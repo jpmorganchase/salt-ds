@@ -61,6 +61,7 @@ export interface SearchSaltResult {
 }
 
 export const MAX_SEARCH_RESULTS = 8;
+export const DEFAULT_SEARCH_RESULTS = 8;
 export const MAX_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES = 3 * 1024;
 const MAX_SUMMARY_CHARS = 240;
 const WORD_PATTERN = /[\p{L}\p{N}]+/gu;
@@ -171,7 +172,7 @@ export function searchSalt(
   const documents = store.getFamily("search_document");
   const limit = Math.min(
     MAX_SEARCH_RESULTS,
-    Math.max(1, input.limit ?? MAX_SEARCH_RESULTS),
+    Math.max(1, input.limit ?? DEFAULT_SEARCH_RESULTS),
   );
 
   let evaluatedDocuments = 0;

@@ -482,6 +482,17 @@ export interface TokenRecord {
   applies_to: string[];
   guidance: string[];
   aliases: string[];
+  /** Immediate, source-backed replacement token names. */
+  replacement_tokens?: string[];
+  /** Curated sources that contributed immediate replacement edges. */
+  replacement_sources?: Array<{
+    replacement: string;
+    source_kind: "docs" | "token";
+    source_path: string;
+    source_text: string;
+    line_start: number | null;
+    line_end: number | null;
+  }>;
   policy?: {
     usage_tier: "characteristic" | "palette" | "foundation";
     direct_component_use: "always" | "conditional" | "never";
@@ -502,7 +513,7 @@ export interface TokenRecord {
     missing: string[];
     evidence_refs: SaltTokenPolicyEvidenceRef[];
   } | null;
-  /** True only when every declaration is deprecated. */
+  /** True only when at least one declaration exists and every declaration is deprecated. */
   deprecated: boolean;
   last_verified_at: string | null;
 }

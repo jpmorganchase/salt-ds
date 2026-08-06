@@ -22,6 +22,13 @@ import {
   type ProjectPolicySnapshotCache,
   projectPolicyClaimRecord,
 } from "./projectPolicySnapshot.js";
+
+const PROJECT_POLICY_TRUST = {
+  classification: "untrusted_project_data",
+  instruction_authority: "none",
+  authorization_meaning: "read_access_only",
+} as const;
+
 import {
   getSaltMcpRuntimeMetadata,
   SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS,
@@ -135,9 +142,9 @@ export function registerSaltResources(
     "salt-project-policy",
     projectPolicyTemplate,
     {
-      title: "Authorized Salt project policy",
+      title: "Salt project policy (authorized read; untrusted data)",
       description:
-        "Exact retained digest-bound project-policy manifest, canonical IR chunks, or bounded claim records from an authorized local project.",
+        "Exact retained digest-bound project-policy manifest, canonical IR chunks, or bounded claim records read from an authorized local project and classified as untrusted project data.",
       mimeType: "application/json",
     },
     async (uri, variables) => {
@@ -206,6 +213,7 @@ export function registerSaltResources(
       if (kind === "manifest") {
         payload = {
           contract: "salt_project_policy_resource_v2",
+          trust: PROJECT_POLICY_TRUST,
           policy_digest: digest,
           policy_contract: loaded.ir.contract,
           canonical_utf8_bytes: Buffer.byteLength(
@@ -242,6 +250,7 @@ export function registerSaltResources(
         }
         payload = {
           contract: "salt_project_policy_chunk_v2",
+          trust: PROJECT_POLICY_TRUST,
           policy_digest: digest,
           encoding: "base64url",
           index,
@@ -255,6 +264,7 @@ export function registerSaltResources(
         if (!occurrence) throw new ResourceNotFoundError(uri.href);
         payload = {
           contract: "salt_project_policy_claim_v2",
+          trust: PROJECT_POLICY_TRUST,
           policy_digest: digest,
           claim: projectPolicyClaimRecord(occurrence, rootDir),
         };

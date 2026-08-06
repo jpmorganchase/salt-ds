@@ -32,7 +32,11 @@ type PackageManifest = {
   publishBundledWorkspaceDependencies?: string[];
   publishBinEntrypoints?: Record<
     string,
-    { requirePath?: string; errorPrefix?: string }
+    {
+      requirePath?: string;
+      errorPrefix?: string;
+      conciseErrorCodes?: string[];
+    }
   >;
   publishConfig?: {
     directory?: string;
@@ -281,6 +285,7 @@ describe("package publish boundaries", () => {
       "bin/salt-mcp.js": {
         requirePath: "../dist-cjs/index.js",
         errorPrefix: "salt-mcp error:",
+        conciseErrorCodes: ["SALT_MCP_CLI_USAGE"],
       },
     });
     expect(manifest.publishScriptExcludes).toEqual([

@@ -42,9 +42,7 @@ describe("layerDiagnostics version normalization", () => {
   it("does not infer compatibility from another Salt package", () => {
     expect(
       deriveComparableSaltVersion({
-        resolvedPackages: [
-          { name: "@salt-ds/lab", resolvedVersion: "1.2.3" },
-        ],
+        resolvedPackages: [{ name: "@salt-ds/lab", resolvedVersion: "1.2.3" }],
       }),
     ).toBeNull();
   });
@@ -52,9 +50,7 @@ describe("layerDiagnostics version normalization", () => {
   it("treats unresolved, range-like, or conflicting Core versions as unknown", () => {
     expect(
       deriveComparableSaltVersion({
-        resolvedPackages: [
-          { name: "@salt-ds/core", resolvedVersion: null },
-        ],
+        resolvedPackages: [{ name: "@salt-ds/core", resolvedVersion: null }],
       }),
     ).toBeNull();
     expect(

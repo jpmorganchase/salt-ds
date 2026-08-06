@@ -38,13 +38,14 @@ The server exposes exactly three tools:
   workspace, and policy facts; and
 - `review_salt_code` for analysis of submitted source text only.
 
-Read the current digest-bound catalog manifest and exact record resources from
-the cursor-paginated URIs returned by MCP resource discovery. Every canonical
-record is listable by exact family and ID. Record reads link larger payloads to
-verified `content` resources rather than embedding them by default. Completion
-is only a bounded convenience and reports when more matches exist; resource
-listing is exhaustive. The immutable packaged catalog has no resource
-subscriptions or list-change notifications.
+MCP resource discovery returns the curated, digest-bound catalog manifest.
+Exact records remain addressable through the catalog resource template and
+links returned by search or parent records. Record reads link larger payloads
+to verified `content` resources rather than embedding them by default. The
+server advertises the catalog and project-policy templates, and the immutable
+packaged catalog has no resource subscriptions or list-change notifications.
+The stdio server negotiates the current `2026-07-28` protocol while retaining
+the documented legacy revisions headed by `2025-11-25`.
 
 The manifest keeps the server package version, catalog version and digests, and
 negotiated MCP protocol revision distinct. The server does not expose a
@@ -79,5 +80,5 @@ instructions will return only after:
 - no expected failure is counted as success; and
 - real-host/model evaluation is available.
 
-The implementation baseline and known semantic failures are recorded in
-[`../../../plans/AI_MCP_PHASE0_BASELINE.md`](../../../plans/AI_MCP_PHASE0_BASELINE.md).
+The implementation baseline and known semantic failures remain internal until
+the release verification work is complete.

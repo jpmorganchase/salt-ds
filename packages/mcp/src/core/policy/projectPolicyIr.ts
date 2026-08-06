@@ -177,16 +177,14 @@ export function evaluateProjectPolicyConditionV2(
             : candidate.value;
         const matches =
           candidate.comparison === "normalized_text"
-            ? context.normalized_facts?.[candidate.fact]?.has(expected) ??
+            ? (context.normalized_facts?.[candidate.fact]?.has(expected) ??
               [...values].some(
                 (value) => normalizedPolicyText(value) === expected,
-              )
+              ))
             : isStringSet(values)
               ? values.has(expected)
               : values.includes(expected);
-        return matches
-          ? "applicable"
-          : "contradicted";
+        return matches ? "applicable" : "contradicted";
       }
       case "salt_version_satisfies": {
         const version = context.salt_version
@@ -194,9 +192,7 @@ export function evaluateProjectPolicyConditionV2(
           : null;
         const range = validRange(candidate.range);
         if (!version || !range) return "unknown";
-        return satisfies(version, range)
-          ? "applicable"
-          : "contradicted";
+        return satisfies(version, range) ? "applicable" : "contradicted";
       }
       case "opaque":
         return "unknown";

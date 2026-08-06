@@ -55,6 +55,7 @@ function buildContentRecords(
       bytes: blob.bytes.byteLength,
       offset,
       length: blob.bytes.byteLength,
+      encoding: "identity",
       extraction_method: blob.extractionMethod,
       validation: {
         state: "validated",

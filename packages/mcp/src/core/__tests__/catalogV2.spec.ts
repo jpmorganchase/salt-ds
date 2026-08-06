@@ -2,6 +2,11 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  brotliCompressSync,
+  brotliDecompressSync,
+  constants as zlibConstants,
+} from "node:zlib";
 import Ajv2020 from "ajv/dist/2020.js";
 import {
   afterAll,
@@ -14,7 +19,6 @@ import {
 } from "vitest";
 import { SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS } from "../../__tests__/registryTestUtils.js";
 import { buildRegistry } from "../build/buildRegistry.js";
-import { TOKEN_OWNED_ARTIFACT_BYTE_BUDGET } from "../build/catalogWriterV2.js";
 import { linkDeprecationsToComponents } from "../build/buildRegistryComponentDeprecations.js";
 import { extractDeprecations } from "../build/buildRegistryDeprecations.js";
 import {
@@ -22,6 +26,7 @@ import {
   createCatalogInputInventory,
   withCatalogInputTracking,
 } from "../build/catalogInputInventory.js";
+import { TOKEN_OWNED_ARTIFACT_BYTE_BUDGET } from "../build/catalogWriterV2.js";
 import { extractTokenDeclarations } from "../build/extractTokenDeclarations.js";
 import { normalizeCatalogV2 } from "../build/normalizeCatalogV2.js";
 import { createDeprecationId } from "../catalog/catalogApiSymbolV2.js";
@@ -61,6 +66,7 @@ import {
   canonicalJsonFile,
   compareCatalogIds,
   sha256Bytes,
+  stableShaId,
 } from "../catalog/catalogSerialization.js";
 import {
   __getCatalogFileReadCountForTests,
@@ -119,6 +125,69 @@ function encodeArtifactRecords<Family extends CatalogFamilyName>(
   return records.map((record) =>
     encodeCatalogRecordForStorage(family, record as never),
   );
+}
+
+const declarationFixtureContext = {
+  family: "declaration_context" as const,
+  id: "context.fixture",
+  raw_selector: null,
+  at_rules: [],
+  selector_variants: [],
+};
+const declarationFixtureSource = {
+  family: "source" as const,
+  id: "source.fixture",
+  source_kind: "repository_file" as const,
+  locator: "fixtures/tokens.css",
+};
+
+function resolveDeclarationFixtureRecord(
+  reference: CatalogReference,
+): CatalogRecord | null {
+  if (reference.family === "token") {
+    return {
+      family: "token",
+      id: reference.id,
+    } as unknown as CatalogRecord;
+  }
+  if (reference.family === "declaration_context") {
+    return declarationFixtureContext as unknown as CatalogRecord;
+  }
+  if (reference.family === "source") {
+    return declarationFixtureSource as unknown as CatalogRecord;
+  }
+  return null;
+}
+
+function declarationFixtureId(input: {
+  token: string;
+  value: string;
+  rawValue: string | null;
+  important: boolean;
+  sourceRange: [number, number, number, number, number, number];
+  deprecated: boolean;
+  replacement: string | null;
+}): string {
+  return stableShaId("token-declaration", {
+    token: input.token,
+    source_path: declarationFixtureSource.locator,
+    source_range: {
+      start_offset: input.sourceRange[0],
+      end_offset: input.sourceRange[1],
+      start_line: input.sourceRange[2],
+      start_column: input.sourceRange[3],
+      end_line: input.sourceRange[4],
+      end_column: input.sourceRange[5],
+    },
+    value: input.value,
+    raw_value: input.rawValue,
+    important: input.important ? true : undefined,
+    raw_selector: declarationFixtureContext.raw_selector,
+    at_rules: declarationFixtureContext.at_rules,
+    selector_variants: declarationFixtureContext.selector_variants,
+    deprecated: input.deprecated,
+    replacement: input.replacement,
+  });
 }
 
 function asExampleEvidence(record: unknown): MutableExampleEvidence | null {
@@ -385,6 +454,103 @@ async function replaceBuildArtifact(
   await writeManifest(directory, manifest, { rebindGeneration: true });
 }
 
+function decodePackedContentBytes(
+  packBytes: Buffer,
+  record: CatalogRecordForFamily<"content">,
+): Buffer {
+  const stored = packBytes.subarray(
+    record.offset,
+    record.offset + record.length,
+  );
+  return record.encoding === "br" ? brotliDecompressSync(stored) : stored;
+}
+
+function encodePackedContentBytes(bytes: Buffer): {
+  bytes: Buffer;
+  encoding: "identity" | "br";
+} {
+  const compressed = brotliCompressSync(bytes, {
+    params: {
+      [zlibConstants.BROTLI_PARAM_MODE]: zlibConstants.BROTLI_MODE_TEXT,
+      [zlibConstants.BROTLI_PARAM_QUALITY]: 6,
+      [zlibConstants.BROTLI_PARAM_SIZE_HINT]: bytes.byteLength,
+    },
+  });
+  return compressed.byteLength < bytes.byteLength
+    ? { bytes: compressed, encoding: "br" }
+    : { bytes, encoding: "identity" };
+}
+
+async function rebindPackedContentObject(
+  directory: string,
+  manifest: CatalogManifest,
+  store: CatalogStoreV2,
+  oldContentId: string,
+  newBytes: Buffer,
+): Promise<string> {
+  const packEntry = manifest.support_artifacts.find(
+    (entry) => entry.kind === "content_pack",
+  );
+  if (!packEntry) throw new Error("Fixture manifest has no content pack.");
+  const packPath = path.join(directory, ...packEntry.file.split("/"));
+  const oldPack = await fs.readFile(packPath);
+  const contentRecords = structuredClone([...store.getFamily("content")]).sort(
+    (left, right) => left.offset - right.offset,
+  );
+  const rebound = contentRecords.find((record) => record.id === oldContentId);
+  if (!rebound || rebound.validation.state !== "validated") {
+    throw new Error("Fixture content object is missing or unvalidated.");
+  }
+  const newId = sha256Bytes(
+    Buffer.concat([Buffer.from(`${rebound.media_type}\0`, "utf8"), newBytes]),
+  );
+  const chunks: Buffer[] = [];
+  let offset = 0;
+  for (const record of contentRecords) {
+    let stored: Buffer<ArrayBufferLike> = oldPack.subarray(
+      record.offset,
+      record.offset + record.length,
+    );
+    if (record.id === oldContentId) {
+      if (record.validation.state !== "validated") {
+        throw new Error("Fixture rebound content is not validated.");
+      }
+      const encoded = encodePackedContentBytes(newBytes);
+      stored = encoded.bytes;
+      record.id = newId;
+      record.bytes = newBytes.byteLength;
+      record.length = stored.byteLength;
+      record.encoding = encoded.encoding;
+      record.validation.basis_digest = newId;
+    }
+    record.offset = offset;
+    chunks.push(stored);
+    offset += stored.byteLength;
+  }
+  const reboundPack = Buffer.concat(chunks);
+  await fs.writeFile(packPath, reboundPack);
+  packEntry.sha256 = sha256Bytes(reboundPack);
+  packEntry.bytes = reboundPack.byteLength;
+
+  const contentEntry = manifest.artifacts.find(
+    (entry) => entry.family === "content",
+  );
+  if (!contentEntry)
+    throw new Error("Fixture manifest has no content artifact.");
+  const contentPath = path.join(directory, ...contentEntry.file.split("/"));
+  const envelope = JSON.parse(
+    await fs.readFile(contentPath, "utf8"),
+  ) as MutableArtifactEnvelope;
+  contentRecords.sort(compareCatalogIds);
+  envelope.records = encodeArtifactRecords("content", contentRecords);
+  const contentBytes = Buffer.from(canonicalJsonFile(envelope), "utf8");
+  await fs.writeFile(contentPath, contentBytes);
+  contentEntry.sha256 = sha256Bytes(contentBytes);
+  contentEntry.bytes = contentBytes.byteLength;
+  contentEntry.record_count = contentRecords.length;
+  return newId;
+}
+
 async function rebindAccessibilitySignalContent(
   directory: string,
   transform: (serialized: string) => string,
@@ -416,25 +582,15 @@ async function rebindAccessibilitySignalContent(
   }
   const packPath = path.join(directory, ...packEntry.file.split("/"));
   const packBytes = await fs.readFile(packPath);
-  const oldBytes = packBytes.subarray(
-    contentRecord.offset,
-    contentRecord.offset + contentRecord.length,
-  );
+  const oldBytes = decodePackedContentBytes(packBytes, contentRecord);
   const newBytes = Buffer.from(transform(oldBytes.toString("utf8")), "utf8");
-  if (newBytes.byteLength !== oldBytes.byteLength) {
-    throw new Error("Rebound content mutation must preserve byte length.");
-  }
-  const newId = sha256Bytes(
-    Buffer.concat([
-      Buffer.from(`${contentRecord.media_type}\0`, "utf8"),
-      newBytes,
-    ]),
+  const newId = await rebindPackedContentObject(
+    directory,
+    manifest,
+    store,
+    oldContentId,
+    newBytes,
   );
-  const reboundPack = Buffer.from(packBytes);
-  newBytes.copy(reboundPack, contentRecord.offset);
-  await fs.writeFile(packPath, reboundPack);
-  packEntry.sha256 = sha256Bytes(reboundPack);
-  packEntry.bytes = reboundPack.byteLength;
 
   const rewriteFamily = async <Family extends CatalogFamilyName>(
     family: Family,
@@ -457,21 +613,6 @@ async function rebindAccessibilitySignalContent(
     entry.bytes = bytes.byteLength;
     entry.record_count = records.length;
   };
-
-  const contentRecords = structuredClone([...store.getFamily("content")]);
-  const reboundContent = contentRecords.find(
-    (record) => record.id === oldContentId,
-  );
-  if (!reboundContent) {
-    throw new Error("Fixture content index record disappeared.");
-  }
-  reboundContent.id = newId;
-  if (reboundContent.validation.state !== "validated") {
-    throw new Error("Fixture content index is not validated.");
-  }
-  reboundContent.validation.basis_digest = newId;
-  contentRecords.sort(compareCatalogIds);
-  await rewriteFamily("content", contentRecords);
 
   const evidenceRecords = structuredClone([...store.getFamily("evidence")]);
   let reboundReferences = 0;
@@ -549,10 +690,7 @@ async function rebindDeprecationValueMapTargetOwner(
   }
   const packPath = path.join(directory, ...packEntry.file.split("/"));
   const packBytes = await fs.readFile(packPath);
-  const oldBytes = packBytes.subarray(
-    contentRecord.offset,
-    contentRecord.offset + contentRecord.length,
-  );
+  const oldBytes = decodePackedContentBytes(packBytes, contentRecord);
   const serialized = oldBytes.toString("utf8");
   const reboundSerialized = serialized
     .split(originalTargetRef.id)
@@ -561,20 +699,13 @@ async function rebindDeprecationValueMapTargetOwner(
     throw new Error("Fixture target reference is absent from its detail.");
   }
   const newBytes = Buffer.from(reboundSerialized, "utf8");
-  if (newBytes.byteLength !== oldBytes.byteLength) {
-    throw new Error("Rebound value-map content must preserve byte length.");
-  }
-  const newId = sha256Bytes(
-    Buffer.concat([
-      Buffer.from(`${contentRecord.media_type}\0`, "utf8"),
-      newBytes,
-    ]),
+  const newId = await rebindPackedContentObject(
+    directory,
+    manifest,
+    store,
+    oldContentId,
+    newBytes,
   );
-  const reboundPack = Buffer.from(packBytes);
-  newBytes.copy(reboundPack, contentRecord.offset);
-  await fs.writeFile(packPath, reboundPack);
-  packEntry.sha256 = sha256Bytes(reboundPack);
-  packEntry.bytes = reboundPack.byteLength;
 
   const rewriteFamily = async <Family extends CatalogFamilyName>(
     family: Family,
@@ -595,18 +726,6 @@ async function rebindDeprecationValueMapTargetOwner(
     entry.bytes = bytes.byteLength;
     entry.record_count = records.length;
   };
-
-  const contentRecords = structuredClone([...store.getFamily("content")]);
-  const reboundContent = contentRecords.find(
-    (record) => record.id === oldContentId,
-  );
-  if (!reboundContent || reboundContent.validation.state !== "validated") {
-    throw new Error("Fixture value-map content is not validated.");
-  }
-  reboundContent.id = newId;
-  reboundContent.validation.basis_digest = newId;
-  contentRecords.sort(compareCatalogIds);
-  await rewriteFamily("content", contentRecords);
 
   const deprecations = structuredClone([...store.getFamily("deprecation")]);
   const reboundDeprecation = deprecations.find(
@@ -659,29 +778,19 @@ async function rebindStructuralRelationOrdinal(
   if (!packEntry) throw new Error("Fixture manifest has no content pack.");
   const packPath = path.join(directory, ...packEntry.file.split("/"));
   const packBytes = await fs.readFile(packPath);
-  const oldBytes = packBytes.subarray(
-    contentRecord.offset,
-    contentRecord.offset + contentRecord.length,
-  );
+  const oldBytes = decodePackedContentBytes(packBytes, contentRecord);
   const detail = JSON.parse(oldBytes.toString("utf8")) as {
     source_ordinal: number;
   };
   detail.source_ordinal = 1;
   const newBytes = Buffer.from(canonicalJson(detail), "utf8");
-  if (newBytes.byteLength !== oldBytes.byteLength) {
-    throw new Error("Ordinal content rebinding must preserve byte length.");
-  }
-  const newId = sha256Bytes(
-    Buffer.concat([
-      Buffer.from(`${contentRecord.media_type}\0`, "utf8"),
-      newBytes,
-    ]),
+  const newId = await rebindPackedContentObject(
+    directory,
+    manifest,
+    store,
+    oldContentId,
+    newBytes,
   );
-  const reboundPack = Buffer.from(packBytes);
-  newBytes.copy(reboundPack, contentRecord.offset);
-  await fs.writeFile(packPath, reboundPack);
-  packEntry.sha256 = sha256Bytes(reboundPack);
-  packEntry.bytes = reboundPack.byteLength;
 
   const rewriteFamily = async <Family extends CatalogFamilyName>(
     family: Family,
@@ -702,18 +811,6 @@ async function rebindStructuralRelationOrdinal(
     entry.bytes = bytes.byteLength;
     entry.record_count = records.length;
   };
-
-  const contentRecords = structuredClone([...store.getFamily("content")]);
-  const reboundContent = contentRecords.find(
-    (record) => record.id === oldContentId,
-  );
-  if (!reboundContent || reboundContent.validation.state !== "validated") {
-    throw new Error("Fixture structural content is not validated.");
-  }
-  reboundContent.id = newId;
-  reboundContent.validation.basis_digest = newId;
-  contentRecords.sort(compareCatalogIds);
-  await rewriteFamily("content", contentRecords);
 
   const evidenceRecords = structuredClone([...store.getFamily("evidence")]);
   const reboundEvidence = evidenceRecords.find(
@@ -1254,19 +1351,27 @@ describe("Salt catalog schema v2 descriptor and storage contract", () => {
   );
 
   it("round-trips fixed-width token declaration tuples without inventing optional fields", () => {
+    const sourceRange = [0, 20, 1, 1, 1, 21] as const;
     const logical: CatalogRecordForFamily<"token_declaration"> = {
       family: "token_declaration",
-      id: "declaration.fixture",
+      id: declarationFixtureId({
+        token: "--salt-fixture",
+        value: "1px",
+        rawValue: null,
+        important: false,
+        sourceRange: [...sourceRange],
+        deprecated: false,
+        replacement: null,
+      }),
       token_ref: { family: "token", id: "--salt-fixture" },
       value: "1px",
       context_ref: { family: "declaration_context", id: "context.fixture" },
-      source_range: [0, 20, 1, 1, 1, 21],
+      source_range: [...sourceRange],
       source_ref: { family: "source", id: "source.fixture" },
       deprecated: false,
     };
     const stored = encodeCatalogRecordForStorage("token_declaration", logical);
     expect(stored).toEqual([
-      "declaration.fixture",
       "--salt-fixture",
       "1px",
       null,
@@ -1277,9 +1382,13 @@ describe("Salt catalog schema v2 descriptor and storage contract", () => {
       false,
       null,
     ]);
-    expect(decodeCatalogRecordFromStorage("token_declaration", stored)).toEqual(
-      logical,
-    );
+    expect(
+      decodeCatalogRecordFromStorage(
+        "token_declaration",
+        stored,
+        resolveDeclarationFixtureRecord,
+      ),
+    ).toEqual(logical);
     expect(() =>
       decodeCatalogRecordFromStorage(
         "token_declaration",
@@ -1339,6 +1448,35 @@ describe("Salt catalog schema v2 descriptor and storage contract", () => {
         ),
       ).toEqual(logical);
     }
+  });
+
+  it("round-trips tagged source assertions without persisting fixed metadata", () => {
+    const store = new CatalogStoreV2({ registryDir: generatedDirectory });
+    const logical = store
+      .getFamily("evidence")
+      .find((record) => record.evidence_kind === "source_assertion");
+    if (!logical || logical.evidence_kind !== "source_assertion") {
+      throw new Error("Built fixture has no source assertion evidence.");
+    }
+    const stored = encodeCatalogRecordForStorage("evidence", logical);
+    expect(stored).toEqual([
+      logical.id,
+      logical.assertion_kind,
+      logical.owner ? [logical.owner.family, logical.owner.id] : null,
+      logical.source_refs.map((reference) => reference.id),
+      logical.detail_content_ref.id,
+    ]);
+    expect(JSON.stringify(stored)).not.toContain("source_extraction");
+    expect(decodeCatalogRecordFromStorage("evidence", stored)).toEqual(logical);
+    expect(() =>
+      decodeCatalogRecordFromStorage("evidence", [
+        logical.id,
+        "unknown_assertion",
+        null,
+        [logical.source_refs[0]!.id],
+        logical.detail_content_ref.id,
+      ]),
+    ).toThrow(/unknown source assertion kind/u);
   });
 
   it("rejects invalid derived-search groups before resolving any target", () => {
@@ -1940,6 +2078,8 @@ describe("Salt catalog schema v2 descriptor and storage contract", () => {
       type: "length",
       semantic_intent: null,
       aliases: ["--legacy-fixture"],
+      status: "stable",
+      replacement_token_refs: [{ family: "token", id: "--salt-replacement" }],
       policy_profile_ref: { family: "policy_profile", id: "policy.fixture" },
       evidence_profile_ref: {
         family: "policy_profile",
@@ -1962,6 +2102,8 @@ describe("Salt catalog schema v2 descriptor and storage contract", () => {
       "policy.fixture",
       "policy.evidence.fixture",
       ["component.fixture"],
+      "stable",
+      ["--salt-replacement"],
     ]);
     expect(decodeCatalogRecordFromStorage("token", storedToken)).toEqual(token);
     expect(() =>
@@ -1986,7 +2128,15 @@ describe("Salt catalog schema v2 descriptor and storage contract", () => {
 
     const declaration: CatalogRecordForFamily<"token_declaration"> = {
       family: "token_declaration",
-      id: "declaration.full",
+      id: declarationFixtureId({
+        token: "--salt-fixture",
+        value: "1px",
+        rawValue: " 1px",
+        important: true,
+        sourceRange: [2, 24, 2, 3, 3, 10],
+        deprecated: true,
+        replacement: "--salt-replacement",
+      }),
       token_ref: { family: "token", id: "--salt-fixture" },
       value: "1px",
       raw_value: " 1px",
@@ -2005,7 +2155,6 @@ describe("Salt catalog schema v2 descriptor and storage contract", () => {
       declaration,
     );
     expect(storedDeclaration).toEqual([
-      "declaration.full",
       "--salt-fixture",
       "1px",
       " 1px",
@@ -2017,13 +2166,17 @@ describe("Salt catalog schema v2 descriptor and storage contract", () => {
       "--salt-replacement",
     ]);
     expect(
-      decodeCatalogRecordFromStorage("token_declaration", storedDeclaration),
+      decodeCatalogRecordFromStorage(
+        "token_declaration",
+        storedDeclaration,
+        resolveDeclarationFixtureRecord,
+      ),
     ).toEqual(declaration);
 
     const wrongRangeType = [...(storedDeclaration as unknown[])];
-    wrongRangeType[6] = { start: 2, end: 24 };
+    wrongRangeType[5] = { start: 2, end: 24 };
     const wrongRequiredType = [...(storedDeclaration as unknown[])];
-    wrongRequiredType[8] = "true";
+    wrongRequiredType[7] = "true";
     for (const invalid of [
       { ...token },
       wrongRangeType,
@@ -4011,7 +4164,7 @@ describe("CatalogStoreV2 lazy integrity checks", () => {
         family: "token_declaration",
         mutate: (records) => {
           const first = [...(records[0] as unknown[])];
-          first[1] = "component.button";
+          first[0] = "component.button";
           records[0] = first;
         },
         error: /unresolved token:component\.button/u,
@@ -4020,7 +4173,7 @@ describe("CatalogStoreV2 lazy integrity checks", () => {
         family: "token_declaration",
         mutate: (records) => {
           const first = [...(records[0] as unknown[])];
-          first[5] = "context.does-not-exist";
+          first[4] = "context.does-not-exist";
           records[0] = first;
         },
         error: /unresolved declaration_context:context\.does-not-exist/u,
@@ -4029,10 +4182,10 @@ describe("CatalogStoreV2 lazy integrity checks", () => {
         family: "token_declaration",
         mutate: (records) => {
           const first = [...(records[0] as unknown[])];
-          first[7] = "source.does-not-exist";
+          first[6] = "source.does-not-exist";
           records[0] = first;
         },
-        error: /unresolved source:source\.does-not-exist/u,
+        error: /unresolved repository source:source\.does-not-exist/u,
       },
       {
         family: "token",

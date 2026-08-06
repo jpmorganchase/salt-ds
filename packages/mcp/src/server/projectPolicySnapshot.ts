@@ -552,7 +552,7 @@ function claimConditionShape(
         range: condition.range,
         origin: condition.origin,
       };
-    case "opaque":
+    case "opaque": {
       const text = boundedClaimText(
         condition.text,
         MAX_PROJECT_POLICY_CLAIM_OPAQUE_TEXT_UTF8_BYTES,
@@ -563,6 +563,7 @@ function claimConditionShape(
         text,
         text_truncated: text !== condition.text,
       };
+    }
   }
 }
 

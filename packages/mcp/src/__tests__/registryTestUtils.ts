@@ -5,19 +5,25 @@ import { fileURLToPath } from "node:url";
 import {
   type CatalogFamilyName,
   type CatalogManifest,
+  type CatalogRecord,
+  type CatalogRuntimeFamilyName,
   catalogManifestCodec,
   catalogPublicationCodec,
+  encodeCatalogArtifactRecordsForStorage,
   getCatalogBuildOnlyArtifactFileNames,
   getCatalogPackageFileNames,
   getCatalogPublishedFileNames,
   getCatalogPublishedManifestGenerationPath,
+  parseCatalogArtifactEnvelope,
   SALT_CATALOG_MANIFEST_FILE,
 } from "../core/catalog/catalogSchemaV2.js";
 import {
   canonicalJson,
   canonicalJsonFile,
+  compareOrdinalStrings,
   sha256Bytes,
 } from "../core/catalog/catalogSerialization.js";
+import { CatalogStoreV2 } from "../core/catalog/catalogStoreV2.js";
 
 export const REPO_ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -198,6 +204,7 @@ export async function rebindCatalogArtifactForTests(
   registryDir: string,
   family: CatalogFamilyName,
   mutate: (envelope: MutableCatalogArtifactEnvelope) => void,
+  options: { canonicalizeRecords?: boolean } = {},
 ): Promise<void> {
   const manifest = await readCatalogManifest(registryDir);
   const artifactEntry = manifest.artifacts.find(
@@ -210,7 +217,22 @@ export async function rebindCatalogArtifactForTests(
   const envelope = JSON.parse(
     await fs.readFile(artifactPath, "utf8"),
   ) as MutableCatalogArtifactEnvelope;
+  const sourceStore = options.canonicalizeRecords
+    ? new CatalogStoreV2({ registryDir })
+    : null;
   mutate(envelope);
+  if (options.canonicalizeRecords) {
+    const records = parseCatalogArtifactEnvelope(
+      family,
+      envelope,
+      (reference) =>
+        sourceStore?.getRecord(
+          reference.family as CatalogRuntimeFamilyName,
+          reference.id,
+        ) as CatalogRecord | null,
+    ).records.sort((left, right) => compareOrdinalStrings(left.id, right.id));
+    envelope.records = encodeCatalogArtifactRecordsForStorage(family, records);
+  }
   const artifactBytes = Buffer.from(canonicalJsonFile(envelope), "utf8");
   await fs.writeFile(artifactPath, artifactBytes);
   artifactEntry.sha256 = sha256Bytes(artifactBytes);

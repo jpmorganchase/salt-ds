@@ -270,12 +270,21 @@ describe("generated token policy", () => {
           .map((doc) => findPolicyDocText(doc))
           .filter((text): text is string => Boolean(text))
           .join(" ");
+        const derivedLifecycleText = token.deprecated
+          ? new Set([
+              "Deprecated token; use replacement_token_refs for migration.",
+              `Deprecated ${token.policy?.usage_tier} token; direct component use is forbidden.`,
+            ])
+          : new Set<string>();
         return [
           ...(token.policy?.preferred_for ?? []),
           ...(token.policy?.avoid_for ?? []),
           ...(token.policy?.notes ?? []),
         ]
-          .filter((text) => !docsText.includes(text))
+          .filter(
+            (text) =>
+              !docsText.includes(text) && !derivedLifecycleText.has(text),
+          )
           .map((text) => `${token.name} -> ${text}`);
       });
 
@@ -589,22 +598,8 @@ describe("generated token policy", () => {
         }),
       }),
     ]);
-    expect(accentEvidenceRefs).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          source_kind: "token",
-          source: expect.objectContaining({
-            repo_path: "packages/theme/css/deprecated/characteristics.css",
-          }),
-        }),
-        expect.objectContaining({
-          source_kind: "token",
-          source: expect.objectContaining({
-            repo_path: "packages/theme/css/legacy/palette/accent.css",
-          }),
-        }),
-      ]),
-    );
+    expect(accentEvidenceRefs).toHaveLength(1);
+    expect(accentToken?.replacement_tokens).toContain("--salt-palette-accent");
     expect(containerToken?.policy?.structural_roles).toEqual([
       "container-background",
     ]);
@@ -653,22 +648,8 @@ describe("generated token policy", () => {
         }),
       }),
     ]);
-    expect(accentEvidenceRefs).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          source_kind: "token",
-          source: expect.objectContaining({
-            repo_path: "packages/theme/css/deprecated/characteristics.css",
-          }),
-        }),
-        expect.objectContaining({
-          source_kind: "token",
-          source: expect.objectContaining({
-            repo_path: "packages/theme/css/legacy/palette/accent.css",
-          }),
-        }),
-      ]),
-    );
+    expect(accentEvidenceRefs).toHaveLength(1);
+    expect(accentToken?.replacement_tokens).toContain("--salt-palette-accent");
     expect(containerToken?.policy?.structural_roles).toEqual([
       "container-background",
     ]);

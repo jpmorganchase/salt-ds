@@ -162,18 +162,27 @@ export function catalogContentReference<
 
 const saltStatusCodec = z.enum(["stable", "beta", "lab", "deprecated"]);
 
+const PUBLIC_DOCGEN_AUTHORING_SYNTAX =
+  /\{@[^}]*\}|@(saltValueMap|saltMigration|deprecated|since|param|returns?|see)\b/iu;
+const publicDocTextCodec = z
+  .string()
+  .refine(
+    (value) => !PUBLIC_DOCGEN_AUTHORING_SYNTAX.test(value),
+    "Public component documentation must not contain JSDoc authoring syntax.",
+  );
+
 const componentPropCodec = z
   .object({
     name: z.string(),
     type: z.string(),
     required: z.boolean(),
-    description: z.string(),
+    description: publicDocTextCodec,
     default: z.string().nullable().optional(),
     allowed_values: z
       .array(z.union([z.string(), z.number(), z.boolean()]))
       .optional(),
     deprecated: z.boolean(),
-    deprecation_note: z.string().nullable().optional(),
+    deprecation_note: publicDocTextCodec.nullable().optional(),
   })
   .strict();
 
@@ -742,12 +751,46 @@ const structuralRelationAssertionCodec = z
     }
   });
 
-const tokenReplacementAssertionCodec = z
-  .object({
-    source: referenceFor("token_declaration"),
-    target: referenceFor("token"),
-  })
-  .strict();
+const tokenReplacementAssertionCodec = z.union([
+  z
+    .object({
+      source: referenceFor("token_declaration"),
+      target: referenceFor("token"),
+    })
+    .strict(),
+  z
+    .object({
+      source: referenceFor("token"),
+      target: referenceFor("token"),
+      source_kind: z.enum(["docs", "token"]),
+      source_path: PORTABLE_REPOSITORY_PATH_CODEC,
+      source_text: NON_EMPTY_STRING_CODEC,
+      line_start: z.number().int().positive().nullable(),
+      line_end: z.number().int().positive().nullable(),
+    })
+    .strict()
+    .superRefine((value, context) => {
+      if ((value.line_start === null) !== (value.line_end === null)) {
+        context.addIssue({
+          code: "custom",
+          path: ["line_end"],
+          message:
+            "Replacement source line bounds must both be present or absent.",
+        });
+      }
+      if (
+        value.line_start !== null &&
+        value.line_end !== null &&
+        value.line_end < value.line_start
+      ) {
+        context.addIssue({
+          code: "custom",
+          path: ["line_end"],
+          message: "Replacement source line_end must not precede line_start.",
+        });
+      }
+    }),
+]);
 
 const accessibilityImplementationSignalCodec = z
   .object({

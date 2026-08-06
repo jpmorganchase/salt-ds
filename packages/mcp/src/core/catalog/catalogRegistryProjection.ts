@@ -1195,6 +1195,14 @@ export class CatalogRegistryProjection {
 
   private projectToken(fact: CatalogRecordForFamily<"token">): TokenRecord {
     const declarations = this.tokenDeclarations(fact);
+    const deprecatedFromDeclarations =
+      declarations.length > 0 &&
+      declarations.every((declaration) => declaration.deprecated);
+    if ((fact.status === "deprecated") !== deprecatedFromDeclarations) {
+      throw new Error(
+        `Token '${fact.id}' lifecycle does not match its declaration aggregation.`,
+      );
+    }
     const profile = fact.policy_profile_ref
       ? this.requirePolicyProfile(fact.policy_profile_ref)
       : null;
@@ -1264,6 +1272,9 @@ export class CatalogRegistryProjection {
       ),
       guidance: usage?.guidance ?? gap?.guidance ?? [],
       aliases: [...fact.aliases],
+      replacement_tokens: fact.replacement_token_refs.map(
+        (reference) => reference.id,
+      ),
       policy,
       policy_gap: gap
         ? {
@@ -1271,9 +1282,7 @@ export class CatalogRegistryProjection {
             evidence_refs: evidenceRefs,
           }
         : null,
-      deprecated:
-        declarations.length > 0 &&
-        declarations.every((declaration) => declaration.deprecated),
+      deprecated: fact.status === "deprecated",
       last_verified_at: null,
     };
   }

@@ -18,13 +18,14 @@ import {
   collectSaltPackages,
   detectSaltWorkspaceScope,
   inspectPackageJsonFile,
+  MAX_WORKSPACE_ANCESTOR_DIRECTORIES,
 } from "./projectContext/saltInstallation.js";
 import { inspectProjectPolicy } from "./projectPolicyInspection.js";
+import type { ProjectPolicySnapshotCache } from "./projectPolicySnapshot.js";
 import {
   createProjectContextHandle,
   createProjectPolicySnapshot,
 } from "./projectPolicySnapshot.js";
-import type { ProjectPolicySnapshotCache } from "./projectPolicySnapshot.js";
 
 export interface InspectSaltProjectInput {
   root_dir?: string;
@@ -121,6 +122,12 @@ export async function inspectSaltProject(
         filesystem_access: "read_only" as const,
         inspected_root: null,
         authorization: accessPolicy.mode,
+        ancestor_workspace_discovery: {
+          status: "not_evaluated" as const,
+          containment: null,
+          max_directories: null,
+          limited: null,
+        },
       },
       coverage: {
         requested_root: "denied" as const,
@@ -370,6 +377,12 @@ export async function inspectSaltProject(
       filesystem_access: "read_only" as const,
       inspected_root: publicRootDir,
       authorization: authorization.mode,
+      ancestor_workspace_discovery: {
+        status: "evaluated" as const,
+        containment: "authorized_root" as const,
+        max_directories: MAX_WORKSPACE_ANCESTOR_DIRECTORIES,
+        limited: workspaceScope.ancestorSearchLimited,
+      },
     },
     coverage: {
       requested_root: "evaluated" as const,

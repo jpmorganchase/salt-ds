@@ -32,8 +32,10 @@ import {
   type SaltCatalogRuntimeContext,
 } from "../core/runtime.js";
 import { MAX_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES } from "../core/search/searchSalt.js";
+import { MAX_TOOL_DISCOVERY_UTF8_BYTES } from "../publicSurfaceBudgets.js";
 import { createSaltMcpServer } from "../server/createServer.js";
 import type { ProjectAccessOptions } from "../server/projectAccess.js";
+import { MAX_WORKSPACE_ANCESTOR_DIRECTORIES } from "../server/projectContext/saltInstallation.js";
 import { MAX_CATALOG_RESOURCE_READ_UTF8_BYTES } from "../server/registerResources.js";
 import { MAX_SEARCH_TOOL_RESULT_UTF8_BYTES } from "../server/registerTools.js";
 import {
@@ -48,7 +50,6 @@ import {
   REGISTERED_SALT_TOOL_NAMES,
   TOOL_DEFINITIONS,
 } from "../server/toolDefinitions.js";
-import { MAX_TOOL_DISCOVERY_UTF8_BYTES } from "../publicSurfaceBudgets.js";
 import {
   createBuiltCatalogV2Fixture,
   REPO_ROOT,
@@ -66,6 +67,11 @@ const MAX_INSTRUCTIONS_UTF8_BYTES = 1_000;
 const JSON_SCHEMA_2020_12 = "https://json-schema.org/draft/2020-12/schema";
 const PACKAGE_VERSIONS_SCHEMA_PATH =
   "review_salt_code.input.properties.package_versions";
+const PROJECT_POLICY_TRUST = {
+  classification: "untrusted_project_data",
+  instruction_authority: "none",
+  authorization_meaning: "read_access_only",
+} as const;
 let catalogFixtureDirectory = "";
 let runtimeContext: SaltCatalogRuntimeContext;
 
@@ -278,23 +284,20 @@ describe("createSaltMcpServer final public boundary", () => {
     ["modern-pinned", { pin: SALT_MCP_CURRENT_PROTOCOL_VERSION }, "modern"],
     ["auto", "auto", "modern"],
     ["legacy-pinned", "legacy", "legacy"],
-  ] as const)(
-    "serves the %s negotiation path through one dual-era factory",
-    async (_label, mode, expectedEra) => {
-      await withNegotiatedStdioClient(mode, async (client, constructedEras) => {
-        expect(client.getProtocolEra()).toBe(expectedEra);
-        expect(client.getNegotiatedProtocolVersion()).toBe(
-          expectedEra === "modern"
-            ? SALT_MCP_CURRENT_PROTOCOL_VERSION
-            : SALT_MCP_PREFERRED_LEGACY_PROTOCOL_VERSION,
-        );
-        expect(constructedEras.at(-1)).toBe(expectedEra);
-        expect((await client.listTools()).tools.map((tool) => tool.name)).toEqual(
-          [...REGISTERED_SALT_TOOL_NAMES],
-        );
-      });
-    },
-  );
+  ] as const)("serves the %s negotiation path through one dual-era factory", async (_label, mode, expectedEra) => {
+    await withNegotiatedStdioClient(mode, async (client, constructedEras) => {
+      expect(client.getProtocolEra()).toBe(expectedEra);
+      expect(client.getNegotiatedProtocolVersion()).toBe(
+        expectedEra === "modern"
+          ? SALT_MCP_CURRENT_PROTOCOL_VERSION
+          : SALT_MCP_PREFERRED_LEGACY_PROTOCOL_VERSION,
+      );
+      expect(constructedEras.at(-1)).toBe(expectedEra);
+      expect((await client.listTools()).tools.map((tool) => tool.name)).toEqual(
+        [...REGISTERED_SALT_TOOL_NAMES],
+      );
+    });
+  });
 
   it("advertises exactly the three read-only adapter tools", async () => {
     await withProtocolClient(async (client) => {
@@ -627,7 +630,11 @@ describe("createSaltMcpServer final public boundary", () => {
       expect(result.isError).not.toBe(true);
       const payload = toolPayload(result) as {
         data?: { root_dir?: string; package_manifest?: { name?: string } };
-        scope?: { kind?: string; filesystem_access?: string };
+        scope?: {
+          kind?: string;
+          filesystem_access?: string;
+          ancestor_workspace_discovery?: unknown;
+        };
         provenance?: {
           project_context_digest?: string | null;
           project_policy_digest?: string | null;
@@ -641,6 +648,12 @@ describe("createSaltMcpServer final public boundary", () => {
           kind: "configured_project_inspection",
           filesystem_access: "read_only",
           authorization: "restricted",
+          ancestor_workspace_discovery: {
+            status: "evaluated",
+            containment: "authorized_root",
+            max_directories: MAX_WORKSPACE_ANCESTOR_DIRECTORIES,
+            limited: false,
+          },
         }),
       );
       expect(payload.provenance).toEqual({
@@ -718,6 +731,7 @@ describe("createSaltMcpServer final public boundary", () => {
                 }>;
               };
             };
+            scope: { ancestor_workspace_discovery: unknown };
           };
           expect(payload.data.workspace).toMatchObject({
             kind: "workspace-package",
@@ -729,6 +743,12 @@ describe("createSaltMcpServer final public boundary", () => {
               resolved_version: "2.1.0",
             }),
           );
+          expect(payload.scope.ancestor_workspace_discovery).toEqual({
+            status: "evaluated",
+            containment: "authorized_root",
+            max_directories: MAX_WORKSPACE_ANCESTOR_DIRECTORIES,
+            limited: false,
+          });
         },
         {
           mode: "unrestricted_local_stdio",
@@ -999,8 +1019,10 @@ describe("createSaltMcpServer final public boundary", () => {
             canonical_utf8_bytes: number;
             chunk_count: number;
             chunk_uri_template: string;
+            trust: typeof PROJECT_POLICY_TRUST;
           };
           expect(manifest.policy_digest).toBe(policyIr!.digest);
+          expect(manifest.trust).toEqual(PROJECT_POLICY_TRUST);
           const chunks = await Promise.all(
             Array.from({ length: manifest.chunk_count }, async (_, index) => {
               const chunkResource = await client.readResource({
@@ -1013,9 +1035,19 @@ describe("createSaltMcpServer final public boundary", () => {
               if (!content || !("text" in content)) {
                 throw new Error("Project-policy chunk omitted text content.");
               }
-              return JSON.parse(content.text) as { data: string };
+              return JSON.parse(content.text) as {
+                data: string;
+                trust: typeof PROJECT_POLICY_TRUST;
+              };
             }),
           );
+          expect(
+            chunks.every(
+              (chunk) =>
+                JSON.stringify(chunk.trust) ===
+                JSON.stringify(PROJECT_POLICY_TRUST),
+            ),
+          ).toBe(true);
           const canonicalBytes = Buffer.concat(
             chunks.map((chunk) => Buffer.from(chunk.data, "base64url")),
           );
@@ -1091,6 +1123,7 @@ describe("createSaltMcpServer final public boundary", () => {
             claimContent && "text" in claimContent
               ? (JSON.parse(claimContent.text) as Record<string, unknown>)
               : null;
+          expect(claimBody?.trust).toEqual(PROJECT_POLICY_TRUST);
           expect(
             claimContent && "text" in claimContent ? claimContent.text : "",
           ).not.toContain(projectRoot);
@@ -1532,7 +1565,7 @@ describe("createSaltMcpServer final public boundary", () => {
         });
         expect(invalidReview.isError).toBe(true);
       }
-      for (const packageVersion of [" ", "^2.0.0", "workspace:^2.0.0"] ) {
+      for (const packageVersion of [" ", "^2.0.0", "workspace:^2.0.0"]) {
         const invalidReview = await client.callTool({
           name: "review_salt_code",
           arguments: {
@@ -1550,6 +1583,19 @@ describe("createSaltMcpServer final public boundary", () => {
           root_dir: REPO_ROOT,
           project_context_handle: "salt-project-context-v1.e30",
         },
+        {
+          project_context_handle: "salt-project-context-v1.e30",
+          package_versions: { "@salt-ds/core": "2.1.0" },
+        },
+        {
+          root_dir: REPO_ROOT,
+          package_versions: { "@salt-ds/core": "2.1.0" },
+        },
+        {
+          project_context_handle: "salt-project-context-v1.e30",
+          package_versions: {},
+        },
+        { root_dir: REPO_ROOT, package_versions: {} },
       ]) {
         const invalidReview = await client.callTool({
           name: "review_salt_code",
@@ -1561,6 +1607,19 @@ describe("createSaltMcpServer final public boundary", () => {
           },
         });
         expect(invalidReview.isError).toBe(true);
+      }
+
+      for (const packageVersions of [{}, { "@salt-ds/core": "2.1.0" }]) {
+        const validReview = await client.callTool({
+          name: "review_salt_code",
+          arguments: {
+            artifacts: [
+              { id: "versions.tsx", language: "tsx", text: "export {};" },
+            ],
+            package_versions: packageVersions,
+          },
+        });
+        expect(validReview.isError).not.toBe(true);
       }
     });
   });

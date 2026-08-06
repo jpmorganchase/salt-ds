@@ -10,6 +10,8 @@ interface RootPackageJson {
 const POST_BUILD_STEPS = [
   "yarn typecheck:mcp",
   "yarn test:ai-tooling",
+  "yarn eval:archive-contract",
+  "node scripts/validatePhase5Candidate.mjs",
   "yarn workspace @salt-ds/mcp measure:runtime-loc",
   "yarn workspace @salt-ds/mcp measure:surface",
   "yarn check:ai-tooling:pack",
@@ -40,7 +42,9 @@ describe("MCP release verification scripts", () => {
 
     const positions = POST_BUILD_STEPS.map((step) => postBuild.indexOf(step));
     expect(positions.every((position) => position >= 0)).toBe(true);
-    expect(positions).toEqual([...positions].sort((left, right) => left - right));
+    expect(positions).toEqual(
+      [...positions].sort((left, right) => left - right),
+    );
     for (const step of POST_BUILD_STEPS) {
       expect(postBuild.split(step)).toHaveLength(2);
     }

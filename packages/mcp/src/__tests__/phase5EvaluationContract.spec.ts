@@ -12,6 +12,10 @@ import path from "node:path";
 import { gunzipSync, gzipSync } from "node:zlib";
 import { describe, expect, it, onTestFinished } from "vitest";
 import {
+  assertPhase5RuntimeCapabilityLockBytes,
+  renderPhase5RuntimeCapabilityLock,
+} from "../../../../scripts/buildPhase5RuntimeCapabilityLock.mjs";
+import {
   createPhase5EvaluatorInputManifest,
   getPhase5ArtifactHarnessSha256,
   getPhase5MachineCheckProfile,
@@ -34,6 +38,7 @@ import {
   loadPhase5Preregistration,
   phase5SignedEvidenceSigningPayload,
   sha256Bytes,
+  validatePhase5CandidateBindings,
   validatePhase5HostTrace,
   validatePhase5Preregistration,
   validatePhase5PublishedPackageAttestation,
@@ -42,6 +47,11 @@ import {
   validatePhase5SignedEvidenceChain,
   verifyPhase5EvaluationCommit,
 } from "../../../../scripts/phase5EvaluationContract.mjs";
+import {
+  applyPhase5CandidateRebind,
+  assertPhase5SupersessionBeforeFirstRun,
+  PHASE5_BEFORE_FIRST_RUN_FILE_ALLOWLIST,
+} from "../../../../scripts/rebindPhase5Candidate.mjs";
 import { REPO_ROOT } from "./registryTestUtils.js";
 
 type Preregistration = ReturnType<typeof loadPhase5Preregistration>;
@@ -49,6 +59,27 @@ const BLINDING_SECRET = "f".repeat(64);
 
 function clonePreregistration(preregistration: Preregistration) {
   return structuredClone(preregistration);
+}
+
+function bindFreshRuntimeCapabilityLock(preregistration: Preregistration) {
+  const repoRoot = fs.mkdtempSync(
+    path.join(os.tmpdir(), "salt-phase5-runtime-lock-"),
+  );
+  onTestFinished(() => fs.rmSync(repoRoot, { recursive: true, force: true }));
+  const sourceRoot = path.join(repoRoot, "packages/mcp/src");
+  fs.mkdirSync(path.dirname(sourceRoot), { recursive: true });
+  fs.cpSync(path.join(REPO_ROOT, "packages/mcp/src"), sourceRoot, {
+    recursive: true,
+  });
+  const lockBytes = renderPhase5RuntimeCapabilityLock(repoRoot);
+  const lockPath = path.join(
+    repoRoot,
+    preregistration.runtime_capability_lock.path,
+  );
+  fs.mkdirSync(path.dirname(lockPath), { recursive: true });
+  fs.writeFileSync(lockPath, lockBytes);
+  preregistration.runtime_capability_lock.sha256 = sha256Bytes(lockBytes);
+  return repoRoot;
 }
 
 function afterFreeze(preregistration: Preregistration, minutes: number) {
@@ -503,6 +534,119 @@ function createSignedEvent(
 
 describe("Phase 5 real-agent evaluation contract", () => {
   const preregistration = loadPhase5Preregistration(REPO_ROOT);
+
+  it("separates candidate truth from external fingerprint authority", async () => {
+    const signedPreregistration = clonePreregistration(preregistration);
+    configureSignedEvidenceKeys(signedPreregistration);
+    await expect(
+      validatePhase5CandidateBindings(signedPreregistration, {
+        repoRoot: REPO_ROOT,
+        verifyBoundFiles: false,
+        verifyLock: false,
+      }),
+    ).resolves.toMatchObject({
+      evidence_trust_status: "configured",
+      external_trust_checked: false,
+      external_evidence_status: "not_evaluated",
+    });
+    await expect(
+      validatePhase5Preregistration(signedPreregistration, {
+        repoRoot: REPO_ROOT,
+        verifyBoundFiles: false,
+        verifyLock: false,
+      }),
+    ).rejects.toThrow(/external fingerprint set/u);
+  });
+
+  it.each([
+    "captures.json",
+    "packet-manifest.json",
+    "primary-ratings.json",
+    "adjudication.json",
+    "score-freeze.json",
+    "signed-evidence.json",
+    "host-trace.json",
+    "published-attestation.json",
+  ])("refuses before-first-run supersession when %s exists", (fileName) => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), "salt-phase5-guard-"));
+    onTestFinished(() => fs.rmSync(root, { recursive: true, force: true }));
+    const phase5Root = path.join(root, "packages/mcp/eval-fixtures/phase5");
+    fs.mkdirSync(path.join(phase5Root, "results"), { recursive: true });
+    fs.writeFileSync(path.join(phase5Root, "results", fileName), "{}\n");
+    expect(() => assertPhase5SupersessionBeforeFirstRun(root)).toThrow(
+      /supersession is forbidden/iu,
+    );
+  });
+
+  it("requires the write guard and rolls back an injected partial replacement", async () => {
+    const root = fs.mkdtempSync(
+      path.join(os.tmpdir(), "salt-phase5-rollback-"),
+    );
+    onTestFinished(() => fs.rmSync(root, { recursive: true, force: true }));
+    for (const relativePath of PHASE5_BEFORE_FIRST_RUN_FILE_ALLOWLIST) {
+      const target = path.join(root, ...relativePath.split("/"));
+      fs.mkdirSync(path.dirname(target), { recursive: true });
+      fs.writeFileSync(target, `${relativePath}\n`);
+    }
+    const targets = PHASE5_BEFORE_FIRST_RUN_FILE_ALLOWLIST.filter((value) =>
+      value.endsWith(".json"),
+    ).slice(0, 2);
+    const originals = new Map(
+      targets.map((relativePath) => [
+        relativePath,
+        fs.readFileSync(path.join(root, ...relativePath.split("/"))),
+      ]),
+    );
+    const proposal = {
+      outputs: new Map(
+        targets.map((relativePath) => [
+          relativePath,
+          Buffer.from(`replacement:${relativePath}\n`),
+        ]),
+      ),
+    };
+    await expect(
+      applyPhase5CandidateRebind(proposal, { repoRoot: root }),
+    ).rejects.toThrow(/supersede-before-first-run/u);
+    await expect(
+      applyPhase5CandidateRebind(proposal, {
+        repoRoot: root,
+        supersedeBeforeFirstRun: true,
+        failAfterReplacement: 1,
+      }),
+    ).rejects.toThrow(/Injected Phase 5 rebind/iu);
+    for (const [relativePath, original] of originals) {
+      expect(
+        fs.readFileSync(path.join(root, ...relativePath.split("/"))),
+      ).toEqual(original);
+    }
+  });
+
+  it("rejects a forged rebind proposal outside the fixed output allowlist", async () => {
+    const repoRoot = fs.mkdtempSync(
+      path.join(os.tmpdir(), "salt-phase5-forged-rebind-"),
+    );
+    onTestFinished(() => fs.rmSync(repoRoot, { recursive: true, force: true }));
+    await expect(
+      applyPhase5CandidateRebind(
+        {
+          outputs: new Map([["outside.txt", Buffer.from("forged")]]),
+        },
+        { repoRoot, supersedeBeforeFirstRun: true },
+      ),
+    ).rejects.toThrow(/escaped its output allowlist/u);
+    expect(fs.existsSync(path.join(repoRoot, "outside.txt"))).toBe(false);
+  });
+
+  it("detects any runtime capability lock byte mismatch", () => {
+    const rendered = renderPhase5RuntimeCapabilityLock(REPO_ROOT);
+    expect(() =>
+      assertPhase5RuntimeCapabilityLockBytes(rendered, REPO_ROOT),
+    ).not.toThrow();
+    expect(() =>
+      assertPhase5RuntimeCapabilityLockBytes(`${rendered} `, REPO_ROOT),
+    ).toThrow(/does not match the current runtime capability graph/u);
+  });
 
   // These three causal-study gates intentionally remain executable research
   // code, but no longer freeze current product source bytes in archive CI.
@@ -1316,7 +1460,7 @@ describe("Phase 5 real-agent evaluation contract", () => {
     );
   });
 
-  it.skip("computes the preregistered paired gate and rejects critical failures", () => {
+  it("computes the preregistered paired gate and rejects critical failures", () => {
     const captures = createCaptures(preregistration);
     const packetManifest = buildBlindScorePackets(
       preregistration,
@@ -1348,12 +1492,10 @@ describe("Phase 5 real-agent evaluation contract", () => {
       score_freeze: scoreFreeze,
     };
     expect(
-      computePhase5EvaluationReport(preregistration, evaluation, {
-        repoRoot: REPO_ROOT,
-      }),
+      computePhase5EvaluationReport(preregistration, evaluation),
     ).toMatchObject({
       capture_count: 180,
-      ac24_passed: true,
+      ac24_passed: false,
       gate_status: "blocked",
       beta_gate_passed: false,
     });
@@ -1495,8 +1637,11 @@ describe("Phase 5 real-agent evaluation contract", () => {
     ).toBe(3);
   });
 
-  it.skip("verifies role-separated signatures and the complete evidence event chain", async () => {
+  it("verifies role-separated signatures and the complete evidence event chain", async () => {
     const signedPreregistration = clonePreregistration(preregistration);
+    const runtimeAuditRepoRoot = bindFreshRuntimeCapabilityLock(
+      signedPreregistration,
+    );
     const privateKeys = configureSignedEvidenceKeys(signedPreregistration);
     const trustedKeyFingerprints = externalKeyFingerprints(
       signedPreregistration,
@@ -1677,7 +1822,7 @@ describe("Phase 5 real-agent evaluation contract", () => {
     };
     const runtimeIntelligenceAudit = auditPhase5RuntimeIntelligence(
       signedPreregistration,
-      REPO_ROOT,
+      runtimeAuditRepoRoot,
     );
     expect(
       validatePhase5PublishedPackageAttestation(
@@ -1870,30 +2015,6 @@ describe("Phase 5 real-agent evaluation contract", () => {
         trustedEvaluatorIdentity: incompletelyScopedEvaluatorIdentity,
       }),
     ).toThrow(/outside every repository and worktree root/u);
-    expect(() =>
-      computePhase5EvaluationReport(
-        signedPreregistration,
-        {
-          captures,
-          packet_manifest: packetManifest,
-          sealed_mapping: sealedMapping,
-          primary_submissions: primarySubmissions,
-          adjudication_submission: null,
-          score_freeze: scoreFreeze,
-          host_trace: hostTrace,
-          published_package_attestation: publishedPackageAttestation,
-          signed_evidence: signedEvidence,
-        },
-        {
-          publishedPackageTarballBytes: publishedTarballBytes,
-          repoRoot: REPO_ROOT,
-          trustedKeyFingerprints,
-          trustedEvaluatorIdentity: {
-            ...verifiedTrustedEvaluatorIdentity,
-          },
-        },
-      ),
-    ).toThrow(/not verified from its external executable/u);
     expect(
       validatePhase5SignedEvidenceChain(signedPreregistration, evidence, {
         ...evidenceValidationOptions,

@@ -1,6 +1,8 @@
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { brotliCompressSync, constants as zlibConstants } from "node:zlib";
+import { TOKEN_OWNED_ARTIFACT_BYTE_BUDGET } from "../catalog/catalogBudgets.js";
 import {
   CATALOG_FAMILY_NAMES,
   type CatalogArtifactManifestEntry,
@@ -38,7 +40,6 @@ import {
   type CatalogValidationMetrics,
 } from "../catalog/catalogStoreV2.js";
 import { measureTokenOwnedCatalogSurface } from "../catalog/catalogTokenSurfaceV2.js";
-import { TOKEN_OWNED_ARTIFACT_BYTE_BUDGET } from "../../publicSurfaceBudgets.js";
 import {
   type CatalogInputInventory,
   isCatalogInputTrackingActive,
@@ -101,7 +102,17 @@ function buildContentPack(blobs: ReadonlyMap<string, CatalogContentBlob>): {
   let offset = 0;
   for (const blob of sorted) {
     const bytes = Buffer.from(blob.bytes);
-    chunks.push(bytes);
+    const compressed = brotliCompressSync(bytes, {
+      params: {
+        [zlibConstants.BROTLI_PARAM_MODE]: zlibConstants.BROTLI_MODE_TEXT,
+        [zlibConstants.BROTLI_PARAM_QUALITY]: 6,
+        [zlibConstants.BROTLI_PARAM_SIZE_HINT]: bytes.byteLength,
+      },
+    });
+    const storedBytes =
+      compressed.byteLength < bytes.byteLength ? compressed : bytes;
+    const encoding = storedBytes === compressed ? "br" : "identity";
+    chunks.push(storedBytes);
     records.push({
       family: "content",
       id: blob.id,
@@ -109,7 +120,8 @@ function buildContentPack(blobs: ReadonlyMap<string, CatalogContentBlob>): {
       media_type: blob.mediaType,
       bytes: bytes.byteLength,
       offset,
-      length: bytes.byteLength,
+      length: storedBytes.byteLength,
+      encoding,
       extraction_method: blob.extractionMethod,
       validation: {
         state: "validated",
@@ -118,7 +130,7 @@ function buildContentPack(blobs: ReadonlyMap<string, CatalogContentBlob>): {
         validated_at: null,
       },
     });
-    offset += bytes.byteLength;
+    offset += storedBytes.byteLength;
   }
   return {
     pack: Buffer.concat(chunks),

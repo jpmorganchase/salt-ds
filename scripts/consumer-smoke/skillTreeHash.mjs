@@ -50,9 +50,7 @@ export function normalizeRelativeSkillPath(relativePath) {
 export function canonicalizeSkillRecords(inputRecords) {
   const includedRecords = inputRecords.filter(
     ({ path: relativePath }) =>
-      !IGNORED_SKILL_TREE_PATHS.has(
-        normalizeRelativeSkillPath(relativePath),
-      ),
+      !IGNORED_SKILL_TREE_PATHS.has(normalizeRelativeSkillPath(relativePath)),
   );
   assert(includedRecords.length > 0, "Canonical skill tree is empty.");
   const seen = new Set();

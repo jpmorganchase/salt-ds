@@ -239,8 +239,9 @@ describe("loadRegistry — Salt catalog schema v2 lazy access", () => {
           if (!declaration) {
             throw new Error("Fixture has no stored token declaration.");
           }
-          declaration[1] = "token.missing-retry-target";
+          declaration[8] = "token.missing-retry-target";
         },
+        { canonicalizeRecords: true },
       );
       const invalidStore = new CatalogStoreV2({
         registryDir: invalidDirectory,
@@ -300,8 +301,9 @@ describe("loadRegistry — Salt catalog schema v2 lazy access", () => {
           if (!declaration) {
             throw new Error("Fixture has no stored token declaration.");
           }
-          declaration[1] = "token.missing-rebound-target";
+          declaration[8] = "token.missing-rebound-target";
         },
+        { canonicalizeRecords: true },
       );
 
       const registry = await loadRegistry({ registryDir });
@@ -337,8 +339,9 @@ describe("loadRegistry — Salt catalog schema v2 lazy access", () => {
           if (!declaration) {
             throw new Error("Fixture has no stored token declaration.");
           }
-          declaration[1] = "token.missing-prefetch-target";
+          declaration[8] = "token.missing-prefetch-target";
         },
+        { canonicalizeRecords: true },
       );
 
       await expect(

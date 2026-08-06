@@ -99,6 +99,13 @@ escapes are rejected. If exactly one root is configured it is the default. A
 multi-root configuration must provide `defaultRoot` for omitted `root_dir`
 requests.
 
+The selected `root_dir` is the starting point for inspection. Workspace
+discovery may inspect a bounded set of ancestors, but only within the
+authorized root containment boundary; inspection results disclose whether that
+bounded ancestor stage ran or reached its limit. Project-policy manifests,
+chunks, and claims are authorized reads of untrusted project data and carry
+that trust classification in each resource envelope.
+
 Bounded readers also reopen the caller-named path, recheck canonical
 containment, and compare the opened handle with the named path before and after
 reading. These checks detect observable replacements, but Node does not expose

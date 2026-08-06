@@ -58,11 +58,15 @@ export function resolvePackageArchiveEntry(extractionRoot, rawEntry) {
   }
   const directory = rawEntry.endsWith("/");
   if (rawEntry.endsWith("//")) {
-    throw new Error(`Archive directory has repeated trailing separators: ${rawEntry}`);
+    throw new Error(
+      `Archive directory has repeated trailing separators: ${rawEntry}`,
+    );
   }
   const entry = directory ? rawEntry.slice(0, -1) : rawEntry;
   if (!isPortableArchivePath(entry)) {
-    throw new Error(`Archive entry is not a portable canonical path: ${rawEntry}`);
+    throw new Error(
+      `Archive entry is not a portable canonical path: ${rawEntry}`,
+    );
   }
   if (entry !== "package" && !entry.startsWith("package/")) {
     throw new Error(`Archive entry is outside the package root: ${rawEntry}`);
@@ -71,7 +75,9 @@ export function resolvePackageArchiveEntry(extractionRoot, rawEntry) {
   const destination = resolveCanonicalPortablePath(extractionRoot, entry);
   const packageRoot = path.resolve(extractionRoot, "package");
   if (!isPathWithinRoot(packageRoot, destination)) {
-    throw new Error(`Archive entry resolves outside the package root: ${rawEntry}`);
+    throw new Error(
+      `Archive entry resolves outside the package root: ${rawEntry}`,
+    );
   }
   return { directory, entry, destination };
 }

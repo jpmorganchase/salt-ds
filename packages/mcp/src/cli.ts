@@ -10,6 +10,10 @@ interface ParsedArgs {
 
 const VALUE_FLAGS = new Set(["registry-dir", "workspace-root"]);
 
+class CliUsageError extends Error {
+  readonly code = "SALT_MCP_CLI_USAGE";
+}
+
 const HELP_TEXT = `Usage: salt-mcp [serve] [options]
 
 Commands:
@@ -49,14 +53,18 @@ function parseArgs(argv: string[]): ParsedArgs {
 
   if (first === "help" || first === "--help" || first === "-h") {
     if (argv.length > 1) {
-      throw new Error(`Unexpected argument after ${first}: ${argv[1]}.`);
+      throw new CliUsageError(
+        `Unexpected argument after ${first}: ${argv[1]}.`,
+      );
     }
     return { command: "help", flags: {} };
   }
 
   if (first === "version" || first === "--version") {
     if (argv.length > 1) {
-      throw new Error(`Unexpected argument after ${first}: ${argv[1]}.`);
+      throw new CliUsageError(
+        `Unexpected argument after ${first}: ${argv[1]}.`,
+      );
     }
     return { command: "version", flags: {} };
   }
@@ -64,7 +72,7 @@ function parseArgs(argv: string[]): ParsedArgs {
   if (first === "serve") {
     valueTokens = argv.slice(1);
   } else if (!first.startsWith("-")) {
-    throw new Error(
+    throw new CliUsageError(
       `Unknown command: ${first}. Supported commands: serve, help, version.`,
     );
   }
@@ -85,25 +93,25 @@ function parseArgs(argv: string[]): ParsedArgs {
   for (let index = 0; index < valueTokens.length; index += 1) {
     const token = valueTokens[index];
     if (!token.startsWith("-")) {
-      throw new Error(`Unexpected argument: ${token}.`);
+      throw new CliUsageError(`Unexpected argument: ${token}.`);
     }
 
     if (!token.startsWith("--")) {
-      throw new Error(`Unknown option: ${token}.`);
+      throw new CliUsageError(`Unknown option: ${token}.`);
     }
 
     const key = token.slice(2);
     if (!VALUE_FLAGS.has(key)) {
-      throw new Error(`Unknown option: ${token}.`);
+      throw new CliUsageError(`Unknown option: ${token}.`);
     }
 
     if (Object.hasOwn(flags, key)) {
-      throw new Error(`Duplicate option: ${token}.`);
+      throw new CliUsageError(`Duplicate option: ${token}.`);
     }
 
     const next = valueTokens[index + 1];
     if (!next || next.startsWith("-") || next.trim().length === 0) {
-      throw new Error(`Option ${token} requires a value.`);
+      throw new CliUsageError(`Option ${token} requires a value.`);
     }
 
     flags[key] = next;
@@ -131,7 +139,8 @@ async function runServe(flags: Record<string, string>): Promise<void> {
       }),
     {
       legacy: "serve",
-      onerror: (error) => console.error(`salt-mcp stdio error: ${error.message}`),
+      onerror: (error) =>
+        console.error(`salt-mcp stdio error: ${error.message}`),
     },
   );
 

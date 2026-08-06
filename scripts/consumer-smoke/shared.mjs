@@ -391,7 +391,9 @@ export async function runCommand(command, args, options = {}) {
   } = options;
 
   if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1) {
-    throw new Error(`Command timeout must be a positive integer; received ${timeoutMs}.`);
+    throw new Error(
+      `Command timeout must be a positive integer; received ${timeoutMs}.`,
+    );
   }
 
   return new Promise((resolve, reject) => {

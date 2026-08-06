@@ -90,10 +90,7 @@ export async function loadBoundedTsconfigAliases(
 ): Promise<BoundedTsconfigAliases> {
   const attempted = new Set<string>();
   const canonicalByLexicalPath = new Map<string, string>();
-  const resolvedByCanonicalPath = new Map<
-    string,
-    ResolvedTsconfig | null
-  >();
+  const resolvedByCanonicalPath = new Map<string, ResolvedTsconfig | null>();
   const limitations = new Set<BoundedTsconfigAliases["limitations"][number]>();
   let filesRead = 0;
 

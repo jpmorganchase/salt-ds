@@ -23,6 +23,7 @@ import {
   canonicalJsonFile,
   compareOrdinalStrings,
   sha256Bytes,
+  stableShaId,
 } from "./catalogSerialization.js";
 import {
   CANONICAL_SITE_ROUTE_PATTERN,
@@ -285,6 +286,8 @@ export const tokenFactCodec = z
     type: z.string().min(1),
     semantic_intent: z.string().nullable(),
     aliases: z.array(z.string()),
+    status: z.enum(["stable", "deprecated"]),
+    replacement_token_refs: z.array(tokenReferenceCodec),
     policy_profile_ref: policyProfileReferenceCodec.nullable(),
     evidence_profile_ref: policyProfileReferenceCodec.nullable(),
     applies_to: z.array(componentReferenceCodec),
@@ -444,6 +447,15 @@ export const declarationContextCodec = z
   })
   .strict();
 
+const tokenDeclarationSourceRangeCodec = z.tuple([
+  z.number().int().nonnegative(),
+  z.number().int().nonnegative(),
+  z.number().int().positive(),
+  z.number().int().positive(),
+  z.number().int().positive(),
+  z.number().int().positive(),
+]);
+
 export const tokenDeclarationCodec = z
   .object({
     family: z.literal("token_declaration"),
@@ -453,14 +465,7 @@ export const tokenDeclarationCodec = z
     raw_value: z.string().optional(),
     important: z.literal(true).optional(),
     context_ref: declarationContextReferenceCodec,
-    source_range: z.tuple([
-      z.number().int().nonnegative(),
-      z.number().int().nonnegative(),
-      z.number().int().positive(),
-      z.number().int().positive(),
-      z.number().int().positive(),
-      z.number().int().positive(),
-    ]),
+    source_range: tokenDeclarationSourceRangeCodec,
     source_ref: sourceReferenceCodec,
     deprecated: z.boolean(),
     replacement_token_ref: tokenReferenceCodec.optional(),
@@ -557,20 +562,31 @@ const replacedByRelationCodec = z
   .object({
     ...relationBaseShape,
     relation_kind: z.literal("replaced_by"),
-    source: z.union([tokenDeclarationReferenceCodec, apiSymbolReferenceCodec]),
+    source: z.union([
+      tokenDeclarationReferenceCodec,
+      tokenReferenceCodec,
+      apiSymbolReferenceCodec,
+    ]),
     target: z.union([tokenReferenceCodec, apiSymbolReferenceCodec]),
-    provenance: z.literal("declared"),
+    provenance: z.enum(["declared", "curated"]),
     role: z.null(),
     normative: z.literal(true),
-    source_evidence_refs: z.tuple([evidenceReferenceCodec]),
+    source_evidence_refs: z.array(evidenceReferenceCodec).min(1),
   })
   .strict()
   .superRefine((record, context) => {
     const valid =
       (record.source.family === "token_declaration" &&
-        record.target.family === "token") ||
+        record.target.family === "token" &&
+        record.provenance === "declared" &&
+        record.source_evidence_refs.length === 1) ||
+      (record.source.family === "token" &&
+        record.target.family === "token" &&
+        record.provenance === "curated") ||
       (record.source.family === "api_symbol" &&
-        record.target.family === "api_symbol");
+        record.target.family === "api_symbol" &&
+        record.provenance === "declared" &&
+        record.source_evidence_refs.length === 1);
     if (!valid) {
       context.addIssue({
         code: "custom",
@@ -667,6 +683,7 @@ export const contentCodec = z
     bytes: z.number().int().nonnegative().max(MAX_CATALOG_CONTENT_BYTES),
     offset: z.number().int().nonnegative(),
     length: z.number().int().nonnegative().max(MAX_CATALOG_CONTENT_BYTES),
+    encoding: z.enum(["identity", "br"]),
     extraction_method: z.enum([
       "registry_projection",
       "source_extraction",
@@ -843,6 +860,9 @@ const sourceAssertionBaseShape = {
     .strict(),
 } as const;
 
+export const UNVALIDATED_SOURCE_ASSERTION_REASON =
+  "Source identity is bound, but the assertion semantics were not independently validated.";
+
 const tokenPolicySourceAssertionCodec = z
   .object({
     ...sourceAssertionBaseShape,
@@ -886,7 +906,7 @@ const tokenReplacementSourceAssertionCodec = z
     ...sourceAssertionBaseShape,
     source_refs: z.tuple([sourceReferenceCodec]),
     assertion_kind: z.literal("token_replacement"),
-    owner: tokenDeclarationReferenceCodec,
+    owner: z.union([tokenDeclarationReferenceCodec, tokenReferenceCodec]),
     claim_kind: z.literal("token"),
     detail_content_ref: catalogContentReferenceCodecFor(
       "token_replacement_assertion",
@@ -1204,12 +1224,22 @@ interface CatalogTupleStorage {
   fields: readonly string[];
   optionalFields?: readonly string[];
   derivedFields?: Readonly<Record<string, string>>;
+  computedFields?: Readonly<
+    Record<
+      string,
+      | "content_media_type"
+      | "content_validation"
+      | "policy_summary"
+      | "token_declaration_id"
+    >
+  >;
   referenceFields?: Readonly<
     Record<
       string,
       {
         family: string;
         cardinality: "one" | "many";
+        codecField?: string;
       }
     >
   >;
@@ -1220,9 +1250,14 @@ interface CatalogDerivedTargetGroupStorage {
   targetField: "target";
 }
 
+interface CatalogTaggedSourceAssertionStorage {
+  kind: "tagged_source_assertion";
+}
+
 type CatalogFamilyStorage =
   | CatalogTupleStorage
-  | CatalogDerivedTargetGroupStorage;
+  | CatalogDerivedTargetGroupStorage
+  | CatalogTaggedSourceAssertionStorage;
 
 export interface CatalogFamilyDescriptor<Codec extends z.ZodType = z.ZodType> {
   familyKind:
@@ -1512,11 +1547,13 @@ const canonicalCatalogFamilies = {
         family: [record.family],
         category: [record.category],
         type: [record.type],
+        status: [record.status],
       },
     }),
     resolveReferences: (record) => [
       ...(record.policy_profile_ref ? [record.policy_profile_ref] : []),
       ...(record.evidence_profile_ref ? [record.evidence_profile_ref] : []),
+      ...record.replacement_token_refs,
       ...record.applies_to,
     ],
     resolveContentReferences: noContentReferences,
@@ -1535,6 +1572,8 @@ const canonicalCatalogFamilies = {
         "policy_profile_ref",
         "evidence_profile_ref",
         "applies_to",
+        "status",
+        "replacement_token_refs",
       ],
       derivedFields: {
         name: "id",
@@ -1549,6 +1588,7 @@ const canonicalCatalogFamilies = {
           cardinality: "one",
         },
         applies_to: { family: "component", cardinality: "many" },
+        replacement_token_refs: { family: "token", cardinality: "many" },
       },
     },
   }),
@@ -1697,7 +1737,6 @@ const canonicalCatalogFamilies = {
     storage: {
       kind: "tuple",
       fields: [
-        "id",
         "token_ref",
         "value",
         "raw_value",
@@ -1709,6 +1748,9 @@ const canonicalCatalogFamilies = {
         "replacement_token_ref",
       ],
       optionalFields: ["raw_value", "important", "replacement_token_ref"],
+      computedFields: {
+        id: "token_declaration_id",
+      },
       referenceFields: {
         token_ref: { family: "token", cardinality: "one" },
         context_ref: {
@@ -1784,7 +1826,17 @@ const canonicalCatalogFamilies = {
     canonical: true,
     storage: {
       kind: "tuple",
-      fields: ["id", "policy_kind", "summary", "body_content_ref"],
+      fields: ["id", "policy_kind", "body_content_ref"],
+      computedFields: {
+        summary: "policy_summary",
+      },
+      referenceFields: {
+        body_content_ref: {
+          family: "content",
+          cardinality: "one",
+          codecField: "policy_kind",
+        },
+      },
     },
   }),
   content: defineCatalogFamily({
@@ -1807,13 +1859,16 @@ const canonicalCatalogFamilies = {
       fields: [
         "id",
         "codec",
-        "media_type",
         "bytes",
         "offset",
         "length",
+        "encoding",
         "extraction_method",
-        "validation",
       ],
+      computedFields: {
+        media_type: "content_media_type",
+        validation: "content_validation",
+      },
     },
   }),
   evidence: defineCatalogFamily({
@@ -1876,6 +1931,9 @@ const canonicalCatalogFamilies = {
     publicationState: "resource-ready",
     resourceUriTemplate: "salt://catalog/v2/evidence/{id}",
     canonical: true,
+    storage: {
+      kind: "tagged_source_assertion",
+    },
   }),
   source: defineCatalogFamily({
     familyKind: "source",
@@ -2424,6 +2482,7 @@ function encodeCatalogTupleField(
   storage: CatalogTupleStorage,
   field: string,
   value: unknown,
+  logical: Readonly<Record<string, unknown>>,
 ): unknown {
   const reference = storage.referenceFields?.[field];
   if (!reference || value === null || value === undefined) return value;
@@ -2438,6 +2497,14 @@ function encodeCatalogTupleField(
     ) {
       throw new Error(
         `Catalog tuple field '${field}' requires a ${reference.family} reference.`,
+      );
+    }
+    if (
+      reference.codecField &&
+      (candidate as { codec?: unknown }).codec !== logical[reference.codecField]
+    ) {
+      throw new Error(
+        `Catalog tuple field '${field}' requires a content codec matching '${reference.codecField}'.`,
       );
     }
     return (candidate as { id: string }).id;
@@ -2458,6 +2525,7 @@ function decodeCatalogTupleField(
   storage: CatalogTupleStorage,
   field: string,
   value: unknown,
+  logical: Readonly<Record<string, unknown>>,
 ): unknown {
   const reference = storage.referenceFields?.[field];
   if (!reference || value === null) return value;
@@ -2468,7 +2536,13 @@ function decodeCatalogTupleField(
         `Catalog tuple field '${field}' requires a stored ${reference.family} reference id.`,
       );
     }
-    return { family: reference.family, id: candidate };
+    return {
+      family: reference.family,
+      id: candidate,
+      ...(reference.codecField
+        ? { codec: z.string().parse(logical[reference.codecField]) }
+        : {}),
+    };
   };
 
   if (reference.cardinality === "many") {
@@ -2528,6 +2602,108 @@ function decodeDerivedSearchTarget(
   return searchDocument;
 }
 
+const sourceAssertionStorageMetadata = {
+  token_policy: {
+    claimKind: "token",
+    detailCodec: "token_policy_assertion",
+  },
+  accessibility_implementation_signal: {
+    claimKind: "accessibility",
+    detailCodec: "accessibility_implementation_signal",
+  },
+  structural_relation: {
+    claimKind: "structural_relation",
+    detailCodec: "structural_relation_assertion",
+  },
+  token_replacement: {
+    claimKind: "token",
+    detailCodec: "token_replacement_assertion",
+  },
+  api_replacement: {
+    claimKind: "deprecation",
+    detailCodec: "api_replacement_assertion",
+  },
+} as const;
+
+function encodeTaggedSourceAssertion(record: Record<string, unknown>): unknown {
+  if (record.evidence_kind !== "source_assertion") return record;
+  const owner = record.owner as CatalogReference | null;
+  const sourceRefs = record.source_refs as CatalogReferenceFor<"source">[];
+  const detailRef = record.detail_content_ref as CatalogContentReference;
+  return [
+    record.id,
+    record.assertion_kind,
+    owner ? [owner.family, owner.id] : null,
+    sourceRefs.map((reference) => reference.id),
+    detailRef.id,
+  ];
+}
+
+function decodeTaggedSourceAssertion(stored: unknown): Record<string, unknown> {
+  if (!Array.isArray(stored)) {
+    if (typeof stored !== "object" || stored === null) {
+      throw new Error(
+        `${catalogFamilies.evidence.artifact} contains an invalid evidence storage record.`,
+      );
+    }
+    return stored as Record<string, unknown>;
+  }
+  if (
+    stored.length !== 5 ||
+    typeof stored[0] !== "string" ||
+    typeof stored[1] !== "string" ||
+    !Array.isArray(stored[3]) ||
+    stored[3].length === 0 ||
+    stored[3].some((id) => typeof id !== "string") ||
+    typeof stored[4] !== "string"
+  ) {
+    throw new Error(
+      `${catalogFamilies.evidence.artifact} contains an invalid source assertion storage tuple.`,
+    );
+  }
+  const metadata =
+    sourceAssertionStorageMetadata[
+      stored[1] as keyof typeof sourceAssertionStorageMetadata
+    ];
+  if (!metadata) {
+    throw new Error(
+      `${catalogFamilies.evidence.artifact} contains an unknown source assertion kind.`,
+    );
+  }
+  const owner = stored[2];
+  if (
+    owner !== null &&
+    (!Array.isArray(owner) ||
+      owner.length !== 2 ||
+      typeof owner[0] !== "string" ||
+      typeof owner[1] !== "string")
+  ) {
+    throw new Error(
+      `${catalogFamilies.evidence.artifact} contains an invalid source assertion owner.`,
+    );
+  }
+  return {
+    family: "evidence",
+    id: stored[0],
+    evidence_kind: "source_assertion",
+    assertion_kind: stored[1],
+    owner: owner ? { family: owner[0], id: owner[1] } : null,
+    claim_kind: metadata.claimKind,
+    source_refs: stored[3].map((id) => ({ family: "source", id })),
+    detail_content_ref: {
+      family: "content",
+      codec: metadata.detailCodec,
+      id: stored[4],
+    },
+    extraction_method: "source_extraction",
+    validation: {
+      state: "unvalidated",
+      reason: UNVALIDATED_SOURCE_ASSERTION_REASON,
+      validated_at: null,
+    },
+  };
+}
+
 export function encodeCatalogRecordForStorage<Family extends CatalogFamilyName>(
   family: Family,
   record: CatalogRecordForFamily<Family>,
@@ -2535,6 +2711,9 @@ export function encodeCatalogRecordForStorage<Family extends CatalogFamilyName>(
   const parsed = parseCatalogRecord(family, record) as Record<string, unknown>;
   const storage = getCatalogFamilyStorage(family);
   if (!storage) return parsed;
+  if (storage.kind === "tagged_source_assertion") {
+    return encodeTaggedSourceAssertion(parsed);
+  }
   if (storage.kind === "derived_target_groups") {
     const target = parsed[storage.targetField];
     if (
@@ -2554,7 +2733,7 @@ export function encodeCatalogRecordForStorage<Family extends CatalogFamilyName>(
     ];
   }
   return storage.fields.map((field) =>
-    encodeCatalogTupleField(storage, field, parsed[field] ?? null),
+    encodeCatalogTupleField(storage, field, parsed[field] ?? null, parsed),
   );
 }
 
@@ -2568,6 +2747,9 @@ export function decodeCatalogRecordFromStorage<
   const storage = getCatalogFamilyStorage(family);
   if (!storage) {
     return parseCatalogRecord(family, stored);
+  }
+  if (storage.kind === "tagged_source_assertion") {
+    return parseCatalogRecord(family, decodeTaggedSourceAssertion(stored));
   }
   if (storage.kind === "derived_target_groups") {
     return decodeDerivedSearchTarget(
@@ -2585,7 +2767,7 @@ export function decodeCatalogRecordFromStorage<
   storage.fields.forEach((field, index) => {
     const value = stored[index];
     if (value === null && optionalFields.has(field)) return;
-    logical[field] = decodeCatalogTupleField(storage, field, value);
+    logical[field] = decodeCatalogTupleField(storage, field, value, logical);
   });
   for (const [field, sourceField] of Object.entries(
     storage.derivedFields ?? {},
@@ -2600,6 +2782,97 @@ export function decodeCatalogRecordFromStorage<
       );
     }
     logical[field] = logical[sourceField];
+  }
+  for (const [field, computation] of Object.entries(
+    storage.computedFields ?? {},
+  )) {
+    if (field in logical) {
+      throw new Error(
+        `${catalogFamilies[family].artifact} declares an invalid computed storage field '${field}'.`,
+      );
+    }
+    if (computation === "content_media_type") {
+      const codec = catalogContentCodecNameCodec.parse(logical.codec);
+      logical[field] = catalogContentCodecs[codec].mediaType;
+    } else if (computation === "content_validation") {
+      const id = CONTENT_ID_CODEC.parse(logical.id);
+      logical[field] = {
+        state: "validated",
+        method: "schema",
+        basis_digest: id,
+        validated_at: null,
+      };
+    } else if (computation === "policy_summary") {
+      const policyKind = catalogContentCodecNameCodec.parse(
+        logical.policy_kind,
+      );
+      logical[field] = `${policyKind.replace(/_/gu, " ")} policy`;
+    } else {
+      if (!resolveRecord) {
+        throw new Error(
+          "Decoding a token declaration identity requires a catalog record resolver.",
+        );
+      }
+      const tokenRef = tokenReferenceCodec.parse(logical.token_ref);
+      const contextRef = declarationContextReferenceCodec.parse(
+        logical.context_ref,
+      );
+      const sourceRef = sourceReferenceCodec.parse(logical.source_ref);
+      const token = resolveRecord(tokenRef);
+      const context = resolveRecord(contextRef);
+      const source = resolveRecord(sourceRef);
+      if (!token || token.family !== "token") {
+        throw new Error(
+          `Token declaration identity has unresolved token:${tokenRef.id}.`,
+        );
+      }
+      if (!context || context.family !== "declaration_context") {
+        throw new Error(
+          `Token declaration identity has unresolved declaration_context:${contextRef.id}.`,
+        );
+      }
+      if (
+        !source ||
+        source.family !== "source" ||
+        source.source_kind !== "repository_file"
+      ) {
+        throw new Error(
+          `Token declaration identity has unresolved repository source:${sourceRef.id}.`,
+        );
+      }
+      const range = tokenDeclarationSourceRangeCodec.parse(
+        logical.source_range,
+      );
+      const replacementRef = logical.replacement_token_ref
+        ? tokenReferenceCodec.parse(logical.replacement_token_ref)
+        : null;
+      logical[field] = stableShaId("token-declaration", {
+        token: tokenRef.id,
+        source_path: source.locator,
+        source_range: {
+          start_offset: range[0],
+          end_offset: range[1],
+          start_line: range[2],
+          start_column: range[3],
+          end_line: range[4],
+          end_column: range[5],
+        },
+        value: z.string().parse(logical.value),
+        raw_value: logical.raw_value ?? null,
+        important: logical.important === true ? true : undefined,
+        raw_selector: context.raw_selector,
+        at_rules: context.at_rules,
+        selector_variants: context.selector_variants.map((variant) => ({
+          ...variant,
+          dimensions: variant.dimensions.map((dimension) => ({
+            ...dimension,
+            selector: variant.selector,
+          })),
+        })),
+        deprecated: z.boolean().parse(logical.deprecated),
+        replacement: replacementRef?.id ?? null,
+      });
+    }
   }
   return parseCatalogRecord(family, logical);
 }

@@ -4,6 +4,7 @@ import {
   DOCGEN_PACKAGES,
   loadPropMetadata,
   type PropMetadata,
+  sanitizePublicDocgenText,
   selectDocgenComponent,
   toComponentPropSubjects,
   toComponentProps,
@@ -17,6 +18,48 @@ beforeAll(async () => {
 }, 180_000);
 
 describe("registry docgen metadata", () => {
+  it("sanitizes structured JSDoc before publishing prop prose", () => {
+    const [prop] = toComponentProps({
+      appearance: {
+        description: [
+          "Controls the visual treatment. Contact design@example.com for help.",
+          "@deprecated since 1.36.0. Use {@link ButtonProps.appearance appearance} and {@link ButtonProps.sentiment sentiment} instead.",
+          "| old | new |",
+          "| --- | --- |",
+          "@saltValueMap",
+          '{"primary":"accented"}',
+          "@since 1.0.0",
+          "@param ignored internal metadata",
+          "@returns nothing",
+          "@see {@link ButtonProps}",
+        ].join("\n"),
+        required: false,
+        type: { name: "string" },
+      },
+    });
+
+    expect(prop).toMatchObject({
+      description:
+        "Controls the visual treatment. Contact design@example.com for help.",
+      deprecated: true,
+      deprecation_note: "since 1.36.0. Use appearance and sentiment instead.",
+    });
+    expect(JSON.stringify(prop)).not.toMatch(
+      /\{@|@salt|@since|@param|@returns|@see|\| old/iu,
+    );
+  });
+
+  it.each([
+    ["", ""],
+    ["Use {@link ButtonProps label}.", "Use label."],
+    ["Use {@link ButtonProps}.", "Use ButtonProps."],
+    ["Email docs@example.com for help.", "Email docs@example.com for help."],
+    ["Public prose. @since 1.0.0", "Public prose."],
+    ["Public prose.\n@see Button\nInternal continuation", "Public prose."],
+  ])("sanitizes public docgen text %#", (raw, expected) => {
+    expect(sanitizePublicDocgenText(raw)).toBe(expected);
+  });
+
   it("loads every declared component package and excludes non-value types", () => {
     expect([...metadata.byPackage.keys()]).toEqual(
       DOCGEN_PACKAGES.map(({ packageName }) => packageName),
