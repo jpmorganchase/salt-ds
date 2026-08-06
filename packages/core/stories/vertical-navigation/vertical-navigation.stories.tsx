@@ -544,8 +544,7 @@ export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
 
   // Keep the accessible name static so it isn't re-announced on toggle;
   // aria-expanded conveys the state.
-  const toggleLabel = "Navigation labels";
-  const toggleTooltip = collapsed ? "Expand navigation" : "Minimize navigation";
+  const toggleLabel = "Labels";
 
   // With reduced motion there is no transition, so no animation to track.
   const startWidthAnimation = () => {
@@ -568,9 +567,14 @@ export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
         "collapsibleNavigationExample-animating": animating,
       })}
     >
-      <div className="collapsibleNavigationExample-sidebar">
-        {/* Hover-only so the tooltip isn't announced as a description on focus. */}
-        <Tooltip content={toggleTooltip} placement="right" disableFocusListener>
+      {/* The sidebar is the navigation landmark, so the toggle is part of it. */}
+      <nav className="collapsibleNavigationExample-sidebar" aria-label="Main">
+        {/* aria-hidden so the tooltip isn't also announced as a description;
+            it duplicates the accessible name. */}
+        <Tooltip
+          content={<span aria-hidden>{toggleLabel}</span>}
+          placement="right"
+        >
           <Button
             appearance="transparent"
             aria-label={toggleLabel}
@@ -584,8 +588,9 @@ export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
             )}
           </Button>
         </Tooltip>
+        {/* Demoted to avoid a nested landmark inside the sidebar nav. */}
         <VerticalNavigation
-          aria-label={"Main navigation"}
+          role="presentation"
           {...args}
           onTransitionEnd={(event) => {
             if (
@@ -602,8 +607,10 @@ export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
               active={location.pathname === item.href}
             >
               <VerticalNavigationItemContent>
+                {/* aria-hidden so the tooltip isn't also announced as a
+                    description; it duplicates the accessible name. */}
                 <Tooltip
-                  content={item.title}
+                  content={<span aria-hidden>{item.title}</span>}
                   disabled={!collapsed}
                   placement="right"
                 >
@@ -622,7 +629,7 @@ export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
             </VerticalNavigationItem>
           ))}
         </VerticalNavigation>
-      </div>
+      </nav>
       {/* Placeholder page content */}
       <div className="collapsibleNavigationExample-content">
         <div className="collapsibleNavigationExample-heading" />
