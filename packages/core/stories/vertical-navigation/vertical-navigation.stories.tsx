@@ -29,7 +29,9 @@ import {
 import { Link, MemoryRouter, useLocation } from "react-router";
 import "./vertical-navigation.stories.css";
 import {
-  HelpSolidIcon,
+  DoubleChevronLeftIcon,
+  DoubleChevronRightIcon,
+  HelpCircleSolidIcon,
   MessageSolidIcon,
   MicroMenuIcon,
   StorageSolidIcon,
@@ -168,7 +170,7 @@ const nested: NavItem[] = [
   {
     title: "Support",
     href: "/support",
-    icon: <HelpSolidIcon aria-hidden />,
+    icon: <HelpCircleSolidIcon aria-hidden />,
   },
   {
     title: "Contact",
@@ -506,6 +508,140 @@ export const WithIcon: StoryFn<typeof VerticalNavigation> = (args) => {
       ))}
     </VerticalNavigation>
   );
+};
+
+const simpleWithIcons: NavItem[] = [
+  {
+    title: "Products",
+    href: "/products",
+    icon: <StorageSolidIcon aria-hidden />,
+  },
+  {
+    title: "About Us",
+    href: "/about",
+    icon: <UserGroupSolidIcon aria-hidden />,
+  },
+  {
+    title: "Support",
+    href: "/support",
+    icon: <HelpCircleSolidIcon aria-hidden />,
+  },
+  {
+    title: "Contact",
+    href: "/contact",
+    icon: <MessageSolidIcon aria-hidden />,
+  },
+];
+
+export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
+  args,
+) => {
+  const location = useLocation();
+  const [collapsed, setCollapsed] = useState(false);
+  const [animating, setAnimating] = useState(false);
+
+  const showLabels = !collapsed || animating;
+
+  // Keep the accessible name static so it isn't re-announced on toggle;
+  // aria-expanded conveys the state.
+  const toggleLabel = "Labels";
+
+  // With reduced motion there is no transition, so no animation to track.
+  const startWidthAnimation = () => {
+    const prefersReducedMotion = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)",
+    )?.matches;
+
+    setAnimating(!prefersReducedMotion);
+  };
+
+  const handleToggle = () => {
+    startWidthAnimation();
+    setCollapsed(!collapsed);
+  };
+
+  return (
+    <div
+      className={clsx("collapsibleNavigationExample", {
+        "collapsibleNavigationExample-collapsed": collapsed,
+        "collapsibleNavigationExample-animating": animating,
+      })}
+    >
+      {/* The sidebar is the navigation landmark, so the toggle is part of it. */}
+      <nav className="collapsibleNavigationExample-sidebar" aria-label="Main">
+        {/* aria-hidden so the tooltip isn't also announced as a description;
+            it duplicates the accessible name. */}
+        <Tooltip
+          content={<span aria-hidden>{toggleLabel}</span>}
+          placement="right"
+        >
+          <Button
+            appearance="transparent"
+            aria-label={toggleLabel}
+            aria-expanded={!collapsed}
+            onClick={handleToggle}
+          >
+            {collapsed ? (
+              <DoubleChevronRightIcon aria-hidden />
+            ) : (
+              <DoubleChevronLeftIcon aria-hidden />
+            )}
+          </Button>
+        </Tooltip>
+        {/* Demoted to avoid a nested landmark inside the sidebar nav. */}
+        <VerticalNavigation
+          role="presentation"
+          {...args}
+          onTransitionEnd={(event) => {
+            if (
+              event.target === event.currentTarget &&
+              event.propertyName === "width"
+            ) {
+              setAnimating(false);
+            }
+          }}
+        >
+          {simpleWithIcons.map((item) => (
+            <VerticalNavigationItem
+              key={item.title}
+              active={location.pathname === item.href}
+            >
+              <VerticalNavigationItemContent>
+                {/* aria-hidden so the tooltip isn't also announced as a
+                    description; it duplicates the accessible name. */}
+                <Tooltip
+                  content={<span aria-hidden>{item.title}</span>}
+                  disabled={!collapsed}
+                  placement="right"
+                >
+                  <MockedTrigger to={item.href}>
+                    {item.icon}
+                    {/* Hidden once collapsed, but kept in the DOM for the
+                        item's accessible name. */}
+                    <VerticalNavigationItemLabel
+                      className={showLabels ? undefined : "visuallyHidden"}
+                    >
+                      {item.title}
+                    </VerticalNavigationItemLabel>
+                  </MockedTrigger>
+                </Tooltip>
+              </VerticalNavigationItemContent>
+            </VerticalNavigationItem>
+          ))}
+        </VerticalNavigation>
+      </nav>
+      {/* Placeholder page content */}
+      <div className="collapsibleNavigationExample-content">
+        <div className="collapsibleNavigationExample-heading" />
+        <div className="collapsibleNavigationExample-block" />
+        <div className="collapsibleNavigationExample-block" />
+      </div>
+    </div>
+  );
+};
+
+CollapsibleNavigation.parameters = {
+  layout: "padded",
 };
 
 export const WithWrapping: StoryFn<typeof VerticalNavigation> = (args) => {
