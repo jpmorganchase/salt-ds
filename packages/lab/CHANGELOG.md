@@ -1,5 +1,30 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.101
+
+### Patch Changes
+
+- 8aaa8d0: Fixed read-only inputs so empty controlled values, empty default values, and empty selections consistently display the `emptyReadOnlyMarker` (`—` by default), while non-empty values such as numeric `0` continue to display the real value.
+- Updated dependencies [8aaa8d0]
+- Updated dependencies [fc112cb]
+- Updated dependencies [8aaa8d0]
+- Updated dependencies [7a828e4]
+- Updated dependencies [87a8a85]
+- Updated dependencies [8156149]
+  - @salt-ds/core@1.68.0
+  - @salt-ds/styles@0.4.0
+  - @salt-ds/icons@1.18.2
+
+## 1.0.0-alpha.100
+
+### Patch Changes
+
+- dddc705: Updated `SystemStatus` default styling to better suit full-width, page-level messaging.
+- c032879: Updated `BreadcrumbsNext` overflow disclosure items to render as plain anchors instead of Link, and scoped overflow trigger styling to Button’s public CSS variables.
+- Updated dependencies [2c459c3]
+  - @salt-ds/core@1.67.1
+  - @salt-ds/icons@1.18.1
+
 ## 1.0.0-alpha.99
 
 ### Minor Changes

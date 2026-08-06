@@ -1,6 +1,6 @@
 .saltToggletipPanel {
   --toggletip-background: var(--salt-container-primary-background);
-  --toggletip-borderColor: var(--salt-container-primary-borderColor);
+  --toggletip-borderColor: var(--salt-container-bold-borderColor);
 
   box-sizing: border-box;
   padding: var(--salt-spacing-100);

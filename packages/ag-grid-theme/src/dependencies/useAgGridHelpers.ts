@@ -31,7 +31,7 @@ export function useAgGridHelpers({
   api?: GridApi;
   compact?: boolean;
 } {
-  const apiRef = useRef<{ api: GridApi }>();
+  const apiRef = useRef<{ api: GridApi } | undefined>(undefined);
   const [isGridReady, setGridReady] = useState(false);
   const contextDensity = useDensity();
   const { mode: contextMode } = useTheme();
@@ -71,7 +71,7 @@ export function useAgGridHelpers({
 
   return {
     containerProps: {
-      className: clsx(containerClassName, className),
+      className,
       style: { height: 500, width: 800 },
     },
     agGridProps: {

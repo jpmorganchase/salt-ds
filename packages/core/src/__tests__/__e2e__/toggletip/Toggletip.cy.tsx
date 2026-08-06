@@ -1,8 +1,8 @@
 import { Toggletip, ToggletipPanel, ToggletipTrigger } from "@salt-ds/core";
 import { HelpCircleIcon } from "@salt-ds/icons";
-import * as toggletipStories from "@stories/toggletip/toggletip.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as toggletipStories from "~stories/toggletip/toggletip.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 

@@ -1,6 +1,6 @@
-import * as rangeSliderStories from "@stories/range-slider/range-slider.stories";
 import { composeStories } from "@storybook/react-vite";
 import { type ChangeEvent, useState } from "react";
+import * as rangeSliderStories from "~stories/range-slider/range-slider.stories";
 
 const composedStories = composeStories(rangeSliderStories);
 
@@ -811,5 +811,11 @@ describe("Given a Range Slider", () => {
           .invoke("val")
           .should("eq", valAfterDrag);
       });
+  });
+
+  it("SHOULD apply startName and endName to the respective inputs", () => {
+    cy.mount(<Default startName="price-min" endName="price-max" />);
+    cy.findAllByRole("slider").eq(0).should("have.attr", "name", "price-min");
+    cy.findAllByRole("slider").eq(1).should("have.attr", "name", "price-max");
   });
 });

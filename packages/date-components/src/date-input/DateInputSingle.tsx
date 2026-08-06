@@ -71,6 +71,10 @@ export interface DateInputSingleProps
    */
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
   /**
+   * The name applied to the input.
+   */
+  name?: string;
+  /**
    * If `true`, the component is read-only.
    */
   readOnly?: boolean;
@@ -167,6 +171,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       endAdornment,
       inputProps = {},
       inputRef: inputRefProp = null,
+      name,
       parse: parseProp,
       placeholder = format.toLowerCase(),
       readOnly: readOnlyProp,
@@ -385,6 +390,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
           id={inputId}
           className={withBaseName("input")}
           disabled={isDisabled}
+          name={name}
           readOnly={isReadOnly}
           ref={handleInputRef}
           tabIndex={isDisabled ? -1 : 0}

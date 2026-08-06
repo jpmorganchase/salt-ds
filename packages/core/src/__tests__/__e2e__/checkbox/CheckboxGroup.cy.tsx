@@ -446,4 +446,35 @@ describe("GIVEN a CheckboxGroup", () => {
       cy.findAllByRole("checkbox").eq(0).should("have.accessibleName", "one");
     });
   });
+
+  it("SHOULD apply the group name to child checkboxes", () => {
+    cy.mount(
+      <CheckboxGroup name="preferences">
+        <Checkbox label="one" value="one" />
+        <Checkbox label="two" value="two" />
+      </CheckboxGroup>,
+    );
+
+    cy.findAllByRole("checkbox").should("have.attr", "name", "preferences");
+  });
+
+  it("SHOULD allow a checkbox name to override the group name", () => {
+    cy.mount(
+      <CheckboxGroup name="preferences">
+        <Checkbox label="one" value="one" />
+        <Checkbox label="two" value="two" name="override" />
+      </CheckboxGroup>,
+    );
+
+    cy.findByRole("checkbox", { name: "one" }).should(
+      "have.attr",
+      "name",
+      "preferences",
+    );
+    cy.findByRole("checkbox", { name: "two" }).should(
+      "have.attr",
+      "name",
+      "override",
+    );
+  });
 });

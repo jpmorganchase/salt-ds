@@ -1,7 +1,7 @@
-import * as switchStories from "@stories/switch/switch.stories";
 import { composeStories } from "@storybook/react";
 import type { ChangeEvent } from "react";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as switchStories from "~stories/switch/switch.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(switchStories);
 const { Default, Disabled, Controlled, WithFormField, Readonly } =

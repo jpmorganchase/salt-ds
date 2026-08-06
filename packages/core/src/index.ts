@@ -5,6 +5,7 @@ export * from "./badge";
 export * from "./banner";
 export * from "./border-item";
 export * from "./border-layout";
+export * from "./breadcrumbs";
 export {
   type Breakpoints,
   DEFAULT_BREAKPOINTS,

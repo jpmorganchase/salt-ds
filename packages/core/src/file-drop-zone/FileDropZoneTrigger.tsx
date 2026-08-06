@@ -26,6 +26,10 @@ export interface FileDropZoneTriggerProps
    */
   multiple?: boolean;
   /**
+   * The name applied to the hidden input.
+   */
+  name?: string;
+  /**
    * Callback for input change event
    */
   onChange?: (event: ChangeEvent<HTMLInputElement>, files: File[]) => void;
@@ -46,7 +50,16 @@ export const FileDropZoneTrigger = forwardRef<
   HTMLButtonElement,
   FileDropZoneTriggerProps
 >(function FileDropZoneTrigger(
-  { accept, children, disabled, multiple = false, onClick, onChange, ...rest },
+  {
+    accept,
+    children,
+    disabled,
+    multiple = false,
+    name,
+    onClick,
+    onChange,
+    ...rest
+  },
   ref,
 ) {
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -89,6 +102,7 @@ export const FileDropZoneTrigger = forwardRef<
         style={{ display: "none" }}
         disabled={disabled}
         multiple={multiple}
+        name={name}
         onChange={handleChange}
         onFocus={handleFocus}
         ref={fileInputRef}

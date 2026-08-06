@@ -1,5 +1,25 @@
 # @salt-ds/date-components
 
+## 1.1.0
+
+### Minor Changes
+
+- 87a8a85: - Added a top-level `name` prop to `DateInputSingle`.
+  - Added `startName` and `endName` to `DateInputRange` which map to the underlying native inputs.
+
+### Patch Changes
+
+- 5663ad4: Updated the `@floating-ui/react` dependency to align the Date Components package with the Floating UI contract used by its overlays. This fixes Date Picker calendar positioning and outside-press dismissal behavior while keeping the root-level resolution available for Mosaic.
+- Updated dependencies [8aaa8d0]
+- Updated dependencies [fc112cb]
+- Updated dependencies [8aaa8d0]
+- Updated dependencies [7a828e4]
+- Updated dependencies [87a8a85]
+- Updated dependencies [8156149]
+  - @salt-ds/core@1.68.0
+  - @salt-ds/styles@0.4.0
+  - @salt-ds/icons@1.18.2
+
 ## 1.0.0
 
 ### Major Changes

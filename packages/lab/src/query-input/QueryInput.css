@@ -71,7 +71,7 @@
 }
 
 .saltQueryInputValueList {
-  border: solid 1px var(--salt-container-primary-borderColor);
+  border: solid 1px var(--salt-container-bold-borderColor);
 }
 
 .saltQueryInputValueList-back {

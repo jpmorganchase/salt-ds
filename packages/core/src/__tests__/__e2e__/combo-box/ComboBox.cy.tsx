@@ -1,12 +1,13 @@
 import { ComboBox, Option } from "@salt-ds/core";
-import * as comboBoxStories from "@stories/combo-box/combo-box.stories";
 import { composeStories } from "@storybook/react-vite";
 import { type KeyboardEventHandler, useRef, useState } from "react";
+import * as comboBoxStories from "~stories/combo-box/combo-box.stories";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
 const {
   Default,
   Readonly,
+  ReadonlyEmpty,
   WithDefaultSelected,
   Disabled,
   DisabledOption,
@@ -902,5 +903,27 @@ describe("Given a ComboBox", () => {
 
     cy.findByRole("combobox").should("not.have.attr", "aria-describedby");
     cy.findByRole("combobox").should("not.have.attr", "aria-labelledby");
+  });
+
+  it("SHOULD apply the name prop to the input", () => {
+    cy.mount(<Default name="city" />);
+    cy.findByRole("combobox").should("have.attr", "name", "city");
+  });
+
+  it("SHOULD allow inputProps.name to override the top-level name prop", () => {
+    cy.mount(<Default name="city" inputProps={{ name: "override" }} />);
+    cy.findByRole("combobox").should("have.attr", "name", "override");
+  });
+
+  describe("WHEN read only", () => {
+    it("THEN should show the selected value rather than the empty marker", () => {
+      cy.mount(<Readonly />);
+      cy.findByRole("textbox").should("have.value", "California");
+    });
+
+    it("THEN should show the empty marker when there is no selection", () => {
+      cy.mount(<ReadonlyEmpty />);
+      cy.findByRole("textbox").should("have.value", "—");
+    });
   });
 });

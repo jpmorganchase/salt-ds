@@ -41,7 +41,7 @@ import { DateInputRange } from "@salt-ds/date-components";
 
 ### Setting the date
 
-Date controls, require your application to contain a [LocalizationProvider](../LocalizationProvider).
+Date controls, require your application to contain a [LocalizationProvider](../localization-provider).
 
 Date input accept dates in two formats:
 
@@ -109,7 +109,7 @@ Additionally, you can provide your own formatter through the `format` prop.
 
 The default locale for Salt's date adapters is "enUS".
 
-`DateInputSingle` and `DateInputRange` use the locale of the configured date adapter provided by the nearest [LocalizationProvider](../LocalizationProvider).
+`DateInputSingle` and `DateInputRange` use the locale of the configured date adapter provided by the nearest [LocalizationProvider](../localization-provider).
 Configuration of locales is date framework specific and may require you to import specific locales from the date library you are using.
 
 For example, if you are using `date-fns`, you may need to import the specific locale you want to use, such as `es` or `frFR`.

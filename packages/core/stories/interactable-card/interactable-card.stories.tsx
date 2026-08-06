@@ -39,8 +39,8 @@ export const Default: StoryFn<typeof InteractableCard> = (args) => (
 export const Disabled: StoryFn<typeof InteractableCard> = (args) => (
   <InteractableCard {...args} style={{ width: "256px" }} disabled accent="top">
     <StackLayout gap={1}>
-      <H3 disabled>Sustainable investing products</H3>
-      <Text disabled>
+      <H3>Sustainable investing products</H3>
+      <Text>
         We have a commitment to provide a wide range of investment solutions to
         enable you to align your financial goals to your values.
       </Text>
@@ -140,9 +140,9 @@ export const InteractableCardGroupSingleSelect: StoryFn<
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
           <BankIcon aria-hidden size={2} />
-          <H3 disabled>Bank wire</H3>
+          <H3>Bank wire</H3>
         </StackLayout>
-        <Text disabled>Link your bank to your payments account.</Text>
+        <Text>Link your bank to your payments account.</Text>
       </StackLayout>
     </InteractableCard>
     <InteractableCard {...args} value="crypto" style={{ width: "180px" }}>
@@ -174,9 +174,9 @@ export const InteractableCardGroupMultiSelect: StoryFn<
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
           <BankIcon aria-hidden size={2} />
-          <H3 disabled>Bank wire</H3>
+          <H3>Bank wire</H3>
         </StackLayout>
-        <Text disabled>Link your bank to your payments account.</Text>
+        <Text>Link your bank to your payments account.</Text>
       </StackLayout>
     </InteractableCard>
     <InteractableCard {...args} value="crypto" style={{ width: "180px" }}>

@@ -1,5 +1,5 @@
-import * as megaMenuStories from "@stories/mega-menu/mega-menu.stories";
 import { composeStories } from "@storybook/react-vite";
+import * as megaMenuStories from "~stories/mega-menu/mega-menu.stories";
 
 const {
   Baseline,

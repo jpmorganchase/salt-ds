@@ -1,6 +1,6 @@
-import * as multilineInputStories from "@stories/multiline-input/multiline-input.stories";
 import { composeStories } from "@storybook/react-vite";
 import type { ChangeEvent } from "react";
+import * as multilineInputStories from "~stories/multiline-input/multiline-input.stories";
 
 const {
   Default,
@@ -183,5 +183,15 @@ describe("GIVEN an MultilineInput", () => {
 
     cy.findByRole("textbox").should("not.have.attr", "aria-describedby");
     cy.findByRole("textbox").should("not.have.attr", "aria-labelledby");
+  });
+
+  it("SHOULD apply the name prop to the textarea", () => {
+    cy.mount(<Default name="notes" />);
+    cy.findByRole("textbox").should("have.attr", "name", "notes");
+  });
+
+  it("SHOULD allow textAreaProps.name to override the top-level name prop", () => {
+    cy.mount(<Default name="notes" textAreaProps={{ name: "override" }} />);
+    cy.findByRole("textbox").should("have.attr", "name", "override");
   });
 });

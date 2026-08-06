@@ -60,6 +60,7 @@ const allAllowedKeys = [
   "borderStyle",
   "cursor",
   "spacing",
+  "layout",
   "typography-textDecoration",
   // icon size
   "icon-size",

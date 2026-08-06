@@ -72,7 +72,7 @@
 .withinTile-tile {
   width: 320px;
   padding: var(--salt-size-unit);
-  border: solid 1px var(--salt-container-primary-borderColor);
+  border: solid 1px var(--salt-container-bold-borderColor);
 }
 
 .withinOverlay {

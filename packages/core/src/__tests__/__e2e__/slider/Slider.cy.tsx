@@ -1,6 +1,6 @@
-import * as sliderStories from "@stories/slider/slider.stories";
 import { composeStories } from "@storybook/react-vite";
 import { type ChangeEvent, useState } from "react";
+import * as sliderStories from "~stories/slider/slider.stories";
 
 const composedStories = composeStories(sliderStories);
 
@@ -621,5 +621,10 @@ describe("Given a Slider", () => {
         cy.wait(100);
         cy.findByRole("slider").invoke("val").should("eq", valAfterDrag);
       });
+  });
+
+  it("SHOULD apply the name prop to the input", () => {
+    cy.mount(<Default name="volume" />);
+    cy.findByRole("slider").should("have.attr", "name", "volume");
   });
 });

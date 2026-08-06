@@ -5,7 +5,7 @@
   text-align: center;
   align-items: center;
   justify-content: center;
-  border: var(--saltFileDropZone-border, var(--salt-size-fixed-200) var(--salt-borderStyle-dashed) var(--salt-container-primary-borderColor));
+  border: var(--saltFileDropZone-border, var(--salt-size-fixed-200) var(--salt-borderStyle-dashed) var(--salt-container-bold-borderColor));
   border-radius: var(--saltFileDropZone-borderRadius, var(--salt-palette-corner, 0));
   flex-direction: column;
   padding: var(--salt-spacing-200);
@@ -35,7 +35,7 @@
 /* Styles applied if `disabled={true}` */
 .saltFileDropZone-disabled {
   background: var(--salt-container-primary-background-disabled);
-  border: var(--salt-size-fixed-200) var(--salt-borderStyle-dashed) var(--salt-container-primary-borderColor-disabled);
+  border: var(--salt-size-fixed-200) var(--salt-borderStyle-dashed) var(--salt-container-bold-borderColor-disabled);
   cursor: var(--salt-cursor-disabled);
   color: var(--salt-content-primary-foreground-disabled);
 }

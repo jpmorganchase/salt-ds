@@ -49,16 +49,16 @@ export interface ThemeContextProps {
   /** Only available when using SaltProviderNext. */
   themeNext: boolean;
   corner: Corner;
-  /** @deprecated use `corner`*/
+  /** @deprecated since 1.32.0. Use `corner`. */
   UNSTABLE_corner: Corner;
   headingFont: HeadingFont;
-  /** @deprecated use `headingFont` */
+  /** @deprecated since 1.32.0. Use `headingFont`. */
   UNSTABLE_headingFont: HeadingFont;
   accent: Accent;
-  /** @deprecated use `accent` */
+  /** @deprecated since 1.32.0. Use `accent`. */
   UNSTABLE_accent: Accent;
   actionFont: ActionFont;
-  /** @deprecated use `actionFont` */
+  /** @deprecated since 1.32.0. Use `actionFont`. */
   UNSTABLE_actionFont: ActionFont;
 }
 
@@ -271,10 +271,10 @@ export function SaltProviderNext({
   );
 }
 
-/** @deprecated use `SaltProviderNextProps` */
+/** @deprecated since 1.32.0. Use `SaltProviderNextProps`. */
 export type UNSTABLE_SaltProviderNextProps = SaltProviderNextProps;
 
-/** @deprecated use `SaltProviderNext` */
+/** @deprecated since 1.32.0. Use `SaltProviderNext`. */
 export const UNSTABLE_SaltProviderNext = SaltProviderNext;
 
 export const useTheme = (): ThemeContextProps => {

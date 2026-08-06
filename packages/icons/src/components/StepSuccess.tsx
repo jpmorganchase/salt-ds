@@ -6,7 +6,7 @@ import { Icon, type IconProps } from "../icon";
 
 export type StepSuccessIconProps = IconProps;
 
-/** @deprecated - Use `SuccessCircleIcon` instead. */
+/** @deprecated since 1.13.0. Use `SuccessCircleIcon` instead. */
 export const StepSuccessIcon = forwardRef<SVGSVGElement, StepSuccessIconProps>(
   function StepSuccessIcon(props: StepSuccessIconProps, ref) {
     return (

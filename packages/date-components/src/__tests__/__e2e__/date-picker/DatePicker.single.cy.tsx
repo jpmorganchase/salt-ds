@@ -16,10 +16,10 @@ import {
   DatePickerSingleInput,
   DatePickerTrigger,
 } from "@salt-ds/date-components";
-import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import type { Dayjs } from "dayjs";
 import type { DateTime } from "luxon";
 import type { Moment } from "moment";
+import * as datePickerStories from "~stories/date-picker/date-picker.stories";
 
 // Initialize adapters
 const adapterDateFnsTZ = new AdapterDateFnsTZ();
@@ -74,6 +74,11 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("button", { name: "Open Calendar" }).realClick();
           // Verify that the calendar is displayed
           cy.findByRole("application").should("exist");
+          cy.findByRole("dialog").should(($dialog) => {
+            expect($dialog[0].style.position).to.equal("absolute");
+            expect($dialog[0].style.top).to.match(/^-?\d+(?:\.\d+)?px$/);
+            expect($dialog[0].style.left).to.match(/^-?\d+(?:\.\d+)?px$/);
+          });
           // cy.get used as we query elements which are non-visible when dialog is open
           cy.get('button[aria-label="Open Calendar"]')
             .should("exist")
@@ -128,6 +133,15 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           // Simulate focus out
           cy.get("body").click(0, 0);
           // Verify the overlay closes
+          cy.findByRole("application").should("not.exist");
+        });
+
+        it("SHOULD dismiss the calendar on an outside press", () => {
+          cy.mount(<Single defaultOpen />);
+          cy.findByRole("application").should("exist");
+
+          cy.get("body").click(0, 0);
+
           cy.findByRole("application").should("not.exist");
         });
 

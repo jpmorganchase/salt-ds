@@ -15,9 +15,9 @@ import {
   type DateParserField,
   type DateRangeSelection,
 } from "@salt-ds/date-components";
-import * as dateInputStories from "@stories/date-input/date-input.stories";
 import { es as dateFnsEs } from "date-fns/locale";
 import { type ChangeEvent, type SyntheticEvent, useState } from "react";
+import * as dateInputStories from "~stories/date-input/date-input.stories";
 import "moment/dist/locale/es";
 import "dayjs/locale/es";
 
@@ -142,6 +142,37 @@ describe("GIVEN a DateInputRange", () => {
         cy.clock().then((clock) => clock.restore());
       });
 
+      it("SHOULD apply startName and endName to the respective inputs", () => {
+        cy.mount(<DateInputRange startName="trip-start" endName="trip-end" />);
+        cy.findByLabelText("Start date").should(
+          "have.attr",
+          "name",
+          "trip-start",
+        );
+        cy.findByLabelText("End date").should("have.attr", "name", "trip-end");
+      });
+
+      it("SHOULD allow startInputProps.name and endInputProps.name to override", () => {
+        cy.mount(
+          <DateInputRange
+            startName="trip-start"
+            endName="trip-end"
+            startInputProps={{ name: "start-override" }}
+            endInputProps={{ name: "end-override" }}
+          />,
+        );
+        cy.findByLabelText("Start date").should(
+          "have.attr",
+          "name",
+          "start-override",
+        );
+        cy.findByLabelText("End date").should(
+          "have.attr",
+          "name",
+          "end-override",
+        );
+      });
+
       const initialDate = {
         startDate: adapter.parse("05 Jan 2025", "DD MMM YYYY").date,
         endDate: adapter.parse("06 Feb 2026", "DD MMM YYYY").date,
@@ -168,6 +199,29 @@ describe("GIVEN a DateInputRange", () => {
         endDate: adapter.parse(updatedFormattedDateValue.endDate, "DD MMM YYYY")
           .date,
       };
+
+      it("SHOULD show the empty marker when read-only with an empty default value", () => {
+        cy.mount(
+          <DateInputRange
+            defaultValue={{ startDate: "", endDate: "" }}
+            readOnly
+          />,
+        );
+
+        cy.findAllByRole("textbox").each(($input) => {
+          cy.wrap($input).should("have.value", "—");
+        });
+      });
+
+      it("SHOULD show the empty marker when read-only with a controlled empty value", () => {
+        cy.mount(
+          <DateInputRange value={{ startDate: "", endDate: "" }} readOnly />,
+        );
+
+        cy.findAllByRole("textbox").each(($input) => {
+          cy.wrap($input).should("have.value", "—");
+        });
+      });
 
       it("SHOULD have an accessible name via aria-labelledby when wrapped in a FormField", () => {
         cy.mount(

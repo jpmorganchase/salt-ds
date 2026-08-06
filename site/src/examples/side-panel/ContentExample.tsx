@@ -32,7 +32,7 @@ export const ContentExample = ({
             backgroundColor: "var(--salt-container-primary-background)",
             borderRadius: "var(--salt-palette-corner-weak)",
             border:
-              "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+              "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",

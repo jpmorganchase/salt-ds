@@ -1,5 +1,5 @@
 .saltOverlayPanel {
-  --overlay-borderColor: var(--saltOverlay-borderColor, var(--salt-container-primary-borderColor));
+  --overlay-borderColor: var(--saltOverlay-borderColor, var(--salt-container-bold-borderColor));
   --overlay-background: var(--saltOverlay-background, var(--salt-container-primary-background));
   font-family: var(--salt-text-fontFamily);
   font-size: var(--saltOverlay-fontSize, var(--salt-text-fontSize));

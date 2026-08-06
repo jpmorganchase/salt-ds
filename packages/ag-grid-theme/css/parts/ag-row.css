@@ -31,7 +31,7 @@ div[class*="ag-theme-salt"].ag-theme-salt-variant-tertiary.ag-theme-salt-variant
   --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
 }
 
-.error-row {
+[class*="ag-theme-salt"] .error-row {
   --ag-background-color: var(--salt-status-error-background);
   --ag-selected-row-background-color: var(--salt-status-error-background-selected);
   --ag-selected-row-border-color: var(--salt-status-error-borderColor);
@@ -39,7 +39,7 @@ div[class*="ag-theme-salt"].ag-theme-salt-variant-tertiary.ag-theme-salt-variant
   --ag-row-hover-color: var(--salt-overlayable-background-hover);
 }
 
-.warning-row {
+[class*="ag-theme-salt"] .warning-row {
   --ag-background-color: var(--salt-status-warning-background);
   --ag-selected-row-background-color: var(--salt-status-warning-background-selected);
   --ag-selected-row-border-color: var(--salt-status-warning-borderColor);
@@ -47,7 +47,7 @@ div[class*="ag-theme-salt"].ag-theme-salt-variant-tertiary.ag-theme-salt-variant
   --ag-row-hover-color: var(--salt-overlayable-background-hover);
 }
 
-.success-row {
+[class*="ag-theme-salt"] .success-row {
   --ag-background-color: var(--salt-status-success-background);
   --ag-selected-row-background-color: var(--salt-status-success-background-selected);
   --ag-selected-row-border-color: var(--salt-status-success-borderColor);

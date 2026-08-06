@@ -4,9 +4,7 @@ import type { ReactElement } from "react";
 export const Error = (): ReactElement => (
   <SystemStatus status="error">
     <SystemStatusContent>
-      <Text color="inherit">
-        We're experiencing a system issue. Our team is working to resolve it.
-      </Text>
+      <Text color="inherit">System failure. Please try again.</Text>
     </SystemStatusContent>
   </SystemStatus>
 );

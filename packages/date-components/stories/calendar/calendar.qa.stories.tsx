@@ -1,4 +1,3 @@
-import { withDateMock } from ".storybook/decorators/withDateMock";
 import {
   Calendar,
   CalendarGrid,
@@ -6,6 +5,7 @@ import {
   useLocalization,
 } from "@salt-ds/date-components";
 import { QAContainer, type QAContainerProps } from "docs/components";
+import { withDateMock } from "~storybook-decorators/withDateMock";
 
 export default {
   title: "Date Components/Calendar/QA",

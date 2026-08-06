@@ -1,5 +1,19 @@
 # @salt-ds/icons
 
+## 1.18.2
+
+### Patch Changes
+
+- Updated dependencies [fc112cb]
+- Updated dependencies [7a828e4]
+  - @salt-ds/styles@0.4.0
+
+## 1.18.1
+
+### Patch Changes
+
+- 2c459c3: Updated deprecated JSDocs for legacy props, theme aliases, icons, and the Moment date adapter to include deprecation versions and clearer migration guidance.
+
 ## 1.18.0
 
 ### Minor Changes

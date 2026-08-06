@@ -1,5 +1,5 @@
-import * as collapsibleStories from "@stories/collapsible/collapsible.stories";
 import { composeStories } from "@storybook/react-vite";
+import * as collapsibleStories from "~stories/collapsible/collapsible.stories";
 
 const composedStories = composeStories(collapsibleStories);
 
