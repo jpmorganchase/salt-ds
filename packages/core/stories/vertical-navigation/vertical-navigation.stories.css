@@ -1,14 +1,16 @@
-.saltVerticalNavigation:not(.collapsibleNavigationExample *) {
+.saltVerticalNavigation {
   min-width: 30ch;
 }
 
 /* CollapsibleNavigation example */
 
 .collapsibleNavigationExample {
-  --collapsibleNavigationExample-width: 30ch;
+  --collapsibleNavigationExample-width: clamp(18ch, 50vw, 30ch);
   --collapsibleNavigationExample-iconSize: max(var(--salt-size-icon), 12px);
   display: flex;
-  width: 700px;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
   height: 400px;
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
   background: var(--salt-container-primary-background);
@@ -47,6 +49,7 @@
 
 .collapsibleNavigationExample .saltVerticalNavigation {
   flex: 1;
+  min-width: 0;
   width: var(--collapsibleNavigationExample-width);
   overflow-x: hidden;
   overflow-y: auto;

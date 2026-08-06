@@ -640,6 +640,10 @@ export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
   );
 };
 
+CollapsibleNavigation.parameters = {
+  layout: "padded",
+};
+
 export const WithWrapping: StoryFn<typeof VerticalNavigation> = (args) => {
   const location = useLocation();
 
