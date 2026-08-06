@@ -406,6 +406,24 @@ function parseDocgenType(typeShape: DocgenTypeShape | undefined): string {
   return typeName.replace(/\s+/g, " ").trim();
 }
 
+const NON_PUBLIC_DOCGEN_TAG =
+  /@(saltValueMap|saltMigration|deprecated|since|param|returns?|see)\b/iu;
+
+export function sanitizePublicDocgenText(description: string): string {
+  const lines = description.split(/\r?\n/u);
+  const retained: string[] = [];
+  for (const line of lines) {
+    const marker = NON_PUBLIC_DOCGEN_TAG.exec(line);
+    if (marker) {
+      const proseBeforeTag = line.slice(0, marker.index).trim();
+      if (proseBeforeTag) retained.push(proseBeforeTag);
+      break;
+    }
+    retained.push(line);
+  }
+  return cleanMarkdownText(retained.join("\n"));
+}
+
 function parseDeprecationNote(description: string): string | null {
   const markerIndex = description.toLowerCase().indexOf("@deprecated");
   if (markerIndex === -1) {
@@ -417,7 +435,15 @@ function parseDeprecationNote(description: string): string | null {
     return "Deprecated.";
   }
 
-  return cleanMarkdownText(trailing.split(/\r?\n/)[0] ?? trailing);
+  const logicalLine = trailing
+    .split(/\r?\n/u)
+    .find((line) => line.trim().length > 0)
+    ?.split(NON_PUBLIC_DOCGEN_TAG, 1)[0]
+    ?.trim();
+  if (!logicalLine || logicalLine.startsWith("|")) {
+    return "Deprecated.";
+  }
+  return cleanMarkdownText(logicalLine);
 }
 
 export function toComponentProps(docgenProps: unknown): ComponentProp[] {
@@ -430,16 +456,9 @@ export function toComponentProps(docgenProps: unknown): ComponentProp[] {
   );
   return entries
     .map(([propName, propValue]) => {
-      const description = cleanMarkdownText(
-        asString(propValue.description) ?? "",
-      );
-      const deprecationNote = parseDeprecationNote(description);
-      const sanitizedDescription =
-        deprecationNote == null
-          ? description
-          : cleanMarkdownText(
-              description.replace(/@deprecated[\s\S]*$/i, "").trim(),
-            ) || "Deprecated.";
+      const rawDescription = asString(propValue.description) ?? "";
+      const deprecationNote = parseDeprecationNote(rawDescription);
+      const sanitizedDescription = sanitizePublicDocgenText(rawDescription);
       const allowedValues = parseAllowedValuesFromType(propValue.type);
 
       const parsedProp: ComponentProp = {

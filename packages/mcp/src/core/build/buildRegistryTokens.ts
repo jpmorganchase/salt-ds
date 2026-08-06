@@ -141,13 +141,28 @@ export async function extractTokens(
         ),
       ),
     ].sort();
+    const deprecated =
+      declarations.length > 0 &&
+      declarations.every((declaration) => declaration.deprecated);
+    const replacementSources = [
+      ...(resolvedTokenPolicySources.deprecated_replacements_by_token.get(
+        token.name,
+      ) ?? []),
+    ].filter((source) => tokenNameSet.has(source.replacement));
+    const replacementTokens = [
+      ...new Set([
+        ...declarations.flatMap((declaration) =>
+          declaration.replacement ? [declaration.replacement] : [],
+        ),
+        ...replacementSources.map((source) => source.replacement),
+      ]),
+    ].sort(compareOrdinalStrings);
     const policyInput = {
       name: token.name,
       category: token.category,
       source_paths: [...token.sourcePathSet].sort(),
-      deprecated_replacements: [...token.deprecatedReplacementSet]
-        .filter((replacement) => tokenNameSet.has(replacement))
-        .sort(),
+      deprecated_replacements: replacementTokens,
+      deprecated,
     };
     const policy = getTokenPolicy(policyInput, resolvedTokenPolicySources);
 
@@ -168,11 +183,20 @@ export async function extractTokens(
       applies_to: [],
       guidance: [...token.guidanceSet],
       aliases: [],
+      replacement_tokens: replacementTokens,
+      replacement_sources: replacementSources.map((source) => ({
+        replacement: source.replacement,
+        source_kind: source.source_kind,
+        source_path: source.source_path,
+        source_text: source.source_text,
+        line_start: source.line_start ?? null,
+        line_end: source.line_end ?? null,
+      })),
       policy,
       policy_gap: policy
         ? null
         : getTokenPolicyGap(policyInput, resolvedTokenPolicySources),
-      deprecated: declarations.every((declaration) => declaration.deprecated),
+      deprecated,
       last_verified_at: null,
     };
   });

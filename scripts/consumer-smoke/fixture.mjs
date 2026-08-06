@@ -1043,15 +1043,18 @@ export async function runInstalledMcpModuleProbe(rootDir, projectRoot) {
         params: {},
       });
       assert(
-        firstPage.resources.length > 1 &&
-          typeof firstPage.nextCursor === "string",
-        `Installed MCP ${format} factory did not expose cursor-paginated resources.`,
+        firstPage.resources.length === 1 && firstPage.nextCursor === undefined,
+        `Installed MCP ${format} factory did not expose exactly one curated manifest resource.`,
       );
       const resources = await client.listResources();
       const resourceUris = resources.resources.map((resource) => resource.uri);
       assert(
-        new Set(resourceUris).size === resourceUris.length,
-        `Installed MCP ${format} factory exposed duplicate resources.`,
+        resources.nextCursor === undefined &&
+          resourceUris.length === 1 &&
+          new Set(resourceUris).size === 1 &&
+          JSON.stringify(resourceUris) ===
+            JSON.stringify(firstPage.resources.map((resource) => resource.uri)),
+        `Installed MCP ${format} factory exposed an unexpected curated resource list.`,
       );
       const manifestResult = await client.readResource({
         uri: resourceUris[0],
@@ -1073,16 +1076,6 @@ export async function runInstalledMcpModuleProbe(rootDir, projectRoot) {
           ),
         `Installed MCP ${format} factory exposed an unexpected resource template surface.`,
       );
-      const expectedResourceCount =
-        1 +
-        manifest.families.reduce(
-          (total, family) => total + family.record_count,
-          0,
-        );
-      assert(
-        resourceUris.length === expectedResourceCount,
-        `Installed MCP ${format} factory listed ${resourceUris.length}/${expectedResourceCount} exact resources.`,
-      );
       const fingerprint = createMcpSurfaceFingerprint({
         client,
         toolNames,
@@ -1095,17 +1088,40 @@ export async function runInstalledMcpModuleProbe(rootDir, projectRoot) {
         client,
         projectRoot,
       );
+      const representativeSearch = await client.callTool({
+        name: "search_salt",
+        arguments: {
+          query: "Button",
+          families: ["component"],
+          limit: 1,
+        },
+      });
+      const representativeMatch =
+        representativeSearch.structuredContent?.data?.matches?.[0];
+      assert(
+        typeof representativeMatch?.uri === "string",
+        `Installed MCP ${format} factory omitted a representative search resource.`,
+      );
+      const representativeRecord = await client.readResource({
+        uri: representativeMatch.uri,
+      });
+      const representativeText = representativeRecord.contents?.[0]?.text;
+      assert(
+        typeof representativeText === "string",
+        `Installed MCP ${format} factory omitted representative record content.`,
+      );
+      const representativeEnvelope = JSON.parse(representativeText);
+      const representativeContentUri =
+        representativeEnvelope.content_resources?.[0]?.uri;
+      assert(
+        typeof representativeContentUri === "string",
+        `Installed MCP ${format} factory omitted a representative linked content resource.`,
+      );
+      await client.readResource({ uri: representativeContentUri });
       if (format === "ESM") {
         esmResourceUris = resourceUris;
         esmFingerprint = fingerprint;
         esmToolFingerprint = toolFingerprint;
-        for (let offset = 0; offset < resourceUris.length; offset += 64) {
-          await Promise.all(
-            resourceUris
-              .slice(offset, offset + 64)
-              .map((uri) => client.readResource({ uri })),
-          );
-        }
       } else {
         assert(
           JSON.stringify(resourceUris) === JSON.stringify(esmResourceUris),
@@ -1120,17 +1136,6 @@ export async function runInstalledMcpModuleProbe(rootDir, projectRoot) {
             JSON.stringify(esmToolFingerprint),
           "Installed MCP CommonJS tool semantics differ from ESM.",
         );
-        for (const family of manifest.families) {
-          const prefix = family.uri_template.slice(0, -"{id}".length);
-          const representative = resourceUris.find((uri) =>
-            uri.startsWith(prefix),
-          );
-          assert(
-            representative,
-            `Installed MCP ${format} factory omitted ${family.family}.`,
-          );
-          await client.readResource({ uri: representative });
-        }
       }
 
       for (const request of [

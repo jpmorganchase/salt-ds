@@ -50,6 +50,12 @@ describe("catalog artifact package contracts", () => {
         ],
       ),
     ).toBe(3);
+    expect(
+      countCatalogArtifactLogicalRecords({ kind: "tagged_source_assertion" }, [
+        { id: "link" },
+        ["id", "token_policy", null, ["source"], "detail"],
+      ]),
+    ).toBe(2);
   });
 
   it("fails closed on malformed or unknown storage contracts", () => {
@@ -88,6 +94,11 @@ describe("catalog artifact package contracts", () => {
     expect(() =>
       countCatalogArtifactLogicalRecords({ kind: "future" }, []),
     ).toThrow(/unknown storage kind/u);
+    expect(() =>
+      countCatalogArtifactLogicalRecords({ kind: "tagged_source_assertion" }, [
+        ["too", "short"],
+      ]),
+    ).toThrow(/five-field tuples/u);
   });
 
   it("requires exact descriptor-derived runtime and build family partitions", () => {

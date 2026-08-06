@@ -488,9 +488,7 @@ describe("bounded public review", () => {
           trust: "untrusted_advisory",
           competing_claims: [
             expect.objectContaining({
-              locator: expect.stringMatching(
-                /^salt:\/\/project-policy\/v2\//u,
-              ),
+              locator: expect.stringMatching(/^salt:\/\/project-policy\/v2\//u),
             }),
           ],
         },

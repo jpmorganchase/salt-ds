@@ -238,7 +238,7 @@ function readNpmTarRegularEntries(tarballPathOrBytes) {
   return regularEntries;
 }
 
-function readNpmTarEntry(tarballPath, expectedPath) {
+export function readPhase5NpmTarEntry(tarballPath, expectedPath) {
   const entry = readNpmTarRegularEntries(tarballPath).get(expectedPath);
   assert(entry !== undefined, `Missing regular tar entry ${expectedPath}.`);
   return entry;
@@ -483,7 +483,7 @@ export function validatePhase5ReplayBinding(architecture, repoRoot) {
     .update(fs.readFileSync(packagePath))
     .digest("base64")}`;
   const packedPackage = JSON.parse(
-    readNpmTarEntry(packagePath, "package/package.json").toString("utf8"),
+    readPhase5NpmTarEntry(packagePath, "package/package.json").toString("utf8"),
   );
   assert(
     packedPackage.name === architecture.package_name &&
@@ -714,7 +714,7 @@ function validateTask(preregistration, task, repoRoot) {
 
 /**
  * @param {any} preregistration
- * @param {{repoRoot: string, verifyBoundFiles?: boolean, verifyLock?: boolean, trustedKeyFingerprints?: Array<{key_id: string, sha256: string}>}} options
+ * @param {{repoRoot: string, verifyBoundFiles?: boolean, verifyLock?: boolean, trustedKeyFingerprints?: Array<{key_id: string, sha256: string}> | null, requireExternalTrust?: boolean}} options
  */
 export async function validatePhase5Preregistration(
   preregistration,
@@ -723,6 +723,7 @@ export async function validatePhase5Preregistration(
     verifyBoundFiles = true,
     verifyLock = true,
     trustedKeyFingerprints = null,
+    requireExternalTrust = true,
   } = { repoRoot: "" },
 ) {
   assert(repoRoot, "Phase 5 preregistration validation requires repoRoot.");
@@ -826,11 +827,13 @@ export async function validatePhase5Preregistration(
         roleCounts.publisher_verifier === 1,
       "Configured Phase 5 evidence trust must freeze seven role-separated public keys.",
     );
-    assertExternalFingerprintSet(
-      configuredFingerprints,
-      trustedKeyFingerprints,
-      "Configured Phase 5 evidence trust is not pinned by the external fingerprint set.",
-    );
+    if (requireExternalTrust) {
+      assertExternalFingerprintSet(
+        configuredFingerprints,
+        trustedKeyFingerprints,
+        "Configured Phase 5 evidence trust is not pinned by the external fingerprint set.",
+      );
+    }
   }
 
   assert(
@@ -1194,7 +1197,7 @@ export async function validatePhase5Preregistration(
       minimal.package_path,
       "Minimal architecture package",
     );
-    const manifestBytes = readNpmTarEntry(
+    const manifestBytes = readPhase5NpmTarEntry(
       minimalPackagePath,
       "package/generated/catalog-manifest.json",
     );
@@ -1231,6 +1234,45 @@ export async function validatePhase5Preregistration(
     validatePhase5PreregistrationLock(preregistration, result, repoRoot);
   }
   return result;
+}
+
+/**
+ * Validates only repository-local candidate truth. Configured public keys are
+ * checked for shape, algorithm, uniqueness, and role separation, but external
+ * fingerprint authority and evaluation evidence are intentionally out of
+ * scope.
+ *
+ * @param {any} preregistration
+ * @param {{repoRoot: string, verifyBoundFiles?: boolean, verifyLock?: boolean, verifyRuntimeIntelligence?: boolean}} options
+ */
+export async function validatePhase5CandidateBindings(
+  preregistration,
+  {
+    repoRoot,
+    verifyBoundFiles = true,
+    verifyLock = true,
+    verifyRuntimeIntelligence = verifyBoundFiles,
+  } = {
+    repoRoot: "",
+  },
+) {
+  const validation = await validatePhase5Preregistration(preregistration, {
+    repoRoot,
+    verifyBoundFiles,
+    verifyLock,
+    trustedKeyFingerprints: null,
+    requireExternalTrust: false,
+  });
+  const intelligence = verifyRuntimeIntelligence
+    ? auditPhase5RuntimeIntelligence(preregistration, repoRoot)
+    : null;
+  return {
+    ...validation,
+    evidence_trust_status: preregistration.evidence_trust.status,
+    external_trust_checked: false,
+    external_evidence_status: "not_evaluated",
+    intelligence,
+  };
 }
 
 export function validatePhase5PreregistrationLock(

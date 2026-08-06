@@ -43,6 +43,7 @@ interface TokenPolicyInput {
   category: string;
   source_paths?: string[];
   deprecated_replacements?: string[];
+  deprecated?: boolean;
 }
 
 export interface DeprecatedTokenReplacementSource {
@@ -2473,6 +2474,7 @@ function buildDeprecatedReplacementPolicy(
   token: TokenPolicyInput,
   sources: TokenPolicySourceRegistry,
 ): NonNullable<TokenRecord["policy"]> | null {
+  const deprecated = token.deprecated === true;
   const resolvedReplacements = resolveDeprecatedReplacements(token, sources);
   const replacements = uniqueStrings(
     resolvedReplacements.map((replacement) => replacement.replacement),
@@ -2505,30 +2507,36 @@ function buildDeprecatedReplacementPolicy(
   const docs = withSources(
     ...supportedReplacements.flatMap((support) => support.docs),
   );
-  const replacementBlocks = uniquePolicyText(
-    supportedReplacements.flatMap((support) => support.sourceTexts),
+  const migrationGuidance = replacements.map(
+    (replacement) => `Deprecated token; migrate to ${replacement}.`,
   );
 
   return withPolicyEvidence(
     token.name,
     {
       usage_tier: tierEvidence.usage_tier,
-      direct_component_use: tierEvidence.direct_component_use,
+      direct_component_use: deprecated
+        ? "never"
+        : tierEvidence.direct_component_use,
       preferred_for: [],
-      avoid_for:
-        tierEvidence.usage_tier === "palette"
+      avoid_for: deprecated
+        ? migrationGuidance
+        : tierEvidence.usage_tier === "palette"
           ? matchingSentences(
               tierEvidence.text,
               /\bnever referenced directly\b/i,
             )
           : [],
-      notes: uniquePolicyText([tierEvidence.text, ...replacementBlocks]),
+      notes: uniquePolicyText([
+        tierEvidence.text,
+        ...supportedReplacements.flatMap((support) => support.sourceTexts),
+        ...migrationGuidance,
+      ]),
       structural_roles: [],
       pairing: null,
     },
     docs,
     [
-      ...buildTokenSourceEvidenceRefs(token.name, token.source_paths ?? []),
       ...buildDeprecatedReplacementSourceEvidenceRefs(
         token.name,
         resolvedReplacements.flatMap(
@@ -2539,6 +2547,7 @@ function buildDeprecatedReplacementPolicy(
         token.name,
         supportedReplacements,
       ),
+      ...buildTokenSourceEvidenceRefs(token.name, token.source_paths ?? []),
     ],
   );
 }
@@ -2548,6 +2557,11 @@ export function getTokenPolicy(
   sources: TokenPolicySourceRegistry,
 ): NonNullable<TokenRecord["policy"]> | null {
   const category = normalizeCategory(token.category);
+  const deprecated = token.deprecated === true;
+
+  if (deprecated) {
+    return buildDeprecatedReplacementPolicy(token, sources);
+  }
 
   if (token.name.startsWith("--salt-palette-") || category === "palette") {
     return buildPalettePolicy(token.name, sources);

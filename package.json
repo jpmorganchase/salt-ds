@@ -16,7 +16,7 @@
     "build": "yarn workspace @salt-ds/mcp build && yarn workspaces foreach --exclude @salt-ds/site --exclude @salt-ds/mcp -Apt run build && yarn bundle:css",
     "release": "yarn build && yarn release:verify:mcp:after-build && yarn changeset publish",
     "release:verify:mcp": "yarn workspace @salt-ds/mcp build && yarn release:verify:mcp:after-build",
-    "release:verify:mcp:after-build": "yarn typecheck:mcp && yarn test:ai-tooling && yarn workspace @salt-ds/mcp measure:runtime-loc && yarn workspace @salt-ds/mcp measure:surface && yarn check:ai-tooling:pack",
+    "release:verify:mcp:after-build": "yarn typecheck:mcp && yarn test:ai-tooling && yarn eval:archive-contract && node scripts/validatePhase5Candidate.mjs && yarn workspace @salt-ds/mcp measure:runtime-loc && yarn workspace @salt-ds/mcp measure:surface && yarn check:ai-tooling:pack",
     "build:ag-grid-theme": "yarn workspace @salt-ds/ag-grid-theme build",
     "build:highcharts-theme": "yarn workspace @salt-ds/highcharts-theme build",
     "bundle:css": "yarn bundle:core:css && yarn bundle:lab:css && yarn bundle:date-components:css & yarn bundle:embla-carousel:css && yarn copy:icon:css && yarn copy:countries:css",

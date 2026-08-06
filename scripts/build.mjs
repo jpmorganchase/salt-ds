@@ -792,6 +792,7 @@ for (const [relativeBinPath, entrypoint] of Object.entries(
     requirePath,
     exportName = "runCli",
     errorPrefix = `${packageName} error:`,
+    conciseErrorCodes = [],
   } = entrypoint;
   const binPath = path.join(outputDir, relativeBinPath);
 
@@ -807,7 +808,11 @@ ${exportName}(process.argv.slice(2))
     process.exit(exitCode);
   })
   .catch((error) => {
-    console.error(${JSON.stringify(errorPrefix)}, error);
+    const concise = ${JSON.stringify(conciseErrorCodes)}.includes(error?.code);
+    const rendered = concise && error instanceof Error
+      ? error.message
+      : error?.stack ?? String(error);
+    console.error(${JSON.stringify(errorPrefix)}, rendered);
     process.exit(1);
   });
 `,

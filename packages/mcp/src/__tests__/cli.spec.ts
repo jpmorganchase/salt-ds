@@ -160,9 +160,11 @@ describe("runCli", () => {
   });
 
   it("rejects build-registry as a public CLI command", async () => {
-    await expect(runCli(["build-registry"])).rejects.toThrow(
-      "Unknown command: build-registry. Supported commands: serve, help, version.",
-    );
+    await expect(runCli(["build-registry"])).rejects.toMatchObject({
+      code: "SALT_MCP_CLI_USAGE",
+      message:
+        "Unknown command: build-registry. Supported commands: serve, help, version.",
+    });
   });
 
   it.each([

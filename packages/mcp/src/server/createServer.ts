@@ -4,9 +4,9 @@ import {
   createProjectAccessPolicy,
   type ProjectAccessOptions,
 } from "./projectAccess.js";
+import { ProjectPolicySnapshotCache } from "./projectPolicySnapshot.js";
 import { registerSaltResources } from "./registerResources.js";
 import { registerSaltTools } from "./registerTools.js";
-import { ProjectPolicySnapshotCache } from "./projectPolicySnapshot.js";
 import {
   buildSaltMcpInstructions,
   buildSaltMcpServerInfo,

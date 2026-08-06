@@ -22,6 +22,7 @@ describe("catalog public bounds", () => {
       id: CONTENT_ID,
       codec: "page_body",
       media_type: "application/vnd.salt.entity-details+json",
+      encoding: "identity",
       bytes: MAX_CATALOG_CONTENT_BYTES,
       offset: 0,
       length: MAX_CATALOG_CONTENT_BYTES,

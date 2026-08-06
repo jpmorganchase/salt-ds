@@ -25,6 +25,11 @@ runCli(process.argv.slice(2))
     process.exit(exitCode);
   })
   .catch((error) => {
-    console.error("salt-mcp error:", error);
+    const concise = ["SALT_MCP_CLI_USAGE"].includes(error?.code);
+    const rendered =
+      concise && error instanceof Error
+        ? error.message
+        : (error?.stack ?? String(error));
+    console.error("salt-mcp error:", rendered);
     process.exit(1);
   });

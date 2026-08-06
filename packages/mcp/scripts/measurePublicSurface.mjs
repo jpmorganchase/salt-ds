@@ -13,7 +13,6 @@ import { performance } from "node:perf_hooks";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { Client, InMemoryTransport } from "@modelcontextprotocol/client";
 import { build } from "esbuild";
-import publicSurfaceBudgets from "../public-surface-budgets.json" with { type: "json" };
 import {
   assertCatalogInputBytes,
   assertCatalogManifestBytes,
@@ -22,6 +21,9 @@ import {
   isPathWithinRoot,
   parseCatalogBuildBanner,
 } from "../../../scripts/catalogBuildIdentity.mjs";
+import publicSurfaceBudgets from "../public-surface-budgets.json" with {
+  type: "json",
+};
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, "..", "..", "..");
@@ -399,7 +401,11 @@ try {
     })),
   };
 
-  assertMaximum("Public tool count", measurement.tool_count, MAX_PUBLIC_TOOL_COUNT);
+  assertMaximum(
+    "Public tool count",
+    measurement.tool_count,
+    MAX_PUBLIC_TOOL_COUNT,
+  );
   assertMaximum(
     "Tool discovery UTF-8 bytes",
     measurement.exact_tools_list_utf8_bytes,

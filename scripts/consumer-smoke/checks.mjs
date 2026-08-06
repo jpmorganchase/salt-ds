@@ -19,6 +19,7 @@ const REGISTERED_TOOL_NAMES = [
   "review_salt_code",
 ];
 const SUPPORTED_PROTOCOL_REVISIONS = [
+  "2026-07-28",
   "2025-11-25",
   "2025-06-18",
   "2025-03-26",
@@ -47,33 +48,24 @@ const MAX_RESOURCE_PAGE_UTF8_BYTES = 256 * 1024;
 const MAX_RESOURCES_PER_PAGE = 512;
 
 async function collectDirectResourcePages(client) {
-  const resources = [];
-  const cursors = new Set();
-  let cursor;
-  do {
-    const page = await client.request({
-      method: "resources/list",
-      params: cursor === undefined ? {} : { cursor },
-    });
-    assert(
-      Array.isArray(page.resources) &&
-        page.resources.length > 0 &&
-        page.resources.length <= MAX_RESOURCES_PER_PAGE &&
-        Buffer.byteLength(JSON.stringify(page), "utf8") <=
-          MAX_RESOURCE_PAGE_UTF8_BYTES,
-      "Installed MCP returned an empty or oversized resource page.",
-    );
-    resources.push(...page.resources);
-    cursor = page.nextCursor;
-    if (cursor !== undefined) {
-      assert(
-        !cursors.has(cursor) && cursors.size < 1_000,
-        "Installed MCP repeated a resource cursor or exceeded the page safety bound.",
-      );
-      cursors.add(cursor);
-    }
-  } while (cursor !== undefined);
-  return { resources, pageCount: cursors.size + 1 };
+  const page = await client.request({
+    method: "resources/list",
+    params: {},
+  });
+  assert(
+    Array.isArray(page.resources) &&
+      page.resources.length === 1 &&
+      page.resources.length <= MAX_RESOURCES_PER_PAGE &&
+      page.nextCursor === undefined &&
+      Buffer.byteLength(JSON.stringify(page), "utf8") <=
+        MAX_RESOURCE_PAGE_UTF8_BYTES,
+    "Installed MCP did not return one bounded curated manifest page.",
+  );
+  return {
+    resources: page.resources,
+    pageCount: 1,
+    nextCursor: page.nextCursor,
+  };
 }
 
 function parseResourceText(result, label) {
@@ -90,10 +82,19 @@ function getToolPayload(result, label) {
   return JSON.parse(text);
 }
 
-async function assertModernProtocolIsNotAdvertised(installedMcpBinPath, cwd) {
+async function assertProtocolIsAdvertised(
+  installedMcpBinPath,
+  cwd,
+  protocolVersion,
+  expectedEra,
+) {
   const client = new Client(
-    { name: "salt-consumer-modern-probe", version: "0.0.0" },
-    { versionNegotiation: { mode: { pin: "2026-07-28" } } },
+    { name: `salt-consumer-${expectedEra}-probe`, version: "0.0.0" },
+    {
+      versionNegotiation: {
+        mode: expectedEra === "modern" ? { pin: protocolVersion } : "legacy",
+      },
+    },
   );
   const transport = new StdioClientTransport({
     command: process.execPath,
@@ -101,22 +102,16 @@ async function assertModernProtocolIsNotAdvertised(installedMcpBinPath, cwd) {
     cwd,
     stderr: "pipe",
   });
-  let rejection;
   try {
     await client.connect(transport);
-  } catch (error) {
-    rejection = error;
+    assert(
+      client.getProtocolEra() === expectedEra &&
+        client.getNegotiatedProtocolVersion() === protocolVersion,
+      `Installed MCP stdio did not negotiate ${expectedEra} ${protocolVersion}.`,
+    );
   } finally {
     await client.close();
   }
-  const rejectionMessage =
-    rejection instanceof Error ? rejection.message : String(rejection ?? "");
-  assert(
-    rejection?.code === "ERA_NEGOTIATION_FAILED" &&
-      /version negotiation failed/iu.test(rejectionMessage) &&
-      rejectionMessage.includes("2026-07-28"),
-    `Installed MCP stdio server did not reject MCP 2026-07-28 with the expected negotiation error: ${rejectionMessage || "no rejection"}.`,
-  );
 }
 
 export function assertBoundedMcpToolPayload(
@@ -154,15 +149,26 @@ export async function runMcpWorkflowCoverage(
     await pathExists(installedMcpBinPath),
     `Expected installed MCP bin at ${installedMcpBinPath}.`,
   );
-  await assertModernProtocolIsNotAdvertised(
+  await assertProtocolIsAdvertised(
     installedMcpBinPath,
     existingSaltRoot,
+    "2026-07-28",
+    "modern",
+  );
+  await assertProtocolIsAdvertised(
+    installedMcpBinPath,
+    existingSaltRoot,
+    "2025-11-25",
+    "legacy",
   );
 
-  const client = new Client({
-    name: "salt-consumer-smoke",
-    version: "0.0.0",
-  });
+  const client = new Client(
+    {
+      name: "salt-consumer-smoke",
+      version: "0.0.0",
+    },
+    { versionNegotiation: { mode: "auto" } },
+  );
   const transport = new StdioClientTransport({
     command: process.execPath,
     args: ["--import", offlineNetworkGuardUrl, installedMcpBinPath, "serve"],
@@ -177,9 +183,9 @@ export async function runMcpWorkflowCoverage(
   try {
     await client.connect(transport);
     assert(
-      client.getProtocolEra() === "legacy" &&
-        client.getNegotiatedProtocolVersion() === "2025-11-25",
-      `Installed MCP stdio negotiated ${client.getProtocolEra() ?? "<no era>"} ${client.getNegotiatedProtocolVersion() ?? "<no version>"} instead of legacy 2025-11-25.`,
+      client.getProtocolEra() === "modern" &&
+        client.getNegotiatedProtocolVersion() === "2026-07-28",
+      `Installed MCP stdio negotiated ${client.getProtocolEra() ?? "<no era>"} ${client.getNegotiatedProtocolVersion() ?? "<no version>"} instead of current 2026-07-28.`,
     );
     const serverVersion = client.getServerVersion();
     const resourceCapabilities = client.getServerCapabilities()?.resources;
@@ -206,8 +212,9 @@ export async function runMcpWorkflowCoverage(
 
     const directResources = await collectDirectResourcePages(client);
     assert(
-      directResources.pageCount > 1,
-      "Installed MCP server did not paginate its exact resource catalog.",
+      directResources.pageCount === 1 &&
+        directResources.nextCursor === undefined,
+      "Installed MCP server did not return one curated resource page.",
     );
     const resources = await client.listResources();
     const resourceUris = resources.resources.map((resource) => resource.uri);
@@ -215,7 +222,9 @@ export async function runMcpWorkflowCoverage(
       (resource) => resource.uri,
     );
     assert(
-      MANIFEST_URI_PATTERN.test(resourceUris[0]) &&
+      resourceUris.length === 1 &&
+        resources.nextCursor === undefined &&
+        MANIFEST_URI_PATTERN.test(resourceUris[0]) &&
         new Set(resourceUris).size === resourceUris.length &&
         JSON.stringify(resourceUris) === JSON.stringify(directResourceUris),
       "Installed MCP server did not advertise a unique digest-bound resource catalog.",
@@ -246,7 +255,7 @@ export async function runMcpWorkflowCoverage(
         typeof manifest?.server_version === "string" &&
         manifest?.server_version === serverVersion.version &&
         typeof manifest?.catalog_version === "string" &&
-        manifest?.negotiated_mcp_protocol_revision === "2025-11-25" &&
+        manifest?.negotiated_mcp_protocol_revision === "2026-07-28" &&
         JSON.stringify(manifest?.supported_mcp_protocol_revisions) ===
           JSON.stringify(SUPPORTED_PROTOCOL_REVISIONS) &&
         /^sha256:[0-9a-f]{64}$/u.test(manifest?.semantic_digest) &&
@@ -264,9 +273,14 @@ export async function runMcpWorkflowCoverage(
       resourceCount: resourceUris.length,
       resourceTemplate: catalogTemplate,
     });
+    const expectedStdioFingerprint = {
+      ...expectedModuleFingerprint.surface,
+      protocol_era: "modern",
+      protocol_revision: "2026-07-28",
+    };
     assert(
       JSON.stringify(stdioFingerprint) ===
-        JSON.stringify(expectedModuleFingerprint.surface),
+        JSON.stringify(expectedStdioFingerprint),
       "Installed MCP stdio protocol fingerprint differs from ESM/CommonJS.",
     );
     const stdioToolFingerprint = await createMcpToolSemanticFingerprint(
@@ -278,31 +292,6 @@ export async function runMcpWorkflowCoverage(
         JSON.stringify(expectedModuleFingerprint.tools),
       "Installed MCP stdio tool semantics differ from ESM/CommonJS.",
     );
-    const expectedResourceCount =
-      1 +
-      manifest.families.reduce(
-        (total, family) => total + family.record_count,
-        0,
-      );
-    assert(
-      resourceUris.length === expectedResourceCount,
-      `Installed MCP listed ${resourceUris.length} resources; expected ${expectedResourceCount}.`,
-    );
-    for (const family of manifest.families) {
-      const prefix = family.uri_template.slice(0, -"{id}".length);
-      const familyResources = resourceUris.filter((uri) =>
-        uri.startsWith(prefix),
-      );
-      assert(
-        familyResources.length === family.record_count,
-        `Installed MCP listed ${familyResources.length}/${family.record_count} ${family.family} resources.`,
-      );
-      await client.readResource({ uri: familyResources[0] });
-    }
-    for (const index of [25, 26, 103, resourceUris.length - 1]) {
-      await client.readResource({ uri: resourceUris[index] });
-    }
-
     const searchResult = await client.callTool({
       name: "search_salt",
       arguments: { query: "Button", families: ["component"], limit: 3 },
@@ -355,37 +344,18 @@ export async function runMcpWorkflowCoverage(
       uri: buttonResource.content_resources[0].uri,
     });
 
-    const evidenceFamily = manifest.families.find(
-      (family) => family.family === "evidence",
-    );
-    assert(evidenceFamily, "Catalog manifest omitted the evidence family.");
-    const evidencePrefix = evidenceFamily.uri_template.slice(0, -"{id}".length);
-    const evidenceIds = resourceUris
-      .filter((uri) => uri.startsWith(evidencePrefix))
-      .map((uri) => decodeURIComponent(uri.slice(evidencePrefix.length)));
+    const buttonFamily = decodeURIComponent(button.uri.split("/").at(-2));
+    const buttonId = decodeURIComponent(button.uri.split("/").at(-1));
     const completion = await client.complete({
       ref: { type: "ref/resource", uri: catalogTemplate },
-      argument: { name: "id", value: "" },
-      context: { arguments: { family: "evidence" } },
+      argument: { name: "id", value: buttonId },
+      context: { arguments: { family: buttonFamily } },
     });
     assert(
-      completion.completion.total === evidenceIds.length &&
-        completion.completion.hasMore === true &&
-        completion.completion.values.includes(evidenceIds[25]) &&
-        completion.completion.values.includes(evidenceIds[26]) &&
-        !completion.completion.values.includes(evidenceIds[103]),
-      "Installed MCP completion misstated its bounded evidence results.",
-    );
-    const narrowCompletion = await client.complete({
-      ref: { type: "ref/resource", uri: catalogTemplate },
-      argument: { name: "id", value: evidenceIds[103] },
-      context: { arguments: { family: "evidence" } },
-    });
-    assert(
-      narrowCompletion.completion.total === 1 &&
-        narrowCompletion.completion.hasMore === false &&
-        narrowCompletion.completion.values[0] === evidenceIds[103],
-      "Installed MCP completion could not retrieve the record after position 103.",
+      completion.completion.total === 1 &&
+        completion.completion.hasMore === false &&
+        completion.completion.values[0] === buttonId,
+      "Installed MCP completion could not retrieve the searched component record.",
     );
 
     const inspectionResult = await client.callTool({

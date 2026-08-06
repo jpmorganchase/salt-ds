@@ -97,7 +97,9 @@ describe("server-configured project access", () => {
       defaultRoot: localRoot,
     });
 
-    await expect(authorizeProjectRoot(policy, undefined)).resolves.toMatchObject({
+    await expect(
+      authorizeProjectRoot(policy, undefined),
+    ).resolves.toMatchObject({
       status: "authorized",
       mode: "unrestricted_local_stdio",
       rootDir: await fs.realpath(localRoot),

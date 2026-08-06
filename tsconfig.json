@@ -49,5 +49,6 @@
     "cypress",
     "cypress/types.d.ts",
     "./declarations.d.ts"
-  ]
+  ],
+  "exclude": ["packages/mcp/eval-fixtures/**"]
 }

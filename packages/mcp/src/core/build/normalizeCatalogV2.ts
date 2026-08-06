@@ -31,6 +31,7 @@ import {
   evidenceCodec,
   policyProfileCodec,
   relationCodec,
+  UNVALIDATED_SOURCE_ASSERTION_REASON,
 } from "../catalog/catalogSchemaV2.js";
 import {
   canonicalJson,
@@ -474,8 +475,7 @@ function linkValidation(
 function unvalidatedAssertion(): CatalogValidationMetadata {
   return {
     state: "unvalidated",
-    reason:
-      "Source identity is bound, but the assertion semantics were not independently validated.",
+    reason: UNVALIDATED_SOURCE_ASSERTION_REASON,
     validated_at: null,
   };
 }
@@ -1285,14 +1285,26 @@ export function normalizeCatalogV2(input: {
     if (!tokenId) throw new Error(`Missing token id for '${token.name}'.`);
     const owner = catalogRef("token", tokenId);
     const evidenceIds: string[] = [];
-    const evidenceRefs = [
+    const registryEvidenceRefs = [
       ...(token.policy?.evidence_refs ?? []),
       ...(token.policy_gap?.evidence_refs ?? []),
     ];
+    const evidenceRefs =
+      token.deprecated && token.policy
+        ? registryEvidenceRefs.filter(
+            (reference) =>
+              reference.source_kind === "docs" &&
+              reference.source?.url === "/salt/themes/design-tokens",
+          )
+        : registryEvidenceRefs;
+    const policyDocs = (token.policy?.docs ?? []).filter(
+      (locator) =>
+        !token.deprecated || locator === "/salt/themes/design-tokens",
+    );
     for (const evidenceRef of evidenceRefs) {
       evidenceIds.push(addEvidenceRef(owner, evidenceRef));
     }
-    for (const href of token.policy?.docs ?? []) {
+    for (const href of policyDocs) {
       if (
         !evidenceRefs.some((evidenceRef) => evidenceRef.source?.url === href)
       ) {
@@ -1306,18 +1318,24 @@ export function normalizeCatalogV2(input: {
           policy: {
             usage_tier: token.policy.usage_tier,
             direct_component_use: token.policy.direct_component_use,
-            preferred_for: token.policy.preferred_for,
-            avoid_for: token.policy.avoid_for,
-            notes: token.policy.notes,
-            docs_refs: token.policy.docs.map((locator) =>
+            preferred_for: token.deprecated ? [] : token.policy.preferred_for,
+            avoid_for: token.deprecated
+              ? ["Deprecated token; use replacement_token_refs for migration."]
+              : token.policy.avoid_for,
+            notes: token.deprecated
+              ? [
+                  `Deprecated ${token.policy.usage_tier} token; direct component use is forbidden.`,
+                ]
+              : token.policy.notes,
+            docs_refs: policyDocs.map((locator) =>
               sources.fromPublicLocator(locator, {
                 resolvePage: resolvePageRoute,
               }),
             ),
-            ...(token.policy.structural_roles
+            ...(!token.deprecated && token.policy.structural_roles
               ? { structural_roles: token.policy.structural_roles }
               : {}),
-            ...(token.policy.pairing !== undefined
+            ...(!token.deprecated && token.policy.pairing !== undefined
               ? { pairing: token.policy.pairing }
               : {}),
           },
@@ -1353,6 +1371,24 @@ export function normalizeCatalogV2(input: {
       type: token.type,
       semantic_intent: token.semantic_intent,
       aliases: uniqueStrings(token.aliases),
+      status: token.deprecated ? "deprecated" : "stable",
+      replacement_token_refs: uniqueStrings(
+        token.replacement_tokens ??
+          (token.declarations ?? []).flatMap((declaration) =>
+            declaration.replacement ? [declaration.replacement] : [],
+          ),
+      ).map((replacement) => {
+        const replacementId = tokenIdByName.get(replacement);
+        if (!replacementId) {
+          throw new Error(
+            `Token '${token.name}' references missing replacement '${replacement}'.`,
+          );
+        }
+        if (replacementId === tokenId) {
+          throw new Error(`Token '${token.name}' cannot replace itself.`);
+        }
+        return catalogRef("token", replacementId);
+      }),
       policy_profile_ref: policyProfileId
         ? catalogRef("policy_profile", policyProfileId)
         : null,
@@ -1489,6 +1525,76 @@ export function normalizeCatalogV2(input: {
     }
   }
   records.declaration_context.push(...declarationContextById.values());
+
+  for (const token of input.registry.tokens) {
+    const tokenId = tokenIdByName.get(token.name);
+    if (!tokenId) throw new Error(`Missing token id for '${token.name}'.`);
+    const relationSource = catalogRef("token", tokenId);
+    const sourcesByReplacement = new Map<
+      string,
+      NonNullable<typeof token.replacement_sources>
+    >();
+    for (const source of token.replacement_sources ?? []) {
+      const entries = sourcesByReplacement.get(source.replacement) ?? [];
+      entries.push(source);
+      sourcesByReplacement.set(source.replacement, entries);
+    }
+    for (const [replacement, replacementSources] of sourcesByReplacement) {
+      const replacementId = tokenIdByName.get(replacement);
+      if (!replacementId) {
+        throw new Error(
+          `Token '${token.name}' curated source references missing replacement '${replacement}'.`,
+        );
+      }
+      if (replacementId === tokenId) {
+        throw new Error(`Token '${token.name}' cannot replace itself.`);
+      }
+      const relationTarget = catalogRef("token", replacementId);
+      const evidenceIds = replacementSources.map((replacementSource) => {
+        const sourceRef = sources.fromRepoPath(
+          replacementSource.source_path,
+          "deprecated",
+        );
+        const replacementDetail = parseCatalogContentPayload(
+          "token_replacement_assertion",
+          {
+            source: relationSource,
+            target: relationTarget,
+            source_kind: replacementSource.source_kind,
+            source_path: replacementSource.source_path,
+            source_text: replacementSource.source_text,
+            line_start: replacementSource.line_start,
+            line_end: replacementSource.line_end,
+          },
+        );
+        const evidenceId = stableShaId("token-replacement-assertion", {
+          detail: replacementDetail,
+          source_ref: sourceRef,
+        });
+        addEvidence({
+          family: "evidence",
+          id: evidenceId,
+          evidence_kind: "source_assertion",
+          assertion_kind: "token_replacement",
+          owner: relationSource,
+          claim_kind: "token",
+          source_refs: [sourceRef],
+          detail_content_ref: content.add(
+            "token_replacement_assertion",
+            replacementDetail,
+            "source_extraction",
+          ),
+          extraction_method: "source_extraction",
+          validation: unvalidatedAssertion(),
+        });
+        return evidenceId;
+      });
+      addRelation("replaced_by", relationSource, relationTarget, {
+        provenance: "curated",
+        sourceEvidenceIds: evidenceIds,
+      });
+    }
+  }
 
   const apiReplacementTargetsBySubject = new Map<string, Set<string>>();
   for (const deprecation of input.registry.deprecations) {

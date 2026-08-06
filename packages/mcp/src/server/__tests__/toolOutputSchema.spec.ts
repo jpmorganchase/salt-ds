@@ -3,12 +3,12 @@ import { McpServer } from "@modelcontextprotocol/server";
 import Ajv2020 from "ajv/dist/2020.js";
 import { describe, expect, it } from "vitest";
 import * as z from "zod/v4";
+import { MAX_TOOL_DISCOVERY_UTF8_BYTES } from "../../publicSurfaceBudgets.js";
 import { compactStandardOutputSchema } from "../compactStandardSchema.js";
 import {
   SALT_MCP_PREFERRED_LEGACY_PROTOCOL_VERSION,
   SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS,
 } from "../serverMetadata.js";
-import { MAX_TOOL_DISCOVERY_UTF8_BYTES } from "../../publicSurfaceBudgets.js";
 import { TOOL_DEFINITIONS } from "../toolDefinitions.js";
 
 type JsonSchema = Record<string, unknown>;
@@ -116,9 +116,9 @@ describe("public tool output schemas", () => {
         SALT_MCP_PREFERRED_LEGACY_PROTOCOL_VERSION,
       );
       const listed = await client.listTools();
-      expect(Buffer.byteLength(JSON.stringify(listed), "utf8")).toBeLessThanOrEqual(
-        MAX_TOOL_DISCOVERY_UTF8_BYTES,
-      );
+      expect(
+        Buffer.byteLength(JSON.stringify(listed), "utf8"),
+      ).toBeLessThanOrEqual(MAX_TOOL_DISCOVERY_UTF8_BYTES);
     } finally {
       await client.close();
       await server.close();
@@ -144,9 +144,9 @@ describe("public tool output schemas", () => {
     expect(validate({ nested: { enabled: true } })).toBe(false);
     expect(validate({ label: "example" })).toBe(false);
     expect(validate({ label: "example", nested: {} })).toBe(false);
-    expect(
-      validate({ label: "example", nested: null, unexpected: true }),
-    ).toBe(false);
+    expect(validate({ label: "example", nested: null, unexpected: true })).toBe(
+      false,
+    );
   });
 
   it("advertises each strict per-tool structural result contract", () => {

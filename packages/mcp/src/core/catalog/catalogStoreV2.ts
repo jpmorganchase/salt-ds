@@ -1,9 +1,6 @@
-import {
-  lstatSync,
-  readFileSync,
-  realpathSync,
-} from "node:fs";
+import { lstatSync, readFileSync, realpathSync } from "node:fs";
 import path from "node:path";
+import { brotliDecompressSync } from "node:zlib";
 import { formatAccessibilityImplementationSignalStatement } from "./accessibilityImplementationSignal.js";
 import {
   createApiSymbolId,
@@ -939,22 +936,30 @@ export class CatalogStoreV2 {
     }
     this.verifyContentPack();
     const packEntry = this.getSupportEntry("content_pack");
-    if (
-      contentRecord.offset + contentRecord.length > packEntry.bytes ||
-      contentRecord.length !== contentRecord.bytes
-    ) {
+    if (contentRecord.offset + contentRecord.length > packEntry.bytes) {
       throw new Error(
         `Catalog content '${reference.id}' has an invalid byte range.`,
       );
     }
     const packBytes = this.contentPackBytes;
     if (!packBytes) {
-      throw new Error("Catalog content pack verification did not retain its bytes.");
+      throw new Error(
+        "Catalog content pack verification did not retain its bytes.",
+      );
     }
-    const bytes = packBytes.subarray(
+    const storedBytes = packBytes.subarray(
       contentRecord.offset,
       contentRecord.offset + contentRecord.length,
     );
+    const bytes =
+      contentRecord.encoding === "br"
+        ? brotliDecompressSync(storedBytes)
+        : storedBytes;
+    if (bytes.byteLength !== contentRecord.bytes) {
+      throw new Error(
+        `Catalog content '${reference.id}' decoded to ${bytes.byteLength} bytes, expected ${contentRecord.bytes}.`,
+      );
+    }
     if (!this.verifiedContentObjects.has(reference.id)) {
       const identity = Buffer.concat([
         Buffer.from(`${contentRecord.media_type}\0`, "utf8"),
@@ -2424,6 +2429,84 @@ export class CatalogStoreV2 {
               new Set<string>();
             targets.add(record.target.id);
             tokenReplacementTargets.set(declaration.token_ref.id, targets);
+          } else if (record.source.family === "token") {
+            if (record.target.family !== "token") {
+              throw new Error(
+                `${owner} curated token replacement must target a token.`,
+              );
+            }
+            if (record.source.id === record.target.id) {
+              throw new Error(
+                `${owner} token replacement cannot target itself.`,
+              );
+            }
+            for (const evidenceRef of record.source_evidence_refs) {
+              const curatedEvidence = this.getRecord(
+                "evidence",
+                evidenceRef.id,
+              );
+              if (
+                !curatedEvidence ||
+                curatedEvidence.evidence_kind !== "source_assertion" ||
+                curatedEvidence.assertion_kind !== "token_replacement" ||
+                curatedEvidence.owner.family !== "token" ||
+                catalogReferenceKey(curatedEvidence.owner) !==
+                  catalogReferenceKey(record.source)
+              ) {
+                throw new Error(
+                  `${owner} curated token replacement must cite token-owned replacement assertions.`,
+                );
+              }
+              if (curatedEvidence.source_refs.length !== 1) {
+                throw new Error(
+                  `${owner} curated token-replacement assertion must cite exactly one source.`,
+                );
+              }
+              requireSourceKinds(
+                curatedEvidence.source_refs[0],
+                `${owner}.source_evidence_refs`,
+                ["repository_file"],
+              );
+              const sourceRecord = this.getRecord(
+                "source",
+                curatedEvidence.source_refs[0].id,
+              );
+              const detail = this.getContentJson(
+                curatedEvidence.detail_content_ref,
+              );
+              if (
+                !("source_kind" in detail) ||
+                catalogReferenceKey(detail.source) !==
+                  catalogReferenceKey(record.source) ||
+                catalogReferenceKey(detail.target) !==
+                  catalogReferenceKey(record.target) ||
+                !sourceRecord ||
+                (sourceRecord.source_kind !== "repository_file" &&
+                  sourceRecord.source_kind !== "repository_directory") ||
+                sourceRecord.locator !== detail.source_path
+              ) {
+                throw new Error(
+                  `${owner} curated token-replacement assertion does not match its relation and repository source.`,
+                );
+              }
+              requireExclusiveRelationEvidence(
+                curatedEvidence.id,
+                record.id,
+                `${owner} curated token-replacement`,
+              );
+              if (
+                !unboundTokenReplacementAssertions.delete(curatedEvidence.id)
+              ) {
+                throw new Error(
+                  `${owner} token-replacement assertion '${curatedEvidence.id}' is bound to more than one relation.`,
+                );
+              }
+            }
+            const targets =
+              tokenReplacementTargets.get(record.source.id) ??
+              new Set<string>();
+            targets.add(record.target.id);
+            tokenReplacementTargets.set(record.source.id, targets);
           } else {
             if (
               record.target.family !== "api_symbol" ||
@@ -2759,6 +2842,19 @@ export class CatalogStoreV2 {
       if (relationIds.length !== expectedRelationCount) {
         throw new Error(
           `token_declaration:${declaration.id} must bind exactly ${expectedRelationCount} token-replacement relation(s); received ${relationIds.length}.`,
+        );
+      }
+    }
+    for (const token of this.getFamily("token")) {
+      const actualTargets = [
+        ...(tokenReplacementTargets.get(token.id) ?? new Set<string>()),
+      ].sort(compareOrdinalStrings);
+      const expectedTargets = token.replacement_token_refs
+        .map((reference) => reference.id)
+        .sort(compareOrdinalStrings);
+      if (canonicalJson(actualTargets) !== canonicalJson(expectedTargets)) {
+        throw new Error(
+          `token:${token.id} replacement references do not exactly match validated replacement relations.`,
         );
       }
     }

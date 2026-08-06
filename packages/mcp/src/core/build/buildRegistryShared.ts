@@ -109,6 +109,9 @@ export function preferEarlierVersion(
 export function cleanMarkdownText(raw: string): string {
   return normalizeWhitespace(
     raw
+      .replace(/\{@link\s+([^\s}]+)(?:\s+([^}]+))?\}/giu, (_, target, label) =>
+        String(label ?? target).trim(),
+      )
       .replace(/`([^`]+)`/g, "$1")
       .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
       .replace(/<[^>]+>/g, "")

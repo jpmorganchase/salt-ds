@@ -20,7 +20,10 @@
   "publishBinEntrypoints": {
     "bin/salt-mcp.js": {
       "requirePath": "../dist-cjs/index.js",
-      "errorPrefix": "salt-mcp error:"
+      "errorPrefix": "salt-mcp error:",
+      "conciseErrorCodes": [
+        "SALT_MCP_CLI_USAGE"
+      ]
     }
   },
   "publishExports": {

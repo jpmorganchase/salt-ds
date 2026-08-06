@@ -64,6 +64,7 @@ export {
   reviewSaltCode,
 } from "./review/reviewSaltCode.js";
 export {
+  DEFAULT_SEARCH_RESULTS,
   MAX_SEARCH_RESULTS,
   searchSalt,
 } from "./search/searchSalt.js";

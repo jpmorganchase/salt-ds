@@ -10,6 +10,7 @@ import {
   validatePhase5RunCaptures,
   verifyPhase5EvaluationCommit,
 } from "./phase5EvaluationContract.mjs";
+import { readPhase5ExternalFile } from "./phase5ExternalFile.mjs";
 
 const repoRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -54,81 +55,23 @@ function readBoundJson(relativePath, label) {
   return JSON.parse(fs.readFileSync(target, "utf8"));
 }
 
-function readExternalFile(absolutePath, label) {
-  if (typeof absolutePath !== "string" || !path.isAbsolute(absolutePath)) {
-    throw new Error(`${label} must be an absolute external file path.`);
-  }
-  const lexicalPath = path.resolve(absolutePath);
-  const lexicalStats = fs.lstatSync(lexicalPath);
-  if (
-    !lexicalStats.isFile() ||
-    lexicalStats.isSymbolicLink() ||
-    lexicalStats.nlink !== 1
-  ) {
-    throw new Error(
-      `${label} must be a regular, non-link, singly linked file.`,
-    );
-  }
-  const fileDescriptor = fs.openSync(lexicalPath, "r");
-  try {
-    const openedStats = fs.fstatSync(fileDescriptor);
-    if (
-      !openedStats.isFile() ||
-      openedStats.nlink !== 1 ||
-      openedStats.dev !== lexicalStats.dev ||
-      openedStats.ino !== lexicalStats.ino
-    ) {
-      throw new Error(`${label} changed while its trust boundary was opened.`);
-    }
-    const realPath = fs.realpathSync.native(lexicalPath);
-    const samePath =
-      process.platform === "win32"
-        ? realPath.toLowerCase() === lexicalPath.toLowerCase()
-        : realPath === lexicalPath;
-    if (!samePath) {
-      throw new Error(`${label} may not resolve through a link.`);
-    }
-    const relative = path.relative(repoRoot, realPath);
-    if (
-      relative === "" ||
-      (relative !== ".." &&
-        !relative.startsWith(`..${path.sep}`) &&
-        !path.isAbsolute(relative))
-    ) {
-      throw new Error(`${label} must be provisioned outside the repository.`);
-    }
-    const bytes = fs.readFileSync(fileDescriptor);
-    const finalStats = fs.fstatSync(fileDescriptor);
-    if (
-      finalStats.dev !== openedStats.dev ||
-      finalStats.ino !== openedStats.ino ||
-      finalStats.size !== openedStats.size ||
-      finalStats.mtimeMs !== openedStats.mtimeMs ||
-      finalStats.nlink !== 1
-    ) {
-      throw new Error(`${label} changed while it was read.`);
-    }
-    return bytes;
-  } finally {
-    fs.closeSync(fileDescriptor);
-  }
-}
-
 const args = parseArgs(process.argv.slice(2));
 const preregistration = loadPhase5Preregistration(repoRoot);
 const trustedKeyFingerprints = args["trusted-key-fingerprints"]
   ? JSON.parse(
-      readExternalFile(
+      readPhase5ExternalFile(
         args["trusted-key-fingerprints"],
         "trusted key fingerprints",
+        repoRoot,
       ).toString("utf8"),
     )
   : null;
 const rawTrustedEvaluatorIdentity = args["trusted-evaluator-identity"]
   ? JSON.parse(
-      readExternalFile(
+      readPhase5ExternalFile(
         args["trusted-evaluator-identity"],
         "trusted evaluator identity",
+        repoRoot,
       ).toString("utf8"),
     )
   : null;
@@ -212,9 +155,10 @@ if (Object.keys(args).length === 0) {
   process.stdout.write(
     `${JSON.stringify(
       computePhase5EvaluationReport(preregistration, evaluation, {
-        publishedPackageTarballBytes: readExternalFile(
+        publishedPackageTarballBytes: readPhase5ExternalFile(
           args["published-tarball"],
           "published package tarball",
+          repoRoot,
         ),
         repoRoot,
         trustedKeyFingerprints,

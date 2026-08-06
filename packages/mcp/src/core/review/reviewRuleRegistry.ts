@@ -212,11 +212,7 @@ function createReviewIndexes(
   const tokenFactsByName = new Map<string, ParsedSubmittedFact[]>();
   const usedNamespaceBindings = new Set<string>();
   for (const fact of facts) {
-    if (
-      fact.kind === "jsx_element" &&
-      fact.package_name &&
-      fact.export_name
-    ) {
+    if (fact.kind === "jsx_element" && fact.package_name && fact.export_name) {
       appendIndexValue(
         jsxFactsByIdentity,
         identityKey(fact.package_name, fact.export_name),
@@ -919,9 +915,7 @@ function policyFinding(
   const referencePaths = [
     fieldPath,
     "claim.declaration.reason",
-    ...(occurrence.declaration.docs?.length
-      ? ["claim.declaration.docs"]
-      : []),
+    ...(occurrence.declaration.docs?.length ? ["claim.declaration.docs"] : []),
     "claim.selector",
     "claim.applicability",
     "claim.source",
@@ -1012,7 +1006,9 @@ function evaluateProjectPolicyRules(input: {
   }
   const policy = input.policy;
   const canonicalNames = uniqueValues(
-    input.facts.map((fact) => catalogGroundedCanonicalName(fact, input.indexes)),
+    input.facts.map((fact) =>
+      catalogGroundedCanonicalName(fact, input.indexes),
+    ),
   );
   const sourceTokens = uniqueValues(
     input.facts.flatMap((fact) =>
@@ -1071,18 +1067,19 @@ function evaluateProjectPolicyRules(input: {
       occurrence,
       blockedByUnresolvedLayer,
       blockedByUnresolvedSelector,
-      status: blockedByUnresolvedLayer || blockedByUnresolvedSelector
-        ? ("unknown" as const)
-        : evaluateProjectPolicyConditionV2(occurrence.condition, {
-            workflow: "review",
-            salt_version: effectiveSaltVersion,
-            facts: {
-              canonical_name: new Set(canonicalNames),
-              source_token: new Set(sourceTokens),
-              token_family: new Set(tokenFamilies),
-            },
-            normalized_facts: {},
-          }),
+      status:
+        blockedByUnresolvedLayer || blockedByUnresolvedSelector
+          ? ("unknown" as const)
+          : evaluateProjectPolicyConditionV2(occurrence.condition, {
+              workflow: "review",
+              salt_version: effectiveSaltVersion,
+              facts: {
+                canonical_name: new Set(canonicalNames),
+                source_token: new Set(sourceTokens),
+                token_family: new Set(tokenFamilies),
+              },
+              normalized_facts: {},
+            }),
     };
   });
   const applicable = applicability.filter(

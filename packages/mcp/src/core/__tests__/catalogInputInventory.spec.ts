@@ -46,7 +46,11 @@ describe("catalog input inventory", () => {
         "scripts/catalogBuildIdentity.mjs",
         "scripts/checkAiToolingPackageDryRun.mjs",
         "vite.config.ts",
+        "packages/mcp/src/core/catalog/catalogBudgets.json",
       ]),
+    );
+    expect(CATALOG_INPUT_PATTERNS).not.toContain(
+      "packages/mcp/public-surface-budgets.json",
     );
   });
 

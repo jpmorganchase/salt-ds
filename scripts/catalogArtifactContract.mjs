@@ -217,6 +217,19 @@ export function countCatalogArtifactLogicalRecords(storage, records) {
         );
       }
       return countDerivedTargetGroups(records);
+    case "tagged_source_assertion":
+      if (
+        records.some(
+          (record) =>
+            (!isRecord(record) && !Array.isArray(record)) ||
+            (Array.isArray(record) && record.length !== 5),
+        )
+      ) {
+        throw new Error(
+          "Catalog tagged source-assertion records must be objects or five-field tuples.",
+        );
+      }
+      return records.length;
     default:
       throw new Error(
         `Catalog artifact uses unknown storage kind '${storage.kind}'.`,
