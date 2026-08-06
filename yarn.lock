@@ -4513,6 +4513,7 @@ __metadata:
     "@salt-ds/core": "workspace:^"
     clsx: "npm:^2.0.0"
     embla-carousel-autoplay: "npm:^8.6.0"
+    embla-carousel-class-names: "npm:^8.6.0"
     embla-carousel-fade: "npm:^8.6.0"
   peerDependencies:
     "@types/react": ">=16.14.0"
@@ -4708,7 +4709,6 @@ __metadata:
     date-fns: "npm:^4.1.0"
     dayjs: "npm:^1.11.20"
     decimal.js: "npm:^10.4.3"
-    embla-carousel-class-names: "npm:^8.6.0"
     embla-carousel-react: "npm:^8.6.0"
     lodash-es: "npm:^4.17.21"
     luxon: "npm:^3.7.2"

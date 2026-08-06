@@ -68,3 +68,34 @@
   width: 100%;
   --carousel-slide-size: 550px;
 }
+
+.customContentCarousel {
+  width: 100%;
+  max-width: 700px;
+  --carousel-slide-size: 320px;
+  --carousel-slide-height: 200px;
+}
+
+.customContentCarousel .saltCarouselSlides {
+  overflow-clip-margin: var(--salt-spacing-100);
+}
+
+.customContentCarousel .saltCarouselSlides-container {
+  padding-top: var(--salt-spacing-100);
+}
+
+.customContentSlide {
+  height: var(--carousel-slide-height);
+}
+
+.customContentSlide .saltCarouselCard-bordered-content {
+  padding-top: var(--salt-spacing-200);
+}
+
+.customContentSlide .saltCarouselCard-actions {
+  margin-top: auto;
+}
+
+.customContentActions {
+  width: 100%;
+}

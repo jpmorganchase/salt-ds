@@ -359,6 +359,49 @@ describe("Given a Carousel", () => {
       });
     });
 
+    it("should not scroll when pointer focus lands on a partially visible slide", () => {
+      mountMultiSlideCarousel().then((emblaApi) => {
+        const pointerDownCallback = cy.stub().as("pointerDownCallback");
+        emblaApi?.on("pointerDown", pointerDownCallback);
+
+        // Queue this assertion in Cypress' command chain; the wrapped value is not used.
+        cy.wrap(null).then(() => {
+          expect(emblaApi?.selectedScrollSnap()).to.equal(0);
+        });
+
+        cy.get(".saltCarouselSlides").then(($viewport) => {
+          cy.get(".carouselSlide")
+            .eq(2)
+            .then(($slide) => {
+              const viewportRect = $viewport[0].getBoundingClientRect();
+              const slideRect = $slide[0].getBoundingClientRect();
+              const visibleSlideWidth = viewportRect.right - slideRect.left;
+
+              expect(slideRect.left).to.be.lessThan(viewportRect.right);
+              expect(slideRect.right).to.be.greaterThan(viewportRect.right);
+              expect(visibleSlideWidth).to.be.greaterThan(0);
+
+              cy.get("body").realMouseDown({
+                scrollBehavior: false,
+                x: Math.floor(slideRect.left + visibleSlideWidth / 2),
+                y: Math.floor(slideRect.top + slideRect.height / 2),
+              });
+            });
+        });
+
+        cy.get("@pointerDownCallback").should("have.been.calledOnce");
+
+        cy.get(".carouselSlide").eq(2).focus();
+        cy.get(".carouselSlide").eq(2).should("be.focused");
+
+        cy.wait(250).then(() => {
+          expect(emblaApi?.selectedScrollSnap()).to.equal(0);
+          emblaApi?.off("pointerDown", pointerDownCallback);
+        });
+        cy.get("body").realMouseUp({ scrollBehavior: false });
+      });
+    });
+
     it("should expose every visible slide as an independent tab stop and exclude off-screen slides", () => {
       mountMultiSlideCarousel().then((emblaApi) => {
         // Initially visible: slides 1 and 2. The other three slides must not
