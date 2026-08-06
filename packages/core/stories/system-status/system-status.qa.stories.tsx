@@ -1,16 +1,19 @@
-import { Button, SplitLayout, StackLayout, Text } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
 import {
+  Button,
+  SplitLayout,
+  StackLayout,
   SystemStatus,
   SystemStatusContent,
   type SystemStatusProps,
-} from "@salt-ds/lab";
+  Text,
+} from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer } from "docs/components";
 import type { FC } from "react";
 
 export default {
-  title: "Lab/System Status/System Status QA",
+  title: "Core/System Status/System Status QA",
   component: SystemStatus,
 } as Meta<typeof SystemStatus>;
 

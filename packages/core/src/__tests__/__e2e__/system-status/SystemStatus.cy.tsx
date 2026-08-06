@@ -1,4 +1,4 @@
-import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
+import { SystemStatus, SystemStatusContent } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
 import * as systemStatusStories from "~stories/system-status/system-status.stories";
 import { checkAccessibility } from "~test-utils/checkAccessibility";
