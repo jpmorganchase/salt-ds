@@ -9,7 +9,7 @@ import {
   useInteractions,
   useRole,
 } from "@floating-ui/react";
-import { type ReactNode, useCallback, useMemo, useRef } from "react";
+import { type ReactNode, useMemo, useRef } from "react";
 import { useControlled, useFloatingUI } from "../utils";
 import { OverlayContext, type OverlayContextValue } from "./OverlayContext";
 
@@ -52,13 +52,10 @@ export const Overlay = ({
     state: "open",
   });
 
-  const handleOpenChange = useCallback(
-    (newOpen: boolean) => {
-      setOpenState(newOpen);
-      onOpenChange?.(newOpen);
-    },
-    [onOpenChange],
-  );
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpenState(newOpen);
+    onOpenChange?.(newOpen);
+  };
 
   const middleware = useMemo(
     () => [
@@ -84,19 +81,17 @@ export const Overlay = ({
     useDismiss(context),
   ]);
 
-  const floatingElement = elements.floating;
-  const floatingHeight = floatingElement?.offsetHeight;
-  const floatingWidth = floatingElement?.offsetWidth;
-
   const floatingStyles = useMemo(() => {
+    const floatingElement = elements.floating;
+
     return {
       top: y ?? 0,
       left: x ?? 0,
       position: strategy,
-      width: floatingWidth,
-      height: floatingHeight,
+      width: floatingElement?.offsetWidth,
+      height: floatingElement?.offsetHeight,
     };
-  }, [floatingHeight, floatingWidth, strategy, x, y]);
+  }, [elements.floating, strategy, x, y]);
 
   const arrowProps = useMemo(
     () => ({
