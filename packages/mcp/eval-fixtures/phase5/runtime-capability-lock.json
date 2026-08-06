@@ -7,7 +7,7 @@
   "files": [
     {
       "path": "packages/mcp/src/cli.ts",
-      "sha256": "c284662621c52705798bddec03ff753235ba082aadb5b5afe9dbce062f7573a9"
+      "sha256": "ccd0c71e7d84db2a67e326dbe167ad2ed505243be1cf6fb4257b755bd47a73a1"
     },
     {
       "path": "packages/mcp/src/core/catalog/accessibilityImplementationSignal.ts",
@@ -27,7 +27,7 @@
     },
     {
       "path": "packages/mcp/src/core/catalog/catalogPayloadSchemaV2.ts",
-      "sha256": "12aa552f1bf98ba57e0fbc72a7c289c1d98e49ae465692e1885f3c000b9a0478"
+      "sha256": "b27fa79e39ac936a449155c68d3d7769ed095c36136cddc005774d2d1583d034"
     },
     {
       "path": "packages/mcp/src/core/catalog/catalogPortablePath.ts",
@@ -43,7 +43,7 @@
     },
     {
       "path": "packages/mcp/src/core/catalog/catalogRegistryProjection.ts",
-      "sha256": "9b058a5a39d6cc12e6b130dddb48d1678437ee602421e9b615e3fb3070f8f328"
+      "sha256": "5a15b35fc8538649455a570a30d23fc0c0e689e0b326e8f5f605f87225f09616"
     },
     {
       "path": "packages/mcp/src/core/catalog/catalogResourceIdentity.ts",
@@ -51,7 +51,7 @@
     },
     {
       "path": "packages/mcp/src/core/catalog/catalogSchemaV2.ts",
-      "sha256": "0faedfd43793c783919808852a99842ea0ff765f43c101196089efd2e1c90f14"
+      "sha256": "759fff8e57e8f930a4befa5c8a7fb4a0be6293c7d56d002f247a1b41b9c93960"
     },
     {
       "path": "packages/mcp/src/core/catalog/catalogSerialization.ts",
@@ -63,7 +63,7 @@
     },
     {
       "path": "packages/mcp/src/core/catalog/catalogStoreV2.ts",
-      "sha256": "a463bea906c69755996426ed173d86d7f35f99d38fe0f01e3213fd94e1de51e4"
+      "sha256": "0c4f19bf84ea8c33fada889391bcdb974134a779c50bd31fd55cbd3aa1e00042"
     },
     {
       "path": "packages/mcp/src/core/catalog/catalogTokenSurfaceV2.ts",
@@ -75,11 +75,11 @@
     },
     {
       "path": "packages/mcp/src/core/policy/layerDiagnostics.ts",
-      "sha256": "a8a03b1bb3f45709948d5e9909264314244e5ab5b7e5ee242b55f8b4c8be93fc"
+      "sha256": "cf69d79f19a256593cef0870f313addcc83b7ce193cc2760a4314962184261fa"
     },
     {
       "path": "packages/mcp/src/core/policy/projectPolicyIr.ts",
-      "sha256": "b59ccfda483b9146b2e70a8a63fec489a43cea43c40e33b26fc4b3308b3b13f7"
+      "sha256": "41741d5d061ac37412a0a91f51beaa4cd2e72593cfe332bba9bb8a96f49ef771"
     },
     {
       "path": "packages/mcp/src/core/policy/projectPolicyResourceIdentity.ts",
@@ -111,11 +111,11 @@
     },
     {
       "path": "packages/mcp/src/core/review/reviewRuleRegistry.ts",
-      "sha256": "a02a4f1e9aa3f082e11424d6588061096faf44c80da5f07470ea449030bae9fb"
+      "sha256": "f76025bccf909e11bc611f5484862487b86c8848df40a5456cbe0317dda6ee0f"
     },
     {
       "path": "packages/mcp/src/core/review/reviewSaltCode.ts",
-      "sha256": "74498e9230edb5b1b28e5dd51938d0c813155e3a56b7981484a7260c3236512d"
+      "sha256": "01532f25e3e2e663249304be5279b73c2cd039ce797b3b0b32c0aac2d1832e5c"
     },
     {
       "path": "packages/mcp/src/core/review/submittedArtifactFacts.ts",
@@ -123,11 +123,11 @@
     },
     {
       "path": "packages/mcp/src/core/runtime.ts",
-      "sha256": "1ebb9fd7fe8ac3a2678ae3920ccaf7875b26a57de755009138c5c668abb514e0"
+      "sha256": "d65ccd975a8798c451dcbca5d43e9c205da86bdd9ad467e9f730610a110af138"
     },
     {
       "path": "packages/mcp/src/core/search/searchSalt.ts",
-      "sha256": "e5a5d2a89cbd6e250e817551ed3b05e39f50f481a3b5b74be446489c8a79fad9"
+      "sha256": "1b9fef584e052ed25cd8ac6eee08f6cc189f92397f6350a366c8999b4f631be3"
     },
     {
       "path": "packages/mcp/src/core/tools/codeAnalysisCommon.ts",
@@ -142,32 +142,28 @@
       "sha256": "c05c016721e091db8ecbf47bf62b34d44de2eeb2f2e3c3ff6769fbdf77fac289"
     },
     {
-      "path": "packages/mcp/src/server/catalogResourceListing.ts",
-      "sha256": "2facec3aafc5e06b38ec219a928318dec61e1a2f006393242de91cdbc9274065"
-    },
-    {
       "path": "packages/mcp/src/server/compactStandardSchema.ts",
       "sha256": "aa34bdc26d243dde2753870960892317aed3db53a744231ea7225b3412962feb"
     },
     {
       "path": "packages/mcp/src/server/createServer.ts",
-      "sha256": "ad4e90e8b95da5daf0390dc74a9e187fb02e2c37f75a2de52f3803419ff827f0"
+      "sha256": "70978339ee22068a379912910166ef6e314dd2932f1e241dc262520b4c4345a8"
     },
     {
       "path": "packages/mcp/src/server/inspectSaltProject.ts",
-      "sha256": "5557f6db948c740f718a9a64526d150160b0a3ee6711d5187bc488728cfe1e8b"
+      "sha256": "a21b432550930fb661142720c8622a6d3bcd5a81b20a5df4fe5fa15cd4813035"
     },
     {
       "path": "packages/mcp/src/server/projectAccess.ts",
-      "sha256": "51851fb0be7110bea274f23ceb15a2728b3304ee0f9deb75742f053abc1ec64f"
+      "sha256": "5a5ac2acba87075cef2ad1ce9f50252c0d9edda2b4d9f0b685d322b3fccdea85"
     },
     {
       "path": "packages/mcp/src/server/projectContext/boundedTsconfig.ts",
-      "sha256": "43136f3eb929b318d394c5464e5d5093c6328d1c5afd49d5fbd73d85a721dbee"
+      "sha256": "de015c0431f234d8b03ef6ad7cec872edf948235a5a2d3ba30b1735487593196"
     },
     {
       "path": "packages/mcp/src/server/projectContext/saltInstallation.ts",
-      "sha256": "44ef11f7ed886fe892c96fc3778513286a47813b08fade3c1433b8ce4433350c"
+      "sha256": "74c6e3c8fcac52580866e968f492ae73b3507d50cce6bdc9e94bf8720a9ec71f"
     },
     {
       "path": "packages/mcp/src/server/projectPolicyImports.ts",
@@ -179,11 +175,11 @@
     },
     {
       "path": "packages/mcp/src/server/projectPolicySnapshot.ts",
-      "sha256": "5a55f94e0504a29664bef5ea6de5d17fdadaaf089f4543cde55a3ab5c3856f76"
+      "sha256": "e0c6c6357b0472becd2ac53f66c859a9ce1f17061e7d752dca3fc9fb2ddf6fce"
     },
     {
       "path": "packages/mcp/src/server/registerResources.ts",
-      "sha256": "e48ae0ed6d5a9a1e714b1e0c088fb93a2111d6123a8187774438aa0459ed0431"
+      "sha256": "bb55952e899cd989111039917760f9cf9c6dddcd82550980b7f91a4ac1c3e612"
     },
     {
       "path": "packages/mcp/src/server/registerTools.ts",
@@ -191,11 +187,11 @@
     },
     {
       "path": "packages/mcp/src/server/serverMetadata.ts",
-      "sha256": "353cc7f523abb896836d5c05cfcc05175e74a9e4b9b25e5b1da0f524253f2836"
+      "sha256": "f81569711ce2c939dfa6b9603ebb0bf40858627be13e865015098eb1d6e93519"
     },
     {
       "path": "packages/mcp/src/server/toolDefinitions.ts",
-      "sha256": "f4f1141eb61fcf91d69960f453219915c283ce15601cf2f5e35ffb83b491f815"
+      "sha256": "84d6f8a6f04d1894448f73033dd3f9b29209a9f99588097b4e5825ee7996ab41"
     }
   ]
 }
