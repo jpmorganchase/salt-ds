@@ -650,7 +650,7 @@ describe("Phase 5 real-agent evaluation contract", () => {
 
   // These three causal-study gates intentionally remain executable research
   // code, but no longer freeze current product source bytes in archive CI.
-  it.skip("binds the frozen 30-task, 180-session preregistration to repository evidence", async () => {
+  it("binds the frozen 30-task, 180-session preregistration to repository evidence", async () => {
     await expect(
       validatePhase5Preregistration(preregistration, { repoRoot: REPO_ROOT }),
     ).resolves.toMatchObject({
