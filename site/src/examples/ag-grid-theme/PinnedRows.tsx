@@ -74,13 +74,12 @@ export const PinnedRows = function PinnedRowsExample({
   };
 
   const getHeaderRow = () => {
-    return headerRow;
+    return [...headerRow];
   };
 
   const pinnedBottomRowData = showFooter ? footerRow() : undefined;
   const pinnedTopRowData = showHeader ? getHeaderRow() : undefined;
 
-  console.log({ pinnedBottomRowData, pinnedTopRowData });
   return (
     <div {...containerProps}>
       <AgGridReact

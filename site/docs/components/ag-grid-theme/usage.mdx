@@ -20,12 +20,13 @@ When you want to use a component that is not related to AG Grid.
 
 <Callout title="Note">
 
-If you're using ag grid v33, please set `{ theme: "legacy" }`.
-Refer to [ag grid upgrade guide](https://www.ag-grid.com/react-data-grid/upgrading-to-ag-grid-33/#migrating-from-ag-grid-community) for more information.
+AG Grid v28–v32 requires no additional theme configuration. If you're using AG Grid v33–v36, set `theme="legacy"` on each grid:
 
+```jsx
+<AgGridReact theme="legacy" />
 ```
-provideGlobalGridOptions({ theme: "legacy"});
-```
+
+You can instead use `provideGlobalGridOptions({ theme: "legacy" })` to configure every grid in your application. Refer to the [AG Grid migration guide](https://www.ag-grid.com/javascript-data-grid/theming-migration/#continue-with-legacy-themes) for more information.
 
 </Callout>
 
@@ -34,6 +35,15 @@ provideGlobalGridOptions({ theme: "legacy"});
 Make sure to install the necessary AG Grid packages. You will need to install `ag-grid-react`. You should also install any [packages](https://www.ag-grid.com/react-data-grid/packages/) and [modules](https://www.ag-grid.com/react-data-grid/modules/) that are necessary for your project, such as `ag-grid-community` and `ag-grid-enterprise`.
 
 To install the `@salt-ds/ag-grid-theme` package, run the command appropriate to your environment: `yarn add @salt-ds/ag-grid-theme` or `npm install @salt-ds/ag-grid-theme`
+
+AG Grid v33+ requires applications to register the modules they use before creating a grid. For example, register all enterprise features with:
+
+```js
+import { ModuleRegistry } from "ag-grid-community";
+import { AllEnterpriseModule } from "ag-grid-enterprise";
+
+ModuleRegistry.registerModules([AllEnterpriseModule]);
+```
 
 ### Import Salt AG Grid theme
 
