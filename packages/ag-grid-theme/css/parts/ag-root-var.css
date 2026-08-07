@@ -5,6 +5,13 @@ div[class*="ag-theme-salt"] {
   --ag-menu-background-color: var(--salt-container-primary-background);
   --ag-border-color: var(--salt-separable-secondary-borderColor);
   --ag-borders-secondary: var(--salt-size-fixed-100) var(--salt-borderStyle-solid);
+  /*
+    [VERSION DIVERGENCE]: v32 paints pinned-row borders directly and ignores this variable.
+    From v33, AG Grid uses it for version-specific pinned-row painters and height measurement.
+    Disable those painters so the explicit v32-v35 outer borders in ag-buttons.css remain the
+    only legacy separators; v36 uses its separately scoped container painters there.
+  */
+  --ag-pinned-row-border: none;
   --ag-card-radius: var(--salt-palette-corner);
   --ag-cell-horizontal-padding: var(--salt-spacing-100);
   --ag-checkbox-border-radius: 0;
@@ -63,6 +70,16 @@ div[class*="ag-theme-salt"] {
       Use categorical color for below tokens when available
       --ag-advanced-filter-join-pill-color,--ag-advanced-filter-column-pill-color,--ag-advanced-filter-option-pill-color,--ag-advanced-filter-value-pill-color
      */
+}
+
+/*
+  [VERSION DIVERGENCE]: AG Grid reads the border through .ag-measurement-container
+  from v33 and re-declares it there from --ag-borders-critical in v36. Keep the
+  measurement at zero so the explicit outer borders do not add a second pixel to
+  pinned-row height. v32 does not use this variable for its measurement.
+*/
+[class*="ag-theme-salt"] .ag-measurement-container {
+  --ag-pinned-row-border: none;
 }
 
 div[class*="ag-theme-salt-compact"] {

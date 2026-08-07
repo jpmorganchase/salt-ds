@@ -1,9 +1,15 @@
 import { useDensity, useTheme } from "@salt-ds/core";
-import type { GridApi, GridReadyEvent } from "ag-grid-community";
+import {
+  type GridApi,
+  type GridReadyEvent,
+  ModuleRegistry,
+} from "ag-grid-community";
+import { AllEnterpriseModule } from "ag-grid-enterprise";
 import type { AgGridReactProps } from "ag-grid-react";
 import { type HTMLAttributes, useMemo, useRef, useState } from "react";
-// Import enterprise to showcase theme, make sure to buy your enterprise license if needed
-import "ag-grid-enterprise";
+
+// [VERSION DIVERGENCE]: AG Grid v33+ requires module registration
+ModuleRegistry.registerModules([AllEnterpriseModule]);
 
 // Helps to set className, rowHeight and headerHeight depending on the current density
 export function useAgGridHelpers(compact = false): {
@@ -42,7 +48,6 @@ export function useAgGridHelpers(compact = false): {
 
   const onGridReady = ({ api }: GridReadyEvent) => {
     apiRef.current = { api };
-    api.sizeColumnsToFit();
     setGridReady(true);
   };
 
@@ -52,7 +57,11 @@ export function useAgGridHelpers(compact = false): {
       style: { height: 500, width: "100%" },
     },
     agGridProps: {
+      // [VERSION DIVERGENCE]: AG Grid v33+ defaults to the Theming API; Salt continues to use legacy CSS themes.
+      theme: "legacy",
       onGridReady,
+      // [VERSION DIVERGENCE]: In v36, sizing on gridReady can run before vertical-scroll visibility is known. Let AG Grid defer fitting until data is rendered.
+      autoSizeStrategy: { type: "fitGridWidth" },
       rowHeight,
       headerHeight: headerRowHeight,
       suppressMenuHide: true,
