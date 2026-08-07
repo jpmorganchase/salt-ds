@@ -103,7 +103,7 @@ ColumnMenuGeneral.play = async ({ canvasElement }) => {
     });
 
     await userEvent.hover(
-      within(menu).getByRole("treeitem", { name: /Pin Column/i }),
+      within(menu).getByRole("menuitem", { name: /Pin Column/i }),
     );
 
     // snapshot the menu
@@ -218,7 +218,7 @@ ColumnMenuColumns.play = async ({ canvasElement }) => {
     });
 
     await userEvent.click(
-      within(menu).getByRole("treeitem", { name: /Choose Column/i }),
+      within(menu).getByRole("menuitem", { name: /Choose Column/i }),
     );
 
     const columnDialog = await within(gridRoot).findByRole("dialog", {

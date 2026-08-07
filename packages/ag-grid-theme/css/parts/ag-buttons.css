@@ -155,11 +155,60 @@
   border-color: var(--salt-separable-secondary-borderColor);
 }
 
+/* [VERSION DIVERGANCE]: Pre-v36, the pinned-bottom top border sits on .ag-floating-bottom. */
 .ag-theme-salt-light .ag-floating-bottom,
 .ag-theme-salt-dark .ag-floating-bottom,
 .ag-theme-salt-compact-light .ag-floating-bottom,
 .ag-theme-salt-compact-dark .ag-floating-bottom {
   border-color: var(--salt-container-bold-borderColor);
+}
+
+/*
+  [VERSION DIVERGANCE]: From v36, AG Grid positions the pinned-bottom ::before separator over the
+  first pixel of the row, where it compounds with cell borders. Move it one pixel above the row
+  instead. Unlike a real container border, this does not increase AG Grid's JS-measured pinned
+  height (which otherwise makes a 61px touch row occupy 62px). Inert pre-v36.
+*/
+.ag-theme-salt-light .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before,
+.ag-theme-salt-dark .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before,
+.ag-theme-salt-compact-light .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before,
+.ag-theme-salt-compact-dark .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before {
+  border-top-color: var(--salt-container-bold-borderColor);
+  top: -1px;
+}
+
+/*
+  [VERSION DIVERGANCE]: From v36, the pinned-top rows container is one pixel taller than its rows
+  and paints over the wrapper's border-bottom, leaving a white gap. The last pinned row also keeps
+  its own lighter row border. Paint the separator into that already-budgeted gap and remove the
+  duplicate row border. The pseudo-element consumes no layout space. Inert pre-v36.
+*/
+.ag-theme-salt-light .ag-grid-scrollable-area.ag-has-top-pinned-rows .ag-grid-pinned-top-rows-container::after,
+.ag-theme-salt-dark .ag-grid-scrollable-area.ag-has-top-pinned-rows .ag-grid-pinned-top-rows-container::after,
+.ag-theme-salt-compact-light .ag-grid-scrollable-area.ag-has-top-pinned-rows .ag-grid-pinned-top-rows-container::after,
+.ag-theme-salt-compact-dark .ag-grid-scrollable-area.ag-has-top-pinned-rows .ag-grid-pinned-top-rows-container::after {
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
+  bottom: 0;
+  content: "";
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+}
+
+.ag-theme-salt-light .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-pinned-left-cells,
+.ag-theme-salt-dark .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-pinned-left-cells,
+.ag-theme-salt-compact-light .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-pinned-left-cells,
+.ag-theme-salt-compact-dark .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-pinned-left-cells,
+.ag-theme-salt-light .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-scrolling-cells,
+.ag-theme-salt-dark .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-scrolling-cells,
+.ag-theme-salt-compact-light .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-scrolling-cells,
+.ag-theme-salt-compact-dark .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-scrolling-cells,
+.ag-theme-salt-light .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-pinned-right-cells,
+.ag-theme-salt-dark .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-pinned-right-cells,
+.ag-theme-salt-compact-light .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-pinned-right-cells,
+.ag-theme-salt-compact-dark .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-pinned-right-cells {
+  border-bottom: none;
 }
 
 .ag-theme-salt-light .ag-column-drop-horizontal,

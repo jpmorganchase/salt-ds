@@ -7,6 +7,16 @@
   font-size: var(--salt-text-fontSize);
 }
 
+/*
+  [VERSION DIVERGANCE]: Known v36 limitation, intentionally NOT patched. Pre-v36 the vertical
+  scrollbar was contained between the pinned top and pinned bottom rows. From v36,
+  FakeVScrollComp sizes the scrollbar track from getHeaderRowsOffset(), which only accounts for
+  the column header, so the overlay thumb travels over pinned rows. The track height is set as
+  an inline style from JS and cannot be corrected from CSS; re-stacking pinned rows above the
+  scrollbar hides the thumb behind them (and would change pre-v36 stacking), so the v36
+  behaviour is left as is.
+*/
+
 .ag-theme-salt-light .ag-row-selected,
 .ag-theme-salt-dark .ag-row-selected,
 .ag-theme-salt-compact-light .ag-row-selected,
@@ -15,6 +25,23 @@
   border-color: var(--ag-selected-row-border-color);
 }
 
+/*
+  [VERSION DIVERGANCE]: From v36, the row bottom border moved from the row element to its cells
+  containers (driven by --ag-row-border-color). This variable is inert pre-v36.
+*/
+.ag-theme-salt-light .ag-row.ag-row-selected,
+.ag-theme-salt-dark .ag-row.ag-row-selected,
+.ag-theme-salt-compact-light .ag-row.ag-row-selected,
+.ag-theme-salt-compact-dark .ag-row.ag-row-selected {
+  --ag-row-border-color: var(--ag-selected-row-border-color);
+}
+
+/*
+  [VERSION DIVERGANCE]: Pre-v36, AG Grid painted the selected row overlay via .ag-row-selected::before
+  and this rule only reshaped it into the 1px selected border. From v36, rows (other than full-width
+  rows) no longer have a ::before of their own, so this rule defines the whole pseudo-element.
+  The z-index lifts the border above the pinned cells containers, which are z-index: 2 in v36.
+*/
 .ag-theme-salt-light .ag-row-selected::before,
 .ag-theme-salt-dark .ag-row-selected::before,
 .ag-theme-salt-compact-light .ag-row-selected::before,
@@ -23,10 +50,46 @@
 .ag-theme-salt-dark .ag-row-hover.ag-row-selected::before,
 .ag-theme-salt-compact-light .ag-row-hover.ag-row-selected::before,
 .ag-theme-salt-compact-dark .ag-row-hover.ag-row-selected::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 3;
   background-color: var(--ag-selected-row-border-color);
   background-image: none;
   height: var(--salt-size-fixed-100);
   top: -1px;
+}
+
+/*
+  [VERSION DIVERGANCE]: From v36, selection is painted on the three cell containers rather than
+  the row. Keep the row's base background in the flex-fill area after the last unpinned column,
+  disable the pre-v36 row-wide border, and paint the top border on the selected cell containers.
+  .ag-grid-scrolling-container is v36-only, so these rules are inert in earlier supported versions.
+*/
+[class*="ag-theme-salt"] .ag-grid-scrolling-container .ag-row.ag-row-selected:not(.ag-full-width-row) {
+  background-color: var(--ag-data-background-color);
+}
+
+[class*="ag-theme-salt"] .ag-grid-scrolling-container .ag-row.ag-row-selected:not(.ag-full-width-row)::before {
+  content: none;
+}
+
+[class*="ag-theme-salt"]
+  .ag-grid-scrolling-container
+  .ag-row.ag-row-selected:not(.ag-full-width-row)
+  > .ag-grid-pinned-left-cells::before,
+[class*="ag-theme-salt"]
+  .ag-grid-scrolling-container
+  .ag-row.ag-row-selected:not(.ag-full-width-row)
+  > .ag-grid-scrolling-cells::before,
+[class*="ag-theme-salt"]
+  .ag-grid-scrolling-container
+  .ag-row.ag-row-selected:not(.ag-full-width-row)
+  > .ag-grid-pinned-right-cells::before {
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--ag-selected-row-border-color);
 }
 
 /* CELL */
