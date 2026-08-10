@@ -1,4 +1,3 @@
-import { withDateMock } from ".storybook/decorators/withDateMock";
 import {
   DatePicker,
   DatePickerOverlay,
@@ -11,9 +10,10 @@ import {
 } from "@salt-ds/date-components";
 import type { StoryFn } from "@storybook/react-vite";
 import { QAContainer } from "docs/components";
+import { withDateMock } from "~storybook-decorators/withDateMock";
 
 export default {
-  title: "Date Components/Date Picker/QA (Month Year)",
+  title: "Date Components/Month Year Picker/QA",
   component: DatePicker,
   decorators: [withDateMock],
 };
@@ -22,7 +22,7 @@ const QAContainerParameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const SingleMonthYearPanel: StoryFn = () => {
+export const MonthYearPanel: StoryFn = () => {
   const { dateAdapter } = useLocalization();
   return (
     <QAContainer itemPadding={10} width={1200} height={2000}>
@@ -41,7 +41,7 @@ export const SingleMonthYearPanel: StoryFn = () => {
     </QAContainer>
   );
 };
-SingleMonthYearPanel.parameters = QAContainerParameters;
+MonthYearPanel.parameters = QAContainerParameters;
 
 export const RangeMonthYearPanel: StoryFn = () => {
   const { dateAdapter } = useLocalization();

@@ -28,8 +28,8 @@ import {
 import { useDatePickerOverlay } from "../date-picker/DatePickerOverlayProvider";
 import { useLocalization } from "../localization-provider";
 import { MonthGrid, type MonthGridProps } from "./MonthGrid";
-import { monthYearPanelMessages } from "./messages";
 import monthYearPanelCss from "./MonthYearPanel.css";
+import { monthYearPanelMessages } from "./messages";
 import { isMonthOutOfRange, monthIndexOf, yearOf } from "./utils";
 
 const withBaseName = makePrefixer("saltMonthYearPanel");

@@ -87,11 +87,11 @@ export const RangeWithMonthYearPanelMinMaxDate = (): ReactElement => {
       for (const candidate of [inputFormat, ...MONTH_YEAR_FORMATS]) {
         const result = dateAdapter.parse(value, candidate);
         if (result?.date && dateAdapter.isValid(result.date)) {
-          const normalised =
+          const normalized =
             field === DateParserField.END
               ? dateAdapter.endOf(result.date, "month")
               : dateAdapter.startOf(result.date, "month");
-          return { ...result, date: normalised, value };
+          return { ...result, date: normalized, value };
         }
       }
       return dateAdapter.parse(value, inputFormat);

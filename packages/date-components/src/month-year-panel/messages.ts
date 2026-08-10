@@ -25,4 +25,3 @@ export const monthYearPanelMessages = {
   noStartMonth: "no start month",
   noEndMonth: "no end month",
 } as const;
-

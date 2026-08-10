@@ -259,12 +259,8 @@ describe("GIVEN a MonthYearRangePanel", () => {
       .findByRole("button", { name: "September 2027" })
       .realClick();
     // Overlay auto-closes on complete range — inputs return to the a11y tree.
-    cy.findAllByRole("textbox")
-      .first()
-      .should("have.value", "March 2026");
-    cy.findAllByRole("textbox")
-      .last()
-      .should("have.value", "September 2027");
+    cy.findAllByRole("textbox").first().should("have.value", "March 2026");
+    cy.findAllByRole("textbox").last().should("have.value", "September 2027");
   });
 
   it("SHOULD replace the start date when an earlier month is clicked with only start set", () => {
@@ -315,12 +311,8 @@ describe("GIVEN a MonthYearRangePanel", () => {
     cy.findByRole("grid", { name: /^Start month/ })
       .findByRole("button", { name: "September 2026" })
       .realClick();
-    cy.findAllByRole("textbox")
-      .first()
-      .should("have.value", "March 2026");
-    cy.findAllByRole("textbox")
-      .last()
-      .should("have.value", "September 2026");
+    cy.findAllByRole("textbox").first().should("have.value", "March 2026");
+    cy.findAllByRole("textbox").last().should("have.value", "September 2026");
   });
 
   it("SHOULD keep the two grids on consecutive years when the range fits in a single year", () => {
