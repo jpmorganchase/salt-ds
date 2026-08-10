@@ -263,9 +263,7 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
           }
           case "ArrowLeft": {
             if (index === 0) {
-              if (
-                onNavigateOutOfRange?.("backward", MONTHS_PER_YEAR - 1)
-              )
+              if (onNavigateOutOfRange?.("backward", MONTHS_PER_YEAR - 1))
                 break;
               if (canGoPrev)
                 rolloverToYear(event, year - 1, MONTHS_PER_YEAR - 1);
@@ -386,9 +384,7 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
           aria-readonly={readOnly || undefined}
           aria-disabled={disabled || undefined}
           onMouseLeave={
-            onMonthHoverChange
-              ? () => onMonthHoverChange(null)
-              : undefined
+            onMonthHoverChange ? () => onMonthHoverChange(null) : undefined
           }
           onBlur={
             onMonthHoverChange
