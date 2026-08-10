@@ -135,7 +135,7 @@ describe("Given useClassNameInjection", () => {
     await expect.element(button()).not.toHaveAttribute("variant");
   });
 
-  it("SHOULD not add a class; key is still deleted when the injector returns undefined", async () => {
+  it("SHOULD not add a class and SHOULD leave the key intact when the injector returns undefined", async () => {
     const registry: ClassNameInjectionRegistry = new Map();
     registerClassInjector<{ foo?: string }, "foo">(
       registry,
@@ -151,8 +151,80 @@ describe("Given useClassNameInjection", () => {
         />
       </ClassNameInjectionProvider>,
     );
+
+    // injector opted out (returned undefined), so no class is added and the
+    // prop passes through to the component untouched
     await expect.element(button()).toHaveAttribute("class", "base");
-    await expect.element(button()).not.toHaveAttribute("foo");
+    await expect.element(button()).toHaveAttribute("foo", "skip");
+  });
+
+  it("SHOULD leave every injector key intact when a multi-key injector opts out", async () => {
+    const registry: ClassNameInjectionRegistry = new Map();
+    registerClassInjector<
+      { className?: string; appearance?: string; sentiment?: string },
+      "appearance" | "sentiment"
+    >(
+      registry,
+      "Button",
+      ["appearance", "sentiment"],
+      ({ appearance, sentiment }) =>
+        appearance === "special" && sentiment
+          ? `special-${sentiment}`
+          : undefined,
+    );
+
+    await renderWithSalt(
+      <ClassNameInjectionProvider value={registry}>
+        <TestComponent
+          componentName="Button"
+          props={{
+            className: "base",
+            appearance: "solid",
+            sentiment: "accented",
+          }}
+        />
+      </ClassNameInjectionProvider>,
+    );
+
+    await expect.element(button()).toHaveAttribute("class", "base");
+    await expect.element(button()).toHaveAttribute("appearance", "solid");
+    await expect.element(button()).toHaveAttribute("sentiment", "accented");
+  });
+
+  it("SHOULD strip every injector key when a multi-key injector acts", async () => {
+    const registry: ClassNameInjectionRegistry = new Map();
+    registerClassInjector<
+      { className?: string; appearance?: string; sentiment?: string },
+      "appearance" | "sentiment"
+    >(
+      registry,
+      "Button",
+      ["appearance", "sentiment"],
+      ({ appearance, sentiment }) =>
+        appearance === "special" && sentiment
+          ? `special-${sentiment}`
+          : undefined,
+    );
+
+    await renderWithSalt(
+      <ClassNameInjectionProvider value={registry}>
+        <TestComponent
+          componentName="Button"
+          props={{
+            className: "base",
+            appearance: "special",
+            sentiment: "accented",
+          }}
+        />
+      </ClassNameInjectionProvider>,
+    );
+
+    // injector acted, so its keys are consumed and stripped from the component
+    await expect
+      .element(button())
+      .toHaveAttribute("class", "base special-accented");
+    await expect.element(button()).not.toHaveAttribute("appearance");
+    await expect.element(button()).not.toHaveAttribute("sentiment");
   });
 
   it("SHOULD only update matching components from the registry", async () => {
