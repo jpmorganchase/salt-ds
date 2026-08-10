@@ -31,8 +31,8 @@ import {
 import { useDatePickerOverlay } from "../date-picker/DatePickerOverlayProvider";
 import { useLocalization } from "../localization-provider";
 import { MonthGrid, type MonthGridApi, type MonthGridProps } from "./MonthGrid";
-import { monthYearPanelMessages } from "./messages";
 import monthYearPanelCss from "./MonthYearPanel.css";
+import { monthYearPanelMessages } from "./messages";
 import { isMonthOutOfRange, monthIndexOf, yearOf } from "./utils";
 
 const withBaseName = makePrefixer("saltMonthYearPanel");
@@ -216,10 +216,7 @@ export const MonthYearRangePanel = forwardRef<
    */
   const handleStartOutOfRange = useCallback(
     (direction: "forward" | "backward", targetIndex: number) => {
-      if (
-        direction === "forward" &&
-        visibleEndYear === visibleStartYear + 1
-      ) {
+      if (direction === "forward" && visibleEndYear === visibleStartYear + 1) {
         endGridApiRef.current?.focusMonth(targetIndex);
         return true;
       }
@@ -237,10 +234,7 @@ export const MonthYearRangePanel = forwardRef<
    */
   const handleEndOutOfRange = useCallback(
     (direction: "forward" | "backward", targetIndex: number) => {
-      if (
-        direction === "backward" &&
-        visibleEndYear === visibleStartYear + 1
-      ) {
+      if (direction === "backward" && visibleEndYear === visibleStartYear + 1) {
         startGridApiRef.current?.focusMonth(targetIndex);
         return true;
       }
@@ -451,10 +445,18 @@ export const MonthYearRangePanel = forwardRef<
     (date: DateFrameworkType) => {
       const start = selectedDate?.startDate;
       const end = selectedDate?.endDate;
-      if (start && dateAdapter.isValid(start) && dateAdapter.isSame(date, start, "month")) {
+      if (
+        start &&
+        dateAdapter.isValid(start) &&
+        dateAdapter.isSame(date, start, "month")
+      ) {
         return true;
       }
-      if (end && dateAdapter.isValid(end) && dateAdapter.isSame(date, end, "month")) {
+      if (
+        end &&
+        dateAdapter.isValid(end) &&
+        dateAdapter.isSame(date, end, "month")
+      ) {
         return true;
       }
       return false;
@@ -479,7 +481,8 @@ export const MonthYearRangePanel = forwardRef<
       const hasStart = !!(start && dateAdapter.isValid(start));
       const hasEnd = !!(end && dateAdapter.isValid(end));
       const isStart =
-        hasStart && dateAdapter.isSame(date, start as DateFrameworkType, "month");
+        hasStart &&
+        dateAdapter.isSame(date, start as DateFrameworkType, "month");
       const isEnd =
         hasEnd && dateAdapter.isSame(date, end as DateFrameworkType, "month");
       const sameMonth =
@@ -502,8 +505,7 @@ export const MonthYearRangePanel = forwardRef<
         rangeStart !== undefined &&
         dateAdapter.compare(monthStart, rangeStart) > 0;
       const beforeEnd =
-        rangeEnd !== undefined &&
-        dateAdapter.compare(monthStart, rangeEnd) < 0;
+        rangeEnd !== undefined && dateAdapter.compare(monthStart, rangeEnd) < 0;
 
       // Hover-preview: only kick in when exactly one endpoint is committed,
       // so we don't fight the confirmed selected range styling above.
