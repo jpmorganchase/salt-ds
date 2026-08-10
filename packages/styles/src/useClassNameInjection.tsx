@@ -86,29 +86,41 @@ export function useClassNameInjection<Props extends PropsWithClassName>(
     [entries, props],
   );
 
-  // Compute injected classes provided through ClassNameInjectionRegistry
-  const injected = useMemo(() => {
+  // Run each injector, tracking which entries actually produced a class.
+  // An entry that returns a class has "consumed" its keys; one that returns
+  // null/undefined has opted out for these props and its keys must pass through
+  // to the component unchanged.
+  const entryResults = useMemo(() => {
     const { className: _ignore, ...restProps } = props as any;
-    if (!entries.length) return [];
-    return entries
-      .map((e) => e.fn(restProps))
-      .filter((v): v is string => v != null);
+    if (!entries.length)
+      return [] as { entry: ClassNameInjectorEntry; result: string | null }[];
+    return entries.map((entry) => ({
+      entry,
+      result: entry.fn(restProps) ?? null,
+    }));
   }, [entries, deps, props]);
 
   // Merge original className with injected classes
   const className = useMemo(
-    () => clsx((props as any).className, injected) || undefined,
-    [props, injected],
+    () =>
+      clsx(
+        (props as any).className,
+        entryResults.map((r) => r.result).filter((v): v is string => v != null),
+      ) || undefined,
+    [props, entryResults],
   );
 
-  // Create a cleaned props object by stripping keys used by injectors, to avoid DOM errors with unknown attributes
+  // Create a cleaned props object by stripping only the keys of injectors that
+  // actually acted, to avoid DOM errors with unknown attributes while leaving
+  // props untouched for components that don't opt into the extension.
   const cleanProps = useMemo(() => {
     const { className: _ignore, ...restProps } = props as any;
     if (!entries.length) {
       return restProps as Omit<Props, "className">;
     }
     const copy = { ...restProps } as Omit<Props, "className">;
-    for (const entry of entries) {
+    for (const { entry, result } of entryResults) {
+      if (result == null) continue;
       for (const key of entry.keys) {
         if (Object.hasOwn(copy, key)) {
           delete (copy as any)[key];
@@ -116,7 +128,7 @@ export function useClassNameInjection<Props extends PropsWithClassName>(
       }
     }
     return copy;
-  }, [entries, deps, props]);
+  }, [entries, entryResults, props]);
 
   return { className, props: cleanProps };
 }
