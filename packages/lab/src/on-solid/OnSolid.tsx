@@ -8,7 +8,11 @@ import onSolidCss from "./OnSolid.css";
 
 const withBaseName = makePrefixer("saltOnSolid");
 
-export interface OnSolidProps extends Omit<ButtonProps, "appearance"> {}
+export interface OnSolidProps
+  extends Omit<
+    ButtonProps,
+    "appearance" | "sentiment" | "variant" | "loading" | "loadingAnnouncement"
+  > {}
 
 export const OnSolid = forwardRef<HTMLButtonElement, OnSolidProps>(
   function OnSolid({ className, ...rest }, ref) {
