@@ -11,7 +11,7 @@ export const OnSolidStory: StoryFn<typeof OnSolid> = (args) => {
   return (
     <div
       style={{
-        background: "var(--salt-actionable-background-active)",
+        background: "var(--salt-status-info-bold-background)",
         padding: "var(--salt-spacing-400)",
         borderRadius: "var(--salt-palette-corner-weak)",
         minWidth: 320,
