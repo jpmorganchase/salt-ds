@@ -1,3 +1,4 @@
+import { SaltShakerIcon } from "@salt-ds/icons";
 import { OnSolid } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 
@@ -10,8 +11,6 @@ export const OnSolidStory: StoryFn<typeof OnSolid> = (args) => {
   return (
     <div
       style={{
-        // Solid accent (blue/teal) fill that adapts to light/dark mode,
-        // representing the solid semantic surface OnSolid is designed to sit on.
         background: "var(--salt-actionable-accented-bold-background)",
         padding: "var(--salt-spacing-400)",
         borderRadius: "var(--salt-palette-corner-weak)",
@@ -23,7 +22,10 @@ export const OnSolidStory: StoryFn<typeof OnSolid> = (args) => {
         boxSizing: "border-box",
       }}
     >
-      <OnSolid {...args}>BUTTON</OnSolid>
+      <OnSolid {...args}>
+        <SaltShakerIcon aria-hidden />
+        OnSolid
+      </OnSolid>
     </div>
   );
 };

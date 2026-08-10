@@ -1,0 +1,17 @@
+.saltOnSolid {
+  --saltButton-background: var(--salt-actionable-onSolid-subtle-background);
+  --saltButton-borderColor: var(--salt-actionable-onSolid-subtle-borderColor);
+  --saltButton-text-color: var(--salt-actionable-onSolid-subtle-foreground);
+
+  --saltButton-background-hover: var(--salt-actionable-onSolid-subtle-background-hover);
+  --saltButton-borderColor-hover: var(--salt-actionable-onSolid-subtle-borderColor-hover);
+  --saltButton-text-color-hover: var(--salt-actionable-onSolid-subtle-foreground-hover);
+
+  --saltButton-background-active: var(--salt-actionable-onSolid-subtle-background-active);
+  --saltButton-borderColor-active: var(--salt-actionable-onSolid-subtle-borderColor-active);
+  --saltButton-text-color-active: var(--salt-actionable-onSolid-subtle-foreground-active);
+
+  --saltButton-background-disabled: var(--salt-actionable-onSolid-subtle-background);
+  --saltButton-borderColor-disabled: var(--salt-actionable-onSolid-subtle-borderColor);
+  --saltButton-text-color-disabled: var(--salt-actionable-onSolid-subtle-foreground);
+}
