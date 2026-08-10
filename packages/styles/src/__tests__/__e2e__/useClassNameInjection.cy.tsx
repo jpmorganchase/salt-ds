@@ -150,7 +150,7 @@ describe("Given useClassNameInjection", () => {
     cy.get("button").should("not.have.attr", "variant");
   });
 
-  it("SHOULD not add a class; key is still deleted when the injector returns undefined", () => {
+  it("SHOULD not add a class and SHOULD leave the key intact when the injector returns undefined", () => {
     const registry: ClassNameInjectionRegistry = new Map();
     registerClassInjector<{ foo?: string }, "foo">(
       registry,
@@ -168,9 +168,78 @@ describe("Given useClassNameInjection", () => {
       </ClassNameInjectionProvider>,
     );
 
-    // assert original className and that foo prop is removed
+    // injector opted out (returned undefined), so no class is added and the
+    // prop passes through to the component untouched
     cy.get("button").should("have.attr", "class", "base");
-    cy.get("button").should("not.have.attr", "foo");
+    cy.get("button").should("have.attr", "foo", "skip");
+  });
+
+  it("SHOULD leave every injector key intact when a multi-key injector opts out", () => {
+    const registry: ClassNameInjectionRegistry = new Map();
+    registerClassInjector<
+      { className?: string; appearance?: string; sentiment?: string },
+      "appearance" | "sentiment"
+    >(
+      registry,
+      "Button",
+      ["appearance", "sentiment"],
+      ({ appearance, sentiment }) =>
+        appearance === "special" && sentiment
+          ? `special-${sentiment}`
+          : undefined,
+    );
+
+    cy.mount(
+      <ClassNameInjectionProvider value={registry}>
+        <TestComponent
+          componentName="Button"
+          props={{
+            className: "base",
+            appearance: "solid",
+            sentiment: "accented",
+          }}
+        />
+      </ClassNameInjectionProvider>,
+    );
+
+    // injector didn't match (appearance !== "special"), so both props pass through
+    cy.get("button").should("have.attr", "class", "base");
+    cy.get("button").should("have.attr", "appearance", "solid");
+    cy.get("button").should("have.attr", "sentiment", "accented");
+  });
+
+  it("SHOULD strip every injector key when a multi-key injector acts", () => {
+    const registry: ClassNameInjectionRegistry = new Map();
+    registerClassInjector<
+      { className?: string; appearance?: string; sentiment?: string },
+      "appearance" | "sentiment"
+    >(
+      registry,
+      "Button",
+      ["appearance", "sentiment"],
+      ({ appearance, sentiment }) =>
+        appearance === "special" && sentiment
+          ? `special-${sentiment}`
+          : undefined,
+    );
+
+    cy.mount(
+      <ClassNameInjectionProvider value={registry}>
+        <TestComponent
+          componentName="Button"
+          props={{
+            className: "base",
+            appearance: "special",
+            sentiment: "accented",
+          }}
+        />
+      </ClassNameInjectionProvider>,
+    );
+
+    // injector acted, so its keys are consumed and stripped from the component
+    cy.get("button").should("have.attr", "class", "base special-accented");
+    cy.get("button").should("not.have.attr", "appearance");
+    cy.get("button").should("not.have.attr", "sentiment");
   });
 
   it("SHOULD only update matching components from the registry", () => {
