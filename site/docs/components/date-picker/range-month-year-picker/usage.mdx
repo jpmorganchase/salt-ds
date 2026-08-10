@@ -14,8 +14,8 @@ data:
 
 The panel renders two independent month grids side by side:
 
-- The **start (left) grid** controls the start of the range and normalises its selection to the first of the month.
-- The **end (right) grid** controls the end of the range and normalises its selection to the last of the month.
+- The **start (left) grid** controls the start of the range and normalizes its selection to the first of the month.
+- The **end (right) grid** controls the end of the range and normalizes its selection to the last of the month.
 
 The header of each grid pairs previous / next year buttons with a year `Dropdown` for quick jumps across many years.
 
@@ -56,7 +56,7 @@ Each grid header renders a `Dropdown` of selectable years alongside the previous
 
 - Match the input `format` (typically `MMMM YYYY`) with the panel's visible representation so typed and picked values render identically.
 - When min/max is set, use `defaultStartVisibleYear` and `defaultEndVisibleYear` to open each grid on a year that contains selectable months.
-- Provide a `parse` function that accepts the common month-year formats used by your audience (`MMMM YYYY`, `MMM YYYY`, `MM/YYYY`, `M/YYYY`) and normalises to the first/last of the month based on `DateParserField.START` / `DateParserField.END`.
+- Provide a `parse` function that accepts the common month-year formats used by your audience (`MMMM YYYY`, `MMM YYYY`, `MM/YYYY`, `M/YYYY`) and normalizes to the first/last of the month based on `DateParserField.START` / `DateParserField.END`.
 
 ## Import
 
