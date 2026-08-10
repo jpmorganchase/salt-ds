@@ -148,4 +148,3 @@ export function MonthGridHeader(props: MonthGridHeaderProps) {
     </div>
   );
 }
-

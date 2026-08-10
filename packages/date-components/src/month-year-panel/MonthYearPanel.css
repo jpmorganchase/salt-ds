@@ -1,7 +1,8 @@
 .saltMonthYearPanel {
-  --calendar-gap: var(--salt-spacing-fixed-100);
+  --calendar-gap: var(--salt-spacing-100);
+  --monthGrid-gap: var(--salt-spacing-fixed-100);
   --monthGrid-columns: 3;
-  --monthGrid-padding: var(--salt-spacing-200);
+  --monthGrid-padding: var(--salt-spacing-100);
   --monthGrid-minWidth: 15em;
 
   box-sizing: border-box;
@@ -27,7 +28,7 @@
 .saltMonthYearPanel-grid {
   display: flex;
   flex-direction: column;
-  gap: var(--calendar-gap);
+  gap: var(--monthGrid-gap);
 }
 
 .saltMonthYearPanel-row {
