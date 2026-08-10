@@ -71,5 +71,3 @@ AllStatesGrid.parameters = {
     disableSnapshot: false,
   },
 };
-
-
