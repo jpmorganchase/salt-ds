@@ -15,4 +15,3 @@ export const Default = (): ReactElement => (
     <OnSolid>Dismiss</OnSolid>
   </div>
 );
-

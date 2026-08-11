@@ -19,4 +19,3 @@ export const OnSolid = (): ReactElement => (
     </OnSolidButton>
   </div>
 );
-
