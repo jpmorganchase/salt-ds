@@ -155,7 +155,7 @@
   border-color: var(--salt-separable-secondary-borderColor);
 }
 
-/* [VERSION DIVERGANCE]: Pre-v36, the pinned-bottom top border sits on .ag-floating-bottom. */
+/* [VERSION DIVERGENCE]: Pre-v36, the pinned-bottom top border sits on .ag-floating-bottom. */
 .ag-theme-salt-light .ag-floating-bottom,
 .ag-theme-salt-dark .ag-floating-bottom,
 .ag-theme-salt-compact-light .ag-floating-bottom,
@@ -164,7 +164,7 @@
 }
 
 /*
-  [VERSION DIVERGANCE]: From v36, AG Grid positions the pinned-bottom ::before separator over the
+  [VERSION DIVERGENCE]: From v36, AG Grid positions the pinned-bottom ::before separator over the
   first pixel of the row, where it compounds with cell borders. Move it one pixel above the row
   instead. Unlike a real container border, this does not increase AG Grid's JS-measured pinned
   height (which otherwise makes a 61px touch row occupy 62px). Inert pre-v36.
@@ -178,7 +178,7 @@
 }
 
 /*
-  [VERSION DIVERGANCE]: From v36, the pinned-top rows container is one pixel taller than its rows
+  [VERSION DIVERGENCE]: From v36, the pinned-top rows container is one pixel taller than its rows
   and paints over the wrapper's border-bottom, leaving a white gap. The last pinned row also keeps
   its own lighter row border. Paint the separator into that already-budgeted gap and remove the
   duplicate row border. The pseudo-element consumes no layout space. Inert pre-v36.

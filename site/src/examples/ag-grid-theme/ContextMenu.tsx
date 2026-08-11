@@ -27,7 +27,7 @@ export const ContextMenu = (props: AgGridReactProps) => {
   );
 };
 
-// [VERSION DIVERGANCE]: AG Grid v36 narrows built-in menu item strings; the callback type preserves their literal types.
+// [VERSION DIVERGENCE]: AG Grid v36 narrows built-in menu item strings; the callback type preserves their literal types.
 const getContextMenuItems: GetContextMenuItems = (params) => {
   const result = [
     {

@@ -15,7 +15,7 @@ import {
   useState,
 } from "react";
 
-// [VERSION DIVERGANCE]: AG Grid v33+ requires module registration; this example setup is not part of the published CSS package.
+// [VERSION DIVERGENCE]: AG Grid v33+ requires module registration; this example setup is not part of the published CSS package.
 ModuleRegistry.registerModules([AllEnterpriseModule]);
 
 interface AgGridHelpersProps {
@@ -82,7 +82,7 @@ export function useAgGridHelpers({
       style: { height: 500, width: 800 },
     },
     agGridProps: {
-      // [VERSION DIVERGANCE]: AG Grid v33+ defaults to the Theming API; Salt continues to use legacy CSS themes.
+      // [VERSION DIVERGENCE]: AG Grid v33+ defaults to the Theming API; Salt continues to use legacy CSS themes.
       theme: "legacy",
       onGridReady,
       rowHeight,

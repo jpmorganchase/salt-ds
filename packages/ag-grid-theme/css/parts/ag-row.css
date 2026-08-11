@@ -32,7 +32,7 @@ div[class*="ag-theme-salt"].ag-theme-salt-variant-tertiary.ag-theme-salt-variant
 }
 
 /*
-  [VERSION DIVERGANCE]: --ag-data-background-color is re-declared per row for v36, where row
+  [VERSION DIVERGENCE]: --ag-data-background-color is re-declared per row for v36, where row
   backgrounds (including the area right of the last column and the pinned cells containers) read it
   from a value resolved on the theme wrapper, so per-row --ag-background-color overrides would
   otherwise be ignored. Inert pre-v36.
@@ -65,7 +65,7 @@ div[class*="ag-theme-salt"].ag-theme-salt-variant-tertiary.ag-theme-salt-variant
 }
 
 /*
-  [VERSION DIVERGANCE]: From v36, zebra striping only recolors the row element itself; the pinned
+  [VERSION DIVERGENCE]: From v36, zebra striping only recolors the row element itself; the pinned
   cells containers and the area right of the last column are painted with --ag-data-background-color,
   so it must follow the odd row background per row. Inert pre-v36.
 */

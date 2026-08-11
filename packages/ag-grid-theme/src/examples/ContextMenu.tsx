@@ -13,7 +13,7 @@ import windows from "../dependencies/windows.png";
 const ContextMenu = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
-  // [VERSION DIVERGANCE]: AG Grid v36 narrows built-in menu item strings; the callback type preserves their literal types.
+  // [VERSION DIVERGENCE]: AG Grid v36 narrows built-in menu item strings; the callback type preserves their literal types.
   const getContextMenuItems: GetContextMenuItems = (params) => {
     const result = [
       {
