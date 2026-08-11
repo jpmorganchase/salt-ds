@@ -76,7 +76,6 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
    *
    * Optional id prop
    * Used for accessibility purposes to announce the title and subtitle when using a screen reader
-   * @saltMigration remove
    * */
   idProp?: string;
 }

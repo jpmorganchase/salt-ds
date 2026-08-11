@@ -267,13 +267,12 @@ class LegacyApi {
   modern(): void {}
   /**
    * @deprecated Static usage is not public.
-   * @saltMigration manual
    */
   static legacyStatic(): void {}
 }
+enum ModernEnum { Value }
 /**
- * @deprecated Review enum usage manually.
- * @saltMigration manual
+ * @deprecated Use {@link ModernEnum} instead.
  */
 enum LegacyEnum { Value }
 interface ButtonProps {
@@ -285,6 +284,7 @@ export type {
   ButtonProps as PublicButtonProps,
   LegacyApi as PublicLegacyApi,
   LegacyEnum as PublicLegacyEnum,
+  ModernEnum as PublicModernEnum,
   ModernApi as PublicModernApi,
 };
 `,
@@ -292,6 +292,7 @@ export type {
   PublicButtonProps,
   PublicLegacyApi,
   PublicLegacyEnum,
+  PublicModernEnum,
   PublicModernApi,
 } from "./Fixture";
 `,
@@ -405,7 +406,6 @@ export type FixtureProps<T extends string = "div"> = PublicSurface<
 export type FixtureProps = PublicSurface<{
   /**
    * @deprecated This member is not part of the resolved public surface.
-   * @saltMigration manual
    */
   legacy?: string;
 }>;
@@ -1023,9 +1023,9 @@ export class InternalClass {
   legacy(): void {}
   /** @deprecated Use {@link PublicClass.modernStatic modernStatic} instead. */
   static legacyStatic(): void {}
-  /** @deprecated Internal only. @saltMigration manual */
+  /** @deprecated Internal only. */
   protected protectedLegacy(): void {}
-  /** @deprecated Internal only. @saltMigration manual */
+  /** @deprecated Internal only. */
   private privateLegacy(): void {}
 }
 `,
@@ -1205,7 +1205,7 @@ ${valueMaps}
     ).rejects.toThrow(expected);
   });
 
-  it("classifies every authored migration shape from typed source declarations", async () => {
+  it("classifies typed replacement and transformation shapes", async () => {
     const repoRoot = await createPackageFixture({
       "src/FixtureProps.ts": `export interface FixtureProps {
   replacement?: string;
@@ -1226,21 +1226,6 @@ ${valueMaps}
    * @saltValueMap {"from":"cta","set":[["appearance","solid"],["sentiment","accented"]]}
    */
   compositeTransform?: "primary" | "cta";
-  /**
-   * @deprecated This property is no longer needed.
-   * @saltMigration remove
-   */
-  removed?: string;
-  /**
-   * @deprecated Reconcile this behavior manually.
-   * @saltMigration manual
-   */
-  manual?: string;
-  /**
-   * @deprecated No universal replacement is known.
-   * @saltMigration unspecified
-   */
-  unspecified?: string;
 }
 `,
       "src/index.ts": 'export type { FixtureProps } from "./FixtureProps";\n',
@@ -1255,7 +1240,7 @@ ${valueMaps}
       deprecations.map((deprecation) => [deprecation.name, deprecation]),
     );
 
-    expect(deprecations).toHaveLength(6);
+    expect(deprecations).toHaveLength(3);
     expect(byName.get("direct")).toMatchObject({
       replacement: {
         mode: "single",
@@ -1328,57 +1313,29 @@ ${valueMaps}
       .toString("utf8");
     expect(citedCompositeSource).toContain("@deprecated");
     expect(citedCompositeSource.match(/@saltValueMap/gu)).toHaveLength(2);
-    for (const strategy of ["remove", "manual", "unspecified"] as const) {
-      expect(
-        byName.get(strategy === "remove" ? "removed" : strategy),
-      ).toMatchObject({
-        replacement: {
-          mode: "none",
-          target: null,
-          targets: [],
-        },
-        migration: {
-          strategy,
-          value_map: null,
-        },
-      });
-    }
   });
 
-  it("extracts numeric public property deprecations without dropping them", async () => {
+  it("recognizes numeric public property deprecations before requiring an override", async () => {
     const repoRoot = await createPackageFixture({
       "src/Fixture.ts": `export interface FixtureProps {
-  /** @deprecated Remove this property. @saltMigration remove */
+  /** @deprecated Remove this property. */
   1?: string;
 }
 `,
       "src/index.ts": 'export type { FixtureProps } from "./Fixture";\n',
     });
 
-    const [deprecation] = await extractDeprecations(
-      repoRoot,
-      [fixturePackage()],
-      new Set(),
+    await expect(
+      extractDeprecations(repoRoot, [fixturePackage()], new Set()),
+    ).rejects.toThrow(
+      /Deprecation '1' must declare typed replacement links or an MCP-owned no-target migration override/u,
     );
-
-    expect(deprecation).toMatchObject({
-      name: "1",
-      kind: "prop",
-      subject: {
-        export_name: "FixtureProps",
-        symbol_space: "type",
-        member_path: [{ kind: "prop", name: "1" }],
-      },
-      migration: {
-        strategy: "remove",
-      },
-    });
   });
 
   it.each([
     {
       name: "statement-level deprecation with multiple public bindings",
-      source: `/** @deprecated Remove these bindings. @saltMigration remove */
+      source: `/** @deprecated Remove these bindings. */
 export const LegacyOne = 1, LegacyTwo = 2;
 `,
       index: 'export { LegacyOne, LegacyTwo } from "./Fixture";\n',
@@ -1424,7 +1381,18 @@ export const LegacyThing = 1;
 `,
       index: 'export { LegacyThing } from "./Fixture";\n',
       expected:
-        /must declare typed replacement links or an explicit @saltMigration strategy/u,
+        /must declare typed replacement links or an MCP-owned no-target migration override/u,
+    },
+    {
+      name: "legacy custom migration tag",
+      source: `/**
+ * @deprecated Legacy behavior.
+ * @saltMigration manual
+ */
+export const LegacyThing = 1;
+`,
+      index: 'export { LegacyThing } from "./Fixture";\n',
+      expected: /must not declare @saltMigration/u,
     },
     {
       name: "incomplete finite value map",
@@ -1628,7 +1596,7 @@ export function legacy(): void {}
       source: `function legacy(value: string): void;
 function legacy(value: number): void;
 function legacy(value: string | number): void {}
-/** @deprecated Remove this API. @saltMigration remove */
+/** @deprecated Remove this API. */
 export default legacy;
 `,
       index: 'export { default } from "./Fixture";\n',
@@ -1648,7 +1616,7 @@ export default legacy;
     {
       name: "public enum member",
       source: `export enum FixtureState {
-  /** @deprecated Remove this member. @saltMigration remove */
+  /** @deprecated Remove this member. */
   Legacy = "legacy",
 }
 `,
@@ -1686,7 +1654,7 @@ export interface FixtureApi {
     {
       name: "unsupported public accessor",
       source: `export class FixtureApi {
-  /** @deprecated Remove this accessor. @saltMigration remove */
+  /** @deprecated Remove this accessor. */
   get legacy(): string {
     return "legacy";
   }
@@ -1709,7 +1677,7 @@ export interface FixtureApi {
   it("omits unsupported members on internal owners instead of aborting public extraction", async () => {
     const repoRoot = await createPackageFixture({
       "src/Fixture.ts": `class InternalApi {
-  /** @deprecated Internal only. @saltMigration manual */
+  /** @deprecated Internal only. */
   static legacy = "legacy";
 }
 export const PublicThing = 1;
@@ -1727,7 +1695,7 @@ export const PublicThing = 1;
       "src/Fixture.ts": `export class PublicApi {}
 export function createInternalApi(): unknown {
   class PublicApi {
-    /** @deprecated Internal only. @saltMigration manual */
+    /** @deprecated Internal only. */
     legacy(): void {}
   }
   return PublicApi;
