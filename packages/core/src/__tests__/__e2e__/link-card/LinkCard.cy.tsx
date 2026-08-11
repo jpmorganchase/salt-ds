@@ -1,6 +1,6 @@
-import * as linkCardStories from "@stories/link-card/link-card.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as linkCardStories from "~stories/link-card/link-card.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(linkCardStories);
 const { Default } = composedStories;

@@ -1,4 +1,4 @@
-import { Card, H3, StackLayout, Text } from "@salt-ds/core";
+import { Card, CardContent, H3, StackLayout, Text } from "@salt-ds/core";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
@@ -21,15 +21,17 @@ export const CustomAccent = (): ReactElement => {
         accent="top"
         hoverable
       >
-        <StackLayout gap={1}>
-          <H3>
-            <strong>Investment Compliance</strong>
-          </H3>
-          <Text>
-            Exception-based reporting that highlights potential warnings or
-            violations of investment guidelines and regulations.
-          </Text>
-        </StackLayout>
+        <CardContent>
+          <StackLayout gap={1}>
+            <H3 style={{ margin: 0 }}>
+              <strong>Investment Compliance</strong>
+            </H3>
+            <Text>
+              Exception-based reporting that highlights potential warnings or
+              violations of investment guidelines and regulations.
+            </Text>
+          </StackLayout>
+        </CardContent>
       </Card>
       {/* in your css:
         .category2 {
@@ -48,14 +50,16 @@ export const CustomAccent = (): ReactElement => {
         accent="top"
         hoverable
       >
-        <StackLayout gap={1}>
-          <H3>
-            <strong>S&P Global Market Intelligence</strong>
-          </H3>
-          <Text>
-            Automate transmission of bank loan settlement instructions.
-          </Text>
-        </StackLayout>
+        <CardContent>
+          <StackLayout gap={1}>
+            <H3 style={{ margin: 0 }}>
+              <strong>S&P Global Market Intelligence</strong>
+            </H3>
+            <Text>
+              Automate transmission of bank loan settlement instructions.
+            </Text>
+          </StackLayout>
+        </CardContent>
       </Card>
     </StackLayout>
   );

@@ -1,7 +1,7 @@
 import { FileDropZoneTrigger } from "@salt-ds/core";
-import * as fileDropZoneStories from "@stories/file-drop-zone/file-drop-zone.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as fileDropZoneStories from "~stories/file-drop-zone/file-drop-zone.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(fileDropZoneStories);
 const { Default } = composedStories;

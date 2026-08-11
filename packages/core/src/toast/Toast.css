@@ -1,7 +1,7 @@
 /* Styles applied to Toast root element */
 .saltToast {
   --toast-background: var(--salt-container-primary-background);
-  --toast-borderColor: var(--salt-container-primary-borderColor);
+  --toast-borderColor: var(--salt-container-bold-borderColor);
   --toast-iconColor: var(--salt-content-primary-foreground);
 
   background: var(--saltToast-background, var(--toast-background));

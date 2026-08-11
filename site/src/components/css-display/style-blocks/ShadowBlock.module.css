@@ -2,7 +2,7 @@
   width: var(--salt-size-base);
   height: var(--salt-size-base);
 
-  border-color: var(--salt-container-primary-borderColor);
+  border-color: var(--salt-container-bold-borderColor);
   border-style: var(--salt-borderStyle-solid);
   border-width: var(--salt-size-fixed-100);
   border-radius: var(--salt-size-unit);

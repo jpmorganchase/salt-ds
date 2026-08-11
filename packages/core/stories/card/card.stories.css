@@ -1,35 +1,3 @@
-.card-demo-inner {
-  display: flex;
-  flex-direction: column;
-}
-
-.card-demo-inner-content {
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  gap: var(--salt-spacing-200);
-  align-items: center;
-  padding: var(--salt-spacing-100) var(--salt-spacing-100) 0 var(--salt-spacing-100);
-}
-
-.salt-density-high {
-  --card-demo-backgroundImage: url("../assets/exampleImage1x.png");
-}
-.salt-density-medium {
-  --card-demo-backgroundImage: url("../assets/exampleImage2x.png");
-}
-.salt-density-low {
-  --card-demo-backgroundImage: url("../assets/exampleImage3x.png");
-}
-.salt-density-touch {
-  --card-demo-backgroundImage: url("../assets/exampleImage4x.png");
-}
-
-.saltInteractableCard.imageBackground {
-  width: 366px;
-  background-image: var(--card-demo-backgroundImage);
-  background-position: center;
-}
-
 h3 {
   margin: 0;
 }
