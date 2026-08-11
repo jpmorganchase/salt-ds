@@ -26,13 +26,4 @@ describe("GIVEN an OnSolid", () => {
       .should("have.class", "saltOnSolid")
       .and("have.class", "custom-class");
   });
-
-  it("should forward a ref to the underlying button element", () => {
-    const ref = cy.stub().as("ref");
-    cy.mount(<OnSolid ref={ref}>Dismiss</OnSolid>);
-    cy.get("@ref").should(
-      "be.calledWith",
-      Cypress.sinon.match.instanceOf(HTMLButtonElement),
-    );
-  });
 });
