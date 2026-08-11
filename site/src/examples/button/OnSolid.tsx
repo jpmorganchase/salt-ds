@@ -1,5 +1,4 @@
 import { StackLayout } from "@salt-ds/core";
-import { NotificationIcon } from "@salt-ds/icons";
 import { OnSolid as OnSolidButton } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
@@ -24,10 +23,7 @@ export const OnSolid = (): ReactElement => (
           justifyContent: "center",
         }}
       >
-        <OnSolidButton>
-          <NotificationIcon aria-hidden />
-          Dismiss
-        </OnSolidButton>
+        <OnSolidButton>Dismiss</OnSolidButton>
       </div>
     ))}
   </StackLayout>
