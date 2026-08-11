@@ -53,7 +53,6 @@ export interface TabstripProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * @deprecated
    * Boolean that enables closing tabs
-   * @saltMigration unspecified
    */
   enableCloseTab?: boolean;
   /**

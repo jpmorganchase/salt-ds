@@ -117,7 +117,6 @@ title: Fixture action
 data:
   package:
     name: "@salt-ds/fixture"
-  primaryExport: "FixtureAction"
   description: Fixture source-backed action component.
   sourceCodeUrl: ${
     options.sourceCodeUrl ??
@@ -222,7 +221,6 @@ title: Fixture action layout
 data:
   package:
     name: "@salt-ds/fixture"
-  primaryExport: "FixtureActionLayout"
   description: Fixture source-backed layout component.
   sourceCodeUrl: https://github.com/jpmorganchase/salt-ds/tree/main/packages/fixture/src/fixture-action/nested
 ${
@@ -927,43 +925,29 @@ export * from "./fixture-action/AmbiguousB.js";
     }
   });
 
-  it("requires an explicit authored primary export decision", async () => {
+  it("derives and validates the conventional primary export", async () => {
     const repoRoot = await fs.mkdtemp(
       path.join(os.tmpdir(), "salt-component-primary-export-fixture-"),
     );
 
     try {
       await writeFixtureRepo(repoRoot);
-      const indexPath = path.join(
+      const components = await extractComponents(
         repoRoot,
-        "site/docs/components/fixture-action/index.mdx",
-      );
-      const source = await fs.readFile(indexPath, "utf8");
-      await fs.writeFile(
-        indexPath,
-        source.replace(/^\s+primaryExport:.*\n/mu, ""),
-        "utf8",
+        new Map([[buildFixturePackage().name, buildFixturePackage()]]),
+        { byPackage: new Map() },
       );
 
-      await expect(
-        extractComponents(
-          repoRoot,
-          new Map([[buildFixturePackage().name, buildFixturePackage()]]),
-          { byPackage: new Map() },
-        ),
-      ).rejects.toThrow(/must explicitly declare data\.primaryExport/u);
+      expect(components[0].source).toEqual({
+        repo_path: "packages/fixture/src/fixture-action/Foo.tsx",
+        export_name: "FixtureAction",
+      });
     } finally {
       await fs.rm(repoRoot, { recursive: true, force: true });
     }
   });
 
-  it.each([
-    "7",
-    "false",
-    "[]",
-    '""',
-    '" FixtureAction "',
-  ])("rejects malformed authored primaryExport value %s", async (primaryExportValue) => {
+  it("rejects legacy primaryExport frontmatter", async () => {
     const repoRoot = await fs.mkdtemp(
       path.join(os.tmpdir(), "salt-component-primary-export-shape-fixture-"),
     );
@@ -978,8 +962,8 @@ export * from "./fixture-action/AmbiguousB.js";
       await fs.writeFile(
         indexPath,
         source.replace(
-          /^\s+primaryExport:.*$/mu,
-          `  primaryExport: ${primaryExportValue}`,
+          "  package:\n",
+          '  primaryExport: "FixtureAction"\n  package:\n',
         ),
         "utf8",
       );
@@ -990,9 +974,7 @@ export * from "./fixture-action/AmbiguousB.js";
           new Map([[buildFixturePackage().name, buildFixturePackage()]]),
           { byPackage: new Map() },
         ),
-      ).rejects.toThrow(
-        /data\.primaryExport must be a non-empty JavaScript export name or null/u,
-      );
+      ).rejects.toThrow(/must not declare data\.primaryExport/u);
     } finally {
       await fs.rm(repoRoot, { recursive: true, force: true });
     }

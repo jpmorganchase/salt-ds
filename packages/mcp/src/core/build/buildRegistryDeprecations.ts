@@ -37,6 +37,10 @@ import {
 } from "./catalogInputInventory.js";
 import { NON_PRODUCTION_IMPLEMENTATION_GLOB_IGNORES } from "./catalogProductionSource.js";
 import {
+  deprecationMigrationStrategyOverride,
+  type NoTargetMigrationStrategy,
+} from "./deprecationMigrationOverrides.js";
+import {
   generatorDependencyDirectoryExists,
   generatorDependencyFileExists,
   generatorDependencyRealpath,
@@ -999,30 +1003,6 @@ function tagsNamed(
   sourceFile: ts.SourceFile,
 ): ts.JSDocTag[] {
   return tags.filter((tag) => tag.tagName.getText(sourceFile) === name);
-}
-
-type NoTargetMigrationStrategy = "remove" | "manual" | "unspecified";
-
-function noTargetMigrationStrategy(
-  tags: readonly ts.JSDocTag[],
-  sourceFile: ts.SourceFile,
-): NoTargetMigrationStrategy | null {
-  const migrationTags = tagsNamed(tags, "saltMigration", sourceFile);
-  if (migrationTags.length > 1) {
-    throw new Error("A deprecation may declare only one @saltMigration tag.");
-  }
-  const migrationTag = migrationTags[0];
-  if (!migrationTag) return null;
-  const strategy = extractJsDocTagComment(
-    migrationTag.comment,
-    sourceFile,
-  ).trim();
-  if (!["remove", "manual", "unspecified"].includes(strategy)) {
-    throw new Error(
-      `Unsupported @saltMigration strategy '${strategy || "(empty)"}'.`,
-    );
-  }
-  return strategy as NoTargetMigrationStrategy;
 }
 
 function deprecatedPublicExportSelectors(
@@ -2040,13 +2020,24 @@ function collectDeprecationsFromSourceFile(
           );
         }
       }
-      const authoredMigration = noTargetMigrationStrategy(allTags, sourceFile);
       const authoredValueMaps = authoredValueMapCases(allTags, sourceFile);
+      const legacyMigrationTags = tagsNamed(
+        allTags,
+        "saltMigration",
+        sourceFile,
+      );
+      if (subjects.length > 0 && legacyMigrationTags.length > 0) {
+        throw new Error(
+          `Deprecated public API '${symbolName}' must not declare @saltMigration; configure no-target behavior in the MCP-owned deprecation override map.`,
+        );
+      }
 
       for (const tag of tags) {
         const rawNote = extractJsDocTagComment(tag.comment, sourceFile);
         const note = summarizeDeprecationNote(rawNote);
         for (const subject of subjects) {
+          const authoredMigration =
+            deprecationMigrationStrategyOverride(subject);
           const subjectKind =
             subject.symbol_space === "type" &&
             (kind === "component" || kind === "other")
@@ -2080,12 +2071,12 @@ function collectDeprecationsFromSourceFile(
           }
           if (replacementTargets.length === 0 && !authoredMigration) {
             throw new Error(
-              `Deprecation '${apiSymbolDisplayName(subject)}' must declare typed replacement links or an explicit @saltMigration strategy.`,
+              `Deprecation '${apiSymbolDisplayName(subject)}' must declare typed replacement links or an MCP-owned no-target migration override.`,
             );
           }
           if (replacementTargets.length > 0 && authoredMigration) {
             throw new Error(
-              `Deprecation '${apiSymbolDisplayName(subject)}' cannot combine replacement links with @saltMigration ${authoredMigration}.`,
+              `Deprecation '${apiSymbolDisplayName(subject)}' cannot combine replacement links with a no-target migration override.`,
             );
           }
           if (replacementTargets.length === 0 && authoredValueMaps.length > 0) {

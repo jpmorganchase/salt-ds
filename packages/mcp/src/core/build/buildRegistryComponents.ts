@@ -47,6 +47,7 @@ import {
 } from "./catalogExportGraph.js";
 import { globCatalogInputs } from "./catalogInputInventory.js";
 import { NON_PRODUCTION_IMPLEMENTATION_GLOB_IGNORES } from "./catalogProductionSource.js";
+import { componentPrimaryExportOverride } from "./componentPrimaryExportOverrides.js";
 import { parseYamlFrontmatter } from "./parseYamlFrontmatter.js";
 
 function inferStatusFromPackage(name: string, version: string): SaltStatus {
@@ -1219,25 +1220,15 @@ export async function extractComponents(
     const examplesMdx = await readFileOrNull(
       path.join(componentDir, "examples.mdx"),
     );
-    if (data == null || !Object.hasOwn(data, "primaryExport")) {
+    if (data != null && Object.hasOwn(data, "primaryExport")) {
       throw new Error(
-        `Component '${title}' must explicitly declare data.primaryExport as a public export name or null.`,
+        `Component '${title}' must not declare data.primaryExport; configure exceptional code bindings in the MCP-owned component override map.`,
       );
     }
-    const rawPrimaryExport = data.primaryExport;
-    const primaryExportName =
-      rawPrimaryExport === null
-        ? null
-        : typeof rawPrimaryExport === "string" &&
-            rawPrimaryExport === rawPrimaryExport.trim() &&
-            /^[A-Za-z_$][A-Za-z0-9_$]*$/u.test(rawPrimaryExport)
-          ? rawPrimaryExport
-          : undefined;
-    if (primaryExportName === undefined) {
-      throw new Error(
-        `Component '${title}' data.primaryExport must be a non-empty JavaScript export name or null.`,
-      );
-    }
+    const primaryExportOverride = componentPrimaryExportOverride(componentRoute);
+    const primaryExportName = primaryExportOverride.configured
+      ? primaryExportOverride.value
+      : toPascalCase(title);
     const docgenSelection = selectDocgenComponent(
       propMetadata,
       packageName,

@@ -38,6 +38,8 @@ import {
   withCatalogInputTracking,
 } from "./catalogInputInventory.js";
 import { writeCatalogV2 } from "./catalogWriterV2.js";
+import { assertComponentPrimaryExportOverridesResolved } from "./componentPrimaryExportOverrides.js";
+import { assertDeprecationMigrationOverridesResolved } from "./deprecationMigrationOverrides.js";
 import {
   createSealedCatalogGeneratorDigest,
   type GeneratorDependencyInventory,
@@ -188,6 +190,11 @@ export async function buildRegistry(
           packageByName,
           propMetadata,
         );
+        assertComponentPrimaryExportOverridesResolved(
+          components
+            .map((component) => component.related_docs.overview)
+            .filter((route): route is string => route !== null),
+        );
         const [patterns, guides, rawTokens, rawDeprecations] =
           await Promise.all([
             extractPatterns(sourceRoot),
@@ -199,6 +206,9 @@ export async function buildRegistry(
               EXCLUDED_REGISTRY_PACKAGES,
             ),
           ]);
+        assertDeprecationMigrationOverridesResolved(
+          rawDeprecations.map((deprecation) => deprecation.id),
+        );
         const pages = await extractPages(sourceRoot);
         const patternStoryExamples = await extractPatternExamplesFromStories(
           sourceRoot,

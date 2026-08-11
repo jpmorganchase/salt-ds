@@ -251,7 +251,7 @@ describe("registry docgen metadata", () => {
       routeSuffix: "date-picker/range-date-picker",
       sourceRepoPath: "packages/date-components/src/date-picker",
     },
-  ])("does not select an arbitrary docgen export for $componentName when primaryExport is explicitly null", ({
+  ])("does not select an arbitrary docgen export for $componentName when primary-export selection is suppressed", ({
     componentName,
     aliases,
     routeSuffix,
