@@ -50,6 +50,13 @@
 .ag-theme-salt-dark .ag-row-hover.ag-row-selected::before,
 .ag-theme-salt-compact-light .ag-row-hover.ag-row-selected::before,
 .ag-theme-salt-compact-dark .ag-row-hover.ag-row-selected::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 3;
   background-color: var(--ag-selected-row-border-color);
   background-image: none;
   height: var(--salt-size-fixed-100);
