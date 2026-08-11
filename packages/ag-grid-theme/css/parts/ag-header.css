@@ -5,6 +5,8 @@
 .ag-theme-salt-compact-dark .ag-header {
   /* Header icon should be the same as text color, aka secondary color */
   --ag-icon-font-color: var(--ag-header-foreground-color);
+  /* [VERSION DIVERGANCE]: From v36, AG Grid paints header rows rather than the .ag-header itself. Keep a solid backing so its translucent bottom border renders at the same color as pre-v36. */
+  background-color: var(--ag-header-background-color);
 }
 
 .ag-theme-salt-light .ag-advanced-filter-header,
@@ -43,10 +45,15 @@
   border-width: 0;
 }
 
+/* [VERSION DIVERGANCE]: Keep pre-v36 pinned header selectors; from v36 the pinned header border is drawn within each header row. */
 .ag-theme-salt-light .ag-pinned-left-header,
 .ag-theme-salt-dark .ag-pinned-left-header,
 .ag-theme-salt-compact-light .ag-pinned-left-header,
-.ag-theme-salt-compact-dark .ag-pinned-left-header {
+.ag-theme-salt-compact-dark .ag-pinned-left-header,
+.ag-theme-salt-light .ag-header-row .ag-grid-pinned-left-cells .ag-grid-container-wrapper,
+.ag-theme-salt-dark .ag-header-row .ag-grid-pinned-left-cells .ag-grid-container-wrapper,
+.ag-theme-salt-compact-light .ag-header-row .ag-grid-pinned-left-cells .ag-grid-container-wrapper,
+.ag-theme-salt-compact-dark .ag-header-row .ag-grid-pinned-left-cells .ag-grid-container-wrapper {
   border-right-color: var(--salt-separable-secondary-borderColor);
 }
 
@@ -55,6 +62,41 @@
 .ag-theme-salt-compact-light .ag-pinned-right-header,
 .ag-theme-salt-compact-dark .ag-pinned-right-header {
   border-left-color: var(--salt-separable-secondary-borderColor);
+}
+
+/*
+  [VERSION DIVERGANCE]: From v36, keep the pinned-right separator on the positioned
+  cells container so its child header cells start beside it, matching pre-v36 geometry.
+*/
+.ag-theme-salt-light .ag-header-row .ag-grid-pinned-right-cells,
+.ag-theme-salt-dark .ag-header-row .ag-grid-pinned-right-cells,
+.ag-theme-salt-compact-light .ag-header-row .ag-grid-pinned-right-cells,
+.ag-theme-salt-compact-dark .ag-header-row .ag-grid-pinned-right-cells {
+  border-left-color: var(--salt-separable-secondary-borderColor);
+  border-left-style: var(--salt-borderStyle-solid);
+  border-left-width: var(--salt-size-fixed-100);
+}
+
+.ag-theme-salt-light .ag-header-row .ag-grid-pinned-right-cells .ag-grid-container-wrapper,
+.ag-theme-salt-dark .ag-header-row .ag-grid-pinned-right-cells .ag-grid-container-wrapper,
+.ag-theme-salt-compact-light .ag-header-row .ag-grid-pinned-right-cells .ag-grid-container-wrapper,
+.ag-theme-salt-compact-dark .ag-header-row .ag-grid-pinned-right-cells .ag-grid-container-wrapper {
+  border-left-width: 0;
+  position: relative;
+  width: calc(100% + var(--salt-size-fixed-100));
+}
+
+/*
+  [VERSION DIVERGANCE]: From v36, the vertical scrollbar spacer overlays the end
+  of the pinned-right header. Let the header backing show through so the final
+  cell's border and column separator remain visible, matching pre-v36.
+*/
+.ag-theme-salt-light .ag-ltr .ag-has-right-pinned-cols .ag-body-vertical-scroll-start-spacer,
+.ag-theme-salt-dark .ag-ltr .ag-has-right-pinned-cols .ag-body-vertical-scroll-start-spacer,
+.ag-theme-salt-compact-light .ag-ltr .ag-has-right-pinned-cols .ag-body-vertical-scroll-start-spacer,
+.ag-theme-salt-compact-dark .ag-ltr .ag-has-right-pinned-cols .ag-body-vertical-scroll-start-spacer {
+  background-color: transparent;
+  background-image: none;
 }
 
 .ag-theme-salt-light .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total),

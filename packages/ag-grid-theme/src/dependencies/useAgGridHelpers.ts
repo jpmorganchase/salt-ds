@@ -1,6 +1,10 @@
 import { useDensity, useTheme } from "@salt-ds/core";
-import type { GridApi, GridReadyEvent } from "ag-grid-community";
-import "ag-grid-enterprise";
+import {
+  type GridApi,
+  type GridReadyEvent,
+  ModuleRegistry,
+} from "ag-grid-community";
+import { AllEnterpriseModule } from "ag-grid-enterprise";
 import type { AgGridReactProps } from "ag-grid-react";
 import { clsx } from "clsx";
 import {
@@ -10,6 +14,9 @@ import {
   useRef,
   useState,
 } from "react";
+
+// [VERSION DIVERGANCE]: AG Grid v33+ requires module registration; this example setup is not part of the published CSS package.
+ModuleRegistry.registerModules([AllEnterpriseModule]);
 
 interface AgGridHelpersProps {
   compact?: boolean;
@@ -75,6 +82,8 @@ export function useAgGridHelpers({
       style: { height: 500, width: 800 },
     },
     agGridProps: {
+      // [VERSION DIVERGANCE]: AG Grid v33+ defaults to the Theming API; Salt continues to use legacy CSS themes.
+      theme: "legacy",
       onGridReady,
       rowHeight,
       headerHeight: headerRowHeight,

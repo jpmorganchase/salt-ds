@@ -7,6 +7,16 @@
   font-size: var(--salt-text-fontSize);
 }
 
+/*
+  [VERSION DIVERGANCE]: Known v36 limitation, intentionally NOT patched. Pre-v36 the vertical
+  scrollbar was contained between the pinned top and pinned bottom rows. From v36,
+  FakeVScrollComp sizes the scrollbar track from getHeaderRowsOffset(), which only accounts for
+  the column header, so the overlay thumb travels over pinned rows. The track height is set as
+  an inline style from JS and cannot be corrected from CSS; re-stacking pinned rows above the
+  scrollbar hides the thumb behind them (and would change pre-v36 stacking), so the v36
+  behaviour is left as is.
+*/
+
 .ag-theme-salt-light .ag-row-selected,
 .ag-theme-salt-dark .ag-row-selected,
 .ag-theme-salt-compact-light .ag-row-selected,
@@ -15,6 +25,23 @@
   border-color: var(--ag-selected-row-border-color);
 }
 
+/*
+  [VERSION DIVERGANCE]: From v36, the row bottom border moved from the row element to its cell
+  containers (driven by --ag-row-border-color). Before v36, the same variable coloured the row
+  border, so this override preserves the selected border colour across versions.
+*/
+.ag-theme-salt-light .ag-row.ag-row-selected,
+.ag-theme-salt-dark .ag-row.ag-row-selected,
+.ag-theme-salt-compact-light .ag-row.ag-row-selected,
+.ag-theme-salt-compact-dark .ag-row.ag-row-selected {
+  --ag-row-border-color: var(--ag-selected-row-border-color);
+}
+
+/*
+  [VERSION DIVERGANCE]: Pre-v36, AG Grid creates this pseudo-element for every selected row. From
+  v36, only full-width selected rows have a row-level pseudo-element; regular rows paint selection
+  on their cell containers. Keep this rule limited to reshaping pseudo-elements AG Grid creates.
+*/
 .ag-theme-salt-light .ag-row-selected::before,
 .ag-theme-salt-dark .ag-row-selected::before,
 .ag-theme-salt-compact-light .ag-row-selected::before,
@@ -27,6 +54,51 @@
   background-image: none;
   height: var(--salt-size-fixed-100);
   top: -1px;
+}
+
+/*
+  [VERSION DIVERGANCE]: In v36, lift full-width selected row borders above regular row cell
+  containers. .ag-grid-scrolling-container is v36-only, so this is inert in earlier versions.
+*/
+[class*="ag-theme-salt"] .ag-grid-scrolling-container .ag-row-selected.ag-full-width-row::before {
+  pointer-events: none;
+  z-index: 3;
+}
+
+/*
+  [VERSION DIVERGANCE]: From v36, paint the selected top border on the three cell containers so
+  it follows the column extent instead of crossing the flex-fill area. The upward shadow overlaps
+  the preceding row border without affecting layout. These container classes are v36-only.
+*/
+[class*="ag-theme-salt"] .ag-row.ag-row-selected > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-row.ag-row-selected > .ag-grid-scrolling-cells,
+[class*="ag-theme-salt"] .ag-row.ag-row-selected > .ag-grid-pinned-right-cells {
+  box-shadow: 0 calc(var(--salt-size-fixed-100) * -1) 0 0 var(--ag-selected-row-border-color);
+}
+
+/*
+  [VERSION DIVERGANCE]: From v36, raise selected cell containers above neighbouring virtualised
+  rows so the upward shadow reliably covers the preceding row border. Preserve AG Grid's pinned
+  cells-above-scrolling-cells stacking order. These container classes are v36-only.
+*/
+[class*="ag-theme-salt"] .ag-row.ag-row-selected > .ag-grid-scrolling-cells {
+  z-index: 1;
+}
+
+[class*="ag-theme-salt"] .ag-row.ag-row-selected > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-row.ag-row-selected > .ag-grid-pinned-right-cells {
+  z-index: 3;
+}
+
+/*
+  [VERSION DIVERGANCE]: From v36, selection is painted on the three cell containers rather than
+  the row. Keep the row's base background in the flex-fill area after the last unpinned column.
+  The cell container shadows above paint the top border over the preceding row's bottom border,
+  matching pre-v36. .ag-grid-scrolling-container is v36-only, so this rule is inert in earlier
+  supported versions.
+*/
+[class*="ag-theme-salt"] .ag-grid-scrolling-container .ag-row.ag-row-selected:not(.ag-full-width-row) {
+  background-color: var(--ag-data-background-color);
 }
 
 /* CELL */

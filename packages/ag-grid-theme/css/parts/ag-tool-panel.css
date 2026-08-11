@@ -6,6 +6,14 @@
   width: inherit;
 }
 
+/* [VERSION DIVERGANCE]: From v35.2, custom tool panels are wrapped in .ag-tool-panel-content. */
+.ag-theme-salt-light .ag-tool-panel-wrapper > .ag-tool-panel-content > .ag-react-container,
+.ag-theme-salt-dark .ag-tool-panel-wrapper > .ag-tool-panel-content > .ag-react-container,
+.ag-theme-salt-compact-light .ag-tool-panel-wrapper > .ag-tool-panel-content > .ag-react-container,
+.ag-theme-salt-compact-dark .ag-tool-panel-wrapper > .ag-tool-panel-content > .ag-react-container {
+  width: 100%;
+}
+
 .ag-theme-salt-light .ag-side-buttons,
 .ag-theme-salt-dark .ag-side-buttons,
 .ag-theme-salt-compact-light .ag-side-buttons,
