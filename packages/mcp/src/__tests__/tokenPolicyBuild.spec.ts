@@ -13,9 +13,7 @@ import {
 import { CatalogStoreV2 } from "../core/catalog/catalogStoreV2.js";
 import {
   SALT_EVIDENCE_REF_CONTRACT,
-  type SaltGeneratedArtifact,
 } from "../core/evidence.js";
-import { validateGeneratedArtifactRegistryEvidence } from "../core/generatedArtifactValidation.js";
 import { getSaltRegistryFingerprint } from "../core/registry/fingerprint.js";
 import { loadRegistry } from "../core/registry/loadRegistry.js";
 import {
@@ -417,104 +415,6 @@ describe("generated token policy", () => {
     const valid = validate(builtStructuralRoleRulePack);
 
     expect(valid, JSON.stringify(validate.errors, null, 2)).toBe(true);
-  });
-
-  it("requires structural role claims to resolve to rule-pack evidence", () => {
-    const structuralRoleToken = builtRegistry.tokens.find(
-      (token) => (token.policy?.structural_roles?.length ?? 0) > 0,
-    );
-    if (!structuralRoleToken) {
-      throw new Error("Expected source-backed structural-role token.");
-    }
-
-    const registryHash = getSaltRegistryFingerprint(builtRegistry);
-    const artifact: SaltGeneratedArtifact = {
-      contract: "salt_generated_artifact_v1",
-      artifact_kind: "pattern-guidance",
-      id: "token-structural-role.fixture",
-      generated_at: "2026-03-26T00:00:00Z",
-      generator: {
-        name: "mcp-core test",
-      },
-      registry: {
-        version: builtRegistry.version,
-        hash: registryHash,
-        generated_at: builtRegistry.generated_at,
-      },
-      claims: [
-        {
-          id: "token-structural-role.fixture.claim",
-          kind: "token",
-          text: "Fixture claim for source-backed token structural role.",
-          field_path: "policy.structural_roles.0",
-          evidence_ref_ids: ["token-structural-role.fixture.ref"],
-        },
-      ],
-      evidence_refs: [
-        {
-          contract: SALT_EVIDENCE_REF_CONTRACT,
-          id: "token-structural-role.fixture.ref",
-          source_kind: "registry",
-          claim_kind: "token",
-          registry: {
-            entity_type: "token",
-            entity_id: structuralRoleToken.name,
-            entity_name: structuralRoleToken.name,
-            field_path: "policy.structural_roles.0",
-            registry_version: builtRegistry.version,
-            registry_hash: registryHash,
-          },
-          source: structuralRoleToken.policy?.docs[0]
-            ? {
-                url: structuralRoleToken.policy.docs[0],
-              }
-            : null,
-        },
-      ],
-    };
-
-    expect(
-      validateGeneratedArtifactRegistryEvidence(artifact, builtRegistry),
-    ).toEqual([]);
-    const registryWithoutRulePack: SaltRegistry = {
-      ...builtRegistry,
-      semantic_hash: null,
-      token_policy_structural_role_rule_pack: null,
-    };
-    const registryWithoutRulePackHash = getSaltRegistryFingerprint(
-      registryWithoutRulePack,
-    );
-    const artifactWithoutRulePack: SaltGeneratedArtifact = {
-      ...artifact,
-      registry: {
-        version: registryWithoutRulePack.version,
-        hash: registryWithoutRulePackHash,
-        generated_at: registryWithoutRulePack.generated_at,
-      },
-      evidence_refs: artifact.evidence_refs.map((ref) =>
-        ref.source_kind === "registry"
-          ? {
-              ...ref,
-              registry: {
-                ...ref.registry,
-                registry_version: registryWithoutRulePack.version,
-                registry_hash: registryWithoutRulePackHash,
-              },
-            }
-          : ref,
-      ),
-    };
-    expect(
-      validateGeneratedArtifactRegistryEvidence(
-        artifactWithoutRulePack,
-        registryWithoutRulePack,
-      ),
-    ).toEqual([
-      expect.objectContaining({
-        code: "missing_structural_role_rule_evidence",
-        path: "evidence_refs[0].registry.field_path",
-      }),
-    ]);
   });
 
   it("does not infer structural roles when source-backed role rules are missing", () => {

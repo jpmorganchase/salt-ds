@@ -870,7 +870,7 @@ function parseCssFacts(
   const offsets = lineOffsets(text);
   const positions = buildSourcePositionMap(text);
   try {
-    const root = postcss.parse(text, { from: undefined });
+    const root = postcss.parse(text, { from: undefined, map: false });
     let visitedNodeCount = 0;
     const structuralStack: Array<{ node: ChildNode; depth: number }> =
       root.nodes.map((node) => ({ node, depth: 1 })).reverse();

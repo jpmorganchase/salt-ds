@@ -21,6 +21,7 @@ interface CreateServerOptions {
 export async function createSaltMcpServer(options: CreateServerOptions = {}) {
   const context = await loadCatalogRuntimeContext({
     registryDir: options.registryDir,
+    prefetch: true,
   });
   const projectAccess = await createProjectAccessPolicy(options.projectAccess);
   const projectPolicySnapshots = new ProjectPolicySnapshotCache();

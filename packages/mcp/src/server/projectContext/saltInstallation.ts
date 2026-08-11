@@ -3,7 +3,10 @@ import path from "node:path";
 import { JSON_SCHEMA, load as parseYaml } from "js-yaml";
 import micromatch from "micromatch";
 import { satisfies, valid, validRange } from "semver";
-import { readBoundedProjectFile } from "../../core/runtime.js";
+import {
+  inspectProjectFileMetadata,
+  readBoundedProjectFile,
+} from "../../core/runtime.js";
 import type {
   SaltInstallationDiagnostics,
   SaltInstallationWorkspace,
@@ -39,14 +42,15 @@ export const MAX_WORKSPACE_ANCESTOR_DIRECTORIES = 32;
 export const MAX_WORKSPACE_PATTERNS = 128;
 export const MAX_WORKSPACE_PATTERN_UTF8_BYTES = 1_024;
 const MAX_RESOLVED_SALT_PACKAGES = 128;
-const MAX_MARKER_BYTES = 8 * 1024 * 1024;
+const PACKAGE_RESOLUTION_CONCURRENCY = 8;
 const SALT_PACKAGE_NAME_PATTERN = /^@salt-ds\/[a-z0-9][a-z0-9._-]{0,204}$/;
-const GRAPH_LIMITATION =
+export const SALT_INSTALLATION_SCOPE_LIMITATION =
   "Salt inspected only declared packages through bounded manifest resolution; full dependency-graph and duplicate-install diagnosis is outside this inspection scope.";
 
 export type MarkerInspectionReason =
   | "outside_root"
   | "not_file"
+  | "multiple_links"
   | "unreadable"
   | "oversized"
   | "changed_during_inspection"
@@ -311,11 +315,10 @@ async function inspectPackageManagerMarker(
   targetPath: string,
   authorityRoot: string = rootDir,
 ): Promise<MarkerInspection<true>> {
-  const file = await readBoundedProjectFile({
+  const file = await inspectProjectFileMetadata({
     authorityRoot,
     rootDir,
     filePath: targetPath,
-    maxUtf8Bytes: MAX_MARKER_BYTES,
   });
   if (file.status === "absent") return { status: "absent", path: null };
   if (file.status === "invalid") {
@@ -777,12 +780,42 @@ function satisfiesDeclaration(
   return null;
 }
 
-async function resolveDeclaredPackageManifestPath(input: {
+type CandidatePackageDirectoryInspection =
+  | { status: "absent" }
+  | { status: "present" }
+  | { status: "unverifiable" };
+
+type DeclaredPackageManifestResolution =
+  | {
+      status: "valid";
+      path: string;
+      value: SaltPackageJsonLike;
+    }
+  | { status: "unverifiable" };
+
+async function inspectCandidatePackageDirectory(
+  candidateDirectory: string,
+  allowedRoot: string,
+): Promise<CandidatePackageDirectoryInspection> {
+  if (!isPathInside(allowedRoot, candidateDirectory)) {
+    return { status: "unverifiable" };
+  }
+  try {
+    await fs.lstat(candidateDirectory, { bigint: true });
+    return { status: "present" };
+  } catch (error) {
+    return (error as NodeJS.ErrnoException | undefined)?.code === "ENOENT"
+      ? { status: "absent" }
+      : { status: "unverifiable" };
+  }
+}
+
+async function resolveDeclaredPackageManifest(input: {
   authorityRoot: string;
   rootDir: string;
   allowedRoot: string;
   packageName: string;
-}): Promise<string> {
+}): Promise<DeclaredPackageManifestResolution> {
   const absoluteRoot = path.resolve(input.rootDir);
   const absoluteAllowedRoot = path.resolve(input.allowedRoot);
   const absoluteAuthorityRoot = path.resolve(input.authorityRoot);
@@ -795,18 +828,33 @@ async function resolveDeclaredPackageManifestPath(input: {
   const packageSegments = input.packageName.split("/");
   let current = absoluteRoot;
   for (;;) {
-    const candidate = path.join(
+    const candidateDirectory = path.join(
       current,
       "node_modules",
       ...packageSegments,
-      "package.json",
     );
-    const inspection = await inspectPackageJsonFile(
-      candidate,
+    const directoryInspection = await inspectCandidatePackageDirectory(
+      candidateDirectory,
       absoluteAllowedRoot,
-      input.authorityRoot,
     );
-    if (inspection.status === "valid") return inspection.path;
+    if (directoryInspection.status === "unverifiable") {
+      return { status: "unverifiable" };
+    }
+    if (directoryInspection.status === "present") {
+      const candidate = path.join(candidateDirectory, "package.json");
+      const inspection = await inspectPackageJsonFile(
+        candidate,
+        absoluteAllowedRoot,
+        input.authorityRoot,
+      );
+      return inspection.status === "valid"
+        ? {
+            status: "valid",
+            path: inspection.path,
+            value: inspection.value,
+          }
+        : { status: "unverifiable" };
+    }
     if (current === absoluteAllowedRoot) break;
     const parent = path.dirname(current);
     if (parent === current || !isPathInside(absoluteAllowedRoot, parent)) {
@@ -814,7 +862,7 @@ async function resolveDeclaredPackageManifestPath(input: {
     }
     current = parent;
   }
-  throw new Error("package-manifest-not-found");
+  return { status: "unverifiable" };
 }
 
 async function resolveDeclaredPackages(input: {
@@ -841,26 +889,33 @@ async function resolveDeclaredPackages(input: {
     }));
   }
 
-  return Promise.all(
-    input.saltPackages.map(async (saltPackage) => {
+  const results: SaltInstallationDiagnostics["resolvedPackages"] = new Array(
+    input.saltPackages.length,
+  );
+  let nextPackageIndex = 0;
+  const resolveNextPackage = async (): Promise<void> => {
+    for (;;) {
+      const packageIndex = nextPackageIndex;
+      nextPackageIndex += 1;
+      if (packageIndex >= input.saltPackages.length) return;
+      const saltPackage = input.saltPackages[packageIndex];
       try {
-        const resolved = await resolveDeclaredPackageManifestPath({
+        const resolution = await resolveDeclaredPackageManifest({
           authorityRoot: input.authorityRoot,
           rootDir: input.rootDir,
           allowedRoot: input.allowedRoot,
           packageName: saltPackage.name,
         });
-        const realResolved = await fs.realpath(resolved);
+        if (resolution.status !== "valid") {
+          throw new Error("package-manifest-unverifiable");
+        }
+        const realResolved = path.resolve(resolution.path);
         if (
           !isPathInside(absoluteAuthorityRoot, realResolved) ||
           !isPathInside(realAllowedRoot, realResolved)
         )
           throw new Error("outside-root");
-        const manifest = await readPackageJsonFile(
-          realResolved,
-          realAllowedRoot,
-          input.authorityRoot,
-        );
+        const manifest = resolution.value;
         const resolvedVersion =
           manifest?.name === saltPackage.name &&
           typeof manifest.version === "string"
@@ -875,7 +930,7 @@ async function resolveDeclaredPackages(input: {
           workspacePatterns: input.workspacePatterns,
           pnpmWorkspace: input.pnpmWorkspace,
         });
-        return {
+        results[packageIndex] = {
           name: saltPackage.name,
           declaredVersion: saltPackage.version,
           effectiveDeclaredVersion: declaration.effective,
@@ -888,7 +943,7 @@ async function resolveDeclaredPackages(input: {
           ),
         };
       } catch {
-        return {
+        results[packageIndex] = {
           name: saltPackage.name,
           declaredVersion: saltPackage.version,
           effectiveDeclaredVersion: null,
@@ -898,8 +953,20 @@ async function resolveDeclaredPackages(input: {
           satisfiesDeclaredVersion: null,
         };
       }
-    }),
+    }
+  };
+  await Promise.all(
+    Array.from(
+      {
+        length: Math.min(
+          PACKAGE_RESOLUTION_CONCURRENCY,
+          input.saltPackages.length,
+        ),
+      },
+      resolveNextPackage,
+    ),
   );
+  return results;
 }
 
 function nodeModulesRoot(packageJsonPath: string): string | null {
@@ -1227,7 +1294,7 @@ export async function collectSaltInstallationDiagnostics(
         ? "succeeded"
         : "limited",
     packageLayout,
-    limitations: [GRAPH_LIMITATION, ...inspectionWarnings],
+    limitations: [SALT_INSTALLATION_SCOPE_LIMITATION, ...inspectionWarnings],
     manifestOverrideFields,
   };
   const versionHealth: SaltPackageVersionHealth = {

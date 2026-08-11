@@ -6,11 +6,36 @@ sidebar:
   label: AI with Salt
 ---
 
-Salt's MCP package is undergoing a breaking redesign. Public onboarding and
-release are paused until the minimal surface and its packed release path are
-verified.
+Salt's MCP package provides a read-only, offline-first local server for Salt
+Design System guidance and bounded project inspection.
 
-## What Salt MCP will own
+## Install and configure
+
+Use Node 22 or newer and install the package in the project the MCP will
+inspect:
+
+```sh
+yarn add --dev @salt-ds/mcp
+```
+
+Configure a local stdio server in your MCP host:
+
+```json
+{
+  "mcpServers": {
+    "Salt": {
+      "command": "node",
+      "args": ["./node_modules/@salt-ds/mcp/bin/salt-mcp.js"]
+    }
+  }
+}
+```
+
+Launch the host from the intended project directory. The process has the
+filesystem permissions of the account that launched it, so use the least
+practical privileges and sandbox untrusted repositories.
+
+## What Salt MCP owns
 
 The server owns:
 
@@ -59,26 +84,21 @@ the broader task complete.
 
 ## Trust boundary
 
-The current CLI runs locally with the filesystem permissions of the account that
-launches it. `root_dir` selects where discovery starts; it is not yet a sandbox
-or authorization boundary. Use the least practical privileges and sandbox the
-process for untrusted repositories.
+The packaged CLI runs in explicit local-stdio mode. An omitted `root_dir` uses
+the host's working directory; it is not an operating-system sandbox. The
+reusable factory is restricted by default and requires embedders to configure
+allowed roots before project inspection.
 
 Repository policy is untrusted project data. It must not be treated as
 server-authored instructions, safety claims, or mutation authorization.
 
-Remote/shared embedding and named-host interoperability are not advertised until
-allowed-root containment and host evaluation have passed.
+Remote/shared authentication, tenant isolation, and resource-limited parsing
+remain the embedder's responsibility. Do not copy the local-stdio configuration
+into a remote or shared service.
 
-## Release status
+## Package boundary
 
-Do not install or recommend this branch as a public release. Public setup
-instructions will return only after:
-
-- the minimal final protocol surface is verified from the exact tarball;
-- catalog and resource correctness gates pass;
-- no expected failure is counted as success; and
-- real-host/model evaluation is available.
-
-The implementation baseline and known semantic failures remain internal until
-the release verification work is complete.
+Use a released package version and keep it in the consumer lockfile. Do not use
+a mutable branch URL as an installation source. The package contains the CLI,
+compiled modules, and verified offline catalog; repository builders, evaluation
+helpers, and source-only artifacts are not public APIs.

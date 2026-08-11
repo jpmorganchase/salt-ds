@@ -19,12 +19,13 @@ import {
   detectSaltWorkspaceScope,
   inspectPackageJsonFile,
   MAX_WORKSPACE_ANCESTOR_DIRECTORIES,
+  SALT_INSTALLATION_SCOPE_LIMITATION,
 } from "./projectContext/saltInstallation.js";
 import { inspectProjectPolicy } from "./projectPolicyInspection.js";
 import type { ProjectPolicySnapshotCache } from "./projectPolicySnapshot.js";
 import {
-  createProjectContextHandle,
   createProjectPolicySnapshot,
+  PROJECT_POLICY_RESOURCE_TRUST,
 } from "./projectPolicySnapshot.js";
 
 export interface InspectSaltProjectInput {
@@ -42,6 +43,60 @@ const MAX_PUBLIC_NAME_JSON_UTF8_BYTES = 512;
 const MAX_PUBLIC_VALUE_JSON_UTF8_BYTES = 256;
 const MAX_PUBLIC_LIMITATION_JSON_UTF8_BYTES = 512;
 const PUBLIC_PACKAGE_MANAGERS = new Set(["npm", "yarn", "pnpm", "bun"]);
+
+type InstallationDiagnosticCode =
+  | "installation_inspection_limited"
+  | "installation_advisory"
+  | "manifest_override_present"
+  | "package_manager_evidence_issue"
+  | "salt_package_unverifiable"
+  | "workspace_ancestor_limit"
+  | "workspace_declaration_issue";
+
+function publicInstallationDiagnostics(
+  installation: Awaited<ReturnType<typeof collectSaltInstallationDiagnostics>>,
+): Array<{
+  code: InstallationDiagnosticCode;
+  parameters: { count: number };
+}> {
+  const diagnostics: Array<{
+    code: InstallationDiagnosticCode;
+    parameters: { count: number };
+  }> = [];
+  const add = (code: InstallationDiagnosticCode, count: number) => {
+    if (count > 0) diagnostics.push({ code, parameters: { count } });
+  };
+  add(
+    "installation_inspection_limited",
+    installation.inspection.status === "limited" ? 1 : 0,
+  );
+  add("installation_advisory", installation.versionHealth.issues.length);
+  add(
+    "salt_package_unverifiable",
+    installation.versionHealth.unverifiablePackages.length,
+  );
+  add(
+    "manifest_override_present",
+    installation.inspection.manifestOverrideFields.length,
+  );
+  add(
+    "package_manager_evidence_issue",
+    installation.inspection.packageManagerDetectionStatus === "ambiguous" ||
+      installation.inspection.packageManagerDetectionStatus === "invalid"
+      ? 1
+      : 0,
+  );
+  add("workspace_declaration_issue", installation.workspace.workspaceIssues.length);
+  add(
+    "workspace_ancestor_limit",
+    installation.inspection.limitations.some((value) =>
+      value.startsWith("Workspace ancestor discovery was limited"),
+    )
+      ? 1
+      : 0,
+  );
+  return diagnostics;
+}
 
 function wholeStringWithinBudget(
   value: string | null,
@@ -195,11 +250,18 @@ export async function inspectSaltProject(
           currentSaltVersion,
           policy: detectedPolicy,
         });
-  limitations.push(
-    ...installation.inspection.limitations,
-    ...installation.versionHealth.issues,
-    ...(policyInspection?.limitations ?? []),
-  );
+  limitations.push(SALT_INSTALLATION_SCOPE_LIMITATION);
+  if (installation.inspection.status === "limited") {
+    limitations.push(
+      "Installation inspection was limited; inspect data.installation.untrusted_project_data.diagnostics for stable condition codes and counts.",
+    );
+  }
+  if (installation.versionHealth.issues.length > 0) {
+    limitations.push(
+      "Installation advisory conditions were observed; inspect the labelled untrusted project data for bounded package facts.",
+    );
+  }
+  limitations.push(...(policyInspection?.limitations ?? []));
 
   const policyIr = policyInspection?.ir ?? null;
   const policySnapshot = policyInspection
@@ -214,7 +276,10 @@ export async function inspectSaltProject(
         ),
       })
     : null;
-  if (policySnapshot) projectPolicySnapshots?.remember(policySnapshot);
+  const projectContextHandle =
+    policySnapshot && projectPolicySnapshots
+      ? projectPolicySnapshots.remember(policySnapshot)
+      : null;
   const policyImportTargets = policyInspection?.import_targets ?? null;
   const omissions: ResultBudgetOmission[] = [
     "root_dir",
@@ -224,7 +289,7 @@ export async function inspectSaltProject(
     "policy.team_config_path",
     "policy.stack_config_path",
     "limitations",
-    "installation.resolved_packages",
+    "installation.untrusted_project_data.resolved_packages",
     "policy.ir",
     "policy.import_targets",
   ].map((section) => ({ section, available: 0, returned: 0 }));
@@ -283,9 +348,9 @@ export async function inspectSaltProject(
   );
   const response = {
     data: {
-      context: policySnapshot
+      context: policySnapshot && projectContextHandle
         ? {
-            handle: createProjectContextHandle(policySnapshot),
+            handle: projectContextHandle,
             digest: policySnapshot.context_digest,
             retention: "process_local_bounded_lru" as const,
           }
@@ -321,15 +386,19 @@ export async function inspectSaltProject(
           unverifiable_package_count:
             installation.versionHealth.unverifiablePackages.length,
         },
-        resolved_packages: [] as Array<{
-          name: string;
-          declared_version: string;
-          effective_declared_version: string | null;
-          declaration_resolution: "verified" | "unverifiable";
-          resolved_version: string | null;
-          resolved_path: string | null;
-          satisfies_declared_version: boolean | null;
-        }>,
+        untrusted_project_data: {
+          ...PROJECT_POLICY_RESOURCE_TRUST,
+          diagnostics: publicInstallationDiagnostics(installation),
+          resolved_packages: [] as Array<{
+            name: string;
+            declared_version: string;
+            effective_declared_version: string | null;
+            declaration_resolution: "verified" | "unverifiable";
+            resolved_version: string | null;
+            resolved_path: string | null;
+            satisfies_declared_version: boolean | null;
+          }>,
+        },
       },
       policy: {
         mode: detectedPolicy.mode,
@@ -415,7 +484,7 @@ export async function inspectSaltProject(
   );
   appendWithinBudget(
     response,
-    response.data.installation.resolved_packages,
+    response.data.installation.untrusted_project_data.resolved_packages,
     installation.resolvedPackages.map((entry) => ({
       name: entry.name,
       declared_version: entry.declaredVersion,
@@ -425,7 +494,7 @@ export async function inspectSaltProject(
       resolved_path: portable(entry.resolvedPath),
       satisfies_declared_version: entry.satisfiesDeclaredVersion,
     })),
-    omission("installation.resolved_packages"),
+    omission("installation.untrusted_project_data.resolved_packages"),
     (entry) =>
       stringFitsBudget(entry.name, MAX_PUBLIC_VALUE_JSON_UTF8_BYTES) &&
       stringFitsBudget(

@@ -449,6 +449,8 @@ async function resolveBoundedPolicyFile(input: {
       outside_root:
         "The project policy file is outside the authorized root after realpath resolution.",
       not_file: "The project policy marker is not a regular file.",
+      multiple_links:
+        "The project policy file has multiple hard links and cannot be trusted as a unique project input.",
       unreadable: "The project policy file is unreadable.",
       oversized: `The project policy file exceeds the ${MAX_PROJECT_POLICY_FILE_BYTES}-byte inspection limit.`,
       changed_during_inspection:

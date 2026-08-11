@@ -524,7 +524,7 @@ export interface ApiSymbolIdentity {
   entrypoint: string;
   export_name: string;
   symbol_space: "value" | "type" | "type_and_value";
-  /** Phase 1 supports either a top-level export or one immediate public member. */
+  /** Supports either a top-level export or one immediate public member. */
   member_path: Array<{
     kind: "prop" | "method" | "static_method";
     name: string;

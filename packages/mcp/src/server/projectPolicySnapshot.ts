@@ -1,12 +1,15 @@
-import { createHash } from "node:crypto";
+import { createHash, randomBytes } from "node:crypto";
 import path from "node:path";
 import {
   canonicalJson,
   deriveComparableSaltVersion,
   detectProjectPolicy,
+  MAX_PUBLIC_RESOURCE_UTF8_BYTES,
   type ProjectPolicyConditionV2,
   type ProjectPolicyOccurrenceV2,
+  publicResourceUtf8Bytes,
   type SaltProjectPolicyIrV2,
+  serializePublicResourceJson,
 } from "../core/runtime.js";
 import {
   authorizeProjectRoot,
@@ -29,12 +32,29 @@ export const MAX_PROJECT_POLICY_SNAPSHOT_CACHE_ENTRIES = 8;
 export const MAX_PROJECT_POLICY_SNAPSHOT_CACHE_UTF8_BYTES = 64 * 1024 * 1024;
 export const MAX_PROJECT_POLICY_SNAPSHOT_CACHE_ENTRY_UTF8_BYTES =
   32 * 1024 * 1024;
-export const MAX_PROJECT_CONTEXT_HANDLE_CHARS = 8 * 1024;
 const PROJECT_CONTEXT_HANDLE_PREFIX = "salt-project-context-v1.";
+const PROJECT_CONTEXT_HANDLE_RANDOM_BYTES = 24;
+export const MAX_PROJECT_CONTEXT_HANDLE_CHARS =
+  PROJECT_CONTEXT_HANDLE_PREFIX.length +
+  Math.ceil((PROJECT_CONTEXT_HANDLE_RANDOM_BYTES * 4) / 3);
+export const PROJECT_CONTEXT_HANDLE_PATTERN = new RegExp(
+  `^${PROJECT_CONTEXT_HANDLE_PREFIX.replaceAll(".", "\\.")}[A-Za-z0-9_-]{${Math.ceil(
+    (PROJECT_CONTEXT_HANDLE_RANDOM_BYTES * 4) / 3,
+  )}}$`,
+  "u",
+);
 const MAX_PROJECT_POLICY_CLAIM_REASON_UTF8_BYTES = 2 * 1024;
 const MAX_PROJECT_POLICY_CLAIM_DOCS = 16;
 const MAX_PROJECT_POLICY_CLAIM_DOC_UTF8_BYTES = 512;
 const MAX_PROJECT_POLICY_CLAIM_OPAQUE_TEXT_UTF8_BYTES = 256;
+const MAX_PROJECT_POLICY_CLAIM_VALUE_UTF8_BYTES = 4 * 1024;
+const MAX_PROJECT_POLICY_CLAIM_PATH_UTF8_BYTES = 8 * 1024;
+
+export const PROJECT_POLICY_RESOURCE_TRUST = {
+  classification: "untrusted_project_data",
+  instruction_authority: "none",
+  authorization_meaning: "read_access_only",
+} as const;
 
 function boundedClaimText(value: string, maxUtf8Bytes: number): string {
   if (Buffer.byteLength(value, "utf8") <= maxUtf8Bytes) return value;
@@ -80,8 +100,13 @@ function snapshotCacheKey(rootDir: string, digest: string): string {
 export class ProjectPolicySnapshotCache {
   readonly #entries = new Map<
     string,
-    { snapshot: AuthorizedProjectPolicySnapshot; utf8Bytes: number }
+    {
+      snapshot: AuthorizedProjectPolicySnapshot;
+      utf8Bytes: number;
+      handle: string;
+    }
   >();
+  readonly #keyByHandle = new Map<string, string>();
   #utf8Bytes = 0;
   readonly limits: Readonly<{
     maxEntries: number;
@@ -116,7 +141,7 @@ export class ProjectPolicySnapshotCache {
     this.limits = Object.freeze({ ...limits });
   }
 
-  remember(snapshot: AuthorizedProjectPolicySnapshot): void {
+  remember(snapshot: AuthorizedProjectPolicySnapshot): string {
     const utf8Bytes = Buffer.byteLength(JSON.stringify(snapshot), "utf8");
     if (utf8Bytes > this.limits.maxEntryUtf8Bytes) {
       throw new Error(
@@ -132,6 +157,14 @@ export class ProjectPolicySnapshotCache {
     if (existing) {
       this.#entries.delete(key);
       this.#utf8Bytes -= existing.utf8Bytes;
+      if (
+        JSON.stringify(existing.snapshot) === JSON.stringify(retainedSnapshot)
+      ) {
+        this.#entries.set(key, existing);
+        this.#utf8Bytes += existing.utf8Bytes;
+        return existing.handle;
+      }
+      this.#keyByHandle.delete(existing.handle);
     }
     while (
       this.#entries.size >= this.limits.maxEntries ||
@@ -141,6 +174,7 @@ export class ProjectPolicySnapshotCache {
       if (typeof oldestKey !== "string") break;
       const oldest = this.#entries.get(oldestKey);
       this.#entries.delete(oldestKey);
+      if (oldest) this.#keyByHandle.delete(oldest.handle);
       this.#utf8Bytes -= oldest?.utf8Bytes ?? 0;
     }
     if (
@@ -151,77 +185,61 @@ export class ProjectPolicySnapshotCache {
         "Project-policy snapshot could not fit in the bounded durable resource cache.",
       );
     }
-    this.#entries.set(key, { snapshot: retainedSnapshot, utf8Bytes });
+    let handle = "";
+    do {
+      handle = `${PROJECT_CONTEXT_HANDLE_PREFIX}${randomBytes(
+        PROJECT_CONTEXT_HANDLE_RANDOM_BYTES,
+      ).toString("base64url")}`;
+    } while (this.#keyByHandle.has(handle));
+    this.#entries.set(key, { snapshot: retainedSnapshot, utf8Bytes, handle });
+    this.#keyByHandle.set(handle, key);
     this.#utf8Bytes += utf8Bytes;
+    return handle;
   }
 
-  get(rootDir: string, digest: string): AuthorizedProjectPolicySnapshot | null {
-    const key = snapshotCacheKey(rootDir, digest);
-    let entry = this.#entries.get(key);
-    let retainedKey = key;
-    if (!entry) {
-      for (const [candidateKey, candidate] of this.#entries) {
-        if (
-          candidate.snapshot.authorization.rootDir === rootDir &&
-          candidate.snapshot.digest === digest
-        ) {
-          entry = candidate;
-          retainedKey = candidateKey;
-          break;
-        }
-      }
+  getByHandle(handle: string): AuthorizedProjectPolicySnapshot | null {
+    if (!PROJECT_CONTEXT_HANDLE_PATTERN.test(handle)) {
+      throw new Error("Invalid project context handle.");
     }
-    if (!entry) return null;
-    this.#entries.delete(retainedKey);
-    this.#entries.set(retainedKey, entry);
+    const key = this.#keyByHandle.get(handle);
+    if (!key) return null;
+    const entry = this.#entries.get(key);
+    if (!entry || entry.handle !== handle) {
+      this.#keyByHandle.delete(handle);
+      return null;
+    }
+    this.#entries.delete(key);
+    this.#entries.set(key, entry);
     return entry.snapshot;
   }
-}
 
-export function createProjectContextHandle(
-  snapshot: AuthorizedProjectPolicySnapshot,
-): string {
-  const payload = Buffer.from(
-    canonicalJson({
-      root_dir: snapshot.authorization.rootDir,
-      context_digest: snapshot.context_digest,
-    }),
-    "utf8",
-  ).toString("base64url");
-  return `${PROJECT_CONTEXT_HANDLE_PREFIX}${payload}`;
-}
-
-export function parseProjectContextHandle(handle: string): {
-  rootDir: string;
-  contextDigest: string;
-} {
-  if (
-    handle.length > MAX_PROJECT_CONTEXT_HANDLE_CHARS ||
-    !handle.startsWith(PROJECT_CONTEXT_HANDLE_PREFIX)
-  ) {
-    throw new Error("Invalid project context handle.");
+  getByContextDigest(
+    rootDir: string,
+    digest: string,
+  ): AuthorizedProjectPolicySnapshot | null {
+    const key = snapshotCacheKey(rootDir, digest);
+    const entry = this.#entries.get(key);
+    if (!entry) return null;
+    this.#entries.delete(key);
+    this.#entries.set(key, entry);
+    return entry.snapshot;
   }
-  try {
-    const value = JSON.parse(
-      Buffer.from(
-        handle.slice(PROJECT_CONTEXT_HANDLE_PREFIX.length),
-        "base64url",
-      ).toString("utf8"),
-    ) as Record<string, unknown>;
-    if (
-      Object.keys(value).length !== 2 ||
-      typeof value.root_dir !== "string" ||
-      typeof value.context_digest !== "string" ||
-      !/^sha256:[0-9a-f]{64}$/u.test(value.context_digest)
-    ) {
-      throw new Error("invalid payload");
+
+  getByPolicyDigest(
+    rootDir: string,
+    digest: string,
+  ): AuthorizedProjectPolicySnapshot | null {
+    for (const [key, entry] of this.#entries) {
+      if (
+        entry.snapshot.authorization.rootDir === rootDir &&
+        entry.snapshot.digest === digest
+      ) {
+        this.#entries.delete(key);
+        this.#entries.set(key, entry);
+        return entry.snapshot;
+      }
     }
-    return {
-      rootDir: value.root_dir,
-      contextDigest: value.context_digest,
-    };
-  } catch {
-    throw new Error("Invalid project context handle.");
+    return null;
   }
 }
 
@@ -314,12 +332,23 @@ export async function loadAuthorizedProjectPolicySnapshot(
   accessPolicy: ProjectAccessPolicy,
   requestedRoot: string | undefined,
   cache?: ProjectPolicySnapshotCache,
-  requestedDigest?: string,
+  requestedSnapshot?:
+    | { kind: "context_digest"; digest: string }
+    | { kind: "policy_digest"; digest: string },
 ): Promise<ProjectPolicySnapshotLoadResult> {
   const authorization = await authorizeProjectRoot(accessPolicy, requestedRoot);
   if (authorization.status === "denied") return { authorization };
-  if (requestedDigest) {
-    const cached = cache?.get(authorization.rootDir, requestedDigest);
+  if (requestedSnapshot) {
+    const cached =
+      requestedSnapshot.kind === "context_digest"
+        ? cache?.getByContextDigest(
+            authorization.rootDir,
+            requestedSnapshot.digest,
+          )
+        : cache?.getByPolicyDigest(
+            authorization.rootDir,
+            requestedSnapshot.digest,
+          );
     if (cached) return { ...cached, authorization };
     return { authorization };
   }
@@ -368,130 +397,298 @@ export async function loadAuthorizedProjectPolicySnapshot(
   return snapshot;
 }
 
-export function projectPolicyClaimRecord(
+interface ClaimCoverageSection {
+  available: number;
+  returned: number;
+  omitted: number;
+  truncated: boolean;
+}
+
+interface OpaqueClaimTextSlot {
+  node: { text: string | null; text_truncated: boolean };
+  source: string;
+}
+
+function boundedClaimValue(value: string): string {
+  return boundedClaimText(value, MAX_PROJECT_POLICY_CLAIM_VALUE_UTF8_BYTES);
+}
+
+function createProjectPolicyClaimProjection(
   occurrence: ProjectPolicyOccurrenceV2,
   rootDir: string,
-): Record<string, unknown> {
+  policyDigest: string,
+): { claim: Record<string, unknown>; serialized: string } {
   const selector = (() => {
     switch (occurrence.category) {
       case "approved_wrapper":
         return {
           fact: "canonical_name",
-          value: occurrence.declaration.wraps,
+          value: boundedClaimValue(occurrence.declaration.wraps),
           comparison: "exact",
         };
       case "preferred_component":
         return {
           fact: "canonical_name",
-          value: occurrence.declaration.salt_name,
+          value: boundedClaimValue(occurrence.declaration.salt_name),
           comparison: "exact",
         };
       case "token_alias":
         return {
           fact: "source_token",
-          value: occurrence.declaration.salt_name,
+          value: boundedClaimValue(occurrence.declaration.salt_name),
           comparison: "exact",
         };
       case "token_family_policy":
         return {
           fact: "token_family",
-          value: occurrence.declaration.family,
+          value: boundedClaimValue(occurrence.declaration.family),
           comparison: "exact",
         };
       case "pattern_preference":
         return occurrence.declaration.canonical_salt_start
           ? {
               fact: "canonical_name",
-              value: occurrence.declaration.canonical_salt_start,
+              value: boundedClaimValue(
+                occurrence.declaration.canonical_salt_start,
+              ),
               comparison: "exact",
             }
           : {
               fact: "intent",
-              value: occurrence.declaration.intent,
+              value: boundedClaimValue(occurrence.declaration.intent),
               comparison: "normalized_text",
             };
       case "banned_choice":
         return {
           fact: "canonical_name",
-          value: occurrence.declaration.name,
+          value: boundedClaimValue(occurrence.declaration.name),
           comparison: "exact",
         };
       case "theme_defaults":
         return null;
     }
   })();
-  const declaration = (() => {
-    const sourceDocs = occurrence.declaration.docs ?? [];
-    const boundedReason = boundedClaimText(
-      occurrence.declaration.reason,
-      MAX_PROJECT_POLICY_CLAIM_REASON_UTF8_BYTES,
-    );
-    const authoredContext = {
-      reason: boundedReason,
-      reason_truncated: boundedReason !== occurrence.declaration.reason,
-      docs: sourceDocs
-        .slice(0, MAX_PROJECT_POLICY_CLAIM_DOCS)
-        .map((entry) =>
-          boundedClaimText(entry, MAX_PROJECT_POLICY_CLAIM_DOC_UTF8_BYTES),
-        ),
-      docs_available: sourceDocs.length,
-      docs_returned: Math.min(sourceDocs.length, MAX_PROJECT_POLICY_CLAIM_DOCS),
-    };
-    switch (occurrence.category) {
-      case "approved_wrapper":
-        return {
-          name: occurrence.declaration.name,
-          ...authoredContext,
-        };
-      case "banned_choice":
-        return {
-          name: occurrence.declaration.name,
-          replacement: occurrence.declaration.replacement ?? null,
-          ...authoredContext,
-        };
-      case "preferred_component":
-      case "token_alias":
-        return {
-          prefer: occurrence.declaration.prefer,
-          ...authoredContext,
-        };
-      case "token_family_policy":
-        return {
-          family: occurrence.declaration.family,
-          mode: occurrence.declaration.mode,
-          ...authoredContext,
-        };
-      case "pattern_preference":
-        return {
-          prefer: occurrence.declaration.prefer,
-          ...authoredContext,
-        };
-      case "theme_defaults":
-        return authoredContext;
-    }
-  })();
+  const sourceDocs = occurrence.declaration.docs ?? [];
+  const declaration: Record<string, unknown> & {
+    docs: string[];
+    docs_available: number;
+    docs_returned: number;
+    reason_truncated: boolean;
+  } = {
+    docs: [],
+    docs_available: sourceDocs.length,
+    docs_returned: 0,
+    reason_truncated: true,
+  };
+  switch (occurrence.category) {
+    case "approved_wrapper":
+      declaration.name = boundedClaimValue(occurrence.declaration.name);
+      break;
+    case "banned_choice":
+      declaration.name = boundedClaimValue(occurrence.declaration.name);
+      declaration.replacement = occurrence.declaration.replacement
+        ? boundedClaimValue(occurrence.declaration.replacement)
+        : null;
+      break;
+    case "preferred_component":
+    case "token_alias":
+    case "pattern_preference":
+      declaration.prefer = boundedClaimValue(occurrence.declaration.prefer);
+      break;
+    case "token_family_policy":
+      declaration.family = boundedClaimValue(occurrence.declaration.family);
+      declaration.mode = occurrence.declaration.mode;
+      break;
+    case "theme_defaults":
+      break;
+  }
+  const opaqueTextSlots: OpaqueClaimTextSlot[] = [];
   const applicabilitySummary = summarizeClaimApplicability(occurrence);
-  return {
-    occurrence_id: occurrence.occurrence_id,
-    policy_type_id: occurrence.policy_type_id,
+  const reasonCoverage: ClaimCoverageSection = {
+    available: 1,
+    returned: 0,
+    omitted: 1,
+    truncated: true,
+  };
+  const documentationCoverage: ClaimCoverageSection & {
+    truncated_entries: number;
+  } = {
+    available: sourceDocs.length,
+    returned: 0,
+    omitted: sourceDocs.length,
+    truncated: sourceDocs.length > 0,
+    truncated_entries: 0,
+  };
+  const opaqueCoverage: ClaimCoverageSection & {
+    truncated_entries: number;
+  } = {
+    available: 0,
+    returned: 0,
+    omitted: 0,
+    truncated: false,
+    truncated_entries: 0,
+  };
+  const claim = {
+    occurrence_id: boundedClaimValue(occurrence.occurrence_id),
+    policy_type_id: boundedClaimValue(occurrence.policy_type_id),
     category: occurrence.category,
     declaration,
     selector,
     applicability: {
-      ...applicabilitySummary,
-      condition_shape: claimConditionShape(occurrence.condition),
+      salt_version_ranges: applicabilitySummary.salt_version_ranges.map(
+        boundedClaimValue,
+      ),
+      required_workflows: applicabilitySummary.required_workflows,
+      opaque_condition_counts: applicabilitySummary.opaque_condition_counts,
+      condition_shape: claimConditionShape(
+        occurrence.condition,
+        opaqueTextSlots,
+      ),
       import_validation: claimImportValidation(occurrence),
     },
     source: {
-      layer_id: occurrence.provenance.layer_id,
+      layer_id: boundedClaimValue(occurrence.provenance.layer_id),
       layer_index: occurrence.provenance.layer_index,
       scope: occurrence.provenance.scope,
-      repo_relative_source: claimRepoRelativeSource(occurrence, rootDir),
-      json_pointer: occurrence.provenance.json_pointer,
+      repo_relative_source: (() => {
+        const relativeSource = claimRepoRelativeSource(occurrence, rootDir);
+        return relativeSource
+          ? boundedClaimText(
+              relativeSource,
+              MAX_PROJECT_POLICY_CLAIM_PATH_UTF8_BYTES,
+            )
+          : null;
+      })(),
+      json_pointer: boundedClaimText(
+        occurrence.provenance.json_pointer,
+        MAX_PROJECT_POLICY_CLAIM_PATH_UTF8_BYTES,
+      ),
       source_order: occurrence.provenance.source_order,
     },
     rule_precedence: occurrence.rule_precedence,
+    coverage: {
+      authored_reason: reasonCoverage,
+      documentation: documentationCoverage,
+      opaque_condition_text: opaqueCoverage,
+    },
   };
+  opaqueCoverage.available = opaqueTextSlots.length;
+  opaqueCoverage.omitted = opaqueTextSlots.length;
+  opaqueCoverage.truncated = opaqueTextSlots.length > 0;
+  const payload = {
+    contract: "salt_project_policy_claim_v2",
+    trust: PROJECT_POLICY_RESOURCE_TRUST,
+    policy_digest: policyDigest,
+    claim,
+  };
+  const fits = (): boolean =>
+    publicResourceUtf8Bytes(JSON.stringify(payload)) <=
+    MAX_PUBLIC_RESOURCE_UTF8_BYTES;
+  if (!fits()) {
+    return {
+      claim,
+      serialized: serializePublicResourceJson(
+        `project-policy claim ${occurrence.occurrence_id}`,
+        payload,
+      ),
+    };
+  }
+
+  const boundedReason = boundedClaimText(
+    occurrence.declaration.reason,
+    MAX_PROJECT_POLICY_CLAIM_REASON_UTF8_BYTES,
+  );
+  declaration.reason = boundedReason;
+  declaration.reason_truncated =
+    boundedReason !== occurrence.declaration.reason;
+  reasonCoverage.returned = 1;
+  reasonCoverage.omitted = 0;
+  reasonCoverage.truncated = declaration.reason_truncated;
+  if (!fits()) {
+    delete declaration.reason;
+    declaration.reason_truncated = true;
+    reasonCoverage.returned = 0;
+    reasonCoverage.omitted = 1;
+    reasonCoverage.truncated = true;
+  }
+
+  for (const sourceDoc of sourceDocs.slice(0, MAX_PROJECT_POLICY_CLAIM_DOCS)) {
+    const boundedDoc = boundedClaimText(
+      sourceDoc,
+      MAX_PROJECT_POLICY_CLAIM_DOC_UTF8_BYTES,
+    );
+    declaration.docs.push(boundedDoc);
+    declaration.docs_returned = declaration.docs.length;
+    documentationCoverage.returned = declaration.docs.length;
+    documentationCoverage.omitted =
+      documentationCoverage.available - documentationCoverage.returned;
+    if (boundedDoc !== sourceDoc) documentationCoverage.truncated_entries += 1;
+    documentationCoverage.truncated =
+      documentationCoverage.omitted > 0 ||
+      documentationCoverage.truncated_entries > 0;
+    if (fits()) continue;
+    declaration.docs.pop();
+    declaration.docs_returned = declaration.docs.length;
+    documentationCoverage.returned = declaration.docs.length;
+    documentationCoverage.omitted =
+      documentationCoverage.available - documentationCoverage.returned;
+    if (boundedDoc !== sourceDoc) documentationCoverage.truncated_entries -= 1;
+    documentationCoverage.truncated = true;
+    break;
+  }
+
+  for (const slot of opaqueTextSlots) {
+    const boundedText = boundedClaimText(
+      slot.source,
+      MAX_PROJECT_POLICY_CLAIM_OPAQUE_TEXT_UTF8_BYTES,
+    );
+    slot.node.text = boundedText;
+    slot.node.text_truncated = boundedText !== slot.source;
+    opaqueCoverage.returned += 1;
+    opaqueCoverage.omitted -= 1;
+    if (slot.node.text_truncated) opaqueCoverage.truncated_entries += 1;
+    opaqueCoverage.truncated =
+      opaqueCoverage.omitted > 0 || opaqueCoverage.truncated_entries > 0;
+    if (fits()) continue;
+    slot.node.text = null;
+    slot.node.text_truncated = true;
+    opaqueCoverage.returned -= 1;
+    opaqueCoverage.omitted += 1;
+    if (boundedText !== slot.source) opaqueCoverage.truncated_entries -= 1;
+    opaqueCoverage.truncated = true;
+    break;
+  }
+
+  return {
+    claim,
+    serialized: serializePublicResourceJson(
+      `project-policy claim ${occurrence.occurrence_id}`,
+      payload,
+    ),
+  };
+}
+
+export function projectPolicyClaimRecord(
+  occurrence: ProjectPolicyOccurrenceV2,
+  rootDir: string,
+): Record<string, unknown> {
+  return createProjectPolicyClaimProjection(
+    occurrence,
+    rootDir,
+    `sha256:${"0".repeat(64)}`,
+  ).claim;
+}
+
+export function serializeProjectPolicyClaimResource(
+  occurrence: ProjectPolicyOccurrenceV2,
+  rootDir: string,
+  policyDigest: string,
+): string {
+  return createProjectPolicyClaimProjection(
+    occurrence,
+    rootDir,
+    policyDigest,
+  ).serialized;
 }
 
 function claimRepoRelativeSource(
@@ -517,6 +714,7 @@ function claimRepoRelativeSource(
 
 function claimConditionShape(
   condition: ProjectPolicyConditionV2,
+  opaqueTextSlots: OpaqueClaimTextSlot[],
 ): Record<string, unknown> {
   switch (condition.type) {
     case "always":
@@ -525,12 +723,17 @@ function claimConditionShape(
     case "any":
       return {
         type: condition.type,
-        conditions: condition.conditions.map(claimConditionShape),
+        conditions: condition.conditions.map((child) =>
+          claimConditionShape(child, opaqueTextSlots),
+        ),
       };
     case "not":
       return {
         type: "not",
-        condition: claimConditionShape(condition.condition),
+        condition: claimConditionShape(
+          condition.condition,
+          opaqueTextSlots,
+        ),
       };
     case "workflow_is":
       return {
@@ -542,27 +745,25 @@ function claimConditionShape(
       return {
         type: condition.type,
         fact: condition.fact,
-        value: condition.value,
+        value: boundedClaimValue(condition.value),
         comparison: condition.comparison,
         origin: condition.origin,
       };
     case "salt_version_satisfies":
       return {
         type: condition.type,
-        range: condition.range,
+        range: boundedClaimValue(condition.range),
         origin: condition.origin,
       };
     case "opaque": {
-      const text = boundedClaimText(
-        condition.text,
-        MAX_PROJECT_POLICY_CLAIM_OPAQUE_TEXT_UTF8_BYTES,
-      );
-      return {
+      const node = {
         type: "opaque",
         origin: condition.origin,
-        text,
-        text_truncated: text !== condition.text,
+        text: null as string | null,
+        text_truncated: true,
       };
+      opaqueTextSlots.push({ node, source: condition.text });
+      return node;
     }
   }
 }
@@ -617,7 +818,7 @@ function claimImportValidation(occurrence: ProjectPolicyOccurrenceV2) {
           check.from === declaredImport.from &&
           check.name === declaredImport.name,
       )?.status ?? "not_inspected_limit",
-    from: declaredImport.from,
-    name: declaredImport.name,
+    from: boundedClaimValue(declaredImport.from),
+    name: boundedClaimValue(declaredImport.name),
   };
 }

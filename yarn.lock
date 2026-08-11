@@ -4492,14 +4492,14 @@ __metadata:
   peerDependencies:
     "@date-fns/tz": ^1.4.1
     "@types/luxon": ^3.7.1
-    "@types/react": ">=16.14.0"
     date-fns: ^4.1.0
     dayjs: ^1.11.20
     luxon: ^3.7.2
-    moment: ^2.30.1
     moment-timezone: ^0.6.1
   peerDependenciesMeta:
     "@date-fns/tz":
+      optional: true
+    "@types/luxon":
       optional: true
     date-fns:
       optional: true
@@ -4507,7 +4507,7 @@ __metadata:
       optional: true
     luxon:
       optional: true
-    moment:
+    moment-timezone:
       optional: true
   languageName: unknown
   linkType: soft
@@ -4647,7 +4647,7 @@ __metadata:
     jsonc-parser: "npm:^3.3.1"
     mdast-util-to-string: "npm:^4.0.0"
     micromatch: "npm:^4.0.8"
-    postcss: "npm:^8.5.8"
+    postcss: "npm:^8.5.24"
     postcss-selector-parser: "npm:^7.1.1"
     react-docgen-typescript: "npm:^2.4.0"
     remark-gfm: "npm:^4.0.1"
@@ -4790,12 +4790,6 @@ __metadata:
     react-dom: "npm:^18.3.1"
     react-markdown: "npm:^10.0.0"
     shiki: "npm:^4.0.0"
-  languageName: unknown
-  linkType: soft
-
-"@salt-ds/skills@workspace:packages/skills":
-  version: 0.0.0-use.local
-  resolution: "@salt-ds/skills@workspace:packages/skills"
   languageName: unknown
   linkType: soft
 

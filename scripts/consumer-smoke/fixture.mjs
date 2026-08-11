@@ -18,7 +18,6 @@ import {
   repoRoot,
   runCommand,
 } from "./shared.mjs";
-import { hashCanonicalSkillTree } from "./skillTreeHash.mjs";
 
 const offlineNetworkGuardUrl = pathToFileURL(
   path.join(repoRoot, "scripts", "consumer-smoke", "offline-network-guard.mjs"),
@@ -175,11 +174,11 @@ async function verifyIsolatedConsumerBrowserArtifact(
   const entrypointPath = path.join(
     targetRoot,
     "src",
-    "phase5-browser-entry.tsx",
+    "consumer-browser-entry.tsx",
   );
   await fs.writeFile(
     path.join(targetRoot, "index.html"),
-    '<!doctype html><html lang="en"><head><title>Consumer artifact</title></head><body tabindex="-1"><div id="root"></div><script type="module" src="/src/phase5-browser-entry.tsx"></script></body></html>\n',
+    '<!doctype html><html lang="en"><head><title>Consumer artifact</title></head><body tabindex="-1"><div id="root"></div><script type="module" src="/src/consumer-browser-entry.tsx"></script></body></html>\n',
     "utf8",
   );
   await fs.writeFile(
@@ -269,11 +268,11 @@ async function verifyIsolatedConsumerBrowserArtifact(
         "chrome",
         "--headless",
         "--config-file",
-        "scripts/consumer-smoke/phase5-cypress.config.mjs",
+        "scripts/consumer-smoke/isolated-consumer-cypress.config.mjs",
         "--config",
         `baseUrl=${baseUrl}`,
         "--spec",
-        "scripts/consumer-smoke/phase5-consumer-artifact.cy.mjs",
+        "scripts/consumer-smoke/isolated-consumer-artifact.cy.mjs",
       ],
       {
         cwd: repoRoot,
@@ -1172,66 +1171,6 @@ export async function runInstalledMcpModuleProbe(rootDir, projectRoot) {
     }
   }
   return { surface: esmFingerprint, tools: esmToolFingerprint };
-}
-
-export async function verifySkills(rootDir, skillsSource, expectedTreeHash) {
-  console.log("Verifying skills source and isolated skill installation...");
-  const packageManagerEnvironment =
-    await createIsolatedPackageManagerEnvironment(rootDir);
-  const expectedSkills = ["salt-ds"];
-  // Keep the release gate deterministic; update this deliberately after
-  // verifying compatibility with a newer Skills CLI.
-  const skillsCliPackage = "skills@1.5.16";
-  const listResult = await runCommand(
-    getExecutable("npx"),
-    [skillsCliPackage, "add", skillsSource, "--list"],
-    {
-      cwd: rootDir,
-      env: packageManagerEnvironment,
-      label: `npx ${skillsCliPackage} add --list`,
-    },
-  );
-  const combinedListOutput = `${listResult.stdout}\n${listResult.stderr}`;
-  for (const skill of expectedSkills) {
-    assert(
-      combinedListOutput.includes(skill),
-      `Skills list output did not include ${skill}.`,
-    );
-
-    await runCommand(
-      getExecutable("npx"),
-      [skillsCliPackage, "add", skillsSource, "--skill", skill, "--yes"],
-      {
-        cwd: rootDir,
-        env: packageManagerEnvironment,
-        label: `npx ${skillsCliPackage} add --skill ${skill}`,
-      },
-    );
-
-    const installedSkillPath = path.join(
-      rootDir,
-      ".agents",
-      "skills",
-      skill,
-      "SKILL.md",
-    );
-    assert(
-      await pathExists(installedSkillPath),
-      `Expected installed skill at ${installedSkillPath}.`,
-    );
-
-    const installedSkillRoot = path.dirname(installedSkillPath);
-    const installedHash = await hashCanonicalSkillTree(installedSkillRoot);
-    const sourceIsRemote = /^https:\/\//u.test(skillsSource);
-    const sourceHash = sourceIsRemote
-      ? null
-      : await hashCanonicalSkillTree(path.join(skillsSource, skill));
-    const requiredHash = expectedTreeHash ?? sourceHash?.sha256;
-    assert(
-      requiredHash && installedHash.sha256 === requiredHash,
-      `Installed ${skill} tree hash ${installedHash.sha256} did not match ${requiredHash ?? "<missing expected hash>"}.`,
-    );
-  }
 }
 
 export async function verifyStandaloneConsumerExample(

@@ -17,6 +17,7 @@ import {
 } from "./catalogArtifactContract.mjs";
 import {
   assertCatalogInputBytes,
+  assertCompleteCatalogInputSet,
   assertCatalogManifestBytes,
   createCatalogBuildIdentity,
   formatCatalogBuildBanner,
@@ -97,27 +98,9 @@ const catalogBuildIdentity = buildIdentityManifestPath
 const catalogBuildBanner = catalogBuildIdentity
   ? formatCatalogBuildBanner(catalogBuildIdentity)
   : undefined;
-const buildBoundaryInputPaths = catalogBuildIdentity
-  ? [
-      path.join(cwd, "package.json"),
-      path.join(cwd, "tsconfig.json"),
-      path.join(repoRoot, "tsconfig.json"),
-      url.fileURLToPath(import.meta.url),
-      path.join(repoRoot, "scripts", "catalogBuildIdentity.mjs"),
-      path.join(repoRoot, "scripts", "makeTypings.mjs"),
-      path.join(repoRoot, "scripts", "transformWorkspaceDeps.mjs"),
-      path.join(repoRoot, "scripts", "utils.mjs"),
-    ]
-  : [];
 async function assertBuildBoundaryInputs() {
   if (!catalogBuildIdentity) return;
-  for (const buildInputPath of buildBoundaryInputPaths) {
-    assertCatalogInputBytes(
-      catalogBuildIdentity,
-      path.relative(repoRoot, buildInputPath).replaceAll("\\", "/"),
-      await fs.readFile(buildInputPath),
-    );
-  }
+  await assertCompleteCatalogInputSet(catalogBuildIdentity, repoRoot);
 }
 await assertBuildBoundaryInputs();
 
@@ -821,4 +804,5 @@ ${exportName}(process.argv.slice(2))
   await fs.chmod(binPath, 0o755);
 }
 
+await assertBuildBoundaryInputs();
 console.log(`Built ${packageName} into ${outputDir}`);

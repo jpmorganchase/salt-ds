@@ -123,12 +123,33 @@ function resultBytes(value: unknown): number {
   return Buffer.byteLength(JSON.stringify(value), "utf8");
 }
 
+function nonSearchTextFallback(
+  name: string,
+  payload: Record<string, unknown>,
+): string {
+  if (name !== "inspect_salt_project") return JSON.stringify(payload);
+  const fallback = structuredClone(payload);
+  const data = isRecord(fallback.data) ? fallback.data : null;
+  const installation = isRecord(data?.installation) ? data.installation : null;
+  const untrustedProjectData = isRecord(installation?.untrusted_project_data)
+    ? installation.untrusted_project_data
+    : null;
+  if (untrustedProjectData) {
+    untrustedProjectData.resolved_packages = [];
+  }
+  return JSON.stringify(fallback);
+}
+
 function toToolResult(name: string, payload: unknown) {
   if (!isRecord(payload)) {
     throw new TypeError(`${name} returned a non-object result.`);
   }
   if (name !== "search_salt") {
     const result = createNonSearchToolResult(payload);
+    if (name === "inspect_salt_project") {
+      const textContent = result.content[0];
+      if (textContent) textContent.text = nonSearchTextFallback(name, payload);
+    }
     const content: ContentBlock[] = [...result.content];
     const linkedResult = { ...result, content };
     for (const link of nonSearchResourceLinks(payload)) {

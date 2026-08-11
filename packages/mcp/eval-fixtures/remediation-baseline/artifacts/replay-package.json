@@ -1,8 +1,0 @@
-{
-  "name": "salt-mcp-remediation-baseline-replay",
-  "private": true,
-  "version": "0.0.0",
-  "dependencies": {
-    "@salt-ds/mcp": "file:./salt-ds-mcp-f0f6d86.tgz"
-  }
-}

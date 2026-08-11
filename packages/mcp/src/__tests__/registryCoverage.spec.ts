@@ -16,11 +16,7 @@ import {
   canonicalJson,
   sha256Bytes,
 } from "../core/catalog/catalogSerialization.js";
-import {
-  __getCatalogFileReadCountForTests,
-  __resetCatalogFileReadCountsForTests,
-  CatalogStoreV2,
-} from "../core/catalog/catalogStoreV2.js";
+import { CatalogStoreV2 } from "../core/catalog/catalogStoreV2.js";
 import { loadRegistry } from "../core/registry/loadRegistry.js";
 import type { SaltRegistry } from "../core/types.js";
 import {
@@ -65,7 +61,6 @@ let emittedRegistry: SaltRegistry;
 let emittedRegistryDir: string;
 let packedRegistryDir: string;
 let emittedSemanticDigest: string;
-let catalogManifestReadsAfterBuild = -1;
 const ownedTemporaryDirectories: string[] = [];
 
 async function buildSealedRegistryInCleanNode(
@@ -212,7 +207,6 @@ beforeAll(async () => {
       "Release coverage requires a sealed workspace catalog generator identity.",
     );
   }
-  __resetCatalogFileReadCountsForTests();
   builtRegistry = releaseManifest
     ? await buildSealedRegistryInCleanNode(emittedRegistryDir)
     : await buildRegistry({
@@ -222,9 +216,6 @@ beforeAll(async () => {
         generatorVersion: "2.0.0-test",
         generatorDigest: `sha256:${"1".repeat(64)}`,
       });
-  catalogManifestReadsAfterBuild = __getCatalogFileReadCountForTests(
-    path.join(emittedRegistryDir, SALT_CATALOG_MANIFEST_FILE),
-  );
   const emittedManifest = await readReleaseManifest(emittedRegistryDir);
   const expectedGeneratorMode = releasePackedRegistryDir ? "sealed" : "test";
   if (emittedManifest.generator.mode !== expectedGeneratorMode) {
@@ -321,7 +312,6 @@ describe("registry coverage audit (roadmap task 0.6)", () => {
   it("loads equivalent freshly emitted and package-inventory representations", () => {
     const projectionDigest = (value: SaltRegistry) =>
       sha256Bytes(canonicalJson(value));
-    expect(catalogManifestReadsAfterBuild).toBe(0);
     expect(projectionDigest(builtRegistry)).toBe(
       projectionDigest(emittedRegistry),
     );

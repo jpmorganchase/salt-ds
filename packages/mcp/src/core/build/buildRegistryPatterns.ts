@@ -26,6 +26,7 @@ import {
   uniqueStrings,
 } from "./buildRegistryShared.js";
 import { globCatalogInputs } from "./catalogInputInventory.js";
+import { NON_PRODUCTION_IMPLEMENTATION_GLOB_IGNORES } from "./catalogProductionSource.js";
 import { parseYamlFrontmatter } from "./parseYamlFrontmatter.js";
 
 function isExportedStoryStatement(statement: ts.Statement): boolean {
@@ -722,7 +723,7 @@ export async function derivePatternImplementationAccessibilitySignals(
       cwd: repoRoot,
       absolute: true,
       onlyFiles: true,
-      ignore: ["**/__tests__/**", "**/*.test.*", "**/*.spec.*"],
+      ignore: [...NON_PRODUCTION_IMPLEMENTATION_GLOB_IGNORES],
     })
   ).sort(compareOrdinalStrings);
   const accessibilitySignals: PatternAccessibilitySignal[] = [];

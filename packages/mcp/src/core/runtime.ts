@@ -5,6 +5,8 @@
  */
 
 export { normalizeCatalogPublicCitation } from "./catalog/catalogPublicCitation.js";
+export type { CatalogResourceRecord } from "./catalog/catalogResourceEnvelope.js";
+export { serializeCatalogResourceEnvelope } from "./catalog/catalogResourceEnvelope.js";
 export {
   canonicalCatalogRuntimeFamilies,
   catalogFamilyFromUriSegment,
@@ -42,7 +44,16 @@ export {
   MAX_PROJECT_POLICY_ENCODED_RESOURCE_ID_CHARS,
   MAX_PROJECT_POLICY_RESOURCE_ID_CHARS,
 } from "./policy/projectPolicyResourceIdentity.js";
-export { readBoundedProjectFile } from "./project/boundedProjectFile.js";
+export {
+  inspectProjectFileMetadata,
+  readBoundedProjectFile,
+} from "./project/boundedProjectFile.js";
+export {
+  assertPublicResourceText,
+  MAX_PUBLIC_RESOURCE_UTF8_BYTES,
+  publicResourceUtf8Bytes,
+  serializePublicResourceJson,
+} from "./publicResourceBudget.js";
 export type { ResultBudgetOmission } from "./publicResultBudget.js";
 export {
   createNonSearchToolResult,

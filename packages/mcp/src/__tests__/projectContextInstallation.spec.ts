@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   collectSaltInstallationDiagnostics,
   collectSaltPackages,
@@ -43,6 +43,7 @@ async function inspectInstallation(
 }
 
 afterEach(async () => {
+  vi.restoreAllMocks();
   await Promise.all(
     tempDirs
       .splice(0, tempDirs.length)
@@ -315,6 +316,103 @@ describe("MCP project-context installation diagnostics", () => {
       }),
     );
     expect(result.installation.versionHealth.issues).toEqual([]);
+  });
+
+  it.each([
+    {
+      label: "a malformed manifest",
+      writeClosest: (packageDirectory: string) =>
+        fs.writeFile(path.join(packageDirectory, "package.json"), "{", "utf8"),
+    },
+    {
+      label: "a missing manifest in a present package directory",
+      writeClosest: async (_packageDirectory: string) => undefined,
+    },
+  ])("does not bypass $label to use a hoisted ancestor", async ({ writeClosest }) => {
+    const workspaceRoot = await createTempDir("salt-mcp-shadowed-hoist");
+    const packageRoot = path.join(workspaceRoot, "packages", "app");
+    const packageJson = {
+      dependencies: { "@salt-ds/core": "^2.0.0" },
+    };
+    await writeJson(path.join(workspaceRoot, "package.json"), {
+      private: true,
+      workspaces: ["packages/*"],
+    });
+    await writeJson(path.join(packageRoot, "package.json"), packageJson);
+    const closestPackageDirectory = path.join(
+      packageRoot,
+      "node_modules",
+      "@salt-ds",
+      "core",
+    );
+    await fs.mkdir(closestPackageDirectory, { recursive: true });
+    await writeClosest(closestPackageDirectory);
+    await writeJson(
+      path.join(
+        workspaceRoot,
+        "node_modules",
+        "@salt-ds",
+        "core",
+        "package.json",
+      ),
+      { name: "@salt-ds/core", version: "2.0.1" },
+    );
+
+    const result = await inspectInstallation(packageRoot, packageJson);
+
+    expect(result.installation.resolvedPackages).toEqual([
+      expect.objectContaining({
+        name: "@salt-ds/core",
+        resolvedVersion: null,
+        resolvedPath: null,
+        declarationResolution: "unverifiable",
+      }),
+    ]);
+    expect(result.installation.inspection.status).toBe("limited");
+  });
+
+  it("bounds package-manifest resolution concurrency and preserves declaration order", async () => {
+    const rootDir = await createTempDir("salt-mcp-resolution-concurrency");
+    const packageNames = Array.from(
+      { length: 128 },
+      (_, index) => `@salt-ds/package-${index.toString().padStart(3, "0")}`,
+    );
+    const dependencies = Object.fromEntries(
+      packageNames.map((name) => [name, "^1.0.0"]),
+    );
+    await writeJson(path.join(rootDir, "package.json"), { dependencies });
+    for (const name of packageNames) {
+      await writeJson(
+        path.join(rootDir, "node_modules", ...name.split("/"), "package.json"),
+        { name, version: "1.0.1" },
+      );
+    }
+    const originalOpen = fs.open.bind(fs);
+    let activePackageOpens = 0;
+    let peakPackageOpens = 0;
+    vi.spyOn(fs, "open").mockImplementation(async (target, flags) => {
+      const handle = await originalOpen(target, flags);
+      if (
+        typeof target === "string" &&
+        target.includes(`${path.sep}node_modules${path.sep}`) &&
+        target.endsWith(`${path.sep}package.json`)
+      ) {
+        activePackageOpens += 1;
+        peakPackageOpens = Math.max(peakPackageOpens, activePackageOpens);
+        await new Promise((resolve) => setTimeout(resolve, 5));
+        activePackageOpens -= 1;
+      }
+      return handle;
+    });
+
+    const result = await inspectInstallation(rootDir, { dependencies });
+
+    expect(result.installation.resolvedPackages.map(({ name }) => name)).toEqual(
+      [...packageNames].sort((left, right) => left.localeCompare(right)),
+    );
+    expect(result.installation.resolvedPackages).toHaveLength(128);
+    expect(peakPackageOpens).toBeGreaterThan(1);
+    expect(peakPackageOpens).toBeLessThanOrEqual(8);
   });
 
   it.each([

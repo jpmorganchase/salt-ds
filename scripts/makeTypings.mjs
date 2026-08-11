@@ -110,11 +110,6 @@ export async function makeTypings(
   );
 
   const emitResult = program.emit();
-
-  // Skip diagnostic reporting in CI
-  if (isCI) {
-    return;
-  }
   const diagnostics = ts
     .getPreEmitDiagnostics(program)
     .concat(emitResult.diagnostics)
@@ -122,5 +117,8 @@ export async function makeTypings(
   if (diagnostics.length > 0) {
     reportTSDiagnostics(diagnostics);
     throw new Error("Could not generate .d.ts files");
+  }
+  if (emitResult.emitSkipped) {
+    throw new Error("Could not generate .d.ts files because emit was skipped");
   }
 }

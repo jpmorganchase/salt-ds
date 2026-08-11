@@ -1,5 +1,8 @@
 import { createHash } from "node:crypto";
+import fs from "node:fs/promises";
 import path from "node:path";
+import fg from "fast-glob";
+import catalogInputPatterns from "../packages/mcp/src/core/build/catalogInputPatterns.json" with { type: "json" };
 
 const BUILD_IDENTITY_MARKER = "salt-catalog-build-identity:v1";
 const SHA256_PATTERN = /^sha256:[0-9a-f]{64}$/u;
@@ -51,6 +54,7 @@ function normalizeRepoPath(repoPath) {
   if (
     normalized.length === 0 ||
     normalized !== repoPath ||
+    normalized !== normalized.trim() ||
     normalized.startsWith("/") ||
     normalized.includes("\\") ||
     hasForbiddenPortablePathCharacter(normalized) ||
@@ -62,7 +66,9 @@ function normalizeRepoPath(repoPath) {
           segment === "." ||
           segment === ".." ||
           /[ .]$/u.test(segment) ||
-          /^(?:con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/iu.test(segment),
+          /^(?:con|prn|aux|nul|com[1-9¹²³]|lpt[1-9¹²³])(?:\.|$)/iu.test(
+            segment,
+          ),
       )
   ) {
     throw new Error(
@@ -70,6 +76,15 @@ function normalizeRepoPath(repoPath) {
     );
   }
   return normalized;
+}
+
+export function isPortableRepositoryBuildPath(value) {
+  try {
+    normalizeRepoPath(value);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export function assertSealedCatalogGeneratorIdentity(generator) {
@@ -290,6 +305,97 @@ export function assertCatalogInputBytes(identity, repoPath, inputBytes) {
     );
   }
   return bytes;
+}
+
+function normalizeFilesystemPath(value) {
+  const resolved = path.resolve(value);
+  return process.platform === "win32" ? resolved.toLowerCase() : resolved;
+}
+
+export async function assertCompleteCatalogInputSet(identity, repoRoot) {
+  if (!identity?.inputsByPath || !(identity.inputsByPath instanceof Map)) {
+    throw new Error("Complete catalog input validation requires a build identity.");
+  }
+  const resolvedRoot = path.resolve(repoRoot);
+  const realRoot = await fs.realpath(resolvedRoot);
+  const discoveredPaths = (
+    await fg(catalogInputPatterns, {
+      cwd: resolvedRoot,
+      absolute: false,
+      dot: true,
+      followSymbolicLinks: false,
+      onlyFiles: true,
+      unique: true,
+    })
+  )
+    .map((entry) => entry.replaceAll("\\", "/"))
+    .sort((left, right) => (left < right ? -1 : left > right ? 1 : 0));
+  const portablePaths = new Map();
+  for (const repoPath of discoveredPaths) {
+    const normalizedPath = normalizeRepoPath(repoPath);
+    const portablePath = normalizedPath.toLowerCase();
+    const existing = portablePaths.get(portablePath);
+    if (existing && existing !== normalizedPath) {
+      throw new Error(
+        `Catalog build inputs collide under portable case normalization: '${existing}' and '${normalizedPath}'.`,
+      );
+    }
+    portablePaths.set(portablePath, normalizedPath);
+  }
+  const expectedPaths = [...identity.inputsByPath.keys()].sort((left, right) =>
+    left < right ? -1 : left > right ? 1 : 0,
+  );
+  if (canonicalJson(discoveredPaths) !== canonicalJson(expectedPaths)) {
+    throw new Error(
+      "Repository catalog input path set does not match the catalog input inventory.",
+    );
+  }
+
+  let nextIndex = 0;
+  const workerCount = Math.min(32, discoveredPaths.length);
+  await Promise.all(
+    Array.from({ length: workerCount }, async () => {
+      while (nextIndex < discoveredPaths.length) {
+        const index = nextIndex;
+        nextIndex += 1;
+        const repoPath = discoveredPaths[index];
+        const absolutePath = path.resolve(resolvedRoot, ...repoPath.split("/"));
+        const expectedRealPath = path.resolve(realRoot, ...repoPath.split("/"));
+        const initialLinkStats = await fs.lstat(absolutePath, { bigint: true });
+        const initialRealPath = await fs.realpath(absolutePath);
+        if (
+          initialLinkStats.isSymbolicLink() ||
+          !initialLinkStats.isFile() ||
+          initialLinkStats.nlink !== 1n ||
+          normalizeFilesystemPath(initialRealPath) !==
+            normalizeFilesystemPath(expectedRealPath)
+        ) {
+          throw new Error(
+            `Repository catalog input resolves through a link: ${repoPath}`,
+          );
+        }
+        const bytes = await fs.readFile(absolutePath);
+        const finalLinkStats = await fs.lstat(absolutePath, { bigint: true });
+        const finalRealPath = await fs.realpath(absolutePath);
+        if (
+          finalLinkStats.isSymbolicLink() ||
+          !finalLinkStats.isFile() ||
+          finalLinkStats.nlink !== 1n ||
+          finalLinkStats.dev !== initialLinkStats.dev ||
+          finalLinkStats.ino !== initialLinkStats.ino ||
+          finalLinkStats.size !== initialLinkStats.size ||
+          finalLinkStats.mtimeNs !== initialLinkStats.mtimeNs ||
+          normalizeFilesystemPath(finalRealPath) !==
+            normalizeFilesystemPath(expectedRealPath)
+        ) {
+          throw new Error(
+            `Repository catalog input changed during package build validation: ${repoPath}`,
+          );
+        }
+        assertCatalogInputBytes(identity, repoPath, bytes);
+      }
+    }),
+  );
 }
 
 export function assertCatalogManifestBytes(identity, manifestBytes) {

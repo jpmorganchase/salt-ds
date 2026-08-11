@@ -231,8 +231,8 @@ jobs:
       - name: Build snapshot packages
         run: yarn build
 
-      - name: Verify MCP package and installed consumer
-        run: yarn release:verify:mcp
+      - name: Verify release packages and installed consumer
+        run: yarn release:verify:after-build
 
       - name: Publish snapshot packages
         id: publish

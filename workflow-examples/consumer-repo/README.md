@@ -50,7 +50,8 @@ consumer-app/
 ## What This Example Shows
 
 - a consumer-owned project and policy fixture used by the MCP verification suite
-- a locally packed `@salt-ds/mcp` install, not a public release claim
+- a locally packed `@salt-ds/mcp` install used to verify the exact candidate
+  bytes before release
 - agent-owned create and migration work grounded by read-only Salt retrieval
 - zero-config canonical Salt value before repo policy exists
 - optional `.salt/team.json` as the default conventions layer when a team chooses repo policy
@@ -64,8 +65,8 @@ consumer-app/
   the host agent owns those decisions.
 - `.salt/team.json` is optional, stays repo-local, and remains host/user-owned. Without it, Salt stays canonical-only and does not invent durable team policy.
 - `.salt/stack.json` is optional and advanced, not the default.
-- Public onboarding is paused during the breaking MCP redesign. A mutable branch
-  URL is not an acceptable substitute for a verified release.
+- Normal consumers should install a released package as documented in the AI
+  guide. A mutable branch URL is not an acceptable substitute for a release.
 - The MCP config deliberately contains no registry install command or public
   version claim. It resolves only a locally installed packed artifact.
 - There is no public CLI fallback. Runtime capture, durable attestation,
@@ -73,6 +74,5 @@ consumer-app/
 
 ## Related Docs
 
-- [`../../packages/skills/README.md`](../../packages/skills/README.md)
 - [`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/ai.mdx)
 - [`../project-conventions/README.md`](../project-conventions/README.md)

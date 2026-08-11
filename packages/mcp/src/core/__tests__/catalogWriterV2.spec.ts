@@ -4,10 +4,7 @@ import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { CatalogInputInventory } from "../build/catalogInputInventory.js";
 import { withCatalogInputTracking } from "../build/catalogInputInventory.js";
-import {
-  TOKEN_OWNED_ARTIFACT_BYTE_BUDGET,
-  writeCatalogV2,
-} from "../build/catalogWriterV2.js";
+import { writeCatalogV2 } from "../build/catalogWriterV2.js";
 import type {
   CatalogContentBlob,
   NormalizedCatalogV2,
@@ -41,6 +38,7 @@ import {
 } from "../catalog/catalogSerialization.js";
 import { CatalogStoreV2 } from "../catalog/catalogStoreV2.js";
 import { measureTokenOwnedCatalogSurface } from "../catalog/catalogTokenSurfaceV2.js";
+import { MAX_PUBLIC_RESOURCE_UTF8_BYTES } from "../publicResourceBudget.js";
 
 const temporaryDirectories: string[] = [];
 
@@ -90,6 +88,26 @@ function synchronizeSearchDocuments(normalized: NormalizedCatalogV2): void {
     }
   }
   normalized.records.search_document = documents;
+}
+
+function addAggregateOversizedTokens(normalized: NormalizedCatalogV2): void {
+  for (let index = 0; index < 100; index += 1) {
+    const id = `--salt-oversized-${String(index).padStart(3, "0")}`;
+    normalized.records.token.push({
+      family: "token",
+      id,
+      name: id,
+      category: "fixture",
+      type: "color",
+      semantic_intent: null,
+      aliases: [`alias-${index}-${"x".repeat(27_000)}`],
+      status: "stable",
+      replacement_token_refs: [],
+      policy_profile_ref: null,
+      evidence_profile_ref: null,
+      applies_to: [],
+    } satisfies CatalogRecordForFamily<"token">);
+  }
 }
 
 function createInventory(): CatalogInputInventory {
@@ -297,6 +315,53 @@ describe("atomic deterministic Salt catalog writer", () => {
     expect(await writerDebris(root, "second")).toEqual([]);
   });
 
+  it("rejects an oversized public record envelope before replacing the manifest", async () => {
+    const root = await createRoot();
+    const outputDir = path.join(root, "catalog");
+    const baseline = createNormalizedCatalog();
+    baseline.records.concept.push({
+      family: "concept",
+      id: "concept.baseline",
+      name: "Baseline",
+      concept_kind: "other",
+      summary: "Baseline concept",
+    });
+    synchronizeSearchDocuments(baseline);
+    await writeCatalogV2({
+      ...fixedOptions,
+      outputDir,
+      normalized: baseline,
+    });
+    const previousManifest = await fs.readFile(
+      path.join(outputDir, SALT_CATALOG_MANIFEST_FILE),
+      "utf8",
+    );
+
+    const oversized = createNormalizedCatalog();
+    oversized.records.concept.push({
+      family: "concept",
+      id: "concept.oversized-public-envelope",
+      name: "Oversized",
+      concept_kind: "other",
+      summary: "x".repeat(MAX_PUBLIC_RESOURCE_UTF8_BYTES),
+    });
+    synchronizeSearchDocuments(oversized);
+
+    await expect(
+      writeCatalogV2({
+        ...fixedOptions,
+        outputDir,
+        normalized: oversized,
+      }),
+    ).rejects.toThrow(
+      /Public resource 'concept:concept\.oversized-public-envelope'.*limit is 65536/iu,
+    );
+    expect(
+      await fs.readFile(path.join(outputDir, SALT_CATALOG_MANIFEST_FILE), "utf8"),
+    ).toBe(previousManifest);
+    expect(await writerDebris(root, "catalog")).toEqual([]);
+  });
+
   it("binds build-only artifacts without publishing them and safely reuses an intact generation", async () => {
     const root = await createRoot();
     const outputDir = path.join(root, "catalog");
@@ -436,35 +501,35 @@ describe("atomic deterministic Salt catalog writer", () => {
       label: "byte-corrupt",
       mutate: async (artifactPath: string) =>
         fs.appendFile(artifactPath, Buffer.from("\ncorrupt", "utf8")),
-      expected: /artifact digest mismatch/u,
+      expected: /artifact digest mismatch|operational limit/u,
     },
-  ])("rejects an identical-generation reuse when its build artifact is $label", async ({
-    mutate,
-    expected,
-  }) => {
-    const root = await createRoot();
-    const outputDir = path.join(root, "catalog");
-    const normalized = createNormalizedCatalog();
-    const first = await writeCatalogV2({
-      ...fixedOptions,
-      outputDir,
-      normalized,
-    });
-    const buildEntry = first.manifest.build_artifacts[0];
-    if (!buildEntry) {
-      throw new Error("Fixture manifest has no build artifact.");
-    }
-    await mutate(path.join(outputDir, ...buildEntry.file.split("/")));
-
-    await expect(
-      writeCatalogV2({
+  ])(
+    "rejects an identical-generation reuse when its build artifact is $label",
+    async ({ mutate, expected }) => {
+      const root = await createRoot();
+      const outputDir = path.join(root, "catalog");
+      const normalized = createNormalizedCatalog();
+      const first = await writeCatalogV2({
         ...fixedOptions,
         outputDir,
         normalized,
-      }),
-    ).rejects.toThrow(expected);
-    expect(await writerDebris(root, "catalog")).toEqual([]);
-  });
+      });
+      const buildEntry = first.manifest.build_artifacts[0];
+      if (!buildEntry) {
+        throw new Error("Fixture manifest has no build artifact.");
+      }
+      await mutate(path.join(outputDir, ...buildEntry.file.split("/")));
+
+      await expect(
+        writeCatalogV2({
+          ...fixedOptions,
+          outputDir,
+          normalized,
+        }),
+      ).rejects.toThrow(expected);
+      expect(await writerDebris(root, "catalog")).toEqual([]);
+    },
+  );
 
   it.each([
     {
@@ -489,29 +554,29 @@ describe("atomic deterministic Salt catalog writer", () => {
       },
       expected: /audit_kind/u,
     },
-  ])("rejects an identical-generation reuse with a rebound $label", async ({
-    mutate,
-    expected,
-  }) => {
-    const root = await createRoot();
-    const outputDir = path.join(root, "catalog");
-    const normalized = createNormalizedCatalog();
-    const first = await writeCatalogV2({
-      ...fixedOptions,
-      outputDir,
-      normalized,
-    });
-    await mutateExistingBuildArtifact(outputDir, first.manifest, mutate);
-
-    await expect(
-      writeCatalogV2({
+  ])(
+    "rejects an identical-generation reuse with a rebound $label",
+    async ({ mutate, expected }) => {
+      const root = await createRoot();
+      const outputDir = path.join(root, "catalog");
+      const normalized = createNormalizedCatalog();
+      const first = await writeCatalogV2({
         ...fixedOptions,
         outputDir,
         normalized,
-      }),
-    ).rejects.toThrow(expected);
-    expect(await writerDebris(root, "catalog")).toEqual([]);
-  });
+      });
+      await mutateExistingBuildArtifact(outputDir, first.manifest, mutate);
+
+      await expect(
+        writeCatalogV2({
+          ...fixedOptions,
+          outputDir,
+          normalized,
+        }),
+      ).rejects.toThrow(expected);
+      expect(await writerDebris(root, "catalog")).toEqual([]);
+    },
+  );
 
   it("rejects a valid rebound build artifact as an identical-generation collision", async () => {
     const root = await createRoot();
@@ -1040,20 +1105,7 @@ describe("atomic deterministic Salt catalog writer", () => {
     expect(await writerDebris(root, "catalog")).toEqual([]);
 
     const oversizedTokens = createNormalizedCatalog();
-    oversizedTokens.records.token.push({
-      family: "token",
-      id: "--salt-oversized",
-      name: "--salt-oversized",
-      category: "fixture",
-      type: "color",
-      semantic_intent: null,
-      aliases: ["x".repeat(TOKEN_OWNED_ARTIFACT_BYTE_BUDGET)],
-      status: "stable",
-      replacement_token_refs: [],
-      policy_profile_ref: null,
-      evidence_profile_ref: null,
-      applies_to: [],
-    } satisfies CatalogRecordForFamily<"token">);
+    addAggregateOversizedTokens(oversizedTokens);
     synchronizeSearchDocuments(oversizedTokens);
     await expect(
       writeCatalogV2({
@@ -1168,23 +1220,102 @@ describe("atomic deterministic Salt catalog writer", () => {
     ).rejects.toThrow(/unsafe catalog output directory/u);
   });
 
+  it("rejects linked output and generation directories without touching their targets", async () => {
+    const root = await createRoot();
+    const external = await createRoot();
+    const sentinel = path.join(external, "sentinel.txt");
+    await fs.writeFile(sentinel, "unchanged", "utf8");
+    const outputLink = path.join(root, "catalog-link");
+    await fs.symlink(
+      external,
+      outputLink,
+      process.platform === "win32" ? "junction" : "dir",
+    );
+
+    await expect(
+      writeCatalogV2({
+        ...fixedOptions,
+        outputDir: outputLink,
+        normalized: createNormalizedCatalog(),
+      }),
+    ).rejects.toThrow(/linked catalog output directory/iu);
+    expect(await fs.readFile(sentinel, "utf8")).toBe("unchanged");
+
+    const outputDir = path.join(root, "catalog");
+    await fs.mkdir(outputDir);
+    await fs.symlink(
+      external,
+      path.join(outputDir, "catalog-generations"),
+      process.platform === "win32" ? "junction" : "dir",
+    );
+    await expect(
+      writeCatalogV2({
+        ...fixedOptions,
+        outputDir,
+        normalized: createNormalizedCatalog(),
+      }),
+    ).rejects.toThrow(/unsafe generation directory/iu);
+    expect(await fs.readFile(sentinel, "utf8")).toBe("unchanged");
+  });
+
+  it("rejects a linked generation collision without changing prior or external data", async () => {
+    const root = await createRoot();
+    const external = await createRoot();
+    const outputDir = path.join(root, "catalog");
+    const normalized = createNormalizedCatalog();
+    const first = await writeCatalogV2({
+      ...fixedOptions,
+      outputDir,
+      normalized,
+    });
+    const rootManifestPath = path.join(outputDir, SALT_CATALOG_MANIFEST_FILE);
+    const rootManifestBytes = await fs.readFile(rootManifestPath);
+    const generation = path.posix.dirname(
+      first.manifest.artifacts[0]?.file ?? "",
+    );
+    if (generation === ".") {
+      throw new Error("Published fixture manifest has no generation prefix.");
+    }
+    const generationDir = path.join(outputDir, ...generation.split("/"));
+    const externalGeneration = path.join(external, "generation");
+    await fs.cp(generationDir, externalGeneration, { recursive: true });
+    const sentinel = path.join(externalGeneration, "sentinel.txt");
+    await fs.writeFile(sentinel, "unchanged", "utf8");
+    await fs.rm(generationDir, { recursive: true });
+    try {
+      await fs.symlink(
+        externalGeneration,
+        generationDir,
+        process.platform === "win32" ? "junction" : "dir",
+      );
+    } catch (error) {
+      if (
+        ["EACCES", "ENOTSUP", "EPERM"].includes(
+          (error as NodeJS.ErrnoException).code ?? "",
+        )
+      ) {
+        return;
+      }
+      throw error;
+    }
+
+    await expect(
+      writeCatalogV2({
+        ...fixedOptions,
+        outputDir,
+        normalized,
+      }),
+    ).rejects.toThrow(/generation collision is linked or non-directory/iu);
+    expect(
+      (await fs.readFile(rootManifestPath)).equals(rootManifestBytes),
+    ).toBe(true);
+    expect(await fs.readFile(sentinel, "utf8")).toBe("unchanged");
+  });
+
   it("permits explicitly non-gating oversized fixtures only when budgets are disabled", async () => {
     const root = await createRoot();
     const normalized = createNormalizedCatalog();
-    normalized.records.token.push({
-      family: "token",
-      id: "--salt-oversized",
-      name: "--salt-oversized",
-      category: "fixture",
-      type: "color",
-      semantic_intent: null,
-      aliases: ["x".repeat(TOKEN_OWNED_ARTIFACT_BYTE_BUDGET)],
-      status: "stable",
-      replacement_token_refs: [],
-      policy_profile_ref: null,
-      evidence_profile_ref: null,
-      applies_to: [],
-    } satisfies CatalogRecordForFamily<"token">);
+    addAggregateOversizedTokens(normalized);
     synchronizeSearchDocuments(normalized);
 
     await expect(
@@ -1197,8 +1328,8 @@ describe("atomic deterministic Salt catalog writer", () => {
     ).resolves.toMatchObject({
       metrics: {
         familyRecordCounts: {
-          token: 1,
-          search_document: 1,
+          token: 100,
+          search_document: 100,
         },
       },
     });

@@ -8,8 +8,8 @@
       "note": "Differential characteristic tokens moved to status characteristic tokens.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2473,
-        "line_end": 2477
+        "line_start": 2496,
+        "line_end": 2500
       }
     },
     {
@@ -19,8 +19,8 @@
       "note": "Differential characteristic tokens moved to status characteristic tokens.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2473,
-        "line_end": 2477
+        "line_start": 2496,
+        "line_end": 2500
       }
     },
     {
@@ -29,8 +29,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 459,
-        "line_end": 459
+        "line_start": 482,
+        "line_end": 482
       }
     },
     {
@@ -39,8 +39,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 460,
-        "line_end": 460
+        "line_start": 483,
+        "line_end": 483
       }
     },
     {
@@ -49,8 +49,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 601,
-        "line_end": 601
+        "line_start": 624,
+        "line_end": 624
       }
     },
     {
@@ -59,8 +59,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 602,
-        "line_end": 602
+        "line_start": 625,
+        "line_end": 625
       }
     },
     {
@@ -69,8 +69,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 603,
-        "line_end": 603
+        "line_start": 626,
+        "line_end": 626
       }
     },
     {
@@ -79,8 +79,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 604,
-        "line_end": 604
+        "line_start": 627,
+        "line_end": 627
       }
     },
     {
@@ -89,8 +89,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 605,
-        "line_end": 605
+        "line_start": 628,
+        "line_end": 628
       }
     },
     {
@@ -99,8 +99,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 606,
-        "line_end": 606
+        "line_start": 629,
+        "line_end": 629
       }
     },
     {
@@ -109,8 +109,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 590,
-        "line_end": 590
+        "line_start": 613,
+        "line_end": 613
       }
     },
     {
@@ -119,8 +119,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 591,
-        "line_end": 591
+        "line_start": 614,
+        "line_end": 614
       }
     },
     {
@@ -129,8 +129,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 592,
-        "line_end": 592
+        "line_start": 615,
+        "line_end": 615
       }
     },
     {
@@ -140,8 +140,8 @@
       "unsupported_reason": "Literal value guidance must remain manual until registry or docs expose an exact replacement token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 1804,
-        "line_end": 1804
+        "line_start": 1827,
+        "line_end": 1827
       }
     },
     {
@@ -151,8 +151,8 @@
       "unsupported_reason": "Literal value guidance must remain manual until registry or docs expose an exact replacement token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 1805,
-        "line_end": 1805
+        "line_start": 1828,
+        "line_end": 1828
       }
     },
     {
@@ -162,8 +162,8 @@
       "note": "Taggable background-active source names a palette replacement, but generated policy still requires final replacement docs.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 1806,
-        "line_end": 1806
+        "line_start": 1829,
+        "line_end": 1829
       }
     },
     {
@@ -173,8 +173,8 @@
       "note": "Taggable background-disabled source names a palette replacement, but generated policy still requires final replacement docs.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 1807,
-        "line_end": 1807
+        "line_start": 1830,
+        "line_end": 1830
       }
     },
     {
@@ -184,8 +184,8 @@
       "unsupported_reason": "Literal value guidance must remain manual until registry or docs expose an exact replacement token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 1809,
-        "line_end": 1809
+        "line_start": 1832,
+        "line_end": 1832
       }
     },
     {
@@ -195,8 +195,8 @@
       "unsupported_reason": "Literal value guidance must remain manual until registry or docs expose an exact replacement token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 1810,
-        "line_end": 1810
+        "line_start": 1833,
+        "line_end": 1833
       }
     },
     {
@@ -206,8 +206,8 @@
       "unsupported_reason": "Literal value guidance must remain manual until registry or docs expose an exact replacement token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 1811,
-        "line_end": 1811
+        "line_start": 1834,
+        "line_end": 1834
       }
     },
     {
@@ -217,8 +217,8 @@
       "unsupported_reason": "Literal value guidance must remain manual until registry or docs expose an exact replacement token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 1812,
-        "line_end": 1812
+        "line_start": 1835,
+        "line_end": 1835
       }
     },
     {
@@ -228,8 +228,8 @@
       "note": "Measured characteristic replaced with Track.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2346,
-        "line_end": 2350
+        "line_start": 2369,
+        "line_end": 2373
       }
     },
     {
@@ -239,8 +239,8 @@
       "note": "Measured characteristic replaced with Track.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2346,
-        "line_end": 2350
+        "line_start": 2369,
+        "line_end": 2373
       }
     },
     {
@@ -250,8 +250,8 @@
       "note": "Measured characteristic replaced with Track.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2346,
-        "line_end": 2350
+        "line_start": 2369,
+        "line_end": 2373
       }
     },
     {
@@ -261,8 +261,8 @@
       "note": "Measured characteristic replaced with Track.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2346,
-        "line_end": 2350
+        "line_start": 2369,
+        "line_end": 2373
       }
     },
     {
@@ -272,8 +272,8 @@
       "note": "Measured characteristic replaced with Track.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2354,
-        "line_end": 2361
+        "line_start": 2377,
+        "line_end": 2384
       }
     },
     {
@@ -283,8 +283,8 @@
       "note": "Measured characteristic replaced with Track.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2354,
-        "line_end": 2361
+        "line_start": 2377,
+        "line_end": 2384
       }
     },
     {
@@ -294,8 +294,8 @@
       "note": "Measured characteristic replaced with Track.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2354,
-        "line_end": 2361
+        "line_start": 2377,
+        "line_end": 2384
       }
     },
     {
@@ -305,8 +305,8 @@
       "note": "Measured characteristic replaced with Track.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2354,
-        "line_end": 2361
+        "line_start": 2377,
+        "line_end": 2384
       }
     },
     {
@@ -316,8 +316,8 @@
       "note": "Measured characteristic replaced with Track; final generated policy still depends on replacement token docs.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2362,
-        "line_end": 2364
+        "line_start": 2385,
+        "line_end": 2387
       }
     },
     {
@@ -327,8 +327,8 @@
       "note": "Measured characteristic replaced with Track; final generated policy still depends on replacement token docs.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2363,
-        "line_end": 2365
+        "line_start": 2386,
+        "line_end": 2388
       }
     },
     {
@@ -338,8 +338,8 @@
       "note": "Measured characteristic replaced with Track.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2364,
-        "line_end": 2372
+        "line_start": 2387,
+        "line_end": 2395
       }
     },
     {
@@ -349,8 +349,8 @@
       "note": "Measured characteristic replaced with Track.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2364,
-        "line_end": 2372
+        "line_start": 2387,
+        "line_end": 2395
       }
     },
     {
@@ -360,8 +360,8 @@
       "note": "Measured characteristic replaced with Track.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2364,
-        "line_end": 2372
+        "line_start": 2387,
+        "line_end": 2395
       }
     },
     {
@@ -371,8 +371,8 @@
       "unsupported_reason": "No exact source-backed replacement token is documented for this deprecated token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2391,
-        "line_end": 2391
+        "line_start": 2414,
+        "line_end": 2414
       }
     },
     {
@@ -382,8 +382,8 @@
       "unsupported_reason": "No exact source-backed replacement token is documented for this deprecated token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2386,
-        "line_end": 2386
+        "line_start": 2409,
+        "line_end": 2409
       }
     },
     {
@@ -393,8 +393,8 @@
       "unsupported_reason": "No exact source-backed replacement token is documented for this deprecated token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2387,
-        "line_end": 2387
+        "line_start": 2410,
+        "line_end": 2410
       }
     },
     {
@@ -404,8 +404,8 @@
       "unsupported_reason": "No exact source-backed replacement token is documented for this deprecated token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2388,
-        "line_end": 2388
+        "line_start": 2411,
+        "line_end": 2411
       }
     },
     {
@@ -415,8 +415,8 @@
       "unsupported_reason": "No exact source-backed replacement token is documented for this deprecated token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2389,
-        "line_end": 2389
+        "line_start": 2412,
+        "line_end": 2412
       }
     },
     {
@@ -426,8 +426,8 @@
       "unsupported_reason": "No exact source-backed replacement token is documented for this deprecated token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2390,
-        "line_end": 2390
+        "line_start": 2413,
+        "line_end": 2413
       }
     },
     {
@@ -437,8 +437,8 @@
       "unsupported_reason": "No exact source-backed replacement token is documented for this deprecated token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2397,
-        "line_end": 2397
+        "line_start": 2420,
+        "line_end": 2420
       }
     },
     {
@@ -448,8 +448,8 @@
       "unsupported_reason": "No exact source-backed replacement token is documented for this deprecated token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2398,
-        "line_end": 2398
+        "line_start": 2421,
+        "line_end": 2421
       }
     },
     {
@@ -459,8 +459,8 @@
       "unsupported_reason": "Literal value guidance must remain manual until registry or docs expose an exact replacement token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2406,
-        "line_end": 2406
+        "line_start": 2429,
+        "line_end": 2429
       }
     },
     {
@@ -469,8 +469,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 412,
-        "line_end": 412
+        "line_start": 435,
+        "line_end": 435
       }
     },
     {
@@ -479,8 +479,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 413,
-        "line_end": 413
+        "line_start": 436,
+        "line_end": 436
       }
     },
     {
@@ -489,8 +489,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 414,
-        "line_end": 414
+        "line_start": 437,
+        "line_end": 437
       }
     },
     {
@@ -499,8 +499,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 415,
-        "line_end": 415
+        "line_start": 438,
+        "line_end": 438
       }
     },
     {
@@ -509,8 +509,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 1765,
-        "line_end": 1769
+        "line_start": 1788,
+        "line_end": 1792
       }
     },
     {
@@ -519,8 +519,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 1765,
-        "line_end": 1769
+        "line_start": 1788,
+        "line_end": 1792
       }
     },
     {
@@ -529,8 +529,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 1765,
-        "line_end": 1769
+        "line_start": 1788,
+        "line_end": 1792
       }
     },
     {
@@ -539,8 +539,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 1765,
-        "line_end": 1769
+        "line_start": 1788,
+        "line_end": 1792
       }
     },
     {
@@ -550,8 +550,8 @@
       "note": "Track background source names a palette replacement, but generated policy still requires final replacement docs.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2366,
-        "line_end": 2369
+        "line_start": 2389,
+        "line_end": 2392
       }
     },
     {
@@ -561,8 +561,8 @@
       "note": "Track background-disabled source names a palette replacement, but generated policy still requires final replacement docs.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2367,
-        "line_end": 2370
+        "line_start": 2390,
+        "line_end": 2393
       }
     },
     {
@@ -571,8 +571,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 457,
-        "line_end": 457
+        "line_start": 480,
+        "line_end": 480
       }
     },
     {
@@ -581,8 +581,8 @@
       "replacement_kind": "direct",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 458,
-        "line_end": 458
+        "line_start": 481,
+        "line_end": 481
       }
     },
     {
@@ -592,8 +592,8 @@
       "note": "Track fontWeight source names a typography foundation replacement token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 1829,
-        "line_end": 1829
+        "line_start": 1852,
+        "line_end": 1852
       }
     },
     {
@@ -603,8 +603,8 @@
       "unsupported_reason": "Literal value guidance must remain manual until registry or docs expose an exact replacement token.",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 1830,
-        "line_end": 1830
+        "line_start": 1853,
+        "line_end": 1853
       }
     },
     {
@@ -613,8 +613,8 @@
       "replacement_kind": "alternative",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 568,
-        "line_end": 568
+        "line_start": 591,
+        "line_end": 591
       }
     },
     {
@@ -623,8 +623,8 @@
       "replacement_kind": "scale",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2039,
-        "line_end": 2039
+        "line_start": 2062,
+        "line_end": 2062
       }
     },
     {
@@ -633,8 +633,8 @@
       "replacement_kind": "scale",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2040,
-        "line_end": 2040
+        "line_start": 2063,
+        "line_end": 2063
       }
     },
     {
@@ -643,8 +643,8 @@
       "replacement_kind": "scale",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2041,
-        "line_end": 2041
+        "line_start": 2064,
+        "line_end": 2064
       }
     },
     {
@@ -653,8 +653,8 @@
       "replacement_kind": "scale",
       "basis": {
         "source_path": "packages/theme/CHANGELOG.md",
-        "line_start": 2042,
-        "line_end": 2042
+        "line_start": 2065,
+        "line_end": 2065
       }
     },
     {

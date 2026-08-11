@@ -161,7 +161,7 @@ function sortSourceOrdinalRecords<
 }
 
 /**
- * Transitional typed projection used by the remaining Phase 1 consumers.
+ * Transitional typed projection used by legacy catalog projection consumers.
  *
  * Canonical persistence is exclusively Salt catalog schema v2. This adapter
  * derives the old in-process collection view on demand and is intentionally

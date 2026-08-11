@@ -22,9 +22,6 @@ const SUPPORTED_PROTOCOL_REVISIONS = [
   "2026-07-28",
   "2025-11-25",
   "2025-06-18",
-  "2025-03-26",
-  "2024-11-05",
-  "2024-10-07",
 ];
 const REMOVED_TOOL_NAMES = [
   "create_salt_ui",
@@ -91,6 +88,7 @@ async function assertProtocolIsAdvertised(
   const client = new Client(
     { name: `salt-consumer-${expectedEra}-probe`, version: "0.0.0" },
     {
+      supportedProtocolVersions: [protocolVersion],
       versionNegotiation: {
         mode: expectedEra === "modern" ? { pin: protocolVersion } : "legacy",
       },
@@ -159,6 +157,12 @@ export async function runMcpWorkflowCoverage(
     installedMcpBinPath,
     existingSaltRoot,
     "2025-11-25",
+    "legacy",
+  );
+  await assertProtocolIsAdvertised(
+    installedMcpBinPath,
+    existingSaltRoot,
+    "2025-06-18",
     "legacy",
   );
 
@@ -371,7 +375,12 @@ export async function runMcpWorkflowCoverage(
     assert(
       inspection.scope.filesystem_access === "read_only" &&
         inspection.data.package_manifest &&
-        Array.isArray(inspection.data.installation?.resolved_packages),
+        inspection.data.installation?.untrusted_project_data
+          ?.classification === "untrusted_project_data" &&
+        Array.isArray(
+          inspection.data.installation?.untrusted_project_data
+            ?.resolved_packages,
+        ),
       "Installed project inspection omitted its read-only package facts.",
     );
 
@@ -393,7 +402,8 @@ export async function runMcpWorkflowCoverage(
         "salt-consumer-smoke-non-salt" &&
         nonSaltInspection.data.installation?.assessment?.status ===
           "not_observed" &&
-        nonSaltInspection.data.installation?.resolved_packages?.length === 0,
+        nonSaltInspection.data.installation?.untrusted_project_data
+          ?.resolved_packages?.length === 0,
       "Installed inspection mislabeled the non-Salt consumer as a healthy Salt installation.",
     );
 

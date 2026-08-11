@@ -50,7 +50,13 @@
       }
     },
     {
-      "files": ["**/theme/css/deprecated/**/*.css"],
+      "files": ["**/theme/css/**/deprecated/**/*.css"],
+      "rules": {
+        "salt/no-deprecated-token-usage": null
+      }
+    },
+    {
+      "files": ["**/theme/css/legacy/**/*.css"],
       "rules": {
         "salt/no-deprecated-token-usage": null
       }
