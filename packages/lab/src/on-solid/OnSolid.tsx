@@ -25,10 +25,10 @@ export const OnSolid = forwardRef<HTMLButtonElement, OnSolidProps>(
 
     return (
       <Button
+        {...rest}
         ref={ref}
         appearance="transparent"
         className={clsx(withBaseName(), className)}
-        {...rest}
       />
     );
   },
