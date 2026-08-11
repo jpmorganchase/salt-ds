@@ -1,4 +1,4 @@
-.saltOnSolid {
+.saltOnSolidButton {
   --saltButton-background: var(--salt-actionable-onSolid-subtle-background);
   --saltButton-borderColor: var(--salt-actionable-onSolid-subtle-borderColor);
   --saltButton-text-color: var(--salt-actionable-onSolid-subtle-foreground);

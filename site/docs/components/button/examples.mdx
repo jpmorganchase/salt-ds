@@ -72,15 +72,20 @@ A button with the prop `loading={true}` will display a spinner to indicate that 
 
 <LivePreview componentName="button" exampleName="Loading" />
 
-## OnSolid
+## On solid
 
-Use an `OnSolid` button to deliver a consistent, accessible action style on solid semantic surfaces, most commonly for close or dismiss actions within status messages that use solid fills, ensuring the button maintains required contrast regardless of the underlying semantic color.
+Use an `OnSolidButton` button to deliver a consistent, accessible action style on solid semantic surfaces, most commonly for close or dismiss actions within status messages that use solid fills, ensuring the button maintains required contrast regardless of the underlying semantic color.
 
-`OnSolid` is currently a release candidate available from the `@salt-ds/lab` package:
+`OnSolidButton` is currently a release candidate available from the `@salt-ds/lab` package:
 
 ```js
-import { OnSolid } from "@salt-ds/lab";
+import { OnSolidButton } from "@salt-ds/lab";
 ```
+
+### Best practices
+
+- **Solid surfaces only**: `OnSolidButton` renders light text on a transparent background, so it's only legible against a solid semantic fill. On a default page surface it will be close to invisible.
+- **Low emphasis**: Reserve it for supporting actions such as dismiss or close. For the primary action on a solid surface, use a button with an appearance that provides more prominence.
 
 <LivePreview componentName="button" exampleName="OnSolid" />
 

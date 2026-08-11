@@ -1,18 +1,18 @@
 import { NotificationIcon } from "@salt-ds/icons";
-import { OnSolid } from "@salt-ds/lab";
+import { OnSolidButton } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import type { ReactNode } from "react";
 
 export default {
-  title: "Lab/Button/OnSolid QA",
-  component: OnSolid,
+  title: "Lab/OnSolidButton/QA",
+  component: OnSolidButton,
   globals: {
     a11y: {
       manual: true,
     },
   },
-} as Meta<typeof OnSolid>;
+} as Meta<typeof OnSolidButton>;
 
 const surfaces = [
   { name: "error", background: "var(--salt-status-error-bold-background)" },
@@ -42,31 +42,25 @@ const Surface = ({
   </div>
 );
 
-export const AllStatesGrid: StoryFn<QAContainerProps> = (props) => (
+export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => (
   <QAContainer cols={1} itemPadding={12} itemWidthAuto {...props}>
     {surfaces.map(({ name, background }) => (
       <Surface key={name} background={background}>
-        <OnSolid>OnSolid</OnSolid>
-        <OnSolid>
+        <OnSolidButton>OnSolidButton</OnSolidButton>
+        <OnSolidButton>
           <NotificationIcon aria-hidden />
-          OnSolid
-        </OnSolid>
-        <OnSolid aria-label="OnSolid">
+          OnSolidButton
+        </OnSolidButton>
+        <OnSolidButton aria-label="OnSolidButton">
           <NotificationIcon aria-hidden />
-        </OnSolid>
-        {/* Active state forced via the core Button `saltButton-active` class
-            hook, so it is captured in the static snapshot. Hover is styled by
-            the core Button using the `:hover` pseudo-class only (no class hook)
-            and there is no pseudo-states addon, so it cannot be reliably forced
-            into a Chromatic snapshot and is intentionally omitted. */}
-        <OnSolid className="saltButton-active">OnSolid</OnSolid>
-        <OnSolid disabled>OnSolid</OnSolid>
+        </OnSolidButton>
+        <OnSolidButton disabled>OnSolidButton</OnSolidButton>
       </Surface>
     ))}
   </QAContainer>
 );
 
-AllStatesGrid.parameters = {
+AllExamplesGrid.parameters = {
   chromatic: {
     disableSnapshot: false,
   },

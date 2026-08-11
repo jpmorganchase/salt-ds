@@ -4,22 +4,32 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { forwardRef } from "react";
 
-import onSolidCss from "./OnSolid.css";
+import onSolidButtonCss from "./OnSolidButton.css";
 
-const withBaseName = makePrefixer("saltOnSolid");
+const withBaseName = makePrefixer("saltOnSolidButton");
 
-export interface OnSolidProps
+export interface OnSolidButtonProps
   extends Omit<
     ButtonProps,
     "appearance" | "sentiment" | "variant" | "loading" | "loadingAnnouncement"
   > {}
 
-export const OnSolid = forwardRef<HTMLButtonElement, OnSolidProps>(
-  function OnSolid({ className, ...rest }, ref) {
+export const OnSolidButton = forwardRef<HTMLButtonElement, OnSolidButtonProps>(
+  function OnSolidButton({ className, ...props }, ref) {
+    // Dropped at runtime as well as in the type,
+    const {
+      appearance: _appearance,
+      sentiment: _sentiment,
+      variant: _variant,
+      loading: _loading,
+      loadingAnnouncement: _loadingAnnouncement,
+      ...rest
+    } = props as ButtonProps;
+
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-on-solid",
-      css: onSolidCss,
+      testId: "salt-on-solid-button",
+      css: onSolidButtonCss,
       window: targetWindow,
     });
 

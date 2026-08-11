@@ -1,30 +1,35 @@
-import { StackLayout } from "@salt-ds/core";
-import { OnSolid as OnSolidButton } from "@salt-ds/lab";
-import type { ReactElement } from "react";
+import { GridLayout, Text } from "@salt-ds/core";
+import { OnSolidButton } from "@salt-ds/lab";
+import { Fragment, type ReactElement } from "react";
 
-const backgrounds = [
-  "var(--salt-status-error-bold-background)",
-  "var(--salt-status-info-bold-background)",
-  "var(--salt-status-warning-bold-background)",
-  "var(--salt-status-success-bold-background)",
+const surfaces = [
+  { name: "Error", background: "var(--salt-status-error-bold-background)" },
+  { name: "Info", background: "var(--salt-status-info-bold-background)" },
+  { name: "Warning", background: "var(--salt-status-warning-bold-background)" },
+  { name: "Success", background: "var(--salt-status-success-bold-background)" },
 ];
 
 export const OnSolid = (): ReactElement => (
-  <StackLayout gap={3} align="start">
-    {backgrounds.map((background) => (
-      <div
-        key={background}
-        style={{
-          background,
-          padding: "var(--salt-spacing-300)",
-          borderRadius: "var(--salt-palette-corner-weak)",
-          display: "inline-flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <OnSolidButton>Dismiss</OnSolidButton>
-      </div>
+  <GridLayout
+    columns="min-content auto"
+    gap={3}
+    style={{ alignItems: "center" }}
+  >
+    {surfaces.map(({ name, background }) => (
+      <Fragment key={name}>
+        <Text>{name}</Text>
+        <div
+          style={{
+            background,
+            padding: "var(--salt-spacing-300)",
+            borderRadius: "var(--salt-palette-corner-weak)",
+          }}
+        >
+          <OnSolidButton aria-label={`Dismiss ${name.toLowerCase()} message`}>
+            Dismiss
+          </OnSolidButton>
+        </div>
+      </Fragment>
     ))}
-  </StackLayout>
+  </GridLayout>
 );

@@ -1,13 +1,13 @@
 import { NotificationIcon } from "@salt-ds/icons";
-import { OnSolid } from "@salt-ds/lab";
+import { OnSolidButton } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
-  title: "Lab/Button",
-  component: OnSolid,
-} as Meta<typeof OnSolid>;
+  title: "Lab/OnSolidButton",
+  component: OnSolidButton,
+} as Meta<typeof OnSolidButton>;
 
-export const OnSolidStory: StoryFn<typeof OnSolid> = (args) => {
+export const Default: StoryFn<typeof OnSolidButton> = (args) => {
   return (
     <div
       style={{
@@ -22,11 +22,10 @@ export const OnSolidStory: StoryFn<typeof OnSolid> = (args) => {
         boxSizing: "border-box",
       }}
     >
-      <OnSolid {...args}>
+      <OnSolidButton {...args}>
         <NotificationIcon aria-hidden />
-        OnSolid
-      </OnSolid>
+        OnSolidButton
+      </OnSolidButton>
     </div>
   );
 };
-OnSolidStory.storyName = "OnSolid";
