@@ -1,0 +1,36 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+- Ensure the accessible name identifies the destination. If the visible label is not specific enough, provide a more descriptive `aria-label` or `aria-labelledby`.
+- When a link button contains an icon and text, pass `aria-hidden` to the icon so screen readers do not announce duplicate content.
+- When a link button has an icon and no visible text, pass an `aria-label` to describe the destination.
+- If a link button opens a new tab or window, make sure this is communicated visually and to assistive technologies.
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+Moves focus to the link button.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+Moves focus to the previous focusable element.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter">
+
+If the link button has an `href`, navigates the user to the linked destination.
+
+</KeyboardControl>
+</KeyboardControls>

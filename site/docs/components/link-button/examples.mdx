@@ -1,0 +1,42 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Neutral
+
+The neutral Link button is ideal for routine, lower-emphasis navigation that requires less visual prominence on the page. Use it when the destination is useful but not the primary call to action.
+
+<LivePreview componentName="link-button" exampleName="Neutral" />
+
+## Accented
+
+Use an accented link button for prominent navigation actions in your workflow, such as directing users to a key new page or destination. It matches `Button`'s accented styling so navigation can carry the same visual weight as an action.
+
+<LivePreview componentName="link-button" exampleName="Accented" />
+
+## With icon
+
+Use a leading or trailing icon with a label to reinforce navigation intent. Add a second icon for additional affordance.
+
+Use the arrow to the right of the text to suggest movement to a new destination.
+Use the tear-out icon for external links to signal the user is leaving the current context.
+
+<LivePreview componentName="link-button" exampleName="WithIcon" />
+
+## Icon only
+
+Use an icon-only link button when space is limited and the icon has a widely understood meaning. Provide an accessible label with `aria-label` because there is no visible text.
+
+<LivePreview componentName="link-button" exampleName="IconOnly" />
+
+## Routing libraries
+
+Use the `render` prop to render a link component from a routing library, such as React Router or Next.js, while preserving the styling and behavior provided by `LinkButton`.
+
+<LivePreview componentName="link-button" exampleName="RoutingLibraries" />

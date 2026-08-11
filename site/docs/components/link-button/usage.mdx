@@ -1,0 +1,44 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+### When to use
+
+- When the primary action is navigation, such as opening a new page or external site.
+- When a button-like appearance is needed for visibility and interaction.
+- When the link is essential to the user flow but should stand out from inline text links.
+
+### When not to use
+
+- Do not use a link button for on-page actions like opening a modal, submitting a form or toggling UI elements.
+- If the action does not navigate the user elsewhere, use [`Button`](../button) instead.
+
+### Routing libraries
+
+If you are using a routing library such as [React Router](https://reactrouter.com/en/main) or [Next.js](https://nextjs.org/docs/app/building-your-application/routing), you can use the `render` prop to render a link component from the routing library. This allows you to take advantage of the routing library's features, such as client-side navigation and route matching.
+
+## Content
+
+- Keep link button text concise and action-oriented.
+- Use text that describes the destination or result, such as “View details” or “Open report”.
+- Do not use generic text like “Click here” or “Read more” unless the surrounding context makes the destination clear.
+
+## Import
+
+To import `LinkButton` from the lab Salt package, use:
+
+```js
+import { LinkButton } from "@salt-ds/lab";
+```
+
+## Props
+
+<PropsTable packageName="lab" componentName="LinkButton" />

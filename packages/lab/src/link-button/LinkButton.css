@@ -1,0 +1,74 @@
+.saltLinkButton {
+  --linkButton-borderWidth: var(--salt-size-fixed-100);
+
+  align-items: var(--saltLinkButton-alignItems, center);
+  appearance: none;
+  background: var(--saltLinkButton-background, var(--linkButton-background));
+  border-color: var(--saltLinkButton-borderColor, var(--linkButton-borderColor, transparent));
+  border-style: var(--saltLinkButton-borderStyle, solid);
+  border-width: var(--saltLinkButton-borderWidth, var(--linkButton-borderWidth));
+  border-radius: var(--saltLinkButton-borderRadius, var(--salt-palette-corner-weak, 0));
+  color: var(--saltLinkButton-text-color, var(--linkButton-text-color));
+  display: inline-flex;
+  gap: var(--salt-spacing-50);
+  justify-content: var(--saltLinkButton-justifyContent, center);
+  font-size: var(--saltLinkButton-fontSize, var(--salt-text-fontSize));
+  font-family: var(--saltLinkButton-fontFamily, var(--salt-text-action-fontFamily));
+  line-height: var(--saltLinkButton-lineHeight, var(--salt-text-lineHeight));
+  letter-spacing: var(--saltLinkButton-letterSpacing, var(--salt-text-action-letterSpacing));
+  text-transform: var(--saltLinkButton-textTransform, var(--salt-text-action-textTransform));
+  padding: 0 var(--saltLinkButton-padding, calc(var(--salt-spacing-100) - var(--saltLinkButton-borderWidth, var(--linkButton-borderWidth))));
+  margin: var(--saltLinkButton-margin, 0);
+  height: var(--saltLinkButton-height, var(--salt-size-base));
+  min-width: var(--saltLinkButton-minWidth, unset);
+  position: relative;
+  text-align: var(--saltLinkButton-textAlign, var(--salt-text-action-textAlign));
+  text-decoration: none;
+  transition: none;
+  width: var(--saltLinkButton-width, auto);
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  /* Styles applied to align children*/
+  font-weight: var(--saltLinkButton-fontWeight, var(--salt-text-action-fontWeight));
+}
+
+@media (hover: hover) {
+  /* Pseudo-class applied to the root element on hover when LinkButton is not active or disabled */
+  .saltLinkButton:hover {
+    background: var(--saltLinkButton-background-hover, var(--linkButton-background-hover));
+    color: var(--saltLinkButton-text-color-hover, var(--linkButton-text-color-hover));
+    border-color: var(--saltLinkButton-borderColor-hover, var(--linkButton-borderColor-hover));
+    cursor: var(--salt-cursor-hover);
+    text-decoration: var(--salt-text-link-textDecoration);
+    text-underline-offset: var(--salt-spacing-fixed-200);
+  }
+}
+
+/* Pseudo-class applied to the root element on focus */
+.saltLinkButton:focus-visible {
+  outline: var(--salt-focused-outline);
+
+  background: var(--linkButton-background-hover);
+  color: var(--linkButton-text-color-hover);
+  border-color: var(--linkButton-borderColor-hover);
+  text-decoration: var(--salt-text-link-textDecoration);
+  text-underline-offset: var(--salt-spacing-fixed-200);
+}
+
+.saltLinkButton-neutral {
+  --linkButton-text-color: var(--salt-actionable-subtle-foreground);
+  --linkButton-text-color-hover: var(--salt-actionable-subtle-foreground-hover);
+  --linkButton-background: var(--salt-actionable-subtle-background);
+  --linkButton-background-hover: var(--salt-actionable-subtle-background-hover);
+  --linkButton-borderColor: var(--salt-actionable-subtle-borderColor);
+  --linkButton-borderColor-hover: var(--salt-actionable-subtle-borderColor-hover);
+}
+
+.saltLinkButton-accented {
+  --linkButton-text-color: var(--salt-actionable-accented-subtle-foreground);
+  --linkButton-text-color-hover: var(--salt-actionable-accented-subtle-foreground-hover);
+  --linkButton-background: var(--salt-actionable-accented-subtle-background);
+  --linkButton-background-hover: var(--salt-actionable-accented-subtle-background-hover);
+  --linkButton-borderColor: var(--salt-actionable-accented-subtle-borderColor);
+  --linkButton-borderColor-hover: var(--salt-actionable-accented-subtle-borderColor-hover);
+}
