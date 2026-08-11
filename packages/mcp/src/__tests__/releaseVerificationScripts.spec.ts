@@ -110,7 +110,9 @@ describe("release verification scripts", () => {
     expect(scripts["lint:check:error"]).toBe(
       "biome lint --diagnostic-level=error",
     );
+    expect(scripts.prettier).toBe("prettier --check .");
     expect(scripts["prettier:ci"]).toBe("prettier --check .");
+    expect(scripts.format).toBe("prettier --write .");
   });
 
   it("includes theme CSS in the style gate while exempting compatibility definitions", async () => {
