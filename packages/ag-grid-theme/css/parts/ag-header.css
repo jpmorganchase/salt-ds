@@ -61,7 +61,7 @@
 .ag-theme-salt-dark .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total),
 .ag-theme-salt-compact-light .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total),
 .ag-theme-salt-compact-dark .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total) {
-  border-top-color: var(--salt-container-primary-borderColor);
+  border-top-color: var(--salt-container-bold-borderColor);
 }
 
 .ag-theme-salt-light .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total):focus,

@@ -43,10 +43,10 @@ import "./calendar.stories.css";
 import "dayjs/locale/es"; // Import the Spanish locale
 import { es as dateFnsEs } from "date-fns/locale";
 import "moment/dist/locale/es";
-import { withDateMock } from ".storybook/decorators/withDateMock";
 import type { Dayjs } from "dayjs";
 import type { DateTime } from "luxon";
 import type { Moment } from "moment/moment";
+import { withDateMock } from "~storybook-decorators/withDateMock";
 
 export default {
   title: "Date Components/Calendar",

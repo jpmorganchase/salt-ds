@@ -1,6 +1,6 @@
-import * as scrimStories from "@stories/scrim/scrim.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as scrimStories from "~stories/scrim/scrim.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 import { Scrim } from "../../../scrim";
 
 const composedStories = composeStories(scrimStories);

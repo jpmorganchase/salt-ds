@@ -91,7 +91,7 @@
   border-radius: var(--salt-palette-corner-weaker);
   border-width: var(--salt-size-fixed-100);
   border-style: var(--salt-borderStyle-solid);
-  border-color: var(--salt-container-primary-borderColor);
+  border-color: var(--salt-container-bold-borderColor);
   background: var(--salt-container-primary-background);
   overflow: hidden;
 }

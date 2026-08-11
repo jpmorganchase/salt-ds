@@ -1,7 +1,7 @@
 .layout-container > div,
 .layout-content {
   padding: var(--salt-spacing-200);
-  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-secondary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
   font-weight: var(--salt-text-fontWeight-small);
 }
 .layout-active-content,
@@ -154,7 +154,7 @@
   transform: translate(calc(var(--gridLayout-rowGap) + 1px), -1px);
 }
 .spacing-example-gap {
-  border: solid 1px var(--salt-container-primary-borderColor);
+  border: solid 1px var(--salt-container-bold-borderColor);
   background: var(--salt-container-primary-background);
 }
 .spacing-example-padding {

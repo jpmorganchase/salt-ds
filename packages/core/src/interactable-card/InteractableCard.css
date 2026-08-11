@@ -31,19 +31,19 @@
 /* Styles applied to InteractableCard when variant="primary" */
 .saltInteractableCard-primary {
   background: var(--saltInteractableCard-background, var(--salt-container-primary-background));
-  border-color: var(--salt-container-primary-borderColor);
+  border-color: var(--salt-container-bold-borderColor);
 }
 
 /* Styles applied to InteractableCard when variant="secondary" */
 .saltInteractableCard-secondary {
   background: var(--saltInteractableCard-background, var(--salt-container-secondary-background));
-  border-color: var(--salt-container-secondary-borderColor);
+  border-color: var(--salt-container-bold-borderColor);
 }
 
 /* Styles applied to InteractableCard when variant="tertiary" */
 .saltInteractableCard-tertiary {
   background: var(--saltInteractableCard-background, var(--salt-container-tertiary-background));
-  border-color: var(--salt-container-tertiary-borderColor);
+  border-color: var(--salt-container-bold-borderColor);
 }
 
 /* Styles applied to create accent */

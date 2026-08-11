@@ -29,17 +29,17 @@
 
 .saltCard-primary {
   background: var(--saltCard-background, var(--salt-container-primary-background));
-  border-color: var(--salt-container-primary-borderColor);
+  border-color: var(--salt-container-bold-borderColor);
 }
 
 .saltCard-secondary {
   background: var(--saltCard-background, var(--salt-container-secondary-background));
-  border-color: var(--salt-container-secondary-borderColor);
+  border-color: var(--salt-container-bold-borderColor);
 }
 
 .saltCard-tertiary {
   background: var(--saltCard-background, var(--salt-container-tertiary-background));
-  border-color: var(--salt-container-tertiary-borderColor);
+  border-color: var(--salt-container-bold-borderColor);
 }
 
 .saltCard-ghost {
@@ -134,7 +134,7 @@ a:focus .saltCard-interactable.saltCard-disabled,
 .saltCard-disabled,
 .saltCard-disabled.saltCard-interactable,
 a:focus .saltCard-interactable.saltCard-disabled {
-  border-color: var(--salt-container-primary-borderColor-disabled);
+  border-color: var(--salt-container-bold-borderColor-disabled);
   color: var(--saltCard-color-disabled, var(--salt-content-primary-foreground-disabled));
   cursor: var(--saltCard-cursor-disabled, var(--salt-cursor-disabled));
   outline: none;

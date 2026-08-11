@@ -1,5 +1,5 @@
-import * as menuStories from "@stories/menu/menu.stories";
 import { composeStories } from "@storybook/react-vite";
+import * as menuStories from "~stories/menu/menu.stories";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
 const {

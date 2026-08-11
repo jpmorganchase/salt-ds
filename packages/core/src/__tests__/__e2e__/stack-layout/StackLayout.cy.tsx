@@ -1,6 +1,6 @@
-import * as stackStories from "@stories/stack-layout/stack-layout.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as stackStories from "~stories/stack-layout/stack-layout.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(stackStories);
 const { Default } = composedStories;

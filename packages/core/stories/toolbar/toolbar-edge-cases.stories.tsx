@@ -57,7 +57,7 @@ const hiddenOverflowDemoControlsStyle = {
 
 const hiddenOverflowDemoFrameStyle = {
   border:
-    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
   padding: "var(--salt-spacing-100)",
 };
 
@@ -75,7 +75,7 @@ const clippingValidationShellStyle = {
 const clippingValidationCardStyle = {
   background: "var(--salt-container-primary-background)",
   border:
-    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
   borderRadius: "var(--salt-palette-corner, 0)",
   boxShadow: "var(--salt-overlayable-shadow-popout)",
   display: "flex" as const,
@@ -86,7 +86,7 @@ const clippingValidationCardStyle = {
 
 const clippingValidationHeaderStyle = {
   borderBottom:
-    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
   padding: "var(--salt-spacing-200)",
 };
 
@@ -104,7 +104,7 @@ const clippingValidationRowStyle = {
   alignItems: "center",
   background: "var(--salt-container-secondary-background)",
   border:
-    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
   display: "grid" as const,
   gap: "var(--salt-spacing-100)",
   gridTemplateColumns: "80px minmax(0, 1fr) minmax(0, 1.4fr)",
@@ -114,7 +114,7 @@ const clippingValidationRowStyle = {
 const clippingValidationToolbarDockStyle = {
   background: "var(--salt-container-secondary-background)",
   borderTop:
-    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
   padding: "var(--salt-spacing-100)",
 };
 
@@ -150,7 +150,7 @@ const subpixelRoundingShellStyle = {
 
 const subpixelRoundingFrameStyle = {
   outline:
-    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
   width: "100%",
 };
 
@@ -162,7 +162,7 @@ const subpixelRoundingItemStyle = {
   alignItems: "center",
   background: "var(--salt-container-secondary-background)",
   border:
-    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
   boxSizing: "border-box" as const,
   display: "flex" as const,
   fontSize: 10,

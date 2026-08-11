@@ -1,5 +1,19 @@
 # @salt-ds/embla-carousel
 
+## 1.1.5
+
+### Patch Changes
+
+- 6c57a1f: Fixed the carousel jumping before drag starts when clicking or touching a partially visible slide in multi-slide mode.
+- Updated dependencies [fc59869]
+- Updated dependencies [e3c0230]
+- Updated dependencies [e25daab]
+- Updated dependencies [b573303]
+- Updated dependencies [e25daab]
+- Updated dependencies [df76f3e]
+- Updated dependencies [9c4e307]
+  - @salt-ds/core@1.69.0
+
 ## 1.1.4
 
 ### Patch Changes

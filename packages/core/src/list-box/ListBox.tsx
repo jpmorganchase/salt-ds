@@ -170,7 +170,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
       case "Enter":
       case " ":
         if (
-          Boolean(activeState?.disabled) ||
+          activeState?.disabled ||
           (typeaheadString.current.trim().length > 0 && event.key === " ")
         ) {
           event.preventDefault();

@@ -1,7 +1,7 @@
-import * as carouselStories from "@stories/carousel.stories";
 import { composeStories } from "@storybook/react-vite";
 import ClassNames from "embla-carousel-class-names";
 import { useEffect, useState } from "react";
+import * as carouselStories from "~stories/carousel.stories";
 import type { CarouselEmblaApiType } from "../../index";
 
 const composedStories = composeStories(carouselStories);
@@ -356,6 +356,49 @@ describe("Given a Carousel", () => {
         cy.wrap(null).then(() => {
           expect(emblaApi?.selectedScrollSnap()).to.equal(0);
         });
+      });
+    });
+
+    it("should not scroll when pointer focus lands on a partially visible slide", () => {
+      mountMultiSlideCarousel().then((emblaApi) => {
+        const pointerDownCallback = cy.stub().as("pointerDownCallback");
+        emblaApi?.on("pointerDown", pointerDownCallback);
+
+        // Queue this assertion in Cypress' command chain; the wrapped value is not used.
+        cy.wrap(null).then(() => {
+          expect(emblaApi?.selectedScrollSnap()).to.equal(0);
+        });
+
+        cy.get(".saltCarouselSlides").then(($viewport) => {
+          cy.get(".carouselSlide")
+            .eq(2)
+            .then(($slide) => {
+              const viewportRect = $viewport[0].getBoundingClientRect();
+              const slideRect = $slide[0].getBoundingClientRect();
+              const visibleSlideWidth = viewportRect.right - slideRect.left;
+
+              expect(slideRect.left).to.be.lessThan(viewportRect.right);
+              expect(slideRect.right).to.be.greaterThan(viewportRect.right);
+              expect(visibleSlideWidth).to.be.greaterThan(0);
+
+              cy.get("body").realMouseDown({
+                scrollBehavior: false,
+                x: Math.floor(slideRect.left + visibleSlideWidth / 2),
+                y: Math.floor(slideRect.top + slideRect.height / 2),
+              });
+            });
+        });
+
+        cy.get("@pointerDownCallback").should("have.been.calledOnce");
+
+        cy.get(".carouselSlide").eq(2).focus();
+        cy.get(".carouselSlide").eq(2).should("be.focused");
+
+        cy.wait(250).then(() => {
+          expect(emblaApi?.selectedScrollSnap()).to.equal(0);
+          emblaApi?.off("pointerDown", pointerDownCallback);
+        });
+        cy.get("body").realMouseUp({ scrollBehavior: false });
       });
     });
 
