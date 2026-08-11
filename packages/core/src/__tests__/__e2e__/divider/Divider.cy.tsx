@@ -1,6 +1,6 @@
-import * as dividerStories from "@stories/divider/divider.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as dividerStories from "~stories/divider/divider.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(dividerStories);
 const { Variants, Vertical } = composedStories;

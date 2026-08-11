@@ -338,4 +338,11 @@
   --salt-category-20-subtle-borderColor: var(--salt-palette-categorical-20);
 
   --salt-sentiment-neutral-track-disabled: var(--salt-palette-neutral-border-disabled);
+
+  --salt-container-primary-borderColor: var(--salt-palette-neutral-border); /* Use --salt-container-bold-borderColor */
+  --salt-container-primary-borderColor-disabled: var(--salt-palette-neutral-border-disabled); /* Use --salt-container-bold-borderColor-disabled */
+  --salt-container-secondary-borderColor: var(--salt-palette-neutral-border); /* Use --salt-container-bold-borderColor */
+  --salt-container-secondary-borderColor-disabled: var(--salt-palette-neutral-border-disabled); /* Use --salt-container-bold-borderColor-disabled */
+  --salt-container-tertiary-borderColor: var(--salt-palette-neutral-border); /* Use --salt-container-bold-borderColor */
+  --salt-container-tertiary-borderColor-disabled: var(--salt-palette-neutral-border-disabled); /* Use --salt-container-bold-borderColor-disabled */
 }

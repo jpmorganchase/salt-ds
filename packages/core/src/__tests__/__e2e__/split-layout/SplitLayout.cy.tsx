@@ -1,6 +1,6 @@
-import * as splitStories from "@stories/split-layout/split-layout.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as splitStories from "~stories/split-layout/split-layout.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(splitStories);
 const { Default } = composedStories;
@@ -16,18 +16,12 @@ describe("GIVEN a Split", () => {
       cy.get(".saltFlexLayout").should("have.css", "flex-direction", "row");
     });
 
-    it(
-      "THEN it should wrap at the default small breakpoint",
-      { viewportWidth: 599 },
-      () => {
-        cy.mount(<Default />);
-        cy.get(".saltFlexLayout").should(
-          "have.css",
-          "flex-direction",
-          "column",
-        );
-      },
-    );
+    it("THEN it should wrap at the default small breakpoint", {
+      viewportWidth: 599,
+    }, () => {
+      cy.mount(<Default />);
+      cy.get(".saltFlexLayout").should("have.css", "flex-direction", "column");
+    });
 
     it("THEN it should render with a default gap", () => {
       cy.mount(<Default />);

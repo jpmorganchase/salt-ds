@@ -1,7 +1,7 @@
 import { UserGroupSolidIcon } from "@salt-ds/icons";
-import * as avatarStories from "@stories/avatar/avatar.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as avatarStories from "~stories/avatar/avatar.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(avatarStories);
 const { Default } = composedStories;
@@ -10,7 +10,7 @@ describe("Given an Avatar", () => {
 
   it("should show the default fallback icon when nothing is provided", () => {
     cy.mount(<Default />);
-    cy.findByTestId("UserSolidIcon").should("exist");
+    cy.findByTestId("UserIcon").should("exist");
   });
 
   it("should show initials if only a name is provided", () => {
@@ -28,7 +28,7 @@ describe("Given an Avatar", () => {
 
   it("should show a fallback icon if an image is provided and fails to load and name is not provided", () => {
     cy.mount(<Default src="bad_url.png" />);
-    cy.findByTestId("UserSolidIcon").should("exist");
+    cy.findByTestId("UserIcon").should("exist");
     cy.findByRole("img").should("not.exist");
   });
 
@@ -61,7 +61,7 @@ describe("Given an Avatar", () => {
 
   it("should default to representing a person with a circular shape and person fallback icon", () => {
     cy.mount(<Default />);
-    cy.findByTestId("UserSolidIcon").should("exist");
+    cy.findByTestId("UserIcon").should("exist");
     cy.get(".saltAvatar").should("not.have.class", "saltAvatar-entity");
   });
 

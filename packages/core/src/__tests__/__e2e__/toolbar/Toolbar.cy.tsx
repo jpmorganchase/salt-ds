@@ -17,9 +17,9 @@ import {
   DatePickerSingleInput,
   DatePickerTrigger,
 } from "@salt-ds/date-components";
-import * as toolbarStories from "@stories/toolbar/toolbar.cypress.stories";
 import { composeStories } from "@storybook/react-vite";
 import { type FocusEventHandler, useState } from "react";
+import * as toolbarStories from "~stories/toolbar/toolbar.cypress.stories";
 
 const {
   DefaultSharedOverflowFixture,

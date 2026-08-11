@@ -1,14 +1,17 @@
 import { useRouter } from "next/router";
 import { MDXRemote } from "next-mdx-remote";
 import { type ReactNode, useEffect } from "react";
-import { ErrorBoundary, useErrorBoundary } from "react-error-boundary";
+import {
+  ErrorBoundary,
+  type FallbackProps,
+  getErrorMessage,
+  useErrorBoundary,
+} from "react-error-boundary";
 import styles from "../layouts/Base/Base.module.css";
 import { Page404 } from "./404";
 import { Page500 } from "./500";
 
-const DefaultFallBackComponent = ({
-  error: { message: errorMessage = "unknown" },
-}) => {
+const DefaultFallBackComponent = ({ error }: FallbackProps) => {
   const router = useRouter();
   const { resetBoundary } = useErrorBoundary();
 
@@ -24,7 +27,7 @@ const DefaultFallBackComponent = ({
     };
   }, [router, resetBoundary]);
   console.error("An un-handled error created a 500 message");
-  console.error(errorMessage);
+  console.error(getErrorMessage(error) ?? "unknown");
   return <Page500 />;
 };
 

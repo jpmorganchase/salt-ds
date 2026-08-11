@@ -1,5 +1,5 @@
-import * as linearProgressStories from "@stories/progress/linear-progress.stories";
 import { composeStories } from "@storybook/react-vite";
+import * as linearProgressStories from "~stories/progress/linear-progress.stories";
 
 const composedStories = composeStories(linearProgressStories);
 const { Default, Indeterminate } = composedStories;

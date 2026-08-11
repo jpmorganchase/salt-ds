@@ -6,7 +6,7 @@ import {
   DoubleChevronDownIcon,
   DoubleChevronUpIcon,
   SuccessCircleSolidIcon,
-  UserSolidIcon,
+  UserIcon,
 } from "@salt-ds/icons";
 
 const TestComponent = () => {
@@ -17,7 +17,7 @@ const TestComponent = () => {
       <icons.CollapseIcon data-testid="ChevronUpIcon" />
       <icons.SuccessIcon data-testid="SuccessCircleSolidIcon" />
       <icons.CalendarIcon data-testid="CalendarIcon" />
-      <icons.UserIcon data-testid="UserSolidIcon" />
+      <icons.UserIcon data-testid="UserIcon" />
     </div>
   );
 };
@@ -28,7 +28,7 @@ describe("SemanticIconProvider", () => {
     cy.get('[data-testid="ChevronDownIcon"]').should("exist");
     cy.get('[data-testid="SuccessCircleSolidIcon"]').should("exist");
     cy.get('[data-testid="CalendarIcon"]').should("exist");
-    cy.get('[data-testid="UserSolidIcon"]').should("exist");
+    cy.get('[data-testid="UserIcon"]').should("exist");
   });
 
   it("should support overriding only specific icons", () => {
@@ -56,7 +56,7 @@ describe("SemanticIconProvider", () => {
 
     cy.get('[data-testid="SuccessCircleSolidIcon"]').should("exist");
     cy.get('[data-testid="CalendarIcon"]').should("exist");
-    cy.get('[data-testid="UserSolidIcon"]').should("exist");
+    cy.get('[data-testid="UserIcon"]').should("exist");
   });
 
   it("should support overriding all icons", () => {
@@ -65,7 +65,7 @@ describe("SemanticIconProvider", () => {
         iconMap={{
           CollapseIcon: ChevronDownIcon,
           ExpandIcon: ChevronUpIcon,
-          SuccessIcon: UserSolidIcon,
+          SuccessIcon: UserIcon,
           CalendarIcon: SuccessCircleSolidIcon,
           UserIcon: CalendarIcon,
         }}
@@ -86,14 +86,14 @@ describe("SemanticIconProvider", () => {
     cy.get('[data-testid="SuccessCircleSolidIcon"]').should(
       "have.attr",
       "aria-label",
-      "user solid",
+      "user",
     );
     cy.get('[data-testid="CalendarIcon"]').should(
       "have.attr",
       "aria-label",
       "success circle solid",
     );
-    cy.get('[data-testid="UserSolidIcon"]').should(
+    cy.get('[data-testid="UserIcon"]').should(
       "have.attr",
       "aria-label",
       "calendar",

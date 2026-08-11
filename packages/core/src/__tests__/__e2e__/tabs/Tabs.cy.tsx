@@ -6,9 +6,9 @@ import {
   Tabs,
   TabTrigger,
 } from "@salt-ds/core";
-import * as tabsStories from "@stories/tabs/tabs.stories";
 import { composeStories } from "@storybook/react-vite";
 import { type ReactElement, useEffect, useState } from "react";
+import * as tabsStories from "~stories/tabs/tabs.stories";
 
 const {
   Bordered,
@@ -1466,25 +1466,23 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("tab", { name: "Overflow" }).should("be.focused");
   });
 
-  it(
-    "should flip overflow menu placement if there is enough space",
-    { viewportWidth: 430 },
-    () => {
-      cy.get("body").invoke("css", "display", "block");
+  it("should flip overflow menu placement if there is enough space", {
+    viewportWidth: 430,
+  }, () => {
+    cy.get("body").invoke("css", "display", "block");
 
-      mountTabs(<Overflow />, { width: 408 });
-      cy.findAllByRole("tab").should("have.length", 5);
+    mountTabs(<Overflow />, { width: 408 });
+    cy.findAllByRole("tab").should("have.length", 5);
 
-      cy.findByRole("tab", { name: "Overflow" }).click();
-      cy.findByRole("tablist", { name: "Overflow tab options" }).should(
-        "be.visible",
-      );
+    cy.findByRole("tab", { name: "Overflow" }).click();
+    cy.findByRole("tablist", { name: "Overflow tab options" }).should(
+      "be.visible",
+    );
 
-      // no horizontal overflow, menu should flip in horizontally
-      cy.get("html").then((body) => {
-        const { clientWidth, scrollWidth } = body[0];
-        expect(clientWidth).to.equal(scrollWidth);
-      });
-    },
-  );
+    // no horizontal overflow, menu should flip in horizontally
+    cy.get("html").then((body) => {
+      const { clientWidth, scrollWidth } = body[0];
+      expect(clientWidth).to.equal(scrollWidth);
+    });
+  });
 });

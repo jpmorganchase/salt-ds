@@ -1,7 +1,7 @@
 import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
-import * as systemStatusStories from "@stories/system-status/system-status.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as systemStatusStories from "~stories/system-status/system-status.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(systemStatusStories);
 // biome-ignore lint/suspicious/noShadowRestrictedNames: Error is the story name.

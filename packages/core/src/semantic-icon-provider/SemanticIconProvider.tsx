@@ -23,7 +23,7 @@ import {
   TriangleDownIcon,
   TriangleUpIcon,
   UploadIcon,
-  UserSolidIcon,
+  UserIcon,
   WarningSolidIcon,
 } from "@salt-ds/icons";
 import {
@@ -115,7 +115,7 @@ const defaultIconMap: SemanticIconMap = {
   SuccessIcon: SuccessCircleSolidIcon,
   SuccessStatusAdornment: SuccessAdornmentIcon,
   UploadIcon,
-  UserIcon: UserSolidIcon,
+  UserIcon: UserIcon,
   WarningIcon: WarningSolidIcon,
   WarningStatusAdornment: WarningAdornmentIcon,
 };

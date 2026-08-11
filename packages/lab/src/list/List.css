@@ -8,7 +8,7 @@
   --list-maxHeight: 100%;
 
   background: var(--list-background);
-  border-color: var(--salt-container-primary-borderColor);
+  border-color: var(--salt-container-bold-borderColor);
   border-style: var(--list-borderStyle);
   border-width: var(--list-borderWidth);
   height: var(--saltList-height, var(--list-height));
