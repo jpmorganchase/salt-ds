@@ -1,5 +1,5 @@
-import { FlowLayout } from "@salt-ds/core";
-import { SaltShakerIcon } from "@salt-ds/icons";
+import { StackLayout } from "@salt-ds/core";
+import { NotificationIcon } from "@salt-ds/icons";
 import { OnSolid as OnSolidButton } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
@@ -11,7 +11,7 @@ const backgrounds = [
 ];
 
 export const OnSolid = (): ReactElement => (
-  <FlowLayout gap={3}>
+  <StackLayout gap={3} align="start">
     {backgrounds.map((background) => (
       <div
         key={background}
@@ -25,10 +25,10 @@ export const OnSolid = (): ReactElement => (
         }}
       >
         <OnSolidButton>
-          <SaltShakerIcon aria-hidden />
+          <NotificationIcon aria-hidden />
           Dismiss
         </OnSolidButton>
       </div>
     ))}
-  </FlowLayout>
+  </StackLayout>
 );

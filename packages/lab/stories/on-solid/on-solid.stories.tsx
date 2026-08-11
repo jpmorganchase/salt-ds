@@ -1,4 +1,4 @@
-import { SaltShakerIcon } from "@salt-ds/icons";
+import { NotificationIcon } from "@salt-ds/icons";
 import { OnSolid } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 
@@ -23,7 +23,7 @@ export const OnSolidStory: StoryFn<typeof OnSolid> = (args) => {
       }}
     >
       <OnSolid {...args}>
-        <SaltShakerIcon aria-hidden />
+        <NotificationIcon aria-hidden />
         OnSolid
       </OnSolid>
     </div>

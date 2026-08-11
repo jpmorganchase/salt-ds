@@ -1,4 +1,4 @@
-import { SaltShakerIcon } from "@salt-ds/icons";
+import { NotificationIcon } from "@salt-ds/icons";
 import { OnSolid } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
@@ -48,11 +48,11 @@ export const AllStatesGrid: StoryFn<QAContainerProps> = (props) => (
       <Surface key={name} background={background}>
         <OnSolid>OnSolid</OnSolid>
         <OnSolid>
-          <SaltShakerIcon aria-hidden />
+          <NotificationIcon aria-hidden />
           OnSolid
         </OnSolid>
         <OnSolid aria-label="OnSolid">
-          <SaltShakerIcon aria-hidden />
+          <NotificationIcon aria-hidden />
         </OnSolid>
         {/* Active state forced via the core Button `saltButton-active` class
             hook, so it is captured in the static snapshot. Hover is styled by
