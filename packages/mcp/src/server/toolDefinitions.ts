@@ -25,7 +25,7 @@ import {
   isAuthorizedProjectPolicySnapshot,
   loadAuthorizedProjectPolicySnapshot,
   MAX_PROJECT_CONTEXT_HANDLE_CHARS,
-  parseProjectContextHandle,
+  PROJECT_CONTEXT_HANDLE_PATTERN,
 } from "./projectPolicySnapshot.js";
 
 const MAX_QUERY_CHARS = 2_000;
@@ -161,7 +161,10 @@ const INSPECT_RESULT_SCHEMA = z
       .object({
         context: z
           .object({
-            handle: z.string().max(MAX_PROJECT_CONTEXT_HANDLE_CHARS),
+            handle: z
+              .string()
+              .length(MAX_PROJECT_CONTEXT_HANDLE_CHARS)
+              .regex(PROJECT_CONTEXT_HANDLE_PATTERN),
             digest: SHA256_SCHEMA,
             retention: z.literal("process_local_bounded_lru"),
           })
@@ -203,19 +206,47 @@ const INSPECT_RESULT_SCHEMA = z
                 unverifiable_package_count: z.number().int().nonnegative(),
               })
               .strict(),
-            resolved_packages: z.array(
-              z
-                .object({
-                  name: z.string(),
-                  declared_version: z.string(),
-                  effective_declared_version: z.string().nullable(),
-                  declaration_resolution: z.enum(["verified", "unverifiable"]),
-                  resolved_version: z.string().nullable(),
-                  resolved_path: NULLABLE_PATH_SCHEMA,
-                  satisfies_declared_version: z.boolean().nullable(),
-                })
-                .strict(),
-            ),
+            untrusted_project_data: z
+              .object({
+                classification: z.literal("untrusted_project_data"),
+                instruction_authority: z.literal("none"),
+                authorization_meaning: z.literal("read_access_only"),
+                diagnostics: z.array(
+                  z
+                    .object({
+                      code: z.enum([
+                        "installation_inspection_limited",
+                        "installation_advisory",
+                        "manifest_override_present",
+                        "package_manager_evidence_issue",
+                        "salt_package_unverifiable",
+                        "workspace_ancestor_limit",
+                        "workspace_declaration_issue",
+                      ]),
+                      parameters: z
+                        .object({ count: z.number().int().positive() })
+                        .strict(),
+                    })
+                    .strict(),
+                ),
+                resolved_packages: z.array(
+                  z
+                    .object({
+                      name: z.string(),
+                      declared_version: z.string(),
+                      effective_declared_version: z.string().nullable(),
+                      declaration_resolution: z.enum([
+                        "verified",
+                        "unverifiable",
+                      ]),
+                      resolved_version: z.string().nullable(),
+                      resolved_path: NULLABLE_PATH_SCHEMA,
+                      satisfies_declared_version: z.boolean().nullable(),
+                    })
+                    .strict(),
+                ),
+              })
+              .strict(),
           })
           .strict()
           .nullable(),
@@ -489,6 +520,12 @@ const REVIEW_RESULT_SCHEMA = z
     scope: z
       .object({
         kind: z.literal("submitted_text_only"),
+        context_source: z.enum([
+          "none",
+          "caller_package_versions",
+          "retained_project_snapshot",
+          "fresh_project_inspection",
+        ]),
         artifact_count: z.number().int().nonnegative(),
         submitted_utf8_bytes: z.number().int().nonnegative(),
       })
@@ -641,8 +678,8 @@ const REVIEW_INPUT_SCHEMA = z
       .optional(),
     project_context_handle: z
       .string()
-      .min(1)
-      .max(MAX_PROJECT_CONTEXT_HANDLE_CHARS)
+      .length(MAX_PROJECT_CONTEXT_HANDLE_CHARS)
+      .regex(PROJECT_CONTEXT_HANDLE_PATTERN)
       .describe(
         "Opaque handle returned by inspect_salt_project; reuses that exact process-local snapshot without rereading the project.",
       )
@@ -816,15 +853,25 @@ export const TOOL_DEFINITIONS: readonly ToolDefinition[] = [
     outputSchema: REVIEW_RESULT_SCHEMA,
     annotations: READ_ONLY_ANNOTATIONS,
     execute: async (context, args) => {
-      const parsedHandle = args.project_context_handle
-        ? parseProjectContextHandle(args.project_context_handle)
+      const retainedSnapshot = args.project_context_handle
+        ? context.projectPolicySnapshots.getByHandle(
+            args.project_context_handle,
+          )
         : null;
-      const loadedPolicy = parsedHandle
+      if (args.project_context_handle && !retainedSnapshot) {
+        throw new Error(
+          "review_salt_code project context handle is expired or evicted; inspect the project again for a new handle.",
+        );
+      }
+      const loadedPolicy = retainedSnapshot
         ? await loadAuthorizedProjectPolicySnapshot(
             context.projectAccess,
-            parsedHandle.rootDir,
+            retainedSnapshot.authorization.rootDir,
             context.projectPolicySnapshots,
-            parsedHandle.contextDigest,
+            {
+              kind: "context_digest",
+              digest: retainedSnapshot.context_digest,
+            },
           )
         : args.root_dir
           ? await loadAuthorizedProjectPolicySnapshot(
@@ -834,7 +881,7 @@ export const TOOL_DEFINITIONS: readonly ToolDefinition[] = [
             )
           : null;
       if (loadedPolicy?.authorization.status === "denied") {
-        if (parsedHandle) {
+        if (retainedSnapshot) {
           throw new Error(
             "review_salt_code project context handle is expired, evicted, or unauthorized; inspect the project again for a new handle.",
           );
@@ -844,8 +891,10 @@ export const TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         );
       }
       if (
-        parsedHandle &&
-        (!loadedPolicy || !isAuthorizedProjectPolicySnapshot(loadedPolicy))
+        retainedSnapshot &&
+        (!loadedPolicy ||
+          !isAuthorizedProjectPolicySnapshot(loadedPolicy) ||
+          loadedPolicy.context_digest !== retainedSnapshot.context_digest)
       ) {
         throw new Error(
           "review_salt_code project context handle is expired or evicted; inspect the project again for a new handle.",
@@ -882,6 +931,13 @@ export const TOOL_DEFINITIONS: readonly ToolDefinition[] = [
         loadedPolicy && isAuthorizedProjectPolicySnapshot(loadedPolicy)
           ? loadedPolicy.context_digest
           : null,
+        retainedSnapshot
+          ? "retained_project_snapshot"
+          : args.root_dir
+            ? "fresh_project_inspection"
+            : args.package_versions
+              ? "caller_package_versions"
+              : "none",
       );
     },
   }),

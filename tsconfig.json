@@ -45,6 +45,5 @@
     "test/browser",
     "vitest.browser.config.mts",
     "./declarations.d.ts"
-  ],
-  "exclude": ["packages/mcp/eval-fixtures/**"]
+  ]
 }

@@ -7,17 +7,20 @@ import { describe, expect, it } from "vitest";
 import {
   assertCatalogInputBytes,
   assertCatalogManifestBytes,
+  assertCompleteCatalogInputSet,
   assertSameCatalogBuildIdentity,
   createCatalogBuildIdentity,
   formatCatalogBuildBanner,
   hasForbiddenPortablePathCharacter,
   isPathWithinRoot,
+  isPortableRepositoryBuildPath,
   parseCatalogBuildBanner,
 } from "../../../../scripts/catalogBuildIdentity.mjs";
 import {
-  captureStableCatalogInventory,
   materializeVerifiedDependencySnapshot,
+  verifySealedGeneratorBundleStability,
 } from "../../scripts/buildRegistry.mjs";
+import { isPortableRepositoryPath } from "../core/catalog/catalogPortablePath.js";
 import { canonicalJson } from "../core/catalog/catalogSerialization.js";
 
 type PackageManifest = {
@@ -96,9 +99,121 @@ function expectEntriesToExclude(
 }
 
 describe("package publish boundaries", () => {
+  it("binds runtime and package-build portable path classifiers to one corpus", () => {
+    const corpus = readJson<{
+      accepted: string[];
+      rejected: string[];
+    }>("../../../../scripts/fixtures/catalogPortablePath.cases.json");
+
+    for (const candidate of corpus.accepted) {
+      expect(isPortableRepositoryPath(candidate), candidate).toBe(true);
+      expect(isPortableRepositoryBuildPath(candidate), candidate).toBe(true);
+    }
+    for (const candidate of corpus.rejected) {
+      expect(isPortableRepositoryPath(candidate), candidate).toBe(false);
+      expect(isPortableRepositoryBuildPath(candidate), candidate).toBe(false);
+    }
+  });
+
+  it("uses only the split SDK-v2 packages at the adapter boundary", () => {
+    const manifest = readJson<PackageManifest>("../../package.json");
+    const dependencies = {
+      ...manifest.dependencies,
+      ...manifest.devDependencies,
+    };
+
+    expect(dependencies).not.toHaveProperty("@modelcontextprotocol/sdk");
+    expect(dependencies["@modelcontextprotocol/server"]).toMatch(/^\^2\./u);
+    expect(dependencies["@modelcontextprotocol/client"]).toMatch(/^\^2\./u);
+  });
+
+  it("revalidates the complete catalog input path set and rejects linked inputs", async () => {
+    const fixtureRoot = await fs.mkdtemp(
+      path.join(tmpdir(), "salt-complete-catalog-inputs-"),
+    );
+    const externalRoot = await fs.mkdtemp(
+      path.join(tmpdir(), "salt-external-catalog-inputs-"),
+    );
+    const packageBytes = Buffer.from('{"private":true}\n', "utf8");
+    const docsBytes = Buffer.from("# Stable documentation\n", "utf8");
+    const packagePath = path.join(fixtureRoot, "package.json");
+    const docsDirectory = path.join(fixtureRoot, "site", "docs");
+    const docsPath = path.join(docsDirectory, "stable.mdx");
+    const inputsByPath = new Map([
+      [
+        "package.json",
+        { bytes: packageBytes.byteLength, sha256: sha256(packageBytes) },
+      ],
+      [
+        "site/docs/stable.mdx",
+        { bytes: docsBytes.byteLength, sha256: sha256(docsBytes) },
+      ],
+    ]);
+    const identity = { inputsByPath };
+
+    try {
+      await fs.mkdir(docsDirectory, { recursive: true });
+      await fs.writeFile(packagePath, packageBytes);
+      await fs.writeFile(docsPath, docsBytes);
+
+      await expect(
+        assertCompleteCatalogInputSet(identity, fixtureRoot),
+      ).resolves.toBeUndefined();
+
+      await fs.writeFile(path.join(fixtureRoot, "notes.txt"), "unrelated\n");
+      await expect(
+        assertCompleteCatalogInputSet(identity, fixtureRoot),
+      ).resolves.toBeUndefined();
+
+      await fs.writeFile(docsPath, "# Changed documentation\n");
+      await expect(
+        assertCompleteCatalogInputSet(identity, fixtureRoot),
+      ).rejects.toThrow(/does not match the catalog input inventory/u);
+      await fs.writeFile(docsPath, docsBytes);
+
+      const addedPath = path.join(docsDirectory, "added.mdx");
+      await fs.writeFile(addedPath, "# Added\n");
+      await expect(
+        assertCompleteCatalogInputSet(identity, fixtureRoot),
+      ).rejects.toThrow(/path set does not match/u);
+      await fs.rm(addedPath);
+
+      await fs.rm(docsPath);
+      await expect(
+        assertCompleteCatalogInputSet(identity, fixtureRoot),
+      ).rejects.toThrow(/path set does not match/u);
+      await fs.writeFile(docsPath, docsBytes);
+
+      const originalPackagePath = `${packagePath}.original`;
+      const externalPackagePath = path.join(externalRoot, "package.json");
+      await fs.rename(packagePath, originalPackagePath);
+      await fs.writeFile(externalPackagePath, packageBytes);
+      await fs.link(externalPackagePath, packagePath);
+      await expect(
+        assertCompleteCatalogInputSet(identity, fixtureRoot),
+      ).rejects.toThrow(/resolves through a link/u);
+      await fs.rm(packagePath);
+      await fs.rename(originalPackagePath, packagePath);
+
+      const originalDocsDirectory = `${docsDirectory}-original`;
+      await fs.rename(docsDirectory, originalDocsDirectory);
+      await fs.writeFile(path.join(externalRoot, "stable.mdx"), docsBytes);
+      await fs.symlink(externalRoot, docsDirectory, "junction");
+      await expect(
+        assertCompleteCatalogInputSet(identity, fixtureRoot),
+      ).rejects.toThrow(/path set does not match|resolves through a link/u);
+      await expect(
+        fs.readFile(path.join(externalRoot, "stable.mdx"), "utf8"),
+      ).resolves.toBe(docsBytes.toString("utf8"));
+    } finally {
+      await fs.rm(fixtureRoot, { recursive: true, force: true });
+      await fs.rm(externalRoot, { recursive: true, force: true });
+    }
+  });
+
   it("fails closed when catalog inputs change across the generator bundle boundary", async () => {
     let content = "before";
-    const createInventory = async () => ({
+    const createInventory = () => ({
       digest: `sha256:${content}`,
       entries: [
         {
@@ -108,28 +223,70 @@ describe("package publish boundaries", () => {
         },
       ],
     });
+    const dependencyInventory = { digest: "sha256:dependencies", entries: [] };
+    let bundlePass = 0;
+    const buildBundle = async () => {
+      const observed = content;
+      bundlePass += 1;
+      if (bundlePass === 1) content = "after";
+      const bytes = Buffer.from(observed, "utf8");
+      return {
+        bytes,
+        digest: sha256(bytes),
+        metafileDigest: sha256(`metafile:${observed}`),
+        firstPartyInputs: [
+          "packages/mcp/src/core/build/buildRegistry.ts",
+        ],
+        generator: {
+          createCatalogInputInventory: async () => createInventory(),
+        },
+      };
+    };
 
     await expect(
-      captureStableCatalogInventory(createInventory, async () => {
-        content = "after";
+      verifySealedGeneratorBundleStability({
+        sourceRoot: "fixture",
+        dependencyInventory,
+        createDependencyInventory: async () => dependencyInventory,
+        buildBundle,
+        assertToolSnapshotStable: async () => undefined,
+        assertGeneratorIdentity: () => undefined,
       }),
-    ).rejects.toThrow(/changed while bundling the generator/u);
+    ).rejects.toThrow(/not byte-identical/u);
 
     content = "stable";
+    bundlePass = 0;
     await expect(
-      captureStableCatalogInventory(
-        createInventory,
-        async () => "sha256:stable-bundle",
-      ),
+      verifySealedGeneratorBundleStability({
+        sourceRoot: "fixture",
+        dependencyInventory,
+        createDependencyInventory: async () => dependencyInventory,
+        buildBundle: async () => {
+          const bytes = Buffer.from(content, "utf8");
+          return {
+            bytes,
+            digest: sha256(bytes),
+            metafileDigest: sha256("metafile:stable"),
+            firstPartyInputs: [
+              "packages/mcp/src/core/build/buildRegistry.ts",
+            ],
+            generator: {
+              createCatalogInputInventory: async () => createInventory(),
+            },
+          };
+        },
+        assertToolSnapshotStable: async () => undefined,
+        assertGeneratorIdentity: () => undefined,
+      }),
     ).resolves.toMatchObject({
-      digest: "sha256:stable",
+      inputInventory: { digest: "sha256:stable" },
     });
   });
 
   it("rejects a transient ABA edit observed by only one bundle pass", async () => {
     let content = "stable";
     let bundlePass = 0;
-    const createInventory = async () => ({
+    const createInventory = () => ({
       digest: `sha256:${content}`,
       entries: [
         {
@@ -139,19 +296,80 @@ describe("package publish boundaries", () => {
         },
       ],
     });
+    const dependencyInventory = { digest: "sha256:dependencies", entries: [] };
 
     await expect(
-      captureStableCatalogInventory(createInventory, async () => {
-        bundlePass += 1;
-        if (bundlePass === 1) {
+      verifySealedGeneratorBundleStability({
+        sourceRoot: "fixture",
+        dependencyInventory,
+        createDependencyInventory: async () => dependencyInventory,
+        buildBundle: async () => {
+          bundlePass += 1;
+          let observed = content;
+          if (bundlePass === 1) {
           content = "transient";
-          const observed = content;
+            observed = content;
           content = "stable";
-          return `sha256:${observed}`;
-        }
-        return `sha256:${content}`;
+          }
+          const bytes = Buffer.from(observed, "utf8");
+          return {
+            bytes,
+            digest: sha256(bytes),
+            metafileDigest: sha256(`metafile:${observed}`),
+            firstPartyInputs: [
+              "packages/mcp/src/core/build/buildRegistry.ts",
+            ],
+            generator: {
+              createCatalogInputInventory: async () => createInventory(),
+            },
+          };
+        },
+        assertToolSnapshotStable: async () => undefined,
+        assertGeneratorIdentity: () => undefined,
       }),
     ).rejects.toThrow(/not byte-identical/u);
+  });
+
+  it("rejects source inventory mutation during the final production bundle pass", async () => {
+    let content = "stable";
+    let bundlePass = 0;
+    const sourcePath = "packages/mcp/src/core/build/buildRegistry.ts";
+    const createInventory = () => ({
+      digest: `sha256:${content}`,
+      entries: [
+        {
+          path: sourcePath,
+          sha256: `sha256:${content}`,
+          bytes: content.length,
+        },
+      ],
+    });
+    const dependencyInventory = { digest: "sha256:dependencies", entries: [] };
+
+    await expect(
+      verifySealedGeneratorBundleStability({
+        sourceRoot: "fixture",
+        dependencyInventory,
+        createDependencyInventory: async () => dependencyInventory,
+        buildBundle: async () => {
+          bundlePass += 1;
+          const observed = content;
+          const bytes = Buffer.from(observed, "utf8");
+          if (bundlePass === 2) content = "changed-after-final-bundle";
+          return {
+            bytes,
+            digest: sha256(bytes),
+            metafileDigest: sha256(`metafile:${observed}`),
+            firstPartyInputs: [sourcePath],
+            generator: {
+              createCatalogInputInventory: async () => createInventory(),
+            },
+          };
+        },
+        assertToolSnapshotStable: async () => undefined,
+        assertGeneratorIdentity: () => undefined,
+      }),
+    ).rejects.toThrow(/Catalog source inventory changed/u);
   });
 
   it("never loads transient dependency bytes from an ABA edit", async () => {
@@ -239,6 +457,9 @@ describe("package publish boundaries", () => {
       new URL("../core/build/catalogInputInventory.ts", import.meta.url),
       "utf8",
     );
+    const inputPatterns = readJson<string[]>(
+      "../core/build/catalogInputPatterns.json",
+    );
 
     expect(manifest.devDependencies).toMatchObject({
       "react-docgen-typescript": "^2.4.0",
@@ -254,9 +475,10 @@ describe("package publish boundaries", () => {
     );
     expect(registryBuilder).toContain("tsconfigRaw");
     expect(inputInventory).not.toContain("site/src/props");
-    expect(inputInventory).toContain('"package.json"');
-    expect(inputInventory).toContain('".yarnrc.yml"');
-    expect(inputInventory).toContain('"yarn.lock"');
+    expect(inputInventory).toContain("catalogInputPatterns");
+    expect(inputPatterns).toContain("package.json");
+    expect(inputPatterns).toContain(".yarnrc.yml");
+    expect(inputPatterns).toContain("yarn.lock");
   });
 
   it("keeps MCP published file roots limited to runtime payload", () => {

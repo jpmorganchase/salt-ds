@@ -2,18 +2,21 @@ import path from "node:path";
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const mocks = vi.hoisted(() => ({
-  createCompilerHost: vi.fn(() => ({})),
-  createProgram: vi.fn(() => ({
-    emit: vi.fn(() => ({ diagnostics: [] })),
-  })),
-  getTypescriptConfig: vi.fn(),
-  parseJsonConfigFileContent: vi.fn(() => ({
-    errors: [],
-    fileNames: [],
-    options: {},
-  })),
-}));
+const mocks = vi.hoisted(() => {
+  const emit = vi.fn();
+  return {
+    createCompilerHost: vi.fn(() => ({})),
+    createProgram: vi.fn(() => ({ emit })),
+    emit,
+    getPreEmitDiagnostics: vi.fn(),
+    getTypescriptConfig: vi.fn(),
+    parseJsonConfigFileContent: vi.fn(() => ({
+      errors: [],
+      fileNames: [],
+      options: {},
+    })),
+  };
+});
 
 vi.mock("ci-info", () => ({ isCI: true }));
 vi.mock("fs-extra", () => ({
@@ -26,6 +29,8 @@ vi.mock("typescript", () => ({
   default: {
     createCompilerHost: mocks.createCompilerHost,
     createProgram: mocks.createProgram,
+    flattenDiagnosticMessageText: vi.fn((message) => String(message)),
+    getPreEmitDiagnostics: mocks.getPreEmitDiagnostics,
     parseJsonConfigFileContent: mocks.parseJsonConfigFileContent,
     sys: {},
   },
@@ -45,6 +50,8 @@ const baseTypescriptConfig = {
 describe("makeTypings call contract", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mocks.emit.mockReturnValue({ diagnostics: [], emitSkipped: false });
+    mocks.getPreEmitDiagnostics.mockReturnValue([]);
     mocks.getTypescriptConfig.mockResolvedValue(baseTypescriptConfig);
   });
 
@@ -130,5 +137,29 @@ describe("makeTypings call contract", () => {
       ".",
     );
     expect(override).toEqual(originalOverride);
+  });
+
+  it("fails on TypeScript diagnostics in CI", async () => {
+    mocks.getPreEmitDiagnostics.mockReturnValue([
+      { code: 2322, messageText: "Type mismatch" },
+    ]);
+
+    await expect(makeTypings("dist")).rejects.toThrow(
+      "Could not generate .d.ts files",
+    );
+  });
+
+  it("fails when declaration emit is skipped in CI", async () => {
+    mocks.emit.mockReturnValue({ diagnostics: [], emitSkipped: true });
+
+    await expect(makeTypings("dist")).rejects.toThrow(/emit was skipped/iu);
+  });
+
+  it("retains the narrow rootDir diagnostic suppression", async () => {
+    mocks.getPreEmitDiagnostics.mockReturnValue([
+      { code: 6059, messageText: "File is outside rootDir" },
+    ]);
+
+    await expect(makeTypings("dist")).resolves.toBeUndefined();
   });
 });

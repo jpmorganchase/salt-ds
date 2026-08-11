@@ -6,8 +6,10 @@ import { compileSaltProjectPolicyIrV2 } from "../../core/policy/projectPolicyIr.
 import {
   type AuthorizedProjectPolicySnapshot,
   loadAuthorizedProjectPolicySnapshot,
+  MAX_PROJECT_CONTEXT_HANDLE_CHARS,
   ProjectPolicySnapshotCache,
   projectPolicyClaimRecord,
+  serializeProjectPolicyClaimResource,
 } from "../projectPolicySnapshot.js";
 
 const inspectPackageJsonFileMock = vi.hoisted(() => vi.fn());
@@ -44,6 +46,52 @@ function cachedSnapshot(
 }
 
 describe("project-policy snapshots", () => {
+  it("issues fixed-size opaque handles and binds them to exact retained snapshots", () => {
+    const cache = new ProjectPolicySnapshotCache();
+    const longRoot = `D:/${"根".repeat(4_096)}`;
+    const first = cachedSnapshot(longRoot, "a", '{"revision":1}');
+    const firstHandle = cache.remember(first);
+
+    expect(firstHandle).toHaveLength(MAX_PROJECT_CONTEXT_HANDLE_CHARS);
+    expect(firstHandle).toMatch(/^salt-project-context-v1\.[A-Za-z0-9_-]{32}$/u);
+    expect(firstHandle).not.toContain("根");
+    expect(cache.getByHandle(firstHandle)).toStrictEqual(first);
+    expect(cache.remember(first)).toBe(firstHandle);
+
+    const replacement = cachedSnapshot(longRoot, "a", '{"revision":2}');
+    const replacementHandle = cache.remember(replacement);
+    expect(replacementHandle).not.toBe(firstHandle);
+    expect(cache.getByHandle(firstHandle)).toBeNull();
+    expect(cache.getByHandle(replacementHandle)).toStrictEqual(replacement);
+  });
+
+  it("rejects malformed handles and returns null for well-shaped forged handles", () => {
+    const cache = new ProjectPolicySnapshotCache();
+    expect(() => cache.getByHandle("not-a-context-handle")).toThrow(
+      /invalid project context handle/iu,
+    );
+    expect(() =>
+      cache.getByHandle("salt-project-context-v1.e30"),
+    ).toThrow(/invalid project context handle/iu);
+    expect(
+      cache.getByHandle(`salt-project-context-v1.${"a".repeat(32)}`),
+    ).toBeNull();
+  });
+
+  it("invalidates an evicted handle", () => {
+    const cache = new ProjectPolicySnapshotCache({
+      maxEntries: 1,
+      maxUtf8Bytes: 64 * 1024,
+      maxEntryUtf8Bytes: 32 * 1024,
+    });
+    const firstHandle = cache.remember(cachedSnapshot("D:/first", "a"));
+    const second = cachedSnapshot("D:/second", "b");
+    const secondHandle = cache.remember(second);
+
+    expect(cache.getByHandle(firstHandle)).toBeNull();
+    expect(cache.getByHandle(secondHandle)).toStrictEqual(second);
+  });
+
   it("does not reinspect live policy state after an authorized digest cache miss", async () => {
     const rootDir = await fs.mkdtemp(
       path.join(os.tmpdir(), "salt-policy-cache-miss-"),
@@ -61,7 +109,7 @@ describe("project-policy snapshots", () => {
         },
         rootDir,
         cache,
-        `sha256:${"f".repeat(64)}`,
+        { kind: "context_digest", digest: `sha256:${"f".repeat(64)}` },
       );
 
       expect(result.authorization).toMatchObject({
@@ -79,7 +127,7 @@ describe("project-policy snapshots", () => {
         },
         rootDir,
         undefined,
-        `sha256:${"e".repeat(64)}`,
+        { kind: "context_digest", digest: `sha256:${"e".repeat(64)}` },
       );
       expect(resultWithoutCache.authorization.status).toBe("authorized");
       expect("ir" in resultWithoutCache).toBe(false);
@@ -102,12 +150,12 @@ describe("project-policy snapshots", () => {
 
     cache.remember(first);
     cache.remember(second);
-    expect(cache.get("D:/repo", first.digest!)).toStrictEqual(first);
+    expect(cache.getByPolicyDigest("D:/repo", first.digest!)).toStrictEqual(first);
     cache.remember(third);
 
-    expect(cache.get("D:/repo", second.digest!)).toBeNull();
-    expect(cache.get("D:/repo", first.digest!)).toStrictEqual(first);
-    expect(cache.get("D:/repo", third.digest!)).toStrictEqual(third);
+    expect(cache.getByPolicyDigest("D:/repo", second.digest!)).toBeNull();
+    expect(cache.getByPolicyDigest("D:/repo", first.digest!)).toStrictEqual(first);
+    expect(cache.getByPolicyDigest("D:/repo", third.digest!)).toStrictEqual(third);
   });
 
   it("binds identical digests to their canonical authorized roots", async () => {
@@ -117,10 +165,10 @@ describe("project-policy snapshots", () => {
     cache.remember(first);
     cache.remember(second);
 
-    expect(cache.get("D:/first", first.digest!)?.canonical_json).toBe(
+    expect(cache.getByPolicyDigest("D:/first", first.digest!)?.canonical_json).toBe(
       '{"root":"first"}',
     );
-    expect(cache.get("D:/second", second.digest!)?.canonical_json).toBe(
+    expect(cache.getByPolicyDigest("D:/second", second.digest!)?.canonical_json).toBe(
       '{"root":"second"}',
     );
 
@@ -132,7 +180,7 @@ describe("project-policy snapshots", () => {
       },
       "D:/first",
       cache,
-      first.digest!,
+      { kind: "policy_digest", digest: first.digest! },
     );
     expect(denied.authorization).toEqual({
       status: "denied",
@@ -147,7 +195,7 @@ describe("project-policy snapshots", () => {
 
     input.canonical_json = '{"mutated":true}';
     input.ir!.contract = "mutated" as "salt_project_policy_ir_v2";
-    const retained = cache.get("D:/repo", input.digest!)!;
+    const retained = cache.getByPolicyDigest("D:/repo", input.digest!)!;
 
     expect(retained.canonical_json).toBe('{"stable":true}');
     expect(retained.ir!.contract).toBe("salt_project_policy_ir_v2");
@@ -156,7 +204,7 @@ describe("project-policy snapshots", () => {
     expect(() => {
       retained.canonical_json = '{"retrieved":"mutation"}';
     }).toThrow();
-    expect(cache.get("D:/repo", input.digest!)?.canonical_json).toBe(
+    expect(cache.getByPolicyDigest("D:/repo", input.digest!)?.canonical_json).toBe(
       '{"stable":true}',
     );
   });
@@ -172,7 +220,22 @@ describe("project-policy snapshots", () => {
     expect(() =>
       cache.remember(cachedSnapshot("D:/repo", "a", "x".repeat(2_000))),
     ).toThrow(/durable resource-cache entry limit/iu);
-    expect(cache.get("D:/repo", retained.digest!)).toStrictEqual(retained);
+    expect(cache.getByPolicyDigest("D:/repo", retained.digest!)).toStrictEqual(retained);
+  });
+
+  it("keeps context and policy digest lookup semantics distinct", () => {
+    const cache = new ProjectPolicySnapshotCache();
+    const first = cachedSnapshot("D:/repo", "a");
+    const second = cachedSnapshot("D:/repo", "a");
+    first.context_digest = `sha256:${"b".repeat(64)}`;
+    second.context_digest = `sha256:${"c".repeat(64)}`;
+    cache.remember(first);
+    cache.remember(second);
+
+    expect(cache.getByContextDigest("D:/repo", first.digest!)).toBeNull();
+    expect(cache.getByContextDigest("D:/repo", first.context_digest)).toStrictEqual(first);
+    expect(cache.getByContextDigest("D:/repo", second.context_digest)).toStrictEqual(second);
+    expect(cache.getByPolicyDigest("D:/repo", first.digest!)).toStrictEqual(first);
   });
 
   it("rejects contradictory limits before they can evict retained entries", () => {
@@ -207,8 +270,19 @@ describe("project-policy snapshots", () => {
               {
                 name: "ActionButton",
                 wraps: "Button",
-                reason: "r".repeat(4_096),
-                use_when: Array.from({ length: 100 }, () => "u".repeat(4_096)),
+                reason: `${"漢".repeat(1_000)}${'\\"\u0001'.repeat(500)}`,
+                docs: Array.from(
+                  { length: 100 },
+                  (_, index) => `doc-${index}-${"漢".repeat(100)}`,
+                ),
+                use_when: Array.from(
+                  { length: 100 },
+                  (_, index) => `use-${index}-${'\\"\u0001'.repeat(100)}`,
+                ),
+                avoid_when: Array.from(
+                  { length: 100 },
+                  (_, index) => `avoid-${index}-${"漢".repeat(100)}`,
+                ),
               },
             ],
           },
@@ -217,7 +291,12 @@ describe("project-policy snapshots", () => {
     });
     const claim = projectPolicyClaimRecord(ir.occurrences[0]!, claimRoot);
 
-    expect(Buffer.byteLength(JSON.stringify({ claim }), "utf8")).toBeLessThan(
+    const serializedResource = serializeProjectPolicyClaimResource(
+      ir.occurrences[0]!,
+      claimRoot,
+      `sha256:${"a".repeat(64)}`,
+    );
+    expect(Buffer.byteLength(serializedResource, "utf8")).toBeLessThanOrEqual(
       64 * 1024,
     );
     expect(claim).toMatchObject({
@@ -231,13 +310,39 @@ describe("project-policy snapshots", () => {
         comparison: "exact",
       },
       applicability: {
-        opaque_condition_counts: { use_when: 100 },
+        opaque_condition_counts: { use_when: 100, avoid_when: 100 },
       },
       source: {
         layer_id: "team",
         json_pointer: "/approved_wrappers/0",
       },
     });
+    expect(claim.coverage).toEqual({
+      authored_reason: {
+        available: 1,
+        returned: 1,
+        omitted: 0,
+        truncated: true,
+      },
+      documentation: {
+        available: 100,
+        returned: 16,
+        omitted: 84,
+        truncated: true,
+        truncated_entries: 0,
+      },
+      opaque_condition_text: expect.objectContaining({
+        available: 200,
+        truncated: true,
+      }),
+    });
+    const opaqueCoverage = claim.coverage as {
+      opaque_condition_text: { available: number; returned: number; omitted: number };
+    };
+    expect(
+      opaqueCoverage.opaque_condition_text.returned +
+        opaqueCoverage.opaque_condition_text.omitted,
+    ).toBe(opaqueCoverage.opaque_condition_text.available);
     const serializedClaim = JSON.stringify(claim);
     expect(serializedClaim).not.toContain("u".repeat(1_024));
     expect(serializedClaim).toContain('"text":');

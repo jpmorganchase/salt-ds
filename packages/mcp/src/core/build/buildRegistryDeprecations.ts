@@ -35,6 +35,7 @@ import {
   globCatalogInputs,
   readCatalogInputFileSyncOrNull,
 } from "./catalogInputInventory.js";
+import { NON_PRODUCTION_IMPLEMENTATION_GLOB_IGNORES } from "./catalogProductionSource.js";
 import {
   generatorDependencyDirectoryExists,
   generatorDependencyFileExists,
@@ -1311,7 +1312,7 @@ function assertRepresentableTopLevelReplacement(
     )
   ) {
     throw new Error(
-      `Overloaded replacement function '${linkTarget.text}' cannot be represented by the Phase 1 public identity.`,
+      `Overloaded replacement function '${linkTarget.text}' cannot be represented by the single-hop public identity.`,
     );
   }
 }
@@ -1367,7 +1368,7 @@ function assertRepresentablePublicTopLevelIdentity(
     )
   ) {
     throw new Error(
-      `${context} function '${displayName}' cannot be represented by the Phase 1 public identity because its public origin is overloaded.`,
+      `${context} function '${displayName}' cannot be represented by the single-hop public identity because its public origin is overloaded.`,
     );
   }
 }
@@ -1401,7 +1402,7 @@ function ownerMemberDeclarations(
   );
   if (namedPublicMembers.some(isStaticPropertyDeclaration)) {
     throw new Error(
-      `Static replacement property '${memberName}' cannot be represented by the Phase 1 public-member identity.`,
+      `Static replacement property '${memberName}' cannot be represented by the single-hop public-member identity.`,
     );
   }
   return namedPublicMembers.filter(
@@ -1456,7 +1457,7 @@ function ownerMemberIdentityKind(
     (kinds[0] === "method" || kinds[0] === "static_method")
   ) {
     throw new Error(
-      `Overloaded replacement method '${memberName}' cannot be represented by the Phase 1 public-member identity.`,
+      `Overloaded replacement method '${memberName}' cannot be represented by the single-hop public-member identity.`,
     );
   }
   return kinds[0] ?? null;
@@ -1918,7 +1919,7 @@ function collectDeprecationsFromSourceFile(
             ? "static properties"
             : "this public member shape";
           throw new Error(
-            `Deprecated public member '${memberName}' uses ${reason}, which cannot be represented by the Phase 1 public-member identity.`,
+            `Deprecated public member '${memberName}' uses ${reason}, which cannot be represented by the single-hop public-member identity.`,
           );
         }
         ts.forEachChild(node, visit);
@@ -1957,7 +1958,7 @@ function collectDeprecationsFromSourceFile(
         : [];
       if (statementPublicBindingNames.length > 1) {
         throw new Error(
-          `Deprecated variable statement declares multiple public bindings (${statementPublicBindingNames.join(", ")}), which cannot share one Phase 1 deprecation contract.`,
+          `Deprecated variable statement declares multiple public bindings (${statementPublicBindingNames.join(", ")}), which cannot share one single-declaration deprecation contract.`,
         );
       }
       const symbolName =
@@ -1983,7 +1984,7 @@ function collectDeprecationsFromSourceFile(
           effectiveCallSignatureCount(node, checker) > 1)
       ) {
         throw new Error(
-          `Deprecated overloaded function '${symbolName}' cannot be represented by the Phase 1 public identity.`,
+          `Deprecated overloaded function '${symbolName}' cannot be represented by the single-hop public identity.`,
         );
       }
       if (
@@ -2006,7 +2007,7 @@ function collectDeprecationsFromSourceFile(
           )
         ) {
           throw new Error(
-            `Deprecated overloaded method '${symbolName}' cannot be represented by the Phase 1 public-member identity.`,
+            `Deprecated overloaded method '${symbolName}' cannot be represented by the single-hop public-member identity.`,
           );
         }
       }
@@ -2845,6 +2846,7 @@ export async function extractDeprecations(
         absolute: true,
         followSymbolicLinks: false,
         onlyFiles: true,
+        ignore: [...NON_PRODUCTION_IMPLEMENTATION_GLOB_IGNORES],
       },
     )
   ).sort(compareOrdinalStrings);

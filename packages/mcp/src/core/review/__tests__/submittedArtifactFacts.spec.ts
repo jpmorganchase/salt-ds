@@ -1,3 +1,4 @@
+import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { parseSubmittedArtifact } from "../submittedArtifactFacts.js";
 
@@ -113,6 +114,25 @@ describe("submitted artifact fact parsing", () => {
       ]),
     );
     expect(JSON.stringify(parsed.facts)).not.toContain("comment-only");
+  });
+
+  it("never resolves submitted CSS source-map references", () => {
+    const existingExternalPath = path
+      .resolve("package.json")
+      .split(path.sep)
+      .join("/");
+    const parse = (sourceMapPath: string) =>
+      parseSubmittedArtifact({
+        language: "css",
+        text: [
+          ".fixture { color: var(--salt-content-primary-foreground); }",
+          `/*# sourceMappingURL=${sourceMapPath} */`,
+        ].join("\n"),
+      });
+
+    expect(parse(existingExternalPath)).toStrictEqual(
+      parse(`${existingExternalPath}.missing`),
+    );
   });
 
   it("does not scan another language after a malformed script", () => {

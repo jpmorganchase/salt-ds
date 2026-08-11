@@ -91,6 +91,12 @@ function canonicalSaltPackageName(moduleSpecifier: string): string | null {
 
 const MAX_MISSING_VERSION_PACKAGE_NAMES = 8;
 
+export type ReviewContextSource =
+  | "none"
+  | "caller_package_versions"
+  | "retained_project_snapshot"
+  | "fresh_project_inspection";
+
 function summarizeFindings(
   findings: Array<{ severity: "info" | "warning" | "error" }>,
 ) {
@@ -110,6 +116,7 @@ export function reviewSaltCode(
   input: ReviewSaltCodeInput,
   policy: ReviewProjectPolicyContext | null = null,
   projectContextDigest: string | null = null,
+  contextSource: ReviewContextSource = "none",
 ) {
   const { registry, store } = context;
   if (
@@ -398,6 +405,7 @@ export function reviewSaltCode(
     data: { results },
     scope: {
       kind: "submitted_text_only" as const,
+      context_source: contextSource,
       artifact_count: results.length,
       submitted_utf8_bytes: submittedBytes,
     },
@@ -426,7 +434,13 @@ export function reviewSaltCode(
       },
     },
     limitations: [
-      "This analysis does not observe files that were not submitted, repository state, compilation, runtime behavior, or user acceptance.",
+      contextSource === "none"
+        ? "Only submitted artifact text was analyzed; no project context was supplied, and files that were not submitted, compilation, runtime behavior, and user acceptance were not analyzed."
+        : contextSource === "caller_package_versions"
+          ? "Only submitted artifact text was analyzed; caller-supplied package versions informed version-specific rules, but files that were not submitted, repository state, compilation, runtime behavior, and user acceptance were not analyzed."
+          : contextSource === "retained_project_snapshot"
+            ? "Only submitted artifact text was analyzed; a retained authorized project snapshot supplied policy and installed-version facts, but project source that was not submitted, compilation, runtime behavior, and user acceptance were not analyzed."
+            : "Only submitted artifact text was analyzed; a fresh authorized project inspection supplied policy and installed-version facts, but project source that was not submitted, compilation, runtime behavior, and user acceptance were not analyzed.",
       "Dynamic expressions, spread props, indirect exports, method calls, runtime values, and rules outside the listed allowlist do not ground findings.",
     ],
     provenance: {

@@ -730,31 +730,62 @@ export async function materializeVerifiedDependencySnapshot({
   }
 }
 
-export async function captureStableCatalogInventory(
-  createInventory,
-  bundleGenerator,
-) {
-  const before = await createInventory();
-  const firstBundleIdentity = await bundleGenerator();
-  const between = await createInventory();
-  if (inventoryIdentity(before) !== inventoryIdentity(between)) {
+export async function verifySealedGeneratorBundleStability({
+  sourceRoot,
+  dependencyInventory,
+  createDependencyInventory,
+  buildBundle,
+  assertToolSnapshotStable,
+  assertGeneratorIdentity,
+}) {
+  await assertToolSnapshotStable();
+  const firstBundle = await buildBundle("first");
+  await assertToolSnapshotStable();
+  assertGeneratorIdentity(firstBundle.generator);
+  const inputBefore =
+    await firstBundle.generator.createCatalogInputInventory(sourceRoot);
+  const sourceInputPaths = new Set(
+    inputBefore.entries.map((entry) => entry.path),
+  );
+  for (const bundleInput of firstBundle.firstPartyInputs) {
+    if (!sourceInputPaths.has(bundleInput)) {
+      throw new Error(
+        `Generator bundle consumed an un-inventoried repository source: ${bundleInput}.`,
+      );
+    }
+  }
+
+  const dependencyBetween = await createDependencyInventory(sourceRoot);
+  assertSameInventory(
+    dependencyInventory,
+    dependencyBetween,
+    "Generator dependency inventory",
+  );
+  const finalBundle = await buildBundle("final");
+  await assertToolSnapshotStable();
+  if (
+    !firstBundle.bytes.equals(finalBundle.bytes) ||
+    firstBundle.digest !== finalBundle.digest ||
+    firstBundle.metafileDigest !== finalBundle.metafileDigest
+  ) {
     throw new Error(
-      "Catalog inputs changed while bundling the generator; refusing to execute a stale bundle.",
+      "Catalog generator bundle was not byte-identical across the sealed dependency snapshot.",
     );
   }
-  const secondBundleIdentity = await bundleGenerator();
-  const after = await createInventory();
-  if (inventoryIdentity(before) !== inventoryIdentity(after)) {
-    throw new Error(
-      "Catalog inputs changed while verifying the generator bundle; refusing to execute a stale bundle.",
-    );
-  }
-  if (firstBundleIdentity !== secondBundleIdentity) {
-    throw new Error(
-      "Catalog generator bundle was not byte-identical across stable input snapshots.",
-    );
-  }
-  return before;
+
+  assertGeneratorIdentity(finalBundle.generator);
+  const inputAfterBundle =
+    await finalBundle.generator.createCatalogInputInventory(sourceRoot);
+  assertSameInventory(
+    inputBefore,
+    inputAfterBundle,
+    "Catalog source inventory",
+  );
+  return {
+    finalBundle,
+    generator: finalBundle.generator,
+    inputInventory: inputBefore,
+  };
 }
 
 function bundleOptions(outfile) {
@@ -1160,74 +1191,39 @@ export async function buildCatalogRegistry(options = {}) {
           "Resolved TypeScript parser and package manifest versions differ.",
         );
       }
-      await toolSnapshot.assertStable();
       const typescriptPackageRoot = path.join(
         temporaryToolRoot,
         ...typescriptPackagePortableRoot.split("/"),
       );
-      const firstBundle = await bundleAndInspect(
-        esbuild,
-        typescript,
-        firstBundlePath,
-        dependencyBefore,
-      );
-      await toolSnapshot.assertStable();
-      const firstGenerator = snapshotRequire(firstBundlePath);
-      assertGeneratorTypeScriptIdentity(
-        firstGenerator,
-        typescriptPackageRoot,
-        typescriptManifest.version,
-      );
-      const inputBefore =
-        await firstGenerator.createCatalogInputInventory(sourceRoot);
-      const sourceInputPaths = new Set(
-        inputBefore.entries.map((entry) => entry.path),
-      );
-      for (const bundleInput of firstBundle.firstPartyInputs) {
-        if (!sourceInputPaths.has(bundleInput)) {
-          throw new Error(
-            `Generator bundle consumed an un-inventoried repository source: ${bundleInput}.`,
-          );
-        }
-      }
-
-      const dependencyBetween =
-        await createGeneratorDependencyInventory(sourceRoot);
-      assertSameInventory(
-        dependencyBefore,
-        dependencyBetween,
-        "Generator dependency inventory",
-      );
-      const finalBundle = await bundleAndInspect(
-        esbuild,
-        typescript,
-        finalBundlePath,
-        dependencyBefore,
-      );
-      await toolSnapshot.assertStable();
-      if (
-        !firstBundle.bytes.equals(finalBundle.bytes) ||
-        firstBundle.digest !== finalBundle.digest ||
-        firstBundle.metafileDigest !== finalBundle.metafileDigest
-      ) {
-        throw new Error(
-          "Catalog generator bundle was not byte-identical across the sealed dependency snapshot.",
-        );
-      }
-
-      const generator = snapshotRequire(finalBundlePath);
-      assertGeneratorTypeScriptIdentity(
+      const {
+        finalBundle,
         generator,
-        typescriptPackageRoot,
-        typescriptManifest.version,
-      );
-      const inputAfterBundle =
-        await generator.createCatalogInputInventory(sourceRoot);
-      assertSameInventory(
-        inputBefore,
-        inputAfterBundle,
-        "Catalog source inventory",
-      );
+        inputInventory: inputBefore,
+      } = await verifySealedGeneratorBundleStability({
+        sourceRoot,
+        dependencyInventory: dependencyBefore,
+        createDependencyInventory: createGeneratorDependencyInventory,
+        assertToolSnapshotStable: () => toolSnapshot.assertStable(),
+        assertGeneratorIdentity: (candidate) =>
+          assertGeneratorTypeScriptIdentity(
+            candidate,
+            typescriptPackageRoot,
+            typescriptManifest.version,
+          ),
+        buildBundle: async (pass) => {
+          const bundlePath =
+            pass === "first" ? firstBundlePath : finalBundlePath;
+          return {
+            ...(await bundleAndInspect(
+              esbuild,
+              typescript,
+              bundlePath,
+              dependencyBefore,
+            )),
+            generator: snapshotRequire(bundlePath),
+          };
+        },
+      });
       const orchestratorPath = "packages/mcp/scripts/buildRegistry.mjs";
       const orchestratorSha256 = await hashFile(scriptPath);
       const orchestratorInput = inputBefore.entries.find(

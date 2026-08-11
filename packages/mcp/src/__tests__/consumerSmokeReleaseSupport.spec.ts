@@ -9,15 +9,9 @@ import {
   parseArgs,
   runCommand,
 } from "../../../../scripts/consumer-smoke/shared.mjs";
-import {
-  canonicalizeSkillRecords,
-  hashCanonicalSkillTree,
-  normalizeRelativeSkillPath,
-} from "../../../../scripts/consumer-smoke/skillTreeHash.mjs";
 
 const tempRoots: string[] = [];
 const commit = "a".repeat(40);
-const treeHash = "b".repeat(64);
 
 afterEach(async () => {
   await Promise.all(
@@ -84,42 +78,10 @@ describe("consumer smoke arguments", () => {
     ).toThrow(/same version/iu);
   });
 
-  it("accepts the skill only as a paired immutable identity", () => {
-    const base = [
-      "--published",
-      "--mcp-spec",
-      "@salt-ds/mcp@0.1.0",
-      "--expected-version",
-      "0.1.0",
-      "--expected-git-head",
-      commit,
-    ];
-
-    expect(parseArgs(base)).toMatchObject({
-      published: true,
-      skillsSource: undefined,
-    });
-    expect(() =>
-      parseArgs([...base, "--skills-source", "https://example.com/main"]),
-    ).toThrow(/together/iu);
-    expect(() =>
-      parseArgs([
-        ...base,
-        "--skills-source",
-        "https://github.com/jpmorganchase/salt-ds/tree/main/packages/skills",
-        "--expected-skill-tree-hash",
-        treeHash,
-      ]),
-    ).toThrow(/immutable/iu);
-    expect(
-      parseArgs([
-        ...base,
-        "--skills-source",
-        `https://github.com/jpmorganchase/salt-ds/tree/${commit}/packages/skills`,
-        "--expected-skill-tree-hash",
-        treeHash,
-      ]),
-    ).toMatchObject({ expectedSkillTreeHash: treeHash });
+  it("rejects unknown options instead of silently skipping retired checks", () => {
+    expect(() => parseArgs(["--retired-option"])).toThrow(
+      /unknown consumer smoke option/iu,
+    );
   });
 });
 
@@ -282,90 +244,6 @@ describe("consumer smoke packed-install coverage", () => {
     expect(runnerSource).toContain("standaloneMcpSpec");
     expect(runnerSource).toContain(
       "expectedVersion: standaloneExpectedVersion",
-    );
-  });
-});
-
-describe("canonical skill-tree hash", () => {
-  it("normalizes text newlines and Windows separators", () => {
-    const lf = canonicalizeSkillRecords([
-      { path: "references/core.md", bytes: Buffer.from("a\nb\n") },
-    ]);
-    const crlf = canonicalizeSkillRecords([
-      { path: "references\\core.md", bytes: Buffer.from("a\r\nb\r\n") },
-    ]);
-    expect(crlf).toEqual(lf);
-  });
-
-  it("hashes binary bytes exactly and sorts in code-point order", () => {
-    const first = canonicalizeSkillRecords([
-      { path: "z.bin", bytes: Buffer.from([0, 13, 10, 255]) },
-      { path: "A.md", bytes: Buffer.from("a") },
-    ]);
-    const reordered = canonicalizeSkillRecords([
-      { path: "A.md", bytes: Buffer.from("a") },
-      { path: "z.bin", bytes: Buffer.from([0, 13, 10, 255]) },
-    ]);
-    const changed = canonicalizeSkillRecords([
-      { path: "A.md", bytes: Buffer.from("a") },
-      { path: "z.bin", bytes: Buffer.from([0, 10, 255]) },
-    ]);
-
-    expect(first).toEqual(reordered);
-    expect(
-      first.records.map((record: { path: string }) => record.path),
-    ).toEqual(["A.md", "z.bin"]);
-    expect(first.sha256).not.toBe(changed.sha256);
-  });
-
-  it("changes for additions and rejects unsafe, duplicate, or invalid text records", () => {
-    const one = canonicalizeSkillRecords([
-      { path: "SKILL.md", bytes: Buffer.from("one") },
-    ]);
-    const two = canonicalizeSkillRecords([
-      { path: "SKILL.md", bytes: Buffer.from("one") },
-      { path: "references/core.md", bytes: Buffer.from("two") },
-    ]);
-    expect(one.sha256).not.toBe(two.sha256);
-    expect(() => normalizeRelativeSkillPath("../SKILL.md")).toThrow(/unsafe/iu);
-    expect(() => normalizeRelativeSkillPath("C:\\SKILL.md")).toThrow(
-      /relative/iu,
-    );
-    expect(() =>
-      canonicalizeSkillRecords([
-        { path: "SKILL.md", bytes: Buffer.from("one") },
-        { path: "SKILL.md", bytes: Buffer.from("two") },
-      ]),
-    ).toThrow(/duplicate/iu);
-    expect(() =>
-      canonicalizeSkillRecords([
-        { path: "SKILL.md", bytes: Buffer.from([0xc3, 0x28]) },
-      ]),
-    ).toThrow(/invalid UTF-8/iu);
-  });
-
-  it("walks every regular file and rejects links", async () => {
-    const root = await createTree({
-      "SKILL.md": "router\n",
-      "references/core.md": "core\n",
-    });
-    const result = await hashCanonicalSkillTree(root);
-    expect(
-      result.records.map((record: { path: string }) => record.path),
-    ).toEqual(["SKILL.md", "references/core.md"]);
-
-    try {
-      await fs.symlink(
-        path.join(root, "SKILL.md"),
-        path.join(root, "escape.md"),
-        "file",
-      );
-    } catch (error) {
-      if ((error as NodeJS.ErrnoException).code === "EPERM") return;
-      throw error;
-    }
-    await expect(hashCanonicalSkillTree(root)).rejects.toThrow(
-      /symlink|junction/iu,
     );
   });
 });

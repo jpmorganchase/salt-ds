@@ -5,6 +5,7 @@ import {
   ResourceTemplate,
 } from "@modelcontextprotocol/server";
 import {
+  assertPublicResourceText,
   canonicalCatalogRuntimeFamilies,
   catalogFamilyFromUriSegment,
   catalogFamilyUriSegment,
@@ -12,39 +13,22 @@ import {
   MAX_PROJECT_POLICY_ENCODED_RESOURCE_ID_CHARS,
   MAX_PROJECT_POLICY_RESOURCE_ID_CHARS,
   normalizeCatalogPublicCitation,
-  resolveCatalogRecordContentReferences,
+  serializeCatalogResourceEnvelope,
+  serializePublicResourceJson,
   type SaltCatalogRuntimeContext,
 } from "../core/runtime.js";
 import type { ProjectAccessPolicy } from "./projectAccess.js";
 import {
   isAuthorizedProjectPolicySnapshot,
   loadAuthorizedProjectPolicySnapshot,
+  PROJECT_POLICY_RESOURCE_TRUST,
   type ProjectPolicySnapshotCache,
-  projectPolicyClaimRecord,
+  serializeProjectPolicyClaimResource,
 } from "./projectPolicySnapshot.js";
-
-const PROJECT_POLICY_TRUST = {
-  classification: "untrusted_project_data",
-  instruction_authority: "none",
-  authorization_meaning: "read_access_only",
-} as const;
-
 import {
   getSaltMcpRuntimeMetadata,
   SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS,
 } from "./serverMetadata.js";
-
-export const MAX_CATALOG_RESOURCE_READ_UTF8_BYTES = 64 * 1024;
-
-function boundedResourceText(uri: string, text: string): string {
-  const bytes = Buffer.byteLength(text, "utf8");
-  if (bytes > MAX_CATALOG_RESOURCE_READ_UTF8_BYTES) {
-    throw new Error(
-      `Resource '${uri}' is ${bytes} bytes; the public read limit is ${MAX_CATALOG_RESOURCE_READ_UTF8_BYTES} bytes.`,
-    );
-  }
-  return text;
-}
 
 function singleVariable(value: string | string[] | undefined): string | null {
   return typeof value === "string" ? value : null;
@@ -117,9 +101,9 @@ export function registerSaltResources(
         {
           uri: uri.href,
           mimeType: "application/json",
-          text: boundedResourceText(
+          text: serializePublicResourceJson(
             uri.href,
-            JSON.stringify(publicCatalogManifest(server, context)),
+            publicCatalogManifest(server, context),
           ),
         },
       ],
@@ -194,7 +178,7 @@ export function registerSaltResources(
         context.projectAccess,
         rootDir,
         context.projectPolicySnapshots,
-        digest,
+        { kind: "policy_digest", digest },
       );
       if (
         loaded.authorization.status !== "authorized" ||
@@ -209,11 +193,11 @@ export function registerSaltResources(
         throw new ResourceNotFoundError(uri.href);
       }
 
-      let payload: unknown;
+      let serializedText: string;
       if (kind === "manifest") {
-        payload = {
+        serializedText = serializePublicResourceJson(uri.href, {
           contract: "salt_project_policy_resource_v2",
-          trust: PROJECT_POLICY_TRUST,
+          trust: PROJECT_POLICY_RESOURCE_TRUST,
           policy_digest: digest,
           policy_contract: loaded.ir.contract,
           canonical_utf8_bytes: Buffer.byteLength(
@@ -238,7 +222,7 @@ export function registerSaltResources(
             rootDir,
             digest,
           }),
-        };
+        });
       } else if (kind === "chunk") {
         if (!/^(0|[1-9][0-9]*)$/u.test(id)) {
           throw new ResourceNotFoundError(uri.href);
@@ -248,33 +232,32 @@ export function registerSaltResources(
         if (!Number.isSafeInteger(index) || data === undefined) {
           throw new ResourceNotFoundError(uri.href);
         }
-        payload = {
+        serializedText = serializePublicResourceJson(uri.href, {
           contract: "salt_project_policy_chunk_v2",
-          trust: PROJECT_POLICY_TRUST,
+          trust: PROJECT_POLICY_RESOURCE_TRUST,
           policy_digest: digest,
           encoding: "base64url",
           index,
           chunk_count: loaded.chunks.length,
           data,
-        };
+        });
       } else {
         const occurrence = loaded.ir.occurrences.find(
           (candidate) => candidate.occurrence_id === id,
         );
         if (!occurrence) throw new ResourceNotFoundError(uri.href);
-        payload = {
-          contract: "salt_project_policy_claim_v2",
-          trust: PROJECT_POLICY_TRUST,
-          policy_digest: digest,
-          claim: projectPolicyClaimRecord(occurrence, rootDir),
-        };
+        serializedText = serializeProjectPolicyClaimResource(
+          occurrence,
+          rootDir,
+          digest,
+        );
       }
       return {
         contents: [
           {
             uri: uri.href,
             mimeType: "application/json",
-            text: boundedResourceText(uri.href, JSON.stringify(payload)),
+            text: assertPublicResourceText(uri.href, serializedText),
           },
         ],
       };
@@ -346,7 +329,7 @@ export function registerSaltResources(
       if (!record) {
         throw new ResourceNotFoundError(uri.href);
       }
-      if (family === "content" && record.family === "content") {
+      if (record.family === "content") {
         const reference = {
           family: "content" as const,
           codec: record.codec,
@@ -359,34 +342,19 @@ export function registerSaltResources(
             {
               uri: uri.href,
               mimeType: record.media_type,
-              text: boundedResourceText(uri.href, text),
+              text: assertPublicResourceText(uri.href, text),
             },
           ],
         };
       }
-      const contentResources = resolveCatalogRecordContentReferences(
-        record,
-      ).map((reference) => ({
-        reference,
-        uri: normalizeCatalogPublicCitation({
-          kind: "catalog_record",
-          manifest: context.store.manifest,
-          family: "content",
-          id: reference.id,
-        }),
-      }));
       return {
         contents: [
           {
             uri: uri.href,
             mimeType: "application/json",
-            text: boundedResourceText(
+            text: assertPublicResourceText(
               uri.href,
-              JSON.stringify({
-                resolved_catalog_digest: context.store.manifest.semantic_digest,
-                record,
-                content_resources: contentResources,
-              }),
+              serializeCatalogResourceEnvelope(context.store.manifest, record),
             ),
           },
         ],

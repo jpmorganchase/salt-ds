@@ -1,9 +1,9 @@
 import defaultDayjs, { type Dayjs } from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import localeData from "dayjs/plugin/localeData";
-import timezone from "dayjs/plugin/timezone";
-import utc from "dayjs/plugin/utc";
-import weekday from "dayjs/plugin/weekday";
+import customParseFormat from "dayjs/plugin/customParseFormat.js";
+import localeData from "dayjs/plugin/localeData.js";
+import timezone from "dayjs/plugin/timezone.js";
+import utc from "dayjs/plugin/utc.js";
+import weekday from "dayjs/plugin/weekday.js";
 import {
   type AdapterOptions,
   DateDetailError,

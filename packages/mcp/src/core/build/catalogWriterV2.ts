@@ -69,7 +69,80 @@ export interface WriteCatalogV2Result {
   metrics: CatalogValidationMetrics;
 }
 
-function assertSafeOutputDirectory(outputDir: string): string {
+interface CatalogOutputDirectoryIdentity {
+  outputDir: string;
+  realParentDir: string;
+  parentDev: bigint;
+  parentIno: bigint;
+  outputDev: bigint;
+  outputIno: bigint;
+}
+
+function sameFilesystemPath(left: string, right: string): boolean {
+  return process.platform === "win32"
+    ? left.toLowerCase() === right.toLowerCase()
+    : left === right;
+}
+
+async function assertCatalogGenerationDirectorySafe(
+  identity: CatalogOutputDirectoryIdentity,
+): Promise<void> {
+  const generationsDir = path.join(identity.outputDir, "catalog-generations");
+  try {
+    const stats = await fs.lstat(generationsDir);
+    if (stats.isSymbolicLink() || !stats.isDirectory()) {
+      throw new Error(
+        `Catalog output contains an unsafe generation directory: ${generationsDir}`,
+      );
+    }
+    const realGenerationsDir = await fs.realpath(generationsDir);
+    if (
+      !sameFilesystemPath(
+        realGenerationsDir,
+        path.join(await fs.realpath(identity.outputDir), "catalog-generations"),
+      )
+    ) {
+      throw new Error(
+        `Catalog generation directory resolves through a link: ${generationsDir}`,
+      );
+    }
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+  }
+}
+
+async function assertCatalogOutputDirectoryIdentity(
+  identity: CatalogOutputDirectoryIdentity,
+): Promise<void> {
+  const parentStats = await fs.stat(identity.realParentDir, { bigint: true });
+  const outputStats = await fs.lstat(identity.outputDir, { bigint: true });
+  if (outputStats.isSymbolicLink() || !outputStats.isDirectory()) {
+    throw new Error(
+      `Catalog output directory became linked or non-directory: ${identity.outputDir}`,
+    );
+  }
+  const realOutputDir = await fs.realpath(identity.outputDir);
+  const expectedRealOutputDir = path.join(
+    identity.realParentDir,
+    path.basename(identity.outputDir),
+  );
+  if (
+    parentStats.dev !== identity.parentDev ||
+    parentStats.ino !== identity.parentIno ||
+    outputStats.dev !== identity.outputDev ||
+    outputStats.ino !== identity.outputIno ||
+    !sameFilesystemPath(realOutputDir, expectedRealOutputDir)
+  ) {
+    throw new Error(
+      `Catalog output directory identity changed during publication: ${identity.outputDir}`,
+    );
+  }
+  await assertCatalogGenerationDirectorySafe(identity);
+}
+
+async function prepareCatalogOutputDirectory(
+  outputDir: string,
+): Promise<CatalogOutputDirectoryIdentity> {
   const resolved = path.resolve(outputDir);
   const parsed = path.parse(resolved);
   if (
@@ -79,7 +152,40 @@ function assertSafeOutputDirectory(outputDir: string): string {
   ) {
     throw new Error(`Refusing unsafe catalog output directory: ${resolved}`);
   }
-  return resolved;
+  const parentDir = path.dirname(resolved);
+  await fs.mkdir(parentDir, { recursive: true });
+  const realParentDir = await fs.realpath(parentDir);
+  const parentStats = await fs.stat(realParentDir, { bigint: true });
+  try {
+    await fs.mkdir(resolved);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;
+  }
+  const outputStats = await fs.lstat(resolved, { bigint: true });
+  if (outputStats.isSymbolicLink() || !outputStats.isDirectory()) {
+    throw new Error(`Refusing linked catalog output directory: ${resolved}`);
+  }
+  const realOutputDir = await fs.realpath(resolved);
+  if (
+    !sameFilesystemPath(
+      realOutputDir,
+      path.join(realParentDir, path.basename(resolved)),
+    )
+  ) {
+    throw new Error(
+      `Catalog output directory resolves through a link: ${resolved}`,
+    );
+  }
+  const identity = {
+    outputDir: resolved,
+    realParentDir,
+    parentDev: parentStats.dev,
+    parentIno: parentStats.ino,
+    outputDev: outputStats.dev,
+    outputIno: outputStats.ino,
+  };
+  await assertCatalogOutputDirectoryIdentity(identity);
+  return identity;
 }
 
 function cloneRecords(
@@ -217,10 +323,11 @@ function publishedManifest(
 
 async function installCatalogGeneration(
   stagedDir: string,
-  outputDir: string,
+  outputIdentity: CatalogOutputDirectoryIdentity,
   manifest: CatalogManifest,
   nonce: string,
 ): Promise<CatalogManifest> {
+  const { outputDir } = outputIdentity;
   const generation = getCatalogManifestGenerationPath(manifest);
   const generationDir = path.join(outputDir, ...generation.split("/"));
   const publicationInventory = catalogPublicationCodec.parse({
@@ -242,13 +349,37 @@ async function installCatalogGeneration(
     sha256: sha256Bytes(publicationInventoryBytes),
     bytes: publicationInventoryBytes.byteLength,
   });
+  await assertCatalogOutputDirectoryIdentity(outputIdentity);
   await fs.mkdir(path.dirname(generationDir), { recursive: true });
+  await assertCatalogOutputDirectoryIdentity(outputIdentity);
 
   try {
+    await assertCatalogOutputDirectoryIdentity(outputIdentity);
     await fs.rename(stagedDir, generationDir);
   } catch (error) {
     if (!(await pathExists(generationDir))) {
       throw error;
+    }
+    await assertCatalogOutputDirectoryIdentity(outputIdentity);
+    const generationStats = await fs.lstat(generationDir);
+    if (generationStats.isSymbolicLink() || !generationStats.isDirectory()) {
+      throw new Error(
+        `Catalog generation collision is linked or non-directory: ${generationDir}`,
+        { cause: error },
+      );
+    }
+    const realGenerationsDir = await fs.realpath(path.dirname(generationDir));
+    const realGenerationDir = await fs.realpath(generationDir);
+    if (
+      !sameFilesystemPath(
+        realGenerationDir,
+        path.join(realGenerationsDir, path.basename(generationDir)),
+      )
+    ) {
+      throw new Error(
+        `Catalog generation collision resolves through a link: ${generationDir}`,
+        { cause: error },
+      );
     }
     const existingStore = new CatalogStoreV2({
       registryDir: generationDir,
@@ -278,6 +409,7 @@ async function installCatalogGeneration(
     `.${SALT_CATALOG_MANIFEST_FILE}.publishing-${nonce}`,
   );
   try {
+    await assertCatalogOutputDirectoryIdentity(outputIdentity);
     await fs.writeFile(
       manifestTempPath,
       canonicalJsonFile(publicationManifest),
@@ -289,6 +421,7 @@ async function installCatalogGeneration(
     // Every referenced artifact is immutable and installed before this
     // single-file commit point, so old and new readers each retain a complete
     // manifest-pinned snapshot.
+    await assertCatalogOutputDirectoryIdentity(outputIdentity);
     await fs.rename(
       manifestTempPath,
       path.join(outputDir, SALT_CATALOG_MANIFEST_FILE),
@@ -431,9 +564,9 @@ export async function writeCatalogV2(
       "Refusing to publish a catalog before input tracking is sealed.",
     );
   }
-  const outputDir = assertSafeOutputDirectory(options.outputDir);
+  const outputIdentity = await prepareCatalogOutputDirectory(options.outputDir);
+  const { outputDir } = outputIdentity;
   const parentDir = path.dirname(outputDir);
-  await fs.mkdir(outputDir, { recursive: true });
   const nonce = `${process.pid}-${randomUUID()}`;
   const stagedDir = path.join(
     parentDir,
@@ -464,7 +597,7 @@ export async function writeCatalogV2(
     }
     const manifest = await installCatalogGeneration(
       stagedDir,
-      outputDir,
+      outputIdentity,
       generationManifest,
       nonce,
     );

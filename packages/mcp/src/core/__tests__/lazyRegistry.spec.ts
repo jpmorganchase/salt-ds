@@ -5,7 +5,6 @@ import {
   afterAll,
   afterEach,
   beforeAll,
-  beforeEach,
   describe,
   expect,
   it,
@@ -19,16 +18,9 @@ import {
   rebindCatalogArtifactForTests,
   SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS,
 } from "../../__tests__/registryTestUtils.js";
-import {
-  getCatalogRuntimeFamilyNames,
-  SALT_CATALOG_MANIFEST_FILE,
-} from "../catalog/catalogSchemaV2.js";
+import { SALT_CATALOG_MANIFEST_FILE } from "../catalog/catalogSchemaV2.js";
 import { CatalogStoreV2 } from "../catalog/catalogStoreV2.js";
 import { getSaltRegistryFingerprint } from "../registry/fingerprint.js";
-import {
-  __getFileReadCountForTests,
-  __resetFileReadCountsForTests,
-} from "../registry/lazyRegistry.js";
 import { loadRegistry } from "../registry/loadRegistry.js";
 
 const tempDirs: string[] = [];
@@ -50,17 +42,12 @@ beforeAll(async () => {
   );
 }, SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS);
 
-beforeEach(() => {
-  __resetFileReadCountsForTests();
-});
-
 afterEach(async () => {
   await Promise.all(
     tempDirs
       .splice(0, tempDirs.length)
       .map((dir) => fs.rm(dir, { recursive: true, force: true })),
   );
-  __resetFileReadCountsForTests();
 });
 
 afterAll(async () => {
@@ -73,12 +60,12 @@ afterAll(async () => {
 });
 
 describe("loadRegistry — Salt catalog schema v2 lazy access", () => {
-  it("reads only the manifest for compatibility metadata", async () => {
-    const registryDir = sourceCatalogDirectory;
+  it("exposes compatibility metadata before an unread family is loaded", async () => {
+    const registryDir = await createCatalogFixture();
     const registry = await loadRegistry({ registryDir });
     const manifest = JSON.parse(
       await fs.readFile(
-        path.join(sourceCatalogDirectory, SALT_CATALOG_MANIFEST_FILE),
+        path.join(registryDir, SALT_CATALOG_MANIFEST_FILE),
         "utf8",
       ),
     ) as { catalog_version: string; semantic_digest: string };
@@ -86,47 +73,37 @@ describe("loadRegistry — Salt catalog schema v2 lazy access", () => {
     expect(registry.version).toBe(manifest.catalog_version);
     expect(registry.generated_at).toBeNull();
     expect(registry.build_info).toBeNull();
-    expect(
-      __getFileReadCountForTests(
-        path.join(registryDir, SALT_CATALOG_MANIFEST_FILE),
-      ),
-    ).toBe(1);
-
-    for (const family of getCatalogRuntimeFamilyNames()) {
-      expect(
-        __getFileReadCountForTests(
-          await catalogFamilyArtifactPath(registryDir, family),
-        ),
-        `${family} must remain unread for compatibility metadata`,
-      ).toBe(0);
-    }
+    const componentsPath = await catalogFamilyArtifactPath(
+      registryDir,
+      "component",
+    );
+    await fs.appendFile(componentsPath, " ", "utf8");
+    expect(registry.version).toBe(manifest.catalog_version);
+    expect(() => registry.components).toThrow(
+      /digest mismatch.*components\.json/iu,
+    );
   });
 
   it(
     "crosses the complete integrity barrier before exposing a collection",
     async () => {
-      const registryDir = sourceCatalogDirectory;
+      const registryDir = await createCatalogFixture();
       const registry = await loadRegistry({ registryDir });
-      const componentsPath = await catalogFamilyArtifactPath(
+      const tokensPath = await catalogFamilyArtifactPath(
         registryDir,
-        "component",
+        "token",
+      );
+      await fs.appendFile(tokensPath, " ", "utf8");
+      expect(() => registry.components).toThrow(
+        /digest mismatch.*tokens\.json/iu,
       );
 
-      expect(__getFileReadCountForTests(componentsPath)).toBe(0);
-      const first = registry.components;
+      const validRegistry = await loadRegistry({
+        registryDir: sourceCatalogDirectory,
+      });
+      const first = validRegistry.components;
       expect(first.length).toBeGreaterThan(0);
-      for (const family of getCatalogRuntimeFamilyNames()) {
-        expect(
-          __getFileReadCountForTests(
-            await catalogFamilyArtifactPath(registryDir, family),
-          ),
-          `integrity barrier must verify ${family}`,
-        ).toBeGreaterThan(0);
-      }
-
-      const second = registry.components;
-      expect(second).toBe(first);
-      expect(__getFileReadCountForTests(componentsPath)).toBe(1);
+      expect(validRegistry.components).toBe(first);
     },
     WHOLE_CATALOG_TEST_TIMEOUT_MS,
   );
@@ -134,25 +111,24 @@ describe("loadRegistry — Salt catalog schema v2 lazy access", () => {
   it(
     "verifies the complete catalog before trusting its manifest fingerprint",
     async () => {
-      const registryDir = sourceCatalogDirectory;
+      const registryDir = await createCatalogFixture();
       const registry = await loadRegistry({ registryDir });
       const manifest = JSON.parse(
         await fs.readFile(
-          path.join(sourceCatalogDirectory, SALT_CATALOG_MANIFEST_FILE),
+          path.join(registryDir, SALT_CATALOG_MANIFEST_FILE),
           "utf8",
         ),
       ) as { semantic_digest: string };
 
-      expect(getSaltRegistryFingerprint(registry)).toBe(
-        manifest.semantic_digest,
+      const tokensPath = await catalogFamilyArtifactPath(
+        registryDir,
+        "token",
       );
-      for (const family of getCatalogRuntimeFamilyNames()) {
-        expect(
-          __getFileReadCountForTests(
-            await catalogFamilyArtifactPath(registryDir, family),
-          ),
-        ).toBeGreaterThan(0);
-      }
+      await fs.appendFile(tokensPath, " ", "utf8");
+      expect(() => getSaltRegistryFingerprint(registry)).toThrow(
+        /digest mismatch.*tokens\.json/iu,
+      );
+      expect(manifest.semantic_digest).toMatch(/^sha256:[0-9a-f]{64}$/u);
     },
     WHOLE_CATALOG_TEST_TIMEOUT_MS,
   );
@@ -189,30 +165,23 @@ describe("loadRegistry — Salt catalog schema v2 lazy access", () => {
   it(
     "prefetches every runtime family and support artifact",
     async () => {
-      const registryDir = sourceCatalogDirectory;
-
-      await loadRegistry({ registryDir, prefetch: true });
-
-      for (const family of getCatalogRuntimeFamilyNames()) {
-        expect(
-          __getFileReadCountForTests(
-            await catalogFamilyArtifactPath(registryDir, family),
-          ),
-          `prefetch must verify ${family}`,
-        ).toBeGreaterThan(0);
-      }
       for (const kind of [
         "json_schema",
         "package_inventory",
         "content_pack",
       ] as const) {
-        expect(
-          __getFileReadCountForTests(
-            await catalogSupportArtifactPath(registryDir, kind),
-          ),
-          `prefetch must verify ${kind}`,
-        ).toBeGreaterThan(0);
+        const registryDir = await createCatalogFixture();
+        const supportPath = await catalogSupportArtifactPath(registryDir, kind);
+        await fs.appendFile(supportPath, " ");
+        await expect(
+          loadRegistry({ registryDir, prefetch: true }),
+        ).rejects.toThrow(/digest mismatch/iu);
       }
+      const valid = await loadRegistry({
+        registryDir: sourceCatalogDirectory,
+        prefetch: true,
+      });
+      expect(valid.components.length).toBeGreaterThan(0);
     },
     WHOLE_CATALOG_TEST_TIMEOUT_MS,
   );
@@ -257,31 +226,6 @@ describe("loadRegistry — Salt catalog schema v2 lazy access", () => {
         /unresolved token:token\.missing-retry-target/iu,
       );
       expect(invalidValidation).toHaveBeenCalledTimes(2);
-    },
-    WHOLE_CATALOG_TEST_TIMEOUT_MS,
-  );
-
-  it(
-    "defers digest failure until the affected family is accessed",
-    async () => {
-      const registryDir = await createCatalogFixture();
-      const componentsPath = await catalogFamilyArtifactPath(
-        registryDir,
-        "component",
-      );
-      await fs.appendFile(componentsPath, " ", "utf8");
-
-      const registry = await loadRegistry({ registryDir });
-      const manifest = JSON.parse(
-        await fs.readFile(
-          path.join(registryDir, SALT_CATALOG_MANIFEST_FILE),
-          "utf8",
-        ),
-      ) as { catalog_version: string };
-      expect(registry.version).toBe(manifest.catalog_version);
-      expect(() => registry.components).toThrow(
-        /digest mismatch.*components\.json/iu,
-      );
     },
     WHOLE_CATALOG_TEST_TIMEOUT_MS,
   );

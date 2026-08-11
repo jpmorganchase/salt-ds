@@ -7,15 +7,45 @@ import {
   normalizeCatalogPublicCitation,
   normalizeCatalogPublicLocator,
 } from "../catalog/catalogPublicCitation.js";
+import { serializeCatalogResourceEnvelope } from "../catalog/catalogResourceEnvelope.js";
 import {
   type CatalogManifest,
   contentCodec,
   packageFactCodec,
+  policyProfileCodec,
 } from "../catalog/catalogSchemaV2.js";
+import {
+  assertPublicResourceText,
+  MAX_PUBLIC_RESOURCE_UTF8_BYTES,
+  publicResourceUtf8Bytes,
+  serializePublicResourceJson,
+} from "../publicResourceBudget.js";
 
 const CONTENT_ID = `sha256:${"a".repeat(64)}`;
 
 describe("catalog public bounds", () => {
+  it.each([
+    ["ASCII", "x", 1],
+    ["multibyte", "漢", 3],
+    ["JSON-escaped", "\u0001", 6],
+  ] as const)(
+    "measures the exact %s serialized UTF-8 resource boundary",
+    (_label, unit, encodedUnitBytes) => {
+      const empty = JSON.stringify({ value: "" });
+      const available = MAX_PUBLIC_RESOURCE_UTF8_BYTES - empty.length;
+      const value =
+        unit.repeat(Math.floor(available / encodedUnitBytes)) +
+        "x".repeat(available % encodedUnitBytes);
+      const exact = serializePublicResourceJson("boundary", { value });
+      expect(publicResourceUtf8Bytes(exact)).toBe(
+        MAX_PUBLIC_RESOURCE_UTF8_BYTES,
+      );
+      expect(() =>
+        serializePublicResourceJson("boundary", { value: `${value}x` }),
+      ).toThrow(/Public resource 'boundary'.*65537.*65536/iu);
+    },
+  );
+
   it("rejects content metadata beyond the public resource read limit", () => {
     const base = {
       family: "content",
@@ -42,6 +72,42 @@ describe("catalog public bounds", () => {
         length: MAX_CATALOG_CONTENT_BYTES + 1,
       }).success,
     ).toBe(false);
+  });
+
+  it("serializes a valid content-linked catalog envelope at the exact limit", () => {
+    const manifest = {
+      semantic_digest: `sha256:${"b".repeat(64)}`,
+    } as CatalogManifest;
+    const baseRecord = {
+      family: "policy_profile",
+      id: "policy-profile.boundary",
+      summary: "",
+      policy_kind: "token_usage",
+      body_content_ref: {
+        family: "content",
+        id: CONTENT_ID,
+        codec: "token_usage",
+      },
+    } as const;
+    expect(policyProfileCodec.safeParse(baseRecord).success).toBe(true);
+    const baseBytes = publicResourceUtf8Bytes(
+      serializeCatalogResourceEnvelope(manifest, baseRecord),
+    );
+    const record = {
+      ...baseRecord,
+      summary: "x".repeat(MAX_PUBLIC_RESOURCE_UTF8_BYTES - baseBytes),
+    };
+    expect(policyProfileCodec.safeParse(record).success).toBe(true);
+    const serialized = serializeCatalogResourceEnvelope(manifest, record);
+    expect(serialized).toContain(
+      `salt://catalog/v2/sha256-${"b".repeat(64)}/content/${encodeURIComponent(CONTENT_ID)}`,
+    );
+    expect(publicResourceUtf8Bytes(serialized)).toBe(
+      MAX_PUBLIC_RESOURCE_UTF8_BYTES,
+    );
+    expect(assertPublicResourceText("catalog boundary", serialized)).toBe(
+      serialized,
+    );
   });
 
   it("rejects catalog IDs that could defeat listing byte bounds", () => {

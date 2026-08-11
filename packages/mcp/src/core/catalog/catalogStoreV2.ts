@@ -1,6 +1,14 @@
-import { lstatSync, readFileSync, realpathSync } from "node:fs";
+import {
+  closeSync,
+  fstatSync,
+  lstatSync,
+  openSync,
+  readSync,
+  realpathSync,
+} from "node:fs";
 import path from "node:path";
 import { brotliDecompressSync } from "node:zlib";
+import { assertPublicResourceText } from "../publicResourceBudget.js";
 import { formatAccessibilityImplementationSignalStatement } from "./accessibilityImplementationSignal.js";
 import {
   createApiSymbolId,
@@ -14,9 +22,11 @@ import {
   type CatalogContentReference,
   type CatalogPayloadForCodec,
   catalogContentCodecs,
+  MAX_CATALOG_CONTENT_BYTES,
   parseCatalogContentPayload,
 } from "./catalogPayloadSchemaV2.js";
 import { isPortableRepositoryPath } from "./catalogPortablePath.js";
+import { serializeCatalogResourceEnvelope } from "./catalogResourceEnvelope.js";
 import {
   CATALOG_FAMILY_NAMES,
   CATALOG_SEARCH_TARGET_FAMILY_NAMES,
@@ -38,6 +48,9 @@ import {
   getCatalogPublishedManifestGenerationPath,
   getCatalogRuntimeFamilyNames,
   isCatalogRuntimeFamilyName,
+  MAX_CATALOG_MANIFEST_BYTES,
+  MAX_CATALOG_RUNTIME_FILE_BYTES,
+  MAX_CATALOG_RUNTIME_TOTAL_BYTES,
   parseCatalogArtifactEnvelope,
   resolveCatalogRecordContentReferences,
   resolveCatalogRecordReferences,
@@ -56,7 +69,6 @@ import {
 } from "./catalogSerialization.js";
 import { measureTokenOwnedCatalogSurface } from "./catalogTokenSurfaceV2.js";
 
-const fileReadCounter = new Map<string, number>();
 const fatalUtf8Decoder = new TextDecoder("utf-8", { fatal: true });
 
 function normalizeAccessibilityDocumentationText(value: string): string {
@@ -72,23 +84,6 @@ function normalizeAccessibilityDocumentationText(value: string): string {
     .replace(/^\s*\{\/\*.*\*\/\}\s*$/gmu, "")
     .replace(/\s+/gu, " ")
     .trim();
-}
-
-function countRead(absolutePath: string): void {
-  fileReadCounter.set(
-    absolutePath,
-    (fileReadCounter.get(absolutePath) ?? 0) + 1,
-  );
-}
-
-export function __getCatalogFileReadCountForTests(
-  absolutePath: string,
-): number {
-  return fileReadCounter.get(path.resolve(absolutePath)) ?? 0;
-}
-
-export function __resetCatalogFileReadCountsForTests(): void {
-  fileReadCounter.clear();
 }
 
 function safeArtifactPath(registryDir: string, relativePath: string): string {
@@ -149,13 +144,65 @@ function safeArtifactPath(registryDir: string, relativePath: string): string {
   return absolutePath;
 }
 
-function readFileCounted(absolutePath: string): Buffer {
-  countRead(path.resolve(absolutePath));
-  return readFileSync(absolutePath);
+function readFileCounted(
+  absolutePath: string,
+  maxBytes: number,
+  label: string,
+): Buffer {
+  if (!Number.isSafeInteger(maxBytes) || maxBytes < 0) {
+    throw new Error(`${label} has an invalid operational byte limit.`);
+  }
+  const fileDescriptor = openSync(absolutePath, "r");
+  try {
+    const openedStats = fstatSync(fileDescriptor, { bigint: true });
+    if (!openedStats.isFile()) {
+      throw new Error(`${label} is not a regular file.`);
+    }
+    if (openedStats.size > BigInt(maxBytes)) {
+      throw new Error(
+        `${label} exceeds the ${maxBytes}-byte operational limit.`,
+      );
+    }
+    const bytes = Buffer.alloc(Number(openedStats.size) + 1);
+    let bytesRead = 0;
+    while (bytesRead < bytes.length) {
+      const count = readSync(
+        fileDescriptor,
+        bytes,
+        bytesRead,
+        bytes.length - bytesRead,
+        null,
+      );
+      if (count === 0) break;
+      bytesRead += count;
+    }
+    const finalStats = fstatSync(fileDescriptor, { bigint: true });
+    if (
+      finalStats.dev !== openedStats.dev ||
+      finalStats.ino !== openedStats.ino ||
+      finalStats.size !== openedStats.size ||
+      finalStats.mtimeNs !== openedStats.mtimeNs ||
+      bytesRead !== Number(openedStats.size)
+    ) {
+      throw new Error(`${label} changed while it was read.`);
+    }
+    if (bytesRead > maxBytes) {
+      throw new Error(
+        `${label} exceeds the ${maxBytes}-byte operational limit.`,
+      );
+    }
+    return bytes.subarray(0, bytesRead);
+  } finally {
+    closeSync(fileDescriptor);
+  }
 }
 
-function readJsonCounted(absolutePath: string): unknown {
-  const bytes = readFileCounted(absolutePath);
+function readJsonCounted(
+  absolutePath: string,
+  maxBytes: number,
+  label: string,
+): unknown {
+  const bytes = readFileCounted(absolutePath, maxBytes, label);
   try {
     return JSON.parse(bytes.toString("utf8")) as unknown;
   } catch (error) {
@@ -163,6 +210,45 @@ function readJsonCounted(absolutePath: string): unknown {
       `Catalog JSON artifact is invalid: ${path.basename(absolutePath)}`,
       { cause: error },
     );
+  }
+}
+
+function assertCatalogRuntimeBudget(manifest: CatalogManifest): void {
+  const declaredRuntimeBytes = [
+    ...manifest.artifacts,
+    ...manifest.build_artifacts,
+    ...manifest.support_artifacts,
+  ].reduce((total, entry) => {
+    if (
+      !Number.isSafeInteger(entry.bytes) ||
+      entry.bytes < 0 ||
+      entry.bytes > MAX_CATALOG_RUNTIME_FILE_BYTES ||
+      !Number.isSafeInteger(total + entry.bytes)
+    ) {
+      throw new Error(
+        "Catalog manifest declares an invalid artifact byte budget.",
+      );
+    }
+    return total + entry.bytes;
+  }, 0);
+  if (declaredRuntimeBytes > MAX_CATALOG_RUNTIME_TOTAL_BYTES) {
+    throw new Error(
+      `Catalog manifest exceeds the ${MAX_CATALOG_RUNTIME_TOTAL_BYTES}-byte aggregate runtime limit.`,
+    );
+  }
+}
+
+function assertDecodedContentBudget(
+  records: readonly CatalogRecordForFamily<"content">[],
+): void {
+  let decodedBytes = 0;
+  for (const record of records) {
+    if (record.bytes > MAX_CATALOG_RUNTIME_TOTAL_BYTES - decodedBytes) {
+      throw new Error(
+        `Catalog content declarations exceed the ${MAX_CATALOG_RUNTIME_TOTAL_BYTES}-byte aggregate decoded-content limit.`,
+      );
+    }
+    decodedBytes += record.bytes;
   }
 }
 
@@ -672,8 +758,15 @@ export class CatalogStoreV2 {
       SALT_CATALOG_MANIFEST_FILE,
     );
     this.manifest = deepFreezeCatalogValue(
-      catalogManifestCodec.parse(readJsonCounted(manifestPath)),
+      catalogManifestCodec.parse(
+        readJsonCounted(
+          manifestPath,
+          MAX_CATALOG_MANIFEST_BYTES,
+          "Catalog manifest",
+        ),
+      ),
     );
+    assertCatalogRuntimeBudget(this.manifest);
     safeArtifactPath(this.registryDir, SALT_CATALOG_MANIFEST_FILE);
     this.publicationPrefix = assertExactManifestCoverage(this.manifest);
     assertPublishedGenerationIdentity(this.manifest, this.publicationPrefix);
@@ -688,7 +781,11 @@ export class CatalogStoreV2 {
     expectedBytes: number,
   ): Buffer {
     const absolutePath = safeArtifactPath(this.registryDir, relativePath);
-    const bytes = readFileCounted(absolutePath);
+    const bytes = readFileCounted(
+      absolutePath,
+      Math.min(expectedBytes + 1, MAX_CATALOG_RUNTIME_FILE_BYTES),
+      `Catalog artifact '${relativePath}'`,
+    );
     safeArtifactPath(this.registryDir, relativePath);
     const actualSha256 = sha256Bytes(bytes);
     if (actualSha256 !== expectedSha256 || bytes.byteLength !== expectedBytes) {
@@ -902,7 +999,11 @@ export class CatalogStoreV2 {
     if (this.verifiedSupport.has("content_pack")) return;
     const entry = this.getSupportEntry("content_pack");
     const absolutePath = safeArtifactPath(this.registryDir, entry.file);
-    const bytes = readFileCounted(absolutePath);
+    const bytes = readFileCounted(
+      absolutePath,
+      Math.min(entry.bytes + 1, MAX_CATALOG_RUNTIME_FILE_BYTES),
+      "Catalog content pack",
+    );
     safeArtifactPath(this.registryDir, entry.file);
     const actual = {
       sha256: sha256Bytes(bytes),
@@ -951,10 +1052,21 @@ export class CatalogStoreV2 {
       contentRecord.offset,
       contentRecord.offset + contentRecord.length,
     );
-    const bytes =
-      contentRecord.encoding === "br"
-        ? brotliDecompressSync(storedBytes)
-        : storedBytes;
+    let bytes: Uint8Array;
+    if (contentRecord.encoding === "br") {
+      try {
+        bytes = brotliDecompressSync(storedBytes, {
+          maxOutputLength: MAX_CATALOG_CONTENT_BYTES,
+        });
+      } catch (error) {
+        throw new Error(
+          `Catalog content '${reference.id}' exceeds its decoded-byte limit or is invalid Brotli data.`,
+          { cause: error },
+        );
+      }
+    } else {
+      bytes = storedBytes;
+    }
     if (bytes.byteLength !== contentRecord.bytes) {
       throw new Error(
         `Catalog content '${reference.id}' decoded to ${bytes.byteLength} bytes, expected ${contentRecord.bytes}.`,
@@ -1053,6 +1165,7 @@ export class CatalogStoreV2 {
     for (const family of getCatalogRuntimeFamilyNames()) {
       void this.getFamily(family);
     }
+    assertDecodedContentBudget(this.getFamily("content"));
     this.verifyJsonSchema();
     this.verifyPackageInventory();
     this.verifyContentPack();
@@ -1744,6 +1857,12 @@ export class CatalogStoreV2 {
         }
         for (const reference of discoveredContentReferences) {
           validateContentReference(reference, owner);
+        }
+        if (record.family !== "content") {
+          assertPublicResourceText(
+            owner,
+            serializeCatalogResourceEnvelope(this.manifest, record),
+          );
         }
 
         if (record.family === "component" && record.policy_profile_ref) {

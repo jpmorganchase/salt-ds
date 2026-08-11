@@ -1,7 +1,5 @@
 import { CatalogRegistryProjection } from "../catalog/catalogRegistryProjection.js";
 import {
-  __getCatalogFileReadCountForTests,
-  __resetCatalogFileReadCountsForTests,
   type CatalogStoreV2,
   createCatalogStoreV2,
 } from "../catalog/catalogStoreV2.js";
@@ -10,11 +8,6 @@ import {
   registerSaltRegistryFingerprintVerifier,
   registerVerifiedSaltRegistryFingerprint,
 } from "./fingerprint.js";
-
-export {
-  __getCatalogFileReadCountForTests as __getFileReadCountForTests,
-  __resetCatalogFileReadCountsForTests as __resetFileReadCountsForTests,
-};
 
 export interface LazyRegistryState {
   registryDir: string;

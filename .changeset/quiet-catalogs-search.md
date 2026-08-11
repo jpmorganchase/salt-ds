@@ -1,5 +1,10 @@
 ---
 "@salt-ds/mcp": major
+"@salt-ds/core": minor
+"@salt-ds/theme": patch
+"@salt-ds/date-adapters": patch
+"@salt-ds/icons": patch
+"@salt-ds/lab": patch
 ---
 
 Replace the private Salt workflow protocol with the MCP SDK v2 adapter. The
@@ -15,10 +20,32 @@ surface.
 
 The public `createSaltMcpServer` factory now returns the SDK v2 concrete
 `McpServer` type. The stdio entry supports the current `2026-07-28` protocol
-and retains the documented legacy revisions headed by `2025-11-25`.
+and retains only the resource-link-compatible `2025-11-25` and `2025-06-18`
+legacy revisions. Project inspection now labels dependency-controlled facts,
+uses fixed-size opaque context handles and metadata-only lockfile probes, and
+review results distinguish fresh, retained, caller-version, and context-free
+evidence without implying that unsubmitted source was analyzed. Production
+token applicability now excludes test, story, and QA sources.
 
 The reusable factory is now restricted by default. Embedders should configure
 `projectAccess.allowedRoots` and, where required, `defaultRoot` for bounded
 project inspection. Trusted local-process embedders may instead select the
 explicit public `unrestricted_local_stdio` mode; the packaged CLI selects that
 mode automatically. It is not appropriate for remote or shared deployments.
+
+Exported `ValidationStatusValues` from `@salt-ds/core` as the supported
+replacement for the deprecated `VALIDATION_NAMED_STATUS` constant and added
+resolvable replacement metadata across deprecated Core APIs.
+
+Corrected published Theme token aliases and deprecated-token replacement
+metadata.
+
+Corrected Date Adapters migration metadata and declaration generation, removed
+duplicate declaration sources, kept source-only entrypoint metadata out of the
+published manifest, removed workspace-only publish scripts and directory
+metadata, made adapter-specific peers optional, and finalized the published
+README and LICENSE, dual ESM/CommonJS module boundaries, derived export map,
+and isolated packed-consumer verification.
+
+Added resolvable replacement links to deprecated Icon declarations and added
+migration metadata to deprecated Lab APIs.

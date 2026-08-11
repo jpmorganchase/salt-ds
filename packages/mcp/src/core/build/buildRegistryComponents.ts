@@ -46,6 +46,7 @@ import {
   resolveUniquePackageValueExport,
 } from "./catalogExportGraph.js";
 import { globCatalogInputs } from "./catalogInputInventory.js";
+import { NON_PRODUCTION_IMPLEMENTATION_GLOB_IGNORES } from "./catalogProductionSource.js";
 import { parseYamlFrontmatter } from "./parseYamlFrontmatter.js";
 
 function inferStatusFromPackage(name: string, version: string): SaltStatus {
@@ -278,9 +279,7 @@ async function readComponentSourceFiles(
       absolute: true,
       onlyFiles: true,
       ignore: [
-        "**/*.spec.*",
-        "**/*.test.*",
-        "**/*.stories.*",
+        ...NON_PRODUCTION_IMPLEMENTATION_GLOB_IGNORES,
         "**/*.css.ts",
         "**/*.d.ts",
       ],

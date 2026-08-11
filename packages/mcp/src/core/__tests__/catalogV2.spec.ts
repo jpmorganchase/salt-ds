@@ -30,7 +30,10 @@ import { TOKEN_OWNED_ARTIFACT_BYTE_BUDGET } from "../build/catalogWriterV2.js";
 import { extractTokenDeclarations } from "../build/extractTokenDeclarations.js";
 import { normalizeCatalogV2 } from "../build/normalizeCatalogV2.js";
 import { createDeprecationId } from "../catalog/catalogApiSymbolV2.js";
-import { parseCatalogContentPayload } from "../catalog/catalogPayloadSchemaV2.js";
+import {
+  MAX_CATALOG_CONTENT_BYTES,
+  parseCatalogContentPayload,
+} from "../catalog/catalogPayloadSchemaV2.js";
 import {
   accessibilityClaimCodec,
   CATALOG_FAMILY_NAMES,
@@ -53,6 +56,9 @@ import {
   getCatalogPublishedFileNames,
   getCatalogPublishedManifestGenerationPath,
   getCatalogRuntimeFamilyNames,
+  MAX_CATALOG_MANIFEST_BYTES,
+  MAX_CATALOG_RUNTIME_FILE_BYTES,
+  MAX_CATALOG_RUNTIME_TOTAL_BYTES,
   parseCatalogArtifactEnvelope,
   portableRepositoryPathCodec,
   relationCodec,
@@ -68,11 +74,7 @@ import {
   sha256Bytes,
   stableShaId,
 } from "../catalog/catalogSerialization.js";
-import {
-  __getCatalogFileReadCountForTests,
-  __resetCatalogFileReadCountsForTests,
-  CatalogStoreV2,
-} from "../catalog/catalogStoreV2.js";
+import { CatalogStoreV2 } from "../catalog/catalogStoreV2.js";
 import { measureTokenOwnedCatalogSurface } from "../catalog/catalogTokenSurfaceV2.js";
 import { loadRegistry } from "../registry/loadRegistry.js";
 import type { SaltRegistry } from "../types.js";
@@ -487,6 +489,7 @@ async function rebindPackedContentObject(
   store: CatalogStoreV2,
   oldContentId: string,
   newBytes: Buffer,
+  options: { declaredBytes?: number } = {},
 ): Promise<string> {
   const packEntry = manifest.support_artifacts.find(
     (entry) => entry.kind === "content_pack",
@@ -518,7 +521,7 @@ async function rebindPackedContentObject(
       const encoded = encodePackedContentBytes(newBytes);
       stored = encoded.bytes;
       record.id = newId;
-      record.bytes = newBytes.byteLength;
+      record.bytes = options.declaredBytes ?? newBytes.byteLength;
       record.length = stored.byteLength;
       record.encoding = encoded.encoding;
       record.validation.basis_digest = newId;
@@ -846,7 +849,6 @@ async function rebindStructuralRelationOrdinal(
 }
 
 afterEach(async () => {
-  __resetCatalogFileReadCountsForTests();
   await Promise.all(
     temporaryDirectories
       .splice(0, temporaryDirectories.length)
@@ -2400,6 +2402,111 @@ describe("Salt catalog schema v2 descriptor and storage contract", () => {
 });
 
 describe("CatalogStoreV2 lazy integrity checks", () => {
+  it("rejects oversized manifests and declared runtime budgets before artifact reads", async () => {
+    const oversizedManifestDirectory = await createCatalogCopy();
+    await fs.writeFile(
+      path.join(oversizedManifestDirectory, SALT_CATALOG_MANIFEST_FILE),
+      Buffer.alloc(MAX_CATALOG_MANIFEST_BYTES + 1, 0x20),
+    );
+    expect(
+      () => new CatalogStoreV2({ registryDir: oversizedManifestDirectory }),
+    ).toThrow(/operational limit/iu);
+
+    const oversizedEntryDirectory = await createCatalogCopy();
+    const oversizedEntryManifest = JSON.parse(
+      await fs.readFile(
+        path.join(oversizedEntryDirectory, SALT_CATALOG_MANIFEST_FILE),
+        "utf8",
+      ),
+    ) as CatalogManifest;
+    oversizedEntryManifest.artifacts[0]!.bytes =
+      MAX_CATALOG_RUNTIME_FILE_BYTES + 1;
+    await fs.writeFile(
+      path.join(oversizedEntryDirectory, SALT_CATALOG_MANIFEST_FILE),
+      canonicalJsonFile(oversizedEntryManifest),
+    );
+    expect(
+      () => new CatalogStoreV2({ registryDir: oversizedEntryDirectory }),
+    ).toThrow();
+
+    const aggregateDirectory = await createCatalogCopy();
+    const aggregateManifest = JSON.parse(
+      await fs.readFile(
+        path.join(aggregateDirectory, SALT_CATALOG_MANIFEST_FILE),
+        "utf8",
+      ),
+    ) as CatalogManifest;
+    const entries = [
+      ...aggregateManifest.artifacts,
+      ...aggregateManifest.build_artifacts,
+      ...aggregateManifest.support_artifacts,
+    ];
+    for (const entry of entries) entry.bytes = 0;
+    for (const entry of entries.slice(0, 4)) {
+      entry.bytes = MAX_CATALOG_RUNTIME_FILE_BYTES;
+    }
+    entries[4]!.bytes = 1;
+    expect(4 * MAX_CATALOG_RUNTIME_FILE_BYTES + 1).toBeGreaterThan(
+      MAX_CATALOG_RUNTIME_TOTAL_BYTES,
+    );
+    await fs.writeFile(
+      path.join(aggregateDirectory, SALT_CATALOG_MANIFEST_FILE),
+      canonicalJsonFile(aggregateManifest),
+    );
+    expect(
+      () => new CatalogStoreV2({ registryDir: aggregateDirectory }),
+    ).toThrow(/aggregate runtime limit/iu);
+  });
+
+  it("bounds Brotli expansion before materializing oversized content", async () => {
+    const directory = await createCatalogCopy();
+    const originalStore = new CatalogStoreV2({ registryDir: directory });
+    const content = originalStore.getFamily("content")[0];
+    if (!content) throw new Error("Fixture has no content record.");
+    const manifest = await readManifest(directory);
+    const newId = await rebindPackedContentObject(
+      directory,
+      manifest,
+      originalStore,
+      content.id,
+      Buffer.alloc(MAX_CATALOG_CONTENT_BYTES + 1, 0x61),
+      { declaredBytes: MAX_CATALOG_CONTENT_BYTES },
+    );
+    manifest.semantic_digest = recomputeManifestSemanticDigest(manifest);
+    await writeManifest(directory, manifest, { rebindGeneration: true });
+
+    const store = new CatalogStoreV2({ registryDir: directory });
+    expect(() =>
+      store.getContentBytes({
+        family: "content",
+        id: newId,
+        codec: content.codec,
+      }),
+    ).toThrow(/decoded-byte limit/iu);
+  });
+
+  it("rejects aggregate decoded content before reading the content pack", async () => {
+    const directory = await createCatalogCopy();
+    await replaceArtifact(directory, "content", (envelope) => {
+      const records = decodeArtifactRecords("content", envelope.records).map(
+        (record) => ({ ...record, bytes: MAX_CATALOG_CONTENT_BYTES }),
+      );
+      expect(records.length * MAX_CATALOG_CONTENT_BYTES).toBeGreaterThan(
+        MAX_CATALOG_RUNTIME_TOTAL_BYTES,
+      );
+      envelope.records = encodeArtifactRecords("content", records);
+    });
+    const manifest = await readManifest(directory);
+    const packEntry = manifest.support_artifacts.find(
+      (entry) => entry.kind === "content_pack",
+    );
+    if (!packEntry) throw new Error("Fixture manifest has no content pack.");
+    await fs.rm(path.join(directory, ...packEntry.file.split("/")));
+
+    const store = new CatalogStoreV2({ registryDir: directory });
+    expect(() => store.prefetch()).toThrow(/aggregate decoded-content limit/iu);
+  });
+
   it("freezes decoded records, nested values, content payloads, and the manifest", () => {
     const store = new CatalogStoreV2({
       registryDir: generatedDirectory,
@@ -2425,56 +2532,51 @@ describe("CatalogStoreV2 lazy integrity checks", () => {
     }).toThrow();
   });
 
-  it("reads only the manifest eagerly and verifies a family once on first access", async () => {
-    __resetCatalogFileReadCountsForTests();
-    const store = new CatalogStoreV2({
-      registryDir: generatedDirectory,
-    });
-    const manifestPath = path.join(
-      generatedDirectory,
-      SALT_CATALOG_MANIFEST_FILE,
-    );
-    const manifest = await readManifest(generatedDirectory);
-    const tokenEntry = manifest.artifacts.find(
+  it("loads an unread family on first access and retains an already verified family", async () => {
+    const unreadDirectory = await createCatalogCopy();
+    const unreadManifest = await readManifest(unreadDirectory);
+    const unreadTokenEntry = unreadManifest.artifacts.find(
       (entry) => entry.family === "token",
     );
-    const buildEntry = manifest.build_artifacts[0];
-    const packEntry = manifest.support_artifacts.find(
-      (entry) => entry.kind === "content_pack",
-    );
-    if (!tokenEntry || !buildEntry || !packEntry) {
-      throw new Error(
-        "Fixture is missing token, build artifact, or content pack metadata.",
-      );
+    if (!unreadTokenEntry) {
+      throw new Error("Fixture is missing token artifact metadata.");
     }
-    const tokenPath = path.join(
-      generatedDirectory,
-      ...tokenEntry.file.split("/"),
+    const unreadTokenPath = path.join(
+      unreadDirectory,
+      ...unreadTokenEntry.file.split("/"),
     );
-    const buildPath = path.join(
-      generatedDirectory,
-      ...buildEntry.file.split("/"),
+    const unreadStore = new CatalogStoreV2({ registryDir: unreadDirectory });
+    await fs.appendFile(unreadTokenPath, " ");
+    expect(() =>
+      unreadStore.getRecord("token", "--salt-accent-background"),
+    ).toThrow(/digest mismatch/u);
+
+    const cachedDirectory = await createCatalogCopy();
+    const cachedManifest = await readManifest(cachedDirectory);
+    const cachedTokenEntry = cachedManifest.artifacts.find(
+      (entry) => entry.family === "token",
     );
-    const packPath = path.join(
-      generatedDirectory,
-      ...packEntry.file.split("/"),
+    if (!cachedTokenEntry) {
+      throw new Error("Fixture is missing token artifact metadata.");
+    }
+    const cachedTokenPath = path.join(
+      cachedDirectory,
+      ...cachedTokenEntry.file.split("/"),
     );
-    expect(__getCatalogFileReadCountForTests(manifestPath)).toBe(1);
-    expect(__getCatalogFileReadCountForTests(tokenPath)).toBe(0);
-    expect(__getCatalogFileReadCountForTests(buildPath)).toBe(0);
-    expect(store.getRecord("token", "--salt-accent-background")).not.toBeNull();
-    expect(__getCatalogFileReadCountForTests(tokenPath)).toBe(1);
-    expect(store.getRecord("token", "--salt-accent-background")).not.toBeNull();
-    expect(__getCatalogFileReadCountForTests(tokenPath)).toBe(1);
-    store.prefetch();
-    expect(__getCatalogFileReadCountForTests(packPath)).toBe(1);
-    store.ensureCatalogVerified();
-    expect(__getCatalogFileReadCountForTests(packPath)).toBe(1);
-    expect(__getCatalogFileReadCountForTests(buildPath)).toBe(0);
-    store.validateBuildArtifacts();
-    expect(__getCatalogFileReadCountForTests(buildPath)).toBe(1);
-    store.validateBuildArtifacts();
-    expect(__getCatalogFileReadCountForTests(buildPath)).toBe(1);
+    const cachedStore = new CatalogStoreV2({ registryDir: cachedDirectory });
+    const firstRead = cachedStore.getRecord(
+      "token",
+      "--salt-accent-background",
+    );
+    expect(firstRead).not.toBeNull();
+    await fs.appendFile(cachedTokenPath, " ");
+    expect(
+      cachedStore.getRecord("token", "--salt-accent-background"),
+    ).toBe(firstRead);
+    const freshStore = new CatalogStoreV2({ registryDir: cachedDirectory });
+    expect(() =>
+      freshStore.getRecord("token", "--salt-accent-background"),
+    ).toThrow(/digest mismatch/u);
   });
 
   it("rejects digest corruption on the first affected family access", async () => {
@@ -2523,7 +2625,9 @@ describe("CatalogStoreV2 lazy integrity checks", () => {
     );
 
     const store = new CatalogStoreV2({ registryDir: directory });
-    expect(() => store.validateBuildArtifacts()).toThrow(/digest mismatch/u);
+    expect(() => store.validateBuildArtifacts()).toThrow(
+      /digest mismatch|operational limit/u,
+    );
   });
 
   it.each([
@@ -2591,18 +2695,17 @@ describe("CatalogStoreV2 lazy integrity checks", () => {
       },
       expected: /contains duplicate id 'build-audit\.duplicate'/u,
     },
-  ])("rejects a rebound build artifact with $label", async ({
-    mutate,
-    rebindRecordCount,
-    expected,
-  }) => {
-    const directory = await createCatalogCopy({
-      includeBuildArtifacts: true,
-    });
-    await replaceBuildArtifact(directory, mutate, { rebindRecordCount });
-    const store = new CatalogStoreV2({ registryDir: directory });
-    expect(() => store.validateBuildArtifacts()).toThrow(expected);
-  });
+  ])(
+    "rejects a rebound build artifact with $label",
+    async ({ mutate, rebindRecordCount, expected }) => {
+      const directory = await createCatalogCopy({
+        includeBuildArtifacts: true,
+      });
+      await replaceBuildArtifact(directory, mutate, { rebindRecordCount });
+      const store = new CatalogStoreV2({ registryDir: directory });
+      expect(() => store.validateBuildArtifacts()).toThrow(expected);
+    },
+  );
 
   it.each([
     {
@@ -2656,22 +2759,22 @@ describe("CatalogStoreV2 lazy integrity checks", () => {
       },
       expected: /contains duplicate file/u,
     },
-  ])("rejects build-artifact manifest metadata with $label", async ({
-    mutate,
-    expected,
-  }) => {
-    const directory = await createCatalogCopy();
-    const manifest = await readManifest(directory);
-    mutate(manifest);
-    await fs.writeFile(
-      path.join(directory, SALT_CATALOG_MANIFEST_FILE),
-      canonicalJsonFile(manifest),
-      "utf8",
-    );
-    expect(() => new CatalogStoreV2({ registryDir: directory })).toThrow(
-      expected,
-    );
-  });
+  ])(
+    "rejects build-artifact manifest metadata with $label",
+    async ({ mutate, expected }) => {
+      const directory = await createCatalogCopy();
+      const manifest = await readManifest(directory);
+      mutate(manifest);
+      await fs.writeFile(
+        path.join(directory, SALT_CATALOG_MANIFEST_FILE),
+        canonicalJsonFile(manifest),
+        "utf8",
+      );
+      expect(() => new CatalogStoreV2({ registryDir: directory })).toThrow(
+        expected,
+      );
+    },
+  );
 
   it("rejects malformed tuples even when the attacker rebinds the artifact digest", async () => {
     const directory = await createCatalogCopy();
@@ -4257,15 +4360,15 @@ describe("CatalogStoreV2 lazy integrity checks", () => {
       registryDir: generatedDirectory,
     });
     const metrics = store.validateCrossReferences();
-    expect(metrics.familyRecordCounts.token).toBe(1_973);
-    expect(metrics.familyRecordCounts.token_declaration).toBe(3_803);
+    expect(metrics.familyRecordCounts.token).toBe(1_986);
+    expect(metrics.familyRecordCounts.token_declaration).toBe(3_829);
     expect(metrics.searchArtifactBytes).toBeLessThanOrEqual(3_000_000);
     expect(metrics.tokenOwnedArtifactBytes).toBeLessThanOrEqual(
       TOKEN_OWNED_ARTIFACT_BYTE_BUDGET,
     );
     const tokenSurface = measureTokenOwnedCatalogSurface(store);
-    expect(tokenSurface.record_counts.token_facts).toBe(1_973);
-    expect(tokenSurface.record_counts.token_search_projection).toBe(1_973);
+    expect(tokenSurface.record_counts.token_facts).toBe(1_986);
+    expect(tokenSurface.record_counts.token_search_projection).toBe(1_986);
     expect(tokenSurface.record_counts.structural_role_profiles).toBe(1);
     expect(tokenSurface.bytes.token_search_projection).toBeGreaterThan(0);
     expect(tokenSurface.bytes.total).toBe(metrics.tokenOwnedArtifactBytes);
@@ -4389,9 +4492,9 @@ describe("source-to-packed token declaration oracle", () => {
       .flatMap((token) => token.declarations ?? [])
       .sort((left, right) => left.id.localeCompare(right.id));
 
-    expect(extracted.declarations.size).toBe(1_973);
-    expect(expected).toHaveLength(3_803);
-    expect(actual).toHaveLength(3_803);
+    expect(extracted.declarations.size).toBe(1_986);
+    expect(expected).toHaveLength(3_829);
+    expect(actual).toHaveLength(3_829);
     expect(canonicalJson(actual)).toBe(canonicalJson(expected));
     expect(
       [...new Set(actual.map((declaration) => declaration.source_path))].sort(),

@@ -189,6 +189,22 @@ describe("catalog input inventory", () => {
     ).rejects.toThrow(/nested link or outside the repository/u);
   });
 
+  it("rejects catalog inputs with an external hard-link alias", async () => {
+    const root = await createFixture({
+      "inputs/declared.txt": "alpha",
+    });
+    const outsideRoot = await createFixture({
+      "outside.txt": "alpha",
+    });
+    const declaredPath = path.join(root, "inputs/declared.txt");
+    await fs.rm(declaredPath);
+    await fs.link(path.join(outsideRoot, "outside.txt"), declaredPath);
+
+    await expect(
+      createCatalogInputInventory(root, ["inputs/**/*"]),
+    ).rejects.toThrow(/uniquely linked regular file/u);
+  });
+
   it("rejects linked subtrees beneath a dynamic catalog input base", async () => {
     const root = await createFixture({
       "site/docs/local.mdx": "# Local",

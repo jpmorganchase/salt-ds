@@ -11,7 +11,6 @@ import {
   installPublishedPackage,
   verifyInstalledMcpModuleExports,
   verifyInstalledMcpTypes,
-  verifySkills,
   verifyStandaloneConsumerExample,
 } from "./consumer-smoke/fixture.mjs";
 import { parseArgs } from "./consumer-smoke/shared.mjs";
@@ -56,13 +55,6 @@ async function main() {
       existingSaltRepo,
     );
     await verifyInstalledMcpTypes(installedToolsRoot);
-    if (options.skillsSource) {
-      await verifySkills(
-        existingSaltRepo,
-        options.skillsSource,
-        options.expectedSkillTreeHash,
-      );
-    }
 
     await runMcpWorkflowCoverage(
       installedToolsRoot,

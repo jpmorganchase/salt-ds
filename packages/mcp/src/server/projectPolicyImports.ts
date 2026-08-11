@@ -489,6 +489,9 @@ async function validateTarget(
                 moduleFile.reason === "not_file"
               ? "the resolved target is not a regular file"
               : moduleFile.status === "invalid" &&
+                  moduleFile.reason === "multiple_links"
+                ? "the resolved target has multiple hard links"
+                : moduleFile.status === "invalid" &&
                   moduleFile.reason === "changed_during_inspection"
                 ? "the resolved module changed during bounded inspection"
                 : moduleFile.status === "invalid" &&

@@ -177,7 +177,7 @@ describe("catalog artifact package contracts", () => {
         envelope: searchEnvelope,
         catalogSchema,
       }),
-    ).toBe(3332);
+    ).toBe(3345);
 
     const corruptedEnvelope = structuredClone(searchEnvelope);
     corruptedEnvelope.records[0][1] = corruptedEnvelope.records[0][1].slice(1);
@@ -187,6 +187,6 @@ describe("catalog artifact package contracts", () => {
         envelope: corruptedEnvelope,
         catalogSchema,
       }),
-    ).toThrow(/logical record count 3331 does not match manifest count 3332/u);
+    ).toThrow(/logical record count 3344 does not match manifest count 3345/u);
   });
 });

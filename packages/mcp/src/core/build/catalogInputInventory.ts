@@ -2,6 +2,7 @@ import fs from "node:fs";
 import fsPromises from "node:fs/promises";
 import path from "node:path";
 import fg from "fast-glob";
+import catalogInputPatterns from "./catalogInputPatterns.json";
 import { isPortableRepositoryPath } from "../catalog/catalogPortablePath.js";
 import {
   canonicalJson,
@@ -23,38 +24,9 @@ export interface CatalogInputInventory {
   expectedByAbsolutePath: ReadonlyMap<string, CatalogInputInventoryEntry>;
 }
 
-export const CATALOG_INPUT_PATTERNS = [
-  "package.json",
-  "tsconfig.json",
-  "vite.config.ts",
-  "declarations.d.ts",
-  ".yarnrc.yml",
-  "yarn.lock",
-  "packages/*/package.json",
-  "packages/*/CHANGELOG.md",
-  "packages/*/*.{ts,tsx,css,scss}",
-  "packages/*/css/**/*.{css,scss}",
-  "packages/*/src/**/*.{ts,tsx,mts,cts,js,jsx,mjs,cjs,css,scss,json}",
-  "packages/*/stories/**/*.{ts,tsx,css,scss,json}",
-  "packages/theme/css/**/*.{css,json}",
-  "site/docs/**/*.mdx",
-  "site/component-category-map.json",
-  "site/pattern-category-map.json",
-  "site/src/components/css-display/descriptions.ts",
-  "site/src/components/icon-preview/salt-icon-synonym.json",
-  "site/src/examples/**/*.{ts,tsx,css,scss,json}",
-  "scripts/build.mjs",
-  "scripts/catalogArtifactContract.mjs",
-  "scripts/catalogBuildIdentity.mjs",
-  "scripts/checkAiToolingPackageDryRun.mjs",
-  "scripts/makeTypings.mjs",
-  "scripts/transformWorkspaceDeps.mjs",
-  "scripts/utils.mjs",
-  "packages/mcp/tsconfig.json",
-  "packages/mcp/src/core/catalog/catalogBudgets.json",
-  "packages/mcp/scripts/buildRegistry.mjs",
-  "packages/mcp/scripts/measurePublicSurface.mjs",
-] as const;
+export const CATALOG_INPUT_PATTERNS = Object.freeze([
+  ...catalogInputPatterns,
+]);
 
 const INPUT_HASH_CONCURRENCY = 32;
 
@@ -307,7 +279,19 @@ export async function createCatalogInputInventory(
           throw new Error(`Catalog input escapes source root: ${relativePath}`);
         }
 
+        const initialStats = await fsPromises.lstat(absolutePath, {
+          bigint: true,
+        });
         const initialRealPath = await fsPromises.realpath(absolutePath);
+        if (
+          initialStats.isSymbolicLink() ||
+          !initialStats.isFile() ||
+          initialStats.nlink !== 1n
+        ) {
+          throw new Error(
+            `Catalog input must be a uniquely linked regular file: ${relativePath}.`,
+          );
+        }
         assertCatalogInputRealPathIdentity(
           resolvedRoot,
           realRoot,
@@ -315,7 +299,23 @@ export async function createCatalogInputInventory(
           initialRealPath,
         );
         const bytes = await fsPromises.readFile(absolutePath);
+        const finalStats = await fsPromises.lstat(absolutePath, {
+          bigint: true,
+        });
         const finalRealPath = await fsPromises.realpath(absolutePath);
+        if (
+          finalStats.isSymbolicLink() ||
+          !finalStats.isFile() ||
+          finalStats.nlink !== 1n ||
+          finalStats.dev !== initialStats.dev ||
+          finalStats.ino !== initialStats.ino ||
+          finalStats.size !== initialStats.size ||
+          finalStats.mtimeNs !== initialStats.mtimeNs
+        ) {
+          throw new Error(
+            `Catalog input changed while its inventory was captured: ${relativePath}.`,
+          );
+        }
         assertCatalogInputRealPathIdentity(
           resolvedRoot,
           realRoot,

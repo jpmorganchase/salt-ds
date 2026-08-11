@@ -40,6 +40,9 @@ export const SALT_CATALOG_PUBLICATION_FILE =
 export const SALT_CATALOG_CONTENT_PACK_FILE = "content.pack" as const;
 export const SALT_CATALOG_GENERATIONS_DIRECTORY =
   "catalog-generations" as const;
+export const MAX_CATALOG_MANIFEST_BYTES = 2 * 1024 * 1024;
+export const MAX_CATALOG_RUNTIME_FILE_BYTES = 32 * 1024 * 1024;
+export const MAX_CATALOG_RUNTIME_TOTAL_BYTES = 128 * 1024 * 1024;
 
 const SHA256_CODEC = z
   .string()
@@ -2148,7 +2151,11 @@ export const catalogInputEntryCodec = z
 const catalogArtifactManifestEntryShape = {
   file: portableRepositoryPathCodec,
   sha256: SHA256_CODEC,
-  bytes: z.number().int().nonnegative(),
+  bytes: z
+    .number()
+    .int()
+    .nonnegative()
+    .max(MAX_CATALOG_RUNTIME_FILE_BYTES),
   record_count: z.number().int().nonnegative(),
   codec: z.string().min(1),
   canonical: z.boolean(),
@@ -2173,7 +2180,11 @@ export const catalogSupportArtifactManifestEntryCodec = z
     kind: z.enum(["json_schema", "package_inventory", "content_pack"]),
     file: portableRepositoryPathCodec,
     sha256: SHA256_CODEC,
-    bytes: z.number().int().nonnegative(),
+    bytes: z
+      .number()
+      .int()
+      .nonnegative()
+      .max(MAX_CATALOG_RUNTIME_FILE_BYTES),
     codec: z.string().min(1),
   })
   .strict();

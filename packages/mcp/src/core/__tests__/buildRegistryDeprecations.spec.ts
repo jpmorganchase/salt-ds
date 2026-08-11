@@ -502,25 +502,24 @@ export const LegacyThing = 2;
     );
   });
 
-  it.each([
-    "src/../src/index.ts",
-    "foo/../src/index.ts",
-    "src//index.ts",
-  ])("rejects noncanonical source entrypoint path %s", async (sourcePath) => {
-    const repoRoot = await createPackageFixture({
-      "package.json": JSON.stringify({
-        name: "@salt-ds/core",
-        saltSourceEntrypoints: {
-          ".": sourcePath,
-        },
-      }),
-      "src/index.ts": "export {};\n",
-    });
+  it.each(["src/../src/index.ts", "foo/../src/index.ts", "src//index.ts"])(
+    "rejects noncanonical source entrypoint path %s",
+    async (sourcePath) => {
+      const repoRoot = await createPackageFixture({
+        "package.json": JSON.stringify({
+          name: "@salt-ds/core",
+          saltSourceEntrypoints: {
+            ".": sourcePath,
+          },
+        }),
+        "src/index.ts": "export {};\n",
+      });
 
-    await expect(
-      extractDeprecations(repoRoot, [fixturePackage()], new Set()),
-    ).rejects.toThrow(/invalid source entrypoint/u);
-  });
+      await expect(
+        extractDeprecations(repoRoot, [fixturePackage()], new Set()),
+      ).rejects.toThrow(/invalid source entrypoint/u);
+    },
+  );
 
   it("keeps semantic ids stable when prose, version, location, and byte ranges change", async () => {
     const repoRoot = await fs.mkdtemp(
@@ -879,36 +878,35 @@ export default interface LegacyThing {}
       symbolSpace: "type",
       index: 'export type { default } from "./Fixture";\n',
     },
-  ])("binds a deprecated member of a default owner", async ({
-    declaration,
-    symbolSpace,
-    index,
-  }) => {
-    const repoRoot = await createPackageFixture({
-      "src/Fixture.ts": `${declaration}\n`,
-      "src/index.ts": index,
-    });
+  ])(
+    "binds a deprecated member of a default owner",
+    async ({ declaration, symbolSpace, index }) => {
+      const repoRoot = await createPackageFixture({
+        "src/Fixture.ts": `${declaration}\n`,
+        "src/index.ts": index,
+      });
 
-    const [deprecation] = await extractDeprecations(
-      repoRoot,
-      [fixturePackage()],
-      new Set(),
-    );
-    expect(deprecation).toMatchObject({
-      name: "legacy",
-      subject: {
-        export_name: "default",
-        symbol_space: symbolSpace,
-        member_path: [{ kind: "method", name: "legacy" }],
-      },
-      replacement: {
-        target: {
+      const [deprecation] = await extractDeprecations(
+        repoRoot,
+        [fixturePackage()],
+        new Set(),
+      );
+      expect(deprecation).toMatchObject({
+        name: "legacy",
+        subject: {
           export_name: "default",
-          member_path: [{ kind: "method", name: "modern" }],
+          symbol_space: symbolSpace,
+          member_path: [{ kind: "method", name: "legacy" }],
         },
-      },
-    });
-  });
+        replacement: {
+          target: {
+            export_name: "default",
+            member_path: [{ kind: "method", name: "modern" }],
+          },
+        },
+      });
+    },
+  );
 
   it("binds a deprecated default export assignment to its local declaration leaf", async () => {
     const repoRoot = await createPackageFixture({
@@ -1385,7 +1383,7 @@ export const LegacyOne = 1, LegacyTwo = 2;
 `,
       index: 'export { LegacyOne, LegacyTwo } from "./Fixture";\n',
       expected:
-        /variable statement declares multiple public bindings.*cannot share one Phase 1 deprecation contract/u,
+        /variable statement declares multiple public bindings.*cannot share one single-declaration deprecation contract/u,
     },
     {
       name: "private replacement",

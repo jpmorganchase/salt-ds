@@ -44,7 +44,15 @@ export function createWindowsCmdInvocation(command, args) {
 
 export const repoRoot = path.resolve(__dirname, "..", "..");
 export const distMcpDir = path.join(repoRoot, "dist", "salt-ds-mcp");
-export const defaultSkillsSource = path.join(repoRoot, "packages", "skills");
+
+const CONSUMER_SMOKE_OPTIONS = new Set([
+  "published",
+  "keep-temp",
+  "skip-build",
+  "mcp-spec",
+  "expected-version",
+  "expected-git-head",
+]);
 
 export function getExecutable(name) {
   return process.platform === "win32" ? `${name}.cmd` : name;
@@ -71,6 +79,10 @@ export function parseArgs(argv) {
     }
 
     const key = token.slice(2);
+    assert(
+      CONSUMER_SMOKE_OPTIONS.has(key),
+      `Unknown consumer smoke option: --${key}.`,
+    );
     const next = argv[index + 1];
     if (!next || next.startsWith("--")) {
       flags[key] = "true";
@@ -82,18 +94,10 @@ export function parseArgs(argv) {
   }
 
   const published = flags.published === "true";
-  const skillsSource = flags["skills-source"];
-  const expectedSkillTreeHash = flags["expected-skill-tree-hash"];
   const result = {
     published,
     keepTemp: flags["keep-temp"] === "true",
     skipBuild: flags["skip-build"] === "true",
-    skillsSource: published
-      ? skillsSource
-      : skillsSource
-        ? path.resolve(skillsSource)
-        : defaultSkillsSource,
-    expectedSkillTreeHash,
     mcpSpec: flags["mcp-spec"],
     expectedVersion: flags["expected-version"],
     expectedGitHead: flags["expected-git-head"],
@@ -101,10 +105,7 @@ export function parseArgs(argv) {
 
   if (!published) {
     assert(
-      !result.mcpSpec &&
-        !result.expectedVersion &&
-        !result.expectedGitHead &&
-        !result.expectedSkillTreeHash,
+      !result.mcpSpec && !result.expectedVersion && !result.expectedGitHead,
       "Published identity options require --published.",
     );
     return result;
@@ -134,23 +135,6 @@ export function parseArgs(argv) {
     /^[0-9a-f]{40}$/u.test(result.expectedGitHead),
     "--expected-git-head must be a full lowercase 40-character commit SHA.",
   );
-  assert(
-    Boolean(result.skillsSource) === Boolean(result.expectedSkillTreeHash),
-    "Published skill source and expected tree hash must be supplied together.",
-  );
-  if (result.skillsSource) {
-    assert(
-      /^https:\/\/github\.com\/jpmorganchase\/salt-ds\/tree\/[0-9a-f]{40}\/packages\/skills\/?$/u.test(
-        result.skillsSource,
-      ),
-      "Published --skills-source must use the immutable Salt GitHub tree URL with a full commit SHA.",
-    );
-    assert(
-      /^[0-9a-f]{64}$/u.test(result.expectedSkillTreeHash),
-      "--expected-skill-tree-hash must be a lowercase SHA-256 digest.",
-    );
-  }
-
   return result;
 }
 
@@ -247,17 +231,31 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
   const inspectionText = inspectionResult.content?.find(
     (part) => part.type === "text",
   )?.text;
+  const expectedInspectionText = structuredClone(inspection);
+  if (
+    expectedInspectionText.data?.installation?.untrusted_project_data
+      ?.resolved_packages
+  ) {
+    expectedInspectionText.data.installation.untrusted_project_data.resolved_packages =
+      [];
+  }
   assert(
     inspectionText &&
-      JSON.stringify(JSON.parse(inspectionText)) === JSON.stringify(inspection),
-    "inspect_salt_project text fallback diverged from structured content.",
+      JSON.stringify(JSON.parse(inspectionText)) ===
+        JSON.stringify(expectedInspectionText),
+    "inspect_salt_project text fallback did not redact only raw dependency facts.",
   );
   const resolvedPackages = [
-    ...(inspection.data.installation?.resolved_packages ?? []),
+    ...(inspection.data.installation?.untrusted_project_data
+      ?.resolved_packages ?? []),
   ].sort((left, right) => left.name.localeCompare(right.name));
   assert(
     inspection.data.package_manifest?.name === "salt-consumer-smoke-existing" &&
       inspection.data.package_manifest?.package_manager === "npm" &&
+      inspection.data.installation?.untrusted_project_data?.classification ===
+        "untrusted_project_data" &&
+      inspection.data.installation?.untrusted_project_data
+        ?.instruction_authority === "none" &&
       resolvedPackages.some(
         (entry) =>
           entry.name === "@salt-ds/core" && entry.declared_version === "1.67.0",

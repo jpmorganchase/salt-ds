@@ -7,14 +7,21 @@ interface RootPackageJson {
   scripts?: Record<string, string>;
 }
 
+interface StylelintConfig {
+  overrides?: Array<{
+    files?: string[];
+    rules?: Record<string, unknown>;
+  }>;
+}
+
 const POST_BUILD_STEPS = [
+  "yarn typecheck",
   "yarn typecheck:mcp",
   "yarn test:ai-tooling",
-  "yarn eval:archive-contract",
-  "node scripts/validatePhase5Candidate.mjs",
   "yarn workspace @salt-ds/mcp measure:runtime-loc",
   "yarn workspace @salt-ds/mcp measure:surface",
   "yarn check:ai-tooling:pack",
+  "yarn smoke:consumer --skip-build",
 ];
 
 async function readScripts(): Promise<Record<string, string>> {
@@ -24,7 +31,7 @@ async function readScripts(): Promise<Record<string, string>> {
   return packageJson.scripts ?? {};
 }
 
-describe("MCP release verification scripts", () => {
+describe("release verification scripts", () => {
   it("keeps the public verification command self-contained and stale-safe", async () => {
     const scripts = await readScripts();
 
@@ -40,27 +47,47 @@ describe("MCP release verification scripts", () => {
     const scripts = await readScripts();
     const postBuild = scripts["release:verify:mcp:after-build"];
 
-    const positions = POST_BUILD_STEPS.map((step) => postBuild.indexOf(step));
-    expect(positions.every((position) => position >= 0)).toBe(true);
-    expect(positions).toEqual(
-      [...positions].sort((left, right) => left - right),
-    );
-    for (const step of POST_BUILD_STEPS) {
-      expect(postBuild.split(step)).toHaveLength(2);
-    }
-    expect(postBuild).not.toContain("yarn eval:deterministic");
+    expect(postBuild.split(" && ")).toEqual(POST_BUILD_STEPS);
     expect(postBuild).not.toContain("release:verify:mcp:after-build");
   });
 
-  it("reuses the full release build without rebuilding MCP", async () => {
+  it("runs the Date package gate before the unchanged MCP composite", async () => {
     const scripts = await readScripts();
 
-    expect(scripts.release).toBe(
-      "yarn build && yarn release:verify:mcp:after-build && yarn changeset publish",
+    expect(scripts["release:verify:after-build"]?.split(" && ")).toEqual([
+      "yarn check:date-adapters:pack",
+      "yarn release:verify:mcp:after-build",
+    ]);
+    expect(scripts["release:verify:after-build"]).not.toContain(
+      "release:verify:after-build",
     );
   });
 
-  it("keeps published registry smoke explicit and outside deterministic verification", async () => {
+  it("runs both package gates after the PR build", async () => {
+    const workflow = await fs.readFile(
+      path.join(REPO_ROOT, ".github", "workflows", "test.yml"),
+      "utf8",
+    );
+    const build = workflow.indexOf("run: yarn build");
+    const mcpPackageGate = workflow.indexOf("run: yarn check:ai-tooling:pack");
+    const datePackageGate = workflow.indexOf(
+      "run: yarn check:date-adapters:pack",
+    );
+
+    expect(build).toBeGreaterThanOrEqual(0);
+    expect(mcpPackageGate).toBeGreaterThan(build);
+    expect(datePackageGate).toBeGreaterThan(build);
+  });
+
+  it("reuses the full release build without rebuilding packages", async () => {
+    const scripts = await readScripts();
+
+    expect(scripts.release).toBe(
+      "yarn build && yarn release:verify:after-build && yarn changeset publish",
+    );
+  });
+
+  it("keeps published registry smoke explicit and verifies the packed local consumer", async () => {
     const scripts = await readScripts();
 
     expect(scripts["smoke:consumer:published"]).toBe(
@@ -72,8 +99,8 @@ describe("MCP release verification scripts", () => {
     expect(scripts["smoke:consumer:network"]).toBe(
       "node ./scripts/consumerRepoSmoke.mjs",
     );
-    expect(scripts["release:verify:mcp:after-build"]).not.toContain(
-      "smoke:consumer",
+    expect(scripts["release:verify:mcp:after-build"]).toContain(
+      "yarn smoke:consumer --skip-build",
     );
   });
 
@@ -86,15 +113,40 @@ describe("MCP release verification scripts", () => {
     expect(scripts["prettier:ci"]).toBe("prettier --check .");
   });
 
-  it("keeps live evaluation, provider, post-publish, and publish work out of verification", async () => {
+  it("includes theme CSS in the style gate while exempting compatibility definitions", async () => {
+    const scripts = await readScripts();
+    const stylelintConfig = JSON.parse(
+      await fs.readFile(path.join(REPO_ROOT, ".stylelintrc.json"), "utf8"),
+    ) as StylelintConfig;
+    const deprecatedThemeOverride = stylelintConfig.overrides?.find(
+      (override) =>
+        override.files?.includes("**/theme/css/**/deprecated/**/*.css"),
+    );
+    const legacyThemeOverride = stylelintConfig.overrides?.find((override) =>
+      override.files?.includes("**/theme/css/legacy/**/*.css"),
+    );
+
+    expect(scripts["lint:style"]?.split(" && ")).toContain(
+      "yarn lint:style:theme",
+    );
+    expect(deprecatedThemeOverride?.rules).toMatchObject({
+      "salt/no-deprecated-token-usage": null,
+    });
+    expect(legacyThemeOverride?.rules).toMatchObject({
+      "salt/no-deprecated-token-usage": null,
+    });
+  });
+
+  it("keeps evaluation, provider, post-publish, and publish work out of verification", async () => {
     const scripts = await readScripts();
     const verification = [
+      scripts["release:verify:after-build"],
       scripts["release:verify:mcp"],
       scripts["release:verify:mcp:after-build"],
     ].join(" ");
 
     expect(verification).not.toMatch(
-      /causal|skill-behavior|prepare-live|import-live|provider|post-publish|changeset publish|npm publish/iu,
+      /eval:|causal|skill-behavior|prepare-live|import-live|provider|post-publish|changeset publish|npm publish/iu,
     );
   });
 });

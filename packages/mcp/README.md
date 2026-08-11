@@ -2,6 +2,33 @@
 
 Read-only, offline-first Salt Design System MCP server.
 
+## Install and configure
+
+Use Node 22 or newer and install the package in the project the MCP will
+inspect:
+
+```sh
+yarn add --dev @salt-ds/mcp
+```
+
+Configure a local stdio server in your MCP host:
+
+```json
+{
+  "mcpServers": {
+    "Salt": {
+      "command": "node",
+      "args": ["./node_modules/@salt-ds/mcp/bin/salt-mcp.js"]
+    }
+  }
+}
+```
+
+Launch the host from the intended project directory. The local server runs
+with the filesystem permissions of the account that launched it; use the least
+practical privileges and sandbox untrusted repositories. This configuration is
+for local stdio use, not a remote or shared service.
+
 ## Breaking public surface
 
 The server registers exactly three read-only tools:
@@ -40,10 +67,15 @@ Policy evaluation is enabled by default and is independent of delivery:
 Inspection also returns an opaque `project_context_handle` backed by the same
 bounded process-local cache. Passing it to `review_salt_code` reuses the exact
 policy snapshot and resolved exact package versions without rereading the
-project. The handle expires on eviction or server restart and never bypasses
-root authorization. Passing `root_dir` to review instead explicitly requests a
-fresh reinspection; passing neither keeps review limited to submitted text and
-caller-supplied exact `package_versions`.
+project. Handles are fixed-size random capabilities and do not encode the
+project path or digest. A handle expires on replacement, eviction, or server
+restart and never bypasses root authorization. Passing `root_dir` to review
+instead explicitly requests a fresh reinspection; passing neither keeps review
+limited to submitted text and optional caller-supplied exact
+`package_versions`. Review always reports `scope.kind = submitted_text_only`
+and separately identifies the auxiliary `context_source` as `none`,
+`caller_package_versions`, `retained_project_snapshot`, or
+`fresh_project_inspection`.
 
 Resource discovery lists the curated catalog manifest rather than materializing
 the internal graph. Exact records remain addressable through the digest-bound
@@ -53,6 +85,12 @@ resource returns its verified payload and media type. Resource-template
 completion is bounded. The packaged catalog is immutable, so the server does
 not advertise resource subscriptions or list-change notifications.
 
+Server creation crosses a whole-catalog integrity barrier before the server is
+returned: every runtime family, support artifact, cross-reference, and content
+object is verified. Manifest, per-file, aggregate stored-runtime, per-object
+decoded-content, and aggregate declared decoded-content limits are enforced
+before content-pack decompression.
+
 The manifest reports the package `server_version`, catalog version and digests,
 and the negotiated MCP protocol revision as separate identities.
 
@@ -60,11 +98,12 @@ There is no capability manifest or server-owned creation or migration workflow.
 
 The stdio entry uses the SDK v2 dual-era server factory. It negotiates MCP
 `2026-07-28` with modern or auto-negotiating clients and retains the legacy
-`2025-11-25`, `2025-06-18`, `2025-03-26`, `2024-11-05`, and `2024-10-07`
-handshake for existing clients. The public factory returns the concrete
-`McpServer` type from `@modelcontextprotocol/server`; callers that need
-dual-era negotiation should serve a fresh instance through the SDK's serving
-entry, as the CLI does.
+`2025-11-25` and `2025-06-18` handshakes for existing clients. Earlier
+revisions are intentionally not advertised because Salt tool results include
+resource links, whose wire shape was added in `2025-06-18`. The public factory
+returns the concrete `McpServer` type from `@modelcontextprotocol/server`;
+callers that need dual-era negotiation should serve a fresh instance through
+the SDK's serving entry, as the CLI does.
 
 ## Responsibility boundary
 
@@ -106,9 +145,19 @@ bounded ancestor stage ran or reached its limit. Project-policy manifests,
 chunks, and claims are authorized reads of untrusted project data and carry
 that trust classification in each resource envelope.
 
+Dependency names, declared ranges, resolved versions, and resolved paths are
+also project-controlled. Structured inspection results expose them only below
+`data.installation.untrusted_project_data`, labelled with
+`classification: untrusted_project_data`, `instruction_authority: none`, and
+`authorization_meaning: read_access_only`. Top-level limitations and the text
+fallback contain only stable repository-authored summaries and diagnostic
+codes; raw dependency facts remain available in structured content.
+
 Bounded readers also reopen the caller-named path, recheck canonical
 containment, and compare the opened handle with the named path before and after
-reading. These checks detect observable replacements, but Node does not expose
+reading. Project inputs with multiple hard links are rejected because they do
+not have a unique pathname identity. These checks detect observable
+replacements, but Node does not expose
 a portable directory-handle-relative, no-follow traversal for every path
 component. An allowed repository that an attacker can rewrite concurrently
 still requires OS permissions, an immutable mount, or process sandboxing.
@@ -140,6 +189,8 @@ default/named catalogs, and local `workspace:` declarations. Unverifiable
 protocol declarations are reported as such and never promoted to verified
 health. Ambiguous lockfile families and invalid lockfile markers also downgrade
 installation assessment to limited instead of following a fixed priority.
+Lockfile presence is checked through contained, no-follow metadata and identity
+validation; marker contents are not read.
 
 ## Package boundary
 
@@ -147,3 +198,8 @@ Published package contents are limited to the CLI entry point, compiled ESM and
 CommonJS bundles, and the packaged offline Salt data needed by the registered
 read-only surface. Internal builders, evaluation helpers, and source-only
 artifacts are not public package APIs.
+
+The release build binds its generated catalog to the complete canonical input
+pattern set in `src/core/build/catalogInputPatterns.json`. The package build re-enumerates
+and byte-verifies that set at each build boundary and immediately before
+success, rejecting added, removed, changed, or linked matching inputs.

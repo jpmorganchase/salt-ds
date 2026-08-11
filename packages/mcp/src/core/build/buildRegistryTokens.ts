@@ -14,6 +14,7 @@ import {
   type TokenPolicySourceRegistry,
 } from "./buildRegistryTokenPolicy.js";
 import { globCatalogInputs } from "./catalogInputInventory.js";
+import { NON_PRODUCTION_IMPLEMENTATION_GLOB_IGNORES } from "./catalogProductionSource.js";
 import { extractTokenDeclarations } from "./extractTokenDeclarations.js";
 
 function inferTokenType(tokenValue: string): string {
@@ -230,6 +231,7 @@ async function extractTokenCountsForSource(
               cwd: repoRoot,
               absolute: true,
               onlyFiles: true,
+              ignore: [...NON_PRODUCTION_IMPLEMENTATION_GLOB_IGNORES],
             })
           )
             .sort(compareOrdinalStrings)
