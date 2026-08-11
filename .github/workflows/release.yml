@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Create Release Pull Request or publish to npm
-        uses: changesets/action@63a615b9cd06ba9a3e6d13796c7fbcb080a60a0b # v1
+        uses: changesets/action@22ccf9aa43179fe9e27dc62e575971d28cce197c # v2.0.0
         with:
           version: yarn changeset version
           publish: yarn release
