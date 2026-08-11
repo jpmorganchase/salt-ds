@@ -1,4 +1,4 @@
-[//]: # (TODO: delete that before merging")
+[//]: # 'TODO: delete that before merging"'
 
 # OnSolid Button
 
@@ -18,7 +18,7 @@ List out the features and functions the component must provide.
 - Support appearance: Transparent
 - Note: bordered appearance not included in current scope
 - Density aware spacing and size
-- Support all sentiments
+- Does not support the `appearance`, `sentiment`, `variant`, `loading` and `loadingAnnouncement` props of Button
 - Must be exposed as a contextual variant of Button, not a new button level / hierarchy
 - Must be self-contained and not inherit container colours
 
