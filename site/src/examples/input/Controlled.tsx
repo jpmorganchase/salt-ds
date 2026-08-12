@@ -9,11 +9,6 @@ export const Controlled = (): ReactElement => {
   };
 
   return (
-    <Input
-      inputProps={{ name: "example" }}
-      value={value}
-      onChange={handleChange}
-      style={{ width: "256px" }}
-    />
+    <Input value={value} onChange={handleChange} style={{ width: "256px" }} />
   );
 };

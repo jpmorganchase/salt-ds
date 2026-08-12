@@ -4,7 +4,6 @@
 "@salt-ds/theme": patch
 "@salt-ds/date-adapters": patch
 "@salt-ds/icons": patch
-"@salt-ds/lab": patch
 ---
 
 Replace the private Salt workflow protocol with the MCP SDK v2 adapter. The
@@ -35,17 +34,16 @@ mode automatically. It is not appropriate for remote or shared deployments.
 
 Exported `ValidationStatusValues` from `@salt-ds/core` as the supported
 replacement for the deprecated `VALIDATION_NAMED_STATUS` constant and added
-resolvable replacement metadata across deprecated Core APIs.
+standard typed replacement links across deprecated Core APIs.
 
 Corrected published Theme token aliases and deprecated-token replacement
 metadata.
 
-Corrected Date Adapters migration metadata and declaration generation, removed
-duplicate declaration sources, kept source-only entrypoint metadata out of the
-published manifest, removed workspace-only publish scripts and directory
-metadata, made adapter-specific peers optional, and finalized the published
-README and LICENSE, dual ESM/CommonJS module boundaries, derived export map,
-and isolated packed-consumer verification.
+Corrected Date Adapters declaration generation, removed duplicate declaration
+sources, kept source-only entrypoint metadata out of the published manifest,
+removed workspace-only publish scripts and directory metadata, made
+adapter-specific peers optional, and finalized the published README and
+LICENSE, dual ESM/CommonJS module boundaries, derived export map, and isolated
+packed-consumer verification.
 
-Added resolvable replacement links to deprecated Icon declarations and added
-migration metadata to deprecated Lab APIs.
+Added resolvable replacement links to deprecated Icon declarations.

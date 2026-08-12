@@ -2247,7 +2247,7 @@ export function normalizeCatalogV2(input: {
         roleSourceField:
           composition.role === null
             ? null
-            : `data.ai.componentRoles[${JSON.stringify(composition.component)}]`,
+            : `mcp.catalogEditorialOverrides.componentRoles[${JSON.stringify(composition.component)}]`,
         sourceRef: sourceForCatalogRoute(overview),
       });
       addRelation("composes", owner, target, {

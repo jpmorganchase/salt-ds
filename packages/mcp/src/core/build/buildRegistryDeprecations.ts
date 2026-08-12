@@ -41,6 +41,10 @@ import {
   type NoTargetMigrationStrategy,
 } from "./deprecationMigrationOverrides.js";
 import {
+  type DeprecationValueMapOverrideCase,
+  deprecationValueMapOverride,
+} from "./deprecationValueMapOverrides.js";
+import {
   generatorDependencyDirectoryExists,
   generatorDependencyFileExists,
   generatorDependencyRealpath,
@@ -1030,81 +1034,6 @@ function deprecatedPublicExportSelectors(
   return selectors.sort(compareOrdinalStrings);
 }
 
-function isApiLiteral(value: unknown): value is ApiLiteral {
-  return (
-    value === null ||
-    typeof value === "string" ||
-    typeof value === "boolean" ||
-    (typeof value === "number" && Number.isFinite(value))
-  );
-}
-
-interface AuthoredValueMapCase {
-  from: ApiLiteral;
-  set: Array<readonly [target: string, value: ApiLiteral]>;
-}
-
-function authoredValueMapCases(
-  tags: readonly ts.JSDocTag[],
-  sourceFile: ts.SourceFile,
-): AuthoredValueMapCase[] {
-  return tagsNamed(tags, "saltValueMap", sourceFile).map((tag) => {
-    const source = extractJsDocTagComment(tag.comment, sourceFile).trim();
-    let parsed: unknown;
-    try {
-      parsed = JSON.parse(source);
-    } catch (error) {
-      throw new Error(
-        `Invalid @saltValueMap JSON '${source}': ${
-          error instanceof Error ? error.message : String(error)
-        }`,
-      );
-    }
-    if (
-      typeof parsed !== "object" ||
-      parsed === null ||
-      Array.isArray(parsed) ||
-      Object.keys(parsed).some((key) => key !== "from" && key !== "set") ||
-      !Object.hasOwn(parsed, "from") ||
-      !Object.hasOwn(parsed, "set")
-    ) {
-      throw new Error(
-        "@saltValueMap must be a JSON object containing only 'from' and 'set'.",
-      );
-    }
-    const candidate = parsed as { from: unknown; set: unknown };
-    if (!isApiLiteral(candidate.from) || !Array.isArray(candidate.set)) {
-      throw new Error(
-        "@saltValueMap requires a literal 'from' value and a 'set' array.",
-      );
-    }
-    const assignments = candidate.set.map((assignment) => {
-      if (
-        !Array.isArray(assignment) ||
-        assignment.length !== 2 ||
-        typeof assignment[0] !== "string" ||
-        !/^[A-Za-z_$][A-Za-z0-9_$]*$/u.test(assignment[0]) ||
-        !isApiLiteral(assignment[1])
-      ) {
-        throw new Error(
-          "@saltValueMap assignments must be [targetName, literalValue] tuples.",
-        );
-      }
-      return [assignment[0], assignment[1]] as const;
-    });
-    const assignmentTargets = new Set<string>();
-    for (const [target] of assignments) {
-      if (assignmentTargets.has(target)) {
-        throw new Error(
-          `@saltValueMap case '${String(candidate.from)}' assigns '${target}' more than once.`,
-        );
-      }
-      assignmentTargets.add(target);
-    }
-    return { from: candidate.from, set: assignments };
-  });
-}
-
 function finiteApiLiteralsFromType(
   type: ts.Type,
   checker: ts.TypeChecker,
@@ -1661,24 +1590,26 @@ function apiSymbolDisplayName(subject: ApiSymbolIdentity): string {
   return subject.member_path.at(-1)?.name ?? subject.export_name;
 }
 
-function buildDeprecationValueMap(
+export function buildDeprecationValueMap(
   node: ts.Node,
   checker: ts.TypeChecker,
-  authoredCases: readonly AuthoredValueMapCase[],
+  valueMapCases: readonly DeprecationValueMapOverrideCase[],
   targets: readonly ApiSymbolIdentity[],
 ): DeprecationValueMap | null {
-  if (authoredCases.length === 0) return null;
+  if (valueMapCases.length === 0) return null;
   if (apiMemberKind(node) !== "prop") {
     throw new Error(
-      "@saltValueMap is only valid for deprecated public properties.",
+      "A deprecation value-map override is only valid for deprecated public properties.",
     );
   }
   if (targets.length === 0) {
-    throw new Error("@saltValueMap requires at least one linked target.");
+    throw new Error(
+      "A deprecation value-map override requires at least one linked target.",
+    );
   }
   if (targets.some((target) => target.member_path.at(-1)?.kind !== "prop")) {
     throw new Error(
-      "@saltValueMap replacement targets must be public properties.",
+      "Deprecation value-map replacement targets must be public properties.",
     );
   }
   const targetByName = new Map<string, ApiSymbolIdentity>();
@@ -1686,7 +1617,7 @@ function buildDeprecationValueMap(
     const name = apiSymbolDisplayName(target);
     if (targetByName.has(name)) {
       throw new Error(
-        `Replacement target name '${name}' is ambiguous in @saltValueMap.`,
+        `Replacement target name '${name}' is ambiguous in the deprecation value-map override.`,
       );
     }
     targetByName.set(name, target);
@@ -1699,32 +1630,32 @@ function buildDeprecationValueMap(
       : null;
     if (!targetType) {
       throw new Error(
-        `@saltValueMap cannot resolve the declared type of replacement property '${targetName}'.`,
+        `The deprecation value-map override cannot resolve the declared type of replacement property '${targetName}'.`,
       );
     }
     if (targetType.flags & (ts.TypeFlags.Any | ts.TypeFlags.Unknown)) {
       throw new Error(
-        `@saltValueMap replacement property '${targetName}' must have a statically checkable type.`,
+        `Deprecation value-map replacement property '${targetName}' must have a statically checkable type.`,
       );
     }
     targetTypes.set(targetName, targetType);
   }
   const seenFrom = new Set<string>();
-  const cases = authoredCases.map((authoredCase) => {
-    const fromKey = canonicalJson(authoredCase.from);
+  const cases = valueMapCases.map((valueMapCase) => {
+    const fromKey = canonicalJson(valueMapCase.from);
     if (seenFrom.has(fromKey)) {
       throw new Error(
-        `@saltValueMap repeats source value ${String(authoredCase.from)}.`,
+        `Deprecation value-map override repeats source value ${String(valueMapCase.from)}.`,
       );
     }
     seenFrom.add(fromKey);
     return {
-      from: authoredCase.from,
-      set: authoredCase.set.map(([targetName, value]) => {
+      from: valueMapCase.from,
+      set: valueMapCase.set.map(([targetName, value]) => {
         const target = targetByName.get(targetName);
         if (!target) {
           throw new Error(
-            `@saltValueMap assigns '${targetName}', which is not a linked replacement target.`,
+            `The deprecation value-map override assigns '${targetName}', which is not a linked replacement target.`,
           );
         }
         const targetType = targetTypes.get(targetName);
@@ -1736,7 +1667,7 @@ function buildDeprecationValueMap(
           )
         ) {
           throw new Error(
-            `@saltValueMap assigns ${JSON.stringify(value)} outside the declared type of replacement target '${targetName}'.`,
+            `The deprecation value-map override assigns ${JSON.stringify(value)} outside the declared type of replacement target '${targetName}'.`,
           );
         }
         return { target, value };
@@ -1746,7 +1677,7 @@ function buildDeprecationValueMap(
   const finiteValues = finiteDeprecatedValues(node, checker);
   if (!finiteValues) {
     throw new Error(
-      "@saltValueMap requires a deprecated property with a finite literal or boolean type.",
+      "A deprecation value-map override requires a deprecated property with a finite literal or boolean type.",
     );
   }
   const expectedValues = new Set(
@@ -1757,7 +1688,7 @@ function buildDeprecationValueMap(
     [...seenFrom].some((value) => !expectedValues.has(value))
   ) {
     throw new Error(
-      "@saltValueMap cases must cover every finite value of the deprecated property exactly once.",
+      "Deprecation value-map cases must cover every finite value of the deprecated property exactly once.",
     );
   }
   return { cases, fallback: "manual" };
@@ -2020,7 +1951,7 @@ function collectDeprecationsFromSourceFile(
           );
         }
       }
-      const authoredValueMaps = authoredValueMapCases(allTags, sourceFile);
+      const legacyValueMapTags = tagsNamed(allTags, "saltValueMap", sourceFile);
       const legacyMigrationTags = tagsNamed(
         allTags,
         "saltMigration",
@@ -2031,6 +1962,11 @@ function collectDeprecationsFromSourceFile(
           `Deprecated public API '${symbolName}' must not declare @saltMigration; configure no-target behavior in the MCP-owned deprecation override map.`,
         );
       }
+      if (subjects.length > 0 && legacyValueMapTags.length > 0) {
+        throw new Error(
+          `Deprecated public API '${symbolName}' must not declare @saltValueMap; configure transformations in the MCP-owned deprecation value-map override map.`,
+        );
+      }
 
       for (const tag of tags) {
         const rawNote = extractJsDocTagComment(tag.comment, sourceFile);
@@ -2038,6 +1974,7 @@ function collectDeprecationsFromSourceFile(
         for (const subject of subjects) {
           const authoredMigration =
             deprecationMigrationStrategyOverride(subject);
+          const valueMapCases = deprecationValueMapOverride(subject);
           const subjectKind =
             subject.symbol_space === "type" &&
             (kind === "component" || kind === "other")
@@ -2079,20 +2016,20 @@ function collectDeprecationsFromSourceFile(
               `Deprecation '${apiSymbolDisplayName(subject)}' cannot combine replacement links with a no-target migration override.`,
             );
           }
-          if (replacementTargets.length === 0 && authoredValueMaps.length > 0) {
+          if (replacementTargets.length === 0 && valueMapCases.length > 0) {
             throw new Error(
-              `Deprecation '${apiSymbolDisplayName(subject)}' cannot declare @saltValueMap without replacement links.`,
+              `Deprecation '${apiSymbolDisplayName(subject)}' cannot use a value-map override without replacement links.`,
             );
           }
           const valueMap = buildDeprecationValueMap(
             node,
             checker,
-            authoredValueMaps,
+            valueMapCases,
             replacementTargets,
           );
           if (replacementTargets.length > 1 && !valueMap) {
             throw new Error(
-              `Composite deprecation '${apiSymbolDisplayName(subject)}' requires a complete @saltValueMap.`,
+              `Composite deprecation '${apiSymbolDisplayName(subject)}' requires a complete MCP-owned value-map override.`,
             );
           }
           const replacementMode =

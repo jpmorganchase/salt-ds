@@ -40,12 +40,11 @@ afterEach(async () => {
 });
 
 describe("extractGuides", () => {
-  it("extracts only getting-started guides explicitly marked for AI use", async () => {
+  it("extracts only getting-started guides selected by MCP overrides", async () => {
     const repoRoot = await createTempRepo({
       "site/docs/getting-started/developing.mdx": `---
 title: Developing with Salt
 description: Learn how to bootstrap a React app with Salt.
-salt_ai_guide: true
 ---
 
 Install Salt in a React app.
@@ -63,7 +62,6 @@ Import the fixture theme and start with [Fixture Button](/salt/components/fixtur
       "site/docs/getting-started/choosing-the-right-primitive.mdx": `---
 title: Choosing the right primitive
 description: Choose the most constrained Salt option first.
-salt_ai_guide: true
 ---
 
 Choose the best primitive for the user intent.
@@ -130,7 +128,6 @@ This page should not become an AI guide.
       "site/docs/getting-started/developing.mdx": `---
 title: Developing with Salt
 description: Learn how to add optional packages.
-salt_ai_guide: true
 ---
 
 Install optional Salt packages.
@@ -163,7 +160,6 @@ supports date ranges.
       "site/docs/getting-started/developing.mdx": `---
 title: Developing with Salt
 description: Learn how to add optional packages.
-salt_ai_guide: true
 ---
 
 Install optional Salt packages.
@@ -184,7 +180,6 @@ Use the [missing component](../components/missing-component/usage).
       "site/docs/getting-started/custom-wrappers.mdx": `---
 title: Custom wrappers
 description: Learn when wrappers add value.
-salt_ai_guide: true
 ---
 
 Wrap Salt primitives only when the wrapper adds value.
@@ -254,5 +249,23 @@ Fixture migration theme guidance comes from this source document.
       ]),
     );
     expect(sourceBackedStep?.snippets).toEqual([]);
+  });
+
+  it("rejects legacy guide-selection frontmatter", async () => {
+    const repoRoot = await createTempRepo({
+      "site/docs/getting-started/developing.mdx": `---
+title: Developing with Salt
+salt_ai_guide: true
+---
+
+## Install packages
+
+Install the required packages.
+`,
+    });
+
+    await expect(extractGuides(repoRoot, [])).rejects.toThrow(
+      /must not declare salt_ai_guide/u,
+    );
   });
 });

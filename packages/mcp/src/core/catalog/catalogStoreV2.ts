@@ -2418,7 +2418,7 @@ export class CatalogStoreV2 {
           const expectedRoleSourceField =
             record.role === null
               ? null
-              : `data.ai.componentRoles[${JSON.stringify(target.name)}]`;
+              : `mcp.catalogEditorialOverrides.componentRoles[${JSON.stringify(target.name)}]`;
           const detail = this.getContentJson(evidence.detail_content_ref);
           const expectedDetail = {
             relation_kind: record.relation_kind,

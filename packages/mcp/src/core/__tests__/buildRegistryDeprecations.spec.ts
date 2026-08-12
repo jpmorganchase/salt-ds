@@ -2,13 +2,18 @@ import fsSync from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import ts from "typescript";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { extractDeprecations } from "../build/buildRegistryDeprecations.js";
+import {
+  buildDeprecationValueMap,
+  extractDeprecations,
+} from "../build/buildRegistryDeprecations.js";
 import {
   createCatalogInputInventory,
   withCatalogInputTracking,
 } from "../build/catalogInputInventory.js";
-import type { PackageRecord } from "../types.js";
+import type { DeprecationValueMapOverrideCase } from "../build/deprecationValueMapOverrides.js";
+import type { ApiSymbolIdentity, PackageRecord } from "../types.js";
 
 const tempRoots: string[] = [];
 
@@ -40,6 +45,63 @@ async function createPackageFixture(
     }),
   );
   return repoRoot;
+}
+
+async function buildFixtureValueMap(options: {
+  source: string;
+  ownerName?: string;
+  sourceMember?: string;
+  targetMembers: readonly {
+    name: string;
+    kind?: ApiSymbolIdentity["member_path"][number]["kind"];
+  }[];
+  cases: readonly DeprecationValueMapOverrideCase[];
+}) {
+  const repoRoot = await createPackageFixture({
+    "src/Fixture.ts": options.source,
+  });
+  const sourcePath = path.join(repoRoot, "packages/core/src/Fixture.ts");
+  const program = ts.createProgram([sourcePath], {
+    strict: true,
+    target: ts.ScriptTarget.ES2022,
+    module: ts.ModuleKind.ESNext,
+    moduleResolution: ts.ModuleResolutionKind.Bundler,
+    noEmit: true,
+    skipLibCheck: true,
+  });
+  const sourceFile = program.getSourceFile(sourcePath);
+  if (!sourceFile) {
+    throw new Error("Value-map fixture source file was not loaded.");
+  }
+  const ownerName = options.ownerName ?? "FixtureProps";
+  const sourceMember = options.sourceMember ?? "legacy";
+  const owner = sourceFile.statements.find(
+    (statement): statement is ts.InterfaceDeclaration | ts.ClassDeclaration =>
+      (ts.isInterfaceDeclaration(statement) ||
+        ts.isClassDeclaration(statement)) &&
+      statement.name?.text === ownerName,
+  );
+  const node = owner?.members.find(
+    (member) => member.name?.getText(sourceFile) === sourceMember,
+  );
+  if (!node) {
+    throw new Error(
+      `Value-map fixture member '${ownerName}.${sourceMember}' was not found.`,
+    );
+  }
+  const targets: ApiSymbolIdentity[] = options.targetMembers.map((target) => ({
+    package: "@salt-ds/core",
+    entrypoint: ".",
+    export_name: ownerName,
+    symbol_space: "type",
+    member_path: [{ kind: target.kind ?? "prop", name: target.name }],
+  }));
+  return buildDeprecationValueMap(
+    node,
+    program.getTypeChecker(),
+    options.cases,
+    targets,
+  );
 }
 
 afterEach(async () => {
@@ -1091,34 +1153,26 @@ export class InternalClass {
     ).toBe(3);
   });
 
-  it("resolves imported finite source and target aliases with the TypeScript checker", async () => {
+  it("resolves MCP-owned maps against imported finite source and target aliases", async () => {
     const repoRoot = await createPackageFixture({
-      "src/Types.ts": `export interface ValidationStatuses {
-  error: string;
-  warning: string;
-  success: string;
-  info: string;
-}
-export type ValidationStatus = keyof ValidationStatuses;
-export type AdornmentValidationStatus = Exclude<ValidationStatus, "info">;
-export type LegacyMode = "primary" | "secondary" | undefined;
+      "src/Types.ts": `export type ButtonVariant = "cta" | "primary" | "secondary" | undefined;
+export type ButtonAppearance = "solid" | "transparent";
+export type ButtonSentiment = "accented" | "neutral";
 `,
-      "src/Fixture.ts": `import type {
-  AdornmentValidationStatus,
-  LegacyMode,
+      "src/Button.ts": `import type {
+  ButtonAppearance,
+  ButtonSentiment,
+  ButtonVariant,
 } from "./Types";
 
-export interface FixtureProps {
-  validationStatus?: AdornmentValidationStatus;
-  /**
-   * @deprecated Use {@link FixtureProps.validationStatus validationStatus}.
-   * @saltValueMap {"from":"primary","set":[["validationStatus","error"]]}
-   * @saltValueMap {"from":"secondary","set":[["validationStatus","warning"]]}
-   */
-  legacy?: LegacyMode;
+export interface ButtonProps {
+  appearance?: ButtonAppearance;
+  sentiment?: ButtonSentiment;
+  /** @deprecated Use {@link ButtonProps.appearance appearance} and {@link ButtonProps.sentiment sentiment}. */
+  variant?: ButtonVariant;
 }
 `,
-      "src/index.ts": 'export type { FixtureProps } from "./Fixture";\n',
+      "src/index.ts": 'export type { ButtonProps } from "./Button";\n',
     });
 
     const [deprecation] = await extractDeprecations(
@@ -1128,107 +1182,102 @@ export interface FixtureProps {
     );
     expect(
       deprecation.migration.value_map?.cases.map((entry) => entry.from),
-    ).toEqual(["primary", "secondary"]);
+    ).toEqual(["cta", "primary", "secondary"]);
   });
 
-  it("accepts a literal value assignable to a broad string replacement type", async () => {
-    const repoRoot = await createPackageFixture({
-      "src/Fixture.ts": `export interface FixtureProps {
+  it("accepts an override literal assignable to a broad string replacement type", async () => {
+    const valueMap = await buildFixtureValueMap({
+      source: `export interface FixtureProps {
   replacement?: string;
-  /**
-   * @deprecated Use {@link FixtureProps.replacement replacement}.
-   * @saltValueMap {"from":true,"set":[["replacement","allowed"]]}
-   * @saltValueMap {"from":false,"set":[]}
-   */
   legacy?: boolean;
 }
 `,
-      "src/index.ts": 'export type { FixtureProps } from "./Fixture";\n',
+      targetMembers: [{ name: "replacement" }],
+      cases: [
+        { from: true, set: [["replacement", "allowed"]] },
+        { from: false, set: [] },
+      ],
     });
 
-    const [deprecation] = await extractDeprecations(
-      repoRoot,
-      [fixturePackage()],
-      new Set(),
-    );
-    expect(deprecation.migration.value_map?.cases[0]?.set[0]?.value).toBe(
-      "allowed",
-    );
+    expect(valueMap?.cases[0]?.set[0]?.value).toBe("allowed");
   });
 
-  it.each([
-    {
-      name: "an uncovered imported source literal",
-      valueMaps:
-        '   * @saltValueMap {"from":"primary","set":[["validationStatus","error"]]}',
-      expected: /must cover every finite value/u,
-    },
-    {
-      name: "a value outside an imported target alias",
-      valueMaps: [
-        '   * @saltValueMap {"from":"primary","set":[["validationStatus","bogus"]]}',
-        '   * @saltValueMap {"from":"secondary","set":[["validationStatus","warning"]]}',
-      ].join("\n"),
-      expected: /outside the declared type of replacement target/u,
-    },
-  ])("rejects $name", async ({ valueMaps, expected }) => {
-    const repoRoot = await createPackageFixture({
-      "src/Types.ts": `export interface ValidationStatuses {
-  error: string;
-  warning: string;
-  success: string;
-  info: string;
-}
-export type AdornmentValidationStatus =
-  Exclude<keyof ValidationStatuses, "info">;
-export type LegacyMode = "primary" | "secondary";
-`,
-      "src/Fixture.ts": `import type {
-  AdornmentValidationStatus,
-  LegacyMode,
-} from "./Types";
-
-export interface FixtureProps {
-  validationStatus?: AdornmentValidationStatus;
-  /**
-   * @deprecated Use {@link FixtureProps.validationStatus validationStatus}.
-${valueMaps}
-   */
-  legacy?: LegacyMode;
-}
-`,
-      "src/index.ts": 'export type { FixtureProps } from "./Fixture";\n',
-    });
-
+  it("rejects incomplete and unassignable MCP-owned value maps", async () => {
     await expect(
-      extractDeprecations(repoRoot, [fixturePackage()], new Set()),
-    ).rejects.toThrow(expected);
+      buildFixtureValueMap({
+        source: `export interface FixtureProps {
+  validationStatus?: "error" | "warning";
+  legacy?: "primary" | "secondary";
+}
+`,
+        targetMembers: [{ name: "validationStatus" }],
+        cases: [
+          {
+            from: "primary",
+            set: [["validationStatus", "error"]],
+          },
+        ],
+      }),
+    ).rejects.toThrow(/must cover every finite value/u);
+    await expect(
+      buildFixtureValueMap({
+        source: `export interface FixtureProps {
+  validationStatus?: "error" | "warning";
+  legacy?: "primary" | "secondary";
+}
+`,
+        targetMembers: [{ name: "validationStatus" }],
+        cases: [
+          {
+            from: "primary",
+            set: [["validationStatus", "bogus"]],
+          },
+          {
+            from: "secondary",
+            set: [["validationStatus", "warning"]],
+          },
+        ],
+      }),
+    ).rejects.toThrow(/outside the declared type of replacement target/u);
+    await expect(
+      buildFixtureValueMap({
+        source: `export interface FixtureProps {
+  validationStatus?: "error" | "warning";
+  legacy?: "primary" | "secondary";
+}
+`,
+        targetMembers: [{ name: "validationStatus" }],
+        cases: [
+          { from: "primary", set: [["unlinkedTarget", "error"]] },
+          { from: "secondary", set: [] },
+        ],
+      }),
+    ).rejects.toThrow(/is not a linked replacement target/u);
   });
 
   it("classifies typed replacement and transformation shapes", async () => {
     const repoRoot = await createPackageFixture({
       "src/FixtureProps.ts": `export interface FixtureProps {
   replacement?: string;
-  validationStatus?: "error";
-  appearance?: "solid" | "transparent";
-  sentiment?: "accented" | "neutral";
   /** @deprecated Use {@link FixtureProps.replacement replacement} instead. */
   direct?: string;
-  /**
-   * @deprecated Use {@link FixtureProps.validationStatus validationStatus} instead.
-   * @saltValueMap {"from":true,"set":[["validationStatus","error"]]}
-   * @saltValueMap {"from":false,"set":[]}
-   */
-  booleanTransform?: boolean;
-  /**
-   * @deprecated Use {@link FixtureProps.appearance appearance} and {@link FixtureProps.sentiment sentiment} instead.
-   * @saltValueMap {"from":"primary","set":[["appearance","solid"],["sentiment","neutral"]]}
-   * @saltValueMap {"from":"cta","set":[["appearance","solid"],["sentiment","accented"]]}
-   */
-  compositeTransform?: "primary" | "cta";
+}
+
+export interface CheckboxIconProps {
+  validationStatus?: "error";
+  /** @deprecated Use {@link CheckboxIconProps.validationStatus validationStatus} instead. */
+  error?: boolean;
+}
+
+export interface ButtonProps {
+  appearance?: "solid" | "transparent";
+  sentiment?: "accented" | "neutral";
+  /** @deprecated Use {@link ButtonProps.appearance appearance} and {@link ButtonProps.sentiment sentiment} instead. */
+  variant?: "cta" | "primary" | "secondary";
 }
 `,
-      "src/index.ts": 'export type { FixtureProps } from "./FixtureProps";\n',
+      "src/index.ts":
+        'export type { ButtonProps, CheckboxIconProps, FixtureProps } from "./FixtureProps";\n',
     });
 
     const deprecations = await extractDeprecations(
@@ -1255,7 +1304,7 @@ ${valueMaps}
         value_map: null,
       },
     });
-    expect(byName.get("booleanTransform")).toMatchObject({
+    expect(byName.get("error")).toMatchObject({
       replacement: {
         mode: "single",
         target: {
@@ -1283,7 +1332,7 @@ ${valueMaps}
         },
       },
     });
-    expect(byName.get("compositeTransform")).toMatchObject({
+    expect(byName.get("variant")).toMatchObject({
       replacement: {
         mode: "composite",
         target: null,
@@ -1296,8 +1345,7 @@ ${valueMaps}
         strategy: "transform",
       },
     });
-    const compositeOccurrence =
-      byName.get("compositeTransform")?.source_occurrences[0];
+    const compositeOccurrence = byName.get("variant")?.source_occurrences[0];
     if (!compositeOccurrence) {
       throw new Error("Composite fixture has no source occurrence.");
     }
@@ -1312,7 +1360,7 @@ ${valueMaps}
       )
       .toString("utf8");
     expect(citedCompositeSource).toContain("@deprecated");
-    expect(citedCompositeSource.match(/@saltValueMap/gu)).toHaveLength(2);
+    expect(citedCompositeSource).not.toContain("@saltValueMap");
   });
 
   it("recognizes numeric public property deprecations before requiring an override", async () => {
@@ -1395,18 +1443,18 @@ export const LegacyThing = 1;
       expected: /must not declare @saltMigration/u,
     },
     {
-      name: "incomplete finite value map",
+      name: "legacy custom value-map tag",
       source: `export interface FixtureProps {
   validationStatus?: "error";
   /**
-   * @deprecated Use {@link FixtureProps.validationStatus validationStatus} instead.
-   * @saltValueMap {"from":true,"set":[["validationStatus","error"]]}
+    * @deprecated Use {@link FixtureProps.validationStatus validationStatus} instead.
+    * @saltValueMap {"from":true,"set":[["validationStatus","error"]]}
    */
   legacy?: boolean;
 }
 `,
       index: 'export type { FixtureProps } from "./Fixture";\n',
-      expected: /must cover every finite value/u,
+      expected: /must not declare @saltValueMap/u,
     },
     {
       name: "composite without a value map",
@@ -1418,54 +1466,7 @@ export const LegacyThing = 1;
 }
 `,
       index: 'export type { FixtureProps } from "./Fixture";\n',
-      expected: /requires a complete @saltValueMap/u,
-    },
-    {
-      name: "value map outside a finite target type",
-      source: `export interface FixtureProps {
-  replacement?: "allowed";
-  /**
-   * @deprecated Use {@link FixtureProps.replacement replacement} instead.
-   * @saltValueMap {"from":true,"set":[["replacement","bogus"]]}
-   * @saltValueMap {"from":false,"set":[]}
-   */
-  legacy?: boolean;
-}
-`,
-      index: 'export type { FixtureProps } from "./Fixture";\n',
-      expected:
-        /outside the declared type of replacement target 'replacement'/u,
-    },
-    {
-      name: "value map outside a broad target type",
-      source: `export interface FixtureProps {
-  replacement?: number;
-  /**
-   * @deprecated Use {@link FixtureProps.replacement replacement} instead.
-   * @saltValueMap {"from":true,"set":[["replacement","bogus"]]}
-   * @saltValueMap {"from":false,"set":[]}
-   */
-  legacy?: boolean;
-}
-`,
-      index: 'export type { FixtureProps } from "./Fixture";\n',
-      expected:
-        /outside the declared type of replacement target 'replacement'/u,
-    },
-    {
-      name: "value map with an unknown target type",
-      source: `export interface FixtureProps {
-  replacement?: unknown;
-  /**
-   * @deprecated Use {@link FixtureProps.replacement replacement} instead.
-   * @saltValueMap {"from":true,"set":[["replacement","value"]]}
-   * @saltValueMap {"from":false,"set":[]}
-   */
-  legacy?: boolean;
-}
-`,
-      index: 'export type { FixtureProps } from "./Fixture";\n',
-      expected: /must have a statically checkable type/u,
+      expected: /requires a complete MCP-owned value-map override/u,
     },
     {
       name: "nested replacement member",
@@ -1477,36 +1478,6 @@ export const LegacyThing = 1;
 `,
       index: 'export type { FixtureProps } from "./Fixture";\n',
       expected: /Replacement member 'replacement' does not exist/u,
-    },
-    {
-      name: "value map authored on a method",
-      source: `export interface FixtureApi {
-  replacement?: "allowed";
-  /**
-   * @deprecated Use {@link FixtureApi.replacement replacement} instead.
-   * @saltValueMap {"from":true,"set":[["replacement","allowed"]]}
-   * @saltValueMap {"from":false,"set":[]}
-   */
-  legacy(): boolean;
-}
-`,
-      index: 'export type { FixtureApi } from "./Fixture";\n',
-      expected: /only valid for deprecated public properties/u,
-    },
-    {
-      name: "method replacement target in a value map",
-      source: `export interface FixtureApi {
-  replacement(): void;
-  /**
-   * @deprecated Use {@link FixtureApi.replacement replacement} instead.
-   * @saltValueMap {"from":true,"set":[["replacement","value"]]}
-   * @saltValueMap {"from":false,"set":[]}
-   */
-  legacy?: boolean;
-}
-`,
-      index: 'export type { FixtureApi } from "./Fixture";\n',
-      expected: /replacement targets must be public properties/u,
     },
     {
       name: "deprecated static property",

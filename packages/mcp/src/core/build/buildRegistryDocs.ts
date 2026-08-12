@@ -24,6 +24,7 @@ import {
   toKebabCase,
   uniqueStrings,
 } from "./buildRegistryShared.js";
+import { isSelectedMcpGuideRoute } from "./catalogEditorialOverrides.js";
 import { globCatalogInputs } from "./catalogInputInventory.js";
 import { extractMdxTextBlocks } from "./pageTextExtractor.js";
 import { parseYamlFrontmatter } from "./parseYamlFrontmatter.js";
@@ -581,7 +582,15 @@ export async function extractGuides(
     }
 
     const parsedGuide = parseYamlFrontmatter(guideSource);
-    if (parsedGuide.data.salt_ai_guide !== true) {
+    if (Object.hasOwn(parsedGuide.data, "salt_ai_guide")) {
+      throw new Error(
+        `Getting-started guide '${path.basename(guidePath)}' must not declare salt_ai_guide; configure guide selection in the MCP-owned editorial override map.`,
+      );
+    }
+    const guideRoute = siteDocsRouteFromRelativePath(
+      `getting-started/${path.basename(guidePath, path.extname(guidePath))}`,
+    );
+    if (!isSelectedMcpGuideRoute(guideRoute)) {
       continue;
     }
 
