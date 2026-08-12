@@ -1,5 +1,8 @@
 import path from "node:path";
-import { serveStdio } from "@modelcontextprotocol/server/stdio";
+import {
+  StdioServerTransport,
+  serveStdio,
+} from "@modelcontextprotocol/server/stdio";
 import { createSaltMcpServer } from "./server/createServer.js";
 import { getSaltMcpPackageManifest } from "./server/serverMetadata.js";
 
@@ -27,20 +30,67 @@ Options:
   -h, --help              Show this help message
   --version               Show the package version`;
 
-function waitForStdioShutdown(): Promise<void> {
-  return new Promise((resolve) => {
-    const finish = () => {
-      process.stdin.off("end", handleStdinClose);
-      process.stdin.off("close", handleStdinClose);
+type TransportLifecycle =
+  | { kind: "closed" }
+  | { error: unknown; kind: "startup_failure" };
+
+class ObservableStdioServerTransport extends StdioServerTransport {
+  readonly lifecycle: Promise<TransportLifecycle>;
+
+  private resolveLifecycle!: (result: TransportLifecycle) => void;
+
+  constructor() {
+    super();
+    this.lifecycle = new Promise((resolve) => {
+      this.resolveLifecycle = resolve;
+    });
+  }
+
+  override async start(): Promise<void> {
+    try {
+      await super.start();
+    } catch (error) {
+      this.resolveLifecycle({ error, kind: "startup_failure" });
+      throw error;
+    }
+  }
+
+  override async close(): Promise<void> {
+    try {
+      await super.close();
+    } finally {
+      this.resolveLifecycle({ kind: "closed" });
+    }
+  }
+}
+
+function waitForStdioShutdown(): {
+  cleanup: () => void;
+  promise: Promise<void>;
+} {
+  let cleanup = () => {};
+  const promise = new Promise<void>((resolve) => {
+    let settled = false;
+    const handleStdinClose = () => {
+      if (settled) {
+        return;
+      }
+      settled = true;
+      cleanup();
       resolve();
     };
 
-    const handleStdinClose = () => finish();
+    cleanup = () => {
+      process.stdin.off("end", handleStdinClose);
+      process.stdin.off("close", handleStdinClose);
+    };
 
     process.stdin.once("end", handleStdinClose);
     process.stdin.once("close", handleStdinClose);
     process.stdin.resume();
   });
+
+  return { cleanup, promise };
 }
 
 function parseArgs(argv: string[]): ParsedArgs {
@@ -128,6 +178,8 @@ async function runServe(flags: Record<string, string>): Promise<void> {
   const workspaceRoot = flags["workspace-root"]
     ? path.resolve(flags["workspace-root"])
     : undefined;
+  const transport = new ObservableStdioServerTransport();
+  const stdinShutdown = waitForStdioShutdown();
   const handle = serveStdio(
     () =>
       createSaltMcpServer({
@@ -141,13 +193,26 @@ async function runServe(flags: Record<string, string>): Promise<void> {
       legacy: "serve",
       onerror: (error) =>
         console.error(`salt-mcp stdio error: ${error.message}`),
+      transport,
     },
   );
 
   console.error("salt-mcp server running on stdio (MCP 2026 and legacy)");
   try {
-    await waitForStdioShutdown();
+    const result = await Promise.race([
+      stdinShutdown.promise.then(() => ({ kind: "stdin" }) as const),
+      transport.lifecycle,
+    ]);
+
+    if (result.kind === "startup_failure") {
+      throw result.error;
+    }
+
+    if (result.kind === "closed") {
+      throw new Error("salt-mcp stdio transport closed unexpectedly.");
+    }
   } finally {
+    stdinShutdown.cleanup();
     await handle.close();
   }
 }

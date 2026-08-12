@@ -132,7 +132,7 @@ export function createVersionContext(
 }
 
 export function isDeprecationRelevant(
-  deprecation: DeprecationRecord,
+  deprecation: Pick<DeprecationRecord, "deprecated_in">,
   version: VersionContext,
 ): boolean {
   if (!version.normalized) {
@@ -148,7 +148,7 @@ export function isDeprecationRelevant(
 }
 
 export function deprecationSeverity(
-  deprecation: DeprecationRecord,
+  deprecation: Pick<DeprecationRecord, "removed_in">,
   version: VersionContext,
 ): "error" | "warning" {
   const removedIn = normalizeVersion(deprecation.removed_in);

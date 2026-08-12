@@ -71,6 +71,7 @@ import {
   canonicalJson,
   canonicalJsonFile,
   compareCatalogIds,
+  compareOrdinalStrings,
   sha256Bytes,
   stableShaId,
 } from "../catalog/catalogSerialization.js";
@@ -1278,6 +1279,284 @@ describe("Salt catalog schema v2 descriptor and storage contract", () => {
     ).not.toMatch(/list builder|two lists|move buttons/iu);
   });
 
+  it("publishes every MCP-owned authoring override as a canonical fact", () => {
+    const store = new CatalogStoreV2({ registryDir: generatedDirectory });
+
+    const findComponentByRoute = (route: string) => {
+      const components = store.getFamily("component").filter((component) => {
+        const detail = store.getContentJson(component.detail_content_ref);
+        return detail.related_docs.overview === route;
+      });
+      expect(components, route).toHaveLength(1);
+      const component = components[0];
+      if (!component) throw new Error(`Expected component for ${route}.`);
+      return component;
+    };
+
+    for (const [route, exportName] of [
+      ["/salt/components/ag-grid-theme", null],
+      ["/salt/components/chart", null],
+      ["/salt/components/date-input", null],
+      ["/salt/components/date-picker/range-date-picker", null],
+      ["/salt/components/progress", null],
+      ["/salt/components/splitter", null],
+      ["/salt/components/tokenized-input-next", "TokenizedInputNext"],
+    ] as const) {
+      const component = findComponentByRoute(route);
+      expect(component.export_name, route).toBe(exportName);
+      expect(component.source_ref, route).not.toBeNull();
+    }
+
+    const aliasContracts = [
+      [
+        "/salt/components/card",
+        ["InteractableCard", "InteractableCardGroup", "LinkCard"],
+        {
+          InteractableCard: "packages/core/src/interactable-card",
+          InteractableCardGroup: "packages/core/src/interactable-card",
+          LinkCard: "packages/core/src/link-card",
+        },
+      ],
+      [
+        "/salt/components/layouts/border-layout",
+        ["BorderItem"],
+        { BorderItem: "packages/core/src/border-item" },
+      ],
+      [
+        "/salt/components/layouts/flex-layout",
+        ["FlexItem"],
+        { FlexItem: "packages/core/src/flex-item" },
+      ],
+      [
+        "/salt/components/layouts/grid-layout",
+        ["GridItem"],
+        { GridItem: "packages/core/src/grid-item" },
+      ],
+      [
+        "/salt/components/list-box",
+        ["Option", "OptionGroup"],
+        {
+          Option: "packages/core/src/option",
+          OptionGroup: "packages/core/src/option",
+        },
+      ],
+      [
+        "/salt/components/text",
+        [
+          "Code",
+          "Display1",
+          "Display2",
+          "Display3",
+          "Display4",
+          "H1",
+          "H2",
+          "H3",
+          "H4",
+          "Label",
+          "TextAction",
+          "TextNotation",
+        ],
+        Object.fromEntries(
+          [
+            "Code",
+            "Display1",
+            "Display2",
+            "Display3",
+            "Display4",
+            "H1",
+            "H2",
+            "H3",
+            "H4",
+            "Label",
+            "TextAction",
+            "TextNotation",
+          ].map((alias) => [alias, "packages/core/src/text"]),
+        ),
+      ],
+      [
+        "/salt/components/toggle-button",
+        ["ToggleButtonGroup"],
+        { ToggleButtonGroup: "packages/core/src/toggle-button-group" },
+      ],
+    ] as const;
+    for (const [componentRoute, aliases] of aliasContracts) {
+      const component = findComponentByRoute(componentRoute);
+      expect(component.aliases, componentRoute).toEqual(
+        expect.arrayContaining([...aliases]),
+      );
+    }
+
+    expect(
+      store
+        .getFamily("guide")
+        .filter((guide) => guide.kind === "getting-started")
+        .map((guide) => {
+          const detail = store.getContentJson(guide.detail_content_ref);
+          return detail.related_docs.overview;
+        })
+        .filter((route): route is string => route !== null)
+        .sort(compareOrdinalStrings),
+    ).toEqual(
+      [
+        "/salt/getting-started/choosing-the-right-primitive",
+        "/salt/getting-started/composition-pitfalls",
+        "/salt/getting-started/custom-wrappers",
+        "/salt/getting-started/developing",
+      ].sort(compareOrdinalStrings),
+    );
+
+    expect(store.getRecord("pattern", "pattern.metric")?.aliases).toEqual(
+      expect.arrayContaining([
+        "dashboard metric",
+        "key metric",
+        "kpi",
+        "large metric",
+      ]),
+    );
+    expect(
+      store.getRecord("pattern", "pattern.vertical-navigation")?.aliases,
+    ).toEqual(
+      expect.arrayContaining([
+        "left-hand navigation",
+        "navigation pane",
+        "nested navigation",
+        "sidebar navigation",
+      ]),
+    );
+
+    const findDeprecationDetail = (contract: {
+      packageId: string;
+      entrypoint: string;
+      exportName: string;
+      memberName?: string;
+    }) => {
+      const subjects = store
+        .getFamily("api_symbol")
+        .filter(
+          (symbol) =>
+            symbol.package_ref.id === contract.packageId &&
+            symbol.entrypoint === contract.entrypoint &&
+            symbol.export_name === contract.exportName &&
+            (contract.memberName === undefined
+              ? symbol.member_path.length === 0
+              : symbol.member_path.at(-1)?.name === contract.memberName),
+        );
+      expect(subjects, JSON.stringify(contract)).toHaveLength(1);
+      const deprecations = store
+        .getFamily("deprecation")
+        .filter(
+          (deprecation) => deprecation.subject_ref.id === subjects[0]?.id,
+        );
+      expect(deprecations, JSON.stringify(contract)).toHaveLength(1);
+      const deprecation = deprecations[0];
+      if (!deprecation) throw new Error("Expected authored deprecation.");
+      return store.getContentJson(deprecation.detail_content_ref);
+    };
+
+    for (const [contract, strategy] of [
+      [
+        {
+          packageId: "package.salt-ds-core",
+          entrypoint: ".",
+          exportName: "AriaAnnounceProps",
+          memberName: "delay",
+        },
+        "manual",
+      ],
+      [
+        {
+          packageId: "package.salt-ds-core",
+          entrypoint: ".",
+          exportName: "DialogProps",
+          memberName: "idProp",
+        },
+        "remove",
+      ],
+      [
+        {
+          packageId: "package.salt-ds-lab",
+          entrypoint: ".",
+          exportName: "TabstripProps",
+          memberName: "enableCloseTab",
+        },
+        "unspecified",
+      ],
+      [
+        {
+          packageId: "package.salt-ds-date-adapters",
+          entrypoint: "./moment",
+          exportName: "AdapterMoment",
+        },
+        "manual",
+      ],
+    ] as const) {
+      expect(findDeprecationDetail(contract).migration).toEqual({
+        strategy,
+        value_map: null,
+      });
+    }
+
+    const summarizeValueMap = (
+      contract: Parameters<typeof findDeprecationDetail>[0],
+    ) => {
+      const valueMap = findDeprecationDetail(contract).migration.value_map;
+      if (!valueMap) throw new Error("Expected authored value map.");
+      return valueMap.cases.map((valueMapCase) => ({
+        from: valueMapCase.from,
+        set: valueMapCase.set.map((assignment) => {
+          const target = store.getRecord(
+            "api_symbol",
+            assignment.target_ref.id,
+          );
+          return [target?.member_path.at(-1)?.name, assignment.value];
+        }),
+      }));
+    };
+    expect(
+      summarizeValueMap({
+        packageId: "package.salt-ds-core",
+        entrypoint: ".",
+        exportName: "ButtonProps",
+        memberName: "variant",
+      }),
+    ).toEqual([
+      {
+        from: "cta",
+        set: [
+          ["appearance", "solid"],
+          ["sentiment", "accented"],
+        ],
+      },
+      {
+        from: "primary",
+        set: [
+          ["appearance", "solid"],
+          ["sentiment", "neutral"],
+        ],
+      },
+      {
+        from: "secondary",
+        set: [
+          ["appearance", "transparent"],
+          ["sentiment", "neutral"],
+        ],
+      },
+    ]);
+    for (const exportName of ["CheckboxIconProps", "RadioButtonIconProps"]) {
+      expect(
+        summarizeValueMap({
+          packageId: "package.salt-ds-core",
+          entrypoint: ".",
+          exportName,
+          memberName: "error",
+        }),
+      ).toEqual([
+        { from: true, set: [["validationStatus", "error"]] },
+        { from: false, set: [] },
+      ]);
+    }
+  });
+
   it("publishes canonical guide component and package document relations", () => {
     const store = new CatalogStoreV2({
       registryDir: generatedDirectory,
@@ -1657,6 +1936,157 @@ describe("Salt catalog schema v2 descriptor and storage contract", () => {
           inventory: builtInventory,
         }),
       ).toThrow(/canonical Salt route or safe absolute HTTPS URL/u);
+    },
+    CATALOG_GRAPH_TEST_TIMEOUT_MS,
+  );
+
+  it(
+    "separates exhaustive input provenance from semantic source evidence",
+    () => {
+      const corePackage = builtRegistry.packages.find(
+        (packageRecord) => packageRecord.name === "@salt-ds/core",
+      );
+      if (!corePackage) {
+        throw new Error("Built fixture has no Core package record.");
+      }
+
+      const withEntry = (
+        inventory: CatalogInputInventory,
+        repoPath: string,
+        contents: string,
+      ): CatalogInputInventory => {
+        const bytes = Buffer.from(contents, "utf8");
+        const entries = [
+          ...inventory.entries.filter((entry) => entry.path !== repoPath),
+          {
+            path: repoPath,
+            bytes: bytes.byteLength,
+            sha256: sha256Bytes(bytes),
+          },
+        ].sort((left, right) => compareOrdinalStrings(left.path, right.path));
+        return {
+          ...inventory,
+          entries,
+          digest: sha256Bytes(canonicalJson(entries)),
+        };
+      };
+      const normalize = (inventory: CatalogInputInventory) =>
+        normalizeCatalogV2({ registry: builtRegistry, inventory });
+      type RepositorySourceRecord =
+        | Extract<
+            CatalogRecordForFamily<"source">,
+            { source_kind: "repository_file" }
+          >
+        | Extract<
+            CatalogRecordForFamily<"source">,
+            { source_kind: "repository_directory" }
+          >;
+      const findRepositorySource = (
+        records: CatalogRecord[],
+        locator: string,
+      ): RepositorySourceRecord | undefined =>
+        records.find(
+          (source): source is RepositorySourceRecord =>
+            source.family === "source" &&
+            (source.source_kind === "repository_file" ||
+              source.source_kind === "repository_directory") &&
+            source.locator === locator,
+        );
+      const baseline = normalize(builtInventory);
+
+      for (const [repoPath, contents] of [
+        [
+          `${corePackage.source_root}/src/__tests__/Semantic.spec.ts`,
+          "test one",
+        ],
+        [
+          `${corePackage.source_root}/stories/Semantic.stories.tsx`,
+          "story one",
+        ],
+      ] as const) {
+        const added = normalize(withEntry(builtInventory, repoPath, contents));
+        const changed = normalize(
+          withEntry(builtInventory, repoPath, `${contents} changed`),
+        );
+        for (const family of Object.keys(baseline.records) as Array<
+          keyof typeof baseline.records
+        >) {
+          if (family === "source") {
+            const summarizeDifferences = (records: CatalogRecord[]) => {
+              const baselineById = new Map(
+                baseline.records.source.map((record) => [
+                  record.id,
+                  canonicalJson(record),
+                ]),
+              );
+              const recordsById = new Map(
+                records.map((record) => [record.id, canonicalJson(record)]),
+              );
+              return [
+                ...new Set([...baselineById.keys(), ...recordsById.keys()]),
+              ]
+                .filter((id) => baselineById.get(id) !== recordsById.get(id))
+                .map((id) => ({
+                  id,
+                  baseline: baselineById.get(id) ?? null,
+                  received: recordsById.get(id) ?? null,
+                }));
+            };
+            expect(
+              summarizeDifferences(added.records.source),
+              `${repoPath} added ${family}`,
+            ).toEqual([]);
+            expect(
+              summarizeDifferences(changed.records.source),
+              `${repoPath} changed ${family}`,
+            ).toEqual([]);
+            continue;
+          }
+          expect(
+            canonicalJson(added.records[family]),
+            `${repoPath} added ${family}`,
+          ).toBe(canonicalJson(baseline.records[family]));
+          expect(
+            canonicalJson(changed.records[family]),
+            `${repoPath} changed ${family}`,
+          ).toBe(canonicalJson(baseline.records[family]));
+        }
+      }
+
+      for (const repoPath of [
+        `${corePackage.source_root}/src/SemanticProduction.ts`,
+        `${corePackage.source_root}/stories/patterns/Semantic.stories.tsx`,
+      ]) {
+        const changed = normalize(
+          withEntry(builtInventory, repoPath, "semantic source"),
+        );
+        const baselineSource = findRepositorySource(
+          baseline.records.source,
+          corePackage.source_root,
+        );
+        const changedSource = findRepositorySource(
+          changed.records.source,
+          corePackage.source_root,
+        );
+        expect(changedSource?.sha256).not.toBe(baselineSource?.sha256);
+        expect(changedSource?.bytes).not.toBe(baselineSource?.bytes);
+      }
+
+      const auditPath = `${corePackage.source_root}/src/__tests__/Direct.spec.ts`;
+      const directRegistry = structuredClone(builtRegistry);
+      const directCorePackage = directRegistry.packages.find(
+        (packageRecord) => packageRecord.name === "@salt-ds/core",
+      );
+      if (!directCorePackage) {
+        throw new Error("Cloned fixture lost its Core package record.");
+      }
+      directCorePackage.source_root = auditPath;
+      expect(() =>
+        normalizeCatalogV2({
+          registry: directRegistry,
+          inventory: withEntry(builtInventory, auditPath, "audit only"),
+        }),
+      ).toThrow(/not production or consumed semantic evidence/u);
     },
     CATALOG_GRAPH_TEST_TIMEOUT_MS,
   );

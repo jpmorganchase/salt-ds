@@ -1,8 +1,5 @@
 import path from "node:path";
-import { hasForbiddenPortablePathCharacter } from "./catalogBuildIdentity.mjs";
-
-const WINDOWS_RESERVED_SEGMENT =
-  /^(?:con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/iu;
+import { isPortableRepositoryBuildPath } from "./catalogBuildIdentity.mjs";
 
 function isPathWithinRoot(root, candidate) {
   const relative = path.relative(root, candidate);
@@ -15,25 +12,7 @@ function isPathWithinRoot(root, candidate) {
 }
 
 export function isPortableArchivePath(filePath) {
-  return (
-    typeof filePath === "string" &&
-    filePath.length > 0 &&
-    filePath === filePath.normalize("NFC") &&
-    !filePath.includes("\\") &&
-    !filePath.startsWith("/") &&
-    !/^[A-Za-z]:/u.test(filePath) &&
-    !hasForbiddenPortablePathCharacter(filePath) &&
-    filePath
-      .split("/")
-      .every(
-        (segment) =>
-          segment.length > 0 &&
-          segment !== "." &&
-          segment !== ".." &&
-          !/[ .]$/u.test(segment) &&
-          !WINDOWS_RESERVED_SEGMENT.test(segment),
-      )
-  );
+  return isPortableRepositoryBuildPath(filePath);
 }
 
 function resolveCanonicalPortablePath(root, portablePath) {

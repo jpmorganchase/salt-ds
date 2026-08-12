@@ -4731,9 +4731,13 @@ __metadata:
     react: "npm:^18.3.1"
     react-docgen-typescript: "npm:2.4.0"
     react-dom: "npm:^18.3.1"
+    react-dom-types-18-fixture: "npm:@types/react-dom@18.3.7"
+    react-dom-types-floor-fixture: "npm:@types/react-dom@18.3.0"
     react-hotkeys-hook: "npm:^5.1.0"
     react-resizable-panels: "npm:^3.0.0"
     react-router: "npm:^7.10.1"
+    react-types-18-fixture: "npm:@types/react@18.3.31"
+    react-types-floor-fixture: "npm:@types/react@18.3.0"
     rollup: "npm:^4.24.2"
     rollup-plugin-esbuild: "npm:^6.1.1"
     rollup-plugin-postcss: "npm:^4.0.2"
@@ -6832,7 +6836,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.3.7":
+"@types/react-dom@npm:^18.3.7, react-dom-types-18-fixture@npm:@types/react-dom@18.3.7":
   version: 18.3.7
   resolution: "@types/react-dom@npm:18.3.7"
   peerDependencies:
@@ -6850,7 +6854,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.3.22":
+"@types/react@npm:*, @types/react@npm:^18.3.22, react-types-18-fixture@npm:@types/react@18.3.31":
   version: 18.3.31
   resolution: "@types/react@npm:18.3.31"
   dependencies:
@@ -15126,6 +15130,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-dom-types-floor-fixture@npm:@types/react-dom@18.3.0":
+  version: 18.3.0
+  resolution: "@types/react-dom@npm:18.3.0"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: 10/6ff53f5a7b7fba952a68e114d3b542ebdc1e87a794234785ebab0bcd9bde7fb4885f21ebaf93d26dc0a1b5b93287f42cad68b78ae04dddf6b20da7aceff0beaf
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:^18.0.0":
   version: 18.3.1
   resolution: "react-dom@npm:18.3.1"
@@ -15352,6 +15365,16 @@ __metadata:
     react: ">=16.6.0"
     react-dom: ">=16.6.0"
   checksum: 10/ca32d3fd2168c976c5d90a317f25d5f5cd723608b415fb3b9006f9d793c8965c619562d0884503a3e44e4b06efbca4fdd1520f30e58ca3e00a0890e637d55419
+  languageName: node
+  linkType: hard
+
+"react-types-floor-fixture@npm:@types/react@18.3.0":
+  version: 18.3.0
+  resolution: "@types/react@npm:18.3.0"
+  dependencies:
+    "@types/prop-types": "npm:*"
+    csstype: "npm:^3.0.2"
+  checksum: 10/2444294740016d61721df9adeb8635658c660c13b0782df9f067260ac6b0a4b71e68245089814ab53264843eb75f81d90f770253b94a13955cc1ddccf3593301
   languageName: node
   linkType: hard
 

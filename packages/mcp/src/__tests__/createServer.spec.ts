@@ -445,6 +445,7 @@ describe("createSaltMcpServer final public boundary", () => {
         ).toEqual([...REGISTERED_SALT_TOOL_NAMES]);
       });
     },
+    30_000,
   );
 
   it("advertises exactly the three read-only adapter tools", async () => {

@@ -9,6 +9,32 @@ transport, process integration, and host compatibility. Production code crosses
 into the core through `src/core/runtime.ts`; registry-build code targets
 `src/core/build/buildRegistry.ts` directly and is never a runtime export.
 
+## Catalog identity layers
+
+| Identity                 | Inputs                                                  | Observable effect                                                                                                              |
+| ------------------------ | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Audit/build provenance   | Every sealed catalog input, including tests and stories | Binds the manifest input inventory, source revision, mutation checks, generator receipts, and immutable publication generation |
+| Semantic source evidence | Production files plus consumed pattern stories          | Binds repository source records, canonical artifacts, semantic digest, and public catalog resource identity                    |
+
+Tests and unconsumed stories remain inventoried, digest-bound, read-tracked,
+and mutation-checked. Changing them rotates audit provenance and publishes a
+new manifest-bound generation, but does not change canonical catalog facts or
+semantic identity. A catalog fact may cite only production or deliberately
+consumed semantic evidence; direct audit-only citations fail closed.
+
+## Runtime catalog flow
+
+Server startup opens `CatalogStoreV2` directly and completes the whole-catalog
+integrity barrier before returning a server. Search and resources read that
+verified store. Submitted-source review receives a purpose-built view containing
+only catalog version/semantic identity plus the component, deprecation, and
+token fields its rules consume. It does not receive a whole legacy registry or
+materialize unrelated catalog families.
+
+The legacy registry projection remains an internal build/test compatibility
+boundary while its remaining supported callers are migrated. It is not part of
+the packed runtime path or the MCP public API.
+
 ## Local filesystem trust model
 
 The published `createSaltMcpServer` factory is transport-agnostic and

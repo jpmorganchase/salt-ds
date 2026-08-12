@@ -110,8 +110,8 @@ function addAggregateOversizedTokens(normalized: NormalizedCatalogV2): void {
   }
 }
 
-function createInventory(): CatalogInputInventory {
-  const bytes = Buffer.from("fixture", "utf8");
+function createInventory(contents = "fixture"): CatalogInputInventory {
+  const bytes = Buffer.from(contents, "utf8");
   const entries = [
     {
       path: "fixture/source.txt",
@@ -357,7 +357,10 @@ describe("atomic deterministic Salt catalog writer", () => {
       /Public resource 'concept:concept\.oversized-public-envelope'.*limit is 65536/iu,
     );
     expect(
-      await fs.readFile(path.join(outputDir, SALT_CATALOG_MANIFEST_FILE), "utf8"),
+      await fs.readFile(
+        path.join(outputDir, SALT_CATALOG_MANIFEST_FILE),
+        "utf8",
+      ),
     ).toBe(previousManifest);
     expect(await writerDebris(root, "catalog")).toEqual([]);
   });
@@ -488,6 +491,80 @@ describe("atomic deterministic Salt catalog writer", () => {
     expect(path.posix.dirname(firstBuildEntry.file)).not.toBe(
       path.posix.dirname(secondBuildEntry.file),
     );
+  });
+
+  it("rotates audit provenance while retaining byte-identical canonical artifacts", async () => {
+    const root = await createRoot();
+    const outputDir = path.join(root, "catalog");
+    const normalized = createNormalizedCatalog();
+    normalized.records.concept.push({
+      family: "concept",
+      id: "concept.audit-separation",
+      name: "Audit separation",
+      concept_kind: "other",
+      summary: "Canonical content stays fixed.",
+    });
+    synchronizeSearchDocuments(normalized);
+
+    const first = await writeCatalogV2({
+      ...fixedOptions,
+      outputDir,
+      normalized,
+      inventory: createInventory("audit input one"),
+      sourceRevision: "audit-source-one",
+    });
+    const second = await writeCatalogV2({
+      ...fixedOptions,
+      outputDir,
+      normalized,
+      inventory: createInventory("audit input two"),
+      sourceRevision: "audit-source-two",
+    });
+
+    expect(second.manifest.input_inventory_digest).not.toBe(
+      first.manifest.input_inventory_digest,
+    );
+    expect(second.manifest.source_revision).not.toBe(
+      first.manifest.source_revision,
+    );
+    expect(canonicalJson(second.manifest.inputs)).not.toBe(
+      canonicalJson(first.manifest.inputs),
+    );
+    expect(second.manifest.semantic_digest).toBe(
+      first.manifest.semantic_digest,
+    );
+    expect(
+      second.manifest.artifacts.map(
+        ({ family, sha256, bytes, record_count }) => ({
+          family,
+          sha256,
+          bytes,
+          record_count,
+        }),
+      ),
+    ).toEqual(
+      first.manifest.artifacts.map(
+        ({ family, sha256, bytes, record_count }) => ({
+          family,
+          sha256,
+          bytes,
+          record_count,
+        }),
+      ),
+    );
+    const firstGeneration = path.posix.dirname(
+      first.manifest.artifacts[0].file,
+    );
+    const secondGeneration = path.posix.dirname(
+      second.manifest.artifacts[0].file,
+    );
+    expect(secondGeneration).not.toBe(firstGeneration);
+    await expect(
+      fs.access(path.join(outputDir, ...firstGeneration.split("/"))),
+    ).resolves.toBeUndefined();
+    await expect(
+      fs.access(path.join(outputDir, ...secondGeneration.split("/"))),
+    ).resolves.toBeUndefined();
   });
 
   it.each([

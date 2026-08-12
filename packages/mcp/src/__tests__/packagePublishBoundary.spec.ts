@@ -14,6 +14,7 @@ import {
   hasForbiddenPortablePathCharacter,
   isPathWithinRoot,
   isPortableRepositoryBuildPath,
+  normalizePortableRepositoryBuildPath,
   parseCatalogBuildBanner,
 } from "../../../../scripts/catalogBuildIdentity.mjs";
 import {
@@ -112,6 +113,17 @@ describe("package publish boundaries", () => {
     for (const candidate of corpus.rejected) {
       expect(isPortableRepositoryPath(candidate), candidate).toBe(false);
       expect(isPortableRepositoryBuildPath(candidate), candidate).toBe(false);
+    }
+  });
+
+  it("rejects non-string build paths before normalization", () => {
+    for (const candidate of [null, {}, []]) {
+      expect(() =>
+        normalizePortableRepositoryBuildPath(
+          candidate,
+          "Test portable path boundary",
+        ),
+      ).toThrow("Test portable path boundary");
     }
   });
 
@@ -234,9 +246,7 @@ describe("package publish boundaries", () => {
         bytes,
         digest: sha256(bytes),
         metafileDigest: sha256(`metafile:${observed}`),
-        firstPartyInputs: [
-          "packages/mcp/src/core/build/buildRegistry.ts",
-        ],
+        firstPartyInputs: ["packages/mcp/src/core/build/buildRegistry.ts"],
         generator: {
           createCatalogInputInventory: async () => createInventory(),
         },
@@ -267,9 +277,7 @@ describe("package publish boundaries", () => {
             bytes,
             digest: sha256(bytes),
             metafileDigest: sha256("metafile:stable"),
-            firstPartyInputs: [
-              "packages/mcp/src/core/build/buildRegistry.ts",
-            ],
+            firstPartyInputs: ["packages/mcp/src/core/build/buildRegistry.ts"],
             generator: {
               createCatalogInputInventory: async () => createInventory(),
             },
@@ -307,18 +315,16 @@ describe("package publish boundaries", () => {
           bundlePass += 1;
           let observed = content;
           if (bundlePass === 1) {
-          content = "transient";
+            content = "transient";
             observed = content;
-          content = "stable";
+            content = "stable";
           }
           const bytes = Buffer.from(observed, "utf8");
           return {
             bytes,
             digest: sha256(bytes),
             metafileDigest: sha256(`metafile:${observed}`),
-            firstPartyInputs: [
-              "packages/mcp/src/core/build/buildRegistry.ts",
-            ],
+            firstPartyInputs: ["packages/mcp/src/core/build/buildRegistry.ts"],
             generator: {
               createCatalogInputInventory: async () => createInventory(),
             },

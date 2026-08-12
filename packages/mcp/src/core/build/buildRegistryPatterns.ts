@@ -27,7 +27,10 @@ import {
 } from "./buildRegistryShared.js";
 import { patternEditorialOverride } from "./catalogEditorialOverrides.js";
 import { globCatalogInputs } from "./catalogInputInventory.js";
-import { NON_PRODUCTION_IMPLEMENTATION_GLOB_IGNORES } from "./catalogProductionSource.js";
+import {
+  CONSUMED_PATTERN_STORY_GLOB,
+  NON_PRODUCTION_IMPLEMENTATION_GLOB_IGNORES,
+} from "./catalogProductionSource.js";
 import { parseYamlFrontmatter } from "./parseYamlFrontmatter.js";
 
 function isExportedStoryStatement(statement: ts.Statement): boolean {
@@ -820,7 +823,7 @@ export async function extractPatternExamplesFromStories(
   patternNameBySlug: Map<string, string>,
 ): Promise<ExampleRecord[]> {
   const storyPaths = (
-    await globCatalogInputs("packages/*/stories/patterns/**/*.stories.tsx", {
+    await globCatalogInputs(CONSUMED_PATTERN_STORY_GLOB, {
       cwd: repoRoot,
       absolute: true,
       onlyFiles: true,

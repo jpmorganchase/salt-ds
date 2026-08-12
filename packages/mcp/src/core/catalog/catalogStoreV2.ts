@@ -8,6 +8,7 @@ import {
 } from "node:fs";
 import path from "node:path";
 import { brotliDecompressSync } from "node:zlib";
+import { isSemanticCatalogSourcePath } from "./catalogSemanticSource.js";
 import { assertPublicResourceText } from "../publicResourceBudget.js";
 import { formatAccessibilityImplementationSignalStatement } from "./accessibilityImplementationSignal.js";
 import {
@@ -1457,6 +1458,7 @@ export class CatalogStoreV2 {
           const input = inputByPath.get(source.locator);
           if (
             !input ||
+            !isSemanticCatalogSourcePath(source.locator) ||
             input.sha256 !== source.sha256 ||
             input.bytes !== source.bytes
           ) {
@@ -1473,8 +1475,10 @@ export class CatalogStoreV2 {
             );
           }
           const prefix = `${source.locator}/`;
-          const entries = this.manifest.inputs.filter((entry) =>
-            entry.path.startsWith(prefix),
+          const entries = this.manifest.inputs.filter(
+            (entry) =>
+              entry.path.startsWith(prefix) &&
+              isSemanticCatalogSourcePath(entry.path),
           );
           if (entries.length === 0) {
             throw new Error(

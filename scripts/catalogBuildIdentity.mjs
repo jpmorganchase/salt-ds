@@ -2,7 +2,9 @@ import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 import fg from "fast-glob";
-import catalogInputPatterns from "../packages/mcp/src/core/build/catalogInputPatterns.json" with { type: "json" };
+import catalogInputPatterns from "../packages/mcp/src/core/build/catalogInputPatterns.json" with {
+  type: "json",
+};
 
 const BUILD_IDENTITY_MARKER = "salt-catalog-build-identity:v1";
 const SHA256_PATTERN = /^sha256:[0-9a-f]{64}$/u;
@@ -49,7 +51,13 @@ function canonicalJson(value) {
   return JSON.stringify(sortValue(value));
 }
 
-function normalizeRepoPath(repoPath) {
+export function normalizePortableRepositoryBuildPath(
+  repoPath,
+  label = "Invalid repository-relative build input path",
+) {
+  if (typeof repoPath !== "string") {
+    throw new Error(`${label}.`);
+  }
   const normalized = repoPath.normalize("NFC");
   if (
     normalized.length === 0 ||
@@ -71,16 +79,14 @@ function normalizeRepoPath(repoPath) {
           ),
       )
   ) {
-    throw new Error(
-      `Invalid repository-relative build input path: ${repoPath}`,
-    );
+    throw new Error(`${label}.`);
   }
   return normalized;
 }
 
 export function isPortableRepositoryBuildPath(value) {
   try {
-    normalizeRepoPath(value);
+    normalizePortableRepositoryBuildPath(value);
     return true;
   } catch {
     return false;
@@ -181,13 +187,14 @@ export function assertSealedCatalogGeneratorIdentity(generator) {
   ) {
     throw new Error("Production catalog has invalid generator receipt paths.");
   }
-  normalizeRepoPath(receipt.orchestrator.path);
+  normalizePortableRepositoryBuildPath(receipt.orchestrator.path);
   for (const dependencyEntry of [
     receipt.dependencies.esbuild_entry,
     receipt.dependencies.esbuild_binary,
     receipt.dependencies.typescript_entry,
   ]) {
-    const normalizedEntry = normalizeRepoPath(dependencyEntry);
+    const normalizedEntry =
+      normalizePortableRepositoryBuildPath(dependencyEntry);
     if (!normalizedEntry.startsWith("node_modules/")) {
       throw new Error(
         "Sealed catalog generator tools must resolve from repository node_modules.",
@@ -250,7 +257,7 @@ export function createCatalogBuildIdentity(manifestBytes) {
   const portableInputPaths = new Map();
   let previousPath = null;
   for (const entry of manifest.inputs) {
-    const repoPath = normalizeRepoPath(entry?.path ?? "");
+    const repoPath = normalizePortableRepositoryBuildPath(entry?.path ?? "");
     const portablePath = repoPath.toLowerCase();
     if (
       inputsByPath.has(repoPath) ||
@@ -288,7 +295,7 @@ export function createCatalogBuildIdentity(manifestBytes) {
 }
 
 export function assertCatalogInputBytes(identity, repoPath, inputBytes) {
-  const normalizedPath = normalizeRepoPath(repoPath);
+  const normalizedPath = normalizePortableRepositoryBuildPath(repoPath);
   const expected = identity.inputsByPath?.get(normalizedPath);
   if (!expected) {
     throw new Error(
@@ -314,7 +321,9 @@ function normalizeFilesystemPath(value) {
 
 export async function assertCompleteCatalogInputSet(identity, repoRoot) {
   if (!identity?.inputsByPath || !(identity.inputsByPath instanceof Map)) {
-    throw new Error("Complete catalog input validation requires a build identity.");
+    throw new Error(
+      "Complete catalog input validation requires a build identity.",
+    );
   }
   const resolvedRoot = path.resolve(repoRoot);
   const realRoot = await fs.realpath(resolvedRoot);
@@ -332,7 +341,7 @@ export async function assertCompleteCatalogInputSet(identity, repoRoot) {
     .sort((left, right) => (left < right ? -1 : left > right ? 1 : 0));
   const portablePaths = new Map();
   for (const repoPath of discoveredPaths) {
-    const normalizedPath = normalizeRepoPath(repoPath);
+    const normalizedPath = normalizePortableRepositoryBuildPath(repoPath);
     const portablePath = normalizedPath.toLowerCase();
     const existing = portablePaths.get(portablePath);
     if (existing && existing !== normalizedPath) {
