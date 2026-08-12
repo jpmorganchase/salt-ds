@@ -33,13 +33,18 @@ import {
   linkTokensToComponents,
 } from "./buildRegistryTokens.js";
 import {
+  assertGuideEditorialOverridesResolved,
+  assertPatternEditorialOverridesResolved,
+} from "./catalogEditorialOverrides.js";
+import {
   type CatalogInputInventory,
   createCatalogInputInventory,
   withCatalogInputTracking,
 } from "./catalogInputInventory.js";
 import { writeCatalogV2 } from "./catalogWriterV2.js";
-import { assertComponentPrimaryExportOverridesResolved } from "./componentPrimaryExportOverrides.js";
+import { assertComponentAuthoringOverridesResolved } from "./componentAuthoringOverrides.js";
 import { assertDeprecationMigrationOverridesResolved } from "./deprecationMigrationOverrides.js";
+import { assertDeprecationValueMapOverridesResolved } from "./deprecationValueMapOverrides.js";
 import {
   createSealedCatalogGeneratorDigest,
   type GeneratorDependencyInventory,
@@ -190,7 +195,7 @@ export async function buildRegistry(
           packageByName,
           propMetadata,
         );
-        assertComponentPrimaryExportOverridesResolved(
+        assertComponentAuthoringOverridesResolved(
           components
             .map((component) => component.related_docs.overview)
             .filter((route): route is string => route !== null),
@@ -206,7 +211,20 @@ export async function buildRegistry(
               EXCLUDED_REGISTRY_PACKAGES,
             ),
           ]);
+        assertPatternEditorialOverridesResolved(
+          patterns
+            .map((pattern) => pattern.related_docs.overview)
+            .filter((route): route is string => route !== null),
+        );
+        assertGuideEditorialOverridesResolved(
+          guides
+            .map((guide) => guide.related_docs.overview)
+            .filter((route): route is string => route !== null),
+        );
         assertDeprecationMigrationOverridesResolved(
+          rawDeprecations.map((deprecation) => deprecation.id),
+        );
+        assertDeprecationValueMapOverridesResolved(
           rawDeprecations.map((deprecation) => deprecation.id),
         );
         const pages = await extractPages(sourceRoot);

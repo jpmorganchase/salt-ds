@@ -47,7 +47,11 @@ import {
 } from "./catalogExportGraph.js";
 import { globCatalogInputs } from "./catalogInputInventory.js";
 import { NON_PRODUCTION_IMPLEMENTATION_GLOB_IGNORES } from "./catalogProductionSource.js";
-import { componentPrimaryExportOverride } from "./componentPrimaryExportOverrides.js";
+import {
+  type ComponentExportAliasOverride,
+  componentExportAliasOverrides,
+  componentPrimaryExportOverride,
+} from "./componentAuthoringOverrides.js";
 import { parseYamlFrontmatter } from "./parseYamlFrontmatter.js";
 
 function inferStatusFromPackage(name: string, version: string): SaltStatus {
@@ -129,89 +133,50 @@ function parsePackageNameFromRepoPath(repoPath: string | null): string | null {
   return `@salt-ds/${match[1]}`;
 }
 
-interface AuthoredComponentExportAlias {
+interface ComponentExportAlias {
   exportName: string;
   sourceRepoPath: string | null;
 }
 
-function parseComponentExportAliases(
+function resolveComponentExportAliases(
   title: string,
-  value: unknown,
+  overrides: readonly ComponentExportAliasOverride[],
   defaultSourceRepoPath: string | null,
   packageName: string,
-): AuthoredComponentExportAlias[] {
-  if (value === undefined) {
-    return [];
-  }
-  if (!Array.isArray(value)) {
-    throw new Error(
-      `Component '${title}' data.componentExportAliases must be an array of export names or source-scoped export records.`,
-    );
-  }
-
-  const aliases: AuthoredComponentExportAlias[] = [];
+): ComponentExportAlias[] {
+  const aliases: ComponentExportAlias[] = [];
   const seenExportNames = new Set<string>();
-  for (const entry of value) {
-    let exportName: unknown;
-    let sourceRepoPath = defaultSourceRepoPath;
-
-    if (typeof entry === "string") {
-      exportName = entry;
-    } else if (
-      typeof entry === "object" &&
-      entry !== null &&
-      !Array.isArray(entry)
-    ) {
-      const record = entry as Record<string, unknown>;
-      const keys = Object.keys(record).sort(compareOrdinalStrings);
+  for (const override of overrides) {
+    const exportName = override.exportName;
+    const sourceRepoPath = override.sourceRepoPath ?? defaultSourceRepoPath;
+    if (override.sourceRepoPath !== undefined) {
       if (
-        keys.length !== 2 ||
-        keys[0] !== "exportName" ||
-        keys[1] !== "sourceCodeUrl"
+        override.sourceRepoPath !== override.sourceRepoPath.trim() ||
+        !isPortableRepositoryPath(override.sourceRepoPath)
       ) {
         throw new Error(
-          `Component '${title}' data.componentExportAliases records must contain exactly exportName and sourceCodeUrl.`,
-        );
-      }
-      exportName = record.exportName;
-      const aliasSourceCodeUrl = record.sourceCodeUrl;
-      sourceRepoPath =
-        typeof aliasSourceCodeUrl === "string"
-          ? parseSourceRepoPath(aliasSourceCodeUrl)
-          : null;
-      if (
-        typeof aliasSourceCodeUrl !== "string" ||
-        aliasSourceCodeUrl !== aliasSourceCodeUrl.trim() ||
-        sourceRepoPath === null
-      ) {
-        throw new Error(
-          `Component '${title}' export alias '${String(exportName)}' has a non-canonical Salt sourceCodeUrl '${String(aliasSourceCodeUrl)}'.`,
+          `Component '${title}' export alias '${exportName}' has a non-canonical MCP source path '${override.sourceRepoPath}'.`,
         );
       }
       const aliasPackageName = parsePackageNameFromRepoPath(sourceRepoPath);
       if (aliasPackageName !== packageName) {
         throw new Error(
-          `Component '${title}' export alias '${String(exportName)}' sourceCodeUrl belongs to '${String(aliasPackageName)}', not '${packageName}'.`,
+          `Component '${title}' export alias '${exportName}' source path belongs to '${String(aliasPackageName)}', not '${packageName}'.`,
         );
       }
-    } else {
-      throw new Error(
-        `Component '${title}' data.componentExportAliases entries must be export-name strings or source-scoped export records.`,
-      );
     }
 
     if (
-      typeof exportName !== "string" ||
       exportName !== exportName.trim() ||
       !/^[A-Za-z_$][A-Za-z0-9_$]*$/u.test(exportName)
     ) {
       throw new Error(
-        `Component '${title}' data.componentExportAliases contains invalid export name '${String(exportName)}'.`,
+        `Component '${title}' MCP export-alias override contains invalid export name '${exportName}'.`,
       );
     }
     if (seenExportNames.has(exportName)) {
       throw new Error(
-        `Component '${title}' data.componentExportAliases contains duplicate export name '${exportName}'.`,
+        `Component '${title}' MCP export-alias override contains duplicate export name '${exportName}'.`,
       );
     }
     seenExportNames.add(exportName);
@@ -1201,9 +1166,14 @@ export async function extractComponents(
       );
     }
     consumedCategoryRoutes.add(componentRoute);
-    const componentExportAliases = parseComponentExportAliases(
+    if (data != null && Object.hasOwn(data, "componentExportAliases")) {
+      throw new Error(
+        `Component '${title}' must not declare data.componentExportAliases; configure exceptional code bindings in the MCP-owned component override map.`,
+      );
+    }
+    const componentExportAliases = resolveComponentExportAliases(
       title,
-      data?.componentExportAliases,
+      componentExportAliasOverrides(componentRoute),
       sourceRepoPath,
       packageName,
     );
@@ -1225,7 +1195,8 @@ export async function extractComponents(
         `Component '${title}' must not declare data.primaryExport; configure exceptional code bindings in the MCP-owned component override map.`,
       );
     }
-    const primaryExportOverride = componentPrimaryExportOverride(componentRoute);
+    const primaryExportOverride =
+      componentPrimaryExportOverride(componentRoute);
     const primaryExportName = primaryExportOverride.configured
       ? primaryExportOverride.value
       : toPascalCase(title);
@@ -1308,7 +1279,7 @@ export async function extractComponents(
           ) === 0
         ) {
           throw new Error(
-            `Component '${title}' export alias '${exportAlias.exportName}' is not a unique public value export within its authored sourceCodeUrl scope '${exportAlias.sourceRepoPath}'.`,
+            `Component '${title}' export alias '${exportAlias.exportName}' is not a unique public value export within its MCP source path '${exportAlias.sourceRepoPath}'.`,
           );
         }
       }

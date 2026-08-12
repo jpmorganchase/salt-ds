@@ -1266,7 +1266,8 @@ describe("Salt catalog schema v2 descriptor and storage contract", () => {
       source: { family: "pattern", id: "pattern.content-status" },
       target: { family: "component", id: "component.stack-layout" },
       source_field: "data.components",
-      role_source_field: 'data.ai.componentRoles["Stack layout"]',
+      role_source_field:
+        'mcp.catalogEditorialOverrides.componentRoles["Stack layout"]',
       role: stackRelation?.role,
     });
     expect(
@@ -2570,9 +2571,9 @@ describe("CatalogStoreV2 lazy integrity checks", () => {
     );
     expect(firstRead).not.toBeNull();
     await fs.appendFile(cachedTokenPath, " ");
-    expect(
-      cachedStore.getRecord("token", "--salt-accent-background"),
-    ).toBe(firstRead);
+    expect(cachedStore.getRecord("token", "--salt-accent-background")).toBe(
+      firstRead,
+    );
     const freshStore = new CatalogStoreV2({ registryDir: cachedDirectory });
     expect(() =>
       freshStore.getRecord("token", "--salt-accent-background"),

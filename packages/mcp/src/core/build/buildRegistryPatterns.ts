@@ -25,6 +25,7 @@ import {
   toKebabCase,
   uniqueStrings,
 } from "./buildRegistryShared.js";
+import { patternEditorialOverride } from "./catalogEditorialOverrides.js";
 import { globCatalogInputs } from "./catalogInputInventory.js";
 import { NON_PRODUCTION_IMPLEMENTATION_GLOB_IGNORES } from "./catalogProductionSource.js";
 import { parseYamlFrontmatter } from "./parseYamlFrontmatter.js";
@@ -72,20 +73,19 @@ function asRecord(value: unknown): Record<string, unknown> | null {
   return value as Record<string, unknown>;
 }
 
-function parseAuthoredComponentRoles(
-  aiConfig: Record<string, unknown> | null,
+function parseComponentRoleOverrides(
+  rawRoles: unknown,
   componentNames: string[],
   patternTitle: string,
 ): Map<string, string> {
   const roles = new Map<string, string>();
-  const rawRoles = aiConfig?.componentRoles;
   if (rawRoles === undefined) {
     return roles;
   }
   const roleRecord = asRecord(rawRoles);
   if (!roleRecord) {
     throw new Error(
-      `Pattern '${patternTitle}' data.ai.componentRoles must be an object.`,
+      `Pattern '${patternTitle}' MCP component-role override must be an object.`,
     );
   }
 
@@ -97,13 +97,13 @@ function parseAuthoredComponentRoles(
       );
       throw new Error(
         caseMismatch
-          ? `Pattern '${patternTitle}' data.ai.componentRoles key '${componentName}' must use the exact component name '${caseMismatch}'.`
-          : `Pattern '${patternTitle}' data.ai.componentRoles references undeclared component '${componentName}'.`,
+          ? `Pattern '${patternTitle}' MCP component-role override key '${componentName}' must use the exact component name '${caseMismatch}'.`
+          : `Pattern '${patternTitle}' MCP component-role override references undeclared component '${componentName}'.`,
       );
     }
     if (typeof rawRole !== "string" || rawRole.trim().length === 0) {
       throw new Error(
-        `Pattern '${patternTitle}' data.ai.componentRoles['${componentName}'] must be a non-empty string.`,
+        `Pattern '${patternTitle}' MCP component-role override for '${componentName}' must be a non-empty string.`,
       );
     }
     roles.set(componentName, rawRole.trim());
@@ -300,8 +300,8 @@ function extractPatternDocsExamples(input: {
 }
 
 function enrichPatternAliases(
-  aliases: string[],
-  additionalAliases: string[] = [],
+  aliases: readonly string[],
+  additionalAliases: readonly string[] = [],
 ): string[] {
   return uniqueStrings([...aliases, ...additionalAliases]);
 }
@@ -970,7 +970,11 @@ export async function extractPatterns(
     }
 
     const data = parsed.data.data as Record<string, unknown> | undefined;
-    const aiConfig = asRecord(data?.ai);
+    if (data != null && Object.hasOwn(data, "ai")) {
+      throw new Error(
+        `Pattern '${title}' must not declare data.ai; configure catalog enrichments in the MCP-owned editorial override map.`,
+      );
+    }
     const components = asStringArray(data?.components);
     const relatedPatterns = asStringArray(data?.relatedPatterns);
     const resources = Array.isArray(data?.resources)
@@ -979,13 +983,14 @@ export async function extractPatterns(
     const route = assertCanonicalSiteRoute(
       `/salt/patterns/${relativePatternPath.replace(/\.mdx$/, "")}`,
     );
+    const editorialOverride = patternEditorialOverride(route);
     const routeSlug = getRouteSlug(route);
     const aliases = enrichPatternAliases(
       uniqueStrings([
         ...asStringArray(parsed.data.aliases),
         ...(routeSlug ? [routeSlug] : []),
       ]),
-      asStringArray(aiConfig?.aliases),
+      editorialOverride?.aliases ?? [],
     );
     const categoryRecord = patternCategoryByRoute.get(route);
     if (!categoryRecord) {
@@ -1013,8 +1018,8 @@ export async function extractPatterns(
       ...structuredGuidance.avoid,
     ]);
     const topicSignals = extractPatternTopicSignals(title, parsed.content);
-    const componentRoles = parseAuthoredComponentRoles(
-      aiConfig,
+    const componentRoles = parseComponentRoleOverrides(
+      editorialOverride?.componentRoles,
       components,
       title,
     );
@@ -1104,7 +1109,6 @@ export async function extractPatterns(
       )}.`,
     );
   }
-
   return patterns.sort((left, right) =>
     compareOrdinalStrings(left.name, right.name),
   );

@@ -69,10 +69,6 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    * | `cta`       | `solid`       | `accented`  |
    * | `primary`   | `solid`       | `neutral`   |
    * | `secondary` | `transparent` | `neutral`   |
-   *
-   * @saltValueMap {"from":"cta","set":[["appearance","solid"],["sentiment","accented"]]}
-   * @saltValueMap {"from":"primary","set":[["appearance","solid"],["sentiment","neutral"]]}
-   * @saltValueMap {"from":"secondary","set":[["appearance","transparent"],["sentiment","neutral"]]}
    */
   variant?: ButtonVariant;
   /**

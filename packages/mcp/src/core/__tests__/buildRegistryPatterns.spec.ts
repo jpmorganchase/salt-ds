@@ -12,6 +12,7 @@ import {
 async function writeFixturePatternRepo(
   repoRoot: string,
   content: string,
+  slug = "fixture-flow",
 ): Promise<void> {
   await fs.mkdir(path.join(repoRoot, "site/docs/patterns"), {
     recursive: true,
@@ -24,8 +25,8 @@ async function writeFixturePatternRepo(
           patternCount: 1,
         },
         patterns: {
-          fixtureFlow: {
-            route: "/salt/patterns/fixture-flow",
+          [slug]: {
+            route: `/salt/patterns/${slug}`,
             category: "Fixture",
           },
         },
@@ -36,7 +37,7 @@ async function writeFixturePatternRepo(
     "utf8",
   );
   await fs.writeFile(
-    path.join(repoRoot, "site/docs/patterns/fixture-flow.mdx"),
+    path.join(repoRoot, `site/docs/patterns/${slug}.mdx`),
     content,
     "utf8",
   );
@@ -84,7 +85,7 @@ Do not use SiblingPart when FixturePart is unavailable.
     }
   });
 
-  it("round-trips only explicitly authored structural component roles", async () => {
+  it("round-trips MCP-owned structural component roles", async () => {
     const repoRoot = await fs.mkdtemp(
       path.join(os.tmpdir(), "salt-pattern-authored-role-fixture-"),
     );
@@ -93,28 +94,26 @@ Do not use SiblingPart when FixturePart is unavailable.
       await writeFixturePatternRepo(
         repoRoot,
         `---
-title: Fixture flow
+title: Content status
 description: Fixture source-backed flow pattern.
 layout: DetailPattern
 data:
-  components: ["FixturePart"]
-  ai:
-    componentRoles:
-      FixturePart: "Provides the explicitly curated fixture role."
+  components: ["Stack layout"]
 ---
 
 ## How to build
 
-Incidental FixturePart prose must not replace the authored role.
+Incidental Stack layout prose must not replace the curated role.
 `,
+        "content-status",
       );
 
       const patterns = await extractPatterns(repoRoot);
 
       expect(patterns[0].composed_of).toEqual([
         {
-          component: "FixturePart",
-          role: "Provides the explicitly curated fixture role.",
+          component: "Stack layout",
+          role: "Arranges the visual indicator, title, supporting message, and optional action in one vertically centered content-status group.",
         },
       ]);
     } finally {
@@ -122,28 +121,38 @@ Incidental FixturePart prose must not replace the authored role.
     }
   });
 
-  it.each([
-    {
-      name: "an undeclared key",
-      declaration: '      OtherPart: "Unknown role."',
-      error: /references undeclared component 'OtherPart'/u,
-    },
-    {
-      name: "a wrong-case key",
-      declaration: '      fixturepart: "Wrong-case role."',
-      error: /must use the exact component name 'FixturePart'/u,
-    },
-    {
-      name: "a non-string value",
-      declaration: "      FixturePart: 42",
-      error: /must be a non-empty string/u,
-    },
-  ])("rejects $name in data.ai.componentRoles", async ({
-    declaration,
-    error,
-  }) => {
+  it("rejects an MCP component-role override for an undeclared component", async () => {
     const repoRoot = await fs.mkdtemp(
       path.join(os.tmpdir(), "salt-pattern-invalid-role-fixture-"),
+    );
+
+    try {
+      await writeFixturePatternRepo(
+        repoRoot,
+        `---
+title: Content status
+description: Fixture source-backed flow pattern.
+layout: DetailPattern
+data:
+  components: ["Progress"]
+---
+
+Fixture content.
+`,
+        "content-status",
+      );
+
+      await expect(extractPatterns(repoRoot)).rejects.toThrow(
+        /references undeclared component 'Stack layout'/u,
+      );
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("rejects legacy pattern enrichment frontmatter", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-pattern-legacy-ai-fixture-"),
     );
 
     try {
@@ -156,15 +165,16 @@ layout: DetailPattern
 data:
   components: ["FixturePart"]
   ai:
-    componentRoles:
-${declaration}
+    aliases: ["legacy fixture"]
 ---
 
 Fixture content.
 `,
       );
 
-      await expect(extractPatterns(repoRoot)).rejects.toThrow(error);
+      await expect(extractPatterns(repoRoot)).rejects.toThrow(
+        /must not declare data.ai/u,
+      );
     } finally {
       await fs.rm(repoRoot, { recursive: true, force: true });
     }
