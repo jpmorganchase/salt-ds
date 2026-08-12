@@ -60,6 +60,12 @@ Right.args = {
   placement: "right",
 };
 
+export const HideArrow = Default.bind({});
+HideArrow.args = {
+  placement: "bottom",
+  hideArrow: true,
+};
+
 const HeaderTemplate: StoryFn = ({ onOpenChange, ...props }: OverlayProps) => {
   const [open, setOpen] = useState(false);
 

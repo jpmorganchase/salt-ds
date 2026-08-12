@@ -1,5 +1,51 @@
 # @salt-ds/core
 
+## 1.69.0
+
+### Minor Changes
+
+- fc59869: Added a `kind` prop to `Avatar` to distinguish usage by what the Avatar represents.
+
+  - `kind="person"` (default) renders a circular Avatar.
+  - `kind="entity"` renders a square Avatar.
+
+  ```tsx
+  <Avatar name="John Doe" />
+  <Avatar kind="entity" name="JPMC" />
+  ```
+
+- e3c0230: Add `CardHeader`, `CardContent` and `CardFooter`, composable layout sections that own the inner padding of a card. Use them as direct children of `Card`, `LinkCard` or `InteractableCard` to create structured layouts and allow other children, such as images or dividers, to extend to the card's edges. When a section is present, the wrapping card's default padding is automatically removed.
+- b573303: Added `Breadcrumbs`, `Breadcrumb`, `BreadcrumbTrigger`, and `BreadcrumbLabel` for secondary navigation trails with collapse, wrapping, and router compatible link rendering.
+
+  Renamed from `BreadcrumbsNext`, `BreadcrumbNext`, `BreadcrumbNextTrigger`, and `BreadcrumbNextLabel` in lab.
+
+  ```tsx
+  import { Breadcrumb, Breadcrumbs } from "@salt-ds/core";
+
+  <Breadcrumbs aria-label="Breadcrumb">
+    <Breadcrumb href="/">Home</Breadcrumb>
+    <Breadcrumb href="/level-1">Level 1</Breadcrumb>
+    <Breadcrumb href="/level-2">Current level</Breadcrumb>
+  </Breadcrumbs>;
+  ```
+
+- 9c4e307: Add `hideArrow` prop to `Overlay`.
+
+  ```tsx
+  <Overlay hideArrow>
+    <OverlayTrigger>
+      <Button>Show Overlay</Button>
+    </OverlayTrigger>
+    <OverlayPanel>Overlay content</OverlayPanel>
+  </Overlay>
+  ```
+
+### Patch Changes
+
+- e25daab: Fixed the TypeScript definition for `OverlayProps` to no longer include unsupported DOM attributes, since `Overlay` does not render a DOM element.
+- e25daab: Reduced the gap between `Overlay` panels and their anchor element, and improved `Overlay` rendering performance by memoizing context values.
+- df76f3e: Fixed the default semantic `UserIcon` to render with the outline icon instead of the solid icon. Validation semantic icons continue to use solid icons by default.
+
 ## 1.68.0
 
 ### Minor Changes

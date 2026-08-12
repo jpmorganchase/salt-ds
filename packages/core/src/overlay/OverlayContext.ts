@@ -20,6 +20,7 @@ export interface OverlayContextValue {
   openState: boolean;
   floatingStyles: FloatingStyleProps;
   arrowProps: FloatingArrowProps;
+  hideArrow: boolean;
   context: FloatingContext;
   reference?: (node: ReferenceType | null) => void;
   floating?: (node: HTMLElement | null) => void;
@@ -42,6 +43,7 @@ export const OverlayContext = createContext<OverlayContextValue>(
     },
     context: {} as FloatingContext,
     arrowProps: {} as FloatingArrowProps,
+    hideArrow: false,
     reference: {} as FloatingReturn["reference"],
     floating: {} as FloatingReturn["floating"],
     getFloatingProps() {

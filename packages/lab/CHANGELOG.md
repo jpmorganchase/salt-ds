@@ -1,5 +1,24 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.102
+
+### Minor Changes
+
+- b573303: Removed `BreadcrumbsNext`, `BreadcrumbNext`, `BreadcrumbNextTrigger`, and `BreadcrumbNextLabel` from lab and promoted to core. As part of the promotion the components were renamed e.g., `BreadcrumbsNext` is now `Breadcrumbs`.
+
+  Removed the legacy `Breadcrumbs` and `Breadcrumb` exports from lab.
+
+### Patch Changes
+
+- Updated dependencies [fc59869]
+- Updated dependencies [e3c0230]
+- Updated dependencies [e25daab]
+- Updated dependencies [b573303]
+- Updated dependencies [e25daab]
+- Updated dependencies [df76f3e]
+- Updated dependencies [9c4e307]
+  - @salt-ds/core@1.69.0
+
 ## 1.0.0-alpha.101
 
 ### Patch Changes
