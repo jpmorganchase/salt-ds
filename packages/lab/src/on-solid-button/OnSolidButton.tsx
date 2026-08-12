@@ -1,31 +1,34 @@
-import { Button, type ButtonProps, makePrefixer } from "@salt-ds/core";
+import { makePrefixer, useButton } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef } from "react";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
 
 import onSolidButtonCss from "./OnSolidButton.css";
 
 const withBaseName = makePrefixer("saltOnSolidButton");
 
-export interface OnSolidButtonProps
-  extends Omit<
-    ButtonProps,
-    "appearance" | "sentiment" | "variant" | "loading" | "loadingAnnouncement"
-  > {}
+export interface OnSolidButtonProps extends ComponentPropsWithoutRef<"button"> {
+  disabled?: boolean;
+  focusableWhenDisabled?: boolean;
+}
 
 export const OnSolidButton = forwardRef<HTMLButtonElement, OnSolidButtonProps>(
-  function OnSolidButton({ className, ...props }, ref) {
-    // Dropped at runtime as well as in the type,
-    const {
-      appearance: _appearance,
-      sentiment: _sentiment,
-      variant: _variant,
-      loading: _loading,
-      loadingAnnouncement: _loadingAnnouncement,
+  function OnSolidButton(
+    {
+      children,
+      className,
+      disabled,
+      focusableWhenDisabled,
+      onBlur,
+      onClick,
+      onKeyDown,
+      onKeyUp,
+      type = "button",
       ...rest
-    } = props as ButtonProps;
-
+    },
+    ref,
+  ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-on-solid-button",
@@ -33,13 +36,34 @@ export const OnSolidButton = forwardRef<HTMLButtonElement, OnSolidButtonProps>(
       window: targetWindow,
     });
 
+    const { active, buttonProps } = useButton<HTMLButtonElement>({
+      disabled,
+      focusableWhenDisabled,
+      onBlur,
+      onClick,
+      onKeyDown,
+      onKeyUp,
+    });
+
+    const { tabIndex: _tabIndex, ...restButtonProps } = buttonProps;
+
     return (
-      <Button
+      <button
+        {...restButtonProps}
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("active")]: active,
+            [withBaseName("disabled")]: disabled,
+          },
+          className,
+        )}
         {...rest}
         ref={ref}
-        appearance="transparent"
-        className={clsx(withBaseName(), className)}
-      />
+        type={type}
+      >
+        {children}
+      </button>
     );
   },
 );
