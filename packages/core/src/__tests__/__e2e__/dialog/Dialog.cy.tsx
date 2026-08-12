@@ -44,20 +44,16 @@ describe("GIVEN a Dialog", () => {
       cy.findByRole("dialog").should("have.class", "saltDialog-enterAnimation");
     });
 
-    it(
-      "THEN it should display medium size by default",
-      {
-        viewportHeight: 900,
-        viewportWidth: 1921,
-      },
-      () => {
-        cy.mount(<Default />);
+    it("THEN it should display medium size by default", {
+      viewportHeight: 900,
+      viewportWidth: 1921,
+    }, () => {
+      cy.mount(<Default />);
 
-        cy.findByRole("button", { name: "Open dialog" }).realClick();
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
 
-        cy.findByRole("dialog").should("have.class", "saltDialog-medium-xl");
-      },
-    );
+      cy.findByRole("dialog").should("have.class", "saltDialog-medium-xl");
+    });
   });
 
   describe("WHEN preheader is provided", () => {
@@ -109,35 +105,27 @@ describe("GIVEN a Dialog", () => {
   });
 
   describe("WHEN a size is provided", () => {
-    it(
-      "THEN it should display the correct size for the respective breakpoint",
-      {
-        viewportHeight: 900,
-        viewportWidth: 1921,
-      },
-      () => {
-        cy.mount(<Default size={"large"} />);
+    it("THEN it should display the correct size for the respective breakpoint", {
+      viewportHeight: 900,
+      viewportWidth: 1921,
+    }, () => {
+      cy.mount(<Default size={"large"} />);
 
-        cy.findByRole("button", { name: "Open dialog" }).realClick();
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
 
-        cy.findByRole("dialog").should("have.class", "saltDialog-large-xl");
-      },
-    );
+      cy.findByRole("dialog").should("have.class", "saltDialog-large-xl");
+    });
 
-    it(
-      "THEN it should display the correct size for the respective breakpoint",
-      {
-        viewportHeight: 900,
-        viewportWidth: 600,
-      },
-      () => {
-        cy.mount(<Default size={"small"} />);
+    it("THEN it should display the correct size for the respective breakpoint", {
+      viewportHeight: 900,
+      viewportWidth: 600,
+    }, () => {
+      cy.mount(<Default size={"small"} />);
 
-        cy.findByRole("button", { name: "Open dialog" }).realClick();
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
 
-        cy.findByRole("dialog").should("have.class", "saltDialog-small-sm");
-      },
-    );
+      cy.findByRole("dialog").should("have.class", "saltDialog-small-sm");
+    });
   });
 
   describe("WHEN a Dialog is open", () => {

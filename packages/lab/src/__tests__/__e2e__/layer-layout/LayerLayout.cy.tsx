@@ -71,61 +71,49 @@ describe("GIVEN a Layer", () => {
   });
 
   describe("WHEN no fullScreenAtBreakpoint value is provided", () => {
-    it(
-      "THEN it should take up the whole screen on small viewports",
-      {
-        viewportHeight: 900,
-        viewportWidth: 700,
-      },
-      () => {
-        cy.mount(<Default />);
+    it("THEN it should take up the whole screen on small viewports", {
+      viewportHeight: 900,
+      viewportWidth: 700,
+    }, () => {
+      cy.mount(<Default />);
 
-        cy.findByRole("button", { name: /Open Layer/i }).click();
+      cy.findByRole("button", { name: /Open Layer/i }).click();
 
-        cy.get(".saltLayerLayout").should(
-          "have.class",
-          "saltLayerLayout-fullScreen",
-        );
-      },
-    );
+      cy.get(".saltLayerLayout").should(
+        "have.class",
+        "saltLayerLayout-fullScreen",
+      );
+    });
   });
 
   describe("WHEN a fullScreenAtBreakpoint value is provided", () => {
-    it(
-      "THEN it should take up the whole screen on medium viewports",
-      {
-        viewportHeight: 900,
-        viewportWidth: 961,
-      },
-      () => {
-        cy.mount(<Default fullScreenAtBreakpoint="md" />);
+    it("THEN it should take up the whole screen on medium viewports", {
+      viewportHeight: 900,
+      viewportWidth: 961,
+    }, () => {
+      cy.mount(<Default fullScreenAtBreakpoint="md" />);
 
-        cy.findByRole("button", { name: /Open Layer/i }).click();
+      cy.findByRole("button", { name: /Open Layer/i }).click();
 
-        cy.get(".saltLayerLayout").should(
-          "have.class",
-          "saltLayerLayout-fullScreen",
-        );
-      },
-    );
+      cy.get(".saltLayerLayout").should(
+        "have.class",
+        "saltLayerLayout-fullScreen",
+      );
+    });
 
-    it(
-      "THEN it should take up the whole screen on extra large viewports",
-      {
-        viewportHeight: 900,
-        viewportWidth: 1821,
-      },
-      () => {
-        cy.mount(<Default fullScreenAtBreakpoint="xl" />);
+    it("THEN it should take up the whole screen on extra large viewports", {
+      viewportHeight: 900,
+      viewportWidth: 1821,
+    }, () => {
+      cy.mount(<Default fullScreenAtBreakpoint="xl" />);
 
-        cy.findByRole("button", { name: /Open Layer/i }).click();
+      cy.findByRole("button", { name: /Open Layer/i }).click();
 
-        cy.get(".saltLayerLayout").should(
-          "have.class",
-          "saltLayerLayout-fullScreen",
-        );
-      },
-    );
+      cy.get(".saltLayerLayout").should(
+        "have.class",
+        "saltLayerLayout-fullScreen",
+      );
+    });
   });
 
   describe("WHEN a layer component is closed", () => {
@@ -148,28 +136,24 @@ describe("GIVEN a Layer", () => {
   });
 
   describe("WHEN a layer component is in full screen mode", () => {
-    it(
-      "THEN it should be able to close",
-      {
-        viewportHeight: 900,
-        viewportWidth: 700,
-      },
-      () => {
-        cy.mount(<Default />);
+    it("THEN it should be able to close", {
+      viewportHeight: 900,
+      viewportWidth: 700,
+    }, () => {
+      cy.mount(<Default />);
 
-        cy.findByRole("button", { name: /Open Layer/i }).click();
+      cy.findByRole("button", { name: /Open Layer/i }).click();
 
-        cy.get(".saltLayerLayout").should("be.visible");
+      cy.get(".saltLayerLayout").should("be.visible");
 
-        cy.get(".saltLayerLayout").should(
-          "have.class",
-          "saltLayerLayout-fullScreen",
-        );
+      cy.get(".saltLayerLayout").should(
+        "have.class",
+        "saltLayerLayout-fullScreen",
+      );
 
-        cy.findByRole("button", { name: /Close Layer/i }).click();
+      cy.findByRole("button", { name: /Close Layer/i }).click();
 
-        cy.get(".saltLayerLayout").should("not.exist");
-      },
-    );
+      cy.get(".saltLayerLayout").should("not.exist");
+    });
   });
 });

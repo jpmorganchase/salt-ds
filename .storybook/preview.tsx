@@ -18,21 +18,12 @@ import "./styles.css";
 import { SaltProvider, SaltProviderNext } from "@salt-ds/core";
 import { DocsContainer } from "@storybook/addon-docs/blocks";
 import type { Preview } from "@storybook/react-vite";
-import { initialize, mswLoader } from "msw-storybook-addon";
 import type { ComponentProps } from "react";
 import { MINIMAL_VIEWPORTS } from "storybook/viewport";
 import { withLocalization } from "./decorators/withLocalization";
 import { withResponsiveWrapper } from "./decorators/withResponsiveWrapper";
 import { withTextSpacingWrapper } from "./decorators/withTextSpacingWrapper";
 import { withTheme } from "./decorators/withTheme";
-
-if (!window.Cypress) {
-  // Initialize MSW
-  initialize({
-    onUnhandledRequest: "bypass",
-    serviceWorker: { url: "/apiMockServiceWorker.js" },
-  });
-}
 
 const preview: Preview = {
   initialGlobals: {
@@ -245,7 +236,6 @@ const preview: Preview = {
     withLocalization,
     withTextSpacingWrapper,
   ],
-  loaders: [mswLoader],
 };
 
 export default preview;

@@ -1,5 +1,28 @@
 # @salt-ds/theme
 
+## 1.44.0
+
+### Minor Changes
+
+- 7d81d18: Added `onSolid` subtle actionable tokens for styling low-emphasis actions on solid backgrounds.
+- 94c489e: Added container characteristic `borderColor` tokens:
+
+  - `--salt-container-bold-borderColor`
+  - `--salt-container-bold-borderColor-disabled`
+  - `--salt-container-borderColor`
+  - `--salt-container-subtle-borderColor`
+
+  Also deprecated the primary, secondary, and tertiary container `borderColor` tokens. Use the following replacement tokens where applicable:
+
+  | Deprecated token                                  | Replacement token                            |
+  | ------------------------------------------------- | -------------------------------------------- |
+  | `--salt-container-primary-borderColor`            | `--salt-container-bold-borderColor`          |
+  | `--salt-container-primary-borderColor-disabled`   | `--salt-container-bold-borderColor-disabled` |
+  | `--salt-container-secondary-borderColor`          | `--salt-container-bold-borderColor`          |
+  | `--salt-container-secondary-borderColor-disabled` | `--salt-container-bold-borderColor-disabled` |
+  | `--salt-container-tertiary-borderColor`           | `--salt-container-bold-borderColor`          |
+  | `--salt-container-tertiary-borderColor-disabled`  | `--salt-container-bold-borderColor-disabled` |
+
 ## 1.43.0
 
 ### Minor Changes
