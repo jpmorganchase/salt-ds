@@ -2,6 +2,7 @@
   --collapsibleNavigation-expandedWidth: 30ch;
   --collapsibleNavigation-collapsedWidth: calc(var(--salt-size-icon) + var(--salt-spacing-100) * 2 + var(--salt-size-fixed-100) * 2);
   width: var(--collapsibleNavigation-expandedWidth);
+  overflow-x: hidden;
   transition: width var(--salt-duration-perceptible) var(--salt-animation-timing-function);
 }
 

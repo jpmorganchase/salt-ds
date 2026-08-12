@@ -6,7 +6,6 @@ import {
   StackLayout,
   Text,
   Tooltip,
-  useId,
   VerticalNavigation,
   VerticalNavigationItem,
   VerticalNavigationItemContent,
@@ -28,7 +27,13 @@ function NavItem({ item, collapsed }: { item: Item; collapsed: boolean }) {
   return (
     <VerticalNavigationItem active={location.pathname === item.href}>
       <VerticalNavigationItemContent>
-        <Tooltip content={item.title} disabled={!collapsed} placement="right">
+        {/* aria-hidden so the tooltip isn't announced as a duplicate of the
+            item's accessible name. */}
+        <Tooltip
+          content={<span aria-hidden>{item.title}</span>}
+          disabled={!collapsed}
+          placement="right"
+        >
           <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
             {item.icon}
             {/* Hidden once collapsed, but kept in the DOM for the item's
@@ -46,8 +51,10 @@ function NavItem({ item, collapsed }: { item: Item; collapsed: boolean }) {
 }
 
 export const CollapsibleNavigation = () => {
-  const navId = useId();
   const [collapsed, setCollapsed] = useState(false);
+
+  // Static so it isn't re-announced on toggle; aria-expanded conveys the state.
+  const toggleLabel = "Labels";
 
   return (
     <MockHistory>
@@ -63,15 +70,22 @@ export const CollapsibleNavigation = () => {
           />
         </BorderItem>
         <BorderItem position="west">
-          <StackLayout align="start" gap={1}>
+          {/* The sidebar is the navigation landmark, so the toggle is part of
+              it. */}
+          <StackLayout
+            as="nav"
+            aria-label="Collapsible sidebar"
+            align="start"
+            gap={1}
+          >
             <Tooltip
-              content={collapsed ? "Expand navigation" : "Collapse navigation"}
+              content={<span aria-hidden>{toggleLabel}</span>}
               placement="right"
             >
               <Button
                 appearance="transparent"
-                aria-controls={navId}
                 aria-expanded={!collapsed}
+                aria-label={toggleLabel}
                 onClick={() => setCollapsed(!collapsed)}
               >
                 {collapsed ? (
@@ -81,11 +95,11 @@ export const CollapsibleNavigation = () => {
                 )}
               </Button>
             </Tooltip>
+            {/* Demoted to avoid a nested landmark inside the sidebar nav. */}
             <VerticalNavigation
-              aria-label="Collapsible sidebar"
+              role="presentation"
               appearance="bordered"
               className={clsx(styles.nav, { [styles.collapsed]: collapsed })}
-              id={navId}
             >
               {flatNavData.map((item) => (
                 <NavItem key={item.href} item={item} collapsed={collapsed} />

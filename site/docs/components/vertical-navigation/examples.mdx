@@ -71,6 +71,11 @@ It's recommended to provide a skip link to bypass the vertical navigation for a 
 
 Collapse `VerticalNavigation` to an icon-only view, while keeping the navigation available at all times.
 
+### Best practices
+
+- Give the collapse toggle a stable accessible name that describes what it controls, such as “Labels”. Avoid changing the name based on state, as `aria-expanded` already conveys whether the navigation is expanded or collapsed.
+- Set `aria-expanded` on the toggle to reflect the current state.
+
 <LivePreview
   componentName="vertical-navigation"
   exampleName="CollapsibleNavigation"
