@@ -30,6 +30,9 @@
     "@date-fns/tz": {
       "optional": true
     },
+    "@types/luxon": {
+      "optional": true
+    },
     "date-fns": {
       "optional": true
     },
@@ -37,9 +40,6 @@
       "optional": true
     },
     "luxon": {
-      "optional": true
-    },
-    "@types/luxon": {
       "optional": true
     },
     "moment-timezone": {
