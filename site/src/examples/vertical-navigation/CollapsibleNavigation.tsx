@@ -36,11 +36,9 @@ function NavItem({ item, collapsed }: { item: Item; collapsed: boolean }) {
         >
           <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
             {item.icon}
-            {/* Hidden once collapsed, but kept in the DOM for the item's
-                accessible name. */}
-            <VerticalNavigationItemLabel
-              className={collapsed ? "salt-visuallyHidden" : undefined}
-            >
+            {/* Faded out and clipped by CSS once collapsed, but kept in the
+                DOM for the item's accessible name. */}
+            <VerticalNavigationItemLabel>
               {item.title}
             </VerticalNavigationItemLabel>
           </VerticalNavigationItemTrigger>

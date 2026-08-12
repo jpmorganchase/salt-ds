@@ -15,8 +15,18 @@
   min-width: 0;
 }
 
+.nav :global(.saltVerticalNavigationItemLabel) {
+  white-space: nowrap;
+  transition: opacity var(--salt-duration-perceptible) var(--salt-animation-timing-function);
+}
+
+.nav.collapsed :global(.saltVerticalNavigationItemLabel) {
+  opacity: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .nav {
+  .nav,
+  .nav :global(.saltVerticalNavigationItemLabel) {
     transition: none;
   }
 }
