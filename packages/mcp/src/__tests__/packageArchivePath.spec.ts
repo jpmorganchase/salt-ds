@@ -1,5 +1,7 @@
+import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import {
   isPortableArchivePath,
@@ -85,5 +87,24 @@ describe("package archive path containment", () => {
     expect(isPortableArchivePath("generated\\catalog-manifest.json")).toBe(
       false,
     );
+  });
+
+  it("uses the complete shared portable-path corpus", () => {
+    const corpus = JSON.parse(
+      fs.readFileSync(
+        path.resolve(
+          path.dirname(fileURLToPath(import.meta.url)),
+          "../../../../scripts/fixtures/catalogPortablePath.cases.json",
+        ),
+        "utf8",
+      ),
+    ) as { accepted: string[]; rejected: string[] };
+
+    for (const candidate of corpus.accepted) {
+      expect(isPortableArchivePath(candidate), candidate).toBe(true);
+    }
+    for (const candidate of corpus.rejected) {
+      expect(isPortableArchivePath(candidate), candidate).toBe(false);
+    }
   });
 });

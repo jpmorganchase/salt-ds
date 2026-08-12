@@ -1,8 +1,10 @@
 import path from "node:path";
+import { CatalogRegistryProjection } from "../catalog/catalogRegistryProjection.js";
 import {
   canonicalJson,
   compareOrdinalStrings,
 } from "../catalog/catalogSerialization.js";
+import { createCatalogStoreV2 } from "../catalog/catalogStoreV2.js";
 import { registerVerifiedSaltRegistryFingerprint } from "../registry/fingerprint.js";
 import { findSaltRepoRoot } from "../registry/paths.js";
 import { buildTokenPolicyStructuralRoleRulePackBody } from "../tokenPolicyStructuralRoleRules.js";
@@ -52,7 +54,6 @@ import {
   withGeneratorDependencyInventory,
 } from "./generatorDependencyInventory.js";
 import { normalizeCatalogV2 } from "./normalizeCatalogV2.js";
-import { projectNormalizedCatalogV2 } from "./normalizedCatalogProjection.js";
 
 const REGISTRY_VERSION = "0.1.0";
 const EXCLUDED_REGISTRY_PACKAGES = new Set(["@salt-ds/mcp"]);
@@ -367,13 +368,9 @@ export async function buildRegistry(
             },
       enforceBudgets: options.enforceBudgets,
     });
-    const registry = projectNormalizedCatalogV2(
-      built.normalized,
-      result.manifest,
-      {
-        prefetch: true,
-      },
-    );
+    const registry = new CatalogRegistryProjection(
+      createCatalogStoreV2({ registryDir: outputDir }),
+    ).asRegistry({ prefetch: true, materialize: true });
     registerVerifiedSaltRegistryFingerprint(
       registry,
       result.manifest.semantic_digest,

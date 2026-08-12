@@ -60,6 +60,8 @@ jobs:
         run: yarn
       - name: Build
         run: yarn build
+      - name: Check Core declarations against supported React types
+        run: yarn check:core-react-types
       - name: Check AI tooling package dry runs
         run: yarn check:ai-tooling:pack
       - name: Check Date Adapters packed consumers

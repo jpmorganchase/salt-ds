@@ -8,6 +8,7 @@ import type {
   SaltRegistry,
   TokenRecord,
 } from "../../types.js";
+import { createReviewCatalogFromLegacyRegistry } from "../reviewCatalogAdapter.js";
 import {
   MAX_REVIEW_SUBMITTED_UTF8_BYTES,
   reviewSaltCode as reviewSaltCodeProduction,
@@ -156,7 +157,10 @@ function reviewSaltCode(
   policy: Parameters<typeof reviewSaltCodeProduction>[2] = null,
 ) {
   return reviewSaltCodeProduction(
-    { registry: fixtureRegistry, store: fixtureStore(fixtureRegistry) },
+    {
+      reviewCatalog: createReviewCatalogFromLegacyRegistry(fixtureRegistry),
+      store: fixtureStore(fixtureRegistry),
+    },
     input,
     policy,
   );

@@ -63,6 +63,7 @@ import type {
   CatalogInputInventory,
   CatalogInputInventoryEntry,
 } from "./catalogInputInventory.js";
+import { isSemanticCatalogSourcePath } from "./catalogProductionSource.js";
 
 export interface CatalogContentBlob {
   id: string;
@@ -250,14 +251,27 @@ class SourceBuilder {
     }
     const locator = locatorInput;
     const file = this.inventoryByPath.get(locator);
-    const directoryEntries = file
+    const fullDirectoryEntries = file
       ? []
       : this.inventoryPaths.filter((candidate) =>
           candidate.startsWith(`${locator}/`),
         );
-    if (!file && directoryEntries.length === 0) {
+    if (!file && fullDirectoryEntries.length === 0) {
       throw new Error(
         `Catalog source path is missing or has incorrect case: ${locator}`,
+      );
+    }
+    if (file && !isSemanticCatalogSourcePath(locator)) {
+      throw new Error(
+        `Catalog source path is not production or consumed semantic evidence: ${locator}`,
+      );
+    }
+    const semanticDirectoryEntries = fullDirectoryEntries.filter(
+      isSemanticCatalogSourcePath,
+    );
+    if (!file && semanticDirectoryEntries.length === 0) {
+      throw new Error(
+        `Catalog source directory has no production or consumed semantic evidence: ${locator}`,
       );
     }
 
@@ -268,7 +282,7 @@ class SourceBuilder {
       ? file.sha256
       : sha256Bytes(
           canonicalJson(
-            directoryEntries.map((candidate) => {
+            semanticDirectoryEntries.map((candidate) => {
               const entry = this.inventoryByPath.get(candidate);
               if (!entry) {
                 throw new Error(`Missing inventory entry for ${candidate}.`);
@@ -279,7 +293,7 @@ class SourceBuilder {
         );
     const bytes = file
       ? file.bytes
-      : directoryEntries.reduce(
+      : semanticDirectoryEntries.reduce(
           (total, candidate) =>
             total + (this.inventoryByPath.get(candidate)?.bytes ?? 0),
           0,

@@ -917,7 +917,7 @@ export const TOOL_DEFINITIONS: readonly ToolDefinition[] = [
           ? loadedPolicy.package_versions
           : (args.package_versions ?? {});
       return reviewSaltCode(
-        { registry: context.registry, store: context.store },
+        { reviewCatalog: context.reviewCatalog, store: context.store },
         {
           artifacts: args.artifacts,
           ...(Object.keys(packageVersions).length > 0

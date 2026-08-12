@@ -13,11 +13,11 @@ import {
   normalizeVersion,
 } from "../tools/codeAnalysisCommon.js";
 import type {
-  ComponentRecord,
-  DeprecationRecord,
-  SaltRegistry,
-  TokenRecord,
-} from "../types.js";
+  ReviewCatalog,
+  ReviewComponent,
+  ReviewDeprecation,
+  ReviewToken,
+} from "./reviewCatalogAdapter.js";
 import {
   type ParsedSubmittedFact,
   type PublicParsedFact,
@@ -61,7 +61,7 @@ interface ReviewRuleDefinition {
   rule_id: string;
   description: string;
   evaluate: (input: {
-    registry: SaltRegistry;
+    registry: ReviewCatalog;
     store: CatalogStoreV2;
     facts: readonly ParsedSubmittedFact[];
     packageVersions: ReadonlyMap<string, string>;
@@ -90,7 +90,7 @@ function consumeReviewBudget(budget: ReviewRuleBudget, count = 1): void {
 
 type ComponentResolution =
   | { status: "none"; component: null }
-  | { status: "resolved"; component: ComponentRecord }
+  | { status: "resolved"; component: ReviewComponent }
   | { status: "ambiguous"; component: null };
 
 type ComponentExportIdentityResolution =
@@ -103,12 +103,12 @@ interface ReviewIndexes {
     string,
     ComponentExportIdentityResolution
   >;
-  rootDeprecationsByExport: ReadonlyMap<string, readonly DeprecationRecord[]>;
+  rootDeprecationsByExport: ReadonlyMap<string, readonly ReviewDeprecation[]>;
   propDeprecationsByPackageAndName: ReadonlyMap<
     string,
-    readonly DeprecationRecord[]
+    readonly ReviewDeprecation[]
   >;
-  tokensByName: ReadonlyMap<string, TokenRecord>;
+  tokensByName: ReadonlyMap<string, ReviewToken>;
   jsxFactsByIdentity: ReadonlyMap<string, readonly ParsedSubmittedFact[]>;
   importFactsByIdentity: ReadonlyMap<string, readonly ParsedSubmittedFact[]>;
   tokenFactsByName: ReadonlyMap<string, readonly ParsedSubmittedFact[]>;
@@ -129,7 +129,7 @@ function appendIndexValue<Value>(
   else index.set(key, [value]);
 }
 
-function componentExportNames(component: ComponentRecord): string[] {
+function componentExportNames(component: ReviewComponent): string[] {
   return [
     component.source.export_name,
     ...(component.sub_components?.map((entry) => entry.export_name) ?? []),
@@ -140,7 +140,7 @@ function componentExportNames(component: ComponentRecord): string[] {
 }
 
 function createReviewIndexes(
-  registry: SaltRegistry,
+  registry: ReviewCatalog,
   facts: readonly ParsedSubmittedFact[],
 ): ReviewIndexes {
   const componentsByExport = new Map<string, ComponentResolution>();
@@ -183,10 +183,10 @@ function createReviewIndexes(
         : { status: "ambiguous" },
     );
   }
-  const rootDeprecationsByExport = new Map<string, DeprecationRecord[]>();
+  const rootDeprecationsByExport = new Map<string, ReviewDeprecation[]>();
   const propDeprecationsByPackageAndName = new Map<
     string,
-    DeprecationRecord[]
+    ReviewDeprecation[]
   >();
   for (const deprecation of registry.deprecations) {
     const member = deprecation.subject.member_path.at(-1);
@@ -345,7 +345,7 @@ function catalogRecordReference(
 
 function deprecationReferences(
   store: CatalogStoreV2,
-  deprecation: DeprecationRecord,
+  deprecation: ReviewDeprecation,
   replacement: string | null,
 ): ReviewEvidenceReference[] {
   const record = store.getRecord("deprecation", deprecation.id);
@@ -427,7 +427,7 @@ function makeFinding(input: {
   };
 }
 
-function directReplacementName(deprecation: DeprecationRecord): string | null {
+function directReplacementName(deprecation: ReviewDeprecation): string | null {
   if (
     deprecation.migration.strategy !== "replace" ||
     deprecation.replacement.mode !== "single" ||
@@ -974,7 +974,7 @@ function approvedWrapperImportVerified(
 }
 
 function evaluateProjectPolicyRules(input: {
-  registry: SaltRegistry;
+  registry: ReviewCatalog;
   facts: readonly ParsedSubmittedFact[];
   packageVersions: ReadonlyMap<string, string>;
   policy: ReviewProjectPolicyContext | null;
@@ -1191,7 +1191,7 @@ function evaluateProjectPolicyRules(input: {
 }
 
 export function evaluateReviewRules(input: {
-  registry: SaltRegistry;
+  registry: ReviewCatalog;
   store: CatalogStoreV2;
   facts: readonly ParsedSubmittedFact[];
   packageVersions: ReadonlyMap<string, string>;

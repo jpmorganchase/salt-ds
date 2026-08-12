@@ -3,6 +3,7 @@ import fs from "node:fs/promises";
 import { builtinModules, createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { normalizePortableRepositoryBuildPath } from "../../../scripts/catalogBuildIdentity.mjs";
 
 const scriptPath = fileURLToPath(import.meta.url);
 const scriptDir = path.dirname(scriptPath);
@@ -87,32 +88,10 @@ function assertGeneratorTypeScriptIdentity(
 }
 
 function assertPortablePath(portablePath) {
-  if (
-    portablePath.length === 0 ||
-    portablePath !== portablePath.normalize("NFC") ||
-    portablePath.startsWith("/") ||
-    portablePath.includes("\\") ||
-    [...portablePath].some((character) => {
-      const codePoint = character.codePointAt(0);
-      return (
-        (codePoint !== undefined && codePoint <= 0x1f) ||
-        '<>:"|?*'.includes(character)
-      );
-    }) ||
-    portablePath
-      .split("/")
-      .some(
-        (segment) =>
-          segment === "" ||
-          segment === "." ||
-          segment === ".." ||
-          /[ .]$/u.test(segment) ||
-          /^(?:con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/iu.test(segment),
-      )
-  ) {
-    throw new Error(`Non-portable generator dependency path: ${portablePath}`);
-  }
-  return portablePath;
+  return normalizePortableRepositoryBuildPath(
+    portablePath,
+    "Non-portable generator dependency path",
+  );
 }
 
 export function assertCleanGeneratorEnvironment(

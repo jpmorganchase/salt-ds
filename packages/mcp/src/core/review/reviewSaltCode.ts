@@ -6,7 +6,7 @@ import {
   MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES,
   nonSearchToolResultUtf8Bytes,
 } from "../publicResultBudget.js";
-import type { SaltRegistry } from "../types.js";
+import type { ReviewCatalog } from "./reviewCatalogAdapter.js";
 import {
   evaluateReviewRules,
   MAX_REVIEW_RULE_COMPARISONS,
@@ -112,13 +112,13 @@ function summarizeFindings(
 }
 
 export function reviewSaltCode(
-  context: { registry: SaltRegistry; store: CatalogStoreV2 },
+  context: { reviewCatalog: ReviewCatalog; store: CatalogStoreV2 },
   input: ReviewSaltCodeInput,
   policy: ReviewProjectPolicyContext | null = null,
   projectContextDigest: string | null = null,
   contextSource: ReviewContextSource = "none",
 ) {
-  const { registry, store } = context;
+  const { reviewCatalog: registry, store } = context;
   if (
     input.artifacts.length < 1 ||
     input.artifacts.length > MAX_REVIEW_ARTIFACTS
@@ -445,7 +445,7 @@ export function reviewSaltCode(
     ],
     provenance: {
       catalog_version: registry.version,
-      semantic_digest: registry.semantic_hash ?? null,
+      semantic_digest: registry.semanticDigest,
       project_context_digest: projectContextDigest,
       project_policy_digest: policy?.digest ?? null,
     },

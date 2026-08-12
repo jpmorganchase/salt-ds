@@ -17,12 +17,12 @@ import {
 } from "./catalogArtifactContract.mjs";
 import {
   assertCatalogInputBytes,
-  assertCompleteCatalogInputSet,
   assertCatalogManifestBytes,
+  assertCompleteCatalogInputSet,
   createCatalogBuildIdentity,
   formatCatalogBuildBanner,
-  hasForbiddenPortablePathCharacter,
   isPathWithinRoot,
+  normalizePortableRepositoryBuildPath,
 } from "./catalogBuildIdentity.mjs";
 import { makeTypings } from "./makeTypings.mjs";
 import { transformWorkspaceDeps } from "./transformWorkspaceDeps.mjs";
@@ -305,28 +305,10 @@ const publishedExtraCopyPaths = publishExtraCopyPaths.map((copyConfig) =>
 );
 
 function assertPortableRelativeCopyPath(relativePath, label) {
-  if (
-    typeof relativePath !== "string" ||
-    relativePath.length === 0 ||
-    relativePath !== relativePath.normalize("NFC") ||
-    relativePath.includes("\\") ||
-    path.isAbsolute(relativePath) ||
-    hasForbiddenPortablePathCharacter(relativePath) ||
-    relativePath
-      .split("/")
-      .some(
-        (part) =>
-          part === "" ||
-          part === "." ||
-          part === ".." ||
-          /[ .]$/u.test(part) ||
-          /^(?:con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/iu.test(part),
-      )
-  ) {
-    throw new Error(
-      `${label} contains an unsafe relative path: ${relativePath}`,
-    );
-  }
+  normalizePortableRepositoryBuildPath(
+    relativePath,
+    `${label} contains an unsafe relative path`,
+  );
 }
 
 async function copyPublishExtraFile(fromPath, toPath, capturedBytes) {

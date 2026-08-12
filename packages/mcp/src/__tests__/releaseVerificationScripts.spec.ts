@@ -51,10 +51,11 @@ describe("release verification scripts", () => {
     expect(postBuild).not.toContain("release:verify:mcp:after-build");
   });
 
-  it("runs the Date package gate before the unchanged MCP composite", async () => {
+  it("runs the Core and Date package gates before the unchanged MCP composite", async () => {
     const scripts = await readScripts();
 
     expect(scripts["release:verify:after-build"]?.split(" && ")).toEqual([
+      "yarn check:core-react-types",
       "yarn check:date-adapters:pack",
       "yarn release:verify:mcp:after-build",
     ]);
@@ -63,7 +64,7 @@ describe("release verification scripts", () => {
     );
   });
 
-  it("runs both package gates after the PR build", async () => {
+  it("runs all package gates after the PR build", async () => {
     const workflow = await fs.readFile(
       path.join(REPO_ROOT, ".github", "workflows", "test.yml"),
       "utf8",
@@ -73,10 +74,12 @@ describe("release verification scripts", () => {
     const datePackageGate = workflow.indexOf(
       "run: yarn check:date-adapters:pack",
     );
+    const coreTypeGate = workflow.indexOf("run: yarn check:core-react-types");
 
     expect(build).toBeGreaterThanOrEqual(0);
     expect(mcpPackageGate).toBeGreaterThan(build);
     expect(datePackageGate).toBeGreaterThan(build);
+    expect(coreTypeGate).toBeGreaterThan(build);
   });
 
   it("reuses the full release build without rebuilding packages", async () => {

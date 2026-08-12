@@ -1,12 +1,19 @@
 import path from "node:path";
-import type { CatalogStoreV2 } from "../catalog/catalogStoreV2.js";
+import {
+  type CatalogStoreV2,
+  createCatalogStoreV2,
+} from "../catalog/catalogStoreV2.js";
+import {
+  createReviewCatalogFromStore,
+  type ReviewCatalog,
+} from "../review/reviewCatalogAdapter.js";
 import type { LoadRegistryOptions, SaltRegistry } from "../types.js";
 import { createLazyRegistry } from "./lazyRegistry.js";
 import { getPackageRoot } from "./paths.js";
 
 export interface SaltCatalogRuntimeContext {
-  registry: SaltRegistry;
   store: CatalogStoreV2;
+  reviewCatalog: ReviewCatalog;
 }
 
 export async function loadCatalogRuntimeContext(
@@ -15,12 +22,9 @@ export async function loadCatalogRuntimeContext(
   const packageRoot = getPackageRoot(import.meta.url);
   const registryDir =
     options.registryDir ?? path.join(packageRoot, "generated");
-  const { registry, state } = createLazyRegistry({
-    registryDir,
-    prefetch: options.prefetch === true,
-  });
-
-  return { registry, store: state.store };
+  const store = createCatalogStoreV2({ registryDir });
+  store.ensureCatalogVerified();
+  return { store, reviewCatalog: createReviewCatalogFromStore(store) };
 }
 
 /**
@@ -34,5 +38,11 @@ export async function loadCatalogRuntimeContext(
 export async function loadRegistry(
   options: LoadRegistryOptions = {},
 ): Promise<SaltRegistry> {
-  return (await loadCatalogRuntimeContext(options)).registry;
+  const packageRoot = getPackageRoot(import.meta.url);
+  const registryDir =
+    options.registryDir ?? path.join(packageRoot, "generated");
+  return createLazyRegistry({
+    registryDir,
+    prefetch: options.prefetch === true,
+  }).registry;
 }
