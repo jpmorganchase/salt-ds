@@ -476,13 +476,13 @@ export const ZebraVariantRowSelection: StoryObj<typeof AgGridReact> = () => {
 ZebraVariantRowSelection.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
-  // Do findAll here so this will also work in `side-by-side` mode
-  const rows = await canvas.findAllByRole("row");
+  // Wait for the data row, not just any `role="row"` (headers resolve first).
+  const coloradoCells = await canvas.findAllByText("Colorado");
 
-  // Filter to find the element with the attribute `row-index="5"`
-  const fifthRows = rows.find((row) => row.getAttribute("row-index") === "5");
-  if (fifthRows) {
-    await userEvent.click(within(fifthRows).getByRole("checkbox"));
+  for (const cell of coloradoCells) {
+    const row = cell.closest("[row-index]") as HTMLElement;
+    await userEvent.click(within(row).getByRole("checkbox"));
+    await expect(row).toHaveClass("ag-row-selected");
   }
 };
 
