@@ -16,7 +16,7 @@ When you use `render`, make sure the final element receives the props and childr
 Use a JSX element when you only need to replace the rendered element and can define the target props directly.
 
 ```tsx
-<LinkButton render={<RouterLink to="/reports" />}>View reports</LinkButton>
+<Link render={<RouterLink to="/reports" />}>View reports</Link>
 ```
 
 Salt merges its props with the props on the element.
@@ -26,24 +26,24 @@ Salt merges its props with the props on the element.
 Use a callback function when you need to transform props before passing them to the rendered element. A common example is mapping Salt’s `href` prop to a router’s `to` prop.
 
 ```tsx
-<LinkButton
+<Link
   href="/reports"
   render={({ href, ...props }) => (
     <RouterLink {...props} to={href ?? "/reports"} />
   )}
 >
   View reports
-</LinkButton>
+</Link>
 ```
 
 When using a callback function, return a valid React element and pass through the props and children needed by the rendered element.
 
-## Implementation checklist
+## What to pass through
 
 - Pass through the provided props unless you intentionally need to transform them.
-- Preserve `className`, `style`, event handlers, ARIA attributes, `ref`, and `children`.
+- Preserve `className`, `style`, event handlers, ARIA attributes, and `children`.
+- Forward the provided `ref` to the final element or to a component that forwards refs. Salt components may use refs for focus management, measurement, or positioning.
 - For routing links, map the Salt `href` prop to the router destination prop, such as React Router’s `to`.
-- For `Link` and `LinkButton`, the final rendered element’s `target` controls the open-in-new-tab cue. If the final target is `_blank`, Salt adds the visual icon and visually hidden text.
 
 ## Check component support
 
