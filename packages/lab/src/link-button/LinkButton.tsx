@@ -1,8 +1,20 @@
-import { makePrefixer, type RenderPropsType, renderProps } from "@salt-ds/core";
+import {
+  capitalize,
+  makePrefixer,
+  type RenderPropsType,
+  renderProps,
+  useIcon,
+} from "@salt-ds/core";
+import type { IconProps } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  type ComponentType,
+  cloneElement,
+  forwardRef,
+} from "react";
 
 import linkButtonCss from "./LinkButton.css";
 
@@ -10,21 +22,38 @@ const withBaseName = makePrefixer("saltLinkButton");
 
 export interface LinkButtonProps extends ComponentPropsWithoutRef<"a"> {
   /**
+   * Icon component displayed when `target="_blank"`. Defaults to `ExternalIcon` from `SemanticIconProvider`.
+   */
+  IconComponent?: ComponentType<IconProps> | null;
+  /**
    * The sentiment of the button. Options are 'accented' and 'neutral'.
    * 'neutral' is the default value.
-   *
-   * @since 1.36.0.
    */
   sentiment?: "accented" | "neutral";
   /**
    * Render prop to enable customisation of anchor element.
    */
   render?: RenderPropsType["render"];
+  /**
+   * Either "default" or "never".
+   * Determines when underline should be applied to the link button.
+   *
+   * @default "default".
+   */
+  underline?: "default" | "never";
 }
 
 export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
   function LinkButton(props, ref) {
-    const { className, sentiment = "neutral", ...rest } = props;
+    const {
+      children,
+      className,
+      IconComponent,
+      sentiment = "neutral",
+      target = "_self",
+      underline = "default",
+      ...rest
+    } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -32,11 +61,43 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
       css: linkButtonCss,
       window: targetWindow,
     });
+    const { ExternalIcon } = useIcon();
 
-    return renderProps("a", {
-      className: clsx(withBaseName(), withBaseName(sentiment), className),
+    const LinkButtonIconComponent =
+      IconComponent === undefined ? ExternalIcon : IconComponent;
+
+    const linkButton = renderProps("a", {
+      className: clsx(
+        withBaseName(),
+        withBaseName(sentiment),
+        withBaseName(`underline${capitalize(underline)}`),
+        className,
+      ),
       ...rest,
       ref,
+      target,
+      children,
     });
+
+    if (linkButton.props.target !== "_blank") {
+      return linkButton;
+    }
+
+    return cloneElement(
+      linkButton,
+      undefined,
+      <>
+        {linkButton.props.children}
+        {LinkButtonIconComponent && (
+          <LinkButtonIconComponent
+            className={withBaseName("icon")}
+            aria-hidden
+          />
+        )}
+        <span className={withBaseName("externalLinkADA")}>
+          Opens in a new tab
+        </span>
+      </>,
+    );
   },
 );

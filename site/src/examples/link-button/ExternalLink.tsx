@@ -4,9 +4,9 @@ import type { ReactElement } from "react";
 export const ExternalLink = (): ReactElement => (
   <LinkButton
     href="https://www.saltdesignsystem.com"
-    rel="noreferrer"
+    rel="noopener"
     target="_blank"
   >
-    Salt Design System
+    Visit Salt
   </LinkButton>
 );

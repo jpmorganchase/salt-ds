@@ -23,13 +23,44 @@
   min-width: var(--saltLinkButton-minWidth, unset);
   position: relative;
   text-align: var(--saltLinkButton-textAlign, var(--salt-text-action-textAlign));
-  text-decoration: none;
+  text-decoration: var(--linkButton-textDecoration, var(--salt-text-link-textDecoration));
+  text-underline-offset: var(--salt-spacing-fixed-200);
   transition: none;
   width: var(--saltLinkButton-width, auto);
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
   /* Styles applied to align children*/
   font-weight: var(--saltLinkButton-fontWeight, var(--salt-text-action-fontWeight));
+}
+
+.saltLinkButton-underlineDefault {
+  --linkButton-textDecoration: var(--salt-text-link-textDecoration);
+  --linkButton-textDecoration-hover: var(--salt-typography-textDecoration-none);
+  --linkButton-textDecoration-focus: var(--linkButton-textDecoration-hover);
+}
+
+.saltLinkButton-underlineNever {
+  --linkButton-textDecoration: var(--salt-typography-textDecoration-none);
+  --linkButton-textDecoration-hover: var(--salt-typography-textDecoration-none);
+  --linkButton-textDecoration-focus: var(--salt-typography-textDecoration-none);
+}
+
+/* Class for ADA content - visually hidden but accessible to screen readers.
+   Uses clip-path and prevents user selection so the text isn't included
+   when users copy the link button's visible content. */
+.saltLinkButton-externalLinkADA {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 @media (hover: hover) {
@@ -39,8 +70,7 @@
     color: var(--saltLinkButton-text-color-hover, var(--linkButton-text-color-hover));
     border-color: var(--saltLinkButton-borderColor-hover, var(--linkButton-borderColor-hover));
     cursor: var(--salt-cursor-hover);
-    text-decoration: var(--salt-text-link-textDecoration);
-    text-underline-offset: var(--salt-spacing-fixed-200);
+    text-decoration: var(--linkButton-textDecoration-hover, var(--salt-typography-textDecoration-none));
   }
 }
 
@@ -48,11 +78,10 @@
 .saltLinkButton:focus-visible {
   outline: var(--salt-focused-outline);
 
-  background: var(--linkButton-background-hover);
-  color: var(--linkButton-text-color-hover);
-  border-color: var(--linkButton-borderColor-hover);
-  text-decoration: var(--salt-text-link-textDecoration);
-  text-underline-offset: var(--salt-spacing-fixed-200);
+  background: var(--saltLinkButton-background-hover, var(--linkButton-background-hover));
+  color: var(--saltLinkButton-text-color-hover, var(--linkButton-text-color-hover));
+  border-color: var(--saltLinkButton-borderColor-hover, var(--linkButton-borderColor-hover));
+  text-decoration: var(--linkButton-textDecoration-focus, var(--salt-typography-textDecoration-none));
 }
 
 .saltLinkButton-neutral {
