@@ -11,7 +11,9 @@ Use `render` when you need a Salt component to render another component, such as
 
 Salt passes styling, behavior, accessibility attributes, refs, and children to the final element. With a JSX element, Salt merges these props for you. With a callback function, pass the provided props to the element you return.
 
-## Render with a JSX element
+## For consumers
+
+### Render with a JSX element
 
 Use a JSX element when you only need to replace the rendered element and can define the target props directly.
 
@@ -19,9 +21,9 @@ Use a JSX element when you only need to replace the rendered element and can def
 <Link render={<RouterLink to="/reports" />}>View reports</Link>
 ```
 
-Salt merges its props with the props on the element.
+Salt merges its props with the props on the element. The component you render must accept those props, forward the `ref`, and pass the received props to its underlying DOM element. This preserves Salt class names, styles, event handlers, ARIA attributes, children, and focus behavior.
 
-## Render with a callback function
+### Render with a callback function
 
 Use a callback function when you need to transform props before passing them to the rendered element. A common example is mapping Salt’s `href` prop to a router’s `to` prop.
 
@@ -29,16 +31,14 @@ Use a callback function when you need to transform props before passing them to 
 <Link
   href="/reports"
   render={({ href, ...props }) => (
-    <RouterLink {...props} to={href ?? "/reports"} />
+    <RouterLink {...props} to={href ?? "/"} />
   )}
 >
   View reports
 </Link>
 ```
 
-When using a callback function, return a valid React element.
-
-### Passing props and refs
+The callback receives the props Salt would have passed to the default element. Return a valid React element.
 
 Pass the provided props to the element you return unless you intentionally need to transform them. This preserves Salt class names, styles, event handlers, ARIA attributes, children, and other component behavior.
 
@@ -46,6 +46,20 @@ If the component you render supports refs, forward the provided `ref` to it. Sal
 
 For routing links, map the Salt `href` prop to the router destination prop, such as React Router’s `to`, while passing the rest of the props through.
 
-## Check component support
+### Check component support
 
 Not every Salt component supports `render`. Check a component’s props table to confirm whether `render` is available.
+
+## For Salt maintainers
+
+Expose `render` when consumers need to compose a Salt component with another component, such as a routing link, or when changing the rendered element is a valid case-by-case escape hatch. Keep the default element semantically correct so most consumers do not need `render`.
+
+When adding `render` support to a component:
+
+- Include `RenderPropsType` in the component props.
+- Build the complete props object for the default element before calling `renderProps`. Include `className`, styles, event handlers, ARIA attributes, data attributes, `children`, and `ref`.
+- Call `renderProps` at the boundary where the default element would otherwise be rendered.
+- If behavior depends on props that a JSX render element can override, inspect the element returned by `renderProps` before deciding what to render. For example, external-link indicators should follow the final rendered `target`, not only the component’s incoming `target` prop.
+- Remember that JSX render elements are merged by Salt: event handlers are chained, `className` values are combined, `style` objects are shallow-merged, and the render element’s other props win when provided.
+- Remember that callback render functions control their own prop spreading. Salt passes the props, but the callback must apply them to the returned element.
+- Add tests for the default element, JSX render elements, callback render functions, prop overrides that affect behavior, and ref or event-handler behavior when the component depends on them.
