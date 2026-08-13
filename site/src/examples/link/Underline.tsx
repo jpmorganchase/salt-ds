@@ -4,11 +4,15 @@ import styles from "./index.module.css";
 
 export const Underline = (): ReactElement => (
   <StackLayout align="start">
-    <Link href="#" className={styles.linkExample}>
-      Underline default
+    <Link href="/salt/components/breadcrumbs" className={styles.linkExample}>
+      View breadcrumbs documentation
     </Link>
-    <Link href="#" underline="never" className={styles.linkExample}>
-      Underline never
+    <Link
+      href="/salt/components/navigation-item"
+      underline="never"
+      className={styles.linkExample}
+    >
+      View navigation guidance
     </Link>
   </StackLayout>
 );

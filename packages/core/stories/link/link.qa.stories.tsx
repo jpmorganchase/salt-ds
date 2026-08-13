@@ -1,5 +1,5 @@
 import { Link, Text } from "@salt-ds/core";
-import { UserIcon } from "@salt-ds/icons";
+import { TearOutIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
@@ -10,44 +10,49 @@ export default {
 
 export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
   <QAContainer height={500} width={1000} {...props}>
-    <Link href="https://www.google.com">Link</Link>
-    <Link href="https://www.google.com" target="_blank">
-      Link target blank
+    <Link href="/salt/components">Browse component documentation</Link>
+    <Link
+      href="https://www.saltdesignsystem.com"
+      target="_blank"
+      rel="noopener"
+    >
+      Visit Salt
     </Link>
     <div style={{ width: 150 }}>
-      <Link href="https://www.google.com" maxRows={1}>
-        <strong>Strong</strong> and <small>small</small> truncation example
+      <Link href="https://github.com/salt-ds/core" maxRows={1}>
+        View <strong>Salt Core</strong> <small>package</small> source
       </Link>
     </div>
-    <Link href="https://www.google.com" color="secondary">
-      Secondary Link
+    <Link href="/salt/about/supported-platforms" color="secondary">
+      View supported platforms
     </Link>
-    <Link href="https://www.google.com" color="accent">
-      Accent Link
+    <Link
+      href="/salt/foundations/data-visualization/color-and-pattern"
+      color="accent"
+    >
+      Read color guidance
     </Link>
     <Text color="error">
-      <Link href="https://www.google.com" color="inherit">
-        Inherit Link
+      <Link href="/salt/components/form-field/accessibility" color="inherit">
+        Review validation guidance
       </Link>
     </Text>
     <Link
-      href="https://www.google.com"
+      href="/salt/about/roadmap"
       style={{ color: "var(--salt-content-foreground-visited)" }}
     >
-      Forced visited
+      View roadmap
     </Link>
     <Link
-      href="https://www.google.com"
+      href="https://github.com/jpmorganchase/salt-ds"
       target="_blank"
-      IconComponent={UserIcon}
+      rel="noopener"
+      IconComponent={TearOutIcon}
     >
-      Custom icon
+      View Salt source
     </Link>
-    <Link href="https://www.google.com" target="_blank" IconComponent={null}>
-      No icon
-    </Link>
-    <Link href="https://www.google.com" underline="never">
-      Underline never
+    <Link href="/salt/components/navigation-item" underline="never">
+      View navigation guidance
     </Link>
   </QAContainer>
 );

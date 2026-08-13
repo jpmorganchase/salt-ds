@@ -1,0 +1,43 @@
+---
+title: Render prop
+layout: DetailTechnical
+sidebar:
+  label: Render prop
+---
+
+Some Salt components support a `render` prop so you can replace the element that the component renders while preserving Salt styling, accessibility attributes, and behavior.
+
+Use `render` when you need a Salt component to render another component, such as a link component from a routing library.
+
+## Render with a JSX element
+
+Use a JSX element when you only need to replace the rendered element and can define the target props directly.
+
+```tsx
+<LinkButton render={<RouterLink to="/reports" />}>View reports</LinkButton>
+```
+
+Salt merges its props with the props on the element.
+
+Render the provided children so labels, icons, and visually hidden helper text from the Salt component stay inside the final element.
+
+## Render with a callback function
+
+Use a callback function when you need to transform props before passing them to the rendered element. A common example is mapping Salt’s `href` prop to a router’s `to` prop.
+
+```tsx
+<LinkButton
+  href="/reports"
+  render={({ href, ...props }) => (
+    <RouterLink {...props} to={href ?? "/reports"} />
+  )}
+>
+  View reports
+</LinkButton>
+```
+
+When using a callback function, return a valid React element and pass through the props and children needed by the rendered element.
+
+## Check component support
+
+Not every Salt component supports `render`. Check a component’s props table to confirm whether `render` is available.
