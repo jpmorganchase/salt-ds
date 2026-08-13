@@ -12,6 +12,10 @@ interface LinkActionProps extends ComponentPropsWithoutRef<"a"> {
 
 export const LinkAction = forwardRef<HTMLAnchorElement, LinkActionProps>(
   function LinkAction({ externalLinkContent, ...props }, ref) {
+    // Resolve the final element before deciding whether to append external-link
+    // content. A JSX `render` element can override `target`, so checking
+    // `props.target` would make the icon and announcement disagree with the
+    // rendered link.
     const link = renderProps("a", { ...props, ref });
 
     if (link.props.target !== "_blank" || !externalLinkContent) {

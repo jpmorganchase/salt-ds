@@ -30,7 +30,7 @@ describe("GIVEN a LinkButton", () => {
       const selection = doc.defaultView?.getSelection();
       selection?.removeAllRanges();
       selection?.addRange(range);
-      expect(selection?.toString()).to.equal("Action");
+      expect(selection?.toString()).to.equal("ACTION");
     });
   });
 

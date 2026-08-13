@@ -28,9 +28,7 @@ Use a callback function when you need to transform props before passing them to 
 ```tsx
 <Link
   href="/reports"
-  render={({ href, ...props }) => (
-    <RouterLink {...props} to={href ?? "/"} />
-  )}
+  render={({ href, ...props }) => <RouterLink {...props} to={href ?? "/"} />}
 >
   View reports
 </Link>
