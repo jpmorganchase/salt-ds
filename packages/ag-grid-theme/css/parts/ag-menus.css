@@ -48,6 +48,16 @@
 .ag-theme-salt-compact-dark .ag-menu-option {
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
+
+/*
+  [VERSION DIVERGENCE]: From v36, AG Grid draws a :focus-visible ::after ring on
+  .ag-menu-option. Pre-v36 had no ring; keyboard/mouse highlight is the active
+  background. Hide the pseudo. Inert if AG Grid never creates it.
+*/
+[class*="ag-theme-salt"] .ag-menu-option:focus-visible::after {
+  content: none;
+}
+
 .ag-theme-salt-light .ag-menu-option-icon,
 .ag-theme-salt-light .ag-compact-menu-option-icon,
 .ag-theme-salt-dark .ag-menu-option-icon,

@@ -57,6 +57,17 @@
   border-right-color: var(--salt-separable-secondary-borderColor);
 }
 
+/*
+  [VERSION DIVERGENCE]: From v36, the pinned-left wrapper already draws a full-height
+  separator. Suppress the short column separator on the last pinned-left header cell
+  to avoid a double line before the first center column. LTR-only: in RTL the cell
+  ::before sits on the left and does not overlap border-right. Inert pre-v36: neither
+  .ag-grid-pinned-left-cells in headers nor .ag-header-cell-last-left-pinned exist.
+*/
+[class*="ag-theme-salt"] .ag-ltr .ag-header-row .ag-grid-pinned-left-cells .ag-header-cell.ag-header-cell-last-left-pinned {
+  --ag-header-column-separator-display: none;
+}
+
 .ag-theme-salt-light .ag-pinned-right-header,
 .ag-theme-salt-dark .ag-pinned-right-header,
 .ag-theme-salt-compact-light .ag-pinned-right-header,
