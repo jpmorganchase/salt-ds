@@ -32,7 +32,7 @@
   background: var(--salt-actionable-onSolid-subtle-background-hover);
   border-color: var(--salt-actionable-onSolid-subtle-borderColor-hover);
   color: var(--salt-actionable-onSolid-subtle-foreground-hover);
-  outline-color: var(--salt-focused-outlineColor);
+  outline-color: var(--salt-focused-onSolid-outlineColor);
   outline-offset: var(--salt-focused-outlineOffset);
   outline-style: var(--salt-focused-outlineStyle);
   outline-width: var(--salt-focused-outlineWidth);
