@@ -9,6 +9,8 @@ Some Salt components support a `render` prop so you can replace the element that
 
 Use `render` when you need a Salt component to render another component, such as a link component from a routing library.
 
+When you use `render`, make sure the final element receives the props and children that Salt provides. This preserves class names, event handlers, ARIA attributes, refs, labels, icons, and visually hidden helper text.
+
 ## Render with a JSX element
 
 Use a JSX element when you only need to replace the rendered element and can define the target props directly.
@@ -18,8 +20,6 @@ Use a JSX element when you only need to replace the rendered element and can def
 ```
 
 Salt merges its props with the props on the element.
-
-Render the provided children so labels, icons, and visually hidden helper text from the Salt component stay inside the final element.
 
 ## Render with a callback function
 
@@ -37,6 +37,13 @@ Use a callback function when you need to transform props before passing them to 
 ```
 
 When using a callback function, return a valid React element and pass through the props and children needed by the rendered element.
+
+## Implementation checklist
+
+- Pass through the provided props unless you intentionally need to transform them.
+- Preserve `className`, `style`, event handlers, ARIA attributes, `ref`, and `children`.
+- For routing links, map the Salt `href` prop to the router destination prop, such as React Router’s `to`.
+- For `Link` and `LinkButton`, the final rendered element’s `target` controls the open-in-new-tab cue. If the final target is `_blank`, Salt adds the visual icon and visually hidden text.
 
 ## Check component support
 

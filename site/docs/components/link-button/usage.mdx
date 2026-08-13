@@ -21,6 +21,16 @@ data:
 - Do not use a link button for on-page actions like opening a modal, submitting a form, or toggling UI elements.
 - If the action does not navigate the user elsewhere, use [`Button`](../button) instead.
 
+### Choosing sentiment
+
+Use `sentiment="neutral"` for routine navigation. Use `sentiment="accented"` when the destination is a primary or high-priority navigation action.
+
+### Opening in a new tab
+
+Open link buttons in the same tab by default. Use `target="_blank"` only when keeping the current page available helps the user, such as when a link button appears in the middle of a form or multi-step flow.
+
+When linking to third-party content in a new tab, set `rel="noopener"` or `rel="noreferrer"` to protect users in legacy browsers.
+
 ### Routing libraries
 
 If your app uses a routing library such as [React Router](https://reactrouter.com/en/main) or [Next.js](https://nextjs.org/docs/app/building-your-application/routing), use the `render` prop to render the routing library’s link component while preserving `LinkButton` styling and behavior. See the [render prop guide](/salt/getting-started/render-prop) for the supported render forms.

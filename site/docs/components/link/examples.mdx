@@ -10,23 +10,13 @@ data:
 
 ## Default
 
-By default, a link will only navigate the user within the same tab, replacing the page where the user followed the link.
+Use the default link for navigation within the current tab.
 
 <LivePreview componentName="link" exampleName="Default" />
 
 ## Open in a new tab
 
-Use `target="_blank"` to open the target page in a new tab. A tear-out icon that communicates this to the user will display next to the link.
-
-Avoid opening links in a new tab unless there is a clear user benefit. Opening a link in a new tab is not expected default behavior for web browsers. It makes it harder to return to the previous page, especially for users of screen readers.
-
-Recommended cases include links in the middle of a form or multi-step process. This allows users to complete the action without losing their place on the original page.
-
-Keep the default icon for standard text links. Use `IconComponent={null}` only for composed or custom content that already provides a separate visible cue that the link opens in a new tab. Avoid hiding the icon when there is no other visible cue.
-
-### Security
-
-When linking to third-party content, we recommend setting `rel="noopener"` or `rel="noreferrer"`. Although this is default behavior in newer browsers, explicitly specifying this helps protect users of legacy browsers. For more information, read [Links to cross-origin destinations are unsafe](https://web.dev/external-anchors-use-rel-noopener/).
+Use `target="_blank"` with `rel="noopener"` or `rel="noreferrer"` to open a link in a new tab. See [usage](./usage) for when to choose this behavior and [accessibility](./accessibility) for how the new-tab cue is announced.
 
 <LivePreview componentName="link" exampleName="OpenInANewTab" />
 
@@ -35,8 +25,6 @@ When linking to third-party content, we recommend setting `rel="noopener"` or `r
 To help create a visual hierarchy using a link, use the `color` prop. The default color is `primary`.
 
 Set `color="inherit"` to inherit hover, active, and focus colors from the parent.
-
-Keep the link text focused on the destination or action. Do not use color alone as the only visual cue that text is a link.
 
 <LivePreview componentName="link" exampleName="Color" />
 
@@ -48,17 +36,13 @@ Links change color after a user clicks on them. This tells the user which links 
 
 ## Underline
 
-Prefer the default underline because it provides a persistent, non-color affordance that text is a link. This is especially important for inline links in sentences, paragraphs, table cells, or other text-heavy content.
-
-Use `underline="never"` only when the link is already recognizable as navigation from its context or another visible, non-color cue. Suitable cases include footer links, navigation lists, breadcrumbs, pagination, toolbar or action groups, and links grouped under a heading such as “Related links.” A dense group of links is not enough on its own—the surrounding pattern should make it clear that the items navigate.
-
-Avoid removing the underline only to make a link look quieter, and do not rely on color alone to identify linked text.
+Use the `underline` prop to compare the default underline with `underline="never"`.
 
 <LivePreview componentName="link" exampleName="Underline" />
 
 ## Routing libraries
 
-Use the `render` prop to adapt `Link` to a routing library. This example renders a React Router link and maps `Link`’s `href` to React Router’s `to` prop. See the [render prop guide](/salt/getting-started/render-prop) for the supported render forms.
+Use the `render` prop to adapt `Link` to a routing library. This example renders a React Router link and maps `Link`’s `href` to React Router’s `to` prop.
 
 <LivePreview componentName="link" exampleName="RoutingLibraries" />
 

@@ -21,6 +21,16 @@ data:
 
 - To trigger an action, such as submitting a form or opening a dialog. Instead, use [`Button`](../button).
 
+### Opening in a new tab
+
+Open links in the same tab by default. Use `target="_blank"` only when keeping the current page available helps the user, such as when a link appears in the middle of a form or multi-step flow.
+
+When linking to third-party content in a new tab, set `rel="noopener"` or `rel="noreferrer"` to protect users in legacy browsers.
+
+### Routing libraries
+
+If your app uses a routing library such as [React Router](https://reactrouter.com/en/main) or [Next.js](https://nextjs.org/docs/app/building-your-application/routing), use the `render` prop to render the routing library’s link component while preserving `Link` styling and behavior. See the [render prop guide](/salt/getting-started/render-prop) for the supported render forms.
+
 ## Content
 
 - Link text should be concise, no longer than a single sentence. This helps to keep the user interface clean, minimize distractions and maintain a clear visual hierarchy.

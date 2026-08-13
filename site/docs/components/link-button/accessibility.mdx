@@ -10,11 +10,11 @@ data:
 
 ## Best practices
 
-- Ensure the accessible name identifies the destination. If the visible label is not specific enough, use an `aria-label` or `aria-labelledby` that includes the visible label text and adds destination context.
-- Prefer the default underline as an extra visible cue that the link button navigates. If you remove the underline, make sure the link button is recognizable from its surrounding pattern or another visible cue.
+- Use a label that identifies the destination. If you add `aria-label` or `aria-labelledby` for extra context, include the visible label text in the accessible name.
+- Do not rely on color alone to show that a link button navigates. Keep the default underline unless the surrounding pattern already provides another visible non-color cue, such as a navigation list, toolbar, or group of related links.
 - When a link button contains an icon and text, pass `aria-hidden` to the icon so screen readers do not announce duplicate content.
-- When a link button has an icon and no visible text, pass an `aria-label` to describe the destination.
-- When `target="_blank"` is set, `LinkButton` automatically adds a visual icon and visually hidden text to communicate that the destination opens in a new tab. Keep the default icon for standard text link buttons; use `IconComponent={null}` only when composed or custom content already provides another visible cue.
+- When a link button contains only an icon, pass an `aria-label` that describes the destination.
+- When `target="_blank"` is set, `LinkButton` automatically adds a visual icon and visually hidden text that announces the new tab. Keep the default icon unless your custom content already provides another visible new-tab cue.
 
 ## Keyboard interactions
 
