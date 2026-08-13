@@ -9,7 +9,7 @@ Some Salt components support a `render` prop so you can replace the element that
 
 Use `render` when you need a Salt component to render another component, such as a link component from a routing library.
 
-When you use `render`, make sure the final element receives the props and children that Salt provides. This preserves class names, event handlers, ARIA attributes, refs, labels, icons, and visually hidden helper text.
+Salt passes styling, behavior, accessibility attributes, refs, and children to the final element. With a JSX element, Salt merges these props for you. With a callback function, pass the provided props to the element you return.
 
 ## Render with a JSX element
 
@@ -36,14 +36,15 @@ Use a callback function when you need to transform props before passing them to 
 </Link>
 ```
 
-When using a callback function, return a valid React element and pass through the props and children needed by the rendered element.
+When using a callback function, return a valid React element.
 
-## What to pass through
+### Passing props and refs
 
-- Pass through the provided props unless you intentionally need to transform them.
-- Preserve `className`, `style`, event handlers, ARIA attributes, and `children`.
-- Forward the provided `ref` to the final element or to a component that forwards refs. Salt components may use refs for focus management, measurement, or positioning.
-- For routing links, map the Salt `href` prop to the router destination prop, such as React Router’s `to`.
+Pass the provided props to the element you return unless you intentionally need to transform them. This preserves Salt class names, styles, event handlers, ARIA attributes, children, and other component behavior.
+
+If the component you render supports refs, forward the provided `ref` to it. Salt components may use refs for focus management, measurement, or positioning.
+
+For routing links, map the Salt `href` prop to the router destination prop, such as React Router’s `to`, while passing the rest of the props through.
 
 ## Check component support
 
