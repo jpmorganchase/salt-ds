@@ -12,6 +12,7 @@ import {
   ProvidedCellEditors,
   ToolPanel,
   VariantZebra,
+  WrappedHeader,
 } from "../src/examples";
 
 import "ag-grid-community/styles/ag-grid.css";
@@ -506,5 +507,22 @@ HeaderVariants.play = async ({ canvasElement }) => {
 
   for (const row of rows) {
     await expect(within(row).getByRole("checkbox")).toBeChecked();
+  }
+};
+
+// Regression of selected-row top border spanning the flex-fill gap before a right-pinned checkbox.
+export const WrappedHeaderRowSelection: StoryObj<typeof AgGridReact> = () => {
+  return <WrappedHeader />;
+};
+WrappedHeaderRowSelection.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  const rows = (await canvas.findAllByRole("row"))
+    .filter((row) => row.hasAttribute("row-index"))
+    .slice(0, 1);
+
+  for (const row of rows) {
+    await userEvent.click(within(row).getByRole("checkbox"));
+    await expect(row).toHaveClass("ag-row-selected");
   }
 };

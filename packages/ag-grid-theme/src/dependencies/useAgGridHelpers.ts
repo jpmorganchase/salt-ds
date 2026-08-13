@@ -72,7 +72,6 @@ export function useAgGridHelpers({
 
   const onGridReady = useCallback(({ api }: GridReadyEvent) => {
     apiRef.current = { api };
-    api.sizeColumnsToFit();
     setGridReady(true);
   }, []);
 
@@ -85,6 +84,8 @@ export function useAgGridHelpers({
       // [VERSION DIVERGENCE]: AG Grid v33+ defaults to the Theming API; Salt continues to use legacy CSS themes.
       theme: "legacy",
       onGridReady,
+      // [VERSION DIVERGENCE]: In v36, sizing on gridReady can run before vertical-scroll visibility is known. Let AG Grid defer fitting until data is rendered.
+      autoSizeStrategy: { type: "fitGridWidth" },
       rowHeight,
       headerHeight: headerRowHeight,
       suppressMenuHide: true,

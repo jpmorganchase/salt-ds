@@ -38,9 +38,10 @@
 }
 
 /*
-  [VERSION DIVERGENCE]: Pre-v36, AG Grid creates this pseudo-element for every selected row. From
-  v36, only full-width selected rows have a row-level pseudo-element; regular rows paint selection
-  on their cell containers. Keep this rule limited to reshaping pseudo-elements AG Grid creates.
+  [VERSION DIVERGENCE]: Do not create or position this pseudo-element. Pre-v36, AG Grid creates it
+  for every selected row, so this rule only reshapes it. From v36, regular rows have no row-level
+  pseudo-element; the section shadows below paint the top border. Full-width selected rows still
+  create a row-level pseudo-element, reshaped here and stacked by the scoped rule that follows.
 */
 .ag-theme-salt-light .ag-row-selected::before,
 .ag-theme-salt-dark .ag-row-selected::before,
@@ -50,13 +51,6 @@
 .ag-theme-salt-dark .ag-row-hover.ag-row-selected::before,
 .ag-theme-salt-compact-light .ag-row-hover.ag-row-selected::before,
 .ag-theme-salt-compact-dark .ag-row-hover.ag-row-selected::before {
-  content: "";
-  display: block;
-  position: absolute;
-  left: 0;
-  right: 0;
-  pointer-events: none;
-  z-index: 3;
   background-color: var(--ag-selected-row-border-color);
   background-image: none;
   height: var(--salt-size-fixed-100);

@@ -1,5 +1,4 @@
 import { useDensity, useTheme } from "@salt-ds/core";
-import type { GridReadyEvent } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { type ReactElement, useMemo } from "react";
 import { defaultData } from "./data";
@@ -28,10 +27,6 @@ export const Default = (): ReactElement => {
   const { mode } = useTheme();
   const density = useDensity();
 
-  const onGridReady = ({ api }: GridReadyEvent) => {
-    api.sizeColumnsToFit();
-  };
-
   const rowHeight = useMemo(() => {
     switch (density) {
       case "high":
@@ -57,7 +52,8 @@ export const Default = (): ReactElement => {
         rowData={defaultData}
         rowSelection="single"
         cellSelection={true}
-        onGridReady={onGridReady}
+        // [VERSION DIVERGENCE]: In v36, sizing on gridReady can run before vertical-scroll visibility is known. Let AG Grid defer fitting until data is rendered.
+        autoSizeStrategy={{ type: "fitGridWidth" }}
         rowHeight={rowHeight}
       />
     </div>
