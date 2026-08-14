@@ -9,7 +9,13 @@ import onSolidButtonCss from "./OnSolidButton.css";
 const withBaseName = makePrefixer("saltOnSolidButton");
 
 export interface OnSolidButtonProps extends ComponentPropsWithoutRef<"button"> {
+  /**
+   * If `true`, the button will be disabled.
+   */
   disabled?: boolean;
+  /**
+   * If `true`, the button will be focusable when disabled.
+   */
   focusableWhenDisabled?: boolean;
 }
 

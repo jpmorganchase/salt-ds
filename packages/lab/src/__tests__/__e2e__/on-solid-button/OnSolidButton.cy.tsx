@@ -34,4 +34,24 @@ describe("GIVEN an OnSolidButton", () => {
     cy.findByRole("button", { name: "Dismiss" }).realClick();
     cy.get("@clickSpy").should("not.have.been.called");
   });
+
+  it("should be focusable when disabled and focusableWhenDisabled", () => {
+    const clickSpy = cy.stub().as("clickSpy");
+    cy.mount(
+      <OnSolidButton disabled focusableWhenDisabled onClick={clickSpy}>
+        Dismiss
+      </OnSolidButton>,
+    );
+    cy.findByRole("button", { name: "Dismiss" })
+      .should("not.be.disabled")
+      .and("have.attr", "aria-disabled", "true");
+    cy.realPress("Tab");
+    cy.findByRole("button", { name: "Dismiss" }).should("be.focused");
+    cy.realPress("Enter");
+    cy.get("@clickSpy").should("not.have.been.called");
+    cy.realPress("Space");
+    cy.get("@clickSpy").should("not.have.been.called");
+    cy.findByRole("button", { name: "Dismiss" }).realClick();
+    cy.get("@clickSpy").should("not.have.been.called");
+  });
 });
