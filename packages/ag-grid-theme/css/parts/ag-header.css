@@ -68,6 +68,17 @@
   --ag-header-column-separator-display: none;
 }
 
+/*
+  [VERSION DIVERGENCE]: From v36, an opaque hover background on the last pinned-left
+  header cell paints over the wrapper's full-height separator. Salt's header hover
+  background matches its normal background, so keep this cell transparent during
+  hover and resize to expose the existing separator. Inert pre-v36.
+*/
+[class*="ag-theme-salt"] .ag-ltr .ag-header-row .ag-grid-pinned-left-cells .ag-header-cell.ag-header-cell-last-left-pinned:hover,
+[class*="ag-theme-salt"] .ag-ltr .ag-header-row .ag-grid-pinned-left-cells .ag-header-cell.ag-header-cell-last-left-pinned.ag-column-resizing {
+  background-color: transparent;
+}
+
 .ag-theme-salt-light .ag-pinned-right-header,
 .ag-theme-salt-dark .ag-pinned-right-header,
 .ag-theme-salt-compact-light .ag-pinned-right-header,
