@@ -2,7 +2,7 @@ import { NotificationIcon } from "@salt-ds/icons";
 import { OnSolidButton } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
-import type { ReactNode } from "react";
+import { type ReactNode, useEffect, useRef } from "react";
 
 export default {
   title: "Lab/OnSolidButton/QA",
@@ -61,6 +61,28 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => (
 );
 
 AllExamplesGrid.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+  },
+};
+
+const FocusedOnSolidButton = () => {
+  const ref = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    ref.current?.focus();
+  }, []);
+
+  return <OnSolidButton ref={ref}>OnSolidButton</OnSolidButton>;
+};
+
+export const FocusVisible: StoryFn = () => (
+  <Surface background="var(--salt-status-info-bold-background)">
+    <FocusedOnSolidButton />
+  </Surface>
+);
+
+FocusVisible.parameters = {
   chromatic: {
     disableSnapshot: false,
   },
