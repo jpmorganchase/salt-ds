@@ -1,8 +1,16 @@
 import { Avatar } from "@salt-ds/core";
 import { AvatarGroup, AvatarGroupCount } from "@salt-ds/lab";
+import { composeStories } from "@storybook/react-vite";
+import * as avatarGroupStories from "~stories/avatar-group/avatar-group.stories";
+import { checkAccessibility } from "~test-utils/checkAccessibility";
+
+const composedStories = composeStories(avatarGroupStories);
+const { RenderProp } = composedStories;
 
 describe("Given an AvatarGroup", () => {
-  it("renders a composed AvatarGroupCount as an accessible indicator", () => {
+  checkAccessibility(composedStories);
+
+  it("should render the count as a visible label with its own accessible name", () => {
     cy.mount(
       <AvatarGroup>
         <Avatar name="Alex Brailescu" />
@@ -15,36 +23,43 @@ describe("Given an AvatarGroup", () => {
     cy.findByRole("img", { name: "2 more" }).should("be.visible");
   });
 
-  it("renders as a custom element from a JSX element while preserving the group class", () => {
+  it("should be focusable and activatable when rendered as a button", () => {
+    const clickSpy = cy.stub().as("clickSpy");
+
     cy.mount(
-      <AvatarGroup render={<button type="button" />}>
+      <RenderProp
+        render={
+          <button type="button" aria-label="Team members" onClick={clickSpy} />
+        }
+      />,
+    );
+
+    cy.findByRole("button", { name: "Team members" }).as("group");
+    cy.realPress("Tab");
+    cy.get("@group").should("be.focused");
+
+    cy.realPress("Enter");
+    cy.get("@clickSpy").should("have.been.calledOnce");
+  });
+
+  it("should pass its children to a `render` function", () => {
+    const renderSpy = cy
+      .stub()
+      .as("renderSpy")
+      .callsFake(({ children }) => (
+        <section data-testid="custom-group">{children}</section>
+      ));
+
+    cy.mount(
+      <AvatarGroup render={renderSpy}>
         <Avatar name="Alex Brailescu" />
-        <Avatar name="Peter Piper" />
         <AvatarGroupCount name="1 more">+1</AvatarGroupCount>
       </AvatarGroup>,
     );
 
-    cy.findByRole("button").should("have.class", "saltAvatarGroup");
-    cy.findByText("+1").should("be.visible");
-  });
-
-  it("calls a `render` function with the merged props to create the element", () => {
-    const mockRender = cy
-      .stub()
-      .as("render")
-      .returns(<div data-testid="render-fn" />);
-
-    cy.mount(
-      <AvatarGroup render={mockRender}>
-        <Avatar name="Alex Brailescu" />
-        <Avatar name="Peter Piper" />
-      </AvatarGroup>,
-    );
-
-    cy.findByTestId("render-fn").should("exist");
-    cy.get("@render").should("have.been.calledWithMatch", {
-      className: Cypress.sinon.match.string,
-      children: Cypress.sinon.match.any,
+    cy.findByTestId("custom-group").within(() => {
+      cy.findByRole("img", { name: "Alex Brailescu" }).should("be.visible");
+      cy.findByText("+1").should("be.visible");
     });
   });
 });
