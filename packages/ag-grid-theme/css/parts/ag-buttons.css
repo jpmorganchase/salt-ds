@@ -164,51 +164,62 @@
 }
 
 /*
-  [VERSION DIVERGENCE]: From v36, AG Grid positions the pinned-bottom ::before separator over the
-  first pixel of the row, where it compounds with cell borders. Move it one pixel above the row
-  instead. Unlike a real container border, this does not increase AG Grid's JS-measured pinned
-  height (which otherwise makes a 61px touch row occupy 62px). Inert pre-v36.
+  [VERSION DIVERGENCE]: From v36, keep AG Grid's pinned-bottom ::before at top: 0 as the
+  fallback painter for widths the cell containers do not cover (columns narrower than the
+  grid, full-width pinned rows). Recolor it to the Salt bold separator. Inert pre-v36.
 */
 .ag-theme-salt-light .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before,
 .ag-theme-salt-dark .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before,
 .ag-theme-salt-compact-light .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before,
 .ag-theme-salt-compact-dark .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before {
   border-top-color: var(--salt-container-bold-borderColor);
-  top: -1px;
 }
 
 /*
-  [VERSION DIVERGENCE]: From v36, the pinned-top rows container is one pixel taller than its rows
-  and paints over the wrapper's border-bottom, leaving a white gap. The last pinned row also keeps
-  its own lighter row border. Paint the separator into that already-budgeted gap and remove the
-  duplicate row border. The pseudo-element consumes no layout space. Inert pre-v36.
+  [VERSION DIVERGENCE]: From v36, reserve the first pinned-bottom row's top pixel with
+  a transparent border so cells shrink to match v32's clipped-row look with no dead
+  strip. The container ::before is the sole bold separator painter, avoiding two bold
+  borders at fractional zoom. --ag-pinned-row-border is none, so the container is exactly
+  the row-height sum. .ag-row-pinned avoids sticky group and header rows. Inert pre-v36.
 */
-.ag-theme-salt-light .ag-grid-scrollable-area.ag-has-top-pinned-rows .ag-grid-pinned-top-rows-container::after,
-.ag-theme-salt-dark .ag-grid-scrollable-area.ag-has-top-pinned-rows .ag-grid-pinned-top-rows-container::after,
-.ag-theme-salt-compact-light .ag-grid-scrollable-area.ag-has-top-pinned-rows .ag-grid-pinned-top-rows-container::after,
-.ag-theme-salt-compact-dark .ag-grid-scrollable-area.ag-has-top-pinned-rows .ag-grid-pinned-top-rows-container::after {
-  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
-  bottom: 0;
-  content: "";
-  left: 0;
-  pointer-events: none;
-  position: absolute;
-  right: 0;
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned > .ag-grid-scrolling-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned > .ag-grid-pinned-right-cells {
+  border-bottom: none;
 }
 
-.ag-theme-salt-light .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-pinned-left-cells,
-.ag-theme-salt-dark .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-pinned-left-cells,
-.ag-theme-salt-compact-light .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-pinned-left-cells,
-.ag-theme-salt-compact-dark .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-pinned-left-cells,
-.ag-theme-salt-light .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-scrolling-cells,
-.ag-theme-salt-dark .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-scrolling-cells,
-.ag-theme-salt-compact-light .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-scrolling-cells,
-.ag-theme-salt-compact-dark .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-scrolling-cells,
-.ag-theme-salt-light .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-pinned-right-cells,
-.ag-theme-salt-dark .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-pinned-right-cells,
-.ag-theme-salt-compact-light .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-pinned-right-cells,
-.ag-theme-salt-compact-dark .ag-grid-pinned-top-rows-container .ag-row-last > .ag-grid-pinned-right-cells {
-  border-bottom: none;
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned.ag-row-first > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned.ag-row-first > .ag-grid-scrolling-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned.ag-row-first > .ag-grid-pinned-right-cells {
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+}
+
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned:not(.ag-row-first) > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned:not(.ag-row-first) > .ag-grid-scrolling-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned:not(.ag-row-first) > .ag-grid-pinned-right-cells {
+  border-top: var(--ag-row-border-style) var(--ag-row-border-color) var(--ag-row-border-width);
+}
+
+/*
+  [VERSION DIVERGENCE]: From v36, AG Grid drops the last body row's border when bottom-pinned
+  rows exist. Restore it so the v32 stack (outline / light / bold / outline) is intact.
+  Inert pre-v36.
+*/
+[class*="ag-theme-salt"] .ag-body-vertical-content-no-gap .ag-has-bottom-pinned-rows .ag-grid-scrolling-container .ag-row-last > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-body-vertical-content-no-gap .ag-has-bottom-pinned-rows .ag-grid-scrolling-container .ag-row-last > .ag-grid-scrolling-cells,
+[class*="ag-theme-salt"] .ag-body-vertical-content-no-gap .ag-has-bottom-pinned-rows .ag-grid-scrolling-container .ag-row-last > .ag-grid-pinned-right-cells {
+  border-bottom: var(--ag-row-border-style) var(--ag-row-border-color) var(--ag-row-border-width);
+}
+
+/*
+  [VERSION DIVERGENCE]: From v36, paint the pinned-top bold separator as border-bottom on
+  the last pinned row so cells shrink to match v32 and the header+pinned-top block realigns.
+  Child combinator + .ag-row-pinned keeps sticky group rows and header rows out. Inert pre-v36.
+*/
+[class*="ag-theme-salt"] .ag-grid-pinned-top-rows-container > .ag-row-pinned.ag-row-last > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-top-rows-container > .ag-row-pinned.ag-row-last > .ag-grid-scrolling-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-top-rows-container > .ag-row-pinned.ag-row-last > .ag-grid-pinned-right-cells {
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
 }
 
 .ag-theme-salt-light .ag-column-drop-horizontal,

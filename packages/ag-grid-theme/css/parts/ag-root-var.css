@@ -5,6 +5,14 @@ div[class*="ag-theme-salt"] {
   --ag-menu-background-color: var(--salt-container-primary-background);
   --ag-border-color: var(--salt-separable-secondary-borderColor);
   --ag-borders-secondary: var(--salt-size-fixed-100) var(--salt-borderStyle-solid);
+  /*
+    [VERSION DIVERGENCE]: From v36, AG Grid JS measures --ag-pinned-row-border via
+    getPinnedRowBorderWidth() and adds that width to pinned container height. Zero it so
+    pinned containers size to the sum of row heights. Unused pre-v36. AG also re-declares
+    this on .ag-measurement-container from --ag-borders-critical, so that node is zeroed
+    below; otherwise the measurement still reads 1px.
+  */
+  --ag-pinned-row-border: none;
   --ag-card-radius: var(--salt-palette-corner);
   --ag-cell-horizontal-padding: var(--salt-spacing-100);
   --ag-checkbox-border-radius: 0;
@@ -63,6 +71,15 @@ div[class*="ag-theme-salt"] {
       Use categorical color for below tokens when available
       --ag-advanced-filter-join-pill-color,--ag-advanced-filter-column-pill-color,--ag-advanced-filter-option-pill-color,--ag-advanced-filter-value-pill-color
      */
+}
+
+/*
+  [VERSION DIVERGENCE]: From v36, .ag-measurement-container re-declares
+  --ag-pinned-row-border from --ag-borders-critical, overriding the theme-wrapper
+  value above. Zero it here so getPinnedRowBorderWidth() reads 0. Inert pre-v36.
+*/
+[class*="ag-theme-salt"] .ag-measurement-container {
+  --ag-pinned-row-border: none;
 }
 
 div[class*="ag-theme-salt-compact"] {
