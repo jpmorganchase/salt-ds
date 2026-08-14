@@ -1,13 +1,14 @@
 import {
   Avatar,
   FlowLayout,
+  H3,
   StackLayout,
   Text,
   useAvatarImage,
 } from "@salt-ds/core";
 import { UserGroupSolidIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import type { ComponentProps, ReactNode } from "react";
+import type { ComponentProps, CSSProperties, ReactNode } from "react";
 import persona1 from "../assets/avatar.png";
 
 export default {
@@ -55,6 +56,23 @@ export const Sizes: StoryFn<typeof Avatar> = (args) => {
           <Text>size: {size}</Text>
         </StackLayout>
       ))}
+    </FlowLayout>
+  );
+};
+
+export const TypographyAlignedSize: StoryFn<typeof Avatar> = (args) => {
+  return (
+    <FlowLayout align="center" gap={1}>
+      <Avatar
+        {...args}
+        name="Alex Brailescu"
+        style={
+          {
+            "--saltAvatar-size": "var(--salt-text-h3-lineHeight)",
+          } as CSSProperties
+        }
+      />
+      <H3>Alex Brailescu</H3>
     </FlowLayout>
   );
 };
