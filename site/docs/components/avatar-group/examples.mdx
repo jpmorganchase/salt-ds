@@ -10,23 +10,25 @@ data:
 
 ## Default
 
-`AvatarGroup` represents multiple users, entities or objects in a compact space using a horizontal stack of overlapping avatars. It supports collaboration patterns by summarizing group membership and providing access to the full list when space is limited.
+`AvatarGroup` represents a group of related users, entities or objects in a compact space, using a horizontal stack of overlapping avatars.
 
 Compose the avatars you want to display and, when members are hidden, add an `AvatarGroupCount` (e.g., “+N” where N is the number of hidden members) as the last child to indicate the additional members.
 
 <LivePreview componentName="avatar-group" exampleName="Default" />
 
+## Entity avatars
+
+An avatar group can represent non-person entities, such as teams, businesses or accounts. Set `kind="entity"` on each `Avatar` to display it as a square, and on the `AvatarGroupCount` so that it matches the avatars it summarizes.
+
+<LivePreview componentName="avatar-group" exampleName="Entity" />
+
 ## Visible avatars
 
-Control how many avatars are visible by composing only the `Avatar` children you want to show, followed by an `AvatarGroupCount` to represent the remaining members.
+Choose how many avatars to display based on the space available and how recognizable the individual members need to be. Update the `AvatarGroupCount` to match the number of members you don’t display.
 
-In limited space, aim for at least 2 visible avatars; if only one fits, use a single [Avatar](/salt/components/avatar) instead of an Avatar Group.
+Display at least two avatars in an `AvatarGroup`; if only one fits, use a single [Avatar](/salt/components/avatar) instead.
 
 <LivePreview componentName="avatar-group" exampleName="Visible" />
-
-### Best practices
-
-For consistency and alignment, we recommend using the default size (1x) and not scaling an Avatar Group beyond the default multiplier.
 
 ## Interactive
 
@@ -34,12 +36,11 @@ For consistency and alignment, we recommend using the default size (1x) and not 
 
 Common interactive use cases include:
 
-- Revealing the full list of members when an Avatar Group is activated.
+- Revealing the full list of members when an avatar group is activated.
 - Opening a menu with group-related actions.
 
 <LivePreview componentName="avatar-group" exampleName="Interactive" />
 
 ### Best practices
 
-- Ensure the Avatar Group has a meaningful accessible name so screen reader users understand what action will occur.
-- Avoid using size modifiers on interactive avatar groups, as they can shrink the touch target and make them harder to interact with.
+Ensure the avatar group has a meaningful accessible name so screen reader users understand what action will occur.
