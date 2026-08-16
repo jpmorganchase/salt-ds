@@ -231,6 +231,10 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
   const inspectionText = inspectionResult.content?.find(
     (part) => part.type === "text",
   )?.text;
+  const resolvedPackages = [
+    ...(inspection.data.installation?.untrusted_project_data
+      ?.resolved_packages ?? []),
+  ].sort((left, right) => left.name.localeCompare(right.name));
   const expectedInspectionText = structuredClone(inspection);
   if (
     expectedInspectionText.data?.installation?.untrusted_project_data
@@ -238,6 +242,42 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
   ) {
     expectedInspectionText.data.installation.untrusted_project_data.resolved_packages =
       [];
+    const packageOmission = inspection.coverage?.result_budget?.omissions?.find(
+      (entry) =>
+        entry.section ===
+        "installation.untrusted_project_data.resolved_packages",
+    );
+    const availableSaltPackages =
+      packageOmission?.available ?? resolvedPackages.length;
+    if (availableSaltPackages > 0) {
+      const applicabilityCounts = resolvedPackages.reduce(
+        (counts, entry) => {
+          const applicability = entry.catalog_assessment?.applicability;
+          if (
+            applicability?.state === "applicable" &&
+            applicability.basis === "exact_catalog_package_version"
+          ) {
+            counts.exact_catalog_package_version += 1;
+          } else if (applicability?.state === "current") {
+            counts.current += 1;
+          } else {
+            counts.unknown += 1;
+          }
+          return counts;
+        },
+        { exact_catalog_package_version: 0, current: 0, unknown: 0 },
+      );
+      expectedInspectionText.data.installation.catalog_assessment_summary = {
+        observed_salt_packages: availableSaltPackages,
+        returned_salt_packages: resolvedPackages.length,
+        package_assessments_truncated:
+          resolvedPackages.length < availableSaltPackages,
+        applicability_count_scope: "returned_packages_only",
+        ...applicabilityCounts,
+        peer_compatibility: "not_evaluated",
+        historical_completeness: false,
+      };
+    }
   }
   assert(
     inspectionText &&
@@ -245,10 +285,6 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
         JSON.stringify(expectedInspectionText),
     "inspect_salt_project text fallback did not redact only raw dependency facts.",
   );
-  const resolvedPackages = [
-    ...(inspection.data.installation?.untrusted_project_data
-      ?.resolved_packages ?? []),
-  ].sort((left, right) => left.name.localeCompare(right.name));
   assert(
     inspection.data.package_manifest?.name === "salt-consumer-smoke-existing" &&
       inspection.data.package_manifest?.package_manager === "npm" &&

@@ -3,6 +3,20 @@ import semver from "semver";
 const WORKSPACE_PROTOCOL_PREFIX = "workspace:";
 const WORKSPACE_WILDCARD_RANGES = new Set(["*", "^", "~"]);
 
+export const EXACT_SEMVER_PATTERN =
+  /^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*)(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/u;
+
+export function parseExactSemVer(
+  value: string | null | undefined,
+): string | null {
+  if (!value || !EXACT_SEMVER_PATTERN.test(value)) return null;
+  try {
+    return semver.parse(value, { loose: false }) ? value : null;
+  } catch {
+    return null;
+  }
+}
+
 function stripWorkspaceProtocol(value: string): string | null {
   const trimmed = value.trim();
   if (!trimmed) {

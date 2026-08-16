@@ -3,11 +3,12 @@ import {
   deriveComparableSaltVersion,
   detectProjectPolicy,
   jsonUtf8Bytes,
+  type KnowledgeApplicability,
   MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES,
   MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES,
-  nonSearchToolResultUtf8Bytes,
   normalizeCatalogPublicCitation,
   type ResultBudgetOmission,
+  resolvePackageKnowledgeApplicability,
 } from "../core/runtime.js";
 import {
   authorizeProjectRoot,
@@ -86,7 +87,10 @@ function publicInstallationDiagnostics(
       ? 1
       : 0,
   );
-  add("workspace_declaration_issue", installation.workspace.workspaceIssues.length);
+  add(
+    "workspace_declaration_issue",
+    installation.workspace.workspaceIssues.length,
+  );
   add(
     "workspace_ancestor_limit",
     installation.inspection.limitations.some((value) =>
@@ -122,6 +126,7 @@ function appendWithinBudget<T>(
   target: T[],
   values: readonly T[],
   omission: ResultBudgetOmission,
+  measureFinalResultUtf8Bytes: (payload: unknown) => number,
   canInclude: (value: T) => boolean = () => true,
 ): void {
   omission.available = values.length;
@@ -132,7 +137,7 @@ function appendWithinBudget<T>(
     if (
       jsonUtf8Bytes(response) >
         MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES - 1_024 ||
-      nonSearchToolResultUtf8Bytes(response) >
+      measureFinalResultUtf8Bytes(response) >
         MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES - 1_024
     ) {
       target.pop();
@@ -145,6 +150,8 @@ export async function inspectSaltProject(
   input: InspectSaltProjectInput,
   accessPolicy: ProjectAccessPolicy,
   projectPolicySnapshots?: ProjectPolicySnapshotCache,
+  catalogPackageVersions: ReadonlyMap<string, string> = new Map(),
+  measureFinalResultUtf8Bytes: (payload: unknown) => number = jsonUtf8Bytes,
 ) {
   const limitations: string[] = [];
   const authorization = await authorizeProjectRoot(
@@ -270,9 +277,10 @@ export async function inspectSaltProject(
         inspection: policyInspection,
         saltVersion: currentSaltVersion,
         packageVersions: Object.fromEntries(
-          installation.resolvedPackages.flatMap((entry) =>
-            entry.resolvedVersion ? [[entry.name, entry.resolvedVersion]] : [],
-          ),
+          installation.resolvedPackages.map((entry) => [
+            entry.name,
+            entry.resolvedVersion,
+          ]),
         ),
       })
     : null;
@@ -348,13 +356,14 @@ export async function inspectSaltProject(
   );
   const response = {
     data: {
-      context: policySnapshot && projectContextHandle
-        ? {
-            handle: projectContextHandle,
-            digest: policySnapshot.context_digest,
-            retention: "process_local_bounded_lru" as const,
-          }
-        : null,
+      context:
+        policySnapshot && projectContextHandle
+          ? {
+              handle: projectContextHandle,
+              digest: policySnapshot.context_digest,
+              retention: "process_local_bounded_lru" as const,
+            }
+          : null,
       root_dir: publicRootDir,
       package_manifest:
         packageInspection.status === "valid" && publicPackagePath
@@ -397,6 +406,13 @@ export async function inspectSaltProject(
             resolved_version: string | null;
             resolved_path: string | null;
             satisfies_declared_version: boolean | null;
+            catalog_assessment: {
+              applicability: KnowledgeApplicability;
+              provenance: {
+                observed_version: "untrusted_project_data";
+                catalog_version: "official_sealed_catalog";
+              };
+            };
           }>,
         },
       },
@@ -480,6 +496,7 @@ export async function inspectSaltProject(
     response.limitations,
     [...new Set(limitations)],
     omission("limitations"),
+    measureFinalResultUtf8Bytes,
     (value) => stringFitsBudget(value, MAX_PUBLIC_LIMITATION_JSON_UTF8_BYTES),
   );
   appendWithinBudget(
@@ -493,8 +510,20 @@ export async function inspectSaltProject(
       resolved_version: entry.resolvedVersion,
       resolved_path: portable(entry.resolvedPath),
       satisfies_declared_version: entry.satisfiesDeclaredVersion,
+      catalog_assessment: {
+        applicability: resolvePackageKnowledgeApplicability({
+          packageName: entry.name,
+          targetVersion: entry.resolvedVersion,
+          catalogVersion: catalogPackageVersions.get(entry.name),
+        }),
+        provenance: {
+          observed_version: "untrusted_project_data" as const,
+          catalog_version: "official_sealed_catalog" as const,
+        },
+      },
     })),
     omission("installation.untrusted_project_data.resolved_packages"),
+    measureFinalResultUtf8Bytes,
     (entry) =>
       stringFitsBudget(entry.name, MAX_PUBLIC_VALUE_JSON_UTF8_BYTES) &&
       stringFitsBudget(
@@ -522,7 +551,7 @@ export async function inspectSaltProject(
     if (
       jsonUtf8Bytes(response) >
         MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES - 1_024 ||
-      nonSearchToolResultUtf8Bytes(response) >
+      measureFinalResultUtf8Bytes(response) >
         MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES - 1_024
     ) {
       response.data.policy.ir.untrusted_ir = null;
@@ -547,7 +576,7 @@ export async function inspectSaltProject(
     if (
       jsonUtf8Bytes(response) >
         MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES - 1_024 ||
-      nonSearchToolResultUtf8Bytes(response) >
+      measureFinalResultUtf8Bytes(response) >
         MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES - 1_024
     ) {
       response.data.policy.import_targets.untrusted_diagnostics = null;
@@ -571,7 +600,7 @@ export async function inspectSaltProject(
     );
   }
   if (
-    nonSearchToolResultUtf8Bytes(response) > MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES
+    measureFinalResultUtf8Bytes(response) > MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES
   ) {
     throw new Error(
       "inspect_salt_project could not fit its mandatory result skeleton within the public wire budget.",

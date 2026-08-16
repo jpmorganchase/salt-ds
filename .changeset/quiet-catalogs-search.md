@@ -32,6 +32,15 @@ project inspection. Trusted local-process embedders may instead select the
 explicit public `unrestricted_local_stdio` mode; the packaged CLI selects that
 mode automatically. It is not appropriate for remote or shared deployments.
 
+Separated the three Salt operations from MCP response adaptation while keeping
+the public three-tool surface unchanged. Search now labels its results as
+current target-state guidance, inspection compares observed Salt package
+versions with the sealed catalog without claiming peer compatibility, and
+review reports official rule disposition and outcome with bounded,
+source-backed version decisions. All applicability remains explicitly
+historically incomplete, and component records no longer misstate the current
+package version as an introduction version.
+
 Exported `ValidationStatusValues` from `@salt-ds/core` as the supported
 replacement for the deprecated `VALIDATION_NAMED_STATUS` constant and added
 standard typed replacement links across deprecated Core APIs.

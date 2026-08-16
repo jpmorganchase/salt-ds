@@ -4,12 +4,13 @@ import {
   jsonUtf8Bytes,
   MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES,
   MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES,
-  nonSearchToolResultUtf8Bytes,
 } from "../publicResultBudget.js";
 import type { ReviewCatalog } from "./reviewCatalogAdapter.js";
 import {
   evaluateReviewRules,
   MAX_REVIEW_RULE_COMPARISONS,
+  type NonFindingVersionDecision,
+  REVIEW_RULE_IDS,
   type ReviewProjectPolicyContext,
   ReviewRuleBudgetError,
   type ReviewRuleEvaluation,
@@ -33,7 +34,6 @@ export interface ReviewSaltCodeArtifactInput {
 
 export interface ReviewSaltCodeInput {
   artifacts: ReviewSaltCodeArtifactInput[];
-  root_dir?: string;
   package_versions?: Record<string, string>;
   max_findings?: number;
 }
@@ -44,6 +44,7 @@ export const MAX_REVIEW_ARTIFACTS = 8;
 export const MAX_REVIEW_ARTIFACT_ID_CHARS = 512;
 export const MAX_REVIEW_ARTIFACT_ID_JSON_UTF8_BYTES = 512;
 export const MAX_REVIEW_PACKAGE_VERSIONS = 32;
+export const MAX_REVIEW_NONFINDING_VERSION_DECISIONS = 50;
 
 export function detectedValidationFindingCount(summary: {
   errors: number;
@@ -111,12 +112,31 @@ function summarizeFindings(
   );
 }
 
+function compareOrdinal(left: string, right: string): number {
+  return left < right ? -1 : left > right ? 1 : 0;
+}
+
+function firstEvidenceReference(decision: NonFindingVersionDecision) {
+  const reference = decision.evidence.references[0];
+  if (!reference) {
+    throw new Error(
+      "A non-finding version decision requires source-bound evidence.",
+    );
+  }
+  return reference;
+}
+
 export function reviewSaltCode(
-  context: { reviewCatalog: ReviewCatalog; store: CatalogStoreV2 },
+  context: {
+    reviewCatalog: ReviewCatalog;
+    store: CatalogStoreV2;
+    packageVersionEvidence?: Readonly<Record<string, string | null>>;
+  },
   input: ReviewSaltCodeInput,
   policy: ReviewProjectPolicyContext | null = null,
   projectContextDigest: string | null = null,
   contextSource: ReviewContextSource = "none",
+  measureFinalResultUtf8Bytes: (payload: unknown) => number = jsonUtf8Bytes,
 ) {
   const { reviewCatalog: registry, store } = context;
   if (
@@ -127,15 +147,27 @@ export function reviewSaltCode(
       `review_salt_code requires between 1 and ${MAX_REVIEW_ARTIFACTS} artifacts.`,
     );
   }
-  const packageVersions = new Map<string, string>();
-  const packageVersionEntries = Object.entries(input.package_versions ?? {});
-  if (packageVersionEntries.length > MAX_REVIEW_PACKAGE_VERSIONS) {
+  const packageVersions = new Map<string, string | null>();
+  const callerPackageVersionEntries = Object.entries(
+    input.package_versions ?? {},
+  );
+  if (callerPackageVersionEntries.length > MAX_REVIEW_PACKAGE_VERSIONS) {
     throw new Error(
       `review_salt_code accepts at most ${MAX_REVIEW_PACKAGE_VERSIONS} package_versions entries.`,
     );
   }
+  const packageVersionEntries = Object.entries(
+    context.packageVersionEvidence ?? input.package_versions ?? {},
+  );
   for (const [packageName, version] of packageVersionEntries) {
     packageVersions.set(packageName, version);
+  }
+  if (context.packageVersionEvidence !== undefined) {
+    for (const catalogPackage of store.getFamily("package")) {
+      if (!packageVersions.has(catalogPackage.name)) {
+        packageVersions.set(catalogPackage.name, null);
+      }
+    }
   }
   const artifactIds = new Set<string>();
   for (const artifact of input.artifacts) {
@@ -213,6 +245,7 @@ export function reviewSaltCode(
         outcome: "not_evaluated" as const,
         summary: { errors: 0, warnings: 0, infos: 0 },
         findings: [],
+        version_decisions: [] as NonFindingVersionDecision[],
         coverage: {
           parser: "not_run" as const,
           fact_counts: [] as Array<{ kind: ParsedFactKind; count: number }>,
@@ -221,6 +254,9 @@ export function reviewSaltCode(
           skipped_rule_matches: 0,
           detected_findings: 0,
           returned_findings: 0,
+          detected_nonfinding_version_decisions: 0,
+          returned_nonfinding_version_decisions: 0,
+          nonfinding_version_decisions_truncated: false,
           truncated: false,
           policy: {
             status: policyCoverageStatus,
@@ -249,6 +285,7 @@ export function reviewSaltCode(
       effectiveParser === "babel" || effectiveParser === "postcss";
     const emptyRuleEvaluation = (): ReviewRuleEvaluation => ({
       findings: [],
+      version_decisions: [],
       evaluated_rule_ids: [],
       skipped_match_count: 0,
       limitations: [] as string[],
@@ -299,6 +336,20 @@ export function reviewSaltCode(
         ...finding.evidence,
       },
     }));
+    const versionDecisions = [...ruleEvaluation.version_decisions].sort(
+      (left, right) =>
+        left.location.start_offset - right.location.start_offset ||
+        REVIEW_RULE_IDS.indexOf(left.rule_id) -
+          REVIEW_RULE_IDS.indexOf(right.rule_id) ||
+        compareOrdinal(
+          firstEvidenceReference(left).locator,
+          firstEvidenceReference(right).locator,
+        ) ||
+        compareOrdinal(
+          firstEvidenceReference(left).field_path,
+          firstEvidenceReference(right).field_path,
+        ),
+    );
     const unknownTokenCount = effectiveFacts.filter(
       (fact) =>
         fact.kind === "token_use" &&
@@ -348,6 +399,7 @@ export function reviewSaltCode(
           : ("no_findings_in_evaluated_scope" as const),
       summary: summarizeFindings(findings),
       findings,
+      version_decisions: versionDecisions,
       coverage: {
         parser: effectiveParser,
         fact_counts: publicFactCounts(factCounts),
@@ -356,6 +408,9 @@ export function reviewSaltCode(
         skipped_rule_matches: ruleEvaluation.skipped_match_count,
         detected_findings: findings.length,
         returned_findings: findings.length,
+        detected_nonfinding_version_decisions: versionDecisions.length,
+        returned_nonfinding_version_decisions: versionDecisions.length,
+        nonfinding_version_decisions_truncated: false,
         truncated: false,
         policy: ruleEvaluation.policy,
       },
@@ -365,6 +420,11 @@ export function reviewSaltCode(
 
   const detectedFindings = analyzedResults.reduce(
     (total, result) => total + result.coverage.detected_findings,
+    0,
+  );
+  const detectedNonFindingVersionDecisions = analyzedResults.reduce(
+    (total, result) =>
+      total + result.coverage.detected_nonfinding_version_decisions,
     0,
   );
   const policyCoverage = analyzedResults.reduce(
@@ -392,13 +452,20 @@ export function reviewSaltCode(
   );
   type PublicReviewFinding =
     (typeof analyzedResults)[number]["findings"][number];
+  type PublicVersionDecision =
+    (typeof analyzedResults)[number]["version_decisions"][number];
   const results = analyzedResults.map((result) => ({
     ...result,
     findings: [] as PublicReviewFinding[],
+    version_decisions: [] as PublicVersionDecision[],
     coverage: {
       ...result.coverage,
       returned_findings: 0,
-      truncated: result.findings.length > 0,
+      returned_nonfinding_version_decisions: 0,
+      nonfinding_version_decisions_truncated:
+        result.version_decisions.length > 0,
+      truncated:
+        result.findings.length > 0 || result.version_decisions.length > 0,
     },
   }));
   const response = {
@@ -420,14 +487,24 @@ export function reviewSaltCode(
       project_policy: policyCoverage,
       detected_findings: detectedFindings,
       returned_findings: 0,
-      truncated: detectedFindings > 0,
+      detected_nonfinding_version_decisions: detectedNonFindingVersionDecisions,
+      returned_nonfinding_version_decisions: 0,
+      nonfinding_version_decisions_truncated:
+        detectedNonFindingVersionDecisions > 0,
+      truncated: detectedFindings > 0 || detectedNonFindingVersionDecisions > 0,
       result_budget: {
         max_utf8_bytes: MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES,
-        truncated: detectedFindings > 0,
+        truncated:
+          detectedFindings > 0 || detectedNonFindingVersionDecisions > 0,
         omissions: [
           {
             section: "findings",
             available: detectedFindings,
+            returned: 0,
+          },
+          {
+            section: "version_decisions",
+            available: detectedNonFindingVersionDecisions,
             returned: 0,
           },
         ],
@@ -450,6 +527,16 @@ export function reviewSaltCode(
       project_policy_digest: policy?.digest ?? null,
     },
   };
+  const findingsOmission = response.coverage.result_budget.omissions.find(
+    (entry) => entry.section === "findings",
+  );
+  const versionDecisionsOmission =
+    response.coverage.result_budget.omissions.find(
+      (entry) => entry.section === "version_decisions",
+    );
+  if (!findingsOmission || !versionDecisionsOmission) {
+    throw new Error("Review result budget omission counters are unavailable.");
+  }
 
   const severityRank = { error: 0, warning: 1, info: 2 } as const;
   const prioritizedFindings = analyzedResults
@@ -475,40 +562,94 @@ export function reviewSaltCode(
     target.findings.push(finding);
     target.coverage.returned_findings += 1;
     response.coverage.returned_findings = returnedFindings + 1;
-    response.coverage.result_budget.omissions[0]!.returned =
-      returnedFindings + 1;
+    findingsOmission.returned = returnedFindings + 1;
     if (
       jsonUtf8Bytes(response) >
         MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES - 1_024 ||
-      nonSearchToolResultUtf8Bytes(response) >
+      measureFinalResultUtf8Bytes(response) >
         MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES - 1_024
     ) {
       target.findings.pop();
       target.coverage.returned_findings -= 1;
       response.coverage.returned_findings = returnedFindings;
-      response.coverage.result_budget.omissions[0]!.returned = returnedFindings;
+      findingsOmission.returned = returnedFindings;
       break;
     }
     returnedFindings += 1;
   }
 
-  const truncated = returnedFindings < detectedFindings;
+  const prioritizedVersionDecisions = analyzedResults.flatMap(
+    (result, resultIndex) =>
+      result.version_decisions.map((decision) => ({
+        decision,
+        resultIndex,
+      })),
+  );
+  let returnedVersionDecisions = 0;
+  for (const { decision, resultIndex } of prioritizedVersionDecisions) {
+    if (returnedVersionDecisions >= MAX_REVIEW_NONFINDING_VERSION_DECISIONS) {
+      break;
+    }
+    const target = response.data.results[resultIndex];
+    if (!target) continue;
+    target.version_decisions.push(decision);
+    target.coverage.returned_nonfinding_version_decisions += 1;
+    response.coverage.returned_nonfinding_version_decisions =
+      returnedVersionDecisions + 1;
+    versionDecisionsOmission.returned = returnedVersionDecisions + 1;
+    if (
+      jsonUtf8Bytes(response) >
+        MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES - 1_024 ||
+      measureFinalResultUtf8Bytes(response) >
+        MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES - 1_024
+    ) {
+      target.version_decisions.pop();
+      target.coverage.returned_nonfinding_version_decisions -= 1;
+      response.coverage.returned_nonfinding_version_decisions =
+        returnedVersionDecisions;
+      versionDecisionsOmission.returned = returnedVersionDecisions;
+      break;
+    }
+    returnedVersionDecisions += 1;
+  }
+
+  const findingsTruncated = returnedFindings < detectedFindings;
+  const versionDecisionsTruncated =
+    returnedVersionDecisions < detectedNonFindingVersionDecisions;
+  const truncated = findingsTruncated || versionDecisionsTruncated;
   response.coverage.truncated = truncated;
+  response.coverage.nonfinding_version_decisions_truncated =
+    versionDecisionsTruncated;
   response.coverage.result_budget.truncated = truncated;
-  response.coverage.result_budget.omissions = truncated
-    ? response.coverage.result_budget.omissions
-    : [];
-  if (truncated) {
+  response.coverage.result_budget.omissions =
+    response.coverage.result_budget.omissions.filter(
+      (entry) => entry.returned < entry.available,
+    );
+  if (findingsTruncated) {
     response.limitations.push(
       `The public result returned ${returnedFindings} of ${detectedFindings} findings because of the aggregate finding or response budget.`,
     );
   }
+  if (versionDecisionsTruncated) {
+    response.limitations.push(
+      `The public result returned ${returnedVersionDecisions} of ${detectedNonFindingVersionDecisions} non-finding version decisions because of the 50-decision or response budget.`,
+    );
+  }
   for (const result of response.data.results) {
+    result.coverage.nonfinding_version_decisions_truncated =
+      result.coverage.returned_nonfinding_version_decisions <
+      result.coverage.detected_nonfinding_version_decisions;
     result.coverage.truncated =
-      result.coverage.returned_findings < result.coverage.detected_findings;
-    if (result.coverage.truncated) {
+      result.coverage.returned_findings < result.coverage.detected_findings ||
+      result.coverage.nonfinding_version_decisions_truncated;
+    if (result.coverage.returned_findings < result.coverage.detected_findings) {
       result.limitations.push(
         `Returned ${result.coverage.returned_findings} of ${result.coverage.detected_findings} findings for this artifact.`,
+      );
+    }
+    if (result.coverage.nonfinding_version_decisions_truncated) {
+      result.limitations.push(
+        `Returned ${result.coverage.returned_nonfinding_version_decisions} of ${result.coverage.detected_nonfinding_version_decisions} non-finding version decisions for this artifact.`,
       );
     }
   }
@@ -518,7 +659,7 @@ export function reviewSaltCode(
     );
   }
   if (
-    nonSearchToolResultUtf8Bytes(response) > MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES
+    measureFinalResultUtf8Bytes(response) > MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES
   ) {
     throw new Error(
       "review_salt_code could not fit its mandatory result skeleton within the public wire budget.",

@@ -4,7 +4,7 @@ import * as t from "@babel/types";
 import semver from "semver";
 import { isApiSymbolSpaceAvailable } from "../catalog/catalogApiSymbolV2.js";
 import type { DeprecationRecord } from "../types.js";
-import { normalizeComparableVersion } from "../versionUtils.js";
+import { parseExactSemVer } from "../versionUtils.js";
 
 export interface ImportedSaltSymbol {
   packageName: string;
@@ -17,6 +17,7 @@ export interface ImportedSaltSymbol {
 export interface VersionContext {
   input: string | null;
   normalized: string | null;
+  evidence: "not_supplied" | "resolved" | "unresolved";
 }
 
 export interface SaltImportAnalysis {
@@ -115,19 +116,22 @@ export function assertSaltCodeAnalysisIsReliable(
 export function normalizeVersion(
   version: string | null | undefined,
 ): string | null {
-  return normalizeComparableVersion(version);
+  return parseExactSemVer(version);
 }
 
 export function createVersionContext(
-  rawVersion: string | undefined,
+  rawVersion: string | null | undefined,
 ): VersionContext {
-  const input = rawVersion?.trim() ?? null;
+  const input = typeof rawVersion === "string" ? rawVersion : null;
   return {
     input,
-    // Tool callers report an observed package version, not a dependency range.
-    // Keep range normalization for catalog metadata, but require exact SemVer at
-    // this trust boundary so inputs such as `^1.2.3` cannot broaden findings.
-    normalized: input === null ? null : semver.valid(input),
+    normalized: parseExactSemVer(input),
+    evidence:
+      rawVersion === undefined
+        ? "not_supplied"
+        : rawVersion === null
+          ? "unresolved"
+          : "resolved",
   };
 }
 

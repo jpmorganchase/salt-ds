@@ -80,7 +80,7 @@ export interface AuthorizedProjectPolicySnapshot {
   context_digest: string;
   chunks: string[];
   salt_version: string | null;
-  package_versions: Readonly<Record<string, string>>;
+  package_versions: Readonly<Record<string, string | null>>;
 }
 
 export type ProjectPolicySnapshotLoadResult =
@@ -265,7 +265,7 @@ export function createProjectPolicySnapshot(input: {
   authorization: Extract<ProjectRootAuthorization, { status: "authorized" }>;
   inspection: ProjectPolicyInspection;
   saltVersion: string | null;
-  packageVersions?: Readonly<Record<string, string>>;
+  packageVersions?: Readonly<Record<string, string | null>>;
 }): AuthorizedProjectPolicySnapshot {
   const ir = input.inspection.ir;
   const packageVersions = Object.fromEntries(
@@ -388,9 +388,10 @@ export async function loadAuthorizedProjectPolicySnapshot(
     inspection,
     saltVersion: currentSaltVersion,
     packageVersions: Object.fromEntries(
-      installation.resolvedPackages.flatMap((entry) =>
-        entry.resolvedVersion ? [[entry.name, entry.resolvedVersion]] : [],
-      ),
+      installation.resolvedPackages.map((entry) => [
+        entry.name,
+        entry.resolvedVersion,
+      ]),
     ),
   });
   cache?.remember(snapshot);

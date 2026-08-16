@@ -6,6 +6,7 @@ import * as z from "zod/v4";
 import {
   CATALOG_SEARCH_TARGET_FAMILY_NAMES,
   DEFAULT_SEARCH_RESULTS,
+  EXACT_SEMVER_PATTERN,
   MAX_REVIEW_ARTIFACT_ID_CHARS,
   MAX_REVIEW_ARTIFACT_ID_JSON_UTF8_BYTES,
   MAX_REVIEW_ARTIFACT_UTF8_BYTES,
@@ -13,17 +14,9 @@ import {
   MAX_REVIEW_PACKAGE_VERSIONS,
   MAX_REVIEW_SUBMITTED_UTF8_BYTES,
   MAX_SEARCH_RESULTS,
-  reviewSaltCode,
-  type SaltCatalogRuntimeContext,
-  searchSalt,
 } from "../core/runtime.js";
 import { compactStandardOutputSchema } from "./compactStandardSchema.js";
-import { inspectSaltProject } from "./inspectSaltProject.js";
-import type { ProjectAccessPolicy } from "./projectAccess.js";
-import type { ProjectPolicySnapshotCache } from "./projectPolicySnapshot.js";
 import {
-  isAuthorizedProjectPolicySnapshot,
-  loadAuthorizedProjectPolicySnapshot,
   MAX_PROJECT_CONTEXT_HANDLE_CHARS,
   PROJECT_CONTEXT_HANDLE_PATTERN,
 } from "./projectPolicySnapshot.js";
@@ -32,8 +25,6 @@ const MAX_QUERY_CHARS = 2_000;
 const MAX_PATH_CHARS = 4_096;
 const MAX_ARTIFACT_CHARS = 256 * 1024;
 const NON_WHITESPACE = /\S/u;
-const EXACT_SEMVER =
-  /^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*)(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/u;
 const READ_ONLY_ANNOTATIONS: ToolAnnotations = {
   readOnlyHint: true,
   destructiveHint: false,
@@ -67,6 +58,39 @@ const PROJECT_POLICY_RESOURCE_URI_SCHEMA = z
   .regex(
     /^salt:\/\/project-policy\/v2\/[A-Za-z0-9_-]+\/sha256-[0-9a-f]{64}\//u,
   );
+const KNOWLEDGE_APPLICABILITY_SCHEMA = z
+  .object({
+    state: z.enum(["current", "applicable", "unknown"]),
+    basis: z.enum([
+      "catalog_current_target",
+      "exact_catalog_package_version",
+      "deprecation_timeline",
+      "evidence_unavailable",
+    ]),
+    package_name: z.string().nullable(),
+    target_version: z.string().nullable(),
+    catalog_version: z.string().nullable(),
+    peer_compatibility: z.literal("not_evaluated"),
+    historical_completeness: z.literal(false),
+  })
+  .strict();
+const REVIEW_DECISION_REASON_SCHEMA = z.enum([
+  "CURRENT_CATALOG_MATCH",
+  "DEPRECATED_AT_TARGET_VERSION",
+  "REMOVED_AT_TARGET_VERSION",
+  "NOT_DEPRECATED_AT_TARGET_VERSION",
+  "TARGET_VERSION_EVIDENCE_UNKNOWN",
+  "DEPRECATION_TIMELINE_UNKNOWN",
+]);
+const OFFICIAL_REVIEW_DECISION_SCHEMA = z
+  .object({
+    disposition: z.literal("evaluated"),
+    outcome: z.literal("finding"),
+    reason_code: REVIEW_DECISION_REASON_SCHEMA,
+    applicability: KNOWLEDGE_APPLICABILITY_SCHEMA,
+    remediation_applicability: KNOWLEDGE_APPLICABILITY_SCHEMA.nullable(),
+  })
+  .strict();
 const SEARCH_RESULT_SCHEMA = z
   .object({
     data: z
@@ -125,6 +149,7 @@ const SEARCH_RESULT_SCHEMA = z
       })
       .strict(),
     limitations: z.array(z.string()),
+    applicability: KNOWLEDGE_APPLICABILITY_SCHEMA,
     provenance: z
       .object({
         catalog_version: z.string().min(1),
@@ -242,6 +267,21 @@ const INSPECT_RESULT_SCHEMA = z
                       resolved_version: z.string().nullable(),
                       resolved_path: NULLABLE_PATH_SCHEMA,
                       satisfies_declared_version: z.boolean().nullable(),
+                      catalog_assessment: z
+                        .object({
+                          applicability: KNOWLEDGE_APPLICABILITY_SCHEMA,
+                          provenance: z
+                            .object({
+                              observed_version: z.literal(
+                                "untrusted_project_data",
+                              ),
+                              catalog_version: z.literal(
+                                "official_sealed_catalog",
+                              ),
+                            })
+                            .strict(),
+                        })
+                        .strict(),
                     })
                     .strict(),
                 ),
@@ -366,6 +406,37 @@ const REVIEW_PARSED_FACT_SCHEMA = z
   })
   .strict();
 
+const NONFINDING_VERSION_DECISION_SCHEMA = z
+  .object({
+    rule_id: z.string(),
+    parsed_fact: REVIEW_PARSED_FACT_SCHEMA,
+    location: REVIEW_LOCATION_SCHEMA,
+    disposition: z.enum(["evaluated", "skipped_unknown"]),
+    outcome: z.literal("no_finding").nullable(),
+    reason_code: REVIEW_DECISION_REASON_SCHEMA,
+    applicability: KNOWLEDGE_APPLICABILITY_SCHEMA,
+    remediation_applicability: KNOWLEDGE_APPLICABILITY_SCHEMA.nullable(),
+    evidence: z
+      .object({
+        references: z.array(REVIEW_EVIDENCE_REFERENCE_SCHEMA).min(1),
+        validation: z.literal("source_bound"),
+      })
+      .strict(),
+  })
+  .strict()
+  .superRefine((value, context) => {
+    if (
+      (value.disposition === "evaluated" && value.outcome !== "no_finding") ||
+      (value.disposition === "skipped_unknown" && value.outcome !== null)
+    ) {
+      context.addIssue({
+        code: "custom",
+        message:
+          "Evaluated version decisions require no_finding; skipped decisions require a null outcome.",
+      });
+    }
+  });
+
 const REVIEW_FINDING_SCHEMA = z
   .object({
     id: z.string(),
@@ -375,6 +446,7 @@ const REVIEW_FINDING_SCHEMA = z
     parsed_fact: REVIEW_PARSED_FACT_SCHEMA,
     location: REVIEW_LOCATION_SCHEMA,
     remediation: z.string().nullable(),
+    official_decision: OFFICIAL_REVIEW_DECISION_SCHEMA.nullable(),
     policy_evaluation: z
       .object({
         digest: SHA256_SCHEMA,
@@ -479,6 +551,9 @@ const REVIEW_RESULT_SCHEMA = z
                 })
                 .strict(),
               findings: z.array(REVIEW_FINDING_SCHEMA),
+              version_decisions: z
+                .array(NONFINDING_VERSION_DECISION_SCHEMA)
+                .max(50),
               coverage: z
                 .object({
                   parser: z.enum([
@@ -507,6 +582,15 @@ const REVIEW_RESULT_SCHEMA = z
                   skipped_rule_matches: z.number().int().nonnegative(),
                   detected_findings: z.number().int().nonnegative(),
                   returned_findings: z.number().int().nonnegative(),
+                  detected_nonfinding_version_decisions: z
+                    .number()
+                    .int()
+                    .nonnegative(),
+                  returned_nonfinding_version_decisions: z
+                    .number()
+                    .int()
+                    .nonnegative(),
+                  nonfinding_version_decisions_truncated: z.boolean(),
                   truncated: z.boolean(),
                   policy: REVIEW_ARTIFACT_POLICY_COVERAGE_SCHEMA,
                 })
@@ -540,6 +624,9 @@ const REVIEW_RESULT_SCHEMA = z
         project_policy: REVIEW_PROJECT_POLICY_COVERAGE_SCHEMA,
         detected_findings: z.number().int().nonnegative(),
         returned_findings: z.number().int().nonnegative(),
+        detected_nonfinding_version_decisions: z.number().int().nonnegative(),
+        returned_nonfinding_version_decisions: z.number().int().nonnegative(),
+        nonfinding_version_decisions_truncated: z.boolean(),
         truncated: z.boolean(),
         result_budget: RESULT_BUDGET_SCHEMA,
       })
@@ -655,7 +742,7 @@ const REVIEW_PACKAGE_VERSIONS_SCHEMA = z
       .min(1)
       .max(214)
       .regex(/^@salt-ds\/[a-z0-9][a-z0-9._-]*$/u),
-    z.string().min(1).max(128).regex(EXACT_SEMVER),
+    z.string().min(1).max(128).regex(EXACT_SEMVER_PATTERN),
   )
   .meta({ maxProperties: MAX_REVIEW_PACKAGE_VERSIONS });
 
@@ -773,172 +860,95 @@ const REVIEW_INPUT_SCHEMA = z
     }
   });
 
-type ToolInputSchema =
-  | typeof SEARCH_INPUT_SCHEMA
-  | typeof INSPECT_INPUT_SCHEMA
-  | typeof REVIEW_INPUT_SCHEMA;
-
-export interface ToolDefinition {
-  name: (typeof REGISTERED_SALT_TOOL_NAMES)[number];
-  description: string;
-  inputSchema: ToolInputSchema;
-  outputSchema: StandardSchemaWithJSON;
-  outputValidationSchema: z.ZodType;
-  annotations: ToolAnnotations;
-  execute: (
-    context: SaltCatalogRuntimeContext & {
-      projectAccess: ProjectAccessPolicy;
-      projectPolicySnapshots: ProjectPolicySnapshotCache;
-    },
-    args: never,
-  ) => Promise<unknown> | unknown;
-}
-
-function defineTool<Schema extends ToolInputSchema>(definition: {
-  name: ToolDefinition["name"];
-  description: string;
-  inputSchema: Schema;
-  outputSchema: z.ZodType;
-  annotations: ToolAnnotations;
-  execute: (
-    context: SaltCatalogRuntimeContext & {
-      projectAccess: ProjectAccessPolicy;
-      projectPolicySnapshots: ProjectPolicySnapshotCache;
-    },
-    args: z.infer<Schema>,
-  ) => Promise<unknown> | unknown;
-}): ToolDefinition {
-  return {
-    ...definition,
-    outputSchema: compactStandardOutputSchema(definition.outputSchema),
-    outputValidationSchema: definition.outputSchema,
-  } as ToolDefinition;
-}
-
 export const REGISTERED_SALT_TOOL_NAMES = [
   "search_salt",
   "inspect_salt_project",
   "review_salt_code",
 ] as const;
 
-export const TOOL_DEFINITIONS: readonly ToolDefinition[] = [
-  defineTool({
-    name: "search_salt",
-    description:
-      "Search the immutable Salt catalog and return bounded ranked summaries with digest-bound resource links for exact evidence.",
-    inputSchema: SEARCH_INPUT_SCHEMA,
-    outputSchema: SEARCH_RESULT_SCHEMA,
-    annotations: READ_ONLY_ANNOTATIONS,
-    execute: (context, args) => searchSalt(context.store, args),
-  }),
-  defineTool({
-    name: "inspect_salt_project",
-    description:
-      "Read an authorized local project to report package, workspace, installation, and untrusted policy facts. Policy details default to bounded summaries and resource links.",
-    inputSchema: INSPECT_INPUT_SCHEMA,
-    outputSchema: INSPECT_RESULT_SCHEMA,
-    annotations: READ_ONLY_ANNOTATIONS,
-    execute: (context, args) =>
-      inspectSaltProject(
-        args,
-        context.projectAccess,
-        context.projectPolicySnapshots,
-      ),
-  }),
-  defineTool({
-    name: "review_salt_code",
-    description:
-      "Analyze only submitted source text against source-bound Salt catalog rules and optional untrusted project policy. Exact package versions enable version-specific deprecation checks; findings are bounded and do not prove repository correctness.",
-    inputSchema: REVIEW_INPUT_SCHEMA,
-    outputSchema: REVIEW_RESULT_SCHEMA,
-    annotations: READ_ONLY_ANNOTATIONS,
-    execute: async (context, args) => {
-      const retainedSnapshot = args.project_context_handle
-        ? context.projectPolicySnapshots.getByHandle(
-            args.project_context_handle,
-          )
-        : null;
-      if (args.project_context_handle && !retainedSnapshot) {
-        throw new Error(
-          "review_salt_code project context handle is expired or evicted; inspect the project again for a new handle.",
-        );
-      }
-      const loadedPolicy = retainedSnapshot
-        ? await loadAuthorizedProjectPolicySnapshot(
-            context.projectAccess,
-            retainedSnapshot.authorization.rootDir,
-            context.projectPolicySnapshots,
-            {
-              kind: "context_digest",
-              digest: retainedSnapshot.context_digest,
-            },
-          )
-        : args.root_dir
-          ? await loadAuthorizedProjectPolicySnapshot(
-              context.projectAccess,
-              args.root_dir,
-              context.projectPolicySnapshots,
-            )
-          : null;
-      if (loadedPolicy?.authorization.status === "denied") {
-        if (retainedSnapshot) {
-          throw new Error(
-            "review_salt_code project context handle is expired, evicted, or unauthorized; inspect the project again for a new handle.",
-          );
-        }
-        throw new Error(
-          `review_salt_code project policy root was denied (${loadedPolicy.authorization.reason}).`,
-        );
-      }
-      if (
-        retainedSnapshot &&
-        (!loadedPolicy ||
-          !isAuthorizedProjectPolicySnapshot(loadedPolicy) ||
-          loadedPolicy.context_digest !== retainedSnapshot.context_digest)
-      ) {
-        throw new Error(
-          "review_salt_code project context handle is expired or evicted; inspect the project again for a new handle.",
-        );
-      }
-      const policyContext =
-        loadedPolicy &&
-        isAuthorizedProjectPolicySnapshot(loadedPolicy) &&
-        loadedPolicy.ir &&
-        loadedPolicy.digest
-          ? {
-              ir: loadedPolicy.ir,
-              root_dir: loadedPolicy.authorization.rootDir,
-              digest: loadedPolicy.digest,
-              salt_version: loadedPolicy.salt_version,
-            }
-          : null;
-      const packageVersions =
-        loadedPolicy && isAuthorizedProjectPolicySnapshot(loadedPolicy)
-          ? loadedPolicy.package_versions
-          : (args.package_versions ?? {});
-      return reviewSaltCode(
-        { reviewCatalog: context.reviewCatalog, store: context.store },
-        {
-          artifacts: args.artifacts,
-          ...(Object.keys(packageVersions).length > 0
-            ? { package_versions: packageVersions }
-            : {}),
-          ...(args.max_findings === undefined
-            ? {}
-            : { max_findings: args.max_findings }),
-        },
-        policyContext,
-        loadedPolicy && isAuthorizedProjectPolicySnapshot(loadedPolicy)
-          ? loadedPolicy.context_digest
-          : null,
-        retainedSnapshot
-          ? "retained_project_snapshot"
-          : args.root_dir
-            ? "fresh_project_inspection"
-            : args.package_versions
-              ? "caller_package_versions"
-              : "none",
-      );
-    },
-  }),
-];
+export type SaltToolName = (typeof REGISTERED_SALT_TOOL_NAMES)[number];
+export type SearchToolInput = z.infer<typeof SEARCH_INPUT_SCHEMA>;
+export type InspectToolInput = z.infer<typeof INSPECT_INPUT_SCHEMA>;
+export type ReviewToolInput = z.infer<typeof REVIEW_INPUT_SCHEMA>;
+export type SearchToolResult = z.infer<typeof SEARCH_RESULT_SCHEMA>;
+export type InspectToolResult = z.infer<typeof INSPECT_RESULT_SCHEMA>;
+export type ReviewToolResult = z.infer<typeof REVIEW_RESULT_SCHEMA>;
+
+export interface SaltToolInputByName {
+  search_salt: SearchToolInput;
+  inspect_salt_project: InspectToolInput;
+  review_salt_code: ReviewToolInput;
+}
+
+export interface SaltToolResultByName {
+  search_salt: SearchToolResult;
+  inspect_salt_project: InspectToolResult;
+  review_salt_code: ReviewToolResult;
+}
+
+export interface ToolDefinition<
+  Name extends SaltToolName,
+  InputSchema extends z.ZodType,
+  OutputSchema extends z.ZodType,
+> {
+  name: Name;
+  description: string;
+  inputSchema: InputSchema;
+  outputSchema: StandardSchemaWithJSON;
+  outputValidationSchema: OutputSchema;
+  annotations: ToolAnnotations;
+}
+
+function defineTool<
+  Name extends SaltToolName,
+  InputSchema extends z.ZodType,
+  OutputSchema extends z.ZodType,
+>(definition: {
+  name: Name;
+  description: string;
+  inputSchema: InputSchema;
+  outputSchema: OutputSchema;
+  annotations: ToolAnnotations;
+}): ToolDefinition<Name, InputSchema, OutputSchema> {
+  return {
+    name: definition.name,
+    description: definition.description,
+    inputSchema: definition.inputSchema,
+    outputSchema: compactStandardOutputSchema(definition.outputSchema),
+    outputValidationSchema: definition.outputSchema,
+    annotations: definition.annotations,
+  };
+}
+
+export const SEARCH_TOOL_DEFINITION = defineTool({
+  name: "search_salt",
+  description:
+    "Search the immutable Salt catalog and return bounded ranked summaries with digest-bound resource links for exact evidence.",
+  inputSchema: SEARCH_INPUT_SCHEMA,
+  outputSchema: SEARCH_RESULT_SCHEMA,
+  annotations: READ_ONLY_ANNOTATIONS,
+});
+
+export const INSPECT_TOOL_DEFINITION = defineTool({
+  name: "inspect_salt_project",
+  description:
+    "Read an authorized local project to report package, workspace, installation, and untrusted policy facts. Policy details default to bounded summaries and resource links.",
+  inputSchema: INSPECT_INPUT_SCHEMA,
+  outputSchema: INSPECT_RESULT_SCHEMA,
+  annotations: READ_ONLY_ANNOTATIONS,
+});
+
+export const REVIEW_TOOL_DEFINITION = defineTool({
+  name: "review_salt_code",
+  description:
+    "Analyze only submitted source text against source-bound Salt catalog rules and optional untrusted project policy. Exact package versions enable version-specific deprecation checks; findings are bounded and do not prove repository correctness.",
+  inputSchema: REVIEW_INPUT_SCHEMA,
+  outputSchema: REVIEW_RESULT_SCHEMA,
+  annotations: READ_ONLY_ANNOTATIONS,
+});
+
+export const TOOL_DEFINITIONS = [
+  SEARCH_TOOL_DEFINITION,
+  INSPECT_TOOL_DEFINITION,
+  REVIEW_TOOL_DEFINITION,
+] as const;

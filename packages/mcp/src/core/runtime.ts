@@ -4,6 +4,17 @@
  * builders and core modules do not depend on MCP protocol types.
  */
 
+export type {
+  KnowledgeApplicability,
+  KnowledgeApplicabilityBasis,
+  KnowledgeApplicabilityState,
+} from "./applicability/knowledgeApplicability.js";
+export {
+  currentKnowledgeApplicability,
+  deprecationTimelineKnowledgeApplicability,
+  resolvePackageKnowledgeApplicability,
+  unknownKnowledgeApplicability,
+} from "./applicability/knowledgeApplicability.js";
 export { normalizeCatalogPublicCitation } from "./catalog/catalogPublicCitation.js";
 export type { CatalogResourceRecord } from "./catalog/catalogResourceEnvelope.js";
 export { serializeCatalogResourceEnvelope } from "./catalog/catalogResourceEnvelope.js";
@@ -56,11 +67,9 @@ export {
 } from "./publicResourceBudget.js";
 export type { ResultBudgetOmission } from "./publicResultBudget.js";
 export {
-  createNonSearchToolResult,
   jsonUtf8Bytes,
   MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES,
   MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES,
-  nonSearchToolResultUtf8Bytes,
 } from "./publicResultBudget.js";
 export type { SaltCatalogRuntimeContext } from "./registry/loadRegistry.js";
 export { loadCatalogRuntimeContext } from "./registry/loadRegistry.js";
@@ -77,5 +86,7 @@ export {
 export {
   DEFAULT_SEARCH_RESULTS,
   MAX_SEARCH_RESULTS,
+  MAX_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES,
   searchSalt,
 } from "./search/searchSalt.js";
+export { EXACT_SEMVER_PATTERN } from "./versionUtils.js";

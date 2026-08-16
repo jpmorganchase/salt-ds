@@ -1,3 +1,10 @@
+import {
+  currentKnowledgeApplicability,
+  deprecationTimelineKnowledgeApplicability,
+  type KnowledgeApplicability,
+  resolvePackageKnowledgeApplicability,
+  unknownKnowledgeApplicability,
+} from "../applicability/knowledgeApplicability.js";
 import { normalizeCatalogPublicCitation } from "../catalog/catalogPublicCitation.js";
 import type { CatalogRuntimeFamilyName } from "../catalog/catalogSchemaV2.js";
 import type { CatalogStoreV2 } from "../catalog/catalogStoreV2.js";
@@ -11,6 +18,7 @@ import {
   deprecationSeverity,
   isDeprecationRelevant,
   normalizeVersion,
+  type VersionContext,
 } from "../tools/codeAnalysisCommon.js";
 import type {
   ReviewCatalog,
@@ -38,6 +46,7 @@ export interface EvaluatedReviewFinding {
   parsed_fact: PublicParsedFact;
   location: SubmittedArtifactLocation;
   remediation: string | null;
+  official_decision: OfficialReviewDecision | null;
   policy_evaluation: {
     digest: string;
     applicability: "applicable";
@@ -57,6 +66,37 @@ export interface EvaluatedReviewFinding {
   };
 }
 
+export type ReviewDecisionReasonCode =
+  | "CURRENT_CATALOG_MATCH"
+  | "DEPRECATED_AT_TARGET_VERSION"
+  | "REMOVED_AT_TARGET_VERSION"
+  | "NOT_DEPRECATED_AT_TARGET_VERSION"
+  | "TARGET_VERSION_EVIDENCE_UNKNOWN"
+  | "DEPRECATION_TIMELINE_UNKNOWN";
+
+export interface OfficialReviewDecision {
+  disposition: "evaluated";
+  outcome: "finding";
+  reason_code: ReviewDecisionReasonCode;
+  applicability: KnowledgeApplicability;
+  remediation_applicability: KnowledgeApplicability | null;
+}
+
+export interface NonFindingVersionDecision {
+  rule_id: string;
+  parsed_fact: PublicParsedFact;
+  location: SubmittedArtifactLocation;
+  disposition: "evaluated" | "skipped_unknown";
+  outcome: "no_finding" | null;
+  reason_code: ReviewDecisionReasonCode;
+  applicability: KnowledgeApplicability;
+  remediation_applicability: KnowledgeApplicability | null;
+  evidence: {
+    references: ReviewEvidenceReference[];
+    validation: "source_bound";
+  };
+}
+
 interface ReviewRuleDefinition {
   rule_id: string;
   description: string;
@@ -64,7 +104,7 @@ interface ReviewRuleDefinition {
     registry: ReviewCatalog;
     store: CatalogStoreV2;
     facts: readonly ParsedSubmittedFact[];
-    packageVersions: ReadonlyMap<string, string>;
+    packageVersions: ReadonlyMap<string, string | null>;
     indexes: ReviewIndexes;
     budget: ReviewRuleBudget;
   }) => RuleMatchEvaluation;
@@ -98,6 +138,7 @@ type ComponentExportIdentityResolution =
   | { status: "ambiguous" };
 
 interface ReviewIndexes {
+  catalogPackageVersions: ReadonlyMap<string, string>;
   componentsByExport: ReadonlyMap<string, ComponentResolution>;
   componentIdentityByExport: ReadonlyMap<
     string,
@@ -141,8 +182,16 @@ function componentExportNames(component: ReviewComponent): string[] {
 
 function createReviewIndexes(
   registry: ReviewCatalog,
+  store: CatalogStoreV2,
   facts: readonly ParsedSubmittedFact[],
 ): ReviewIndexes {
+  const catalogPackageVersions = new Map(
+    typeof store.getFamily === "function"
+      ? store
+          .getFamily("package")
+          .map((record) => [record.name, record.version] as const)
+      : [],
+  );
   const componentsByExport = new Map<string, ComponentResolution>();
   const componentPackagesByExport = new Map<string, Set<string>>();
   for (const component of registry.components) {
@@ -245,6 +294,7 @@ function createReviewIndexes(
     }
   }
   return {
+    catalogPackageVersions,
     componentsByExport,
     componentIdentityByExport,
     rootDeprecationsByExport,
@@ -261,12 +311,14 @@ function createReviewIndexes(
 
 interface RuleMatchEvaluation {
   findings: EvaluatedReviewFinding[];
+  version_decisions: NonFindingVersionDecision[];
   skipped_match_count: number;
   limitation: string | null;
 }
 
 export interface ReviewRuleEvaluation {
   findings: EvaluatedReviewFinding[];
+  version_decisions: NonFindingVersionDecision[];
   evaluated_rule_ids: string[];
   skipped_match_count: number;
   limitations: string[];
@@ -395,6 +447,7 @@ function collectRuleMatches(
   const skipped = matches.length - findings.length;
   return {
     findings,
+    version_decisions: [],
     skipped_match_count: skipped,
     limitation:
       skipped === 0
@@ -409,6 +462,7 @@ function makeFinding(input: {
   fact: ParsedSubmittedFact;
   remediation: string | null;
   references: ReviewEvidenceReference[];
+  officialDecision?: OfficialReviewDecision;
 }): EvaluatedReviewFinding | null {
   if (input.references.length === 0) return null;
   return {
@@ -419,6 +473,21 @@ function makeFinding(input: {
     parsed_fact: publicParsedFact(input.fact),
     location: input.fact.location,
     remediation: input.remediation,
+    official_decision:
+      input.officialDecision ??
+      ({
+        disposition: "evaluated",
+        outcome: "finding",
+        reason_code: "CURRENT_CATALOG_MATCH",
+        applicability: currentKnowledgeApplicability({
+          packageName: input.fact.package_name,
+        }),
+        remediation_applicability: input.remediation
+          ? currentKnowledgeApplicability({
+              packageName: input.fact.package_name,
+            })
+          : null,
+      } satisfies OfficialReviewDecision),
     policy_evaluation: null,
     evidence: {
       references: input.references,
@@ -439,6 +508,124 @@ function directReplacementName(deprecation: ReviewDeprecation): string | null {
     deprecation.replacement.target.member_path.at(-1)?.name ??
     deprecation.replacement.target.export_name
   );
+}
+
+function catalogPackageVersion(
+  indexes: ReviewIndexes,
+  packageName: string,
+): string | null {
+  return indexes.catalogPackageVersions.get(packageName) ?? null;
+}
+
+function deprecationApplicability(
+  deprecation: ReviewDeprecation,
+  version: VersionContext,
+  indexes: ReviewIndexes,
+): KnowledgeApplicability {
+  const catalogVersion = catalogPackageVersion(indexes, deprecation.package);
+  if (!version.input) {
+    return currentKnowledgeApplicability({
+      packageName: deprecation.package,
+      catalogVersion,
+    });
+  }
+  const exact = resolvePackageKnowledgeApplicability({
+    packageName: deprecation.package,
+    targetVersion: version.normalized,
+    catalogVersion,
+  });
+  return exact.state === "applicable"
+    ? exact
+    : deprecationTimelineKnowledgeApplicability({
+        packageName: deprecation.package,
+        targetVersion: version.normalized!,
+        catalogVersion,
+      });
+}
+
+function remediationApplicability(
+  deprecation: ReviewDeprecation,
+  version: VersionContext,
+  indexes: ReviewIndexes,
+  hasRemediation: boolean,
+): KnowledgeApplicability | null {
+  if (!hasRemediation) return null;
+  const catalogVersion = catalogPackageVersion(indexes, deprecation.package);
+  if (!version.input) {
+    return currentKnowledgeApplicability({
+      packageName: deprecation.package,
+      catalogVersion,
+    });
+  }
+  const exact = resolvePackageKnowledgeApplicability({
+    packageName: deprecation.package,
+    targetVersion: version.normalized,
+    catalogVersion,
+  });
+  return exact.state === "applicable"
+    ? exact
+    : unknownKnowledgeApplicability({
+        packageName: deprecation.package,
+        targetVersion: version.normalized,
+        catalogVersion,
+      });
+}
+
+function officialDeprecationDecision(input: {
+  deprecation: ReviewDeprecation;
+  version: VersionContext;
+  indexes: ReviewIndexes;
+  hasRemediation: boolean;
+}): OfficialReviewDecision {
+  return {
+    disposition: "evaluated",
+    outcome: "finding",
+    reason_code:
+      deprecationSeverity(input.deprecation, input.version) === "error"
+        ? "REMOVED_AT_TARGET_VERSION"
+        : input.version.input
+          ? "DEPRECATED_AT_TARGET_VERSION"
+          : "CURRENT_CATALOG_MATCH",
+    applicability: deprecationApplicability(
+      input.deprecation,
+      input.version,
+      input.indexes,
+    ),
+    remediation_applicability: remediationApplicability(
+      input.deprecation,
+      input.version,
+      input.indexes,
+      input.hasRemediation,
+    ),
+  };
+}
+
+function nonFindingVersionDecision(input: {
+  rule: Pick<ReviewRuleDefinition, "rule_id">;
+  fact: ParsedSubmittedFact;
+  deprecation: ReviewDeprecation;
+  disposition: NonFindingVersionDecision["disposition"];
+  outcome: NonFindingVersionDecision["outcome"];
+  reasonCode: ReviewDecisionReasonCode;
+  applicability: KnowledgeApplicability;
+  references: ReviewEvidenceReference[];
+  remediationApplicability?: KnowledgeApplicability | null;
+}): NonFindingVersionDecision | null {
+  if (input.references.length === 0) return null;
+  return {
+    rule_id: input.rule.rule_id,
+    parsed_fact: publicParsedFact(input.fact),
+    location: input.fact.location,
+    disposition: input.disposition,
+    outcome: input.outcome,
+    reason_code: input.reasonCode,
+    applicability: input.applicability,
+    remediation_applicability: input.remediationApplicability ?? null,
+    evidence: {
+      references: input.references,
+      validation: "source_bound",
+    },
+  };
 }
 
 const ACTION_NAVIGATION_RULE: ReviewRuleDefinition = {
@@ -556,6 +743,7 @@ const DEPRECATED_IMPORT_RULE: ReviewRuleDefinition = {
   description:
     "A used Salt value import is checked against source-bound deprecation records.",
   evaluate: ({ store, facts, packageVersions, indexes, budget }) => {
+    const versionDecisions: NonFindingVersionDecision[] = [];
     let incompleteMetadataCount = 0;
     let invalidRemovalMetadataCount = 0;
     let invalidVersionMatchCount = 0;
@@ -578,9 +766,41 @@ const DEPRECATED_IMPORT_RULE: ReviewRuleDefinition = {
         const version = createVersionContext(
           packageVersions.get(deprecation.package),
         );
-        if (version.input !== null && version.normalized === null) {
+        if (
+          version.evidence !== "not_supplied" &&
+          version.normalized === null
+        ) {
           invalidVersionPackages.add(deprecation.package);
           invalidVersionMatchCount += 1;
+          const replacement = directReplacementName(deprecation);
+          const decision = nonFindingVersionDecision({
+            rule: DEPRECATED_IMPORT_RULE,
+            fact,
+            deprecation,
+            disposition: "skipped_unknown",
+            outcome: null,
+            reasonCode: "TARGET_VERSION_EVIDENCE_UNKNOWN",
+            applicability: unknownKnowledgeApplicability({
+              packageName: deprecation.package,
+              targetVersion: version.input,
+              catalogVersion: catalogPackageVersion(
+                indexes,
+                deprecation.package,
+              ),
+            }),
+            references: deprecationReferences(store, deprecation, replacement),
+            remediationApplicability: replacement
+              ? unknownKnowledgeApplicability({
+                  packageName: deprecation.package,
+                  targetVersion: version.input,
+                  catalogVersion: catalogPackageVersion(
+                    indexes,
+                    deprecation.package,
+                  ),
+                })
+              : null,
+          });
+          if (decision) versionDecisions.push(decision);
           return [];
         }
         if (
@@ -588,6 +808,35 @@ const DEPRECATED_IMPORT_RULE: ReviewRuleDefinition = {
           !normalizeVersion(deprecation.deprecated_in)
         ) {
           incompleteMetadataCount += 1;
+          const replacement = directReplacementName(deprecation);
+          const decision = nonFindingVersionDecision({
+            rule: DEPRECATED_IMPORT_RULE,
+            fact,
+            deprecation,
+            disposition: "skipped_unknown",
+            outcome: null,
+            reasonCode: "DEPRECATION_TIMELINE_UNKNOWN",
+            applicability: unknownKnowledgeApplicability({
+              packageName: deprecation.package,
+              targetVersion: version.normalized,
+              catalogVersion: catalogPackageVersion(
+                indexes,
+                deprecation.package,
+              ),
+            }),
+            references: deprecationReferences(store, deprecation, replacement),
+            remediationApplicability: replacement
+              ? unknownKnowledgeApplicability({
+                  packageName: deprecation.package,
+                  targetVersion: version.normalized,
+                  catalogVersion: catalogPackageVersion(
+                    indexes,
+                    deprecation.package,
+                  ),
+                })
+              : null,
+          });
+          if (decision) versionDecisions.push(decision);
           return [];
         }
         if (
@@ -596,9 +845,58 @@ const DEPRECATED_IMPORT_RULE: ReviewRuleDefinition = {
           !normalizeVersion(deprecation.removed_in)
         ) {
           invalidRemovalMetadataCount += 1;
+          const replacement = directReplacementName(deprecation);
+          const decision = nonFindingVersionDecision({
+            rule: DEPRECATED_IMPORT_RULE,
+            fact,
+            deprecation,
+            disposition: "skipped_unknown",
+            outcome: null,
+            reasonCode: "DEPRECATION_TIMELINE_UNKNOWN",
+            applicability: unknownKnowledgeApplicability({
+              packageName: deprecation.package,
+              targetVersion: version.normalized,
+              catalogVersion: catalogPackageVersion(
+                indexes,
+                deprecation.package,
+              ),
+            }),
+            references: deprecationReferences(store, deprecation, replacement),
+            remediationApplicability: replacement
+              ? unknownKnowledgeApplicability({
+                  packageName: deprecation.package,
+                  targetVersion: version.normalized,
+                  catalogVersion: catalogPackageVersion(
+                    indexes,
+                    deprecation.package,
+                  ),
+                })
+              : null,
+          });
+          if (decision) versionDecisions.push(decision);
           return [];
         }
-        if (!isDeprecationRelevant(deprecation, version)) return [];
+        if (!isDeprecationRelevant(deprecation, version)) {
+          const decision = nonFindingVersionDecision({
+            rule: DEPRECATED_IMPORT_RULE,
+            fact,
+            deprecation,
+            disposition: "evaluated",
+            outcome: "no_finding",
+            reasonCode: "NOT_DEPRECATED_AT_TARGET_VERSION",
+            applicability: deprecationTimelineKnowledgeApplicability({
+              packageName: deprecation.package,
+              targetVersion: version.normalized!,
+              catalogVersion: catalogPackageVersion(
+                indexes,
+                deprecation.package,
+              ),
+            }),
+            references: deprecationReferences(store, deprecation, null),
+          });
+          if (decision) versionDecisions.push(decision);
+          return [];
+        }
         const replacement = directReplacementName(deprecation);
         const finding = makeFinding({
           rule: DEPRECATED_IMPORT_RULE,
@@ -608,6 +906,12 @@ const DEPRECATED_IMPORT_RULE: ReviewRuleDefinition = {
             ? `Review replacing ${deprecation.name} with ${replacement}.`
             : null,
           references: deprecationReferences(store, deprecation, replacement),
+          officialDecision: officialDeprecationDecision({
+            deprecation,
+            version,
+            indexes,
+            hasRemediation: replacement !== null,
+          }),
         });
         return [finding];
       });
@@ -615,6 +919,7 @@ const DEPRECATED_IMPORT_RULE: ReviewRuleDefinition = {
     const result = collectRuleMatches(DEPRECATED_IMPORT_RULE, matches);
     return {
       ...result,
+      version_decisions: versionDecisions,
       skipped_match_count:
         result.skipped_match_count +
         invalidVersionMatchCount +
@@ -624,7 +929,7 @@ const DEPRECATED_IMPORT_RULE: ReviewRuleDefinition = {
         [
           result.limitation,
           invalidVersionMatchCount > 0
-            ? `${DEPRECATED_IMPORT_RULE.rule_id} skipped ${invalidVersionMatchCount} matching deprecation record${invalidVersionMatchCount === 1 ? "" : "s"} for ${[...invalidVersionPackages].sort().join(", ")} because the supplied version entries were not valid exact semantic versions.`
+            ? `${DEPRECATED_IMPORT_RULE.rule_id} skipped ${invalidVersionMatchCount} matching deprecation record${invalidVersionMatchCount === 1 ? "" : "s"} for ${[...invalidVersionPackages].sort().join(", ")} because package-version evidence was unresolved or not valid exact semantic versions.`
             : null,
           incompleteMetadataCount > 0
             ? `${DEPRECATED_IMPORT_RULE.rule_id} skipped ${incompleteMetadataCount} matching deprecation record${incompleteMetadataCount === 1 ? "" : "s"} because deprecated_in was missing or invalid for the applicable supplied package version.`
@@ -644,6 +949,7 @@ const DEPRECATED_PROP_RULE: ReviewRuleDefinition = {
   description:
     "A statically named prop on a used Salt component is checked against source-bound deprecation records.",
   evaluate: ({ store, facts, packageVersions, indexes, budget }) => {
+    const versionDecisions: NonFindingVersionDecision[] = [];
     let incompleteMetadataCount = 0;
     let invalidRemovalMetadataCount = 0;
     let invalidVersionMatchCount = 0;
@@ -701,9 +1007,41 @@ const DEPRECATED_PROP_RULE: ReviewRuleDefinition = {
         const version = createVersionContext(
           packageVersions.get(deprecation.package),
         );
-        if (version.input !== null && version.normalized === null) {
+        if (
+          version.evidence !== "not_supplied" &&
+          version.normalized === null
+        ) {
           invalidVersionPackages.add(deprecation.package);
           invalidVersionMatchCount += 1;
+          const replacement = directReplacementName(deprecation);
+          const decision = nonFindingVersionDecision({
+            rule: DEPRECATED_PROP_RULE,
+            fact,
+            deprecation,
+            disposition: "skipped_unknown",
+            outcome: null,
+            reasonCode: "TARGET_VERSION_EVIDENCE_UNKNOWN",
+            applicability: unknownKnowledgeApplicability({
+              packageName: deprecation.package,
+              targetVersion: version.input,
+              catalogVersion: catalogPackageVersion(
+                indexes,
+                deprecation.package,
+              ),
+            }),
+            references: deprecationReferences(store, deprecation, replacement),
+            remediationApplicability: replacement
+              ? unknownKnowledgeApplicability({
+                  packageName: deprecation.package,
+                  targetVersion: version.input,
+                  catalogVersion: catalogPackageVersion(
+                    indexes,
+                    deprecation.package,
+                  ),
+                })
+              : null,
+          });
+          if (decision) versionDecisions.push(decision);
           return [];
         }
         if (
@@ -711,6 +1049,35 @@ const DEPRECATED_PROP_RULE: ReviewRuleDefinition = {
           !normalizeVersion(deprecation.deprecated_in)
         ) {
           incompleteMetadataCount += 1;
+          const replacement = directReplacementName(deprecation);
+          const decision = nonFindingVersionDecision({
+            rule: DEPRECATED_PROP_RULE,
+            fact,
+            deprecation,
+            disposition: "skipped_unknown",
+            outcome: null,
+            reasonCode: "DEPRECATION_TIMELINE_UNKNOWN",
+            applicability: unknownKnowledgeApplicability({
+              packageName: deprecation.package,
+              targetVersion: version.normalized,
+              catalogVersion: catalogPackageVersion(
+                indexes,
+                deprecation.package,
+              ),
+            }),
+            references: deprecationReferences(store, deprecation, replacement),
+            remediationApplicability: replacement
+              ? unknownKnowledgeApplicability({
+                  packageName: deprecation.package,
+                  targetVersion: version.normalized,
+                  catalogVersion: catalogPackageVersion(
+                    indexes,
+                    deprecation.package,
+                  ),
+                })
+              : null,
+          });
+          if (decision) versionDecisions.push(decision);
           return [];
         }
         if (
@@ -719,9 +1086,58 @@ const DEPRECATED_PROP_RULE: ReviewRuleDefinition = {
           !normalizeVersion(deprecation.removed_in)
         ) {
           invalidRemovalMetadataCount += 1;
+          const replacement = directReplacementName(deprecation);
+          const decision = nonFindingVersionDecision({
+            rule: DEPRECATED_PROP_RULE,
+            fact,
+            deprecation,
+            disposition: "skipped_unknown",
+            outcome: null,
+            reasonCode: "DEPRECATION_TIMELINE_UNKNOWN",
+            applicability: unknownKnowledgeApplicability({
+              packageName: deprecation.package,
+              targetVersion: version.normalized,
+              catalogVersion: catalogPackageVersion(
+                indexes,
+                deprecation.package,
+              ),
+            }),
+            references: deprecationReferences(store, deprecation, replacement),
+            remediationApplicability: replacement
+              ? unknownKnowledgeApplicability({
+                  packageName: deprecation.package,
+                  targetVersion: version.normalized,
+                  catalogVersion: catalogPackageVersion(
+                    indexes,
+                    deprecation.package,
+                  ),
+                })
+              : null,
+          });
+          if (decision) versionDecisions.push(decision);
           return [];
         }
-        if (!isDeprecationRelevant(deprecation, version)) return [];
+        if (!isDeprecationRelevant(deprecation, version)) {
+          const decision = nonFindingVersionDecision({
+            rule: DEPRECATED_PROP_RULE,
+            fact,
+            deprecation,
+            disposition: "evaluated",
+            outcome: "no_finding",
+            reasonCode: "NOT_DEPRECATED_AT_TARGET_VERSION",
+            applicability: deprecationTimelineKnowledgeApplicability({
+              packageName: deprecation.package,
+              targetVersion: version.normalized!,
+              catalogVersion: catalogPackageVersion(
+                indexes,
+                deprecation.package,
+              ),
+            }),
+            references: deprecationReferences(store, deprecation, null),
+          });
+          if (decision) versionDecisions.push(decision);
+          return [];
+        }
         const replacement = directReplacementName(deprecation);
         const finding = makeFinding({
           rule: DEPRECATED_PROP_RULE,
@@ -731,6 +1147,12 @@ const DEPRECATED_PROP_RULE: ReviewRuleDefinition = {
             ? `Review replacing prop ${deprecation.name} with ${replacement}.`
             : null,
           references: deprecationReferences(store, deprecation, replacement),
+          officialDecision: officialDeprecationDecision({
+            deprecation,
+            version,
+            indexes,
+            hasRemediation: replacement !== null,
+          }),
         });
         return [finding];
       });
@@ -738,6 +1160,7 @@ const DEPRECATED_PROP_RULE: ReviewRuleDefinition = {
     const result = collectRuleMatches(DEPRECATED_PROP_RULE, matches);
     return {
       ...result,
+      version_decisions: versionDecisions,
       skipped_match_count:
         result.skipped_match_count +
         invalidVersionMatchCount +
@@ -747,7 +1170,7 @@ const DEPRECATED_PROP_RULE: ReviewRuleDefinition = {
         [
           result.limitation,
           invalidVersionMatchCount > 0
-            ? `${DEPRECATED_PROP_RULE.rule_id} skipped ${invalidVersionMatchCount} matching deprecation record${invalidVersionMatchCount === 1 ? "" : "s"} for ${[...invalidVersionPackages].sort().join(", ")} because the supplied version entries were not valid exact semantic versions.`
+            ? `${DEPRECATED_PROP_RULE.rule_id} skipped ${invalidVersionMatchCount} matching deprecation record${invalidVersionMatchCount === 1 ? "" : "s"} for ${[...invalidVersionPackages].sort().join(", ")} because package-version evidence was unresolved or not valid exact semantic versions.`
             : null,
           incompleteMetadataCount > 0
             ? `${DEPRECATED_PROP_RULE.rule_id} skipped ${incompleteMetadataCount} matching deprecation record${incompleteMetadataCount === 1 ? "" : "s"} because deprecated_in was missing or invalid for the applicable supplied package version.`
@@ -933,6 +1356,7 @@ function policyFinding(
     parsed_fact: publicParsedFact(fact),
     location: fact.location,
     remediation: null,
+    official_decision: null,
     policy_evaluation: {
       digest: policy.digest,
       applicability: "applicable",
@@ -976,7 +1400,7 @@ function approvedWrapperImportVerified(
 function evaluateProjectPolicyRules(input: {
   registry: ReviewCatalog;
   facts: readonly ParsedSubmittedFact[];
-  packageVersions: ReadonlyMap<string, string>;
+  packageVersions: ReadonlyMap<string, string | null>;
   policy: ReviewProjectPolicyContext | null;
   indexes: ReviewIndexes;
   budget: ReviewRuleBudget;
@@ -1194,11 +1618,11 @@ export function evaluateReviewRules(input: {
   registry: ReviewCatalog;
   store: CatalogStoreV2;
   facts: readonly ParsedSubmittedFact[];
-  packageVersions: ReadonlyMap<string, string>;
+  packageVersions: ReadonlyMap<string, string | null>;
   policy?: ReviewProjectPolicyContext | null;
   budget?: ReviewRuleBudget;
 }): ReviewRuleEvaluation {
-  const indexes = createReviewIndexes(input.registry, input.facts);
+  const indexes = createReviewIndexes(input.registry, input.store, input.facts);
   const budget: ReviewRuleBudget = input.budget ?? {
     remaining: MAX_REVIEW_RULE_COMPARISONS,
     limit: MAX_REVIEW_RULE_COMPARISONS,
@@ -1238,6 +1662,9 @@ export function evaluateReviewRules(input: {
   });
   return {
     findings,
+    version_decisions: evaluations.flatMap(
+      ({ result }) => result.version_decisions,
+    ),
     evaluated_rule_ids: [
       ...evaluations
         .filter(
