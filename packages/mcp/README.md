@@ -40,6 +40,25 @@ The server registers exactly three read-only tools:
 - `review_salt_code` parses each non-blank submitted artifact once and applies
   a bounded, source-bound allowlist of Salt rules to normalized facts.
 
+These tools share one sealed, offline Catalog v2, but make different
+applicability claims:
+
+- `search_salt` returns current target-state Salt guidance. It does not claim
+  that every result is usable with an older installed package;
+- `inspect_salt_project` compares each observed Salt package version with the
+  matching package version in the sealed catalog. Exact equality is reported
+  as package-version applicability; a mismatch or missing version is unknown;
+  and
+- `review_salt_code` reports official rule disposition separately from outcome.
+  An explicit deprecation timeline can establish a narrow historical finding
+  or no-finding decision, but never complete historical API availability.
+
+Every applicability result sets `historical_completeness` to `false` and leaves
+peer compatibility `not_evaluated`. In particular, exact equality for a Salt
+package is not proof that its AG Grid, Embla, or other peer combination is
+supported. Project-observed versions remain labelled untrusted project data;
+the compared catalog version remains official sealed-catalog evidence.
+
 Catalog resources are schema-v2 and digest-bound. Discover the current manifest
 and record template through MCP resource discovery; their shapes are:
 
@@ -84,6 +103,10 @@ reads return compact metadata plus links to larger content; reading a `content`
 resource returns its verified payload and media type. Resource-template
 completion is bounded. The packaged catalog is immutable, so the server does
 not advertise resource subscriptions or list-change notifications.
+
+Resources are optional provenance and the exact-record path; they are not a
+fourth tool or a second knowledge store. Search remains useful as bounded
+current guidance even when a host does not automatically follow resource links.
 
 Server creation crosses a whole-catalog integrity barrier before the server is
 returned: every runtime family, support artifact, cross-reference, and content
@@ -198,6 +221,19 @@ Published package contents are limited to the CLI entry point, compiled ESM and
 CommonJS bundles, and the packaged offline Salt data needed by the registered
 read-only surface. Internal builders, evaluation helpers, and source-only
 artifacts are not public package APIs.
+
+The Salt search, inspection, and submitted-code review operations use ordinary
+Salt-owned inputs and results internally. MCP SDK schemas, content blocks,
+resource links, and transport behavior stay at the server adapter edge. This
+keeps the existing Node MCP product understandable without introducing another
+package or generic protocol framework.
+
+A Python host can use this MCP server as-is. Native Python implementation work
+is deferred unless a real deployment cannot run the Node server. Concurrently
+supported package-major ranges, exact tool-based record reads, a thinner
+external Skill, or package-shipped documentation likewise require named product
+evidence and separate plans; none is implied by the current applicability
+labels.
 
 The release build binds its generated catalog to the complete canonical input
 pattern set in `src/core/build/catalogInputPatterns.json`. The package build re-enumerates

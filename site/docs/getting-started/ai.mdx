@@ -63,6 +63,29 @@ The server exposes exactly three tools:
   workspace, and policy facts; and
 - `review_salt_code` for analysis of submitted source text only.
 
+## Version applicability
+
+`search_salt` is current Salt target-state guidance. When a project uses an
+older package, a search result is not automatically a claim that the API was
+available in that installed version.
+
+`inspect_salt_project` reports observed Salt package versions as untrusted
+project data and compares them with the official package versions represented
+by its sealed catalog. Exact equality establishes only package-version
+alignment. A mismatch or missing version is reported as unknown, peer
+compatibility is not evaluated, and historical completeness is always false.
+
+`review_salt_code` can make a narrower historical decision when a source-bound
+deprecation or removal version is available. It reports whether the rule was
+evaluated or skipped because evidence was unknown, and distinguishes a finding
+from a no-finding result. A no-finding before a deprecation date means only that
+the referenced API was not yet deprecated; it does not prove that the API
+existed or was otherwise valid at that version.
+
+Repository-owned `.salt` policy remains a separate untrusted advisory layer. It
+may require a company wrapper where direct Salt use is technically valid, but
+it cannot make a nonexistent Salt prop valid or suppress an official Salt fact.
+
 MCP resource discovery returns the curated, digest-bound catalog manifest.
 Exact records remain addressable through the catalog resource template and
 links returned by search or parent records. Record reads link larger payloads
@@ -75,6 +98,10 @@ the documented legacy revisions headed by `2025-11-25`.
 The manifest keeps the server package version, catalog version and digests, and
 negotiated MCP protocol revision distinct. The server does not expose a
 capability manifest or server-owned creation or migration workflow.
+
+Resources are optional provenance and the exact-record path. The product still
+has one catalog and three tools; it does not require package-shipped AI
+documentation, a remote registry, embeddings, or runtime network access.
 
 Creation and migration remain possible as agent-owned procedures: inspect the
 project, retrieve exact Salt evidence, make only authorized edits, submit changed
@@ -102,3 +129,9 @@ Use a released package version and keep it in the consumer lockfile. Do not use
 a mutable branch URL as an installation source. The package contains the CLI,
 compiled modules, and verified offline catalog; repository builders, evaluation
 helpers, and source-only artifacts are not public APIs.
+
+A Python application can act as an MCP host for this Node server. A separate
+native Python implementation, concurrently supported package-major model, or
+another knowledge distribution is deferred until a concrete deployment or
+versioning requirement demonstrates that the current sealed-catalog product is
+insufficient.

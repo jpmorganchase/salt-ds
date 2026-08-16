@@ -763,6 +763,30 @@ describe("createSaltMcpServer final public boundary", () => {
       expect(
         (toolPayload(asciiResult) as { data: { query: string } }).data.query,
       ).toBe(asciiQuery);
+
+      const applicabilityOnlyQuery = "é".repeat(1_100);
+      const applicabilityOnlyResult = await client.callTool({
+        name: "search_salt",
+        arguments: { query: applicabilityOnlyQuery },
+      });
+      expect(applicabilityOnlyResult.isError).not.toBe(true);
+      const applicabilityOnlyPayload = toolPayload(
+        applicabilityOnlyResult,
+      ) as {
+        data: { query: string };
+        scope: { truncated: boolean };
+        limitations: string[];
+      };
+      expect(applicabilityOnlyPayload.data.query.length).toBeLessThan(
+        applicabilityOnlyQuery.length,
+      );
+      expect(applicabilityOnlyPayload.scope.truncated).toBe(true);
+      expect(applicabilityOnlyPayload.limitations.join(" ")).toMatch(
+        /used in full for search.*public echo was truncated/iu,
+      );
+      expect(
+        Buffer.byteLength(JSON.stringify(applicabilityOnlyResult), "utf8"),
+      ).toBeLessThanOrEqual(MAX_SEARCH_TOOL_RESULT_UTF8_BYTES);
     });
   }, 30_000);
 
@@ -888,6 +912,43 @@ describe("createSaltMcpServer final public boundary", () => {
           expect(fallback?.type === "text" ? fallback.text : "").not.toContain(
             instructionRange,
           );
+          const fallbackPayload =
+            fallback?.type === "text"
+              ? (JSON.parse(fallback.text) as {
+                  data: {
+                    installation: {
+                      catalog_assessment_summary: {
+                        observed_salt_packages: number;
+                        returned_salt_packages: number;
+                        package_assessments_truncated: boolean;
+                        applicability_count_scope: string;
+                        exact_catalog_package_version: number;
+                        current: number;
+                        unknown: number;
+                        peer_compatibility: string;
+                        historical_completeness: boolean;
+                      };
+                    };
+                  };
+                })
+              : null;
+          const applicabilitySummary =
+            fallbackPayload?.data.installation.catalog_assessment_summary;
+          expect(applicabilitySummary).toEqual(
+            expect.objectContaining({
+              observed_salt_packages: 1,
+              returned_salt_packages: 1,
+              package_assessments_truncated: false,
+              applicability_count_scope: "returned_packages_only",
+              peer_compatibility: "not_evaluated",
+              historical_completeness: false,
+            }),
+          );
+          expect(
+            (applicabilitySummary?.exact_catalog_package_version ?? 0) +
+              (applicabilitySummary?.current ?? 0) +
+              (applicabilitySummary?.unknown ?? 0),
+          ).toBe(applicabilitySummary?.returned_salt_packages);
         },
         {
           mode: "restricted",
@@ -1175,9 +1236,34 @@ describe("createSaltMcpServer final public boundary", () => {
             Buffer.byteLength(JSON.stringify(result), "utf8"),
           ).toBeLessThanOrEqual(MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES);
           const fallback = result.content.find((part) => part.type === "text");
+          const fallbackPayload =
+            fallback?.type === "text"
+              ? (JSON.parse(fallback.text) as {
+                  data: {
+                    installation: {
+                      catalog_assessment_summary?: Record<string, unknown>;
+                    };
+                  };
+                })
+              : null;
           expect(
-            fallback?.type === "text" ? JSON.parse(fallback.text) : null,
-          ).toEqual(payload);
+            fallbackPayload?.data.installation.catalog_assessment_summary,
+          ).toEqual({
+            observed_salt_packages: 1,
+            returned_salt_packages: 0,
+            package_assessments_truncated: true,
+            applicability_count_scope: "returned_packages_only",
+            exact_catalog_package_version: 0,
+            current: 0,
+            unknown: 0,
+            peer_compatibility: "not_evaluated",
+            historical_completeness: false,
+          });
+          if (fallbackPayload) {
+            delete fallbackPayload.data.installation
+              .catalog_assessment_summary;
+          }
+          expect(fallbackPayload).toEqual(payload);
           expect(
             TOOL_DEFINITIONS.find(
               (candidate) => candidate.name === "inspect_salt_project",
@@ -2113,6 +2199,73 @@ describe("createSaltMcpServer final public boundary", () => {
     });
   }, 60_000);
 
+  it("adapts real Core 1.35 deprecation decisions with usable evidence links", async () => {
+    await withProtocolClient(async (client) => {
+      const result = await client.callTool({
+        name: "review_salt_code",
+        arguments: {
+          package_versions: { "@salt-ds/core": "1.35.0" },
+          artifacts: [
+            {
+              id: "button-1.35.tsx",
+              language: "tsx",
+              text: 'import { Button } from "@salt-ds/core"; export const Example = () => <Button variant="primary" />;',
+            },
+          ],
+        },
+      });
+      expect(result.isError).not.toBe(true);
+      const payload = toolPayload(result) as {
+        data: {
+          results: Array<{
+            findings: Array<{ rule_id: string }>;
+            version_decisions: Array<{
+              rule_id: string;
+              reason_code: string;
+              evidence: {
+                references: Array<{ locator: string; field_path: string }>;
+              };
+            }>;
+          }>;
+        };
+      };
+      const reviewed = payload.data.results[0]!;
+      expect(
+        reviewed.findings.some(
+          (finding) => finding.rule_id === "salt.deprecation.static_prop",
+        ),
+      ).toBe(false);
+      const decision = reviewed.version_decisions.find(
+        (candidate) => candidate.rule_id === "salt.deprecation.static_prop",
+      );
+      expect(decision).toEqual(
+        expect.objectContaining({
+          reason_code: "NOT_DEPRECATED_AT_TARGET_VERSION",
+        }),
+      );
+      const evidenceUris = [
+        ...new Set(
+          decision?.evidence.references.map((reference) => reference.locator),
+        ),
+      ];
+      expect(evidenceUris.length).toBeGreaterThan(0);
+      for (const uri of evidenceUris) {
+        expect(result.content).toContainEqual(
+          expect.objectContaining({ type: "resource_link", uri }),
+        );
+        const resource = await client.readResource({ uri });
+        expect(resource.contents).not.toHaveLength(0);
+      }
+      const fallback = result.content.find((part) => part.type === "text");
+      expect(
+        fallback?.type === "text" ? JSON.parse(fallback.text) : null,
+      ).toEqual(payload);
+      expect(
+        Buffer.byteLength(JSON.stringify(result), "utf8"),
+      ).toBeLessThanOrEqual(MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES);
+    });
+  }, 30_000);
+
   it("enforces strict input schemas over the real transport", async () => {
     await withProtocolClient(async (client) => {
       const invalidSearch = await client.callTool({
@@ -2145,7 +2298,14 @@ describe("createSaltMcpServer final public boundary", () => {
         });
         expect(invalidReview.isError).toBe(true);
       }
-      for (const packageVersion of [" ", "^2.0.0", "workspace:^2.0.0"]) {
+      for (const packageVersion of [
+        " ",
+        "^2.0.0",
+        "workspace:^2.0.0",
+        "v2.0.0",
+        " 2.0.0",
+        "2.0.0 ",
+      ]) {
         const invalidReview = await client.callTool({
           name: "review_salt_code",
           arguments: {
@@ -2189,7 +2349,11 @@ describe("createSaltMcpServer final public boundary", () => {
         expect(invalidReview.isError).toBe(true);
       }
 
-      for (const packageVersions of [{}, { "@salt-ds/core": "2.1.0" }]) {
+      for (const packageVersions of [
+        {},
+        { "@salt-ds/core": "2.1.0" },
+        { "@salt-ds/core": "2.1.0-alpha.1+local.1" },
+      ]) {
         const validReview = await client.callTool({
           name: "review_salt_code",
           arguments: {
@@ -2211,7 +2375,7 @@ describe("createSaltMcpServer final public boundary", () => {
         expect(payload.provenance.project_context_digest).toBeNull();
       }
     });
-  });
+  }, 30_000);
 
   it("lists a curated manifest while exact linked records remain retrievable", async () => {
     await withProtocolClient(async (client) => {
@@ -2331,7 +2495,7 @@ describe("createSaltMcpServer final public boundary", () => {
         hasMore: false,
       });
     });
-  });
+  }, 30_000);
 
   it("advertises immutable resources without subscriptions or list changes", async () => {
     await withProtocolClient(async (client) => {
@@ -2342,7 +2506,7 @@ describe("createSaltMcpServer final public boundary", () => {
         }),
       );
     });
-  });
+  }, 30_000);
 
   it("rejects malformed and noncanonical aliases as resource misses", async () => {
     await withProtocolClient(async (client) => {

@@ -10,6 +10,11 @@ const SRC_ROOT = path.resolve(
 );
 const CORE_ROOT = path.join(SRC_ROOT, "core");
 const CORE_RUNTIME = path.join(CORE_ROOT, "runtime.ts");
+const SALT_TOOL_OPERATIONS = path.join(
+  SRC_ROOT,
+  "server",
+  "saltToolOperations.ts",
+);
 
 function collectTypeScriptFiles(directory: string): string[] {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -54,6 +59,46 @@ function collectModuleSpecifiers(filePath: string): string[] {
   return specifiers;
 }
 
+function collectRuntimeModuleSpecifiers(filePath: string): string[] {
+  const source = ts.createSourceFile(
+    filePath,
+    fs.readFileSync(filePath, "utf8"),
+    ts.ScriptTarget.Latest,
+    true,
+  );
+  const specifiers: string[] = [];
+
+  function visit(node: ts.Node): void {
+    if (
+      ts.isImportDeclaration(node) &&
+      !node.importClause?.isTypeOnly &&
+      ts.isStringLiteral(node.moduleSpecifier)
+    ) {
+      const bindings = node.importClause?.namedBindings;
+      const hasRuntimeBinding =
+        !node.importClause ||
+        Boolean(node.importClause.name) ||
+        (bindings && ts.isNamespaceImport(bindings)) ||
+        (bindings &&
+          ts.isNamedImports(bindings) &&
+          bindings.elements.some((element) => !element.isTypeOnly));
+      if (hasRuntimeBinding) specifiers.push(node.moduleSpecifier.text);
+    }
+    if (
+      ts.isCallExpression(node) &&
+      node.expression.kind === ts.SyntaxKind.ImportKeyword &&
+      node.arguments.length === 1 &&
+      ts.isStringLiteral(node.arguments[0])
+    ) {
+      specifiers.push(node.arguments[0].text);
+    }
+    ts.forEachChild(node, visit);
+  }
+
+  visit(source);
+  return specifiers;
+}
+
 function resolveSourceSpecifier(importer: string, specifier: string): string {
   const resolved = path.resolve(path.dirname(importer), specifier);
   return resolved.replace(/\.js$/u, ".ts");
@@ -68,6 +113,69 @@ function isWithin(parent: string, target: string): boolean {
 }
 
 describe("MCP internal architecture boundary", () => {
+  it("limits MCP SDK imports to the frozen adapter and host edge", () => {
+    const allowed = new Set(
+      [
+        "cli.ts",
+        "index.ts",
+        "server/compactStandardSchema.ts",
+        "server/createServer.ts",
+        "server/registerResources.ts",
+        "server/registerTools.ts",
+        "server/responseAdapters.ts",
+        "server/toolDefinitions.ts",
+      ].map((file) => path.join(SRC_ROOT, ...file.split("/"))),
+    );
+    const actual = collectTypeScriptFiles(SRC_ROOT).filter(
+      (filePath) =>
+        !filePath.includes(`${path.sep}__tests__${path.sep}`) &&
+        collectModuleSpecifiers(filePath).some((specifier) =>
+          specifier.startsWith("@modelcontextprotocol"),
+        ),
+    );
+
+    expect(actual.sort()).toEqual([...allowed].sort());
+  });
+
+  it("keeps the concrete Salt operation runtime closure free of MCP SDK and envelope concepts", () => {
+    const pending = [SALT_TOOL_OPERATIONS];
+    const visited = new Set<string>();
+    const violations: string[] = [];
+
+    while (pending.length > 0) {
+      const filePath = pending.pop();
+      if (!filePath) continue;
+      if (visited.has(filePath)) continue;
+      visited.add(filePath);
+      const source = fs.readFileSync(filePath, "utf8");
+      for (const token of [
+        "ContentBlock",
+        "ResourceLink",
+        "structuredContent",
+        "McpServer",
+        "StdioServerTransport",
+      ]) {
+        if (source.includes(token)) {
+          violations.push(
+            `${path.relative(SRC_ROOT, filePath)} contains ${token}`,
+          );
+        }
+      }
+      for (const specifier of collectRuntimeModuleSpecifiers(filePath)) {
+        if (specifier.startsWith("@modelcontextprotocol")) {
+          violations.push(
+            `${path.relative(SRC_ROOT, filePath)} imports ${specifier}`,
+          );
+        }
+        if (!specifier.startsWith(".")) continue;
+        const target = resolveSourceSpecifier(filePath, specifier);
+        if (isWithin(SRC_ROOT, target)) pending.push(target);
+      }
+    }
+
+    expect(violations).toEqual([]);
+  });
+
   it("keeps the internal core independent from MCP transport and host concerns", () => {
     const violations: string[] = [];
     const forbiddenPackages = [

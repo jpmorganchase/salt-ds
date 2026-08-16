@@ -261,4 +261,135 @@ describe("project inspection truth and trust boundaries", () => {
       ]),
     );
   });
+
+  it("separates observed package versions from sealed current-catalog applicability", async () => {
+    const root = await projectRoot("salt-inspect-catalog-applicability");
+    const installed = new Map([
+      ["@salt-ds/core", "1.69.0"],
+      ["@salt-ds/ag-grid-theme", "2.8.0"],
+      ["@salt-ds/embla-carousel", "1.0.0"],
+    ]);
+    for (const [packageName, version] of installed) {
+      const packageRoot = path.join(
+        root,
+        "node_modules",
+        ...packageName.split("/"),
+      );
+      await fs.mkdir(packageRoot, { recursive: true });
+      await fs.writeFile(
+        path.join(packageRoot, "package.json"),
+        JSON.stringify({ name: packageName, version }),
+        "utf8",
+      );
+    }
+    await fs.writeFile(
+      path.join(root, "package.json"),
+      JSON.stringify({
+        name: "fixture",
+        dependencies: Object.fromEntries(installed),
+      }),
+      "utf8",
+    );
+
+    const result = await inspectSaltProject(
+      { evaluate_policy: false },
+      restricted(root),
+      undefined,
+      new Map([
+        ["@salt-ds/core", "1.69.0"],
+        ["@salt-ds/ag-grid-theme", "2.9.0"],
+        ["@salt-ds/embla-carousel", "1.0.0"],
+      ]),
+    );
+    const packages =
+      result.data.installation?.untrusted_project_data.resolved_packages ?? [];
+    const assessment = (packageName: string) => {
+      const resolved = packages.find((entry) => entry.name === packageName);
+      if (!resolved)
+        throw new Error(`Missing inspected package ${packageName}`);
+      return resolved.catalog_assessment;
+    };
+
+    expect(assessment("@salt-ds/core")).toEqual({
+      applicability: {
+        state: "applicable",
+        basis: "exact_catalog_package_version",
+        package_name: "@salt-ds/core",
+        target_version: "1.69.0",
+        catalog_version: "1.69.0",
+        peer_compatibility: "not_evaluated",
+        historical_completeness: false,
+      },
+      provenance: {
+        observed_version: "untrusted_project_data",
+        catalog_version: "official_sealed_catalog",
+      },
+    });
+    expect(assessment("@salt-ds/ag-grid-theme").applicability).toMatchObject({
+      state: "unknown",
+      basis: "evidence_unavailable",
+      target_version: "2.8.0",
+      catalog_version: "2.9.0",
+      peer_compatibility: "not_evaluated",
+      historical_completeness: false,
+    });
+    expect(assessment("@salt-ds/embla-carousel").applicability).toMatchObject({
+      state: "applicable",
+      basis: "exact_catalog_package_version",
+      peer_compatibility: "not_evaluated",
+      historical_completeness: false,
+    });
+
+    for (const [packageName, version] of [
+      ["@salt-ds/ag-grid-theme", "2.9.0"],
+      ["@salt-ds/embla-carousel", "0.9.0"],
+    ] as const) {
+      await fs.writeFile(
+        path.join(
+          root,
+          "node_modules",
+          ...packageName.split("/"),
+          "package.json",
+        ),
+        JSON.stringify({ name: packageName, version }),
+        "utf8",
+      );
+    }
+    const inverseResult = await inspectSaltProject(
+      { evaluate_policy: false },
+      restricted(root),
+      undefined,
+      new Map([
+        ["@salt-ds/core", "1.69.0"],
+        ["@salt-ds/ag-grid-theme", "2.9.0"],
+        ["@salt-ds/embla-carousel", "1.0.0"],
+      ]),
+    );
+    const inversePackages =
+      inverseResult.data.installation?.untrusted_project_data
+        .resolved_packages ?? [];
+    const inverseAssessment = (packageName: string) => {
+      const resolved = inversePackages.find(
+        (entry) => entry.name === packageName,
+      );
+      if (!resolved)
+        throw new Error(`Missing inspected package ${packageName}`);
+      return resolved.catalog_assessment.applicability;
+    };
+
+    expect(inverseAssessment("@salt-ds/ag-grid-theme")).toMatchObject({
+      state: "applicable",
+      basis: "exact_catalog_package_version",
+      peer_compatibility: "not_evaluated",
+      historical_completeness: false,
+    });
+    expect(inverseAssessment("@salt-ds/embla-carousel")).toMatchObject({
+      state: "unknown",
+      basis: "evidence_unavailable",
+      target_version: "0.9.0",
+      catalog_version: "1.0.0",
+      peer_compatibility: "not_evaluated",
+      historical_completeness: false,
+    });
+  });
 });

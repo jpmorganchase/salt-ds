@@ -881,6 +881,23 @@ describe("Salt catalog schema v2 descriptor and storage contract", () => {
     expect(clone.deprecations).toHaveLength(builtRegistry.deprecations.length);
   });
 
+  it("keeps component introduction history unknown without explicit evidence", () => {
+    expect(builtRegistry.components.length).toBeGreaterThan(0);
+    expect(
+      builtRegistry.components.every(
+        (component) => component.package.since === null,
+      ),
+    ).toBe(true);
+
+    const store = new CatalogStoreV2({ registryDir: generatedDirectory });
+    expect(
+      store.getFamily("component").every((component) => {
+        const detail = store.getContentJson(component.detail_content_ref);
+        return detail.package_since === null;
+      }),
+    ).toBe(true);
+  });
+
   it("derives runtime families, package files, codecs, and URIs from one descriptor table", async () => {
     const runtimeFamilies = getCatalogRuntimeFamilyNames();
     const buildOnlyFamilies = getCatalogBuildOnlyFamilyNames();

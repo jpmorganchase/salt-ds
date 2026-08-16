@@ -1389,7 +1389,9 @@ export async function extractComponents(
       package: {
         name: packageName,
         status: packageRecord.status,
-        since: packageRecord.version,
+        // The current package version is not evidence that this component was
+        // introduced in that release. Keep historical availability unknown.
+        since: null,
       },
       summary: cleanMarkdownText(description),
       status: packageRecord.status,

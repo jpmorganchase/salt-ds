@@ -326,6 +326,11 @@ export function BasicFixtureAction() {
       );
 
       expect(components).toHaveLength(1);
+      expect(components[0].package).toEqual({
+        name: "@salt-ds/fixture",
+        status: "stable",
+        since: null,
+      });
       expect(components[0].canonical_example_exports).toEqual([
         {
           export_name: "FixtureActionItem",

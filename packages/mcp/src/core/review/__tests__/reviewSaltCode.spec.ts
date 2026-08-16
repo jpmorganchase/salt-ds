@@ -107,6 +107,11 @@ function fixtureStore(fixtureRegistry: SaltRegistry): CatalogStoreV2 {
     manifest: {
       semantic_digest: fixtureRegistry.semantic_hash ?? "unavailable",
     },
+    getFamily(family: string) {
+      return family === "package"
+        ? fixtureRegistry.packages.map((record) => ({ family, ...record }))
+        : [];
+    },
     getRecord(family: string, id: string) {
       if (!fixtureRegistry.semantic_hash) return null;
       if (family === "component") {
@@ -155,11 +160,13 @@ function reviewSaltCode(
   fixtureRegistry: SaltRegistry,
   input: Parameters<typeof reviewSaltCodeProduction>[1],
   policy: Parameters<typeof reviewSaltCodeProduction>[2] = null,
+  packageVersionEvidence?: Readonly<Record<string, string | null>>,
 ) {
   return reviewSaltCodeProduction(
     {
       reviewCatalog: createReviewCatalogFromLegacyRegistry(fixtureRegistry),
       store: fixtureStore(fixtureRegistry),
+      ...(packageVersionEvidence ? { packageVersionEvidence } : {}),
     },
     input,
     policy,
@@ -437,6 +444,61 @@ describe("bounded public review", () => {
         (finding) => finding.rule_id === "salt.project_policy.approved_wrapper",
       )?.policy_evaluation?.salt_version,
     ).toBe("2.4.0");
+  });
+
+  it("keeps untrusted wrapper policy independent from official Salt findings", () => {
+    const result = reviewSaltCode(
+      registry(),
+      {
+        artifacts: [
+          {
+            id: "company-button.tsx",
+            language: "tsx",
+            text: NAVIGATION_SOURCE,
+          },
+        ],
+      },
+      reviewPolicy({
+        contract: "project_conventions_v1",
+        version: "1.0.0",
+        approved_wrappers: [
+          {
+            name: "CompanyButton",
+            wraps: "Button",
+            reason: "Use the company wrapper for product actions.",
+          },
+        ],
+      }),
+    );
+    const findings = result.data.results[0]!.findings;
+    const official = findings.find(
+      (finding) =>
+        finding.rule_id === "salt.component.action_navigation_target",
+    );
+    const policy = findings.find(
+      (finding) => finding.rule_id === "salt.project_policy.approved_wrapper",
+    );
+
+    expect(official).toMatchObject({
+      official_decision: {
+        disposition: "evaluated",
+        outcome: "finding",
+        applicability: {
+          state: "current",
+          historical_completeness: false,
+        },
+      },
+      policy_evaluation: null,
+    });
+    expect(policy).toMatchObject({
+      official_decision: null,
+      remediation: null,
+      policy_evaluation: {
+        trust: "untrusted_advisory",
+        category: "approved_wrapper",
+      },
+    });
+    expect(result.coverage.project_policy.status).toBe("evaluated");
   });
 
   it("returns cross-category policy conflicts for host arbitration", () => {
@@ -820,6 +882,59 @@ describe("bounded public review", () => {
     expect(result.data.results[0]!.coverage.skipped_rule_matches).toBe(0);
   });
 
+  it("treats explicitly unresolved project package evidence as unknown", () => {
+    const result = reviewSaltCode(
+      registry({ deprecations: [deprecation()] }),
+      {
+        artifacts: [{ id: "demo", language: "tsx", text: NAVIGATION_SOURCE }],
+      },
+      null,
+      { "@salt-ds/core": null },
+    );
+    const reviewed = result.data.results[0]!;
+
+    expect(reviewed.findings).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ rule_id: "salt.deprecation.used_import" }),
+      ]),
+    );
+    expect(reviewed.version_decisions).toEqual([
+      expect.objectContaining({
+        disposition: "skipped_unknown",
+        outcome: null,
+        reason_code: "TARGET_VERSION_EVIDENCE_UNKNOWN",
+        applicability: expect.objectContaining({
+          state: "unknown",
+          target_version: null,
+          historical_completeness: false,
+        }),
+      }),
+    ]);
+  });
+
+  it("does not apply the public caller-entry cap to bounded project evidence", () => {
+    const packageVersionEvidence = Object.fromEntries([
+      ["@salt-ds/core", null],
+      ...Array.from({ length: 40 }, (_, index) => [
+        `@salt-ds/project-evidence-${index}`,
+        null,
+      ]),
+    ]);
+
+    expect(() =>
+      reviewSaltCode(
+        registry({ deprecations: [deprecation()] }),
+        {
+          artifacts: [
+            { id: "demo", language: "tsx", text: NAVIGATION_SOURCE },
+          ],
+        },
+        null,
+        packageVersionEvidence,
+      ),
+    ).not.toThrow();
+  });
+
   it("does not infer navigation policy from approximate prose", () => {
     const approximate = button();
     approximate.when_not_to_use = [
@@ -887,6 +1002,30 @@ describe("bounded public review", () => {
     expect(importFinding(beforeRemoval).severity).toBe("warning");
     expect(importFinding(atRemoval).severity).toBe("error");
     expect(importFinding(withoutVersion).severity).toBe("warning");
+    expect(importFinding(beforeRemoval).official_decision).toMatchObject({
+      disposition: "evaluated",
+      outcome: "finding",
+      reason_code: "DEPRECATED_AT_TARGET_VERSION",
+      applicability: {
+        state: "applicable",
+        basis: "deprecation_timeline",
+        historical_completeness: false,
+      },
+      remediation_applicability: {
+        state: "unknown",
+        historical_completeness: false,
+      },
+    });
+    expect(importFinding(atRemoval).official_decision?.reason_code).toBe(
+      "REMOVED_AT_TARGET_VERSION",
+    );
+    expect(importFinding(withoutVersion).official_decision).toMatchObject({
+      reason_code: "CURRENT_CATALOG_MATCH",
+      applicability: {
+        state: "current",
+        historical_completeness: false,
+      },
+    });
     expect(
       importFinding(atRemoval).evidence.references.map((ref) => ref.field_path),
     ).toEqual([
@@ -895,6 +1034,248 @@ describe("bounded public review", () => {
       "removed_in",
       "replacement.target_ref",
     ]);
+  });
+
+  it("reports an exact no-finding decision before explicit deprecation timing", () => {
+    const result = reviewSaltCode(
+      registry({ deprecations: [deprecation({ deprecated_in: "2.0.0" })] }),
+      {
+        package_versions: { "@salt-ds/core": "1.35.0" },
+        artifacts: [{ id: "demo", language: "tsx", text: NAVIGATION_SOURCE }],
+      },
+    );
+
+    const artifact = result.data.results[0]!;
+    expect(
+      artifact.findings.some(
+        (finding) => finding.rule_id === "salt.deprecation.used_import",
+      ),
+    ).toBe(false);
+    expect(artifact.version_decisions).toEqual([
+      expect.objectContaining({
+        rule_id: "salt.deprecation.used_import",
+        disposition: "evaluated",
+        outcome: "no_finding",
+        reason_code: "NOT_DEPRECATED_AT_TARGET_VERSION",
+        applicability: expect.objectContaining({
+          state: "applicable",
+          basis: "deprecation_timeline",
+          target_version: "1.35.0",
+          historical_completeness: false,
+        }),
+        remediation_applicability: null,
+        evidence: expect.objectContaining({
+          validation: "source_bound",
+          references: expect.arrayContaining([
+            expect.objectContaining({ field_path: "deprecated_in" }),
+          ]),
+        }),
+      }),
+    ]);
+    expect(artifact.coverage).toMatchObject({
+      detected_nonfinding_version_decisions: 1,
+      returned_nonfinding_version_decisions: 1,
+      nonfinding_version_decisions_truncated: false,
+    });
+  });
+
+  it("models the real Core 1.35 Button variant boundary as deprecation-only evidence", () => {
+    const variantDeprecation = deprecation({
+      id: "button.variant.deprecation",
+      kind: "prop",
+      name: "variant",
+      deprecated_in: "1.36.0",
+      removed_in: null,
+      replacement: {
+        mode: "none",
+        target: null,
+        targets: [],
+        type: null,
+        name: null,
+        notes: null,
+      },
+      subject: {
+        package: "@salt-ds/core",
+        entrypoint: ".",
+        export_name: "ButtonProps",
+        symbol_space: "type",
+        member_path: [{ kind: "prop", name: "variant" }],
+      },
+    });
+    const result = reviewSaltCode(
+      registry({ deprecations: [variantDeprecation] }),
+      {
+        package_versions: { "@salt-ds/core": "1.35.0" },
+        artifacts: [
+          {
+            id: "button-1.35.tsx",
+            language: "tsx",
+            text: [
+              'import { Button } from "@salt-ds/core";',
+              'export const Demo = () => <Button variant="primary" />;',
+            ].join("\n"),
+          },
+        ],
+      },
+    );
+    const artifact = result.data.results[0]!;
+
+    expect(
+      artifact.findings.some(
+        (finding) => finding.rule_id === "salt.deprecation.static_prop",
+      ),
+    ).toBe(false);
+    expect(artifact.version_decisions).toEqual([
+      expect.objectContaining({
+        rule_id: "salt.deprecation.static_prop",
+        disposition: "evaluated",
+        outcome: "no_finding",
+        reason_code: "NOT_DEPRECATED_AT_TARGET_VERSION",
+        applicability: {
+          state: "applicable",
+          basis: "deprecation_timeline",
+          package_name: "@salt-ds/core",
+          target_version: "1.35.0",
+          catalog_version: null,
+          peer_compatibility: "not_evaluated",
+          historical_completeness: false,
+        },
+        remediation_applicability: null,
+      }),
+    ]);
+    expect(result.limitations.join(" ")).not.toMatch(
+      /variant (?:existed|was available|was stable)/iu,
+    );
+  });
+
+  it("caps non-finding version decisions after preserving finding priority and exact counts", () => {
+    const variantDeprecation = deprecation({
+      id: "button.variant.deprecation",
+      kind: "prop",
+      name: "variant",
+      deprecated_in: "1.36.0",
+      removed_in: null,
+      replacement: {
+        mode: "none",
+        target: null,
+        targets: [],
+        type: null,
+        name: null,
+        notes: null,
+      },
+      subject: {
+        package: "@salt-ds/core",
+        entrypoint: ".",
+        export_name: "ButtonProps",
+        symbol_space: "type",
+        member_path: [{ kind: "prop", name: "variant" }],
+      },
+    });
+    const uses = Array.from(
+      { length: 60 },
+      (_, index) =>
+        `<Button key={${index}} variant="primary"${
+          index === 0 ? ' href="/independent-finding"' : ""
+        } />`,
+    );
+    const result = reviewSaltCode(
+      registry({ deprecations: [variantDeprecation] }),
+      {
+        package_versions: { "@salt-ds/core": "1.35.0" },
+        artifacts: [
+          {
+            id: "many-version-decisions.tsx",
+            language: "tsx",
+            text: [
+              'import { Button } from "@salt-ds/core";',
+              "export const Demo = () => <>",
+              ...uses,
+              "</>;",
+            ].join("\n"),
+          },
+        ],
+      },
+    );
+    const artifact = result.data.results[0]!;
+    const returned = artifact.version_decisions.length;
+
+    expect(artifact.coverage.detected_findings).toBe(1);
+    expect(artifact.coverage.returned_findings).toBe(1);
+    expect(artifact.findings).toEqual([
+      expect.objectContaining({
+        rule_id: "salt.component.action_navigation_target",
+      }),
+    ]);
+    expect(artifact.coverage.detected_nonfinding_version_decisions).toBe(60);
+    expect(returned).toBeLessThanOrEqual(50);
+    expect(returned).toBeGreaterThan(0);
+    expect(artifact.coverage).toMatchObject({
+      returned_nonfinding_version_decisions: returned,
+      nonfinding_version_decisions_truncated: true,
+      truncated: true,
+    });
+    expect(result.coverage).toMatchObject({
+      detected_nonfinding_version_decisions: 60,
+      returned_nonfinding_version_decisions: returned,
+      nonfinding_version_decisions_truncated: true,
+      truncated: true,
+    });
+    expect(result.coverage.result_budget.omissions).toContainEqual({
+      section: "version_decisions",
+      available: 60,
+      returned,
+    });
+    expect(
+      artifact.version_decisions.map(
+        (decision) => decision.location.start_offset,
+      ),
+    ).toEqual(
+      [...artifact.version_decisions]
+        .map((decision) => decision.location.start_offset)
+        .sort((left, right) => left - right),
+    );
+  });
+
+  it("labels exact current package decisions without claiming historical completeness", () => {
+    const fixtureRegistry = registry({
+      packages: [
+        {
+          id: "package.core",
+          name: "@salt-ds/core",
+          status: "stable",
+          version: "2.5.0",
+          summary: "Core fixture.",
+          source_root: "packages/core",
+          changelog_path: "packages/core/CHANGELOG.md",
+          docs_root: "site/docs/components",
+        },
+      ],
+      deprecations: [deprecation()],
+    });
+    const result = reviewSaltCode(fixtureRegistry, {
+      package_versions: { "@salt-ds/core": "2.5.0" },
+      artifacts: [{ id: "demo", language: "tsx", text: NAVIGATION_SOURCE }],
+    });
+    const finding = result.data.results[0]!.findings.find(
+      (candidate) => candidate.rule_id === "salt.deprecation.used_import",
+    )!;
+
+    expect(finding.official_decision).toMatchObject({
+      reason_code: "DEPRECATED_AT_TARGET_VERSION",
+      applicability: {
+        state: "applicable",
+        basis: "exact_catalog_package_version",
+        target_version: "2.5.0",
+        catalog_version: "2.5.0",
+        peer_compatibility: "not_evaluated",
+        historical_completeness: false,
+      },
+      remediation_applicability: {
+        state: "applicable",
+        basis: "exact_catalog_package_version",
+        historical_completeness: false,
+      },
+    });
   });
 
   it("uses the canonical package version for a subpath import", () => {
@@ -1031,12 +1412,41 @@ describe("bounded public review", () => {
     );
   });
 
+  it.each(["^2.0.0", "2", "2.0"])(
+    "treats the non-exact deprecation timeline %s as unknown",
+    (deprecatedIn) => {
+      const result = reviewSaltCode(
+        registry({ deprecations: [deprecation({ deprecated_in: deprecatedIn })] }),
+        {
+          package_versions: { "@salt-ds/core": "3.0.0" },
+          artifacts: [
+            { id: "demo", language: "tsx", text: NAVIGATION_SOURCE },
+          ],
+        },
+      );
+      const reviewed = result.data.results[0]!;
+
+      expect(reviewed.findings).not.toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ rule_id: "salt.deprecation.used_import" }),
+        ]),
+      );
+      expect(reviewed.version_decisions).toEqual([
+        expect.objectContaining({
+          disposition: "skipped_unknown",
+          outcome: null,
+          reason_code: "DEPRECATION_TIMELINE_UNKNOWN",
+        }),
+      ]);
+    },
+  );
+
   it("skips import and prop deprecations with invalid removal metadata", () => {
     const propDeprecation = deprecation({
       id: "button.old-prop.invalid-removal",
       kind: "prop",
       name: "oldProp",
-      removed_in: "not-semver",
+      removed_in: "^3.0.0",
       subject: {
         package: "@salt-ds/core",
         entrypoint: ".",
@@ -1052,7 +1462,7 @@ describe("bounded public review", () => {
     const result = reviewSaltCode(
       registry({
         deprecations: [
-          deprecation({ removed_in: "not-semver" }),
+          deprecation({ removed_in: "^3.0.0" }),
           propDeprecation,
         ],
       }),

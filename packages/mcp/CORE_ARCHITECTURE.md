@@ -9,6 +9,27 @@ transport, process integration, and host compatibility. Production code crosses
 into the core through `src/core/runtime.ts`; registry-build code targets
 `src/core/build/buildRegistry.ts` directly and is never a runtime export.
 
+The three public tools are implemented as concrete Salt-owned operations. Tool
+definitions contain names and strict wire schemas but no execution callbacks;
+registration invokes the matching operation and a response adapter constructs
+the MCP content envelope. The operation runtime dependency closure contains no
+MCP SDK, content-block, ResourceLink, server, or transport types. This is an
+internal dependency rule, not a generic adapter framework or a separately
+published domain package.
+
+```text
+MCP schemas, registration, resources, and transport
+                         |
+                         v
+             response adapter at the server edge
+                         |
+                         v
+     concrete search / inspect / review operations
+                         |
+                         v
+          core runtime, catalog, rules, and policy
+```
+
 ## Catalog identity layers
 
 | Identity                 | Inputs                                                  | Observable effect                                                                                                              |
@@ -34,6 +55,30 @@ materialize unrelated catalog families.
 The legacy registry projection remains an internal build/test compatibility
 boundary while its remaining supported callers are migrated. It is not part of
 the packed runtime path or the MCP public API.
+
+## Applicability and historical limits
+
+The catalog describes the current generated Salt source state. Contextual
+applicability is computed at runtime and is not persisted as another catalog
+truth:
+
+- search is current target-state guidance;
+- exact equality between an observed Salt package version and the corresponding
+  sealed catalog package record establishes only package-version alignment;
+- explicit `deprecated_in` and `removed_in` evidence may establish the narrow
+  applicability of one review decision; and
+- missing, invalid, or non-exact evidence is unknown.
+
+All states carry `historical_completeness: false`. Component extraction does
+not use the package's current version as an invented component introduction
+date. Peer compatibility is not evaluated in this phase. Repository policy
+remains an independent untrusted advisory layer: it may narrow team usage but
+cannot suppress or rewrite official Salt technical facts.
+
+Supporting a concurrent non-current package major would require approved,
+source-bound ranges, peer requirements, and migration evidence. A future Python
+host should consume the current MCP server; only a confirmed native/no-Node
+deployment requirement justifies a new cross-language implementation plan.
 
 ## Local filesystem trust model
 
