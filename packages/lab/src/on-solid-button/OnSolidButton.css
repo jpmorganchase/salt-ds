@@ -1,0 +1,80 @@
+.saltOnSolidButton {
+  --onSolidButton-borderWidth: var(--salt-size-fixed-100);
+  align-items: center;
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--salt-actionable-onSolid-subtle-background);
+  border-color: var(--salt-actionable-onSolid-subtle-borderColor);
+  border-radius: var(--salt-palette-corner-weak, 0);
+  border-style: solid;
+  border-width: var(--onSolidButton-borderWidth);
+  color: var(--salt-actionable-onSolid-subtle-foreground);
+  display: inline-flex;
+  font-family: var(--salt-text-action-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-action-fontWeight);
+  gap: var(--salt-spacing-50);
+  height: var(--salt-size-base);
+  justify-content: center;
+  letter-spacing: var(--salt-text-action-letterSpacing);
+  line-height: var(--salt-text-lineHeight);
+  margin: 0;
+  padding: 0 calc(var(--salt-spacing-100) - var(--onSolidButton-borderWidth));
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  text-align: var(--salt-text-action-textAlign);
+  text-decoration: none;
+  text-transform: var(--salt-text-action-textTransform);
+  transition: none;
+}
+
+.saltOnSolidButton:focus-visible {
+  background: var(--salt-actionable-onSolid-subtle-background-hover);
+  border-color: var(--salt-actionable-onSolid-subtle-borderColor-hover);
+  color: var(--salt-actionable-onSolid-subtle-foreground-hover);
+  outline-color: var(--salt-focused-onSolid-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+}
+
+@media (hover: hover) {
+  .saltOnSolidButton:hover {
+    background: var(--salt-actionable-onSolid-subtle-background-hover);
+    border-color: var(--salt-actionable-onSolid-subtle-borderColor-hover);
+    color: var(--salt-actionable-onSolid-subtle-foreground-hover);
+    cursor: var(--salt-cursor-hover);
+  }
+}
+
+.saltOnSolidButton.saltOnSolidButton-active:focus-visible,
+.saltOnSolidButton:focus-visible:active,
+.saltOnSolidButton:active,
+.saltOnSolidButton.saltOnSolidButton-active {
+  background: var(--salt-actionable-onSolid-subtle-background-active);
+  border-color: var(--salt-actionable-onSolid-subtle-borderColor-active);
+  color: var(--salt-actionable-onSolid-subtle-foreground-active);
+  cursor: var(--salt-cursor-active);
+}
+
+.saltOnSolidButton:disabled,
+.saltOnSolidButton.saltOnSolidButton-disabled,
+.saltOnSolidButton.saltOnSolidButton-disabled:active,
+.saltOnSolidButton.saltOnSolidButton-disabled:focus-visible,
+.saltOnSolidButton.saltOnSolidButton-disabled:focus-visible:active,
+.saltOnSolidButton.saltOnSolidButton-disabled:hover {
+  background: var(--salt-actionable-onSolid-subtle-background);
+  border-color: var(--salt-actionable-onSolid-subtle-borderColor);
+  color: var(--salt-actionable-onSolid-subtle-foreground);
+  cursor: var(--salt-cursor-disabled);
+  opacity: 0.4;
+}
+
+.saltOnSolidButton strong {
+  font-weight: var(--salt-text-action-fontWeight-strong);
+}
+
+.saltOnSolidButton small {
+  font-size: inherit;
+  font-weight: var(--salt-text-action-fontWeight-small);
+}
