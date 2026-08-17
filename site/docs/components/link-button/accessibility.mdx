@@ -13,7 +13,8 @@ data:
 - Use a label that identifies the destination. If you add `aria-label` or `aria-labelledby` for extra context, include the visible label text in the accessible name.
 - Do not rely on color alone to show that a link button navigates. Keep the default underline unless the surrounding pattern already provides another visible non-color cue, such as a navigation list, toolbar, or group of related links.
 - When a link button contains an icon and text, pass `aria-hidden` to the icon so screen readers do not announce duplicate content.
-- When a link button contains only an icon, pass an `aria-label` that describes the destination.
+- When a link button contains only an icon, add an `aria-label` that identifies the destination and pass `aria-hidden` to the icon. A `Tooltip` does not replace this accessible name.
+- Add a [`Tooltip`](../tooltip) with the same destination text to help users who may not recognize the icon. Use visible link text instead when the icon or destination may be unfamiliar.
 - When `target="_blank"` is set, `LinkButton` automatically adds a visual icon and visually hidden text that announces the new tab. Keep the default icon unless your custom content already provides another visible new-tab cue.
 
 ## Keyboard interactions

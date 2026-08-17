@@ -34,15 +34,17 @@ Use the `underline` prop to compare the default underline with `underline="never
 
 ## With icon
 
-Link buttons support both leading and trailing icons. Use leading icons when the icon acts as a clear visual identifier for the label. Use trailing icons to reinforce the destination or direction of travel, such as an `ArrowRight` or `TearOut` icon, to indicate moving forward or leaving the current context.
+Link buttons support both leading and trailing icons. In most cases, use a trailing icon to reinforce the destination or direction of travel, such as `ArrowRight` or `TearOut`, to indicate moving forward or leaving the current context.
 
-An exception is, when the action is to move backward, use a leading icon such as `ArrowLeft` to help indicate returning to a previous page or step.
+An exception is backward navigation. Use a leading icon such as `ArrowLeft` to indicate returning to a previous page or step. You can also use a leading icon when it acts as a clear visual identifier for the label.
 
 <LivePreview componentName="link-button" exampleName="WithIcon" />
 
 ## Icon only
 
-Use an icon-only link button when space is limited and the icon has a widely understood navigation meaning.
+Use an icon-only link button when space is limited and the icon clearly communicates the destination or direction of travel. This can be a directional icon, such as a back arrow; a brand icon, such as the GitHub logo; or an icon familiar in your product context, such as a basket in a commerce application or a wallet in a finance application.
+
+See [accessibility](./accessibility) for accessible naming, decorative icon, and tooltip guidance.
 
 <LivePreview componentName="link-button" exampleName="IconOnly" />
 
