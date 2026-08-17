@@ -1,7 +1,10 @@
 import {
   Avatar,
   FlowLayout,
+  H1,
+  H2,
   H3,
+  H4,
   StackLayout,
   Text,
   useAvatarImage,
@@ -60,20 +63,31 @@ export const Sizes: StoryFn<typeof Avatar> = (args) => {
   );
 };
 
+const typographyAlignedRows = [
+  { Heading: H1, size: "var(--salt-text-h1-lineHeight)" },
+  { Heading: H2, size: "var(--salt-text-h2-lineHeight)" },
+  { Heading: H3, size: "var(--salt-text-h3-lineHeight)" },
+  { Heading: H4, size: "var(--salt-text-h4-lineHeight)" },
+] as const;
+
 export const TypographyAlignedSize: StoryFn<typeof Avatar> = (args) => {
   return (
-    <FlowLayout align="center" gap={1}>
-      <Avatar
-        {...args}
-        name="Alex Brailescu"
-        style={
-          {
-            "--saltAvatar-size": "var(--salt-text-h3-lineHeight)",
-          } as CSSProperties
-        }
-      />
-      <H3>Alex Brailescu</H3>
-    </FlowLayout>
+    <StackLayout gap={2}>
+      {typographyAlignedRows.map(({ Heading, size }) => (
+        <FlowLayout key={size} align="center" gap={1}>
+          <Avatar
+            {...args}
+            name="Alex Brailescu"
+            style={
+              {
+                "--saltAvatar-size": size,
+              } as CSSProperties
+            }
+          />
+          <Heading>Alex Brailescu</Heading>
+        </FlowLayout>
+      ))}
+    </StackLayout>
   );
 };
 
