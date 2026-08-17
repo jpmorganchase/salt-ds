@@ -5,7 +5,7 @@ import { QAContainer, type QAContainerProps } from "docs/components";
 import { type ReactNode, useEffect, useRef } from "react";
 
 export default {
-  title: "Lab/OnSolidButton/QA",
+  title: "Lab/On Solid Button/On Solid Button QA",
   component: OnSolidButton,
   globals: {
     a11y: {

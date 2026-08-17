@@ -3,7 +3,7 @@ import { OnSolidButton } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
-  title: "Lab/OnSolidButton",
+  title: "Lab/On Solid Button",
   component: OnSolidButton,
 } as Meta<typeof OnSolidButton>;
 
