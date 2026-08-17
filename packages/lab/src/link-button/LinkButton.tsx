@@ -3,6 +3,7 @@ import {
   makePrefixer,
   type RenderPropsType,
   renderProps,
+  useButton,
   useIcon,
 } from "@salt-ds/core";
 import type { IconProps } from "@salt-ds/icons";
@@ -49,11 +50,24 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
       children,
       className,
       IconComponent,
+      onBlur,
+      onClick,
+      onKeyDown,
+      onKeyUp,
       sentiment = "neutral",
       target = "_self",
       underline = "default",
       ...rest
     } = props;
+
+    const { active, buttonProps } = useButton<HTMLAnchorElement>({
+      onBlur,
+      onClick,
+      onKeyDown,
+      onKeyUp,
+    });
+    // Native anchors with an href do not require tabIndex="0".
+    const { tabIndex: _tabIndex, ...activeStateProps } = buttonProps;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -71,8 +85,10 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
         withBaseName(),
         withBaseName(sentiment),
         withBaseName(`underline${capitalize(underline)}`),
+        { [withBaseName("active")]: active },
         className,
       ),
+      ...activeStateProps,
       ...rest,
       ref,
       target,

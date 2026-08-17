@@ -84,20 +84,37 @@
   text-decoration: var(--linkButton-textDecoration-focus, var(--salt-typography-textDecoration-none));
 }
 
+/* Pseudo-class applied to the root element when LinkButton is active */
+.saltLinkButton.saltLinkButton-active:focus-visible,
+.saltLinkButton:focus-visible:active,
+.saltLinkButton:active,
+.saltLinkButton.saltLinkButton-active {
+  background: var(--saltLinkButton-background-active, var(--linkButton-background-active));
+  color: var(--saltLinkButton-text-color-active, var(--linkButton-text-color-active));
+  border-color: var(--saltLinkButton-borderColor-active, var(--linkButton-borderColor-active));
+  cursor: var(--salt-cursor-active);
+}
+
 .saltLinkButton-neutral {
   --linkButton-text-color: var(--salt-actionable-subtle-foreground);
   --linkButton-text-color-hover: var(--salt-actionable-subtle-foreground-hover);
+  --linkButton-text-color-active: var(--salt-actionable-subtle-foreground-active);
   --linkButton-background: var(--salt-actionable-subtle-background);
   --linkButton-background-hover: var(--salt-actionable-subtle-background-hover);
+  --linkButton-background-active: var(--salt-actionable-subtle-background-active);
   --linkButton-borderColor: var(--salt-actionable-subtle-borderColor);
   --linkButton-borderColor-hover: var(--salt-actionable-subtle-borderColor-hover);
+  --linkButton-borderColor-active: var(--salt-actionable-subtle-borderColor-active);
 }
 
 .saltLinkButton-accented {
   --linkButton-text-color: var(--salt-actionable-accented-subtle-foreground);
   --linkButton-text-color-hover: var(--salt-actionable-accented-subtle-foreground-hover);
+  --linkButton-text-color-active: var(--salt-actionable-accented-subtle-foreground-active);
   --linkButton-background: var(--salt-actionable-accented-subtle-background);
   --linkButton-background-hover: var(--salt-actionable-accented-subtle-background-hover);
+  --linkButton-background-active: var(--salt-actionable-accented-subtle-background-active);
   --linkButton-borderColor: var(--salt-actionable-accented-subtle-borderColor);
   --linkButton-borderColor-hover: var(--salt-actionable-accented-subtle-borderColor-hover);
+  --linkButton-borderColor-active: var(--salt-actionable-accented-subtle-borderColor-active);
 }

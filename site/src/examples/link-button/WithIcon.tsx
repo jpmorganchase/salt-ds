@@ -1,5 +1,5 @@
 import { StackLayout } from "@salt-ds/core";
-import { ArrowLeftIcon, ArrowRightIcon } from "@salt-ds/icons";
+import { ArrowLeftIcon, ArrowRightIcon, SaltShakerIcon } from "@salt-ds/icons";
 import { LinkButton } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
@@ -10,6 +10,10 @@ export const WithIcon = (): ReactElement => (
     </LinkButton>
     <LinkButton href="/salt/getting-started">
       <ArrowLeftIcon aria-hidden /> Back to getting started
+    </LinkButton>
+    <LinkButton href="https://github.com/jpmorganchase/salt-ds">
+      <SaltShakerIcon aria-hidden /> Learn more about Salt
+      <ArrowRightIcon aria-hidden />
     </LinkButton>
   </StackLayout>
 );
