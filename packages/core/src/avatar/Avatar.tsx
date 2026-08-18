@@ -135,8 +135,8 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   let children: ReactNode;
 
   const style = {
-    ...styleProp,
     "--saltAvatar-size-multiplier": `${size}`,
+    ...styleProp,
   };
 
   const status = useAvatarImage({ src });
