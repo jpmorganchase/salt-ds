@@ -1,16 +1,43 @@
 import { UserGroupSolidIcon } from "@salt-ds/icons";
 import { composeStories } from "@storybook/react-vite";
+import type { CSSProperties } from "react";
 import * as avatarStories from "~stories/avatar/avatar.stories";
 import { checkAccessibility } from "~test-utils/checkAccessibility";
 
 const composedStories = composeStories(avatarStories);
 const { Default } = composedStories;
+const directSizeStyle = {
+  "--saltAvatar-size": "18px",
+} as CSSProperties;
+
 describe("Given an Avatar", () => {
   checkAccessibility(composedStories);
 
   it("should show the default fallback icon when nothing is provided", () => {
     cy.mount(<Default />);
     cy.findByTestId("UserIcon").should("exist");
+  });
+
+  it("should keep direct sizing independent of the size multiplier", () => {
+    cy.mount(
+      <>
+        <Default name="Size one" size={1} style={directSizeStyle} />
+        <Default name="Size four" size={4} style={directSizeStyle} />
+      </>,
+    );
+
+    cy.findAllByRole("img").should(($avatars) => {
+      expect($avatars).to.have.length(2);
+
+      const sizeOne = $avatars.eq(0);
+      const sizeFour = $avatars.eq(1);
+
+      expect(sizeOne.css("width")).to.equal("18px");
+      expect(sizeOne.css("height")).to.equal("18px");
+      expect(sizeFour.css("width")).to.equal("18px");
+      expect(sizeFour.css("height")).to.equal("18px");
+      expect(sizeFour.css("font-size")).to.equal(sizeOne.css("font-size"));
+    });
   });
 
   it("should show initials if only a name is provided", () => {

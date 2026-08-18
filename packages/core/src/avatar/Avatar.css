@@ -1,9 +1,31 @@
+/* TODO: Remove hardcoded values - unitless notation-fontSize / size-base because Firefox can't do unit division  */
+.salt-density-high {
+  --avatar-fontSize-ratio: calc(8 / 20);
+}
+
+.salt-density-medium {
+  --avatar-fontSize-ratio: calc(10 / 28);
+}
+
+.salt-density-low {
+  --avatar-fontSize-ratio: calc(12 / 36);
+}
+
+.salt-density-touch {
+  --avatar-fontSize-ratio: calc(14 / 44);
+}
+
+.salt-density-mobile {
+  --avatar-fontSize-ratio: calc(12 / 44);
+}
+
 /* Default variables applied to the root element */
 .saltAvatar {
   --avatar-size-multiplier: var(--saltAvatar-size-multiplier, 1);
   --avatar-base-size: var(--salt-size-base);
-  --avatar-base-fontSize: var(--saltAvatar-fontSize, var(--salt-text-notation-fontSize));
-  --avatar-container-size: calc(var(--avatar-base-size) * var(--avatar-size-multiplier));
+  --avatar-direct-fontSize: calc(var(--saltAvatar-size) * var(--avatar-fontSize-ratio) / var(--avatar-size-multiplier));
+  --avatar-base-fontSize: var(--saltAvatar-fontSize, var(--avatar-direct-fontSize, var(--salt-text-notation-fontSize)));
+  --avatar-container-size: var(--saltAvatar-size, calc(var(--avatar-base-size) * var(--avatar-size-multiplier)));
   --avatar-fontSize: calc(var(--avatar-base-fontSize) * var(--avatar-size-multiplier));
   /* Icon styling */
   --saltIcon-size: calc(var(--avatar-container-size) / 2);
