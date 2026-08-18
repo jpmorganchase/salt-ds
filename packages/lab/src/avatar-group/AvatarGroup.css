@@ -47,7 +47,7 @@ button.saltAvatarGroup:disabled {
   inset: 0;
   box-sizing: border-box;
   border-radius: inherit;
-  border: var(--avatarGroup-gap) solid var(--salt-container-primary-background);
+  border: var(--avatarGroup-gap) var(--salt-borderStyle-solid) var(--salt-container-primary-background);
   pointer-events: none;
 }
 
