@@ -15,7 +15,7 @@ const CustomAvatarButton = (props: ComponentProps<"button">) => (
 
 export const Default: StoryFn<typeof AvatarGroup> = (args) => {
   return (
-    <AvatarGroup {...args}>
+    <AvatarGroup aria-label="Team members" {...args}>
       <Avatar name="Alex Brailescu" src={persona1} />
       <Avatar name="Peter Piper" color="category-2" />
       <Avatar name="John Doe" color="category-3" />
@@ -27,7 +27,7 @@ export const Default: StoryFn<typeof AvatarGroup> = (args) => {
 export const RenderProp: StoryFn<typeof AvatarGroup> = (args) => {
   return (
     <AvatarGroup
-      render={<CustomAvatarButton aria-label="Avatar group" />}
+      render={<CustomAvatarButton aria-label="Team members" />}
       {...args}
     >
       <Avatar name="Alex Brailescu" src={persona1} />

@@ -33,10 +33,13 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
       window: targetWindow,
     });
 
+    const roleProps = render ? {} : { role: "group" };
+
     return renderProps("div", {
       ref,
       className: clsx(withBaseName(), className),
       render,
+      ...roleProps,
       ...rest,
     });
   },

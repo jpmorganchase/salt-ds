@@ -12,6 +12,10 @@ data:
 
 In a non-interactive avatar group, ensure each `Avatar` has a meaningful accessible name so screen reader users can identify individual members. When the group is interactive, the accessible name of the group replaces the names of the avatars it contains.
 
+A non-interactive avatar group is exposed with `role="group"`. Give it an accessible name with `aria-label` (for example, “Team members”) so screen reader users know what the avatars have in common, as the role conveys little on its own.
+
+When you use the `render` prop, the group role isn’t applied, so the element you provide keeps its own semantics — a button is announced as a button rather than a group.
+
 The count indicator is an `AvatarGroupCount`. Give it a meaningful `name` (for example, “3 more”) so that assistive technology users are aware of how many additional members are hidden, while its children (for example, “+3”) provide the visible label.
 
 When an avatar group is interactive, provide a descriptive accessible name (for example, “Team members”) so screen reader users understand what action will occur when it is activated.

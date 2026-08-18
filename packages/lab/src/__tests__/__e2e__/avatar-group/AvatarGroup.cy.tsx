@@ -10,6 +10,17 @@ const { RenderProp } = composedStories;
 describe("Given an AvatarGroup", () => {
   checkAccessibility(composedStories);
 
+  it("should not apply the group role when rendered as a button", () => {
+    cy.mount(
+      <RenderProp
+        render={<button type="button" aria-label="Team members" />}
+      />,
+    );
+
+    cy.findByRole("button", { name: "Team members" }).should("exist");
+    cy.findByRole("group").should("not.exist");
+  });
+
   it("should render the count as a visible label with its own accessible name", () => {
     cy.mount(
       <AvatarGroup>

@@ -4,7 +4,7 @@ import type { ReactElement } from "react";
 
 export const Entity = (): ReactElement => {
   return (
-    <AvatarGroup>
+    <AvatarGroup aria-label="Divisions">
       <Avatar
         kind="entity"
         name="Operations"

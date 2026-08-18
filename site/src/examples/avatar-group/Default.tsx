@@ -4,7 +4,7 @@ import type { ReactElement } from "react";
 
 export const Default = (): ReactElement => {
   return (
-    <AvatarGroup>
+    <AvatarGroup aria-label="Team members">
       <Avatar name="Alex Brailescu" src="/img/examples/avatar.png" />
       <Avatar name="Peter Piper" color="category-2" />
       <Avatar name="John Doe" color="category-3" />
