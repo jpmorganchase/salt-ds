@@ -1,3 +1,93 @@
 .saltVerticalNavigation {
   min-width: 30ch;
 }
+
+/* CollapsibleNavigation example */
+
+.collapsibleNavigationExample {
+  --collapsibleNavigationExample-width: clamp(18ch, 50vw, 30ch);
+  --collapsibleNavigationExample-iconSize: max(var(--salt-size-icon), 12px);
+  display: flex;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  height: 400px;
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
+  background: var(--salt-container-primary-background);
+  overflow: hidden;
+}
+
+.collapsibleNavigationExample-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--salt-spacing-100);
+  padding: var(--salt-spacing-100);
+  border-right: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor);
+  background: var(--salt-container-secondary-background);
+}
+
+.collapsibleNavigationExample-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--salt-spacing-200);
+  padding: var(--salt-spacing-200);
+  overflow: hidden;
+}
+
+.collapsibleNavigationExample-heading {
+  flex: 0 0 var(--salt-size-base);
+  width: 40%;
+  background: var(--salt-container-secondary-background);
+}
+
+.collapsibleNavigationExample-block {
+  flex: 1;
+  background: var(--salt-container-secondary-background);
+}
+
+.collapsibleNavigationExample .saltVerticalNavigation {
+  flex: 1;
+  min-width: 0;
+  width: var(--collapsibleNavigationExample-width);
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition: width var(--salt-duration-perceptible) var(--salt-animation-timing-function);
+}
+
+.collapsibleNavigationExample .saltVerticalNavigationItemContent {
+  min-width: 0;
+}
+
+/* Visually hide the labels once collapsed, but keep them in the DOM for the
+   item's accessible name. */
+.collapsibleNavigationExample .visuallyHidden {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.collapsibleNavigationExample-animating .saltVerticalNavigation ol {
+  width: var(--collapsibleNavigationExample-width);
+}
+
+.collapsibleNavigationExample-collapsed .saltVerticalNavigation {
+  width: calc(var(--collapsibleNavigationExample-iconSize) + var(--salt-spacing-100) * 2 + var(--salt-size-fixed-100) * 2);
+}
+
+.collapsibleNavigationExample-collapsed .saltVerticalNavigation-indicator {
+  width: calc(var(--collapsibleNavigationExample-iconSize) + var(--salt-spacing-150) + var(--salt-size-indicator) + var(--salt-spacing-100));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collapsibleNavigationExample .saltVerticalNavigation {
+    transition: none;
+  }
+}

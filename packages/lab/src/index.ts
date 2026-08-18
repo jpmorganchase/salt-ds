@@ -43,6 +43,7 @@ export * from "./list-next";
 export * from "./logo";
 export * from "./menu-button";
 export * from "./metric";
+export * from "./on-solid-button";
 export * from "./portal";
 export * from "./query-input";
 export * from "./responsive";
