@@ -2,12 +2,17 @@ import { Avatar } from "@salt-ds/core";
 import { SaltShakerIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
+import type { CSSProperties } from "react";
 import persona1 from "../assets/avatar.png";
 
 export default {
   title: "Core/Avatar/Avatar QA",
   component: Avatar,
 } as Meta<typeof Avatar>;
+
+const directSizeStyle = {
+  "--saltAvatar-size": "var(--salt-text-h3-lineHeight)",
+} as CSSProperties;
 
 export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
   <QAContainer height={500} width={1000} {...props}>
@@ -35,6 +40,9 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Avatar name="Peter Piper" color="category-18" />
     <Avatar name="Peter Piper" color="category-19" />
     <Avatar name="Peter Piper" color="category-20" />
+    <Avatar src={persona1} style={directSizeStyle} />
+    <Avatar name="Alex Brailescu" style={directSizeStyle} />
+    <Avatar style={directSizeStyle} />
   </QAContainer>
 );
 
