@@ -26,7 +26,7 @@ data:
 
 Open links in the same tab by default. Use `target="_blank"` only when keeping the current page available helps the user, such as when a link appears in the middle of a form or multi-step flow.
 
-When linking to third-party content in a new tab, set `rel="noopener"` or `rel="noreferrer"` to protect users in legacy browsers.
+Add `rel="noopener"` so the new page cannot access or control the original page in legacy browsers. Use `rel="noreferrer"` instead when you also need to prevent the browser from sending the current page’s address as referrer information.
 
 ### Routing libraries
 

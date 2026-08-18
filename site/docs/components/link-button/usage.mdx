@@ -13,28 +13,23 @@ data:
 ### When to use
 
 - When the primary action is navigation, such as opening a new page or external site.
-- When navigation needs a button-like appearance for visibility and interaction.
 - When the navigation stands alone and should stand out from inline text links, such as a primary call to action in a card, banner, or empty state.
 - When it sits alongside [`Button`](../button) components and should share their visual weight and alignment.
 
 ### When not to use
 
 - When the navigation sits inline within a sentence or among other links and should carry lower visual priority. Instead, use [`Link`](../link).
-- For on-page actions like opening a modal, submitting a form, or toggling UI elements. If the action does not navigate the user elsewhere, use [`Button`](../button) instead.
-
-### Choosing sentiment
-
-Use `sentiment="neutral"` for routine navigation. Use `sentiment="accented"` when the destination is a primary or high-priority navigation action.
+- When the interaction triggers an on-page action, such as submitting a form, opening a modal, or toggling UI, rather than navigating the user to a different destination. Instead, use [`Button`](../button).
 
 ### Opening in a new tab
 
-Open link buttons in the same tab by default. Use `target="_blank"` only when keeping the current page available helps the user, such as when a link button appears in the middle of a form or multi-step flow.
+Open link buttons in the same tab by default. Open in a new tab using `target="_blank"` only when keeping the current page available helps the user, such as when a link button appears in the middle of a form or multi-step flow.
 
-When linking to third-party content in a new tab, set `rel="noopener"` or `rel="noreferrer"` to protect users in legacy browsers.
+Add `rel="noopener"` so the new page cannot access or control the original page in legacy browsers. Use `rel="noreferrer"` instead when you also need to prevent the browser from sending the current page’s address as referrer information.
 
 ### Routing libraries
 
-If your app uses a routing library such as [React Router](https://reactrouter.com/en/main) or [Next.js](https://nextjs.org/docs/app/building-your-application/routing), use the `render` prop to render the routing library’s link component while preserving `LinkButton` styling and behavior. See the [render prop guide](/salt/getting-started/render-prop) for the supported render forms.
+Routing libraries such as [React Router](https://reactrouter.com/en/main) and [Next.js](https://nextjs.org/docs/app/building-your-application/routing) handle navigation within an application without reloading the page. If your app uses one, use the `render` prop with the routing library’s link component. This allows the routing library to handle navigation while preserving `LinkButton` styling and behavior. See the [render prop guide](/salt/getting-started/render-prop) for the supported render forms.
 
 ## Content
 
