@@ -50,9 +50,10 @@
 }
 
 /*
-  [VERSION DIVERGENCE]: From v36, AG Grid draws a :focus-visible ::after ring on
-  .ag-menu-option. Pre-v36 had no ring; keyboard/mouse highlight is the active
-  background. Hide the pseudo. Inert if AG Grid never creates it.
+  [VERSION DIVERGENCE]: From v33, AG Grid draws a :focus-visible ::after ring on
+  .ag-menu-option. Pre-v33 had no ring; keyboard/mouse highlight is the active
+  background. Hide the pseudo across v33-v36 to preserve the pre-v33 treatment.
+  Inert if AG Grid never creates it.
 */
 [class*="ag-theme-salt"] .ag-menu-option:focus-visible::after {
   content: none;

@@ -155,12 +155,24 @@
   border-color: var(--salt-separable-secondary-borderColor);
 }
 
-/* [VERSION DIVERGENCE]: Pre-v36, the pinned-bottom top border sits on .ag-floating-bottom. */
-.ag-theme-salt-light .ag-floating-bottom,
-.ag-theme-salt-dark .ag-floating-bottom,
-.ag-theme-salt-compact-light .ag-floating-bottom,
-.ag-theme-salt-compact-dark .ag-floating-bottom {
-  border-color: var(--salt-container-bold-borderColor);
+/*
+  [VERSION DIVERGENCE]: v32-v35 include .ag-floating-top and .ag-floating-bottom,
+  while v33-v35 also introduce viewport border painters driven by --ag-pinned-row-border.
+  That variable is disabled in ag-root-var.css so these higher-specificity outer borders
+  remain the single separators and retain v32 geometry. Both outer elements are removed in v36.
+*/
+.ag-theme-salt-light .ag-floating-top:not(.ag-invisible),
+.ag-theme-salt-dark .ag-floating-top:not(.ag-invisible),
+.ag-theme-salt-compact-light .ag-floating-top:not(.ag-invisible),
+.ag-theme-salt-compact-dark .ag-floating-top:not(.ag-invisible) {
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
+}
+
+.ag-theme-salt-light .ag-floating-bottom:not(.ag-invisible),
+.ag-theme-salt-dark .ag-floating-bottom:not(.ag-invisible),
+.ag-theme-salt-compact-light .ag-floating-bottom:not(.ag-invisible),
+.ag-theme-salt-compact-dark .ag-floating-bottom:not(.ag-invisible) {
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
 }
 
 /*
@@ -212,14 +224,13 @@
 }
 
 /*
-  [VERSION DIVERGENCE]: From v36, paint the pinned-top bold separator as border-bottom on
-  the last pinned row so cells shrink to match v32 and the header+pinned-top block realigns.
-  Child combinator + .ag-row-pinned keeps sticky group rows and header rows out. Inert pre-v36.
+  [VERSION DIVERGENCE]: From v36, --ag-pinned-row-border is none so JS does not add
+  a pixel to pinned-top height. v32 painted .ag-floating-top with --ag-border-color. Inert pre-v36.
 */
 [class*="ag-theme-salt"] .ag-grid-pinned-top-rows-container > .ag-row-pinned.ag-row-last > .ag-grid-pinned-left-cells,
 [class*="ag-theme-salt"] .ag-grid-pinned-top-rows-container > .ag-row-pinned.ag-row-last > .ag-grid-scrolling-cells,
 [class*="ag-theme-salt"] .ag-grid-pinned-top-rows-container > .ag-row-pinned.ag-row-last > .ag-grid-pinned-right-cells {
-  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
 }
 
 .ag-theme-salt-light .ag-column-drop-horizontal,

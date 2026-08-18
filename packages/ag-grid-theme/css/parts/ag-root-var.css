@@ -6,11 +6,10 @@ div[class*="ag-theme-salt"] {
   --ag-border-color: var(--salt-separable-secondary-borderColor);
   --ag-borders-secondary: var(--salt-size-fixed-100) var(--salt-borderStyle-solid);
   /*
-    [VERSION DIVERGENCE]: From v36, AG Grid JS measures --ag-pinned-row-border via
-    getPinnedRowBorderWidth() and adds that width to pinned container height. Zero it so
-    pinned containers size to the sum of row heights. Unused pre-v36. AG also re-declares
-    this on .ag-measurement-container from --ag-borders-critical, so that node is zeroed
-    below; otherwise the measurement still reads 1px.
+    [VERSION DIVERGENCE]: v32 paints pinned-row borders directly and ignores this variable.
+    From v33, AG Grid uses it for version-specific pinned-row painters and height measurement.
+    Disable those painters so the explicit v32-v35 outer borders in ag-buttons.css remain the
+    only legacy separators; v36 uses its separately scoped container painters there.
   */
   --ag-pinned-row-border: none;
   --ag-card-radius: var(--salt-palette-corner);
@@ -74,9 +73,10 @@ div[class*="ag-theme-salt"] {
 }
 
 /*
-  [VERSION DIVERGENCE]: From v36, .ag-measurement-container re-declares
-  --ag-pinned-row-border from --ag-borders-critical, overriding the theme-wrapper
-  value above. Zero it here so getPinnedRowBorderWidth() reads 0. Inert pre-v36.
+  [VERSION DIVERGENCE]: AG Grid reads the border through .ag-measurement-container
+  from v33 and re-declares it there from --ag-borders-critical in v36. Keep the
+  measurement at zero so the explicit outer borders do not add a second pixel to
+  pinned-row height. v32 does not use this variable for its measurement.
 */
 [class*="ag-theme-salt"] .ag-measurement-container {
   --ag-pinned-row-border: none;
