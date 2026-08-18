@@ -60,6 +60,7 @@ export const SingleSelection: StoryFn<typeof InteractableCard> = (args) => {
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
             <BankIcon
+              aria-hidden
               style={
                 {
                   "--saltIcon-size": "var(--salt-text-h3-fontSize)",
