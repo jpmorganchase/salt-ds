@@ -20,7 +20,7 @@ export const DisabledToggleGroup = (): ReactElement => (
         <CardContent>
           <StackLayout gap={1}>
             <StackLayout gap={1} direction="row" align="center">
-              <CreditCardIcon size={2} />
+              <CreditCardIcon size={2} aria-hidden />
               <H3 disabled style={{ margin: 0 }}>
                 Credit Card
               </H3>
@@ -33,7 +33,7 @@ export const DisabledToggleGroup = (): ReactElement => (
         <CardContent>
           <StackLayout gap={1}>
             <StackLayout gap={1} direction="row" align="center">
-              <BankIcon size={2} />
+              <BankIcon size={2} aria-hidden />
               <H3 disabled style={{ margin: 0 }}>
                 Bank wire
               </H3>
@@ -46,7 +46,7 @@ export const DisabledToggleGroup = (): ReactElement => (
         <CardContent>
           <StackLayout gap={1}>
             <StackLayout gap={1} direction="row" align="center">
-              <DiamondIcon size={2} />
+              <DiamondIcon size={2} aria-hidden />
               <H3 disabled style={{ margin: 0 }}>
                 Cryptocurrency
               </H3>

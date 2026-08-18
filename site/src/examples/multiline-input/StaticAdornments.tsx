@@ -11,11 +11,11 @@ export const StaticAdornments = (): ReactElement => (
     <MultilineInput startAdornment={<Text>£</Text>} defaultValue="Value" />
     <MultilineInput endAdornment={<Text>GBP</Text>} defaultValue="1000" />
     <MultilineInput
-      startAdornment={<BankCheckSolidIcon />}
+      startAdornment={<BankCheckSolidIcon aria-hidden />}
       endAdornment={
         <>
-          <EditSolidIcon />
-          <HelpSolidIcon />
+          <EditSolidIcon aria-hidden />
+          <HelpSolidIcon aria-hidden />
         </>
       }
       defaultValue="JPMC"
