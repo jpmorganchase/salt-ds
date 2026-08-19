@@ -94,10 +94,10 @@
 /* Class applied to the root element if `disabled={true}` */
 .saltFormFieldLegacy-disabled {
   --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-disabled);
-  --formFieldLegacy-activationIndicator-opacity: var(--salt-palette-opacity-disabled);
+  --formFieldLegacy-activationIndicator-opacity: 0.4;
   --formFieldLegacy-activationIndicator-size: var(--salt-size-fixed-100);
   --formFieldLegacy-activationIndicator-style: var(--salt-borderStyle-solid);
-  --formFieldLegacy-helperText-opacity: var(--salt-palette-opacity-disabled);
+  --formFieldLegacy-helperText-opacity: 0.4;
 
   --saltInputLegacy-cursor: var(--salt-cursor-disabled);
 }
@@ -145,9 +145,9 @@
 
 /* Class applied to the root element if `labelPlacement="left"` */
 .saltFormFieldLegacy-labelLeft {
-  --formFieldLegacy-label-marginTop: var(--salt-size-unit);
+  --formFieldLegacy-label-marginTop: var(--salt-spacing-100);
   --formFieldLegacy-label-paddingLeft: 0px;
-  --formFieldLegacy-label-paddingRight: calc(0.75 * var(--salt-size-unit));
+  --formFieldLegacy-label-paddingRight: calc(0.75 * var(--salt-spacing-100));
 
   align-self: start;
   grid-template-columns: auto 1fr;
@@ -157,8 +157,8 @@
 .saltFormFieldLegacy-labelTop {
   --formFieldLegacy-label-marginBottom: var(--formFieldLegacy-label-top-marginBottom);
   --formFieldLegacy-label-marginTop: 0;
-  --formFieldLegacy-label-paddingLeft: var(--salt-size-unit);
-  --formFieldLegacy-label-paddingRight: var(--salt-size-unit);
+  --formFieldLegacy-label-paddingLeft: var(--salt-spacing-100);
+  --formFieldLegacy-label-paddingRight: var(--salt-spacing-100);
   /* Uses density invariant value unless helper text provided */
   --formFieldLegacy-background-offset-height: calc(var(--formFieldLegacy-helperText-marginTop, 0px) + var(--saltFormFieldLegacy-helperText-lineHeight, var(--formFieldLegacy-helperText-height)));
 

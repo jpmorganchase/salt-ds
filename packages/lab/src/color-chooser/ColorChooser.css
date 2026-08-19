@@ -1,7 +1,7 @@
 .saltColorChooser-overlayButtonSwatch {
   margin-right: 10px;
-  height: calc(2 * var(--salt-size-unit));
-  width: calc(2 * var(--salt-size-unit));
+  height: calc(2 * var(--salt-spacing-100));
+  width: calc(2 * var(--salt-spacing-100));
 }
 
 .saltColorChooser-overlayButtonSwatchWithBorder {
@@ -9,8 +9,8 @@
 }
 
 .saltColorChooser-overlayButtonSwatchTransparent {
-  height: calc(var(--salt-size-container-spacing) - 2px) !important;
-  width: calc(var(--salt-size-container-spacing) - 2px) !important;
+  height: calc(var(--salt-spacing-300) - 2px) !important;
+  width: calc(var(--salt-spacing-300) - 2px) !important;
   border: 1px solid var(--salt-sentiment-negative-foreground-decorative);
   /* RGBA using red-700 */
   background: linear-gradient(to top left, rgba(166, 21, 11, 0) 0%, rgba(166, 21, 11, 0) calc(50% - 0.8px), rgba(166, 21, 11, 1) 50%, rgba(166, 21, 11, 0) calc(50% + 0.8px), rgba(166, 21, 11, 0) 100%);
@@ -30,7 +30,7 @@
 }
 
 .saltColorChooser-overlayButtonHiddenLabel {
-  width: var(--salt-size-container-spacing);
+  width: var(--salt-spacing-300);
   display: contents;
 }
 
@@ -38,7 +38,7 @@
   float: right;
   background: transparent;
   padding: 6px 2px 6px 2px;
-  height: var(--salt-size-stackable);
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 
 .saltColorChooser-defaultButton {

@@ -1,5 +1,5 @@
 .saltMenuButtonTrigger {
-  --menuButton-trigger-open-color: var(--saltMenuButton-trigger-open-color, var(--salt-actionable-primary-foreground-active));
+  --menuButton-trigger-open-color: var(--saltMenuButton-trigger-open-color, var(--salt-actionable-bold-foreground-active));
 }
 
 .saltMenuButtonTrigger {
@@ -8,7 +8,7 @@
 }
 
 .saltMenuButtonTrigger-buttonOpen {
-  background: var(--saltMenuButton-trigger-open-background, var(--salt-actionable-primary-background-active));
+  background: var(--saltMenuButton-trigger-open-background, var(--salt-actionable-bold-background-active));
   color: var(--menuButton-trigger-open-color);
 }
 
@@ -21,5 +21,5 @@
 }
 
 .saltMenuButtonTrigger-caretIcon {
-  --saltIcon-margin: 0 0 0 var(--salt-size-unit);
+  --saltIcon-margin: 0 0 0 var(--salt-spacing-100);
 }

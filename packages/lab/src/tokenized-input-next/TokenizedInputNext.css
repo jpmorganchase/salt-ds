@@ -49,19 +49,19 @@
 /* Class applied if `variant="primary"` */
 .saltTokenizedInputNext-primary {
   --tokenizedInput-background: var(--salt-editable-primary-background);
-  --tokenizedInput-background-active: var(--salt-editable-primary-background-active);
-  --tokenizedInput-background-hover: var(--salt-editable-primary-background-hover);
+  --tokenizedInput-background-active: var(--salt-editable-primary-background);
+  --tokenizedInput-background-hover: var(--salt-editable-primary-background);
   --tokenizedInput-background-disabled: var(--salt-editable-primary-background-disabled);
-  --tokenizedInput-background-readonly: var(--salt-editable-primary-background-readonly);
+  --tokenizedInput-background-readonly: var(--salt-editable-background-readonly);
 }
 
 /* Class applied if `variant="secondary"` */
 .saltTokenizedInputNext-secondary {
   --tokenizedInput-background: var(--salt-editable-secondary-background);
-  --tokenizedInput-background-active: var(--salt-editable-secondary-background-active);
-  --tokenizedInput-background-hover: var(--salt-editable-secondary-background-active);
+  --tokenizedInput-background-active: var(--salt-editable-secondary-background);
+  --tokenizedInput-background-hover: var(--salt-editable-secondary-background);
   --tokenizedInput-background-disabled: var(--salt-editable-secondary-background-disabled);
-  --tokenizedInput-background-readonly: var(--salt-editable-secondary-background-readonly);
+  --tokenizedInput-background-readonly: var(--salt-editable-background-readonly);
 }
 
 /* Style applied to input if `validationState="error"` */

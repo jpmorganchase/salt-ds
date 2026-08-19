@@ -11,7 +11,7 @@
   padding-left: var(--salt-spacing-100);
   padding-right: var(--salt-spacing-100);
   display: flex;
-  gap: var(--salt-size-unit);
+  gap: var(--salt-spacing-100);
   position: relative;
   align-items: center;
   white-space: nowrap;

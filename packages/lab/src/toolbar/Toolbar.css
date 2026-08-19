@@ -5,7 +5,7 @@
 }
 
 .saltToolbar {
-  --toolbar-size: calc(var(--salt-size-base) + var(--salt-size-unit) * 2);
+  --toolbar-size: calc(var(--salt-size-base) + var(--salt-spacing-100) * 2);
 
   background: var(--saltToolbar-background, var(--toolbar-background));
   font-size: var(--toolbar-fontSize);
@@ -49,13 +49,13 @@
 }
 
 .saltToolbar[aria-orientation="horizontal"] > .Responsive-inner > :not(.saltTooltray) {
-  margin-right: var(--salt-size-unit);
+  margin-right: var(--salt-spacing-100);
   align-self: center;
 }
 
 .saltToolbar[aria-orientation="horizontal"] > .Responsive-inner > .saltTooltray > .Responsive-inner > * {
-  margin-top: var(--salt-size-unit);
-  /* margin-right: var(--salt-size-unit); */
+  margin-top: var(--salt-spacing-100);
+  /* margin-right: var(--salt-spacing-100); */
 }
 
 .saltToolbar[aria-orientation="horizontal"] > .Responsive-inner > .saltTooltray {
@@ -71,7 +71,7 @@
 }
 
 .saltToolbar[aria-orientation="horizontal"] > .Responsive-inner > *:first-child {
-  margin-left: var(--salt-size-unit);
+  margin-left: var(--salt-spacing-100);
 }
 
 .saltToolbar[aria-orientation="vertical"] {
@@ -115,18 +115,18 @@
 }
 
 .saltToolbarField.saltFormFieldLegacy-labelLeft > .saltFormLabel {
-  padding-left: var(--salt-size-unit);
+  padding-left: var(--salt-spacing-100);
 }
 
 .saltToolbar .saltFormFieldLegacy-primary.saltFormFieldLegacy > .saltToolbarButton {
   background: var(--toolbar-background);
 }
 .saltToolbar .saltFormFieldLegacy-primary.saltFormFieldLegacy > .saltToolbarButton:hover {
-  background: var(--salt-actionable-secondary-background-hover);
+  background: var(--salt-actionable-subtle-background-hover);
 }
 .saltToolbar .saltFormFieldLegacy-primary.saltFormFieldLegacy > .saltButton-active,
 .saltToolbar .saltFormFieldLegacy-primary.saltFormFieldLegacy > .saltToolbarButton:active {
-  background: var(--salt-actionable-secondary-background-active) !important;
+  background: var(--salt-actionable-subtle-background-active) !important;
 }
 
 /* copied over from Tabstrip.css */
