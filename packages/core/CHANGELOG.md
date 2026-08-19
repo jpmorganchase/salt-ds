@@ -1,5 +1,26 @@
 # @salt-ds/core
 
+## 1.70.0
+
+### Minor Changes
+
+- 6c12378: Added `--saltAvatar-size` for sizing an Avatar from a CSS length. Images, fallback icons and initials stay proportional to that length across densities, matching the existing `size` multiplier ratio.
+
+### Patch Changes
+
+- 2892934: Fixed `Avatar` so consumer `style` can override `--saltAvatar-size-multiplier`.
+- 416d4b8: Fixed `VerticalNavigationItemTrigger` dropping its forwarded ref.
+
+  The internal action element was a plain function component, so the ref passed to `VerticalNavigationItemTrigger` never reached the rendered element on React 18 and below. This broke consumers that need the underlying node, such as wrapping the trigger in a `Tooltip`.
+
+  ```tsx
+  <Tooltip content="Products" placement="right">
+    <VerticalNavigationItemTrigger render={<Link to="/products" />}>
+      <VerticalNavigationItemLabel>Products</VerticalNavigationItemLabel>
+    </VerticalNavigationItemTrigger>
+  </Tooltip>
+  ```
+
 ## 1.69.0
 
 ### Minor Changes

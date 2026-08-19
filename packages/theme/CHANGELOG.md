@@ -1,5 +1,18 @@
 # @salt-ds/theme
 
+## 1.45.0
+
+### Minor Changes
+
+- e20c4a8: Added `--salt-curve-300` to the curve foundation.
+- ba3df7e: Added an `alpha-light-*` palette ramp, an always-white counterpart to the always-black `alpha-dark-*` ramp, and `--salt-focused-onSolid-outlineColor` for the focus outline of components placed on solid backgrounds.
+
+  Backfilled the `alpha-dark-*` ramp into the legacy theme.
+
+### Patch Changes
+
+- 0e83a66: Fixed `theme.css` and `theme-next.css` so each can be imported independently without relying on tokens from the other theme.
+
 ## 1.44.0
 
 ### Minor Changes
