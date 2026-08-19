@@ -9,7 +9,7 @@ export const Interactive = (): ReactElement => {
       <Avatar name="Peter Piper" color="category-2" />
       <Avatar name="John Doe" color="category-3" />
       <Avatar name="Jane Smith" color="category-4" />
-      <AvatarGroupCount name="3 more">+3</AvatarGroupCount>
+      <AvatarGroupCount aria-label="3 more">+3</AvatarGroupCount>
     </AvatarGroup>
   );
 };
