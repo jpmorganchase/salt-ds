@@ -1,13 +1,15 @@
-import { Avatar, type AvatarProps, makePrefixer } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { forwardRef, type HTMLAttributes } from "react";
 
+import avatarGroupCountCss from "./AvatarGroupCount.css";
+
+/**
+ * TODO: current color is a placeholder until design finalizes decision
+ */
 export interface AvatarGroupCountProps
-  /**
-   * TODO: user can still pass color prop ignoring type errors, and categories will work.
-   * Pending design decision on coloring
-   * DO NOT MERGE UNTIL RESOLVED
-   */
   extends Omit<HTMLAttributes<HTMLDivElement>, "color"> {
   /**
    * The visible label of the count, for example `+3`.
@@ -18,7 +20,7 @@ export interface AvatarGroupCountProps
    *
    * @default "person"
    */
-  kind?: AvatarProps["kind"];
+  kind?: "person" | "entity";
 }
 
 const withBaseName = makePrefixer("saltAvatarGroupCount");
@@ -26,15 +28,25 @@ const withBaseName = makePrefixer("saltAvatarGroupCount");
 export const AvatarGroupCount = forwardRef<
   HTMLDivElement,
   AvatarGroupCountProps
->(function AvatarGroupCount({ children, className, ...rest }, ref) {
+>(function AvatarGroupCount(
+  { children, className, kind = "person", ...rest },
+  ref,
+) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-avatar-group-count",
+    css: avatarGroupCountCss,
+    window: targetWindow,
+  });
+
   return (
-    <Avatar
-      role="img"
+    <div
       ref={ref}
-      className={clsx(withBaseName(), className)}
+      role="img"
+      className={clsx(withBaseName(), withBaseName(kind), className)}
       {...rest}
     >
       {children}
-    </Avatar>
+    </div>
   );
 });
