@@ -10,10 +10,10 @@
 .salt-density-low,
 .salt-density-medium,
 .salt-density-high {
-  --colorChooser-swatch-density-high-size: calc(5 * var(--salt-size-unit));
-  --colorChooser-swatch-density-medium-size: calc(3 * var(--salt-size-unit));
-  --colorChooser-swatch-density-low-size: calc(3 * var(--salt-size-unit));
-  --colorChooser-swatch-density-touch-size: calc(2 * var(--salt-size-unit));
+  --colorChooser-swatch-density-high-size: calc(5 * var(--salt-spacing-100));
+  --colorChooser-swatch-density-medium-size: calc(3 * var(--salt-spacing-100));
+  --colorChooser-swatch-density-low-size: calc(3 * var(--salt-spacing-100));
+  --colorChooser-swatch-density-touch-size: calc(2 * var(--salt-spacing-100));
 }
 
 .salt-density-touch {
@@ -67,7 +67,7 @@
 
 .saltColorChooserSwatch-active {
   outline: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
-  border: var(--salt-focused-outlineWidth) var(--salt-borderStyle-solid) var(--salt-actionable-cta-foreground-active) !important;
+  border: var(--salt-focused-outlineWidth) var(--salt-borderStyle-solid) var(--salt-actionable-accented-bold-foreground-active) !important;
   margin-bottom: 1px;
   margin-left: 1px;
   cursor: var(--salt-cursor-active);

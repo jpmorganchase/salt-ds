@@ -31,20 +31,20 @@
 
 /* .saltTooltray-horizontal > .Responsive-inner > :not(:last-child) { */
 .saltTooltray-horizontal > .Responsive-inner > * {
-  margin-top: var(--salt-size-unit);
-  margin-right: var(--salt-size-unit);
+  margin-top: var(--salt-spacing-100);
+  margin-right: var(--salt-spacing-100);
 }
 
 /* .saltTooltray-horizontal:first-child {
-  padding-left: var(--salt-size-unit);
+  padding-left: var(--salt-spacing-100);
 } */
 /* .saltTooltray-horizontal:last-child {
-  padding-right: var(--salt-size-unit);
+  padding-right: var(--salt-spacing-100);
 } */
 
 .saltTooltray-horizontal:not(:first-child) {
-  margin-left: var(--salt-size-unit);
-  padding-left: calc(var(--salt-size-unit) * 2);
+  margin-left: var(--salt-spacing-100);
+  padding-left: calc(var(--salt-spacing-100) * 2);
 }
 .saltTooltray-horizontal:not(:first-child):before {
   content: "";

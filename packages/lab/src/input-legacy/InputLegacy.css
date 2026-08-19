@@ -1,18 +1,18 @@
 /* Styles applied to the root element dependent on density */
 .salt-density-touch {
-  --inputLegacy-adornment-height: calc(var(--salt-size-base) + var(--salt-size-unit) * 0.5);
+  --inputLegacy-adornment-height: calc(var(--salt-size-base) + var(--salt-spacing-100) * 0.5);
   --inputLegacy-button-inset: 4px;
 }
 .salt-density-low {
-  --inputLegacy-adornment-height: calc(var(--salt-size-base) + var(--salt-size-unit) * 2 / 3);
+  --inputLegacy-adornment-height: calc(var(--salt-size-base) + var(--salt-spacing-100) * 2 / 3);
   --inputLegacy-button-inset: 4px;
 }
 .salt-density-medium {
-  --inputLegacy-adornment-height: calc(var(--salt-size-base) + var(--salt-size-unit) * 0.5);
+  --inputLegacy-adornment-height: calc(var(--salt-size-base) + var(--salt-spacing-100) * 0.5);
   --inputLegacy-button-inset: 2px;
 }
 .salt-density-high {
-  --inputLegacy-adornment-height: calc(var(--salt-size-base) + var(--salt-size-unit));
+  --inputLegacy-adornment-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   --inputLegacy-button-inset: 2px;
 }
 
@@ -31,7 +31,7 @@
   line-height: var(--salt-text-lineHeight);
   min-height: var(--saltInputLegacy-minHeight, var(--salt-size-base));
   min-width: var(--saltInputLegacy-minWidth, 8em);
-  padding: var(--saltInputLegacy-padding, 0 var(--salt-size-unit));
+  padding: var(--saltInputLegacy-padding, 0 var(--salt-spacing-100));
   position: var(--saltInputLegacy-position, relative);
   width: 100%;
   box-sizing: border-box;
@@ -90,7 +90,7 @@
 
 /* Style applied to inner input element with start adornment */
 .saltInputLegacy-inputAdornedStart .saltInputLegacy-input {
-  padding-left: var(--saltInputLegacy-adornedStart-input-padding, var(--salt-size-unit));
+  padding-left: var(--saltInputLegacy-adornedStart-input-padding, var(--salt-spacing-100));
 }
 
 /* Style applied to root element with end adornment */
@@ -100,7 +100,7 @@
 
 /* Style applied to inner input element with end adornment */
 .saltInputLegacy-inputAdornedEnd .saltInputLegacy-input {
-  padding-right: var(--saltInputLegacy-adornedEnd-input-padding, var(--salt-size-unit));
+  padding-right: var(--saltInputLegacy-adornedEnd-input-padding, var(--salt-spacing-100));
 }
 
 /* Style applied to salt Button used within Input component adornments */
@@ -108,7 +108,7 @@
 .saltInputLegacy .saltInputLegacy-prefixContainer > .saltButton {
   height: calc(var(--saltButton-height, var(--salt-size-base)) - (var(--inputLegacy-button-inset) * 2));
   margin: var(--inputLegacy-button-inset);
-  padding: 0 calc(var(--salt-size-unit) - var(--inputLegacy-button-inset));
+  padding: 0 calc(var(--salt-spacing-100) - var(--inputLegacy-button-inset));
 }
 
 /* Style applied if `textAlign={"left"}` */

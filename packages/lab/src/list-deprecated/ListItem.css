@@ -14,7 +14,7 @@
   --list-item-lineHeight: var(--salt-text-lineHeight);
 
   /* Spacing */
-  --list-item-padding: 0 var(--salt-size-unit);
+  --list-item-padding: 0 var(--salt-spacing-100);
 
   /* Misc. */
   --list-item-gap: 0px;
@@ -23,7 +23,7 @@
   --list-item-cursor: default;
 
   --list-item-disabled-cursor: var(--salt-cursor-disabled);
-  --list-item-disabled-regular-opacity: var(--salt-palette-opacity-disabled);
+  --list-item-disabled-regular-opacity: 0.4;
 }
 
 .saltListItemDeprecated {

@@ -8,7 +8,7 @@
   align-items: baseline;
   display: flex;
   flex-direction: row;
-  gap: calc(var(--salt-size-unit) / 2);
+  gap: calc(var(--salt-spacing-100) / 2);
   margin-top: var(--metric-content-valueContainer-marginTop, 0px);
 }
 

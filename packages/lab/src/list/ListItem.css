@@ -33,7 +33,7 @@
   height: var(--saltList-item-height, var(--list-item-height, auto));
   /* Replaced border-bottom with margin. In design spec, the height of the items should not include gap */
   margin-bottom: var(--list-item-gap);
-  padding: 0 var(--salt-size-unit);
+  padding: 0 var(--salt-spacing-100);
   left: 0;
   right: 0;
   display: flex;
@@ -49,7 +49,7 @@
 .saltListItem-checkbox {
   --list-item-background-active: var(--salt-selectable-background);
   --list-item-text-color-active: var(--salt-content-primary-foreground);
-  --list-item-text-padding: 0 0 0 var(--salt-size-unit);
+  --list-item-text-padding: 0 0 0 var(--salt-spacing-100);
 }
 
 .saltListItem[aria-selected="true"]:not(.saltListItem-checkbox) {

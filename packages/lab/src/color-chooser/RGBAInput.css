@@ -1,7 +1,7 @@
 .saltColorChooser-rgbaInput {
-  width: var(--salt-size-unit);
+  width: var(--salt-spacing-100);
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-editable-borderColor);
-  padding-top: var(--salt-size-unit);
+  padding-top: var(--salt-spacing-100);
 }
 
 .saltColorChooser-opacityInput {
@@ -23,7 +23,7 @@
 .saltColorChooser-rgbaInputDiv {
   display: flex;
   flex-direction: row;
-  padding: 0px 0px var(--salt-size-unit) 0px;
+  padding: 0px 0px var(--salt-spacing-100) 0px;
 }
 
 .saltColorChooser-overrideInput {

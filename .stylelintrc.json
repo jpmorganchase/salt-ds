@@ -4,7 +4,8 @@
     "./tooling/stylelint/no-deprecated-token-usage/index.mjs",
     "./tooling/stylelint/custom-property-attributes-kebab-case/index.mjs",
     "./tooling/stylelint/custom-property-starts-with-component-name/index.mjs",
-    "./tooling/stylelint/characteristic-token-in-all-themes/index.mjs"
+    "./tooling/stylelint/characteristic-token-in-all-themes/index.mjs",
+    "./tooling/stylelint/theme-self-containment/index.mjs"
   ],
   "rules": {
     "salt/correct-theme-token-usage": {
@@ -19,7 +20,8 @@
     "salt/custom-property-starts-with-component-name": {
       "logLevel": "default"
     },
-    "salt/characteristic-token-in-all-themes": null
+    "salt/characteristic-token-in-all-themes": null,
+    "salt/theme-self-containment": null
   },
   "overrides": [
     {
@@ -50,7 +52,13 @@
       }
     },
     {
-      "files": ["**/theme/css/deprecated/**/*.css"],
+      "files": ["**/theme/css/theme.css", "**/theme/css/theme-next.css"],
+      "rules": {
+        "salt/theme-self-containment": true
+      }
+    },
+    {
+      "files": ["**/theme/css/**/deprecated/**/*.css"],
       "rules": {
         "salt/no-deprecated-token-usage": null
       }
