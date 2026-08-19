@@ -12,20 +12,31 @@ data:
 
 ### When to use
 
-- To provide navigation to a page on the same or different site.
-- To link to documents, email addresses or phone numbers.
+- To provide navigation to a page on the same site or a different site.
+- To link to documents, email addresses, or phone numbers.
 - To send users to a specific section on the same page.
-- To provide users with more detailed information or assistance e.g., terms and conditions, help sections or contact information.
+- To provide users with more detailed information or assistance, such as terms and conditions, help sections, or contact information.
 
 ### When not to use
 
 - To trigger an action, such as submitting a form or opening a dialog. Instead, use [`Button`](../button).
+- When the navigation needs button-like prominence, such as a primary call to action in a card, banner, or empty state, or when it sits alongside [`Button`](../button) components. Instead, use [`LinkButton`](../link-button).
+
+### Opening in a new tab
+
+Open links in the same tab by default. Use `target="_blank"` only when keeping the current page available helps the user, such as when a link appears in the middle of a form or multi-step flow.
+
+Add `rel="noopener"` so the new page cannot access or control the original page in legacy browsers. Use `rel="noreferrer"` instead when you also need to prevent the browser from sending the current page’s address as referrer information.
+
+### Routing libraries
+
+If your app uses a routing library such as [React Router](https://reactrouter.com/en/main) or [Next.js](https://nextjs.org/docs/app/building-your-application/routing), use the `render` prop to render the routing library’s link component while preserving `Link` styling and behavior. See the [render prop guide](/salt/getting-started/render-prop) for the supported render forms.
 
 ## Content
 
 - Link text should be concise, no longer than a single sentence. This helps to keep the user interface clean, minimize distractions and maintain a clear visual hierarchy.
 - Do not overload sentences or pages with links.
-- Consider writing standalone links as calls-to-action and begin with a verb e.g., “Visit the help page”.
+- Consider writing standalone links as calls to action and begin with a verb, such as “Visit the help page.”
 - Write inline links as if they were part of the sentence.
 - Do not include the word “link” in the link text. Most screen readers say “link” before each link.
 - Link text should accurately describe the linked content. Link text that does not correctly reflect the destination or purpose can confuse or frustrate the user.

@@ -1,0 +1,50 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+### When to use
+
+- When the primary action is navigation, such as opening a new page or external site.
+- When the navigation stands alone and should stand out from inline text links, such as a primary call to action in a card, banner, or empty state.
+- When it sits alongside [`Button`](../button) components and should share their visual weight and alignment.
+
+### When not to use
+
+- When the navigation sits inline within a sentence or among other links and should carry lower visual priority. Instead, use [`Link`](../link).
+- When the interaction triggers an on-page action, such as submitting a form, opening a modal, or toggling UI, rather than navigating the user to a different destination. Instead, use [`Button`](../button).
+
+### Opening in a new tab
+
+Open link buttons in the same tab by default. Open in a new tab using `target="_blank"` only when keeping the current page available helps the user, such as when a link button appears in the middle of a form or multi-step flow.
+
+Add `rel="noopener"` so the new page cannot access or control the original page in legacy browsers. Use `rel="noreferrer"` instead when you also need to prevent the browser from sending the current page’s address as referrer information.
+
+### Routing libraries
+
+Routing libraries such as [React Router](https://reactrouter.com/en/main) and [Next.js](https://nextjs.org/docs/app/building-your-application/routing) handle navigation within an application without reloading the page. If your app uses one, use the `render` prop with the routing library’s link component. This allows the routing library to handle navigation while preserving `LinkButton` styling and behavior. See the [render prop guide](/salt/getting-started/render-prop) for the supported render forms.
+
+## Content
+
+- Keep link button text concise and action-oriented.
+- Use text that describes the destination or result, such as “View details” or “Open report”.
+- Do not use generic text like “Click here” or “Read more” unless the surrounding context makes the destination clear.
+
+## Import
+
+To import `LinkButton` from the lab Salt package, use:
+
+```js
+import { LinkButton } from "@salt-ds/lab";
+```
+
+## Props
+
+<PropsTable packageName="lab" componentName="LinkButton" />

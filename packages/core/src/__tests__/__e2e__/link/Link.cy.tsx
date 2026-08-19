@@ -4,12 +4,13 @@ import * as linkStories from "~stories/link/link.stories";
 
 const composedStories = composeStories(linkStories);
 const { TargetBlankCustomIcon } = composedStories;
+const testHref = "https://www.saltdesignsystem.com";
 
 describe("GIVEN a link", () => {
   it("WHEN passed children node, THEN children should be rendered", () => {
     const testId = "children-testid";
     cy.mount(
-      <Link href="#root" data-testid={testId}>
+      <Link href={testHref} data-testid={testId}>
         hello world
       </Link>,
     );
@@ -18,7 +19,7 @@ describe("GIVEN a link", () => {
 
   it('WHEN passed target="_blank", THEN should render the Link with the tear out icon', () => {
     cy.mount(
-      <Link href="#root" target="_blank">
+      <Link href={testHref} target="_blank" rel="noopener">
         Action
       </Link>,
     );
@@ -32,7 +33,7 @@ describe("GIVEN a link", () => {
 
   it('WHEN passed target="_blank", THEN the "Opens in a new tab" ADA text should NOT be included when the link is copied', () => {
     cy.mount(
-      <Link href="#root" target="_blank">
+      <Link href={testHref} target="_blank" rel="noopener">
         Action
       </Link>,
     );
@@ -48,15 +49,15 @@ describe("GIVEN a link", () => {
     });
   });
 
-  it('WHEN passed target="_blank" AND passed IconComponent, THEN should render the Link with the tear out icon', () => {
+  it('WHEN passed target="_blank" AND passed IconComponent, THEN should render the Link with the custom icon', () => {
     cy.mount(<TargetBlankCustomIcon />);
 
-    cy.findByTestId(/StackOverflowIcon/i).should("exist");
+    cy.findByTestId(/CustomTearOutIcon/i).should("exist");
   });
 
   it('WHEN passed target != "_blank", THEN should NOT render the tear out icon', () => {
     cy.mount(
-      <Link href="#root" target="blank">
+      <Link href={testHref} target="blank">
         Action
       </Link>,
     );
@@ -71,12 +72,12 @@ describe("GIVEN a link", () => {
       .stub()
       .as("render")
       .returns(
-        <a href="#root" data-testid={testId}>
+        <a href={testHref} data-testid={testId}>
           Action
         </a>,
       );
 
-    cy.mount(<Link href="#root" render={mockRender} />);
+    cy.mount(<Link href={testHref} render={mockRender} />);
 
     cy.findByTestId(testId).should("exist");
 
@@ -90,13 +91,45 @@ describe("GIVEN a link", () => {
     const testId = "link-testid";
 
     const mockRender = (
-      <a href="#root" data-testid={testId}>
+      <a href={testHref} data-testid={testId}>
         Action
       </a>
     );
 
-    cy.mount(<Link href="#root" render={mockRender} />);
+    cy.mount(<Link href={testHref} render={mockRender} />);
 
     cy.findByTestId(testId).should("exist");
+  });
+
+  it('WHEN render is given a JSX element with target="_blank", THEN should render the tear out icon', () => {
+    cy.mount(
+      <Link
+        href={testHref}
+        render={<a href={testHref} rel="noopener" target="_blank" />}
+      >
+        Action
+      </Link>,
+    );
+
+    cy.findByTestId(/TearOutIcon/i).should("exist");
+    cy.findByRole("link").should(
+      "have.accessibleName",
+      "Action Opens in a new tab",
+    );
+  });
+
+  it('WHEN render is given a JSX element with target!="_blank", THEN should NOT render the tear out icon', () => {
+    cy.mount(
+      <Link
+        href={testHref}
+        target="_blank"
+        render={<a href={testHref} target="_self" />}
+      >
+        Action
+      </Link>,
+    );
+
+    cy.findByTestId(/TearOutIcon/i).should("not.exist");
+    cy.findByRole("link").should("have.accessibleName", "Action");
   });
 });

@@ -43,6 +43,22 @@ To deprecate a prop, you should:
 2. Update the component's documentation to reflect the deprecation, including the reason for deprecation and the recommended alternative.
 3. Add a changeset with the deprecation information, including the prop name, the reason for deprecation, and the recommended alternative. The changeset should show contain a diff code block.
 
+### Render prop support
+
+Expose `render` when consumers need to compose a Salt component with another component, such as a routing link, or when changing the rendered element is a valid case-by-case escape hatch. Keep the default element semantically correct so most consumers do not need `render`.
+
+When adding `render` support to a component:
+
+1. Include `RenderPropsType` in the component props.
+2. Build the complete props object for the default element before calling `renderProps`. Include `className`, styles, event handlers, ARIA attributes, data attributes, `children`, and `ref`.
+3. Call `renderProps` at the boundary where the default element would otherwise be rendered.
+4. If behavior depends on props that a JSX render element can override, inspect the element returned by `renderProps` before deciding what to render. For example, external-link indicators should follow the final rendered `target`, not only the component's incoming `target` prop.
+5. Remember that JSX render elements are merged by Salt: event handlers are chained, `className` values are combined, `style` objects are shallow-merged, and the render element's other props win when provided.
+6. Remember that callback render functions control their own prop spreading. Salt passes the props, but the callback must apply them to the returned element.
+7. Add tests for the default element, JSX render elements, callback render functions, prop overrides that affect behavior, and ref or event-handler behavior when the component depends on them.
+
+Consumer-facing guidance should stay in the [render prop guide](./site/docs/getting-started/render-prop.mdx).
+
 ### Theming
 
 Additions and updates to the theme come from our designers. Any changes to the theme should have solid reasoning, be well-documented and follow clear steps for any necessary deprecation. All Salt theme tokens are prefixed with `--salt-`, followed by `-<characteristic | foundation>-`, and then the intent of the token: for example `--salt-actionable-cta-background`. For more information on tokens, see our [Theme docs](https://storybook.saltdesignsystem.com/?path=/docs/theme-about-the-salt-theme--docs). Tokens should align 100% with Figma to ensure ease of communication between designers and developers.
@@ -94,13 +110,15 @@ In `theme/css/deprecated/characteristics.css`, add these 3 tokens:
 
 - Most pull requests should have a related issue. This helps us track the changes, agree scope and ensures that the pull request is addressing a specific problem or feature.
 - Small pull requests are preferred, as they are easier to review and test. If you have a large change, consider breaking it down into smaller pull requests.
-- Pull requests should include tests for any new functionality or changes to existing functionality. These can either be behavioural tests using Cypress component tests or visual tests using Chromatic.
+- Pull requests should include tests for any new functionality or changes to existing functionality. These can either be behavioral tests using Cypress component tests or visual tests using Chromatic.
 - Pull request titles and commits should be written in the present tense, e.g. "Add new icon" or "Fix bug in component".
 - Each user-facing change should be documented in a changeset. The changeset should be written in past tense, e.g. "Added new icon" or "Fixed bug in component".
 - To help efficiency, please self-review your pull request before submitting it.
 - If your pull request is not ready for review, please mark it as a draft. This will help us avoid reviewing pull requests that are not ready.
 
 #### Chromatic
+
+<!-- cspell:ignore Turbosnap turbosnap -->
 
 ##### Pull requests
 

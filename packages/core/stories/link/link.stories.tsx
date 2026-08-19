@@ -1,5 +1,5 @@
 import { Link, Text } from "@salt-ds/core";
-import { StackoverflowIcon } from "@salt-ds/icons";
+import { type IconProps, TearOutIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import type { ComponentProps } from "react";
 
@@ -10,32 +10,39 @@ export default {
 
 const LinkTemplate: StoryFn<typeof Link> = (args) => <Link {...args} />;
 
+const CustomTearOutIcon = (props: IconProps) => (
+  <TearOutIcon {...props} data-testid="CustomTearOutIcon" />
+);
+
 export const Primary = LinkTemplate.bind({});
 Primary.args = {
   href: "https://github.com/salt-ds/core",
-  children: "Link to URL",
+  children: "View source",
 };
 
 export const Secondary = LinkTemplate.bind({});
 Secondary.args = {
   color: "secondary",
   href: "https://github.com/salt-ds/core",
-  children: "Link to URL",
+  children: "View source",
 };
 
 export const Accent = LinkTemplate.bind({});
 Accent.args = {
   color: "accent",
   href: "https://github.com/salt-ds/core",
-  children: "Link to URL",
+  children: "View source",
 };
 
 export const InheritColor: StoryFn<typeof Link> = (args) => {
   return (
     <Text color="error">
-      You've encountered an error{" "}
-      <Link href="https://github.com/salt-ds/core" color="inherit" {...args}>
-        (#5417)
+      <Link
+        href="/salt/components/form-field/accessibility"
+        color="inherit"
+        {...args}
+      >
+        Review validation guidance
       </Link>
     </Text>
   );
@@ -44,16 +51,18 @@ export const InheritColor: StoryFn<typeof Link> = (args) => {
 export const TargetBlank = LinkTemplate.bind({});
 TargetBlank.args = {
   href: "https://github.com/salt-ds/core",
-  children: "Link to URL",
+  children: "View source",
   target: "_blank",
+  rel: "noopener",
 };
 
 export const TargetBlankCustomIcon = LinkTemplate.bind({});
 TargetBlankCustomIcon.args = {
   href: "https://github.com/salt-ds/core",
-  children: "Link to URL",
+  children: "View source",
   target: "_blank",
-  IconComponent: StackoverflowIcon,
+  rel: "noopener",
+  IconComponent: CustomTearOutIcon,
 };
 
 export const Strong = LinkTemplate.bind({});
@@ -61,7 +70,7 @@ Strong.args = {
   href: "https://github.com/salt-ds/core",
   children: (
     <span>
-      This is a <strong>strong</strong> link example
+      View <strong>source</strong>
     </span>
   ),
 };
@@ -71,7 +80,7 @@ Small.args = {
   href: "https://github.com/salt-ds/core",
   children: (
     <span>
-      This is a <small>small</small> link example
+      View <small>source</small>
     </span>
   ),
 };
@@ -79,42 +88,35 @@ Small.args = {
 export const StyleAs = LinkTemplate.bind({});
 StyleAs.args = {
   href: "https://github.com/salt-ds/core",
-  children: "This is a styleAs label example",
+  children: "View source",
   styleAs: "label",
-};
-
-export const TargetBlankNoIcon = LinkTemplate.bind({});
-TargetBlankNoIcon.args = {
-  href: "https://github.com/salt-ds/core",
-  children: "This has no icon",
-  target: "_blank",
-  IconComponent: null,
 };
 
 export const Truncation: StoryFn<typeof Link> = (args) => {
   return (
     <div style={{ width: 150 }}>
-      <Link href="#root" maxRows={1} {...args}>
-        This is a truncation example
+      <Link href="https://github.com/salt-ds/core" maxRows={1} {...args}>
+        View Salt Core package source
       </Link>
     </div>
   );
 };
 
-const CustomLinkImplementation = (props: ComponentProps<"a">) => (
-  <a href="#root" aria-label={"overridden-label"} {...props}>
-    Your own Link implementation
-  </a>
-);
+const CustomLinkImplementation = ({
+  children,
+  ...props
+}: ComponentProps<"a">) => <a {...props}>{children}</a>;
 
 export const RenderElement = LinkTemplate.bind({});
 RenderElement.args = {
   href: "https://github.com/salt-ds/core",
+  children: "View source",
   render: <CustomLinkImplementation />,
 };
 
 export const RenderProp = LinkTemplate.bind({});
 RenderProp.args = {
   href: "https://github.com/salt-ds/core",
+  children: "View source",
   render: (props) => <CustomLinkImplementation {...props} />,
 };
