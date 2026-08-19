@@ -193,9 +193,10 @@ copied into a remote or shared service.
 
 Remote/shared authentication and tenant isolation remain the embedder's
 responsibility; the factory's allowed-root policy bounds intended inspection
-scope but is not an OS sandbox against hostile concurrent mutation. See
-[the packaged architecture guide](./CORE_ARCHITECTURE.md#local-filesystem-trust-model)
-for the complete model.
+scope but is not an OS sandbox against hostile concurrent mutation. See the
+[repository architecture guide](./CORE_ARCHITECTURE.md#local-filesystem-trust-model)
+for the complete model. Repository Markdown is not part of the published
+package.
 
 Submitted review is limited to 256 KiB per artifact, 512 KiB per call, 50,000
 AST/PostCSS nodes, depth 128, 10,000 normalized facts, and 250,000 rule

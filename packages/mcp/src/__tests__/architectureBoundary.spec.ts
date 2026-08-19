@@ -59,10 +59,13 @@ function collectModuleSpecifiers(filePath: string): string[] {
   return specifiers;
 }
 
-function collectRuntimeModuleSpecifiers(filePath: string): string[] {
+function collectRuntimeModuleSpecifiersFromSource(
+  sourceText: string,
+  filePath = "runtime-boundary-fixture.ts",
+): string[] {
   const source = ts.createSourceFile(
     filePath,
-    fs.readFileSync(filePath, "utf8"),
+    sourceText,
     ts.ScriptTarget.Latest,
     true,
   );
@@ -85,6 +88,19 @@ function collectRuntimeModuleSpecifiers(filePath: string): string[] {
       if (hasRuntimeBinding) specifiers.push(node.moduleSpecifier.text);
     }
     if (
+      ts.isExportDeclaration(node) &&
+      !node.isTypeOnly &&
+      node.moduleSpecifier &&
+      ts.isStringLiteral(node.moduleSpecifier)
+    ) {
+      const hasRuntimeExport =
+        !node.exportClause ||
+        ts.isNamespaceExport(node.exportClause) ||
+        (ts.isNamedExports(node.exportClause) &&
+          node.exportClause.elements.some((element) => !element.isTypeOnly));
+      if (hasRuntimeExport) specifiers.push(node.moduleSpecifier.text);
+    }
+    if (
       ts.isCallExpression(node) &&
       node.expression.kind === ts.SyntaxKind.ImportKeyword &&
       node.arguments.length === 1 &&
@@ -97,6 +113,13 @@ function collectRuntimeModuleSpecifiers(filePath: string): string[] {
 
   visit(source);
   return specifiers;
+}
+
+function collectRuntimeModuleSpecifiers(filePath: string): string[] {
+  return collectRuntimeModuleSpecifiersFromSource(
+    fs.readFileSync(filePath, "utf8"),
+    filePath,
+  );
 }
 
 function resolveSourceSpecifier(importer: string, specifier: string): string {
@@ -113,6 +136,22 @@ function isWithin(parent: string, target: string): boolean {
 }
 
 describe("MCP internal architecture boundary", () => {
+  it.each([
+    ['export { value } from "./module.js";', ["./module.js"]],
+    [
+      'export { type Model, value } from "./module.js";',
+      ["./module.js"],
+    ],
+    ['export * from "./module.js";', ["./module.js"]],
+    ['export * as module from "./module.js";', ["./module.js"]],
+    ['export type { Model } from "./module.js";', []],
+    ['export { type Model } from "./module.js";', []],
+    ['export type * from "./module.js";', []],
+    ['export {} from "./module.js";', []],
+  ])("classifies runtime re-export edges in %s", (source, expected) => {
+    expect(collectRuntimeModuleSpecifiersFromSource(source)).toEqual(expected);
+  });
+
   it("limits MCP SDK imports to the frozen adapter and host edge", () => {
     const allowed = new Set(
       [
@@ -174,6 +213,10 @@ describe("MCP internal architecture boundary", () => {
     }
 
     expect(violations).toEqual([]);
+    expect(visited).toContain(
+      path.join(CORE_ROOT, "review", "reviewSaltCode.ts"),
+    );
+    expect(visited).toContain(path.join(CORE_ROOT, "search", "searchSalt.ts"));
   });
 
   it("keeps the internal core independent from MCP transport and host concerns", () => {

@@ -3,6 +3,8 @@ export const CONSUMED_PATTERN_STORY_GLOB =
 
 const CONSUMED_PATTERN_STORY_PATTERN =
   /^packages\/[^/]+\/stories\/patterns\/.+\.stories\.tsx$/u;
+const PACKAGE_STORY_DIRECTORY_PATTERN =
+  /^packages\/[^/]+\/stories(?:\/|$)/u;
 
 export function isSemanticCatalogSourcePath(repoPath: string): boolean {
   const segments = repoPath.split("/");
@@ -12,8 +14,9 @@ export function isSemanticCatalogSourcePath(repoPath: string): boolean {
   ) {
     return false;
   }
-  if (/\.stories\.[^/]+$/u.test(repoPath)) {
+  if (PACKAGE_STORY_DIRECTORY_PATTERN.test(repoPath)) {
     return CONSUMED_PATTERN_STORY_PATTERN.test(repoPath);
   }
+  if (/\.stories\.[^/]+$/u.test(repoPath)) return false;
   return true;
 }

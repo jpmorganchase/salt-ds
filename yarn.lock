@@ -3561,7 +3561,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@modelcontextprotocol/server@npm:^2.0.0":
+"@modelcontextprotocol/server@npm:2.0.0":
   version: 2.0.0
   resolution: "@modelcontextprotocol/server@npm:2.0.0"
   dependencies:
@@ -4635,7 +4635,7 @@ __metadata:
     "@babel/traverse": "npm:^7.28.4"
     "@babel/types": "npm:^7.28.4"
     "@modelcontextprotocol/client": "npm:^2.0.0"
-    "@modelcontextprotocol/server": "npm:^2.0.0"
+    "@modelcontextprotocol/server": "npm:2.0.0"
     "@types/js-yaml": "npm:^4.0.9"
     "@types/micromatch": "npm:^4.0.10"
     "@types/node": "npm:^24.0.0"

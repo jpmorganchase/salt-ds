@@ -252,6 +252,165 @@ export { LinkCard } from "./${linkCardSourceDirectory}/index.js";
   );
 }
 
+const aliasScopeFixtures = [
+  {
+    route: "/salt/components/card",
+    title: "Card",
+    primaryExport: "Card",
+    primaryDirectory: "card",
+    aliases: [
+      ["InteractableCard", "interactable-card"],
+      ["InteractableCardGroup", "interactable-card"],
+      ["LinkCard", "link-card"],
+    ],
+  },
+  {
+    route: "/salt/components/layouts/border-layout",
+    title: "Border layout",
+    primaryExport: "BorderLayout",
+    primaryDirectory: "border-layout",
+    aliases: [["BorderItem", "border-item"]],
+  },
+  {
+    route: "/salt/components/layouts/flex-layout",
+    title: "Flex layout",
+    primaryExport: "FlexLayout",
+    primaryDirectory: "flex-layout",
+    aliases: [["FlexItem", "flex-item"]],
+  },
+  {
+    route: "/salt/components/layouts/grid-layout",
+    title: "Grid layout",
+    primaryExport: "GridLayout",
+    primaryDirectory: "grid-layout",
+    aliases: [["GridItem", "grid-item"]],
+  },
+  {
+    route: "/salt/components/list-box",
+    title: "List box",
+    primaryExport: "ListBox",
+    primaryDirectory: "list-box",
+    aliases: [
+      ["Option", "option"],
+      ["OptionGroup", "option"],
+    ],
+  },
+  {
+    route: "/salt/components/text",
+    title: "Text",
+    primaryExport: "Text",
+    primaryDirectory: "text",
+    aliases: [
+      ["Code", "text"],
+      ["Display1", "text"],
+      ["Display2", "text"],
+      ["Display3", "text"],
+      ["Display4", "text"],
+      ["H1", "text"],
+      ["H2", "text"],
+      ["H3", "text"],
+      ["H4", "text"],
+      ["Label", "text"],
+      ["TextAction", "text"],
+      ["TextNotation", "text"],
+    ],
+  },
+  {
+    route: "/salt/components/toggle-button",
+    title: "Toggle button",
+    primaryExport: "ToggleButton",
+    primaryDirectory: "toggle-button",
+    aliases: [["ToggleButtonGroup", "toggle-button-group"]],
+  },
+] as const;
+
+type AliasScopeFixture = (typeof aliasScopeFixtures)[number];
+const displacedAliasScopeFixtures = aliasScopeFixtures.flatMap((fixture) =>
+  fixture.aliases.map(([exportName, configuredDirectory]) => ({
+    fixture,
+    exportName,
+    configuredDirectory,
+  })),
+);
+
+async function writeAliasScopeFixture(
+  repoRoot: string,
+  fixture: AliasScopeFixture,
+  displacedAlias?: string,
+): Promise<void> {
+  const routeSuffix = fixture.route.slice("/salt/components/".length);
+  const docsDir = path.join(repoRoot, "site/docs/components", routeSuffix);
+  const sourceRoot = path.join(repoRoot, "packages/core/src");
+  await fs.mkdir(docsDir, { recursive: true });
+  await fs.writeFile(
+    path.join(repoRoot, "site/component-category-map.json"),
+    `${JSON.stringify(
+      {
+        meta: { componentCount: 1 },
+        components: {
+          fixture: { route: fixture.route, category: "Fixture" },
+        },
+      },
+      null,
+      2,
+    )}\n`,
+    "utf8",
+  );
+  await fs.writeFile(
+    path.join(docsDir, "index.mdx"),
+    `---
+layout: DetailComponent
+title: ${fixture.title}
+data:
+  package:
+    name: "@salt-ds/core"
+  description: Source-backed alias-scope fixture.
+  sourceCodeUrl: https://github.com/jpmorganchase/salt-ds/tree/main/packages/core/src/${fixture.primaryDirectory}
+---
+
+Source-backed alias-scope fixture.
+`,
+    "utf8",
+  );
+
+  const exportsByDirectory = new Map<string, string[]>([
+    [fixture.primaryDirectory, [fixture.primaryExport]],
+  ]);
+  for (const [exportName, configuredDirectory] of fixture.aliases) {
+    const directory =
+      exportName === displacedAlias
+        ? `outside-${exportName.toLowerCase()}`
+        : configuredDirectory;
+    const exports = exportsByDirectory.get(directory) ?? [];
+    exports.push(exportName);
+    exportsByDirectory.set(directory, exports);
+  }
+
+  const rootExports: string[] = [];
+  for (const [directory, exportNames] of exportsByDirectory) {
+    const sourceDirectory = path.join(sourceRoot, directory);
+    await fs.mkdir(sourceDirectory, { recursive: true });
+    await fs.writeFile(
+      path.join(sourceDirectory, "index.tsx"),
+      `${exportNames
+        .map(
+          (exportName) =>
+            `export function ${exportName}() { return null; }`,
+        )
+        .join("\n")}\n`,
+      "utf8",
+    );
+    rootExports.push(
+      `export { ${exportNames.join(", ")} } from "./${directory}/index.js";`,
+    );
+  }
+  await fs.writeFile(
+    path.join(sourceRoot, "index.ts"),
+    `${rootExports.join("\n")}\n`,
+    "utf8",
+  );
+}
+
 describe("component registry extraction", () => {
   it("omits private workspace packages from the public registry", async () => {
     const repoRoot = await fs.mkdtemp(
@@ -398,6 +557,58 @@ export function BasicFixtureAction() {
       await fs.rm(repoRoot, { recursive: true, force: true });
     }
   });
+
+  it.each(aliasScopeFixtures)(
+    "resolves every MCP alias for $route within its configured public scope",
+    async (fixture) => {
+      const repoRoot = await fs.mkdtemp(
+        path.join(os.tmpdir(), "salt-component-alias-scope-positive-"),
+      );
+      try {
+        await writeAliasScopeFixture(repoRoot, fixture);
+        const [component] = await extractComponents(
+          repoRoot,
+          new Map([["@salt-ds/core", buildCoreFixturePackage()]]),
+          { byPackage: new Map() },
+        );
+        expect(component.aliases).toEqual(
+          fixture.aliases.map(([exportName]) => exportName),
+        );
+      } finally {
+        await fs.rm(repoRoot, { recursive: true, force: true });
+      }
+    },
+  );
+
+  it.each(displacedAliasScopeFixtures)(
+    "rejects displaced $exportName evidence outside its authored scope",
+    async ({ fixture, exportName, configuredDirectory }) => {
+      const repoRoot = await fs.mkdtemp(
+        path.join(os.tmpdir(), "salt-component-alias-scope-negative-"),
+      );
+      try {
+        await writeAliasScopeFixture(repoRoot, fixture, exportName);
+        const escapedScope = `packages/core/src/${configuredDirectory}`.replace(
+          /[.*+?^${}()|[\]\\]/gu,
+          "\\$&",
+        );
+        await expect(
+          extractComponents(
+            repoRoot,
+            new Map([["@salt-ds/core", buildCoreFixturePackage()]]),
+            { byPackage: new Map() },
+          ),
+        ).rejects.toThrow(
+          new RegExp(
+            `export alias '${exportName}' is not a unique public value export within its MCP source path '${escapedScope}'`,
+            "u",
+          ),
+        );
+      } finally {
+        await fs.rm(repoRoot, { recursive: true, force: true });
+      }
+    },
+  );
 
   it("rejects legacy component export-alias frontmatter", async () => {
     const repoRoot = await fs.mkdtemp(

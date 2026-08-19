@@ -2,6 +2,10 @@ import { describe, expect, it } from "vitest";
 import type { CatalogStoreV2 } from "../../catalog/catalogStoreV2.js";
 import type { ProjectConventions } from "../../policy/index.js";
 import { compileSaltProjectPolicyIrV2 } from "../../policy/projectPolicyIr.js";
+import {
+  jsonUtf8Bytes,
+  MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES,
+} from "../../publicResultBudget.js";
 import type {
   ComponentRecord,
   DeprecationRecord,
@@ -1234,6 +1238,100 @@ describe("bounded public review", () => {
         .map((decision) => decision.location.start_offset)
         .sort((left, right) => left - right),
     );
+  });
+
+  it("finalizes mixed eight-artifact omissions inside the structured budget", () => {
+    const variantDeprecation = deprecation({
+      id: "button.variant.deprecation",
+      kind: "prop",
+      name: "variant",
+      deprecated_in: "1.36.0",
+      removed_in: null,
+      replacement: {
+        mode: "none",
+        target: null,
+        targets: [],
+        type: null,
+        name: null,
+        notes: null,
+      },
+      subject: {
+        package: "@salt-ds/core",
+        entrypoint: ".",
+        export_name: "ButtonProps",
+        symbol_space: "type",
+        member_path: [{ kind: "prop", name: "variant" }],
+      },
+    });
+    const artifacts = Array.from({ length: 8 }, (_, artifactIndex) => ({
+      id:
+        artifactIndex === 0
+          ? "mixed-0"
+          : `mixed-${artifactIndex}-${"x".repeat(165)}`,
+      language: "tsx" as const,
+      text: [
+        'import { Button } from "@salt-ds/core";',
+        "export const Demo = () => <>",
+        ...Array.from(
+          { length: 80 },
+          (_, useIndex) =>
+            `<Button key={${useIndex}} href="/next" variant="primary" />`,
+        ),
+        "</>;",
+      ].join("\n"),
+    }));
+    const fixtureRegistry = registry({ deprecations: [variantDeprecation] });
+    const input = {
+      package_versions: { "@salt-ds/core": "1.35.0" },
+      max_findings: 50,
+      artifacts,
+    };
+
+    const result = reviewSaltCode(fixtureRegistry, input);
+    const repeated = reviewSaltCode(fixtureRegistry, input);
+    const returnedFindings = result.data.results.reduce(
+      (total, artifact) => total + artifact.findings.length,
+      0,
+    );
+    const returnedDecisions = result.data.results.reduce(
+      (total, artifact) => total + artifact.version_decisions.length,
+      0,
+    );
+
+    expect(repeated).toEqual(result);
+    expect(jsonUtf8Bytes(result)).toBeLessThanOrEqual(
+      MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES,
+    );
+    expect(result.coverage).toMatchObject({
+      detected_findings: 640,
+      returned_findings: returnedFindings,
+      detected_nonfinding_version_decisions: 640,
+      returned_nonfinding_version_decisions: returnedDecisions,
+      truncated: true,
+    });
+    expect(returnedFindings).toBeGreaterThan(0);
+    expect(result.coverage.result_budget.omissions).toEqual([
+      { section: "findings", available: 640, returned: returnedFindings },
+      {
+        section: "version_decisions",
+        available: 640,
+        returned: returnedDecisions,
+      },
+    ]);
+    for (const artifact of result.data.results) {
+      expect(artifact.coverage).toMatchObject({
+        detected_findings: 80,
+        detected_nonfinding_version_decisions: 80,
+        returned_findings: artifact.findings.length,
+        returned_nonfinding_version_decisions:
+          artifact.version_decisions.length,
+        truncated: true,
+        nonfinding_version_decisions_truncated: true,
+      });
+      expect(artifact.limitations.join(" ")).toMatch(
+        /Returned \d+ of 80 findings.*Returned \d+ of 80 non-finding version decisions/iu,
+      );
+    }
   });
 
   it("labels exact current package decisions without claiming historical completeness", () => {

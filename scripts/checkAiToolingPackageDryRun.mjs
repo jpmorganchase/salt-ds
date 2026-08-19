@@ -63,8 +63,6 @@ const packages = [
     dir: "dist/salt-ds-mcp",
     requiredPaths: [
       "package.json",
-      "README.md",
-      "CORE_ARCHITECTURE.md",
       "bin/salt-mcp.js",
       "generated",
       "dist-cjs",
@@ -73,7 +71,6 @@ const packages = [
     ],
     expectedFilesField: [
       "bin",
-      "CORE_ARCHITECTURE.md",
       "generated",
       "dist-cjs",
       "dist-es",
@@ -85,11 +82,14 @@ const packages = [
       "publishTypingEntryPath",
       "publishTypingEntryOnly",
       "publishPreserveModules",
+      "publishIncludeReadme",
+      "saltDocs",
       "typescriptInclude",
       "typescriptRootDir",
     ],
     forbiddenPublishConfigFields: ["directory"],
     forbiddenPublishedDependencies: ["@salt-ds/semantic-core", "get-tsconfig"],
+    expectedExactDependencies: { "@modelcontextprotocol/server": "2.0.0" },
     expectedDeclarationFiles: ["dist-types/index.d.ts"],
     forbiddenDeclarationImports: ["@salt-ds/semantic-core"],
     expectedModuleMarkers: {
@@ -97,6 +97,7 @@ const packages = [
       "dist-es/package.json": "module",
     },
     expectedBundleFiles: {
+      bin: ["salt-mcp.js"],
       "dist-cjs": ["index.js", "package.json"],
       "dist-es": ["index.js", "package.json"],
     },
@@ -104,8 +105,6 @@ const packages = [
     publishedBin: "bin/salt-mcp.js",
     allowedTopLevelPaths: [
       "LICENSE",
-      "README.md",
-      "CORE_ARCHITECTURE.md",
       "bin",
       "dist-cjs",
       "dist-es",
@@ -516,6 +515,17 @@ function assertBuiltManifest(packageConfig, packageDir) {
     ) {
       fail(
         `${packageConfig.name} built manifest includes unresolved workspace dependency ${dependencyName}@${dependencyVersion}`,
+      );
+    }
+  }
+
+  for (const [dependencyName, expectedVersion] of Object.entries(
+    packageConfig.expectedExactDependencies ?? {},
+  )) {
+    const actualVersion = manifest.dependencies?.[dependencyName];
+    if (actualVersion !== expectedVersion) {
+      fail(
+        `${packageConfig.name} built dependency ${dependencyName} is ${String(actualVersion)}, expected exactly ${expectedVersion}`,
       );
     }
   }
@@ -1100,6 +1110,9 @@ for (const packageConfig of packages) {
     }
 
     for (const filePath of paths) {
+      if (/\.(?:md|mdx|markdown)$/iu.test(filePath)) {
+        fail(`${packageConfig.name} pack includes Markdown: ${filePath}`);
+      }
       const topLevelPath = filePath.split("/")[0];
       if (
         Array.isArray(packageConfig.allowedTopLevelPaths) &&

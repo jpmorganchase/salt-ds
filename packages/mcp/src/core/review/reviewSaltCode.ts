@@ -527,17 +527,6 @@ export function reviewSaltCode(
       project_policy_digest: policy?.digest ?? null,
     },
   };
-  const findingsOmission = response.coverage.result_budget.omissions.find(
-    (entry) => entry.section === "findings",
-  );
-  const versionDecisionsOmission =
-    response.coverage.result_budget.omissions.find(
-      (entry) => entry.section === "version_decisions",
-    );
-  if (!findingsOmission || !versionDecisionsOmission) {
-    throw new Error("Review result budget omission counters are unavailable.");
-  }
-
   const severityRank = { error: 0, warning: 1, info: 2 } as const;
   const prioritizedFindings = analyzedResults
     .flatMap((result, resultIndex) =>
@@ -554,28 +543,18 @@ export function reviewSaltCode(
         left.resultIndex - right.resultIndex ||
         left.findingIndex - right.findingIndex,
     );
-  let returnedFindings = 0;
-  for (const { finding, resultIndex } of prioritizedFindings) {
-    if (returnedFindings >= maxFindings) break;
+  const acceptedEntries: Array<{
+    section: "findings" | "version_decisions";
+    resultIndex: number;
+  }> = [];
+  for (const { finding, resultIndex } of prioritizedFindings.slice(
+    0,
+    maxFindings,
+  )) {
     const target = response.data.results[resultIndex];
     if (!target) continue;
     target.findings.push(finding);
-    target.coverage.returned_findings += 1;
-    response.coverage.returned_findings = returnedFindings + 1;
-    findingsOmission.returned = returnedFindings + 1;
-    if (
-      jsonUtf8Bytes(response) >
-        MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES - 1_024 ||
-      measureFinalResultUtf8Bytes(response) >
-        MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES - 1_024
-    ) {
-      target.findings.pop();
-      target.coverage.returned_findings -= 1;
-      response.coverage.returned_findings = returnedFindings;
-      findingsOmission.returned = returnedFindings;
-      break;
-    }
-    returnedFindings += 1;
+    acceptedEntries.push({ section: "findings", resultIndex });
   }
 
   const prioritizedVersionDecisions = analyzedResults.flatMap(
@@ -585,85 +564,126 @@ export function reviewSaltCode(
         resultIndex,
       })),
   );
-  let returnedVersionDecisions = 0;
-  for (const { decision, resultIndex } of prioritizedVersionDecisions) {
-    if (returnedVersionDecisions >= MAX_REVIEW_NONFINDING_VERSION_DECISIONS) {
-      break;
-    }
+  for (const { decision, resultIndex } of prioritizedVersionDecisions.slice(
+    0,
+    MAX_REVIEW_NONFINDING_VERSION_DECISIONS,
+  )) {
     const target = response.data.results[resultIndex];
     if (!target) continue;
     target.version_decisions.push(decision);
-    target.coverage.returned_nonfinding_version_decisions += 1;
-    response.coverage.returned_nonfinding_version_decisions =
-      returnedVersionDecisions + 1;
-    versionDecisionsOmission.returned = returnedVersionDecisions + 1;
-    if (
-      jsonUtf8Bytes(response) >
-        MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES - 1_024 ||
-      measureFinalResultUtf8Bytes(response) >
-        MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES - 1_024
-    ) {
-      target.version_decisions.pop();
-      target.coverage.returned_nonfinding_version_decisions -= 1;
-      response.coverage.returned_nonfinding_version_decisions =
-        returnedVersionDecisions;
-      versionDecisionsOmission.returned = returnedVersionDecisions;
-      break;
-    }
-    returnedVersionDecisions += 1;
+    acceptedEntries.push({ section: "version_decisions", resultIndex });
   }
 
-  const findingsTruncated = returnedFindings < detectedFindings;
-  const versionDecisionsTruncated =
-    returnedVersionDecisions < detectedNonFindingVersionDecisions;
-  const truncated = findingsTruncated || versionDecisionsTruncated;
-  response.coverage.truncated = truncated;
-  response.coverage.nonfinding_version_decisions_truncated =
-    versionDecisionsTruncated;
-  response.coverage.result_budget.truncated = truncated;
-  response.coverage.result_budget.omissions =
-    response.coverage.result_budget.omissions.filter(
-      (entry) => entry.returned < entry.available,
+  const baseLimitations = [...response.limitations];
+  const baseResultLimitations = response.data.results.map((result) => [
+    ...result.limitations,
+  ]);
+  const finalizeSelection = (): void => {
+    const returnedFindings = response.data.results.reduce(
+      (total, result) => total + result.findings.length,
+      0,
     );
-  if (findingsTruncated) {
-    response.limitations.push(
-      `The public result returned ${returnedFindings} of ${detectedFindings} findings because of the aggregate finding or response budget.`,
+    const returnedVersionDecisions = response.data.results.reduce(
+      (total, result) => total + result.version_decisions.length,
+      0,
     );
-  }
-  if (versionDecisionsTruncated) {
-    response.limitations.push(
-      `The public result returned ${returnedVersionDecisions} of ${detectedNonFindingVersionDecisions} non-finding version decisions because of the 50-decision or response budget.`,
-    );
-  }
-  for (const result of response.data.results) {
-    result.coverage.nonfinding_version_decisions_truncated =
-      result.coverage.returned_nonfinding_version_decisions <
-      result.coverage.detected_nonfinding_version_decisions;
-    result.coverage.truncated =
-      result.coverage.returned_findings < result.coverage.detected_findings ||
-      result.coverage.nonfinding_version_decisions_truncated;
-    if (result.coverage.returned_findings < result.coverage.detected_findings) {
-      result.limitations.push(
-        `Returned ${result.coverage.returned_findings} of ${result.coverage.detected_findings} findings for this artifact.`,
-      );
+    const findingsTruncated = returnedFindings < detectedFindings;
+    const versionDecisionsTruncated =
+      returnedVersionDecisions < detectedNonFindingVersionDecisions;
+    const truncated = findingsTruncated || versionDecisionsTruncated;
+
+    response.coverage.returned_findings = returnedFindings;
+    response.coverage.returned_nonfinding_version_decisions =
+      returnedVersionDecisions;
+    response.coverage.nonfinding_version_decisions_truncated =
+      versionDecisionsTruncated;
+    response.coverage.truncated = truncated;
+    response.coverage.result_budget.truncated = truncated;
+    response.coverage.result_budget.omissions = [
+      ...(findingsTruncated
+        ? [
+            {
+              section: "findings",
+              available: detectedFindings,
+              returned: returnedFindings,
+            },
+          ]
+        : []),
+      ...(versionDecisionsTruncated
+        ? [
+            {
+              section: "version_decisions",
+              available: detectedNonFindingVersionDecisions,
+              returned: returnedVersionDecisions,
+            },
+          ]
+        : []),
+    ];
+    response.limitations = [
+      ...baseLimitations,
+      ...(findingsTruncated
+        ? [
+            `The public result returned ${returnedFindings} of ${detectedFindings} findings because of the aggregate finding or response budget.`,
+          ]
+        : []),
+      ...(versionDecisionsTruncated
+        ? [
+            `The public result returned ${returnedVersionDecisions} of ${detectedNonFindingVersionDecisions} non-finding version decisions because of the 50-decision or response budget.`,
+          ]
+        : []),
+    ];
+
+    for (const [resultIndex, result] of response.data.results.entries()) {
+      result.coverage.returned_findings = result.findings.length;
+      result.coverage.returned_nonfinding_version_decisions =
+        result.version_decisions.length;
+      result.coverage.nonfinding_version_decisions_truncated =
+        result.version_decisions.length <
+        result.coverage.detected_nonfinding_version_decisions;
+      result.coverage.truncated =
+        result.findings.length < result.coverage.detected_findings ||
+        result.coverage.nonfinding_version_decisions_truncated;
+      result.limitations = [
+        ...(baseResultLimitations[resultIndex] ?? []),
+        ...(result.findings.length < result.coverage.detected_findings
+          ? [
+              `Returned ${result.findings.length} of ${result.coverage.detected_findings} findings for this artifact.`,
+            ]
+          : []),
+        ...(result.coverage.nonfinding_version_decisions_truncated
+          ? [
+              `Returned ${result.version_decisions.length} of ${result.coverage.detected_nonfinding_version_decisions} non-finding version decisions for this artifact.`,
+            ]
+          : []),
+      ];
     }
-    if (result.coverage.nonfinding_version_decisions_truncated) {
-      result.limitations.push(
-        `Returned ${result.coverage.returned_nonfinding_version_decisions} of ${result.coverage.detected_nonfinding_version_decisions} non-finding version decisions for this artifact.`,
-      );
-    }
-  }
-  if (jsonUtf8Bytes(response) > MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES) {
-    throw new Error(
-      "review_salt_code could not fit its mandatory result skeleton within the structured-content budget.",
-    );
-  }
-  if (
+  };
+
+  finalizeSelection();
+  while (
+    jsonUtf8Bytes(response) > MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES ||
     measureFinalResultUtf8Bytes(response) > MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES
   ) {
-    throw new Error(
-      "review_salt_code could not fit its mandatory result skeleton within the public wire budget.",
-    );
+    const removedEntry = acceptedEntries.pop();
+    if (!removedEntry) {
+      if (
+        jsonUtf8Bytes(response) > MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES
+      ) {
+        throw new Error(
+          "review_salt_code could not fit its mandatory result skeleton within the structured-content budget.",
+        );
+      }
+      throw new Error(
+        "review_salt_code could not fit its mandatory result skeleton within the public wire budget.",
+      );
+    }
+    const target = response.data.results[removedEntry.resultIndex];
+    if (!target) {
+      throw new Error("Review result selection lost its target artifact.");
+    }
+    if (removedEntry.section === "findings") target.findings.pop();
+    else target.version_decisions.pop();
+    finalizeSelection();
   }
   return response;
 }

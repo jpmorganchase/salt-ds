@@ -1,8 +1,14 @@
-import type { McpServer } from "@modelcontextprotocol/server";
+import type {
+  Implementation,
+  McpServer,
+  ServerContext,
+} from "@modelcontextprotocol/server";
 import {
   adaptSaltToolResult,
+  createSaltToolWireContext,
   MAX_SEARCH_TOOL_RESULT_UTF8_BYTES,
-  measureNonSearchToolResultUtf8Bytes,
+  measureSaltToolBaseResultFrameUtf8Bytes,
+  type SaltToolWireContext,
 } from "./responseAdapters.js";
 import {
   inspectSaltProjectOperation,
@@ -31,6 +37,7 @@ function validateAndAdapt(
     ): { success: true; data: unknown } | { success: false };
   },
   payload: unknown,
+  wireContext: SaltToolWireContext,
 ) {
   const validated = outputValidationSchema.safeParse(payload);
   if (!validated.success || !isRecord(validated.data)) {
@@ -38,17 +45,44 @@ function validateAndAdapt(
       `${name} returned a result that failed its strict internal output contract.`,
     );
   }
-  return adaptSaltToolResult(name, validated.data);
+  return adaptSaltToolResult(name, validated.data, wireContext);
+}
+
+type SaltToolRegistrationContext = Omit<
+  SaltToolOperationContext,
+  "measureFinalResultUtf8Bytes"
+>;
+
+function requestOperationContext(
+  context: SaltToolRegistrationContext,
+  name: SaltToolName,
+  serverContext: ServerContext,
+  serverInfo: Implementation,
+): { operationContext: SaltToolOperationContext; wireContext: SaltToolWireContext } {
+  const wireContext = createSaltToolWireContext(serverContext, serverInfo);
+  return {
+    wireContext,
+    operationContext: {
+      ...context,
+      measureFinalResultUtf8Bytes(payload) {
+        if (!isRecord(payload)) {
+          throw new Error(`${name} produced a non-object public payload.`);
+        }
+        return measureSaltToolBaseResultFrameUtf8Bytes(
+          name,
+          payload,
+          wireContext,
+        );
+      },
+    },
+  };
 }
 
 export function registerSaltTools(
   server: McpServer,
-  context: Omit<SaltToolOperationContext, "measureFinalResultUtf8Bytes">,
+  context: SaltToolRegistrationContext,
+  serverInfo: Implementation,
 ): void {
-  const operationContext: SaltToolOperationContext = {
-    ...context,
-    measureFinalResultUtf8Bytes: measureNonSearchToolResultUtf8Bytes,
-  };
   server.registerTool(
     SEARCH_TOOL_DEFINITION.name,
     {
@@ -57,12 +91,20 @@ export function registerSaltTools(
       outputSchema: SEARCH_TOOL_DEFINITION.outputSchema,
       annotations: SEARCH_TOOL_DEFINITION.annotations,
     },
-    async (input) =>
-      validateAndAdapt(
+    async (input, serverContext) => {
+      const { operationContext, wireContext } = requestOperationContext(
+        context,
+        SEARCH_TOOL_DEFINITION.name,
+        serverContext,
+        serverInfo,
+      );
+      return validateAndAdapt(
         SEARCH_TOOL_DEFINITION.name,
         SEARCH_TOOL_DEFINITION.outputValidationSchema,
         await searchSaltOperation(operationContext, input),
-      ),
+        wireContext,
+      );
+    },
   );
   server.registerTool(
     INSPECT_TOOL_DEFINITION.name,
@@ -72,12 +114,20 @@ export function registerSaltTools(
       outputSchema: INSPECT_TOOL_DEFINITION.outputSchema,
       annotations: INSPECT_TOOL_DEFINITION.annotations,
     },
-    async (input) =>
-      validateAndAdapt(
+    async (input, serverContext) => {
+      const { operationContext, wireContext } = requestOperationContext(
+        context,
+        INSPECT_TOOL_DEFINITION.name,
+        serverContext,
+        serverInfo,
+      );
+      return validateAndAdapt(
         INSPECT_TOOL_DEFINITION.name,
         INSPECT_TOOL_DEFINITION.outputValidationSchema,
         await inspectSaltProjectOperation(operationContext, input),
-      ),
+        wireContext,
+      );
+    },
   );
   server.registerTool(
     REVIEW_TOOL_DEFINITION.name,
@@ -87,11 +137,19 @@ export function registerSaltTools(
       outputSchema: REVIEW_TOOL_DEFINITION.outputSchema,
       annotations: REVIEW_TOOL_DEFINITION.annotations,
     },
-    async (input) =>
-      validateAndAdapt(
+    async (input, serverContext) => {
+      const { operationContext, wireContext } = requestOperationContext(
+        context,
+        REVIEW_TOOL_DEFINITION.name,
+        serverContext,
+        serverInfo,
+      );
+      return validateAndAdapt(
         REVIEW_TOOL_DEFINITION.name,
         REVIEW_TOOL_DEFINITION.outputValidationSchema,
         await reviewSaltCodeOperation(operationContext, input),
-      ),
+        wireContext,
+      );
+    },
   );
 }

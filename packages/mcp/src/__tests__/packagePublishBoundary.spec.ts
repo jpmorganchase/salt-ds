@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import fs from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -58,7 +58,9 @@ type PackageManifest = {
       }
   >;
   publishPreserveModules?: boolean;
+  publishIncludeReadme?: boolean;
   publishScriptExcludes?: string[];
+  saltDocs?: unknown;
   publishTypingEntryPath?: string;
   publishTypingEntryOnly?: boolean;
   typescriptInclude?: string[];
@@ -135,7 +137,7 @@ describe("package publish boundaries", () => {
     };
 
     expect(dependencies).not.toHaveProperty("@modelcontextprotocol/sdk");
-    expect(dependencies["@modelcontextprotocol/server"]).toMatch(/^\^2\./u);
+    expect(dependencies["@modelcontextprotocol/server"]).toBe("2.0.0");
     expect(dependencies["@modelcontextprotocol/client"]).toMatch(/^\^2\./u);
   });
 
@@ -492,7 +494,9 @@ describe("package publish boundaries", () => {
 
     expect(manifest.publishConfig?.directory).toBe("../../dist/salt-ds-mcp");
     expect(manifest.engines?.node).toBe(">=22");
-    expect(manifest.files).toEqual(["bin", "CORE_ARCHITECTURE.md"]);
+    expect(manifest.files).toEqual(["bin"]);
+    expect(manifest.publishIncludeReadme).toBe(false);
+    expect(manifest.saltDocs).toBeUndefined();
     expect(manifest.typescriptInclude).toEqual(["src/index.ts"]);
     expect(manifest.publishEntryPath).toBeUndefined();
     expect(manifest.publishTypingEntryPath).toBeUndefined();
@@ -509,6 +513,12 @@ describe("package publish boundaries", () => {
     expect(manifest.dependencies?.["js-yaml"]).toMatch(/^\^4\./u);
     expect(manifest.dependencies?.postcss).toMatch(/^\^8\./u);
     expect(manifest.dependencies?.["@types/node"]).toMatch(/^\^24\./u);
+    expect(manifest.dependencies?.["@modelcontextprotocol/server"]).toBe(
+      "2.0.0",
+    );
+    expect(readdirSync(new URL("../../bin", import.meta.url)).sort()).toEqual([
+      "salt-mcp.js",
+    ]);
     expect(manifest.publishBinEntrypoints).toEqual({
       "bin/salt-mcp.js": {
         requirePath: "../dist-cjs/index.js",

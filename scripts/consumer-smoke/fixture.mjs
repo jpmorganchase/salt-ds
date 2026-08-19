@@ -872,52 +872,6 @@ export async function verifyInstalledMcpTypes(rootDir) {
   );
 }
 
-export async function verifyPackedReadmeLocalLinks(installedPackageDir) {
-  const readmePath = path.join(installedPackageDir, "README.md");
-  const readme = await fs.readFile(readmePath, "utf8");
-  const links = [...readme.matchAll(/\]\(([^)]+)\)/gu)].map(
-    (match) => match[1],
-  );
-  let localTargetsVerified = 0;
-  let externalUrlsNotFetched = 0;
-  for (const link of links) {
-    if (/^(?:https?:|mailto:)/iu.test(link)) {
-      externalUrlsNotFetched += 1;
-      continue;
-    }
-    if (link.startsWith("#")) continue;
-    assert(
-      !/^[a-z][a-z0-9+.-]*:/iu.test(link),
-      `Packed README link uses an unsupported URI scheme: ${link}`,
-    );
-    const target = path.resolve(
-      installedPackageDir,
-      decodeURIComponent(link.split("#", 1)[0]),
-    );
-    const relative = path.relative(installedPackageDir, target);
-    assert(
-      relative === "" ||
-        (!relative.startsWith(`..${path.sep}`) &&
-          relative !== ".." &&
-          !path.isAbsolute(relative)),
-      `Packed README link escapes the installed package: ${link}`,
-    );
-    assert(
-      await pathExists(target),
-      `Packed README link does not exist in the installed package: ${link}`,
-    );
-    localTargetsVerified += 1;
-  }
-  assert(
-    localTargetsVerified > 0,
-    "Packed README must link to at least one package-local target.",
-  );
-  return {
-    local_targets_verified: localTargetsVerified,
-    external_urls_not_fetched: externalUrlsNotFetched,
-  };
-}
-
 export async function verifyInstalledMcpModuleExports(rootDir, projectRoot) {
   const probePath = path.join(
     repoRoot,
@@ -984,10 +938,6 @@ export async function runInstalledMcpModuleProbe(rootDir, projectRoot) {
     "node_modules",
     "@salt-ds",
     "mcp",
-  );
-  const readmeLinks = await verifyPackedReadmeLocalLinks(installedPackageDir);
-  console.log(
-    `Verified ${readmeLinks.local_targets_verified} package-local README target(s); ${readmeLinks.external_urls_not_fetched} external URL(s) were not fetched.`,
   );
   const require = createRequire(import.meta.url);
   await import(offlineNetworkGuardUrl);
