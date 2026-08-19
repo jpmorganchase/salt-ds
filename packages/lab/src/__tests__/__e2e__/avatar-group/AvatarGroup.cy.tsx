@@ -26,7 +26,7 @@ describe("Given an AvatarGroup", () => {
       <AvatarGroup>
         <Avatar name="Alex Brailescu" />
         <Avatar name="Peter Piper" />
-        <AvatarGroupCount name="2 more">+2</AvatarGroupCount>
+        <AvatarGroupCount aria-label="2 more">+2</AvatarGroupCount>
       </AvatarGroup>,
     );
 
@@ -64,7 +64,7 @@ describe("Given an AvatarGroup", () => {
     cy.mount(
       <AvatarGroup render={renderSpy}>
         <Avatar name="Alex Brailescu" />
-        <AvatarGroupCount name="1 more">+1</AvatarGroupCount>
+        <AvatarGroupCount aria-label="1 more">+1</AvatarGroupCount>
       </AvatarGroup>,
     );
 

@@ -16,6 +16,6 @@ A non-interactive avatar group is exposed with `role="group"`. Give it an access
 
 When you use the `render` prop, the group role isn’t applied, so the element you provide keeps its own semantics — a button is announced as a button rather than a group.
 
-The count indicator is an `AvatarGroupCount`. Give it a meaningful `name` (for example, “3 more”) so that assistive technology users are aware of how many additional members are hidden, while its children (for example, “+3”) provide the visible label.
+The count indicator is an `AvatarGroupCount`. Give it a meaningful `aria-label` (for example, “3 more”) so that assistive technology users are aware of how many additional members are hidden, while its children (for example, “+3”) provide the visible label.
 
 When an avatar group is interactive, provide a descriptive accessible name (for example, “Team members”) so screen reader users understand what action will occur when it is activated.

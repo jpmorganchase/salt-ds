@@ -19,7 +19,7 @@ export const Default: StoryFn<typeof AvatarGroup> = (args) => {
       <Avatar name="Alex Brailescu" src={persona1} />
       <Avatar name="Peter Piper" color="category-2" />
       <Avatar name="John Doe" color="category-3" />
-      <AvatarGroupCount name="1 more">+1</AvatarGroupCount>
+      <AvatarGroupCount aria-label="1 more">+1</AvatarGroupCount>
     </AvatarGroup>
   );
 };
@@ -33,7 +33,7 @@ export const RenderProp: StoryFn<typeof AvatarGroup> = (args) => {
       <Avatar name="Alex Brailescu" src={persona1} />
       <Avatar name="Peter Piper" color="category-2" />
       <Avatar name="John Doe" color="category-3" />
-      <AvatarGroupCount name="1 more">+1</AvatarGroupCount>
+      <AvatarGroupCount aria-label="1 more">+1</AvatarGroupCount>
     </AvatarGroup>
   );
 };

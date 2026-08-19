@@ -1,6 +1,6 @@
-import { Avatar, makePrefixer } from "@salt-ds/core";
+import { Avatar, type AvatarProps, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
+import { forwardRef, type HTMLAttributes } from "react";
 
 export interface AvatarGroupCountProps
   /**
@@ -12,12 +12,13 @@ export interface AvatarGroupCountProps
   /**
    * The visible label of the count, for example `+3`.
    */
-  children: ReactNode;
+  children: string;
   /**
-   * The accessible name of the count, describing the members that aren't
-   * displayed, for example `3 more`.
+   * Matches the shape of the avatars the count summarizes.
+   *
+   * @default "person"
    */
-  name: string;
+  kind?: AvatarProps["kind"];
 }
 
 const withBaseName = makePrefixer("saltAvatarGroupCount");
@@ -25,12 +26,12 @@ const withBaseName = makePrefixer("saltAvatarGroupCount");
 export const AvatarGroupCount = forwardRef<
   HTMLDivElement,
   AvatarGroupCountProps
->(function AvatarGroupCount({ children, className, name, ...rest }, ref) {
+>(function AvatarGroupCount({ children, className, ...rest }, ref) {
   return (
     <Avatar
+      role="img"
       ref={ref}
       className={clsx(withBaseName(), className)}
-      name={name}
       {...rest}
     >
       {children}
