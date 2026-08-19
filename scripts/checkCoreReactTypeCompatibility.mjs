@@ -17,13 +17,16 @@ const repositoryResolutionAnchor = path.join(
   "scripts",
   "core-react-type-compatibility-anchor.ts",
 );
+const REACT_TYPES_FLOOR_VERSION = "18.3.0";
+const REACT_TYPES_PEER_RANGE = `>=${REACT_TYPES_FLOOR_VERSION}`;
+const RUNTIME_REACT_PEER_RANGE = ">=16.14.0";
 const fixtures = [
   {
     label: "React type-definition advertised floor",
     reactAlias: "react-types-floor-fixture",
     reactDomAlias: "react-dom-types-floor-fixture",
-    reactDomVersion: "18.3.0",
-    reactVersion: "18.3.0",
+    reactDomVersion: REACT_TYPES_FLOOR_VERSION,
+    reactVersion: REACT_TYPES_FLOOR_VERSION,
   },
   {
     label: "React 18 repository current",
@@ -80,6 +83,30 @@ async function readExactPackageManifest(
     fail(
       `${packageRoot} resolved ${String(manifest.name)}@${String(manifest.version)}; expected ${expectedName}@${expectedVersion}.`,
     );
+  }
+}
+
+async function assertPublishedReactPeerContract(packageRoot, expectedName) {
+  const manifest = JSON.parse(
+    await fs.readFile(path.join(packageRoot, "package.json"), "utf8"),
+  );
+  if (manifest.name !== expectedName) {
+    fail(
+      `${packageRoot} resolved ${String(manifest.name)}; expected ${expectedName}.`,
+    );
+  }
+  const expectedPeers = {
+    "@types/react": REACT_TYPES_PEER_RANGE,
+    react: RUNTIME_REACT_PEER_RANGE,
+    "react-dom": RUNTIME_REACT_PEER_RANGE,
+  };
+  for (const [peerName, expectedRange] of Object.entries(expectedPeers)) {
+    const receivedRange = manifest.peerDependencies?.[peerName];
+    if (receivedRange !== expectedRange) {
+      fail(
+        `${expectedName} published peer ${peerName} is ${String(receivedRange)}; expected exactly ${expectedRange}.`,
+      );
+    }
   }
 }
 
@@ -303,8 +330,8 @@ function assertResolutionBoundary({
     }
   }
   if (requireCore) {
-    const coreResolution = receipt.find(({ moduleName }) =>
-      moduleName.startsWith("@salt-ds/core"),
+    const coreResolution = receipt.find(
+      ({ moduleName }) => moduleName === "@salt-ds/core",
     );
     if (
       !coreResolution?.resolvedFileName ||
@@ -387,6 +414,7 @@ async function verifyFixture(temporaryRoot, extractedCoreRoot, fixture) {
     coreConsumerPath,
     [
       'import type { ReactElement } from "react";',
+      'import * as CorePublicApi from "@salt-ds/core";',
       'import { BreakpointProvider } from "@salt-ds/core/dist-types/breakpoints/BreakpointProvider";',
       'import { Menu } from "@salt-ds/core/dist-types/menu/Menu";',
       'import { SaltProvider } from "@salt-ds/core/dist-types/salt-provider/SaltProvider";',
@@ -394,6 +422,7 @@ async function verifyFixture(temporaryRoot, extractedCoreRoot, fixture) {
       "export type BreakpointProviderResult = ElementOnly<ReturnType<typeof BreakpointProvider>>;",
       "export type MenuResult = ElementOnly<ReturnType<typeof Menu>>;",
       "export type SaltProviderResult = ElementOnly<ReturnType<typeof SaltProvider>>;",
+      "export type CorePublicSurface = typeof CorePublicApi;",
       "",
     ].join("\n"),
   );
@@ -435,6 +464,11 @@ const temporaryRoot = await fs.mkdtemp(
 );
 try {
   const extractedCoreRoot = await packCore(temporaryRoot);
+  await assertPublishedReactPeerContract(extractedCoreRoot, "@salt-ds/core");
+  await assertPublishedReactPeerContract(
+    saltDependencyRoots.get("@salt-ds/window"),
+    "@salt-ds/window",
+  );
   for (const fixture of fixtures) {
     await verifyFixture(temporaryRoot, extractedCoreRoot, fixture);
   }

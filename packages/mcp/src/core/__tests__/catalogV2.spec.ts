@@ -1328,34 +1328,13 @@ describe("Salt catalog schema v2 descriptor and storage contract", () => {
       [
         "/salt/components/card",
         ["InteractableCard", "InteractableCardGroup", "LinkCard"],
-        {
-          InteractableCard: "packages/core/src/interactable-card",
-          InteractableCardGroup: "packages/core/src/interactable-card",
-          LinkCard: "packages/core/src/link-card",
-        },
       ],
-      [
-        "/salt/components/layouts/border-layout",
-        ["BorderItem"],
-        { BorderItem: "packages/core/src/border-item" },
-      ],
-      [
-        "/salt/components/layouts/flex-layout",
-        ["FlexItem"],
-        { FlexItem: "packages/core/src/flex-item" },
-      ],
-      [
-        "/salt/components/layouts/grid-layout",
-        ["GridItem"],
-        { GridItem: "packages/core/src/grid-item" },
-      ],
+      ["/salt/components/layouts/border-layout", ["BorderItem"]],
+      ["/salt/components/layouts/flex-layout", ["FlexItem"]],
+      ["/salt/components/layouts/grid-layout", ["GridItem"]],
       [
         "/salt/components/list-box",
         ["Option", "OptionGroup"],
-        {
-          Option: "packages/core/src/option",
-          OptionGroup: "packages/core/src/option",
-        },
       ],
       [
         "/salt/components/text",
@@ -1373,28 +1352,8 @@ describe("Salt catalog schema v2 descriptor and storage contract", () => {
           "TextAction",
           "TextNotation",
         ],
-        Object.fromEntries(
-          [
-            "Code",
-            "Display1",
-            "Display2",
-            "Display3",
-            "Display4",
-            "H1",
-            "H2",
-            "H3",
-            "H4",
-            "Label",
-            "TextAction",
-            "TextNotation",
-          ].map((alias) => [alias, "packages/core/src/text"]),
-        ),
       ],
-      [
-        "/salt/components/toggle-button",
-        ["ToggleButtonGroup"],
-        { ToggleButtonGroup: "packages/core/src/toggle-button-group" },
-      ],
+      ["/salt/components/toggle-button", ["ToggleButtonGroup"]],
     ] as const;
     for (const [componentRoute, aliases] of aliasContracts) {
       const component = findComponentByRoute(componentRoute);
@@ -2020,10 +1979,34 @@ describe("Salt catalog schema v2 descriptor and storage contract", () => {
           `${corePackage.source_root}/stories/Semantic.stories.tsx`,
           "story one",
         ],
+        [`${corePackage.source_root}/stories/exampleData.ts`, "story data"],
+        [
+          `${corePackage.source_root}/stories/renderSlides.tsx`,
+          "story helper",
+        ],
+        [`${corePackage.source_root}/stories/theme.css`, "story css"],
+        [`${corePackage.source_root}/stories/data.json`, "story json"],
+        [
+          `${corePackage.source_root}/stories/patterns/helper.scss`,
+          "pattern helper",
+        ],
       ] as const) {
-        const added = normalize(withEntry(builtInventory, repoPath, contents));
+        const addedInventory = withEntry(builtInventory, repoPath, contents);
+        const changedInventory = withEntry(
+          builtInventory,
+          repoPath,
+          `${contents} changed`,
+        );
+        expect(addedInventory.digest, `${repoPath} inventory addition`).not.toBe(
+          builtInventory.digest,
+        );
+        expect(
+          changedInventory.digest,
+          `${repoPath} inventory change`,
+        ).not.toBe(addedInventory.digest);
+        const added = normalize(addedInventory);
         const changed = normalize(
-          withEntry(builtInventory, repoPath, `${contents} changed`),
+          changedInventory,
         );
         for (const family of Object.keys(baseline.records) as Array<
           keyof typeof baseline.records
@@ -2089,21 +2072,65 @@ describe("Salt catalog schema v2 descriptor and storage contract", () => {
         expect(changedSource?.bytes).not.toBe(baselineSource?.bytes);
       }
 
-      const auditPath = `${corePackage.source_root}/src/__tests__/Direct.spec.ts`;
-      const directRegistry = structuredClone(builtRegistry);
-      const directCorePackage = directRegistry.packages.find(
-        (packageRecord) => packageRecord.name === "@salt-ds/core",
-      );
-      if (!directCorePackage) {
-        throw new Error("Cloned fixture lost its Core package record.");
+      for (const auditPath of [
+        `${corePackage.source_root}/src/__tests__/Direct.spec.ts`,
+        `${corePackage.source_root}/stories/exampleData.ts`,
+        `${corePackage.source_root}/stories/Direct.stories.tsx`,
+        `${corePackage.source_root}/stories/patterns/helper.ts`,
+      ]) {
+        const directRegistry = structuredClone(builtRegistry);
+        const directCorePackage = directRegistry.packages.find(
+          (packageRecord) => packageRecord.name === "@salt-ds/core",
+        );
+        if (!directCorePackage) {
+          throw new Error("Cloned fixture lost its Core package record.");
+        }
+        directCorePackage.source_root = auditPath;
+        expect(() =>
+          normalizeCatalogV2({
+            registry: directRegistry,
+            inventory: withEntry(builtInventory, auditPath, "audit only"),
+          }),
+        ).toThrow(/not production or consumed semantic evidence/u);
       }
-      directCorePackage.source_root = auditPath;
+    },
+    CATALOG_GRAPH_TEST_TIMEOUT_MS,
+  );
+
+  it(
+    "rejects integrity-correct catalog source records that cite story helpers",
+    async () => {
+      const directory = await createCatalogCopy();
+      const manifest = await readManifest(directory);
+      const storyHelper = manifest.inputs.find(
+        (entry) =>
+          /^packages\/[^/]+\/stories\//u.test(entry.path) &&
+          !/\/stories\/patterns\/.+\.stories\.tsx$/u.test(entry.path) &&
+          !/\.stories\.[^/]+$/u.test(entry.path),
+      );
+      if (!storyHelper) {
+        throw new Error("Fixture manifest has no story helper input.");
+      }
+
+      await replaceArtifact(directory, "source", (envelope) => {
+        const records = decodeArtifactRecords("source", envelope.records);
+        const source = records.find(
+          (record) => record.source_kind === "repository_file",
+        );
+        if (!source || source.source_kind !== "repository_file") {
+          throw new Error("Fixture has no repository-file source record.");
+        }
+        source.locator = storyHelper.path;
+        source.sha256 = storyHelper.sha256;
+        source.bytes = storyHelper.bytes;
+        source.entrypoint_contexts = [];
+        source.validation.basis_digest = storyHelper.sha256;
+        envelope.records = encodeArtifactRecords("source", records);
+      });
+
       expect(() =>
-        normalizeCatalogV2({
-          registry: directRegistry,
-          inventory: withEntry(builtInventory, auditPath, "audit only"),
-        }),
-      ).toThrow(/not production or consumed semantic evidence/u);
+        new CatalogStoreV2({ registryDir: directory }).validateCrossReferences(),
+      ).toThrow(/does not match its exact manifest input file/u);
     },
     CATALOG_GRAPH_TEST_TIMEOUT_MS,
   );

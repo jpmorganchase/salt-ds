@@ -24,7 +24,10 @@ legacy revisions. Project inspection now labels dependency-controlled facts,
 uses fixed-size opaque context handles and metadata-only lockfile probes, and
 review results distinguish fresh, retained, caller-version, and context-free
 evidence without implying that unsubmitted source was analyzed. Production
-token applicability now excludes test, story, and QA sources.
+token applicability now excludes test, story, and QA sources. Inspection text
+fallbacks now omit project-controlled names, paths, path-bearing resource
+identifiers, dependency facts, and policy prose while retaining labelled
+structured evidence, typed ResourceLinks, and stable assessment summaries.
 
 The reusable factory is now restricted by default. Embedders should configure
 `projectAccess.allowedRoots` and, where required, `defaultRoot` for bounded

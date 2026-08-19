@@ -49,6 +49,7 @@ const {
   publishExtraCopyPaths = [],
   publishPreserveModules = true,
   publishSourceMaps = true,
+  publishIncludeReadme = true,
   publishIncludeChangelog = true,
   generateTypings = true,
   publishTypingEntryOnly = false,
@@ -62,7 +63,7 @@ const {
 } = packageJson;
 
 const FILES_TO_COPY = [
-  "README.md",
+  ...(publishIncludeReadme ? ["README.md"] : []),
   "LICENSE",
   ...(publishIncludeChangelog ? ["CHANGELOG.md"] : []),
 ].concat(packageJson.files ?? []);

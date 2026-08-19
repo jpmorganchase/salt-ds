@@ -235,55 +235,198 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
     ...(inspection.data.installation?.untrusted_project_data
       ?.resolved_packages ?? []),
   ].sort((left, right) => left.name.localeCompare(right.name));
-  const expectedInspectionText = structuredClone(inspection);
-  if (
-    expectedInspectionText.data?.installation?.untrusted_project_data
-      ?.resolved_packages
-  ) {
-    expectedInspectionText.data.installation.untrusted_project_data.resolved_packages =
-      [];
-    const packageOmission = inspection.coverage?.result_budget?.omissions?.find(
-      (entry) =>
-        entry.section ===
-        "installation.untrusted_project_data.resolved_packages",
-    );
-    const availableSaltPackages =
-      packageOmission?.available ?? resolvedPackages.length;
-    if (availableSaltPackages > 0) {
-      const applicabilityCounts = resolvedPackages.reduce(
-        (counts, entry) => {
-          const applicability = entry.catalog_assessment?.applicability;
-          if (
-            applicability?.state === "applicable" &&
-            applicability.basis === "exact_catalog_package_version"
-          ) {
-            counts.exact_catalog_package_version += 1;
-          } else if (applicability?.state === "current") {
-            counts.current += 1;
-          } else {
-            counts.unknown += 1;
+  const packageOmission = inspection.coverage?.result_budget?.omissions?.find(
+    (entry) =>
+      entry.section ===
+      "installation.untrusted_project_data.resolved_packages",
+  );
+  const availableSaltPackages =
+    packageOmission?.available ?? resolvedPackages.length;
+  const applicabilityCounts = resolvedPackages.reduce(
+    (counts, entry) => {
+      const applicability = entry.catalog_assessment?.applicability;
+      if (
+        applicability?.state === "applicable" &&
+        applicability.basis === "exact_catalog_package_version"
+      ) {
+        counts.exact_catalog_package_version += 1;
+      } else if (applicability?.state === "current") {
+        counts.current += 1;
+      } else {
+        counts.unknown += 1;
+      }
+      return counts;
+    },
+    { exact_catalog_package_version: 0, current: 0, unknown: 0 },
+  );
+  const installation = inspection.data.installation;
+  const policy = inspection.data.policy;
+  const scope = inspection.scope;
+  const coverage = inspection.coverage;
+  const resultBudget = coverage?.result_budget;
+  const provenance = inspection.provenance;
+  const expectedInspectionText = {
+    data: {
+      context: inspection.data.context
+        ? {
+            handle: inspection.data.context.handle,
+            digest: inspection.data.context.digest,
+            retention: inspection.data.context.retention,
           }
-          return counts;
-        },
-        { exact_catalog_package_version: 0, current: 0, unknown: 0 },
-      );
-      expectedInspectionText.data.installation.catalog_assessment_summary = {
-        observed_salt_packages: availableSaltPackages,
-        returned_salt_packages: resolvedPackages.length,
-        package_assessments_truncated:
-          resolvedPackages.length < availableSaltPackages,
-        applicability_count_scope: "returned_packages_only",
-        ...applicabilityCounts,
-        peer_compatibility: "not_evaluated",
-        historical_completeness: false,
-      };
-    }
-  }
+        : null,
+      root_dir: null,
+      package_manifest: null,
+      workspace: inspection.data.workspace
+        ? { kind: inspection.data.workspace.kind, workspace_root: null }
+        : null,
+      installation: installation
+        ? {
+            assessment: installation.assessment
+              ? {
+                  status: installation.assessment.status,
+                  blocking: installation.assessment.blocking,
+                  advisory_issue_count:
+                    installation.assessment.advisory_issue_count,
+                  unverifiable_package_count:
+                    installation.assessment.unverifiable_package_count,
+                }
+              : null,
+            untrusted_project_data: installation.untrusted_project_data
+              ? {
+                  classification:
+                    installation.untrusted_project_data.classification,
+                  instruction_authority:
+                    installation.untrusted_project_data.instruction_authority,
+                  authorization_meaning:
+                    installation.untrusted_project_data.authorization_meaning,
+                  diagnostics:
+                    installation.untrusted_project_data.diagnostics.map(
+                      (diagnostic) => ({
+                        code: diagnostic.code,
+                        parameters: { count: diagnostic.parameters.count },
+                      }),
+                    ),
+                  resolved_packages: [],
+                }
+              : null,
+            ...(availableSaltPackages > 0
+              ? {
+                  catalog_assessment_summary: {
+                    observed_salt_packages: availableSaltPackages,
+                    returned_salt_packages: resolvedPackages.length,
+                    package_assessments_truncated:
+                      resolvedPackages.length < availableSaltPackages,
+                    applicability_count_scope: "returned_packages_only",
+                    ...applicabilityCounts,
+                    peer_compatibility: "not_evaluated",
+                    historical_completeness: false,
+                  },
+                }
+              : {}),
+          }
+        : null,
+      policy: policy
+        ? {
+            mode: policy.mode,
+            team_config_path: null,
+            stack_config_path: null,
+            ir: policy.ir
+              ? {
+                  contract: policy.ir.contract,
+                  policy_mode: policy.ir.policy_mode,
+                  declared: policy.ir.declared,
+                  digest: policy.ir.digest,
+                  manifest_uri: null,
+                  counts: policy.ir.counts
+                    ? {
+                        layers: policy.ir.counts.layers,
+                        occurrences: policy.ir.counts.occurrences,
+                        diagnostics: policy.ir.counts.diagnostics,
+                      }
+                    : null,
+                  untrusted_ir: null,
+                }
+              : null,
+            import_targets: policy.import_targets
+              ? {
+                  status: policy.import_targets.status,
+                  declared_count: policy.import_targets.declared_count,
+                  resolved_count: policy.import_targets.resolved_count,
+                  issue_count: policy.import_targets.issue_count,
+                  untrusted_diagnostics: null,
+                }
+              : null,
+          }
+        : null,
+    },
+    scope: scope
+      ? {
+          kind: scope.kind,
+          filesystem_access: scope.filesystem_access,
+          inspected_root: null,
+          authorization: scope.authorization,
+          ancestor_workspace_discovery: scope.ancestor_workspace_discovery
+            ? {
+                status: scope.ancestor_workspace_discovery.status,
+                containment: scope.ancestor_workspace_discovery.containment,
+                max_directories:
+                  scope.ancestor_workspace_discovery.max_directories,
+                limited: scope.ancestor_workspace_discovery.limited,
+              }
+            : null,
+        }
+      : null,
+    coverage: coverage
+      ? {
+          requested_root: coverage.requested_root,
+          package_manifest: coverage.package_manifest,
+          installation: coverage.installation,
+          workspace: coverage.workspace,
+          policy: coverage.policy,
+          result_budget: resultBudget
+            ? {
+                max_utf8_bytes: resultBudget.max_utf8_bytes,
+                truncated: resultBudget.truncated,
+                omissions: resultBudget.omissions.map((omission) => ({
+                  section: omission.section,
+                  available: omission.available,
+                  returned: omission.returned,
+                })),
+              }
+            : null,
+        }
+      : null,
+    limitations: inspection.limitations.filter(
+      (limitation) => typeof limitation === "string",
+    ),
+    provenance: provenance
+      ? {
+          project_context_digest: provenance.project_context_digest,
+          project_policy_digest: provenance.project_policy_digest,
+        }
+      : null,
+  };
   assert(
     inspectionText &&
       JSON.stringify(JSON.parse(inspectionText)) ===
         JSON.stringify(expectedInspectionText),
-    "inspect_salt_project text fallback did not redact only raw dependency facts.",
+    "inspect_salt_project text fallback did not redact raw project-controlled facts.",
+  );
+  const structuredManifestName = inspection.data.package_manifest?.name;
+  const structuredRoot = inspection.data.root_dir;
+  const structuredManifestUri = inspection.data.policy?.ir?.manifest_uri;
+  assert(
+    inspectionText &&
+      typeof structuredManifestName === "string" &&
+      structuredManifestName.length > 0 &&
+      !inspectionText.includes(structuredManifestName) &&
+      typeof structuredRoot === "string" &&
+      structuredRoot.length > 0 &&
+      !inspectionText.includes(structuredRoot) &&
+      typeof structuredManifestUri === "string" &&
+      structuredManifestUri.length > 0 &&
+      !inspectionText.includes(structuredManifestUri),
+    "inspect_salt_project text fallback exposed a project name, root, or path-bearing resource identifier.",
   );
   assert(
     inspection.data.package_manifest?.name === "salt-consumer-smoke-existing" &&
@@ -305,7 +448,12 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
       inspection.scope?.kind === "configured_project_inspection" &&
       inspection.scope?.filesystem_access === "read_only" &&
       inspection.coverage?.requested_root === "evaluated" &&
-      inspection.coverage?.policy === "policy_ir_evaluated",
+      inspection.coverage?.policy === "policy_ir_evaluated" &&
+      inspectionResult.content.some(
+        (part) =>
+          part.type === "resource_link" &&
+          part.uri === inspection.data.policy?.ir?.manifest_uri,
+      ),
     "inspect_salt_project omitted expected fixture facts or bounded coverage.",
   );
 

@@ -15,7 +15,10 @@ import {
   type ProjectAccessPolicy,
 } from "../projectAccess.js";
 import { ProjectPolicySnapshotCache } from "../projectPolicySnapshot.js";
-import { measureNonSearchToolResultUtf8Bytes } from "../responseAdapters.js";
+import {
+  measureSaltToolBaseResultFrameUtf8Bytes,
+  type SaltToolWireContext,
+} from "../responseAdapters.js";
 import {
   inspectSaltProjectOperation,
   reviewSaltCodeOperation,
@@ -33,6 +36,20 @@ let projectRoot = "";
 let runtimeContext: SaltCatalogRuntimeContext;
 let operationContext: SaltToolOperationContext;
 
+const TEST_WIRE_CONTEXT: SaltToolWireContext = {
+  era: "modern",
+  requestId: 0,
+  serverInfo: { name: "salt-mcp-test", version: "0.0.0-test" },
+};
+
+function measureTestNonSearchResult(payload: unknown): number {
+  return measureSaltToolBaseResultFrameUtf8Bytes(
+    "review_salt_code",
+    payload as Record<string, unknown>,
+    TEST_WIRE_CONTEXT,
+  );
+}
+
 function withProjectAccess(
   projectAccess: ProjectAccessPolicy,
 ): SaltToolOperationContext {
@@ -40,7 +57,7 @@ function withProjectAccess(
     ...runtimeContext,
     projectAccess,
     projectPolicySnapshots: new ProjectPolicySnapshotCache(),
-    measureFinalResultUtf8Bytes: measureNonSearchToolResultUtf8Bytes,
+    measureFinalResultUtf8Bytes: measureTestNonSearchResult,
   };
 }
 
@@ -109,7 +126,7 @@ beforeAll(async () => {
       defaultRoot: projectRoot,
     }),
     projectPolicySnapshots: new ProjectPolicySnapshotCache(),
-    measureFinalResultUtf8Bytes: measureNonSearchToolResultUtf8Bytes,
+    measureFinalResultUtf8Bytes: measureTestNonSearchResult,
   };
 }, SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS);
 

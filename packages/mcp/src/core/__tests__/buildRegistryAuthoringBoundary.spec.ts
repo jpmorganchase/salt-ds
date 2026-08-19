@@ -7,6 +7,10 @@ import { SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS } from "../../__tests__/registryT
 
 const guardCalls = vi.hoisted(() => ({
   componentRoutes: [] as string[][],
+  componentAliasOverrides: [] as Array<{
+    route: string;
+    aliases: Array<{ exportName: string; sourceRepoPath?: string }>;
+  }>,
   patternRoutes: [] as string[][],
   guideRoutes: [] as string[][],
   migrationIds: [] as string[][],
@@ -19,6 +23,14 @@ vi.mock("../build/componentAuthoringOverrides.js", async () => {
   >("../build/componentAuthoringOverrides.js");
   return {
     ...actual,
+    componentExportAliasOverrides(route: string) {
+      const aliases = actual.componentExportAliasOverrides(route);
+      guardCalls.componentAliasOverrides.push({
+        route,
+        aliases: aliases.map((alias) => ({ ...alias })),
+      });
+      return aliases;
+    },
     assertComponentAuthoringOverridesResolved(routes: readonly string[]) {
       guardCalls.componentRoutes.push([...routes]);
       return actual.assertComponentAuthoringOverridesResolved(routes);
@@ -72,6 +84,68 @@ vi.mock("../build/deprecationValueMapOverrides.js", async () => {
 import { buildRegistry } from "../build/buildRegistry.js";
 import { CatalogStoreV2 } from "../catalog/catalogStoreV2.js";
 import type { SaltRegistry } from "../types.js";
+
+const EXPECTED_COMPONENT_ALIAS_OVERRIDES = {
+  "/salt/components/card": [
+    {
+      exportName: "InteractableCard",
+      sourceRepoPath: "packages/core/src/interactable-card",
+    },
+    {
+      exportName: "InteractableCardGroup",
+      sourceRepoPath: "packages/core/src/interactable-card",
+    },
+    {
+      exportName: "LinkCard",
+      sourceRepoPath: "packages/core/src/link-card",
+    },
+  ],
+  "/salt/components/layouts/border-layout": [
+    {
+      exportName: "BorderItem",
+      sourceRepoPath: "packages/core/src/border-item",
+    },
+  ],
+  "/salt/components/layouts/flex-layout": [
+    {
+      exportName: "FlexItem",
+      sourceRepoPath: "packages/core/src/flex-item",
+    },
+  ],
+  "/salt/components/layouts/grid-layout": [
+    {
+      exportName: "GridItem",
+      sourceRepoPath: "packages/core/src/grid-item",
+    },
+  ],
+  "/salt/components/list-box": [
+    { exportName: "Option", sourceRepoPath: "packages/core/src/option" },
+    {
+      exportName: "OptionGroup",
+      sourceRepoPath: "packages/core/src/option",
+    },
+  ],
+  "/salt/components/text": [
+    { exportName: "Code" },
+    { exportName: "Display1" },
+    { exportName: "Display2" },
+    { exportName: "Display3" },
+    { exportName: "Display4" },
+    { exportName: "H1" },
+    { exportName: "H2" },
+    { exportName: "H3" },
+    { exportName: "H4" },
+    { exportName: "Label" },
+    { exportName: "TextAction" },
+    { exportName: "TextNotation" },
+  ],
+  "/salt/components/toggle-button": [
+    {
+      exportName: "ToggleButtonGroup",
+      sourceRepoPath: "packages/core/src/toggle-button-group",
+    },
+  ],
+} as const;
 
 const TEST_DIRECTORY = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(TEST_DIRECTORY, "../../../../..");
@@ -134,5 +208,68 @@ describe("buildRegistry authoring boundary", () => {
     );
     expect(new Set(guardCalls.migrationIds[0])).toEqual(publicDeprecationIds);
     expect(new Set(guardCalls.valueMapIds[0])).toEqual(publicDeprecationIds);
+  });
+
+  it("binds every raw component alias override to builder and store output", () => {
+    const observationsByRoute = new Map<
+      string,
+      Array<Array<{ exportName: string; sourceRepoPath?: string }>>
+    >();
+    for (const observation of guardCalls.componentAliasOverrides) {
+      const observations = observationsByRoute.get(observation.route) ?? [];
+      observations.push(observation.aliases);
+      observationsByRoute.set(observation.route, observations);
+    }
+
+    for (const component of registry.components) {
+      const route = component.related_docs.overview;
+      if (!route) {
+        throw new Error(`Component '${component.id}' has no overview route.`);
+      }
+      expect(
+        observationsByRoute.has(route),
+        route,
+      ).toBe(true);
+    }
+    for (const [route, observations] of observationsByRoute) {
+      expect(observations.length, route).toBeGreaterThan(0);
+      for (const observation of observations) {
+        expect(observation, route).toEqual(observations[0]);
+      }
+    }
+
+    const nonEmptyObservations = Object.fromEntries(
+      [...observationsByRoute.entries()]
+        .filter(([, observations]) => (observations[0]?.length ?? 0) > 0)
+        .map(([route, observations]) => [route, observations[0]]),
+    );
+    expect(nonEmptyObservations).toEqual(EXPECTED_COMPONENT_ALIAS_OVERRIDES);
+    expect(
+      Object.values(EXPECTED_COMPONENT_ALIAS_OVERRIDES).flat(),
+    ).toHaveLength(21);
+
+    for (const [route, aliases] of Object.entries(
+      EXPECTED_COMPONENT_ALIAS_OVERRIDES,
+    )) {
+      const registryComponent = registry.components.find(
+        (component) => component.related_docs.overview === route,
+      );
+      expect(registryComponent, route).toBeDefined();
+      expect(registryComponent?.aliases, route).toEqual(
+        expect.arrayContaining(aliases.map((alias) => alias.exportName)),
+      );
+
+      const storedComponents = store
+        .getFamily("component")
+        .filter(
+          (component) =>
+            store.getContentJson(component.detail_content_ref).related_docs
+              .overview === route,
+        );
+      expect(storedComponents, route).toHaveLength(1);
+      expect(storedComponents[0]?.aliases, route).toEqual(
+        expect.arrayContaining(aliases.map((alias) => alias.exportName)),
+      );
+    }
   });
 });

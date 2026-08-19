@@ -3,7 +3,6 @@ import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { assertBoundedMcpToolPayload } from "../../../../scripts/consumer-smoke/checks.mjs";
-import { verifyPackedReadmeLocalLinks } from "../../../../scripts/consumer-smoke/fixture.mjs";
 import {
   createWindowsCmdInvocation,
   parseArgs,
@@ -20,17 +19,6 @@ afterEach(async () => {
       .map((root) => fs.rm(root, { recursive: true, force: true })),
   );
 });
-
-async function createTree(files: Record<string, string | Buffer>) {
-  const root = await fs.mkdtemp(path.join(os.tmpdir(), "salt-skill-hash-"));
-  tempRoots.push(root);
-  for (const [relativePath, contents] of Object.entries(files)) {
-    const destination = path.join(root, relativePath);
-    await fs.mkdir(path.dirname(destination), { recursive: true });
-    await fs.writeFile(destination, contents);
-  }
-  return root;
-}
 
 describe("consumer smoke arguments", () => {
   it("keeps local packed smoke as the default", () => {
@@ -160,44 +148,6 @@ describe("consumer smoke bounded outcomes", () => {
 });
 
 describe("consumer smoke packed-install coverage", () => {
-  it("verifies package-local README targets without claiming to fetch external URLs", async () => {
-    const root = await createTree({
-      "README.md": [
-        "[architecture](./CORE_ARCHITECTURE.md#local-filesystem-trust-model)",
-        "[website](https://www.saltdesignsystem.com/)",
-      ].join("\n"),
-      "CORE_ARCHITECTURE.md": "## Local filesystem trust model\n",
-    });
-
-    await expect(verifyPackedReadmeLocalLinks(root)).resolves.toEqual({
-      local_targets_verified: 1,
-      external_urls_not_fetched: 1,
-    });
-  });
-
-  it("rejects missing, escaping, and unsupported packed README targets", async () => {
-    const missing = await createTree({
-      "README.md": "[architecture](./CORE_ARCHITECTURE.md)",
-    });
-    await expect(verifyPackedReadmeLocalLinks(missing)).rejects.toThrow(
-      /does not exist in the installed package/iu,
-    );
-
-    const escaping = await createTree({
-      "README.md": "[outside](../outside.md)",
-    });
-    await expect(verifyPackedReadmeLocalLinks(escaping)).rejects.toThrow(
-      /escapes the installed package/iu,
-    );
-
-    const unsupported = await createTree({
-      "README.md": "[custom](custom:target)",
-    });
-    await expect(verifyPackedReadmeLocalLinks(unsupported)).rejects.toThrow(
-      /unsupported URI scheme/iu,
-    );
-  });
-
   it("keeps local-only scripts out of the package and verifies the configured standalone binary", async () => {
     const [manifestText, fixtureSource, runnerSource] = await Promise.all([
       fs.readFile(

@@ -25,8 +25,9 @@ export async function createSaltMcpServer(options: CreateServerOptions = {}) {
   });
   const projectAccess = await createProjectAccessPolicy(options.projectAccess);
   const projectPolicySnapshots = new ProjectPolicySnapshotCache();
+  const serverInfo = buildSaltMcpServerInfo(context);
 
-  const server = new McpServer(buildSaltMcpServerInfo(context), {
+  const server = new McpServer(serverInfo, {
     instructions: buildSaltMcpInstructions(context),
     supportedProtocolVersions: [...SALT_MCP_SUPPORTED_LEGACY_PROTOCOL_VERSIONS],
     capabilities: {
@@ -43,7 +44,7 @@ export async function createSaltMcpServer(options: CreateServerOptions = {}) {
     ...context,
     projectAccess,
     projectPolicySnapshots,
-  });
+  }, serverInfo);
 
   return server;
 }
