@@ -1,5 +1,15 @@
 # @salt-ds/embla-carousel
 
+## 1.1.6
+
+### Patch Changes
+
+- 0e83a66: Updated Embla Carousel styles to use the current border style token.
+- Updated dependencies [6c12378]
+- Updated dependencies [2892934]
+- Updated dependencies [416d4b8]
+  - @salt-ds/core@1.70.0
+
 ## 1.1.5
 
 ### Patch Changes
