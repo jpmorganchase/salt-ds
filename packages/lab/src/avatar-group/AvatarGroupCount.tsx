@@ -3,6 +3,11 @@ import { clsx } from "clsx";
 import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 
 export interface AvatarGroupCountProps
+  /**
+   * TODO: user can still pass color prop ignoring type errors, and categories will work.
+   * Pending design decision on coloring
+   * DO NOT MERGE UNTIL RESOLVED
+   */
   extends Omit<HTMLAttributes<HTMLDivElement>, "color"> {
   /**
    * The visible label of the count, for example `+3`.
