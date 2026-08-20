@@ -18,7 +18,7 @@ export const CustomPadding = (): ReactElement => {
   const [padding, setPadding] = useState("spacing-200");
 
   return (
-    <StackLayout align="center">
+    <StackLayout align="center" style={{ width: "100%" }}>
       {padding === "spacing-100" && (
         <LinkCard
           href="#"
@@ -63,6 +63,7 @@ export const CustomPadding = (): ReactElement => {
           style={
             {
               "--saltCardContent-padding": "var(--salt-spacing-300)",
+              maxWidth: "100%",
               width: "500px",
             } as CSSProperties
           }
@@ -97,6 +98,8 @@ export const CustomPadding = (): ReactElement => {
         </Card>
       )}
       <RadioButtonGroup
+        aria-label="Card padding"
+        style={{ maxWidth: "100%" }}
         value={padding}
         onChange={(e) => setPadding(e.target.value)}
         direction="horizontal"

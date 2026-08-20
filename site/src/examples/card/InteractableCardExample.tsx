@@ -5,7 +5,9 @@ export const InteractableCardExample = (): ReactElement => {
   return (
     <InteractableCard
       accent="top"
-      style={{ width: "260px", height: "144px" }}
-    />
+      style={{ width: "260px", minHeight: "144px" }}
+    >
+      View sustainable investing products
+    </InteractableCard>
   );
 };
