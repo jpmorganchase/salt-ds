@@ -1,9 +1,10 @@
 import { useDensity, useTheme } from "@salt-ds/core";
+import type { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { type ReactElement, useMemo } from "react";
 import { defaultData } from "./data";
 
-const columnDefs = [
+const columnDefs: ColDef[] = [
   {
     headerName: "Name",
     field: "name",
@@ -48,6 +49,7 @@ export const Default = (): ReactElement => {
       style={{ height: 500, width: "100%" }}
     >
       <AgGridReact
+        theme="legacy"
         columnDefs={columnDefs}
         rowData={defaultData}
         rowSelection="single"

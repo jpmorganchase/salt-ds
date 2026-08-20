@@ -34,7 +34,7 @@ const MasterDetail = (props: AgGridReactProps) => {
         columnDefs={columnDefs}
         detailCellRenderer={detailCellRenderer}
         detailCellRendererParams={{
-          detailGridOptions: { columnDefs },
+          detailGridOptions: { theme: "legacy", columnDefs },
           getDetailRowData: (params: {
             successCallback: (data: typeof rowData) => void;
           }) => params.successCallback(rowData),
