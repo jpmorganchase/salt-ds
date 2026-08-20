@@ -3,7 +3,6 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type ComponentPropsWithRef,
   type ForwardedRef,
   forwardRef,
   type ReactElement,
@@ -11,21 +10,6 @@ import {
 } from "react";
 import { makePrefixer, type RenderPropsType, renderProps } from "../utils";
 import listItemActionCss from "./ListItemAction.css";
-
-export type ListItemActionButtonRenderProps = ComponentPropsWithRef<"button">;
-export type ListItemActionLinkRenderProps = Omit<
-  ComponentPropsWithRef<"a">,
-  "href"
-> & {
-  href: string;
-};
-
-type ButtonRender =
-  | ReactElement
-  | ((props: ListItemActionButtonRenderProps) => ReactElement);
-type LinkRender =
-  | ReactElement
-  | ((props: ListItemActionLinkRenderProps) => ReactElement);
 
 export interface ListItemActionButtonProps
   extends Omit<ComponentPropsWithoutRef<"button">, "href"> {
@@ -36,7 +20,7 @@ export interface ListItemActionButtonProps
   /**
    * Replace the underlying button while receiving its merged native props.
    */
-  render?: ButtonRender;
+  render?: RenderPropsType["render"];
 }
 
 export interface ListItemActionLinkProps
@@ -48,7 +32,7 @@ export interface ListItemActionLinkProps
   /**
    * Replace the underlying anchor while receiving its merged native props.
    */
-  render?: LinkRender;
+  render?: RenderPropsType["render"];
 }
 
 export type ListItemActionProps =
@@ -70,7 +54,7 @@ interface ListItemActionComponent {
   ): ReactElement | null;
 }
 
-const withBaseName = makePrefixer("saltCoreListItemAction");
+const withBaseName = makePrefixer("saltListItemAction");
 
 function ListItemActionImpl(
   props: ListItemActionProps,
@@ -78,7 +62,7 @@ function ListItemActionImpl(
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-core-list-item-action",
+    testId: "salt-list-item-action",
     css: listItemActionCss,
     window: targetWindow,
   });
@@ -91,7 +75,7 @@ function ListItemActionImpl(
       className: clsx(withBaseName(), className),
       href,
       ref: ref as ForwardedRef<HTMLAnchorElement>,
-      render: render as RenderPropsType["render"],
+      render,
       children,
     });
   }
@@ -109,7 +93,7 @@ function ListItemActionImpl(
     ...rest,
     className: clsx(withBaseName(), className),
     ref: ref as ForwardedRef<HTMLButtonElement>,
-    render: render as RenderPropsType["render"],
+    render,
     type,
     children,
   });
