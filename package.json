@@ -50,7 +50,7 @@
     "@biomejs/biome": "^2.5.7",
     "@biomejs/js-api": "^6.0.0",
     "@biomejs/wasm-nodejs": "^2.5.7",
-    "@changesets/cli": "^2.29.6",
+    "@changesets/cli": "^3.0.0",
     "@cypress/react": "^8.0.0",
     "@e965/xlsx": "^0.20.3",
     "@faker-js/faker": "^8.0.0",
@@ -102,7 +102,7 @@
     "yup": "^1.7.1"
   },
   "resolutions": {
-    "@changesets/assemble-release-plan@npm:^6.0.9": "patch:@changesets/assemble-release-plan@npm%3A6.0.9#~/.yarn/patches/@changesets-assemble-release-plan-npm-6.0.9-e01af97ef4.patch",
+    "@changesets/assemble-release-plan@npm:^7.0.0": "patch:@changesets/assemble-release-plan@npm%3A7.0.0#~/.yarn/patches/@changesets-assemble-release-plan-npm-7.0.0-3a8fdadcb3.patch",
     "@floating-ui/react": "^0.27.19",
     "cookie": "^1.0.0",
     "esbuild": "^0.28.0",
