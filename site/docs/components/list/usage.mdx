@@ -1,0 +1,161 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+`List` is a composable native list for passive rows and rows with persistent actions. It does not manage selection, current state, or keyboard focus.
+
+- `List` provides the `ul` structure. Use `render={<ol />}` when item order is meaningful.
+- `ListItem` provides one structural `li` row and its layout.
+- `ListItemContent` contains the row's non-interactive primary content.
+- `ListItemAction` makes the primary region a native button or link.
+- `ListItemActions` contains independent trailing controls.
+
+Passive and actionable rows can appear in the same list.
+
+### Choosing a list component
+
+| Component                          | Use it for                                                    |
+| ---------------------------------- | ------------------------------------------------------------- |
+| `List`                             | Passive content and persistent, independent buttons or links. |
+| `ListBox`                          | Choosing one or more values in a form.                        |
+| `Menu`                             | A transient composite containing commands.                    |
+| `VerticalNavigation` or `MegaMenu` | Application and site navigation systems.                      |
+
+## Composition
+
+### Passive content
+
+```tsx
+<ListItem>
+  <ListItemContent>Quarterly report</ListItemContent>
+</ListItem>
+```
+
+### Passive content with secondary actions
+
+```tsx
+<ListItem>
+  <ListItemContent>Quarterly report</ListItemContent>
+  <ListItemActions>
+    <Button aria-label="Download quarterly report">Download</Button>
+  </ListItemActions>
+</ListItem>
+```
+
+### Primary button with a secondary action
+
+```tsx
+<ListItem>
+  <ListItemAction onClick={openReport}>
+    <ListItemContent>Quarterly report</ListItemContent>
+  </ListItemAction>
+  <ListItemActions>
+    <Button aria-label="More options for quarterly report">More</Button>
+  </ListItemActions>
+</ListItem>
+```
+
+### Primary link with a secondary action
+
+```tsx
+<ListItem>
+  <ListItemAction href="/reports/quarterly">
+    <ListItemContent>Quarterly report</ListItemContent>
+  </ListItemAction>
+  <ListItemActions>
+    <Button aria-label="Download quarterly report">Download</Button>
+  </ListItemActions>
+</ListItem>
+```
+
+“Nested actions” means controls within a `ListItem`, as siblings of `ListItemAction`. Never put a button, link, checkbox, or other focusable element inside `ListItemAction`.
+
+`ListItemContent` renders a `span` so the same component is valid inside passive and actionable rows. It supports phrasing, non-interactive content. Configure `Text` and layout primitives within it to use span-safe hosts. Arbitrary block-host content is not supported in the first version.
+
+Leading icons can be ordinary children of `ListItemContent`. The icon, first line of text, and trailing actions stay aligned when the label wraps.
+
+## Button and link behavior
+
+`href` determines the action type. With no `href`, `ListItemAction` renders a button and defaults to `type="button"`. With an `href`, it renders an anchor. The button branch supports native `disabled`; links do not have a native disabled state, so `ListItemAction` does not provide a fake-disabled link API.
+
+The primary action fills the row, including the empty space around and between trailing controls. Each control in `ListItemActions` keeps its own independent hit target.
+
+Use `render` to integrate another link component. Prefer a self-closing JSX render element when props map directly. Do not provide children on the render element unless you intend to override the children of `ListItemAction`. Use a callback when a routing library needs `href` mapped to another prop such as `to`.
+
+```tsx
+<ListItemAction
+  href="/reports/quarterly"
+  render={({ href, ...props }) => <RouterLink {...props} to={href} />}
+>
+  <ListItemContent>Quarterly report</ListItemContent>
+</ListItemAction>
+```
+
+For a link with `target="_blank"`, render the Core `Link` component so its external-link treatment remains available without nesting anchors.
+
+```tsx
+<ListItemAction
+  href="https://example.com/reports"
+  render={<Link target="_blank" />}
+>
+  <ListItemContent>External reports</ListItemContent>
+</ListItemAction>
+```
+
+When multiple trailing controls form a named set, add `role="group"` and an accessible name to `ListItemActions`. A role is not added by default.
+
+## Containing surfaces
+
+`List` does not own scrolling, dismissal, or focus management. A containing Dialog or Overlay retains those responsibilities, and activating an item does not automatically dismiss it. If an action removes its focused row, the application should move focus to the next logical row, the previous row, or a stable surrounding control.
+
+For navigation, place the list inside a labelled `nav` landmark. Do not change it to menu semantics.
+
+## Import
+
+```js
+import {
+  List,
+  ListItem,
+  ListItemAction,
+  ListItemActions,
+  ListItemContent,
+} from "@salt-ds/core";
+```
+
+## Props
+
+### `List`
+
+<PropsTable packageName="core" componentName="List" />
+
+### `ListItem`
+
+<PropsTable packageName="core" componentName="ListItem" />
+
+### `ListItemContent`
+
+<PropsTable packageName="core" componentName="ListItemContent" />
+
+### `ListItemAction`
+
+`ListItemAction` accepts the native props for the branch selected by `href`. The generated prop reference cannot represent both sides of this discriminated union, so the branch-specific props are summarized here.
+
+| Prop       | Button branch                                            | Link branch                                                                    |
+| ---------- | -------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `href`     | Omitted                                                  | Required string                                                                |
+| `render`   | Button element or callback receiving native button props | Anchor element or callback receiving native anchor props and a required `href` |
+| `type`     | Native button type; defaults to `button`                 | Native anchor media type                                                       |
+| `disabled` | Native button disabled state                             | Not available                                                                  |
+| `ref`      | `HTMLButtonElement`                                      | `HTMLAnchorElement`                                                            |
+
+### `ListItemActions`
+
+<PropsTable packageName="core" componentName="ListItemActions" />
