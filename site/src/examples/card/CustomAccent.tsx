@@ -1,16 +1,20 @@
-import { Card, CardContent, H3, StackLayout, Text } from "@salt-ds/core";
+import {
+  Card,
+  CardContent,
+  FlowLayout,
+  H3,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 export const CustomAccent = (): ReactElement => {
   return (
-    <StackLayout direction="row">
-      {/* in your css:
-        .category1 { 
-          --saltCard-accent-color: rgb(70, 118, 191);
-        }
-        .category1:hover {
-          --saltCard-accent-color: rgb(35, 77, 140);
+    <FlowLayout>
+      {/* In your CSS:
+        .category1 {
+          --saltCard-accent-color: var(--salt-category-1-borderColor);
         }
       */}
       <Card
@@ -19,13 +23,10 @@ export const CustomAccent = (): ReactElement => {
           width: "240px",
         }}
         accent="top"
-        hoverable
       >
         <CardContent>
           <StackLayout gap={1}>
-            <H3 style={{ margin: 0 }}>
-              <strong>Investment Compliance</strong>
-            </H3>
+            <H3 style={{ margin: 0 }}>Investment Compliance</H3>
             <Text>
               Exception-based reporting that highlights potential warnings or
               violations of investment guidelines and regulations.
@@ -33,13 +34,9 @@ export const CustomAccent = (): ReactElement => {
           </StackLayout>
         </CardContent>
       </Card>
-      {/* in your css:
+      {/* In your CSS:
         .category2 {
-          --saltCard-accent-color: rgb(171, 101, 40);
-        }
-
-        .category2:hover {
-          --saltCard-accent-color: rgb(133, 72, 20);
+          --saltCard-accent-color: var(--salt-category-2-borderColor);
         }
       */}
       <Card
@@ -48,19 +45,16 @@ export const CustomAccent = (): ReactElement => {
           width: "240px",
         }}
         accent="top"
-        hoverable
       >
         <CardContent>
           <StackLayout gap={1}>
-            <H3 style={{ margin: 0 }}>
-              <strong>S&P Global Market Intelligence</strong>
-            </H3>
+            <H3 style={{ margin: 0 }}>S&P Global Market Intelligence</H3>
             <Text>
               Automate transmission of bank loan settlement instructions.
             </Text>
           </StackLayout>
         </CardContent>
       </Card>
-    </StackLayout>
+    </FlowLayout>
   );
 };
