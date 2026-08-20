@@ -22,6 +22,7 @@ export default {
 };
 
 export {
+  AbsoluteSorting,
   CellValidation,
   CheckboxSelection,
   Coloration,
