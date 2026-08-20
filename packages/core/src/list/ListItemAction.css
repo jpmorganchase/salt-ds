@@ -1,8 +1,8 @@
-.saltCoreListItemAction {
+.saltListItemAction {
   appearance: none;
   -webkit-appearance: none;
   align-self: stretch;
-  background: var(--salt-selectable-background);
+  background: transparent;
   border: 0;
   border-radius: var(--salt-palette-corner-weak, 0);
   box-sizing: border-box;
@@ -15,46 +15,58 @@
   grid-row: 1;
   min-width: 0;
   padding: 0;
-  position: relative;
+  position: static;
   text-align: start;
   text-decoration: none;
   width: 100%;
 }
 
-.saltCoreListItemAction:hover:not(:disabled) {
-  background: var(--salt-overlayable-background-hover);
-}
-
-.saltCoreListItemAction:focus-visible {
-  outline: var(--salt-focused-outline);
-  outline-offset: calc(var(--salt-size-fixed-100) * -2);
-  z-index: 1;
-}
-
-.saltCoreListItemAction:active:not(:disabled) {
-  background: var(--salt-navigable-accent-background-active);
-}
-
-.saltCoreListItemAction:active:not(:disabled)::before {
-  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-navigable-accent-borderColor-active);
+.saltListItemAction::before {
+  background: var(--salt-selectable-background);
   border-radius: inherit;
-  box-sizing: border-box;
   bottom: 0;
   content: "";
   left: 0;
-  pointer-events: none;
   position: absolute;
   right: 0;
   top: 0;
+  z-index: 0;
 }
 
-.saltCoreListItemAction > .saltLink-icon {
+.saltListItemAction > * {
+  position: relative;
+  z-index: 1;
+}
+
+.saltListItemAction:hover:not(:disabled)::before {
+  background: var(--salt-overlayable-background-hover);
+}
+
+.saltListItemAction:focus-visible {
+  outline: none;
+}
+
+.saltListItemAction:focus-visible::before {
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(var(--salt-size-fixed-100) * -2);
+}
+
+.saltListItemAction:active:not(:disabled)::before {
+  background: var(--salt-navigable-accent-background-active);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-navigable-accent-borderColor-active);
+  box-sizing: border-box;
+}
+
+.saltListItemAction > .saltLink-icon {
   margin-bottom: 0;
   margin-top: calc(var(--salt-spacing-50) + ((var(--salt-size-base) - var(--icon-size, max(var(--salt-size-icon), 12px))) / 2));
 }
 
-button.saltCoreListItemAction:disabled {
-  background: var(--salt-selectable-background-disabled);
+button.saltListItemAction:disabled {
   color: var(--salt-content-primary-foreground-disabled);
   cursor: var(--salt-cursor-disabled);
+}
+
+button.saltListItemAction:disabled::before {
+  background: var(--salt-selectable-background-disabled);
 }

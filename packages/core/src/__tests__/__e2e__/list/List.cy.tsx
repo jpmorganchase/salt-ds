@@ -115,31 +115,79 @@ function OverlayExample({ onOpenChange }: { onOpenChange: () => void }) {
 describe("List", () => {
   it("renders native unordered and ordered list structures", () => {
     const unorderedRef = createRef<HTMLUListElement>();
-    const orderedRef = createRef<HTMLOListElement>();
+    const orderedRef = createRef<HTMLUListElement>();
 
     cy.mount(
       <>
         <List className="reports" data-list="unordered" ref={unorderedRef}>
           <ListItem>Unordered item</ListItem>
         </List>
-        <List as="ol" data-list="ordered" ref={orderedRef} start={2}>
+        <List
+          data-list="ordered"
+          data-source="list"
+          ref={orderedRef}
+          render={
+            <ol className="ordered-render" data-source="render" start={2} />
+          }
+        >
           <ListItem>Ordered item</ListItem>
         </List>
       </>,
     );
 
     cy.get('ul[data-list="unordered"]')
-      .should("have.class", "saltCoreList")
+      .should("have.class", "saltList")
       .and("have.class", "reports")
       .children("li")
       .should("have.length", 1);
     cy.get('ol[data-list="ordered"]')
       .should("have.attr", "start", "2")
+      .and("have.attr", "data-source", "render")
+      .and("have.class", "saltList")
+      .and("have.class", "ordered-render")
       .children("li")
       .should("have.length", 1);
     cy.then(() => {
       expect(unorderedRef.current?.tagName).to.equal("UL");
       expect(orderedRef.current?.tagName).to.equal("OL");
+    });
+  });
+
+  it("passes complete root props to a callback render", () => {
+    const listRef = createRef<HTMLUListElement>();
+    const renderSpy = cy.stub().as("listRender");
+
+    cy.mount(
+      <List
+        aria-label="Ordered reports"
+        className="reports"
+        data-list="callback"
+        ref={listRef}
+        render={(props) => {
+          renderSpy(props);
+          return <ol {...props} data-render="callback" />;
+        }}
+      >
+        <ListItem>First report</ListItem>
+      </List>,
+    );
+
+    cy.findByRole("list", { name: "Ordered reports" })
+      .should("match", "ol")
+      .and("have.class", "saltList")
+      .and("have.class", "reports")
+      .and("have.attr", "data-list", "callback")
+      .and("have.attr", "data-render", "callback")
+      .children("li")
+      .should("have.length", 1);
+    cy.get("@listRender").should("have.been.calledWithMatch", {
+      "aria-label": "Ordered reports",
+      className: Cypress.sinon.match.string,
+      children: Cypress.sinon.match.any,
+      ref: Cypress.sinon.match.object,
+    });
+    cy.then(() => {
+      expect(listRef.current?.tagName).to.equal("OL");
     });
   });
 
@@ -301,6 +349,56 @@ describe("List", () => {
     );
   });
 
+  it("keeps the row clickable around multiple secondary actions", () => {
+    const primarySpy = cy.stub().as("primaryAction");
+    const firstSecondarySpy = cy.stub().as("firstSecondaryAction");
+    const secondSecondarySpy = cy.stub().as("secondSecondaryAction");
+
+    cy.mount(
+      <List>
+        <ListItem data-clickable-row>
+          <ListItemAction onClick={primarySpy}>
+            <ListItemContent>Run report</ListItemContent>
+          </ListItemAction>
+          <ListItemActions>
+            <Button aria-label="Download report" onClick={firstSecondarySpy} />
+            <Button
+              aria-label="More report actions"
+              onClick={secondSecondarySpy}
+            />
+          </ListItemActions>
+        </ListItem>
+      </List>,
+    );
+
+    cy.get("[data-clickable-row]").then(($row) => {
+      const rowRect = $row[0].getBoundingClientRect();
+      const secondaryActions = $row[0].querySelectorAll(
+        ".saltListItemActions > button",
+      );
+      const firstActionRect = secondaryActions[0].getBoundingClientRect();
+      const secondActionRect = secondaryActions[1].getBoundingClientRect();
+
+      cy.wrap($row).realClick({
+        x:
+          firstActionRect.right +
+          (secondActionRect.left - firstActionRect.right) / 2 -
+          rowRect.left,
+        y: rowRect.height / 2,
+      });
+      cy.wrap($row).realClick({
+        x: rowRect.width - 2,
+        y: rowRect.height / 2,
+      });
+    });
+
+    cy.get("@primaryAction").should("have.callCount", 2);
+    cy.findByRole("button", { name: "More report actions" }).realClick();
+    cy.get("@secondSecondaryAction").should("have.been.calledOnce");
+    cy.get("@firstSecondaryAction").should("not.have.been.called");
+    cy.get("@primaryAction").should("have.callCount", 2);
+  });
+
   it("does not leak secondary activation to the primary action", () => {
     const primarySpy = cy.stub().as("primaryAction");
     const secondarySpy = cy.stub().as("secondaryAction");
@@ -398,7 +496,7 @@ describe("List", () => {
     );
 
     cy.findByRole("button", { name: "Custom button" })
-      .should("have.class", "saltCoreListItemAction")
+      .should("have.class", "saltListItemAction")
       .and("have.class", "consumer-button")
       .and("have.class", "render-button")
       .and("have.attr", "data-consumer", "button")
@@ -418,7 +516,7 @@ describe("List", () => {
     });
   });
 
-  it("forwards structural props and refs to every primitive", () => {
+  it("forwards native props and refs to every primitive", () => {
     const listRef = createRef<HTMLUListElement>();
     const itemRef = createRef<HTMLLIElement>();
     const contentRef = createRef<HTMLSpanElement>();
@@ -559,7 +657,7 @@ describe("List", () => {
           const text = row.querySelector<HTMLElement>("[data-alignment-text]");
           const textRect = text?.getBoundingClientRect();
           const actionRect = row
-            .querySelector<HTMLElement>(".saltCoreListItemActions button")
+            .querySelector<HTMLElement>(".saltListItemActions button")
             ?.getBoundingClientRect();
 
           expect(iconRect).not.to.equal(undefined);

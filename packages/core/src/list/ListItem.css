@@ -1,8 +1,9 @@
-.saltCoreListItem {
+.saltListItem {
   box-sizing: border-box;
   color: var(--salt-content-primary-foreground);
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   list-style: none;
   min-width: 0;
+  position: relative;
 }

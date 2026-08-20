@@ -1,0 +1,45 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Passive content
+
+Use `ListItemContent` directly within an item when the row has no primary action.
+
+<LivePreview componentName="list" exampleName="Default" />
+
+## Secondary actions
+
+Add one or more independent controls in `ListItemActions`.
+
+<LivePreview componentName="list" exampleName="WithSecondaryActions" />
+
+## Action items
+
+Use `ListItemAction` for a primary button or link while keeping secondary controls as siblings.
+
+<LivePreview componentName="list" exampleName="ActionItems" />
+
+## Routing libraries
+
+Use the JSX or callback form of `render` to integrate routing and link components.
+
+<LivePreview componentName="list" exampleName="RoutingLibraries" />
+
+## In a Dialog
+
+The Dialog owns initial focus, focus containment, Escape dismissal, focus return, and scrolling.
+
+<LivePreview componentName="list" exampleName="InDialog" />
+
+## In an Overlay
+
+The Overlay owns focus and dismissal while the list provides only its native structure and actions.
+
+<LivePreview componentName="list" exampleName="InOverlay" />

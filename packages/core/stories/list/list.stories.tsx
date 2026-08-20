@@ -125,7 +125,7 @@ export const ActionItems: StoryFn = () => (
 );
 
 export const Ordered: StoryFn = () => (
-  <List as="ol" aria-label="Report preparation steps">
+  <List render={<ol />} aria-label="Report preparation steps">
     <ListItem>
       <ListItemContent>Choose a reporting period</ListItemContent>
     </ListItem>
