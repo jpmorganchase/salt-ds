@@ -56,6 +56,7 @@ export const CardActions = (): ReactElement => {
                 media={
                   <img
                     aria-hidden={true}
+                    alt=""
                     className={styles.carouselImage}
                     src={slide.image}
                   />

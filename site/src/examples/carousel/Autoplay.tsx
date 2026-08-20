@@ -173,9 +173,9 @@ export const Autoplay = () => {
             onClick={togglePlayState}
           >
             {playState === "play" ? (
-              <PauseSolidIcon style={{ pointerEvents: "none" }} />
+              <PauseSolidIcon style={{ pointerEvents: "none" }} aria-hidden />
             ) : (
-              <PlaySolidIcon style={{ pointerEvents: "none" }} />
+              <PlaySolidIcon style={{ pointerEvents: "none" }} aria-hidden />
             )}
           </Button>
           <CarouselPreviousButton onClick={stop} />
@@ -205,6 +205,7 @@ export const Autoplay = () => {
                 media={
                   <img
                     aria-hidden={true}
+                    alt=""
                     className={styles.carouselImage}
                     src={slide.image}
                   />

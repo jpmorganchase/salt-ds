@@ -9,12 +9,12 @@ import type { ReactElement } from "react";
 
 export const StaticAdornments = (): ReactElement => (
   <FlowLayout style={{ width: "256px" }}>
-    <Input startAdornment={<FilterIcon />} defaultValue="Value" />
+    <Input startAdornment={<FilterIcon aria-hidden />} defaultValue="Value" />
     <Input
       variant="secondary"
       startAdornment={
         <>
-          <CallIcon />
+          <CallIcon aria-hidden />
           <Text>+1</Text>
         </>
       }
@@ -23,11 +23,11 @@ export const StaticAdornments = (): ReactElement => (
     <Input endAdornment={<Text>USD</Text>} defaultValue="Value" />
     <Input
       variant="secondary"
-      startAdornment={<FlagIcon />}
+      startAdornment={<FlagIcon aria-hidden />}
       endAdornment={
         <>
           <Text>%</Text>
-          <FilterClearIcon />
+          <FilterClearIcon aria-hidden />
         </>
       }
       defaultValue="Value"
