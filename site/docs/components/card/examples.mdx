@@ -24,6 +24,27 @@ Ghost cards can create a seamless integration with the surrounding elements, mak
 
 <LivePreview componentName="card" exampleName="Ghost" />
 
+## Elevation
+
+Cards support two elevations: flat and raised. Cards are raised by default.
+
+Use a flat card for compact containers in data-dense interfaces, where users need to scan and compare information quickly with minimal visual noise.
+
+Use a raised card when the content needs stronger prominence and separation from the surrounding interface.
+
+<LivePreview componentName="card" exampleName="Elevation" />
+
+## Border color
+
+Cards support strong, default, and subtle border colors, as well as no border. Cards use a strong border when `borderColor` isn't set. The `borderColor` prop doesn't apply to ghost cards, so their border color remains unchanged.
+
+- Use `borderColor="strong"` for higher-priority client experiences or when a stronger structural boundary is needed.
+- For most cards, use `borderColor="default"` unless there is a specific reason to increase or reduce visual emphasis.
+- Use `borderColor="subtle"` when the interface needs additional structure without increasing visual noise.
+- Use `borderColor="none"` to create a subtle color-blocking effect behind key information or controls when the container shouldn't compete visually with surrounding content.
+
+<LivePreview componentName="card" exampleName="BorderColor" />
+
 ## Accents
 
 - The accent in a card is optional, but you can use it to indicate meaning (such as product or brand color).
