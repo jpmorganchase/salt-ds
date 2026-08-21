@@ -15,6 +15,7 @@ const reactMajorVersion = Number.parseInt(
   10,
 );
 const browserDependencies = [
+  "@floating-ui/dom",
   "clipboard-copy",
   "deepmerge",
   "mockdate",
