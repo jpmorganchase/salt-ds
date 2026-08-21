@@ -145,15 +145,24 @@ describe("GIVEN an Overlay", () => {
   });
 
   it("should support tooltip on overlay triggers", async () => {
-    await renderWithSalt(<WithTooltip />);
+    await renderWithSalt(
+      <>
+        <WithTooltip />
+        <button type="button">After overlay trigger</button>
+      </>,
+    );
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
     await userEvent.tab();
     await expect.element(page.getByRole("tooltip")).toBeVisible();
     await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "After overlay trigger" }))
+      .toHaveFocus();
     await expect.element(page.getByRole("tooltip")).not.toBeInTheDocument();
-    await page.getByRole("button").hover();
+    const tooltipTrigger = page.getByRole("button", { name: "Show content" });
+    await tooltipTrigger.hover();
     await expect.element(page.getByRole("tooltip")).toBeVisible();
-    await page.getByRole("button").click();
+    await tooltipTrigger.click();
     await expect.element(page.getByRole("dialog")).toBeInTheDocument();
   });
 });
