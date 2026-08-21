@@ -1,6 +1,5 @@
-import { FlowLayout, Tooltip } from "@salt-ds/core";
+import { FlowLayout, LinkButton, Tooltip } from "@salt-ds/core";
 import { ArrowLeftIcon, CartIcon, GithubIcon } from "@salt-ds/icons";
-import { LinkButton } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const IconOnly = (): ReactElement => (

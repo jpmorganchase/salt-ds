@@ -1,5 +1,5 @@
+import { LinkButton } from "@salt-ds/core";
 import { StackoverflowIcon } from "@salt-ds/icons";
-import { LinkButton } from "@salt-ds/lab";
 
 describe("GIVEN a LinkButton", () => {
   it('WHEN passed target="_blank", THEN should render the LinkButton with the tear out icon', () => {

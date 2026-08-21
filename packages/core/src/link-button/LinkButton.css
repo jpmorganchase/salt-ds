@@ -23,7 +23,7 @@
   min-width: var(--saltLinkButton-minWidth, unset);
   position: relative;
   text-align: var(--saltLinkButton-textAlign, var(--salt-text-action-textAlign));
-  text-decoration: var(--linkButton-textDecoration, var(--salt-text-link-textDecoration));
+  text-decoration: var(--linkButton-textDecoration, var(--salt-typography-textDecoration-underline));
   text-underline-offset: var(--salt-spacing-fixed-200);
   transition: none;
   width: var(--saltLinkButton-width, auto);
@@ -34,7 +34,7 @@
 }
 
 .saltLinkButton-underlineDefault {
-  --linkButton-textDecoration: var(--salt-text-link-textDecoration);
+  --linkButton-textDecoration: var(--salt-typography-textDecoration-underline);
   --linkButton-textDecoration-hover: var(--salt-typography-textDecoration-none);
   --linkButton-textDecoration-focus: var(--linkButton-textDecoration-hover);
 }
