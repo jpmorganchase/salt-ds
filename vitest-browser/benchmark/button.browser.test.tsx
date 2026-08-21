@@ -33,14 +33,23 @@ describe("Given a Button", () => {
 
   it("calls onBlur when blurred", async () => {
     const onBlur = vi.fn();
-    await renderWithSalt(<Default onBlur={onBlur} />);
-    const button = page.getByRole("button");
+    await renderWithSalt(
+      <>
+        <Default onBlur={onBlur} />
+        <button type="button">Blur target</button>
+      </>,
+    );
+    const button = page.getByRole("button", {
+      name: Default.args?.children as string,
+    });
+    const blurTarget = page.getByRole("button", { name: "Blur target" });
 
     await userEvent.tab();
     await expect.element(button).toHaveFocus();
-    await userEvent.tab();
+    await blurTarget.click();
+    await expect.element(blurTarget).toHaveFocus();
     await expect.element(button).not.toHaveFocus();
-    expect(onBlur).toHaveBeenCalled();
+    expect(onBlur).toHaveBeenCalledTimes(1);
   });
 
   it.each([

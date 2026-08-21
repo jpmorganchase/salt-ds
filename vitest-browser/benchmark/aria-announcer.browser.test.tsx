@@ -344,6 +344,8 @@ describe("Given useAriaAnnouncer", () => {
       useEffect(() => {
         announce("hello", { ariaLive: "polite" });
         announce("hello", { ariaLive: "assertive" });
+        return () =>
+          announce("cleanup announcement", { ariaLive: "assertive" });
       }, [announce]);
       return null;
     }
