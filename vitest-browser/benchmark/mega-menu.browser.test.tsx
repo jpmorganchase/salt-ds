@@ -62,14 +62,17 @@ describe("Given the Baseline MegaMenu example", () => {
   });
 
   it("closes on outside click", async () => {
-    await renderWithSalt(<Baseline />);
+    await renderWithSalt(
+      <>
+        <button type="button">Outside menu</button>
+        <Baseline />
+      </>,
+    );
     await page.getByRole("button", { name: "Solutions" }).click();
     await expect
       .poll(() => document.querySelector(".saltMegaMenuPanel"))
       .not.toBeNull();
-    await page
-      .elementLocator(document.body)
-      .click({ position: { x: 0, y: 0 } });
+    await page.getByRole("button", { name: "Outside menu" }).click();
     await expect
       .poll(() => document.querySelector(".saltMegaMenuPanel"))
       .toBeNull();
