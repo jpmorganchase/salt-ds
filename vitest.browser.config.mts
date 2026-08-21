@@ -91,6 +91,13 @@ export default defineConfig({
     ],
   },
   test: {
+    expect: {
+      // Match Cypress's retry window closely enough for animations to settle
+      // when several browser files are competing for CPU.
+      poll: {
+        timeout: 5_000,
+      },
+    },
     fileParallelism: true,
     maxWorkers: Math.min(8, availableParallelism()),
     include: ["vitest-browser/**/*.browser.test.tsx"],
