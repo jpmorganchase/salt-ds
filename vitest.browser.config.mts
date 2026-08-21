@@ -86,7 +86,7 @@ export default defineConfig({
     ],
   },
   test: {
-    fileParallelism: false,
+    fileParallelism: true,
     include: ["vitest-browser/**/*.browser.test.tsx"],
     setupFiles: ["./vitest-browser/setup.ts"],
     browser: {
