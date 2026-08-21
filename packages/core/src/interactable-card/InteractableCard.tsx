@@ -25,6 +25,14 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
    */
   accent?: "bottom" | "top" | "left" | "right";
   /**
+   * Visual elevation.
+   */
+  elevation?: "flat" | "raised";
+  /**
+   * Border color strength.
+   */
+  borderColor?: "strong" | "default" | "subtle" | "none";
+  /**
    * @deprecated since 1.23.0. Use the `accent` prop instead.
    */
   accentPlacement?: "bottom" | "top" | "left" | "right";
@@ -54,9 +62,11 @@ export const InteractableCard = forwardRef<
   const {
     accent,
     accentPlacement,
+    borderColor,
     children,
     className,
     disabled: disabledProp,
+    elevation,
     variant = "primary",
     value,
     onBlur,
@@ -145,6 +155,7 @@ export const InteractableCard = forwardRef<
 
   return (
     // biome-ignore lint/a11y/useAriaPropsSupportedByRole: Biome can't detect the role provided by the role variable. aria-checked is only used when the role is appropriate.
+    // biome-ignore lint/a11y/useKeyWithClickEvents: Keyboard event handlers are provided by cardProps.
     <div
       {...cardProps}
       role={role}
@@ -157,7 +168,10 @@ export const InteractableCard = forwardRef<
         {
           [withBaseName("accent")]: accentValue,
           [withBaseName(`accent${capitalize(accentValue ?? "")}`)]: accentValue,
+          [withBaseName(elevation || "")]: elevation,
           [withBaseName("active")]: role === "button" && active,
+          [withBaseName(`borderColor${capitalize(borderColor ?? "")}`)]:
+            borderColor,
           [withBaseName("disabled")]: disabled,
           [withBaseName("selected")]: selected,
           [withBaseName("sectioned")]: sectioned,

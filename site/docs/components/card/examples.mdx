@@ -10,27 +10,54 @@ data:
 
 ## Card
 
-By default, the card component does not have any interactive or focusable elements.
+`Card` is a static container. It doesn't add interactive behavior or enter the tab order.
 
 <LivePreview componentName="card" exampleName="Default" />
 
 ## Variants
 
-Cards are available in several variants: primary, secondary, and tertiary, with an additional ghost variant for static cards. These variants can be combined to create different levels of hierarchy within your UI. There is no strict order to follow; the choice largely depends on the content, layout, and structure of your UI. Select the variant that best aligns with the design language you are establishing and the hierarchy you aim to create.
+`Card`, `LinkCard`, and `InteractableCard` support primary, secondary, and tertiary variants. Static cards also support the ghost variant. Choose variants based on the content, layout, and visual hierarchy of your interface.
 
 <LivePreview componentName="card" exampleName="Variants" />
 
-Ghost cards can create a seamless integration with the surrounding elements, making the layout feel more fluid and less compartmentalized. This can be useful in designs where a continuous flow of information is desired. For example, if you want to highlight particular content over the top of a custom background, image or gradient.
+Use a ghost card to integrate static content with a custom background, image, or gradient without creating a strongly compartmentalized layout.
 
 <LivePreview componentName="card" exampleName="Ghost" />
 
+## Elevation
+
+Cards support two elevations: flat and raised. Cards are raised by default.
+
+Use a flat card for compact containers in data-dense interfaces, where users need to scan and compare information quickly with minimal visual noise.
+
+Use a raised card when the content needs stronger prominence and separation from the surrounding interface.
+
+<LivePreview componentName="card" exampleName="Elevation" />
+
+## Border color
+
+Cards support strong, default, and subtle border colors, as well as no border. Cards use a strong border when `borderColor` isn't set. The `borderColor` prop doesn't apply to ghost cards, so their border color remains unchanged.
+
+- Use `borderColor="strong"` for higher-priority client experiences or when a stronger structural boundary is needed.
+- For most cards, use `borderColor="default"` unless there is a specific reason to increase or reduce visual emphasis.
+- Use `borderColor="subtle"` when the interface needs additional structure without increasing visual noise.
+- Use `borderColor="none"` to create a subtle color-blocking effect behind key information or controls when the container shouldn't compete visually with surrounding content.
+
+<LivePreview componentName="card" exampleName="BorderColor" />
+
 ## Accents
 
-- The accent in a card is optional, but you can use it to indicate meaning (such as product or brand color).
-- When paired with the hoverable prop, an accent can indicate a card is interactive when the user moves focus to the card. Interactable cards and link cards are always hoverable.
+- Accents are optional. Use them to communicate meaning, such as a product or brand association.
+- Don't use an accent alone to indicate that a card is interactive.
 - Maintain consistency in accent placement across cards to ensure a coherent visual experience in your UI.
 
 <LivePreview componentName="card" exampleName="Accents" />
+
+## Hoverable
+
+The `hoverable` prop adds hover styling to a static `Card`; it doesn't add interaction, semantics, or keyboard behavior. Use `LinkCard` or `InteractableCard` when the entire card is interactive.
+
+<LivePreview componentName="card" exampleName="HoverStyling" />
 
 ## Actions
 
@@ -40,23 +67,25 @@ You can incorporate actions like [links](../link) or [buttons](../button) into a
 
 ## Sections
 
-Use `CardHeader`, `CardContent` and `CardFooter` to create distinct padded sections within `Card`, `LinkCard` or `InteractableCard`. When a section is present, the card removes its own padding and the sections provide consistent inner spacing. By default, adjacent sections share a single `--salt-spacing-200` gap.
+Structural sections organize a card into predictable content regions. Use only the sections that your content needs.
 
-Sections must be direct children of the card; don't wrap them in fragments or other components.
+Use `CardHeader` for a heading and supporting information, `CardContent` for the primary content, and `CardFooter` for actions. Include a heading element within `CardHeader` that follows the page's heading hierarchy.
+
+Sections must be direct children of `Card`, `LinkCard`, or `InteractableCard`; don't wrap them in fragments or other components. Place other direct children, such as images, between sections when content needs to extend to the card edges.
 
 <LivePreview componentName="card" exampleName="Sections" />
 
 ## Link card
 
-- Use a link card when the entire card is clickable and navigates the user within the same tab or to a new tab.
-- Don't use any focusable elements within link cards, only use static content such as text or icons.
-- Avoid adding too much content to link cards. Users should be able to read them easily, and it shouldn't take too long for a screen reader tool to read out the content.
+- Use a link card when the entire card should act as a link. If it opens a new tab, make that clear in the link text.
+- Don't place other focusable elements within link cards. Use only static content, such as text or icons.
+- Keep link card content concise so users can read it easily, including with a screen reader.
 
 <LivePreview componentName="card" exampleName="LinkCardExample" />
 
-## Full width image
+## Full-width image
 
-When using images in cards, set the image to span the card's entire width. You can do this by using the `CardContent` component inside `Card`, `LinkCard` or `InteractableCard`. `CardContent` removes the wrapping card's default padding, allowing siblings (such as images) to extend to the card's edges, and applies its own padding to the content inside it.
+When an image needs to extend to the card edges, place it directly inside `Card`, `LinkCard`, or `InteractableCard`, alongside any structural sections. Including `CardContent` removes the card's root padding and applies padding to the content within that section.
 
 <LivePreview componentName="card" exampleName="FullWidthImage" />
 
@@ -69,41 +98,43 @@ You can set an image as the background of a card using [`background-image`](http
 ## Custom padding
 
 - By default, the card components include `--salt-spacing-200` inner padding.
-- For very small cards with a limited hit area, customizing the padding to `--salt-spacing-100` is advisable.
-- When your cards are intended to occupy a significant portion of your application window, `--salt-spacing-300` is recommended.
-- Customize the spacing using the `--saltCard-padding`, `--saltLinkCard-padding` or `--saltInteractableCard-padding` CSS properties.
-- When structural sections are used, the card's root padding is always removed. Customize section spacing using `--saltCardHeader-padding`, `--saltCardContent-padding` or `--saltCardFooter-padding` instead.
+- Use `--salt-spacing-100` for compact cards. For interactive cards, make sure the resulting target remains large enough to use comfortably.
+- Use `--salt-spacing-300` when a card occupies a significant portion of the application window.
+- Customize the spacing using the `--saltCard-padding`, `--saltLinkCard-padding`, or `--saltInteractableCard-padding` CSS properties.
+- When structural sections are used, the card's root padding is always removed. Customize section spacing using `--saltCardHeader-padding`, `--saltCardContent-padding`, or `--saltCardFooter-padding` instead.
 
 <LivePreview componentName="card" exampleName="CustomPadding" />
 
 ## Custom accent
 
-- By default, the card components accent color uses `--salt-container-primary-borderColor` or `--salt-container-secondary-borderColor` depending on the variant.
-- When there is a need to associate a brand or product color to the accent bar, you can override `--saltCard-accent-color` or `--saltLinkCard-accent-color` with the desired color.
+- By default, card accents use `--salt-sentiment-accent-background`.
+- To associate a brand or product color with an accent, override `--saltCard-accent-color`, `--saltLinkCard-accent-color`, or `--saltInteractableCard-accent-color`.
+- Set custom accents with a categorical border token, such as `--salt-category-1-borderColor`, instead of a hard-coded color value.
 
 <LivePreview componentName="card" exampleName="CustomAccent" />
 
 ## Interactable card
 
-Use an Interactable card when the entire card functions as a button, or when the entire card needs to be selectable from a group of cards.
+A standalone `InteractableCard` functions as a button. Use it within `InteractableCardGroup` when users need to select from a group of cards.
 
 <LivePreview componentName="card" exampleName="InteractableCardExample" />
 
 ## Disabled interactable card
 
-The Interactable card component can be disabled to prevent the user from interacting with it, e.g., if the option is temporarily unavailable
+Set `disabled` on `InteractableCard` when the action or option is temporarily unavailable.
 
 <LivePreview componentName="card" exampleName="DisabledInteractableCard" />
 
-## Toggle group
+## Selection group
 
-Interactable cards can be used as a toggle button. This would typically be when used within a group context, facilitating single or multi selection.
+By default, users can select one card in an `InteractableCardGroup`. Set `multiSelect` to allow users to select more than one card.
 
-<LivePreview componentName="card" exampleName="ToggleGroup" />
+Use `defaultValue` to set the initial selection, or use `value` with `onChange` to control selection. With `multiSelect`, pass an array of card values to `defaultValue` or `value`.
 
-## Disabled toggle group
+<LivePreview componentName="card" exampleName="SelectionGroup" />
 
-- Set both `disabled={true}` and `selected={true}` to apply selected-disabled styling to interactable cards.
-- Make sure to also apply `disabled={true}` and `selected={true}` to any nested components, such as Text, to ensure selected-disabled styling also applies to the content.
+## Disabled selection group
 
-<LivePreview componentName="card" exampleName="DisabledToggleGroup" />
+Set `disabled` on `InteractableCardGroup` to disable every card in the group.
+
+<LivePreview componentName="card" exampleName="DisabledSelectionGroup" />
