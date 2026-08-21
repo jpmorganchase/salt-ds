@@ -11,11 +11,12 @@
 }
 
 /*
-  [VERSION DIVERGENCE]: From v36, AG Grid subtracts an additional 2px from cell widget heights,
-  shifting checkboxes 1px above their pre-v36 position. Restore height for row-selection
-  checkboxes and boolean checkbox cell renderers. The scrolling container class is v36-only.
+  [VERSION DIVERGENCE]: From v33, AG Grid subtracts an additional 2px from cell widget heights,
+  shifting checkboxes 1px above their v32 position. Restore the v32 height for row-selection
+  checkboxes and boolean checkbox cell renderers across every row container. In v32, this
+  repeats AG Grid's existing height calculation and therefore has no visual effect.
 */
-[class*="ag-theme-salt"] .ag-grid-scrolling-container .ag-cell-wrapper > .ag-selection-checkbox,
-[class*="ag-theme-salt"] .ag-grid-scrolling-container .ag-cell-wrapper.ag-checkbox-cell > .ag-labeled.ag-checkbox {
+[class*="ag-theme-salt"] .ag-cell-wrapper > .ag-selection-checkbox,
+[class*="ag-theme-salt"] .ag-cell-wrapper.ag-checkbox-cell > .ag-labeled.ag-checkbox {
   height: min(var(--ag-line-height, calc(var(--ag-row-height) - var(--ag-row-border-width))), calc(var(--ag-row-height) - var(--ag-row-border-width)));
 }
