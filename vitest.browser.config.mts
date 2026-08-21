@@ -1,3 +1,4 @@
+import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react";
@@ -7,6 +8,11 @@ import { cssInline } from "css-inline-plugin";
 import { defineConfig } from "vitest/config";
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
+const reactMajorVersion = Number.parseInt(
+  (require("react/package.json") as { version: string }).version,
+  10,
+);
 const browserDependencies = [
   "clipboard-copy",
   "deepmerge",
@@ -33,6 +39,18 @@ const distAliases: Record<string, string> = isCI
     }
   : {};
 
+const legacyReactAliases: Record<string, string> =
+  reactMajorVersion < 18
+    ? {
+        // vitest-browser-react uses react-dom/client, which only exists in
+        // React 18+. Keep the same small render contract for Salt's 16/17 lane.
+        "vitest-browser-react": path.resolve(
+          rootDir,
+          "./vitest-browser/legacy-react-renderer.tsx",
+        ),
+      }
+    : {};
+
 export default defineConfig({
   plugins: [react(), cssInline()],
   define: {
@@ -48,7 +66,10 @@ export default defineConfig({
   },
   resolve: {
     tsconfigPaths: true,
-    alias: distAliases,
+    alias: {
+      ...distAliases,
+      ...legacyReactAliases,
+    },
   },
   optimizeDeps: {
     include: [
