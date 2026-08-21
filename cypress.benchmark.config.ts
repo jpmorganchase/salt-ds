@@ -20,7 +20,17 @@ const benchmarkSpecs = [
   "packages/lab/src/__tests__/__e2e__/on-solid-button/OnSolidButton.cy.tsx",
   "packages/lab/src/__tests__/__e2e__/combo-box-deprecated/ComboBox.cy.tsx",
   "packages/lab/src/__tests__/__e2e__/search-input/SearchInput.cy.tsx",
+  "packages/date-components/src/__tests__/__e2e__/calendar/Calendar.a11y.cy.tsx",
+  "packages/date-components/src/__tests__/__e2e__/calendar/Calendar.cy.tsx",
+  "packages/date-components/src/__tests__/__e2e__/calendar/Calendar.offset.cy.tsx",
+  "packages/date-components/src/__tests__/__e2e__/calendar/Calendar.range.cy.tsx",
+  "packages/date-components/src/__tests__/__e2e__/calendar/Calendar.single.cy.tsx",
   "packages/date-components/src/__tests__/__e2e__/date-input/DateInput.cy.tsx",
+  "packages/date-components/src/__tests__/__e2e__/date-input/DateInputRange.cy.tsx",
+  "packages/date-components/src/__tests__/__e2e__/date-input/DateInputSingle.cy.tsx",
+  "packages/date-components/src/__tests__/__e2e__/date-picker/DatePicker.cy.tsx",
+  "packages/date-components/src/__tests__/__e2e__/date-picker/DatePicker.range.cy.tsx",
+  "packages/date-components/src/__tests__/__e2e__/date-picker/DatePicker.single.cy.tsx",
 ];
 
 export default {
