@@ -64,12 +64,20 @@ describe("GIVEN a LayerLayout", () => {
   );
 
   it("runs an exit animation when closed", async () => {
-    await openLayer();
+    const layer = await openLayer();
+    let sawExitAnimation = layer.classList.contains(
+      "saltLayerLayout-exit-animation",
+    );
+    const observer = new MutationObserver(() => {
+      sawExitAnimation ||= layer.classList.contains(
+        "saltLayerLayout-exit-animation",
+      );
+    });
+    observer.observe(layer, { attributeFilter: ["class"] });
     await page.getByRole("button", { name: /Close Layer/i }).click();
-    await expect
-      .poll(() => layerElement()?.className ?? "")
-      .toContain("saltLayerLayout-exit-animation");
+    await expect.poll(() => sawExitAnimation).toBe(true);
     await expect.poll(layerElement).toBeNull();
+    observer.disconnect();
   });
 
   it("can close in full-screen mode", async () => {

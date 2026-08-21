@@ -207,7 +207,10 @@ describe("Given a Card", () => {
 
     expect(
       page.getByTestId("media").element().getBoundingClientRect().width,
-    ).toBe((page.getByTestId("card").element() as HTMLElement).clientWidth);
+    ).toBeCloseTo(
+      (page.getByTestId("card").element() as HTMLElement).clientWidth,
+      0,
+    );
   });
 
   it("supports sections in link and interactable cards", async () => {

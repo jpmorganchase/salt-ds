@@ -33,6 +33,9 @@ describe("GIVEN a Drawer", () => {
     await page.getByRole("button", { name: "Open Primary Drawer" }).click();
     await expect.element(page.getByTestId("scrim")).toBeInTheDocument();
     await expect.element(page.getByRole("dialog")).toBeVisible();
+    await expect
+      .element(page.getByRole("button", { name: "Close Drawer" }))
+      .toHaveFocus();
     const callCount = consoleSpy.mock.calls.length;
 
     await page.getByRole("button", { name: "Close Drawer" }).click();
@@ -119,7 +122,12 @@ describe("GIVEN a Drawer", () => {
   it("supports an action configured to close the drawer", async () => {
     await renderWithSalt(<OptionalCloseAction />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
-    await page.getByRole("button", { name: "Submit" }).click();
+    await expect.element(page.getByRole("dialog")).toBeVisible();
+    (
+      (await page
+        .getByRole("button", { name: "Submit" })
+        .element()) as HTMLButtonElement
+    ).click();
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
   });
 
