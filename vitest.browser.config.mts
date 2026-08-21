@@ -20,6 +20,7 @@ const browserDependencies = [
   "mockdate",
   "react-color",
   "react-hotkeys-hook",
+  "react-router",
   "react-window",
   "rifm",
   "storybook/test",
