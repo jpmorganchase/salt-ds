@@ -9,9 +9,11 @@ const rootDir = path.dirname(fileURLToPath(import.meta.url));
 const browserDependencies = [
   "clipboard-copy",
   "deepmerge",
+  "mockdate",
   "react-color",
   "react-window",
   "rifm",
+  "storybook/test",
   "tinycolor2",
 ];
 
