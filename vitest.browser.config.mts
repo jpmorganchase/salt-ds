@@ -18,6 +18,7 @@ const browserDependencies = [
   "deepmerge",
   "mockdate",
   "react-color",
+  "react-hotkeys-hook",
   "react-window",
   "rifm",
   "storybook/test",
