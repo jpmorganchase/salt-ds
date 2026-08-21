@@ -18,6 +18,7 @@ const browserDependencies = [
   "@floating-ui/dom",
   "clipboard-copy",
   "deepmerge",
+  "embla-carousel-class-names",
   "mockdate",
   "react-color",
   "react-hotkeys-hook",
