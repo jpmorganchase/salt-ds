@@ -27,6 +27,14 @@
     "test": "vitest",
     "test:components": "cypress run --component --browser chrome --headless",
     "test:components:local": "cypress open --component --browser electron",
+    "test:components:vitest": "vitest run --config vitest.browser.config.mts --browser.headless",
+    "test:components:vitest:local": "vitest --config vitest.browser.config.mts",
+    "test:components:playwright": "playwright test --config playwright.component.config.ts --project components",
+    "test:components:playwright:ui": "playwright test --config playwright.component.config.ts --project components --ui",
+    "playwright:components:serve": "vite --config vite.playwright.config.mts",
+    "benchmark:components": "node tooling/component-test-benchmark.mjs",
+    "benchmark:components:cypress": "cypress run --config-file cypress.benchmark.config.ts --component --browser chrome --headless",
+    "benchmark:components:vitest": "vitest run --config vitest.browser.config.mts --browser.headless vitest-browser/benchmark",
     "prettier": "prettier --write .",
     "prettier:ci": "prettier --check .",
     "lint": "biome check",
@@ -137,15 +145,19 @@
   },
   "devDependencies": {
     "@date-fns/tz": "^1.4.1",
+    "@playwright/test": "1.62.1",
     "@rollup/plugin-commonjs": "^28.0.1",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.3.0",
+    "@vitest/browser-playwright": "4.1.10",
     "browserslist-to-esbuild": "^2.1.1",
     "execa": "^10.0.0",
     "get-tsconfig": "^4.7.5",
+    "playwright": "1.62.1",
     "rollup": "^4.24.2",
     "rollup-plugin-esbuild": "^6.1.1",
-    "rollup-plugin-postcss": "^4.0.2"
+    "rollup-plugin-postcss": "^4.0.2",
+    "vitest-browser-react": "2.2.0"
   },
   "dependenciesMeta": {
     "cypress": {

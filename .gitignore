@@ -17,6 +17,10 @@ node_modules
 
 # testing
 /cypress/screenshots
+/.vitest-attachments
+/vitest-browser/screenshots
+/playwright-report
+/test-results
 /coverage
 .nyc_output
 
