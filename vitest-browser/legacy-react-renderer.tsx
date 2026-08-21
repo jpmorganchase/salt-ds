@@ -71,6 +71,9 @@ export async function render(
       if (!mountedRoot) return;
       await act(async () => mountedRoot.unmount());
       mountedRoots.delete(container);
+      if (container.parentNode === document.body) {
+        document.body.removeChild(container);
+      }
     },
     async rerender(newUi: ReactNode) {
       const mountedRoot = mountedRoots.get(container);
