@@ -22,6 +22,7 @@ const browserDependencies = [
   "mockdate",
   "react-color",
   "react-hotkeys-hook",
+  "react-resizable-panels",
   "react-router",
   "react-window",
   "rifm",
