@@ -1,4 +1,5 @@
 import { createRequire } from "node:module";
+import { availableParallelism } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react";
@@ -88,6 +89,7 @@ export default defineConfig({
   },
   test: {
     fileParallelism: true,
+    maxWorkers: Math.min(8, availableParallelism()),
     include: ["vitest-browser/**/*.browser.test.tsx"],
     setupFiles: ["./vitest-browser/setup.ts"],
     browser: {
