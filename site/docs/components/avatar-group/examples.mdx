@@ -1,0 +1,40 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Default
+
+`AvatarGroup` represents a group of related users, entities or objects in a compact space, using a horizontal stack of overlapping avatars.
+
+When members are hidden, add an `AvatarGroupCount` as the last child to indicate how many aren’t displayed (e.g., “+N” where N is the number of hidden members).
+
+<LivePreview componentName="avatar-group" exampleName="Default" />
+
+{/* TODO:  confirm with design if that docs entry is coming in */}
+
+## Entity avatars
+
+<LivePreview componentName="avatar-group" exampleName="Entity" />
+
+## Visible avatars
+
+Choose how many avatars to display based on the space available and how recognizable the individual members need to be.
+
+<LivePreview componentName="avatar-group" exampleName="Visible" />
+
+## Interactive
+
+`AvatarGroup` can be made interactive using the `render` prop. Props defined on the JSX element will be merged with props from the component.
+
+Common interactive use cases include:
+
+- Revealing the full list of members when an avatar group is activated.
+- Opening a menu with group-related actions.
+
+<LivePreview componentName="avatar-group" exampleName="Interactive" />
