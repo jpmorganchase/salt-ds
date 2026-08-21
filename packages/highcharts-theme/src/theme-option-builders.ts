@@ -262,6 +262,15 @@ export const buildLegendOptions = (
   symbolHeight: tokens["--salt-size-icon"],
   symbolRadius: tokens["--salt-palette-corner-weaker"],
   symbolWidth: tokens["--salt-size-icon"],
+  title: {
+    style: {
+      color: tokens["--salt-content-secondary-foreground"],
+      fontFamily: tokens["--salt-text-label-fontFamily"],
+      fontSize: tokens["--salt-text-label-fontSize"],
+      fontWeight: tokens["--salt-text-label-fontWeight-strong"],
+      lineHeight: tokens["--salt-text-label-lineHeight"],
+    },
+  },
   verticalAlign: "top",
   y: tokens["--salt-spacing-200"] + tokens["--salt-size-icon"],
 });
