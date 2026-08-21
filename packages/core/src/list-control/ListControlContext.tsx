@@ -20,7 +20,7 @@ export interface ListControlContextValue<Item> {
   selectedState: unknown[];
   select: (event: SyntheticEvent, option: OptionValue<Item>) => void;
   activeState?: OptionValue<Item>;
-  setActive: (option: OptionValue<Item>) => void;
+  setActive: (option?: OptionValue<Item>) => void;
   multiselect: boolean;
   focusVisibleState: boolean;
   valueToString: (item: Item) => string;
