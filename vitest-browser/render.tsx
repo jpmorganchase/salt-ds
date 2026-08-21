@@ -8,20 +8,24 @@ import {
   type LocalizationProviderProps,
 } from "@salt-ds/date-components";
 import type { ReactNode } from "react";
-import { render } from "vitest-browser-react";
+import { cleanup, render } from "vitest-browser-react";
 
 interface RenderWithSaltOptions<TDate extends DateFrameworkType, TLocale> {
   dateAdapter?: SaltDateAdapter<TDate, TLocale>;
   dateLocale?: TLocale;
 }
 
-export function renderWithSalt<
+export async function renderWithSalt<
   TDate extends DateFrameworkType = DateFrameworkType,
   TLocale = unknown,
 >(
   children: ReactNode,
   { dateAdapter, dateLocale }: RenderWithSaltOptions<TDate, TLocale> = {},
 ) {
+  // Cypress component mount replaces the current tree. Mirror that behavior so
+  // tests that mount a second scenario do not leave duplicate providers or DOM.
+  await cleanup();
+
   const content = dateAdapter ? (
     <LocalizationProvider<TDate, TLocale>
       DateAdapter={
