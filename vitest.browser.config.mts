@@ -10,9 +10,11 @@ const rootDir = path.dirname(fileURLToPath(import.meta.url));
 const browserDependencies = [
   "clipboard-copy",
   "deepmerge",
+  "mockdate",
   "react-color",
   "react-window",
   "rifm",
+  "storybook/test",
   "tinycolor2",
 ];
 
@@ -63,6 +65,7 @@ export default defineConfig({
     ],
   },
   test: {
+    fileParallelism: false,
     include: ["vitest-browser/**/*.browser.test.tsx"],
     setupFiles: ["./vitest-browser/setup.ts"],
     browser: {

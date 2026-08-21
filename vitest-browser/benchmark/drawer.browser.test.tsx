@@ -99,11 +99,13 @@ describe("GIVEN a Drawer", () => {
   it("traps focus without a close button", async () => {
     await renderWithSalt(<OptionalCloseAction />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
-    const dialog = page.getByRole("dialog").element();
+    await expect.element(page.getByRole("dialog")).toBeVisible();
+    const firstField = page.getByRole("textbox", { name: "House no." });
+    await expect.element(firstField).toHaveFocus();
     for (let index = 0; index < 7; index += 1) {
       await userEvent.tab();
-      expect(dialog.contains(document.activeElement)).toBe(true);
     }
+    await expect.element(firstField).toHaveFocus();
   });
 
   it("focuses the first focusable element", async () => {

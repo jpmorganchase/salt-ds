@@ -1,5 +1,5 @@
 import axe, { type RunOptions } from "axe-core";
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 import { describe, expect, it } from "vitest";
 import { renderWithSalt } from "../render";
 
@@ -16,7 +16,12 @@ export async function runAxeScan(container: Element) {
   await axe.run(container);
 }
 
-export function checkAccessibility(stories: Record<string, BenchmarkStory>) {
+type StoryRenderer = (children: ReactNode) => ReturnType<typeof renderWithSalt>;
+
+export function checkAccessibility(
+  stories: Record<string, BenchmarkStory>,
+  renderStory: StoryRenderer = renderWithSalt,
+) {
   describe("Axe Testing", () => {
     for (const [name, StoryComponent] of Object.entries(stories)) {
       const disabledRules = StoryComponent.parameters?.axe?.disabledRules ?? [];
@@ -26,7 +31,7 @@ export function checkAccessibility(stories: Record<string, BenchmarkStory>) {
       testFunction(
         `Story "${name}", should not have axe violations`,
         async () => {
-          const { container } = await renderWithSalt(<StoryComponent />);
+          const { container } = await renderStory(<StoryComponent />);
           const rules = disabledRules.reduce<NonNullable<RunOptions["rules"]>>(
             (result, rule) => {
               result[rule] = { enabled: false };
