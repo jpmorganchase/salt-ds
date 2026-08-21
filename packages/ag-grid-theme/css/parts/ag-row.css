@@ -31,11 +31,18 @@ div[class*="ag-theme-salt"].ag-theme-salt-variant-tertiary.ag-theme-salt-variant
   --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
 }
 
+/*
+  [VERSION DIVERGENCE]: --ag-data-background-color is re-declared per row for v36, where row
+  backgrounds (including the area right of the last column and the pinned cells containers) read it
+  from a value resolved on the theme wrapper, so per-row --ag-background-color overrides would
+  otherwise be ignored. Inert pre-v36.
+*/
 [class*="ag-theme-salt"] .error-row {
   --ag-background-color: var(--salt-status-error-background);
   --ag-selected-row-background-color: var(--salt-status-error-background-selected);
   --ag-selected-row-border-color: var(--salt-status-error-borderColor);
   --ag-odd-row-background-color: var(--ag-background-color);
+  --ag-data-background-color: var(--ag-background-color);
   --ag-row-hover-color: var(--salt-overlayable-background-hover);
 }
 
@@ -44,6 +51,7 @@ div[class*="ag-theme-salt"].ag-theme-salt-variant-tertiary.ag-theme-salt-variant
   --ag-selected-row-background-color: var(--salt-status-warning-background-selected);
   --ag-selected-row-border-color: var(--salt-status-warning-borderColor);
   --ag-odd-row-background-color: var(--ag-background-color);
+  --ag-data-background-color: var(--ag-background-color);
   --ag-row-hover-color: var(--salt-overlayable-background-hover);
 }
 
@@ -52,5 +60,15 @@ div[class*="ag-theme-salt"].ag-theme-salt-variant-tertiary.ag-theme-salt-variant
   --ag-selected-row-background-color: var(--salt-status-success-background-selected);
   --ag-selected-row-border-color: var(--salt-status-success-borderColor);
   --ag-odd-row-background-color: var(--ag-background-color);
+  --ag-data-background-color: var(--ag-background-color);
   --ag-row-hover-color: var(--salt-overlayable-background-hover);
+}
+
+/*
+  [VERSION DIVERGENCE]: From v36, zebra striping only recolors the row element itself; the pinned
+  cells containers and the area right of the last column are painted with --ag-data-background-color,
+  so it must follow the odd row background per row. Inert pre-v36.
+*/
+[class*="ag-theme-salt"] .ag-row-odd {
+  --ag-data-background-color: var(--ag-odd-row-background-color);
 }

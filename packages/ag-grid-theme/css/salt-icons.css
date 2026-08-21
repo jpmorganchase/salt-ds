@@ -67,4 +67,26 @@
   --ag-icon-font-code-tree-open: "\e936";
   --ag-icon-font-code-unlinked: "\e937";
   --ag-icon-font-code-up: "\e938";
+  --ag-icon-font-code-aasc: "\e939";
+  --ag-icon-font-code-adesc: "\e93a";
+}
+
+/*
+  [VERSION DIVERGENCE]: AG Grid v35+ ships .ag-icon-aasc / .ag-icon-adesc. Provide the
+  class rules here so the Salt font mappings resolve on older AG Grid stylesheets too.
+*/
+[class*="ag-theme-salt"] .ag-icon-aasc {
+  font-family: var(--ag-icon-font-family-aasc, var(--ag-icon-font-family));
+}
+
+[class*="ag-theme-salt"] .ag-icon-aasc::before {
+  content: var(--ag-icon-font-code-aasc);
+}
+
+[class*="ag-theme-salt"] .ag-icon-adesc {
+  font-family: var(--ag-icon-font-family-adesc, var(--ag-icon-font-family));
+}
+
+[class*="ag-theme-salt"] .ag-icon-adesc::before {
+  content: var(--ag-icon-font-code-adesc);
 }
