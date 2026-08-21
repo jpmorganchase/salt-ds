@@ -551,7 +551,7 @@ import {
   ZipSolidIcon,
 } from "@salt-ds/icons";
 
-export const allIcons = [
+export const allIcons = {
   AccessibleIcon,
   AccessibleSolidIcon,
   AddDocumentIcon,
@@ -1100,4 +1100,4 @@ export const allIcons = [
   XlsSolidIcon,
   ZipIcon,
   ZipSolidIcon,
-];
+};
