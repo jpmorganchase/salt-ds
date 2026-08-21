@@ -1,4 +1,4 @@
-import { LinkButton } from "@salt-ds/lab";
+import { LinkButton } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const Neutral = (): ReactElement => (
