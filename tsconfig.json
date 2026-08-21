@@ -37,7 +37,8 @@
       "cypress",
       "@testing-library/cypress",
       "node",
-      "cypress-real-events"
+      "cypress-real-events",
+      "vite/client"
     ]
   },
   "include": [
@@ -47,6 +48,11 @@
     "docs",
     "tooling",
     "cypress",
+    "playwright",
+    "vitest-browser",
+    "playwright.component.config.ts",
+    "vite.playwright.config.mts",
+    "vitest.browser.config.mts",
     "cypress/types.d.ts",
     "./declarations.d.ts"
   ]
