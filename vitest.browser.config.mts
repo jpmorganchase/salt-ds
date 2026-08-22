@@ -100,7 +100,9 @@ export default defineConfig({
       },
     },
     fileParallelism: true,
-    maxWorkers: Math.min(8, availableParallelism()),
+    // Each worker drives a full browser. Six retains parallel throughput without
+    // the CPU saturation observed at eight; the CLI can still override it.
+    maxWorkers: Math.min(6, availableParallelism()),
     include: ["vitest-browser/**/*.browser.test.tsx"],
     setupFiles: ["./vitest-browser/setup.ts"],
     browser: {
