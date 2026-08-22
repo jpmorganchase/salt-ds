@@ -53,8 +53,8 @@ describe("Given a Menu", () => {
         .element(page.getByRole("menuitem", { name: "Copy" }))
         .toHaveFocus();
       await userEvent.keyboard(selectionKey);
-      expect(alertSpy).toHaveBeenCalledWith("Copy");
       await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+      expect(alertSpy).toHaveBeenCalledWith("Copy");
       expect(onOpenChange).toHaveBeenLastCalledWith(false);
     },
   );

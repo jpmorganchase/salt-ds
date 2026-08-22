@@ -103,13 +103,22 @@ describe("GIVEN a Tokenized Input", () => {
     });
 
     it("should expand on clicking the expand button and collapse when blur", async () => {
-      await renderWithSalt(<WithCollapsedButton />);
+      await renderWithSalt(
+        <>
+          <WithCollapsedButton />
+          <button type="button">After tokenized input</button>
+        </>,
+      );
       await focusInput();
       await expect.poll(optionCount).toBe(50);
       const pills = page.getByTestId("pill");
+      const afterInput = page.getByRole("button", {
+        name: "After tokenized input",
+      });
       await expect.element(pills.nth(49)).toBeVisible();
       await userEvent.tab();
       await userEvent.tab();
+      await expect.element(afterInput).toHaveFocus();
       await expect.element(textbox()).not.toHaveFocus();
       expect(await pills.elements()).toHaveLength(50);
       await expect.element(pills.nth(49)).not.toBeVisible();

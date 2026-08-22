@@ -1,4 +1,5 @@
 import { List, ListItem } from "@salt-ds/lab";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { renderWithSalt } from "../render";
@@ -20,17 +21,24 @@ function selectionFor(kind: ListKind, index: number) {
   return kind === "declarative" ? ITEMS[index].label : ITEMS[index];
 }
 
-function renderList(kind: ListKind, props: Record<string, unknown> = {}) {
+function renderList(
+  kind: ListKind,
+  props: Record<string, unknown> = {},
+  after?: ReactNode,
+) {
   return renderWithSalt(
-    kind === "declarative" ? (
-      <List id="list" {...props}>
-        {ITEMS.map(({ label }) => (
-          <ListItem key={label}>{label}</ListItem>
-        ))}
-      </List>
-    ) : (
-      <List<ItemWithLabel> id="list" source={ITEMS} {...props} />
-    ),
+    <>
+      {kind === "declarative" ? (
+        <List id="list" {...props}>
+          {ITEMS.map(({ label }) => (
+            <ListItem key={label}>{label}</ListItem>
+          ))}
+        </List>
+      ) : (
+        <List<ItemWithLabel> id="list" source={ITEMS} {...props} />
+      )}
+      {after}
+    </>,
   );
 }
 
@@ -127,9 +135,12 @@ describe.each(LIST_KINDS)("%s List keyboard focus", (kind) => {
   );
 
   it("removes highlight and focus styling on Tab", async () => {
-    await renderList(kind);
+    await renderList(kind, {}, <button type="button">After list</button>);
     await focusList();
     await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "After list" }))
+      .toHaveFocus();
     await expect.element(listbox()).not.toHaveFocus();
     await expect
       .poll(() => document.querySelector("#list .saltHighlighted"))

@@ -45,6 +45,7 @@ describe("Given a Range Slider", () => {
     const track = rail();
     const rect = track.getBoundingClientRect();
     await userEvent.click(track, {
+      delay: 100,
       position: { x: Math.round(rect.width * 0.75), y: rect.height / 2 },
     });
     await expectValues("0", "7");
