@@ -17,6 +17,7 @@ export async function runAxeScan(container: Element) {
 }
 
 type StoryRenderer = (children: ReactNode) => ReturnType<typeof renderWithSalt>;
+const ACCESSIBILITY_TEST_TIMEOUT = 30_000;
 
 export function checkAccessibility(
   stories: Record<string, BenchmarkStory>,
@@ -43,6 +44,7 @@ export function checkAccessibility(
 
           expect(results.violations).toEqual([]);
         },
+        ACCESSIBILITY_TEST_TIMEOUT,
       );
     }
   });

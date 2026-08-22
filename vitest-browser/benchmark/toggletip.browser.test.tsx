@@ -188,15 +188,19 @@ describe("GIVEN a Toggletip", () => {
     );
     await userEvent.tab();
     await userEvent.tab();
+    await expect.element(defaultTrigger()).toHaveFocus();
     await userEvent.keyboard("{Enter}");
+    const dialog = page.getByRole("dialog");
+    await expect.element(dialog).toBeVisible();
+    await expect.element(dialog).toHaveFocus();
     await userEvent.tab({ shift: true });
     await expect.element(defaultTrigger()).toHaveFocus();
-    await expect.element(page.getByRole("dialog")).toBeVisible();
+    await expect.element(dialog).toBeVisible();
     await userEvent.tab({ shift: true });
     await expect
       .element(page.getByRole("button", { name: "Before" }))
       .toHaveFocus();
-    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+    await expect.element(dialog).not.toBeInTheDocument();
   });
 
   it("closes from an interactive child with Escape", async () => {

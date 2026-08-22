@@ -130,8 +130,13 @@ describe.each(LIST_KINDS)("%s List keyboard focus", (kind) => {
     await renderList(kind);
     await focusList();
     await userEvent.tab();
-    expect(document.querySelector("#list .saltHighlighted")).toBeNull();
-    expect(document.querySelector("#list .saltFocusVisible")).toBeNull();
+    await expect.element(listbox()).not.toHaveFocus();
+    await expect
+      .poll(() => document.querySelector("#list .saltHighlighted"))
+      .toBeNull();
+    await expect
+      .poll(() => document.querySelector("#list .saltFocusVisible"))
+      .toBeNull();
   });
 
   it("focuses the selected item", async () => {
