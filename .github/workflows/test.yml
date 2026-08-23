@@ -139,48 +139,17 @@ jobs:
       - name: Build packages
         run: yarn run build
       - name: Cypress Components
+        id: cypress_components
         uses: cypress-io/github-action@dace029018fcdf86e0df89a31bc3cfa5b32570d8 # v7
         with:
           install: false
           component: true
           browser: chrome
+      - name: Vitest Browser Components
+        if: ${{ !cancelled() && (steps.cypress_components.outcome == 'success' || steps.cypress_components.outcome == 'failure') }}
+        run: yarn run test:components:vitest
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: failure()
         with:
           name: cypress-screenshots-${{ matrix.react }}
           path: cypress/screenshots
-
-  component-test-benchmark:
-    name: Component Test Benchmark
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    timeout-minutes: 120
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-      - name: Use Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
-        with:
-          node-version: "24"
-          cache: "yarn"
-      - name: Install dependencies
-        run: yarn
-      - name: Build packages
-        run: yarn run build
-      - name: Benchmark Cypress against Vitest Browser
-        run: yarn benchmark:components --warmup=1 --runs=5 2>&1 | tee component-benchmark.txt
-      - name: Add benchmark summary
-        if: always()
-        run: |
-          {
-            echo "## Component test benchmark"
-            echo '```text'
-            if [[ -f component-benchmark.txt ]]; then
-              tail -n 5 component-benchmark.txt
-            else
-              echo "Benchmark did not run."
-            fi
-            echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
