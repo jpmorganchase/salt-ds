@@ -232,7 +232,9 @@ describe("GIVEN a SidePanel component", () => {
     await expect
       .element(page.getByRole("region", { name: "Detached Order Panel" }))
       .toBeVisible();
-    await new Promise((resolve) => setTimeout(resolve, 80));
+    await new Promise<void>((resolve) => {
+      requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+    });
     expect(document.activeElement?.closest(".saltSidePanel")).toBeNull();
   });
 

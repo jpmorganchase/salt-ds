@@ -120,7 +120,7 @@ describe("GIVEN a Tokenized Input", () => {
       await userEvent.tab();
       await expect.element(afterInput).toHaveFocus();
       await expect.element(textbox()).not.toHaveFocus();
-      expect(await pills.elements()).toHaveLength(50);
+      await expect.element(pills).toHaveLength(50);
       await expect.element(pills.nth(49)).not.toBeVisible();
     });
 

@@ -1595,11 +1595,21 @@ describe("Toolbar keyboard, focus and portals", () => {
     const trigger = overflowTrigger(/Actions overflow\./i);
     await expect.element(trigger).not.toHaveAttribute("aria-haspopup");
     await expect.element(trigger).toHaveAttribute("aria-expanded", "false");
-    const panelId = trigger.element().getAttribute("aria-controls");
-    expect(panelId).toBeTruthy();
+    await expect.element(trigger).toHaveAttribute("aria-controls");
     await trigger.click();
     await expect.element(trigger).toHaveAttribute("aria-expanded", "true");
-    expect(document.getElementById(panelId ?? "")).not.toBeNull();
+    await expect
+      .poll(() => {
+        const panelId = trigger.element().getAttribute("aria-controls");
+        return panelId
+          ? Boolean(
+              document
+                .getElementById(panelId)
+                ?.querySelector('[role="toolbar"]'),
+            )
+          : false;
+      })
+      .toBe(true);
     await expect
       .element(page.getByRole("toolbar", { name: "Actions overflow" }))
       .toBeVisible();
@@ -1843,9 +1853,16 @@ describe("Toolbar keyboard, focus and portals", () => {
   it("keeps the portaled overflow panel within the viewport", async () => {
     await renderWithSalt(<KeyboardOverflowFixture width={260} />);
     await overflowTrigger(/Actions overflow\./i).click();
-    expect(document.documentElement.scrollWidth).toBe(
-      document.documentElement.clientWidth,
-    );
+    await expect
+      .element(page.getByRole("toolbar", { name: "Actions overflow" }))
+      .toBeVisible();
+    await expect
+      .poll(
+        () =>
+          document.documentElement.scrollWidth ===
+          document.documentElement.clientWidth,
+      )
+      .toBe(true);
   });
 
   it("preserves overflow focus across parent re-renders", async () => {

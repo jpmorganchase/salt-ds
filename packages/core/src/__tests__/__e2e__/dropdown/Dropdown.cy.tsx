@@ -470,22 +470,24 @@ describe("Given a Dropdown", () => {
   it("should support typeahead", () => {
     cy.mount(<Default />);
     cy.realPress("Tab");
-    cy.realType("A");
+    cy.clock();
+    cy.focused().type("A");
     cy.findByRole("listbox").should("exist");
     cy.findByRole("option", { name: "Alabama" }).should("be.activeDescendant");
 
-    cy.realType("A");
+    cy.focused().type("A");
     cy.findByRole("option", { name: "Alaska" }).should("be.activeDescendant");
 
-    cy.realType("A");
+    cy.focused().type("A");
     cy.findByRole("option", { name: "Arizona" }).should("be.activeDescendant");
 
-    cy.wait(500);
+    cy.tick(501);
 
-    cy.realType("Co");
+    cy.focused().type("Co");
     cy.findByRole("option", { name: "Connecticut" }).should(
       "be.activeDescendant",
     );
+    cy.tick(501);
   });
 
   it("should render the custom floating component", () => {

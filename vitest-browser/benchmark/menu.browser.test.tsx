@@ -22,6 +22,32 @@ afterEach(() => vi.restoreAllMocks());
 
 const trigger = () => page.getByRole("button", { name: "Open Menu" });
 const menuCount = async () => (await page.getByRole("menu").elements()).length;
+const backgroundTarget = () => page.getByTestId("menu-background-target");
+
+function rectanglesOverlap(a: DOMRect, b: DOMRect) {
+  return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+}
+
+function MultiLevelWithBackgroundTarget() {
+  return (
+    <>
+      <MultiLevel />
+      <div
+        aria-hidden="true"
+        data-testid="menu-background-target"
+        style={{
+          background: "transparent",
+          bottom: 8,
+          height: 32,
+          pointerEvents: "auto",
+          position: "fixed",
+          right: 8,
+          width: 32,
+        }}
+      />
+    </>
+  );
+}
 
 describe("Given a Menu", () => {
   it("opens, performs an action, and closes with a mouse", async () => {
@@ -122,16 +148,24 @@ describe("Given a Menu", () => {
     await expect.poll(menuCount).toBe(1);
   });
 
-  // Cypress's body hover resolves to runner-specific coordinates that keep the
-  // submenu open. Real Playwright/CDP movement to the page closes it, so retain
-  // the parity case explicitly until the expected pointer path is clarified.
-  it.skip("keeps a nested menu open when the pointer leaves for the page", async () => {
-    await renderWithSalt(<MultiLevel />);
+  it("closes a nested menu when the pointer moves to page background", async () => {
+    await renderWithSalt(<MultiLevelWithBackgroundTarget />);
     await trigger().click();
     await page.getByRole("menuitem", { name: "Edit styling" }).hover();
-    await expect.poll(menuCount).toBe(2);
-    await page.elementLocator(document.body).hover();
-    await expect.poll(menuCount).toBe(2);
+    await expect.element(page.getByRole("menu")).toHaveLength(2);
+
+    const targetRect = backgroundTarget().element().getBoundingClientRect();
+    const surfaces = [trigger().element(), ...page.getByRole("menu").elements()];
+    expect(targetRect.width).toBeGreaterThan(0);
+    expect(targetRect.height).toBeGreaterThan(0);
+    for (const surface of surfaces) {
+      expect(
+        rectanglesOverlap(targetRect, surface.getBoundingClientRect()),
+      ).toBe(false);
+    }
+
+    await backgroundTarget().hover();
+    await expect.element(page.getByRole("menu")).toHaveLength(1);
   });
 
   it("supports nested keyboard navigation", async () => {

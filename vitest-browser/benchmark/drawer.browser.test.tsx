@@ -123,11 +123,7 @@ describe("GIVEN a Drawer", () => {
     await renderWithSalt(<OptionalCloseAction />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
     await expect.element(page.getByRole("dialog")).toBeVisible();
-    (
-      (await page
-        .getByRole("button", { name: "Submit" })
-        .element()) as HTMLButtonElement
-    ).click();
+    await page.getByRole("button", { name: "Submit" }).click();
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
   });
 

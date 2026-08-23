@@ -10,6 +10,26 @@ import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { renderWithSalt } from "../render";
 
+const TREE_TYPEAHEAD_RESET_MS = 500;
+
+async function withFakeTimers<T extends { unmount: () => Promise<void> }>(
+  render: () => Promise<T>,
+  run: () => Promise<void>,
+) {
+  vi.useFakeTimers();
+  try {
+    const rendered = await render();
+    try {
+      await run();
+    } finally {
+      await rendered.unmount();
+      expect(vi.getTimerCount()).toBe(0);
+    }
+  } finally {
+    vi.useRealTimers();
+  }
+}
+
 const renderSecretFiles = (show = true) =>
   show ? (
     <>
@@ -159,7 +179,7 @@ describe("Given a Tree", () => {
       await expect
         .element(page.getByRole("tree", { name: "File browser" }))
         .toBeInTheDocument();
-      expect(await page.getByRole("treeitem").elements()).toHaveLength(3);
+      await expect.element(page.getByRole("treeitem")).toHaveLength(3);
     });
 
     it("only renders aria-expanded on parents and hides collapsed children", async () => {
@@ -305,12 +325,8 @@ describe("Given a Tree", () => {
         </Tree>,
       );
       await userEvent.tab();
-      page
-        .getByRole("tree")
-        .element()
-        .dispatchEvent(
-          new KeyboardEvent("keydown", { key: "*", bubbles: true }),
-        );
+      await expect.element(treeItem("Parent 1")).toHaveFocus();
+      await userEvent.keyboard("*");
       await expect
         .element(treeItem("Parent 1"))
         .toHaveAttribute("aria-expanded", "true");
@@ -323,19 +339,25 @@ describe("Given a Tree", () => {
     });
 
     it("supports single and multi-character type-ahead", async () => {
-      await renderWithSalt(
-        <Tree aria-label="File browser">
-          <TreeNode value="bar" label="Bar" />
-          <TreeNode value="baz" label="Baz" />
-          <TreeNode value="cherry" label="Cherry" />
-        </Tree>,
+      await withFakeTimers(
+        () =>
+          renderWithSalt(
+            <Tree aria-label="File browser">
+              <TreeNode value="bar" label="Bar" />
+              <TreeNode value="baz" label="Baz" />
+              <TreeNode value="cherry" label="Cherry" />
+            </Tree>,
+          ),
+        async () => {
+          await userEvent.tab();
+          await userEvent.keyboard("c");
+          await expect.element(treeItem("Cherry")).toHaveFocus();
+          await vi.advanceTimersByTimeAsync(TREE_TYPEAHEAD_RESET_MS + 1);
+          await userEvent.keyboard("baz");
+          await expect.element(treeItem("Baz")).toHaveFocus();
+          await vi.advanceTimersByTimeAsync(TREE_TYPEAHEAD_RESET_MS + 1);
+        },
       );
-      await userEvent.tab();
-      await userEvent.keyboard("c");
-      await expect.element(treeItem("Cherry")).toHaveFocus();
-      await new Promise((resolve) => setTimeout(resolve, 600));
-      await userEvent.keyboard("baz");
-      await expect.element(treeItem("Baz")).toHaveFocus();
     });
   });
 

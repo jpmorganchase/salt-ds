@@ -73,17 +73,18 @@ describe("Given an Avatar", () => {
     await expect
       .element(page.getByRole("img", { name: "Juanito Jones" }))
       .toBeInTheDocument();
-    await expect.poll(() => document.querySelector("img")).not.toBeNull();
   });
 
   it("shows an image provided via children", async () => {
     await renderWithSalt(
       <Default>
-        <img src="blah.png" alt="" />
+        <img data-testid="avatar-child" src="blah.png" alt="" />
       </Default>,
     );
 
-    expect(document.querySelector("img")).toHaveAttribute("src", "blah.png");
+    await expect
+      .element(page.getByTestId("avatar-child"))
+      .toHaveAttribute("src", "blah.png");
   });
 
   it("supports a custom fallback icon", async () => {
@@ -94,19 +95,19 @@ describe("Given an Avatar", () => {
   });
 
   it("defaults to a circular person avatar", async () => {
-    await renderWithSalt(<Default />);
+    await renderWithSalt(<Default data-testid="avatar" />);
     await expect.element(page.getByTestId("UserIcon")).toBeInTheDocument();
-    expect(document.querySelector(".saltAvatar")).not.toHaveClass(
-      "saltAvatar-entity",
-    );
+    await expect
+      .element(page.getByTestId("avatar"))
+      .not.toHaveClass("saltAvatar-entity");
   });
 
   it("renders an entity avatar with the business fallback icon", async () => {
-    await renderWithSalt(<Default kind="entity" />);
+    await renderWithSalt(<Default data-testid="avatar" kind="entity" />);
     await expect.element(page.getByTestId("BankIcon")).toBeInTheDocument();
-    expect(document.querySelector(".saltAvatar")).toHaveClass(
-      "saltAvatar-entity",
-    );
+    await expect
+      .element(page.getByTestId("avatar"))
+      .toHaveClass("saltAvatar-entity");
   });
 
   it("supports a custom fallback icon for an entity", async () => {

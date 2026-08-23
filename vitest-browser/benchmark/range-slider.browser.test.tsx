@@ -26,7 +26,7 @@ async function expectValues(start: string, end: string) {
 describe("Given a Range Slider", () => {
   it("renders with default props", async () => {
     await renderWithSalt(<Default />);
-    expect(await sliders().elements()).toHaveLength(2);
+    await expect.element(sliders()).toHaveLength(2);
     await expectValues("0", "50");
   });
 

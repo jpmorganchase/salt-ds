@@ -15,18 +15,20 @@ describe("GIVEN a logo", () => {
         <Text>{appTitle}</Text>
       </Logo>,
     );
-    expect(document.querySelector("img")).toBeInTheDocument();
+    await expect
+      .element(page.getByRole("img", { name: "Logo image" }))
+      .toBeInTheDocument();
   });
 
   it("renders a separator", async () => {
     await renderWithSalt(
       <Logo>
         <LogoImage src={src} alt="Logo image" />
-        <LogoSeparator />
+        <LogoSeparator data-testid="logo-separator" />
         <Text>{appTitle}</Text>
       </Logo>,
     );
-    expect(document.querySelector(".saltLogoSeparator")).toBeInTheDocument();
+    await expect.element(page.getByTestId("logo-separator")).toBeInTheDocument();
   });
 
   it("renders an app title", async () => {
@@ -43,12 +45,12 @@ describe("GIVEN a logo", () => {
     await renderWithSalt(
       <Logo>
         <Text>{src}</Text>
-        <LogoSeparator />
+        <LogoSeparator data-testid="logo-separator" />
         <Text>{appTitle}</Text>
       </Logo>,
     );
 
     await expect.element(page.getByText(src)).toBeInTheDocument();
-    expect(document.querySelector(".saltLogoSeparator")).toBeInTheDocument();
+    await expect.element(page.getByTestId("logo-separator")).toBeInTheDocument();
   });
 });

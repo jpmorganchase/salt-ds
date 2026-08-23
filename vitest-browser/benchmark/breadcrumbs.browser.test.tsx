@@ -57,7 +57,7 @@ describe("GIVEN Breadcrumbs", () => {
       .element(page.getByRole("navigation", { name: "Breadcrumb" }))
       .toBeInTheDocument();
     expect(page.getByRole("list").element().tagName).toBe("OL");
-    expect(await page.getByRole("listitem").elements()).toHaveLength(3);
+    await expect.element(page.getByRole("listitem")).toHaveLength(3);
     await expect
       .element(page.getByRole("link", { name: "Root Level Entity" }))
       .toHaveAttribute("href", "#root");
@@ -268,11 +268,9 @@ describe("GIVEN Breadcrumbs", () => {
       .element(page.getByText("Four", { exact: true }))
       .toBeInTheDocument();
     await expect.element(page.getByText("Wrapped two")).toBeInTheDocument();
-    expect(
-      await page
-        .getByRole("button", { name: "Additional breadcrumbs" })
-        .elements(),
-    ).toHaveLength(1);
+    await expect
+      .element(page.getByRole("button", { name: "Additional breadcrumbs" }))
+      .toHaveLength(1);
   });
 
   it("opens and closes disclosure without moving trigger focus", async () => {
@@ -282,7 +280,7 @@ describe("GIVEN Breadcrumbs", () => {
     await expect.element(disclosure()).toHaveFocus();
     await expect.element(disclosure()).toHaveAttribute("aria-expanded", "true");
     const hidden = page.getByRole("list", { name: "Hidden breadcrumb levels" });
-    expect(await hidden.getByRole("listitem").elements()).toHaveLength(2);
+    await expect.element(hidden.getByRole("listitem")).toHaveLength(2);
     await userEvent.keyboard("{Escape}");
     await expect
       .element(disclosure())

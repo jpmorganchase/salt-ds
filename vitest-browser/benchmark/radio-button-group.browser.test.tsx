@@ -24,7 +24,7 @@ describe("GIVEN a RadioButtonGroup", () => {
         ))}
       </RadioButtonGroup>,
     );
-    expect(page.getByRole("radio").elements()).toHaveLength(3);
+    await expect.element(page.getByRole("radio")).toHaveLength(3);
   });
 
   it("supports horizontal layout", async () => {

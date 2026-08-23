@@ -56,29 +56,43 @@ describe("Number Input", () => {
   it.each(["mouse", "touch"] as const)(
     "repeats increment while held with a %s pointer and stops on release",
     async (pointerType) => {
-      await renderWithSalt(<Default />);
-      const increment = button("increment").element();
-      increment.dispatchEvent(
-        new PointerEvent("pointerdown", {
-          bubbles: true,
-          button: 0,
-          pointerType,
-        }),
-      );
-      await new Promise((resolve) => setTimeout(resolve, 700));
-      increment.dispatchEvent(
-        new PointerEvent("pointerup", {
-          bubbles: true,
-          button: 0,
-          pointerType,
-        }),
-      );
-      const valueAfterRelease = Number(
-        (input().element() as HTMLInputElement).value,
-      );
-      expect(valueAfterRelease).toBeGreaterThan(1);
-      await new Promise((resolve) => setTimeout(resolve, 300));
-      await expect.element(input()).toHaveValue(String(valueAfterRelease));
+      vi.useFakeTimers();
+      try {
+        const rendered = await renderWithSalt(<Default />);
+        try {
+          const increment = button("increment").element();
+          increment.dispatchEvent(
+            new PointerEvent("pointerdown", {
+              bubbles: true,
+              button: 0,
+              pointerType,
+            }),
+          );
+          await expect.element(input()).toHaveValue("1");
+          await vi.advanceTimersByTimeAsync(500);
+          await expect.element(input()).toHaveValue("2");
+          await vi.advanceTimersByTimeAsync(100);
+          await expect.element(input()).toHaveValue("3");
+          increment.dispatchEvent(
+            new PointerEvent("pointerup", {
+              bubbles: true,
+              button: 0,
+              pointerType,
+            }),
+          );
+          const valueAfterRelease = Number(
+            (input().element() as HTMLInputElement).value,
+          );
+          expect(valueAfterRelease).toBeGreaterThan(1);
+          await vi.advanceTimersByTimeAsync(200);
+          await expect.element(input()).toHaveValue(String(valueAfterRelease));
+        } finally {
+          await rendered.unmount();
+          expect(vi.getTimerCount()).toBe(0);
+        }
+      } finally {
+        vi.useRealTimers();
+      }
     },
   );
 

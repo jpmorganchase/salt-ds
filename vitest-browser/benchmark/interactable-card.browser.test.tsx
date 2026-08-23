@@ -83,7 +83,7 @@ describe("Given an Interactable Card", () => {
 describe("GIVEN a multiselect InteractableCardGroup", () => {
   it("renders checkbox cards with values", async () => {
     await renderWithSalt(<Cards multiSelect />);
-    expect(await cards(true).elements()).toHaveLength(3);
+    await expect.element(cards(true)).toHaveLength(3);
     for (const [index, value] of ["one", "two", "three"].entries())
       await expect
         .element(cards(true).nth(index))
@@ -217,7 +217,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
 describe("GIVEN a single-select InteractableCardGroup", () => {
   it("renders radio cards", async () => {
     await renderWithSalt(<Cards />);
-    expect(await cards(false).elements()).toHaveLength(3);
+    await expect.element(cards(false)).toHaveLength(3);
   });
 
   it("uses one tab stop and exits the group", async () => {

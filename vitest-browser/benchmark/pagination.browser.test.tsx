@@ -163,9 +163,9 @@ describe("GIVEN an Pagination", () => {
 
     it("THEN should move to the last page", async () => {
       const spy = await renderCompact();
-      expect(
-        await page.getByText("10", { exact: true }).elements(),
-      ).toHaveLength(1);
+      await expect
+        .element(page.getByText("10", { exact: true }))
+        .toHaveLength(1);
       await pageButton(10).click();
       await expect
         .poll(
@@ -244,9 +244,9 @@ describe("GIVEN an Pagination", () => {
           <Paginator siblingCount={3} />
         </Pagination>,
       );
-      expect(
-        await page.getByRole("button", { name: /^Page.*/ }).elements(),
-      ).toHaveLength(11);
+      await expect
+        .element(page.getByRole("button", { name: /^Page.*/ }))
+        .toHaveLength(11);
     });
 
     it("THEN should render 10 buttons when the count is 12", async () => {
@@ -255,9 +255,9 @@ describe("GIVEN an Pagination", () => {
           <Paginator siblingCount={3} />
         </Pagination>,
       );
-      expect(
-        await page.getByRole("button", { name: /^Page.*/ }).elements(),
-      ).toHaveLength(10);
+      await expect
+        .element(page.getByRole("button", { name: /^Page.*/ }))
+        .toHaveLength(10);
     });
   });
 
@@ -268,9 +268,9 @@ describe("GIVEN an Pagination", () => {
           <Paginator boundaryCount={2} />
         </Pagination>,
       );
-      expect(
-        await page.getByRole("button", { name: /^Page.*/ }).elements(),
-      ).toHaveLength(10);
+      await expect
+        .element(page.getByRole("button", { name: /^Page.*/ }))
+        .toHaveLength(10);
     });
 
     it("THEN should render 9 buttons when the count is 20 and initial page is 10", async () => {
@@ -279,9 +279,9 @@ describe("GIVEN an Pagination", () => {
           <Paginator boundaryCount={2} />
         </Pagination>,
       );
-      expect(
-        await page.getByRole("button", { name: /^Page.*/ }).elements(),
-      ).toHaveLength(9);
+      await expect
+        .element(page.getByRole("button", { name: /^Page.*/ }))
+        .toHaveLength(9);
     });
   });
 

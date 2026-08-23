@@ -54,7 +54,7 @@ async function expectAllChecked(checked: boolean) {
 describe("GIVEN a CheckboxGroup", () => {
   it("renders its checkboxes and values", async () => {
     await renderWithSalt(<Group />);
-    expect(await page.getByRole("checkbox").elements()).toHaveLength(3);
+    await expect.element(page.getByRole("checkbox")).toHaveLength(3);
     for (const value of ["one", "two", "three"]) {
       await expect
         .element(page.getByRole("checkbox", { name: value }))

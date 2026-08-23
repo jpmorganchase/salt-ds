@@ -276,6 +276,7 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
         });
 
         it("supports item selection using the Spacebar after search times out", () => {
+          cy.clock();
           cy.mount(
             <Dropdown
               defaultIsOpen
@@ -292,28 +293,28 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
             "test-item-0",
           );
 
-          cy.realPress("F");
+          cy.focused().type("F");
           cy.get("#test-control").should(
             "have.attr",
             "aria-activedescendant",
             "test-item-1",
           );
 
-          cy.realPress("O");
+          cy.focused().type("O");
           cy.get("#test-control").should(
             "have.attr",
             "aria-activedescendant",
             "test-item-1",
           );
 
-          cy.realPress("O");
+          cy.focused().type("O");
           cy.get("#test-control").should(
             "have.attr",
             "aria-activedescendant",
             "test-item-1",
           );
 
-          cy.realPress("Space");
+          cy.focused().type(" ");
           cy.get("#test-control").should(
             "have.attr",
             "aria-activedescendant",
@@ -321,9 +322,9 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
           );
 
           // Advance the timers so we can select using the Spacebar
-          cy.wait(1500);
+          cy.tick(101);
 
-          cy.realPress("Space");
+          cy.focused().type(" ");
           if (!isMultiSelect) {
             // Closes menu
             cy.findByTestId("dropdown-list").should("not.exist");
@@ -335,6 +336,7 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
         });
 
         it("resets the search text after a timeout", () => {
+          cy.clock();
           cy.mount(
             <Dropdown
               defaultIsOpen
@@ -344,24 +346,26 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
             />,
           );
           cy.get("#test-control").focus();
-          cy.realPress("F");
+          cy.focused().type("F");
           cy.get("#test-control").should(
             "have.attr",
             "aria-activedescendant",
             "test-item-1",
           );
 
-          cy.wait(1500);
+          cy.tick(101);
 
-          cy.realPress("B");
+          cy.focused().type("B");
           cy.get("#test-control").should(
             "have.attr",
             "aria-activedescendant",
             "test-item-3",
           );
+          cy.tick(101);
         });
 
         it("wraps around to search from the beginning when no items past the current one match", () => {
+          cy.clock();
           cy.mount(
             <Dropdown
               defaultIsOpen
@@ -371,23 +375,22 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
             />,
           );
           cy.get("#test-control").focus();
-          cy.realPress("B");
-          cy.realPress("A");
-          cy.realPress("Z");
+          cy.focused().type("BAZ");
           cy.get("#test-control").should(
             "have.attr",
             "aria-activedescendant",
             "test-item-3",
           );
 
-          cy.wait(1500);
+          cy.tick(101);
 
-          cy.realPress("F");
+          cy.focused().type("F");
           cy.get("#test-control").should(
             "have.attr",
             "aria-activedescendant",
             "test-item-1",
           );
+          cy.tick(101);
         });
 
         it("cycles through options when typing the first character repeatedly", () => {

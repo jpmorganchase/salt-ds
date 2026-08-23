@@ -74,12 +74,10 @@ function PersonaContact({
   );
 }
 
-function disclosure(label: "Expand" | "Collapse") {
-  const element = document.querySelector<HTMLElement>(
-    `[aria-label="${label}"]`,
-  );
-  if (!element) throw new Error(`Missing ${label} disclosure`);
-  return page.elementLocator(element);
+function disclosure() {
+  return page.getByRole("button").filter({
+    has: page.getByTestId(/Chevron(Down|Up)Icon/),
+  });
 }
 
 for (const variant of variants) {
@@ -115,7 +113,12 @@ for (const variant of variants) {
       const ids = [heading.id, secondary.id];
       if (variant === "default")
         ids.push(page.getByTestId("tertiary").element().id);
-      expect(heading.getAttribute("aria-labelledby")).toContain(ids.join(" "));
+      await expect
+        .element(page.getByRole("heading"))
+        .toHaveAttribute(
+          "aria-labelledby",
+          expect.stringContaining(ids.join(" ")),
+        );
     });
 
     it("labels the favorite toggle", async () => {
@@ -154,26 +157,29 @@ describe("GIVEN a default collapsible ContactDetails", () => {
   });
 
   it("labels its disclosure button with the primary element", async () => {
-    const expand = disclosure("Expand").element();
+    const expand = disclosure();
+    const expandElement = expand.element();
     const primary = page.getByText(persona.name, { exact: true }).element();
-    expect(expand).toHaveAttribute(
-      "aria-labelledby",
-      `${expand.id} ${primary.id}`,
-    );
+    await expect
+      .element(expand)
+      .toHaveAttribute(
+        "aria-labelledby",
+        `${expandElement.id} ${primary.id}`,
+      );
   });
 
   it("updates the disclosure label and expanded state", async () => {
-    expect(document.querySelector('[aria-label="Collapse"]')).toBeNull();
-    const expand = disclosure("Expand");
+    const expand = disclosure();
+    await expect.element(expand).toHaveAttribute("aria-label", "Expand");
     await expect.element(expand).toHaveAttribute("aria-expanded", "false");
     await expand.click();
     await expect
-      .element(disclosure("Collapse"))
+      .element(disclosure())
       .toHaveAttribute("aria-expanded", "true");
   });
 
   it("places the disclosure after favorite and actions in tab order", async () => {
-    await disclosure("Expand").click();
+    await disclosure().click();
     page.getByLabelText("Favorite").element().focus();
     for (const [label, accessibleText] of actions) {
       await userEvent.tab();
@@ -183,6 +189,6 @@ describe("GIVEN a default collapsible ContactDetails", () => {
       await expect.element(page.getByText(accessibleText)).toBeInTheDocument();
     }
     await userEvent.tab();
-    await expect.element(disclosure("Collapse")).toHaveFocus();
+    await expect.element(disclosure()).toHaveFocus();
   });
 });

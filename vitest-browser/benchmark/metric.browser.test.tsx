@@ -156,7 +156,7 @@ describe("GIVEN MetricContent", () => {
     await expect
       .element(page.getByTestId("metric-value"))
       .toHaveTextContent("$801.9B");
-    expect(page.getByTestId("metric-subvalue").elements()).toHaveLength(0);
+    await expect.element(page.getByTestId("metric-subvalue")).toHaveLength(0);
   });
 
   it("renders a supplied subvalue", async () => {

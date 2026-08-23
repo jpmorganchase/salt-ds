@@ -21,8 +21,9 @@ async function expectOpen(open: boolean) {
 
 async function expectHighlighted(name: string) {
   const item = option(name);
-  await expect.poll(() => item.element().className).toMatch(/saltHighlighted/);
-  expect(item.element().className).toMatch(/saltFocusVisible/);
+  await expect
+    .element(item)
+    .toHaveClass(/saltHighlighted/, /saltFocusVisible/);
 }
 
 describe("A lab combo box", () => {
@@ -31,10 +32,16 @@ describe("A lab combo box", () => {
       await renderWithSalt(<Default />);
       await userEvent.tab();
 
-      const options = await page.getByRole("option").elements();
-      expect(
-        options.every((item) => !/saltHighlighted/.test(item.className)),
-      ).toBe(true);
+      const options = page.getByRole("option");
+      await expect
+        .poll(() => {
+          const items = options.elements();
+          return (
+            items.length > 0 &&
+            items.every((item) => !/saltHighlighted/.test(item.className))
+          );
+        })
+        .toBe(true);
     });
 
     it("clears an unselected input value when blurred", async () => {

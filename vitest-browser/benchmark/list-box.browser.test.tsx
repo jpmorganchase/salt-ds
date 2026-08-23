@@ -16,14 +16,23 @@ const {
 } = composeStories(listBoxStories);
 
 async function expectActiveOption(nameOrIndex: string | number) {
-  const option =
-    typeof nameOrIndex === "number"
-      ? page.getByRole("option").nth(nameOrIndex)
-      : page.getByRole("option", { name: nameOrIndex });
-  const optionId = (await option.element()).id;
   await expect
-    .element(page.getByRole("listbox"))
-    .toHaveAttribute("aria-activedescendant", optionId);
+    .poll(async () => {
+      const activeId = page
+        .getByRole("listbox")
+        .element()
+        .getAttribute("aria-activedescendant");
+      const options = await (typeof nameOrIndex === "number"
+        ? page.getByRole("option")
+        : page.getByRole("option", { name: nameOrIndex })
+      ).elements();
+      const option =
+        typeof nameOrIndex === "number"
+          ? options.at(nameOrIndex)
+          : options.at(0);
+      return option?.id === activeId;
+    })
+    .toBe(true);
 }
 
 describe("GIVEN a List box", () => {
@@ -190,14 +199,25 @@ describe("GIVEN a List box", () => {
   });
 
   it("supports typeahead", async () => {
-    await renderWithSalt(<SingleSelect />);
-    await userEvent.tab();
-    await userEvent.keyboard("A");
-    await expectActiveOption("Alaska");
-    await userEvent.keyboard("A");
-    await expectActiveOption("Arizona");
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    await userEvent.keyboard("Alas");
-    await expectActiveOption("Alaska");
+    vi.useFakeTimers();
+    try {
+      const rendered = await renderWithSalt(<SingleSelect />);
+      try {
+        await userEvent.tab();
+        await userEvent.keyboard("A");
+        await expectActiveOption("Alaska");
+        await userEvent.keyboard("A");
+        await expectActiveOption("Arizona");
+        await vi.advanceTimersByTimeAsync(501);
+        await userEvent.keyboard("Alas");
+        await expectActiveOption("Alaska");
+        await vi.advanceTimersByTimeAsync(501);
+      } finally {
+        await rendered.unmount();
+        expect(vi.getTimerCount()).toBe(0);
+      }
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

@@ -511,25 +511,27 @@ const ITEMS_PER_PAGE = 2;
       cy.findByRole("listbox").focus();
     });
     it("supports focusing items by typing letters in rapid succession", () => {
+      cy.clock();
       cy.get("#list-item-0")
         .should("be.highlighted")
         .should("have.focusVisible");
 
       // Prioritize next available option starting with B from the cyclic effect
-      cy.realType("B");
+      cy.focused().type("B");
       cy.get("#list-item-3")
         .should("be.highlighted")
         .should("have.focusVisible");
 
-      cy.realType("A");
+      cy.focused().type("A");
       cy.get("#list-item-3")
         .should("be.highlighted")
         .should("have.focusVisible");
 
-      cy.realType("R");
+      cy.focused().type("R");
       cy.get("#list-item-0")
         .should("be.highlighted")
         .should("have.focusVisible");
+      cy.tick(101);
     });
     // TODO:
     it.skip("supports the space character in a search", () => {
@@ -564,19 +566,20 @@ const ITEMS_PER_PAGE = 2;
     });
 
     it("supports item selection using the Spacebar after search times out", () => {
-      cy.realType("F");
+      cy.clock();
+      cy.focused().type("F");
       cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
-      cy.realType("O");
+      cy.focused().type("O");
       cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
-      cy.realType("O");
+      cy.focused().type("O");
       cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
-      cy.realPress("Space");
+      cy.focused().type(" ");
       cy.get("#list-item-2")
         .should("be.highlighted")
         .should("have.focusVisible");
@@ -586,8 +589,8 @@ const ITEMS_PER_PAGE = 2;
       // Verify onChange was not called
       cy.get("@selectionChangeHandler").should("not.have.been.called");
 
-      cy.wait(1500);
-      cy.realPress("Space");
+      cy.tick(101);
+      cy.focused().type(" ");
       cy.get("#list-item-2").should("have.attr", "aria-selected", "true");
       cy.get("@selectionChangeHandler").should(
         "have.been.calledWith",
@@ -596,29 +599,31 @@ const ITEMS_PER_PAGE = 2;
       );
     });
     it("resets the search text after a timeout", () => {
-      cy.realType("F");
+      cy.clock();
+      cy.focused().type("F");
       cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
-      cy.wait(1500);
-      cy.realType("B");
+      cy.tick(101);
+      cy.focused().type("B");
       cy.get("#list-item-3")
         .should("be.highlighted")
         .should("have.focusVisible");
+      cy.tick(101);
     });
 
     it("wraps around to search from the beginning when no items past the current one match", () => {
-      cy.realType("B");
-      cy.realType("A");
-      cy.realType("Z");
+      cy.clock();
+      cy.focused().type("BAZ");
       cy.get("#list-item-3")
         .should("be.highlighted")
         .should("have.focusVisible");
-      cy.wait(1500);
-      cy.realType("F");
+      cy.tick(101);
+      cy.focused().type("F");
       cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
+      cy.tick(101);
     });
     it("cycles through options when typing the first character repeatedly", () => {
       cy.realType("F");

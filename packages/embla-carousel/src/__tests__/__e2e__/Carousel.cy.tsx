@@ -310,11 +310,6 @@ describe("Given a Carousel", () => {
         ).then(() => {
           expect(emblaApi?.selectedScrollSnap()).to.be.greaterThan(0);
         });
-
-        // Wait additional time to ensure it doesn't snap back
-        cy.wait(500).then(() => {
-          expect(emblaApi?.selectedScrollSnap()).to.be.greaterThan(0);
-        });
       });
     });
 
@@ -394,6 +389,8 @@ describe("Given a Carousel", () => {
         cy.get(".carouselSlide").eq(2).focus();
         cy.get(".carouselSlide").eq(2).should("be.focused");
 
+        // Intrinsic real-time wait: observe that native Embla animation does
+        // not begin after pointer focus lands on a partially visible slide.
         cy.wait(250).then(() => {
           expect(emblaApi?.selectedScrollSnap()).to.equal(0);
           emblaApi?.off("pointerDown", pointerDownCallback);

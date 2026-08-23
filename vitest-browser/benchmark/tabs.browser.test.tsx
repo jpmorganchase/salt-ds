@@ -690,12 +690,16 @@ describe("Given Tabs", () => {
     await add.click();
     await add.click();
     await expect.element(tab("Overflow")).toBeVisible();
-    const tablistRect = page
-      .getByRole("tablist")
-      .element()
-      .getBoundingClientRect();
-    const buttonRect = add.element().getBoundingClientRect();
-    expect(tablistRect.right).toBeLessThanOrEqual(buttonRect.left);
+    await expect
+      .poll(() => {
+        const tablistRect = page
+          .getByRole("tablist")
+          .element()
+          .getBoundingClientRect();
+        const buttonRect = add.element().getBoundingClientRect();
+        return tablistRect.right <= buttonRect.left;
+      })
+      .toBe(true);
   });
 
   it("adds a tab through confirmation without changing selection", async () => {
@@ -863,8 +867,12 @@ describe("Given Tabs", () => {
   it("keeps the overflow panel inside the horizontal viewport", async () => {
     await mountTabs(<Overflow />, { width: 408 });
     await openOverflow();
-    expect(document.documentElement.scrollWidth).toBe(
-      document.documentElement.clientWidth,
-    );
+    await expect
+      .poll(
+        () =>
+          document.documentElement.scrollWidth ===
+          document.documentElement.clientWidth,
+      )
+      .toBe(true);
   });
 });

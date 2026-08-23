@@ -12,6 +12,31 @@ const {
   WithDisabledItems,
 } = composeStories(menuStories);
 
+function rectanglesOverlap(a: DOMRect, b: DOMRect) {
+  return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+}
+
+function MultiLevelWithBackgroundTarget() {
+  return (
+    <>
+      <MultiLevel />
+      <div
+        aria-hidden="true"
+        data-testid="menu-background-target"
+        style={{
+          background: "transparent",
+          bottom: 8,
+          height: 32,
+          pointerEvents: "auto",
+          position: "fixed",
+          right: 8,
+          width: 32,
+        }}
+      />
+    </>
+  );
+}
+
 describe("Given a Menu", () => {
   it("should show a menu and perform an action with a mouse", () => {
     const openChangeSpy = cy.stub().as("openChangeSpy");
@@ -142,14 +167,36 @@ describe("Given a Menu", () => {
     cy.findAllByRole("menu").should("have.length", 1);
   });
 
-  it("should not close nested menus when the mouse leaves the menu and hovers the page body", () => {
-    cy.mount(<MultiLevel />);
+  it("should close a nested menu when the pointer moves to page background", () => {
+    cy.mount(<MultiLevelWithBackgroundTarget />);
     cy.findByRole("button", { name: "Open Menu" }).realClick();
     cy.findAllByRole("menu").should("have.length", 1);
     cy.findByRole("menuitem", { name: "Edit styling" }).realHover();
     cy.findAllByRole("menu").should("have.length", 2);
-    cy.get("body").realHover();
-    cy.findAllByRole("menu").should("have.length", 2);
+    cy.findAllByRole("menu").then(($menus) => {
+      const document = $menus[0].ownerDocument;
+      const target = document.querySelector<HTMLElement>(
+        '[data-testid="menu-background-target"]',
+      );
+      const trigger = document.querySelector<HTMLElement>(
+        'button[aria-label="Open Menu"]',
+      );
+      expect(target, "background target").not.to.be.null;
+      expect(trigger, "menu trigger").not.to.be.null;
+      if (!target || !trigger) return;
+
+      const targetRect = target.getBoundingClientRect();
+      expect(targetRect.width).to.be.greaterThan(0);
+      expect(targetRect.height).to.be.greaterThan(0);
+      for (const surface of [trigger, ...Array.from($menus)]) {
+        expect(
+          rectanglesOverlap(targetRect, surface.getBoundingClientRect()),
+          "background target does not overlap a menu surface",
+        ).to.equal(false);
+      }
+    });
+    cy.findByTestId("menu-background-target").realHover();
+    cy.findAllByRole("menu").should("have.length", 1);
   });
 
   it("should support nested keyboard navigation", () => {

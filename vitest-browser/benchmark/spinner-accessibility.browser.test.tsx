@@ -1,5 +1,5 @@
 import { Spinner } from "@salt-ds/core";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { page } from "vitest/browser";
 import { renderWithSalt } from "../render";
 
@@ -33,12 +33,20 @@ describe("GIVEN a Spinner", () => {
 });
 
 describe("GIVEN an available announcer", () => {
-  it("announces the aria-label again after five seconds", {
-    timeout: 8_000,
-  }, async () => {
-    await renderWithSalt(<Spinner aria-label={ariaLabel} />);
-    await new Promise((resolve) => setTimeout(resolve, 5_000));
-    await expect.poll(liveRegionText).toContain(ariaLabel);
+  it("announces the aria-label again after five seconds", async () => {
+    vi.useFakeTimers();
+    try {
+      const rendered = await renderWithSalt(<Spinner aria-label={ariaLabel} />);
+      try {
+        await vi.advanceTimersByTimeAsync(5_000);
+        await expect.poll(liveRegionText).toContain(ariaLabel);
+      } finally {
+        await rendered.unmount();
+        expect(vi.getTimerCount()).toBe(0);
+      }
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   // Preserves the Cypress skips while their unmount-announcement TODO remains.

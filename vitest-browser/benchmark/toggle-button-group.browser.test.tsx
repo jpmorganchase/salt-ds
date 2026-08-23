@@ -129,7 +129,7 @@ describe("GIVEN a controlled ToggleButtonGroup", () => {
     const onChange = vi.fn();
     await renderWithSalt(<ControlledGroup onChange={onChange} />);
     const radios = page.getByRole("radio");
-    expect(await radios.elements()).toHaveLength(4);
+    await expect.element(radios).toHaveLength(4);
     await expect.element(radios.nth(3)).toHaveAttribute("aria-checked", "true");
     await expect.element(radios.nth(3)).toHaveAttribute("tabindex", "0");
 

@@ -92,15 +92,22 @@ describe("GIVEN an Overlay", () => {
       it(`THEN it should appear on ${placement} of trigger element`, async () => {
         await renderWithSalt(<Story />);
         await trigger().click();
-        const dialogPosition = (
-          await page.getByRole("dialog").element()
-        ).getBoundingClientRect()[axis];
-        const triggerPosition = (
-          await page.getByText(/Show Overlay/i).element()
-        ).getBoundingClientRect()[axis];
-        if (comparison === "greater")
-          expect(triggerPosition).toBeGreaterThan(dialogPosition);
-        else expect(triggerPosition).toBeLessThan(dialogPosition);
+        const dialog = page.getByRole("dialog");
+        const overlayTrigger = page.getByText(/Show Overlay/i);
+        await expect.element(dialog).toBeVisible();
+        await expect
+          .poll(() => {
+            const dialogPosition = dialog.element().getBoundingClientRect()[
+              axis
+            ];
+            const triggerPosition = overlayTrigger
+              .element()
+              .getBoundingClientRect()[axis];
+            return comparison === "greater"
+              ? triggerPosition > dialogPosition
+              : triggerPosition < dialogPosition;
+          })
+          .toBe(true);
       });
     });
   }

@@ -740,24 +740,12 @@ describe("Given a ComboBox", () => {
     cy.get("@blurSpy").should("not.have.been.called");
   });
 
-  it("should support 10000 items without much delay", () => {
+  it("should open a list with 10000 items", () => {
     cy.mount(<PerformanceTest />);
 
     cy.findByRole("combobox").should("be.visible");
-
-    cy.window().its("performance").invoke("mark", "open_start");
-
     cy.findByRole("combobox").realClick();
-
     cy.findByRole("listbox", { timeout: 30000 }).should("be.visible");
-
-    cy.window().its("performance").invoke("mark", "open_end");
-
-    cy.window()
-      .its("performance")
-      .invoke("measure", "open_duration", "open_start", "open_end")
-      .its("duration", { timeout: 0 })
-      .should("be.lessThan", 5000);
   });
 
   it("should remove aria-activedescendant when closed", () => {

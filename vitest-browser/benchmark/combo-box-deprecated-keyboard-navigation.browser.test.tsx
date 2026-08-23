@@ -51,13 +51,19 @@ describe("A deprecated combo box", () => {
     it("does not highlight any item with a focus ring when focused", async () => {
       await renderWithSalt(<Default />);
       await userEvent.tab();
-      const options = await page.getByRole("option").elements();
-      expect(
-        options.every(
-          (item) =>
-            !item.classList.contains("saltListItemDeprecated-highlighted"),
-        ),
-      ).toBe(true);
+      const options = page.getByRole("option");
+      await expect
+        .poll(() => {
+          const items = options.elements();
+          return (
+            items.length > 0 &&
+            items.every(
+              (item) =>
+                !item.classList.contains("saltListItemDeprecated-highlighted"),
+            )
+          );
+        })
+        .toBe(true);
     });
 
     it("clears an unselected input value when blurred", async () => {
@@ -223,13 +229,19 @@ describe("A deprecated multi-select combo box", () => {
     it("does not highlight any item with a focus ring when focused", async () => {
       await renderWithSalt(<MultiSelect />);
       await userEvent.tab();
-      const options = await page.getByRole("option").elements();
-      expect(
-        options.every(
-          (item) =>
-            !item.classList.contains("saltListItemDeprecated-highlighted"),
-        ),
-      ).toBe(true);
+      const options = page.getByRole("option");
+      await expect
+        .poll(() => {
+          const items = options.elements();
+          return (
+            items.length > 0 &&
+            items.every(
+              (item) =>
+                !item.classList.contains("saltListItemDeprecated-highlighted"),
+            )
+          );
+        })
+        .toBe(true);
     });
 
     it("clears input value when blurred", async () => {

@@ -94,7 +94,7 @@ describe("GIVEN a Rating component", () => {
 
   it("THEN should handle max value of 0", async () => {
     await renderWithSalt(<Default max={0} />);
-    expect(await page.getByRole("radio").elements()).toHaveLength(0);
+    await expect.element(page.getByRole("radio")).toHaveLength(0);
   });
 
   describe("WHEN mounted as a controlled component", () => {
@@ -244,8 +244,8 @@ describe("GIVEN a Rating component", () => {
 
   it("THEN should render custom icons", async () => {
     await renderWithSalt(<CustomIcons />);
-    expect(await page.getByTestId("LikeSolidIcon").elements()).toHaveLength(3);
-    expect(await page.getByTestId("LikeIcon").elements()).toHaveLength(2);
+    await expect.element(page.getByTestId("LikeSolidIcon")).toHaveLength(3);
+    await expect.element(page.getByTestId("LikeIcon")).toHaveLength(2);
   });
 
   it("THEN should update visible label on hover and selection", async () => {

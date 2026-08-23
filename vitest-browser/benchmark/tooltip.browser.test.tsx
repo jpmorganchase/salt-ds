@@ -104,15 +104,22 @@ describe("GIVEN a Tooltip", () => {
     for (const [label, placement, axis, comparison] of cases) {
       it(`${label} - tooltip should be positioned relative to the trigger`, async () => {
         await renderWithSalt(<Open placement={placement} />);
-        const triggerPosition = (
-          await page.getByRole("button").element()
-        ).getBoundingClientRect()[axis];
-        const tooltipPosition = (
-          await page.getByRole("tooltip").element()
-        ).getBoundingClientRect()[axis];
-        if (comparison === "greater")
-          expect(triggerPosition).toBeGreaterThan(tooltipPosition);
-        else expect(triggerPosition).toBeLessThan(tooltipPosition);
+        const trigger = page.getByRole("button");
+        const tooltip = page.getByRole("tooltip");
+        await expect.element(tooltip).toBeVisible();
+        await expect
+          .poll(() => {
+            const triggerPosition = trigger.element().getBoundingClientRect()[
+              axis
+            ];
+            const tooltipPosition = tooltip.element().getBoundingClientRect()[
+              axis
+            ];
+            return comparison === "greater"
+              ? triggerPosition > tooltipPosition
+              : triggerPosition < tooltipPosition;
+          })
+          .toBe(true);
       });
     }
   });
@@ -120,26 +127,40 @@ describe("GIVEN a Tooltip", () => {
   describe("WHEN hideArrow", () => {
     it("shows arrow by default", async () => {
       await renderWithSalt(<Open />);
-      expect(document.querySelector(".saltTooltip-arrow")).toBeVisible();
+      const tooltip = page.getByRole("tooltip");
+      await expect.element(tooltip).toBeVisible();
+      await expect
+        .poll(() => tooltip.element().querySelector(".saltTooltip-arrow"))
+        .not.toBeNull();
+      expect(
+        tooltip.element().querySelector(".saltTooltip-arrow"),
+      ).toBeVisible();
     });
 
     it('arrow is not displayed when "hideArrow=true"', async () => {
       await renderWithSalt(<Open hideArrow />);
-      expect(
-        document.querySelector(".saltTooltip-arrow"),
-      ).not.toBeInTheDocument();
+      const tooltip = page.getByRole("tooltip");
+      await expect.element(tooltip).toBeVisible();
+      expect(tooltip.element().querySelector(".saltTooltip-arrow")).toBeNull();
     });
   });
 
   describe("WHEN hideIcon", () => {
     it("shows icon by default", async () => {
       await renderWithSalt(<Open status="info" />);
-      expect(document.querySelector(".saltIcon")).toBeVisible();
+      const tooltip = page.getByRole("tooltip");
+      await expect.element(tooltip).toBeVisible();
+      await expect
+        .poll(() => tooltip.element().querySelector(".saltIcon"))
+        .not.toBeNull();
+      expect(tooltip.element().querySelector(".saltIcon")).toBeVisible();
     });
 
     it('icon is not displayed when "hideIcon=true"', async () => {
       await renderWithSalt(<Open hideIcon status="info" />);
-      expect(document.querySelector(".saltIcon")).not.toBeInTheDocument();
+      const tooltip = page.getByRole("tooltip");
+      await expect.element(tooltip).toBeVisible();
+      expect(tooltip.element().querySelector(".saltIcon")).toBeNull();
     });
   });
 
@@ -153,21 +174,25 @@ describe("GIVEN a Tooltip", () => {
   describe("WHEN content = component", () => {
     it("then tooltip displays the component", async () => {
       await renderWithSalt(<CustomContent open />);
-      expect(document.querySelector('[role="tooltip"] div')).toBeVisible();
-      expect(document.querySelector("ul")).toBeVisible();
-      expect(document.querySelector("li")).toBeVisible();
+      const tooltip = page.getByRole("tooltip");
+      await expect.element(tooltip).toBeVisible();
+      await expect.element(tooltip.getByRole("list")).toBeVisible();
+      await expect.element(tooltip.getByRole("listitem")).toHaveLength(4);
     });
 
     it("then tooltip flips direction when there is not enough space", async () => {
       await page.viewport(200, 750);
       await renderWithSalt(<CustomContent open />);
-      const triggerY = (
-        await page.getByRole("button").element()
-      ).getBoundingClientRect().y;
-      const tooltipY = (
-        await page.getByRole("tooltip").element()
-      ).getBoundingClientRect().y;
-      expect(triggerY).toBeLessThan(tooltipY);
+      const trigger = page.getByRole("button");
+      const tooltip = page.getByRole("tooltip");
+      await expect.element(tooltip).toBeVisible();
+      await expect
+        .poll(
+          () =>
+            trigger.element().getBoundingClientRect().y <
+            tooltip.element().getBoundingClientRect().y,
+        )
+        .toBe(true);
     });
   });
 

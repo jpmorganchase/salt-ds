@@ -38,6 +38,7 @@ describe("Number Input", () => {
   });
 
   it("increments repeatedly while holding down the increment button and stops after pointerup (mouse)", () => {
+    cy.clock();
     cy.mount(<Default />);
     cy.findByRole("spinbutton").should("have.value", "");
 
@@ -46,7 +47,11 @@ describe("Number Input", () => {
       button: 0,
     });
 
-    cy.wait(700);
+    cy.findByRole("spinbutton").should("have.value", "1");
+    cy.tick(500);
+    cy.findByRole("spinbutton").should("have.value", "2");
+    cy.tick(100);
+    cy.findByRole("spinbutton").should("have.value", "3");
 
     cy.get(".saltNumberInput-increment").trigger("pointerup", {
       pointerType: "mouse",
@@ -56,13 +61,14 @@ describe("Number Input", () => {
     cy.findByRole("spinbutton")
       .invoke("val")
       .then((valBeforeWait) => {
-        cy.wait(500);
+        cy.tick(200);
         cy.findByRole("spinbutton").invoke("val").should("eq", valBeforeWait);
         expect(Number(valBeforeWait)).to.be.greaterThan(1);
       });
   });
 
   it("increments repeatedly while holding down the increment button and stops after pointerup (touch)", () => {
+    cy.clock();
     cy.mount(<Default />);
     cy.findByRole("spinbutton").should("have.value", "");
 
@@ -70,7 +76,11 @@ describe("Number Input", () => {
       pointerType: "touch",
     });
 
-    cy.wait(700);
+    cy.findByRole("spinbutton").should("have.value", "1");
+    cy.tick(500);
+    cy.findByRole("spinbutton").should("have.value", "2");
+    cy.tick(100);
+    cy.findByRole("spinbutton").should("have.value", "3");
 
     cy.get(".saltNumberInput-increment").trigger("pointerup", {
       pointerType: "touch",
@@ -79,7 +89,7 @@ describe("Number Input", () => {
     cy.findByRole("spinbutton")
       .invoke("val")
       .then((valBeforeWait) => {
-        cy.wait(500);
+        cy.tick(200);
         cy.findByRole("spinbutton").invoke("val").should("eq", valBeforeWait);
         expect(Number(valBeforeWait)).to.be.greaterThan(1);
       });

@@ -58,6 +58,23 @@ async function expectFocusedDay(locator: ReturnType<typeof page.getByRole>) {
   await expect.element(locator).toHaveClass(/saltCalendarDay-focused/);
 }
 
+async function expectTooltipContent(
+  locator: ReturnType<typeof page.getByRole>,
+  content: string,
+) {
+  await expect
+    .poll(() => {
+      const describedBy = locator.element().getAttribute("aria-describedby");
+      return describedBy
+        ? document
+            .getElementById(describedBy)
+            ?.querySelector(".saltTooltip-content")
+            ?.textContent?.trim()
+        : null;
+    })
+    .toBe(content);
+}
+
 function registerAdapterTests(
   // biome-ignore lint/suspicious/noExplicitAny: shared behavior across adapter date types
   adapter: SaltDateAdapter<any>,
@@ -466,13 +483,7 @@ function registerAdapterTests(
         });
         await expect.element(day).toHaveAttribute("aria-disabled", "true");
         await day.hover();
-        const describedBy = day.element().getAttribute("aria-describedby");
-        expect(describedBy).toBeTruthy();
-        const tooltip = document.getElementById(describedBy ?? "");
-        expect(tooltip).toHaveAttribute("role", "tooltip");
-        expect(
-          tooltip?.querySelector(".saltTooltip-content"),
-        ).toHaveTextContent("weekends are un-selectable");
+        await expectTooltipContent(day, "weekends are un-selectable");
       }
       expect(selectionChange).not.toHaveBeenCalled();
     });
@@ -484,21 +495,25 @@ function registerAdapterTests(
       });
       focus(friday);
       await userEvent.keyboard("{ArrowRight}");
-      expect(document.activeElement).toHaveAttribute("aria-disabled", "true");
-      await page.elementLocator(document.activeElement as HTMLElement).hover();
-      const describedBy =
-        document.activeElement?.getAttribute("aria-describedby");
-      const tooltip = document.getElementById(describedBy ?? "");
-      expect(tooltip?.querySelector(".saltTooltip-content")).toHaveTextContent(
-        "weekends are un-selectable",
-      );
+      const saturday = page.getByRole("button", {
+        name: "Saturday 2 March 2024",
+      });
+      await expect.element(saturday).toHaveFocus();
+      await expect.element(saturday).toHaveAttribute("aria-disabled", "true");
+      await saturday.hover();
+      await expectTooltipContent(saturday, "weekends are un-selectable");
       await userEvent.keyboard("{ArrowRight}");
-      expect(document.activeElement).toHaveAttribute("aria-disabled", "true");
+      const sunday = page.getByRole("button", {
+        name: "Sunday 3 March 2024",
+      });
+      await expect.element(sunday).toHaveFocus();
+      await expect.element(sunday).toHaveAttribute("aria-disabled", "true");
       await userEvent.keyboard("{ArrowRight}");
-      expect(document.activeElement).not.toHaveAttribute(
-        "aria-disabled",
-        "true",
-      );
+      const monday = page.getByRole("button", {
+        name: "Monday 4 March 2024",
+      });
+      await expect.element(monday).toHaveFocus();
+      await expect.element(monday).not.toHaveAttribute("aria-disabled", "true");
     });
   });
 }

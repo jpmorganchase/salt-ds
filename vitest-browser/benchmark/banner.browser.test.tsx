@@ -57,27 +57,35 @@ describe("GIVEN a Banner", () => {
 });
 
 describe("WHEN adding BannerActions", () => {
-  it("handles click, Enter and Space activation", async () => {
-    const onClick = vi.fn();
-    await renderWithSalt(
-      <Banner>
-        <BannerContent>On Close example</BannerContent>
-        <BannerActions>
-          <Button
-            aria-label="refresh"
-            appearance="transparent"
-            onClick={onClick}
-          >
-            <RefreshIcon />
-          </Button>
-        </BannerActions>
-      </Banner>,
-    );
-    const button = page.getByRole("button", { name: "refresh" });
+  it.each(["click", "Enter", "Space"] as const)(
+    "handles %s activation",
+    async (activation) => {
+      const onClick = vi.fn();
+      await renderWithSalt(
+        <Banner>
+          <BannerContent>On Close example</BannerContent>
+          <BannerActions>
+            <Button
+              aria-label="refresh"
+              appearance="transparent"
+              onClick={onClick}
+            >
+              <RefreshIcon />
+            </Button>
+          </BannerActions>
+        </Banner>,
+      );
+      const button = page.getByRole("button", { name: "refresh" });
 
-    await button.click();
-    await userEvent.keyboard("{Enter}");
-    await userEvent.keyboard(" ");
-    expect(onClick).toHaveBeenCalledTimes(3);
-  });
+      if (activation === "click") {
+        await button.click();
+      } else {
+        await userEvent.tab();
+        await expect.element(button).toHaveFocus();
+        await userEvent.keyboard(activation === "Enter" ? "{Enter}" : " ");
+      }
+
+      expect(onClick).toHaveBeenCalledOnce();
+    },
+  );
 });

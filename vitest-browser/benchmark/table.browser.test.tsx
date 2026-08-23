@@ -56,7 +56,7 @@ describe("GIVEN a Table inside a TableContainer", () => {
     await expect
       .element(page.getByRole("table", { name: "Column headers" }))
       .toBeVisible();
-    expect(page.getByRole("region").elements()).toHaveLength(0);
+    await expect.element(page.getByRole("region")).toHaveLength(0);
     const container = page.getByTestId("non-scrollable-container");
     await expect.element(container).toBeVisible();
     await expect.element(container).not.toHaveAttribute("tabindex");

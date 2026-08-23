@@ -214,16 +214,18 @@ describe("GIVEN a List box", () => {
   it("should support typeahead", () => {
     cy.mount(<SingleSelect />);
     cy.realPress("Tab");
-    cy.realType("A");
+    cy.clock();
+    cy.focused().type("A");
     cy.findByRole("listbox").should("exist");
     cy.findByRole("option", { name: "Alaska" }).should("be.activeDescendant");
 
-    cy.realType("A");
+    cy.focused().type("A");
     cy.findByRole("option", { name: "Arizona" }).should("be.activeDescendant");
 
-    cy.wait(500);
+    cy.tick(501);
 
-    cy.realType("Alas");
+    cy.focused().type("Alas");
     cy.findByRole("option", { name: "Alaska" }).should("be.activeDescendant");
+    cy.tick(501);
   });
 });

@@ -110,7 +110,7 @@ describe("Given a Carousel", () => {
       document.querySelector('[aria-label="Carousel group example"]'),
     ).toBeInTheDocument();
     await expect.element(page.getByRole("group")).toBeInTheDocument();
-    expect(await page.getByRole("tabpanel").elements()).toHaveLength(0);
+    await expect.element(page.getByRole("tabpanel")).toHaveLength(0);
   });
 
   it("should navigate forwards to last slide", async () => {
@@ -169,7 +169,7 @@ describe("Given a Carousel", () => {
 
   it("should display the tablist", async () => {
     await mountCarousel({}, 3);
-    expect(await page.getByRole("tab").elements()).toHaveLength(4);
+    await expect.element(page.getByRole("tab")).toHaveLength(4);
   });
 
   it("should navigate to each slide in the tablist", async () => {
@@ -201,13 +201,18 @@ describe("Given a Carousel", () => {
 
   it("should not snap back to start when clicking Next with 5 slides and 2 per view", async () => {
     const apiRef = await mountMultiSlideCarousel();
-    expect(getApi(apiRef).selectedScrollSnap()).toBe(0);
+    const api = getApi(apiRef);
+    expect(api.selectedScrollSnap()).toBe(0);
+    const settled = new Promise<void>((resolve) => {
+      const handleSettle = () => {
+        api.off("settle", handleSettle);
+        resolve();
+      };
+      api.on("settle", handleSettle);
+    });
     await page.getByLabelText(/Next slide/).click();
-    await expect
-      .poll(() => apiRef.current?.selectedScrollSnap())
-      .toBeGreaterThan(0);
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    expect(getApi(apiRef).selectedScrollSnap()).toBeGreaterThan(0);
+    await settled;
+    expect(api.selectedScrollSnap()).toBeGreaterThan(0);
   });
 
   it("should move focus within the current snap and scroll only across snap groups", async () => {
@@ -252,6 +257,8 @@ describe("Given a Carousel", () => {
     });
     await expect.poll(() => pointerDown.mock.calls.length).toBe(1);
     expect(slide).toHaveFocus();
+    // Intrinsic real-time wait: observe that native Embla animation does not
+    // begin after pointer focus lands on a partially visible slide.
     await new Promise((resolve) => setTimeout(resolve, 250));
     expect(api.selectedScrollSnap()).toBe(0);
     api.off("pointerDown", pointerDown);

@@ -16,9 +16,25 @@ const BUTTON_TEXT_POLITE = "CLICK ME POLITE";
 const BUTTON_TEXT_ASSERTIVE = "CLICK ME ASSERTIVE";
 const BUTTON_TEXT_TARGETED = "CLICK ME TARGETED";
 const removalWait = ANNOUNCEMENT_TIME_IN_DOM + 100;
+const LEGACY_DELAY_MS = 500;
 
-const wait = (milliseconds: number) =>
-  new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
+async function withFakeTimers<T extends { unmount: () => Promise<void> }>(
+  renderComponent: () => Promise<T>,
+  run: () => Promise<void>,
+) {
+  vi.useFakeTimers();
+  try {
+    const rendered = await renderComponent();
+    try {
+      await run();
+    } finally {
+      await rendered.unmount();
+      expect(vi.getTimerCount()).toBe(0);
+    }
+  } finally {
+    vi.useRealTimers();
+  }
+}
 
 const clickSynchronously = (locator: Locator) =>
   (locator.element() as HTMLElement).click();
@@ -202,140 +218,183 @@ describe("Given useAriaAnnouncer", () => {
   });
 
   it("announces politely by default and clears the message", async () => {
-    await render(
-      <AriaAnnouncerProvider>
-        <TestComponent announcement="test" />
-      </AriaAnnouncerProvider>,
+    await withFakeTimers(
+      () =>
+        render(
+          <AriaAnnouncerProvider>
+            <TestComponent announcement="test" />
+          </AriaAnnouncerProvider>,
+        ),
+      async () => {
+        await page
+          .getByRole("button", { name: BUTTON_TEXT, exact: true })
+          .click();
+        await expectLiveText("polite", "test");
+        await vi.advanceTimersByTimeAsync(removalWait);
+        await expectLiveText("polite", "test", false);
+      },
     );
-    await page.getByRole("button", { name: BUTTON_TEXT, exact: true }).click();
-    await expectLiveText("polite", "test");
-    await wait(removalWait);
-    await expectLiveText("polite", "test", false);
   });
 
   it("supports a legacy delay", async () => {
-    await render(
-      <AriaAnnouncerProvider>
-        <TestComponent announcement="test" delay={500} />
-      </AriaAnnouncerProvider>,
+    await withFakeTimers(
+      () =>
+        render(
+          <AriaAnnouncerProvider>
+            <TestComponent announcement="test" delay={LEGACY_DELAY_MS} />
+          </AriaAnnouncerProvider>,
+        ),
+      async () => {
+        await page.getByRole("button", { name: BUTTON_TEXT_WAIT }).click();
+        await expectLiveText("polite", "test", false);
+        await vi.advanceTimersByTimeAsync(LEGACY_DELAY_MS);
+        await expectLiveText("polite", "test");
+        await vi.advanceTimersByTimeAsync(removalWait);
+        await expectLiveText("polite", "test", false);
+      },
     );
-    await page.getByRole("button", { name: BUTTON_TEXT_WAIT }).click();
-    await expectLiveText("polite", "test", false);
-    await expectLiveText("polite", "test");
-    await wait(removalWait);
-    await expectLiveText("polite", "test", false);
   });
 
   it.each([
     ["polite", "test polite"],
     ["assertive", "test assertive"],
   ] as const)("announces with %s urgency", async (ariaLive, announcement) => {
-    await render(
-      <AriaAnnouncerProvider>
-        <TestComponent announcement={announcement} ariaLive={ariaLive} />
-      </AriaAnnouncerProvider>,
-    );
-    await page.getByRole("button", { name: BUTTON_TEXT, exact: true }).click();
+    await withFakeTimers(
+      () =>
+        render(
+          <AriaAnnouncerProvider>
+            <TestComponent announcement={announcement} ariaLive={ariaLive} />
+          </AriaAnnouncerProvider>,
+        ),
+      async () => {
+        await page
+          .getByRole("button", { name: BUTTON_TEXT, exact: true })
+          .click();
 
-    await expectLiveText(ariaLive, announcement);
-    const otherRegion = ariaLive === "polite" ? "assertive" : "polite";
-    await expectLiveText(otherRegion, announcement, false);
-    await wait(removalWait);
-    await expectLiveText(ariaLive, announcement, false);
+        await expectLiveText(ariaLive, announcement);
+        const otherRegion = ariaLive === "polite" ? "assertive" : "polite";
+        await expectLiveText(otherRegion, announcement, false);
+        await vi.advanceTimersByTimeAsync(removalWait);
+        await expectLiveText(ariaLive, announcement, false);
+      },
+    );
   });
 
   it("renders different urgencies simultaneously", async () => {
-    await render(
-      <AriaAnnouncerProvider>
-        <TestComponent announcement="test message" />
-      </AriaAnnouncerProvider>,
-    );
-    clickSynchronously(page.getByRole("button", { name: BUTTON_TEXT_POLITE }));
-    clickSynchronously(
-      page.getByRole("button", { name: BUTTON_TEXT_ASSERTIVE }),
-    );
+    await withFakeTimers(
+      () =>
+        render(
+          <AriaAnnouncerProvider>
+            <TestComponent announcement="test message" />
+          </AriaAnnouncerProvider>,
+        ),
+      async () => {
+        clickSynchronously(
+          page.getByRole("button", { name: BUTTON_TEXT_POLITE }),
+        );
+        clickSynchronously(
+          page.getByRole("button", { name: BUTTON_TEXT_ASSERTIVE }),
+        );
 
-    await expectLiveText("polite", "test message");
-    await expectLiveText("assertive", "test message");
-    await wait(removalWait);
-    await expectLiveText("polite", "test message", false);
-    await expectLiveText("assertive", "test message", false);
+        await expectLiveText("polite", "test message");
+        await expectLiveText("assertive", "test message");
+        await vi.advanceTimersByTimeAsync(removalWait);
+        await expectLiveText("polite", "test message", false);
+        await expectLiveText("assertive", "test message", false);
+      },
+    );
   });
 
   it("debounces to the last announcement", async () => {
     let increment = 0;
-    await render(
-      <AriaAnnouncerProvider>
-        <TestComponent
-          debounce={500}
-          getAnnouncement={() => `test ${++increment}`}
-        />
-      </AriaAnnouncerProvider>,
-    );
-    const button = page.getByRole("button", {
-      name: BUTTON_TEXT,
-      exact: true,
-    });
-    clickSynchronously(button);
-    clickSynchronously(button);
-    clickSynchronously(button);
-    await wait(600);
+    await withFakeTimers(
+      () =>
+        render(
+          <AriaAnnouncerProvider>
+            <TestComponent
+              debounce={LEGACY_DELAY_MS}
+              getAnnouncement={() => `test ${++increment}`}
+            />
+          </AriaAnnouncerProvider>,
+        ),
+      async () => {
+        const button = page.getByRole("button", {
+          name: BUTTON_TEXT,
+          exact: true,
+        });
+        clickSynchronously(button);
+        clickSynchronously(button);
+        clickSynchronously(button);
+        await expectLiveText("polite", "test 3", false);
+        await vi.advanceTimersByTimeAsync(LEGACY_DELAY_MS + 1);
 
-    await expectLiveText("polite", "test 3");
-    await expectLiveText("polite", "test 1", false);
-    await expectLiveText("polite", "test 2", false);
-    await wait(removalWait);
-    await expectLiveText("polite", "test 3", false);
+        await expectLiveText("polite", "test 3");
+        await expectLiveText("polite", "test 1", false);
+        await expectLiveText("polite", "test 2", false);
+        await vi.advanceTimersByTimeAsync(removalWait);
+        await expectLiveText("polite", "test 3", false);
+      },
+    );
   });
 
   it("renders queued announcements in order", async () => {
     let increment = 0;
-    await render(
-      <AriaAnnouncerProvider>
-        <TestComponent getAnnouncement={() => `test ${++increment}`} />
-      </AriaAnnouncerProvider>,
-    );
-    const button = page.getByRole("button", {
-      name: BUTTON_TEXT,
-      exact: true,
-    });
-    clickSynchronously(button);
-    clickSynchronously(button);
+    await withFakeTimers(
+      () =>
+        render(
+          <AriaAnnouncerProvider>
+            <TestComponent getAnnouncement={() => `test ${++increment}`} />
+          </AriaAnnouncerProvider>,
+        ),
+      async () => {
+        const button = page.getByRole("button", {
+          name: BUTTON_TEXT,
+          exact: true,
+        });
+        clickSynchronously(button);
+        clickSynchronously(button);
 
-    await expectLiveText("polite", "test 1");
-    await expectLiveText("polite", "test 2");
-    await wait(removalWait);
-    await expectLiveText("polite", "test 1", false);
-    await expectLiveText("polite", "test 2", false);
+        await expectLiveText("polite", "test 1");
+        await expectLiveText("polite", "test 2");
+        await vi.advanceTimersByTimeAsync(removalWait);
+        await expectLiveText("polite", "test 1", false);
+        await expectLiveText("polite", "test 2", false);
+      },
+    );
   });
 
   it("renders multiple messages in one region", async () => {
     let increment = 0;
-    await render(
-      <AriaAnnouncerProvider>
-        <TestComponent
-          ariaLive="polite"
-          getAnnouncement={() => `message ${++increment}`}
-        />
-      </AriaAnnouncerProvider>,
-    );
-    const button = page.getByRole("button", {
-      name: BUTTON_TEXT,
-      exact: true,
-    });
-    clickSynchronously(button);
-    await wait(50);
-    clickSynchronously(button);
-    await wait(50);
-    clickSynchronously(button);
+    await withFakeTimers(
+      () =>
+        render(
+          <AriaAnnouncerProvider>
+            <TestComponent
+              ariaLive="polite"
+              getAnnouncement={() => `message ${++increment}`}
+            />
+          </AriaAnnouncerProvider>,
+        ),
+      async () => {
+        const button = page.getByRole("button", {
+          name: BUTTON_TEXT,
+          exact: true,
+        });
+        clickSynchronously(button);
+        await vi.advanceTimersByTimeAsync(50);
+        clickSynchronously(button);
+        await vi.advanceTimersByTimeAsync(50);
+        clickSynchronously(button);
 
-    for (const message of ["message 1", "message 2", "message 3"]) {
-      await expectLiveText("polite", message);
-    }
-    await wait(removalWait);
-    for (const message of ["message 1", "message 2", "message 3"]) {
-      await expectLiveText("polite", message, false);
-    }
+        for (const message of ["message 1", "message 2", "message 3"]) {
+          await expectLiveText("polite", message);
+        }
+        await vi.advanceTimersByTimeAsync(removalWait);
+        for (const message of ["message 1", "message 2", "message 3"]) {
+          await expectLiveText("polite", message, false);
+        }
+      },
+    );
   });
 
   it("clears timers when the provider unmounts", async () => {
@@ -369,13 +428,17 @@ describe("Given useAriaAnnouncer", () => {
     const consoleError = vi
       .spyOn(console, "error")
       .mockImplementation(() => {});
-    await render(<Wrapper />);
-    await expectLiveText("polite", "hello");
-    await expectLiveText("assertive", "hello");
-    await page.getByRole("button", { name: "unmount provider" }).click();
-    await wait(removalWait);
-    expect(consoleError).not.toHaveBeenCalled();
-    consoleError.mockRestore();
+    await withFakeTimers(
+      () => render(<Wrapper />),
+      async () => {
+        await expectLiveText("polite", "hello");
+        await expectLiveText("assertive", "hello");
+        await page.getByRole("button", { name: "unmount provider" }).click();
+        await vi.advanceTimersByTimeAsync(removalWait);
+        expect(consoleError).not.toHaveBeenCalled();
+        consoleError.mockRestore();
+      },
+    );
   });
 
   it("handles empty announcements", async () => {
@@ -409,23 +472,30 @@ describe("Given useAriaAnnouncer", () => {
   });
 
   it("clears urgency regions independently", async () => {
-    await render(
-      <AriaAnnouncerProvider>
-        <TestComponent announcement="test message" />
-      </AriaAnnouncerProvider>,
-    );
-    clickSynchronously(page.getByRole("button", { name: BUTTON_TEXT_POLITE }));
-    await expectLiveText("polite", "test message");
-    await wait(ANNOUNCEMENT_TIME_IN_DOM / 2);
-    clickSynchronously(
-      page.getByRole("button", { name: BUTTON_TEXT_ASSERTIVE }),
-    );
-    await expectLiveText("assertive", "test message");
+    await withFakeTimers(
+      () =>
+        render(
+          <AriaAnnouncerProvider>
+            <TestComponent announcement="test message" />
+          </AriaAnnouncerProvider>,
+        ),
+      async () => {
+        clickSynchronously(
+          page.getByRole("button", { name: BUTTON_TEXT_POLITE }),
+        );
+        await expectLiveText("polite", "test message");
+        await vi.advanceTimersByTimeAsync(ANNOUNCEMENT_TIME_IN_DOM / 2);
+        clickSynchronously(
+          page.getByRole("button", { name: BUTTON_TEXT_ASSERTIVE }),
+        );
+        await expectLiveText("assertive", "test message");
 
-    await wait(ANNOUNCEMENT_TIME_IN_DOM / 2 + 100);
-    await expectLiveText("polite", "test message", false);
-    await expectLiveText("assertive", "test message");
-    await wait(ANNOUNCEMENT_TIME_IN_DOM / 2 + 100);
-    await expectLiveText("assertive", "test message", false);
+        await vi.advanceTimersByTimeAsync(ANNOUNCEMENT_TIME_IN_DOM / 2 + 100);
+        await expectLiveText("polite", "test message", false);
+        await expectLiveText("assertive", "test message");
+        await vi.advanceTimersByTimeAsync(ANNOUNCEMENT_TIME_IN_DOM / 2 + 100);
+        await expectLiveText("assertive", "test message", false);
+      },
+    );
   });
 });

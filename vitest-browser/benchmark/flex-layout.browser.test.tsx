@@ -67,7 +67,9 @@ describe("GIVEN a FlexLayout", () => {
   ] as const)("uses responsive wrap at %ipx", async (width, expected) => {
     await page.viewport(width, 900);
     await renderWithSalt(<Default wrap={wrap} />);
-    expect(getComputedStyle(layouts()[0]).flexWrap).toBe(expected);
+    await expect
+      .poll(() => getComputedStyle(layouts()[0]).flexWrap)
+      .toBe(expected);
   });
 
   const breakpoints = { xs: 0, sm: 500, md: 860, lg: 1180, xl: 1820 };
@@ -86,7 +88,9 @@ describe("GIVEN a FlexLayout", () => {
           <Default wrap={wrap} />
         </SaltProvider>,
       );
-      expect(getComputedStyle(layouts()[0]).flexWrap).toBe(expected);
+      await expect
+        .poll(() => getComputedStyle(layouts()[0]).flexWrap)
+        .toBe(expected);
     },
   );
 });

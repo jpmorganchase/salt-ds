@@ -16,6 +16,25 @@ const ITEMS: ItemWithLabel[] = [
 const LIST_KINDS = ["source", "declarative"] as const;
 const ITEMS_PER_PAGE = 2;
 const FANCY_ITEMS = ["Bar", "Foo", "Foo Bar", "Baz"];
+const LAB_TYPEAHEAD_RESET_MS = 100;
+
+async function withFakeTimers<T extends { unmount: () => Promise<void> }>(
+  render: () => Promise<T>,
+  run: () => Promise<void>,
+) {
+  vi.useFakeTimers();
+  try {
+    const rendered = await render();
+    try {
+      await run();
+    } finally {
+      await rendered.unmount();
+      expect(vi.getTimerCount()).toBe(0);
+    }
+  } finally {
+    vi.useRealTimers();
+  }
+}
 
 function selectionFor(kind: ListKind, index: number) {
   return kind === "declarative" ? ITEMS[index].label : ITEMS[index];
@@ -178,9 +197,16 @@ describe.each(LIST_KINDS)("%s List keyboard focus", (kind) => {
     await focusList();
     await item(2).hover();
     await item(1).hover();
+    await expect.element(item(1)).toHaveClass("saltHighlighted");
     await page.getByTestId("outside").hover();
-    expect(document.querySelector("#list .saltHighlighted")).toBeNull();
-    expect(document.querySelector("#list .saltFocusVisible")).toBeNull();
+    await expect
+      .poll(
+        () =>
+          document.querySelectorAll(
+            "#list .saltHighlighted, #list .saltFocusVisible",
+          ).length,
+      )
+      .toBe(0);
     listbox().element().blur();
     await focusList();
     await expectActive(2);
@@ -257,52 +283,73 @@ describe.each(LIST_KINDS)("%s List keyboard movement", (kind) => {
 
 describe.each(LIST_KINDS)("%s List type-to-select", (kind) => {
   it("focuses matches typed in rapid succession", async () => {
-    await renderFancyList(kind);
-    await focusList();
-    await expectActive(0);
-    await userEvent.keyboard("B");
-    await expectActive(3);
-    await userEvent.keyboard("A");
-    await expectActive(3);
-    await userEvent.keyboard("R");
-    await expectActive(0);
+    await withFakeTimers(
+      () => renderFancyList(kind),
+      async () => {
+        await focusList();
+        await expectActive(0);
+        await userEvent.keyboard("B");
+        await expectActive(3);
+        await userEvent.keyboard("A");
+        await expectActive(3);
+        await userEvent.keyboard("R");
+        await expectActive(0);
+        await vi.advanceTimersByTimeAsync(LAB_TYPEAHEAD_RESET_MS + 1);
+      },
+    );
   });
 
   it("uses Space as selection after search times out", async () => {
     const onSelectionChange = vi.fn();
-    await renderFancyList(kind, { onSelectionChange });
-    await focusList();
-    await userEvent.keyboard("FOO ");
-    await expectActive(2);
-    await expect.element(item(2)).not.toHaveAttribute("aria-selected", "true");
-    expect(onSelectionChange).not.toHaveBeenCalled();
-    await new Promise((resolve) => setTimeout(resolve, 1_500));
-    await userEvent.keyboard(" ");
-    await expect.element(item(2)).toHaveAttribute("aria-selected", "true");
-    expect(onSelectionChange).toHaveBeenCalledWith(
-      expect.anything(),
-      "Foo Bar",
+    await withFakeTimers(
+      () => renderFancyList(kind, { onSelectionChange }),
+      async () => {
+        await focusList();
+        await userEvent.keyboard("FOO ");
+        await expectActive(2);
+        await expect
+          .element(item(2))
+          .not.toHaveAttribute("aria-selected", "true");
+        expect(onSelectionChange).not.toHaveBeenCalled();
+        await vi.advanceTimersByTimeAsync(LAB_TYPEAHEAD_RESET_MS + 1);
+        await userEvent.keyboard(" ");
+        await expect.element(item(2)).toHaveAttribute("aria-selected", "true");
+        expect(onSelectionChange).toHaveBeenCalledWith(
+          expect.anything(),
+          "Foo Bar",
+        );
+      },
     );
   });
 
   it("resets search text after a timeout", async () => {
-    await renderFancyList(kind);
-    await focusList();
-    await userEvent.keyboard("F");
-    await expectActive(1);
-    await new Promise((resolve) => setTimeout(resolve, 1_500));
-    await userEvent.keyboard("B");
-    await expectActive(3);
+    await withFakeTimers(
+      () => renderFancyList(kind),
+      async () => {
+        await focusList();
+        await userEvent.keyboard("F");
+        await expectActive(1);
+        await vi.advanceTimersByTimeAsync(LAB_TYPEAHEAD_RESET_MS + 1);
+        await userEvent.keyboard("B");
+        await expectActive(3);
+        await vi.advanceTimersByTimeAsync(LAB_TYPEAHEAD_RESET_MS + 1);
+      },
+    );
   });
 
   it("wraps search to the beginning", async () => {
-    await renderFancyList(kind);
-    await focusList();
-    await userEvent.keyboard("BAZ");
-    await expectActive(3);
-    await new Promise((resolve) => setTimeout(resolve, 1_500));
-    await userEvent.keyboard("F");
-    await expectActive(1);
+    await withFakeTimers(
+      () => renderFancyList(kind),
+      async () => {
+        await focusList();
+        await userEvent.keyboard("BAZ");
+        await expectActive(3);
+        await vi.advanceTimersByTimeAsync(LAB_TYPEAHEAD_RESET_MS + 1);
+        await userEvent.keyboard("F");
+        await expectActive(1);
+        await vi.advanceTimersByTimeAsync(LAB_TYPEAHEAD_RESET_MS + 1);
+      },
+    );
   });
 
   it("cycles matches when their first character is repeated", async () => {

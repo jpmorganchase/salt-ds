@@ -166,7 +166,12 @@ describe("A deprecated multi-select combo box", () => {
           .element(textbox())
           .toHaveAttribute("aria-activedescendant", `${mockId}-input-pill-4`);
         await userEvent.keyboard(`{${key}}`);
-        await expect.element(textbox()).toBeInTheDocument();
+        await expect
+          .element(textbox())
+          .toHaveAttribute(
+            "aria-activedescendant",
+            expect.stringMatching(new RegExp(`^${mockId}-list-item-\\d+$`)),
+          );
       },
     );
   });

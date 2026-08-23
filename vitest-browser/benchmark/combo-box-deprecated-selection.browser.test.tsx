@@ -184,9 +184,15 @@ describe("A deprecated multi-select combo box selection", () => {
     await page.getByRole("button", { name: "clear input" }).click();
     await expect.element(page.getByTestId("pill")).toHaveLength(0);
     expect(onChange).toHaveBeenCalledWith(null, []);
-    const options = await page.getByRole("option").elements();
-    expect(options.every((item) => !item.hasAttribute("aria-selected"))).toBe(
-      true,
-    );
+    const options = page.getByRole("option");
+    await expect
+      .poll(() => {
+        const items = options.elements();
+        return (
+          items.length > 0 &&
+          items.every((item) => !item.hasAttribute("aria-selected"))
+        );
+      })
+      .toBe(true);
   });
 });

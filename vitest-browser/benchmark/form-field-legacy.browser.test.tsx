@@ -68,7 +68,7 @@ describe("GIVEN a legacy FormField", () => {
         <MockControl />
       </FormField>,
     );
-    expect(page.getByText("Helper Text").elements()).toHaveLength(0);
+    await expect.element(page.getByText("Helper Text")).toHaveLength(0);
   });
 
   it("provides read-only state to its child", async () => {
@@ -102,7 +102,7 @@ describe("GIVEN a legacy FormField", () => {
         <MockControl />
       </FormField>,
     );
-    expect(page.getByLabelText(/Required/i).elements()).toHaveLength(0);
+    await expect.element(page.getByLabelText(/Required/i)).toHaveLength(0);
   });
 
   it("supports optional necessity labelling", async () => {
@@ -141,7 +141,9 @@ describe("GIVEN a legacy FormField", () => {
         <Input defaultValue="Value" />
       </FormField>,
     );
-    expect(page.getByTestId("WarningIndicatorIcon").elements()).toHaveLength(0);
+    await expect
+      .element(page.getByTestId("WarningIndicatorIcon"))
+      .toHaveLength(0);
   });
 
   it("renders an error indicator", async () => {
@@ -165,7 +167,9 @@ describe("GIVEN a legacy FormField", () => {
         <Input defaultValue="Value" />
       </FormField>,
     );
-    expect(page.getByTestId("ErrorIndicatorIcon").elements()).toHaveLength(0);
+    await expect
+      .element(page.getByTestId("ErrorIndicatorIcon"))
+      .toHaveLength(0);
   });
 
   it("runs the legacy input accessibility scan", async () => {

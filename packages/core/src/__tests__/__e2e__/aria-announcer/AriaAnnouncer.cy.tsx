@@ -166,6 +166,7 @@ describe("Given useAriaAnnouncer", () => {
   });
 
   it("should trigger an announcement in the polite region by default", () => {
+    cy.clock();
     mount(
       <AriaAnnouncerProvider>
         <TestComponent announcement="test" />
@@ -180,12 +181,13 @@ describe("Given useAriaAnnouncer", () => {
       .should("contain.text", "test");
 
     // Wait for announcement to be cleared
-    cy.wait(ANNOUNCEMENT_TIME_IN_DOM + 100);
+    cy.tick(ANNOUNCEMENT_TIME_IN_DOM + 100);
     cy.get('[aria-live="polite"]').should("not.contain.text", "test");
   });
 
   describe("given a legacy delay", () => {
     it("should trigger an announcement after that delay", () => {
+      cy.clock();
       mount(
         <AriaAnnouncerProvider>
           <TestComponent announcement="test" delay={500} />
@@ -196,19 +198,21 @@ describe("Given useAriaAnnouncer", () => {
       cy.get("[aria-live]").should("not.have.text", "test");
 
       // Wait for delay and verify announcement appears
+      cy.tick(500);
       cy.get('[aria-live="polite"]', { timeout: 1000 }).should(
         "contain.text",
         "test",
       );
 
       // Wait for announcement to be cleared
-      cy.wait(ANNOUNCEMENT_TIME_IN_DOM + 100);
+      cy.tick(ANNOUNCEMENT_TIME_IN_DOM + 100);
       cy.get('[aria-live="polite"]').should("not.contain.text", "test");
     });
   });
 
   describe("given an ariaLive", () => {
     it("should trigger an announcement with polite urgency", () => {
+      cy.clock();
       mount(
         <AriaAnnouncerProvider>
           <TestComponent announcement="test polite" ariaLive="polite" />
@@ -232,11 +236,12 @@ describe("Given useAriaAnnouncer", () => {
       );
 
       // Wait for announcement to be cleared
-      cy.wait(ANNOUNCEMENT_TIME_IN_DOM + 100);
+      cy.tick(ANNOUNCEMENT_TIME_IN_DOM + 100);
       cy.get('[aria-live="polite"]').should("not.contain.text", "test polite");
     });
 
     it("should trigger an announcement with assertive urgency", () => {
+      cy.clock();
       mount(
         <AriaAnnouncerProvider>
           <TestComponent announcement="test assertive" ariaLive="assertive" />
@@ -260,7 +265,7 @@ describe("Given useAriaAnnouncer", () => {
       );
 
       // Wait for announcement to be cleared
-      cy.wait(ANNOUNCEMENT_TIME_IN_DOM + 100);
+      cy.tick(ANNOUNCEMENT_TIME_IN_DOM + 100);
       cy.get('[aria-live="assertive"]').should(
         "not.contain.text",
         "test assertive",
@@ -270,6 +275,7 @@ describe("Given useAriaAnnouncer", () => {
 
   describe("given multiple announcements with different urgencies", () => {
     it("should render announcements in their respective regions simultaneously", () => {
+      cy.clock();
       mount(
         <AriaAnnouncerProvider>
           <TestComponent announcement="test message" />
@@ -293,7 +299,7 @@ describe("Given useAriaAnnouncer", () => {
       cy.get('[aria-live="assertive"]').should("contain.text", "test message");
 
       // Wait for announcements to be cleared
-      cy.wait(ANNOUNCEMENT_TIME_IN_DOM + 100);
+      cy.tick(ANNOUNCEMENT_TIME_IN_DOM + 100);
       cy.get('[aria-live="polite"]').should("not.contain.text", "test message");
       cy.get('[aria-live="assertive"]').should(
         "not.contain.text",
@@ -305,6 +311,7 @@ describe("Given useAriaAnnouncer", () => {
   describe("given a debounce", () => {
     it("should create an announce method that triggers only the last announcement after debounce delay", () => {
       let increment = 0;
+      cy.clock();
 
       mount(
         <AriaAnnouncerProvider>
@@ -327,7 +334,7 @@ describe("Given useAriaAnnouncer", () => {
         .realClick();
 
       // Wait for debounce to settle
-      cy.wait(600);
+      cy.tick(501);
 
       // Should only show the last announcement (test 3)
       cy.get('[aria-live="polite"]', { timeout: 1000 }).should(
@@ -340,7 +347,7 @@ describe("Given useAriaAnnouncer", () => {
       cy.get('[aria-live="polite"]').should("not.contain.text", "test 2");
 
       // Wait for announcement to be removed
-      cy.wait(ANNOUNCEMENT_TIME_IN_DOM + 100);
+      cy.tick(ANNOUNCEMENT_TIME_IN_DOM + 100);
       cy.get('[aria-live="polite"]').should("not.contain.text", "test 3");
     });
   });
@@ -348,6 +355,7 @@ describe("Given useAriaAnnouncer", () => {
   describe("given two queued up announcements", () => {
     it("should render the queued announcements one after the other with a delay", () => {
       let increment = 0;
+      cy.clock();
 
       mount(
         <AriaAnnouncerProvider>
@@ -378,7 +386,7 @@ describe("Given useAriaAnnouncer", () => {
       }).should("contain.text", "test 2");
 
       // Wait for announcement(s) to be removed
-      cy.wait(ANNOUNCEMENT_TIME_IN_DOM + 100);
+      cy.tick(ANNOUNCEMENT_TIME_IN_DOM + 100);
       cy.get('[aria-live="polite"]').should("not.contain.text", "test 1");
       cy.get('[aria-live="polite"]').should("not.contain.text", "test 2");
     });
@@ -387,6 +395,7 @@ describe("Given useAriaAnnouncer", () => {
   describe("given multiple announcements in the same region", () => {
     it("should render multiple messages simultaneously in the same region", () => {
       let increment = 0;
+      cy.clock();
 
       mount(
         <AriaAnnouncerProvider>
@@ -406,11 +415,11 @@ describe("Given useAriaAnnouncer", () => {
         .should("be.visible")
         .realClick();
 
-      cy.wait(50); // Small delay to ensure separate announcements
+      cy.tick(50); // Keep announcements separated in application time.
 
       cy.findByText(BUTTON_TEXT).realClick();
 
-      cy.wait(50);
+      cy.tick(50);
 
       cy.findByText(BUTTON_TEXT).realClick();
 
@@ -421,7 +430,7 @@ describe("Given useAriaAnnouncer", () => {
         .should("contain.text", "message 3");
 
       // Wait for all announcements to be cleared
-      cy.wait(ANNOUNCEMENT_TIME_IN_DOM + 100);
+      cy.tick(ANNOUNCEMENT_TIME_IN_DOM + 100);
       cy.get('[aria-live="polite"]')
         .should("not.contain.text", "message 1")
         .should("not.contain.text", "message 2")
@@ -431,6 +440,7 @@ describe("Given useAriaAnnouncer", () => {
 
   describe("when the provider unmounts before announcements drain", () => {
     it("should clear pending removal timers and not warn about setState on an unmounted component", () => {
+      cy.clock();
       const AnnounceOnMount = () => {
         const { announce } = useAriaAnnouncer();
         React.useEffect(() => {
@@ -469,7 +479,7 @@ describe("Given useAriaAnnouncer", () => {
 
       // Wait past the drain window; the pending timers, if not cleared, would
       // fire against an unmounted tree and log a React warning.
-      cy.wait(ANNOUNCEMENT_TIME_IN_DOM + 100);
+      cy.tick(ANNOUNCEMENT_TIME_IN_DOM + 100);
 
       cy.get("@consoleError").should("not.have.been.called");
     });
@@ -522,6 +532,7 @@ describe("Given useAriaAnnouncer", () => {
     });
 
     it("should clear announcements independently in each region", () => {
+      cy.clock();
       mount(
         <AriaAnnouncerProvider>
           <TestComponent announcement="test message" />
@@ -537,7 +548,7 @@ describe("Given useAriaAnnouncer", () => {
       cy.get('[aria-live="polite"]').should("contain.text", "test message");
 
       // Wait half the announcement time
-      cy.wait(ANNOUNCEMENT_TIME_IN_DOM / 2);
+      cy.tick(ANNOUNCEMENT_TIME_IN_DOM / 2);
 
       // Add announcement to assertive region
       cy.findByText(BUTTON_TEXT_ASSERTIVE)
@@ -548,14 +559,14 @@ describe("Given useAriaAnnouncer", () => {
       cy.get('[aria-live="assertive"]').should("contain.text", "test message");
 
       // Wait for polite announcement to clear
-      cy.wait(ANNOUNCEMENT_TIME_IN_DOM / 2 + 100);
+      cy.tick(ANNOUNCEMENT_TIME_IN_DOM / 2 + 100);
       cy.get('[aria-live="polite"]').should("not.contain.text", "test message");
 
       // Assertive should still be present
       cy.get('[aria-live="assertive"]').should("contain.text", "test message");
 
       // Wait for assertive to clear
-      cy.wait(ANNOUNCEMENT_TIME_IN_DOM / 2 + 100);
+      cy.tick(ANNOUNCEMENT_TIME_IN_DOM / 2 + 100);
       cy.get('[aria-live="assertive"]').should(
         "not.contain.text",
         "test message",

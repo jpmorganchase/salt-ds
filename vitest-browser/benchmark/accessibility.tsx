@@ -12,8 +12,18 @@ type BenchmarkStory = ComponentType & {
   };
 };
 
-export async function runAxeScan(container: Element) {
-  await axe.run(container);
+export async function runAxeScan(container: Element, options?: RunOptions) {
+  const portalRoots = container.ownerDocument.querySelectorAll(
+    "[data-floating-ui-portal]",
+  );
+  const context = {
+    include: [container, ...portalRoots],
+    exclude: ["[data-floating-ui-focus-guard]"],
+  };
+  const results = options
+    ? await axe.run(context, options)
+    : await axe.run(context);
+  expect(results.violations).toEqual([]);
 }
 
 type StoryRenderer = (children: ReactNode) => ReturnType<typeof renderWithSalt>;
@@ -40,9 +50,7 @@ export function checkAccessibility(
             },
             {},
           );
-          const results = await axe.run(container, { rules });
-
-          expect(results.violations).toEqual([]);
+          await runAxeScan(container, { rules });
         },
         ACCESSIBILITY_TEST_TIMEOUT,
       );

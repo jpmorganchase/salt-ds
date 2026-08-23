@@ -26,25 +26,29 @@ export async function renderWithSalt<
   // tests that mount a second scenario do not leave duplicate providers or DOM.
   await cleanup();
 
-  const content = dateAdapter ? (
-    <LocalizationProvider<TDate, TLocale>
-      DateAdapter={
-        dateAdapter.constructor as LocalizationProviderProps<
-          TDate,
-          TLocale
-        >["DateAdapter"]
-      }
-      locale={dateLocale}
-    >
-      {children}
-    </LocalizationProvider>
-  ) : (
-    children
-  );
+  function Wrapper({ children: wrappedChildren }: { children: ReactNode }) {
+    const content = dateAdapter ? (
+      <LocalizationProvider<TDate, TLocale>
+        DateAdapter={
+          dateAdapter.constructor as LocalizationProviderProps<
+            TDate,
+            TLocale
+          >["DateAdapter"]
+        }
+        locale={dateLocale}
+      >
+        {wrappedChildren}
+      </LocalizationProvider>
+    ) : (
+      wrappedChildren
+    );
 
-  return render(
-    <SaltProvider density="medium" mode="light">
-      {content}
-    </SaltProvider>,
-  );
+    return (
+      <SaltProvider density="medium" mode="light">
+        {content}
+      </SaltProvider>
+    );
+  }
+
+  return render(children, { wrapper: Wrapper });
 }

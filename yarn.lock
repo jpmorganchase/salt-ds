@@ -4534,7 +4534,7 @@ __metadata:
     "@types/tinycolor2": "npm:^1.4.3"
     "@typescript/native-preview": "npm:7.0.0-dev.20260601.1"
     "@vitejs/plugin-react": "npm:^6.0.4"
-    "@vitest/browser-playwright": "npm:4.1.11"
+    "@vitest/browser-playwright": "npm:^4.1.11"
     ag-grid-community: "npm:^32.0.0"
     ag-grid-enterprise: "npm:^32.0.0"
     ag-grid-react: "npm:^32.0.0"
@@ -6910,7 +6910,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/browser-playwright@npm:4.1.11":
+"@vitest/browser-playwright@npm:^4.1.11":
   version: 4.1.11
   resolution: "@vitest/browser-playwright@npm:4.1.11"
   dependencies:

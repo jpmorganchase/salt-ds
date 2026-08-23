@@ -26,9 +26,10 @@ describe("GIVEN a Spinner", () => {
 
 describe("GIVEN an available announcer", () => {
   it("THEN the announcer should be called with aria-label every 5 seconds", () => {
+    cy.clock();
     cy.mount(<Spinner aria-label={ariaLabel} />);
 
-    cy.wait(5000);
+    cy.tick(5000);
 
     cy.findByRole("img").should("announce", ariaLabel);
   });

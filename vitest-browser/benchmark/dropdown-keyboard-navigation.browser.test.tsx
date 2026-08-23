@@ -7,6 +7,25 @@ type DropdownKind = "single" | "multiselect";
 
 const DROPDOWN_KINDS = ["single", "multiselect"] as const;
 const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
+const LAB_TYPEAHEAD_RESET_MS = 100;
+
+async function withFakeTimers<T extends { unmount: () => Promise<void> }>(
+  render: () => Promise<T>,
+  run: () => Promise<void>,
+) {
+  vi.useFakeTimers();
+  try {
+    const rendered = await render();
+    try {
+      await run();
+    } finally {
+      await rendered.unmount();
+      expect(vi.getTimerCount()).toBe(0);
+    }
+  } finally {
+    vi.useRealTimers();
+  }
+}
 
 function selectionStrategy(kind: DropdownKind): SelectionStrategy {
   return kind === "multiselect" ? "multiple" : "default";
@@ -134,34 +153,48 @@ describe.each(DROPDOWN_KINDS)("legacy %s Dropdown keyboard", (kind) => {
   });
 
   it("uses Space as selection after type-ahead times out", async () => {
-    await renderDropdown(kind, { defaultIsOpen: true });
-    await focusControl();
-    await userEvent.keyboard("FOO ");
-    await expectActive(2);
-    await new Promise((resolve) => setTimeout(resolve, 1_500));
-    await userEvent.keyboard(" ");
-    await expectPopup(kind === "multiselect");
-    await expect.element(control()).toHaveTextContent("Foo Bar");
+    await withFakeTimers(
+      () => renderDropdown(kind, { defaultIsOpen: true }),
+      async () => {
+        await focusControl();
+        await userEvent.keyboard("FOO ");
+        await expectActive(2);
+        await vi.advanceTimersByTimeAsync(LAB_TYPEAHEAD_RESET_MS + 1);
+        await userEvent.keyboard(" ");
+        await expectPopup(kind === "multiselect");
+        await expect.element(control()).toHaveTextContent("Foo Bar");
+      },
+    );
   });
 
   it("resets type-ahead text after a timeout", async () => {
-    await renderDropdown(kind, { defaultIsOpen: true });
-    await focusControl();
-    await userEvent.keyboard("F");
-    await expectActive(1);
-    await new Promise((resolve) => setTimeout(resolve, 1_500));
-    await userEvent.keyboard("B");
-    await expectActive(3);
+    await withFakeTimers(
+      () => renderDropdown(kind, { defaultIsOpen: true }),
+      async () => {
+        await focusControl();
+        await userEvent.keyboard("F");
+        await expectActive(1);
+        await vi.advanceTimersByTimeAsync(LAB_TYPEAHEAD_RESET_MS + 1);
+        await userEvent.keyboard("B");
+        await expectActive(3);
+        await vi.advanceTimersByTimeAsync(LAB_TYPEAHEAD_RESET_MS + 1);
+      },
+    );
   });
 
   it("wraps type-ahead search to the beginning", async () => {
-    await renderDropdown(kind, { defaultIsOpen: true });
-    await focusControl();
-    await userEvent.keyboard("BAZ");
-    await expectActive(3);
-    await new Promise((resolve) => setTimeout(resolve, 1_500));
-    await userEvent.keyboard("F");
-    await expectActive(1);
+    await withFakeTimers(
+      () => renderDropdown(kind, { defaultIsOpen: true }),
+      async () => {
+        await focusControl();
+        await userEvent.keyboard("BAZ");
+        await expectActive(3);
+        await vi.advanceTimersByTimeAsync(LAB_TYPEAHEAD_RESET_MS + 1);
+        await userEvent.keyboard("F");
+        await expectActive(1);
+        await vi.advanceTimersByTimeAsync(LAB_TYPEAHEAD_RESET_MS + 1);
+      },
+    );
   });
 
   it("cycles matches when the first character is repeated", async () => {

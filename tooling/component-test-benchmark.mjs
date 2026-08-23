@@ -1,11 +1,12 @@
 import { spawnSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
+import path from "node:path";
 import { performance } from "node:perf_hooks";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 
-function readCount(name, defaultValue, minimum) {
-  const argument = process.argv.find((value) => value.startsWith(`--${name}=`));
+export function readCount(argv, name, defaultValue, minimum) {
+  const argument = argv.find((value) => value.startsWith(`--${name}=`));
   if (!argument) return defaultValue;
 
   const count = Number.parseInt(argument.slice(name.length + 3), 10);
@@ -17,73 +18,232 @@ function readCount(name, defaultValue, minimum) {
   return count;
 }
 
-const measuredRuns = readCount("runs", 5, 1);
-const warmupRuns = readCount("warmup", 1, 0);
-const verbose = process.argv.includes("--verbose");
-const packageJson = JSON.parse(
-  readFileSync(new URL("../package.json", import.meta.url), "utf8"),
-);
-const yarnVersion = packageJson.packageManager.replace("yarn@", "");
-const yarnPath = fileURLToPath(
-  new URL(`../.yarn/releases/yarn-${yarnVersion}.cjs`, import.meta.url),
-);
+export function createRunners() {
+  return [
+    {
+      name: "Cypress",
+      script: "benchmark:components:cypress",
+      specDirectory: new URL("../packages", import.meta.url),
+      specPattern: /\.cy\.(?:js|ts|jsx|tsx)$/,
+      completionPattern: /\(Run Finished\)/,
+    },
+    {
+      name: "Vitest Browser",
+      script: "benchmark:components:vitest",
+      specDirectory: new URL("../vitest-browser/benchmark", import.meta.url),
+      specPattern: /\.browser\.test\.tsx$/,
+      completionPattern: /Test Files\s+/,
+    },
+  ];
+}
 
-const runners = [
-  { name: "Cypress", script: "benchmark:components:cypress" },
-  { name: "Vitest Browser", script: "benchmark:components:vitest" },
-];
-const results = new Map(runners.map(({ name }) => [name, []]));
+export function countSpecs(runners, readDirectory = readdirSync) {
+  return runners.map(({ name, specDirectory, specPattern }) => ({
+    name,
+    count: readDirectory(specDirectory, {
+      recursive: true,
+      withFileTypes: true,
+    }).filter((entry) => entry.isFile() && specPattern.test(entry.name)).length,
+  }));
+}
 
-function run(runner, phase, iteration) {
-  console.log(`\n${phase} ${iteration}: ${runner.name}`);
-  const start = performance.now();
-  const child = spawnSync(process.execPath, [yarnPath, runner.script], {
-    cwd: process.cwd(),
+function childExitCode(child) {
+  return Number.isInteger(child.status) && child.status !== 0
+    ? child.status
+    : 1;
+}
+
+export function runSuite(
+  runner,
+  phase,
+  iteration,
+  {
+    cwd,
+    env,
+    execPath,
+    yarnPath,
+    verbose = false,
+    spawn = spawnSync,
+    now = () => performance.now(),
+    log = console.log,
+    error = console.error,
+    stdoutWrite = (value) => process.stdout.write(value),
+    stderrWrite = (value) => process.stderr.write(value),
+  },
+) {
+  log(`\n${phase} ${iteration}: ${runner.name}`);
+  const start = now();
+  const child = spawn(execPath, [yarnPath, runner.script], {
+    cwd,
     encoding: "utf8",
-    env: process.env,
-    stdio: verbose ? "inherit" : ["ignore", "pipe", "pipe"],
+    env,
+    maxBuffer: 50 * 1024 * 1024,
+    stdio: ["ignore", "pipe", "pipe"],
   });
-  const durationSeconds = (performance.now() - start) / 1000;
+  const durationSeconds = (now() - start) / 1000;
+  const output = `${child.stdout ?? ""}\n${child.stderr ?? ""}`;
+  const completed = runner.completionPattern.test(output);
+  const passed = completed && child.status === 0 && child.error == null;
 
-  if (child.status !== 0) {
-    if (!verbose) {
-      process.stdout.write(child.stdout ?? "");
-      process.stderr.write(child.stderr ?? "");
-    }
-    process.exit(child.status ?? 1);
+  if (verbose || !passed) {
+    stdoutWrite(child.stdout ?? "");
+    stderrWrite(child.stderr ?? "");
   }
 
-  console.log(`${runner.name}: ${durationSeconds.toFixed(2)}s wall time`);
-  return durationSeconds;
-}
-
-for (let iteration = 1; iteration <= warmupRuns; iteration += 1) {
-  for (const runner of runners) {
-    run(runner, "Warm-up", iteration);
+  if (child.error) {
+    error(`${runner.name} failed to start: ${child.error.message}`);
   }
-}
 
-for (let iteration = 1; iteration <= measuredRuns; iteration += 1) {
-  const orderedRunners = iteration % 2 === 1 ? runners : [...runners].reverse();
-  for (const runner of orderedRunners) {
-    results.get(runner.name).push(run(runner, "Measured run", iteration));
+  if (!completed) {
+    error(`${runner.name} did not complete its full test suite.`);
   }
+
+  const result = {
+    completed,
+    durationSeconds,
+    exitCode: passed ? 0 : childExitCode(child),
+    passed,
+  };
+
+  log(
+    `${runner.name}: ${durationSeconds.toFixed(2)}s wall time (${passed ? "passed" : completed ? `completed with test failures; exit ${child.status ?? "unknown"}` : "incomplete"})`,
+  );
+  return result;
 }
 
-function percentile(values, fraction) {
+export function percentile(values, fraction) {
   const sorted = [...values].sort((left, right) => left - right);
   return sorted[
     Math.min(Math.ceil(sorted.length * fraction) - 1, sorted.length - 1)
   ];
 }
 
-console.log("\nComponent benchmark summary (seconds)");
-console.log("Runner\tRuns\tMedian\tp95\tMin\tMax");
-for (const { name } of runners) {
-  const values = results.get(name);
-  const median = percentile(values, 0.5);
-  const p95 = percentile(values, 0.95);
-  console.log(
-    `${name}\t${values.length}\t${median.toFixed(2)}\t${p95.toFixed(2)}\t${Math.min(...values).toFixed(2)}\t${Math.max(...values).toFixed(2)}`,
+function formatSeconds(value) {
+  return value === undefined ? "n/a" : value.toFixed(2);
+}
+
+export function printSummary(runners, results, log = console.log) {
+  log("\nComponent benchmark summary (seconds)");
+  log("Runner\tAttempts\tPassed\tFailed\tSamples\tMedian\tp95\tMin\tMax");
+
+  for (const { name } of runners) {
+    const runs = results.get(name) ?? [];
+    const values = runs
+      .filter(({ passed }) => passed)
+      .map(({ durationSeconds }) => durationSeconds);
+    const median = values.length === 0 ? undefined : percentile(values, 0.5);
+    const p95 = values.length === 0 ? undefined : percentile(values, 0.95);
+    const minimum = values.length === 0 ? undefined : Math.min(...values);
+    const maximum = values.length === 0 ? undefined : Math.max(...values);
+    const passed = runs.filter((result) => result.passed).length;
+
+    log(
+      `${name}\t${runs.length}\t${passed}\t${runs.length - passed}\t${values.length}\t${formatSeconds(median)}\t${formatSeconds(p95)}\t${formatSeconds(minimum)}\t${formatSeconds(maximum)}`,
+    );
+  }
+}
+
+export function runBenchmark({
+  runners,
+  measuredRuns,
+  warmupRuns,
+  runSuiteOptions,
+}) {
+  const results = new Map(runners.map(({ name }) => [name, []]));
+
+  for (let iteration = 1; iteration <= warmupRuns; iteration += 1) {
+    for (const runner of runners) {
+      const result = runSuite(runner, "Warm-up", iteration, runSuiteOptions);
+      if (!result.passed) return result.exitCode;
+    }
+  }
+
+  let measuredFailure = false;
+  for (let iteration = 1; iteration <= measuredRuns; iteration += 1) {
+    const orderedRunners =
+      iteration % 2 === 1 ? runners : [...runners].reverse();
+    for (const runner of orderedRunners) {
+      const result = runSuite(
+        runner,
+        "Measured run",
+        iteration,
+        runSuiteOptions,
+      );
+      if (!result.completed) return result.exitCode;
+      results.get(runner.name).push(result);
+      measuredFailure ||= !result.passed;
+    }
+  }
+
+  printSummary(runners, results, runSuiteOptions.log);
+  return measuredFailure ? 1 : 0;
+}
+
+export function main({
+  argv = process.argv.slice(2),
+  readFile = readFileSync,
+  readDirectory = readdirSync,
+  spawn = spawnSync,
+  now = () => performance.now(),
+  log = console.log,
+  error = console.error,
+  stdoutWrite = (value) => process.stdout.write(value),
+  stderrWrite = (value) => process.stderr.write(value),
+  cwd = process.cwd(),
+  env = process.env,
+  execPath = process.execPath,
+} = {}) {
+  const measuredRuns = readCount(argv, "runs", 5, 1);
+  const warmupRuns = readCount(argv, "warmup", 1, 0);
+  const verbose = argv.includes("--verbose");
+  const packageJson = JSON.parse(
+    readFile(new URL("../package.json", import.meta.url), "utf8"),
   );
+  const yarnVersion = packageJson.packageManager.replace("yarn@", "");
+  const yarnPath = fileURLToPath(
+    new URL(`../.yarn/releases/yarn-${yarnVersion}.cjs`, import.meta.url),
+  );
+  const runners = createRunners();
+  const specCounts = countSpecs(runners, readDirectory);
+
+  if (new Set(specCounts.map(({ count }) => count)).size !== 1) {
+    throw new Error(
+      `Component benchmark suites are not comparable: ${specCounts
+        .map(({ name, count }) => `${name} has ${count} specs`)
+        .join(", ")}`,
+    );
+  }
+
+  log(
+    `Benchmarking complete component suites (${specCounts[0].count} specs each).`,
+  );
+
+  return runBenchmark({
+    measuredRuns,
+    runners,
+    warmupRuns,
+    runSuiteOptions: {
+      cwd,
+      env,
+      error,
+      execPath,
+      log,
+      now,
+      spawn,
+      stderrWrite,
+      stdoutWrite,
+      verbose,
+      yarnPath,
+    },
+  });
+}
+
+const invokedPath = process.argv[1] ? path.resolve(process.argv[1]) : undefined;
+if (invokedPath === fileURLToPath(import.meta.url)) {
+  try {
+    process.exitCode = main();
+  } catch (error) {
+    console.error(error);
+    process.exitCode = 1;
+  }
 }

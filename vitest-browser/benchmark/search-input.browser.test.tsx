@@ -16,7 +16,9 @@ describe("GIVEN a SearchInput", () => {
   });
 
   it("has no a11y violations when empty", async () => {
-    const { container } = await renderWithSalt(<SearchInput />);
+    const { container } = await renderWithSalt(
+      <SearchInput inputProps={{ "aria-label": "Search" }} />,
+    );
     await runAxeScan(container);
   });
 
@@ -127,7 +129,9 @@ describe("GIVEN a SearchInput", () => {
   });
 
   it("has no a11y violations when disabled", async () => {
-    const { container } = await renderWithSalt(<SearchInput disabled />);
+    const { container } = await renderWithSalt(
+      <SearchInput disabled inputProps={{ "aria-label": "Search" }} />,
+    );
     await runAxeScan(container);
   });
 

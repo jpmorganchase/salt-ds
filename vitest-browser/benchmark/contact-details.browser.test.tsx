@@ -101,16 +101,14 @@ for (const variant of variants) {
       it("renders fast actions", async () => {
         for (const label of actionLabels) {
           await expect
-            .element(page.getByText(label, { exact: true }))
+            .element(page.getByRole("button", { name: label }))
             .toBeInTheDocument();
         }
       });
 
-      it("invokes fast actions", async () => {
-        for (const label of actionLabels) {
-          await page.getByText(label, { exact: true }).click();
-        }
-        expect(onAction).toHaveBeenCalledTimes(3);
+      it.each(actionLabels)("invokes the %s action", async (label) => {
+        await page.getByRole("button", { name: label }).click();
+        expect(onAction).toHaveBeenCalledOnce();
       });
     }
 
@@ -125,13 +123,19 @@ for (const variant of variants) {
 }
 
 function favoriteIconClass() {
-  return document.querySelector("svg")?.getAttribute("class") ?? "";
+  return (
+    page
+      .getByLabelText("Favorite")
+      .element()
+      .querySelector("svg")
+      ?.getAttribute("class") ?? ""
+  );
 }
 
 for (const variant of variants) {
   describe(`GIVEN a ${variant} controlled favorite toggle`, () => {
     it("updates after a prop change", async () => {
-      await renderWithSalt(
+      const { rerender } = await renderWithSalt(
         <ContactDetails variant={variant}>
           <ContactFavoriteToggle isFavorite={false} />
           <ContactPrimaryInfo text={primaryText} />
@@ -141,7 +145,7 @@ for (const variant of variants) {
         "saltContactFavoriteToggle-deselected",
       );
 
-      await renderWithSalt(
+      await rerender(
         <ContactDetails variant={variant}>
           <ContactFavoriteToggle isFavorite />
           <ContactPrimaryInfo text={primaryText} />

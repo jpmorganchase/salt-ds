@@ -18,18 +18,24 @@ describe("Given a Button", () => {
       .toBeVisible();
   });
 
-  it("calls onClick when interacted with", async () => {
-    const onClick = vi.fn();
-    await renderWithSalt(<Default onClick={onClick} />);
-    const button = page.getByRole("button");
+  it.each(["click", "Enter", "Space"] as const)(
+    "calls onClick for %s activation",
+    async (activation) => {
+      const onClick = vi.fn();
+      await renderWithSalt(<Default onClick={onClick} />);
+      const button = page.getByRole("button");
 
-    await userEvent.tab();
-    await expect.element(button).toHaveFocus();
-    await userEvent.keyboard("{Enter}");
-    await userEvent.keyboard(" ");
-    await button.click();
-    expect(onClick).toHaveBeenCalledTimes(3);
-  });
+      if (activation === "click") {
+        await button.click();
+      } else {
+        await userEvent.tab();
+        await expect.element(button).toHaveFocus();
+        await userEvent.keyboard(activation === "Enter" ? "{Enter}" : " ");
+      }
+
+      expect(onClick).toHaveBeenCalledOnce();
+    },
+  );
 
   it("calls onBlur when blurred", async () => {
     const onBlur = vi.fn();

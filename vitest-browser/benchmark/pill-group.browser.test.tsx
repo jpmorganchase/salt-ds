@@ -32,12 +32,12 @@ async function expectAllChecked(checked: boolean) {
 describe("GIVEN a PillGroup", () => {
   it("THEN should render pills as buttons by default", async () => {
     await renderWithSalt(<Default />);
-    expect(await page.getByRole("button").elements()).toHaveLength(3);
+    await expect.element(page.getByRole("button")).toHaveLength(3);
   });
 
   it("THEN should render pills as checkboxes when selectionVariant is multiple", async () => {
     await renderWithSalt(<SelectableGroup />);
-    expect(await page.getByRole("checkbox").elements()).toHaveLength(3);
+    await expect.element(page.getByRole("checkbox")).toHaveLength(3);
   });
 
   it("SHOULD render a disabled pill", async () => {

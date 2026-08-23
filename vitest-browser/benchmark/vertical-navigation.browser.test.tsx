@@ -11,7 +11,7 @@ const { Basic, CollapsibleSubmenu, WithExpandButton } = composeStories(
 describe("GIVEN a VerticalNavigation", () => {
   it("renders a list of links", async () => {
     await renderWithSalt(<Basic />);
-    expect(page.getByRole("link").elements()).toHaveLength(5);
+    await expect.element(page.getByRole("link")).toHaveLength(5);
   });
 
   it("supports mouse navigation", async () => {

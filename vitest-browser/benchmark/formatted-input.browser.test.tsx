@@ -1,4 +1,4 @@
-import { FormattedInput } from "@salt-ds/lab";
+import { FormattedInput, FormField } from "@salt-ds/lab";
 import { useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page } from "vitest/browser";
@@ -12,7 +12,9 @@ function textbox() {
 describe("GIVEN FormattedInput", () => {
   it("has no accessibility violations", async () => {
     const { container } = await renderWithSalt(
-      <FormattedInput defaultValue="The default value" />,
+      <FormField label="Formatted input">
+        <FormattedInput defaultValue="The default value" />
+      </FormField>,
     );
     await runAxeScan(container);
   });
@@ -40,7 +42,9 @@ describe("GIVEN FormattedInput", () => {
 
   it("renders disabled accessibly", async () => {
     const { container } = await renderWithSalt(
-      <FormattedInput defaultValue="The default value" disabled />,
+      <FormField label="Formatted input">
+        <FormattedInput defaultValue="The default value" disabled />
+      </FormField>,
     );
     await runAxeScan(container);
   });
@@ -54,7 +58,9 @@ describe("GIVEN FormattedInput", () => {
 
   it("renders read-only accessibly", async () => {
     const { container } = await renderWithSalt(
-      <FormattedInput defaultValue="The default value" readOnly />,
+      <FormField label="Formatted input">
+        <FormattedInput defaultValue="The default value" readOnly />
+      </FormField>,
     );
     await runAxeScan(container);
   });

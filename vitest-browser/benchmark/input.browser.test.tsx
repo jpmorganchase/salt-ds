@@ -14,7 +14,10 @@ const textbox = () => page.getByRole("textbox");
 describe("GIVEN an Input", () => {
   it("SHOULD have no a11y violations on load", async () => {
     const { container } = await renderWithSalt(
-      <Input defaultValue="The default value" />,
+      <Input
+        defaultValue="The default value"
+        inputProps={{ "aria-label": "Input" }}
+      />,
     );
     await runAxeScan(container);
   });
@@ -149,7 +152,11 @@ describe("GIVEN an Input", () => {
 
     it("SHOULD have no a11y violations on load", async () => {
       const { container } = await renderWithSalt(
-        <Input defaultValue="The default value" disabled />,
+        <Input
+          defaultValue="The default value"
+          disabled
+          inputProps={{ "aria-label": "Input" }}
+        />,
       );
       await runAxeScan(container);
     });
@@ -163,7 +170,11 @@ describe("GIVEN an Input", () => {
 
     it("SHOULD have no a11y violations on load", async () => {
       const { container } = await renderWithSalt(
-        <Input defaultValue="The default value" readOnly />,
+        <Input
+          defaultValue="The default value"
+          inputProps={{ "aria-label": "Input" }}
+          readOnly
+        />,
       );
       await runAxeScan(container);
     });

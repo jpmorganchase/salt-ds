@@ -627,11 +627,13 @@ describe("Given a Tree", () => {
         </Tree>,
       );
       cy.realPress("Tab");
-      cy.realType("ba");
+      cy.clock();
+      cy.focused().type("ba");
       cy.findByRole("treeitem", { name: "Bar" }).should("be.focused");
-      cy.wait(600); // wait for type-ahead timeout
-      cy.realType("baz");
+      cy.tick(501);
+      cy.focused().type("baz");
       cy.findByRole("treeitem", { name: "Baz" }).should("be.focused");
+      cy.tick(501);
     });
   });
 

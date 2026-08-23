@@ -25,19 +25,48 @@ const {
   LongList,
 } = composeStories(dropdownStories);
 
+const CORE_TYPEAHEAD_RESET_MS = 500;
+
+async function withFakeTimers<T extends { unmount: () => Promise<void> }>(
+  render: () => Promise<T>,
+  run: () => Promise<void>,
+) {
+  vi.useFakeTimers();
+  try {
+    const rendered = await render();
+    try {
+      await run();
+    } finally {
+      await rendered.unmount();
+      expect(vi.getTimerCount()).toBe(0);
+    }
+  } finally {
+    vi.useRealTimers();
+  }
+}
+
 afterEach(() => vi.restoreAllMocks());
 
 const combobox = () => page.getByRole("combobox");
 const listbox = () => page.getByRole("listbox");
 
 async function expectActive(nameOrIndex: string | number) {
-  const option =
-    typeof nameOrIndex === "number"
-      ? page.getByRole("option").nth(nameOrIndex)
-      : page.getByRole("option", { name: nameOrIndex });
   await expect
-    .element(combobox())
-    .toHaveAttribute("aria-activedescendant", option.element().id);
+    .poll(async () => {
+      const activeId = combobox()
+        .element()
+        .getAttribute("aria-activedescendant");
+      const options = await (typeof nameOrIndex === "number"
+        ? page.getByRole("option")
+        : page.getByRole("option", { name: nameOrIndex })
+      ).elements();
+      const option =
+        typeof nameOrIndex === "number"
+          ? options.at(nameOrIndex)
+          : options.at(0);
+      return option?.id === activeId;
+    })
+    .toBe(true);
 }
 
 describe("Given a core Dropdown", () => {
@@ -382,19 +411,24 @@ describe("Given a core Dropdown", () => {
   });
 
   it("supports typeahead", async () => {
-    await renderWithSalt(<Default />);
-    await userEvent.tab();
-    for (const [keys, name] of [
-      ["A", "Alabama"],
-      ["A", "Alaska"],
-      ["A", "Arizona"],
-    ] as const) {
-      await userEvent.keyboard(keys);
-      await expectActive(name);
-    }
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    await userEvent.keyboard("Co");
-    await expectActive("Connecticut");
+    await withFakeTimers(
+      () => renderWithSalt(<Default />),
+      async () => {
+        await userEvent.tab();
+        for (const [keys, name] of [
+          ["A", "Alabama"],
+          ["A", "Alaska"],
+          ["A", "Arizona"],
+        ] as const) {
+          await userEvent.keyboard(keys);
+          await expectActive(name);
+        }
+        await vi.advanceTimersByTimeAsync(CORE_TYPEAHEAD_RESET_MS + 1);
+        await userEvent.keyboard("Co");
+        await expectActive("Connecticut");
+        await vi.advanceTimersByTimeAsync(CORE_TYPEAHEAD_RESET_MS + 1);
+      },
+    );
   });
 
   it("renders a configured floating component", async () => {
