@@ -28,7 +28,9 @@ describe("GIVEN a logo", () => {
         <Text>{appTitle}</Text>
       </Logo>,
     );
-    await expect.element(page.getByTestId("logo-separator")).toBeInTheDocument();
+    await expect
+      .element(page.getByTestId("logo-separator"))
+      .toBeInTheDocument();
   });
 
   it("renders an app title", async () => {
@@ -51,6 +53,8 @@ describe("GIVEN a logo", () => {
     );
 
     await expect.element(page.getByText(src)).toBeInTheDocument();
-    await expect.element(page.getByTestId("logo-separator")).toBeInTheDocument();
+    await expect
+      .element(page.getByTestId("logo-separator"))
+      .toBeInTheDocument();
   });
 });

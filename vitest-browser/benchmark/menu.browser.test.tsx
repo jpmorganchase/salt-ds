@@ -25,7 +25,9 @@ const menuCount = async () => (await page.getByRole("menu").elements()).length;
 const backgroundTarget = () => page.getByTestId("menu-background-target");
 
 function rectanglesOverlap(a: DOMRect, b: DOMRect) {
-  return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+  return (
+    a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top
+  );
 }
 
 function MultiLevelWithBackgroundTarget() {
@@ -155,7 +157,10 @@ describe("Given a Menu", () => {
     await expect.element(page.getByRole("menu")).toHaveLength(2);
 
     const targetRect = backgroundTarget().element().getBoundingClientRect();
-    const surfaces = [trigger().element(), ...page.getByRole("menu").elements()];
+    const surfaces = [
+      trigger().element(),
+      ...page.getByRole("menu").elements(),
+    ];
     expect(targetRect.width).toBeGreaterThan(0);
     expect(targetRect.height).toBeGreaterThan(0);
     for (const surface of surfaces) {

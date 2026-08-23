@@ -162,10 +162,7 @@ describe("GIVEN a default collapsible ContactDetails", () => {
     const primary = page.getByText(persona.name, { exact: true }).element();
     await expect
       .element(expand)
-      .toHaveAttribute(
-        "aria-labelledby",
-        `${expandElement.id} ${primary.id}`,
-      );
+      .toHaveAttribute("aria-labelledby", `${expandElement.id} ${primary.id}`);
   });
 
   it("updates the disclosure label and expanded state", async () => {
@@ -173,9 +170,7 @@ describe("GIVEN a default collapsible ContactDetails", () => {
     await expect.element(expand).toHaveAttribute("aria-label", "Expand");
     await expect.element(expand).toHaveAttribute("aria-expanded", "false");
     await expand.click();
-    await expect
-      .element(disclosure())
-      .toHaveAttribute("aria-expanded", "true");
+    await expect.element(disclosure()).toHaveAttribute("aria-expanded", "true");
   });
 
   it("places the disclosure after favorite and actions in tab order", async () => {

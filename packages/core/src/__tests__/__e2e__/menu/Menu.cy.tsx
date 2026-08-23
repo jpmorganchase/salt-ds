@@ -13,7 +13,9 @@ const {
 } = composeStories(menuStories);
 
 function rectanglesOverlap(a: DOMRect, b: DOMRect) {
-  return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+  return (
+    a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top
+  );
 }
 
 function MultiLevelWithBackgroundTarget() {

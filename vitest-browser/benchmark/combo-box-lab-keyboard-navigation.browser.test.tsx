@@ -21,9 +21,7 @@ async function expectOpen(open: boolean) {
 
 async function expectHighlighted(name: string) {
   const item = option(name);
-  await expect
-    .element(item)
-    .toHaveClass(/saltHighlighted/, /saltFocusVisible/);
+  await expect.element(item).toHaveClass(/saltHighlighted/, /saltFocusVisible/);
 }
 
 describe("A lab combo box", () => {

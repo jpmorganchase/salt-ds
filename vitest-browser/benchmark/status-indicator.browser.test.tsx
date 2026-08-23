@@ -27,6 +27,8 @@ describe("Given a Status Indicator", () => {
   it("does not crash for an invalid status", async () => {
     // @ts-expect-error testing runtime handling of an invalid status
     await renderWithSalt(<Default status="invalid" />);
-    await expect.element(page.getByLabelText("invalid")).not.toBeInTheDocument();
+    await expect
+      .element(page.getByLabelText("invalid"))
+      .not.toBeInTheDocument();
   });
 });
