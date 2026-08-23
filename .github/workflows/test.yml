@@ -149,3 +149,38 @@ jobs:
         with:
           name: cypress-screenshots-${{ matrix.react }}
           path: cypress/screenshots
+
+  component-test-benchmark:
+    name: Component Test Benchmark
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Use Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: "24"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: Build packages
+        run: yarn run build
+      - name: Benchmark Cypress against Vitest Browser
+        run: yarn benchmark:components --warmup=1 --runs=5 2>&1 | tee component-benchmark.txt
+      - name: Add benchmark summary
+        if: always()
+        run: |
+          {
+            echo "## Component test benchmark"
+            echo '```text'
+            if [[ -f component-benchmark.txt ]]; then
+              tail -n 5 component-benchmark.txt
+            else
+              echo "Benchmark did not run."
+            fi
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
