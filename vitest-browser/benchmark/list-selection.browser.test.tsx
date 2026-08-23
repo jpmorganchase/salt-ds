@@ -69,16 +69,16 @@ async function expectOnlySelected(indexes: number[]) {
 
 async function clickItem(
   index: number,
-  { control = false, shift = false } = {},
+  { controlOrMeta = false, shift = false } = {},
 ) {
   await item(index).hover();
-  if (control) await userEvent.keyboard("{Control>}");
+  if (controlOrMeta) await userEvent.keyboard("{ControlOrMeta>}");
   if (shift) await userEvent.keyboard("{Shift>}");
   try {
     await item(index).click();
   } finally {
     if (shift) await userEvent.keyboard("{/Shift}");
-    if (control) await userEvent.keyboard("{/Control}");
+    if (controlOrMeta) await userEvent.keyboard("{/ControlOrMeta}");
   }
 }
 
@@ -220,11 +220,11 @@ describe.each(LIST_KINDS)("extended-selection %s List", (kind) => {
     );
   });
 
-  it.skipIf(react18)("adds selection with Control+click", async () => {
+  it.skipIf(react18)("adds selection with Control/Meta+click", async () => {
     const onSelectionChange = vi.fn();
     await renderSelectionList(kind, "extended", { onSelectionChange });
     await clickItem(0);
-    await clickItem(2, { control: true });
+    await clickItem(2, { controlOrMeta: true });
     await expectOnlySelected([0, 2]);
     expect(onSelectionChange).toHaveBeenLastCalledWith(
       expect.anything(),
@@ -250,7 +250,7 @@ describe.each(LIST_KINDS)("extended-selection %s List", (kind) => {
     await clickItem(1);
     await clickItem(0, { shift: true });
     await expectOnlySelected([0, 1]);
-    await clickItem(3, { control: true, shift: true });
+    await clickItem(3, { controlOrMeta: true, shift: true });
     await expectOnlySelected([0, 1, 2, 3]);
     expect(onSelectionChange).toHaveBeenLastCalledWith(
       expect.anything(),
@@ -274,14 +274,14 @@ describe.each(LIST_KINDS)("extended-selection %s List", (kind) => {
   });
 
   it.skipIf(react18)(
-    "concatenates ranges with Control+Shift+click",
+    "concatenates ranges with Control/Meta+Shift+click",
     async () => {
       const onSelectionChange = vi.fn();
       await renderSelectionList(kind, "extended", { onSelectionChange });
       await clickItem(0);
       await clickItem(1, { shift: true });
-      await clickItem(2, { control: true });
-      await clickItem(3, { control: true, shift: true });
+      await clickItem(2, { controlOrMeta: true });
+      await clickItem(3, { controlOrMeta: true, shift: true });
       await expectOnlySelected([0, 1, 2, 3]);
       expect(onSelectionChange).toHaveBeenLastCalledWith(
         expect.anything(),
@@ -293,18 +293,18 @@ describe.each(LIST_KINDS)("extended-selection %s List", (kind) => {
   it("keeps only the clicked item after a simple click", async () => {
     await renderSelectionList(kind, "extended");
     await clickItem(0);
-    await clickItem(2, { control: true });
-    await clickItem(3, { control: true });
+    await clickItem(2, { controlOrMeta: true });
+    await clickItem(3, { controlOrMeta: true });
     await clickItem(0);
     await expectOnlySelected([0]);
   });
 
-  it("deselects only the item clicked with Control", async () => {
+  it("deselects only the item clicked with Control/Meta", async () => {
     await renderSelectionList(kind, "extended");
     await clickItem(0);
-    await clickItem(2, { control: true });
-    await clickItem(3, { control: true });
-    await clickItem(0, { control: true });
+    await clickItem(2, { controlOrMeta: true });
+    await clickItem(3, { controlOrMeta: true });
+    await clickItem(0, { controlOrMeta: true });
     await expectOnlySelected([2, 3]);
   });
 });

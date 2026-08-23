@@ -105,13 +105,26 @@ describe("Given a ComboBox", () => {
     ["{Tab}", false],
   ] as const)("quick-selects with %s", async (key, staysFocused) => {
     const onSelectionChange = vi.fn();
-    await renderWithSalt(<Default onSelectionChange={onSelectionChange} />);
+    await renderWithSalt(
+      <>
+        <Default onSelectionChange={onSelectionChange} />
+        <button type="button">After ComboBox</button>
+      </>,
+    );
     await typeFilter("C");
     await expectActive("California");
-    await userEvent.keyboard(key);
+    if (key === "{Tab}") {
+      await userEvent.tab();
+    } else {
+      await userEvent.keyboard(key);
+    }
     await expect.element(input()).toHaveValue("California");
     if (staysFocused) await expect.element(input()).toHaveFocus();
-    else await expect.element(input()).not.toHaveFocus();
+    else {
+      await expect
+        .element(page.getByRole("button", { name: "After ComboBox" }))
+        .toHaveFocus();
+    }
   });
 
   it("toggles the list from its button", async () => {

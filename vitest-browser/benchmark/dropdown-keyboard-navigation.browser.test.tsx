@@ -143,13 +143,18 @@ describe.each(DROPDOWN_KINDS)("legacy %s Dropdown keyboard", (kind) => {
   });
 
   it("supports a space in type-ahead without closing", async () => {
-    await renderDropdown(kind, { defaultIsOpen: true });
-    await focusControl();
-    await userEvent.keyboard("FOO ");
-    await expectActive(2);
-    await userEvent.keyboard("BAR");
-    await expectActive(2);
-    await expectPopup(true);
+    await withFakeTimers(
+      () => renderDropdown(kind, { defaultIsOpen: true }),
+      async () => {
+        await focusControl();
+        await userEvent.keyboard("FOO ");
+        await expectActive(2);
+        await userEvent.keyboard("BAR");
+        await expectActive(2);
+        await expectPopup(true);
+        await vi.advanceTimersByTimeAsync(LAB_TYPEAHEAD_RESET_MS + 1);
+      },
+    );
   });
 
   it("uses Space as selection after type-ahead times out", async () => {
