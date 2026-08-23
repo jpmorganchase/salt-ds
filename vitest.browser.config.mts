@@ -105,6 +105,20 @@ export default defineConfig({
     maxWorkers: Math.min(6, availableParallelism()),
     include: ["vitest-browser/**/*.browser.test.tsx"],
     setupFiles: ["./vitest-browser/setup.ts"],
+    coverage: {
+      provider: "v8",
+      include: [
+        "packages/{core,countries,date-adapters,date-components,embla-carousel,icons,lab,styles,window}/src/**/*.{ts,tsx}",
+      ],
+      exclude: [
+        "**/*.d.ts",
+        "**/__tests__/**",
+        "packages/icons/src/components/**",
+        "packages/countries/src/components/**",
+        "packages/countries/src/{countryComponentMap,countryMetaMap}.ts",
+        "packages/countries/src/lazy-country-symbol/lazyMap.ts",
+      ],
+    },
     browser: {
       enabled: true,
       provider: playwright({
