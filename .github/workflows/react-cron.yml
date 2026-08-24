@@ -11,8 +11,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  cypress-tests:
-    name: Cypress Tests
+  vitest-browser-tests:
+    name: Vitest Browser Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,17 +26,21 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn
-      - name: Setup react
-        run: yarn up react@canary react-dom@canary
+      - name: Setup React canary
+        run: |
+          yarn set resolution react@npm:^18.0.0 npm:canary
+          yarn set resolution react-dom@npm:^18.0.0 npm:canary
+      - name: Verify React canary
+        run: |
+          yarn node -e 'const version = require("react/package.json").version; if (!version.includes("canary")) throw new Error("Expected React canary, received " + version)'
+          yarn node -e 'const version = require("react-dom/package.json").version; if (!version.includes("canary")) throw new Error("Expected React DOM canary, received " + version)'
       - name: Build packages
         run: yarn run build
-      - name: Cypress Components
-        uses: cypress-io/github-action@dace029018fcdf86e0df89a31bc3cfa5b32570d8 # v7
-        with:
-          install: false
-          command: yarn run test:components
+      - name: Vitest Browser Components
+        run: yarn run test:components
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: failure()
         with:
-          name: cypress-screenshots
-          path: cypress/screenshots
+          name: vitest-browser-screenshots-canary
+          path: vitest-browser/screenshots
+          if-no-files-found: ignore

@@ -95,8 +95,8 @@ jobs:
         run: yarn
       - name: Run typecheck
         run: yarn run typecheck
-  jest-tests:
-    name: Jest Tests
+  unit-tests:
+    name: Vitest Unit Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -111,12 +111,12 @@ jobs:
       - name: Install dependencies
         run: yarn
       - run: yarn run test
-  cypress-tests:
-    name: Cypress Tests (React ${{ matrix.react }})
+  vitest-browser-tests:
+    name: Vitest Browser Tests (React ${{ matrix.react }})
     strategy:
       fail-fast: false
       matrix:
-        react: [16, 17, 18]
+        react: [16, 17, 18, 19]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -138,18 +138,11 @@ jobs:
           yarn set resolution react-dom@npm:^18.0.0 "npm:^$REACT_VERSION"
       - name: Build packages
         run: yarn run build
-      - name: Cypress Components
-        id: cypress_components
-        uses: cypress-io/github-action@dace029018fcdf86e0df89a31bc3cfa5b32570d8 # v7
-        with:
-          install: false
-          component: true
-          browser: chrome
       - name: Vitest Browser Components
-        if: ${{ !cancelled() && (steps.cypress_components.outcome == 'success' || steps.cypress_components.outcome == 'failure') }}
-        run: yarn run test:components:vitest
+        run: yarn run test:components
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: failure()
         with:
-          name: cypress-screenshots-${{ matrix.react }}
-          path: cypress/screenshots
+          name: vitest-browser-screenshots-${{ matrix.react }}
+          path: vitest-browser/screenshots
+          if-no-files-found: ignore
