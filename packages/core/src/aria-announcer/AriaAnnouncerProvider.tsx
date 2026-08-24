@@ -59,6 +59,7 @@ export const AriaAnnouncerProvider = forwardRef<
   >([]);
 
   const idCounterRef = useRef(0);
+  const isMountedRef = useRef(true);
   const timeoutsRef = useRef<Set<number>>(new Set());
 
   const scheduleRemoval = useCallback(
@@ -86,9 +87,11 @@ export const AriaAnnouncerProvider = forwardRef<
       assertiveness: "polite" | "assertive" = "polite",
       duration: number = ANNOUNCEMENT_TIME_IN_DOM,
     ) => {
+      if (!isMountedRef.current) return;
+
       idCounterRef.current += 1;
       // Date.now() can collide when multiple announcements are created in the same millisecond
-      // (e.g. tests with cy.clock, batching, or multiple announces during one tick).
+      // (e.g. tests with fake timers, batching, or multiple announces during one tick).
       // Add a monotonic counter suffix to guarantee uniqueness.
       const id = `announce-${assertiveness}-${Date.now()}-${idCounterRef.current}`;
       if (assertiveness === "polite") {
@@ -104,6 +107,13 @@ export const AriaAnnouncerProvider = forwardRef<
     },
     [scheduleRemoval],
   );
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     const timeouts = timeoutsRef.current;
