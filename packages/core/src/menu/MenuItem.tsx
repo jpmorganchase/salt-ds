@@ -84,7 +84,6 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
                   new window.MouseEvent("click", eventInit),
                 );
               });
-              tree?.events.emit("click");
             }
           },
           onClick(event: MouseEvent<HTMLDivElement>) {
