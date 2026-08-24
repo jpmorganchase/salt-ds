@@ -961,8 +961,12 @@ function registerAdapterTests(
           </DatePicker>
         </FormField>,
       );
-      await expect.element(startInput()).toHaveAttribute("aria-labelledby");
-      await expect.element(endInput()).toHaveAttribute("aria-labelledby");
+      expect(startInput().element().getAttribute("aria-labelledby")).toMatch(
+        /\S/,
+      );
+      expect(endInput().element().getAttribute("aria-labelledby")).toMatch(
+        /\S/,
+      );
     });
 
     it("SHOULD provide unique accessible names for navigation pairs", async () => {

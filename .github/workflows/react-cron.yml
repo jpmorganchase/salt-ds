@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   vitest-browser-tests:
-    name: Vitest Browser Tests
+    name: Browser Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,7 +36,7 @@ jobs:
           yarn node -e 'const version = require("react-dom/package.json").version; if (!version.includes("canary")) throw new Error("Expected React DOM canary, received " + version)'
       - name: Build packages
         run: yarn run build
-      - name: Vitest Browser Components
+      - name: Browser Tests
         run: yarn run test:components
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: failure()

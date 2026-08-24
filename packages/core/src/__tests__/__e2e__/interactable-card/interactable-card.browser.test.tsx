@@ -169,6 +169,22 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
       for (const name of ["One", "Two", "Three"])
         await expectChecked(name, true, true);
       expect(onChange.mock.lastCall?.[1]).toEqual(["one", "two", "three"]);
+
+      const firstCard = card("One", true);
+      if (interaction === "mouse") await firstCard.click();
+      else {
+        firstCard.element().focus();
+        await userEvent.keyboard(" ");
+      }
+      await expectChecked("One", true, false);
+      expect(onChange.mock.lastCall?.[1]).toEqual(["two", "three"]);
+
+      if (interaction === "mouse") await firstCard.click();
+      else await userEvent.keyboard(" ");
+      await expectChecked("One", true, true);
+      expect(new Set(onChange.mock.lastCall?.[1] as string[])).toEqual(
+        new Set(["one", "two", "three"]),
+      );
     },
   );
 
@@ -189,10 +205,26 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
       await expectChecked("One", true, true);
       await expectChecked("Two", true, true);
       expect(onChange.mock.lastCall?.[1]).toEqual(["one", "two"]);
+
+      const firstCard = card("One", true);
+      if (interaction === "mouse") await firstCard.click();
+      else {
+        firstCard.element().focus();
+        await userEvent.keyboard(" ");
+      }
+      await expectChecked("One", true, false);
+      expect(onChange.mock.lastCall?.[1]).toEqual(["two"]);
+
+      if (interaction === "mouse") await firstCard.click();
+      else await userEvent.keyboard(" ");
+      await expectChecked("One", true, true);
+      expect(new Set(onChange.mock.lastCall?.[1] as string[])).toEqual(
+        new Set(["one", "two"]),
+      );
     },
   );
 
-  it("does not toggle disabled cards or groups", async () => {
+  it("does not toggle disabled groups", async () => {
     const onChange = vi.fn();
     await renderWithSalt(
       <InteractableCardGroup multiSelect disabled onChange={onChange}>
@@ -200,6 +232,23 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
       </InteractableCardGroup>,
     );
     await card("One", true).click({ force: true });
+    await expectChecked("One", true, false);
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it("does not toggle an individually disabled card", async () => {
+    const onChange = vi.fn();
+    await renderWithSalt(
+      <InteractableCardGroup multiSelect onChange={onChange}>
+        <InteractableCard disabled value="one">
+          One
+        </InteractableCard>
+        <InteractableCard value="two">Two</InteractableCard>
+      </InteractableCardGroup>,
+    );
+    const disabledCard = card("One", true);
+    await expect.element(disabledCard).toHaveAttribute("aria-disabled", "true");
+    await disabledCard.click({ force: true });
     await expectChecked("One", true, false);
     expect(onChange).not.toHaveBeenCalled();
   });
@@ -262,7 +311,13 @@ describe("GIVEN a single-select InteractableCardGroup", () => {
     await userEvent.keyboard("{ArrowLeft}");
     await expect.element(card("One", false)).toHaveFocus();
     await expectChecked("One", false, true);
-    expect(onChange).toHaveBeenCalledTimes(2);
+    await userEvent.keyboard("{ArrowDown}");
+    await expect.element(card("Two", false)).toHaveFocus();
+    await expectChecked("Two", false, true);
+    await userEvent.keyboard("{ArrowUp}");
+    await expect.element(card("One", false)).toHaveFocus();
+    await expectChecked("One", false, true);
+    expect(onChange).toHaveBeenCalledTimes(4);
   });
 
   it("selects with Space when initially empty", async () => {
@@ -302,6 +357,23 @@ describe("GIVEN a single-select InteractableCardGroup", () => {
     const onChange = vi.fn();
     await renderWithSalt(<Cards disabled onChange={onChange} />);
     await card("One", false).click({ force: true });
+    await expectChecked("One", false, false);
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it("does not select an individually disabled card", async () => {
+    const onChange = vi.fn();
+    await renderWithSalt(
+      <InteractableCardGroup onChange={onChange}>
+        <InteractableCard disabled value="one">
+          One
+        </InteractableCard>
+        <InteractableCard value="two">Two</InteractableCard>
+      </InteractableCardGroup>,
+    );
+    const disabledCard = card("One", false);
+    await expect.element(disabledCard).toHaveAttribute("aria-disabled", "true");
+    await disabledCard.click({ force: true });
     await expectChecked("One", false, false);
     expect(onChange).not.toHaveBeenCalled();
   });

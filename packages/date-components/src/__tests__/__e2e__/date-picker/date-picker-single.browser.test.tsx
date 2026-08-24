@@ -755,7 +755,9 @@ function registerAdapterTests(
           </DatePicker>
         </FormField>,
       );
-      await expect.element(textInput()).toHaveAttribute("aria-labelledby");
+      expect(textInput().element().getAttribute("aria-labelledby")).toMatch(
+        /\S/,
+      );
     });
   });
 }

@@ -117,13 +117,18 @@ describe("GIVEN Breadcrumbs", () => {
 
   it("keeps linked current items in focus order", async () => {
     await renderWithSalt(
-      <Breadcrumbs>
-        <Breadcrumb href="#root">Root</Breadcrumb>
-        <Breadcrumb current href="#level-2">
-          Current
-        </Breadcrumb>
-        <Breadcrumb href="#level-3">Level 3</Breadcrumb>
-      </Breadcrumbs>,
+      <>
+        <Breadcrumbs>
+          <Breadcrumb href="#root">Root</Breadcrumb>
+          <Breadcrumb current href="#level-2">
+            Current
+          </Breadcrumb>
+          <Breadcrumb href="#level-3">Level 3</Breadcrumb>
+        </Breadcrumbs>
+        <Breadcrumbs>
+          <Breadcrumb>Placeholder current</Breadcrumb>
+        </Breadcrumbs>
+      </>,
     );
     for (const name of ["Root", "Current", "Level 3"]) {
       await userEvent.tab();
@@ -132,6 +137,27 @@ describe("GIVEN Breadcrumbs", () => {
     await expect
       .element(page.getByRole("link", { name: "Current" }))
       .toHaveAttribute("aria-current", "page");
+
+    const currentLink = page.getByRole("link", { name: "Current" });
+    const placeholder = page
+      .getByText("Placeholder current")
+      .element()
+      .closest(".saltBreadcrumb-current");
+    if (!placeholder)
+      throw new Error("Current breadcrumb text was not rendered");
+    const currentStyles = getComputedStyle(currentLink.element());
+    expect(currentStyles.textDecorationLine).toBe("none");
+    expect(currentStyles.cursor).toBe("text");
+    expect(currentStyles.color).toBe(getComputedStyle(placeholder).color);
+
+    await currentLink.hover();
+    expect(getComputedStyle(currentLink.element()).textDecorationLine).toBe(
+      "none",
+    );
+    currentLink.element().focus();
+    expect(getComputedStyle(currentLink.element()).textDecorationLine).toBe(
+      "none",
+    );
   });
 
   it("renders non-navigable items without a link role", async () => {
@@ -371,12 +397,34 @@ describe("GIVEN Breadcrumbs", () => {
   });
 
   it("supports native navigation from hidden links", async () => {
-    await renderWithSalt(
-      <CollapsedBreadcrumbs levelTwoHref="#native-click-level-2" />,
-    );
-    await disclosure().click();
-    await page.getByRole("link", { name: "Level 2 Entity" }).click();
-    expect(window.location.hash).toBe("#native-click-level-2");
+    const startingUrl = window.location.href;
+    const startingState = window.history.state;
+    try {
+      await renderWithSalt(
+        <CollapsedBreadcrumbs levelTwoHref="#native-click-level-2" />,
+      );
+      await disclosure().click();
+      const hiddenLink = page.getByRole("link", { name: "Level 2 Entity" });
+      await expect
+        .element(hiddenLink)
+        .toHaveClass("saltBreadcrumbs-disclosureItem");
+      expect(getComputedStyle(hiddenLink.element()).textDecorationLine).toBe(
+        "none",
+      );
+      await hiddenLink.hover();
+      expect(getComputedStyle(hiddenLink.element()).textDecorationLine).toBe(
+        "none",
+      );
+      hiddenLink.element().focus();
+      expect(getComputedStyle(hiddenLink.element()).textDecorationLine).toBe(
+        "none",
+      );
+
+      await hiddenLink.click();
+      expect(window.location.hash).toBe("#native-click-level-2");
+    } finally {
+      window.history.replaceState(startingState, "", startingUrl);
+    }
   });
 
   it("preserves composed hidden trigger content and handlers", async () => {

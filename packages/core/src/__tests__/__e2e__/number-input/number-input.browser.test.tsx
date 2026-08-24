@@ -177,6 +177,9 @@ describe("Number Input", () => {
       ["{ArrowUp}", "20"],
       ["{PageUp}", "120"],
       ["{Shift>}{ArrowUp}{/Shift}", "220"],
+      ["{ArrowDown}", "210"],
+      ["{PageDown}", "110"],
+      ["{Shift>}{ArrowDown}{/Shift}", "10"],
       ["{End}", "2000"],
       ["{Home}", "-2000"],
     ] as const) {
@@ -555,13 +558,43 @@ describe("Number Input", () => {
       await expect.element(input()).toHaveValue(value);
     });
 
+    it.each([
+      ["-12.1234", 2, "-12.12"],
+      [".1", 1, "0.1"],
+      ["1.", 1, "1.0"],
+    ])(
+      "normalizes typed value %s at scale %s",
+      async (typedValue, decimalScale, value) => {
+        await renderWithSalt(<Default decimalScale={decimalScale} />);
+        await typeValue(typedValue);
+        await userEvent.tab();
+        await expect.element(input()).toHaveValue(value);
+      },
+    );
+
+    it("normalizes a malformed controlled value to its decimal scale", async () => {
+      await renderWithSalt(<Default value="1.111abxse" decimalScale={2} />);
+      await expect.element(input()).toHaveValue("1.11");
+    });
+
     it.each([".", "-"])(
       "normalizes lone '%s' to zero on blur",
       async (value) => {
-        await renderWithSalt(<Default />);
+        const onChange = vi.fn();
+        const onNumberChange = vi.fn();
+        await renderWithSalt(
+          <Default onChange={onChange} onNumberChange={onNumberChange} />,
+        );
         await typeValue(value);
+        expect(onChange.mock.lastCall?.[1]).toBe(value);
+        expect(onNumberChange).not.toHaveBeenCalled();
+        const changeCallsBeforeBlur = onChange.mock.calls.length;
         await userEvent.tab();
         await expect.element(input()).toHaveValue("0");
+        expect(onChange).toHaveBeenCalledTimes(changeCallsBeforeBlur + 1);
+        expect(onChange.mock.lastCall?.[1]).toBe("0");
+        expect(onNumberChange).toHaveBeenCalledOnce();
+        expect(onNumberChange.mock.lastCall?.[1]).toBe(0);
       },
     );
   });

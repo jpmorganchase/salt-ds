@@ -413,6 +413,32 @@ describe("GIVEN a SidePanel component", () => {
     },
   );
 
+  it("opens and closes immediately when reduced motion is preferred", async () => {
+    vi.spyOn(window, "matchMedia").mockImplementation(
+      (query) =>
+        ({
+          matches: query.includes("prefers-reduced-motion: reduce"),
+          media: query,
+          onchange: null,
+          addListener: () => undefined,
+          removeListener: () => undefined,
+          addEventListener: () => undefined,
+          removeEventListener: () => undefined,
+          dispatchEvent: () => false,
+        }) as MediaQueryList,
+    );
+
+    await renderWithSalt(<Default />);
+    await page.getByRole("button", { name: "Open right panel" }).click();
+    const panel = page.getByRole("region", { name: "Section Title" });
+    await expect.element(panel).toBeVisible();
+    await expect.element(panel).not.toHaveClass("saltSidePanel-enterAnimation");
+    await expect.element(panel).not.toHaveClass("saltSidePanel-exitAnimation");
+
+    await page.getByRole("button", { name: "Close Section Title" }).click();
+    await expect.element(panel).not.toBeInTheDocument();
+  });
+
   it("focuses the panel after a user reopens a default-open instance", async () => {
     await renderWithSalt(<FocusOrderPanel defaultOpen />);
     page.getByRole("button", { name: "Close Focus Panel" }).element().focus();

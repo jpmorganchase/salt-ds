@@ -505,6 +505,20 @@ describe("Given a Tree", () => {
         .not.toHaveAttribute("aria-selected");
     });
 
+    it("selects a parent node with Space", async () => {
+      const onSelectionChange = vi.fn();
+      await renderWithSalt(
+        <ParentTree multiselect onSelectionChange={onSelectionChange} />,
+      );
+      await userEvent.tab();
+      await expect.element(treeItem("Parent")).toHaveFocus();
+      await userEvent.keyboard(" ");
+      await expect
+        .element(treeItem("Parent"))
+        .toHaveAttribute("aria-checked", "true");
+      expect(onSelectionChange).toHaveBeenCalledOnce();
+    });
+
     it("selects ranges with Shift+Arrow", async () => {
       await renderWithSalt(<FlatTree multiselect />);
       await userEvent.tab();
@@ -655,6 +669,10 @@ describe("Given a Tree", () => {
       await expect
         .element(treeItem("Secret folder"))
         .toHaveAttribute("aria-checked", "true");
+      await expansionIcon("Secret folder").click();
+      await expect
+        .element(treeItem("Nested secret file"))
+        .toHaveAttribute("aria-checked", "true");
 
       await renderWithSalt(<FragmentTree configDisabled />);
       for (const label of [
@@ -665,6 +683,31 @@ describe("Given a Tree", () => {
         await expect
           .element(treeItem(label))
           .toHaveAttribute("aria-disabled", "true");
+    });
+
+    it("derives mixed state from controlled hierarchical selection", async () => {
+      await renderWithSalt(
+        <Tree
+          aria-label="File browser"
+          multiselect
+          defaultExpanded={["parent"]}
+          selected={["child1"]}
+        >
+          <TreeNode value="parent" label="Parent">
+            <TreeNode value="child1" label="Child 1" />
+            <TreeNode value="child2" label="Child 2" />
+          </TreeNode>
+        </Tree>,
+      );
+      await expect
+        .element(treeItem("Parent"))
+        .toHaveAttribute("aria-checked", "mixed");
+      await expect
+        .element(treeItem("Child 1"))
+        .toHaveAttribute("aria-checked", "true");
+      await expect
+        .element(treeItem("Child 2"))
+        .toHaveAttribute("aria-checked", "false");
     });
 
     it("supports controlled external selection, Ctrl+A and clearing", async () => {

@@ -62,6 +62,11 @@ type OverflowTestWindow = Window & {
 
 let nextTrackedTabInstanceId = 0;
 
+const liveRegionText = () =>
+  Array.from(document.querySelectorAll("[aria-live]"))
+    .map((region) => region.textContent ?? "")
+    .join(" ");
+
 function TrackedTabContent({ label }: { label: string }) {
   const [instanceId] = useState(() => {
     nextTrackedTabInstanceId += 1;
@@ -562,8 +567,8 @@ describe("Given Tabs", () => {
     await clickOverflowTab("Liquidity");
     await expectSelected("Liquidity");
     await expect
-      .element(page.getByText(/Liquidity moved to main tab list/))
-      .toBeInTheDocument();
+      .poll(liveRegionText)
+      .toContain("Liquidity moved to main tab list");
   });
 
   it("does not announce a later external selection that was previously ignored", async () => {
@@ -571,13 +576,20 @@ describe("Given Tabs", () => {
     await openOverflow();
     await clickOverflowTab("Liquidity");
     await expectSelected("Home");
+    // Let the ignored controlled update clear its overflow-selection marker.
+    await new Promise<void>((resolve) =>
+      requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+    );
     await page
       .getByRole("button", { name: "Select Liquidity externally" })
       .click();
     await expectSelected("Liquidity");
-    expect(document.querySelector("[aria-live]")?.textContent).not.toContain(
-      "Liquidity moved to main tab list",
+    // Overflow announcements are scheduled after 100 ms.
+    await new Promise((resolve) => setTimeout(resolve, 150));
+    await new Promise<void>((resolve) =>
+      requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
     );
+    expect(liveRegionText()).not.toContain("Liquidity moved to main tab list");
   });
 
   it("makes the first visible tab tabbable without an initial selection", async () => {

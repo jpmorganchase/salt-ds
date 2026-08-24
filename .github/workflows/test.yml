@@ -96,7 +96,7 @@ jobs:
       - name: Run typecheck
         run: yarn run typecheck
   unit-tests:
-    name: Vitest Unit Tests
+    name: Unit Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

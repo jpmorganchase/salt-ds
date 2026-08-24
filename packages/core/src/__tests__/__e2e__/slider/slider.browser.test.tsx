@@ -284,6 +284,8 @@ describe("Given a Slider", () => {
     await expect
       .element(page.getByTestId("sliderTooltip"))
       .toHaveTextContent(text);
+    await userEvent.unhover(thumb().element());
+    await expect.element(page.getByTestId("sliderTooltip")).not.toBeVisible();
   });
 
   it("omits the tooltip when showTooltip is false", async () => {
