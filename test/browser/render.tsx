@@ -7,7 +7,9 @@ import {
   LocalizationProvider,
   type LocalizationProviderProps,
 } from "@salt-ds/date-components";
+import * as React from "react";
 import { isValidElement, type ReactNode } from "react";
+import { act as reactDomAct } from "react-dom/test-utils";
 import { cleanup, render } from "vitest-browser-react";
 
 interface RenderWithSaltOptions<TDate extends DateFrameworkType, TLocale> {
@@ -18,6 +20,29 @@ interface RenderWithSaltOptions<TDate extends DateFrameworkType, TLocale> {
 type PortableStory = {
   globals?: Record<string, unknown>;
 };
+
+type ReactWithAct = typeof React & {
+  act?: typeof reactDomAct;
+  unstable_act?: typeof reactDomAct;
+};
+
+const reactAct =
+  (React as ReactWithAct).act ??
+  (React as ReactWithAct).unstable_act ??
+  reactDomAct;
+
+export async function act(callback: () => void | Promise<void>) {
+  const actEnvironment = globalThis as typeof globalThis & {
+    IS_REACT_ACT_ENVIRONMENT?: boolean;
+  };
+  const previousEnvironment = actEnvironment.IS_REACT_ACT_ENVIRONMENT;
+  actEnvironment.IS_REACT_ACT_ENVIRONMENT = true;
+  try {
+    await reactAct(callback);
+  } finally {
+    actEnvironment.IS_REACT_ACT_ENVIRONMENT = previousEnvironment;
+  }
+}
 
 function setPortableStoryLocalization<TDate extends DateFrameworkType, TLocale>(
   children: ReactNode,

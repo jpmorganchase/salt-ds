@@ -81,7 +81,7 @@ const legacyReactAliases: Record<string, string> =
         // React 18+. Keep the same small render contract for Salt's 16/17 lane.
         "vitest-browser-react": path.resolve(
           rootDir,
-          "./vitest-browser/legacy-react-renderer.tsx",
+          "./test/browser/legacy-react-renderer.tsx",
         ),
       }
     : {};
@@ -130,10 +130,10 @@ export default defineConfig({
     // the CPU saturation observed at eight; the CLI can still override it.
     maxWorkers: Math.min(6, availableParallelism()),
     include: [
-      "vitest-browser/**/*.browser.test.tsx",
+      "test/browser/**/*.browser.test.tsx",
       "packages/*/src/__tests__/__e2e__/**/*.browser.test.tsx",
     ],
-    setupFiles: ["./vitest-browser/setup.ts"],
+    setupFiles: ["./test/browser/setup.ts"],
     browser: {
       enabled: true,
       provider: playwright({
@@ -143,7 +143,7 @@ export default defineConfig({
       }),
       instances: [{ browser: "chromium" }],
       viewport: { width: 1280, height: 1024 },
-      screenshotDirectory: "vitest-browser/screenshots",
+      screenshotDirectory: "test/browser/screenshots",
       screenshotFailures: true,
     },
   },

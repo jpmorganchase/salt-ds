@@ -357,20 +357,28 @@ describe("Given a ComboBox", () => {
 
   it("does not deselect an existing multiselect value on Tab", async () => {
     const onSelectionChange = vi.fn();
-    await renderWithSalt(<SelectOnTab onSelectionChange={onSelectionChange} />);
+    await renderWithSalt(
+      <>
+        <SelectOnTab onSelectionChange={onSelectionChange} />
+        <button type="button">After ComboBox</button>
+      </>,
+    );
+    const afterComboBox = page.getByRole("button", { name: "After ComboBox" });
     await typeFilter("Ala");
     await userEvent.tab();
+    await expect.element(afterComboBox).toHaveFocus();
     expect(onSelectionChange).toHaveBeenCalledTimes(1);
     expect(onSelectionChange.mock.lastCall?.[1]).toEqual(["Alabama"]);
     await expect
-      .element(page.getByRole("button", { name: "Remove Alabama" }))
+      .element(page.getByRole("button", { name: "Alabama", exact: true }))
       .toBeVisible();
 
     await typeFilter("Alabama");
     await userEvent.tab();
+    await expect.element(afterComboBox).toHaveFocus();
     expect(onSelectionChange).toHaveBeenCalledTimes(1);
     await expect
-      .element(page.getByRole("button", { name: "Remove Alabama" }))
+      .element(page.getByRole("button", { name: "Alabama", exact: true }))
       .toBeVisible();
     await input().click();
     await expect

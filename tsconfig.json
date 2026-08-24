@@ -18,7 +18,7 @@
     "noImplicitAny": true,
     "jsx": "react-jsx",
     "paths": {
-      "~browser-test-utils/*": ["./vitest-browser/*"],
+      "~browser-test-utils/*": ["./test/browser/*"],
       "~storybook-decorators/*": ["./.storybook/decorators/*"],
       "~stories/*": [
         "./packages/ag-grid-theme/stories/*",
@@ -42,7 +42,7 @@
     ".storybook/decorators",
     "docs",
     "tooling",
-    "vitest-browser",
+    "test/browser",
     "vitest.browser.config.mts",
     "./declarations.d.ts"
   ]

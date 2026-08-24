@@ -11,7 +11,7 @@ import { composeStory } from "@storybook/react-vite";
 import { useEffect } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page } from "vitest/browser";
-import { withLocalization } from "../.storybook/decorators/withLocalization";
+import { withLocalization } from "../../.storybook/decorators/withLocalization";
 import { renderWithSalt } from "./render";
 
 interface LifecycleProbeProps {

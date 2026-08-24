@@ -1,7 +1,7 @@
 import { composeStories } from "@storybook/react-vite";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { renderWithSalt } from "~browser-test-utils/render";
+import { act, renderWithSalt } from "~browser-test-utils/render";
 import * as rangeSliderStories from "~stories/range-slider/range-slider.stories";
 
 const { Default } = composeStories(rangeSliderStories);
@@ -27,26 +27,28 @@ function nextFrame() {
   return new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 }
 
-function dispatchPointer(
+async function dispatchPointer(
   target: EventTarget,
   type: "pointerdown" | "pointermove" | "pointerup",
   pointerType: "mouse" | "touch",
   clientX: number,
   clientY: number,
 ) {
-  target.dispatchEvent(
-    new PointerEvent(type, {
-      bubbles: true,
-      cancelable: true,
-      button: 0,
-      buttons: type === "pointerup" ? 0 : 1,
-      clientX,
-      clientY,
-      isPrimary: true,
-      pointerId: 1,
-      pointerType,
-    }),
-  );
+  await act(async () => {
+    target.dispatchEvent(
+      new PointerEvent(type, {
+        bubbles: true,
+        cancelable: true,
+        button: 0,
+        buttons: type === "pointerup" ? 0 : 1,
+        clientX,
+        clientY,
+        isPrimary: true,
+        pointerId: 1,
+        pointerType,
+      }),
+    );
+  });
 }
 
 describe("Given a Range Slider", () => {
@@ -99,7 +101,7 @@ describe("Given a Range Slider", () => {
       const pointerY = trackRect.top + trackRect.height / 2;
       const secondThumb = page.getByTestId("sliderThumb").nth(1);
 
-      dispatchPointer(
+      await dispatchPointer(
         secondThumb.element(),
         "pointerdown",
         pointerType,
@@ -107,14 +109,20 @@ describe("Given a Range Slider", () => {
         pointerY,
       );
       await nextFrame();
-      dispatchPointer(window, "pointermove", pointerType, dragX, pointerY);
+      await dispatchPointer(
+        window,
+        "pointermove",
+        pointerType,
+        dragX,
+        pointerY,
+      );
       await expectValues("0", "6");
       await expect.element(sliders().nth(1)).toHaveFocus();
       await expect
         .element(secondThumb)
         .not.toHaveClass("saltSliderThumb-focusVisible");
 
-      dispatchPointer(window, "pointerup", pointerType, dragX, pointerY);
+      await dispatchPointer(window, "pointerup", pointerType, dragX, pointerY);
       await nextFrame();
       const valueAfterRelease = (sliders().nth(1).element() as HTMLInputElement)
         .value;
@@ -127,7 +135,7 @@ describe("Given a Range Slider", () => {
         Number(valueAfterRelease),
       ]);
 
-      dispatchPointer(
+      await dispatchPointer(
         window,
         "pointermove",
         pointerType,

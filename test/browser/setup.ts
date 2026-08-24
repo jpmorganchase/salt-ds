@@ -1,7 +1,7 @@
 import { setProjectAnnotations } from "@storybook/react-vite";
 import { beforeEach } from "vitest";
 import { cdp } from "vitest/browser";
-import * as globalStorybookConfig from "../.storybook/preview";
+import * as globalStorybookConfig from "../../.storybook/preview";
 import "./browser.css";
 
 setProjectAnnotations(globalStorybookConfig);

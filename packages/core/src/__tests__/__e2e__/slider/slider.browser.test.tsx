@@ -1,7 +1,7 @@
 import { composeStories } from "@storybook/react-vite";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { renderWithSalt } from "~browser-test-utils/render";
+import { act, renderWithSalt } from "~browser-test-utils/render";
 import * as sliderStories from "~stories/slider/slider.stories";
 
 const { Default } = composeStories(sliderStories);
@@ -24,26 +24,28 @@ function nextFrame() {
   return new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 }
 
-function dispatchPointer(
+async function dispatchPointer(
   target: EventTarget,
   type: "pointerdown" | "pointermove" | "pointerup",
   pointerType: "mouse" | "touch",
   clientX: number,
   clientY: number,
 ) {
-  target.dispatchEvent(
-    new PointerEvent(type, {
-      bubbles: true,
-      cancelable: true,
-      button: 0,
-      buttons: type === "pointerup" ? 0 : 1,
-      clientX,
-      clientY,
-      isPrimary: true,
-      pointerId: 1,
-      pointerType,
-    }),
-  );
+  await act(async () => {
+    target.dispatchEvent(
+      new PointerEvent(type, {
+        bubbles: true,
+        cancelable: true,
+        button: 0,
+        buttons: type === "pointerup" ? 0 : 1,
+        clientX,
+        clientY,
+        isPrimary: true,
+        pointerId: 1,
+        pointerType,
+      }),
+    );
+  });
 }
 
 describe("Given a Slider", () => {
@@ -94,7 +96,7 @@ describe("Given a Slider", () => {
       const afterReleaseX = trackRect.left + trackRect.width * 0.9;
       const pointerY = trackRect.top + trackRect.height / 2;
 
-      dispatchPointer(
+      await dispatchPointer(
         thumb().element(),
         "pointerdown",
         pointerType,
@@ -102,20 +104,26 @@ describe("Given a Slider", () => {
         pointerY,
       );
       await nextFrame();
-      dispatchPointer(window, "pointermove", pointerType, dragX, pointerY);
+      await dispatchPointer(
+        window,
+        "pointermove",
+        pointerType,
+        dragX,
+        pointerY,
+      );
       await expect.element(slider()).toHaveValue("6");
       await expect.element(slider()).toHaveFocus();
       await expect
         .element(thumb())
         .not.toHaveClass("saltSliderThumb-focusVisible");
 
-      dispatchPointer(window, "pointerup", pointerType, dragX, pointerY);
+      await dispatchPointer(window, "pointerup", pointerType, dragX, pointerY);
       await nextFrame();
       const valueAfterRelease = (slider().element() as HTMLInputElement).value;
       expect(onChange.mock.lastCall?.[1]).toBe(Number(valueAfterRelease));
       expect(onChangeEnd.mock.lastCall?.[1]).toBe(Number(valueAfterRelease));
 
-      dispatchPointer(
+      await dispatchPointer(
         window,
         "pointermove",
         pointerType,
