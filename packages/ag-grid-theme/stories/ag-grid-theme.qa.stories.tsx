@@ -174,7 +174,7 @@ ColumnMenuFilterFiltered.play = async ({ canvasElement }) => {
 
     await userEvent.click(within(alaskaOption).getByText("Alaska"));
 
-    await expect(within(alaskaOption).getByRole("checkbox")).not.toBeChecked();
+    await expect(alaskaOption.querySelector("input")).not.toBeChecked();
 
     await userEvent.click(
       within(menu).getByRole("button", {
@@ -481,7 +481,12 @@ ZebraVariantRowSelection.play = async ({ canvasElement }) => {
 
   for (const cell of coloradoCells) {
     const row = cell.closest("[row-index]") as HTMLElement;
-    await userEvent.click(within(row).getByRole("checkbox"));
+    const grid = row.closest(".ag-root-wrapper")!;
+    await userEvent.click(
+      grid.querySelector(
+        `[row-index="${row.getAttribute("row-index")}"] .ag-selection-checkbox`,
+      )!,
+    );
     await expect(row).toHaveClass("ag-row-selected");
   }
 };
@@ -502,11 +507,21 @@ HeaderVariants.play = async ({ canvasElement }) => {
     .slice(0, 2);
 
   for (const row of rows) {
-    await userEvent.click(within(row).getByRole("checkbox"));
+    const grid = row.closest(".ag-root-wrapper")!;
+    await userEvent.click(
+      grid.querySelector(
+        `[row-index="${row.getAttribute("row-index")}"] .ag-selection-checkbox`,
+      )!,
+    );
   }
 
   for (const row of rows) {
-    await expect(within(row).getByRole("checkbox")).toBeChecked();
+    const grid = row.closest(".ag-root-wrapper")!;
+    await expect(
+      grid.querySelector(
+        `[row-index="${row.getAttribute("row-index")}"] .ag-selection-checkbox input`,
+      ),
+    ).toBeChecked();
   }
 };
 
@@ -522,7 +537,12 @@ WrappedHeaderRowSelection.play = async ({ canvasElement }) => {
     .slice(0, 1);
 
   for (const row of rows) {
-    await userEvent.click(within(row).getByRole("checkbox"));
+    const grid = row.closest(".ag-root-wrapper")!;
+    await userEvent.click(
+      grid.querySelector(
+        `[row-index="${row.getAttribute("row-index")}"] .ag-selection-checkbox`,
+      )!,
+    );
     await expect(row).toHaveClass("ag-row-selected");
   }
 };
