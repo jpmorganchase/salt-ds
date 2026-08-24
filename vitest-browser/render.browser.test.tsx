@@ -1,9 +1,17 @@
 import { useDensity, useTheme } from "@salt-ds/core";
+import type {
+  DateFrameworkType,
+  SaltDateAdapter,
+} from "@salt-ds/date-adapters";
+import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { useLocalization } from "@salt-ds/date-components";
+import { composeStory } from "@storybook/react-vite";
 import { useEffect } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page } from "vitest/browser";
+import { withLocalization } from "../.storybook/decorators/withLocalization";
 import { renderWithSalt } from "./render";
 
 interface LifecycleProbeProps {
@@ -55,6 +63,39 @@ function DateLifecycleProbe({
       {label}
     </div>
   );
+}
+
+function PortableDateProbe() {
+  const { dateAdapter } = useLocalization();
+  const adapterType =
+    dateAdapter instanceof AdapterDateFnsTZ
+      ? "date-fns-tz"
+      : dateAdapter instanceof AdapterDateFns
+        ? "date-fns"
+        : dateAdapter instanceof AdapterDayjs
+          ? "dayjs"
+          : "unknown";
+  return <div data-testid="portable-date-probe">{adapterType}</div>;
+}
+
+const PortableDateStory = composeStory(
+  { render: () => <PortableDateProbe /> },
+  { component: PortableDateProbe, title: "Portable date probe" },
+  {
+    decorators: [withLocalization],
+    initialGlobals: { dateAdapter: "luxon" },
+  },
+);
+
+async function expectPortableStoryAdapter<
+  TDate extends DateFrameworkType,
+  TLocale,
+>(adapter: SaltDateAdapter<TDate, TLocale>, expectedType: string) {
+  await renderWithSalt(<PortableDateStory />, { dateAdapter: adapter });
+
+  await expect
+    .element(page.getByTestId("portable-date-probe"))
+    .toHaveTextContent(expectedType);
 }
 
 describe("renderWithSalt", () => {
@@ -124,6 +165,12 @@ describe("renderWithSalt", () => {
       .toHaveAttribute("data-adapter-type-preserved", "true");
     expect(onMount).toHaveBeenCalledOnce();
     expect(onUnmount).not.toHaveBeenCalled();
+  });
+
+  it("preserves exact adapters inside portable story decorators", async () => {
+    await expectPortableStoryAdapter(new AdapterDayjs(), "dayjs");
+    await expectPortableStoryAdapter(new AdapterDateFns(), "date-fns");
+    await expectPortableStoryAdapter(new AdapterDateFnsTZ(), "date-fns-tz");
   });
 
   it("replaces the previous tree on a separate helper call", async () => {

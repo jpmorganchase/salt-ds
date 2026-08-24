@@ -16,7 +16,6 @@ node_modules
 /.yarn/plugins/** binary
 
 # testing
-/cypress/screenshots
 /.vitest-attachments
 /vitest-browser/screenshots
 /playwright-report

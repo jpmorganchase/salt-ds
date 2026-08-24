@@ -34,13 +34,42 @@ const distAliases: Record<string, string> = isCI
   ? {
       "@salt-ds/core": path.resolve(rootDir, "./dist/salt-ds-core"),
       "@salt-ds/countries": path.resolve(rootDir, "./dist/salt-ds-countries"),
+      "@salt-ds/date-adapters/date-fns-tz": path.resolve(
+        rootDir,
+        "./dist/salt-ds-date-adapters/dist-es/date-fns-tz/index.js",
+      ),
+      "@salt-ds/date-adapters/date-fns": path.resolve(
+        rootDir,
+        "./dist/salt-ds-date-adapters/dist-es/date-fns/index.js",
+      ),
+      "@salt-ds/date-adapters/dayjs": path.resolve(
+        rootDir,
+        "./dist/salt-ds-date-adapters/dist-es/dayjs/index.js",
+      ),
+      "@salt-ds/date-adapters/luxon": path.resolve(
+        rootDir,
+        "./dist/salt-ds-date-adapters/dist-es/luxon/index.js",
+      ),
+      "@salt-ds/date-adapters/moment": path.resolve(
+        rootDir,
+        "./dist/salt-ds-date-adapters/dist-es/moment/index.js",
+      ),
+      "@salt-ds/date-adapters": path.resolve(
+        rootDir,
+        "./dist/salt-ds-date-adapters",
+      ),
       "@salt-ds/date-components": path.resolve(
         rootDir,
         "./dist/salt-ds-date-components",
       ),
+      "@salt-ds/embla-carousel": path.resolve(
+        rootDir,
+        "./dist/salt-ds-embla-carousel",
+      ),
       "@salt-ds/icons": path.resolve(rootDir, "./dist/salt-ds-icons"),
       "@salt-ds/lab": path.resolve(rootDir, "./dist/salt-ds-lab"),
       "@salt-ds/styles": path.resolve(rootDir, "./dist/salt-ds-styles"),
+      "@salt-ds/theme": path.resolve(rootDir, "./dist/salt-ds-theme"),
       "@salt-ds/window": path.resolve(rootDir, "./dist/salt-ds-window"),
     }
   : {};
@@ -62,11 +91,6 @@ export default defineConfig({
   define: {
     "process.env": {},
   },
-  server: {
-    watch: {
-      ignored: ["**/coverage"],
-    },
-  },
   build: {
     sourcemap: !isCI,
   },
@@ -83,7 +107,9 @@ export default defineConfig({
       ...(isCI
         ? [
             "@salt-ds/core",
+            "@salt-ds/date-adapters",
             "@salt-ds/date-components",
+            "@salt-ds/embla-carousel",
             "@salt-ds/lab",
             "@salt-ds/icons",
             "@salt-ds/window",
@@ -93,8 +119,8 @@ export default defineConfig({
   },
   test: {
     expect: {
-      // Match Cypress's retry window closely enough for animations to settle
-      // when several browser files are competing for CPU.
+      // Allow enough time for animations to settle when several browser files
+      // are competing for CPU.
       poll: {
         timeout: 5_000,
       },
@@ -103,22 +129,11 @@ export default defineConfig({
     // Each worker drives a full browser. Six retains parallel throughput without
     // the CPU saturation observed at eight; the CLI can still override it.
     maxWorkers: Math.min(6, availableParallelism()),
-    include: ["vitest-browser/**/*.browser.test.tsx"],
+    include: [
+      "vitest-browser/**/*.browser.test.tsx",
+      "packages/*/src/__tests__/__e2e__/**/*.browser.test.tsx",
+    ],
     setupFiles: ["./vitest-browser/setup.ts"],
-    coverage: {
-      provider: "v8",
-      include: [
-        "packages/{core,countries,date-adapters,date-components,embla-carousel,icons,lab,styles,window}/src/**/*.{ts,tsx}",
-      ],
-      exclude: [
-        "**/*.d.ts",
-        "**/__tests__/**",
-        "packages/icons/src/components/**",
-        "packages/countries/src/components/**",
-        "packages/countries/src/{countryComponentMap,countryMetaMap}.ts",
-        "packages/countries/src/lazy-country-symbol/lazyMap.ts",
-      ],
-    },
     browser: {
       enabled: true,
       provider: playwright({
