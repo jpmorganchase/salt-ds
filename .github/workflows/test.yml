@@ -111,8 +111,8 @@ jobs:
       - name: Install dependencies
         run: yarn
       - run: yarn run test
-  vitest-browser-tests:
-    name: Vitest Browser Tests (React ${{ matrix.react }})
+  browser-tests:
+    name: Browser Tests (React ${{ matrix.react }})
     strategy:
       fail-fast: false
       matrix:
@@ -138,11 +138,11 @@ jobs:
           yarn set resolution react-dom@npm:^18.0.0 "npm:^$REACT_VERSION"
       - name: Build packages
         run: yarn run build
-      - name: Vitest Browser Components
+      - name: Test Components
         run: yarn run test:components
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: failure()
         with:
-          name: vitest-browser-screenshots-${{ matrix.react }}
+          name: browser-screenshots-${{ matrix.react }}
           path: test/browser/screenshots
           if-no-files-found: ignore
