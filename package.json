@@ -25,8 +25,8 @@
     "copy:icon:css": "yarn workspace @salt-ds/icons copy:css",
     "copy:countries:css": "yarn workspace @salt-ds/countries copy:css",
     "test": "vitest",
-    "test:components": "cypress run --component --browser chrome --headless",
-    "test:components:local": "cypress open --component --browser electron",
+    "test:components": "vitest run --config vitest.browser.config.mts --browser.headless",
+    "test:components:local": "vitest --config vitest.browser.config.mts",
     "prettier": "prettier --write .",
     "prettier:ci": "prettier --check .",
     "lint": "biome check",
@@ -51,7 +51,6 @@
     "@biomejs/js-api": "^6.0.0",
     "@biomejs/wasm-nodejs": "^2.5.7",
     "@changesets/cli": "^3.0.0",
-    "@cypress/react": "^8.0.0",
     "@e965/xlsx": "^0.20.3",
     "@faker-js/faker": "^8.0.0",
     "@fontsource/open-sans": "^5.0.0",
@@ -63,7 +62,6 @@
     "@storybook/icons": "^2.0.1",
     "@storybook/react-vite": "10.5.3",
     "@tanstack/react-query": "^5.0.0",
-    "@testing-library/cypress": "^10.0.0",
     "@testing-library/dom": "^10.0.0",
     "@types/node": "^24.0.0",
     "@types/react": "^18.3.22",
@@ -79,9 +77,6 @@
     "chromatic": "^18.0.0",
     "ci-info": "^4.0.0",
     "clsx": "^2.0.0",
-    "cypress": "^15.17.0",
-    "cypress-axe": "^1.7.0",
-    "cypress-real-events": "^1.15.0",
     "deepmerge": "^4.2.2",
     "dom-accessibility-api": "^0.7.1",
     "highcharts": "10.3.3",
@@ -98,7 +93,7 @@
     "stylelint": "^17.0.0",
     "typescript": "^6.0.0",
     "vite": "^8.2.0",
-    "vitest": "^4.1.10",
+    "vitest": "^4.1.11",
     "yup": "^1.7.1"
   },
   "resolutions": {
@@ -140,17 +135,18 @@
     "@rollup/plugin-commonjs": "^28.0.1",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.3.0",
+    "@vitest/browser-playwright": "^4.1.11",
     "browserslist-to-esbuild": "^2.1.1",
     "execa": "^10.0.0",
+    "fs-extra": "^9.1.0",
     "get-tsconfig": "^4.7.5",
+    "playwright": "1.62.1",
     "rollup": "^4.24.2",
     "rollup-plugin-esbuild": "^6.1.1",
-    "rollup-plugin-postcss": "^4.0.2"
+    "rollup-plugin-postcss": "^4.0.2",
+    "vitest-browser-react": "2.2.0"
   },
   "dependenciesMeta": {
-    "cypress": {
-      "built": true
-    },
     "esbuild": {
       "built": true
     },

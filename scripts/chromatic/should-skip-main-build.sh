@@ -40,12 +40,12 @@ fi
 echo "Changed files between $parent and $head_sha:"
 printf '%s\n' "$changed" | sed 's/^/  /'
 
-# Paths that cannot affect Storybook output: four directory roots whose
+# Paths that cannot affect Storybook output: three directory roots whose
 # contents are never part of the visual build, plus LICENSE, plus any
 # Markdown / MDX file. Storybook MDX in this codebase is documentation
 # only (uses `<Canvas of={...} />` to embed stories defined in
 # `.stories.tsx` files; no inline `<Story>` blocks).
-allowlist_regex='^(\.changeset|\.github|site|cypress)/|^LICENSE$|\.mdx?$'
+allowlist_regex='^(\.changeset|\.github|site)/|^LICENSE$|\.mdx?$'
 
 remaining=$(printf '%s\n' "$changed" | grep -Ev "$allowlist_regex" || true)
 

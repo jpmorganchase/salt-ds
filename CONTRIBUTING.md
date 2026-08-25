@@ -110,7 +110,7 @@ In `theme/css/deprecated/characteristics.css`, add these 3 tokens:
 
 - Most pull requests should have a related issue. This helps us track the changes, agree scope and ensures that the pull request is addressing a specific problem or feature.
 - Small pull requests are preferred, as they are easier to review and test. If you have a large change, consider breaking it down into smaller pull requests.
-- Pull requests should include tests for any new functionality or changes to existing functionality. These can either be behavioral tests using Cypress component tests or visual tests using Chromatic.
+- Pull requests should include tests for any new functionality or changes to existing functionality. These can either be behavioral tests using Vitest browser mode or visual tests using Chromatic.
 - Pull request titles and commits should be written in the present tense, e.g. "Add new icon" or "Fix bug in component".
 - Each user-facing change should be documented in a changeset. The changeset should be written in past tense, e.g. "Added new icon" or "Fixed bug in component".
 - To help efficiency, please self-review your pull request before submitting it.
