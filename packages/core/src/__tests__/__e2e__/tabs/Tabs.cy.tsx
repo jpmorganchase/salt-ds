@@ -842,10 +842,19 @@ describe("Given a Tabstrip", () => {
 
     clickOverflowTab("Liquidity");
     cy.findByRole("tab", { name: "Home", selected: true }).should("be.visible");
+    cy.window().then(
+      (win) =>
+        new Cypress.Promise<void>((resolve) => {
+          win.requestAnimationFrame(() => {
+            win.requestAnimationFrame(() => resolve());
+          });
+        }),
+    );
 
     cy.findByRole("button", { name: "Select Liquidity externally" }).click();
 
     assertSelectedMainTab("Liquidity");
+    cy.wait(150);
     cy.get("[aria-live]").should(
       "not.contain.text",
       "Liquidity moved to main tab list",
