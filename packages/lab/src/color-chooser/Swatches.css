@@ -12,12 +12,12 @@
 
 .saltColorChooserSwatches-colorTextDiv {
   font-size: var(--salt-text-fontSize);
-  margin-right: var(--salt-size-unit);
+  margin-right: var(--salt-spacing-100);
 }
 
 .saltColorChooserSwatches-alphaTextDiv {
   font-size: var(--salt-text-fontSize);
-  margin-right: var(--salt-size-unit);
+  margin-right: var(--salt-spacing-100);
 }
 
 .saltColorChooserSwatches-textDiv {
@@ -27,5 +27,5 @@
 }
 
 .saltColorChooserSwatches-pickerDiv {
-  padding-top: calc(2 * var(--salt-size-unit));
+  padding-top: calc(2 * var(--salt-spacing-100));
 }

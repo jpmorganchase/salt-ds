@@ -78,6 +78,7 @@ export const ControlledCarousel = (): ReactElement => {
                   media={
                     <img
                       aria-hidden={true}
+                      alt=""
                       className={styles.carouselImage}
                       src={slide.image}
                     />

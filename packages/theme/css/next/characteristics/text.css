@@ -23,7 +23,7 @@
   --salt-text-label-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
 
   /* Code */
-  --salt-text-code-fontFamily: var(--salt-palette-text-fontFamily-code);
+  --salt-text-code-fontFamily: var(--salt-typography-fontFamily-ptMono);
 }
 
 .salt-theme-next.salt-theme[data-action-font="Open Sans"] {

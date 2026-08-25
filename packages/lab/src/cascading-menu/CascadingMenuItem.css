@@ -12,8 +12,8 @@
   user-select: none;
   white-space: nowrap;
   text-overflow: ellipsis;
-  border-top: var(--salt-size-fixed-100) var(--salt-selectable-borderStyle-selected) transparent;
-  border-bottom: var(--salt-size-fixed-100) var(--salt-selectable-borderStyle-selected) transparent;
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
   box-sizing: border-box;
 }
 
@@ -27,7 +27,7 @@
 }
 
 .saltCascadingMenuItem-menuItemStartAdornmentContainer {
-  margin-right: var(--salt-size-unit);
+  margin-right: var(--salt-spacing-100);
   width: 12px;
 }
 

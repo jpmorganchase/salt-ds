@@ -24,7 +24,7 @@
 }
 
 .saltInputPill.saltInputPill:active {
-  background: var(--salt-actionable-primary-background-active);
-  --saltPill-color: var(--salt-actionable-primary-foreground-active);
-  --saltIcon-color: var(--salt-actionable-primary-foreground-active);
+  background: var(--salt-actionable-bold-background-active);
+  --saltPill-color: var(--salt-actionable-bold-foreground-active);
+  --saltIcon-color: var(--salt-actionable-bold-foreground-active);
 }

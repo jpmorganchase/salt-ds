@@ -18,8 +18,8 @@ export const Interactive = (): ReactElement => (
         &nbsp; or later.
       </BannerContent>
       <BannerActions>
-        <Button aria-label="close" appearance="transparent">
-          <CloseIcon />
+        <Button aria-label="Dismiss" appearance="transparent">
+          <CloseIcon aria-hidden />
         </Button>
       </BannerActions>
     </Banner>

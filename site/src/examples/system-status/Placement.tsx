@@ -38,8 +38,8 @@ export const Placement = (): ReactElement => {
             fraud.
           </BannerContent>
           <BannerActions>
-            <Button aria-label="refresh" appearance="transparent">
-              <CloseIcon />
+            <Button aria-label="Dismiss" appearance="transparent">
+              <CloseIcon aria-hidden />
             </Button>
           </BannerActions>
         </Banner>

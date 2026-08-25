@@ -88,10 +88,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       ref={ref}
       target={target}
       color="inherit"
-      {...rest}
-    >
-      {children}
-      {target === "_blank" && (
+      externalLinkContent={
         <>
           {LinkIconComponent && (
             <LinkIconComponent className={withBaseName("icon")} aria-hidden />
@@ -100,7 +97,10 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
             Opens in a new tab
           </span>
         </>
-      )}
+      }
+      {...rest}
+    >
+      {children}
     </Text>
   );
 });

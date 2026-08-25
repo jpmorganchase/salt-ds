@@ -17,11 +17,11 @@ export const Error = (): ReactElement => (
         again.
       </BannerContent>
       <BannerActions>
-        <Button aria-label="refresh" appearance="transparent">
-          <RefreshIcon />
+        <Button aria-label="Refresh" appearance="transparent">
+          <RefreshIcon aria-hidden />
         </Button>
-        <Button aria-label="close" appearance="transparent">
-          <CloseIcon />
+        <Button aria-label="Dismiss" appearance="transparent">
+          <CloseIcon aria-hidden />
         </Button>
       </BannerActions>
     </Banner>

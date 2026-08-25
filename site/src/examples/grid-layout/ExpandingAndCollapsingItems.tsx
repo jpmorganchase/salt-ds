@@ -31,8 +31,12 @@ export const ExpandingAndCollapsingItems = (): ReactElement => {
             shouldAnimate && !expanded,
         })}
       >
-        <Button sentiment="accented" onClick={onExpand}>
-          {expanded ? <MinimizeIcon /> : <ExpandIcon />}
+        <Button
+          sentiment="accented"
+          onClick={onExpand}
+          aria-label={expanded ? "Collapse" : "Expand"}
+        >
+          {expanded ? <MinimizeIcon aria-hidden /> : <ExpandIcon aria-hidden />}
         </Button>
       </GridItem>
 

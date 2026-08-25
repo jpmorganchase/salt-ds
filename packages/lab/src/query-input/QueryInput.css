@@ -5,21 +5,21 @@
 }
 
 .saltQueryInputBody > .saltIcon {
-  padding: var(--salt-size-unit);
+  padding: var(--salt-spacing-100);
   align-self: start;
 }
 
 .saltQueryInputBody-separator {
   width: 1px;
   background: var(--salt-separable-secondary-borderColor);
-  margin: 0 var(--salt-size-unit);
+  margin: 0 var(--salt-spacing-100);
   align-self: stretch;
 }
 
 .saltQueryInputBody-buttonGroup {
   flex-shrink: 0;
   align-self: start;
-  margin-bottom: var(--salt-size-unit);
+  margin-bottom: var(--salt-spacing-100);
 }
 
 .saltQueryInputBody-input {
@@ -44,7 +44,7 @@
 
 .saltCategoryListItem-text {
   flex-shrink: 0;
-  margin-right: calc(var(--salt-size-unit) * 1.5);
+  margin-right: calc(var(--salt-spacing-100) * 1.5);
 }
 
 .saltCategoryListItem-valuesContainer {
@@ -63,7 +63,7 @@
 
 .saltCategoryListItem-chevron {
   flex-shrink: 0;
-  margin-left: var(--salt-size-unit);
+  margin-left: var(--salt-spacing-100);
 }
 
 .saltListItem-selected .saltIcon {
@@ -83,7 +83,7 @@
 }
 
 .saltQueryInputValueList-back .saltIcon {
-  margin-right: var(--salt-size-unit);
+  margin-right: var(--salt-spacing-100);
 }
 
 .saltQueryInputValueList-category {
@@ -102,7 +102,7 @@
   font-weight: var(--salt-text-fontWeight-strong);
   display: flex;
   align-items: center;
-  padding: 0 var(--salt-size-unit);
+  padding: 0 var(--salt-spacing-100);
   position: sticky;
   top: 0;
   z-index: var(--salt-zIndex-default);

@@ -139,19 +139,19 @@ export const PreferencesDialog = () => {
   const items = [
     {
       label: "Display",
-      icon: <LaptopIcon />,
+      icon: <LaptopIcon aria-hidden />,
       title: "Display settings",
       view: displayView,
     },
     {
       label: "Account",
-      icon: <UserIcon />,
+      icon: <UserIcon aria-hidden />,
       title: "Account settings",
       view: accountView,
     },
     {
       label: "Export",
-      icon: <ExportIcon />,
+      icon: <ExportIcon aria-hidden />,
       title: "Export settings",
       view: exportView,
     },
@@ -203,7 +203,7 @@ export const PreferencesDialog = () => {
             appearance="transparent"
             aria-label="Back"
           >
-            <ChevronLeftIcon />
+            <ChevronLeftIcon aria-hidden />
           </Button>
         )}
         <H2>{active.label}</H2>

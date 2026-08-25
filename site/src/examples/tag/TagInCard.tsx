@@ -20,7 +20,7 @@ export const TagInCard = (): ReactElement => (
           dates, real-time interest rate changes, and credit ratings.
         </Text>
       </StackLayout>
-      <FlexLayout direction="row" justify="end" gap={1}>
+      <FlexLayout direction="row" justify="end" gap={0.5}>
         <Tag category={4}>Coming soon</Tag>
         <Tag variant="secondary" category={3}>
           Bonds

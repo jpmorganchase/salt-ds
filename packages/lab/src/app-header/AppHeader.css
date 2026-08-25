@@ -1,18 +1,18 @@
 .salt-density-medium,
 .salt-density-low,
 .salt-density-touch {
-  --appHeader-height: var(--saltAppHeader-height, calc(var(--salt-size-base) + var(--salt-size-unit) * 2));
+  --appHeader-height: var(--saltAppHeader-height, calc(var(--salt-size-base) + var(--salt-spacing-100) * 2));
 }
 
 .salt-density-high {
-  --appHeader-height: var(--saltAppHeader-height, calc(var(--salt-size-base) + var(--salt-size-unit) * 3));
+  --appHeader-height: var(--saltAppHeader-height, calc(var(--salt-size-base) + var(--salt-spacing-100) * 3));
 }
 
 .saltAppHeader {
   --appHeader-background: var(--salt-container-primary-background);
   --appHeader-separable-bar: var(--salt-separable-secondary-borderColor);
   --appHeader-shadow: var(--saltAppHeader-shadow, var(--salt-overlayable-shadow-region));
-  --appHeader-padding: var(--salt-size-container-spacing);
+  --appHeader-padding: var(--salt-spacing-300);
   --appHeader-paddingLeft: 8px;
   --appHeader-paddingRight: var(--appHeader-padding);
 

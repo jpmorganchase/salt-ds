@@ -1,5 +1,26 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.103
+
+### Minor Changes
+
+- ba3df7e: Added `OnSolidButton`, a button for low-emphasis actions on solid semantic surfaces, such as dismiss actions within status messages that use solid fills.
+- d29e31c: Added `LinkButton`, a button-styled link for prominent navigation. Supports neutral and accented sentiments, icons, icon-only labels, and routing-library integration via the `render` prop.
+
+  ```tsx
+  import { LinkButton } from "@salt-ds/lab";
+
+  <LinkButton href="/reports">View reports</LinkButton>;
+  ```
+
+### Patch Changes
+
+- 0e83a66: Migrated deprecated theme token usage in Lab styles to current foundation and characteristic tokens.
+- Updated dependencies [6c12378]
+- Updated dependencies [2892934]
+- Updated dependencies [416d4b8]
+  - @salt-ds/core@1.70.0
+
 ## 1.0.0-alpha.102
 
 ### Minor Changes

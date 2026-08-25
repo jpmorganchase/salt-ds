@@ -1,0 +1,55 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Neutral
+
+Use the neutral sentiment for routine navigation that should look like a button.
+
+<LivePreview componentName="link-button" exampleName="Neutral" />
+
+## Accented
+
+Use the accented sentiment for prominent navigation actions.
+
+<LivePreview componentName="link-button" exampleName="Accented" />
+
+## Open in a new tab
+
+Use `target="_blank"` with `rel="noopener"` or `rel="noreferrer"` to open a link button in a new tab. See [usage](./usage) for when to choose this behavior and [accessibility](./accessibility) for how the new-tab cue is announced.
+
+<LivePreview componentName="link-button" exampleName="ExternalLink" />
+
+## Underline
+
+Link buttons are underlined by default to indicate that they navigate to another destination. Use `underline="never"` only when this is already clear from the surrounding context and does not rely on color alone.
+
+<LivePreview componentName="link-button" exampleName="Underline" />
+
+## With icon
+
+Link buttons support both leading and trailing icons. In most cases, use a trailing icon to reinforce the destination or direction of travel, such as `ArrowRight` or `TearOut`, to indicate moving forward or leaving the current context.
+
+An exception is backward navigation. Use a leading icon such as `ArrowLeft` to indicate returning to a previous page or step. You can also use a leading icon when it acts as a clear visual identifier for the label.
+
+<LivePreview componentName="link-button" exampleName="WithIcon" />
+
+## Icon only
+
+Use an icon-only link button when space is limited and the icon clearly communicates the destination or direction of travel. This can be a directional icon, such as a back arrow; a brand icon, such as the GitHub logo; or an icon familiar in your product context, such as a basket in a commerce application or a wallet in a finance application.
+
+See [accessibility](./accessibility) for accessible naming, decorative icon, and tooltip guidance.
+
+<LivePreview componentName="link-button" exampleName="IconOnly" />
+
+## Routing libraries
+
+Use the `render` prop when a routing library handles navigation in your application. This example allows React Router to handle navigation while preserving `LinkButton` styling and behavior. It does this by rendering a React Router link and mapping `LinkButton`’s `href` to React Router’s `to` prop.
+
+<LivePreview componentName="link-button" exampleName="RoutingLibraries" />

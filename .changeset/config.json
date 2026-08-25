@@ -1,14 +1,15 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@1.6.3/schema.json",
+  "$schema": "../node_modules/@changesets/config/schema.json",
   "changelog": "@changesets/cli/changelog",
   "commit": false,
   "linked": [],
   "access": "public",
   "baseBranch": "main",
+  "format": "prettier",
   "updateInternalDependencies": "patch",
   "ignore": [],
   "privatePackages": false,
-  "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
-    "onlyUpdatePeerDependentsWhenOutOfRange": false
+  "snapshot": {
+    "useCalculatedVersion": false
   }
 }

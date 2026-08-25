@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import path from "node:path";
 import { findAll, parse } from "css-tree";
 import glob from "fast-glob";
 import valueParser from "postcss-value-parser";
@@ -10,19 +11,55 @@ const {
   utils: { report, ruleMessages },
 } = stylelint;
 
-const deprecatedTokensSet = new Set(
-  glob
-    .sync("./packages/theme/css/*/deprecated/*.css")
-    .flatMap((file) => {
-      const ast = parse(fs.readFileSync(file, { encoding: "utf-8" }));
-      return findAll(
-        ast,
-        (node) =>
-          node.type === "Declaration" && node.property.startsWith("--salt"),
-      ).map((decl) => decl.property);
-    })
-    .filter(Boolean),
+function loadTokens(pattern, options) {
+  return new Set(
+    glob
+      .sync(pattern, options)
+      .flatMap((file) => {
+        const ast = parse(fs.readFileSync(file, { encoding: "utf-8" }));
+        return findAll(
+          ast,
+          (node) =>
+            node.type === "Declaration" && node.property.startsWith("--salt"),
+        ).map((decl) => decl.property);
+      })
+      .filter(Boolean),
+  );
+}
+
+const activeThemeTokens = loadTokens("./packages/theme/css/**/*.css", {
+  ignore: ["./packages/theme/css/**/deprecated/**/*.css"],
+});
+const sharedDeprecatedTokens = loadTokens(
+  "./packages/theme/css/deprecated/*.css",
 );
+
+for (const token of activeThemeTokens) {
+  sharedDeprecatedTokens.delete(token);
+}
+
+const deprecatedTokensByTheme = {
+  legacy: new Set([
+    ...sharedDeprecatedTokens,
+    ...loadTokens("./packages/theme/css/legacy/deprecated/*.css"),
+  ]),
+  next: new Set([
+    ...sharedDeprecatedTokens,
+    ...loadTokens("./packages/theme/css/next/deprecated/*.css"),
+  ]),
+};
+const allDeprecatedTokens = new Set(
+  Object.values(deprecatedTokensByTheme).flatMap((tokens) => [...tokens]),
+);
+
+function deprecatedTokensForSource(sourcePath) {
+  const normalizedPath = sourcePath?.split(path.sep).join("/") ?? "";
+  const theme = normalizedPath.match(
+    /(?:^|\/)packages\/theme\/css\/(legacy|next)(?:\/|$)/,
+  )?.[1];
+
+  return deprecatedTokensByTheme[theme] ?? allDeprecatedTokens;
+}
 
 // ---- Start of plugin ----
 
@@ -38,14 +75,18 @@ const meta = {
   url: "https://saltdesignsystem-storybook.pages.dev/?path=/story/theme-characteristics-about-characteristics--docs",
 };
 
-function isDeprecatedToken(property, verboseLog) {
-  const checkResult = deprecatedTokensSet.has(property);
+function isDeprecatedToken(property, deprecatedTokens, verboseLog) {
+  const checkResult = deprecatedTokens.has(property);
   verboseLog && console.log("Checking", property, "is deprecated", checkResult);
   return checkResult;
 }
 
 const ruleFunction = (primaryOption, secondaryOptionObject) => {
   return (root, result) => {
+    const deprecatedTokens = deprecatedTokensForSource(
+      root.source?.input.file ?? result.opts.from,
+    );
+
     function complainDeprecatedTokenUsage(
       index,
       length,
@@ -82,7 +123,9 @@ const ruleFunction = (primaryOption, secondaryOptionObject) => {
 
           if (!firstNode) return;
 
-          if (isDeprecatedToken(firstNode.value, verboseLog)) {
+          if (
+            isDeprecatedToken(firstNode.value, deprecatedTokens, verboseLog)
+          ) {
             complainDeprecatedTokenUsage(
               declarationValueIndex(decl) + firstNode.sourceIndex,
               firstNode.value.length,
@@ -97,7 +140,7 @@ const ruleFunction = (primaryOption, secondaryOptionObject) => {
 
       verboseLog && console.log({ prop });
 
-      if (isDeprecatedToken(prop, verboseLog)) {
+      if (isDeprecatedToken(prop, deprecatedTokens, verboseLog)) {
         complainDeprecatedTokenUsage(0, prop.length, decl, prop);
       }
     });
