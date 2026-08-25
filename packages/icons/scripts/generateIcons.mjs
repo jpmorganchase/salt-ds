@@ -350,7 +350,7 @@ const generateIndex = async ({ icons, componentsPath }) => {
 };
 
 /**
- * Generate a file to export all Icon components in an array.
+ * Generate a file to export all Icon components by name.
  */
 const generateIconAll = async ({ icons, allPath }) => {
   console.log(`Generating ${allPath}`);
@@ -361,7 +361,7 @@ const generateIconAll = async ({ icons, allPath }) => {
     .join("\n");
 
   const importsStatements = `import {\n${sortedIcons}\n} from "@salt-ds/icons";\n`;
-  const exportStatements = `export const allIcons = [${sortedIcons}\n];\n`;
+  const exportStatements = `export const allIcons = {${sortedIcons}\n};\n`;
 
   const joinedText = [
     GENERATED_WARNING_COMMENT,

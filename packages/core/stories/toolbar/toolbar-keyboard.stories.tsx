@@ -9,7 +9,7 @@ import {
   KeyboardRtlFixture,
   KeyboardTextInputFixture,
   KeyboardToggleGroupFixture,
-} from "./toolbar.cypress.stories";
+} from "./toolbar.test.stories";
 
 export default {
   title: "Core/Toolbar/Keyboard",

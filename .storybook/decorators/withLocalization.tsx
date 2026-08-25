@@ -15,6 +15,14 @@ const dateAdapterMap: Record<string, any> = {
   luxon: AdapterLuxon,
 };
 
+type TestLocalization = {
+  // biome-ignore lint/suspicious/noExplicitAny: Date framework adapter
+  DateAdapter: any;
+  dateAdapter: string;
+  // biome-ignore lint/suspicious/noExplicitAny: Locale type varies by adapter
+  dateLocale: any;
+};
+
 const getDefaultLocale = (dateAdapter: string) => {
   if (dateAdapter === "date-fns") {
     return dateFnsEnUs;
@@ -24,17 +32,22 @@ const getDefaultLocale = (dateAdapter: string) => {
 
 /** A storybook decorator that provides the Localization context (date support etc.) */
 export const withLocalization: Decorator = (Story, context) => {
+  const testLocalization = context.globals
+    ? (context.globals.__saltTestLocalization as TestLocalization | undefined)
+    : undefined;
   const dateAdapter =
-    context.parameters?.dateAdapter ?? context.globals?.dateAdapter;
-  const dateLocale =
-    context.parameters?.dateLocale ?? context.globals?.dateLocale;
+    testLocalization?.dateAdapter ??
+    context.parameters?.dateAdapter ??
+    context.globals?.dateAdapter;
+  const dateLocale = testLocalization
+    ? testLocalization.dateLocale
+    : (context.parameters?.dateLocale ?? context.globals?.dateLocale);
   const locale = dateLocale ?? getDefaultLocale(dateAdapter);
+  const DateAdapter =
+    testLocalization?.DateAdapter ?? dateAdapterMap[dateAdapter];
   return (
-    <LocalizationProvider
-      DateAdapter={dateAdapterMap[dateAdapter]}
-      locale={locale}
-    >
-      <Story key={dateAdapter} {...context} />
+    <LocalizationProvider DateAdapter={DateAdapter} locale={locale}>
+      <Story key={`${dateAdapter}-${DateAdapter.name}`} {...context} />
     </LocalizationProvider>
   );
 };

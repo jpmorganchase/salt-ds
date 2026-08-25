@@ -18,11 +18,12 @@
     "noImplicitAny": true,
     "jsx": "react-jsx",
     "paths": {
+      "~browser-test-utils/*": ["./test/browser/*"],
       "~storybook-decorators/*": ["./.storybook/decorators/*"],
-      "~test-utils/*": ["./cypress/tests/*"],
       "~stories/*": [
         "./packages/ag-grid-theme/stories/*",
         "./packages/core/stories/*",
+        "./packages/countries/stories/*",
         "./packages/date-components/stories/*",
         "./packages/icons/stories/*",
         "./packages/lab/stories/*",
@@ -33,12 +34,7 @@
         "./packages/date-adapters/src/*-adapter/index.ts"
       ]
     },
-    "types": [
-      "cypress",
-      "@testing-library/cypress",
-      "node",
-      "cypress-real-events"
-    ]
+    "types": ["node", "vite/client"]
   },
   "include": [
     "packages",
@@ -46,8 +42,8 @@
     ".storybook/decorators",
     "docs",
     "tooling",
-    "cypress",
-    "cypress/types.d.ts",
+    "test/browser",
+    "vitest.browser.config.mts",
     "./declarations.d.ts"
   ]
 }
