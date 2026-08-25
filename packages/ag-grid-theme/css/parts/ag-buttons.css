@@ -155,11 +155,82 @@
   border-color: var(--salt-separable-secondary-borderColor);
 }
 
-.ag-theme-salt-light .ag-floating-bottom,
-.ag-theme-salt-dark .ag-floating-bottom,
-.ag-theme-salt-compact-light .ag-floating-bottom,
-.ag-theme-salt-compact-dark .ag-floating-bottom {
-  border-color: var(--salt-container-bold-borderColor);
+/*
+  [VERSION DIVERGENCE]: v32-v35 include .ag-floating-top and .ag-floating-bottom,
+  while v33-v35 also introduce viewport border painters driven by --ag-pinned-row-border.
+  That variable is disabled in ag-root-var.css so these higher-specificity outer borders
+  remain the single separators and retain v32 geometry. Both outer elements are removed in v36.
+*/
+.ag-theme-salt-light .ag-floating-top:not(.ag-invisible),
+.ag-theme-salt-dark .ag-floating-top:not(.ag-invisible),
+.ag-theme-salt-compact-light .ag-floating-top:not(.ag-invisible),
+.ag-theme-salt-compact-dark .ag-floating-top:not(.ag-invisible) {
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
+}
+
+.ag-theme-salt-light .ag-floating-bottom:not(.ag-invisible),
+.ag-theme-salt-dark .ag-floating-bottom:not(.ag-invisible),
+.ag-theme-salt-compact-light .ag-floating-bottom:not(.ag-invisible),
+.ag-theme-salt-compact-dark .ag-floating-bottom:not(.ag-invisible) {
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
+}
+
+/*
+  [VERSION DIVERGENCE]: From v36, keep AG Grid's pinned-bottom ::before at top: 0 as the
+  fallback painter for widths the cell containers do not cover (columns narrower than the
+  grid, full-width pinned rows). Recolor it to the Salt bold separator. Inert pre-v36.
+*/
+.ag-theme-salt-light .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before,
+.ag-theme-salt-dark .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before,
+.ag-theme-salt-compact-light .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before,
+.ag-theme-salt-compact-dark .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before {
+  border-top-color: var(--salt-container-bold-borderColor);
+}
+
+/*
+  [VERSION DIVERGENCE]: From v36, reserve the first pinned-bottom row's top pixel with
+  a transparent border so cells shrink to match v32's clipped-row look with no dead
+  strip. The container ::before is the sole bold separator painter, avoiding two bold
+  borders at fractional zoom. --ag-pinned-row-border is none, so the container is exactly
+  the row-height sum. .ag-row-pinned avoids sticky group and header rows. Inert pre-v36.
+*/
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned > .ag-grid-scrolling-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned > .ag-grid-pinned-right-cells {
+  border-bottom: none;
+}
+
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned.ag-row-first > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned.ag-row-first > .ag-grid-scrolling-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned.ag-row-first > .ag-grid-pinned-right-cells {
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+}
+
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned:not(.ag-row-first) > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned:not(.ag-row-first) > .ag-grid-scrolling-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned:not(.ag-row-first) > .ag-grid-pinned-right-cells {
+  border-top: var(--ag-row-border-style) var(--ag-row-border-color) var(--ag-row-border-width);
+}
+
+/*
+  [VERSION DIVERGENCE]: From v36, AG Grid drops the last body row's border when bottom-pinned
+  rows exist. Restore it so the v32 stack (outline / light / bold / outline) is intact.
+  Inert pre-v36.
+*/
+[class*="ag-theme-salt"] .ag-body-vertical-content-no-gap .ag-has-bottom-pinned-rows .ag-grid-scrolling-container .ag-row-last > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-body-vertical-content-no-gap .ag-has-bottom-pinned-rows .ag-grid-scrolling-container .ag-row-last > .ag-grid-scrolling-cells,
+[class*="ag-theme-salt"] .ag-body-vertical-content-no-gap .ag-has-bottom-pinned-rows .ag-grid-scrolling-container .ag-row-last > .ag-grid-pinned-right-cells {
+  border-bottom: var(--ag-row-border-style) var(--ag-row-border-color) var(--ag-row-border-width);
+}
+
+/*
+  [VERSION DIVERGENCE]: From v36, --ag-pinned-row-border is none so JS does not add
+  a pixel to pinned-top height. v32 painted .ag-floating-top with --ag-border-color. Inert pre-v36.
+*/
+[class*="ag-theme-salt"] .ag-grid-pinned-top-rows-container > .ag-row-pinned.ag-row-last > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-top-rows-container > .ag-row-pinned.ag-row-last > .ag-grid-scrolling-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-top-rows-container > .ag-row-pinned.ag-row-last > .ag-grid-pinned-right-cells {
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
 }
 
 .ag-theme-salt-light .ag-column-drop-horizontal,

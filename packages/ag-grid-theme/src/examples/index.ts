@@ -1,3 +1,4 @@
+export { default as AbsoluteSorting } from "./AbsoluteSorting";
 export { CellValidation } from "./CellValidation";
 export { default as CheckboxSelection } from "./CheckboxSelection";
 export { default as Coloration } from "./Coloration";
