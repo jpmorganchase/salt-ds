@@ -12,7 +12,7 @@ import avatarGroupCss from "./AvatarGroup.css";
 
 export interface AvatarGroupProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The children of the AvatarGroup. Should be `Avatar` components, optionally
+   * The children of the `AvatarGroup`. Should be `Avatar` components, optionally
    * followed by an `AvatarGroupCount` to represent hidden members.
    */
   children?: ReactNode;
