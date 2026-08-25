@@ -267,7 +267,7 @@ export const buildLegendOptions = (
       color: tokens["--salt-content-secondary-foreground"],
       fontFamily: tokens["--salt-text-label-fontFamily"],
       fontSize: tokens["--salt-text-label-fontSize"],
-      fontWeight: tokens["--salt-text-label-fontWeight-strong"],
+      fontWeight: tokens["--salt-text-label-fontWeight"],
       lineHeight: tokens["--salt-text-label-lineHeight"],
     },
   },
