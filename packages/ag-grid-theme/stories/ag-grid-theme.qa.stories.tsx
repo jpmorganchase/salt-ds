@@ -12,6 +12,7 @@ import {
   ProvidedCellEditors,
   ToolPanel,
   VariantZebra,
+  WrappedHeader,
 } from "../src/examples";
 
 import "ag-grid-community/styles/ag-grid.css";
@@ -103,7 +104,7 @@ ColumnMenuGeneral.play = async ({ canvasElement }) => {
     });
 
     await userEvent.hover(
-      within(menu).getByRole("treeitem", { name: /Pin Column/i }),
+      within(menu).getByRole("menuitem", { name: /Pin Column/i }),
     );
 
     // snapshot the menu
@@ -218,7 +219,7 @@ ColumnMenuColumns.play = async ({ canvasElement }) => {
     });
 
     await userEvent.click(
-      within(menu).getByRole("treeitem", { name: /Choose Column/i }),
+      within(menu).getByRole("menuitem", { name: /Choose Column/i }),
     );
 
     const columnDialog = await within(gridRoot).findByRole("dialog", {
@@ -475,13 +476,13 @@ export const ZebraVariantRowSelection: StoryObj<typeof AgGridReact> = () => {
 ZebraVariantRowSelection.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
-  // Do findAll here so this will also work in `side-by-side` mode
-  const rows = await canvas.findAllByRole("row");
+  // Wait for the data row, not just any `role="row"` (headers resolve first).
+  const coloradoCells = await canvas.findAllByText("Colorado");
 
-  // Filter to find the element with the attribute `row-index="5"`
-  const fifthRows = rows.find((row) => row.getAttribute("row-index") === "5");
-  if (fifthRows) {
-    await userEvent.click(within(fifthRows).getByRole("checkbox"));
+  for (const cell of coloradoCells) {
+    const row = cell.closest("[row-index]") as HTMLElement;
+    await userEvent.click(within(row).getByRole("checkbox"));
+    await expect(row).toHaveClass("ag-row-selected");
   }
 };
 
@@ -506,5 +507,22 @@ HeaderVariants.play = async ({ canvasElement }) => {
 
   for (const row of rows) {
     await expect(within(row).getByRole("checkbox")).toBeChecked();
+  }
+};
+
+// Regression of selected-row top border spanning the flex-fill gap before a right-pinned checkbox.
+export const WrappedHeaderRowSelection: StoryObj<typeof AgGridReact> = () => {
+  return <WrappedHeader />;
+};
+WrappedHeaderRowSelection.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  const rows = (await canvas.findAllByRole("row"))
+    .filter((row) => row.hasAttribute("row-index"))
+    .slice(0, 1);
+
+  for (const row of rows) {
+    await userEvent.click(within(row).getByRole("checkbox"));
+    await expect(row).toHaveClass("ag-row-selected");
   }
 };

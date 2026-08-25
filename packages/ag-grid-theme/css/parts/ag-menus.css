@@ -48,6 +48,7 @@
 .ag-theme-salt-compact-dark .ag-menu-option {
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
+
 .ag-theme-salt-light .ag-menu-option-icon,
 .ag-theme-salt-light .ag-compact-menu-option-icon,
 .ag-theme-salt-dark .ag-menu-option-icon,
