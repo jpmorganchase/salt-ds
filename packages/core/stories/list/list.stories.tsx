@@ -1,7 +1,6 @@
 import {
   Button,
   Dialog,
-  DialogCloseButton,
   DialogContent,
   DialogHeader,
   Link,
@@ -11,13 +10,19 @@ import {
   ListItemActions,
   ListItemContent,
   Overlay,
+  OverlayHeader,
   OverlayPanel,
-  OverlayPanelCloseButton,
   OverlayPanelContent,
   OverlayTrigger,
   StackLayout,
+  useId,
 } from "@salt-ds/core";
-import { DeleteIcon, DocumentIcon, DownloadIcon } from "@salt-ds/icons";
+import {
+  CloseIcon,
+  DeleteIcon,
+  DocumentIcon,
+  DownloadIcon,
+} from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type ComponentPropsWithoutRef, forwardRef, useState } from "react";
 
@@ -194,11 +199,23 @@ export const RoutingLibraries: StoryFn = () => (
 export const InDialog: StoryFn = () => {
   const [open, setOpen] = useState(false);
 
+  const handleClose = () => setOpen(false);
+
+  const closeButton = (
+    <Button
+      aria-label="Close dialog"
+      appearance="transparent"
+      onClick={handleClose}
+    >
+      <CloseIcon aria-hidden />
+    </Button>
+  );
+
   return (
     <>
       <Button onClick={() => setOpen(true)}>Open reports</Button>
       <Dialog open={open} onOpenChange={setOpen} size="small">
-        <DialogHeader header="Reports" actions={<DialogCloseButton />} />
+        <DialogHeader header="Reports" actions={closeButton} />
         <DialogContent>
           <List aria-label="Reports">
             <ListItem>
@@ -220,14 +237,27 @@ export const InDialog: StoryFn = () => {
 
 export const InOverlay: StoryFn = () => {
   const [open, setOpen] = useState(false);
+  const headerId = useId();
+
+  const handleClose = () => setOpen(false);
+
+  const closeButton = (
+    <Button
+      aria-label="Close overlay"
+      appearance="transparent"
+      onClick={handleClose}
+    >
+      <CloseIcon aria-hidden />
+    </Button>
+  );
 
   return (
     <Overlay open={open} onOpenChange={setOpen} placement="bottom">
       <OverlayTrigger>
         <Button>Show reports</Button>
       </OverlayTrigger>
-      <OverlayPanel>
-        <OverlayPanelCloseButton />
+      <OverlayPanel aria-labelledby={headerId}>
+        <OverlayHeader header="Reports" actions={closeButton} id={headerId} />
         <OverlayPanelContent>
           <StackLayout gap={1} style={{ width: 320 }}>
             <List aria-label="Reports">
