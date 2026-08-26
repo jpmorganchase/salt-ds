@@ -1,7 +1,7 @@
 .saltAvatarGroupCount {
   --avatarGroupCount-size: var(--avatarGroup-item-size, var(--salt-size-base));
   color: var(--salt-content-bold-foreground);
-  background: var(--salt-sentiment-accent-background);
+  background: var(--salt-sentiment-neutral-background);
   font-family: var(--salt-text-notation-fontFamily);
   font-size: calc(var(--salt-text-notation-fontSize) * var(--avatarGroup-size-multiplier, 1));
   font-weight: var(--salt-text-notation-fontWeight);
