@@ -3,6 +3,7 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
+  Link,
   List,
   ListItem,
   ListItemAction,
@@ -76,6 +77,14 @@ const ListMatrix = ({ direction = "ltr" }: { direction?: "ltr" | "rtl" }) => (
             <DownloadIcon aria-hidden />
           </Button>
         </ListItemActions>
+      </ListItem>
+      <ListItem>
+        <ListItemAction
+          href="https://example.com/reports"
+          render={<Link rel="noopener" target="_blank" />}
+        >
+          <ListItemContent>External report</ListItemContent>
+        </ListItemAction>
       </ListItem>
       <ListItem>
         <ListItemAction disabled>
