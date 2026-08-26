@@ -11,8 +11,8 @@ data:
 ## Best practices
 
 - Give icon-only secondary controls an accessible name that includes the row context, such as “Download quarterly report”.
-- When several trailing controls form a named set, use `role="group"` and `aria-label` or `aria-labelledby` on `ListItemActions`.
-- Keep all interactive controls as siblings within `ListItem`. Never nest a control inside `ListItemAction`.
+- When several trailing controls form a named set, wrap them in an element with `role="group"` and `aria-label` or `aria-labelledby`.
+- Keep `ListItemTrigger` and each trailing control, or its semantic group, as siblings within `ListItem`. Never nest a control inside `ListItemTrigger`.
 - Use a labelled `nav` landmark around lists whose primary purpose is navigation.
 - When an action removes its focused row, move focus to the next logical row, previous row, or a stable surrounding control.
 

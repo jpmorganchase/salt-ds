@@ -1,10 +1,4 @@
-import {
-  Button,
-  List,
-  ListItem,
-  ListItemActions,
-  ListItemContent,
-} from "@salt-ds/core";
+import { Button, List, ListItem, ListItemContent } from "@salt-ds/core";
 import { DocumentIcon, DownloadIcon } from "@salt-ds/icons";
 import type { ReactElement } from "react";
 
@@ -15,36 +9,30 @@ export const WithSecondaryActions = (): ReactElement => (
         <DocumentIcon aria-hidden />
         Quarterly report
       </ListItemContent>
-      <ListItemActions>
-        <Button appearance="transparent" aria-label="Download quarterly report">
-          <DownloadIcon aria-hidden />
-        </Button>
-      </ListItemActions>
+      <Button appearance="transparent" aria-label="Download quarterly report">
+        <DownloadIcon aria-hidden />
+      </Button>
     </ListItem>
     <ListItem>
       <ListItemContent>
         <DocumentIcon aria-hidden />
         Annual report
       </ListItemContent>
-      <ListItemActions>
-        <Button appearance="transparent" aria-label="Download annual report">
-          <DownloadIcon aria-hidden />
-        </Button>
-      </ListItemActions>
+      <Button appearance="transparent" aria-label="Download annual report">
+        <DownloadIcon aria-hidden />
+      </Button>
     </ListItem>
     <ListItem>
       <ListItemContent>
         <DocumentIcon aria-hidden />
         Monthly performance report
       </ListItemContent>
-      <ListItemActions>
-        <Button
-          appearance="transparent"
-          aria-label="Download monthly performance report"
-        >
-          <DownloadIcon aria-hidden />
-        </Button>
-      </ListItemActions>
+      <Button
+        appearance="transparent"
+        aria-label="Download monthly performance report"
+      >
+        <DownloadIcon aria-hidden />
+      </Button>
     </ListItem>
   </List>
 );

@@ -1,4 +1,4 @@
-.saltListItemAction {
+.saltListItemTrigger {
   appearance: none;
   -webkit-appearance: none;
   align-self: stretch;
@@ -21,7 +21,7 @@
   width: 100%;
 }
 
-.saltListItemAction::before {
+.saltListItemTrigger::before {
   background: var(--salt-selectable-background);
   border-radius: inherit;
   bottom: 0;
@@ -33,12 +33,12 @@
   z-index: 0;
 }
 
-.saltListItemAction > :not(.saltLink-externalLinkADA) {
+.saltListItemTrigger > :not(.saltLink-externalLinkADA) {
   position: relative;
   z-index: 1;
 }
 
-.saltListItemAction.saltLink {
+.saltListItemTrigger.saltLink {
   --link-color: var(--salt-content-primary-foreground);
   --link-color-active: var(--salt-content-primary-foreground);
   --link-color-focus: var(--salt-content-primary-foreground);
@@ -53,36 +53,36 @@
   padding-inline-end: var(--salt-spacing-100);
 }
 
-.saltListItemAction.saltLink > .saltListItemContent {
+.saltListItemTrigger.saltLink > .saltListItemContent {
   flex-grow: 0;
   padding-inline-end: 0;
   width: auto;
 }
 
-.saltListItemAction:hover:not(:disabled)::before {
+.saltListItemTrigger:hover:not(:disabled)::before {
   background: var(--salt-overlayable-background-hover);
 }
 
-.saltListItemAction:focus-visible {
+.saltListItemTrigger:focus-visible {
   outline: none;
 }
 
-.saltListItemAction.saltLink:focus {
+.saltListItemTrigger.saltLink:focus {
   outline: none;
 }
 
-.saltListItemAction:focus-visible::before {
+.saltListItemTrigger:focus-visible::before {
   outline: var(--salt-focused-outline);
   outline-offset: calc(var(--salt-size-fixed-100) * -2);
 }
 
-.saltListItemAction:active:not(:disabled)::before {
+.saltListItemTrigger:active:not(:disabled)::before {
   background: var(--salt-navigable-accent-background-active);
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-navigable-accent-borderColor-active);
   box-sizing: border-box;
 }
 
-.saltListItemAction > .saltLink-icon {
+.saltListItemTrigger > .saltLink-icon {
   flex-shrink: 0;
   margin-left: 0;
   margin-bottom: 0;
@@ -90,11 +90,11 @@
   margin-top: calc(var(--salt-spacing-50) + ((var(--salt-size-base) - var(--icon-size, max(var(--salt-size-icon), 12px))) / 2));
 }
 
-button.saltListItemAction:disabled {
+button.saltListItemTrigger:disabled {
   color: var(--salt-content-primary-foreground-disabled);
   cursor: var(--salt-cursor-disabled);
 }
 
-button.saltListItemAction:disabled::before {
+button.saltListItemTrigger:disabled::before {
   background: var(--salt-selectable-background-disabled);
 }

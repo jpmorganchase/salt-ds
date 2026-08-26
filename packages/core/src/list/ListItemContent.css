@@ -5,6 +5,7 @@
   flex: 1 1 auto;
   gap: var(--salt-spacing-100);
   grid-column: 1;
+  grid-row: 1;
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   min-width: 0;
   overflow-wrap: anywhere;

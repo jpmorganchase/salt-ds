@@ -6,9 +6,8 @@ import {
   Link,
   List,
   ListItem,
-  ListItemAction,
-  ListItemActions,
   ListItemContent,
+  ListItemTrigger,
   Overlay,
   OverlayHeader,
   OverlayPanel,
@@ -58,36 +57,30 @@ export const WithSecondaryActions: StoryFn = () => (
         <DocumentIcon aria-hidden />
         Quarterly report
       </ListItemContent>
-      <ListItemActions>
-        <Button appearance="transparent" aria-label="Download quarterly report">
-          <DownloadIcon aria-hidden />
-        </Button>
-      </ListItemActions>
+      <Button appearance="transparent" aria-label="Download quarterly report">
+        <DownloadIcon aria-hidden />
+      </Button>
     </ListItem>
     <ListItem>
       <ListItemContent>
         <DocumentIcon aria-hidden />
         Annual report
       </ListItemContent>
-      <ListItemActions>
-        <Button appearance="transparent" aria-label="Download annual report">
-          <DownloadIcon aria-hidden />
-        </Button>
-      </ListItemActions>
+      <Button appearance="transparent" aria-label="Download annual report">
+        <DownloadIcon aria-hidden />
+      </Button>
     </ListItem>
     <ListItem>
       <ListItemContent>
         <DocumentIcon aria-hidden />
         Monthly performance report
       </ListItemContent>
-      <ListItemActions>
-        <Button
-          appearance="transparent"
-          aria-label="Download monthly performance report"
-        >
-          <DownloadIcon aria-hidden />
-        </Button>
-      </ListItemActions>
+      <Button
+        appearance="transparent"
+        aria-label="Download monthly performance report"
+      >
+        <DownloadIcon aria-hidden />
+      </Button>
     </ListItem>
   </List>
 );
@@ -95,25 +88,25 @@ export const WithSecondaryActions: StoryFn = () => (
 export const ActionItems: StoryFn = () => (
   <List aria-label="Available reports">
     <ListItem>
-      <ListItemAction onClick={() => undefined}>
+      <ListItemTrigger onClick={() => undefined}>
         <ListItemContent>
           <DocumentIcon aria-hidden />
           Generate a new report
         </ListItemContent>
-      </ListItemAction>
+      </ListItemTrigger>
     </ListItem>
     <ListItem>
-      <ListItemAction href="#quarterly" onClick={preventNavigation}>
+      <ListItemTrigger href="#quarterly" onClick={preventNavigation}>
         <ListItemContent>
           <DocumentIcon aria-hidden />
           Open quarterly report
         </ListItemContent>
-      </ListItemAction>
+      </ListItemTrigger>
     </ListItem>
     <ListItem>
-      <ListItemAction disabled>
+      <ListItemTrigger disabled>
         <ListItemContent>Unavailable report</ListItemContent>
-      </ListItemAction>
+      </ListItemTrigger>
     </ListItem>
   </List>
 );
@@ -145,11 +138,9 @@ export const MultilineContent: StoryFn = () => (
           </span>
         </span>
       </ListItemContent>
-      <ListItemActions>
-        <Button appearance="transparent" aria-label="Download quarterly report">
-          <DownloadIcon aria-hidden />
-        </Button>
-      </ListItemActions>
+      <Button appearance="transparent" aria-label="Download quarterly report">
+        <DownloadIcon aria-hidden />
+      </Button>
     </ListItem>
   </List>
 );
@@ -159,28 +150,28 @@ export const RoutingLibraries: StoryFn = () => (
     <nav aria-label="Report links">
       <List>
         <ListItem>
-          <ListItemAction
+          <ListItemTrigger
             href="/reports/quarterly"
             render={<RouterLink to="/reports/quarterly" />}
           >
             <ListItemContent>Quarterly report</ListItemContent>
-          </ListItemAction>
+          </ListItemTrigger>
         </ListItem>
         <ListItem>
-          <ListItemAction
+          <ListItemTrigger
             href="/reports/annual"
             render={({ href, ...props }) => <RouterLink {...props} to={href} />}
           >
             <ListItemContent>Annual report</ListItemContent>
-          </ListItemAction>
+          </ListItemTrigger>
         </ListItem>
         <ListItem>
-          <ListItemAction
+          <ListItemTrigger
             href="https://example.com/report"
             render={<Link rel="noopener" target="_blank" />}
           >
             <ListItemContent>External report</ListItemContent>
-          </ListItemAction>
+          </ListItemTrigger>
         </ListItem>
       </List>
     </nav>
@@ -210,19 +201,19 @@ export const InDialog: StoryFn = () => {
         <DialogContent>
           <List aria-label="Reports">
             <ListItem>
-              <ListItemAction>
+              <ListItemTrigger>
                 <ListItemContent>Quarterly report</ListItemContent>
-              </ListItemAction>
+              </ListItemTrigger>
             </ListItem>
             <ListItem>
-              <ListItemAction>
+              <ListItemTrigger>
                 <ListItemContent>Annual report</ListItemContent>
-              </ListItemAction>
+              </ListItemTrigger>
             </ListItem>
             <ListItem>
-              <ListItemAction>
+              <ListItemTrigger>
                 <ListItemContent>Monthly performance report</ListItemContent>
-              </ListItemAction>
+              </ListItemTrigger>
             </ListItem>
           </List>
         </DialogContent>
@@ -258,21 +249,21 @@ export const InOverlay: StoryFn = () => {
           <StackLayout gap={1} style={{ width: 320 }}>
             <List aria-label="Reports">
               <ListItem>
-                <ListItemAction>
+                <ListItemTrigger>
                   <ListItemContent>Quarterly report</ListItemContent>
-                </ListItemAction>
+                </ListItemTrigger>
               </ListItem>
               <ListItem>
-                <ListItemAction>
+                <ListItemTrigger>
                   <ListItemContent>Annual report</ListItemContent>
-                </ListItemAction>
+                </ListItemTrigger>
               </ListItem>
               <ListItem>
-                <ListItemAction>
+                <ListItemTrigger>
                   <ListItemContent>
                     Monthly report with a title that wraps in the narrow panel
                   </ListItemContent>
-                </ListItemAction>
+                </ListItemTrigger>
               </ListItem>
             </List>
           </StackLayout>

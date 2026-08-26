@@ -2,8 +2,8 @@ import {
   Button,
   List,
   ListItem,
-  ListItemAction,
   ListItemContent,
+  ListItemTrigger,
   Overlay,
   OverlayHeader,
   OverlayPanel,
@@ -40,21 +40,21 @@ export const InOverlay = (): ReactElement => {
         <OverlayPanelContent>
           <List aria-label="Reports" style={{ width: 320 }}>
             <ListItem>
-              <ListItemAction>
+              <ListItemTrigger>
                 <ListItemContent>Quarterly report</ListItemContent>
-              </ListItemAction>
+              </ListItemTrigger>
             </ListItem>
             <ListItem>
-              <ListItemAction>
+              <ListItemTrigger>
                 <ListItemContent>
                   Annual report with a title that wraps in the narrow panel
                 </ListItemContent>
-              </ListItemAction>
+              </ListItemTrigger>
             </ListItem>
             <ListItem>
-              <ListItemAction>
+              <ListItemTrigger>
                 <ListItemContent>Monthly performance report</ListItemContent>
-              </ListItemAction>
+              </ListItemTrigger>
             </ListItem>
           </List>
         </OverlayPanelContent>
