@@ -11,5 +11,8 @@ export const Default = (): ReactElement => (
         Annual report with a longer title that can wrap onto another line
       </ListItemContent>
     </ListItem>
+    <ListItem>
+      <ListItemContent>Monthly performance report</ListItemContent>
+    </ListItem>
   </List>
 );

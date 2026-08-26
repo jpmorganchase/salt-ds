@@ -13,7 +13,13 @@ import {
   OverlayPanelContent,
   OverlayTrigger,
 } from "@salt-ds/core";
-import { DeleteIcon, DocumentIcon, DownloadIcon } from "@salt-ds/icons";
+import {
+  AddUserIcon,
+  DeleteIcon,
+  DocumentIcon,
+  DownloadIcon,
+  OverflowMenuIcon,
+} from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
@@ -29,15 +35,15 @@ const ListMatrix = ({ direction = "ltr" }: { direction?: "ltr" | "rtl" }) => (
   <div dir={direction} style={{ width: 320 }}>
     <List aria-label={`${direction} reports`}>
       <ListItem>
-        <ListItemContent>Passive content</ListItemContent>
+        <ListItemContent>Static content</ListItemContent>
       </ListItem>
       <ListItem>
         <ListItemContent>
           <DocumentIcon aria-hidden />
-          Passive content with one action
+          Static content with one action
         </ListItemContent>
         <ListItemActions>
-          <Button appearance="transparent" aria-label="Download passive report">
+          <Button appearance="transparent" aria-label="Download static report">
             <DownloadIcon aria-hidden />
           </Button>
         </ListItemActions>
@@ -76,7 +82,12 @@ const ListMatrix = ({ direction = "ltr" }: { direction?: "ltr" | "rtl" }) => (
           <ListItemContent>Disabled primary button</ListItemContent>
         </ListItemAction>
         <ListItemActions>
-          <Button appearance="transparent">Request access</Button>
+          <Button
+            appearance="transparent"
+            aria-label="Request access to disabled primary button"
+          >
+            <AddUserIcon aria-hidden />
+          </Button>
         </ListItemActions>
       </ListItem>
       <ListItem>
@@ -95,7 +106,9 @@ const ListMatrix = ({ direction = "ltr" }: { direction?: "ltr" | "rtl" }) => (
           <Button
             appearance="transparent"
             aria-label="More truncated report actions"
-          />
+          >
+            <OverflowMenuIcon aria-hidden />
+          </Button>
         </ListItemActions>
       </ListItem>
     </List>

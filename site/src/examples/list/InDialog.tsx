@@ -6,7 +6,6 @@ import {
   List,
   ListItem,
   ListItemAction,
-  ListItemActions,
   ListItemContent,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
@@ -38,13 +37,15 @@ export const InDialog = (): ReactElement => {
               <ListItemAction>
                 <ListItemContent>Quarterly report</ListItemContent>
               </ListItemAction>
-              <ListItemActions>
-                <Button aria-label="Download quarterly report">Download</Button>
-              </ListItemActions>
             </ListItem>
             <ListItem>
               <ListItemAction>
                 <ListItemContent>Annual report</ListItemContent>
+              </ListItemAction>
+            </ListItem>
+            <ListItem>
+              <ListItemAction>
+                <ListItemContent>Monthly performance report</ListItemContent>
               </ListItemAction>
             </ListItem>
           </List>
