@@ -11,7 +11,7 @@ export interface ListItemContentProps
 const withBaseName = makePrefixer("saltListItemContent");
 
 /**
- * The passive content and first-line alignment area of a list row.
+ * The static content and first-line alignment area of a list row.
  */
 export const ListItemContent = forwardRef<
   HTMLSpanElement,
