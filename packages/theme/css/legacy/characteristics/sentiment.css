@@ -5,8 +5,6 @@
   --salt-sentiment-negative-foreground-decorative: var(--salt-palette-negative-foreground);
   --salt-sentiment-positive-foreground-decorative: var(--salt-palette-positive-foreground);
 
-  --salt-sentiment-neutral-background: var(--salt-palette-neutral-background);
-
   --salt-sentiment-neutral-track: var(--salt-palette-neutral-border);
 
   --salt-sentiment-caution-dataviz: var(--salt-palette-warning-foreground-decorative);
@@ -14,6 +12,8 @@
   --salt-sentiment-positive-dataviz: var(--salt-palette-success-foreground-decorative);
   --salt-sentiment-neutral-dataviz: var(--salt-palette-neutral-secondary-foreground);
   --salt-sentiment-accent-dataviz: var(--salt-palette-warning-foreground-decorative);
+
+  --salt-sentiment-neutral-background: var(--salt-palette-neutral-background);
 
   --salt-sentiment-accent-background: var(--salt-palette-accent);
   --salt-sentiment-accent-background-disabled: var(--salt-palette-accent-disabled);
