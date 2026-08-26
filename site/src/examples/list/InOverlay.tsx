@@ -3,7 +3,6 @@ import {
   List,
   ListItem,
   ListItemAction,
-  ListItemActions,
   ListItemContent,
   Overlay,
   OverlayHeader,
@@ -44,15 +43,17 @@ export const InOverlay = (): ReactElement => {
               <ListItemAction>
                 <ListItemContent>Quarterly report</ListItemContent>
               </ListItemAction>
-              <ListItemActions>
-                <Button aria-label="Download quarterly report">Download</Button>
-              </ListItemActions>
             </ListItem>
             <ListItem>
               <ListItemAction>
                 <ListItemContent>
                   Annual report with a title that wraps in the narrow panel
                 </ListItemContent>
+              </ListItemAction>
+            </ListItem>
+            <ListItem>
+              <ListItemAction>
+                <ListItemContent>Monthly performance report</ListItemContent>
               </ListItemAction>
             </ListItem>
           </List>

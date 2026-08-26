@@ -15,7 +15,7 @@ export interface ListProps extends ComponentPropsWithoutRef<"ul"> {
 const withBaseName = makePrefixer("saltList");
 
 /**
- * A structural list for passive and independently actionable rows.
+ * A structural list for static and independently actionable rows.
  */
 export const List = forwardRef<HTMLUListElement, ListProps>(function List(
   { children, className, render, ...rest },

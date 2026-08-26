@@ -17,14 +17,10 @@ import {
   StackLayout,
   useId,
 } from "@salt-ds/core";
-import {
-  CloseIcon,
-  DeleteIcon,
-  DocumentIcon,
-  DownloadIcon,
-} from "@salt-ds/icons";
+import { CloseIcon, DocumentIcon, DownloadIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { type ComponentPropsWithoutRef, forwardRef, useState } from "react";
+import { useState } from "react";
+import { MemoryRouter, Link as RouterLink } from "react-router";
 
 export default {
   title: "Core/List",
@@ -41,20 +37,16 @@ export default {
 const preventNavigation = (event: { preventDefault: () => void }) =>
   event.preventDefault();
 
-const RouterLink = forwardRef<
-  HTMLAnchorElement,
-  Omit<ComponentPropsWithoutRef<"a">, "href"> & { to: string }
->(function RouterLink({ to, ...rest }, ref) {
-  return <a {...rest} href={to} ref={ref} />;
-});
-
-export const PassiveContent: StoryFn = () => (
+export const StaticContent: StoryFn = () => (
   <List aria-label="Reports">
     <ListItem>
       <ListItemContent>Quarterly report</ListItemContent>
     </ListItem>
     <ListItem>
       <ListItemContent>Annual report</ListItemContent>
+    </ListItem>
+    <ListItem>
+      <ListItemContent>Monthly performance report</ListItemContent>
     </ListItem>
   </List>
 );
@@ -77,12 +69,23 @@ export const WithSecondaryActions: StoryFn = () => (
         <DocumentIcon aria-hidden />
         Annual report
       </ListItemContent>
-      <ListItemActions aria-label="Annual report actions" role="group">
+      <ListItemActions>
         <Button appearance="transparent" aria-label="Download annual report">
           <DownloadIcon aria-hidden />
         </Button>
-        <Button appearance="transparent" aria-label="Delete annual report">
-          <DeleteIcon aria-hidden />
+      </ListItemActions>
+    </ListItem>
+    <ListItem>
+      <ListItemContent>
+        <DocumentIcon aria-hidden />
+        Monthly performance report
+      </ListItemContent>
+      <ListItemActions>
+        <Button
+          appearance="transparent"
+          aria-label="Download monthly performance report"
+        >
+          <DownloadIcon aria-hidden />
         </Button>
       </ListItemActions>
     </ListItem>
@@ -98,12 +101,6 @@ export const ActionItems: StoryFn = () => (
           Generate a new report
         </ListItemContent>
       </ListItemAction>
-      <ListItemActions>
-        <Button
-          appearance="transparent"
-          aria-label="Report generation options"
-        />
-      </ListItemActions>
     </ListItem>
     <ListItem>
       <ListItemAction href="#quarterly" onClick={preventNavigation}>
@@ -112,19 +109,11 @@ export const ActionItems: StoryFn = () => (
           Open quarterly report
         </ListItemContent>
       </ListItemAction>
-      <ListItemActions>
-        <Button appearance="transparent" aria-label="Download quarterly report">
-          <DownloadIcon aria-hidden />
-        </Button>
-      </ListItemActions>
     </ListItem>
     <ListItem>
       <ListItemAction disabled>
         <ListItemContent>Unavailable report</ListItemContent>
       </ListItemAction>
-      <ListItemActions>
-        <Button appearance="transparent">Request access</Button>
-      </ListItemActions>
     </ListItem>
   </List>
 );
@@ -146,18 +135,16 @@ export const Ordered: StoryFn = () => (
 export const MultilineContent: StoryFn = () => (
   <List aria-label="Reports" style={{ maxWidth: 320 }}>
     <ListItem>
-      <ListItemAction>
-        <ListItemContent>
-          <DocumentIcon aria-hidden />
-          <span>
-            <span style={{ display: "block" }}>Quarterly report</span>
-            <span style={{ display: "block" }}>
-              A longer description wraps below the first line while the icon and
-              trailing action remain aligned with that first line.
-            </span>
+      <ListItemContent>
+        <DocumentIcon aria-hidden />
+        <span>
+          <span style={{ display: "block" }}>Quarterly report</span>
+          <span style={{ display: "block" }}>
+            A longer description wraps below the first line while the icon and
+            trailing action remain aligned with that first line.
           </span>
-        </ListItemContent>
-      </ListItemAction>
+        </span>
+      </ListItemContent>
       <ListItemActions>
         <Button appearance="transparent" aria-label="Download quarterly report">
           <DownloadIcon aria-hidden />
@@ -168,32 +155,34 @@ export const MultilineContent: StoryFn = () => (
 );
 
 export const RoutingLibraries: StoryFn = () => (
-  <List aria-label="Reports">
-    <ListItem>
-      <ListItemAction
-        href="/reports/quarterly"
-        render={<RouterLink to="/reports/quarterly" />}
-      >
-        <ListItemContent>JSX router link</ListItemContent>
-      </ListItemAction>
-    </ListItem>
-    <ListItem>
-      <ListItemAction
-        href="/reports/annual"
-        render={({ href, ...props }) => <RouterLink {...props} to={href} />}
-      >
-        <ListItemContent>Callback router link</ListItemContent>
-      </ListItemAction>
-    </ListItem>
-    <ListItem>
-      <ListItemAction
-        href="https://example.com/report"
-        render={<Link target="_blank" />}
-      >
-        <ListItemContent>External report</ListItemContent>
-      </ListItemAction>
-    </ListItem>
-  </List>
+  <MemoryRouter>
+    <List aria-label="Reports">
+      <ListItem>
+        <ListItemAction
+          href="/reports/quarterly"
+          render={<RouterLink to="/reports/quarterly" />}
+        >
+          <ListItemContent>Quarterly report</ListItemContent>
+        </ListItemAction>
+      </ListItem>
+      <ListItem>
+        <ListItemAction
+          href="/reports/annual"
+          render={({ href, ...props }) => <RouterLink {...props} to={href} />}
+        >
+          <ListItemContent>Annual report</ListItemContent>
+        </ListItemAction>
+      </ListItem>
+      <ListItem>
+        <ListItemAction
+          href="https://example.com/report"
+          render={<Link target="_blank" />}
+        >
+          <ListItemContent>External report</ListItemContent>
+        </ListItemAction>
+      </ListItem>
+    </List>
+  </MemoryRouter>
 );
 
 export const InDialog: StoryFn = () => {
@@ -222,11 +211,16 @@ export const InDialog: StoryFn = () => {
               <ListItemAction>
                 <ListItemContent>Quarterly report</ListItemContent>
               </ListItemAction>
-              <ListItemActions>
-                <Button aria-label="Download quarterly report">
-                  <DownloadIcon aria-hidden />
-                </Button>
-              </ListItemActions>
+            </ListItem>
+            <ListItem>
+              <ListItemAction>
+                <ListItemContent>Annual report</ListItemContent>
+              </ListItemAction>
+            </ListItem>
+            <ListItem>
+              <ListItemAction>
+                <ListItemContent>Monthly performance report</ListItemContent>
+              </ListItemAction>
             </ListItem>
           </List>
         </DialogContent>
@@ -265,11 +259,18 @@ export const InOverlay: StoryFn = () => {
                 <ListItemAction>
                   <ListItemContent>Quarterly report</ListItemContent>
                 </ListItemAction>
-                <ListItemActions>
-                  <Button aria-label="Download quarterly report">
-                    <DownloadIcon aria-hidden />
-                  </Button>
-                </ListItemActions>
+              </ListItem>
+              <ListItem>
+                <ListItemAction>
+                  <ListItemContent>Annual report</ListItemContent>
+                </ListItemAction>
+              </ListItem>
+              <ListItem>
+                <ListItemAction>
+                  <ListItemContent>
+                    Monthly report with a title that wraps in the narrow panel
+                  </ListItemContent>
+                </ListItemAction>
               </ListItem>
             </List>
           </StackLayout>

@@ -10,7 +10,7 @@ data:
 
 ## Using the component
 
-`List` is a composable native list for passive rows and rows with persistent actions. It does not manage selection, current state, or keyboard focus.
+`List` is a composable native list for static rows and rows with persistent actions. It does not manage selection, current state, or keyboard focus.
 
 - `List` provides the `ul` structure. Use `render={<ol />}` when item order is meaningful.
 - `ListItem` provides one structural `li` row and its layout.
@@ -18,20 +18,20 @@ data:
 - `ListItemAction` makes the primary region a native button or link.
 - `ListItemActions` contains independent trailing controls.
 
-Passive and actionable rows can appear in the same list.
+Static and actionable rows can appear in the same list.
 
 ### Choosing a list component
 
-| Component                          | Use it for                                                    |
-| ---------------------------------- | ------------------------------------------------------------- |
-| `List`                             | Passive content and persistent, independent buttons or links. |
-| `ListBox`                          | Choosing one or more values in a form.                        |
-| `Menu`                             | A transient composite containing commands.                    |
-| `VerticalNavigation` or `MegaMenu` | Application and site navigation systems.                      |
+| Component                          | Use it for                                                   |
+| ---------------------------------- | ------------------------------------------------------------ |
+| `List`                             | Static content and persistent, independent buttons or links. |
+| `ListBox`                          | Choosing one or more values in a form.                       |
+| `Menu`                             | A transient composite containing commands.                   |
+| `VerticalNavigation` or `MegaMenu` | Application and site navigation systems.                     |
 
 ## Composition
 
-### Passive content
+### Static content
 
 ```tsx
 <ListItem>
@@ -39,46 +39,42 @@ Passive and actionable rows can appear in the same list.
 </ListItem>
 ```
 
-### Passive content with secondary actions
+### Static content with secondary actions
 
 ```tsx
 <ListItem>
   <ListItemContent>Quarterly report</ListItemContent>
   <ListItemActions>
-    <Button aria-label="Download quarterly report">Download</Button>
+    <Button appearance="transparent" aria-label="Download quarterly report">
+      <DownloadIcon aria-hidden />
+    </Button>
   </ListItemActions>
 </ListItem>
 ```
 
-### Primary button with a secondary action
+### Primary button
 
 ```tsx
 <ListItem>
   <ListItemAction onClick={openReport}>
     <ListItemContent>Quarterly report</ListItemContent>
   </ListItemAction>
-  <ListItemActions>
-    <Button aria-label="More options for quarterly report">More</Button>
-  </ListItemActions>
 </ListItem>
 ```
 
-### Primary link with a secondary action
+### Primary link
 
 ```tsx
 <ListItem>
   <ListItemAction href="/reports/quarterly">
     <ListItemContent>Quarterly report</ListItemContent>
   </ListItemAction>
-  <ListItemActions>
-    <Button aria-label="Download quarterly report">Download</Button>
-  </ListItemActions>
 </ListItem>
 ```
 
-“Nested actions” means controls within a `ListItem`, as siblings of `ListItemAction`. Never put a button, link, checkbox, or other focusable element inside `ListItemAction`.
+When combining primary and secondary actions in a custom composition, keep the controls as siblings within `ListItem`. Never put a button, link, checkbox, or other focusable element inside `ListItemAction`.
 
-`ListItemContent` renders a `span` so the same component is valid inside passive and actionable rows. It supports phrasing, non-interactive content. Configure `Text` and layout primitives within it to use span-safe hosts. Arbitrary block-host content is not supported in the first version.
+`ListItemContent` renders a `span` so the same component is valid inside static and actionable rows. It supports phrasing, non-interactive content. Configure `Text` and layout primitives within it to use span-safe hosts. Arbitrary block-host content is not supported in the first version.
 
 Leading icons can be ordinary children of `ListItemContent`. The icon, first line of text, and trailing actions stay aligned when the label wraps.
 
