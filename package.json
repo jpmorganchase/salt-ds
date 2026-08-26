@@ -135,7 +135,7 @@
     "@vitest/browser-playwright": "^4.1.11",
     "browserslist-to-esbuild": "^2.1.1",
     "execa": "^10.0.0",
-    "fs-extra": "^9.1.0",
+    "fs-extra": "^11.0.0",
     "get-tsconfig": "^4.7.5",
     "playwright": "1.62.1",
     "rollup": "^4.24.2",
