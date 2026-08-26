@@ -156,32 +156,34 @@ export const MultilineContent: StoryFn = () => (
 
 export const RoutingLibraries: StoryFn = () => (
   <MemoryRouter>
-    <List aria-label="Reports">
-      <ListItem>
-        <ListItemAction
-          href="/reports/quarterly"
-          render={<RouterLink to="/reports/quarterly" />}
-        >
-          <ListItemContent>Quarterly report</ListItemContent>
-        </ListItemAction>
-      </ListItem>
-      <ListItem>
-        <ListItemAction
-          href="/reports/annual"
-          render={({ href, ...props }) => <RouterLink {...props} to={href} />}
-        >
-          <ListItemContent>Annual report</ListItemContent>
-        </ListItemAction>
-      </ListItem>
-      <ListItem>
-        <ListItemAction
-          href="https://example.com/report"
-          render={<Link target="_blank" />}
-        >
-          <ListItemContent>External report</ListItemContent>
-        </ListItemAction>
-      </ListItem>
-    </List>
+    <nav aria-label="Report links">
+      <List>
+        <ListItem>
+          <ListItemAction
+            href="/reports/quarterly"
+            render={<RouterLink to="/reports/quarterly" />}
+          >
+            <ListItemContent>Quarterly report</ListItemContent>
+          </ListItemAction>
+        </ListItem>
+        <ListItem>
+          <ListItemAction
+            href="/reports/annual"
+            render={({ href, ...props }) => <RouterLink {...props} to={href} />}
+          >
+            <ListItemContent>Annual report</ListItemContent>
+          </ListItemAction>
+        </ListItem>
+        <ListItem>
+          <ListItemAction
+            href="https://example.com/report"
+            render={<Link rel="noopener" target="_blank" />}
+          >
+            <ListItemContent>External report</ListItemContent>
+          </ListItemAction>
+        </ListItem>
+      </List>
+    </nav>
   </MemoryRouter>
 );
 

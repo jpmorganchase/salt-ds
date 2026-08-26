@@ -3,4 +3,4 @@
 ---
 
 Added `List`, `ListItem`, `ListItemContent`, `ListItemAction`, and
-`ListItemActions` for passive and actionable list rows.
+`ListItemActions` for static and actionable list rows.
