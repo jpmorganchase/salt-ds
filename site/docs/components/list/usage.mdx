@@ -100,7 +100,7 @@ For a link with `target="_blank"`, render the Core `Link` component so its exter
 ```tsx
 <ListItemAction
   href="https://example.com/reports"
-  render={<Link target="_blank" />}
+  render={<Link rel="noopener" target="_blank" />}
 >
   <ListItemContent>External reports</ListItemContent>
 </ListItemAction>

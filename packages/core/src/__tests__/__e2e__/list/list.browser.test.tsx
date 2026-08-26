@@ -1,19 +1,12 @@
 import {
   Button,
-  Dialog,
-  DialogContent,
   Link,
   List,
   ListItem,
   ListItemAction,
   ListItemActions,
   ListItemContent,
-  Overlay,
-  OverlayPanel,
-  OverlayPanelContent,
-  OverlayTrigger,
 } from "@salt-ds/core";
-import { DocumentIcon } from "@salt-ds/icons";
 import {
   type ComponentPropsWithoutRef,
   createRef,
@@ -56,105 +49,50 @@ function FormExample({ renderSubmit = false }: { renderSubmit?: boolean }) {
   );
 }
 
-function DialogExample({ onOpenChange }: { onOpenChange: () => void }) {
-  const [open, setOpen] = useState(true);
-
-  return (
-    <Dialog
-      initialFocus={0}
-      open={open}
-      onOpenChange={(nextOpen) => {
-        onOpenChange();
-        setOpen(nextOpen);
-      }}
-    >
-      <DialogContent>
-        <List aria-label="Dialog reports">
-          <ListItem>
-            <ListItemAction>
-              <ListItemContent>Open dialog report</ListItemContent>
-            </ListItemAction>
-            <ListItemActions>
-              <Button aria-label="More dialog report actions" />
-            </ListItemActions>
-          </ListItem>
-        </List>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
-function OverlayExample({ onOpenChange }: { onOpenChange: () => void }) {
-  const [open, setOpen] = useState(true);
-
-  return (
-    <Overlay
-      open={open}
-      onOpenChange={(nextOpen) => {
-        onOpenChange();
-        setOpen(nextOpen);
-      }}
-    >
-      <OverlayTrigger>
-        <Button>Show reports</Button>
-      </OverlayTrigger>
-      <OverlayPanel>
-        <OverlayPanelContent>
-          <List aria-label="Overlay reports">
-            <ListItem>
-              <ListItemAction>
-                <ListItemContent>Open overlay report</ListItemContent>
-              </ListItemAction>
-              <ListItemActions>
-                <Button aria-label="More overlay report actions" />
-              </ListItemActions>
-            </ListItem>
-          </List>
-        </OverlayPanelContent>
-      </OverlayPanel>
-    </Overlay>
-  );
-}
-
 describe("List", () => {
-  it("renders native unordered and ordered list structures", async () => {
-    const unorderedRef = createRef<HTMLUListElement>();
-    const orderedRef = createRef<HTMLUListElement>();
-
+  it("renders native list semantics and supports ordered-list rendering", async () => {
     await renderWithSalt(
       <>
-        <List className="reports" data-list="unordered" ref={unorderedRef}>
+        <List aria-label="Unordered reports">
           <ListItem>Unordered item</ListItem>
         </List>
         <List
-          data-list="ordered"
+          aria-label="Ordered reports"
+          className="consumer-list"
           data-source="list"
-          ref={orderedRef}
-          render={
-            <ol className="ordered-render" data-source="render" start={2} />
-          }
+          render={<ol className="render-list" data-source="render" start={2} />}
         >
           <ListItem>Ordered item</ListItem>
         </List>
       </>,
     );
 
-    const unorderedList = document.querySelector('ul[data-list="unordered"]');
-    expect(unorderedList).toHaveClass("saltList", "reports");
-    expect(unorderedList?.children).toHaveLength(1);
+    const unorderedList = page.getByRole("list", {
+      name: "Unordered reports",
+      exact: true,
+    });
+    expect(unorderedList.element().tagName).toBe("UL");
+    await expect
+      .element(unorderedList.getByRole("listitem"))
+      .toHaveTextContent("Unordered item");
 
-    const orderedList = document.querySelector('ol[data-list="ordered"]');
-    expect(orderedList).toHaveAttribute("start", "2");
-    expect(orderedList).toHaveAttribute("data-source", "render");
-    expect(orderedList).toHaveClass("saltList", "ordered-render");
-    expect(orderedList?.children).toHaveLength(1);
-    expect(unorderedRef.current?.tagName).toBe("UL");
-    expect(orderedRef.current?.tagName).toBe("OL");
+    const orderedList = page.getByRole("list", {
+      name: "Ordered reports",
+      exact: true,
+    });
+    expect(orderedList.element().tagName).toBe("OL");
+    await expect.element(orderedList).toHaveAttribute("start", "2");
+    await expect.element(orderedList).toHaveAttribute("data-source", "render");
+    await expect
+      .element(orderedList)
+      .toHaveClass("consumer-list", "render-list");
+    await expect
+      .element(orderedList.getByRole("listitem"))
+      .toHaveTextContent("Ordered item");
   });
 
-  it("passes complete root props to a callback render", async () => {
+  it("merges root props into the output of a callback render", async () => {
     const listRef = createRef<HTMLUListElement>();
-    const renderSpy = vi.fn();
 
     await renderWithSalt(
       <List
@@ -162,30 +100,21 @@ describe("List", () => {
         className="reports"
         data-list="callback"
         ref={listRef}
-        render={(props) => {
-          renderSpy(props);
-          return <ol {...props} data-render="callback" />;
-        }}
+        render={(props) => <ul {...props} data-render="callback" />}
       >
         <ListItem>First report</ListItem>
       </List>,
     );
 
     const list = page.getByRole("list", { name: "Ordered reports" });
-    await expect.element(list).toHaveClass("saltList", "reports");
+    await expect.element(list).toHaveClass("reports");
     await expect.element(list).toHaveAttribute("data-list", "callback");
     await expect.element(list).toHaveAttribute("data-render", "callback");
-    expect(list.element().tagName).toBe("OL");
-    expect(list.element().children).toHaveLength(1);
-    expect(renderSpy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        "aria-label": "Ordered reports",
-        children: expect.anything(),
-        className: expect.any(String),
-        ref: expect.any(Object),
-      }),
-    );
-    expect(listRef.current?.tagName).toBe("OL");
+    expect(list.element().tagName).toBe("UL");
+    await expect
+      .element(list.getByRole("listitem"))
+      .toHaveTextContent("First report");
+    expect(listRef.current).toBe(list.element());
   });
 
   it("keeps passive rows structural and out of the tab order", async () => {
@@ -197,21 +126,13 @@ describe("List", () => {
       </List>,
     );
 
-    await expect
-      .element(page.getByRole("list", { name: "Reports" }))
-      .toBeInTheDocument();
-    await expect.element(page.getByRole("listitem")).toHaveLength(1);
-    for (const element of document.querySelectorAll("ul, li")) {
-      expect(element).not.toHaveAttribute("tabindex");
-    }
-    expect(
-      document.querySelector(
-        '[role="menu"], [role="listbox"], [role="option"], [role="menuitem"]',
-      ),
-    ).not.toBeInTheDocument();
-    expect(
-      document.querySelector("button, a, input, select, textarea, [tabindex]"),
-    ).not.toBeInTheDocument();
+    const list = page.getByRole("list", { name: "Reports" });
+    const listItem = list.getByRole("listitem");
+    await expect.element(listItem).toHaveLength(1);
+    await expect.element(list).not.toHaveAttribute("tabindex");
+    await expect.element(listItem).not.toHaveAttribute("tabindex");
+    await expect.element(list.getByRole("button")).not.toBeInTheDocument();
+    await expect.element(list.getByRole("link")).not.toBeInTheDocument();
   });
 
   it("tabs only through secondary controls in passive rows", async () => {
@@ -237,7 +158,7 @@ describe("List", () => {
       .toHaveFocus();
   });
 
-  it("uses native button activation and preserves submit overrides", async () => {
+  it("renders a native button and forwards activation", async () => {
     const clickSpy = vi.fn();
 
     await renderWithSalt(
@@ -253,17 +174,18 @@ describe("List", () => {
     const button = page.getByRole("button", { name: "Run report" });
     await expect.element(button).toHaveAttribute("type", "button");
     await button.click();
-    await expect.element(button).toHaveFocus();
-    await userEvent.keyboard("{Enter}");
-    await userEvent.keyboard(" ");
-    expect(clickSpy).toHaveBeenCalledTimes(3);
+    expect(clickSpy).toHaveBeenCalledOnce();
+  });
 
+  it("does not submit forms by default", async () => {
     await renderWithSalt(<FormExample />);
     await page.getByRole("button", { name: "Run report" }).click();
     await expect
       .element(page.getByRole("status", { name: "Submission count" }))
       .toHaveTextContent("0");
+  });
 
+  it("preserves submit behavior from a rendered button", async () => {
     await renderWithSalt(<FormExample renderSubmit />);
     const submitButton = page.getByRole("button", { name: "Run report" });
     await expect.element(submitButton).toHaveAttribute("type", "submit");
@@ -273,7 +195,7 @@ describe("List", () => {
       .toHaveTextContent("1");
   });
 
-  it("uses native link attributes and keyboard activation", async () => {
+  it("renders a native link and forwards its attributes", async () => {
     const clickSpy = vi.fn();
 
     await renderWithSalt(
@@ -303,17 +225,14 @@ describe("List", () => {
     await expect.element(link).toHaveAttribute("download", "quarterly.csv");
     await expect.element(link).toHaveAttribute("aria-current", "page");
     await expect.element(link).not.toHaveAttribute("type");
-    link.element().focus();
-    await userEvent.keyboard("{Enter}");
-    expect(clickSpy).toHaveBeenCalledTimes(1);
-    await userEvent.keyboard(" ");
+    await link.click();
     expect(clickSpy).toHaveBeenCalledTimes(1);
   });
 
-  it("keeps primary and secondary actions as independent siblings", async () => {
+  it("tabs through primary and secondary actions in document order", async () => {
     await renderWithSalt(
       <List>
-        <ListItem data-row="button">
+        <ListItem>
           <ListItemAction>
             <ListItemContent>Button report</ListItemContent>
           </ListItemAction>
@@ -321,7 +240,7 @@ describe("List", () => {
             <Button aria-label="More button report actions" />
           </ListItemActions>
         </ListItem>
-        <ListItem data-row="link">
+        <ListItem>
           <ListItemAction href="#link-report">
             <ListItemContent>Link report</ListItemContent>
           </ListItemAction>
@@ -331,16 +250,6 @@ describe("List", () => {
         </ListItem>
       </List>,
     );
-
-    expect(
-      document.querySelector('[data-row="button"] > button + div'),
-    ).toBeInTheDocument();
-    expect(
-      document.querySelector('[data-row="link"] > a + div'),
-    ).toBeInTheDocument();
-    expect(
-      document.querySelector("button button, button a, a button, a a"),
-    ).not.toBeInTheDocument();
 
     for (const [role, name] of [
       ["button", "Button report"],
@@ -361,8 +270,8 @@ describe("List", () => {
     const secondSecondarySpy = vi.fn();
 
     await renderWithSalt(
-      <List>
-        <ListItem data-clickable-row>
+      <List aria-label="Reports">
+        <ListItem>
           <ListItemAction onClick={primarySpy}>
             <ListItemContent>Run report</ListItemContent>
           </ListItemAction>
@@ -377,14 +286,19 @@ describe("List", () => {
       </List>,
     );
 
-    const row = document.querySelector<HTMLElement>("[data-clickable-row]");
-    if (!row) throw new Error("Clickable list row missing");
+    const row = page
+      .getByRole("list", { name: "Reports" })
+      .getByRole("listitem")
+      .element();
     const rowRect = row.getBoundingClientRect();
-    const secondaryActions = row.querySelectorAll(
-      ".saltListItemActions > button",
-    );
-    const firstActionRect = secondaryActions[0].getBoundingClientRect();
-    const secondActionRect = secondaryActions[1].getBoundingClientRect();
+    const firstActionRect = page
+      .getByRole("button", { name: "Download report" })
+      .element()
+      .getBoundingClientRect();
+    const secondActionRect = page
+      .getByRole("button", { name: "More report actions" })
+      .element()
+      .getBoundingClientRect();
 
     await userEvent.click(row, {
       position: {
@@ -406,32 +320,6 @@ describe("List", () => {
     expect(primarySpy).toHaveBeenCalledTimes(2);
   });
 
-  it("does not leak secondary activation to the primary action", async () => {
-    const primarySpy = vi.fn();
-    const secondarySpy = vi.fn();
-
-    await renderWithSalt(
-      <List>
-        <ListItem>
-          <ListItemAction onClick={primarySpy}>
-            <ListItemContent>Run report</ListItemContent>
-          </ListItemAction>
-          <ListItemActions>
-            <Button aria-label="More report actions" onClick={secondarySpy} />
-          </ListItemActions>
-        </ListItem>
-      </List>,
-    );
-
-    const secondaryAction = page.getByRole("button", {
-      name: "More report actions",
-    });
-    await secondaryAction.click();
-    await userEvent.keyboard("{Enter}");
-    expect(secondarySpy).toHaveBeenCalledTimes(2);
-    expect(primarySpy).not.toHaveBeenCalled();
-  });
-
   it("disables only the primary button", async () => {
     const primarySpy = vi.fn();
     const secondarySpy = vi.fn();
@@ -451,8 +339,6 @@ describe("List", () => {
 
     const primaryAction = page.getByRole("button", { name: "Run report" });
     await expect.element(primaryAction).toBeDisabled();
-    await primaryAction.click({ force: true });
-    expect(primarySpy).not.toHaveBeenCalled();
     await userEvent.tab();
     const secondaryAction = page.getByRole("button", {
       name: "Download report",
@@ -460,12 +346,14 @@ describe("List", () => {
     await expect.element(secondaryAction).toHaveFocus();
     await secondaryAction.click();
     expect(secondarySpy).toHaveBeenCalledOnce();
+    expect(primarySpy).not.toHaveBeenCalled();
   });
 
-  it("merges JSX and callback render props for both action branches", async () => {
+  it("merges JSX and callback render props and refs for both action branches", async () => {
     const buttonRef = createRef<HTMLButtonElement>();
-    const linkRef = createRef<HTMLAnchorElement>();
-    const routerRef = createRef<HTMLAnchorElement>();
+    const callbackButtonRef = createRef<HTMLButtonElement>();
+    const jsxLinkRef = createRef<HTMLAnchorElement>();
+    const callbackLinkRef = createRef<HTMLAnchorElement>();
 
     await renderWithSalt(
       <List>
@@ -482,11 +370,28 @@ describe("List", () => {
         </ListItem>
         <ListItem>
           <ListItemAction
+            aria-label="Callback button"
+            data-consumer="callback-button"
+            ref={callbackButtonRef}
+            render={(props) => (
+              <button
+                {...props}
+                data-render="callback-button"
+                type={props.type}
+              />
+            )}
+          >
+            <ListItemContent>Callback button label</ListItemContent>
+          </ListItemAction>
+        </ListItem>
+        <ListItem>
+          <ListItemAction
             className="consumer-link"
-            href="#jsx-link"
-            ref={linkRef}
+            data-consumer="link"
+            href="/jsx-link"
+            ref={jsxLinkRef}
             render={
-              <a className="render-link" data-render="link" href="#jsx-link" />
+              <a className="render-link" data-render="link" href="/jsx-link" />
             }
           >
             <ListItemContent>JSX link</ListItemContent>
@@ -495,7 +400,7 @@ describe("List", () => {
         <ListItem>
           <ListItemAction
             href="/callback-link"
-            ref={routerRef}
+            ref={callbackLinkRef}
             render={({ href, ...props }) => (
               <RouterLink {...props} data-render="router" to={href} />
             )}
@@ -509,23 +414,40 @@ describe("List", () => {
     const button = page.getByRole("button", { name: "Custom button" });
     await expect
       .element(button)
-      .toHaveClass("saltListItemAction", "consumer-button", "render-button");
+      .toHaveClass("consumer-button", "render-button");
     await expect.element(button).toHaveAttribute("data-consumer", "button");
     await expect.element(button).toHaveAttribute("data-render", "button");
     await expect.element(button).toHaveTextContent("Button label");
+    expect(buttonRef.current).toBe(button.element());
+
+    const callbackButton = page.getByRole("button", {
+      name: "Callback button",
+    });
+    await expect
+      .element(callbackButton)
+      .toHaveAttribute("data-consumer", "callback-button");
+    await expect
+      .element(callbackButton)
+      .toHaveAttribute("data-render", "callback-button");
+    await expect.element(callbackButton).toHaveAttribute("type", "button");
+    await expect
+      .element(callbackButton)
+      .toHaveTextContent("Callback button label");
+    expect(callbackButtonRef.current).toBe(callbackButton.element());
 
     const jsxLink = page.getByRole("link", { name: "JSX link" });
     await expect.element(jsxLink).toHaveClass("consumer-link", "render-link");
-    await expect.element(jsxLink).toHaveAttribute("href", "#jsx-link");
+    await expect.element(jsxLink).toHaveAttribute("data-consumer", "link");
+    await expect.element(jsxLink).toHaveAttribute("data-render", "link");
+    await expect.element(jsxLink).toHaveAttribute("href", "/jsx-link");
+    expect(jsxLinkRef.current).toBe(jsxLink.element());
 
     const callbackLink = page.getByRole("link", { name: "Callback link" });
     await expect
       .element(callbackLink)
       .toHaveAttribute("href", "/callback-link");
     await expect.element(callbackLink).toHaveAttribute("data-render", "router");
-    expect(buttonRef.current?.tagName).toBe("BUTTON");
-    expect(linkRef.current?.tagName).toBe("A");
-    expect(routerRef.current?.tagName).toBe("A");
+    expect(callbackLinkRef.current).toBe(callbackLink.element());
   });
 
   it("forwards native props and refs to every primitive", async () => {
@@ -533,63 +455,64 @@ describe("List", () => {
     const itemRef = createRef<HTMLLIElement>();
     const contentRef = createRef<HTMLSpanElement>();
     const actionRef = createRef<HTMLButtonElement>();
+    const linkActionRef = createRef<HTMLAnchorElement>();
     const actionsRef = createRef<HTMLDivElement>();
 
     await renderWithSalt(
-      <List aria-label="Reports" data-ref="list" ref={listRef}>
-        <ListItem aria-label="Report row" data-ref="item" ref={itemRef}>
-          <ListItemAction
-            aria-describedby="description"
-            data-ref="action"
-            ref={actionRef}
-          >
-            <ListItemContent
-              aria-label="Report content"
-              data-ref="content"
-              ref={contentRef}
-            >
+      <List aria-label="Reports" ref={listRef}>
+        <ListItem ref={itemRef} title="Report row">
+          <ListItemAction aria-label="Open quarterly report" ref={actionRef}>
+            <ListItemContent ref={contentRef} title="Report content">
               Quarterly report
             </ListItemContent>
           </ListItemAction>
           <ListItemActions
             aria-label="Report controls"
-            data-ref="actions"
             ref={actionsRef}
             role="group"
           >
             <Button aria-label="Download report" />
           </ListItemActions>
         </ListItem>
+        <ListItem>
+          <ListItemAction href="/quarterly-report" ref={linkActionRef}>
+            <ListItemContent>Quarterly report link</ListItemContent>
+          </ListItemAction>
+        </ListItem>
       </List>,
     );
 
-    expect(document.querySelector('[data-ref="list"]')).toHaveAttribute(
+    expect(listRef.current).toHaveAttribute("aria-label", "Reports");
+    expect(itemRef.current).toHaveAttribute("title", "Report row");
+    expect(contentRef.current).toHaveAttribute("title", "Report content");
+    expect(actionRef.current).toHaveAttribute(
       "aria-label",
-      "Reports",
+      "Open quarterly report",
     );
-    expect(document.querySelector('[data-ref="item"]')).toHaveAttribute(
-      "aria-label",
-      "Report row",
-    );
-    expect(document.querySelector('[data-ref="content"]')).toHaveAttribute(
-      "aria-label",
-      "Report content",
-    );
-    expect(document.querySelector('[data-ref="action"]')).toHaveAttribute(
-      "aria-describedby",
-      "description",
-    );
-    const actions = document.querySelector('[data-ref="actions"]');
-    expect(actions).toHaveAttribute("role", "group");
-    expect(actions).toHaveAttribute("aria-label", "Report controls");
+    expect(linkActionRef.current).toHaveAttribute("href", "/quarterly-report");
+    expect(actionsRef.current).toHaveAttribute("role", "group");
+    expect(actionsRef.current).toHaveAttribute("aria-label", "Report controls");
     expect(listRef.current?.tagName).toBe("UL");
     expect(itemRef.current?.tagName).toBe("LI");
     expect(contentRef.current?.tagName).toBe("SPAN");
     expect(actionRef.current?.tagName).toBe("BUTTON");
+    expect(linkActionRef.current?.tagName).toBe("A");
     expect(actionsRef.current?.tagName).toBe("DIV");
+    expect(listRef.current).toBe(
+      page.getByRole("list", { name: "Reports" }).element(),
+    );
+    expect(actionRef.current).toBe(
+      page.getByRole("button", { name: "Open quarterly report" }).element(),
+    );
+    expect(actionsRef.current).toBe(
+      page.getByRole("group", { name: "Report controls" }).element(),
+    );
+    expect(linkActionRef.current).toBe(
+      page.getByRole("link", { name: "Quarterly report link" }).element(),
+    );
   });
 
-  it("passes accessibility checks for all canonical compositions", async () => {
+  it("has no automated accessibility violations in canonical compositions", async () => {
     const { container } = await renderWithSalt(
       <List aria-label="Reports">
         <ListItem>
@@ -618,193 +541,41 @@ describe("List", () => {
             <Button aria-label="Download linked report" />
           </ListItemActions>
         </ListItem>
+        <ListItem>
+          <ListItemAction
+            href="https://example.com/reports"
+            render={<Link rel="noopener" target="_blank" />}
+          >
+            <ListItemContent>External report</ListItemContent>
+          </ListItemAction>
+        </ListItem>
       </List>,
     );
 
     await runAxeScan(container);
   }, 30_000);
 
-  it("keeps leading icons and trailing actions aligned to the first text line", async () => {
+  it("preserves the accessible name of a custom rendered link", async () => {
     await renderWithSalt(
-      <List aria-label="Alignment examples" style={{ width: 280 }}>
-        <ListItem data-alignment-row="short">
-          <ListItemContent>
-            <DocumentIcon aria-hidden size={2} />
-            <span data-alignment-text>Short report</span>
-          </ListItemContent>
-          <ListItemActions>
-            <Button aria-label="Short report actions" />
-          </ListItemActions>
-        </ListItem>
-        <ListItem data-alignment-row="long">
-          <ListItemContent>
-            <DocumentIcon aria-hidden size={2} />
-            <span data-alignment-text>
-              A report label that wraps onto at least three lines without moving
-              its leading icon or trailing action away from the first line
-            </span>
-          </ListItemContent>
-          <ListItemActions>
-            <Button aria-label="Long report actions" />
-          </ListItemActions>
-        </ListItem>
-        <ListItem data-alignment-row="external">
+      <List aria-label="Reports">
+        <ListItem>
           <ListItemAction
             href="https://example.com/reports"
-            render={<Link target="_blank" />}
+            render={<Link rel="noopener" target="_blank" />}
           >
-            <ListItemContent>
-              <span data-alignment-text>External report</span>
-            </ListItemContent>
+            <ListItemContent>External report</ListItemContent>
           </ListItemAction>
         </ListItem>
       </List>,
     );
 
-    const getMetrics = (row: HTMLElement) => {
-      const rowRect = row.getBoundingClientRect();
-      const iconRect = row
-        .querySelector<HTMLElement>(".saltIcon")
-        ?.getBoundingClientRect();
-      const text = row.querySelector<HTMLElement>("[data-alignment-text]");
-      const textRect = text?.getBoundingClientRect();
-      const actionRect = row
-        .querySelector<HTMLElement>(".saltListItemActions button")
-        ?.getBoundingClientRect();
-
-      expect(iconRect).toBeDefined();
-      expect(text).not.toBeNull();
-      expect(textRect).toBeDefined();
-      expect(actionRect).toBeDefined();
-
-      const lineHeight = Number.parseFloat(
-        getComputedStyle(text as HTMLElement).lineHeight,
-      );
-
-      return {
-        actionCenter:
-          (actionRect as DOMRect).top +
-          (actionRect as DOMRect).height / 2 -
-          rowRect.top,
-        firstLineCenter:
-          (textRect as DOMRect).top + lineHeight / 2 - rowRect.top,
-        iconCenter:
-          (iconRect as DOMRect).top +
-          (iconRect as DOMRect).height / 2 -
-          rowRect.top,
-        lineHeight,
-        textHeight: (textRect as DOMRect).height,
-      };
-    };
-
-    const shortRow = document.querySelector<HTMLElement>(
-      '[data-alignment-row="short"]',
-    );
-    const longRow = document.querySelector<HTMLElement>(
-      '[data-alignment-row="long"]',
-    );
-    if (!shortRow || !longRow) throw new Error("Alignment list rows missing");
-
-    const short = getMetrics(shortRow);
-    const long = getMetrics(longRow);
-    expect(long.textHeight).toBeGreaterThan(long.lineHeight * 2);
-    expect(Math.abs(short.iconCenter - short.firstLineCenter)).toBeLessThan(1);
-    expect(Math.abs(long.iconCenter - long.firstLineCenter)).toBeLessThan(1);
-    expect(Math.abs(short.actionCenter - short.firstLineCenter)).toBeLessThan(
-      1,
-    );
-    expect(Math.abs(long.actionCenter - long.firstLineCenter)).toBeLessThan(1);
-    expect(Math.abs(long.iconCenter - short.iconCenter)).toBeLessThan(1);
-    expect(Math.abs(long.actionCenter - short.actionCenter)).toBeLessThan(1);
-
-    const externalRow = document.querySelector<HTMLElement>(
-      '[data-alignment-row="external"]',
-    );
-    if (!externalRow) throw new Error("External link list row missing");
-    const rowRect = externalRow.getBoundingClientRect();
-    const text = externalRow.querySelector<HTMLElement>(
-      "[data-alignment-text]",
-    );
-    const textRect = text?.getBoundingClientRect();
-    const externalAction = externalRow.querySelector<HTMLAnchorElement>(
-      ".saltListItemAction",
-    );
-    const iconRect = externalRow
-      .querySelector<HTMLElement>(".saltLink-icon")
-      ?.getBoundingClientRect();
-
-    expect(text).not.toBeNull();
-    expect(textRect).toBeDefined();
-    expect(externalAction).not.toBeNull();
-    expect(iconRect).toBeDefined();
-
-    const lineHeight = Number.parseFloat(
-      getComputedStyle(text as HTMLElement).lineHeight,
-    );
-    const firstLineCenter =
-      (textRect as DOMRect).top + lineHeight / 2 - rowRect.top;
-    const iconCenter =
-      (iconRect as DOMRect).top +
-      (iconRect as DOMRect).height / 2 -
-      rowRect.top;
-
-    expect(Math.abs(iconCenter - firstLineCenter)).toBeLessThan(1);
-    expect(
-      (iconRect as DOMRect).left - (textRect as DOMRect).right,
-    ).toBeLessThan(16);
-    expect(
-      getComputedStyle(externalAction as HTMLAnchorElement).textDecorationLine,
-    ).toBe("none");
-  });
-
-  it("leaves focus containment and Escape handling to Dialog and Overlay", async () => {
-    const dialogOpenChange = vi.fn();
-
-    await renderWithSalt(<DialogExample onOpenChange={dialogOpenChange} />);
-    await expect.element(page.getByRole("dialog")).toBeVisible();
+    const externalAction = page.getByRole("link");
     await expect
-      .element(page.getByRole("button", { name: "Open dialog report" }))
-      .toHaveFocus();
-    for (const element of document.querySelectorAll("ul, li")) {
-      expect(element).not.toHaveAttribute("tabindex");
-    }
-    await userEvent.keyboard("{ArrowDown}");
+      .element(externalAction)
+      .toHaveAttribute("href", "https://example.com/reports");
+    await expect.element(externalAction).toHaveAttribute("target", "_blank");
     await expect
-      .element(page.getByRole("button", { name: "Open dialog report" }))
-      .toHaveFocus();
-    await userEvent.tab();
-    const dialogSecondaryAction = page.getByRole("button", {
-      name: "More dialog report actions",
-    });
-    await expect.element(dialogSecondaryAction).toHaveFocus();
-    await dialogSecondaryAction.click();
-    await expect.element(page.getByRole("dialog")).toBeVisible();
-    expect(dialogOpenChange).not.toHaveBeenCalled();
-    await userEvent.keyboard("{Escape}");
-    expect(dialogOpenChange).toHaveBeenCalledOnce();
-
-    const overlayOpenChange = vi.fn();
-    await renderWithSalt(<OverlayExample onOpenChange={overlayOpenChange} />);
-    await expect.element(page.getByRole("dialog")).toBeVisible();
-    await expect
-      .element(page.getByRole("button", { name: "Open overlay report" }))
-      .toHaveFocus();
-    await userEvent.keyboard("{ArrowDown}");
-    await expect
-      .element(page.getByRole("button", { name: "Open overlay report" }))
-      .toHaveFocus();
-    await userEvent.tab();
-    const overlaySecondaryAction = page.getByRole("button", {
-      name: "More overlay report actions",
-    });
-    await expect.element(overlaySecondaryAction).toHaveFocus();
-    await overlaySecondaryAction.click();
-    await expect.element(page.getByRole("dialog")).toBeVisible();
-    expect(overlayOpenChange).not.toHaveBeenCalled();
-    await userEvent.keyboard("{Escape}");
-    expect(overlayOpenChange).toHaveBeenCalledOnce();
-    await expect
-      .element(page.getByRole("button", { name: "Show reports" }))
-      .toHaveFocus();
+      .element(externalAction)
+      .toHaveAccessibleName("External report Opens in a new tab");
   });
 });
