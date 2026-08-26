@@ -6,9 +6,6 @@ import { forwardRef, type HTMLAttributes } from "react";
 
 import avatarGroupCountCss from "./AvatarGroupCount.css";
 
-/**
- * TODO: current color is a placeholder until design finalizes decision
- */
 export interface AvatarGroupCountProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "color"> {
   /**
