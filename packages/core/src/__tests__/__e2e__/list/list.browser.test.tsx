@@ -3,9 +3,8 @@ import {
   Link,
   List,
   ListItem,
-  ListItemAction,
-  ListItemActions,
   ListItemContent,
+  ListItemTrigger,
 } from "@salt-ds/core";
 import {
   type ComponentPropsWithoutRef,
@@ -37,11 +36,11 @@ function FormExample({ renderSubmit = false }: { renderSubmit?: boolean }) {
     >
       <List>
         <ListItem>
-          <ListItemAction
+          <ListItemTrigger
             render={renderSubmit ? <button type="submit" /> : undefined}
           >
             <ListItemContent>Run report</ListItemContent>
-          </ListItemAction>
+          </ListItemTrigger>
         </ListItem>
       </List>
       <output aria-label="Submission count">{submissions}</output>
@@ -117,7 +116,7 @@ describe("List", () => {
     expect(listRef.current).toBe(list.element());
   });
 
-  it("keeps passive rows structural and out of the tab order", async () => {
+  it("keeps static rows structural and out of the tab order", async () => {
     await renderWithSalt(
       <List aria-label="Reports">
         <ListItem>
@@ -135,15 +134,13 @@ describe("List", () => {
     await expect.element(list.getByRole("link")).not.toBeInTheDocument();
   });
 
-  it("tabs only through secondary controls in passive rows", async () => {
+  it("tabs only through secondary controls in static rows", async () => {
     await renderWithSalt(
       <List>
         <ListItem>
           <ListItemContent>Quarterly report</ListItemContent>
-          <ListItemActions>
-            <Button aria-label="Download quarterly report" />
-            <Button aria-label="Delete quarterly report" />
-          </ListItemActions>
+          <Button aria-label="Download quarterly report" />
+          <Button aria-label="Delete quarterly report" />
         </ListItem>
       </List>,
     );
@@ -164,9 +161,9 @@ describe("List", () => {
     await renderWithSalt(
       <List>
         <ListItem>
-          <ListItemAction onClick={clickSpy}>
+          <ListItemTrigger onClick={clickSpy}>
             <ListItemContent>Run report</ListItemContent>
-          </ListItemAction>
+          </ListItemTrigger>
         </ListItem>
       </List>,
     );
@@ -201,7 +198,7 @@ describe("List", () => {
     await renderWithSalt(
       <List>
         <ListItem>
-          <ListItemAction
+          <ListItemTrigger
             aria-current="page"
             download="quarterly.csv"
             href="#quarterly"
@@ -213,7 +210,7 @@ describe("List", () => {
             target="_blank"
           >
             <ListItemContent>Open report</ListItemContent>
-          </ListItemAction>
+          </ListItemTrigger>
         </ListItem>
       </List>,
     );
@@ -233,20 +230,16 @@ describe("List", () => {
     await renderWithSalt(
       <List>
         <ListItem>
-          <ListItemAction>
+          <ListItemTrigger>
             <ListItemContent>Button report</ListItemContent>
-          </ListItemAction>
-          <ListItemActions>
-            <Button aria-label="More button report actions" />
-          </ListItemActions>
+          </ListItemTrigger>
+          <Button aria-label="More button report actions" />
         </ListItem>
         <ListItem>
-          <ListItemAction href="#link-report">
+          <ListItemTrigger href="#link-report">
             <ListItemContent>Link report</ListItemContent>
-          </ListItemAction>
-          <ListItemActions>
-            <Button aria-label="More link report actions" />
-          </ListItemActions>
+          </ListItemTrigger>
+          <Button aria-label="More link report actions" />
         </ListItem>
       </List>,
     );
@@ -264,7 +257,7 @@ describe("List", () => {
     }
   });
 
-  it("keeps the row clickable around multiple secondary actions", async () => {
+  it("keeps the row clickable around grouped secondary actions", async () => {
     const primarySpy = vi.fn();
     const firstSecondarySpy = vi.fn();
     const secondSecondarySpy = vi.fn();
@@ -272,16 +265,16 @@ describe("List", () => {
     await renderWithSalt(
       <List aria-label="Reports">
         <ListItem>
-          <ListItemAction onClick={primarySpy}>
+          <ListItemTrigger onClick={primarySpy}>
             <ListItemContent>Run report</ListItemContent>
-          </ListItemAction>
-          <ListItemActions>
+          </ListItemTrigger>
+          <span aria-label="Report actions" role="group">
             <Button aria-label="Download report" onClick={firstSecondarySpy} />
             <Button
               aria-label="More report actions"
               onClick={secondSecondarySpy}
             />
-          </ListItemActions>
+          </span>
         </ListItem>
       </List>,
     );
@@ -327,12 +320,10 @@ describe("List", () => {
     await renderWithSalt(
       <List>
         <ListItem>
-          <ListItemAction disabled onClick={primarySpy}>
+          <ListItemTrigger disabled onClick={primarySpy}>
             <ListItemContent>Run report</ListItemContent>
-          </ListItemAction>
-          <ListItemActions>
-            <Button aria-label="Download report" onClick={secondarySpy} />
-          </ListItemActions>
+          </ListItemTrigger>
+          <Button aria-label="Download report" onClick={secondarySpy} />
         </ListItem>
       </List>,
     );
@@ -358,7 +349,7 @@ describe("List", () => {
     await renderWithSalt(
       <List>
         <ListItem>
-          <ListItemAction
+          <ListItemTrigger
             aria-label="Custom button"
             className="consumer-button"
             data-consumer="button"
@@ -366,10 +357,10 @@ describe("List", () => {
             render={<button className="render-button" data-render="button" />}
           >
             <ListItemContent>Button label</ListItemContent>
-          </ListItemAction>
+          </ListItemTrigger>
         </ListItem>
         <ListItem>
-          <ListItemAction
+          <ListItemTrigger
             aria-label="Callback button"
             data-consumer="callback-button"
             ref={callbackButtonRef}
@@ -382,10 +373,10 @@ describe("List", () => {
             )}
           >
             <ListItemContent>Callback button label</ListItemContent>
-          </ListItemAction>
+          </ListItemTrigger>
         </ListItem>
         <ListItem>
-          <ListItemAction
+          <ListItemTrigger
             className="consumer-link"
             data-consumer="link"
             href="/jsx-link"
@@ -395,10 +386,10 @@ describe("List", () => {
             }
           >
             <ListItemContent>JSX link</ListItemContent>
-          </ListItemAction>
+          </ListItemTrigger>
         </ListItem>
         <ListItem>
-          <ListItemAction
+          <ListItemTrigger
             href="/callback-link"
             ref={callbackLinkRef}
             render={({ href, ...props }) => (
@@ -406,7 +397,7 @@ describe("List", () => {
             )}
           >
             <ListItemContent>Callback link</ListItemContent>
-          </ListItemAction>
+          </ListItemTrigger>
         </ListItem>
       </List>,
     );
@@ -456,28 +447,21 @@ describe("List", () => {
     const contentRef = createRef<HTMLSpanElement>();
     const actionRef = createRef<HTMLButtonElement>();
     const linkActionRef = createRef<HTMLAnchorElement>();
-    const actionsRef = createRef<HTMLDivElement>();
 
     await renderWithSalt(
       <List aria-label="Reports" ref={listRef}>
         <ListItem ref={itemRef} title="Report row">
-          <ListItemAction aria-label="Open quarterly report" ref={actionRef}>
+          <ListItemTrigger aria-label="Open quarterly report" ref={actionRef}>
             <ListItemContent ref={contentRef} title="Report content">
               Quarterly report
             </ListItemContent>
-          </ListItemAction>
-          <ListItemActions
-            aria-label="Report controls"
-            ref={actionsRef}
-            role="group"
-          >
-            <Button aria-label="Download report" />
-          </ListItemActions>
+          </ListItemTrigger>
+          <Button aria-label="Download report" />
         </ListItem>
         <ListItem>
-          <ListItemAction href="/quarterly-report" ref={linkActionRef}>
+          <ListItemTrigger href="/quarterly-report" ref={linkActionRef}>
             <ListItemContent>Quarterly report link</ListItemContent>
-          </ListItemAction>
+          </ListItemTrigger>
         </ListItem>
       </List>,
     );
@@ -490,22 +474,16 @@ describe("List", () => {
       "Open quarterly report",
     );
     expect(linkActionRef.current).toHaveAttribute("href", "/quarterly-report");
-    expect(actionsRef.current).toHaveAttribute("role", "group");
-    expect(actionsRef.current).toHaveAttribute("aria-label", "Report controls");
     expect(listRef.current?.tagName).toBe("UL");
     expect(itemRef.current?.tagName).toBe("LI");
     expect(contentRef.current?.tagName).toBe("SPAN");
     expect(actionRef.current?.tagName).toBe("BUTTON");
     expect(linkActionRef.current?.tagName).toBe("A");
-    expect(actionsRef.current?.tagName).toBe("DIV");
     expect(listRef.current).toBe(
       page.getByRole("list", { name: "Reports" }).element(),
     );
     expect(actionRef.current).toBe(
       page.getByRole("button", { name: "Open quarterly report" }).element(),
-    );
-    expect(actionsRef.current).toBe(
-      page.getByRole("group", { name: "Report controls" }).element(),
     );
     expect(linkActionRef.current).toBe(
       page.getByRole("link", { name: "Quarterly report link" }).element(),
@@ -516,38 +494,34 @@ describe("List", () => {
     const { container } = await renderWithSalt(
       <List aria-label="Reports">
         <ListItem>
-          <ListItemContent>Passive report</ListItemContent>
+          <ListItemContent>Static report</ListItemContent>
         </ListItem>
         <ListItem>
-          <ListItemContent>Passive report with actions</ListItemContent>
-          <ListItemActions>
-            <Button aria-label="Download passive report" />
-            <Button aria-label="Delete passive report" />
-          </ListItemActions>
+          <ListItemContent>Static report with actions</ListItemContent>
+          <span aria-label="Static report actions" role="group">
+            <Button aria-label="Download static report" />
+            <Button aria-label="Delete static report" />
+          </span>
         </ListItem>
         <ListItem>
-          <ListItemAction>
+          <ListItemTrigger>
             <ListItemContent>Button report</ListItemContent>
-          </ListItemAction>
-          <ListItemActions>
-            <Button aria-label="More button report actions" />
-          </ListItemActions>
+          </ListItemTrigger>
+          <Button aria-label="More button report actions" />
         </ListItem>
         <ListItem>
-          <ListItemAction href="#linked-report">
+          <ListItemTrigger href="#linked-report">
             <ListItemContent>Linked report</ListItemContent>
-          </ListItemAction>
-          <ListItemActions>
-            <Button aria-label="Download linked report" />
-          </ListItemActions>
+          </ListItemTrigger>
+          <Button aria-label="Download linked report" />
         </ListItem>
         <ListItem>
-          <ListItemAction
+          <ListItemTrigger
             href="https://example.com/reports"
             render={<Link rel="noopener" target="_blank" />}
           >
             <ListItemContent>External report</ListItemContent>
-          </ListItemAction>
+          </ListItemTrigger>
         </ListItem>
       </List>,
     );
@@ -559,12 +533,12 @@ describe("List", () => {
     await renderWithSalt(
       <List aria-label="Reports">
         <ListItem>
-          <ListItemAction
+          <ListItemTrigger
             href="https://example.com/reports"
             render={<Link rel="noopener" target="_blank" />}
           >
             <ListItemContent>External report</ListItemContent>
-          </ListItemAction>
+          </ListItemTrigger>
         </ListItem>
       </List>,
     );

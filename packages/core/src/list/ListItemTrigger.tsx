@@ -9,9 +9,9 @@ import {
   type RefAttributes,
 } from "react";
 import { makePrefixer, type RenderPropsType, renderProps } from "../utils";
-import listItemActionCss from "./ListItemAction.css";
+import listItemTriggerCss from "./ListItemTrigger.css";
 
-export interface ListItemActionButtonProps
+export interface ListItemTriggerButtonProps
   extends Omit<ComponentPropsWithoutRef<"button">, "href"> {
   /**
    * Omit `href` to render the primary action as a button.
@@ -23,7 +23,7 @@ export interface ListItemActionButtonProps
   render?: RenderPropsType["render"];
 }
 
-export interface ListItemActionLinkProps
+export interface ListItemTriggerLinkProps
   extends Omit<ComponentPropsWithoutRef<"a">, "href"> {
   /**
    * Render the primary action as a link to this destination.
@@ -35,35 +35,35 @@ export interface ListItemActionLinkProps
   render?: RenderPropsType["render"];
 }
 
-export type ListItemActionProps =
-  | ListItemActionButtonProps
-  | ListItemActionLinkProps;
+export type ListItemTriggerProps =
+  | ListItemTriggerButtonProps
+  | ListItemTriggerLinkProps;
 
-type ListItemActionButtonComponentProps = ListItemActionButtonProps &
+type ListItemTriggerButtonComponentProps = ListItemTriggerButtonProps &
   RefAttributes<HTMLButtonElement>;
-type ListItemActionLinkComponentProps = ListItemActionLinkProps &
+type ListItemTriggerLinkComponentProps = ListItemTriggerLinkProps &
   RefAttributes<HTMLAnchorElement>;
 
-interface ListItemActionComponent {
-  (props: ListItemActionButtonComponentProps): ReactElement | null;
-  (props: ListItemActionLinkComponentProps): ReactElement | null;
+interface ListItemTriggerComponent {
+  (props: ListItemTriggerButtonComponentProps): ReactElement | null;
+  (props: ListItemTriggerLinkComponentProps): ReactElement | null;
   (
     props:
-      | ListItemActionButtonComponentProps
-      | ListItemActionLinkComponentProps,
+      | ListItemTriggerButtonComponentProps
+      | ListItemTriggerLinkComponentProps,
   ): ReactElement | null;
 }
 
-const withBaseName = makePrefixer("saltListItemAction");
+const withBaseName = makePrefixer("saltListItemTrigger");
 
-function ListItemActionImpl(
-  props: ListItemActionProps,
+function ListItemTriggerImpl(
+  props: ListItemTriggerProps,
   ref: ForwardedRef<HTMLAnchorElement | HTMLButtonElement>,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-list-item-action",
-    css: listItemActionCss,
+    testId: "salt-list-item-trigger",
+    css: listItemTriggerCss,
     window: targetWindow,
   });
 
@@ -102,6 +102,6 @@ function ListItemActionImpl(
 /**
  * A native button or link that fills the primary region of a list row.
  */
-export const ListItemAction = forwardRef(
-  ListItemActionImpl,
-) as ListItemActionComponent;
+export const ListItemTrigger = forwardRef(
+  ListItemTriggerImpl,
+) as ListItemTriggerComponent;

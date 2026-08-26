@@ -6,9 +6,8 @@ import {
   Link,
   List,
   ListItem,
-  ListItemAction,
-  ListItemActions,
   ListItemContent,
+  ListItemTrigger,
   Overlay,
   OverlayPanel,
   OverlayPanelContent,
@@ -43,14 +42,12 @@ const ListMatrix = ({ direction = "ltr" }: { direction?: "ltr" | "rtl" }) => (
           <DocumentIcon aria-hidden />
           Static content with one action
         </ListItemContent>
-        <ListItemActions>
-          <Button appearance="transparent" aria-label="Download static report">
-            <DownloadIcon aria-hidden />
-          </Button>
-        </ListItemActions>
+        <Button appearance="transparent" aria-label="Download static report">
+          <DownloadIcon aria-hidden />
+        </Button>
       </ListItem>
       <ListItem>
-        <ListItemAction>
+        <ListItemTrigger>
           <ListItemContent>
             <DocumentIcon aria-hidden />
             <span>
@@ -58,46 +55,42 @@ const ListMatrix = ({ direction = "ltr" }: { direction?: "ltr" | "rtl" }) => (
               this width and prove first-line alignment.
             </span>
           </ListItemContent>
-        </ListItemAction>
-        <ListItemActions aria-label="Button item actions" role="group">
+        </ListItemTrigger>
+        <span aria-label="Button item actions" role="group">
           <Button appearance="transparent" aria-label="Download button report">
             <DownloadIcon aria-hidden />
           </Button>
           <Button appearance="transparent" aria-label="Delete button report">
             <DeleteIcon aria-hidden />
           </Button>
-        </ListItemActions>
+        </span>
       </ListItem>
       <ListItem>
-        <ListItemAction href="#linked-report" onClick={preventNavigation}>
+        <ListItemTrigger href="#linked-report" onClick={preventNavigation}>
           <ListItemContent>Linked report</ListItemContent>
-        </ListItemAction>
-        <ListItemActions>
-          <Button appearance="transparent" aria-label="Download linked report">
-            <DownloadIcon aria-hidden />
-          </Button>
-        </ListItemActions>
+        </ListItemTrigger>
+        <Button appearance="transparent" aria-label="Download linked report">
+          <DownloadIcon aria-hidden />
+        </Button>
       </ListItem>
       <ListItem>
-        <ListItemAction
+        <ListItemTrigger
           href="https://example.com/reports"
           render={<Link rel="noopener" target="_blank" />}
         >
           <ListItemContent>External report</ListItemContent>
-        </ListItemAction>
+        </ListItemTrigger>
       </ListItem>
       <ListItem>
-        <ListItemAction disabled>
+        <ListItemTrigger disabled>
           <ListItemContent>Disabled primary button</ListItemContent>
-        </ListItemAction>
-        <ListItemActions>
-          <Button
-            appearance="transparent"
-            aria-label="Request access to disabled primary button"
-          >
-            <AddUserIcon aria-hidden />
-          </Button>
-        </ListItemActions>
+        </ListItemTrigger>
+        <Button
+          appearance="transparent"
+          aria-label="Request access to disabled primary button"
+        >
+          <AddUserIcon aria-hidden />
+        </Button>
       </ListItem>
       <ListItem>
         <ListItemContent>
@@ -111,14 +104,12 @@ const ListMatrix = ({ direction = "ltr" }: { direction?: "ltr" | "rtl" }) => (
             Truncated report name that is deliberately much wider than the row
           </span>
         </ListItemContent>
-        <ListItemActions>
-          <Button
-            appearance="transparent"
-            aria-label="More truncated report actions"
-          >
-            <OverflowMenuIcon aria-hidden />
-          </Button>
-        </ListItemActions>
+        <Button
+          appearance="transparent"
+          aria-label="More truncated report actions"
+        >
+          <OverflowMenuIcon aria-hidden />
+        </Button>
       </ListItem>
     </List>
   </div>

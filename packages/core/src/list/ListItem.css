@@ -2,8 +2,37 @@
   box-sizing: border-box;
   color: var(--salt-content-primary-foreground);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-auto-columns: max-content;
+  grid-auto-flow: column;
+  grid-template-columns: minmax(0, 1fr);
   list-style: none;
   min-width: 0;
   position: relative;
+}
+
+.saltListItem > :not(.saltListItemTrigger):not(.saltListItemContent) {
+  align-self: start;
+  grid-row: 1;
+  margin-block: var(--salt-spacing-50);
+  position: relative;
+  z-index: 2;
+}
+
+.saltListItem > :not(.saltListItemTrigger):not(.saltListItemContent):not(:last-child) {
+  margin-inline-end: var(--salt-spacing-50);
+}
+
+.saltListItem > :not(.saltListItemTrigger):not(.saltListItemContent):last-child {
+  margin-inline-end: var(--salt-spacing-100);
+}
+
+.saltListItem > [role="group"] {
+  display: flex;
+  align-items: center;
+  gap: var(--salt-spacing-50);
+  pointer-events: none;
+}
+
+.saltListItem > [role="group"] > * {
+  pointer-events: auto;
 }
