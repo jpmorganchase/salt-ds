@@ -1,9 +1,8 @@
 import {
   List,
   ListItem,
-  ListItemAction,
-  ListItemActions,
   ListItemContent,
+  ListItemTrigger,
 } from "@salt-ds/core";
 import { createRef } from "react";
 
@@ -26,7 +25,7 @@ const linkRef = createRef<HTMLAnchorElement>();
 
 <List render={(props) => <ol {...props} data-custom-list />} />;
 
-<ListItemAction
+<ListItemTrigger
   onClick={(event) => {
     event.currentTarget.disabled = true;
   }}
@@ -34,9 +33,9 @@ const linkRef = createRef<HTMLAnchorElement>();
   render={(props) => <button {...props} data-custom-button />}
 >
   <ListItemContent>Run report</ListItemContent>
-</ListItemAction>;
+</ListItemTrigger>;
 
-<ListItemAction
+<ListItemTrigger
   href="/reports/quarterly"
   onClick={(event) => {
     event.currentTarget.href;
@@ -46,11 +45,7 @@ const linkRef = createRef<HTMLAnchorElement>();
   target="_blank"
 >
   <ListItemContent>Open report</ListItemContent>
-</ListItemAction>;
-
-<ListItemActions aria-label="Report actions" role="group">
-  <button type="button">Download</button>
-</ListItemActions>;
+</ListItemTrigger>;
 
 // @ts-expect-error -- customize the list element with render, not as
 <List as="ol" />;
@@ -59,7 +54,7 @@ const linkRef = createRef<HTMLAnchorElement>();
 <List start={3} />;
 
 // @ts-expect-error -- links use anchor refs
-<ListItemAction href="/reports" ref={buttonRef} />;
+<ListItemTrigger href="/reports" ref={buttonRef} />;
 
 // @ts-expect-error -- buttons use button refs
-<ListItemAction ref={linkRef} />;
+<ListItemTrigger ref={linkRef} />;

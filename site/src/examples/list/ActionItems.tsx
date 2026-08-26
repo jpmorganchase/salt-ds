@@ -1,32 +1,37 @@
-import { List, ListItem, ListItemAction, ListItemContent } from "@salt-ds/core";
+import {
+  List,
+  ListItem,
+  ListItemContent,
+  ListItemTrigger,
+} from "@salt-ds/core";
 import { DocumentIcon } from "@salt-ds/icons";
 import type { ReactElement } from "react";
 
 export const ActionItems = (): ReactElement => (
   <List aria-label="Available reports" style={{ maxWidth: 480 }}>
     <ListItem>
-      <ListItemAction onClick={() => undefined}>
+      <ListItemTrigger onClick={() => undefined}>
         <ListItemContent>
           <DocumentIcon aria-hidden />
           Generate a new report
         </ListItemContent>
-      </ListItemAction>
+      </ListItemTrigger>
     </ListItem>
     <ListItem>
-      <ListItemAction href="#quarterly">
+      <ListItemTrigger href="#quarterly">
         <ListItemContent>
           <DocumentIcon aria-hidden />
           Open quarterly report
         </ListItemContent>
-      </ListItemAction>
+      </ListItemTrigger>
     </ListItem>
     <ListItem>
-      <ListItemAction href="#annual">
+      <ListItemTrigger href="#annual">
         <ListItemContent>
           <DocumentIcon aria-hidden />
           Open annual report
         </ListItemContent>
-      </ListItemAction>
+      </ListItemTrigger>
     </ListItem>
   </List>
 );

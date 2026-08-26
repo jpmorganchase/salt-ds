@@ -2,8 +2,8 @@ import {
   Link,
   List,
   ListItem,
-  ListItemAction,
   ListItemContent,
+  ListItemTrigger,
 } from "@salt-ds/core";
 import type { ReactElement } from "react";
 import { MemoryRouter, Link as RouterLink } from "react-router";
@@ -13,28 +13,28 @@ export const RoutingLibraries = (): ReactElement => (
     <nav aria-label="Report links">
       <List style={{ maxWidth: 420 }}>
         <ListItem>
-          <ListItemAction
+          <ListItemTrigger
             href="/reports/quarterly"
             render={<RouterLink to="/reports/quarterly" />}
           >
             <ListItemContent>Quarterly report</ListItemContent>
-          </ListItemAction>
+          </ListItemTrigger>
         </ListItem>
         <ListItem>
-          <ListItemAction
+          <ListItemTrigger
             href="/reports/annual"
             render={({ href, ...props }) => <RouterLink {...props} to={href} />}
           >
             <ListItemContent>Annual report</ListItemContent>
-          </ListItemAction>
+          </ListItemTrigger>
         </ListItem>
         <ListItem>
-          <ListItemAction
+          <ListItemTrigger
             href="https://example.com/reports"
             render={<Link rel="noopener" target="_blank" />}
           >
             <ListItemContent>External reports</ListItemContent>
-          </ListItemAction>
+          </ListItemTrigger>
         </ListItem>
       </List>
     </nav>

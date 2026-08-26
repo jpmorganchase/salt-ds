@@ -5,8 +5,8 @@ import {
   DialogHeader,
   List,
   ListItem,
-  ListItemAction,
   ListItemContent,
+  ListItemTrigger,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
@@ -34,19 +34,19 @@ export const InDialog = (): ReactElement => {
         <DialogContent>
           <List aria-label="Reports">
             <ListItem>
-              <ListItemAction>
+              <ListItemTrigger>
                 <ListItemContent>Quarterly report</ListItemContent>
-              </ListItemAction>
+              </ListItemTrigger>
             </ListItem>
             <ListItem>
-              <ListItemAction>
+              <ListItemTrigger>
                 <ListItemContent>Annual report</ListItemContent>
-              </ListItemAction>
+              </ListItemTrigger>
             </ListItem>
             <ListItem>
-              <ListItemAction>
+              <ListItemTrigger>
                 <ListItemContent>Monthly performance report</ListItemContent>
-              </ListItemAction>
+              </ListItemTrigger>
             </ListItem>
           </List>
         </DialogContent>
