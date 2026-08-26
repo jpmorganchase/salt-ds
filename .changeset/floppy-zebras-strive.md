@@ -2,7 +2,8 @@
 "@salt-ds/theme": minor
 ---
 
-Added: 
+Added:
+
 - `--salt-sentiment-neutral-background`.
 - `--salt-palette-neutral-background` to the legacy theme.
 
