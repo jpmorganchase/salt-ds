@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   forwardRef,
+  type UIEventHandler,
   useCallback,
   useRef,
   useState,
@@ -23,7 +24,7 @@ export type DrawerContentProps = ComponentPropsWithoutRef<"div">;
 
 export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
   function DrawerContent(props, ref) {
-    const { children, className, ...rest } = props;
+    const { children, className, onScrollCapture, ...rest } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -44,11 +45,13 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
       const container = scrollRef.current;
       if (!container) return;
 
-      const overflowing = container.scrollHeight > container.clientHeight;
-      setIsOverflowing(overflowing);
-      setCanScrollUp(overflowing && container.scrollTop > 0);
+      const overflowingY = container.scrollHeight > container.clientHeight;
+      setIsOverflowing(
+        overflowingY || container.scrollWidth > container.clientWidth,
+      );
+      setCanScrollUp(overflowingY && container.scrollTop > 0);
       setCanScrollDown(
-        overflowing &&
+        overflowingY &&
           container.scrollHeight -
             container.scrollTop -
             container.clientHeight >
@@ -56,8 +59,9 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
       );
     }, []);
 
-    const handleScroll = () => {
+    const handleScroll: UIEventHandler<HTMLDivElement> = (event) => {
       targetWindow?.requestAnimationFrame(readScrollPosition);
+      onScrollCapture?.(event);
     };
 
     useResizeObserver({ ref: scrollRef, onResize: readScrollPosition });
@@ -77,15 +81,12 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
           },
           className,
         )}
-        {...rest}
         onScrollCapture={handleScroll}
         {...(isOverflowing && {
-          role: "region",
           tabIndex: 0,
-          ...(headerId
-            ? { "aria-labelledby": headerId }
-            : { "aria-label": "Content" }),
+          ...(headerId && { role: "region", "aria-labelledby": headerId }),
         })}
+        {...rest}
       >
         {children}
       </div>

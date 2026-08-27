@@ -16,7 +16,8 @@ const withBaseName = makePrefixer("saltDrawerHeader");
 export interface DrawerHeaderProps extends ComponentPropsWithoutRef<"div"> {
   // TODO: confirm if DrawerHeader supports rendering status icon instead of accent bar, based on the status prop -> look Dialog in core
   /**
-   * Displays the accent bar in the Drawer Header */
+   * Hides the accent bar in the Drawer Header. Defaults to `false`.
+   */
   disableAccent?: boolean;
   /**
    * Displays the header at the top of the Drawer
@@ -57,9 +58,17 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(
       window: targetWindow,
     });
 
-    const { setHeaderId } = useDrawerContext();
+    const { setHeaderId, setHasHeader } = useDrawerContext();
     const headingId = useId();
     const hasHeading = Boolean(header || preheader);
+
+    useIsomorphicLayoutEffect(() => {
+      setHasHeader?.(true);
+
+      return () => {
+        setHasHeader?.(false);
+      };
+    }, [setHasHeader]);
 
     useIsomorphicLayoutEffect(() => {
       setHeaderId?.(hasHeading ? headingId : undefined);
