@@ -1,13 +1,23 @@
 {
   "name": "@salt-ds/highcharts-theme",
   "version": "1.0.3",
+  "description": "Salt Design System theme and React utilities for Highcharts.",
+  "homepage": "https://www.saltdesignsystem.com/salt/components/chart",
+  "keywords": [
+    "salt-design-system",
+    "react",
+    "highcharts",
+    "theme"
+  ],
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/jpmorganchase/salt-ds.git",
     "directory": "packages/highcharts-theme"
   },
-  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "bugs": {
+    "url": "https://www.saltdesignsystem.com/salt/support-and-contributions"
+  },
   "sideEffects": false,
   "scripts": {
     "build": "yarn node ../../scripts/build.mjs"

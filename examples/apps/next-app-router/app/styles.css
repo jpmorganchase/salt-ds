@@ -1,0 +1,28 @@
+:root { font-family: var(--salt-text-fontFamily); background: var(--salt-container-primary-background); }
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: inherit; }
+.appShell { min-height: 100vh; background: var(--salt-container-primary-background); color: var(--salt-content-primary-foreground); }
+.appHeader { min-height: 64px; display: flex; align-items: center; gap: var(--salt-spacing-300); padding: var(--salt-spacing-100) var(--salt-spacing-300); border-bottom: var(--salt-size-fixed-100) solid var(--salt-separable-primary-borderColor); }
+.brand { font-weight: var(--salt-text-label-fontWeight); text-decoration: none; }
+.appHeader nav { display: flex; gap: var(--salt-spacing-200); }
+.appHeader nav a { padding: var(--salt-spacing-100); text-decoration: none; }
+.appHeader nav a[aria-current="page"] { border-bottom: var(--salt-size-fixed-200) solid var(--salt-selectable-tab-foreground-selected); }
+.headerControls { margin-left: auto; }
+.mainContent { width: min(100% - var(--salt-spacing-600), 1040px); margin: 0 auto; padding: var(--salt-spacing-500) 0; display: grid; gap: var(--salt-spacing-300); }
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--salt-spacing-500); align-items: end; }
+.hero h1 { font: var(--salt-text-display-fontWeight) var(--salt-text-display-fontSize) / var(--salt-text-display-lineHeight) var(--salt-text-fontFamily); margin: 0 0 var(--salt-spacing-100); }
+.hero p { max-width: 62ch; }
+.eyebrow { color: var(--salt-content-secondary-foreground); margin: 0 0 var(--salt-spacing-100); }
+.metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--salt-spacing-200); }
+.metricCard, .contentCard { border: var(--salt-size-fixed-100) solid var(--salt-container-primary-borderColor); padding: var(--salt-spacing-250); background: var(--salt-container-secondary-background); }
+.metricCard { display: grid; gap: var(--salt-spacing-50); }
+.metricCard strong { font-size: var(--salt-text-heading-h2-fontSize); }
+
+@media (max-width: 720px) {
+  .appHeader { flex-wrap: wrap; padding: var(--salt-spacing-150); }
+  .appHeader nav { order: 3; width: 100%; overflow-x: auto; }
+  .mainContent { width: calc(100% - var(--salt-spacing-300)); padding: var(--salt-spacing-300) 0; }
+  .hero { grid-template-columns: 1fr; gap: var(--salt-spacing-200); }
+  .metrics { grid-template-columns: 1fr; }
+}

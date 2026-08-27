@@ -1,5 +1,5 @@
 import { createRequire } from "node:module";
-import { dirname, join } from "node:path";
+import { dirname, isAbsolute, join, relative } from "node:path";
 import type { StorybookConfig } from "@storybook/react-vite";
 import { cssInline } from "css-inline-plugin";
 import remarkGfm from "remark-gfm";
@@ -35,10 +35,40 @@ const config: StorybookConfig = {
     getAbsolutePath("@storybook/addon-a11y"),
   ],
   async viteFinal(config, { configType }) {
-    const { mergeConfig } = await import("vite");
+    const { mergeConfig, transformWithOxc } = await import("vite");
+    const canonicalPatternRoot = join(
+      config.root ?? process.cwd(),
+      "site",
+      "src",
+      "examples",
+      "patterns",
+    );
 
     const customConfig: UserConfig = {
-      plugins: [cssInline()],
+      plugins: [
+        {
+          name: "salt:canonical-pattern-tsx",
+          enforce: "pre",
+          async transform(source, id) {
+            const sourcePath = id.split("?", 1)[0];
+            const relativePath = relative(canonicalPatternRoot, sourcePath);
+
+            if (
+              !sourcePath.endsWith(".tsx") ||
+              relativePath.startsWith("..") ||
+              isAbsolute(relativePath)
+            ) {
+              return null;
+            }
+
+            return transformWithOxc(source, sourcePath, {
+              jsx: { runtime: "automatic" },
+              lang: "tsx",
+            });
+          },
+        },
+        cssInline(),
+      ],
       server: {
         watch: {
           ignored: ["**/coverage/**"],

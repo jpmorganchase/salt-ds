@@ -1,78 +1,42 @@
-# Consumer Repo Workflow Example
+# Consumer package/release fixture
 
-This workflow example is the smallest external-consumer repo shape Salt expects.
+This directory is an external-consumer fixture for Salt package and release
+verification. It is intentionally small and policy-heavy; it is not a public
+starter application. Use the runnable applications under `examples/apps/` and
+the [Developing with Salt](../../site/docs/getting-started/developing.mdx) guide
+for consumer setup.
 
-Use it as a file-layout reference, not as the canonical workflow guide. Consumers should be able to use Salt from [`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/ai.mdx) alone.
-
-Node 22 or newer and Corepack are required. From a standalone copy of this directory, run:
+Node 22 or newer and Corepack are required. From a standalone copy, run:
 
 ```sh
 corepack yarn install --immutable
 corepack yarn ui:verify
 ```
 
-The example pins public registry versions and carries its own Yarn lockfile and TypeScript configuration. It does not resolve through the Salt monorepo.
+The fixture pins public registry versions and carries its own lockfile and
+TypeScript configuration. Salt's release smoke test copies it to an isolated
+directory and may substitute an exact locally packed pre-release artifact for
+internal verification. That substitution is not a supported installation path.
 
-## Example Layout
+## Contents
 
-```text
-consumer-app/
-├── AGENTS.md
-├── package.json
-├── mcp.config.example.json
-├── tsconfig.json
-├── docs/
-│   └── repo convention references
-├── src/
-│   ├── components/AppButton.tsx
-│   └── theme/ConsumerBrandProvider.tsx
-└── .salt/
-    └── team.json
-```
+- `package.json` and `yarn.lock` define the standalone consumer dependency tree.
+- `src/theme/ConsumerBrandProvider.tsx` deliberately exercises the legacy
+  provider exported by this fixture's pinned, already released package cohort.
+  New applications should use the current provider shown in the public guide.
+- `src/components/AppButton.tsx` is a transparent wrapper used only to compile
+  a consumer-owned public-API composition. It adds no analytics or defaults.
+- `.salt/team.json` contains optional repository conventions whose claims must
+  match checked-in implementations.
+- `AGENTS.md` is a repository-owned workflow note, not package documentation.
+- `mcp.config.example.json` is retained solely as an unreleased package-test
+  fixture. Consumers must not copy it or install the named pre-release package.
 
-## Files
+## Boundaries
 
-- `package.json`
-  - minimal React app dependencies that consume Salt, plus a working `ui:verify` TypeScript check
-- `mcp.config.example.json`
-  - local-development configuration used only after repository tooling installs
-    the exact packed tarball under test
-- `AGENTS.md`
-  - the shared repo workflow contract for Salt UI tasks
-- `.salt/team.json`
-  - the default repo-local conventions file
-- `.github/copilot-instructions.md`
-  - optional VS Code adapter generated only when a repo wants host-specific scaffolding
-- `src/` and `docs/`
-  - minimal, compilable implementations and documentation for every wrapper,
-    provider, token alias, and pattern preference declared by `.salt/team.json`
-
-## What This Example Shows
-
-- a consumer-owned project and policy fixture used by the MCP verification suite
-- a locally packed `@salt-ds/mcp` install used to verify the exact candidate
-  bytes before release
-- agent-owned create and migration work grounded by read-only Salt retrieval
-- zero-config canonical Salt value before repo policy exists
-- optional `.salt/team.json` as the default conventions layer when a team chooses repo policy
-- root `AGENTS.md` as the shared cross-IDE workflow contract
-- `ui:verify` as a real repo-owned TypeScript gate that teams can extend with their own checks
-
-## Important Boundary
-
-- Salt MCP stays canonical for Salt decisions.
-- Salt MCP is read-only and does not authorize edits or prove task completion;
-  the host agent owns those decisions.
-- `.salt/team.json` is optional, stays repo-local, and remains host/user-owned. Without it, Salt stays canonical-only and does not invent durable team policy.
-- `.salt/stack.json` is optional and advanced, not the default.
-- Normal consumers should install a released package as documented in the AI
-  guide. A mutable branch URL is not an acceptable substitute for a release.
-- The MCP config deliberately contains no registry install command or public
-  version claim. It resolves only a locally installed packed artifact.
-- There is no public CLI fallback. Runtime capture, durable attestation,
-  bootstrap automation, and artifact persistence remain host- or repo-owned.
-
-## Related Docs
-
-- [`../../site/docs/getting-started/ai.mdx`](../../site/docs/getting-started/ai.mdx)
-- [`../project-conventions/README.md`](../project-conventions/README.md)
+- Use only released Salt packages and public entry points in application code.
+- Keep canonical Salt guidance separate from optional repository policy.
+- Do not claim wrapper behavior that the wrapper and its tests do not implement.
+- Do not treat this fixture as an AI tooling, starter-app or support guide.
+- Use the public [support and contributions](../../site/docs/support-and-contributions/index.mdx)
+  page for feedback or help.

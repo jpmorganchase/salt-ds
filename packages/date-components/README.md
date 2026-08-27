@@ -23,7 +23,10 @@ This package includes:
 yarn add @salt-ds/date-components @salt-ds/date-adapters
 ```
 
-You will also need the usual Salt peer dependencies (React) and the Salt packages used by these components (for example `@salt-ds/core`, `@salt-ds/styles`).
+React and React DOM are peer dependencies. New applications should use
+`SaltProviderNext` and import `@salt-ds/theme/css/global.css` plus
+`@salt-ds/theme/css/theme-next.css`. Component styles are injected at runtime
+unless style injection is disabled.
 
 ## Date adapters
 
@@ -36,14 +39,16 @@ Make sure you have an adapter configured for the date library/framework you’re
 Import components from `@salt-ds/date-components`:
 
 ```tsx
-import {
-  LocalizationProvider,
-  DatePicker,
-  DateInputSingle,
-  Calendar,
-} from "@salt-ds/date-components";
+import { LocalizationProvider, Calendar } from "@salt-ds/date-components";
+import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 
-// ...render in your app
+export function Dates() {
+  return (
+    <LocalizationProvider DateAdapter={AdapterDateFns}>
+      <Calendar />
+    </LocalizationProvider>
+  );
+}
 ```
 
 ## Migration from `@salt-ds/lab`
@@ -61,3 +66,10 @@ to:
 ```ts
 import { DatePicker } from "@salt-ds/date-components";
 ```
+
+Install the peer dependency for exactly one selected adapter. Date object types
+from different libraries are not interchangeable within one localization
+provider.
+
+See the [Date input documentation](https://www.saltdesignsystem.com/salt/components/date-input)
+and [Localization provider usage](https://www.saltdesignsystem.com/salt/components/localization-provider/usage).

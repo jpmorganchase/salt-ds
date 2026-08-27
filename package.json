@@ -54,6 +54,10 @@
     "smoke:consumer": "node ./scripts/consumerRepoSmoke.mjs",
     "smoke:consumer:network": "node ./scripts/consumerRepoSmoke.mjs",
     "smoke:consumer:published": "node ./scripts/consumerRepoSmoke.mjs --published",
+    "examples:manifest": "node ./scripts/checkPublicExamples.mjs --write-manifest",
+    "check:public-examples": "node ./scripts/checkPublicExamples.mjs",
+    "check:public-docs": "node ./scripts/checkPublicDocumentation.mjs && yarn check:public-examples",
+    "check:sample-apps": "node ./scripts/checkSampleApps.mjs",
     "typecheck": "tsgo --noEmit",
     "typecheck:mcp": "tsc -p packages/mcp/tsconfig.test.json --noEmit",
     "chromatic": "chromatic"

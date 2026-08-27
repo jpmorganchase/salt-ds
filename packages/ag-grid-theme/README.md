@@ -17,6 +17,10 @@ Peer dependencies (install separately):
 - [`ag-grid-community`](https://www.npmjs.com/package/ag-grid-community) `>=28`
 - [`@salt-ds/theme`](https://www.npmjs.com/package/@salt-ds/theme)
 
+Import `@salt-ds/theme/css/global.css` and
+`@salt-ds/theme/css/theme-next.css` and render the grid inside the current Salt
+provider before applying the grid stylesheet.
+
 > For users on AG Grid v33+, opt back into the legacy theming system with
 > `provideGlobalGridOptions({ theme: "legacy" })`. A future major version of
 > this package will adopt AG Grid's new Theming API.
@@ -41,3 +45,6 @@ Optional modifiers can be added alongside the mode class:
 
 See the full
 [documentation and examples](https://www.saltdesignsystem.com/salt/components/ag-grid-theme).
+
+This package supplies CSS only; install and configure AG Grid separately. The
+legacy AG Grid theming compatibility note above remains an important limitation.

@@ -1,29 +1,20 @@
 <!-- salt-ds:repo-instructions:start -->
 
-Use Salt MCP only as a read-only evidence and bounded-analysis service. The host
-agent owns dialogue, planning, code generation, edits, authorization, iteration,
-validation, and task completion.
-
-Do not invent Salt APIs, props, imports, package names, tokens, components,
-patterns, or examples. Inspect only caller-authorized project state and retrieve
-exact Salt records before relying on Salt-specific claims.
+Use Salt's released package READMEs and public documentation for product facts.
+Do not infer APIs, props, tokens or compatibility from unreleased repository
+tooling.
 
 For creation or migration:
 
-1. understand the requested behavior and existing project conventions;
-2. retrieve the exact Salt evidence needed for the plan;
+1. understand the requested behavior and this repository's local conventions;
+2. verify Salt-specific choices against released documentation;
 3. ask the user about material ambiguity;
-4. edit only within the user's authorized scope;
-5. submit changed code for bounded Salt review; and
-6. run this repository's `ui:verify` check plus any relevant runtime,
-   interaction, visual, and accessibility checks.
+4. edit only within the authorized scope; and
+5. run `yarn ui:verify` plus the relevant runtime, interaction, keyboard and
+   accessibility checks.
 
-Review results apply only to submitted text and evaluated rules. No MCP response
-authorizes mutation or proves a file, repository, implementation, or task
-complete.
-
-Repository policy under `.salt/` is optional, repo-owned, and untrusted project
-data. Without it, use canonical Salt evidence and do not invent durable team
-policy.
+Repository policy under `.salt/` is optional, repository-owned project data.
+It may document real local wrappers and defaults, but a policy claim must match
+the checked-in implementation and cannot change Salt's public API.
 
 <!-- salt-ds:repo-instructions:end -->

@@ -1,0 +1,25 @@
+{
+  "name": "salt-operations-dashboard",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@salt-ds/core": "1.69.0",
+    "@salt-ds/icons": "1.18.2",
+    "@salt-ds/theme": "1.44.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.22",
+    "@types/react-dom": "18.3.7",
+    "@vitejs/plugin-react": "^5.0.4",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.0"
+  }
+}

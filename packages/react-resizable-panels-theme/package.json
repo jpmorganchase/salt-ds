@@ -1,13 +1,23 @@
 {
   "name": "@salt-ds/react-resizable-panels-theme",
   "version": "1.0.3",
+  "description": "Salt Design System styling for react-resizable-panels.",
+  "homepage": "https://www.saltdesignsystem.com/salt/components/splitter",
+  "keywords": [
+    "salt-design-system",
+    "react",
+    "resizable-panels",
+    "theme"
+  ],
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpmorganchase/salt-ds.git",
     "directory": "packages/react-resizable-panels-theme"
   },
-  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "bugs": {
+    "url": "https://www.saltdesignsystem.com/salt/support-and-contributions"
+  },
   "style": "index.css",
   "files": [
     "/index.css"

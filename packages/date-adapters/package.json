@@ -1,13 +1,23 @@
 {
   "name": "@salt-ds/date-adapters",
   "version": "1.0.2",
+  "description": "Date-library adapters for Salt Design System date components.",
+  "homepage": "https://www.saltdesignsystem.com/salt/components/localization-provider/usage",
+  "keywords": [
+    "salt-design-system",
+    "date",
+    "localization",
+    "adapter"
+  ],
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpmorganchase/salt-ds.git",
     "directory": "packages/date-adapters"
   },
-  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "bugs": {
+    "url": "https://www.saltdesignsystem.com/salt/support-and-contributions"
+  },
   "main": "src/index.ts",
   "saltSourceEntrypoints": {
     ".": "src/types/index.ts",

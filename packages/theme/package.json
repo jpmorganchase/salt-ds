@@ -1,13 +1,23 @@
 {
   "name": "@salt-ds/theme",
   "version": "1.45.0",
+  "description": "Themes, design tokens and global CSS for Salt Design System.",
+  "homepage": "https://www.saltdesignsystem.com/salt/themes",
+  "keywords": [
+    "salt-design-system",
+    "css",
+    "theme",
+    "design-tokens"
+  ],
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpmorganchase/salt-ds.git",
     "directory": "packages/theme"
   },
-  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "bugs": {
+    "url": "https://www.saltdesignsystem.com/salt/support-and-contributions"
+  },
   "style": "index.css",
   "files": [
     "/index.css",

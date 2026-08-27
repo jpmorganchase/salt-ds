@@ -1,13 +1,23 @@
 {
   "name": "@salt-ds/core",
   "version": "1.70.0",
+  "description": "Production-ready React components for Salt Design System.",
+  "homepage": "https://www.saltdesignsystem.com/salt/components",
+  "keywords": [
+    "salt-design-system",
+    "react",
+    "components",
+    "accessibility"
+  ],
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpmorganchase/salt-ds.git",
     "directory": "packages/core"
   },
-  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "bugs": {
+    "url": "https://www.saltdesignsystem.com/salt/support-and-contributions"
+  },
   "main": "src/index.ts",
   "sideEffects": [
     "*.css"

@@ -1,13 +1,13 @@
 {
   "name": "@salt-ds/mcp",
   "version": "0.0.0",
+  "private": true,
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpmorganchase/salt-ds.git",
     "directory": "packages/mcp"
   },
-  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "main": "src/index.ts",
   "engines": {
     "node": ">=22"

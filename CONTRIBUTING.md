@@ -4,8 +4,9 @@ Follow below instructions to contribute to Salt.
 
 1. Run `yarn` to install dependencies. If this step is stuck, check your proxy setting.
 2. Run `yarn build` to build all packages across the repo. This is required to run Storybook or the site.
-3. Run `yarn storybook` to run a local instance of [storybook](https://storybook.js.org/docs/get-started/install#start-storybook) for development
-4. Run `cd site && yarn serve` to run a local instance of the [documentation](https://www.saltdesignsystem.com/) site.
+3. Run `yarn storybook` when you need the maintainer component workshop.
+4. Run `yarn workspace @salt-ds/site serve` to run the documentation site.
+5. Run `yarn workspace @salt-ds/site build` before submitting documentation changes; the root build does not build the site.
 
 ## Packages
 
@@ -14,11 +15,20 @@ The repo contains below packages under `/packages`
 - ag-grid-theme: Custom theme for [AG Grid](https://ag-grid.com/)
 - core: Stable components for production use
 - countries: [Country symbol](https://www.saltdesignsystem.com/salt/components/country-symbol/) components following ISO 3166
+- date-adapters: Date-library adapters used by Salt date components
+- date-components: Date inputs, calendars, date pickers and localization
+- embla-carousel: Salt's carousel component built on Embla
+- highcharts-theme: Salt styling and configuration for Highcharts
 - icons: [Icon](https://www.saltdesignsystem.com/salt/components/icon/) components
 - lab: Experimental components may or may not land in core
-- styles: [Style injection](https://storybook.saltdesignsystem.com/?path=/docs/documentation-style-injection--docs) implementation
+- react-resizable-panels-theme: Salt styling for react-resizable-panels
+- styles: [Style injection](https://www.saltdesignsystem.com/salt/getting-started/style-injection) implementation
 - theme: Implementation of Salt theme and design tokens, using CSS variables
-- window: [Desktop support](https://storybook.saltdesignsystem.com/?path=/docs/documentation-desktop-support--docs) implementation to support platforms like [OpenFin](https://www.openfin.co/)
+- window: Window context used by Salt components in browser and multi-window applications
+
+The repository also contains the private, unreleased `mcp` workspace. It is
+not part of the public package inventory and must not be documented as an
+installable consumer package.
 
 ## How to's
 
@@ -61,7 +71,7 @@ Consumer-facing guidance should stay in the [render prop guide](./site/docs/gett
 
 ### Theming
 
-Additions and updates to the theme come from our designers. Any changes to the theme should have solid reasoning, be well-documented and follow clear steps for any necessary deprecation. All Salt theme tokens are prefixed with `--salt-`, followed by `-<characteristic | foundation>-`, and then the intent of the token: for example `--salt-actionable-cta-background`. For more information on tokens, see our [Theme docs](https://storybook.saltdesignsystem.com/?path=/docs/theme-about-the-salt-theme--docs). Tokens should align 100% with Figma to ensure ease of communication between designers and developers.
+Additions and updates to the theme come from our designers. Any changes to the theme should have solid reasoning, be well-documented and follow clear steps for any necessary deprecation. All Salt theme tokens are prefixed with `--salt-`, followed by `-<characteristic | foundation>-`, and then the intent of the token: for example `--salt-actionable-cta-background`. For more information on tokens, see our [Theme docs](https://www.saltdesignsystem.com/salt/themes). Tokens should align 100% with Figma to ensure ease of communication between designers and developers.
 
 #### How to add new tokens
 
@@ -108,7 +118,7 @@ In `theme/css/deprecated/characteristics.css`, add these 3 tokens:
 
 ### Pull requests
 
-- Most pull requests should have a related issue. This helps us track the changes, agree scope and ensures that the pull request is addressing a specific problem or feature.
+- Describe the problem, intended outcome and scope directly in the pull request. A pre-existing tracking item is not required.
 - Small pull requests are preferred, as they are easier to review and test. If you have a large change, consider breaking it down into smaller pull requests.
 - Pull requests should include tests for any new functionality or changes to existing functionality. These can either be behavioral tests using Vitest browser mode or visual tests using Chromatic.
 - Pull request titles and commits should be written in the present tense, e.g. "Add new icon" or "Fix bug in component".

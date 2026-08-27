@@ -1,13 +1,23 @@
 {
   "name": "@salt-ds/icons",
   "version": "1.18.2",
+  "description": "SVG icon components for Salt Design System.",
+  "homepage": "https://www.saltdesignsystem.com/salt/components/icon",
+  "keywords": [
+    "salt-design-system",
+    "react",
+    "icons",
+    "svg"
+  ],
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpmorganchase/salt-ds.git",
     "directory": "packages/icons"
   },
-  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "bugs": {
+    "url": "https://www.saltdesignsystem.com/salt/support-and-contributions"
+  },
   "main": "src/index.ts",
   "files": [
     "css",

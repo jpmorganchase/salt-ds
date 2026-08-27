@@ -1,13 +1,23 @@
 {
   "name": "@salt-ds/styles",
   "version": "0.4.0",
+  "description": "Style injection and Content Security Policy utilities for Salt Design System.",
+  "homepage": "https://www.saltdesignsystem.com/salt/getting-started/style-injection",
+  "keywords": [
+    "salt-design-system",
+    "react",
+    "css",
+    "csp"
+  ],
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpmorganchase/salt-ds.git",
     "directory": "packages/styles"
   },
-  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "bugs": {
+    "url": "https://www.saltdesignsystem.com/salt/support-and-contributions"
+  },
   "main": "src/index.ts",
   "sideEffects": false,
   "peerDependencies": {

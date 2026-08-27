@@ -9,10 +9,11 @@ aliases:
 data:
   resources:
     [
-      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-keyboard-shortcuts--with-dialog", label: "Examples" },
     ]
   components: ["Input", "Kbd", "Switch", "Table"]
 ---
+
+<LivePreview componentName="patterns/keyboard-shortcuts" exampleName="WithDialog" />
 The keyboard shortcuts pattern is a comprehensive and searchable list of the shortcuts that are currently available to the application user, helping them to quickly reference and learn key combinations and perform actions efficiently.
 
 This pattern is a recommended layout and should be displayed within an appropriate container component that fits the application's information architecture and supports the user's workflow.
@@ -134,9 +135,9 @@ If the keyboard shortcuts list exceeds the available display area, an overflow s
 
 This pattern should be placed inside the appropriate container for your application. Select a container that aligns with the product’s user experience and context of use. Common options include:
 
-- [Dialog](salt/components/dialog): Suitable when users need to focus on shortcuts without distraction, and when shortcuts should be accessible from anywhere in the application through a keyboard shortcut—quickly and without disrupting common tasks.
--  [Preferences dialog](salt/patterns/preferences-dialog): Works well if keyboard shortcuts are part of broader settings.
-- [Drawer](salt/components/drawer): Appropriate for persistent access, or when shortcut settings are relevant to a specific part of the application that is in focus.
+- [Dialog](/salt/components/dialog): Suitable when users need to focus on shortcuts without distraction, and when shortcuts should be accessible from anywhere in the application through a keyboard shortcut—quickly and without disrupting common tasks.
+-  [Preferences dialog](/salt/patterns/preferences-dialog): Works well if keyboard shortcuts are part of broader settings.
+- [Drawer](/salt/components/drawer): Appropriate for persistent access, or when shortcut settings are relevant to a specific part of the application that is in focus.
 
 The choice of container should be guided by how and when users will need to access the shortcuts, ensuring the pattern effectively supports the intended task.
 

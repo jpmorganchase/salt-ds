@@ -1,13 +1,23 @@
 {
   "name": "@salt-ds/countries",
   "version": "1.5.2",
+  "description": "ISO 3166 country symbol components for Salt Design System.",
+  "homepage": "https://www.saltdesignsystem.com/salt/components/country-symbol",
+  "keywords": [
+    "salt-design-system",
+    "react",
+    "country",
+    "flags"
+  ],
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpmorganchase/salt-ds.git",
     "directory": "packages/countries"
   },
-  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "bugs": {
+    "url": "https://www.saltdesignsystem.com/salt/support-and-contributions"
+  },
   "main": "src/index.ts",
   "files": [
     "saltCountries.css",

@@ -1,0 +1,29 @@
+:root { font-family: var(--salt-text-fontFamily); background: var(--salt-container-primary-background); }
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: inherit; }
+.dashboardShell { min-height: 100vh; background: var(--salt-container-primary-background); color: var(--salt-content-primary-foreground); }
+.topBar { min-height: 64px; display: flex; align-items: center; gap: var(--salt-spacing-300); padding: var(--salt-spacing-100) var(--salt-spacing-300); border-bottom: var(--salt-size-fixed-100) solid var(--salt-separable-primary-borderColor); }
+.brand { text-decoration: none; font-weight: var(--salt-text-label-fontWeight); }
+.topBar nav { display: flex; gap: var(--salt-spacing-200); }
+.topBar nav a { padding: var(--salt-spacing-100); text-decoration: none; }
+.topBar nav a[aria-current="page"] { border-bottom: var(--salt-size-fixed-200) solid var(--salt-selectable-tab-foreground-selected); }
+.topActions { margin-left: auto; }
+.dashboardMain { width: min(100% - var(--salt-spacing-600), 1200px); margin: 0 auto; padding: var(--salt-spacing-400) 0; display: grid; gap: var(--salt-spacing-300); }
+.pageHeading { display: flex; align-items: end; justify-content: space-between; gap: var(--salt-spacing-300); }
+.metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--salt-spacing-200); }
+.metrics article, .servicePanel { border: var(--salt-size-fixed-100) solid var(--salt-container-primary-borderColor); background: var(--salt-container-secondary-background); }
+.metrics article { display: grid; gap: var(--salt-spacing-50); padding: var(--salt-spacing-250); }
+.metrics strong { font-size: var(--salt-text-heading-h2-fontSize); }
+.panelHeader { display: flex; justify-content: space-between; align-items: end; gap: var(--salt-spacing-200); padding: var(--salt-spacing-250); }
+.panelHeader h2 { margin: 0 0 var(--salt-spacing-50); }
+.tableScroller { overflow-x: auto; }
+.tableScroller table { min-width: 760px; width: 100%; }
+
+@media (max-width: 760px) {
+  .topBar { flex-wrap: wrap; padding: var(--salt-spacing-150); }
+  .topBar nav { order: 3; width: 100%; overflow-x: auto; }
+  .dashboardMain { width: calc(100% - var(--salt-spacing-300)); padding: var(--salt-spacing-250) 0; }
+  .pageHeading, .panelHeader { align-items: flex-start; flex-direction: column; }
+  .metrics { grid-template-columns: 1fr; }
+}

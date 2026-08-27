@@ -1,13 +1,23 @@
 {
   "name": "@salt-ds/embla-carousel",
   "version": "1.1.6",
+  "description": "Accessible Salt Design System carousel components built on Embla.",
+  "homepage": "https://www.saltdesignsystem.com/salt/components/carousel",
+  "keywords": [
+    "salt-design-system",
+    "react",
+    "carousel",
+    "embla"
+  ],
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpmorganchase/salt-ds.git",
     "directory": "packages/embla-carousel"
   },
-  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "bugs": {
+    "url": "https://www.saltdesignsystem.com/salt/support-and-contributions"
+  },
   "main": "src/index.ts",
   "files": [
     "css"

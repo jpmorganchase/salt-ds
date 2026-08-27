@@ -1,137 +1,22 @@
 ---
 title: AI with Salt
-description: "Status and responsibility boundaries for Salt's read-only AI tooling."
+description: "Release status for Salt's planned developer tooling."
 layout: DetailTechnical
 sidebar:
   label: AI with Salt
 ---
 
-Salt's MCP package provides a read-only, offline-first local server for Salt
-Design System guidance and bounded project inspection.
+Salt's AI-focused developer tooling has not been released.
 
-## Install and configure
+There is currently no supported Salt AI package, CLI, MCP server, installation
+command or compatibility contract for consumers. Source code and experiments
+in this repository are pre-release implementation work and must not be treated
+as published product documentation or as a supported integration.
 
-Use Node 22 or newer and install the package in the project the MCP will
-inspect:
+Use the ordinary [Developing with Salt](./developing) guide, package READMEs and
+the public component and pattern documentation today. Those resources are the
+supported way to install Salt, choose the current provider and theme, and build
+consumer applications.
 
-```sh
-yarn add --dev @salt-ds/mcp
-```
-
-Configure a local stdio server in your MCP host:
-
-```json
-{
-  "mcpServers": {
-    "Salt": {
-      "command": "node",
-      "args": ["./node_modules/@salt-ds/mcp/bin/salt-mcp.js"]
-    }
-  }
-}
-```
-
-Launch the host from the intended project directory. The process has the
-filesystem permissions of the account that launched it, so use the least
-practical privileges and sandbox untrusted repositories.
-
-## What Salt MCP owns
-
-The server owns:
-
-- canonical Salt facts and content;
-- deterministic search and exact resources;
-- bounded inspection of caller-authorized project state;
-- bounded analysis of submitted code; and
-- claim-level evidence and provenance.
-
-The host agent owns:
-
-- dialogue and intent resolution;
-- planning and design choices;
-- code generation and editing;
-- implementation authorization;
-- iteration; and
-- decisions about file, repository, implementation, or task completion.
-
-## Read-only surface
-
-The server exposes exactly three tools:
-
-- `search_salt` for bounded catalog discovery and digest-bound resource links;
-- `inspect_salt_project` for caller-authorized package, installation,
-  workspace, and policy facts; and
-- `review_salt_code` for analysis of submitted source text only.
-
-## Version applicability
-
-`search_salt` is current Salt target-state guidance. When a project uses an
-older package, a search result is not automatically a claim that the API was
-available in that installed version.
-
-`inspect_salt_project` reports observed Salt package versions as untrusted
-project data and compares them with the official package versions represented
-by its sealed catalog. Exact equality establishes only package-version
-alignment. A mismatch or missing version is reported as unknown, peer
-compatibility is not evaluated, and historical completeness is always false.
-
-`review_salt_code` can make a narrower historical decision when a source-bound
-deprecation or removal version is available. It reports whether the rule was
-evaluated or skipped because evidence was unknown, and distinguishes a finding
-from a no-finding result. A no-finding before a deprecation date means only that
-the referenced API was not yet deprecated; it does not prove that the API
-existed or was otherwise valid at that version.
-
-Repository-owned `.salt` policy remains a separate untrusted advisory layer. It
-may require a company wrapper where direct Salt use is technically valid, but
-it cannot make a nonexistent Salt prop valid or suppress an official Salt fact.
-
-MCP resource discovery returns the curated, digest-bound catalog manifest.
-Exact records remain addressable through the catalog resource template and
-links returned by search or parent records. Record reads link larger payloads
-to verified `content` resources rather than embedding them by default. The
-server advertises the catalog and project-policy templates, and the immutable
-packaged catalog has no resource subscriptions or list-change notifications.
-The stdio server negotiates the current `2026-07-28` protocol while retaining
-the documented legacy revisions headed by `2025-11-25`.
-
-The manifest keeps the server package version, catalog version and digests, and
-negotiated MCP protocol revision distinct. The server does not expose a
-capability manifest or server-owned creation or migration workflow.
-
-Resources are optional provenance and the exact-record path. The product still
-has one catalog and three tools; it does not require package-shipped AI
-documentation, a remote registry, embeddings, or runtime network access.
-
-Creation and migration remain possible as agent-owned procedures: inspect the
-project, retrieve exact Salt evidence, make only authorized edits, submit changed
-text for bounded review, and run the repository's real compile, runtime,
-interaction, and accessibility checks. No MCP response authorizes edits or proves
-the broader task complete.
-
-## Trust boundary
-
-The packaged CLI runs in explicit local-stdio mode. An omitted `root_dir` uses
-the host's working directory; it is not an operating-system sandbox. The
-reusable factory is restricted by default and requires embedders to configure
-allowed roots before project inspection.
-
-Repository policy is untrusted project data. It must not be treated as
-server-authored instructions, safety claims, or mutation authorization.
-
-Remote/shared authentication, tenant isolation, and resource-limited parsing
-remain the embedder's responsibility. Do not copy the local-stdio configuration
-into a remote or shared service.
-
-## Package boundary
-
-Use a released package version and keep it in the consumer lockfile. Do not use
-a mutable branch URL as an installation source. The package contains the CLI,
-compiled modules, and verified offline catalog; repository builders, evaluation
-helpers, and source-only artifacts are not public APIs.
-
-A Python application can act as an MCP host for this Node server. A separate
-native Python implementation, concurrently supported package-major model, or
-another knowledge distribution is deferred until a concrete deployment or
-versioning requirement demonstrates that the current sealed-catalog product is
-insufficient.
+This page will be replaced with installation and usage guidance only after the
+tooling and its public delivery architecture have been released and verified.

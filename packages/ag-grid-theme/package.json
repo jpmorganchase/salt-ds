@@ -1,13 +1,23 @@
 {
   "name": "@salt-ds/ag-grid-theme",
   "version": "2.9.0",
+  "description": "Salt Design System styling for AG Grid.",
+  "homepage": "https://www.saltdesignsystem.com/salt/components/ag-grid-theme",
+  "keywords": [
+    "salt-design-system",
+    "react",
+    "ag-grid",
+    "theme"
+  ],
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpmorganchase/salt-ds.git",
     "directory": "packages/ag-grid-theme"
   },
-  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "bugs": {
+    "url": "https://www.saltdesignsystem.com/salt/support-and-contributions"
+  },
   "style": "salt-ag-theme.css",
   "files": [
     "/fonts",

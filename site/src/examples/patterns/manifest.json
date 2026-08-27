@@ -1,0 +1,438 @@
+{
+  "schemaVersion": 1,
+  "examples": [
+    {
+      "id": "announcement-dialog",
+      "exportName": "AnnouncementDialog",
+      "route": "/salt/patterns/announcement-dialog",
+      "entry": "patterns/announcement-dialog/index.tsx",
+      "files": [
+        "patterns/announcement-dialog/example.module.css",
+        "patterns/announcement-dialog/index.tsx",
+        "patterns/assets/exampleImage4x.png"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/icons"
+      ]
+    },
+    {
+      "id": "app-header",
+      "exportName": "AppHeader",
+      "route": "/salt/patterns/app-header",
+      "entry": "patterns/app-header/index.tsx",
+      "files": [
+        "patterns/app-header/index.tsx",
+        "patterns/assets/logo.svg"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/icons"
+      ]
+    },
+    {
+      "id": "breadcrumbs",
+      "exportName": "Breadcrumbs",
+      "route": "/salt/patterns/breadcrumbs",
+      "entry": "patterns/breadcrumbs/index.tsx",
+      "files": [
+        "patterns/breadcrumbs/index.tsx"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/icons"
+      ]
+    },
+    {
+      "id": "button-bar",
+      "exportName": "ButtonBar",
+      "route": "/salt/patterns/button-bar",
+      "entry": "patterns/button-bar/index.tsx",
+      "files": [
+        "patterns/button-bar/index.tsx"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/icons"
+      ]
+    },
+    {
+      "id": "comments",
+      "exportName": "Default",
+      "route": "/salt/patterns/comments",
+      "entry": "patterns/comments/index.tsx",
+      "files": [
+        "patterns/comments/index.tsx"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/icons"
+      ]
+    },
+    {
+      "id": "contact-details",
+      "exportName": "ContactDetails",
+      "route": "/salt/patterns/contact-details",
+      "entry": "patterns/contact-details/index.tsx",
+      "files": [
+        "patterns/assets/avatar.png",
+        "patterns/assets/avatar2.png",
+        "patterns/assets/avatar3.png",
+        "patterns/contact-details/index.tsx"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/icons"
+      ]
+    },
+    {
+      "id": "content-status",
+      "exportName": "Info",
+      "route": "/salt/patterns/content-status",
+      "entry": "patterns/content-status/index.tsx",
+      "files": [
+        "patterns/content-status/index.tsx"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core"
+      ]
+    },
+    {
+      "id": "experience-customization",
+      "exportName": "StandardControls",
+      "route": "/salt/patterns/experience-customization",
+      "entry": "patterns/experience-customization/index.tsx",
+      "files": [
+        "patterns/experience-customization/DataFormatContent.tsx",
+        "patterns/experience-customization/FoundationContent.tsx",
+        "patterns/experience-customization/MandatoryConfigurationsContent.tsx",
+        "patterns/experience-customization/NotificationsContent.tsx",
+        "patterns/experience-customization/RegionalSettingsContent.tsx",
+        "patterns/experience-customization/StockCard.tsx",
+        "patterns/experience-customization/img/negative-trend-dark.png",
+        "patterns/experience-customization/img/negative-trend.png",
+        "patterns/experience-customization/img/positive-trend-dark.png",
+        "patterns/experience-customization/img/positive-trend.png",
+        "patterns/experience-customization/img/table-high-dark.png",
+        "patterns/experience-customization/img/table-high.png",
+        "patterns/experience-customization/img/table-low-dark.png",
+        "patterns/experience-customization/img/table-low.png",
+        "patterns/experience-customization/img/table-medium-dark.png",
+        "patterns/experience-customization/img/table-medium.png",
+        "patterns/experience-customization/index.tsx",
+        "patterns/wizard/ContentOverflow.module.css",
+        "patterns/wizard/ContentOverflow.tsx",
+        "patterns/wizard/useWizardForm.ts",
+        "patterns/wizard/utils/index.ts"
+      ],
+      "externalDependencies": [
+        "clsx",
+        "react",
+        "yup"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/countries",
+        "@salt-ds/icons"
+      ]
+    },
+    {
+      "id": "file-upload",
+      "exportName": "FileUploadExample",
+      "route": "/salt/patterns/file-upload",
+      "entry": "patterns/file-upload/index.tsx",
+      "files": [
+        "patterns/file-upload/index.tsx"
+      ],
+      "externalDependencies": [
+        "@faker-js/faker",
+        "clsx",
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/icons",
+        "@salt-ds/lab"
+      ]
+    },
+    {
+      "id": "formatted-input",
+      "exportName": "PhoneNumber",
+      "route": "/salt/patterns/formatted-input",
+      "entry": "patterns/formatted-input/index.tsx",
+      "files": [
+        "patterns/formatted-input/index.tsx",
+        "patterns/formatted-input/useFormattedInput.ts"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core"
+      ]
+    },
+    {
+      "id": "forms",
+      "exportName": "StandardLayout",
+      "route": "/salt/patterns/forms",
+      "entry": "patterns/forms/index.tsx",
+      "files": [
+        "patterns/forms/index.tsx"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core"
+      ]
+    },
+    {
+      "id": "indication",
+      "exportName": "Status",
+      "route": "/salt/patterns/indication",
+      "entry": "patterns/indication/index.tsx",
+      "files": [
+        "patterns/indication/index.tsx"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/icons"
+      ]
+    },
+    {
+      "id": "international-phone-number-input",
+      "exportName": "Column",
+      "route": "/salt/patterns/international-phone-number-input",
+      "entry": "patterns/international-phone-number-input/index.tsx",
+      "files": [
+        "patterns/international-phone-number-input/index.tsx"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/countries"
+      ]
+    },
+    {
+      "id": "keyboard-shortcuts",
+      "exportName": "WithDialog",
+      "route": "/salt/patterns/keyboard-shortcuts",
+      "entry": "patterns/keyboard-shortcuts/index.tsx",
+      "files": [
+        "patterns/keyboard-shortcuts/example.module.css",
+        "patterns/keyboard-shortcuts/index.tsx"
+      ],
+      "externalDependencies": [
+        "react",
+        "react-hotkeys-hook"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/icons"
+      ]
+    },
+    {
+      "id": "list-builder",
+      "exportName": "SingleSelect",
+      "route": "/salt/patterns/list-builder",
+      "entry": "patterns/list-builder/index.tsx",
+      "files": [
+        "patterns/assets/exampleData.ts",
+        "patterns/list-builder/example.module.css",
+        "patterns/list-builder/index.tsx"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/icons"
+      ]
+    },
+    {
+      "id": "menu-button",
+      "exportName": "MenuButton",
+      "route": "/salt/patterns/menu-button",
+      "entry": "patterns/menu-button/index.tsx",
+      "files": [
+        "patterns/menu-button/index.tsx"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/icons"
+      ]
+    },
+    {
+      "id": "metric",
+      "exportName": "Metric",
+      "route": "/salt/patterns/metric",
+      "entry": "patterns/metric/index.tsx",
+      "files": [
+        "patterns/metric/index.tsx"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/icons"
+      ]
+    },
+    {
+      "id": "navigation",
+      "exportName": "Navigation",
+      "route": "/salt/patterns/navigation",
+      "entry": "patterns/navigation/index.tsx",
+      "files": [
+        "patterns/assets/logo.svg",
+        "patterns/navigation/index.tsx"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/icons"
+      ]
+    },
+    {
+      "id": "preferences-dialog",
+      "exportName": "PreferencesDialog",
+      "route": "/salt/patterns/preferences-dialog",
+      "entry": "patterns/preferences-dialog/index.tsx",
+      "files": [
+        "patterns/preferences-dialog/index.tsx"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core"
+      ]
+    },
+    {
+      "id": "search",
+      "exportName": "DefaultIcon",
+      "route": "/salt/patterns/search",
+      "entry": "patterns/search/index.tsx",
+      "files": [
+        "patterns/search/index.tsx"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/icons"
+      ]
+    },
+    {
+      "id": "selectable-card",
+      "exportName": "SingleSelection",
+      "route": "/salt/patterns/selectable-card",
+      "entry": "patterns/selectable-card/index.tsx",
+      "files": [
+        "patterns/assets/avatar.png",
+        "patterns/assets/avatar2.png",
+        "patterns/assets/avatar3.png",
+        "patterns/selectable-card/index.tsx"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/icons"
+      ]
+    },
+    {
+      "id": "split-button",
+      "exportName": "Primary",
+      "route": "/salt/patterns/split-button",
+      "entry": "patterns/split-button/index.tsx",
+      "files": [
+        "patterns/split-button/index.tsx"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/icons"
+      ]
+    },
+    {
+      "id": "vertical-navigation",
+      "exportName": "SingleLevel",
+      "route": "/salt/patterns/vertical-navigation",
+      "entry": "patterns/vertical-navigation/index.tsx",
+      "files": [
+        "patterns/vertical-navigation/index.tsx"
+      ],
+      "externalDependencies": [
+        "react"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/icons"
+      ]
+    },
+    {
+      "id": "wizard",
+      "exportName": "Horizontal",
+      "route": "/salt/patterns/wizard",
+      "entry": "patterns/wizard/index.tsx",
+      "files": [
+        "patterns/wizard/AccountCancelDialog.tsx",
+        "patterns/wizard/AccountCreatedDialog.tsx",
+        "patterns/wizard/AccountDetailsContent.tsx",
+        "patterns/wizard/AccountTypeContent.tsx",
+        "patterns/wizard/AdditionalInfoContent.tsx",
+        "patterns/wizard/ContentOverflow.module.css",
+        "patterns/wizard/ContentOverflow.tsx",
+        "patterns/wizard/ReviewAccountContent.tsx",
+        "patterns/wizard/index.tsx",
+        "patterns/wizard/useWizardForm.ts",
+        "patterns/wizard/utils/index.ts"
+      ],
+      "externalDependencies": [
+        "clsx",
+        "react",
+        "yup"
+      ],
+      "saltPackages": [
+        "@salt-ds/core",
+        "@salt-ds/icons"
+      ]
+    }
+  ]
+}

@@ -5,81 +5,66 @@
 [![@salt-ds/theme](https://img.shields.io/npm/v/@salt-ds/theme.svg?label=@salt-ds/theme)](https://www.npmjs.com/package/@salt-ds/theme)
 [![@salt-ds/icons](https://img.shields.io/npm/v/@salt-ds/icons.svg?label=@salt-ds/icons)](https://www.npmjs.com/package/@salt-ds/icons)
 
-Salt provides you with a suite of UI components and a flexible theming system. With no customisation, the default theme offers an attractive and modern look-and-feel, with both light and dark variants and support for a range of UI densities.
-We have included a theming system which allows you to easily create theme variations, or in fact substitute alternate themes.
+Salt is a React design system with production-ready components, accessible
+interaction patterns and a flexible theming system. The current J.P. Morgan
+theme supports light and dark modes and multiple UI densities.
 
-Salt has been developed with the following design goals:
+## Start a new application
 
-- Providing a comprehensive set of commonly-used UI controls.
-- Complying with WCAG 2.1 accessibility guidelines.
-- To be lightweight and performant.
-- Offering flexible styling and theming support.
-- Minimizing dependencies on third-party libraries.
-
-## Installation
-
-There are four packages you can install:
-
-- `@salt-ds/core` is required, this contains stable components and receives
-  new features and patch updates when needed.
-- `@salt-ds/lab` is where we introduce new components which are under initial development until they are stable and moved over to core. This is typically an unstable environment and may have major breaking changes.
-- `@salt-ds/theme` is required, this contains the Salt .css files required
-  for any application you develop with Salt.
-- `@salt-ds/icons` contains SVG-based icons you can use in your
-  application.
-
-Depending on the package manager you use, edit and run one of the following commands to install the packages you need:
+Install the stable component package, theme and icons:
 
 ```sh
-npm install @salt-ds/core @salt-ds/theme @salt-ds/lab @salt-ds/icons
+npm install @salt-ds/core @salt-ds/theme @salt-ds/icons
 ```
 
-Or
+Use `SaltProviderNext` with the current theme CSS:
 
-```sh
-yarn add @salt-ds/core @salt-ds/theme @salt-ds/lab @salt-ds/icons
-```
+- `@salt-ds/theme/css/global.css`
+- `@salt-ds/theme/css/theme-next.css`
 
-You will then need to import the .css files into your application, along with any components that you plan to use.
+The [Developing with Salt guide](https://www.saltdesignsystem.com/salt/getting-started/developing)
+is the canonical setup reference. The repository also contains complete,
+build-checked [Vite](./examples/apps/vite-starter) and
+[Next App Router](./examples/apps/next-app-router) applications.
 
-Here’s a quick example of button for your reference:
+`SaltProvider` with `@salt-ds/theme/index.css` remains supported for
+applications that are maintaining or migrating the legacy UITK visual theme.
+New applications should use the setup above.
 
-```JSX
-import { Button, SaltProvider } from "@salt-ds/core";
+Add packages for specific use cases only when needed. For example,
+`@salt-ds/lab` contains experimental components whose APIs may change, while
+packages such as `@salt-ds/date-components`, `@salt-ds/ag-grid-theme` and
+`@salt-ds/highcharts-theme` cover focused integrations.
 
-import "@salt-ds/theme/index.css";
+## Documentation
 
-function App() {
-  return (
-    <SaltProvider>
-      <Button sentiment="accented" appearance="solid">Button</Button>
-    </SaltProvider>
-  );
-}
-```
+- [Developing with Salt](https://www.saltdesignsystem.com/salt/getting-started/developing)
+- [Components](https://www.saltdesignsystem.com/salt/components)
+- [Patterns](https://www.saltdesignsystem.com/salt/patterns)
+- [Themes](https://www.saltdesignsystem.com/salt/themes)
+- [Support and contributions](https://www.saltdesignsystem.com/salt/support-and-contributions)
+
+Storybook and Chromatic remain maintainer tools for component development and
+visual regression testing. Public setup and pattern guidance is available on
+the documentation site and does not require Storybook.
 
 ## Accessibility
 
-Salt is a high-quality, WCAG 2.1 compliant solution for building great, accessible experiences for your users.
+Salt targets WCAG 2.1 and tests supported browser and assistive-technology
+combinations. See [Supported platforms](https://www.saltdesignsystem.com/salt/about/supported-platforms)
+for the current support statement.
 
-### Screen reader support & compatibility
+## Contributing
 
-We support specific combinations of assistive technologies (ATs) and
-browsers, outlined in the table below.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for the repository workflow, package
+inventory and verification expectations.
 
-| Operating System | Web browser | Screen reader |
-| ---------------- | ----------- | ------------- |
-| Windows          | Firefox     | NVDA          |
-|                  | Chrome      | JAWS          |
-| macOS            | Safari      | VoiceOver     |
+## License
+
+Salt packages are distributed under the [Apache License 2.0](./LICENSE).
 
 ## Thanks
 
-<a href="https://www.chromatic.com/">
-  <picture>
-    <source srcset="https://user-images.githubusercontent.com/1671563/170278933-da4e813f-0e8f-4029-b6db-79890d9314d1.png" media="(prefers-color-scheme: dark)">
-    <img src="https://user-images.githubusercontent.com/321738/84662277-e3db4f80-af1b-11ea-88f5-91d67a5e59f6.png" width="153" height="30" alt="Chromatic" />
-  </picture>
-</a>
-
-Thanks to [Chromatic](https://www.chromatic.com/) for providing the visual testing platform that helps us review UI changes and catch visual regressions.
+Thanks to [Chromatic](https://www.chromatic.com/) for providing the visual
+testing platform used by maintainers to review UI changes and catch visual
+regressions.

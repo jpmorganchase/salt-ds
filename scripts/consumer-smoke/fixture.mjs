@@ -40,6 +40,7 @@ const STANDALONE_CONSUMER_FIXTURE_FILES = [
   "docs/workspace-shell.md",
   "mcp.config.example.json",
   "package.json",
+  "scripts/verify-policy.mjs",
   "src/components/AppButton.tsx",
   "src/env.d.ts",
   "src/theme/ConsumerBrandProvider.tsx",

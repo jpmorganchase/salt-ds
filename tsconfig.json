@@ -38,6 +38,7 @@
   },
   "include": [
     "packages",
+    "site/src/examples/patterns",
     "integration/toolkit",
     ".storybook/decorators",
     "docs",

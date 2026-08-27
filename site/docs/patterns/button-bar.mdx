@@ -9,11 +9,12 @@ aliases:
 data:
   resources:
     [
-      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-button-bar--button-bar", label: "Button bar examples" },
     ]
   components: ["Button", "Split layout", "Stack layout"]
   relatedPatterns: ["Forms"]
 ---
+
+<LivePreview componentName="patterns/button-bar" exampleName="ButtonBar" />
 
   <Diagram
     src="/img/patterns/button-bar/button-bar-hero-shot.png"
@@ -249,7 +250,6 @@ Order of stacked buttons: In a stacked button layout, we recommend buttons stack
 2. Adjust the direction property on both stack layout and split layout (if used) to `{{xs: "column", sm: "row"}}`. This responsive setting arranges the buttons into a column for extra small (xs) screens and a row for small (sm) screens and upwards. This ensures a responsive layout that adapts to the viewport width.
 3. When the button bar has core actions on the right, you'll need to configure an alternative stack layout.
     - Reverse the buttons in this layout to ensure that the core actions are at the top.
-    - Employ Salt's responsive design utilities to render this alternative layout at the desired breakpoint. You can refer to our [examples](https://storybook.saltdesignsystem.com/?path=/story/patterns-button-bar--responsive-reverse) for more information.
 
   <Diagram
     src="/img/patterns/button-bar/button-bar-building-stacked-button-bar-1.png"

@@ -66,6 +66,12 @@ jobs:
         run: yarn check:ai-tooling:pack
       - name: Check Date Adapters packed consumers
         run: yarn check:date-adapters:pack
+      - name: Check public docs, links, package presentation, and examples
+        run: yarn check:public-docs
+      - name: Build public documentation site
+        run: yarn workspace @salt-ds/site build
+      - name: Check standalone Vite, Next, and operations applications
+        run: yarn check:sample-apps
       - name: Check build core package.json dependencies
         run: |
           if grep -q "@salt-ds\/\(core\|lab\)\":" dist/salt-ds-core/package.json; then

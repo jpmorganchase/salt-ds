@@ -11,8 +11,6 @@ import { SettingsSolidIcon } from "@salt-ds/icons";
 import type { FC } from "react";
 import { LivePreviewProvider } from "../../components";
 import { ThemeControls } from "../../components/components/ThemeControls";
-import { CTALink } from "../../components/cta-link/CTALink";
-import { Image } from "../../components/mdx/image";
 import { PageNavigation } from "../../components/navigation/PageNavigation";
 import { TableOfContents } from "../../components/toc";
 import { Base } from "../Base/index";
@@ -24,14 +22,7 @@ import styles from "./DetailPattern.module.css";
 import { RelatedPatterns } from "./RelatedPatterns";
 import { Resources } from "./Resources";
 
-type ResourcesArray = {
-  href: string;
-  label: string;
-  internal?: boolean;
-}[];
-
 type Data = {
-  resources: ResourcesArray;
   showThemeControl?: boolean;
 };
 
@@ -42,29 +33,12 @@ function PatternPageHeading({
   description,
   id,
 }: PageHeadingProps): JSX.Element {
-  const resourcesArray =
-    useStore((state: CustomSiteState) => state.data?.resources) ?? [];
   const showThemeControl =
     useStore((state: CustomSiteState) => state.data?.showThemeControl) ?? false;
-
-  const exampleLink = resourcesArray.filter((resource) =>
-    resource.href.startsWith("https://storybook.saltdesignsystem.com"),
-  )[0];
 
   return (
     <PageHeading title={title} description={description} id={id}>
       <div className={styles.headingActions}>
-        {exampleLink && (
-          <CTALink
-            appearance="bordered"
-            sentiment="neutral"
-            href={exampleLink.href}
-            aria-label="View Example"
-          >
-            <Image src="/img/storybook_logo.svg" alt={""} aria-hidden /> View
-            Example
-          </CTALink>
-        )}
         {showThemeControl && (
           <Overlay>
             <OverlayTrigger>

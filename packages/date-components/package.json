@@ -1,13 +1,23 @@
 {
   "name": "@salt-ds/date-components",
   "version": "1.1.0",
+  "description": "Date inputs, calendars and date pickers for Salt Design System.",
+  "homepage": "https://www.saltdesignsystem.com/salt/components/date-input",
+  "keywords": [
+    "salt-design-system",
+    "react",
+    "date-picker",
+    "calendar"
+  ],
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpmorganchase/salt-ds.git",
     "directory": "packages/date-components"
   },
-  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "bugs": {
+    "url": "https://www.saltdesignsystem.com/salt/support-and-contributions"
+  },
   "main": "src/index.ts",
   "files": [
     "css"
