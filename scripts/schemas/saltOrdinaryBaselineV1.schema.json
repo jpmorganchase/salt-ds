@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/schemas/salt-ordinary-baseline-1.json",
+  "title": "Salt ordinary provenance baseline v1",
+  "type": "object",
+  "required": ["schema_version", "kind", "source_commit", "inventory_path", "inventory_digest", "sealed", "entry_count", "entries"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "kind": { "const": "ordinary-baseline-receipt" },
+    "source_commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
+    "inventory_path": { "const": "tooling/ai/ordinary-legacy-attestations-v1.json" },
+    "inventory_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "sealed": { "const": true },
+    "entry_count": { "type": "integer", "minimum": 0 },
+    "entries": { "type": "array" }
+  },
+  "additionalProperties": false
+}

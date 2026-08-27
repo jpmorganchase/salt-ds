@@ -1,0 +1,6 @@
+{
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/ordinary-legacy-attestation-inventory-1.json",
+  "schema_version": "1.0.0",
+  "policy": "deny-unverified-legacy-provenance-by-default",
+  "entries": []
+}

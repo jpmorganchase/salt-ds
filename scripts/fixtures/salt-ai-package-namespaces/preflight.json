@@ -1,0 +1,15 @@
+{
+  "packages": [
+    {
+      "name": "@salt-ds/core",
+      "status": "present",
+      "versions": ["1.69.0"],
+      "dist_tags": { "latest": "1.69.0" },
+      "deprecated_versions": [],
+      "repository": "git+https://github.com/jpmorganchase/salt-ds.git"
+    },
+    { "name": "@salt-ds/cli", "status": "absent" },
+    { "name": "@salt-ds/knowledge", "status": "absent" },
+    { "name": "@salt-ds/mcp", "status": "absent" }
+  ]
+}

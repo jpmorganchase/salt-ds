@@ -82,11 +82,11 @@ describe("release verification scripts", () => {
     expect(coreTypeGate).toBeGreaterThan(build);
   });
 
-  it("reuses the full release build without rebuilding packages", async () => {
+  it("checks the AI embargo before reusing the full release build", async () => {
     const scripts = await readScripts();
 
     expect(scripts.release).toBe(
-      "yarn build && yarn release:verify:after-build && yarn changeset publish",
+      "yarn verify:salt-ai-release-embargo && yarn build && yarn release:verify:after-build && yarn changeset publish",
     );
   });
 

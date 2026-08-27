@@ -1,0 +1,26 @@
+{
+  "packages": [
+    {
+      "name": "@salt-ds/core",
+      "status": "present",
+      "versions": ["1.69.0"],
+      "dist_tags": { "latest": "1.69.0" },
+      "deprecated_versions": [],
+      "repository": "git+https://github.com/jpmorganchase/salt-ds.git"
+    },
+    {
+      "name": "@salt-ds/cli",
+      "status": "present",
+      "versions": ["0.0.0-snapshot-example"],
+      "dist_tags": { "latest": "0.0.0-snapshot-example" },
+      "deprecated_versions": [],
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jpmorganchase/salt-ds.git",
+        "directory": "packages/mcp"
+      }
+    },
+    { "name": "@salt-ds/knowledge", "status": "absent" },
+    { "name": "@salt-ds/mcp", "status": "absent" }
+  ]
+}

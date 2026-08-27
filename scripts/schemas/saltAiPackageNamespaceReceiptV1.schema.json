@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-package-namespace-receipt-1.json",
+  "title": "Salt AI package namespace receipt v1",
+  "type": "object",
+  "required": ["schema_version", "kind", "mode", "source_commit", "checked_at", "expires_at", "registry", "scope", "scope_control", "publisher", "packages", "policy_digest", "result"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "kind": { "enum": ["package-namespace-receipt", "package-namespace-release-receipt"] },
+    "mode": { "enum": ["preflight", "release", "protected_final"] },
+    "source_commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
+    "checked_at": { "type": "string", "format": "date-time" },
+    "expires_at": { "type": "string", "format": "date-time" },
+    "registry": { "type": "string", "format": "uri" },
+    "scope": { "const": "@salt-ds" },
+    "scope_control": { "type": "object" },
+    "publisher": { "type": "object" },
+    "packages": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "object" } },
+    "policy_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "result": { "enum": ["pass", "fail"] }
+  },
+  "additionalProperties": false
+}

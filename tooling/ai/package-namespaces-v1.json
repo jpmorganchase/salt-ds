@@ -1,0 +1,22 @@
+{
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/package-namespace-policy-1.json",
+  "schema_version": "1.0.0",
+  "registry": "https://registry.npmjs.org",
+  "scope": "@salt-ds",
+  "scope_anchor": "@salt-ds/core",
+  "expected_repository": "https://github.com/jpmorganchase/salt-ds",
+  "controlling_organization": "JPMorganChase",
+  "receipt_ttl_hours": 168,
+  "publisher": {
+    "approval_status": "approved",
+    "provider": "github-actions-oidc",
+    "repository": "jpmorganchase/salt-ds",
+    "workflow": ".github/workflows/publish-salt-ai.yml",
+    "environment": "salt-ai-release"
+  },
+  "packages": [
+    { "name": "@salt-ds/cli", "expected_repository_directory": "packages/cli", "existing_identity": "must-be-absent" },
+    { "name": "@salt-ds/knowledge", "expected_repository_directory": "packages/knowledge", "existing_identity": "must-be-absent" },
+    { "name": "@salt-ds/mcp", "expected_repository_directory": "packages/mcp", "existing_identity": "must-be-absent" }
+  ]
+}
