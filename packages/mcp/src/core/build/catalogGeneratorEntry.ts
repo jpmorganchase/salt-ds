@@ -2,7 +2,10 @@ import path from "node:path";
 import ts from "typescript";
 
 export { buildRegistry } from "./buildRegistry.js";
-export { createCatalogInputInventory } from "./catalogInputInventory.js";
+export {
+  createCatalogInputInventory,
+  validateCatalogInputPatterns,
+} from "./catalogInputInventory.js";
 export { createSealedCatalogGeneratorDigest } from "./generatorDependencyInventory.js";
 
 export const catalogGeneratorTypeScriptIdentity = Object.freeze({

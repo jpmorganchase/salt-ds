@@ -2,9 +2,6 @@ import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 import fg from "fast-glob";
-import catalogInputPatterns from "../packages/mcp/src/core/build/catalogInputPatterns.json" with {
-  type: "json",
-};
 
 const BUILD_IDENTITY_MARKER = "salt-catalog-build-identity:v1";
 const SHA256_PATTERN = /^sha256:[0-9a-f]{64}$/u;
@@ -319,7 +316,35 @@ function normalizeFilesystemPath(value) {
   return process.platform === "win32" ? resolved.toLowerCase() : resolved;
 }
 
-export async function assertCompleteCatalogInputSet(identity, repoRoot) {
+export function validateCatalogBuildInputPatterns(value, label) {
+  if (!Array.isArray(value) || value.length === 0) {
+    throw new Error(`${label} must be a non-empty array of input globs.`);
+  }
+  const patterns = value.map((entry, index) => {
+    if (
+      typeof entry !== "string" ||
+      entry.length === 0 ||
+      entry !== entry.trim() ||
+      entry.includes("\\") ||
+      entry.includes("\0") ||
+      path.posix.isAbsolute(entry) ||
+      entry.split("/").some((segment) => segment === "..")
+    ) {
+      throw new Error(`${label}[${index}] is not a safe repository glob.`);
+    }
+    return entry;
+  });
+  if (new Set(patterns).size !== patterns.length) {
+    throw new Error(`${label} contains duplicate input globs.`);
+  }
+  return patterns;
+}
+
+export async function assertCompleteCatalogInputSet(
+  identity,
+  repoRoot,
+  inputPatterns,
+) {
   if (!identity?.inputsByPath || !(identity.inputsByPath instanceof Map)) {
     throw new Error(
       "Complete catalog input validation requires a build identity.",
@@ -327,6 +352,10 @@ export async function assertCompleteCatalogInputSet(identity, repoRoot) {
   }
   const resolvedRoot = path.resolve(repoRoot);
   const realRoot = await fs.realpath(resolvedRoot);
+  const catalogInputPatterns = validateCatalogBuildInputPatterns(
+    inputPatterns,
+    "catalog input patterns",
+  );
   const discoveredPaths = (
     await fg(catalogInputPatterns, {
       cwd: resolvedRoot,

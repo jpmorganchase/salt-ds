@@ -23,6 +23,7 @@ import {
   formatCatalogBuildBanner,
   isPathWithinRoot,
   normalizePortableRepositoryBuildPath,
+  validateCatalogBuildInputPatterns,
 } from "./catalogBuildIdentity.mjs";
 import { makeTypings } from "./makeTypings.mjs";
 import { transformWorkspaceDeps } from "./transformWorkspaceDeps.mjs";
@@ -46,6 +47,8 @@ const {
   publishAdditionalDependencies = {},
   publishAdditionalEntryPaths = [],
   publishBuildIdentityManifest,
+  publishBuildIdentityInputPatterns,
+  publishCatalogArtifactPaths,
   publishExtraCopyPaths = [],
   publishPreserveModules = true,
   publishSourceMaps = true,
@@ -93,15 +96,89 @@ if (
 const buildIdentityManifestPath = publishBuildIdentityManifest
   ? path.resolve(cwd, publishBuildIdentityManifest)
   : null;
+if (
+  buildIdentityManifestPath &&
+  (!publishBuildIdentityInputPatterns ||
+    typeof publishBuildIdentityInputPatterns !== "object" ||
+    Array.isArray(publishBuildIdentityInputPatterns) ||
+    typeof publishBuildIdentityInputPatterns.semantic !== "string" ||
+    typeof publishBuildIdentityInputPatterns.compiler !== "string")
+) {
+  throw new Error(
+    "publishBuildIdentityInputPatterns must declare semantic and compiler pattern files.",
+  );
+}
+const catalogInputPatterns = buildIdentityManifestPath
+  ? (
+      await Promise.all(
+        [
+          ["semantic", publishBuildIdentityInputPatterns.semantic],
+          ["compiler", publishBuildIdentityInputPatterns.compiler],
+        ].map(async ([kind, relativePath]) => {
+          normalizePortableRepositoryBuildPath(
+            relativePath,
+            `publishBuildIdentityInputPatterns.${kind} is unsafe`,
+          );
+          const patternPath = path.resolve(cwd, relativePath);
+          if (!isPathWithinRoot(cwd, patternPath)) {
+            throw new Error(
+              `publishBuildIdentityInputPatterns.${kind} escapes the package.`,
+            );
+          }
+          return validateCatalogBuildInputPatterns(
+            await fs.readJSON(patternPath),
+            `publishBuildIdentityInputPatterns.${kind}`,
+          );
+        }),
+      )
+    ).flat()
+  : [];
 const catalogBuildIdentity = buildIdentityManifestPath
   ? createCatalogBuildIdentity(await fs.readFile(buildIdentityManifestPath))
   : null;
+if (
+  catalogBuildIdentity &&
+  (!publishCatalogArtifactPaths ||
+    typeof publishCatalogArtifactPaths !== "object" ||
+    Array.isArray(publishCatalogArtifactPaths) ||
+    typeof publishCatalogArtifactPaths.generationDirectory !== "string" ||
+    typeof publishCatalogArtifactPaths.publicationInventoryFile !== "string" ||
+    typeof publishCatalogArtifactPaths.schemaArtifactKind !== "string" ||
+    typeof publishCatalogArtifactPaths.buildArtifactsField !== "string")
+) {
+  throw new Error(
+    "publishCatalogArtifactPaths must name the generation, publication inventory, schema kind, and build-artifact field.",
+  );
+}
+if (catalogBuildIdentity) {
+  for (const [label, value] of [
+    ["generationDirectory", publishCatalogArtifactPaths.generationDirectory],
+    [
+      "publicationInventoryFile",
+      publishCatalogArtifactPaths.publicationInventoryFile,
+    ],
+  ]) {
+    normalizePortableRepositoryBuildPath(
+      value,
+      `publishCatalogArtifactPaths.${label} is unsafe`,
+    );
+  }
+  for (const label of ["schemaArtifactKind", "buildArtifactsField"]) {
+    if (!/^[a-z][a-z0-9_]*$/u.test(publishCatalogArtifactPaths[label])) {
+      throw new Error(`publishCatalogArtifactPaths.${label} is invalid.`);
+    }
+  }
+}
 const catalogBuildBanner = catalogBuildIdentity
   ? formatCatalogBuildBanner(catalogBuildIdentity)
   : undefined;
 async function assertBuildBoundaryInputs() {
   if (!catalogBuildIdentity) return;
-  await assertCompleteCatalogInputSet(catalogBuildIdentity, repoRoot);
+  await assertCompleteCatalogInputSet(
+    catalogBuildIdentity,
+    repoRoot,
+    catalogInputPatterns,
+  );
 }
 await assertBuildBoundaryInputs();
 
@@ -389,6 +466,9 @@ async function readManifestBoundInventory(copyConfig, fromPath) {
     );
   }
   const inventory = JSON.parse(inventoryBytes.toString("utf8"));
+  const generationDirectory = publishCatalogArtifactPaths.generationDirectory;
+  const publicationInventoryFile =
+    publishCatalogArtifactPaths.publicationInventoryFile;
   const expectedInventoryGeneration =
     typeof entry.file === "string" ? path.posix.dirname(entry.file) : null;
   if (
@@ -396,9 +476,12 @@ async function readManifestBoundInventory(copyConfig, fromPath) {
     inventory.semantic_digest !== manifest.semantic_digest ||
     !Array.isArray(inventory.files) ||
     typeof inventory.generation !== "string" ||
-    !/^catalog-generations\/[0-9a-f]{64}$/u.test(inventory.generation) ||
+    !inventory.generation.startsWith(`${generationDirectory}/`) ||
+    !/^[0-9a-f]{64}$/u.test(
+      inventory.generation.slice(generationDirectory.length + 1),
+    ) ||
     inventory.generation !== expectedInventoryGeneration ||
-    entry.file !== `${inventory.generation}/catalog-publication.json`
+    entry.file !== `${inventory.generation}/${publicationInventoryFile}`
   ) {
     throw new Error(
       `${entry.file} must match the manifest schema, semantic identity, and immutable generation`,
@@ -420,7 +503,7 @@ async function readManifestBoundInventory(copyConfig, fromPath) {
     );
   }
   const schemaEntries = (manifest.support_artifacts ?? []).filter(
-    (artifact) => artifact.kind === "json_schema",
+    (artifact) => artifact.kind === publishCatalogArtifactPaths.schemaArtifactKind,
   );
   if (schemaEntries.length !== 1) {
     throw new Error(
@@ -457,7 +540,13 @@ async function readManifestBoundInventory(copyConfig, fromPath) {
     strict: false,
   });
   const buildRecordValidators = new Map();
-  for (const artifact of manifest.build_artifacts) {
+  const buildArtifacts = manifest[publishCatalogArtifactPaths.buildArtifactsField];
+  if (!Array.isArray(buildArtifacts)) {
+    throw new Error(
+      `${copyConfig.filesFromManifest} has no configured build-artifact array.`,
+    );
+  }
+  for (const artifact of buildArtifacts) {
     assertPortableRelativeCopyPath(
       artifact.file,
       `${copyConfig.filesFromManifest} build artifact file`,

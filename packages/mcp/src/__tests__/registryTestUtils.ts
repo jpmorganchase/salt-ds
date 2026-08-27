@@ -24,6 +24,10 @@ import {
   sha256Bytes,
 } from "../core/catalog/catalogSerialization.js";
 import { CatalogStoreV2 } from "../core/catalog/catalogStoreV2.js";
+import {
+  loadCatalogRuntimeContext,
+  type SaltCatalogRuntimeContext,
+} from "../core/registry/loadRegistry.js";
 
 export const REPO_ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -35,6 +39,10 @@ export const REPO_ROOT = path.resolve(
 // Full source extraction can exceed four minutes on Windows even in isolation;
 // this bounds setup without turning normal catalog extraction into a flaky hook.
 export const SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS = 360_000;
+export const UNIT_00B_COLD_CATALOG_LOAD_BASELINE_MS = 3_762.594;
+export const VERIFIED_CATALOG_CONTEXT_TEST_TIMEOUT_MS = Math.ceil(
+  UNIT_00B_COLD_CATALOG_LOAD_BASELINE_MS * 16,
+);
 export const CATALOG_V2_PACKAGE_FILES = getCatalogPackageFileNames();
 export const CATALOG_V2_BUILD_ONLY_FILES =
   getCatalogBuildOnlyArtifactFileNames();
@@ -120,6 +128,47 @@ export async function createBuiltCatalogV2Fixture(
     return registryDir;
   } catch (error) {
     await fs.rm(registryDir, { recursive: true, force: true });
+    throw error;
+  }
+}
+
+export interface VerifiedCatalogTestContext {
+  registryDir: string;
+  runtime: SaltCatalogRuntimeContext;
+  coldStartMs: number;
+  dispose: () => Promise<void>;
+}
+
+/**
+ * Copies the immutable built fixture once, verifies the complete catalog, and
+ * enforces the Unit 00b cold-load-derived test bound before any MCP server is
+ * constructed.
+ */
+export async function createVerifiedCatalogTestContext(
+  prefix: string,
+): Promise<VerifiedCatalogTestContext> {
+  const registryDir = await createBuiltCatalogV2Fixture(prefix);
+  const startedAt = performance.now();
+  try {
+    const runtime = await loadCatalogRuntimeContext({
+      registryDir,
+      prefetch: true,
+    });
+    const coldStartMs = performance.now() - startedAt;
+    if (coldStartMs > VERIFIED_CATALOG_CONTEXT_TEST_TIMEOUT_MS) {
+      throw new Error(
+        `Verified catalog cold start took ${coldStartMs.toFixed(3)}ms; the Unit 00b-derived bound is ${VERIFIED_CATALOG_CONTEXT_TEST_TIMEOUT_MS}ms.`,
+      );
+    }
+    return {
+      registryDir,
+      runtime,
+      coldStartMs,
+      dispose: () =>
+        fs.rm(registryDir, { recursive: true, force: true, maxRetries: 5 }),
+    };
+  } catch (error) {
+    await fs.rm(registryDir, { recursive: true, force: true, maxRetries: 5 });
     throw error;
   }
 }

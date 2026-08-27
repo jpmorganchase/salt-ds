@@ -39,8 +39,10 @@ import {
   assertPatternEditorialOverridesResolved,
 } from "./catalogEditorialOverrides.js";
 import {
+  CATALOG_INPUT_PATTERNS,
   type CatalogInputInventory,
   createCatalogInputInventory,
+  validateCatalogInputPatterns,
   withCatalogInputTracking,
 } from "./catalogInputInventory.js";
 import { writeCatalogV2 } from "./catalogWriterV2.js";
@@ -56,7 +58,6 @@ import {
 import { normalizeCatalogV2 } from "./normalizeCatalogV2.js";
 
 const REGISTRY_VERSION = "0.1.0";
-const EXCLUDED_REGISTRY_PACKAGES = new Set(["@salt-ds/mcp"]);
 
 export type ExtendedBuildRegistryOptions = BuildRegistryOptions & {
   inputInventory?: CatalogInputInventory;
@@ -86,13 +87,17 @@ export function resolveCatalogGeneratorCapability(
   if (dependencyInventory) {
     if (
       !requestedSourceRoot ||
+      options.packageRoot === undefined ||
       options.outputDir === undefined ||
+      options.packageVersion === undefined ||
+      options.semanticInputPatterns === undefined ||
+      options.compilerInputPatterns === undefined ||
       !options.generatorDependencySnapshotRoot ||
       !options.generatorReceipt ||
       !options.assertGeneratorDependenciesStable
     ) {
       throw new Error(
-        "Sealed catalog generation requires explicit source/output roots, a receipt, and a final dependency stability check.",
+        "Sealed catalog generation requires explicit source/package/output roots, package version, semantic/compiler input patterns, a receipt, and a final dependency stability check.",
       );
     }
     if (options.generatorDigest !== undefined) {
@@ -159,13 +164,31 @@ export async function buildRegistry(
     requestedSourceRoot ??
     (await findSaltRepoRoot(process.cwd())) ??
     process.cwd();
+  const packageRoot = path.resolve(
+    options.packageRoot ?? path.join(sourceRoot, "packages", "mcp"),
+  );
   const outputDir =
     options.outputDir != null
       ? path.resolve(options.outputDir)
-      : path.join(sourceRoot, "packages", "mcp", "generated");
+      : path.join(packageRoot, "generated");
   const version = options.version ?? REGISTRY_VERSION;
+  const packageVersion = options.packageVersion ?? "0.0.0";
+  if (!/^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$/u.test(packageVersion)) {
+    throw new Error("Catalog packageVersion must be an exact semantic version.");
+  }
+  const semanticInputPatterns = validateCatalogInputPatterns(
+    options.semanticInputPatterns ?? CATALOG_INPUT_PATTERNS,
+    "semanticInputPatterns",
+  );
+  const compilerInputPatterns = validateCatalogInputPatterns(
+    options.compilerInputPatterns ?? ["package.json"],
+    "compilerInputPatterns",
+  );
+  const inputPatterns = [...semanticInputPatterns, ...compilerInputPatterns];
+  const excludedPackageNames = new Set(options.excludedPackageNames ?? []);
   const inventory =
-    options.inputInventory ?? (await createCatalogInputInventory(sourceRoot));
+    options.inputInventory ??
+    (await createCatalogInputInventory(sourceRoot, inputPatterns));
   const sourceRevision = options.sourceRevision ?? inventory.digest;
   const generatorVersion =
     options.generatorVersion ??
@@ -186,7 +209,7 @@ export async function buildRegistry(
       inventory,
       async () => {
         const [packages, propMetadata, tokenPolicySources] = await Promise.all([
-          extractPackages(sourceRoot, EXCLUDED_REGISTRY_PACKAGES),
+          extractPackages(sourceRoot, excludedPackageNames),
           loadPropMetadata(sourceRoot),
           buildTokenPolicySourceRegistry(sourceRoot),
         ]);
@@ -209,7 +232,7 @@ export async function buildRegistry(
             extractDeprecations(
               sourceRoot,
               packages,
-              EXCLUDED_REGISTRY_PACKAGES,
+              excludedPackageNames,
             ),
           ]);
         assertPatternEditorialOverridesResolved(
@@ -335,7 +358,10 @@ export async function buildRegistry(
       },
     );
 
-    const finalInventory = await createCatalogInputInventory(sourceRoot);
+    const finalInventory = await createCatalogInputInventory(
+      sourceRoot,
+      inputPatterns,
+    );
     if (
       finalInventory.digest !== inventory.digest ||
       canonicalJson(finalInventory.entries) !== canonicalJson(inventory.entries)

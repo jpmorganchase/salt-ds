@@ -711,6 +711,8 @@ export async function materializeVerifiedDependencySnapshot({
 
 export async function verifySealedGeneratorBundleStability({
   sourceRoot,
+  semanticInputPatterns = [],
+  compilerInputPatterns = [],
   dependencyInventory,
   createDependencyInventory,
   buildBundle,
@@ -721,8 +723,14 @@ export async function verifySealedGeneratorBundleStability({
   const firstBundle = await buildBundle("first");
   await assertToolSnapshotStable();
   assertGeneratorIdentity(firstBundle.generator);
-  const inputBefore =
-    await firstBundle.generator.createCatalogInputInventory(sourceRoot);
+  const inputPatterns = [
+    ...semanticInputPatterns,
+    ...compilerInputPatterns,
+  ];
+  const inputBefore = await firstBundle.generator.createCatalogInputInventory(
+    sourceRoot,
+    inputPatterns,
+  );
   const sourceInputPaths = new Set(
     inputBefore.entries.map((entry) => entry.path),
   );
@@ -754,7 +762,10 @@ export async function verifySealedGeneratorBundleStability({
 
   assertGeneratorIdentity(finalBundle.generator);
   const inputAfterBundle =
-    await finalBundle.generator.createCatalogInputInventory(sourceRoot);
+    await finalBundle.generator.createCatalogInputInventory(
+      sourceRoot,
+      inputPatterns,
+    );
   assertSameInventory(
     inputBefore,
     inputAfterBundle,
@@ -767,11 +778,18 @@ export async function verifySealedGeneratorBundleStability({
   };
 }
 
-function bundleOptions(outfile) {
+function bundleOptions(outfile, layout = {}) {
+  const activeRepoRoot = path.resolve(layout.sourceRoot ?? repoRoot);
+  const activeGeneratorEntryPath = path.resolve(
+    layout.generatorEntryPath ?? generatorEntryPath,
+  );
+  const activeGeneratorNoSourceMapPath = path.resolve(
+    layout.generatorNoSourceMapPath ?? generatorNoSourceMapPath,
+  );
   return {
-    entryPoints: [generatorEntryPath],
+    entryPoints: [activeGeneratorEntryPath],
     outfile,
-    absWorkingDir: repoRoot,
+    absWorkingDir: activeRepoRoot,
     bundle: true,
     format: "cjs",
     platform: "node",
@@ -782,7 +800,7 @@ function bundleOptions(outfile) {
     logLevel: "silent",
     conditions: ["node", "import", "default"],
     alias: {
-      "source-map-js": generatorNoSourceMapPath,
+      "source-map-js": activeGeneratorNoSourceMapPath,
     },
     resolveExtensions: [
       ".tsx",
@@ -802,7 +820,11 @@ function bundleOptions(outfile) {
   };
 }
 
-export function validateBundleMetafile(metafile, dependencyInventory) {
+export function validateBundleMetafile(
+  metafile,
+  dependencyInventory,
+  sourceRoot = repoRoot,
+) {
   const dependencyFiles = new Set(
     dependencyInventory.entries
       .filter((entry) => entry.kind === "file")
@@ -810,7 +832,7 @@ export function validateBundleMetafile(metafile, dependencyInventory) {
   );
   let sawTypeScriptExternal = false;
   for (const inputPath of Object.keys(metafile.inputs)) {
-    const portablePath = portableBundleInputPath(inputPath);
+    const portablePath = portableBundleInputPath(inputPath, sourceRoot);
     if (portablePath.startsWith("node_modules/source-map-js/")) {
       throw new Error(
         `Generator bundle retained forbidden source-map runtime code: ${portablePath}.`,
@@ -845,21 +867,24 @@ export function validateBundleMetafile(metafile, dependencyInventory) {
   }
 }
 
-function portableBundleInputPath(inputPath) {
+function portableBundleInputPath(inputPath, sourceRoot = repoRoot) {
+  const activeSourceRoot = path.resolve(sourceRoot);
   const absolutePath = path.isAbsolute(inputPath)
     ? inputPath
-    : path.resolve(repoRoot, inputPath);
-  if (!isWithin(repoRoot, absolutePath)) {
+    : path.resolve(activeSourceRoot, inputPath);
+  if (!isWithin(activeSourceRoot, absolutePath)) {
     throw new Error(
       `Generator bundle input escapes the repository: ${inputPath}.`,
     );
   }
-  return assertPortablePath(toPosixPath(path.relative(repoRoot, absolutePath)));
+  return assertPortablePath(
+    toPosixPath(path.relative(activeSourceRoot, absolutePath)),
+  );
 }
 
-export function getBundleFirstPartyInputPaths(metafile) {
+export function getBundleFirstPartyInputPaths(metafile, sourceRoot = repoRoot) {
   return Object.keys(metafile.inputs)
-    .map(portableBundleInputPath)
+    .map((inputPath) => portableBundleInputPath(inputPath, sourceRoot))
     .filter((inputPath) => !inputPath.startsWith("node_modules/"))
     .sort();
 }
@@ -1007,18 +1032,26 @@ async function bundleAndInspect(
   typescript,
   outfile,
   dependencyInventory,
+  layout = {},
 ) {
-  const result = await esbuild.build(bundleOptions(outfile));
+  const result = await esbuild.build(bundleOptions(outfile, layout));
   if (!result.metafile) {
     throw new Error("Generator bundle did not produce an esbuild metafile.");
   }
-  validateBundleMetafile(result.metafile, dependencyInventory);
+  validateBundleMetafile(
+    result.metafile,
+    dependencyInventory,
+    layout.sourceRoot,
+  );
   const bytes = await fs.readFile(outfile);
   assertNoDynamicCodeLoading(bytes.toString("utf8"), typescript);
   return {
     digest: sha256(bytes),
     bytes,
-    firstPartyInputs: getBundleFirstPartyInputPaths(result.metafile),
+    firstPartyInputs: getBundleFirstPartyInputPaths(
+      result.metafile,
+      layout.sourceRoot,
+    ),
     metafileDigest: createBundleMetafileDigest(result.metafile),
   };
 }
@@ -1039,14 +1072,84 @@ export async function buildCatalogRegistry(options = {}) {
   assertCleanGeneratorEnvironment();
   return withCanonicalGeneratorEnvironment(async () => {
     const sourceRoot = path.resolve(options.sourceRoot ?? repoRoot);
-    const outputDir = path.resolve(
-      options.outputDir ?? path.join(packageRoot, "generated"),
+    const activePackageRoot = path.resolve(
+      options.packageRoot ?? path.join(sourceRoot, "packages", "mcp"),
     );
-    if (sourceRoot !== repoRoot) {
+    const outputDir = path.resolve(
+      options.outputDir ?? path.join(activePackageRoot, "generated"),
+    );
+    const activeGeneratorEntryPath = path.resolve(
+      options.generatorEntryPath ??
+        path.join(
+          activePackageRoot,
+          "src",
+          "core",
+          "build",
+          "catalogGeneratorEntry.ts",
+        ),
+    );
+    const activeGeneratorNoSourceMapPath = path.resolve(
+      options.generatorNoSourceMapPath ??
+        path.join(
+          activePackageRoot,
+          "src",
+          "core",
+          "build",
+          "catalogGeneratorNoSourceMap.ts",
+        ),
+    );
+    const semanticInputPatternsPath = path.resolve(
+      options.semanticInputPatternsPath ??
+        path.join(
+          activePackageRoot,
+          "src",
+          "core",
+          "build",
+          "catalogSemanticInputPatterns.json",
+        ),
+    );
+    const compilerInputPatternsPath = path.resolve(
+      options.compilerInputPatternsPath ??
+        path.join(
+          activePackageRoot,
+          "src",
+          "core",
+          "build",
+          "catalogCompilerInputPatterns.json",
+        ),
+    );
+    for (const [label, candidate] of [
+      ["package root", activePackageRoot],
+      ["output root", outputDir],
+      ["generator entry", activeGeneratorEntryPath],
+      ["source-map replacement", activeGeneratorNoSourceMapPath],
+      ["semantic input patterns", semanticInputPatternsPath],
+      ["compiler input patterns", compilerInputPatternsPath],
+    ]) {
+      if (!isWithin(sourceRoot, candidate)) {
+        throw new Error(`Catalog ${label} escapes the repository root.`);
+      }
+    }
+    const [packageManifest, semanticInputPatterns, compilerInputPatterns] =
+      await Promise.all([
+        fs.readFile(path.join(activePackageRoot, "package.json"), "utf8").then(JSON.parse),
+        fs.readFile(semanticInputPatternsPath, "utf8").then(JSON.parse),
+        fs.readFile(compilerInputPatternsPath, "utf8").then(JSON.parse),
+      ]);
+    const packageVersion = options.packageVersion ?? packageManifest.version;
+    if (
+      typeof packageVersion !== "string" ||
+      !/^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$/u.test(packageVersion)
+    ) {
       throw new Error(
-        `Canonical catalog generation requires source root '${repoRoot}'.`,
+        "Canonical catalog generation requires an exact package version.",
       );
     }
+    const layout = {
+      sourceRoot,
+      generatorEntryPath: activeGeneratorEntryPath,
+      generatorNoSourceMapPath: activeGeneratorNoSourceMapPath,
+    };
 
     const runtimeIdentity = {
       executable_sha256: await hashFile(process.execPath),
@@ -1123,7 +1226,7 @@ export async function buildCatalogRegistry(options = {}) {
       esbuildManifest,
     );
     const temporaryToolRoot = await fs.mkdtemp(
-      path.join(packageRoot, ".registry-tools-"),
+      path.join(activePackageRoot, ".registry-tools-"),
     );
     const temporaryBuildDir = path.join(temporaryToolRoot, "work");
     const firstBundlePath = path.join(temporaryBuildDir, "generator-first.cjs");
@@ -1180,6 +1283,8 @@ export async function buildCatalogRegistry(options = {}) {
         inputInventory: inputBefore,
       } = await verifySealedGeneratorBundleStability({
         sourceRoot,
+        semanticInputPatterns,
+        compilerInputPatterns,
         dependencyInventory: dependencyBefore,
         createDependencyInventory: createGeneratorDependencyInventory,
         assertToolSnapshotStable: () => toolSnapshot.assertStable(),
@@ -1198,12 +1303,15 @@ export async function buildCatalogRegistry(options = {}) {
               typescript,
               bundlePath,
               dependencyBefore,
+              layout,
             )),
             generator: snapshotRequire(bundlePath),
           };
         },
       });
-      const orchestratorPath = "packages/mcp/scripts/buildRegistry.mjs";
+      const orchestratorPath = assertPortablePath(
+        toPosixPath(path.relative(sourceRoot, scriptPath)),
+      );
       const orchestratorSha256 = await hashFile(scriptPath);
       const orchestratorInput = inputBefore.entries.find(
         (entry) => entry.path === orchestratorPath,
@@ -1260,7 +1368,12 @@ export async function buildCatalogRegistry(options = {}) {
       };
       const registry = await generator.buildRegistry({
         sourceRoot,
+        packageRoot: activePackageRoot,
         outputDir,
+        packageVersion,
+        semanticInputPatterns,
+        compilerInputPatterns,
+        excludedPackageNames: options.excludedPackageNames ?? ["@salt-ds/mcp"],
         generatorVersion: "2.0.0",
         inputInventory: inputBefore,
         generatorDependencyInventory: dependencyBefore,
@@ -1287,7 +1400,24 @@ async function main() {
   const outputDir = path.join(packageRoot, "generated");
   const registry = await buildCatalogRegistry({
     sourceRoot: repoRoot,
+    packageRoot,
     outputDir,
+    packageVersion: "0.0.0",
+    semanticInputPatternsPath: path.join(
+      packageRoot,
+      "src",
+      "core",
+      "build",
+      "catalogSemanticInputPatterns.json",
+    ),
+    compilerInputPatternsPath: path.join(
+      packageRoot,
+      "src",
+      "core",
+      "build",
+      "catalogCompilerInputPatterns.json",
+    ),
+    excludedPackageNames: ["@salt-ds/mcp"],
   });
   console.error(
     `Built registry at ${outputDir}: ${registry.packages.length} packages, ${registry.components.length} components, ${registry.icons.length} icons, ${registry.country_symbols.length} country symbols, ${registry.patterns.length} patterns, ${registry.tokens.length} tokens.`,

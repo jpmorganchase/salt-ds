@@ -343,16 +343,25 @@ describe("catalog generator identity modes", () => {
         sha256: inventory.digest,
       },
     };
+    const explicitLayout = {
+      packageRoot: repoRoot,
+      packageVersion: "0.0.0",
+      semanticInputPatterns: ["package.json"],
+      compilerInputPatterns: ["package.json"],
+    };
     expect(() =>
       resolveCatalogGeneratorCapability(
         {
+          ...explicitLayout,
           sourceRoot: repoRoot,
           outputDir: path.join(repoRoot, "catalog"),
           generatorDependencyInventory: inventory,
         },
         repoRoot,
       ),
-    ).toThrow(/requires explicit source\/output roots, a receipt/u);
+    ).toThrow(
+      /requires explicit source\/package\/output roots, package version, semantic\/compiler input patterns, a receipt/u,
+    );
     expect(() =>
       resolveCatalogGeneratorCapability(
         {
@@ -365,6 +374,7 @@ describe("catalog generator identity modes", () => {
     expect(() =>
       resolveCatalogGeneratorCapability(
         {
+          ...explicitLayout,
           sourceRoot: repoRoot,
           outputDir: path.join(repoRoot, "catalog"),
           generatorDependencyInventory: inventory,
@@ -378,6 +388,7 @@ describe("catalog generator identity modes", () => {
     expect(
       resolveCatalogGeneratorCapability(
         {
+          ...explicitLayout,
           sourceRoot: repoRoot,
           outputDir: path.join(repoRoot, "catalog"),
           generatorDependencyInventory: inventory,
@@ -399,6 +410,7 @@ describe("catalog generator identity modes", () => {
     expect(() =>
       resolveCatalogGeneratorCapability(
         {
+          ...explicitLayout,
           sourceRoot: repoRoot,
           outputDir: path.join(repoRoot, "catalog"),
           generatorDependencyInventory: inventory,

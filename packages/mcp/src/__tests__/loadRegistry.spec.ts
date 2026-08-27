@@ -9,7 +9,7 @@ import {
   catalogFamilyArtifactPath,
   copyCatalogV2Artifacts,
   createBuiltCatalogV2Fixture,
-  SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS,
+  VERIFIED_CATALOG_CONTEXT_TEST_TIMEOUT_MS,
   withRegistryDir,
 } from "./registryTestUtils.js";
 
@@ -19,7 +19,7 @@ beforeAll(async () => {
   catalogFixtureDirectory = await createBuiltCatalogV2Fixture(
     "salt-load-registry-source-",
   );
-}, SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS);
+}, VERIFIED_CATALOG_CONTEXT_TEST_TIMEOUT_MS);
 
 afterAll(async () => {
   if (catalogFixtureDirectory) {

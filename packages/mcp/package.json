@@ -48,6 +48,16 @@
     "prepack"
   ],
   "publishBuildIdentityManifest": "generated/catalog-manifest.json",
+  "publishBuildIdentityInputPatterns": {
+    "semantic": "src/core/build/catalogSemanticInputPatterns.json",
+    "compiler": "src/core/build/catalogCompilerInputPatterns.json"
+  },
+  "publishCatalogArtifactPaths": {
+    "generationDirectory": "catalog-generations",
+    "publicationInventoryFile": "catalog-publication.json",
+    "schemaArtifactKind": "json_schema",
+    "buildArtifactsField": "build_artifacts"
+  },
   "publishExtraCopyPaths": [
     {
       "from": "generated",

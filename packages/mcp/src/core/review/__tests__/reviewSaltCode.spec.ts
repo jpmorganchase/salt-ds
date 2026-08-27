@@ -14,6 +14,7 @@ import type {
 } from "../../types.js";
 import { createReviewCatalogFromLegacyRegistry } from "../reviewCatalogAdapter.js";
 import {
+  analyzeSaltCode as analyzeSaltCodeProduction,
   MAX_REVIEW_SUBMITTED_UTF8_BYTES,
   reviewSaltCode as reviewSaltCodeProduction,
 } from "../reviewSaltCode.js";
@@ -177,6 +178,19 @@ function reviewSaltCode(
   );
 }
 
+function analyzeSaltCode(
+  fixtureRegistry: SaltRegistry,
+  input: Parameters<typeof analyzeSaltCodeProduction>[1],
+) {
+  return analyzeSaltCodeProduction(
+    {
+      reviewCatalog: createReviewCatalogFromLegacyRegistry(fixtureRegistry),
+      store: fixtureStore(fixtureRegistry),
+    },
+    input,
+  );
+}
+
 function reviewPolicy(conventions: ProjectConventions) {
   return {
     ir: compileSaltProjectPolicyIrV2({
@@ -291,6 +305,44 @@ const NAVIGATION_SOURCE = [
 ].join("\n");
 
 describe("bounded public review", () => {
+  it("keeps the complete analyzer independent from public result selection", () => {
+    const input = {
+      max_findings: 1,
+      artifacts: [
+        {
+          id: "complete.tsx",
+          language: "tsx" as const,
+          text: [
+            'import { Button } from "@salt-ds/core";',
+            "export const Demo = () => <>",
+            ...Array.from(
+              { length: 6 },
+              (_, index) => `<Button key={${index}} href="/next" />`,
+            ),
+            "</>;",
+          ].join("\n"),
+        },
+      ],
+    };
+
+    const complete = analyzeSaltCode(registry(), input);
+    const publicResult = reviewSaltCode(registry(), input);
+
+    expect(complete).not.toHaveProperty("data");
+    expect(complete.coverage).not.toHaveProperty("result_budget");
+    expect(complete.coverage.detected_findings).toBe(6);
+    expect(complete.results[0]?.findings).toHaveLength(6);
+    expect(complete.results[0]?.coverage).toMatchObject({
+      detected_findings: 6,
+      returned_findings: 6,
+      truncated: false,
+    });
+    expect(publicResult.coverage).toMatchObject({
+      detected_findings: 6,
+      returned_findings: 1,
+      truncated: true,
+    });
+  });
   it("finds grounded navigation usage before its valid later import", () => {
     const result = reviewSaltCode(registry(), {
       artifacts: [

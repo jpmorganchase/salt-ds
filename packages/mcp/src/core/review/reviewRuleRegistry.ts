@@ -1228,6 +1228,10 @@ export const REVIEW_RULES: readonly ReviewRuleDefinition[] = [
 ];
 
 export const REVIEW_RULE_IDS = REVIEW_RULES.map((rule) => rule.rule_id);
+export const REVIEW_RULE_CHARACTERIZATION = REVIEW_RULES.map((rule) => ({
+  rule_id: rule.rule_id,
+  rule_description: rule.description,
+}));
 
 function uniqueValues(values: Array<string | null | undefined>): string[] {
   return [

@@ -9,7 +9,6 @@ import {
 import path from "node:path";
 import { brotliDecompressSync } from "node:zlib";
 import { isSemanticCatalogSourcePath } from "./catalogSemanticSource.js";
-import { assertPublicResourceText } from "../publicResourceBudget.js";
 import { formatAccessibilityImplementationSignalStatement } from "./accessibilityImplementationSignal.js";
 import {
   createApiSymbolId,
@@ -27,7 +26,6 @@ import {
   parseCatalogContentPayload,
 } from "./catalogPayloadSchemaV2.js";
 import { isPortableRepositoryPath } from "./catalogPortablePath.js";
-import { serializeCatalogResourceEnvelope } from "./catalogResourceEnvelope.js";
 import {
   CATALOG_FAMILY_NAMES,
   CATALOG_SEARCH_TARGET_FAMILY_NAMES,
@@ -1862,13 +1860,6 @@ export class CatalogStoreV2 {
         for (const reference of discoveredContentReferences) {
           validateContentReference(reference, owner);
         }
-        if (record.family !== "content") {
-          assertPublicResourceText(
-            owner,
-            serializeCatalogResourceEnvelope(this.manifest, record),
-          );
-        }
-
         if (record.family === "component" && record.policy_profile_ref) {
           requirePolicyProfileKinds(
             record.policy_profile_ref,

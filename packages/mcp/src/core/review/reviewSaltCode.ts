@@ -8,6 +8,7 @@ import {
 import type { ReviewCatalog } from "./reviewCatalogAdapter.js";
 import {
   evaluateReviewRules,
+  type EvaluatedReviewFinding,
   MAX_REVIEW_RULE_COMPARISONS,
   type NonFindingVersionDecision,
   REVIEW_RULE_IDS,
@@ -98,6 +99,84 @@ export type ReviewContextSource =
   | "retained_project_snapshot"
   | "fresh_project_inspection";
 
+export interface ReviewSaltCodeContext {
+  reviewCatalog: ReviewCatalog;
+  store: CatalogStoreV2;
+  packageVersionEvidence?: Readonly<Record<string, string | null>>;
+}
+
+export type CompleteReviewFinding = Omit<
+  EvaluatedReviewFinding,
+  "evidence"
+> & {
+  evidence: EvaluatedReviewFinding["evidence"] & {
+    submitted_artifact_id: string;
+  };
+};
+
+export interface CompleteReviewArtifactAnalysis {
+  artifact: {
+    id: string;
+    language: SubmittedArtifactLanguage;
+    utf8_bytes: number;
+    content_digest: string;
+  };
+  outcome: "not_evaluated" | "findings" | "no_findings_in_evaluated_scope";
+  summary: { errors: number; warnings: number; infos: number };
+  findings: CompleteReviewFinding[];
+  version_decisions: NonFindingVersionDecision[];
+  coverage: {
+    parser: string;
+    fact_counts: Array<{ kind: ParsedFactKind; count: number }>;
+    unknown_fact_count: number;
+    evaluated_rule_ids: string[];
+    skipped_rule_matches: number;
+    detected_findings: number;
+    returned_findings: number;
+    detected_nonfinding_version_decisions: number;
+    returned_nonfinding_version_decisions: number;
+    nonfinding_version_decisions_truncated: boolean;
+    truncated: boolean;
+    policy: ReviewRuleEvaluation["policy"];
+  };
+  limitations: string[];
+}
+
+export interface CompleteReviewSaltCodeAnalysis {
+  results: CompleteReviewArtifactAnalysis[];
+  scope: {
+    kind: "submitted_text_only";
+    context_source: ReviewContextSource;
+    artifact_count: number;
+    submitted_utf8_bytes: number;
+  };
+  coverage: {
+    submitted_artifacts: number;
+    evaluated_artifacts: number;
+    analyzer: "salt_submitted_fact_rules_v1";
+    semantic_validation: "source_bound_allowlist";
+    location_encoding: "utf8_bytes_end_exclusive";
+    project_policy: {
+      status: "not_supplied" | "evaluated" | "limited";
+      digest: string | null;
+      unresolved_required_layers: number;
+      evaluated_occurrence_artifact_pairs: number;
+      applicable_occurrence_artifact_pairs: number;
+      contradicted_occurrence_artifact_pairs: number;
+      unknown_occurrence_artifact_pairs: number;
+    };
+    detected_findings: number;
+    detected_nonfinding_version_decisions: number;
+  };
+  limitations: string[];
+  provenance: {
+    catalog_version: string;
+    semantic_digest: string | null;
+    project_context_digest: string | null;
+    project_policy_digest: string | null;
+  };
+}
+
 function summarizeFindings(
   findings: Array<{ severity: "info" | "warning" | "error" }>,
 ) {
@@ -126,17 +205,16 @@ function firstEvidenceReference(decision: NonFindingVersionDecision) {
   return reference;
 }
 
-export function reviewSaltCode(
-  context: {
-    reviewCatalog: ReviewCatalog;
-    store: CatalogStoreV2;
-    packageVersionEvidence?: Readonly<Record<string, string | null>>;
-  },
+function reviewSaltCodeWithCapture(
+  context: ReviewSaltCodeContext,
   input: ReviewSaltCodeInput,
   policy: ReviewProjectPolicyContext | null = null,
   projectContextDigest: string | null = null,
   contextSource: ReviewContextSource = "none",
   measureFinalResultUtf8Bytes: (payload: unknown) => number = jsonUtf8Bytes,
+  captureCompleteAnalysis?: (
+    analysis: CompleteReviewSaltCodeAnalysis,
+  ) => void,
 ) {
   const { reviewCatalog: registry, store } = context;
   if (
@@ -450,6 +528,45 @@ export function reviewSaltCode(
       unknown_occurrence_artifact_pairs: 0,
     },
   );
+  const completeAnalysis: CompleteReviewSaltCodeAnalysis = {
+    results: analyzedResults,
+    scope: {
+      kind: "submitted_text_only",
+      context_source: contextSource,
+      artifact_count: analyzedResults.length,
+      submitted_utf8_bytes: submittedBytes,
+    },
+    coverage: {
+      submitted_artifacts: analyzedResults.length,
+      evaluated_artifacts: analyzedResults.filter(
+        (result) => result.outcome !== "not_evaluated",
+      ).length,
+      analyzer: "salt_submitted_fact_rules_v1",
+      semantic_validation: "source_bound_allowlist",
+      location_encoding: "utf8_bytes_end_exclusive",
+      project_policy: policyCoverage,
+      detected_findings: detectedFindings,
+      detected_nonfinding_version_decisions:
+        detectedNonFindingVersionDecisions,
+    },
+    limitations: [
+      contextSource === "none"
+        ? "Only submitted artifact text was analyzed; no project context was supplied, and files that were not submitted, compilation, runtime behavior, and user acceptance were not analyzed."
+        : contextSource === "caller_package_versions"
+          ? "Only submitted artifact text was analyzed; caller-supplied package versions informed version-specific rules, but files that were not submitted, repository state, compilation, runtime behavior, and user acceptance were not analyzed."
+          : contextSource === "retained_project_snapshot"
+            ? "Only submitted artifact text was analyzed; a retained authorized project snapshot supplied policy and installed-version facts, but project source that was not submitted, compilation, runtime behavior, and user acceptance were not analyzed."
+            : "Only submitted artifact text was analyzed; a fresh authorized project inspection supplied policy and installed-version facts, but project source that was not submitted, compilation, runtime behavior, and user acceptance were not analyzed.",
+      "Dynamic expressions, spread props, indirect exports, method calls, runtime values, and rules outside the listed allowlist do not ground findings.",
+    ],
+    provenance: {
+      catalog_version: registry.version,
+      semantic_digest: registry.semanticDigest,
+      project_context_digest: projectContextDigest,
+      project_policy_digest: policy?.digest ?? null,
+    },
+  };
+  captureCompleteAnalysis?.(completeAnalysis);
   type PublicReviewFinding =
     (typeof analyzedResults)[number]["findings"][number];
   type PublicVersionDecision =
@@ -470,21 +587,9 @@ export function reviewSaltCode(
   }));
   const response = {
     data: { results },
-    scope: {
-      kind: "submitted_text_only" as const,
-      context_source: contextSource,
-      artifact_count: results.length,
-      submitted_utf8_bytes: submittedBytes,
-    },
+    scope: completeAnalysis.scope,
     coverage: {
-      submitted_artifacts: results.length,
-      evaluated_artifacts: results.filter(
-        (result) => result.outcome !== "not_evaluated",
-      ).length,
-      analyzer: "salt_submitted_fact_rules_v1" as const,
-      semantic_validation: "source_bound_allowlist" as const,
-      location_encoding: "utf8_bytes_end_exclusive" as const,
-      project_policy: policyCoverage,
+      ...completeAnalysis.coverage,
       detected_findings: detectedFindings,
       returned_findings: 0,
       detected_nonfinding_version_decisions: detectedNonFindingVersionDecisions,
@@ -510,22 +615,8 @@ export function reviewSaltCode(
         ],
       },
     },
-    limitations: [
-      contextSource === "none"
-        ? "Only submitted artifact text was analyzed; no project context was supplied, and files that were not submitted, compilation, runtime behavior, and user acceptance were not analyzed."
-        : contextSource === "caller_package_versions"
-          ? "Only submitted artifact text was analyzed; caller-supplied package versions informed version-specific rules, but files that were not submitted, repository state, compilation, runtime behavior, and user acceptance were not analyzed."
-          : contextSource === "retained_project_snapshot"
-            ? "Only submitted artifact text was analyzed; a retained authorized project snapshot supplied policy and installed-version facts, but project source that was not submitted, compilation, runtime behavior, and user acceptance were not analyzed."
-            : "Only submitted artifact text was analyzed; a fresh authorized project inspection supplied policy and installed-version facts, but project source that was not submitted, compilation, runtime behavior, and user acceptance were not analyzed.",
-      "Dynamic expressions, spread props, indirect exports, method calls, runtime values, and rules outside the listed allowlist do not ground findings.",
-    ],
-    provenance: {
-      catalog_version: registry.version,
-      semantic_digest: registry.semanticDigest,
-      project_context_digest: projectContextDigest,
-      project_policy_digest: policy?.digest ?? null,
-    },
+    limitations: [...completeAnalysis.limitations],
+    provenance: completeAnalysis.provenance,
   };
   const severityRank = { error: 0, warning: 1, info: 2 } as const;
   const prioritizedFindings = analyzedResults
@@ -686,4 +777,60 @@ export function reviewSaltCode(
     finalizeSelection();
   }
   return response;
+}
+
+export type ReviewSaltCodeResult = ReturnType<typeof reviewSaltCodeWithCapture>;
+
+export function reviewSaltCode(
+  context: ReviewSaltCodeContext,
+  input: ReviewSaltCodeInput,
+  policy: ReviewProjectPolicyContext | null = null,
+  projectContextDigest: string | null = null,
+  contextSource: ReviewContextSource = "none",
+  measureFinalResultUtf8Bytes: (payload: unknown) => number = jsonUtf8Bytes,
+): ReviewSaltCodeResult {
+  return reviewSaltCodeWithCapture(
+    context,
+    input,
+    policy,
+    projectContextDigest,
+    contextSource,
+    measureFinalResultUtf8Bytes,
+  );
+}
+
+const COMPLETE_ANALYSIS_CAPTURE = Symbol("complete-review-analysis-capture");
+
+/**
+ * Returns every detected finding and version decision before public MCP result
+ * selection, truncation, response envelopes, or wire-size measurement.
+ */
+export function analyzeSaltCode(
+  context: ReviewSaltCodeContext,
+  input: ReviewSaltCodeInput,
+  policy: ReviewProjectPolicyContext | null = null,
+  projectContextDigest: string | null = null,
+  contextSource: ReviewContextSource = "none",
+): CompleteReviewSaltCodeAnalysis {
+  let completeAnalysis: CompleteReviewSaltCodeAnalysis | null = null;
+  try {
+    reviewSaltCodeWithCapture(
+      context,
+      input,
+      policy,
+      projectContextDigest,
+      contextSource,
+      jsonUtf8Bytes,
+      (analysis) => {
+        completeAnalysis = analysis;
+        throw COMPLETE_ANALYSIS_CAPTURE;
+      },
+    );
+  } catch (error) {
+    if (error !== COMPLETE_ANALYSIS_CAPTURE) throw error;
+  }
+  if (!completeAnalysis) {
+    throw new Error("Complete Salt code analysis was not captured.");
+  }
+  return completeAnalysis;
 }

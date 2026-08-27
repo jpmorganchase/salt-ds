@@ -13,6 +13,34 @@ export interface SearchSaltInput {
   limit?: number;
 }
 
+export interface SaltKnowledgeRecordReference {
+  family: CatalogSearchTargetFamilyName;
+  id: string;
+}
+
+export interface SearchSaltRecordMatch {
+  reference: SaltKnowledgeRecordReference;
+  title: string;
+  summary: string;
+  evidence: {
+    matched_fields: Array<"title" | "summary" | "terms">;
+    matched_terms: string[];
+    score: number;
+  };
+}
+
+export interface SearchSaltRecordsResult {
+  query: string;
+  matches: SearchSaltRecordMatch[];
+  searched_families: CatalogSearchTargetFamilyName[];
+  searched_statuses: string[] | null;
+  indexed_documents: number;
+  evaluated_documents: number;
+  matched_documents: number;
+  candidate_count: number;
+  top_score_tie_count: number;
+}
+
 export interface SearchSaltMatch {
   family: CatalogSearchTargetFamilyName;
   id: string;
@@ -156,10 +184,14 @@ function boundedSummary(summary: string): string {
   return `${summary.slice(0, MAX_SUMMARY_CHARS - 1).trimEnd()}…`;
 }
 
-export function searchSalt(
+/**
+ * Protocol-neutral catalog search. References identify records without
+ * choosing a transport URI, public response envelope, or wire-size budget.
+ */
+export function searchSaltRecords(
   store: CatalogStoreV2,
   input: SearchSaltInput,
-): SearchSaltResult {
+): SearchSaltRecordsResult {
   const query = input.query.trim();
   const normalizedQuery = normalize(query);
   const queryWords = words(query);
@@ -193,32 +225,64 @@ export function searchSalt(
       left.document.target.family.localeCompare(right.document.target.family) ||
       left.document.target.id.localeCompare(right.document.target.id),
   );
-  let matches = ranked.slice(0, limit).map(({ document, ranking }) => {
-    const uri = normalizeCatalogPublicCitation({
-      kind: "catalog_record",
-      manifest: store.manifest,
-      family: document.target.family,
-      id: document.target.id,
-    });
-    return {
-      family: document.target.family,
-      id: document.target.id,
-      title: document.title,
-      summary: boundedSummary(document.summary),
-      uri,
-      evidence: {
-        matched_fields: ranking.matchedFields,
-        matched_terms: ranking.matchedTerms,
-        score: ranking.score,
-      },
-      provenance: { resource_uri: uri },
-    };
-  });
   const topScore = ranked[0]?.ranking.score;
   const topScoreTieCount =
     topScore === undefined
       ? 0
       : ranked.filter((entry) => entry.ranking.score === topScore).length;
+
+  return {
+    query,
+    matches: ranked.slice(0, limit).map(({ document, ranking }) => ({
+      reference: {
+        family: document.target.family,
+        id: document.target.id,
+      },
+      title: document.title,
+      summary: document.summary,
+      evidence: {
+        matched_fields: ranking.matchedFields,
+        matched_terms: ranking.matchedTerms,
+        score: ranking.score,
+      },
+    })),
+    searched_families: families,
+    searched_statuses: statuses,
+    indexed_documents: documents.length,
+    evaluated_documents: evaluatedDocuments,
+    matched_documents: ranked.length,
+    candidate_count: ranked.length,
+    top_score_tie_count: topScoreTieCount,
+  };
+}
+
+export function searchSalt(
+  store: CatalogStoreV2,
+  input: SearchSaltInput,
+): SearchSaltResult {
+  const neutral = searchSaltRecords(store, input);
+  const query = neutral.query;
+  const families = neutral.searched_families;
+  const statuses = neutral.searched_statuses;
+  const documents = store.getFamily("search_document");
+  let matches = neutral.matches.map((match) => {
+    const uri = normalizeCatalogPublicCitation({
+      kind: "catalog_record",
+      manifest: store.manifest,
+      family: match.reference.family,
+      id: match.reference.id,
+    });
+    return {
+      family: match.reference.family,
+      id: match.reference.id,
+      title: match.title,
+      summary: boundedSummary(match.summary),
+      uri,
+      evidence: match.evidence,
+      provenance: { resource_uri: uri },
+    };
+  });
+  const topScoreTieCount = neutral.top_score_tie_count;
 
   const queryUtf8Bytes = Buffer.byteLength(query, "utf8");
   let publicQuery = query;
@@ -231,7 +295,7 @@ export function searchSalt(
       matches,
       ambiguity: {
         is_ambiguous: topScoreTieCount > 1,
-        candidate_count: ranked.length,
+        candidate_count: neutral.candidate_count,
         top_score_tie_count: topScoreTieCount,
       },
     },
@@ -241,12 +305,12 @@ export function searchSalt(
       searched_statuses: statuses,
       total_documents: documents.length,
       returned: matches.length,
-      truncated: ranked.length > matches.length || queryLimited,
+      truncated: neutral.matched_documents > matches.length || queryLimited,
     },
     coverage: {
       indexed_documents: documents.length,
-      evaluated_documents: evaluatedDocuments,
-      matched_documents: ranked.length,
+      evaluated_documents: neutral.evaluated_documents,
+      matched_documents: neutral.matched_documents,
       ranking: "deterministic_catalog_index" as const,
     },
     limitations: [

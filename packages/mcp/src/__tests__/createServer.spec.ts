@@ -32,7 +32,6 @@ import {
 import { MAX_PUBLIC_RESOURCE_UTF8_BYTES } from "../core/publicResourceBudget.js";
 import {
   canonicalCatalogRuntimeFamilies,
-  loadCatalogRuntimeContext,
   MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES,
   MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES,
   MAX_REVIEW_ARTIFACT_ID_JSON_UTF8_BYTES,
@@ -64,10 +63,11 @@ import {
 } from "../server/toolDefinitions.js";
 import {
   copyCatalogV2Artifacts,
-  createBuiltCatalogV2Fixture,
+  createVerifiedCatalogTestContext,
+  readCatalogManifest,
   REPO_ROOT,
   rebindCatalogArtifactForTests,
-  SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS,
+  VERIFIED_CATALOG_CONTEXT_TEST_TIMEOUT_MS,
 } from "./registryTestUtils.js";
 
 const REMOVED_TOOL_NAMES = [
@@ -88,6 +88,7 @@ const PROJECT_POLICY_TRUST = {
 } as const;
 let catalogFixtureDirectory = "";
 let runtimeContext: SaltCatalogRuntimeContext;
+let disposeCatalogFixture: () => Promise<void> = async () => undefined;
 
 function assertStrictNestedObjects(
   value: unknown,
@@ -146,22 +147,16 @@ function assertRequiredObjectProperty(
 }
 
 beforeAll(async () => {
-  catalogFixtureDirectory = await createBuiltCatalogV2Fixture(
+  const verified = await createVerifiedCatalogTestContext(
     "salt-create-server-v2-",
   );
-  runtimeContext = await loadCatalogRuntimeContext({
-    registryDir: catalogFixtureDirectory,
-    prefetch: true,
-  });
-}, SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS);
+  catalogFixtureDirectory = verified.registryDir;
+  runtimeContext = verified.runtime;
+  disposeCatalogFixture = verified.dispose;
+}, VERIFIED_CATALOG_CONTEXT_TEST_TIMEOUT_MS);
 
 afterAll(async () => {
-  if (catalogFixtureDirectory) {
-    await fs.rm(catalogFixtureDirectory, {
-      recursive: true,
-      force: true,
-    });
-  }
+  await disposeCatalogFixture();
 });
 
 function toolPayload(result: unknown): Record<string, unknown> {
@@ -394,21 +389,21 @@ describe("createSaltMcpServer final public boundary", () => {
         { canonicalizeRecords: true },
       );
 
-      await expect(
-        createSaltMcpServer({
-          registryDir,
-          projectAccess: {
-            mode: "restricted",
-            allowedRoots: [REPO_ROOT],
-            defaultRoot: REPO_ROOT,
-          },
-        }),
-      ).rejects.toThrow(
-        new RegExp(
-          `Public resource 'concept:${conceptId.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&")}'.*limit is 65536`,
-          "iu",
-        ),
-      );
+      const server = await createSaltMcpServer({
+        registryDir,
+        projectAccess: {
+          mode: "restricted",
+          allowedRoots: [REPO_ROOT],
+          defaultRoot: REPO_ROOT,
+        },
+      });
+      const manifest = await readCatalogManifest(registryDir);
+      const uri = catalogRecordResourceUri(manifest, "concept", conceptId);
+      await withConnectedProtocolClient(server, async (client) => {
+        await expect(client.readResource({ uri })).rejects.toThrow(
+          /Public resource.*limit is 65536/iu,
+        );
+      });
     } finally {
       await fs.rm(registryDir, { recursive: true, force: true });
     }

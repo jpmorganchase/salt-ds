@@ -5,15 +5,14 @@ import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { detectedValidationFindingCount } from "../core/review/reviewSaltCode.js";
 import {
-  loadCatalogRuntimeContext,
   reviewSaltCode,
   type SaltCatalogRuntimeContext,
   searchSalt,
 } from "../core/runtime.js";
 import { inspectSaltProject } from "../server/inspectSaltProject.js";
 import {
-  createBuiltCatalogV2Fixture,
-  SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS,
+  createVerifiedCatalogTestContext,
+  VERIFIED_CATALOG_CONTEXT_TEST_TIMEOUT_MS,
 } from "./registryTestUtils.js";
 
 const PRIVATE_CONTROL_PATTERN =
@@ -21,16 +20,17 @@ const PRIVATE_CONTROL_PATTERN =
 let catalogDirectory = "";
 let context: SaltCatalogRuntimeContext;
 let projectRoot = "";
+let disposeCatalogFixture: () => Promise<void> = async () => undefined;
 
 beforeAll(async () => {
-  [catalogDirectory, projectRoot] = await Promise.all([
-    createBuiltCatalogV2Fixture("salt-outcome-boundaries-"),
+  const [verified, createdProjectRoot] = await Promise.all([
+    createVerifiedCatalogTestContext("salt-outcome-boundaries-"),
     fs.mkdtemp(path.join(os.tmpdir(), "salt-outcome-project-")),
   ]);
-  context = await loadCatalogRuntimeContext({
-    registryDir: catalogDirectory,
-    prefetch: true,
-  });
+  catalogDirectory = verified.registryDir;
+  context = verified.runtime;
+  disposeCatalogFixture = verified.dispose;
+  projectRoot = createdProjectRoot;
   await fs.mkdir(path.join(projectRoot, ".salt"), { recursive: true });
   await Promise.all([
     fs.writeFile(
@@ -106,14 +106,15 @@ beforeAll(async () => {
       "utf8",
     ),
   ]);
-}, SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS);
+}, VERIFIED_CATALOG_CONTEXT_TEST_TIMEOUT_MS);
 
 afterAll(async () => {
-  await Promise.all(
-    [catalogDirectory, projectRoot]
-      .filter(Boolean)
-      .map((directory) => fs.rm(directory, { recursive: true, force: true })),
-  );
+  await Promise.all([
+    disposeCatalogFixture(),
+    ...(projectRoot
+      ? [fs.rm(projectRoot, { recursive: true, force: true })]
+      : []),
+  ]);
 });
 
 describe("MCP negative outcome boundaries", () => {

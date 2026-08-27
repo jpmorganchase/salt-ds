@@ -28,6 +28,33 @@ export const CATALOG_INPUT_PATTERNS = Object.freeze([
   ...catalogInputPatterns,
 ]);
 
+export function validateCatalogInputPatterns(
+  value: unknown,
+  label: string,
+): string[] {
+  if (!Array.isArray(value) || value.length === 0) {
+    throw new Error(`${label} must be a non-empty array of glob patterns.`);
+  }
+  const patterns = value.map((entry, index) => {
+    if (
+      typeof entry !== "string" ||
+      entry.length === 0 ||
+      entry !== entry.trim() ||
+      entry.includes("\\") ||
+      entry.includes("\0") ||
+      path.posix.isAbsolute(entry) ||
+      entry.split("/").some((segment) => segment === "..")
+    ) {
+      throw new Error(`${label}[${index}] is not a safe repository glob.`);
+    }
+    return entry;
+  });
+  if (new Set(patterns).size !== patterns.length) {
+    throw new Error(`${label} contains duplicate glob patterns.`);
+  }
+  return patterns;
+}
+
 const INPUT_HASH_CONCURRENCY = 32;
 
 interface ActiveCatalogInputTracking {

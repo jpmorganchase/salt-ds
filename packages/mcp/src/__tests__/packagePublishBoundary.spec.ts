@@ -33,6 +33,16 @@ type PackageManifest = {
   publishEntryPath?: string;
   publishAdditionalEntryPaths?: string[];
   publishBuildIdentityManifest?: string;
+  publishBuildIdentityInputPatterns?: {
+    semantic: string;
+    compiler: string;
+  };
+  publishCatalogArtifactPaths?: {
+    generationDirectory: string;
+    publicationInventoryFile: string;
+    schemaArtifactKind: string;
+    buildArtifactsField: string;
+  };
   publishBundledWorkspaceDependencies?: string[];
   publishBinEntrypoints?: Record<
     string,
@@ -164,6 +174,7 @@ describe("package publish boundaries", () => {
       ],
     ]);
     const identity = { inputsByPath };
+    const inputPatterns = ["package.json", "site/docs/**/*.mdx"];
 
     try {
       await fs.mkdir(docsDirectory, { recursive: true });
@@ -171,30 +182,30 @@ describe("package publish boundaries", () => {
       await fs.writeFile(docsPath, docsBytes);
 
       await expect(
-        assertCompleteCatalogInputSet(identity, fixtureRoot),
+        assertCompleteCatalogInputSet(identity, fixtureRoot, inputPatterns),
       ).resolves.toBeUndefined();
 
       await fs.writeFile(path.join(fixtureRoot, "notes.txt"), "unrelated\n");
       await expect(
-        assertCompleteCatalogInputSet(identity, fixtureRoot),
+        assertCompleteCatalogInputSet(identity, fixtureRoot, inputPatterns),
       ).resolves.toBeUndefined();
 
       await fs.writeFile(docsPath, "# Changed documentation\n");
       await expect(
-        assertCompleteCatalogInputSet(identity, fixtureRoot),
+        assertCompleteCatalogInputSet(identity, fixtureRoot, inputPatterns),
       ).rejects.toThrow(/does not match the catalog input inventory/u);
       await fs.writeFile(docsPath, docsBytes);
 
       const addedPath = path.join(docsDirectory, "added.mdx");
       await fs.writeFile(addedPath, "# Added\n");
       await expect(
-        assertCompleteCatalogInputSet(identity, fixtureRoot),
+        assertCompleteCatalogInputSet(identity, fixtureRoot, inputPatterns),
       ).rejects.toThrow(/path set does not match/u);
       await fs.rm(addedPath);
 
       await fs.rm(docsPath);
       await expect(
-        assertCompleteCatalogInputSet(identity, fixtureRoot),
+        assertCompleteCatalogInputSet(identity, fixtureRoot, inputPatterns),
       ).rejects.toThrow(/path set does not match/u);
       await fs.writeFile(docsPath, docsBytes);
 
@@ -204,7 +215,7 @@ describe("package publish boundaries", () => {
       await fs.writeFile(externalPackagePath, packageBytes);
       await fs.link(externalPackagePath, packagePath);
       await expect(
-        assertCompleteCatalogInputSet(identity, fixtureRoot),
+        assertCompleteCatalogInputSet(identity, fixtureRoot, inputPatterns),
       ).rejects.toThrow(/resolves through a link/u);
       await fs.rm(packagePath);
       await fs.rename(originalPackagePath, packagePath);
@@ -214,7 +225,7 @@ describe("package publish boundaries", () => {
       await fs.writeFile(path.join(externalRoot, "stable.mdx"), docsBytes);
       await fs.symlink(externalRoot, docsDirectory, "junction");
       await expect(
-        assertCompleteCatalogInputSet(identity, fixtureRoot),
+        assertCompleteCatalogInputSet(identity, fixtureRoot, inputPatterns),
       ).rejects.toThrow(/path set does not match|resolves through a link/u);
       await expect(
         fs.readFile(path.join(externalRoot, "stable.mdx"), "utf8"),
@@ -465,8 +476,15 @@ describe("package publish boundaries", () => {
       new URL("../core/build/catalogInputInventory.ts", import.meta.url),
       "utf8",
     );
-    const inputPatterns = readJson<string[]>(
-      "../core/build/catalogInputPatterns.json",
+    const semanticInputPatterns = readJson<string[]>(
+      "../core/build/catalogSemanticInputPatterns.json",
+    );
+    const compilerInputPatterns = readJson<string[]>(
+      "../core/build/catalogCompilerInputPatterns.json",
+    );
+    const buildIdentity = readFileSync(
+      new URL("../../../../scripts/catalogBuildIdentity.mjs", import.meta.url),
+      "utf8",
     );
 
     expect(manifest.devDependencies).toMatchObject({
@@ -484,9 +502,13 @@ describe("package publish boundaries", () => {
     expect(registryBuilder).toContain("tsconfigRaw");
     expect(inputInventory).not.toContain("site/src/props");
     expect(inputInventory).toContain("catalogInputPatterns");
-    expect(inputPatterns).toContain("package.json");
-    expect(inputPatterns).toContain(".yarnrc.yml");
-    expect(inputPatterns).toContain("yarn.lock");
+    expect(buildIdentity).not.toMatch(/import catalogInputPatterns/u);
+    expect(semanticInputPatterns).toContain(
+      "packages/*/src/**/*.{ts,tsx,mts,cts,js,jsx,mjs,cjs,css,scss,json}",
+    );
+    expect(compilerInputPatterns).toContain("package.json");
+    expect(compilerInputPatterns).toContain(".yarnrc.yml");
+    expect(compilerInputPatterns).toContain("yarn.lock");
   });
 
   it("keeps MCP published file roots limited to runtime payload", () => {
@@ -505,6 +527,16 @@ describe("package publish boundaries", () => {
     expect(manifest.publishBuildIdentityManifest).toBe(
       "generated/catalog-manifest.json",
     );
+    expect(manifest.publishBuildIdentityInputPatterns).toEqual({
+      semantic: "src/core/build/catalogSemanticInputPatterns.json",
+      compiler: "src/core/build/catalogCompilerInputPatterns.json",
+    });
+    expect(manifest.publishCatalogArtifactPaths).toEqual({
+      generationDirectory: "catalog-generations",
+      publicationInventoryFile: "catalog-publication.json",
+      schemaArtifactKind: "json_schema",
+      buildArtifactsField: "build_artifacts",
+    });
     expectEntriesToExclude(manifest.files, FORBIDDEN_RUNTIME_FILE_ENTRIES);
     expect(manifest.publishBundledWorkspaceDependencies).toBeUndefined();
     expect(manifest.dependencies).not.toHaveProperty("@salt-ds/semantic-core");

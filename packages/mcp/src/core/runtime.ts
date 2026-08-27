@@ -59,6 +59,18 @@ export {
   inspectProjectFileMetadata,
   readBoundedProjectFile,
 } from "./project/boundedProjectFile.js";
+export { createSaltProjectFacts } from "./project/projectFacts.js";
+export type {
+  ResolvedSaltPackageDescriptor,
+  SaltInstallationDiagnostics,
+  SaltInstallationWorkspace,
+  SaltPackageDescriptor,
+  SaltPackageManagerInspection,
+  SaltPackageVersionHealth,
+  SaltPackageVersionMismatch,
+  SaltProjectFacts,
+  SaltProjectFactsInput,
+} from "./project/projectFacts.js";
 export {
   assertPublicResourceText,
   MAX_PUBLIC_RESOURCE_UTF8_BYTES,
@@ -81,12 +93,26 @@ export {
   MAX_REVIEW_ARTIFACTS,
   MAX_REVIEW_PACKAGE_VERSIONS,
   MAX_REVIEW_SUBMITTED_UTF8_BYTES,
+  analyzeSaltCode,
   reviewSaltCode,
+} from "./review/reviewSaltCode.js";
+export type {
+  CompleteReviewArtifactAnalysis,
+  CompleteReviewFinding,
+  CompleteReviewSaltCodeAnalysis,
+  ReviewSaltCodeContext,
+  ReviewSaltCodeResult,
 } from "./review/reviewSaltCode.js";
 export {
   DEFAULT_SEARCH_RESULTS,
   MAX_SEARCH_RESULTS,
   MAX_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES,
   searchSalt,
+  searchSaltRecords,
+} from "./search/searchSalt.js";
+export type {
+  SaltKnowledgeRecordReference,
+  SearchSaltRecordMatch,
+  SearchSaltRecordsResult,
 } from "./search/searchSalt.js";
 export { EXACT_SEMVER_PATTERN } from "./versionUtils.js";

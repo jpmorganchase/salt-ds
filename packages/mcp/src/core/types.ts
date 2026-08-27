@@ -627,8 +627,13 @@ export interface SaltRegistry {
 
 export interface BuildRegistryOptions {
   sourceRoot?: string;
+  packageRoot?: string;
   outputDir?: string;
   version?: string;
+  packageVersion?: string;
+  semanticInputPatterns?: readonly string[];
+  compilerInputPatterns?: readonly string[];
+  excludedPackageNames?: readonly string[];
   sourceRevision?: string;
   generatorVersion?: string;
   generatorDigest?: string;

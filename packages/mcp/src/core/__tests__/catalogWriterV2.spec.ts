@@ -38,7 +38,6 @@ import {
 } from "../catalog/catalogSerialization.js";
 import { CatalogStoreV2 } from "../catalog/catalogStoreV2.js";
 import { measureTokenOwnedCatalogSurface } from "../catalog/catalogTokenSurfaceV2.js";
-import { MAX_PUBLIC_RESOURCE_UTF8_BYTES } from "../publicResourceBudget.js";
 
 const temporaryDirectories: string[] = [];
 
@@ -315,7 +314,7 @@ describe("atomic deterministic Salt catalog writer", () => {
     expect(await writerDebris(root, "second")).toEqual([]);
   });
 
-  it("rejects an oversized public record envelope before replacing the manifest", async () => {
+  it("keeps the MCP resource envelope budget out of catalog generation", async () => {
     const root = await createRoot();
     const outputDir = path.join(root, "catalog");
     const baseline = createNormalizedCatalog();
@@ -343,25 +342,21 @@ describe("atomic deterministic Salt catalog writer", () => {
       id: "concept.oversized-public-envelope",
       name: "Oversized",
       concept_kind: "other",
-      summary: "x".repeat(MAX_PUBLIC_RESOURCE_UTF8_BYTES),
+      summary: "x".repeat(65_536),
     });
     synchronizeSearchDocuments(oversized);
 
-    await expect(
-      writeCatalogV2({
-        ...fixedOptions,
-        outputDir,
-        normalized: oversized,
-      }),
-    ).rejects.toThrow(
-      /Public resource 'concept:concept\.oversized-public-envelope'.*limit is 65536/iu,
-    );
+    await writeCatalogV2({
+      ...fixedOptions,
+      outputDir,
+      normalized: oversized,
+    });
     expect(
       await fs.readFile(
         path.join(outputDir, SALT_CATALOG_MANIFEST_FILE),
         "utf8",
       ),
-    ).toBe(previousManifest);
+    ).not.toBe(previousManifest);
     expect(await writerDebris(root, "catalog")).toEqual([]);
   });
 
