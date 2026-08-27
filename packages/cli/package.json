@@ -1,12 +1,12 @@
 {
-  "name": "@salt-ds/mcp",
+  "name": "@salt-ds/cli",
   "version": "0.0.0",
   "private": true,
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpmorganchase/salt-ds.git",
-    "directory": "packages/mcp"
+    "directory": "packages/cli"
   },
   "main": "src/index.ts",
   "engines": {
@@ -14,14 +14,17 @@
   },
   "sideEffects": false,
   "files": [
-    "bin"
+    "bin",
+    "schemas"
   ],
   "publishBinEntrypoints": {
-    "bin/salt-mcp.js": {
+    "bin/salt-ds.js": {
       "requirePath": "../dist-cjs/index.js",
-      "errorPrefix": "salt-mcp error:",
+      "errorPrefix": "salt-ds error:",
       "conciseErrorCodes": [
-        "SALT_MCP_CLI_USAGE"
+        "SALT_CLI_USAGE",
+        "SALT_PROJECT_ROOT_NOT_DIRECTORY",
+        "SALT_PROJECT_ROOT_UNAVAILABLE"
       ]
     }
   },
@@ -42,38 +45,28 @@
   "publishScriptExcludes": [
     "build",
     "build:package",
-    "build:registry",
-    "measure:runtime-loc",
-    "measure:surface",
     "prepack"
   ],
   "publishSourceMaps": false,
   "publishIncludeReadme": false,
   "publishIncludeChangelog": false,
   "bin": {
-    "salt-mcp": "bin/salt-mcp.js"
+    "salt-ds": "bin/salt-ds.js"
   },
   "scripts": {
-    "build:registry": "node ./scripts/buildRegistry.mjs",
     "build:package": "yarn node ../../scripts/build.mjs",
     "build": "yarn build:package",
-    "measure:surface": "node --expose-gc ./scripts/measurePublicSurface.mjs",
-    "measure:runtime-loc": "node ./scripts/measureRuntimeReachableLoc.mjs",
     "prepack": "yarn build"
   },
   "dependencies": {
-    "@modelcontextprotocol/server": "2.0.0",
-    "@salt-ds/knowledge": "workspace:*",
-    "@types/node": "^24.0.0",
-    "zod": "^4.2.0"
+    "@salt-ds/knowledge": "workspace:*"
   },
   "devDependencies": {
-    "@modelcontextprotocol/client": "^2.0.0",
-    "ajv": "^8.17.1",
+    "@types/node": "^24.0.0",
     "typescript": "^6.0.2"
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-mcp",
+    "directory": "../../dist/salt-ds-cli",
     "provenance": true
   }
 }

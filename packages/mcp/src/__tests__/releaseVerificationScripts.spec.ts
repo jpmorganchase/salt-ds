@@ -21,8 +21,8 @@ const POST_BUILD_STEPS = [
   "yarn workspace @salt-ds/mcp measure:runtime-loc",
   "yarn workspace @salt-ds/mcp measure:surface",
   "yarn build:ai-tooling",
-  "yarn check:ai-tooling:pack -- --profile pre-agent-support --report dist/salt-ai-pack/unit-03.json",
-  "yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit-03.json",
+  "yarn check:ai-tooling:pack -- --profile pre-agent-support --report dist/salt-ai-pack/unit-04a.json",
+  "yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit-04a.json",
 ];
 
 async function readScripts(): Promise<Record<string, string>> {
@@ -72,7 +72,7 @@ describe("release verification scripts", () => {
     );
     const build = workflow.indexOf("run: yarn build");
     const mcpPackageGate = workflow.indexOf(
-      "run: yarn check:ai-tooling:pack -- --profile pre-agent-support --report dist/salt-ai-pack/unit-03.json",
+      "run: yarn check:ai-tooling:pack -- --profile pre-agent-support --report dist/salt-ai-pack/unit-04a.json",
     );
     const datePackageGate = workflow.indexOf(
       "run: yarn check:date-adapters:pack",
@@ -106,7 +106,7 @@ describe("release verification scripts", () => {
       "node ./scripts/consumerRepoSmoke.mjs",
     );
     expect(scripts["release:verify:mcp:after-build"]).toContain(
-      "yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit-03.json",
+      "yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit-04a.json",
     );
   });
 

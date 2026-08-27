@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/schemas/salt-config-1.json",
+  "title": "Salt CLI configuration v1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "include": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 1024 },
+      "maxItems": 128,
+      "uniqueItems": true
+    },
+    "exclude": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 1024 },
+      "maxItems": 128,
+      "uniqueItems": true
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false
+    }
+  }
+}

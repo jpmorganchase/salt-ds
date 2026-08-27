@@ -579,7 +579,7 @@ describe("package publish boundaries", () => {
     expect(manifest.dependencies).not.toHaveProperty("get-tsconfig");
     expect(manifest.dependencies?.["@salt-ds/knowledge"]).toBe("workspace:*");
     expect(manifest.dependencies?.["jsonc-parser"]).toBeUndefined();
-    expect(manifest.dependencies?.["js-yaml"]).toMatch(/^\^4\./u);
+    expect(manifest.dependencies?.["js-yaml"]).toBeUndefined();
     expect(manifest.dependencies?.postcss).toBeUndefined();
     expect(manifest.dependencies?.["@types/node"]).toMatch(/^\^24\./u);
     expect(manifest.dependencies?.["@modelcontextprotocol/server"]).toBe(
@@ -612,6 +612,47 @@ describe("package publish boundaries", () => {
       "./package.json": "./package.json",
     });
     expect(manifest.publishExtraCopyPaths).toBeUndefined();
+  });
+
+  it("keeps the private CLI package narrow and exact-pinned to Knowledge", () => {
+    const manifest = readJson<PackageManifest>("../../../cli/package.json");
+
+    expect(manifest.name).toBe("@salt-ds/cli");
+    expect(manifest.private).toBe(true);
+    expect(manifest.engines?.node).toBe(">=22");
+    expect(manifest.files).toEqual(["bin", "schemas"]);
+    expect(manifest.dependencies).toEqual({
+      "@salt-ds/knowledge": "workspace:*",
+    });
+    expect(manifest.dependencies).not.toHaveProperty("@salt-ds/mcp");
+    expect(manifest.dependencies).not.toHaveProperty(
+      "@modelcontextprotocol/server",
+    );
+    expect(manifest.publishConfig?.directory).toBe("../../dist/salt-ds-cli");
+    expect(manifest.publishIncludeReadme).toBe(false);
+    expect(manifest.publishTypingEntryOnly).toBe(true);
+    expect(manifest.publishPreserveModules).toBe(false);
+    expect(manifest.typescriptInclude).toEqual(["src/index.ts"]);
+    expect(manifest.publishBinEntrypoints).toEqual({
+      "bin/salt-ds.js": {
+        requirePath: "../dist-cjs/index.js",
+        errorPrefix: "salt-ds error:",
+        conciseErrorCodes: [
+          "SALT_CLI_USAGE",
+          "SALT_PROJECT_ROOT_NOT_DIRECTORY",
+          "SALT_PROJECT_ROOT_UNAVAILABLE",
+        ],
+      },
+    });
+    expect(manifest.publishExports).toEqual({
+      ".": {
+        types: "./dist-types/index.d.ts",
+        import: "./dist-es/index.js",
+        require: "./dist-cjs/index.js",
+      },
+      "./package.json": "./package.json",
+    });
+    expectEntriesToExclude(manifest.files, FORBIDDEN_RUNTIME_FILE_ENTRIES);
   });
 
   it("binds package banners and loaded source bytes to one exact catalog build", () => {

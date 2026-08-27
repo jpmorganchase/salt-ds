@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/schemas/scan-result-1.json",
+  "title": "Salt scan result v1",
+  "type": "object",
+  "required": ["contract", "schema_version"],
+  "properties": {
+    "contract": { "const": "salt-scan-result/1" },
+    "schema_version": { "const": "1.0.0" }
+  },
+  "additionalProperties": true
+}

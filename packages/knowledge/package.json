@@ -34,7 +34,9 @@
     "./package.json": "./package.json"
   },
   "publishEntryPath": "src/public.ts",
-  "typescriptInclude": ["src/public.ts"],
+  "typescriptInclude": [
+    "src/public.ts"
+  ],
   "typescriptRootDir": "src",
   "publishTypingEntryOnly": false,
   "publishPreserveModules": false,

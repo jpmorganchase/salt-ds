@@ -122,7 +122,9 @@
         "content_policy"
       ],
       "properties": {
-        "name": { "enum": ["@salt-ds/knowledge", "@salt-ds/mcp"] },
+        "name": {
+          "enum": ["@salt-ds/cli", "@salt-ds/knowledge", "@salt-ds/mcp"]
+        },
         "version": { "type": "string", "pattern": "^0\\.0\\.0$" },
         "manifest": { "$ref": "#/$defs/artifact" },
         "tarball": { "$ref": "#/$defs/artifact" },

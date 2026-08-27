@@ -9,8 +9,10 @@ import {
   assert,
   createMcpSurfaceFingerprint,
   createMcpToolSemanticFingerprint,
+  getInstalledCliBin,
   getInstalledMcpBin,
   pathExists,
+  runCommand,
 } from "./shared.mjs";
 
 const REGISTERED_TOOL_NAMES = [
@@ -43,6 +45,192 @@ const PUBLIC_CITATION_PATTERN =
   /^(?:salt:\/\/(?:catalog\/v2\/sha256-[0-9a-f]{64}|project-policy\/v2\/[A-Za-z0-9_-]+\/sha256-[0-9a-f]{64})\/|https:\/\/)/u;
 const MAX_RESOURCE_PAGE_UTF8_BYTES = 256 * 1024;
 const MAX_RESOURCES_PER_PAGE = 512;
+
+async function runInstalledCli(
+  installedCliBinPath,
+  args,
+  cwd,
+  acceptableExitCodes = [0],
+) {
+  return runCommand(
+    process.execPath,
+    ["--import", offlineNetworkGuardUrl, installedCliBinPath, ...args],
+    {
+      cwd,
+      acceptableExitCodes,
+      label: `offline packed salt-ds ${args.join(" ")}`,
+    },
+  );
+}
+
+export async function runCliWorkflowCoverage(
+  installRoot,
+  exactSaltRoot,
+  nonSaltRoot,
+  packReport,
+) {
+  console.log("Checking the installed Salt CLI surface offline...");
+  runOfflineNetworkGuardSelfTest();
+  const installedCliBinPath = getInstalledCliBin(installRoot);
+  assert(
+    await pathExists(installedCliBinPath),
+    `Expected installed CLI bin at ${installedCliBinPath}.`,
+  );
+  for (const [mode, args] of [
+    [
+      "ESM",
+      [
+        "--import",
+        offlineNetworkGuardUrl,
+        "--input-type=module",
+        "--eval",
+        'const mod = await import("@salt-ds/cli"); if (JSON.stringify(Object.keys(mod).sort()) !== JSON.stringify(["runCli"])) throw new Error("unexpected CLI ESM exports");',
+      ],
+    ],
+    [
+      "CommonJS",
+      [
+        "--import",
+        offlineNetworkGuardUrl,
+        "--eval",
+        'const mod = require("@salt-ds/cli"); if (JSON.stringify(Object.keys(mod).sort()) !== JSON.stringify(["runCli"])) throw new Error("unexpected CLI CommonJS exports");',
+      ],
+    ],
+  ]) {
+    await runCommand(process.execPath, args, {
+      cwd: installRoot,
+      label: `offline packed CLI ${mode} export check`,
+    });
+  }
+
+  const helpResults = [];
+  for (const args of [["help"], ["-h"], ["--help"]]) {
+    helpResults.push(await runInstalledCli(installedCliBinPath, args, exactSaltRoot));
+  }
+  assert(
+    helpResults.every(
+      (result) =>
+        result.stderr === "" && result.stdout === helpResults[0].stdout,
+    ) && helpResults[0].stdout.includes("salt-ds info [root] --json"),
+    "Packed help aliases did not preserve exact stdout/stderr semantics.",
+  );
+
+  const versionResults = [];
+  for (const args of [["version"], ["--version"]]) {
+    versionResults.push(
+      await runInstalledCli(installedCliBinPath, args, exactSaltRoot),
+    );
+  }
+  assert(
+    versionResults.every(
+      (result) =>
+        result.stderr === "" &&
+        result.stdout === `${packReport.cli.version}\n` &&
+        result.stdout === versionResults[0].stdout,
+    ),
+    "Packed version aliases did not report the exact CLI package version.",
+  );
+
+  for (const args of [
+    [],
+    ["help", "extra"],
+    ["-h", "extra"],
+    ["--help", "extra"],
+    ["version", "extra"],
+    ["--version", "extra"],
+    ["info"],
+    ["info", "--json", "--json"],
+    ["info", "one", "two", "--json"],
+    ["info", "missing-root", "--json"],
+    ["unknown"],
+  ]) {
+    const result = await runInstalledCli(
+      installedCliBinPath,
+      args,
+      exactSaltRoot,
+      [2],
+    );
+    assert(
+      result.stdout === "" && result.stderr.startsWith("salt-ds error:"),
+      `Packed CLI invalid arguments did not use exit 2 and stderr only: ${args.join(" ")}.`,
+    );
+  }
+
+  const explicitInfo = await runInstalledCli(
+    installedCliBinPath,
+    ["info", exactSaltRoot, "--json"],
+    nonSaltRoot,
+  );
+  const defaultInfo = await runInstalledCli(
+    installedCliBinPath,
+    ["info", "--json"],
+    exactSaltRoot,
+  );
+  assert(
+    explicitInfo.stderr === "" &&
+      defaultInfo.stderr === "" &&
+      explicitInfo.stdout === defaultInfo.stdout,
+    "Packed info root selection was not deterministic.",
+  );
+  const info = JSON.parse(explicitInfo.stdout);
+  const observed = new Map(
+    info.project?.packages?.map((entry) => [entry.name, entry.observed_version]),
+  );
+  assert(
+    info.contract === "salt-cli-info/1" &&
+      info.schema_version === "1.0.0" &&
+      info.tool?.package === "@salt-ds/cli" &&
+      info.tool.version === packReport.cli.version &&
+      info.knowledge?.package === "@salt-ds/knowledge" &&
+      info.knowledge.package_version === packReport.knowledge.version &&
+      info.knowledge.selected_bundle_version === packReport.knowledge.version &&
+      info.knowledge.bundle_digest ===
+        packReport.report.knowledge_bundle.bundle_digest &&
+      info.knowledge.semantic_digest ===
+        packReport.report.knowledge_bundle.semantic_digest &&
+      observed.get("@salt-ds/core") === "1.69.0" &&
+      observed.get("@salt-ds/theme") === "1.44.0" &&
+      info.coverage?.status === "complete" &&
+      info.coverage.exact_project_package_vector === true &&
+      info.compatibility?.compatible === true &&
+      Array.isArray(info.compatibility.disabled_families) &&
+      Array.isArray(info.limitations),
+    "Packed info did not report the exact project vector and Knowledge identity.",
+  );
+
+  const partialResult = await runInstalledCli(
+    installedCliBinPath,
+    ["info", nonSaltRoot, "--json"],
+    exactSaltRoot,
+  );
+  const partial = JSON.parse(partialResult.stdout);
+  assert(
+    partial.coverage?.status === "partial" &&
+      partial.coverage.exact_project_package_vector === false &&
+      partial.compatibility?.compatible === false &&
+      partial.compatibility.disabled_families.some(
+        (entry) =>
+          entry.name === "@salt-ds/core" &&
+          entry.reason === "missing_required",
+      ) &&
+      partial.limitations.includes("SALT_PACKAGE_VECTOR_INCOMPATIBLE"),
+    "Packed info did not disclose incomplete non-Salt coverage.",
+  );
+
+  return {
+    aliases: { help: 3, version: 2 },
+    invalid_argument_cases: 11,
+    exact_info: {
+      bundle_digest: info.knowledge.bundle_digest,
+      semantic_digest: info.knowledge.semantic_digest,
+      package_count: info.project.packages.length,
+      coverage: info.coverage.status,
+    },
+    partial_info: { coverage: partial.coverage.status },
+    network: "offline",
+    node: process.versions.node,
+  };
+}
 
 async function collectDirectResourcePages(client) {
   const page = await client.request({

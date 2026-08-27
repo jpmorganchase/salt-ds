@@ -21,7 +21,9 @@ export * from "./policy/index.js";
 export * from "./policy/layerDiagnostics.js";
 export * from "./policy/projectPolicyIr.js";
 export * from "./project/boundedProjectFile.js";
+export * from "./project/inspectSaltProjectFacts.js";
 export * from "./project/projectFacts.js";
+export * from "./project/saltInstallation.js";
 export * from "./registry/paths.js";
 export type {
   ReviewCatalog,

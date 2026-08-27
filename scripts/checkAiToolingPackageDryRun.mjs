@@ -306,11 +306,75 @@ const mcpPackage = {
     maxEntryCount: 16,
   };
 
+const cliPackage = {
+  name: "@salt-ds/cli",
+  dir: "dist/salt-ds-cli",
+  requiredPaths: [
+    "package.json",
+    "bin/salt-ds.js",
+    "schemas/salt-config-1.schema.json",
+    "schemas/scan-result-1.schema.json",
+    "dist-cjs/index.js",
+    "dist-es/index.js",
+    "dist-types/index.d.ts",
+  ],
+  expectedFilesField: ["bin", "schemas", "dist-cjs", "dist-es", "dist-types"],
+  forbiddenManifestFields: [
+    "publishBinEntrypoints",
+    "publishTypingEntryOnly",
+    "publishPreserveModules",
+    "publishScriptExcludes",
+    "publishSourceMaps",
+    "publishIncludeReadme",
+    "publishIncludeChangelog",
+    "typescriptInclude",
+    "typescriptRootDir",
+  ],
+  forbiddenPublishConfigFields: ["directory"],
+  forbiddenPublishedDependencies: [
+    "@modelcontextprotocol/server",
+    "@salt-ds/mcp",
+    "@storybook/react",
+  ],
+  expectedExactDependencies: { "@salt-ds/knowledge": "0.0.0" },
+  expectedDeclarationFiles: ["dist-types/index.d.ts"],
+  expectedModuleMarkers: {
+    "dist-cjs/package.json": "commonjs",
+    "dist-es/package.json": "module",
+  },
+  expectedBundleFiles: {
+    bin: ["salt-ds.js"],
+    schemas: ["salt-config-1.schema.json", "scan-result-1.schema.json"],
+    "dist-cjs": ["index.js", "package.json"],
+    "dist-es": ["index.js", "package.json"],
+  },
+  allowedTopLevelPaths: [
+    "LICENSE",
+    "bin",
+    "dist-cjs",
+    "dist-es",
+    "dist-types",
+    "package.json",
+    "schemas",
+  ],
+  forbiddenTextMarkers: [
+    "@modelcontextprotocol/server",
+    "@storybook/",
+    "catalog-generations",
+    "salt://",
+  ],
+  maxPackageBytes: 1_000_000,
+  maxUnpackedBytes: 4_000_000,
+  maxGeneratedBytes: 0,
+  maxSourceMapBytes: 0,
+  maxEntryCount: 16,
+};
+
 const packages = [
   options.profile === "pre-agent-support"
     ? preAgentKnowledgePackage
     : extractionParityKnowledgePackage,
-  mcpPackage,
+  options.profile === "pre-agent-support" ? cliPackage : mcpPackage,
 ];
 
 function fail(message) {
@@ -1555,13 +1619,22 @@ const knowledgeReport = packageReports.find(
   (entry) => entry.name === "@salt-ds/knowledge",
 );
 const mcpReport = packageReports.find((entry) => entry.name === "@salt-ds/mcp");
-if (!knowledgeReport || !mcpReport || packageReports.length !== packages.length) {
+const cliReport = packageReports.find((entry) => entry.name === "@salt-ds/cli");
+const adapterReport =
+  options.profile === "pre-agent-support" ? cliReport : mcpReport;
+if (
+  !knowledgeReport ||
+  !adapterReport ||
+  packageReports.length !== packages.length
+) {
   rmSync(stagingArtifactDirectory, { recursive: true, force: true });
   throw new Error("AI tooling pack did not produce both required package reports.");
 }
-if (mcpReport.dependencies["@salt-ds/knowledge"] !== knowledgeReport.version) {
+if (adapterReport.dependencies["@salt-ds/knowledge"] !== knowledgeReport.version) {
   rmSync(stagingArtifactDirectory, { recursive: true, force: true });
-  throw new Error("MCP does not exact-pin the packed knowledge package version.");
+  throw new Error(
+    `${adapterReport.name} does not exact-pin the packed knowledge package version.`,
+  );
 }
 
 let extractionParityBytes = null;
@@ -1648,7 +1721,7 @@ const report = {
     },
     dependencies: entry.dependencies,
     first_party_dependencies:
-      entry.name === "@salt-ds/mcp"
+      entry.name === adapterReport.name
         ? [
             {
               name: "@salt-ds/knowledge",

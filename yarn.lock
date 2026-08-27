@@ -4240,6 +4240,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@salt-ds/cli@workspace:packages/cli":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/cli@workspace:packages/cli"
+  dependencies:
+    "@salt-ds/knowledge": "workspace:*"
+    "@types/node": "npm:^24.0.0"
+    typescript: "npm:^6.0.2"
+  bin:
+    salt-ds: bin/salt-ds.js
+  languageName: unknown
+  linkType: soft
+
 "@salt-ds/core@npm:^1.56.0, @salt-ds/core@workspace:^, @salt-ds/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@salt-ds/core@workspace:packages/core"

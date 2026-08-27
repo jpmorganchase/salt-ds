@@ -962,7 +962,7 @@ ${exportName}(process.argv.slice(2))
       ? error.message
       : error?.stack ?? String(error);
     console.error(${JSON.stringify(errorPrefix)}, rendered);
-    process.exit(1);
+    process.exit(Number.isSafeInteger(error?.exitCode) ? error.exitCode : 1);
   });
 `,
     "utf8",

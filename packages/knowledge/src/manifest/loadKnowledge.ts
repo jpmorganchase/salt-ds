@@ -6,11 +6,11 @@ import {
 } from "../review/reviewCatalogAdapter.js";
 import {
   createKnowledgeStore,
-  type KnowledgeRecordStore,
+  type KnowledgeStore,
 } from "./knowledgeStore.js";
 
 export interface KnowledgeRuntimeContext {
-  store: KnowledgeRecordStore;
+  store: KnowledgeStore;
   reviewCatalog: ReviewCatalog;
 }
 
