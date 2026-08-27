@@ -26,6 +26,7 @@ import { canonicalJson } from "../catalog/catalogSerialization.js";
 
 type PackageManifest = {
   name?: string;
+  private?: boolean;
   engines?: Record<string, string>;
   files?: string[];
   dependencies?: Record<string, string>;
@@ -68,6 +69,7 @@ type PackageManifest = {
       }
   >;
   publishPreserveModules?: boolean;
+  publishSourceMaps?: boolean;
   publishIncludeReadme?: boolean;
   publishScriptExcludes?: string[];
   saltDocs?: unknown;
@@ -112,6 +114,32 @@ function expectEntriesToExclude(
 }
 
 describe("package publish boundaries", () => {
+  it("keeps the Unit 02 knowledge package private and excludes its comparison corpus", () => {
+    const manifest = readJson<PackageManifest>("../../package.json");
+    const runtime = readFileSync(
+      new URL("../runtime.ts", import.meta.url),
+      "utf8",
+    );
+    const catalogSchema = readFileSync(
+      new URL("../catalog/catalogSchemaV2.ts", import.meta.url),
+      "utf8",
+    );
+
+    expect(manifest.name).toBe("@salt-ds/knowledge");
+    expect(manifest.private).toBe(true);
+    expect(manifest.engines?.node).toBe(">=22");
+    expect(manifest.files).toEqual([]);
+    expect(manifest.publishConfig?.directory).toBe(
+      "../../dist/salt-ds-knowledge",
+    );
+    expect(manifest.publishExtraCopyPaths).toBeUndefined();
+    expect(manifest.publishSourceMaps).toBe(false);
+    expect(manifest.publishPreserveModules).toBe(false);
+    expect(runtime).not.toContain('from "./build/');
+    expect(runtime).not.toContain("salt://");
+    expect(catalogSchema).not.toContain("salt://");
+  });
+
   it("binds runtime and package-build portable path classifiers to one corpus", () => {
     const corpus = readJson<{
       accepted: string[];

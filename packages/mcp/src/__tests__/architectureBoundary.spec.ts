@@ -8,6 +8,9 @@ const SRC_ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "..",
 );
+const PACKAGES_ROOT = path.resolve(SRC_ROOT, "..", "..");
+const KNOWLEDGE_ROOT = path.join(PACKAGES_ROOT, "knowledge", "src");
+const KNOWLEDGE_RUNTIME = path.join(KNOWLEDGE_ROOT, "runtime.ts");
 const CORE_ROOT = path.join(SRC_ROOT, "core");
 const CORE_RUNTIME = path.join(CORE_ROOT, "runtime.ts");
 const SALT_TOOL_OPERATIONS = path.join(
@@ -330,6 +333,129 @@ describe("MCP internal architecture boundary", () => {
           violations.push(
             `${path.relative(SRC_ROOT, filePath)} bypasses public citation normalization with ${builder}`,
           );
+        }
+      }
+    }
+
+    expect(violations).toEqual([]);
+  });
+
+  it("keeps knowledge independent from MCP, CLI, and the MCP SDK", () => {
+    const violations: string[] = [];
+    const forbiddenPackages = [
+      "@modelcontextprotocol",
+      "@salt-ds/mcp",
+      "@salt-ds/cli",
+    ];
+
+    for (const filePath of collectTypeScriptFiles(KNOWLEDGE_ROOT)) {
+      if (filePath.includes(`${path.sep}__tests__${path.sep}`)) continue;
+      for (const specifier of collectModuleSpecifiers(filePath)) {
+        if (
+          forbiddenPackages.some(
+            (name) => specifier === name || specifier.startsWith(`${name}/`),
+          )
+        ) {
+          violations.push(
+            `${path.relative(KNOWLEDGE_ROOT, filePath)} imports ${specifier}`,
+          );
+        }
+      }
+    }
+
+    expect(violations).toEqual([]);
+  });
+
+  it("allows MCP to import only the knowledge package root", () => {
+    const violations: string[] = [];
+    for (const filePath of collectTypeScriptFiles(SRC_ROOT)) {
+      for (const specifier of collectModuleSpecifiers(filePath)) {
+        if (
+          specifier.startsWith("@salt-ds/knowledge/") ||
+          specifier.includes("packages/knowledge/src")
+        ) {
+          violations.push(
+            `${path.relative(SRC_ROOT, filePath)} imports ${specifier}`,
+          );
+        }
+      }
+    }
+
+    expect(violations).toEqual([]);
+    expect(
+      collectModuleSpecifiers(CORE_RUNTIME).filter(
+        (specifier) => specifier === "@salt-ds/knowledge",
+      ),
+    ).toHaveLength(1);
+  });
+
+  it("keeps the knowledge runtime closure away from generator-only dependencies", () => {
+    const manifest = JSON.parse(
+      fs.readFileSync(path.join(PACKAGES_ROOT, "knowledge", "package.json"), "utf8"),
+    ) as {
+      dependencies?: Record<string, string>;
+      devDependencies?: Record<string, string>;
+    };
+    const generatorOnlyDependencies = new Set(
+      Object.keys(manifest.devDependencies ?? {}).filter(
+        (name) => !Object.hasOwn(manifest.dependencies ?? {}, name),
+      ),
+    );
+    const pending = [KNOWLEDGE_RUNTIME];
+    const visited = new Set<string>();
+    const violations: string[] = [];
+
+    while (pending.length > 0) {
+      const filePath = pending.pop();
+      if (!filePath || visited.has(filePath)) continue;
+      visited.add(filePath);
+      for (const specifier of collectRuntimeModuleSpecifiers(filePath)) {
+        const dependencyRoot = specifier.startsWith("@")
+          ? specifier.split("/").slice(0, 2).join("/")
+          : specifier.split("/")[0];
+        if (generatorOnlyDependencies.has(dependencyRoot)) {
+          violations.push(
+            `${path.relative(KNOWLEDGE_ROOT, filePath)} imports ${specifier}`,
+          );
+        }
+        if (!specifier.startsWith(".")) continue;
+        const target = resolveSourceSpecifier(filePath, specifier);
+        if (isWithin(KNOWLEDGE_ROOT, target)) pending.push(target);
+      }
+    }
+
+    expect(violations).toEqual([]);
+    expect(
+      [...visited].some((filePath) =>
+        isWithin(path.join(KNOWLEDGE_ROOT, "build"), filePath),
+      ),
+    ).toBe(false);
+  });
+
+  it("prevents production packages from importing another package's source tree", () => {
+    const violations: string[] = [];
+    for (const [sourceRoot, packageRoot] of [
+      [SRC_ROOT, path.dirname(SRC_ROOT)],
+      [KNOWLEDGE_ROOT, path.dirname(KNOWLEDGE_ROOT)],
+    ]) {
+      for (const filePath of collectTypeScriptFiles(sourceRoot)) {
+        if (filePath.includes(`${path.sep}__tests__${path.sep}`)) continue;
+        for (const specifier of collectModuleSpecifiers(filePath)) {
+          if (/^@salt-ds\/[^/]+\/src(?:\/|$)/u.test(specifier)) {
+            violations.push(
+              `${path.relative(PACKAGES_ROOT, filePath)} imports ${specifier}`,
+            );
+          }
+          if (!specifier.startsWith(".")) continue;
+          const target = resolveSourceSpecifier(filePath, specifier);
+          if (
+            isWithin(PACKAGES_ROOT, target) &&
+            !isWithin(packageRoot, target)
+          ) {
+            violations.push(
+              `${path.relative(PACKAGES_ROOT, filePath)} crosses package source via ${specifier}`,
+            );
+          }
         }
       }
     }

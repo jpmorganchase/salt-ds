@@ -10,7 +10,7 @@
       "affected_families": ["@salt-ds/core"],
       "required_source_evidence": [
         "packages/core/src/button/Button.tsx",
-        "packages/mcp/src/core/build/deprecationValueMapOverrides.ts"
+        "packages/knowledge/src/build/deprecationValueMapOverrides.ts"
       ]
     },
     {
@@ -21,7 +21,7 @@
       "affected_families": ["@salt-ds/core"],
       "required_source_evidence": [
         "packages/core/src/checkbox/CheckboxIcon.tsx",
-        "packages/mcp/src/core/build/deprecationValueMapOverrides.ts"
+        "packages/knowledge/src/build/deprecationValueMapOverrides.ts"
       ]
     },
     {
@@ -32,7 +32,7 @@
       "affected_families": ["@salt-ds/core"],
       "required_source_evidence": [
         "packages/core/src/radio-button/RadioButtonIcon.tsx",
-        "packages/mcp/src/core/build/deprecationValueMapOverrides.ts"
+        "packages/knowledge/src/build/deprecationValueMapOverrides.ts"
       ]
     },
     {
@@ -43,7 +43,7 @@
       "affected_families": ["@salt-ds/date-adapters"],
       "required_source_evidence": [
         "packages/date-adapters/src/moment-adapter/index.ts",
-        "packages/mcp/src/core/build/deprecationMigrationOverrides.ts"
+        "packages/knowledge/src/build/deprecationMigrationOverrides.ts"
       ]
     }
   ]

@@ -42,6 +42,7 @@ const repoRoot = path.resolve(
 );
 const isWindows = process.platform === "win32";
 const require = createRequire(import.meta.url);
+const Ajv2020 = require("ajv/dist/2020").default;
 const vitestPackagePath = require.resolve("vitest/package.json");
 const vitestPackage = JSON.parse(readFileSync(vitestPackagePath, "utf8"));
 const vitestCli = path.resolve(
@@ -971,6 +972,20 @@ function runRealPack(packageConfig, packageDir) {
   };
 }
 
+function assertJsonSchema(value, schemaFileName, label) {
+  const schema = JSON.parse(
+    readFileSync(path.join(repoRoot, "scripts", "schemas", schemaFileName), "utf8"),
+  );
+  const validator = new Ajv2020({ allErrors: true, strict: true }).compile(
+    schema,
+  );
+  if (!validator(value)) {
+    throw new Error(
+      `${label} is not schema-valid: ${JSON.stringify(validator.errors)}`,
+    );
+  }
+}
+
 function collectExactFileInventory(rootDirectory) {
   const files = [];
   const visit = (directory) => {
@@ -1365,6 +1380,11 @@ if (!existsSync(extractionParityPath)) {
 }
 const extractionParityBytes = readFileSync(extractionParityPath);
 const extractionParity = JSON.parse(extractionParityBytes.toString("utf8"));
+assertJsonSchema(
+  extractionParity,
+  "saltExtractionParityV1.schema.json",
+  "Extraction parity receipt",
+);
 if (
   extractionParity.contract !== "extraction-parity@1" ||
   extractionParity.status !== "passed" ||
@@ -1436,6 +1456,16 @@ const report = {
     files: comparisonRegistryFiles,
   },
 };
+try {
+  assertJsonSchema(
+    report,
+    "saltAiPackReportV1.schema.json",
+    "AI tooling pack report",
+  );
+} catch (error) {
+  rmSync(finalArtifactDirectory, { recursive: true, force: true });
+  throw error;
+}
 const reportBytes = Buffer.from(`${JSON.stringify(report, null, 2)}\n`, "utf8");
 const temporaryReportPath = `${options.reportPath}.tmp-${process.pid}`;
 writeFileSync(temporaryReportPath, reportBytes, { flag: "wx" });

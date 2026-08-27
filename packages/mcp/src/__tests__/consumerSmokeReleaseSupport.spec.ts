@@ -21,11 +21,19 @@ afterEach(async () => {
 });
 
 describe("consumer smoke arguments", () => {
-  it("keeps local packed smoke as the default", () => {
-    expect(parseArgs(["--skip-build"])).toMatchObject({
+  it("requires the exact pack report for local smoke", () => {
+    expect(() => parseArgs(["--skip-build"])).toThrow(/pack-report/iu);
+    expect(
+      parseArgs([
+        "--skip-build",
+        "--pack-report",
+        "dist/salt-ai-pack/unit-02.json",
+      ]),
+    ).toMatchObject({
       published: false,
       skipBuild: true,
       mcpSpec: undefined,
+      packReport: "dist/salt-ai-pack/unit-02.json",
     });
   });
 
