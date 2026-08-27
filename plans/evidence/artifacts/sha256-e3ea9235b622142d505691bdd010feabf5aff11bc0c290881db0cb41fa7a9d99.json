@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "contract": "unit-01-normalized-characterization-receipt",
+  "plan_id": "001",
+  "unit_id": "01",
+  "source_sha": "9159f98ad9affdb054c09d7ad344f97bea89c64f",
+  "baseline": {
+    "path": "packages/mcp/src/core/__fixtures__/unit01-semantic-characterization.json",
+    "sha256": "sha256:0e7f974cc1baed2d57ee58e7570eb2a7c247f40749b4b6f54ed46d4da6801be7",
+    "semantic_digest": "sha256:ddb91ebdd41f9b256e986967f651aa5710064ec50c52a57b823294e5d70c78aa",
+    "catalog_input_count": 4206,
+    "normalized_input_projection_digest": "sha256:eb3f624c003663b289917e87c69d9560eceae1c578e643b19621c530b0af9d8e",
+    "semantic_patterns_sha256": "sha256:2074fcd4ca2ce5cd7edcf7aada94fad2c1f957020df97ea290596af5786555a9",
+    "compiler_patterns_sha256": "sha256:f5548a35c01fcfe2d987a10d9a737a7b94301d20d41e2a3f70c856c1fc029811"
+  },
+  "characterized_surfaces": [
+    "package-family inventory and exact record reads",
+    "neutral search query ranking and record references",
+    "neutral installed-package, workspace, and policy facts",
+    "five review rule identities and complete analysis result contract",
+    "exact, mismatched, and unknown package applicability",
+    "catalog integrity, containment, and changed-during-read outcomes",
+    "complete-versus-publicly-truncated review results"
+  ],
+  "prototype_only_fields": [
+    "catalog-v2 schema and codecs",
+    "catalog-manifest generator receipt",
+    "salt://catalog/v2 resource identities",
+    "build_artifacts publication partition",
+    "MCP public result and resource budgets"
+  ],
+  "verification": {
+    "exact_unit_suite": {
+      "test_files": 47,
+      "tests": 703,
+      "result": "passed"
+    },
+    "full_ai_tooling_suite": {
+      "test_files": 68,
+      "tests": 909,
+      "result": "passed"
+    },
+    "commands": [
+      "yarn vitest run packages/mcp/src/core packages/mcp/src/server packages/mcp/src/__tests__/createServer.spec.ts packages/mcp/src/__tests__/architectureBoundary.spec.ts --maxWorkers=4",
+      "yarn workspace @salt-ds/mcp build",
+      "yarn typecheck:mcp",
+      "yarn test:ai-tooling",
+      "yarn validate:salt-ai:contracts",
+      "yarn prettier --check packages/mcp/package.json packages/mcp/scripts/buildRegistry.mjs packages/mcp/src/__tests__ packages/mcp/src/core packages/mcp/src/server/inspectSaltProject.ts packages/mcp/src/server/projectContext/installationTypes.ts scripts/build.mjs scripts/catalogBuildIdentity.mjs",
+      "git diff --check"
+    ]
+  }
+}
