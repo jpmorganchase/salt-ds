@@ -1,0 +1,18 @@
+.saltDrawerContent {
+  color: var(--salt-content-primary-foreground);
+  padding: 0 var(--salt-spacing-300) var(--salt-spacing-300);
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+  box-sizing: border-box;
+}
+
+.saltDrawerContent.saltDrawerContent-scrollTop {
+  border-top-color: var(--salt-separable-tertiary-borderColor);
+}
+
+.saltDrawerContent.saltDrawerContent-scrollBottom {
+  border-bottom-color: var(--salt-separable-tertiary-borderColor);
+}
