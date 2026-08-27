@@ -20,7 +20,88 @@
     },
     "limits": {
       "type": "object",
-      "additionalProperties": false
+      "additionalProperties": false,
+      "properties": {
+        "traversal_depth": { "type": "integer", "minimum": 1, "maximum": 32 },
+        "visited_directories": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "directory_entries": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "queued_paths": { "type": "integer", "minimum": 1, "maximum": 25000 },
+        "selected_files": { "type": "integer", "minimum": 1, "maximum": 5000 },
+        "selected_aggregate_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 52428800
+        },
+        "individual_source_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        },
+        "discovery_elapsed_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 15000
+        },
+        "js_ast_nodes_per_file": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 250000
+        },
+        "css_nodes_per_file": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "evidence_candidates_per_file": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 25000
+        },
+        "findings_per_file": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        },
+        "worker_concurrency": { "type": "integer", "minimum": 1, "maximum": 2 },
+        "worker_deadline_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5000
+        },
+        "worker_old_generation_mib": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 128
+        },
+        "forced_worker_restarts": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8
+        },
+        "cumulative_worker_wall_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 900000
+        },
+        "whole_scan_elapsed_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 600000
+        },
+        "canonical_result_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2097152
+        }
+      }
     }
   }
 }

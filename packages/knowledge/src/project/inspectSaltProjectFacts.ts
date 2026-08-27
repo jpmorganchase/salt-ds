@@ -1,7 +1,11 @@
+import type { Stats } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { detectProjectPolicy } from "../policy/detection.js";
-import { createSaltProjectFacts, type SaltProjectFacts } from "./projectFacts.js";
+import {
+  createSaltProjectFacts,
+  type SaltProjectFacts,
+} from "./projectFacts.js";
 import {
   collectSaltInstallationDiagnostics,
   collectSaltPackages,
@@ -26,6 +30,8 @@ export class SaltProjectInspectionError extends Error {
 
 export interface InspectSaltProjectFactsInput {
   rootDir: string;
+  /** Canonical filesystem authority. Defaults to the inspected root. */
+  authorityRoot?: string;
 }
 
 export interface InspectedSaltProjectFacts {
@@ -35,6 +41,16 @@ export interface InspectedSaltProjectFacts {
 
 function portable(value: string): string {
   return value.replaceAll("\\", "/");
+}
+
+function isPathInside(rootDir: string, candidatePath: string): boolean {
+  const relative = path.relative(rootDir, candidatePath);
+  return (
+    relative === "" ||
+    (!relative.startsWith(`..${path.sep}`) &&
+      relative !== ".." &&
+      !path.isAbsolute(relative))
+  );
 }
 
 function manifestLimitation(reason: MarkerInspectionReason): string {
@@ -51,12 +67,17 @@ export async function inspectSaltProjectFacts(
   input: InspectSaltProjectFactsInput,
 ): Promise<InspectedSaltProjectFacts> {
   const requestedRoot = path.resolve(input.rootDir);
+  const requestedAuthorityRoot = path.resolve(
+    input.authorityRoot ?? requestedRoot,
+  );
   let rootDir: string;
-  let rootStats;
+  let authorityRoot: string;
+  let rootStats: Stats;
   try {
+    authorityRoot = await fs.realpath(requestedAuthorityRoot);
     rootDir = await fs.realpath(requestedRoot);
     rootStats = await fs.lstat(rootDir);
-  } catch (error) {
+  } catch {
     throw new SaltProjectInspectionError(
       "SALT_PROJECT_ROOT_UNAVAILABLE",
       `Project root is unavailable: ${portable(requestedRoot)}.`,
@@ -68,22 +89,28 @@ export async function inspectSaltProjectFacts(
       `Project root is not a canonical directory: ${portable(requestedRoot)}.`,
     );
   }
+  if (!isPathInside(authorityRoot, rootDir)) {
+    throw new SaltProjectInspectionError(
+      "SALT_PROJECT_ROOT_UNAVAILABLE",
+      `Project root is outside its filesystem authority: ${portable(requestedRoot)}.`,
+    );
+  }
 
   const packageInspection = await inspectPackageJsonFile(
     path.join(rootDir, "package.json"),
     rootDir,
-    rootDir,
+    authorityRoot,
   );
   const packageJson =
     packageInspection.status === "valid" ? packageInspection.value : null;
   const declaredSaltPackages = collectSaltPackages(packageJson);
-  const workspaceScope = await detectSaltWorkspaceScope(rootDir, rootDir);
+  const workspaceScope = await detectSaltWorkspaceScope(rootDir, authorityRoot);
   const installation = await collectSaltInstallationDiagnostics(
     rootDir,
     declaredSaltPackages,
-    { authorityRoot: rootDir, workspaceScope },
+    { authorityRoot, workspaceScope },
   );
-  const detectedPolicy = await detectProjectPolicy(rootDir, rootDir);
+  const detectedPolicy = await detectProjectPolicy(rootDir, authorityRoot);
   const limitations = [
     ...(packageInspection.status === "absent"
       ? ["SALT_PACKAGE_MANIFEST_ABSENT"]

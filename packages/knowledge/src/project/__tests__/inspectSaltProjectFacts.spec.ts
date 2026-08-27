@@ -34,9 +34,9 @@ async function fixtureRoot(): Promise<string> {
 
 afterEach(async () => {
   await Promise.all(
-    tempDirectories.splice(0).map((directory) =>
-      fs.rm(directory, { recursive: true, force: true }),
-    ),
+    tempDirectories
+      .splice(0)
+      .map((directory) => fs.rm(directory, { recursive: true, force: true })),
   );
 });
 
@@ -81,5 +81,66 @@ describe("inspectSaltProjectFacts", () => {
     await expect(
       inspectSaltProjectFacts({ rootDir: path.join(root, "package.json") }),
     ).rejects.toBeInstanceOf(SaltProjectInspectionError);
+  });
+
+  it("resolves a workspace package through its explicit repository authority", async () => {
+    const root = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-info-workspace-"),
+    );
+    tempDirectories.push(root);
+    const packageRoot = path.join(root, "packages", "app");
+    await fs.mkdir(packageRoot, { recursive: true });
+    await fs.writeFile(
+      path.join(root, "package.json"),
+      JSON.stringify({
+        private: true,
+        packageManager: "npm@11.0.0",
+        workspaces: ["packages/*"],
+      }),
+      "utf8",
+    );
+    await fs.writeFile(
+      path.join(packageRoot, "package.json"),
+      JSON.stringify({ dependencies: { "@salt-ds/core": "1.69.0" } }),
+      "utf8",
+    );
+    await fs.mkdir(path.join(root, "node_modules", "@salt-ds", "core"), {
+      recursive: true,
+    });
+    await fs.writeFile(
+      path.join(root, "node_modules", "@salt-ds", "core", "package.json"),
+      JSON.stringify({ name: "@salt-ds/core", version: "1.69.0" }),
+      "utf8",
+    );
+
+    const result = await inspectSaltProjectFacts({
+      rootDir: packageRoot,
+      authorityRoot: root,
+    });
+    expect(result.facts.workspace).toMatchObject({
+      kind: "workspace-package",
+      workspaceRoot: root.replaceAll("\\", "/"),
+    });
+    expect(result.facts.installation.resolvedPackages[0]).toMatchObject({
+      name: "@salt-ds/core",
+      resolvedVersion: "1.69.0",
+      satisfiesDeclaredVersion: true,
+    });
+  });
+
+  it("rejects a selected root outside its explicit authority", async () => {
+    const authorityRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-info-authority-"),
+    );
+    const outsideRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-info-outside-"),
+    );
+    tempDirectories.push(authorityRoot, outsideRoot);
+    await expect(
+      inspectSaltProjectFacts({
+        rootDir: outsideRoot,
+        authorityRoot,
+      }),
+    ).rejects.toMatchObject({ code: "SALT_PROJECT_ROOT_UNAVAILABLE" });
   });
 });

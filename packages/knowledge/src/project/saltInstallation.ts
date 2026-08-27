@@ -18,6 +18,11 @@ import type {
 export interface SaltPackageJsonLike {
   name?: string;
   version?: string;
+  private?: boolean;
+  main?: string;
+  module?: string;
+  types?: string;
+  exports?: unknown;
   packageManager?: string;
   workspaces?: unknown;
   scripts?: Record<string, string>;
@@ -87,7 +92,7 @@ export interface CompiledWorkspacePatterns {
   matches: (relativePath: string) => boolean;
 }
 
-type WorkspacePatternCompilation =
+export type WorkspacePatternCompilation =
   | { status: "absent" }
   | { status: "invalid" }
   | CompiledWorkspacePatterns;
@@ -112,7 +117,9 @@ function hasExcessiveNumericRange(pattern: string): boolean {
   return false;
 }
 
-function compileWorkspacePatterns(value: unknown): WorkspacePatternCompilation {
+export function compileWorkspacePatterns(
+  value: unknown,
+): WorkspacePatternCompilation {
   const candidates = Array.isArray(value)
     ? value
     : isRecord(value) && Array.isArray(value.packages)
