@@ -67,11 +67,18 @@ async function livePackage(name, includeVersionIdentities) {
       (version) => typeof document.versions?.[version]?.deprecated === "string",
     ),
     repository: latestManifest?.repository ?? document.repository ?? null,
-    maintainers: [...(document.maintainers ?? [])].sort((left, right) =>
-      left.name.localeCompare(right.name),
-    ),
+    maintainers: [...(document.maintainers ?? [])]
+      .map((maintainer) => ({ name: maintainer.name }))
+      .sort((left, right) => left.name.localeCompare(right.name)),
     modified_at: document.time?.modified ?? null,
-    latest_publisher: latestManifest?._npmUser ?? null,
+    latest_publisher: latestManifest?._npmUser
+      ? {
+          name: latestManifest._npmUser.name,
+          ...(latestManifest._npmUser.trustedPublisher
+            ? { trustedPublisher: latestManifest._npmUser.trustedPublisher }
+            : {}),
+        }
+      : null,
     latest_integrity: latestManifest?.dist?.integrity ?? null,
     latest_attestations: latestManifest?.dist?.attestations ?? null,
     ...(includeVersionIdentities

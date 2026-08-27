@@ -8,12 +8,11 @@
       "deprecated_versions": [],
       "repository": "git+https://github.com/jpmorganchase/salt-ds.git",
       "maintainers": [
-        { "name": "brooklynrob", "email": "robert.underwood@jpmchase.com" },
-        { "name": "saltdesignsystem", "email": "open.source+saltdesignsystem@jpmchase.com" }
+        { "name": "brooklynrob" },
+        { "name": "saltdesignsystem" }
       ],
       "latest_publisher": {
         "name": "GitHub Actions",
-        "email": "npm-oidc-no-reply@github.com",
         "trustedPublisher": { "id": "github", "oidcConfigId": "fixture" }
       },
       "latest_integrity": "sha512-fixture",
