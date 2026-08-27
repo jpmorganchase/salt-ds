@@ -4,6 +4,8 @@ import { createContext } from "../utils";
 export interface DrawerContextValue {
   headerId?: string;
   setHeaderId?: (id: string | undefined) => void;
+  hasHeader?: boolean;
+  setHasHeader?: (hasHeader: boolean) => void;
 }
 
 export const DrawerContext = createContext<DrawerContextValue>(
@@ -11,6 +13,8 @@ export const DrawerContext = createContext<DrawerContextValue>(
   {
     headerId: undefined,
     setHeaderId: () => {},
+    hasHeader: false,
+    setHasHeader: () => {},
   },
 );
 

@@ -4,6 +4,7 @@
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
+  scrollbar-gutter: stable;
   border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
   box-sizing: border-box;

@@ -97,6 +97,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     const [showComponent, setShowComponent] = useState(false);
     const [headerId, setHeaderId] = useState<string | undefined>(undefined);
+    const [hasHeader, setHasHeader] = useState(false);
     const { Component: FloatingComponent } = useFloatingComponent();
 
     const { context, floating, elements } = useFloatingUI({
@@ -124,7 +125,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [open, showComponent]);
 
-    const contextValue = useMemo(() => ({ headerId, setHeaderId }), [headerId]);
+    const contextValue = useMemo(
+      () => ({ headerId, setHeaderId, hasHeader, setHasHeader }),
+      [headerId, hasHeader],
+    );
 
     return (
       <DrawerContext.Provider value={contextValue}>
@@ -149,7 +153,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 [withBaseName("enterAnimation")]: open,
                 [withBaseName("exitAnimation")]: !open,
                 [withBaseName(variant)]: variant,
-                [withBaseName("hasHeader")]: headerId,
+                [withBaseName("hasHeader")]: hasHeader,
               },
               className,
             )}

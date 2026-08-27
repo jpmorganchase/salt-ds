@@ -21,7 +21,6 @@ import {
   Text,
   useId,
 } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   type ChangeEvent,
@@ -455,16 +454,6 @@ export const WithHeader: StoryFn<DrawerProps> = (args) => {
     setOpen(false);
   };
 
-  const closeButton = (
-    <Button
-      aria-label="Close drawer"
-      appearance="transparent"
-      onClick={handleClose}
-    >
-      <CloseIcon aria-hidden />
-    </Button>
-  );
-
   return (
     <>
       <Button onClick={() => setOpen(true)}>Open Drawer</Button>
@@ -478,7 +467,7 @@ export const WithHeader: StoryFn<DrawerProps> = (args) => {
         <DrawerHeader
           header="Check deposit #1278"
           description="Pending transaction review"
-          actions={closeButton}
+          actions={<DrawerCloseButton onClick={handleClose} />}
         />
         <DrawerContent>
           <StackLayout>
