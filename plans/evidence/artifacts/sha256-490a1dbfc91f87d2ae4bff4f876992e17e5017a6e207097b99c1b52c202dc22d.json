@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.0.0",
+  "contract": "unit-04b-discovery-config-verification-receipt",
+  "plan_id": "001",
+  "unit_id": "04b",
+  "source_sha": "032efb79a9b7efbf0bf31381e71df6d664c536cd",
+  "completion_sha": "032efb79a9b7efbf0bf31381e71df6d664c536cd",
+  "source_artifacts": [
+    {
+      "path": "packages/cli/schemas/salt-config-1.schema.json",
+      "sha256": "sha256:d48c1d7d659e210e13a49b10b4dfab90aad792023513b7a1dc3375af6be59944",
+      "bytes": 2957
+    },
+    {
+      "path": "packages/cli/src/config/limits.ts",
+      "sha256": "sha256:61acdf2a17bb88236aeb995ae33e41b31b99db882d4446e83827267b305b2b14",
+      "bytes": 1635
+    },
+    {
+      "path": "packages/cli/src/config/loadConfig.ts",
+      "sha256": "sha256:2b2c55ad558e10251b0c33e25da0d1a21a50bb36c163a460485a0dbf9d49bf84",
+      "bytes": 5750
+    },
+    {
+      "path": "packages/cli/src/discovery/discoverProject.ts",
+      "sha256": "sha256:53a9954a63d4b1ab6b5de5f00c12b9ac5b76e5cc93514de64f5594c643a36e0c",
+      "bytes": 27074
+    },
+    {
+      "path": "packages/cli/src/discovery/pathPatterns.ts",
+      "sha256": "sha256:123f4b28e3db87fa55edbdf7b16655e6fa1d36035a0642870f0c94d692c4c884",
+      "bytes": 3545
+    }
+  ],
+  "configuration": {
+    "format": "data-only-json",
+    "unknown_keys": "fail-closed-exit-2",
+    "invalid_paths": "fail-closed-exit-2",
+    "limit_dimensions": 19,
+    "project_values": "lower-only",
+    "environment_ceiling_bypass": false,
+    "salt_policy_context": "untrusted-separate"
+  },
+  "discovery": {
+    "portable_stable_paths": true,
+    "stable_order": true,
+    "selected_file_single_owner": true,
+    "workspace_ownership_complexity": "bounded-ancestor-depth",
+    "network": "offline",
+    "consumer_code_execution": false,
+    "incremental_limit_codes": [
+      "SCAN_DIRECTORY_ENTRY_LIMIT",
+      "SCAN_DISCOVERY_TIMEOUT",
+      "SCAN_QUEUED_PATH_LIMIT",
+      "SCAN_SELECTED_BYTES_LIMIT",
+      "SCAN_SELECTED_FILE_LIMIT",
+      "SCAN_SOURCE_BYTES_LIMIT",
+      "SCAN_TRAVERSAL_DEPTH_LIMIT",
+      "SCAN_VISITED_DIRECTORY_LIMIT"
+    ],
+    "containment_cases": [
+      "before-and-after-file-identity",
+      "hard-link-rejected",
+      "identity-unavailable-rejected",
+      "junction-or-symlink-escape-rejected",
+      "out-of-authority-root-rejected",
+      "replacement-race-rejected"
+    ],
+    "workspace_cases": [
+      "ambiguous-overlap-failed",
+      "empty-non-salt-complete",
+      "hoisted-dependency-authority",
+      "nested-and-sibling-boundaries",
+      "shared-library-classification",
+      "sibling-exact-vectors"
+    ]
+  },
+  "verification": {
+    "focused": {
+      "command": "yarn vitest run packages/cli/src/config packages/cli/src/discovery packages/knowledge/src/project packages/mcp/src/__tests__/releaseVerificationScripts.spec.ts --maxWorkers=4",
+      "test_files": 7,
+      "tests": 60,
+      "result": "passed"
+    },
+    "full": {
+      "command": "yarn test:ai-tooling",
+      "test_files": 63,
+      "tests": 810,
+      "result": "passed"
+    },
+    "workflow_operating_systems": [
+      "linux",
+      "windows"
+    ],
+    "workflow_node_matrix": [
+      22,
+      24
+    ]
+  }
+}

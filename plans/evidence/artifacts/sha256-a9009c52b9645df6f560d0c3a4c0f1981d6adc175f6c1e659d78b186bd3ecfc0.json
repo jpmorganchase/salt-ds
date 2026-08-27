@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "contract": "unit-04b-installed-cli-smoke-receipt",
+  "plan_id": "001",
+  "unit_id": "04b",
+  "source_sha": "032efb79a9b7efbf0bf31381e71df6d664c536cd",
+  "completion_sha": "032efb79a9b7efbf0bf31381e71df6d664c536cd",
+  "pack_report_sha256": "sha256:83e11eb336a1808dd4885dfdc521627bc0bbd1c75d026d4b49e1bc25ed3f730b",
+  "packages": [
+    {
+      "name": "@salt-ds/knowledge",
+      "version": "0.0.0",
+      "tarball_sha256": "sha256:f4f4f33719253646d6f36d6ef3164d6f0c6a1bb03f0c1012c293059394492de7"
+    },
+    {
+      "name": "@salt-ds/cli",
+      "version": "0.0.0",
+      "tarball_sha256": "sha256:bdb9b1d48b82149305395a6e5233a21c05a99eadea5c68a433c8981b3aec00cf"
+    }
+  ],
+  "consumer_smoke": {
+    "result": "passed",
+    "local_node_version": "24.10.0",
+    "workflow_node_matrix": [
+      22,
+      24
+    ],
+    "network": "offline",
+    "workspace_links": 0,
+    "first_party_registry_fallbacks": 0,
+    "lockfile_replay": "unchanged",
+    "module_formats": [
+      "cjs",
+      "esm"
+    ],
+    "help_aliases": 3,
+    "version_aliases": 2,
+    "invalid_argument_cases": 11,
+    "info": {
+      "exact_vector_packages": 2,
+      "exact_coverage": "complete",
+      "non_salt_coverage": "partial",
+      "bundle_digest": "sha256:51bb0efad32e3efdeeff28d6d376a38deb470839b0eed12b2a344dc09b0b06c7",
+      "semantic_digest": "sha256:f2fb02c9e6b999935b1e9727463b4a298492f810e376c434bc3626ab050cccab"
+    }
+  },
+  "verification": [
+    "yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit-04b.json"
+  ]
+}

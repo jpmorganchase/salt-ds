@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0.0",
+  "contract": "unit-04b-knowledge-cli-pack-receipt",
+  "plan_id": "001",
+  "unit_id": "04b",
+  "source_sha": "032efb79a9b7efbf0bf31381e71df6d664c536cd",
+  "completion_sha": "032efb79a9b7efbf0bf31381e71df6d664c536cd",
+  "pack_report": {
+    "contract": "salt-ai-pack-report@1",
+    "policy_profile": "pre-agent-support",
+    "publishable": false,
+    "path": "dist/salt-ai-pack/unit-04b.json",
+    "sha256": "sha256:83e11eb336a1808dd4885dfdc521627bc0bbd1c75d026d4b49e1bc25ed3f730b",
+    "bytes": 2895
+  },
+  "knowledge_bundle": {
+    "bundle_digest": "sha256:51bb0efad32e3efdeeff28d6d376a38deb470839b0eed12b2a344dc09b0b06c7",
+    "semantic_digest": "sha256:f2fb02c9e6b999935b1e9727463b4a298492f810e376c434bc3626ab050cccab",
+    "semantic_source_digest": "sha256:ae6585d7844d552e5d4f648f2f8b9b8cc91b21ffeb103e316093d4567f14f60a",
+    "compiler_digest": "sha256:34224b8dd82132a44beea959935c10e24affb8a55d40714d44a9860208c2c9d3",
+    "manifest_sha256": "sha256:d9907b9c23c9028e0b57e8e0b92c25c3b6f8e27cd9ce81c442a32f6fafcbaf16",
+    "manifest_bytes": 3265,
+    "artifact_count": 539,
+    "artifact_bytes": 24092197
+  },
+  "packages": [
+    {
+      "name": "@salt-ds/knowledge",
+      "version": "0.0.0",
+      "tarball_sha256": "sha256:f4f4f33719253646d6f36d6ef3164d6f0c6a1bb03f0c1012c293059394492de7",
+      "tarball_bytes": 3601648,
+      "packed_files": 585,
+      "unpacked_bytes": 24778923,
+      "prototype_catalog": false,
+      "workspace_link": false
+    },
+    {
+      "name": "@salt-ds/cli",
+      "version": "0.0.0",
+      "knowledge_dependency": "0.0.0",
+      "tarball_sha256": "sha256:bdb9b1d48b82149305395a6e5233a21c05a99eadea5c68a433c8981b3aec00cf",
+      "tarball_bytes": 8712,
+      "packed_files": 10,
+      "unpacked_bytes": 36228,
+      "prototype_catalog": false,
+      "workspace_link": false
+    }
+  ],
+  "verification": [
+    "yarn build:ai-tooling",
+    "yarn typecheck:ai-tooling",
+    "yarn test:ai-tooling",
+    "yarn validate:salt-ai:contracts",
+    "yarn check:ai-tooling:pack -- --profile pre-agent-support --report dist/salt-ai-pack/unit-04b.json",
+    "git diff --check"
+  ]
+}
