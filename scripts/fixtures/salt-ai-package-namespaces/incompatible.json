@@ -6,7 +6,18 @@
       "versions": ["1.69.0"],
       "dist_tags": { "latest": "1.69.0" },
       "deprecated_versions": [],
-      "repository": "git+https://github.com/jpmorganchase/salt-ds.git"
+      "repository": "git+https://github.com/jpmorganchase/salt-ds.git",
+      "maintainers": [
+        { "name": "brooklynrob", "email": "robert.underwood@jpmchase.com" },
+        { "name": "saltdesignsystem", "email": "open.source+saltdesignsystem@jpmchase.com" }
+      ],
+      "latest_publisher": {
+        "name": "GitHub Actions",
+        "email": "npm-oidc-no-reply@github.com",
+        "trustedPublisher": { "id": "github", "oidcConfigId": "fixture" }
+      },
+      "latest_integrity": "sha512-fixture",
+      "latest_attestations": { "provenance": { "predicateType": "https://slsa.dev/provenance/v1" } }
     },
     {
       "name": "@salt-ds/cli",

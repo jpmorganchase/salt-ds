@@ -5,6 +5,7 @@
   "type": "object",
   "required": ["schema_version", "kind", "mode", "source_commit", "checked_at", "expires_at", "registry", "scope", "scope_control", "publisher", "packages", "policy_digest", "result"],
   "properties": {
+    "$schema": { "const": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-package-namespace-receipt-1.json" },
     "schema_version": { "const": "1.0.0" },
     "kind": { "enum": ["package-namespace-receipt", "package-namespace-release-receipt"] },
     "mode": { "enum": ["preflight", "release", "protected_final"] },
@@ -19,5 +20,12 @@
     "policy_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
     "result": { "enum": ["pass", "fail"] }
   },
+  "allOf": [
+    {
+      "if": { "properties": { "mode": { "const": "preflight" } }, "required": ["mode"] },
+      "then": { "properties": { "kind": { "const": "package-namespace-receipt" } } },
+      "else": { "properties": { "kind": { "const": "package-namespace-release-receipt" } } }
+    }
+  ],
   "additionalProperties": false
 }

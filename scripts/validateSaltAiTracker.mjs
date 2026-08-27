@@ -2,6 +2,9 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 
+import Ajv2020 from "ajv/dist/2020.js";
+import addFormats from "ajv-formats";
+
 import {
   assert,
   commitPattern,
@@ -17,6 +20,18 @@ const args = parseArgs(process.argv.slice(2));
 const digestReference = /^sha256:[0-9a-f]{64}$/u;
 const now = args.get("--now") ? new Date(String(args.get("--now"))) : new Date();
 assert(!Number.isNaN(now.valueOf()), "--now must be an ISO-8601 timestamp");
+const schemaValidator = new Ajv2020({ allErrors: true, strict: true });
+addFormats(schemaValidator);
+const validateIndexSchema = schemaValidator.compile(
+  await readJson(
+    path.join(
+      repositoryRoot,
+      "scripts",
+      "schemas",
+      "saltPlanEvidenceIndexV1.schema.json",
+    ),
+  ),
+);
 
 function validateEntry(entry, context) {
   const required = [
@@ -73,6 +88,13 @@ function validateIndex(
   { clock = now, entriesByDigest: suppliedEntriesByDigest } = {},
 ) {
   const context = `${index.plan_id ?? "?"}/${index.unit_id ?? "?"}`;
+  assert(
+    validateIndexSchema(index),
+    `${context} failed schema validation: ${schemaValidator.errorsText(
+      validateIndexSchema.errors,
+      { separator: "; " },
+    )}`,
+  );
   assert(index.schema_version === "1.0.0", `${context} has an unsupported schema version`);
   assert(/^\d{3}$/u.test(index.plan_id), `${context} has an invalid plan ID`);
   assert(/^[0-9]{2}[a-z]?$/u.test(index.unit_id), `${context} has an invalid unit ID`);

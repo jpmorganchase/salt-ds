@@ -7,6 +7,10 @@
   "expected_repository": "https://github.com/jpmorganchase/salt-ds",
   "controlling_organization": "JPMorganChase",
   "receipt_ttl_hours": 168,
+  "scope_control": {
+    "expected_maintainer_names": ["brooklynrob", "saltdesignsystem"],
+    "expected_trusted_publisher_provider": "github"
+  },
   "publisher": {
     "approval_status": "approved",
     "provider": "github-actions-oidc",

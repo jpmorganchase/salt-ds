@@ -35,7 +35,7 @@ const output = path.resolve(
 );
 const config = await readJson(configPath);
 
-async function livePackage(name) {
+async function livePackage(name, includeVersionIdentities) {
   const response = await fetch(
     `${config.registry.replace(/\/$/u, "")}/${encodeURIComponent(name)}`,
     { headers: { accept: "application/json" }, redirect: "error" },
@@ -55,6 +55,28 @@ async function livePackage(name) {
       (version) => typeof document.versions?.[version]?.deprecated === "string",
     ),
     repository: latestManifest?.repository ?? document.repository ?? null,
+    maintainers: [...(document.maintainers ?? [])].sort((left, right) =>
+      left.name.localeCompare(right.name),
+    ),
+    modified_at: document.time?.modified ?? null,
+    latest_publisher: latestManifest?._npmUser ?? null,
+    latest_integrity: latestManifest?.dist?.integrity ?? null,
+    latest_attestations: latestManifest?.dist?.attestations ?? null,
+    ...(includeVersionIdentities
+      ? {
+          version_identities: versions.map((version) => {
+            const manifest = document.versions[version];
+            return {
+              version,
+              deprecated: manifest.deprecated ?? null,
+              repository: manifest.repository ?? null,
+              git_head: manifest.gitHead ?? null,
+              integrity: manifest.dist?.integrity ?? null,
+              attestations: manifest.dist?.attestations ?? null,
+            };
+          }),
+        }
+      : {}),
   };
 }
 
@@ -73,7 +95,7 @@ if (fixturePath) {
 } else {
   observations = await Promise.all(
     [config.scope_anchor, ...config.packages.map((entry) => entry.name)].map(
-      livePackage,
+      (name, index) => livePackage(name, index > 0),
     ),
   );
 }
@@ -101,6 +123,20 @@ assert(
   normalizedRepository(anchor.repository) ===
     normalizedRepository(config.expected_repository),
   `Scope anchor ${config.scope_anchor} does not identify ${config.expected_repository}`,
+);
+const maintainerNames = new Set(
+  (anchor.maintainers ?? []).map((maintainer) => maintainer.name),
+);
+for (const expected of config.scope_control.expected_maintainer_names) {
+  assert(
+    maintainerNames.has(expected),
+    `Scope anchor ${config.scope_anchor} is missing expected maintainer ${expected}`,
+  );
+}
+assert(
+  anchor.latest_publisher?.trustedPublisher?.id ===
+    config.scope_control.expected_trusted_publisher_provider,
+  `Scope anchor ${config.scope_anchor} does not expose the expected trusted publisher`,
 );
 assert(
   config.publisher?.approval_status === "approved",
@@ -199,6 +235,10 @@ const receipt = {
     anchor_package: config.scope_anchor,
     repository: config.expected_repository,
     controlling_organization: config.controlling_organization,
+    maintainers: anchor.maintainers,
+    anchor_latest_publisher: anchor.latest_publisher,
+    anchor_latest_integrity: anchor.latest_integrity,
+    anchor_latest_attestations: anchor.latest_attestations,
   },
   publisher: config.publisher,
   packages,
