@@ -4,3 +4,4 @@ export * from "./DisableScrim";
 export * from "./MandatoryAction";
 export * from "./RightDrawer";
 export * from "./TopDrawer";
+export * from "./WithHeader";

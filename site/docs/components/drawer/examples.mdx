@@ -18,6 +18,14 @@ Set `variant="secondary"` for a secondary drawer and `variant="tertiary"` for a 
 
 <LivePreview componentName="drawer" exampleName="Default" />
 
+## With header
+
+Use `DrawerHeader` to display the [header block](/salt/patterns/header-block) pattern at the top of a drawer. It supports a `header`, an optional `preheader` and `description`, and an `actions` slot for a close button.
+
+`DrawerHeader` labels the drawer for assistive technology, so you don't need to set `aria-labelledby` yourself. Set `disableAccent` to hide the accent bar, or `status` to display a status icon in its place.
+
+<LivePreview componentName="drawer" exampleName="WithHeader" />
+
 ## Right drawer usage example
 
 Consider using a right-anchored drawer to show supporting information related to the current context, such as recent events, notifications or quick settings. Always set your drawer's width suitable for the content inside it.

@@ -4,12 +4,11 @@ import {
   Display3,
   Drawer,
   DrawerCloseButton,
+  DrawerHeader,
   FlowLayout,
-  H2,
   H3,
   StackLayout,
   Text,
-  useId,
 } from "@salt-ds/core";
 import { AgGridReact } from "ag-grid-react";
 import { type ReactElement, useState } from "react";
@@ -121,7 +120,6 @@ const defaultData = [
 export const BottomDrawer = (): ReactElement => {
   const [open, setOpen] = useState(false);
   const { containerProps, agGridProps } = useAgGridHelpers();
-  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -143,11 +141,12 @@ export const BottomDrawer = (): ReactElement => {
         onOpenChange={onOpenChange}
         position="bottom"
         style={{ height: "max-content" }}
-        aria-labelledby={id}
       >
-        <DrawerCloseButton onClick={handleClose} />
+        <DrawerHeader
+          header="Marginal Tiering"
+          actions={<DrawerCloseButton onClick={handleClose} />}
+        />
         <StackLayout gap={3}>
-          <H2 id={id}>Marginal Tiering</H2>
           <div
             {...containerProps}
             style={{ height: "calc(3 * var(--salt-size-base))" }}

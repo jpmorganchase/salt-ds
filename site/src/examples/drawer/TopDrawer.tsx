@@ -2,15 +2,14 @@ import {
   Button,
   Drawer,
   DrawerCloseButton,
+  DrawerHeader,
   FlexLayout,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
-  H2,
   Input,
   StackLayout,
   Text,
-  useId,
 } from "@salt-ds/core";
 import { type ReactElement, useState } from "react";
 
@@ -24,7 +23,6 @@ const FormFieldExample = () => (
 
 export const TopDrawer = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -41,15 +39,12 @@ export const TopDrawer = (): ReactElement => {
   return (
     <>
       <Button onClick={handleRequestOpen}>Open Top Drawer</Button>
-      <Drawer
-        open={open}
-        onOpenChange={onOpenChange}
-        position="top"
-        aria-labelledby={id}
-      >
+      <Drawer open={open} onOpenChange={onOpenChange} position="top">
+        <DrawerHeader
+          header="Section title"
+          actions={<DrawerCloseButton onClick={handleClose} />}
+        />
         <StackLayout>
-          <DrawerCloseButton onClick={handleClose} />
-          <H2 id={id}>Section title</H2>
           <Text>
             This placeholder text is provided to illustrate how content will
             appear within the component. The sentences are intended for

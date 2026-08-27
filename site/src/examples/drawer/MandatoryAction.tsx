@@ -3,15 +3,14 @@ import {
   Checkbox,
   ComboBox,
   Drawer,
+  DrawerHeader,
   FlexItem,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
-  H2,
   Input,
   Option,
   StackLayout,
-  useId,
 } from "@salt-ds/core";
 import {
   type ChangeEvent,
@@ -23,7 +22,6 @@ import {
 export const MandatoryAction = (): ReactElement => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
-  const id = useId();
 
   const postcodes = ["05011", "01050", "03040", "11050"];
 
@@ -60,10 +58,9 @@ export const MandatoryAction = (): ReactElement => {
         position="right"
         style={{ width: 500 }}
         disableDismiss
-        aria-labelledby={id}
       >
+        <DrawerHeader header="Add your delivery details" />
         <StackLayout>
-          <H2 id={id}>Add your delivery details</H2>
           <FormField>
             <FormFieldLabel>House no.</FormFieldLabel>
             <Input />

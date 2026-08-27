@@ -3,24 +3,12 @@ import {
   Drawer,
   DrawerCloseButton,
   DrawerHeader,
-  FormField,
-  FormFieldHelperText,
-  FormFieldLabel,
-  Input,
   StackLayout,
   Text,
 } from "@salt-ds/core";
 import { type ReactElement, useState } from "react";
 
-const FormFieldExample = () => (
-  <FormField>
-    <FormFieldLabel>Label</FormFieldLabel>
-    <Input />
-    <FormFieldHelperText>Help text appears here</FormFieldHelperText>
-  </FormField>
-);
-
-export const RightDrawer = (): ReactElement => {
+export const WithHeader = (): ReactElement => {
   const [open, setOpen] = useState(false);
 
   const handleRequestOpen = () => {
@@ -37,7 +25,7 @@ export const RightDrawer = (): ReactElement => {
 
   return (
     <>
-      <Button onClick={handleRequestOpen}>Open Right Drawer</Button>
+      <Button onClick={handleRequestOpen}>Open Drawer</Button>
       <Drawer
         open={open}
         onOpenChange={onOpenChange}
@@ -45,7 +33,9 @@ export const RightDrawer = (): ReactElement => {
         style={{ width: 500 }}
       >
         <DrawerHeader
-          header="Section Title"
+          preheader="Settlements - Nostros"
+          header="Cash breaks"
+          description="LOB: Global Derivatives and Cash"
           actions={<DrawerCloseButton onClick={handleClose} />}
         />
         <StackLayout>
@@ -54,12 +44,7 @@ export const RightDrawer = (): ReactElement => {
             appear within the component. The sentences are intended for
             demonstration only and do not convey specific information. Generic
             examples like this help review layout, spacing, and overall design.
-            Adjust the wording as needed to fit your use case or display
-            requirements.
           </Text>
-          {Array.from({ length: 7 }, (_, index) => (
-            <FormFieldExample key={index} />
-          ))}
         </StackLayout>
       </Drawer>
     </>

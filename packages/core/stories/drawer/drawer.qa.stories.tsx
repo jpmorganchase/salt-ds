@@ -1,4 +1,12 @@
-import { Drawer, type DrawerProps, H2, StackLayout, Text } from "@salt-ds/core";
+import {
+  Drawer,
+  DrawerCloseButton,
+  DrawerHeader,
+  type DrawerProps,
+  H2,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
@@ -51,5 +59,59 @@ export const DrawerExamples: StoryFn<QAContainerProps> = (props) => {
   );
 };
 DrawerExamples.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+/* Padding matches the real Drawer so the header's accent bar lands on the container edge */
+const headerDrawerStyle = {
+  width: 350,
+  padding: "var(--salt-spacing-300)",
+  boxSizing: "border-box",
+} as const;
+
+const DrawerHeaderTemplate: StoryFn<typeof Drawer> = () => {
+  return (
+    <StackLayout>
+      <FakeDrawer style={headerDrawerStyle}>
+        <DrawerHeader
+          preheader="Settlements - Nostros"
+          header="Cash breaks"
+          description="LOB: Global Derivatives and Cash"
+          actions={<DrawerCloseButton />}
+        />
+        <Text>Drawer content</Text>
+      </FakeDrawer>
+      <FakeDrawer style={headerDrawerStyle}>
+        <DrawerHeader header="Cash breaks" actions={<DrawerCloseButton />} />
+      </FakeDrawer>
+      <FakeDrawer style={headerDrawerStyle}>
+        <DrawerHeader
+          disableAccent
+          header="Cash breaks"
+          actions={<DrawerCloseButton />}
+        />
+      </FakeDrawer>
+      <FakeDrawer style={headerDrawerStyle}>
+        <DrawerHeader
+          status="warning"
+          header="Can't move file"
+          description="The destination folder is read-only."
+          actions={<DrawerCloseButton />}
+        />
+      </FakeDrawer>
+    </StackLayout>
+  );
+};
+
+export const DrawerHeaderExamples: StoryFn<QAContainerProps> = (props) => {
+  const { ...rest } = props;
+
+  return (
+    <QAContainer height={1200} itemPadding={20} width={1000} {...rest}>
+      <DrawerHeaderTemplate />
+    </QAContainer>
+  );
+};
+DrawerHeaderExamples.parameters = {
   chromatic: { disableSnapshot: false },
 };

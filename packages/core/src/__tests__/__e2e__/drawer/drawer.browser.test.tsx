@@ -4,8 +4,15 @@ import { page, userEvent } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as drawerStories from "~stories/drawer/drawer.stories";
 
-const { Default, OptionalCloseAction, InitialFocusIndex, InitialFocusRef } =
-  composeStories(drawerStories);
+const {
+  Default,
+  OptionalCloseAction,
+  InitialFocusIndex,
+  InitialFocusRef,
+  WithHeader,
+  WithHeaderNoAccent,
+  WithHeaderStatus,
+} = composeStories(drawerStories);
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -125,6 +132,42 @@ describe("GIVEN a Drawer", () => {
     await expect.element(page.getByRole("dialog")).toBeVisible();
     await page.getByRole("button", { name: "Submit" }).click();
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("takes its accessible name from the header", async () => {
+    await renderWithSalt(<WithHeaderNoAccent />);
+    await page.getByRole("button", { name: "Open Drawer" }).click();
+    await expect
+      .element(page.getByRole("dialog", { name: "Cash breaks" }))
+      .toBeVisible();
+  });
+
+  it("includes the preheader in the accessible name", async () => {
+    await renderWithSalt(<WithHeader />);
+    await page.getByRole("button", { name: "Open Drawer" }).click();
+    await expect
+      .element(page.getByRole("dialog", { name: /Settlements - Nostros/ }))
+      .toBeVisible();
+  });
+
+  it("closes from a close button inside the header", async () => {
+    await renderWithSalt(<WithHeader />);
+    await page.getByRole("button", { name: "Open Drawer" }).click();
+    await expect.element(page.getByRole("dialog")).toBeVisible();
+    await page.getByRole("button", { name: "Close Drawer" }).click();
+    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("renders a status indicator in place of the accent bar", async () => {
+    await renderWithSalt(<WithHeaderStatus />);
+    await page.getByRole("button", { name: "Open Drawer" }).click();
+    const heading = page.getByRole("heading", { name: "Can't move file" });
+    await expect.element(heading).toBeVisible();
+    const header = heading.element().closest(".saltDrawerHeader");
+    expect(header?.classList.contains("saltDrawerHeader-warning")).toBe(true);
+    expect(header?.classList.contains("saltDrawerHeader-withAccent")).toBe(
+      false,
+    );
   });
 
   it.each([
