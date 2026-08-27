@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "corpus_id": "salt-ai-outcome-v1",
+  "fixture_file": "evals/salt-ai/fixtures/repositories.json",
+  "fixture_sha256": "sha256:e44a6d1f7005a12b69f21a6ec38442258c3895d4395f6d49a56290ce0efa4141",
+  "case_files": [
+    "evals/salt-ai/retrieval/api-migrations.json",
+    "evals/salt-ai/retrieval/navigation-overlay.json",
+    "evals/salt-ai/scan/deprecated-prop.json",
+    "evals/salt-ai/scan/invalid-import.json",
+    "evals/salt-ai/tasks/choose-button-vs-link.json",
+    "evals/salt-ai/tasks/configure-provider-theme.json",
+    "evals/salt-ai/tasks/create-labelled-form.json",
+    "evals/salt-ai/tasks/lab-prerelease.json",
+    "evals/salt-ai/tasks/migrate-button-variant.json",
+    "evals/salt-ai/tasks/non-salt-control.json",
+    "evals/salt-ai/tasks/partial-package-mismatch.json",
+    "evals/salt-ai/tasks/project-wrapper-policy.json",
+    "evals/salt-ai/tasks/repair-invalid-import.json",
+    "evals/salt-ai/tasks/valid-noop.json"
+  ],
+  "activation_case_files": [
+    "evals/salt-ai/activation/discover-project.json",
+    "evals/salt-ai/activation/find-guidance.json",
+    "evals/salt-ai/activation/verify-loop.json"
+  ],
+  "protocol_files": [
+    "evals/salt-ai/protocol/adjudication.md",
+    "evals/salt-ai/protocol/attempt-policy.json",
+    "evals/salt-ai/protocol/bootstrap/profiles.json",
+    "evals/salt-ai/protocol/budgets.json",
+    "evals/salt-ai/protocol/metric-definitions.json",
+    "evals/salt-ai/protocol/modes.json"
+  ],
+  "counts": {
+    "outcome_cases": 14,
+    "activation_cases": 3,
+    "retrieval_gold_queries": 40
+  }
+}

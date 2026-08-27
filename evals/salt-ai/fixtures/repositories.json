@@ -1,0 +1,122 @@
+{
+  "schema_version": "1.0.0",
+  "fixtures": [
+    {
+      "id": "repo-choose-button-link",
+      "files": {
+        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\"}}",
+        "src/App.tsx": "export function App(){return <a onClick={()=>{}}>Continue</a>}"
+      }
+    },
+    {
+      "id": "repo-configure-provider-theme",
+      "files": {
+        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\",\"@salt-ds/theme\":\"1.44.0\"}}",
+        "src/main.tsx": "export function Root(){return <div>App</div>}"
+      }
+    },
+    {
+      "id": "repo-create-labelled-form",
+      "files": {
+        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\"}}",
+        "src/Form.tsx": "export function Form(){return <form />}"
+      }
+    },
+    {
+      "id": "repo-repair-invalid-import",
+      "files": {
+        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\"}}",
+        "src/App.tsx": "import { Button } from '@salt-ds/core/button'; export const App=()=> <Button>Save</Button>"
+      }
+    },
+    {
+      "id": "repo-migrate-button-variant",
+      "files": {
+        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\"}}",
+        "src/App.tsx": "import {Button} from '@salt-ds/core'; export const App=()=> <Button variant=\"cta\">Save</Button>"
+      }
+    },
+    {
+      "id": "repo-project-wrapper",
+      "files": {
+        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\"}}",
+        ".salt/team.json": "{\"contract\":\"project_conventions_v1\",\"version\":\"1.0.0\",\"project\":\"fixture\",\"approved_wrappers\":[{\"name\":\"AppButton\",\"wraps\":\"Button\",\"reason\":\"Product analytics\",\"import\":{\"from\":\"./src/AppButton\",\"name\":\"AppButton\"},\"use_when\":[\"product action\"],\"avoid_when\":[\"navigation\"]}]}"
+      }
+    },
+    {
+      "id": "repo-partial-package-mismatch",
+      "files": {
+        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\",\"@salt-ds/theme\":\"1.43.0\"}}",
+        "src/App.tsx": "export const App=()=>null"
+      }
+    },
+    {
+      "id": "repo-lab-prerelease",
+      "files": {
+        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\",\"@salt-ds/lab\":\"1.0.0-alpha.102\"}}",
+        "src/App.tsx": "import {MegaMenu} from '@salt-ds/lab'; export const App=()=> <MegaMenu />"
+      }
+    },
+    {
+      "id": "repo-non-salt-control",
+      "files": {
+        "package.json": "{\"private\":true,\"dependencies\":{\"react\":\"18.3.1\"}}",
+        "src/App.tsx": "export const App=()=> <button>Save</button>"
+      }
+    },
+    {
+      "id": "repo-valid-noop",
+      "files": {
+        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\"}}",
+        "src/App.tsx": "import {Button} from '@salt-ds/core'; export const App=()=> <Button>Save</Button>"
+      }
+    },
+    {
+      "id": "repo-retrieval-navigation",
+      "files": {
+        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\",\"@salt-ds/lab\":\"1.0.0-alpha.102\"}}"
+      }
+    },
+    {
+      "id": "repo-retrieval-api",
+      "files": {
+        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\",\"@salt-ds/theme\":\"1.44.0\",\"@salt-ds/date-adapters\":\"1.0.2\"}}"
+      }
+    },
+    {
+      "id": "repo-scan-invalid-import",
+      "files": {
+        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\"}}",
+        "src/Bad.tsx": "import Button from '@salt-ds/core/dist/Button'; export const Bad=()=> <Button/>"
+      }
+    },
+    {
+      "id": "repo-scan-deprecated-prop",
+      "files": {
+        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\"}}",
+        "src/Bad.tsx": "import {Button} from '@salt-ds/core'; export const Bad=()=> <Button variant=\"primary\"/>"
+      }
+    },
+    {
+      "id": "activation-discover-project",
+      "files": {
+        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\"}}",
+        "src/App.tsx": "export const App=()=>null"
+      }
+    },
+    {
+      "id": "activation-find-guidance",
+      "files": {
+        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\"}}",
+        "src/App.tsx": "export const App=()=> <button>Continue</button>"
+      }
+    },
+    {
+      "id": "activation-verify-loop",
+      "files": {
+        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\"}}",
+        "src/App.tsx": "import {Button} from '@salt-ds/core'; export const App=()=> <Button>Continue</Button>"
+      }
+    }
+  ]
+}

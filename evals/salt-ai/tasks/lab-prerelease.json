@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "id": "lab-prerelease",
+  "suite": "task",
+  "family": "compatibility",
+  "fixture_id": "repo-lab-prerelease",
+  "package_vector": [
+    { "name": "@salt-ds/core", "version": "1.69.0" },
+    { "name": "@salt-ds/lab", "version": "1.0.0-alpha.102" }
+  ],
+  "goal": "Use Lab guidance only when the exact prerelease is explicitly supported.",
+  "modes": [
+    "mode_1_base_tools",
+    "mode_2_markdown",
+    "mode_3_cli_bootstrap",
+    "mode_4_mcp_candidate"
+  ],
+  "mcp_eligible": true,
+  "allowed_variants": [
+    "Exact prerelease support",
+    "Disclosed unknown when evidence is absent"
+  ],
+  "checks": [
+    {
+      "id": "prerelease-explicit",
+      "kind": "compatibility",
+      "expected": "no-range-inference"
+    }
+  ],
+  "non_goals": ["Treat prerelease as stable"],
+  "human_rubric": null
+}

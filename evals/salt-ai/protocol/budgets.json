@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "per_cell": {
+    "input_tokens": 64000,
+    "output_tokens": 16000,
+    "turns": 12,
+    "tool_calls": 40,
+    "wall_time_seconds": 1800
+  },
+  "tiers": {
+    "pull_request": {
+      "model_cells": 0,
+      "deterministic_wall_time_seconds": 1800,
+      "estimated_cost_usd": 0
+    },
+    "weekly_smoke": {
+      "scheduled_cells": 18,
+      "input_tokens": 1152000,
+      "output_tokens": 288000,
+      "wall_time_seconds": 7200,
+      "estimated_cost_usd": 100
+    },
+    "full_required_modes": {
+      "scheduled_cells": 252,
+      "input_tokens": 16128000,
+      "output_tokens": 4032000,
+      "wall_time_seconds": 172800,
+      "estimated_cost_usd": 1500
+    },
+    "full_with_mcp": {
+      "scheduled_cells": 324,
+      "input_tokens": 20736000,
+      "output_tokens": 5184000,
+      "wall_time_seconds": 172800,
+      "estimated_cost_usd": 1800
+    },
+    "activation_experiment": {
+      "scheduled_cells": 54,
+      "input_tokens": 3456000,
+      "output_tokens": 864000,
+      "wall_time_seconds": 43200,
+      "estimated_cost_usd": 300
+    }
+  },
+  "maximum_monthly_cost_usd": 2000,
+  "policy": "A run exceeding any predeclared ceiling fails; efficiency cannot compensate for correctness."
+}

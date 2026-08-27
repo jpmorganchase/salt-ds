@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "id": "non-salt-control",
+  "suite": "task",
+  "family": "control",
+  "fixture_id": "repo-non-salt-control",
+  "package_vector": [],
+  "goal": "Identify that the repository has no Salt installation and make no Salt-specific repair.",
+  "modes": [
+    "mode_1_base_tools",
+    "mode_2_markdown",
+    "mode_3_cli_bootstrap",
+    "mode_4_mcp_candidate"
+  ],
+  "mcp_eligible": false,
+  "allowed_variants": ["Truthful non-Salt no-op"],
+  "checks": [{ "id": "no-salt-edit", "kind": "diff", "expected": "empty" }],
+  "non_goals": ["Install Salt"],
+  "human_rubric": null
+}

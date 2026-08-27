@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "id": "choose-button-vs-link",
+  "suite": "task",
+  "family": "choose",
+  "fixture_id": "repo-choose-button-link",
+  "package_vector": [{ "name": "@salt-ds/core", "version": "1.69.0" }],
+  "goal": "Choose and implement the correct Salt action or navigation primitive for Continue.",
+  "modes": [
+    "mode_1_base_tools",
+    "mode_2_markdown",
+    "mode_3_cli_bootstrap",
+    "mode_4_mcp_candidate"
+  ],
+  "mcp_eligible": true,
+  "allowed_variants": [
+    "Button for an action",
+    "Link for navigation with a real href"
+  ],
+  "checks": [
+    { "id": "compiles", "kind": "command", "expected": "pass" },
+    {
+      "id": "semantic-owner",
+      "kind": "ast",
+      "expected": "action-or-navigation-explicit"
+    }
+  ],
+  "non_goals": ["Redesign the page"],
+  "human_rubric": "Choice rationale matches the implemented interaction."
+}

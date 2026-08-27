@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "id": "scan-deprecated-prop",
+  "suite": "scan",
+  "family": "scan",
+  "fixture_id": "repo-scan-deprecated-prop",
+  "package_vector": [{ "name": "@salt-ds/core", "version": "1.69.0" }],
+  "goal": "Detect a version-applicable deprecated prop and its exact value-map remediation.",
+  "modes": ["mode_3_cli_bootstrap", "mode_4_mcp_candidate"],
+  "mcp_eligible": true,
+  "allowed_variants": ["One high-confidence deprecation finding"],
+  "checks": [
+    { "id": "deprecated-prop", "kind": "scan", "expected": "finding" },
+    { "id": "remediation", "kind": "scan", "expected": "solid-neutral" }
+  ],
+  "non_goals": ["General UI score"],
+  "human_rubric": null
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "id": "configure-provider-theme",
+  "suite": "task",
+  "family": "configure",
+  "fixture_id": "repo-configure-provider-theme",
+  "package_vector": [
+    { "name": "@salt-ds/core", "version": "1.69.0" },
+    { "name": "@salt-ds/theme", "version": "1.44.0" }
+  ],
+  "goal": "Configure the current Salt provider, global CSS, and theme-next CSS for the fixture.",
+  "modes": [
+    "mode_1_base_tools",
+    "mode_2_markdown",
+    "mode_3_cli_bootstrap",
+    "mode_4_mcp_candidate"
+  ],
+  "mcp_eligible": true,
+  "allowed_variants": ["Equivalent supported entry-file placement"],
+  "checks": [
+    { "id": "compiles", "kind": "command", "expected": "pass" },
+    {
+      "id": "provider-theme",
+      "kind": "ast",
+      "expected": "current-provider-and-css"
+    }
+  ],
+  "non_goals": ["Install packages", "Use a legacy-only setup"],
+  "human_rubric": "Setup is concise and version-correct."
+}

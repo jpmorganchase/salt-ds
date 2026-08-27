@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "id": "create-labelled-form",
+  "suite": "task",
+  "family": "create",
+  "fixture_id": "repo-create-labelled-form",
+  "package_vector": [{ "name": "@salt-ds/core", "version": "1.69.0" }],
+  "goal": "Create a small labelled Salt form with validation feedback and a submit action.",
+  "modes": [
+    "mode_1_base_tools",
+    "mode_2_markdown",
+    "mode_3_cli_bootstrap",
+    "mode_4_mcp_candidate"
+  ],
+  "mcp_eligible": true,
+  "allowed_variants": ["Supported FormField composition"],
+  "checks": [
+    { "id": "compiles", "kind": "command", "expected": "pass" },
+    {
+      "id": "accessible-label",
+      "kind": "interaction",
+      "expected": "label-associated"
+    }
+  ],
+  "non_goals": ["Backend submission"],
+  "human_rubric": "Composition uses current Salt semantics without unsupported accessibility claims."
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "cohort_seed": "salt-ai-v1-2026-08-27",
+  "repetitions": 3,
+  "host_model_aliases": ["host_model_a", "host_model_b"],
+  "counterbalance": "latin-square-by-case-repetition-host",
+  "sampling": {
+    "temperature": 0,
+    "top_p": 1,
+    "seed": "provider_seed_or_explicit_unsupported",
+    "other_parameters": "provider_defaults_recorded_exactly"
+  },
+  "initial_attempts": 1,
+  "maximum_retries": 1,
+  "retryable": [
+    "provider_transport_before_output",
+    "provider_rate_limit_before_output",
+    "provider_5xx_before_output"
+  ],
+  "non_retryable": [
+    "budget_timeout",
+    "host_failure",
+    "tool_failure",
+    "invalid_output",
+    "partial_output",
+    "grader_failure",
+    "quality_failure",
+    "output_or_tool_action_started"
+  ],
+  "selection": "The sole eligible completed retry is selected; the first infrastructure failure remains in operational metrics."
+}

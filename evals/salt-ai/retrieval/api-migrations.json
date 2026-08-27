@@ -1,0 +1,145 @@
+{
+  "schema_version": "1.0.0",
+  "id": "retrieval-api-migrations",
+  "suite": "retrieval",
+  "family": "retrieval",
+  "fixture_id": "repo-retrieval-api",
+  "package_vector": [
+    { "name": "@salt-ds/core", "version": "1.69.0" },
+    { "name": "@salt-ds/theme", "version": "1.44.0" },
+    { "name": "@salt-ds/date-adapters", "version": "1.0.2" }
+  ],
+  "goal": "Retrieve exact API, token, setup, and migration records.",
+  "modes": ["mode_2_markdown", "mode_3_cli_bootstrap", "mode_4_mcp_candidate"],
+  "mcp_eligible": true,
+  "allowed_variants": ["Any declared applicable gold record in the first five"],
+  "checks": [
+    { "id": "recall-at-5", "kind": "retrieval", "expected": ">=0.95" }
+  ],
+  "non_goals": ["Model prose scoring"],
+  "human_rubric": null,
+  "gold_queries": [
+    {
+      "id": "api-01",
+      "query": "SaltProviderNext setup",
+      "category": "guide",
+      "gold": ["record:guide:developing"]
+    },
+    {
+      "id": "api-02",
+      "query": "global css",
+      "category": "guide",
+      "gold": ["record:guide:developing"]
+    },
+    {
+      "id": "api-03",
+      "query": "theme next css",
+      "category": "guide",
+      "gold": ["record:guide:developing"]
+    },
+    {
+      "id": "api-04",
+      "query": "Button appearance sentiment",
+      "category": "api",
+      "gold": ["record:core:button"]
+    },
+    {
+      "id": "api-05",
+      "query": "deprecated Button variant",
+      "category": "migration",
+      "gold": ["record:migration:core-button-variant-to-appearance-sentiment"]
+    },
+    {
+      "id": "api-06",
+      "query": "CheckboxIcon error replacement",
+      "category": "migration",
+      "gold": ["record:migration:core-checkbox-icon-error-to-validation-status"]
+    },
+    {
+      "id": "api-07",
+      "query": "RadioButtonIcon error replacement",
+      "category": "migration",
+      "gold": [
+        "record:migration:core-radio-button-icon-error-to-validation-status"
+      ]
+    },
+    {
+      "id": "api-08",
+      "query": "Moment adapter migration",
+      "category": "migration",
+      "gold": ["record:migration:date-adapters-moment-to-maintained-adapter"]
+    },
+    {
+      "id": "api-09",
+      "query": "spacing token",
+      "category": "token",
+      "gold": ["record:token:spacing"]
+    },
+    {
+      "id": "api-10",
+      "query": "color token",
+      "category": "token",
+      "gold": ["record:token:color"]
+    },
+    {
+      "id": "api-11",
+      "query": "density",
+      "category": "foundation",
+      "gold": ["record:foundation:density"]
+    },
+    {
+      "id": "api-12",
+      "query": "typography",
+      "category": "foundation",
+      "gold": ["record:foundation:typography"]
+    },
+    {
+      "id": "api-13",
+      "query": "responsive layout",
+      "category": "foundation",
+      "gold": ["record:foundation:responsiveness"]
+    },
+    {
+      "id": "api-14",
+      "query": "date adapter",
+      "category": "api",
+      "gold": ["record:date-adapters:index"]
+    },
+    {
+      "id": "api-15",
+      "query": "validation status",
+      "category": "api",
+      "gold": ["record:core:form-field"]
+    },
+    {
+      "id": "api-16",
+      "query": "SaltProvider mode",
+      "category": "api",
+      "gold": ["record:core:salt-provider"]
+    },
+    {
+      "id": "api-17",
+      "query": "custom wrapper policy",
+      "category": "guide",
+      "gold": ["record:guide:custom-wrappers"]
+    },
+    {
+      "id": "api-18",
+      "query": "composition pitfalls",
+      "category": "guide",
+      "gold": ["record:guide:composition-pitfalls"]
+    },
+    {
+      "id": "api-19",
+      "query": "supported platforms",
+      "category": "guide",
+      "gold": ["record:guide:supported-platforms"]
+    },
+    {
+      "id": "api-20",
+      "query": "public support",
+      "category": "guide",
+      "gold": ["record:guide:support-and-contributions"]
+    }
+  ]
+}

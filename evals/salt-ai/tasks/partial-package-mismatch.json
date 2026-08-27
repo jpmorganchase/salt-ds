@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0.0",
+  "id": "partial-package-mismatch",
+  "suite": "task",
+  "family": "compatibility",
+  "fixture_id": "repo-partial-package-mismatch",
+  "package_vector": [
+    { "name": "@salt-ds/core", "version": "1.69.0" },
+    { "name": "@salt-ds/theme", "version": "1.43.0" }
+  ],
+  "goal": "Report the mixed package vector without silently applying current Theme guidance.",
+  "modes": [
+    "mode_1_base_tools",
+    "mode_2_markdown",
+    "mode_3_cli_bootstrap",
+    "mode_4_mcp_candidate"
+  ],
+  "mcp_eligible": true,
+  "allowed_variants": ["Partial coverage with exact disclosed mismatch"],
+  "checks": [
+    {
+      "id": "no-nearest-fallback",
+      "kind": "compatibility",
+      "expected": "partial"
+    }
+  ],
+  "non_goals": ["Upgrade dependencies"],
+  "human_rubric": null
+}

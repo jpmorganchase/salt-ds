@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "pairs": [
+    {
+      "scope": "001/08c",
+      "premerge_kind": "app-cohort-premerge-receipt",
+      "landed_kind": "app-cohort-receipt"
+    },
+    {
+      "scope": "001/08c",
+      "premerge_kind": "effective-public-package-docs-premerge-receipt",
+      "landed_kind": "effective-public-package-docs-receipt"
+    },
+    {
+      "scope": "001/08c",
+      "premerge_kind": "effective-selected-graph-premerge-receipt",
+      "landed_kind": "effective-selected-graph-receipt"
+    },
+    {
+      "scope": "001/08c",
+      "premerge_kind": "mcp-final-disposition-premerge-receipt",
+      "landed_kind": "mcp-final-disposition-receipt"
+    },
+    {
+      "scope": "001/08c",
+      "premerge_kind": "pack-report-premerge",
+      "landed_kind": "pack-report"
+    },
+    {
+      "scope": "001/08c",
+      "premerge_kind": "public-docs-final-premerge-receipt",
+      "landed_kind": "public-docs-final-receipt"
+    },
+    {
+      "scope": "001/08c",
+      "premerge_kind": "release-partition-applied-premerge",
+      "landed_kind": "release-partition-applied"
+    },
+    {
+      "scope": "001/08c",
+      "premerge_kind": "web-release-premerge-receipt",
+      "landed_kind": "web-release-receipt"
+    },
+    {
+      "scope": "001/09c",
+      "premerge_kind": "discovery-deployment-candidate-premerge-receipt",
+      "landed_kind": "discovery-deployment-landed-candidate-receipt"
+    }
+  ]
+}

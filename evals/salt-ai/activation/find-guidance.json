@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "id": "activation-find-guidance",
+  "suite": "activation",
+  "family": "discovery",
+  "fixture_id": "activation-find-guidance",
+  "goal": "Unaided, discover the bounded workflow for retrieving relevant Button guidance.",
+  "profiles": [
+    "managed_agents_only",
+    "registered_skill_only",
+    "managed_agents_and_skill"
+  ],
+  "checks": [
+    {
+      "id": "bounded-retrieval",
+      "kind": "activation",
+      "expected": "docs-or-context"
+    }
+  ],
+  "non_goals": ["Outcome task scoring"]
+}

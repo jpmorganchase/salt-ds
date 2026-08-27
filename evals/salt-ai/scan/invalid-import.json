@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "id": "scan-invalid-import",
+  "suite": "scan",
+  "family": "scan",
+  "fixture_id": "repo-scan-invalid-import",
+  "package_vector": [{ "name": "@salt-ds/core", "version": "1.69.0" }],
+  "goal": "Detect an unsupported internal import with stable evidence and remediation.",
+  "modes": ["mode_3_cli_bootstrap", "mode_4_mcp_candidate"],
+  "mcp_eligible": true,
+  "allowed_variants": ["One high-confidence invalid-import finding"],
+  "checks": [
+    { "id": "invalid-import", "kind": "scan", "expected": "finding" },
+    { "id": "coverage", "kind": "scan", "expected": "complete" }
+  ],
+  "non_goals": ["Apply a fix"],
+  "human_rubric": null
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "record_contract": "salt-migration-record/1",
+  "records": [
+    {
+      "id": "core-button-variant-to-appearance-sentiment",
+      "status": "planned",
+      "file": "docs/ai/migrations/records/core-button-variant-to-appearance-sentiment.json",
+      "owners": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "affected_families": ["@salt-ds/core"],
+      "required_source_evidence": [
+        "packages/core/src/button/Button.tsx",
+        "packages/mcp/src/core/build/deprecationValueMapOverrides.ts"
+      ]
+    },
+    {
+      "id": "core-checkbox-icon-error-to-validation-status",
+      "status": "planned",
+      "file": "docs/ai/migrations/records/core-checkbox-icon-error-to-validation-status.json",
+      "owners": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "affected_families": ["@salt-ds/core"],
+      "required_source_evidence": [
+        "packages/core/src/checkbox/CheckboxIcon.tsx",
+        "packages/mcp/src/core/build/deprecationValueMapOverrides.ts"
+      ]
+    },
+    {
+      "id": "core-radio-button-icon-error-to-validation-status",
+      "status": "planned",
+      "file": "docs/ai/migrations/records/core-radio-button-icon-error-to-validation-status.json",
+      "owners": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "affected_families": ["@salt-ds/core"],
+      "required_source_evidence": [
+        "packages/core/src/radio-button/RadioButtonIcon.tsx",
+        "packages/mcp/src/core/build/deprecationValueMapOverrides.ts"
+      ]
+    },
+    {
+      "id": "date-adapters-moment-to-maintained-adapter",
+      "status": "planned",
+      "file": "docs/ai/migrations/records/date-adapters-moment-to-maintained-adapter.json",
+      "owners": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "affected_families": ["@salt-ds/date-adapters"],
+      "required_source_evidence": [
+        "packages/date-adapters/src/moment-adapter/index.ts",
+        "packages/mcp/src/core/build/deprecationMigrationOverrides.ts"
+      ]
+    }
+  ]
+}

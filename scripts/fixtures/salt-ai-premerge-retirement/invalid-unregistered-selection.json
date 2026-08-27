@@ -1,0 +1,12 @@
+{
+  "valid": false,
+  "mode": "selection",
+  "scope": "001/09c",
+  "pairs": [
+    {
+      "scope": "001/09c",
+      "premerge_kind": "unknown-premerge",
+      "landed_kind": "unknown-landed"
+    }
+  ]
+}
