@@ -220,31 +220,27 @@ Salt injects component styles at runtime by default, so you don’t need to impo
 
 #### (Optional) Apply the CSS baseline reset
 
-Salt components style themselves through component classes and never touch bare HTML tags. Typography, color, and focus styles are applied by the `.salt-theme` class from `global.css` and only apply inside that scope. Anything you render outside a Salt component—plain `<h1>`, `<p>`, `<ul>`, `<button>`, `<a>`—still picks up the browser's default user-agent styles, which vary between browsers and often conflict with Salt layouts (oversized headings, default list bullets/indentation, bright-blue links, browser button chrome, etc.).
+Salt's text styles control typography, but browsers also add margins to semantic elements such as headings and paragraphs. Those margins remain when Markdown content is rendered with `Text` using the semantic `as` prop; changing its visual style with `styleAs` does not change the element's spacing. This mixes browser-defined spacing with Salt's spacing system.
 
-To avoid this, `@salt-ds/theme` ships an opt-in baseline reset. Import it once at the root of your app, after the theme CSS:
+To remove that browser spacing, `@salt-ds/theme` ships an opt-in baseline reset. Import it once at the root of your app, before the theme CSS:
 
 ```tsx
+import "@salt-ds/theme/css/baseline.css";
 import "@salt-ds/theme/css/global.css";
 import "@salt-ds/theme/css/theme-next.css";
-import "@salt-ds/theme/css/baseline.css";
 ```
 
-The reset is deliberately minimal. It:
+The reset only removes the default margin from:
 
-- Applies `box-sizing: border-box` globally.
-- Zeroes browser default margin and padding on common block elements (`h1`–`h6`, `p`, `ul`, `ol`, `dl`, `dd`, `blockquote`, `pre`, `figure`, `fieldset`, `hr`).
-- Makes headings inherit `font-size` and `font-weight` so bare `<h1>` doesn't break layouts.
-- Sets sensible defaults for media (`img`, `svg`, …), form controls, bare `<button>`, `<fieldset>`, `<table>`, and `<a>`.
+- The document `<body>`, removing the browser's spacing around the application viewport.
+- Heading elements (`<h1>`–`<h6>`), allowing each semantic level to use any appropriate Salt visual style.
+- Paragraphs (`<p>`), allowing applications to compose text spacing with Salt layout and spacing tokens.
 
-It deliberately does **not** set body background/color, restyle lists, or override motion preferences—those are app-level decisions.
-
-The reset is safe to use alongside Salt: every Salt component styles itself via a class selector, which wins by specificity over the reset's bare tag selectors. Non-Salt markup in your app will have its browser defaults normalized.
+It does not change box sizing, typography, lists, media, form controls, buttons, tables, links, motion, or page colors. Those behaviors are already owned by Salt components or need an application-specific decision. Salt components remain self-contained and work whether or not you import the baseline.
 
 <Callout title="Not using the reset?">
-  You can skip the baseline import if you already have your own reset (e.g.
-  `normalize.css`, Tailwind Preflight) or prefer to keep browser defaults for
-  non-Salt markup.
+  You can skip the baseline import if your existing reset already removes body,
+  heading and paragraph margins, or if you prefer to keep that browser spacing.
 </Callout>
 
 ### 4. Import components
