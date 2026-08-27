@@ -1,0 +1,94 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  forwardRef,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
+import {
+  makePrefixer,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+  useResizeObserver,
+} from "../utils";
+import drawerContentCss from "./DrawerContent.css";
+import { useDrawerContext } from "./DrawerContext";
+
+const withBaseName = makePrefixer("saltDrawerContent");
+
+export type DrawerContentProps = ComponentPropsWithoutRef<"div">;
+
+export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
+  function DrawerContent(props, ref) {
+    const { children, className, ...rest } = props;
+
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-drawer-content",
+      css: drawerContentCss,
+      window: targetWindow,
+    });
+
+    const { headerId } = useDrawerContext();
+
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const handleRef = useForkRef<HTMLDivElement>(scrollRef, ref);
+    const [isOverflowing, setIsOverflowing] = useState(false);
+    const [canScrollUp, setCanScrollUp] = useState(false);
+    const [canScrollDown, setCanScrollDown] = useState(false);
+
+    const readScrollPosition = useCallback(() => {
+      const container = scrollRef.current;
+      if (!container) return;
+
+      const overflowing = container.scrollHeight > container.clientHeight;
+      setIsOverflowing(overflowing);
+      setCanScrollUp(overflowing && container.scrollTop > 0);
+      setCanScrollDown(
+        overflowing &&
+          container.scrollHeight -
+            container.scrollTop -
+            container.clientHeight >
+            1,
+      );
+    }, []);
+
+    const handleScroll = () => {
+      targetWindow?.requestAnimationFrame(readScrollPosition);
+    };
+
+    useResizeObserver({ ref: scrollRef, onResize: readScrollPosition });
+
+    useIsomorphicLayoutEffect(() => {
+      readScrollPosition();
+    }, [readScrollPosition]);
+
+    return (
+      <div
+        ref={handleRef}
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("scrollTop")]: canScrollUp,
+            [withBaseName("scrollBottom")]: canScrollDown,
+          },
+          className,
+        )}
+        {...rest}
+        onScrollCapture={handleScroll}
+        {...(isOverflowing && {
+          role: "region",
+          tabIndex: 0,
+          ...(headerId
+            ? { "aria-labelledby": headerId }
+            : { "aria-label": "Content" }),
+        })}
+      >
+        {children}
+      </div>
+    );
+  },
+);

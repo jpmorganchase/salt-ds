@@ -1,0 +1,47 @@
+.saltDrawerHeader {
+  padding: var(--salt-spacing-300);
+  display: flex;
+  flex-direction: row;
+  gap: var(--salt-spacing-100);
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+/*TODO: check if can use better slot names for all 3 header blocks: container -> content, actionsContainer -> actions, header -> heading*/
+.saltDrawerHeader-header {
+  margin: 0;
+}
+
+.saltDrawerHeader-container {
+  flex-grow: 1;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-50);
+  padding-top: calc((var(--salt-size-base) - var(--salt-text-h2-lineHeight)) / 2);
+  align-items: flex-start;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.saltDrawerHeader-header > .saltText {
+  margin: 0;
+}
+
+.saltDrawerHeader-actionsContainer {
+  align-self: flex-start;
+}
+
+.saltDrawerHeader-withAccent {
+  position: relative;
+}
+
+.saltDrawerHeader-withAccent::before {
+  content: "";
+  position: absolute;
+  top: var(--salt-spacing-300);
+  bottom: var(--salt-spacing-300);
+  left: 0;
+  width: var(--salt-size-bar);
+  background: var(--salt-sentiment-accent-background);
+}

@@ -12,6 +12,7 @@ import {
   forwardRef,
   type PropsWithChildren,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 import { Scrim } from "../scrim";
@@ -22,6 +23,7 @@ import {
   useForkRef,
 } from "../utils";
 import drawerCss from "./Drawer.css";
+import { DrawerContext } from "./DrawerContext";
 
 interface ConditionalScrimWrapperProps extends PropsWithChildren {
   condition: boolean;
@@ -82,6 +84,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       disableDismiss,
       disableScrim,
       initialFocus,
+      "aria-labelledby": ariaLabelledBy,
       ...rest
     } = props;
 
@@ -93,6 +96,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     });
 
     const [showComponent, setShowComponent] = useState(false);
+    const [headerId, setHeaderId] = useState<string | undefined>(undefined);
     const { Component: FloatingComponent } = useFloatingComponent();
 
     const { context, floating, elements } = useFloatingUI({
@@ -120,36 +124,42 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [open, showComponent]);
 
+    const contextValue = useMemo(() => ({ headerId, setHeaderId }), [headerId]);
+
     return (
-      <ConditionalScrimWrapper condition={showComponent && !disableScrim}>
-        <FloatingComponent
-          open={showComponent}
-          ref={handleRef}
-          role={"dialog"}
-          width={elements.floating?.offsetWidth}
-          height={elements.floating?.offsetHeight}
-          aria-modal="true"
-          focusManagerProps={{
-            context: context,
-            initialFocus,
-            outsideElementsInert: true,
-          }}
-          className={clsx(
-            withBaseName(),
-            withBaseName(position),
-            {
-              [withBaseName("enterAnimation")]: open,
-              [withBaseName("exitAnimation")]: !open,
-              [withBaseName(variant)]: variant,
-            },
-            className,
-          )}
-          {...getFloatingProps()}
-          {...rest}
-        >
-          {children}
-        </FloatingComponent>
-      </ConditionalScrimWrapper>
+      <DrawerContext.Provider value={contextValue}>
+        <ConditionalScrimWrapper condition={showComponent && !disableScrim}>
+          <FloatingComponent
+            open={showComponent}
+            ref={handleRef}
+            role={"dialog"}
+            width={elements.floating?.offsetWidth}
+            height={elements.floating?.offsetHeight}
+            aria-modal="true"
+            aria-labelledby={clsx(ariaLabelledBy, headerId) || undefined}
+            focusManagerProps={{
+              context: context,
+              initialFocus,
+              outsideElementsInert: true,
+            }}
+            className={clsx(
+              withBaseName(),
+              withBaseName(position),
+              {
+                [withBaseName("enterAnimation")]: open,
+                [withBaseName("exitAnimation")]: !open,
+                [withBaseName(variant)]: variant,
+                [withBaseName("hasHeader")]: headerId,
+              },
+              className,
+            )}
+            {...getFloatingProps()}
+            {...rest}
+          >
+            {children}
+          </FloatingComponent>
+        </ConditionalScrimWrapper>
+      </DrawerContext.Provider>
     );
   },
 );

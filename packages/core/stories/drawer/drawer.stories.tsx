@@ -5,6 +5,8 @@ import {
   ComboBox,
   Drawer,
   DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
   type DrawerProps,
   FlexItem,
   FlexLayout,
@@ -19,6 +21,7 @@ import {
   Text,
   useId,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   type ChangeEvent,
@@ -440,6 +443,61 @@ export const InitialFocusRef: StoryFn<DrawerProps> = (args) => {
           <Input inputRef={inputRef} inputProps={{ "aria-label": "Third" }} />
           <Button>Fourth</Button>
         </StackLayout>
+      </Drawer>
+    </>
+  );
+};
+
+export const WithHeader: StoryFn<DrawerProps> = (args) => {
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const closeButton = (
+    <Button
+      aria-label="Close drawer"
+      appearance="transparent"
+      onClick={handleClose}
+    >
+      <CloseIcon aria-hidden />
+    </Button>
+  );
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open Drawer</Button>
+      <Drawer
+        {...args}
+        open={open}
+        onOpenChange={setOpen}
+        position="right"
+        style={{ width: 400 }}
+      >
+        <DrawerHeader
+          header="Check deposit #1278"
+          description="Pending transaction review"
+          actions={closeButton}
+        />
+        <DrawerContent>
+          <StackLayout>
+            <Text>
+              Incididunt adipisicing deserunt nostrud ullamco consequat
+              consectetur magna id do irure labore fugiat. Eiusmod pariatur
+              officia elit ad. Ullamco adipisicing Lorem amet velit in do
+              reprehenderit nostrud eu aute voluptate quis quis.
+            </Text>
+            {Array.from({ length: 12 }, (_, index) => `Field ${index + 1}`).map(
+              (label) => (
+                <FormField key={label}>
+                  <FormFieldLabel>{label}</FormFieldLabel>
+                  <Input />
+                </FormField>
+              ),
+            )}
+          </StackLayout>
+        </DrawerContent>
       </Drawer>
     </>
   );
