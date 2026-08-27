@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/schemas/salt-snapshot-package-compatibility-1.json",
+  "title": "Salt pre-stable snapshot package compatibility policy v1",
+  "type": "object",
+  "required": ["$schema", "schema_version", "policy_id", "decision_status", "approved_at", "approval_basis", "packages", "first_protected_transition"],
+  "properties": {
+    "$schema": { "const": "https://www.saltdesignsystem.com/ai/schemas/salt-snapshot-package-compatibility-1.json" },
+    "schema_version": { "const": "1.0.0" },
+    "policy_id": { "const": "salt-ai-unused-test-snapshots/1" },
+    "decision_status": { "const": "approved" },
+    "approved_at": { "type": "string", "format": "date" },
+    "approval_basis": { "type": "string", "minLength": 1 },
+    "packages": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["name", "allowed_versions", "expected_dist_tags", "allowed_repository_directories", "require_integrity", "require_provenance", "expected_deprecated_versions"],
+        "properties": {
+          "name": { "enum": ["@salt-ds/cli", "@salt-ds/mcp"] },
+          "allowed_versions": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^0\\.0\\.0-snapshot-[0-9]{14}$" }
+          },
+          "expected_dist_tags": {
+            "type": "object",
+            "required": ["latest", "snapshot"],
+            "properties": {
+              "latest": { "type": "string", "pattern": "^0\\.0\\.0-snapshot-[0-9]{14}$" },
+              "snapshot": { "type": "string", "pattern": "^0\\.0\\.0-snapshot-[0-9]{14}$" }
+            },
+            "additionalProperties": false
+          },
+          "allowed_repository_directories": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^packages/[a-z0-9-]+$" }
+          },
+          "require_integrity": { "const": true },
+          "require_provenance": { "const": true },
+          "expected_deprecated_versions": {
+            "type": "array",
+            "maxItems": 0
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "first_protected_transition": {
+      "type": "object",
+      "required": ["minimum_version", "preserve_snapshot_runtime_api", "require_protected_release", "require_exact_registry_readback", "deprecate_approved_snapshots", "ship_action", "omit_action", "require_successor_namespace_policy", "unexpected_registry_identity_action"],
+      "properties": {
+        "minimum_version": { "const": "1.0.0" },
+        "preserve_snapshot_runtime_api": { "const": false },
+        "require_protected_release": { "const": true },
+        "require_exact_registry_readback": { "const": true },
+        "deprecate_approved_snapshots": { "const": true },
+        "ship_action": { "const": "activate-stable-and-remove-snapshot-tag" },
+        "omit_action": { "const": "deprecate-snapshots-and-remove-all-dist-tags" },
+        "require_successor_namespace_policy": { "const": true },
+        "unexpected_registry_identity_action": { "const": "stop" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

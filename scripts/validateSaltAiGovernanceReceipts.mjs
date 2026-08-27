@@ -75,6 +75,19 @@ for (const check of receiptChecks) {
   );
 }
 
+validate(
+  await validator("saltSnapshotPackageCompatibilityV1.schema.json"),
+  await readJson(
+    path.join(
+      repositoryRoot,
+      "tooling",
+      "ai",
+      "snapshot-package-compatibility-v1.json",
+    ),
+  ),
+  "snapshot package compatibility policy",
+);
+
 const validateIndex = await validator("saltPlanEvidenceIndexV1.schema.json");
 const fixtureDirectory = path.join(
   repositoryRoot,
@@ -94,5 +107,5 @@ for (const name of fixtureNames) {
 }
 
 console.log(
-  `Salt AI governance receipts schema-validated (${receiptChecks.length} receipts, ${validFixtureCount} valid tracker fixtures; ${fixtureNames.length - validFixtureCount} hostile fixtures exercised separately).`,
+  `Salt AI governance evidence schema-validated (${receiptChecks.length} receipts, 1 compatibility policy, ${validFixtureCount} valid tracker fixtures; ${fixtureNames.length - validFixtureCount} hostile tracker fixtures exercised separately).`,
 );

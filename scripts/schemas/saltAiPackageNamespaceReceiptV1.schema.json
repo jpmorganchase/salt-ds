@@ -3,7 +3,7 @@
   "$id": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-package-namespace-receipt-1.json",
   "title": "Salt AI package namespace receipt v1",
   "type": "object",
-  "required": ["schema_version", "kind", "mode", "source_commit", "checked_at", "expires_at", "registry", "scope", "scope_control", "publisher", "packages", "policy_digest", "result"],
+  "required": ["schema_version", "kind", "mode", "source_commit", "checked_at", "expires_at", "registry", "scope", "scope_control", "publisher", "compatibility_policy", "compatibility_fixture_count", "packages", "policy_digest", "result"],
   "properties": {
     "$schema": { "const": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-package-namespace-receipt-1.json" },
     "schema_version": { "const": "1.0.0" },
@@ -16,6 +16,18 @@
     "scope": { "const": "@salt-ds" },
     "scope_control": { "type": "object" },
     "publisher": { "type": "object" },
+    "compatibility_policy": {
+      "type": "object",
+      "required": ["path", "policy_id", "decision_status", "digest"],
+      "properties": {
+        "path": { "const": "tooling/ai/snapshot-package-compatibility-v1.json" },
+        "policy_id": { "const": "salt-ai-unused-test-snapshots/1" },
+        "decision_status": { "const": "approved" },
+        "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+      },
+      "additionalProperties": false
+    },
+    "compatibility_fixture_count": { "type": "integer", "minimum": 7 },
     "packages": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "object" } },
     "policy_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
     "result": { "enum": ["pass", "fail"] }

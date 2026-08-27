@@ -34,6 +34,18 @@ const output = path.resolve(
   ),
 );
 const config = await readJson(configPath);
+const compatibilityPolicyPath = path.resolve(
+  repositoryRoot,
+  config.compatibility_policy_path,
+);
+const compatibilityPolicy = await readJson(compatibilityPolicyPath);
+assert(
+  compatibilityPolicy.decision_status === "approved",
+  "Snapshot compatibility policy is not approved",
+);
+const compatibilityByName = new Map(
+  compatibilityPolicy.packages.map((entry) => [entry.name, entry]),
+);
 
 async function livePackage(name, includeVersionIdentities) {
   const response = await fetch(
@@ -119,6 +131,147 @@ const normalizedRepository = (value) =>
 const repositoryDirectory = (value) =>
   typeof value === "object" && value !== null ? value.directory ?? null : null;
 
+function compatibilityFindings(policy, observed, approved) {
+  if (policy.existing_identity === "must-be-absent") {
+    return ["existing-versions-forbidden"];
+  }
+  if (policy.existing_identity !== "approved-test-snapshot-lineage") {
+    return ["unsupported-existing-identity-policy"];
+  }
+  if (
+    policy.compatibility_policy_id !== compatibilityPolicy.policy_id ||
+    !approved
+  ) {
+    return ["missing-approved-snapshot-policy"];
+  }
+
+  const findings = [];
+  const identities = observed.version_identities ?? [];
+  if (identities.length !== observed.versions.length) {
+    findings.push("missing-version-identities");
+  }
+  if (
+    stableJson(observed.versions) !==
+    stableJson([...approved.allowed_versions].sort())
+  ) {
+    findings.push("version-set-mismatch");
+  }
+  if (stableJson(observed.dist_tags) !== stableJson(approved.expected_dist_tags)) {
+    findings.push("dist-tags-mismatch");
+  }
+  if (
+    stableJson(observed.deprecated_versions) !==
+    stableJson(approved.expected_deprecated_versions)
+  ) {
+    findings.push("deprecation-state-mismatch");
+  }
+  for (const identity of identities) {
+    if (!/^0\.0\.0-snapshot-[0-9]{14}$/u.test(identity.version)) {
+      findings.push("non-snapshot-version");
+    }
+    if (
+      normalizedRepository(identity.repository) !==
+      normalizedRepository(config.expected_repository)
+    ) {
+      findings.push("repository-mismatch");
+    }
+    if (
+      !approved.allowed_repository_directories.includes(
+        repositoryDirectory(identity.repository),
+      )
+    ) {
+      findings.push("repository-directory-mismatch");
+    }
+    if (
+      approved.require_integrity &&
+      !/^sha512-[A-Za-z0-9+/]+={0,2}$/u.test(identity.integrity ?? "")
+    ) {
+      findings.push("missing-integrity");
+    }
+    if (
+      approved.require_provenance &&
+      identity.attestations?.provenance?.predicateType !==
+        "https://slsa.dev/provenance/v1"
+    ) {
+      findings.push("missing-provenance");
+    }
+  }
+  return [...new Set(findings)].sort();
+}
+
+function verifyCompatibilityFixtures() {
+  const version = "0.0.0-snapshot-20260827000000";
+  const approved = {
+    allowed_versions: [version],
+    expected_dist_tags: { latest: version, snapshot: version },
+    allowed_repository_directories: ["packages/legacy"],
+    require_integrity: true,
+    require_provenance: true,
+    expected_deprecated_versions: [],
+  };
+  const policy = {
+    name: "@salt-ds/fixture",
+    existing_identity: "approved-test-snapshot-lineage",
+    compatibility_policy_id: compatibilityPolicy.policy_id,
+  };
+  const identity = {
+    version,
+    deprecated: null,
+    repository: {
+      type: "git",
+      url: "git+https://github.com/jpmorganchase/salt-ds.git",
+      directory: "packages/legacy",
+    },
+    integrity: `sha512-${Buffer.alloc(64).toString("base64")}`,
+    attestations: {
+      provenance: { predicateType: "https://slsa.dev/provenance/v1" },
+    },
+  };
+  const observed = {
+    versions: [version],
+    dist_tags: approved.expected_dist_tags,
+    deprecated_versions: [],
+    version_identities: [identity],
+  };
+  assert(
+    compatibilityFindings(policy, observed, approved).length === 0,
+    "Valid snapshot compatibility fixture was rejected",
+  );
+  const hostile = [
+    { ...observed, versions: [...observed.versions, `${version}-extra`] },
+    {
+      ...observed,
+      versions: ["1.0.0"],
+      version_identities: [{ ...identity, version: "1.0.0" }],
+    },
+    { ...observed, dist_tags: { ...observed.dist_tags, latest: "1.0.0" } },
+    {
+      ...observed,
+      version_identities: [
+        {
+          ...identity,
+          repository: { ...identity.repository, directory: "packages/foreign" },
+        },
+      ],
+    },
+    {
+      ...observed,
+      version_identities: [{ ...identity, integrity: null }],
+    },
+    {
+      ...observed,
+      version_identities: [{ ...identity, attestations: null }],
+    },
+  ];
+  for (const [index, fixture] of hostile.entries()) {
+    assert(
+      compatibilityFindings(policy, fixture, approved).length > 0,
+      `Hostile snapshot compatibility fixture ${index + 1} was accepted`,
+    );
+  }
+  return hostile.length + 1;
+}
+
 assert(
   normalizedRepository(anchor.repository) ===
     normalizedRepository(config.expected_repository),
@@ -150,25 +303,19 @@ const packages = config.packages
     if (observed.status === "absent") {
       return { ...observed, disposition: "safe_absent" };
     }
-    const repositoryMatches =
-      normalizedRepository(observed.repository) ===
-      normalizedRepository(config.expected_repository);
-    const directoryMatches =
-      repositoryDirectory(observed.repository) ===
-      policy.expected_repository_directory;
-    const identityAllowed = policy.existing_identity !== "must-be-absent";
+    const identityFindings = compatibilityFindings(
+      policy,
+      observed,
+      compatibilityByName.get(policy.name),
+    );
     return {
       ...observed,
       disposition:
-        repositoryMatches && directoryMatches && identityAllowed
-          ? "owned_compatible"
+        identityFindings.length === 0
+          ? "owned_compatible_test_snapshots"
           : "incompatible_existing_identity",
       expected_repository_directory: policy.expected_repository_directory,
-      identity_findings: [
-        ...(repositoryMatches ? [] : ["repository-mismatch"]),
-        ...(directoryMatches ? [] : ["repository-directory-mismatch"]),
-        ...(identityAllowed ? [] : ["existing-versions-forbidden"]),
-      ],
+      identity_findings: identityFindings,
     };
   })
   .sort((left, right) => left.name.localeCompare(right.name));
@@ -180,6 +327,7 @@ assert(!Number.isNaN(now.valueOf()), "--now must be an ISO-8601 timestamp");
 const expiresAt = new Date(now.valueOf() + config.receipt_ttl_hours * 3_600_000);
 const sourceCommit = await gitHeadCommit();
 assert(commitPattern(sourceCommit), "Unable to resolve the source commit");
+const compatibilityFixtureCount = verifyCompatibilityFixtures();
 
 if (args.get("--expected-receipt")) {
   const previous = await readJson(
@@ -210,7 +358,7 @@ if (args.get("--expected-receipt")) {
     assert(
       prior.disposition === current.disposition ||
         (prior.disposition === "safe_absent" &&
-          current.disposition === "owned_compatible"),
+          current.disposition.startsWith("owned_compatible")),
       `Namespace ${prior.name} changed incompatibly`,
     );
   }
@@ -241,6 +389,13 @@ const receipt = {
     anchor_latest_attestations: anchor.latest_attestations,
   },
   publisher: config.publisher,
+  compatibility_policy: {
+    path: config.compatibility_policy_path,
+    policy_id: compatibilityPolicy.policy_id,
+    decision_status: compatibilityPolicy.decision_status,
+    digest: sha256(await readFile(compatibilityPolicyPath)),
+  },
+  compatibility_fixture_count: compatibilityFixtureCount,
   packages,
   policy_digest: sha256(await readFile(configPath)),
   result: packages.some(
