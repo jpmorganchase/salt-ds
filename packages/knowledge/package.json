@@ -13,39 +13,53 @@
     "node": ">=22"
   },
   "sideEffects": false,
-  "files": [],
+  "files": [
+    "manifest.json",
+    "index.json",
+    "indexes",
+    "records",
+    "content",
+    "examples",
+    "markdown",
+    "compatibility",
+    "support",
+    "schemas"
+  ],
   "publishExports": {
     ".": {
-      "types": "./dist-types/index.d.ts",
-      "import": "./dist-es/index.js",
-      "require": "./dist-cjs/index.js"
+      "types": "./dist-types/public.d.ts",
+      "import": "./dist-es/public.js",
+      "require": "./dist-cjs/public.js"
     },
     "./package.json": "./package.json"
   },
-  "typescriptInclude": [
-    "src/index.ts"
-  ],
+  "publishEntryPath": "src/public.ts",
+  "typescriptInclude": ["src/public.ts"],
   "typescriptRootDir": "src",
   "publishTypingEntryOnly": false,
   "publishPreserveModules": false,
   "publishSourceMaps": false,
+  "publishIncludeReadme": false,
+  "publishIncludeChangelog": false,
   "publishScriptExcludes": [
     "build",
     "build:knowledge",
     "build:package",
     "prepack"
   ],
-  "publishBuildIdentityManifest": "generated/catalog-manifest.json",
-  "publishBuildIdentityInputPatterns": {
+  "publishKnowledgeManifest": "generated/manifest.json",
+  "publishKnowledgePublicationInventory": "generated/publication-files.json",
+  "publishKnowledgeInputPatterns": {
     "semantic": "src/build/catalogSemanticInputPatterns.json",
     "compiler": "src/build/catalogCompilerInputPatterns.json"
   },
-  "publishCatalogArtifactPaths": {
-    "generationDirectory": "catalog-generations",
-    "publicationInventoryFile": "catalog-publication.json",
-    "schemaArtifactKind": "json_schema",
-    "buildArtifactsField": "build_artifacts"
-  },
+  "publishExtraCopyPaths": [
+    {
+      "from": "generated",
+      "to": ".",
+      "filesFrom": "generated/publication-files.json"
+    }
+  ],
   "scripts": {
     "build:knowledge": "node ./scripts/buildKnowledge.mjs",
     "build:package": "yarn node ../../scripts/build.mjs",

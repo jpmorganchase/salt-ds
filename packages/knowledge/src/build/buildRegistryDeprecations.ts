@@ -2768,7 +2768,7 @@ export async function extractDeprecations(
   }
   const sourcePaths = (
     await globCatalogInputs(
-      "packages/*/src/**/*.{ts,tsx,mts,cts,js,jsx,mjs,cjs}",
+      "packages/{ag-grid-theme,core,countries,date-adapters,date-components,embla-carousel,highcharts-theme,icons,lab,react-resizable-panels-theme,styles,theme,window}/src/**/*.{ts,tsx,mts,cts,js,jsx,mjs,cjs}",
       {
         cwd: repoRoot,
         absolute: true,

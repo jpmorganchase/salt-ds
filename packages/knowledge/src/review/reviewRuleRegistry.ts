@@ -5,8 +5,10 @@ import {
   resolvePackageKnowledgeApplicability,
   unknownKnowledgeApplicability,
 } from "../applicability/knowledgeApplicability.js";
-import type { CatalogRuntimeFamilyName } from "../catalog/catalogSchemaV2.js";
-import type { CatalogStoreV2 } from "../catalog/catalogStoreV2.js";
+import type {
+  KnowledgeRecordFamily,
+  KnowledgeRecordStore,
+} from "../manifest/knowledgeStore.js";
 import {
   evaluateProjectPolicyConditionV2,
   type SaltProjectPolicyIrV2,
@@ -105,7 +107,7 @@ interface ReviewRuleDefinition {
   description: string;
   evaluate: (input: {
     registry: ReviewCatalog;
-    store: CatalogStoreV2;
+    store: KnowledgeRecordStore;
     facts: readonly ParsedSubmittedFact[];
     packageVersions: ReadonlyMap<string, string | null>;
     indexes: ReviewIndexes;
@@ -185,7 +187,7 @@ function componentExportNames(component: ReviewComponent): string[] {
 
 function createReviewIndexes(
   registry: ReviewCatalog,
-  store: CatalogStoreV2,
+  store: KnowledgeRecordStore,
   facts: readonly ParsedSubmittedFact[],
 ): ReviewIndexes {
   const catalogPackageVersions = new Map(
@@ -369,8 +371,8 @@ function valueAtFieldPath(value: unknown, fieldPath: string): unknown {
 }
 
 function catalogRecordReference(
-  store: CatalogStoreV2,
-  family: CatalogRuntimeFamilyName,
+  store: KnowledgeRecordStore,
+  family: KnowledgeRecordFamily,
   id: string,
   fieldPath: string,
 ): ReviewEvidenceReference[] {
@@ -394,7 +396,7 @@ function catalogRecordReference(
 }
 
 function deprecationReferences(
-  store: CatalogStoreV2,
+  store: KnowledgeRecordStore,
   deprecation: ReviewDeprecation,
   replacement: string | null,
 ): ReviewEvidenceReference[] {
@@ -1598,7 +1600,7 @@ function evaluateProjectPolicyRules(input: {
 
 export function evaluateReviewRules(input: {
   registry: ReviewCatalog;
-  store: CatalogStoreV2;
+  store: KnowledgeRecordStore;
   facts: readonly ParsedSubmittedFact[];
   packageVersions: ReadonlyMap<string, string | null>;
   policy?: ReviewProjectPolicyContext | null;

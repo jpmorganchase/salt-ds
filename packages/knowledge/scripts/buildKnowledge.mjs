@@ -1360,61 +1360,95 @@ export async function buildCatalogRegistry(options = {}) {
           "Generator dependency inventory",
         );
       };
-      const registry = await generator.buildRegistry({
-        sourceRoot,
-        packageRoot: activePackageRoot,
-        outputDir,
-        packageVersion,
-        semanticInputPatterns,
-        compilerInputPatterns,
-        excludedPackageNames: options.excludedPackageNames ?? [
-          "@salt-ds/knowledge",
-          "@salt-ds/mcp",
-        ],
-        generatorVersion: "2.0.0",
-        inputInventory: inputBefore,
-        generatorDependencyInventory: dependencyBefore,
-        generatorReceipt: receipt,
-        assertGeneratorDependenciesStable,
-        generatorDependencySnapshotRoot: temporaryToolRoot,
-      });
-      await toolSnapshot.assertStable();
-      await assertGeneratorDependenciesStable();
-      const characterizationBaselinePath = path.join(
-        packageRoot,
-        "src",
-        "__fixtures__",
-        "unit01-semantic-characterization.json",
-      );
-      const characterizationBaselineBytes = await fs.readFile(
-        characterizationBaselinePath,
-      );
-      const characterizationBaseline = JSON.parse(
-        characterizationBaselineBytes.toString("utf8"),
-      );
-      const currentCharacterization =
-        await generator.createExtractionParityProjection({
+      const prototypeOutputDir = `${outputDir}.prototype-${process.pid}`;
+      await fs.rm(prototypeOutputDir, { recursive: true, force: true });
+      try {
+        const registry = await generator.buildRegistry({
           sourceRoot,
-          registryDir: outputDir,
+          packageRoot: activePackageRoot,
+          outputDir: prototypeOutputDir,
+          packageVersion,
+          semanticInputPatterns,
+          compilerInputPatterns,
+          excludedPackageNames: options.excludedPackageNames ?? [
+            "@salt-ds/knowledge",
+            "@salt-ds/mcp",
+          ],
+          generatorVersion: "2.0.0",
+          inputInventory: inputBefore,
+          generatorDependencyInventory: dependencyBefore,
+          generatorReceipt: receipt,
+          assertGeneratorDependenciesStable,
+          generatorDependencySnapshotRoot: temporaryToolRoot,
         });
-      const extractionParityReceipt =
-        generator.createExtractionParityReceipt({
-          baseline: characterizationBaseline,
-          baselineSource: {
-            path: toPosixPath(
-              path.relative(sourceRoot, characterizationBaselinePath),
+        await toolSnapshot.assertStable();
+        await assertGeneratorDependenciesStable();
+        const characterizationBaselinePath = path.join(
+          packageRoot,
+          "src",
+          "__fixtures__",
+          "unit01-semantic-characterization.json",
+        );
+        const characterizationBaselineBytes = await fs.readFile(
+          characterizationBaselinePath,
+        );
+        const characterizationBaseline = JSON.parse(
+          characterizationBaselineBytes.toString("utf8"),
+        );
+        const currentCharacterization =
+          await generator.createExtractionParityProjection({
+            sourceRoot,
+            registryDir: prototypeOutputDir,
+          });
+        const extractionParityReceipt =
+          generator.createExtractionParityReceipt({
+            baseline: characterizationBaseline,
+            baselineSource: {
+              path: toPosixPath(
+                path.relative(sourceRoot, characterizationBaselinePath),
+              ),
+              sha256: sha256(characterizationBaselineBytes),
+              bytes: characterizationBaselineBytes.byteLength,
+            },
+            current: currentCharacterization,
+          });
+        const [semanticInputInventory, compilerInputInventory] =
+          await Promise.all([
+            generator.createCatalogInputInventory(
+              sourceRoot,
+              semanticInputPatterns,
             ),
-            sha256: sha256(characterizationBaselineBytes),
-            bytes: characterizationBaselineBytes.byteLength,
-          },
-          current: currentCharacterization,
+            generator.createCatalogInputInventory(
+              sourceRoot,
+              compilerInputPatterns,
+            ),
+          ]);
+        await generator.buildKnowledgeV1({
+          sourceRoot,
+          packageRoot: activePackageRoot,
+          prototypeRoot: prototypeOutputDir,
+          outputDir,
+          packageVersion,
+          registry,
+          semanticInputInventory,
+          compilerInputInventory,
+          generatorReceipt: receipt,
+          generatorDigest,
         });
-      await fs.writeFile(
-        path.join(outputDir, "extraction-parity.json"),
-        `${canonicalJson(extractionParityReceipt)}\n`,
-        { flag: "wx" },
-      );
-      return registry;
+        await fs.writeFile(
+          path.join(outputDir, "extraction-parity.json"),
+          `${canonicalJson(extractionParityReceipt)}\n`,
+          { flag: "wx" },
+        );
+        return registry;
+      } finally {
+        await fs.rm(prototypeOutputDir, {
+          recursive: true,
+          force: true,
+          maxRetries: 5,
+          retryDelay: 100,
+        });
+      }
     } finally {
       await esbuildToStop?.stop?.();
       await fs.rm(temporaryToolRoot, {

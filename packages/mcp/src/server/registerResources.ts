@@ -15,7 +15,7 @@ import {
   normalizeCatalogPublicCitation,
   serializeCatalogResourceEnvelope,
   serializePublicResourceJson,
-  type SaltCatalogRuntimeContext,
+  type KnowledgeRuntimeContext,
 } from "../core/runtime.js";
 import type { ProjectAccessPolicy } from "./projectAccess.js";
 import {
@@ -35,31 +35,36 @@ function singleVariable(value: string | string[] | undefined): string | null {
 }
 
 function canonicalArtifact(
-  context: SaltCatalogRuntimeContext,
+  context: KnowledgeRuntimeContext,
   family: ReturnType<typeof canonicalCatalogRuntimeFamilies>[number],
 ) {
-  const artifact = context.store.manifest.artifacts.find(
-    (candidate) => candidate.family === family && candidate.canonical,
-  );
-  if (!artifact) {
-    throw new Error(`Catalog manifest omitted canonical family '${family}'.`);
-  }
-  return artifact;
+  return {
+    record_count: context.store.getFamily(family).length,
+    sha256:
+      context.store.manifest.bundle_digest ??
+      context.store.manifest.semantic_digest,
+  };
 }
 
 function publicCatalogManifest(
   server: McpServer,
-  context: SaltCatalogRuntimeContext,
+  context: KnowledgeRuntimeContext,
 ) {
   const metadata = getSaltMcpRuntimeMetadata(context);
   return {
     server_version: metadata.server_version,
-    schema_version: context.store.manifest.schema_version,
-    catalog_version: context.store.manifest.catalog_version,
+    schema_version: context.store.manifest.schema_version ?? "1.0.0",
+    catalog_version:
+      context.store.manifest.bundle_version ??
+      context.store.manifest.catalog_version ??
+      "0.0.0",
+    bundle_digest:
+      context.store.manifest.bundle_digest ??
+      context.store.manifest.semantic_digest,
     semantic_digest: context.store.manifest.semantic_digest,
-    input_inventory_digest: context.store.manifest.input_inventory_digest,
-    generator_digest: context.store.manifest.generator.digest,
-    source_revision: context.store.manifest.source_revision,
+    semantic_source_digest:
+      context.store.manifest.semantic_source_digest ?? null,
+    compiler_digest: context.store.manifest.compiler_digest ?? null,
     negotiated_mcp_protocol_revision:
       server.server.getNegotiatedProtocolVersion() ?? null,
     supported_mcp_protocol_revisions: [...SALT_MCP_SUPPORTED_PROTOCOL_VERSIONS],
@@ -78,7 +83,7 @@ function publicCatalogManifest(
 
 export function registerSaltResources(
   server: McpServer,
-  context: SaltCatalogRuntimeContext & {
+  context: KnowledgeRuntimeContext & {
     projectAccess: ProjectAccessPolicy;
     projectPolicySnapshots: ProjectPolicySnapshotCache;
   },

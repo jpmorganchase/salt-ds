@@ -766,11 +766,14 @@ export async function extractPackages(
   excludedPackageNames: ReadonlySet<string>,
 ): Promise<PackageRecord[]> {
   const packageManifestPaths = (
-    await globCatalogInputs("packages/*/package.json", {
-      cwd: repoRoot,
-      absolute: true,
-      onlyFiles: true,
-    })
+    await globCatalogInputs(
+      "packages/{ag-grid-theme,core,countries,date-adapters,date-components,embla-carousel,highcharts-theme,icons,lab,react-resizable-panels-theme,styles,theme,window}/package.json",
+      {
+        cwd: repoRoot,
+        absolute: true,
+        onlyFiles: true,
+      },
+    )
   ).sort(compareOrdinalStrings);
 
   const packages: PackageRecord[] = [];

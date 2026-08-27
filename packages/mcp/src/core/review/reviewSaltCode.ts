@@ -10,7 +10,7 @@ import {
   type CompleteReviewArtifactAnalysis,
   type CompleteReviewFinding,
   type CompleteReviewSaltCodeAnalysis,
-  type CatalogRuntimeFamilyName,
+  type KnowledgeRecordFamily,
   type ReviewContextSource,
   type ReviewProjectPolicyContext,
   type ReviewSaltCodeContext,
@@ -53,7 +53,7 @@ function renderPublicEvidenceLocator(
     return normalizeCatalogPublicCitation({
       kind: "catalog_record",
       manifest: context.store.manifest,
-      family: recordMatch[1] as CatalogRuntimeFamilyName,
+      family: recordMatch[1] as KnowledgeRecordFamily,
       id: decodeURIComponent(recordMatch[2]),
     });
   }

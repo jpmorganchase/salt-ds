@@ -17,7 +17,7 @@
     "release": "yarn verify:salt-ai-release-embargo && yarn build && yarn release:verify:after-build && yarn changeset publish",
     "release:verify:after-build": "yarn check:core-react-types && yarn check:date-adapters:pack && yarn release:verify:mcp:after-build",
     "release:verify:mcp": "yarn workspace @salt-ds/mcp build && yarn release:verify:mcp:after-build",
-    "release:verify:mcp:after-build": "yarn typecheck && yarn typecheck:ai-tooling && yarn test:ai-tooling && yarn workspace @salt-ds/mcp measure:runtime-loc && yarn workspace @salt-ds/mcp measure:surface && yarn build:ai-tooling && yarn check:ai-tooling:pack -- --profile extraction-parity --report dist/salt-ai-pack/unit-02.json && yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit-02.json",
+    "release:verify:mcp:after-build": "yarn typecheck && yarn typecheck:ai-tooling && yarn test:ai-tooling && yarn workspace @salt-ds/mcp measure:runtime-loc && yarn workspace @salt-ds/mcp measure:surface && yarn build:ai-tooling && yarn check:ai-tooling:pack -- --profile pre-agent-support --report dist/salt-ai-pack/unit-03.json && yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit-03.json",
     "build:ai-tooling": "yarn workspace @salt-ds/knowledge build && yarn workspace @salt-ds/mcp build",
     "build:ag-grid-theme": "yarn workspace @salt-ds/ag-grid-theme build",
     "build:highcharts-theme": "yarn workspace @salt-ds/highcharts-theme build",

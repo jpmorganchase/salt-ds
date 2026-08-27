@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/schemas/search-index-1.json",
+  "title": "Salt knowledge search index v1",
+  "type": "object",
+  "required": ["contract", "schema_version", "shards"],
+  "properties": {
+    "contract": { "const": "salt-search-index/1" },
+    "schema_version": { "const": "1.0.0" },
+    "shards": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["path", "first_key", "last_key", "records", "bytes", "sha256"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "first_key": { "type": "string", "minLength": 1 },
+          "last_key": { "type": "string", "minLength": 1 },
+          "records": { "type": "integer", "minimum": 1 },
+          "bytes": { "type": "integer", "minimum": 1 },
+          "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -722,12 +722,15 @@ export async function derivePatternImplementationAccessibilitySignals(
 
   const patternSlug = toKebabCase(pattern.name);
   const sourcePaths = (
-    await globCatalogInputs(`packages/*/src/${patternSlug}/**/*.{ts,tsx}`, {
-      cwd: repoRoot,
-      absolute: true,
-      onlyFiles: true,
-      ignore: [...NON_PRODUCTION_IMPLEMENTATION_GLOB_IGNORES],
-    })
+    await globCatalogInputs(
+      `packages/{ag-grid-theme,core,countries,date-adapters,date-components,embla-carousel,highcharts-theme,icons,lab,react-resizable-panels-theme,styles,theme,window}/src/${patternSlug}/**/*.{ts,tsx}`,
+      {
+        cwd: repoRoot,
+        absolute: true,
+        onlyFiles: true,
+        ignore: [...NON_PRODUCTION_IMPLEMENTATION_GLOB_IGNORES],
+      },
+    )
   ).sort(compareOrdinalStrings);
   const accessibilitySignals: PatternAccessibilitySignal[] = [];
 

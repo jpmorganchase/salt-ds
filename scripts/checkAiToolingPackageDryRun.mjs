@@ -35,6 +35,7 @@ import {
   resolvePackageArchiveEntry,
   resolvePackageRelativeArchivePath,
 } from "./packageArchivePath.mjs";
+import { verifyKnowledgeArtifactContract } from "./knowledgeArtifactContract.mjs";
 
 const repoRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -65,13 +66,13 @@ function parseOptions(argv) {
     options[token.slice(2)] = value;
     index += 1;
   }
-  if (options.profile !== "extraction-parity") {
+  if (!new Set(["extraction-parity", "pre-agent-support"]).has(options.profile)) {
     throw new Error(
-      "Unit 02 package checks require --profile extraction-parity.",
+      "AI package checks require --profile extraction-parity or pre-agent-support.",
     );
   }
   if (!options.report) {
-    throw new Error("Unit 02 package checks require an explicit --report.");
+    throw new Error("AI package checks require an explicit --report.");
   }
   const reportPath = path.resolve(repoRoot, options.report);
   const reportRoot = path.join(repoRoot, "dist", "salt-ai-pack");
@@ -96,8 +97,7 @@ const forbiddenPublishPathSegments = [
   "workflow-examples",
 ];
 
-const packages = [
-  {
+const extractionParityKnowledgePackage = {
     name: "@salt-ds/knowledge",
     dir: "dist/salt-ds-knowledge",
     requiredPaths: ["package.json", "dist-cjs", "dist-es", "dist-types"],
@@ -148,8 +148,102 @@ const packages = [
     maxGeneratedBytes: 0,
     maxSourceMapBytes: 0,
     maxEntryCount: 80,
+  };
+
+const preAgentKnowledgePackage = {
+  name: "@salt-ds/knowledge",
+  dir: "dist/salt-ds-knowledge",
+  requiredPaths: [
+    "package.json",
+    "manifest.json",
+    "index.json",
+    "indexes/artifacts/root.json",
+    "compatibility/item-applicability.json",
+    "schemas/knowledge-manifest-1.schema.json",
+    "dist-cjs/public.js",
+    "dist-es/public.js",
+    "dist-types/public.d.ts",
+  ],
+  expectedFilesField: [
+    "manifest.json",
+    "index.json",
+    "indexes",
+    "records",
+    "content",
+    "examples",
+    "markdown",
+    "compatibility",
+    "support",
+    "schemas",
+    "dist-cjs",
+    "dist-es",
+    "dist-types",
+  ],
+  forbiddenManifestFields: [
+    "publishEntryPath",
+    "publishBuildIdentityManifest",
+    "publishBuildIdentityInputPatterns",
+    "publishCatalogArtifactPaths",
+    "publishKnowledgeManifest",
+    "publishKnowledgePublicationInventory",
+    "publishKnowledgeInputPatterns",
+    "publishExtraCopyPaths",
+    "publishTypingEntryPath",
+    "publishTypingEntryOnly",
+    "publishPreserveModules",
+    "publishIncludeReadme",
+    "publishIncludeChangelog",
+    "publishSourceMaps",
+    "saltDocs",
+    "typescriptInclude",
+    "typescriptRootDir",
+  ],
+  forbiddenPublishConfigFields: ["directory"],
+  forbiddenPublishedDependencies: [
+    "@salt-ds/mcp",
+    "@salt-ds/cli",
+    "@modelcontextprotocol/server",
+  ],
+  expectedModuleMarkers: {
+    "dist-cjs/package.json": "commonjs",
+    "dist-es/package.json": "module",
   },
-  {
+  expectedBundleFiles: {
+    "dist-cjs": ["package.json", "public.js"],
+    "dist-es": ["package.json", "public.js"],
+  },
+  allowedTopLevelPaths: [
+    "LICENSE",
+    "compatibility",
+    "content",
+    "dist-cjs",
+    "dist-es",
+    "dist-types",
+    "examples",
+    "index.json",
+    "indexes",
+    "manifest.json",
+    "markdown",
+    "package.json",
+    "records",
+    "schemas",
+    "support",
+  ],
+  forbiddenTextMarkers: [
+    "catalog-generations",
+    "catalog-manifest.json",
+    "extraction-parity@1",
+  ],
+  allowMarkdown: true,
+  knowledgeV1: true,
+  maxPackageBytes: 10 * 1024 * 1024,
+  maxUnpackedBytes: 25 * 1024 * 1024,
+  maxGeneratedBytes: 0,
+  maxSourceMapBytes: 0,
+  maxEntryCount: 640,
+};
+
+const mcpPackage = {
     name: "@salt-ds/mcp",
     dir: "dist/salt-ds-mcp",
     requiredPaths: [
@@ -208,7 +302,13 @@ const packages = [
     maxGeneratedBytes: 0,
     maxSourceMapBytes: 0,
     maxEntryCount: 16,
-  },
+  };
+
+const packages = [
+  options.profile === "pre-agent-support"
+    ? preAgentKnowledgePackage
+    : extractionParityKnowledgePackage,
+  mcpPackage,
 ];
 
 function fail(message) {
@@ -986,6 +1086,84 @@ function assertJsonSchema(value, schemaFileName, label) {
   }
 }
 
+function assertPackedKnowledgeV1(packageDir, packedPaths, packageVersion) {
+  const verified = verifyKnowledgeArtifactContract({
+    packageRoot: packageDir,
+    manifestPath: "manifest.json",
+  });
+  const manifest = verified.manifest;
+  if (
+    manifest.bundle_version !== packageVersion ||
+    manifest.agent_support !== undefined
+  ) {
+    throw new Error(
+      "Pre-agent Knowledge-v1 must match its package version and omit only agent_support.",
+    );
+  }
+  const schemaDirectory = path.join(packageDir, "schemas");
+  const ajv = new Ajv2020({ allErrors: true, strict: true });
+  for (const entry of readdirSync(schemaDirectory, { withFileTypes: true })) {
+    if (entry.isFile() && entry.name.endsWith(".schema.json")) {
+      ajv.addSchema(
+        JSON.parse(readFileSync(path.join(schemaDirectory, entry.name), "utf8")),
+      );
+    }
+  }
+  const validateManifest = ajv.getSchema(
+    "https://www.saltdesignsystem.com/ai/schemas/knowledge-manifest-1.json",
+  );
+  if (!validateManifest || !validateManifest(manifest)) {
+    throw new Error(
+      `Packed Knowledge manifest is not schema-valid: ${JSON.stringify(validateManifest?.errors)}`,
+    );
+  }
+  const treePaths = new Set(verified.files);
+  const treeTopLevels = new Set([
+    "compatibility",
+    "content",
+    "examples",
+    "index.json",
+    "indexes",
+    "manifest.json",
+    "markdown",
+    "records",
+    "schemas",
+    "support",
+  ]);
+  for (const packedPath of packedPaths) {
+    if (
+      treeTopLevels.has(packedPath.split("/")[0]) &&
+      !treePaths.has(packedPath)
+    ) {
+      throw new Error(
+        `Packed Knowledge contains an unlisted artifact or descriptor: ${packedPath}`,
+      );
+    }
+  }
+  for (const expectedPath of treePaths) {
+    if (!packedPaths.includes(expectedPath)) {
+      throw new Error(`Packed Knowledge omits verified tree path ${expectedPath}.`);
+    }
+  }
+  return {
+    manifest: {
+      path: "manifest.json",
+      sha256: sha256(verified.manifestBytes),
+      bytes: verified.manifestBytes.byteLength,
+    },
+    bundle_digest: manifest.bundle_digest,
+    semantic_digest: manifest.semantic_digest,
+    semantic_source_digest: manifest.semantic_source_digest,
+    compiler_digest: manifest.compiler_digest,
+    artifact_tree: {
+      node_count: manifest.artifact_tree.node_count,
+      tree_bytes: manifest.artifact_tree.tree_bytes,
+      artifact_count: manifest.artifact_tree.artifact_count,
+      artifact_bytes: manifest.artifact_tree.artifact_bytes,
+    },
+  };
+}
+
 function collectExactFileInventory(rootDirectory) {
   const files = [];
   const visit = (directory) => {
@@ -1034,6 +1212,7 @@ const stagingArtifactDirectory = mkdtempSync(
   path.join(reportParent, `.${reportBaseName}-artifacts-`),
 );
 const packageReports = [];
+let knowledgeBundleReport = null;
 
 for (const packageConfig of packages) {
   const packageDir = path.join(repoRoot, packageConfig.dir);
@@ -1118,6 +1297,21 @@ for (const packageConfig of packages) {
     });
     if (paths.length === 0) {
       fail(`${packageConfig.name} npm pack returned no packed files`);
+    }
+    if (packageConfig.knowledgeV1) {
+      try {
+        knowledgeBundleReport = assertPackedKnowledgeV1(
+          extractedPackageDir,
+          paths,
+          packed.version,
+        );
+      } catch (error) {
+        fail(
+          `${packageConfig.name} Knowledge-v1 contract failed: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+        );
+      }
     }
 
     for (const [directory, expectedFiles] of Object.entries(
@@ -1259,7 +1453,10 @@ for (const packageConfig of packages) {
     }
 
     for (const filePath of paths) {
-      if (/\.(?:md|mdx|markdown)$/iu.test(filePath)) {
+      if (
+        !packageConfig.allowMarkdown &&
+        /\.(?:md|mdx|markdown)$/iu.test(filePath)
+      ) {
         fail(`${packageConfig.name} pack includes Markdown: ${filePath}`);
       }
       const topLevelPath = filePath.split("/")[0];
@@ -1365,53 +1562,78 @@ if (mcpReport.dependencies["@salt-ds/knowledge"] !== knowledgeReport.version) {
   throw new Error("MCP does not exact-pin the packed knowledge package version.");
 }
 
-const extractionParityPath = path.join(
-  repoRoot,
-  "packages",
-  "knowledge",
-  "generated",
-  "extraction-parity.json",
-);
-if (!existsSync(extractionParityPath)) {
-  rmSync(stagingArtifactDirectory, { recursive: true, force: true });
-  throw new Error(
-    "Missing packages/knowledge/generated/extraction-parity.json. Run yarn build:ai-tooling first.",
+let extractionParityBytes = null;
+let extractionParity = null;
+let comparisonRegistryFiles = null;
+let comparisonManifest = null;
+if (options.profile === "extraction-parity") {
+  const extractionParityPath = path.join(
+    repoRoot,
+    "packages",
+    "knowledge",
+    "generated",
+    "extraction-parity.json",
   );
-}
-const extractionParityBytes = readFileSync(extractionParityPath);
-const extractionParity = JSON.parse(extractionParityBytes.toString("utf8"));
-assertJsonSchema(
-  extractionParity,
-  "saltExtractionParityV1.schema.json",
-  "Extraction parity receipt",
-);
-if (
-  extractionParity.contract !== "extraction-parity@1" ||
-  extractionParity.status !== "passed" ||
-  extractionParity.current?.semantic_digest !==
-    extractionParity.baseline?.semantic_digest
-) {
+  if (!existsSync(extractionParityPath)) {
+    rmSync(stagingArtifactDirectory, { recursive: true, force: true });
+    throw new Error(
+      "Missing packages/knowledge/generated/extraction-parity.json. Run yarn build:ai-tooling first.",
+    );
+  }
+  extractionParityBytes = readFileSync(extractionParityPath);
+  extractionParity = JSON.parse(extractionParityBytes.toString("utf8"));
+  assertJsonSchema(
+    extractionParity,
+    "saltExtractionParityV1.schema.json",
+    "Extraction parity receipt",
+  );
+  if (
+    extractionParity.contract !== "extraction-parity@1" ||
+    extractionParity.status !== "passed" ||
+    extractionParity.current?.semantic_digest !==
+      extractionParity.baseline?.semantic_digest
+  ) {
+    rmSync(stagingArtifactDirectory, { recursive: true, force: true });
+    throw new Error(
+      "The extraction parity receipt is not a passing Unit 02 receipt.",
+    );
+  }
+  comparisonRegistryFiles = collectExactFileInventory(
+    path.dirname(extractionParityPath),
+  );
+  comparisonManifest = comparisonRegistryFiles.find(
+    (entry) => entry.path === "catalog-manifest.json",
+  );
+  if (!comparisonManifest) {
+    rmSync(stagingArtifactDirectory, { recursive: true, force: true });
+    throw new Error("The comparison registry has no catalog-manifest.json.");
+  }
+} else if (!knowledgeBundleReport) {
   rmSync(stagingArtifactDirectory, { recursive: true, force: true });
-  throw new Error("The extraction parity receipt is not a passing Unit 02 receipt.");
-}
-const comparisonRegistryRoot = path.dirname(extractionParityPath);
-const comparisonRegistryFiles = collectExactFileInventory(
-  comparisonRegistryRoot,
-);
-const comparisonManifest = comparisonRegistryFiles.find(
-  (entry) => entry.path === "catalog-manifest.json",
-);
-if (!comparisonManifest) {
-  rmSync(stagingArtifactDirectory, { recursive: true, force: true });
-  throw new Error("The comparison registry has no catalog-manifest.json.");
+  throw new Error("The pre-agent pack has no verified Knowledge-v1 bundle.");
 }
 
 renameSync(stagingArtifactDirectory, finalArtifactDirectory);
 const artifactDirectoryName = path.basename(finalArtifactDirectory);
+const policy =
+  options.profile === "pre-agent-support"
+    ? {
+        id: "pre-agent-support@1",
+        publishable: false,
+        allowed_omission: "agent_support",
+        allowed_stages: ["R1_PRE_AGENT"],
+      }
+    : {
+        id: "extraction-parity@1",
+        publishable: false,
+        allowed_omission: "knowledge_v1",
+        allowed_stages: ["UNIT_02"],
+      };
 const report = {
   schema_version: "1.0.0",
   contract: "salt-ai-pack-report@1",
   policy_profile: options.profile,
+  policy_digest: sha256(Buffer.from(JSON.stringify(policy), "utf8")),
   publishable: false,
   packages: packageReports.map((entry) => ({
     name: entry.name,
@@ -1434,27 +1656,33 @@ const report = {
           ]
         : [],
     content_policy: {
-      generated_tree: false,
+      generated_tree:
+        options.profile === "pre-agent-support" &&
+        entry.name === "@salt-ds/knowledge",
       prototype_catalog: false,
       workspace_link: false,
     },
   })),
-  extraction_parity: {
-    path: "packages/knowledge/generated/extraction-parity.json",
-    sha256: sha256(extractionParityBytes),
-    bytes: extractionParityBytes.byteLength,
-    contract: extractionParity.contract,
-    status: extractionParity.status,
-    semantic_digest: extractionParity.current.semantic_digest,
-    normalized_semantic_projection_sha256:
-      extractionParity.normalized_semantic_projection_sha256,
-  },
-  comparison_registry: {
-    root: "packages/knowledge/generated",
-    semantic_digest: extractionParity.current.semantic_digest,
-    manifest: comparisonManifest,
-    files: comparisonRegistryFiles,
-  },
+  ...(options.profile === "pre-agent-support"
+    ? { knowledge_bundle: knowledgeBundleReport }
+    : {
+        extraction_parity: {
+          path: "packages/knowledge/generated/extraction-parity.json",
+          sha256: sha256(extractionParityBytes),
+          bytes: extractionParityBytes.byteLength,
+          contract: extractionParity.contract,
+          status: extractionParity.status,
+          semantic_digest: extractionParity.current.semantic_digest,
+          normalized_semantic_projection_sha256:
+            extractionParity.normalized_semantic_projection_sha256,
+        },
+        comparison_registry: {
+          root: "packages/knowledge/generated",
+          semantic_digest: extractionParity.current.semantic_digest,
+          manifest: comparisonManifest,
+          files: comparisonRegistryFiles,
+        },
+      }),
 };
 try {
   assertJsonSchema(

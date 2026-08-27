@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import type { CatalogStoreV2 } from "../catalog/catalogStoreV2.js";
+import type { KnowledgeRecordStore } from "../manifest/knowledgeStore.js";
 import type { ReviewCatalog } from "./reviewCatalogAdapter.js";
 import {
   evaluateReviewRules,
@@ -99,7 +99,7 @@ export type ReviewContextSource =
 
 export interface ReviewSaltCodeContext {
   reviewCatalog: ReviewCatalog;
-  store: CatalogStoreV2;
+  store: KnowledgeRecordStore;
   packageVersionEvidence?: Readonly<Record<string, string | null>>;
 }
 

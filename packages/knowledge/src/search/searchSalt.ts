@@ -1,19 +1,38 @@
-import {
-  CATALOG_SEARCH_TARGET_FAMILY_NAMES,
-  type CatalogRecordForFamily,
-  type CatalogSearchTargetFamilyName,
-} from "../catalog/catalogSchemaV2.js";
-import type { CatalogStoreV2 } from "../catalog/catalogStoreV2.js";
+import type { KnowledgeRecordStore } from "../manifest/knowledgeStore.js";
+
+export const KNOWLEDGE_SEARCH_TARGET_FAMILY_NAMES = [
+  "component",
+  "concept",
+  "country_symbol",
+  "deprecation",
+  "guide",
+  "icon",
+  "package",
+  "page",
+  "pattern",
+  "token",
+] as const;
+
+export type KnowledgeSearchTargetFamilyName =
+  (typeof KNOWLEDGE_SEARCH_TARGET_FAMILY_NAMES)[number];
+
+interface KnowledgeSearchDocument {
+  target: { family: KnowledgeSearchTargetFamilyName; id: string };
+  title: string;
+  summary: string;
+  terms: string[];
+  facets: { status?: string[] };
+}
 
 export interface SearchSaltInput {
   query: string;
-  families?: CatalogSearchTargetFamilyName[];
+  families?: KnowledgeSearchTargetFamilyName[];
   statuses?: string[];
   limit?: number;
 }
 
 export interface SaltKnowledgeRecordReference {
-  family: CatalogSearchTargetFamilyName;
+  family: KnowledgeSearchTargetFamilyName;
   id: string;
 }
 
@@ -31,7 +50,7 @@ export interface SearchSaltRecordMatch {
 export interface SearchSaltRecordsResult {
   query: string;
   matches: SearchSaltRecordMatch[];
-  searched_families: CatalogSearchTargetFamilyName[];
+  searched_families: KnowledgeSearchTargetFamilyName[];
   searched_statuses: string[] | null;
   indexed_documents: number;
   evaluated_documents: number;
@@ -53,16 +72,16 @@ function words(value: string): string[] {
 }
 
 function selectedFamilies(
-  requested: readonly CatalogSearchTargetFamilyName[] | undefined,
-): CatalogSearchTargetFamilyName[] {
-  const allow = new Set(CATALOG_SEARCH_TARGET_FAMILY_NAMES);
+  requested: readonly KnowledgeSearchTargetFamilyName[] | undefined,
+): KnowledgeSearchTargetFamilyName[] {
+  const allow = new Set(KNOWLEDGE_SEARCH_TARGET_FAMILY_NAMES);
   return requested && requested.length > 0
     ? [...new Set(requested)].filter((family) => allow.has(family))
-    : [...CATALOG_SEARCH_TARGET_FAMILY_NAMES];
+    : [...KNOWLEDGE_SEARCH_TARGET_FAMILY_NAMES];
 }
 
 function hasSelectedStatus(
-  document: CatalogRecordForFamily<"search_document">,
+  document: KnowledgeSearchDocument,
   requested: readonly string[] | undefined,
 ): boolean {
   if (!requested || requested.length === 0) return true;
@@ -73,7 +92,7 @@ function hasSelectedStatus(
 }
 
 function rankDocument(
-  document: CatalogRecordForFamily<"search_document">,
+  document: KnowledgeSearchDocument,
   normalizedQuery: string,
   queryWords: readonly string[],
 ): {
@@ -134,7 +153,7 @@ function rankDocument(
  * choosing a transport URI, public response envelope, or wire-size budget.
  */
 export function searchSaltRecords(
-  store: CatalogStoreV2,
+  store: KnowledgeRecordStore,
   input: SearchSaltInput,
 ): SearchSaltRecordsResult {
   const query = input.query.trim();
@@ -145,8 +164,10 @@ export function searchSaltRecords(
     input.statuses && input.statuses.length > 0
       ? [...new Set(input.statuses.map(normalize))]
       : null;
-  const familySet = new Set<CatalogSearchTargetFamilyName>(families);
-  const documents = store.getFamily("search_document");
+  const familySet = new Set<KnowledgeSearchTargetFamilyName>(families);
+  const documents = store.getFamily(
+    "search_document",
+  ) as readonly KnowledgeSearchDocument[];
   const limit = Math.min(
     MAX_KNOWLEDGE_SEARCH_RESULTS,
     Math.max(1, input.limit ?? DEFAULT_SEARCH_RESULTS),
@@ -201,3 +222,22 @@ export function searchSaltRecords(
   };
 }
 
+export const searchKnowledge = searchSaltRecords;
+
+export function renderKnowledgeContext(
+  store: KnowledgeRecordStore,
+  input: SearchSaltInput & { max_utf8_bytes?: number },
+): string {
+  const maxBytes = Math.min(
+    16 * 1024,
+    Math.max(256, input.max_utf8_bytes ?? 16 * 1024),
+  );
+  const result = searchKnowledge(store, input);
+  const lines = [`# Salt knowledge: ${result.query}`, ""];
+  for (const match of result.matches) {
+    const next = `## ${match.title}\n\n${match.summary}\n\nRecord: ${match.reference.family}/${match.reference.id}\n`;
+    if (Buffer.byteLength(`${lines.join("\n")}\n${next}`, "utf8") > maxBytes) break;
+    lines.push(next);
+  }
+  return `${lines.join("\n").trimEnd()}\n`;
+}

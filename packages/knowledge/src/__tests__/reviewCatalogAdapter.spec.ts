@@ -8,10 +8,10 @@ import { canonicalJson } from "../catalog/catalogSerialization.js";
 import { createCatalogStoreV2 } from "../catalog/catalogStoreV2.js";
 import { loadRegistry } from "../registry/loadRegistry.js";
 import {
-  createReviewCatalogFromLegacyRegistry,
   createReviewCatalogFromStore,
   type ReviewCatalog,
 } from "../review/reviewCatalogAdapter.js";
+import { createReviewCatalogFromLegacyRegistry } from "../review/reviewLegacyCatalogAdapter.js";
 import { analyzeSaltCode } from "../review/reviewSaltCode.js";
 
 const REPO_ROOT = path.resolve(import.meta.dirname, "../../../..");

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/schemas/operation-capabilities-1.json",
+  "title": "Salt operation capabilities v1",
+  "type": "object",
+  "required": ["search", "docs", "context", "project_facts", "scan", "review"],
+  "properties": {
+    "search": { "const": "supported" },
+    "docs": { "const": "supported" },
+    "context": { "const": "supported" },
+    "project_facts": { "const": "supported" },
+    "scan": { "const": "supported" },
+    "review": { "const": "supported" }
+  },
+  "additionalProperties": false
+}

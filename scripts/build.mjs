@@ -28,6 +28,7 @@ import {
 import { makeTypings } from "./makeTypings.mjs";
 import { transformWorkspaceDeps } from "./transformWorkspaceDeps.mjs";
 import { distinct, getTypescriptConfig } from "./utils.mjs";
+import { verifyKnowledgeArtifactContract } from "./knowledgeArtifactContract.mjs";
 
 const cwd = process.cwd();
 const repoRoot = path.resolve(
@@ -46,6 +47,7 @@ const {
   publishScriptExcludes = [],
   publishAdditionalDependencies = {},
   publishAdditionalEntryPaths = [],
+  publishEntryPath,
   publishBuildIdentityManifest,
   publishBuildIdentityInputPatterns,
   publishCatalogArtifactPaths,
@@ -54,6 +56,9 @@ const {
   publishSourceMaps = true,
   publishIncludeReadme = true,
   publishIncludeChangelog = true,
+  publishKnowledgeManifest,
+  publishKnowledgePublicationInventory,
+  publishKnowledgeInputPatterns,
   generateTypings = true,
   publishTypingEntryOnly = false,
   publishConfig,
@@ -75,7 +80,13 @@ const packageName = packageJson.name;
 const { directory: _publishConfigDirectory, ...publishConfigForPublish } =
   publishConfig ?? {};
 const outputDir = path.join(publishConfig.directory);
-const sourceEntryPath = path.join(cwd, "src", "index.ts");
+const sourceEntryPath = path.resolve(
+  cwd,
+  publishEntryPath ?? path.join("src", "index.ts"),
+);
+if (!isPathWithinRoot(cwd, sourceEntryPath)) {
+  throw new Error("publishEntryPath must stay inside the package root.");
+}
 const additionalSourceEntryPaths = publishAdditionalEntryPaths.map(
   (entryPath) => path.join(cwd, entryPath),
 );
@@ -96,6 +107,64 @@ if (
 const buildIdentityManifestPath = publishBuildIdentityManifest
   ? path.resolve(cwd, publishBuildIdentityManifest)
   : null;
+if (
+  publishKnowledgeManifest !== undefined &&
+  (publishBuildIdentityManifest !== undefined ||
+    typeof publishKnowledgeManifest !== "string" ||
+    typeof publishKnowledgePublicationInventory !== "string" ||
+    typeof publishKnowledgeInputPatterns !== "object" ||
+    Array.isArray(publishKnowledgeInputPatterns) ||
+    typeof publishKnowledgeInputPatterns.semantic !== "string" ||
+    typeof publishKnowledgeInputPatterns.compiler !== "string")
+) {
+  throw new Error(
+    "Knowledge-v1 publication requires distinct manifest/inventory paths and cannot use the Catalog-v2 build identity.",
+  );
+}
+const knowledgeInputPatterns = publishKnowledgeManifest
+  ? Object.fromEntries(
+      await Promise.all(
+        ["semantic", "compiler"].map(async (kind) => {
+          const relativePath = publishKnowledgeInputPatterns[kind];
+          normalizePortableRepositoryBuildPath(
+            relativePath,
+            `publishKnowledgeInputPatterns.${kind} is unsafe`,
+          );
+          const patternPath = path.resolve(cwd, relativePath);
+          if (!isPathWithinRoot(cwd, patternPath)) {
+            throw new Error(
+              `publishKnowledgeInputPatterns.${kind} escapes the package.`,
+            );
+          }
+          return [
+            kind,
+            validateCatalogBuildInputPatterns(
+              await fs.readJSON(patternPath),
+              `publishKnowledgeInputPatterns.${kind}`,
+            ),
+          ];
+        }),
+      ),
+    )
+  : null;
+const assertKnowledgeBuildBoundary = publishKnowledgeManifest
+  ? async () => {
+      const verified = verifyKnowledgeArtifactContract({
+        packageRoot: cwd,
+        manifestPath: publishKnowledgeManifest,
+        publicationInventoryPath: publishKnowledgePublicationInventory,
+      });
+      for (const kind of ["semantic", "compiler"]) {
+        await assertCompleteCatalogInputSet(
+          verified.inputInventories[kind],
+          repoRoot,
+          knowledgeInputPatterns[kind],
+        );
+      }
+      return verified;
+    }
+  : async () => null;
+await assertKnowledgeBuildBoundary();
 if (
   buildIdentityManifestPath &&
   (!publishBuildIdentityInputPatterns ||
@@ -181,6 +250,7 @@ async function assertBuildBoundaryInputs() {
   );
 }
 await assertBuildBoundaryInputs();
+await assertKnowledgeBuildBoundary();
 
 function repositoryModulePath(id) {
   if (!catalogBuildIdentity || !path.isAbsolute(id) || id.includes("\0")) {
@@ -340,6 +410,7 @@ await bundle.write({
 
 await bundle.close();
 await assertBuildBoundaryInputs();
+await assertKnowledgeBuildBoundary();
 
 // The repository root intentionally has no package `type`, while the build
 // emits `.js` files for both module formats. Give Node an unambiguous format
@@ -378,9 +449,11 @@ const publishedDependencies = await transformWorkspaceDeps({
 const publishedPeerDependencies = packageJson.peerDependencies
   ? await transformWorkspaceDeps(packageJson.peerDependencies)
   : null;
-const publishedExtraCopyPaths = publishExtraCopyPaths.map((copyConfig) =>
-  typeof copyConfig === "string" ? copyConfig : copyConfig.to,
-);
+const publishedExtraCopyPaths = publishExtraCopyPaths
+  .map((copyConfig) =>
+    typeof copyConfig === "string" ? copyConfig : copyConfig.to,
+  )
+  .filter((copyPath) => copyPath !== ".");
 
 function assertPortableRelativeCopyPath(relativePath, label) {
   normalizePortableRepositoryBuildPath(
@@ -394,7 +467,26 @@ async function copyPublishExtraFile(fromPath, toPath, capturedBytes) {
     await fs.outputFile(toPath, capturedBytes);
     return;
   }
-  await fs.copy(fromPath, toPath);
+  if (path.resolve(fromPath) === path.resolve(toPath)) {
+    throw new Error(`Publish copy source and destination are identical: ${fromPath}`);
+  }
+  const before = await fs.lstat(fromPath, { bigint: true });
+  if (!before.isFile() || before.isSymbolicLink()) {
+    throw new Error(`Publish copy source is not a regular file: ${fromPath}`);
+  }
+  const bytes = await fs.readFile(fromPath);
+  const after = await fs.lstat(fromPath, { bigint: true });
+  if (
+    !after.isFile() ||
+    after.isSymbolicLink() ||
+    before.dev !== after.dev ||
+    before.ino !== after.ino ||
+    before.size !== after.size ||
+    before.mtimeNs !== after.mtimeNs
+  ) {
+    throw new Error(`Publish copy source changed while it was read: ${fromPath}`);
+  }
+  await fs.outputFile(toPath, bytes);
 }
 
 function sha256(bytes) {
@@ -811,6 +903,7 @@ for (const file of FILES_TO_COPY) {
 }
 
 for (const copyConfig of publishExtraCopyPaths) {
+  await assertKnowledgeBuildBoundary();
   const fromPath =
     typeof copyConfig === "string"
       ? path.join(cwd, copyConfig)
@@ -838,6 +931,7 @@ for (const copyConfig of publishExtraCopyPaths) {
   } else {
     await fs.copy(fromPath, toPath);
   }
+  await assertKnowledgeBuildBoundary();
 }
 
 for (const [relativeBinPath, entrypoint] of Object.entries(

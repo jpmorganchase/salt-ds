@@ -1,7 +1,7 @@
 import {
   searchSaltRecords,
-  type CatalogSearchTargetFamilyName,
-  type CatalogStoreV2,
+  type KnowledgeRecordStore,
+  type KnowledgeSearchTargetFamilyName,
   type SaltKnowledgeRecordReference,
   type SearchSaltInput,
   type SearchSaltRecordMatch,
@@ -18,7 +18,7 @@ export type {
 };
 
 export interface SearchSaltMatch {
-  family: CatalogSearchTargetFamilyName;
+  family: KnowledgeSearchTargetFamilyName;
   id: string;
   title: string;
   summary: string;
@@ -51,7 +51,7 @@ export interface SearchSaltResult {
   };
   scope: {
     kind: "catalog_search";
-    searched_families: CatalogSearchTargetFamilyName[];
+    searched_families: KnowledgeSearchTargetFamilyName[];
     searched_statuses: string[] | null;
     total_documents: number;
     returned: number;
@@ -74,7 +74,7 @@ function boundedSummary(summary: string): string {
 }
 
 export function searchSalt(
-  store: CatalogStoreV2,
+  store: KnowledgeRecordStore,
   input: SearchSaltInput,
 ): SearchSaltResult {
   const neutral = searchSaltRecords(store, {
@@ -150,7 +150,10 @@ export function searchSalt(
         : []),
     ],
     provenance: {
-      catalog_version: store.manifest.catalog_version,
+      catalog_version:
+        store.manifest.bundle_version ??
+        store.manifest.catalog_version ??
+        "0.0.0",
       semantic_digest: store.manifest.semantic_digest,
     },
   });

@@ -3,7 +3,7 @@ import path from "node:path";
 import {
   getPackageRoot,
   normalizeCatalogPublicCitation,
-  type SaltCatalogRuntimeContext,
+  type KnowledgeRuntimeContext,
 } from "../core/runtime.js";
 import { REGISTERED_SALT_TOOL_NAMES } from "./toolDefinitions.js";
 
@@ -43,13 +43,16 @@ export function getSaltMcpPackageManifest(): SaltMcpPackageManifest {
   return cachedPackageManifest;
 }
 
-export function getSaltMcpRuntimeMetadata(context: SaltCatalogRuntimeContext) {
+export function getSaltMcpRuntimeMetadata(context: KnowledgeRuntimeContext) {
   const packageManifest = getSaltMcpPackageManifest();
   return {
     server_name: SALT_MCP_SERVER_NAME,
     package_name: packageManifest.name,
     server_version: packageManifest.version,
-    catalog_version: context.store.manifest.catalog_version,
+    catalog_version:
+      context.store.manifest.bundle_version ??
+      context.store.manifest.catalog_version ??
+      "0.0.0",
     catalog_digest: context.store.manifest.semantic_digest,
     catalog_manifest_uri: normalizeCatalogPublicCitation({
       kind: "catalog_manifest",
@@ -59,7 +62,7 @@ export function getSaltMcpRuntimeMetadata(context: SaltCatalogRuntimeContext) {
   };
 }
 
-export function buildSaltMcpServerInfo(context: SaltCatalogRuntimeContext) {
+export function buildSaltMcpServerInfo(context: KnowledgeRuntimeContext) {
   const metadata = getSaltMcpRuntimeMetadata(context);
   return {
     name: metadata.server_name,
@@ -70,7 +73,7 @@ export function buildSaltMcpServerInfo(context: SaltCatalogRuntimeContext) {
 }
 
 export function buildSaltMcpInstructions(
-  context: SaltCatalogRuntimeContext,
+  context: KnowledgeRuntimeContext,
 ): string {
   const metadata = getSaltMcpRuntimeMetadata(context);
   return [

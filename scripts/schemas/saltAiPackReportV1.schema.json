@@ -9,14 +9,52 @@
     "contract",
     "policy_profile",
     "publishable",
-    "packages",
-    "extraction_parity",
-    "comparison_registry"
+    "packages"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "policy_profile": { "const": "extraction-parity" },
+        "knowledge_bundle": {},
+        "extraction_parity": {},
+        "comparison_registry": {}
+      },
+      "required": ["extraction_parity", "comparison_registry"],
+      "not": {
+        "properties": { "knowledge_bundle": {} },
+        "required": ["knowledge_bundle"]
+      }
+    },
+    {
+      "properties": {
+        "policy_profile": { "const": "pre-agent-support" },
+        "policy_digest": {},
+        "knowledge_bundle": {},
+        "extraction_parity": {},
+        "comparison_registry": {}
+      },
+      "required": ["policy_digest", "knowledge_bundle"],
+      "not": {
+        "anyOf": [
+          {
+            "properties": { "extraction_parity": {} },
+            "required": ["extraction_parity"]
+          },
+          {
+            "properties": { "comparison_registry": {} },
+            "required": ["comparison_registry"]
+          }
+        ]
+      }
+    }
   ],
   "properties": {
     "schema_version": { "const": "1.0.0" },
     "contract": { "const": "salt-ai-pack-report@1" },
-    "policy_profile": { "const": "extraction-parity" },
+    "policy_profile": {
+      "enum": ["extraction-parity", "pre-agent-support"]
+    },
+    "policy_digest": { "$ref": "#/$defs/sha256" },
     "publishable": { "const": false },
     "packages": {
       "type": "array",
@@ -25,7 +63,8 @@
       "items": { "$ref": "#/$defs/package" }
     },
     "extraction_parity": { "$ref": "#/$defs/extractionParity" },
-    "comparison_registry": { "$ref": "#/$defs/comparisonRegistry" }
+    "comparison_registry": { "$ref": "#/$defs/comparisonRegistry" },
+    "knowledge_bundle": { "$ref": "#/$defs/knowledgeBundle" }
   },
   "$defs": {
     "sha256": {
@@ -65,7 +104,7 @@
         "workspace_link"
       ],
       "properties": {
-        "generated_tree": { "const": false },
+        "generated_tree": { "type": "boolean" },
         "prototype_catalog": { "const": false },
         "workspace_link": { "const": false }
       }
@@ -138,6 +177,50 @@
           "minItems": 1,
           "items": { "$ref": "#/$defs/artifact" }
         }
+      }
+    },
+    "artifactTreeSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node_count",
+        "tree_bytes",
+        "artifact_count",
+        "artifact_bytes"
+      ],
+      "properties": {
+        "node_count": { "type": "integer", "minimum": 1, "maximum": 512 },
+        "tree_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8388608
+        },
+        "artifact_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 40000
+        },
+        "artifact_bytes": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "knowledgeBundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manifest",
+        "bundle_digest",
+        "semantic_digest",
+        "semantic_source_digest",
+        "compiler_digest",
+        "artifact_tree"
+      ],
+      "properties": {
+        "manifest": { "$ref": "#/$defs/artifact" },
+        "bundle_digest": { "$ref": "#/$defs/sha256" },
+        "semantic_digest": { "$ref": "#/$defs/sha256" },
+        "semantic_source_digest": { "$ref": "#/$defs/sha256" },
+        "compiler_digest": { "$ref": "#/$defs/sha256" },
+        "artifact_tree": { "$ref": "#/$defs/artifactTreeSummary" }
       }
     }
   }

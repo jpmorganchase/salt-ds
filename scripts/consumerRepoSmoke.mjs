@@ -85,7 +85,7 @@ async function main() {
       );
     } else {
       console.log(
-        "Verified nonpublishable Unit 02 workflows from the exact two-package report; standalone publication replay remains embargoed.",
+        "Verified nonpublishable workflows from the exact two-package report; standalone publication replay remains embargoed.",
       );
     }
 

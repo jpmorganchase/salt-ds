@@ -1,20 +1,16 @@
 import { normalizeCatalogPublicCitation } from "./catalogPublicCitation.js";
 import {
-  type CatalogManifest,
-  type CatalogRecord,
-  resolveCatalogRecordContentReferences,
+  resolveKnowledgeRecordContentReferences,
 } from "@salt-ds/knowledge";
+import type { KnowledgeManifestIdentity } from "./catalogResourceIdentity.js";
 
-export type CatalogResourceRecord = Exclude<
-  CatalogRecord,
-  { family: "content" }
->;
+export type CatalogResourceRecord = any;
 
 export function serializeCatalogResourceEnvelope(
-  manifest: CatalogManifest,
+  manifest: KnowledgeManifestIdentity,
   record: CatalogResourceRecord,
 ): string {
-  const contentResources = resolveCatalogRecordContentReferences(record).map(
+  const contentResources = resolveKnowledgeRecordContentReferences(record).map(
     (reference) => ({
       reference,
       uri: normalizeCatalogPublicCitation({

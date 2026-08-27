@@ -2,6 +2,7 @@ import path from "node:path";
 import ts from "typescript";
 
 export { buildRegistry } from "./buildRegistry.js";
+export { buildKnowledgeV1 } from "./buildKnowledgeV1.js";
 export {
   createCatalogInputInventory,
   validateCatalogInputPatterns,

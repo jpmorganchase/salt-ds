@@ -3,8 +3,27 @@ import traverse, { type NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
 import semver from "semver";
 import { isApiSymbolSpaceAvailable } from "../catalog/catalogApiSymbolV2.js";
-import type { DeprecationRecord } from "../types.js";
 import { parseExactSemVer } from "../versionUtils.js";
+
+export interface AnalysisApiSymbolIdentity {
+  package: string;
+  entrypoint: string;
+  export_name: string;
+  symbol_space: "value" | "type" | "type_and_value";
+  member_path: Array<{
+    kind: "prop" | "method" | "static_method";
+    name: string;
+  }>;
+}
+
+export interface AnalysisDeprecationRecord {
+  subject: AnalysisApiSymbolIdentity;
+  component: string | null;
+  kind: "import" | "component" | "prop" | "method" | "token" | "type" | "other";
+  name: string;
+  deprecated_in: string | null;
+  removed_in: string | null;
+}
 
 export interface ImportedSaltSymbol {
   packageName: string;
@@ -44,7 +63,7 @@ export interface CatalogedMethodDeprecationOwners {
 
 export type PropDeprecationIndex = Map<
   string,
-  Map<string, Map<string, DeprecationRecord[]>>
+  Map<string, Map<string, AnalysisDeprecationRecord[]>>
 >;
 
 export const traverseAst: typeof traverse =
@@ -136,7 +155,7 @@ export function createVersionContext(
 }
 
 export function isDeprecationRelevant(
-  deprecation: Pick<DeprecationRecord, "deprecated_in">,
+  deprecation: Pick<AnalysisDeprecationRecord, "deprecated_in">,
   version: VersionContext,
 ): boolean {
   if (!version.normalized) {
@@ -152,7 +171,7 @@ export function isDeprecationRelevant(
 }
 
 export function deprecationSeverity(
-  deprecation: Pick<DeprecationRecord, "removed_in">,
+  deprecation: Pick<AnalysisDeprecationRecord, "removed_in">,
   version: VersionContext,
 ): "error" | "warning" {
   const removedIn = normalizeVersion(deprecation.removed_in);
@@ -164,7 +183,7 @@ export function deprecationSeverity(
 }
 
 export function apiSymbolModuleSpecifier(
-  identity: DeprecationRecord["subject"],
+  identity: AnalysisDeprecationRecord["subject"],
 ): string {
   return identity.entrypoint === "."
     ? identity.package
@@ -174,7 +193,7 @@ export function apiSymbolModuleSpecifier(
 const METHOD_DEPRECATION_OWNER_DISCLOSURE_LIMIT = 8;
 
 export function catalogedMethodDeprecationOwners(
-  deprecations: readonly DeprecationRecord[],
+  deprecations: readonly AnalysisDeprecationRecord[],
   version: VersionContext,
   importedSymbols: Iterable<ImportedSaltSymbol>,
 ): CatalogedMethodDeprecationOwners {
@@ -461,7 +480,7 @@ export function isImportedSaltBindingVisible(
 }
 
 export function buildPropDeprecationIndex(
-  deprecations: DeprecationRecord[],
+  deprecations: AnalysisDeprecationRecord[],
   version: VersionContext,
   options: {
     excluded_names?: Iterable<string>;
@@ -470,7 +489,7 @@ export function buildPropDeprecationIndex(
   const excludedNames = new Set(options.excluded_names ?? []);
   const byPackage = new Map<
     string,
-    Map<string, Map<string, DeprecationRecord[]>>
+    Map<string, Map<string, AnalysisDeprecationRecord[]>>
   >();
 
   for (const deprecation of deprecations) {
