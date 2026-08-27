@@ -1,0 +1,484 @@
+{
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-package-namespace-receipt-1.json",
+  "checked_at": "2026-08-27T09:29:17.136Z",
+  "compatibility_fixture_count": 7,
+  "compatibility_policy": {
+    "decision_status": "approved",
+    "digest": "sha256:9d3414d3f5fd12bf35b5b692c1d20952aa82ca85b5cf7df0b67736d781b4e505",
+    "path": "tooling/ai/snapshot-package-compatibility-v1.json",
+    "policy_id": "salt-ai-unused-test-snapshots/1"
+  },
+  "expires_at": "2026-09-03T09:29:17.136Z",
+  "kind": "package-namespace-receipt",
+  "mode": "preflight",
+  "packages": [
+    {
+      "deprecated_versions": [],
+      "disposition": "owned_compatible_test_snapshots",
+      "dist_tags": {
+        "latest": "0.0.0-snapshot-20260330131032",
+        "snapshot": "0.0.0-snapshot-20260331141637"
+      },
+      "expected_repository_directory": "packages/cli",
+      "identity_findings": [],
+      "latest_attestations": {
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        },
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fcli@0.0.0-snapshot-20260330131032"
+      },
+      "latest_integrity": "sha512-AGKnF+X3Xm4dr+HuIr1k1m30aR1/tUZJKqs5z/1xLPJe95ZDyOG3hTZfY8NmMHSiUe62rvDZhtBNvKZeGV1sTw==",
+      "latest_publisher": {
+        "name": "saltdesignsystem"
+      },
+      "maintainers": [
+        {
+          "name": "brooklynrob"
+        },
+        {
+          "name": "saltdesignsystem"
+        }
+      ],
+      "modified_at": "2026-03-31T14:19:04.510Z",
+      "name": "@salt-ds/cli",
+      "repository": {
+        "directory": "packages/mcp",
+        "type": "git",
+        "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+      },
+      "status": "present",
+      "version_identities": [
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fcli@0.0.0-snapshot-20260330131032"
+          },
+          "deprecated": null,
+          "git_head": "559696af2a65a60516feb41c05c3d56e4efbd97b",
+          "integrity": "sha512-AGKnF+X3Xm4dr+HuIr1k1m30aR1/tUZJKqs5z/1xLPJe95ZDyOG3hTZfY8NmMHSiUe62rvDZhtBNvKZeGV1sTw==",
+          "repository": {
+            "directory": "packages/mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260330131032"
+        },
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fcli@0.0.0-snapshot-20260330133530"
+          },
+          "deprecated": null,
+          "git_head": "559696af2a65a60516feb41c05c3d56e4efbd97b",
+          "integrity": "sha512-Z/qrZqJGqmIiYjDoujHLHDXX4nx9ARyFeAlPLUAhgijk6kquvY/trG3t3EIxdPYUGOivLXjOqhzv+y8Doa5c3Q==",
+          "repository": {
+            "directory": "packages/mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260330133530"
+        },
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fcli@0.0.0-snapshot-20260330204214"
+          },
+          "deprecated": null,
+          "git_head": "d496444e1158bdc7f189397aaa7a2b572af624f6",
+          "integrity": "sha512-SkESMtX1sXdEr3uVqROWU0KiCxT+aweOR0UiWqVTNYIxLywq4WIPYMRQW10LKsjSkGsVAJNWfeXpyD40eMsvrA==",
+          "repository": {
+            "directory": "packages/mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260330204214"
+        },
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fcli@0.0.0-snapshot-20260331110424"
+          },
+          "deprecated": null,
+          "git_head": "9592cd3abadbb7426bcf6f627cad6ed0b23160ff",
+          "integrity": "sha512-sIHXi62S/3RxKIgXdaHcIxFtoTtRAwYMYKXraZxzQzAdYT9NHQSWigMvy1DJsBnJi25AmDR3YIsmBla6DgXJ4w==",
+          "repository": {
+            "directory": "packages/mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260331110424"
+        },
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fcli@0.0.0-snapshot-20260331131717"
+          },
+          "deprecated": null,
+          "git_head": "137eff8f46f4f267c59c0c1c5e90cc2b9cd52f8a",
+          "integrity": "sha512-7UhWdWO33t5u05+E+fAjklwdwMGlt7DXmVNWkzW6+uc9TvuttPKA/AxlIk9djDpv9hCVcahLYHyM6CUheWSzug==",
+          "repository": {
+            "directory": "packages/mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260331131717"
+        },
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fcli@0.0.0-snapshot-20260331141637"
+          },
+          "deprecated": null,
+          "git_head": "137eff8f46f4f267c59c0c1c5e90cc2b9cd52f8a",
+          "integrity": "sha512-jyuu5aP0lexM4u6YnQOXP9ur+MqjsHVjHgUxdGerzSSeGpn/Us2hg4ZHd9Dn9unVBo/7D4aPjXgahj5wD5WzcA==",
+          "repository": {
+            "directory": "packages/mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260331141637"
+        }
+      ],
+      "versions": [
+        "0.0.0-snapshot-20260330131032",
+        "0.0.0-snapshot-20260330133530",
+        "0.0.0-snapshot-20260330204214",
+        "0.0.0-snapshot-20260331110424",
+        "0.0.0-snapshot-20260331131717",
+        "0.0.0-snapshot-20260331141637"
+      ]
+    },
+    {
+      "disposition": "safe_absent",
+      "name": "@salt-ds/knowledge",
+      "status": "absent"
+    },
+    {
+      "deprecated_versions": [],
+      "disposition": "owned_compatible_test_snapshots",
+      "dist_tags": {
+        "latest": "0.0.0-snapshot-20260317135132",
+        "snapshot": "0.0.0-snapshot-20260331141637"
+      },
+      "expected_repository_directory": "packages/mcp",
+      "identity_findings": [],
+      "latest_attestations": {
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        },
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fmcp@0.0.0-snapshot-20260317135132"
+      },
+      "latest_integrity": "sha512-5zwjDyu3SfFdG8eqW+wcvyhxU+s8hDr8EA8QgGG8JbLHcPjlYtex62VXf8zZeo0FQ2MBde5QQ+iYJdBKTLNnHw==",
+      "latest_publisher": {
+        "name": "saltdesignsystem"
+      },
+      "maintainers": [
+        {
+          "name": "brooklynrob"
+        },
+        {
+          "name": "saltdesignsystem"
+        }
+      ],
+      "modified_at": "2026-03-31T14:19:05.101Z",
+      "name": "@salt-ds/mcp",
+      "repository": {
+        "directory": "packages/salt-mcp",
+        "type": "git",
+        "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+      },
+      "status": "present",
+      "version_identities": [
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fmcp@0.0.0-snapshot-20260317135132"
+          },
+          "deprecated": null,
+          "git_head": "2f0843a790cb93f0f4525ff71bdf999ad278a2d9",
+          "integrity": "sha512-5zwjDyu3SfFdG8eqW+wcvyhxU+s8hDr8EA8QgGG8JbLHcPjlYtex62VXf8zZeo0FQ2MBde5QQ+iYJdBKTLNnHw==",
+          "repository": {
+            "directory": "packages/salt-mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260317135132"
+        },
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fmcp@0.0.0-snapshot-20260317141840"
+          },
+          "deprecated": null,
+          "git_head": "2f0843a790cb93f0f4525ff71bdf999ad278a2d9",
+          "integrity": "sha512-gNRjHBbbJ9sswPOO2EUEfAEKyCNYVwq/cYCK/DIqOUcnSCRrPVtWKDAstnljgopxWrqlLOO0UTbyOTH/PmKwKA==",
+          "repository": {
+            "directory": "packages/salt-mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260317141840"
+        },
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fmcp@0.0.0-snapshot-20260317164320"
+          },
+          "deprecated": null,
+          "git_head": "7e8505d04d6f170dc09e76b23d9f53da1b956a0b",
+          "integrity": "sha512-RjSVTzuWqGTRUAW6L00NfHc7GziEOOGlPHvkmRroa+MfUUYqXSDdfhcKP6wwo4i0wksfgHmeMz4qZvVLG8QU2g==",
+          "repository": {
+            "directory": "packages/mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260317164320"
+        },
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fmcp@0.0.0-snapshot-20260318105832"
+          },
+          "deprecated": null,
+          "git_head": "8d0e456012496db238a60867c090ae1b2adf0881",
+          "integrity": "sha512-cedHqEUYR16b9dSvMmehn3nppeiI+sKbsm/Me78qZWwVBD0wzp1TfDTuqJl30RMTtRSXFEM65yR1BvSqVdSrrA==",
+          "repository": {
+            "directory": "packages/mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260318105832"
+        },
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fmcp@0.0.0-snapshot-20260324095809"
+          },
+          "deprecated": null,
+          "git_head": "9009b0033797356385785b48a7494c33d2eee287",
+          "integrity": "sha512-WeG4aZJBRGoO3pk1E+CcDkHKmBqzGv6Mzh4czWmUCmePsDQzQraAPNabg7+ZwH4txqBG0/45MHFJseINUrNt5g==",
+          "repository": {
+            "directory": "packages/mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260324095809"
+        },
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fmcp@0.0.0-snapshot-20260324111937"
+          },
+          "deprecated": null,
+          "git_head": "774f4f8bbd1ddfbe45e6867aa449e455f626b298",
+          "integrity": "sha512-u0CoF4LwXgUhioH8aCNtqq73KlQaiygVhtci0VpPeao1ou6H0JZRQy2QzDb7t8bsqZouh/wKTeLuii1tT0wYSA==",
+          "repository": {
+            "directory": "packages/mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260324111937"
+        },
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fmcp@0.0.0-snapshot-20260330125735"
+          },
+          "deprecated": null,
+          "git_head": "79f8de14569c9d2a16727d922a9c2bfd3b91d69a",
+          "integrity": "sha512-HQxSo8rfxVQZOSVjpe1ao4cHM2iK+yUukw4e1vfS/hrgImQPq7+Z4uIyqCIF78i5H+WTGYrISjpPU6c1//WxVw==",
+          "repository": {
+            "directory": "packages/mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260330125735"
+        },
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fmcp@0.0.0-snapshot-20260330131032"
+          },
+          "deprecated": null,
+          "git_head": "559696af2a65a60516feb41c05c3d56e4efbd97b",
+          "integrity": "sha512-EcnaeM6JgXt75fEzk/f0aFSAMsukhrwAQhHFCpMnopI0bqIw+NpQn8rKQ31cWBucTmdhsc3lGcKjoVvSqCACUw==",
+          "repository": {
+            "directory": "packages/mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260330131032"
+        },
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fmcp@0.0.0-snapshot-20260330133530"
+          },
+          "deprecated": null,
+          "git_head": "559696af2a65a60516feb41c05c3d56e4efbd97b",
+          "integrity": "sha512-RiHMg+FxByll1R1IQVJzOcUvtLO/UAHlT9vuhygaPwzgOOlMzCDgolCRhwEWDT9WKycklKPFk5SAlEoQ05Qktg==",
+          "repository": {
+            "directory": "packages/mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260330133530"
+        },
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fmcp@0.0.0-snapshot-20260330204214"
+          },
+          "deprecated": null,
+          "git_head": "d496444e1158bdc7f189397aaa7a2b572af624f6",
+          "integrity": "sha512-lmVdMPNLsFN/vuvZTJ/vODHSQtY6mCIPiPzi+15PE1oWzPm9UKZ+L7mh7gjG2QW3WzqyanEs04/8cbJkeYQZMQ==",
+          "repository": {
+            "directory": "packages/mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260330204214"
+        },
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fmcp@0.0.0-snapshot-20260331110424"
+          },
+          "deprecated": null,
+          "git_head": "9592cd3abadbb7426bcf6f627cad6ed0b23160ff",
+          "integrity": "sha512-//MsgUl5L2Slxej8iWLM3q+dmi196XzEDrnYnRDWGVnbFghyLCDDX9M9fWYDJ4OGqRd9m1GGEAAHsk2h91NPzg==",
+          "repository": {
+            "directory": "packages/mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260331110424"
+        },
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fmcp@0.0.0-snapshot-20260331131717"
+          },
+          "deprecated": null,
+          "git_head": "137eff8f46f4f267c59c0c1c5e90cc2b9cd52f8a",
+          "integrity": "sha512-yLG/BtRpfXzab7YNnrNkcl9KQEZaOfYKHhDhLmPUQ67unaDKDFHfPUQy1Ats2GoC6P/E+hHSaJkF9WhASSvALA==",
+          "repository": {
+            "directory": "packages/mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260331131717"
+        },
+        {
+          "attestations": {
+            "provenance": {
+              "predicateType": "https://slsa.dev/provenance/v1"
+            },
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fmcp@0.0.0-snapshot-20260331141637"
+          },
+          "deprecated": null,
+          "git_head": "137eff8f46f4f267c59c0c1c5e90cc2b9cd52f8a",
+          "integrity": "sha512-eZ5KqksRbJl9/ZuIq8nm0pMqjGtFAmpDxwSIZICrGGmwGPD99mxCJrle5kXUle0zgu7eCxPqYwxjBihTmMVy+Q==",
+          "repository": {
+            "directory": "packages/mcp",
+            "type": "git",
+            "url": "git+https://github.com/jpmorganchase/salt-ds.git"
+          },
+          "version": "0.0.0-snapshot-20260331141637"
+        }
+      ],
+      "versions": [
+        "0.0.0-snapshot-20260317135132",
+        "0.0.0-snapshot-20260317141840",
+        "0.0.0-snapshot-20260317164320",
+        "0.0.0-snapshot-20260318105832",
+        "0.0.0-snapshot-20260324095809",
+        "0.0.0-snapshot-20260324111937",
+        "0.0.0-snapshot-20260330125735",
+        "0.0.0-snapshot-20260330131032",
+        "0.0.0-snapshot-20260330133530",
+        "0.0.0-snapshot-20260330204214",
+        "0.0.0-snapshot-20260331110424",
+        "0.0.0-snapshot-20260331131717",
+        "0.0.0-snapshot-20260331141637"
+      ]
+    }
+  ],
+  "policy_digest": "sha256:c67ea79ff692d9e326477de70fa676ff7a51849071f87c4be5d7bab4e30e194e",
+  "publisher": {
+    "approval_status": "approved",
+    "environment": "salt-ai-release",
+    "provider": "github-actions-oidc",
+    "repository": "jpmorganchase/salt-ds",
+    "workflow": ".github/workflows/publish-salt-ai.yml"
+  },
+  "registry": "https://registry.npmjs.org",
+  "result": "pass",
+  "schema_version": "1.0.0",
+  "scope": "@salt-ds",
+  "scope_control": {
+    "anchor_latest_attestations": {
+      "provenance": {
+        "predicateType": "https://slsa.dev/provenance/v1"
+      },
+      "url": "https://registry.npmjs.org/-/npm/v1/attestations/@salt-ds%2fcore@1.70.0"
+    },
+    "anchor_latest_integrity": "sha512-qqYJyXKcRKhTe3IIf4ygeR/JzLeE+ck5rqdrwbDDZ+iepfuhppD479d4g/F4onVNrhtZFh1E9mfxK4C16rdw6Q==",
+    "anchor_latest_publisher": {
+      "name": "GitHub Actions",
+      "trustedPublisher": {
+        "id": "github",
+        "oidcConfigId": "oidc:ec92e2ab-7157-400d-ac8c-4fef71438d94"
+      }
+    },
+    "anchor_package": "@salt-ds/core",
+    "controlling_organization": "JPMorganChase",
+    "maintainers": [
+      {
+        "name": "brooklynrob"
+      },
+      {
+        "name": "saltdesignsystem"
+      }
+    ],
+    "method": "existing-public-package-repository-identity",
+    "repository": "https://github.com/jpmorganchase/salt-ds"
+  },
+  "source_commit": "db3d38c165a259aa19db422af02b6423c80fa288"
+}

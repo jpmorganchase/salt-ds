@@ -1,0 +1,52 @@
+{
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-workflow-policy-receipt-1.json",
+  "ai_packages": [
+    "@salt-ds/cli",
+    "@salt-ds/knowledge",
+    "@salt-ds/mcp"
+  ],
+  "fixture_count": 4,
+  "kind": "workflow-policy-receipt",
+  "package_states": [
+    {
+      "manifest": "packages/mcp/package.json",
+      "name": "@salt-ds/mcp",
+      "private": true,
+      "version": "0.0.0"
+    }
+  ],
+  "prohibited_events": [
+    "issue_comment",
+    "pull_request",
+    "pull_request_target"
+  ],
+  "result": "pass",
+  "schema_version": "1.0.0",
+  "source_commit": "db3d38c165a259aa19db422af02b6423c80fa288",
+  "workflows": [
+    {
+      "path": ".github/workflows/build-storybook.yml",
+      "sha256": "sha256:b8cf507e44ca269db8d08451add3a47dbb1a8b4a4651288320d3cdad6583eb12"
+    },
+    {
+      "path": ".github/workflows/chromatic.yml",
+      "sha256": "sha256:01316820eb118a6b3ae8d953505d5f26583c9aab768b2cf13eae0c0be545d24b"
+    },
+    {
+      "path": ".github/workflows/publish-storybook.yml",
+      "sha256": "sha256:026d1a93412279e25281d199975a425ce56d5c9f30cfd2bc00ac5a943fc3bcc1"
+    },
+    {
+      "path": ".github/workflows/react-cron.yml",
+      "sha256": "sha256:9a88741bc1fff66b0c37d56641b13745a4d3723c33beefde80bd3b64b62a1181"
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "sha256": "sha256:9438eaaca275b38cff5d42765a6c397921bc75cbd887bd3a6707cc71c90a984c"
+    },
+    {
+      "path": ".github/workflows/test.yml",
+      "sha256": "sha256:c274872ead8baf9ce8fa4007a2173dee4a7af4143599b5f47d7f87d6187f8171"
+    }
+  ]
+}

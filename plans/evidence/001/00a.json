@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0.0",
+  "plan_id": "001",
+  "unit_id": "00a",
+  "tracker_status": "DONE",
+  "completion_sha": "db3d38c165a259aa19db422af02b6423c80fa288",
+  "entries": [
+    {
+      "kind": "ordinary-baseline-receipt",
+      "schema_id": "https://www.saltdesignsystem.com/ai/schemas/salt-ordinary-baseline-1.json",
+      "schema_version": "1.0.0",
+      "locator": "repo://plans/evidence/artifacts/sha256-36e5684fba5de9d10929568b83563ec218850e01eef1dc6bda67bd30f48ffd3a.json",
+      "sha256": "sha256:36e5684fba5de9d10929568b83563ec218850e01eef1dc6bda67bd30f48ffd3a",
+      "source_sha": "db3d38c165a259aa19db422af02b6423c80fa288",
+      "completion_sha": "db3d38c165a259aa19db422af02b6423c80fa288",
+      "workflow_class": "local-ci",
+      "environment_class": "local-worktree",
+      "retention_expires_at": "2031-08-27T00:00:00.000Z",
+      "parents": [],
+      "state": "active"
+    },
+    {
+      "kind": "workflow-policy-receipt",
+      "schema_id": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-workflow-policy-receipt-1.json",
+      "schema_version": "1.0.0",
+      "locator": "repo://plans/evidence/artifacts/sha256-8c4620d96561d2098042d128c21b6c7e7544e9046772ae5980a9f87bae3bce71.json",
+      "sha256": "sha256:8c4620d96561d2098042d128c21b6c7e7544e9046772ae5980a9f87bae3bce71",
+      "source_sha": "db3d38c165a259aa19db422af02b6423c80fa288",
+      "completion_sha": "db3d38c165a259aa19db422af02b6423c80fa288",
+      "workflow_class": "local-ci",
+      "environment_class": "local-worktree",
+      "retention_expires_at": "2031-08-27T00:00:00.000Z",
+      "parents": [],
+      "state": "active"
+    },
+    {
+      "kind": "release-embargo-receipt",
+      "schema_id": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-release-embargo-receipt-1.json",
+      "schema_version": "1.0.0",
+      "locator": "repo://plans/evidence/artifacts/sha256-9aef94a6be98039043442b57432e37bba778780b12d9a868cf1771d137d65871.json",
+      "sha256": "sha256:9aef94a6be98039043442b57432e37bba778780b12d9a868cf1771d137d65871",
+      "source_sha": "db3d38c165a259aa19db422af02b6423c80fa288",
+      "completion_sha": "db3d38c165a259aa19db422af02b6423c80fa288",
+      "workflow_class": "local-ci",
+      "environment_class": "local-worktree",
+      "retention_expires_at": "2031-08-27T00:00:00.000Z",
+      "parents": [],
+      "state": "active"
+    },
+    {
+      "kind": "snapshot-package-compatibility-policy",
+      "schema_id": "https://www.saltdesignsystem.com/ai/schemas/salt-snapshot-package-compatibility-1.json",
+      "schema_version": "1.0.0",
+      "locator": "repo://plans/evidence/artifacts/sha256-9d3414d3f5fd12bf35b5b692c1d20952aa82ca85b5cf7df0b67736d781b4e505.json",
+      "sha256": "sha256:9d3414d3f5fd12bf35b5b692c1d20952aa82ca85b5cf7df0b67736d781b4e505",
+      "source_sha": "db3d38c165a259aa19db422af02b6423c80fa288",
+      "completion_sha": "db3d38c165a259aa19db422af02b6423c80fa288",
+      "workflow_class": "owner-decision",
+      "environment_class": "plan-control",
+      "retention_expires_at": "2031-08-27T00:00:00.000Z",
+      "parents": [],
+      "state": "active"
+    },
+    {
+      "kind": "package-namespace-receipt",
+      "schema_id": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-package-namespace-receipt-1.json",
+      "schema_version": "1.0.0",
+      "locator": "repo://plans/evidence/artifacts/sha256-ae1e7fe27d5190418e99a63d3554b149c615fb6343147c27c2dff749f2dffae9.json",
+      "sha256": "sha256:ae1e7fe27d5190418e99a63d3554b149c615fb6343147c27c2dff749f2dffae9",
+      "source_sha": "db3d38c165a259aa19db422af02b6423c80fa288",
+      "completion_sha": "db3d38c165a259aa19db422af02b6423c80fa288",
+      "workflow_class": "registry-readback",
+      "environment_class": "public-npm-read-only",
+      "retention_expires_at": "2031-08-27T00:00:00.000Z",
+      "parents": [
+        "sha256:9d3414d3f5fd12bf35b5b692c1d20952aa82ca85b5cf7df0b67736d781b4e505"
+      ],
+      "state": "active"
+    }
+  ]
+}
