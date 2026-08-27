@@ -60,6 +60,13 @@ async function livePackage(name) {
 
 let observations;
 const fixturePath = args.get("--fixture");
+if (mode !== "preflight") {
+  assert(
+    args.get("--expected-receipt"),
+    `${mode} mode requires --expected-receipt`,
+  );
+  assert(!fixturePath, `${mode} mode cannot use a registry fixture`);
+}
 if (fixturePath) {
   observations = (await readJson(path.resolve(repositoryRoot, String(fixturePath))))
     .packages;
@@ -142,6 +149,21 @@ if (args.get("--expected-receipt")) {
   const previous = await readJson(
     path.resolve(repositoryRoot, String(args.get("--expected-receipt"))),
   );
+  assert(
+    previous.kind === "package-namespace-receipt" ||
+      previous.kind === "package-namespace-release-receipt",
+    "Expected namespace receipt has an unsupported kind",
+  );
+  assert(
+    previous.result === "pass",
+    "Expected namespace receipt did not pass",
+  );
+  if (args.get("--require-unexpired") || mode === "protected_final") {
+    assert(
+      new Date(previous.expires_at).valueOf() > now.valueOf(),
+      "Expected namespace receipt has expired",
+    );
+  }
   assert(
     stableJson(previous.publisher) === stableJson(config.publisher),
     "Protected publisher identity changed since the expected namespace receipt",

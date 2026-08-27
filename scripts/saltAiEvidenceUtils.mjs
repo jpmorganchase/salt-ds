@@ -53,16 +53,29 @@ export async function gitHeadCommit() {
     assert(match, "Unable to resolve the Git directory");
     gitDirectory = path.resolve(repositoryRoot, match[1]);
   }
+  let commonDirectory = gitDirectory;
+  try {
+    const commonMarker = (await readFile(
+      path.join(gitDirectory, "commondir"),
+      "utf8",
+    )).trim();
+    commonDirectory = path.resolve(gitDirectory, commonMarker);
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
   const head = (await readFile(path.join(gitDirectory, "HEAD"), "utf8")).trim();
   if (/^[0-9a-f]{40}$/u.test(head)) return head;
   const match = head.match(/^ref:\s*(.+)$/u);
   assert(match, "Git HEAD is neither a commit nor a symbolic ref");
   try {
-    return (await readFile(path.join(gitDirectory, match[1]), "utf8")).trim();
+    return (await readFile(path.join(commonDirectory, match[1]), "utf8")).trim();
   } catch (error) {
     if (error.code !== "ENOENT") throw error;
   }
-  const packedRefs = await readFile(path.join(gitDirectory, "packed-refs"), "utf8");
+  const packedRefs = await readFile(
+    path.join(commonDirectory, "packed-refs"),
+    "utf8",
+  );
   const packed = packedRefs
     .split(/\r?\n/u)
     .find((line) => line.endsWith(` ${match[1]}`));

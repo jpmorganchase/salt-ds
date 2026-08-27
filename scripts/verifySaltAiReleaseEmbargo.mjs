@@ -32,7 +32,8 @@ async function filesIn(directory, predicate) {
 }
 
 function changesetPackages(source) {
-  const frontmatter = source.match(/^---\s*\n([\s\S]*?)\n---/u)?.[1] ?? "";
+  const normalized = source.replaceAll("\r\n", "\n");
+  const frontmatter = normalized.match(/^---\s*\n([\s\S]*?)\n---/u)?.[1] ?? "";
   return [...frontmatter.matchAll(/^"([^"]+)":\s*(?:patch|minor|major)$/gmu)].map(
     (match) => match[1],
   );

@@ -10,10 +10,13 @@ import {
   readJson,
   repositoryRoot,
   sha256,
+  stableJson,
 } from "./saltAiEvidenceUtils.mjs";
 
 const args = parseArgs(process.argv.slice(2));
 const digestReference = /^sha256:[0-9a-f]{64}$/u;
+const now = args.get("--now") ? new Date(String(args.get("--now"))) : new Date();
+assert(!Number.isNaN(now.valueOf()), "--now must be an ISO-8601 timestamp");
 
 function validateEntry(entry, context) {
   const required = [
@@ -64,7 +67,11 @@ function validateEntry(entry, context) {
   }
 }
 
-function validateIndex(index, expected = {}) {
+function validateIndex(
+  index,
+  expected = {},
+  { clock = now, entriesByDigest: suppliedEntriesByDigest } = {},
+) {
   const context = `${index.plan_id ?? "?"}/${index.unit_id ?? "?"}`;
   assert(index.schema_version === "1.0.0", `${context} has an unsupported schema version`);
   assert(/^\d{3}$/u.test(index.plan_id), `${context} has an invalid plan ID`);
@@ -76,6 +83,13 @@ function validateIndex(index, expected = {}) {
   const identities = new Set();
   const activeKinds = new Set();
   const digests = new Map();
+  const sortedLocators = index.entries
+    .map((entry) => entry.locator)
+    .toSorted((left, right) => left.localeCompare(right));
+  assert(
+    index.entries.every((entry, position) => entry.locator === sortedLocators[position]),
+    `${context} entries are not path-sorted`,
+  );
   for (const entry of index.entries) {
     validateEntry(entry, context);
     const identity = `${entry.kind}\u0000${entry.sha256}`;
@@ -84,17 +98,27 @@ function validateIndex(index, expected = {}) {
     if (entry.state === "active") {
       assert(!activeKinds.has(entry.kind), `${context} has multiple active ${entry.kind} entries`);
       activeKinds.add(entry.kind);
+      assert(
+        new Date(entry.retention_expires_at).valueOf() > clock.valueOf(),
+        `${context}/${entry.kind} active evidence has expired`,
+      );
     }
     const prior = digests.get(entry.sha256);
     assert(!prior || prior === entry.kind, `${context} reuses a digest across evidence kinds`);
     digests.set(entry.sha256, entry.kind);
+    assert(
+      new Set(entry.parents).size === entry.parents.length,
+      `${context}/${entry.kind} repeats a parent digest`,
+    );
   }
+
+  const entriesByDigest =
+    suppliedEntriesByDigest ??
+    new Map(index.entries.map((entry) => [entry.sha256, entry]));
 
   for (const entry of index.entries) {
     if (entry.state !== "superseded") continue;
-    const successor = index.entries.find(
-      (candidate) => candidate.sha256 === entry.successor_sha256,
-    );
+    const successor = entriesByDigest.get(entry.successor_sha256);
     assert(successor, `${context}/${entry.kind} has a dangling successor`);
     assert(successor.kind === entry.kind, `${context}/${entry.kind} successor crosses kinds`);
     const visited = new Set([entry.sha256]);
@@ -102,12 +126,39 @@ function validateIndex(index, expected = {}) {
     while (cursor.state === "superseded") {
       assert(!visited.has(cursor.sha256), `${context}/${entry.kind} successor cycle`);
       visited.add(cursor.sha256);
-      cursor = index.entries.find(
-        (candidate) => candidate.sha256 === cursor.successor_sha256,
-      );
+      cursor = entriesByDigest.get(cursor.successor_sha256);
       assert(cursor, `${context}/${entry.kind} has a dangling successor chain`);
     }
     assert(cursor.state === "active", `${context}/${entry.kind} successor chain is not active`);
+  }
+
+  for (const entry of index.entries) {
+    if (entry.state !== "active") continue;
+    for (const parentDigest of entry.parents) {
+      const visited = new Set();
+      let parent = entriesByDigest.get(parentDigest);
+      assert(parent, `${context}/${entry.kind} has a dangling active parent`);
+      while (parent.state === "superseded") {
+        assert(
+          !visited.has(parent.sha256),
+          `${context}/${entry.kind} active parent successor cycle`,
+        );
+        visited.add(parent.sha256);
+        parent = entriesByDigest.get(parent.successor_sha256);
+        assert(
+          parent,
+          `${context}/${entry.kind} active parent has a dangling successor`,
+        );
+      }
+      assert(
+        parent.state === "active",
+        `${context}/${entry.kind} parent does not resolve to active evidence`,
+      );
+      assert(
+        new Date(parent.retention_expires_at).valueOf() > clock.valueOf(),
+        `${context}/${entry.kind} active parent has expired`,
+      );
+    }
   }
 
   if (index.tracker_status === "DONE") {
@@ -134,7 +185,9 @@ async function validateFixtures() {
     const fixture = await readJson(path.join(directory, name));
     let failed = false;
     try {
-      validateIndex(fixture.index);
+      const fixtureNow = fixture.now ? new Date(fixture.now) : now;
+      assert(!Number.isNaN(fixtureNow.valueOf()), `${name} has an invalid fixture clock`);
+      validateIndex(fixture.index, {}, { clock: fixtureNow });
     } catch {
       failed = true;
     }
@@ -156,6 +209,7 @@ if (!args.get("--fixtures-only")) {
   const rows = [...source.matchAll(/^\|\s+([0-9]{2}[a-z]?)\s+\|[^\n]*$/gmu)];
   assert(rows.length > 0, "No Plan 001 execution rows found");
   const units = new Set();
+  const indexedRows = [];
   for (const match of rows) {
     const cells = match[0]
       .split("|")
@@ -183,9 +237,30 @@ if (!args.get("--fixtures-only")) {
     const bytes = await readFile(indexPath);
     assert(sha256(bytes) === expectedDigest, `Unit ${unit} evidence-index digest mismatch`);
     const index = JSON.parse(bytes.toString("utf8"));
-    validateIndex(index, { plan: "001", unit });
+    indexedRows.push({ completion, index, status, unit });
+  }
+
+  const entriesByDigest = new Map();
+  for (const { index, unit } of indexedRows) {
+    for (const entry of index.entries) {
+      const existing = entriesByDigest.get(entry.sha256);
+      assert(
+        !existing || stableJson(existing) === stableJson(entry),
+        `Unit ${unit} reuses ${entry.sha256} with different evidence metadata`,
+      );
+      entriesByDigest.set(entry.sha256, entry);
+    }
+  }
+  for (const { completion, index, status, unit } of indexedRows) {
+    validateIndex(
+      index,
+      { plan: "001", unit },
+      { clock: now, entriesByDigest },
+    );
     assert(index.tracker_status === status, `Unit ${unit} status/index mismatch`);
-    if (status === "DONE") assert(index.completion_sha === completion, `Unit ${unit} completion mismatch`);
+    if (status === "DONE") {
+      assert(index.completion_sha === completion, `Unit ${unit} completion mismatch`);
+    }
   }
   assert(units.has("00a") && units.has("09c"), "Plan 001 tracker is incomplete");
 }
