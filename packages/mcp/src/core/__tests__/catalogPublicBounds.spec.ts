@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   MAX_CATALOG_CONTENT_BYTES,
   MAX_CATALOG_ID_CHARS,
-} from "../catalog/catalogPayloadSchemaV2.js";
+} from "@salt-ds/knowledge";
 import {
   normalizeCatalogPublicCitation,
   normalizeCatalogPublicLocator,
@@ -13,7 +13,7 @@ import {
   contentCodec,
   packageFactCodec,
   policyProfileCodec,
-} from "../catalog/catalogSchemaV2.js";
+} from "@salt-ds/knowledge";
 import {
   assertPublicResourceText,
   MAX_PUBLIC_RESOURCE_UTF8_BYTES,

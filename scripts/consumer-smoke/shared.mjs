@@ -43,6 +43,11 @@ export function createWindowsCmdInvocation(command, args) {
 }
 
 export const repoRoot = path.resolve(__dirname, "..", "..");
+export const distKnowledgeDir = path.join(
+  repoRoot,
+  "dist",
+  "salt-ds-knowledge",
+);
 export const distMcpDir = path.join(repoRoot, "dist", "salt-ds-mcp");
 
 const CONSUMER_SMOKE_OPTIONS = new Set([
@@ -52,6 +57,7 @@ const CONSUMER_SMOKE_OPTIONS = new Set([
   "mcp-spec",
   "expected-version",
   "expected-git-head",
+  "pack-report",
 ]);
 
 export function getExecutable(name) {
@@ -101,6 +107,7 @@ export function parseArgs(argv) {
     mcpSpec: flags["mcp-spec"],
     expectedVersion: flags["expected-version"],
     expectedGitHead: flags["expected-git-head"],
+    packReport: flags["pack-report"],
   };
 
   if (!published) {
@@ -108,8 +115,11 @@ export function parseArgs(argv) {
       !result.mcpSpec && !result.expectedVersion && !result.expectedGitHead,
       "Published identity options require --published.",
     );
+    assert(result.packReport, "Local packed smoke requires --pack-report.");
     return result;
   }
+
+  assert(!result.packReport, "Published smoke does not accept --pack-report.");
 
   assert(result.mcpSpec, "Published smoke requires --mcp-spec.");
   assert(

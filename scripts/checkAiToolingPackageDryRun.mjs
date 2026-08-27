@@ -3,11 +3,16 @@
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import {
+  copyFileSync,
   existsSync,
+  lstatSync,
   mkdirSync,
   mkdtempSync,
+  readdirSync,
   readFileSync,
+  renameSync,
   rmSync,
+  writeFileSync,
 } from "node:fs";
 import { createRequire } from "node:module";
 import os from "node:os";
@@ -44,6 +49,39 @@ const vitestCli = path.resolve(
   vitestPackage.bin.vitest,
 );
 
+function parseOptions(argv) {
+  const options = {};
+  for (let index = 0; index < argv.length; index += 1) {
+    const token = argv[index];
+    if (token === "--") continue;
+    if (token !== "--profile" && token !== "--report") {
+      throw new Error(`Unknown AI tooling pack option: ${token}`);
+    }
+    const value = argv[index + 1];
+    if (!value || value.startsWith("--")) {
+      throw new Error(`${token} requires a value.`);
+    }
+    options[token.slice(2)] = value;
+    index += 1;
+  }
+  if (options.profile !== "extraction-parity") {
+    throw new Error(
+      "Unit 02 package checks require --profile extraction-parity.",
+    );
+  }
+  if (!options.report) {
+    throw new Error("Unit 02 package checks require an explicit --report.");
+  }
+  const reportPath = path.resolve(repoRoot, options.report);
+  const reportRoot = path.join(repoRoot, "dist", "salt-ai-pack");
+  if (!isPathWithinRoot(reportRoot, reportPath) || reportPath === reportRoot) {
+    throw new Error("The AI tooling pack report must stay under dist/salt-ai-pack.");
+  }
+  return { profile: options.profile, reportPath, reportRoot };
+}
+
+const options = parseOptions(process.argv.slice(2));
+
 const forbiddenPublishPathSegments = [
   "archive",
   "baselines",
@@ -59,19 +97,69 @@ const forbiddenPublishPathSegments = [
 
 const packages = [
   {
+    name: "@salt-ds/knowledge",
+    dir: "dist/salt-ds-knowledge",
+    requiredPaths: ["package.json", "dist-cjs", "dist-es", "dist-types"],
+    expectedFilesField: [
+      "dist-cjs",
+      "dist-es",
+      "dist-types",
+      "CHANGELOG.md",
+    ],
+    forbiddenManifestFields: [
+      "publishEntryPath",
+      "publishBuildIdentityManifest",
+      "publishBuildIdentityInputPatterns",
+      "publishCatalogArtifactPaths",
+      "publishTypingEntryPath",
+      "publishTypingEntryOnly",
+      "publishPreserveModules",
+      "publishIncludeReadme",
+      "publishSourceMaps",
+      "saltDocs",
+      "typescriptInclude",
+      "typescriptRootDir",
+    ],
+    forbiddenPublishConfigFields: ["directory"],
+    forbiddenPublishedDependencies: [
+      "@salt-ds/mcp",
+      "@salt-ds/cli",
+      "@modelcontextprotocol/server",
+    ],
+    expectedModuleMarkers: {
+      "dist-cjs/package.json": "commonjs",
+      "dist-es/package.json": "module",
+    },
+    expectedBundleFiles: {
+      "dist-cjs": ["index.js", "package.json"],
+      "dist-es": ["index.js", "package.json"],
+    },
+    allowedTopLevelPaths: [
+      "LICENSE",
+      "dist-cjs",
+      "dist-es",
+      "dist-types",
+      "package.json",
+    ],
+    forbiddenTextMarkers: ["salt://"],
+    maxPackageBytes: 2_000_000,
+    maxUnpackedBytes: 8_000_000,
+    maxGeneratedBytes: 0,
+    maxSourceMapBytes: 0,
+    maxEntryCount: 80,
+  },
+  {
     name: "@salt-ds/mcp",
     dir: "dist/salt-ds-mcp",
     requiredPaths: [
       "package.json",
       "bin/salt-mcp.js",
-      "generated",
       "dist-cjs",
       "dist-es",
       "dist-types",
     ],
     expectedFilesField: [
       "bin",
-      "generated",
       "dist-cjs",
       "dist-es",
       "dist-types",
@@ -89,7 +177,10 @@ const packages = [
     ],
     forbiddenPublishConfigFields: ["directory"],
     forbiddenPublishedDependencies: ["@salt-ds/semantic-core", "get-tsconfig"],
-    expectedExactDependencies: { "@modelcontextprotocol/server": "2.0.0" },
+    expectedExactDependencies: {
+      "@modelcontextprotocol/server": "2.0.0",
+      "@salt-ds/knowledge": "0.0.0",
+    },
     expectedDeclarationFiles: ["dist-types/index.d.ts"],
     forbiddenDeclarationImports: ["@salt-ds/semantic-core"],
     expectedModuleMarkers: {
@@ -109,25 +200,13 @@ const packages = [
       "dist-cjs",
       "dist-es",
       "dist-types",
-      "generated",
       "package.json",
     ],
-    expectedGeneratedManifest: "generated/catalog-manifest.json",
-    workspaceGeneratedDir: "packages/mcp/generated",
-    forbiddenGeneratedFiles: [
-      "changes.json",
-      "create-retrieval-index.jsonl",
-      "examples.json",
-      "icons-lite.json",
-      "page-search-index.json",
-      "pattern-validation-rules.json",
-      "search-index.jsonl",
-    ],
-    maxPackageBytes: 4_000_000,
-    maxUnpackedBytes: 18_000_000,
-    maxGeneratedBytes: 15_000_000,
+    maxPackageBytes: 2_000_000,
+    maxUnpackedBytes: 8_000_000,
+    maxGeneratedBytes: 0,
     maxSourceMapBytes: 0,
-    maxEntryCount: 40,
+    maxEntryCount: 16,
   },
 ];
 
@@ -892,6 +971,55 @@ function runRealPack(packageConfig, packageDir) {
   };
 }
 
+function collectExactFileInventory(rootDirectory) {
+  const files = [];
+  const visit = (directory) => {
+    for (const entry of readdirSync(directory, { withFileTypes: true }).sort(
+      (left, right) => compareOrdinalStrings(left.name, right.name),
+    )) {
+      const absolutePath = path.join(directory, entry.name);
+      const stats = lstatSync(absolutePath);
+      if (stats.isSymbolicLink()) {
+        throw new Error(`Comparison registry contains a link: ${absolutePath}`);
+      }
+      if (stats.isDirectory()) {
+        visit(absolutePath);
+        continue;
+      }
+      if (!stats.isFile()) {
+        throw new Error(
+          `Comparison registry contains a non-file entry: ${absolutePath}`,
+        );
+      }
+      const bytes = readFileSync(absolutePath);
+      files.push({
+        path: normalizePath(path.relative(rootDirectory, absolutePath)),
+        sha256: sha256(bytes),
+        bytes: bytes.byteLength,
+      });
+    }
+  };
+  visit(rootDirectory);
+  return files;
+}
+
+const reportParent = path.dirname(options.reportPath);
+mkdirSync(reportParent, { recursive: true });
+const reportBaseName = path.basename(options.reportPath, path.extname(options.reportPath));
+const finalArtifactDirectory = path.join(
+  reportParent,
+  `${reportBaseName}.artifacts`,
+);
+if (!isPathWithinRoot(options.reportRoot, finalArtifactDirectory)) {
+  throw new Error("The AI tooling pack artifact directory escaped its root.");
+}
+rmSync(options.reportPath, { force: true });
+rmSync(finalArtifactDirectory, { recursive: true, force: true });
+const stagingArtifactDirectory = mkdtempSync(
+  path.join(reportParent, `.${reportBaseName}-artifacts-`),
+);
+const packageReports = [];
+
 for (const packageConfig of packages) {
   const packageDir = path.join(repoRoot, packageConfig.dir);
   if (!existsSync(packageDir)) {
@@ -904,17 +1032,21 @@ for (const packageConfig of packages) {
   const manifest = assertBuiltManifest(packageConfig, packageDir);
   if (manifest) {
     assertManifestTargetsExist(packageConfig, packageDir, manifest);
-    assertCliVersion(packageConfig, packageDir, manifest);
+    if (packageConfig.verifyCliVersion === true) {
+      assertCliVersion(packageConfig, packageDir, manifest);
+    }
   }
   assertModuleFormatMarkers(packageConfig, packageDir);
   assertPackedCatalogBuildIdentity(packageConfig, packageDir);
   assertPackedCatalogSemantics(packageConfig, packageDir);
-  assertCatalogDirectoriesEqual(
-    packageConfig,
-    path.join(repoRoot, packageConfig.workspaceGeneratedDir),
-    path.join(packageDir, "generated"),
-    "workspace-to-dist",
-  );
+  if (packageConfig.workspaceGeneratedDir) {
+    assertCatalogDirectoriesEqual(
+      packageConfig,
+      path.join(repoRoot, packageConfig.workspaceGeneratedDir),
+      path.join(packageDir, "generated"),
+      "workspace-to-dist",
+    );
+  }
 
   const packResult = runRealPack(packageConfig, packageDir);
   if (!packResult) {
@@ -942,13 +1074,15 @@ for (const packageConfig of packages) {
     assertModuleFormatMarkers(packageConfig, extractedPackageDir);
     assertPackedCatalogBuildIdentity(packageConfig, extractedPackageDir);
     assertPackedCatalogSemantics(packageConfig, extractedPackageDir);
-    assertCatalogDirectoriesEqual(
-      packageConfig,
-      path.join(packageDir, "generated"),
-      path.join(extractedPackageDir, "generated"),
-      "dist-to-extracted-tarball",
-    );
-    assertPackedCatalogReleaseCoverage(packageConfig, extractedPackageDir);
+    if (packageConfig.expectedGeneratedManifest) {
+      assertCatalogDirectoriesEqual(
+        packageConfig,
+        path.join(packageDir, "generated"),
+        path.join(extractedPackageDir, "generated"),
+        "dist-to-extracted-tarball",
+      );
+      assertPackedCatalogReleaseCoverage(packageConfig, extractedPackageDir);
+    }
 
     if (packed.name !== packageConfig.name) {
       fail(`${packageConfig.dir} packed as ${packed.name}`);
@@ -1139,6 +1273,20 @@ for (const packageConfig of packages) {
         }
       }
 
+      if (/\.(?:js|cjs|mjs|d\.ts|json)$/u.test(filePath)) {
+        const content = readFileSync(
+          path.join(extractedPackageDir, filePath),
+          "utf8",
+        );
+        for (const marker of packageConfig.forbiddenTextMarkers ?? []) {
+          if (content.includes(marker)) {
+            fail(
+              `${packageConfig.name} pack includes forbidden prototype marker ${JSON.stringify(marker)} in ${filePath}`,
+            );
+          }
+        }
+      }
+
       const segments = filePath.split("/");
       const forbiddenSegment = forbiddenPublishPathSegments.find((segment) =>
         segments.includes(segment),
@@ -1153,11 +1301,145 @@ for (const packageConfig of packages) {
     console.log(
       `${packageConfig.name}: ${packed.entryCount} files, ${packed.size} compressed bytes, ${packed.unpackedSize} unpacked bytes, ${generatedBytes} generated bytes, tarball ${sha256(readFileSync(tarballPath))}`,
     );
+
+    const persistentTarballPath = path.join(
+      stagingArtifactDirectory,
+      packed.filename,
+    );
+    copyFileSync(tarballPath, persistentTarballPath);
+    const tarballBytes = readFileSync(persistentTarballPath);
+    const manifestBytes = readFileSync(
+      path.join(extractedPackageDir, "package.json"),
+    );
+    const packedManifest = JSON.parse(manifestBytes.toString("utf8"));
+    packageReports.push({
+      name: packageConfig.name,
+      version: packedManifest.version,
+      manifest: {
+        path: `${packageConfig.name}/package.json`,
+        sha256: sha256(manifestBytes),
+        bytes: manifestBytes.byteLength,
+      },
+      tarball: {
+        fileName: packed.filename,
+        sha256: sha256(tarballBytes),
+        bytes: tarballBytes.byteLength,
+      },
+      dependencies: packedManifest.dependencies ?? {},
+    });
   } finally {
     cleanup();
   }
 }
 
 if (process.exitCode) {
+  rmSync(stagingArtifactDirectory, { recursive: true, force: true });
   process.exit(process.exitCode);
 }
+
+const knowledgeReport = packageReports.find(
+  (entry) => entry.name === "@salt-ds/knowledge",
+);
+const mcpReport = packageReports.find((entry) => entry.name === "@salt-ds/mcp");
+if (!knowledgeReport || !mcpReport || packageReports.length !== packages.length) {
+  rmSync(stagingArtifactDirectory, { recursive: true, force: true });
+  throw new Error("AI tooling pack did not produce both required package reports.");
+}
+if (mcpReport.dependencies["@salt-ds/knowledge"] !== knowledgeReport.version) {
+  rmSync(stagingArtifactDirectory, { recursive: true, force: true });
+  throw new Error("MCP does not exact-pin the packed knowledge package version.");
+}
+
+const extractionParityPath = path.join(
+  repoRoot,
+  "packages",
+  "knowledge",
+  "generated",
+  "extraction-parity.json",
+);
+if (!existsSync(extractionParityPath)) {
+  rmSync(stagingArtifactDirectory, { recursive: true, force: true });
+  throw new Error(
+    "Missing packages/knowledge/generated/extraction-parity.json. Run yarn build:ai-tooling first.",
+  );
+}
+const extractionParityBytes = readFileSync(extractionParityPath);
+const extractionParity = JSON.parse(extractionParityBytes.toString("utf8"));
+if (
+  extractionParity.contract !== "extraction-parity@1" ||
+  extractionParity.status !== "passed" ||
+  extractionParity.current?.semantic_digest !==
+    extractionParity.baseline?.semantic_digest
+) {
+  rmSync(stagingArtifactDirectory, { recursive: true, force: true });
+  throw new Error("The extraction parity receipt is not a passing Unit 02 receipt.");
+}
+const comparisonRegistryRoot = path.dirname(extractionParityPath);
+const comparisonRegistryFiles = collectExactFileInventory(
+  comparisonRegistryRoot,
+);
+const comparisonManifest = comparisonRegistryFiles.find(
+  (entry) => entry.path === "catalog-manifest.json",
+);
+if (!comparisonManifest) {
+  rmSync(stagingArtifactDirectory, { recursive: true, force: true });
+  throw new Error("The comparison registry has no catalog-manifest.json.");
+}
+
+renameSync(stagingArtifactDirectory, finalArtifactDirectory);
+const artifactDirectoryName = path.basename(finalArtifactDirectory);
+const report = {
+  schema_version: "1.0.0",
+  contract: "salt-ai-pack-report@1",
+  policy_profile: options.profile,
+  publishable: false,
+  packages: packageReports.map((entry) => ({
+    name: entry.name,
+    version: entry.version,
+    manifest: entry.manifest,
+    tarball: {
+      path: `${artifactDirectoryName}/${entry.tarball.fileName}`,
+      sha256: entry.tarball.sha256,
+      bytes: entry.tarball.bytes,
+    },
+    dependencies: entry.dependencies,
+    first_party_dependencies:
+      entry.name === "@salt-ds/mcp"
+        ? [
+            {
+              name: "@salt-ds/knowledge",
+              version: knowledgeReport.version,
+              tarball_sha256: knowledgeReport.tarball.sha256,
+            },
+          ]
+        : [],
+    content_policy: {
+      generated_tree: false,
+      prototype_catalog: false,
+      workspace_link: false,
+    },
+  })),
+  extraction_parity: {
+    path: "packages/knowledge/generated/extraction-parity.json",
+    sha256: sha256(extractionParityBytes),
+    bytes: extractionParityBytes.byteLength,
+    contract: extractionParity.contract,
+    status: extractionParity.status,
+    semantic_digest: extractionParity.current.semantic_digest,
+    normalized_semantic_projection_sha256:
+      extractionParity.normalized_semantic_projection_sha256,
+  },
+  comparison_registry: {
+    root: "packages/knowledge/generated",
+    semantic_digest: extractionParity.current.semantic_digest,
+    manifest: comparisonManifest,
+    files: comparisonRegistryFiles,
+  },
+};
+const reportBytes = Buffer.from(`${JSON.stringify(report, null, 2)}\n`, "utf8");
+const temporaryReportPath = `${options.reportPath}.tmp-${process.pid}`;
+writeFileSync(temporaryReportPath, reportBytes, { flag: "wx" });
+renameSync(temporaryReportPath, options.reportPath);
+console.log(
+  `Wrote ${path.relative(repoRoot, options.reportPath)} (${sha256(reportBytes)}).`,
+);

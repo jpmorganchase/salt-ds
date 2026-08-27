@@ -1,0 +1,16 @@
+[
+  "packages/*/package.json",
+  "packages/*/CHANGELOG.md",
+  "packages/*/*.{ts,tsx,css,scss}",
+  "packages/*/css/**/*.{css,scss}",
+  "packages/*/src/**/*.{ts,tsx,mts,cts,js,jsx,mjs,cjs,css,scss,json}",
+  "!packages/knowledge/src/__fixtures__/unit01-semantic-characterization.json",
+  "packages/*/stories/**/*.{ts,tsx,css,scss,json}",
+  "packages/theme/css/**/*.{css,json}",
+  "site/docs/**/*.mdx",
+  "site/component-category-map.json",
+  "site/pattern-category-map.json",
+  "site/src/components/css-display/descriptions.ts",
+  "site/src/components/icon-preview/salt-icon-synonym.json",
+  "site/src/examples/**/*.{ts,tsx,css,scss,json}"
+]

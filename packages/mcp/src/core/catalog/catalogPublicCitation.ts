@@ -1,22 +1,20 @@
 import {
+  type CatalogManifest,
+  type CatalogRuntimeFamilyName,
+  isCanonicalSiteRoute,
+  isSafeAbsoluteHttpsUrl,
+  officialSaltSiteUrl,
+} from "@salt-ds/knowledge";
+import {
   type ProjectPolicyResourceKind,
   projectPolicyResourceTemplate,
   projectPolicyResourceUri,
 } from "../policy/projectPolicyResourceIdentity.js";
-import { isSafeAbsoluteHttpsUrl } from "./catalogHttpsUrl.js";
 import {
   catalogManifestResourceUri,
   catalogRecordResourceTemplate,
   catalogRecordResourceUri,
 } from "./catalogResourceIdentity.js";
-import type {
-  CatalogManifest,
-  CatalogRuntimeFamilyName,
-} from "./catalogSchemaV2.js";
-import {
-  isCanonicalSiteRoute,
-  officialSaltSiteUrl,
-} from "./catalogSiteRoute.js";
 
 export type CatalogPublicCitation =
   | { kind: "catalog_manifest"; manifest: CatalogManifest }

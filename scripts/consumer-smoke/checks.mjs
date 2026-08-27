@@ -82,9 +82,13 @@ function getToolPayload(result, label) {
 async function assertProtocolIsAdvertised(
   installedMcpBinPath,
   cwd,
+  registryDir,
   protocolVersion,
   expectedEra,
 ) {
+  const registryArgs = registryDir
+    ? ["--registry-dir", registryDir]
+    : [];
   const client = new Client(
     { name: `salt-consumer-${expectedEra}-probe`, version: "0.0.0" },
     {
@@ -96,7 +100,13 @@ async function assertProtocolIsAdvertised(
   );
   const transport = new StdioClientTransport({
     command: process.execPath,
-    args: ["--import", offlineNetworkGuardUrl, installedMcpBinPath, "serve"],
+    args: [
+      "--import",
+      offlineNetworkGuardUrl,
+      installedMcpBinPath,
+      "serve",
+      ...registryArgs,
+    ],
     cwd,
     stderr: "pipe",
   });
@@ -139,10 +149,14 @@ export async function runMcpWorkflowCoverage(
   existingSaltRoot,
   nonSaltRoot,
   expectedModuleFingerprint,
+  registryDir,
 ) {
   console.log("Checking the installed MCP v2 surface...");
   runOfflineNetworkGuardSelfTest();
   const installedMcpBinPath = getInstalledMcpBin(installRoot);
+  const registryArgs = registryDir
+    ? ["--registry-dir", registryDir]
+    : [];
   assert(
     await pathExists(installedMcpBinPath),
     `Expected installed MCP bin at ${installedMcpBinPath}.`,
@@ -150,18 +164,21 @@ export async function runMcpWorkflowCoverage(
   await assertProtocolIsAdvertised(
     installedMcpBinPath,
     existingSaltRoot,
+    registryDir,
     "2026-07-28",
     "modern",
   );
   await assertProtocolIsAdvertised(
     installedMcpBinPath,
     existingSaltRoot,
+    registryDir,
     "2025-11-25",
     "legacy",
   );
   await assertProtocolIsAdvertised(
     installedMcpBinPath,
     existingSaltRoot,
+    registryDir,
     "2025-06-18",
     "legacy",
   );
@@ -175,7 +192,13 @@ export async function runMcpWorkflowCoverage(
   );
   const transport = new StdioClientTransport({
     command: process.execPath,
-    args: ["--import", offlineNetworkGuardUrl, installedMcpBinPath, "serve"],
+    args: [
+      "--import",
+      offlineNetworkGuardUrl,
+      installedMcpBinPath,
+      "serve",
+      ...registryArgs,
+    ],
     cwd: existingSaltRoot,
     stderr: "pipe",
   });

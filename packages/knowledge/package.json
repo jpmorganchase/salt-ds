@@ -1,0 +1,86 @@
+{
+  "name": "@salt-ds/knowledge",
+  "version": "0.0.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpmorganchase/salt-ds.git",
+    "directory": "packages/knowledge"
+  },
+  "main": "src/index.ts",
+  "engines": {
+    "node": ">=22"
+  },
+  "sideEffects": false,
+  "files": [],
+  "publishExports": {
+    ".": {
+      "types": "./dist-types/index.d.ts",
+      "import": "./dist-es/index.js",
+      "require": "./dist-cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "typescriptInclude": [
+    "src/index.ts"
+  ],
+  "typescriptRootDir": "src",
+  "publishTypingEntryOnly": false,
+  "publishPreserveModules": false,
+  "publishSourceMaps": false,
+  "publishScriptExcludes": [
+    "build",
+    "build:knowledge",
+    "build:package",
+    "prepack"
+  ],
+  "publishBuildIdentityManifest": "generated/catalog-manifest.json",
+  "publishBuildIdentityInputPatterns": {
+    "semantic": "src/build/catalogSemanticInputPatterns.json",
+    "compiler": "src/build/catalogCompilerInputPatterns.json"
+  },
+  "publishCatalogArtifactPaths": {
+    "generationDirectory": "catalog-generations",
+    "publicationInventoryFile": "catalog-publication.json",
+    "schemaArtifactKind": "json_schema",
+    "buildArtifactsField": "build_artifacts"
+  },
+  "scripts": {
+    "build:knowledge": "node ./scripts/buildKnowledge.mjs",
+    "build:package": "yarn node ../../scripts/build.mjs",
+    "build": "yarn build:knowledge && yarn build:package",
+    "prepack": "yarn build"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.28.4",
+    "@babel/traverse": "^7.28.4",
+    "@babel/types": "^7.28.4",
+    "@types/node": "^24.0.0",
+    "js-yaml": "^4.1.1",
+    "jsonc-parser": "^3.3.1",
+    "micromatch": "^4.0.8",
+    "postcss": "^8.5.24",
+    "semver": "^7.7.3",
+    "zod": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/micromatch": "^4.0.10",
+    "@types/semver": "^7.7.1",
+    "esbuild": "^0.28.0",
+    "fast-glob": "^3.3.3",
+    "mdast-util-to-string": "^4.0.0",
+    "postcss-selector-parser": "^7.1.1",
+    "react-docgen-typescript": "^2.4.0",
+    "remark-gfm": "^4.0.1",
+    "remark-mdx": "^3.1.1",
+    "remark-parse": "^11.0.0",
+    "typescript": "^6.0.2",
+    "unified": "^11.0.5"
+  },
+  "publishConfig": {
+    "directory": "../../dist/salt-ds-knowledge",
+    "provenance": true
+  }
+}

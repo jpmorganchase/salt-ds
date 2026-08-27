@@ -123,7 +123,7 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: Build MCP registry test inputs
-        run: yarn workspace @salt-ds/mcp build:registry
+        run: yarn workspace @salt-ds/knowledge build:knowledge
       - run: yarn run test
   consumer-smoke:
     name: Consumer smoke (Node ${{ matrix.node }})

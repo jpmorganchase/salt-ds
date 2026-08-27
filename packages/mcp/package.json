@@ -47,25 +47,6 @@
     "measure:surface",
     "prepack"
   ],
-  "publishBuildIdentityManifest": "generated/catalog-manifest.json",
-  "publishBuildIdentityInputPatterns": {
-    "semantic": "src/core/build/catalogSemanticInputPatterns.json",
-    "compiler": "src/core/build/catalogCompilerInputPatterns.json"
-  },
-  "publishCatalogArtifactPaths": {
-    "generationDirectory": "catalog-generations",
-    "publicationInventoryFile": "catalog-publication.json",
-    "schemaArtifactKind": "json_schema",
-    "buildArtifactsField": "build_artifacts"
-  },
-  "publishExtraCopyPaths": [
-    {
-      "from": "generated",
-      "to": "generated",
-      "filesFromManifest": "generated/catalog-manifest.json",
-      "manifestSupportArtifactKind": "package_inventory"
-    }
-  ],
   "publishSourceMaps": false,
   "publishIncludeReadme": false,
   "publishIncludeChangelog": false,
@@ -75,40 +56,23 @@
   "scripts": {
     "build:registry": "node ./scripts/buildRegistry.mjs",
     "build:package": "yarn node ../../scripts/build.mjs",
-    "build": "yarn build:registry && yarn build:package",
+    "build": "yarn build:package",
     "measure:surface": "node --expose-gc ./scripts/measurePublicSurface.mjs",
     "measure:runtime-loc": "node ./scripts/measureRuntimeReachableLoc.mjs",
     "prepack": "yarn build"
   },
   "dependencies": {
-    "@babel/parser": "^7.28.4",
-    "@babel/traverse": "^7.28.4",
-    "@babel/types": "^7.28.4",
     "@modelcontextprotocol/server": "2.0.0",
+    "@salt-ds/knowledge": "workspace:*",
     "@types/node": "^24.0.0",
     "js-yaml": "^4.1.1",
-    "jsonc-parser": "^3.3.1",
-    "micromatch": "^4.0.8",
-    "postcss": "^8.5.24",
-    "semver": "^7.7.3",
     "zod": "^4.2.0"
   },
   "devDependencies": {
     "@modelcontextprotocol/client": "^2.0.0",
     "@types/js-yaml": "^4.0.9",
-    "@types/micromatch": "^4.0.10",
-    "@types/semver": "^7.7.1",
     "ajv": "^8.17.1",
-    "esbuild": "^0.28.0",
-    "fast-glob": "^3.3.3",
-    "mdast-util-to-string": "^4.0.0",
-    "postcss-selector-parser": "^7.1.1",
-    "react-docgen-typescript": "^2.4.0",
-    "remark-gfm": "^4.0.1",
-    "remark-mdx": "^3.1.1",
-    "remark-parse": "^11.0.0",
-    "typescript": "^6.0.2",
-    "unified": "^11.0.5"
+    "typescript": "^6.0.2"
   },
   "publishConfig": {
     "directory": "../../dist/salt-ds-mcp",

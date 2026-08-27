@@ -54,4 +54,5 @@ yarn-error.log*
 # MCP registry
 
 /packages/mcp/generated
+/packages/knowledge/generated
 .salt-eval-cache

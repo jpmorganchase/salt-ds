@@ -9,6 +9,7 @@ import {
   ensureBuildArtifacts,
   installLocalPackages,
   installPublishedPackage,
+  loadExactPackReport,
   verifyInstalledMcpModuleExports,
   verifyInstalledMcpTypes,
   verifyStandaloneConsumerExample,
@@ -29,6 +30,7 @@ async function main() {
     let standaloneMcpSpec = options.mcpSpec;
     let standaloneExpectedVersion = options.expectedVersion ?? null;
     let standaloneExpectedPackageTreeSha256 = null;
+    let comparisonRegistryDir = null;
     if (options.published) {
       const identity = await installPublishedPackage(
         installedToolsRoot,
@@ -38,11 +40,16 @@ async function main() {
       console.log(`Verified registry identity: ${JSON.stringify(identity)}`);
     } else {
       await ensureBuildArtifacts(options.skipBuild);
-      const localInstallation = await installLocalPackages(installedToolsRoot);
+      const packReport = await loadExactPackReport(options.packReport);
+      const localInstallation = await installLocalPackages(
+        installedToolsRoot,
+        packReport,
+      );
       standaloneMcpSpec = localInstallation.tarballPath;
       standaloneExpectedVersion = localInstallation.packMetadata.version;
       standaloneExpectedPackageTreeSha256 =
         localInstallation.installedTreeSha256;
+      comparisonRegistryDir = packReport.comparisonRegistryDir;
     }
     await fs.mkdir(existingSaltRepo, { recursive: true });
     await fs.mkdir(nonSaltRepo, { recursive: true });
@@ -53,6 +60,7 @@ async function main() {
     const moduleFingerprint = await verifyInstalledMcpModuleExports(
       installedToolsRoot,
       existingSaltRepo,
+      comparisonRegistryDir,
     );
     await verifyInstalledMcpTypes(installedToolsRoot);
 
@@ -61,18 +69,25 @@ async function main() {
       existingSaltRepo,
       nonSaltRepo,
       moduleFingerprint,
+      comparisonRegistryDir,
     );
-    const standaloneReceipt = await verifyStandaloneConsumerExample(
-      tempRoot,
-      standaloneMcpSpec,
-      {
-        expectedPackageTreeSha256: standaloneExpectedPackageTreeSha256,
-        expectedVersion: standaloneExpectedVersion,
-      },
-    );
-    console.log(
-      `Verified standalone exact-package replay: ${JSON.stringify(standaloneReceipt)}`,
-    );
+    if (options.published) {
+      const standaloneReceipt = await verifyStandaloneConsumerExample(
+        tempRoot,
+        standaloneMcpSpec,
+        {
+          expectedPackageTreeSha256: standaloneExpectedPackageTreeSha256,
+          expectedVersion: standaloneExpectedVersion,
+        },
+      );
+      console.log(
+        `Verified standalone exact-package replay: ${JSON.stringify(standaloneReceipt)}`,
+      );
+    } else {
+      console.log(
+        "Verified nonpublishable Unit 02 workflows from the exact two-package report; standalone publication replay remains embargoed.",
+      );
+    }
 
     console.log("");
     console.log("Consumer smoke test passed.");

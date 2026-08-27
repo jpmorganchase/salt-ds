@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://salt-ds.github.io/schemas/salt-ai-pack-report-v1.schema.json",
+  "title": "Salt AI package report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "contract",
+    "policy_profile",
+    "publishable",
+    "packages",
+    "extraction_parity",
+    "comparison_registry"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "contract": { "const": "salt-ai-pack-report@1" },
+    "policy_profile": { "const": "extraction-parity" },
+    "publishable": { "const": false },
+    "packages": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": { "$ref": "#/$defs/package" }
+    },
+    "extraction_parity": { "$ref": "#/$defs/extractionParity" },
+    "comparison_registry": { "$ref": "#/$defs/comparisonRegistry" }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "bytes"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?![A-Za-z]:|/|.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "bytes": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "dependencyEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "tarball_sha256"],
+      "properties": {
+        "name": { "const": "@salt-ds/knowledge" },
+        "version": { "type": "string", "pattern": "^0\\.0\\.0$" },
+        "tarball_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "contentPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generated_tree",
+        "prototype_catalog",
+        "workspace_link"
+      ],
+      "properties": {
+        "generated_tree": { "const": false },
+        "prototype_catalog": { "const": false },
+        "workspace_link": { "const": false }
+      }
+    },
+    "package": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version",
+        "manifest",
+        "tarball",
+        "dependencies",
+        "first_party_dependencies",
+        "content_policy"
+      ],
+      "properties": {
+        "name": { "enum": ["@salt-ds/knowledge", "@salt-ds/mcp"] },
+        "version": { "type": "string", "pattern": "^0\\.0\\.0$" },
+        "manifest": { "$ref": "#/$defs/artifact" },
+        "tarball": { "$ref": "#/$defs/artifact" },
+        "dependencies": {
+          "type": "object",
+          "additionalProperties": { "type": "string", "minLength": 1 }
+        },
+        "first_party_dependencies": {
+          "type": "array",
+          "maxItems": 1,
+          "items": { "$ref": "#/$defs/dependencyEdge" }
+        },
+        "content_policy": { "$ref": "#/$defs/contentPolicy" }
+      }
+    },
+    "extractionParity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "bytes",
+        "contract",
+        "status",
+        "semantic_digest",
+        "normalized_semantic_projection_sha256"
+      ],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "bytes": { "type": "integer", "minimum": 1 },
+        "contract": { "const": "extraction-parity@1" },
+        "status": { "const": "passed" },
+        "semantic_digest": { "$ref": "#/$defs/sha256" },
+        "normalized_semantic_projection_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "comparisonRegistry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["root", "semantic_digest", "manifest", "files"],
+      "properties": {
+        "root": {
+          "const": "packages/knowledge/generated"
+        },
+        "semantic_digest": { "$ref": "#/$defs/sha256" },
+        "manifest": { "$ref": "#/$defs/artifact" },
+        "files": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/artifact" }
+        }
+      }
+    }
+  }
+}

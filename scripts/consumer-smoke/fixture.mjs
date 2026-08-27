@@ -11,6 +11,7 @@ import {
   assert,
   createMcpSurfaceFingerprint,
   createMcpToolSemanticFingerprint,
+  distKnowledgeDir,
   distMcpDir,
   getExecutable,
   pathExists,
@@ -116,7 +117,7 @@ async function createIsolatedPackageManagerEnvironment(rootDir) {
   return environment;
 }
 
-async function hashExactDirectoryTree(rootDir) {
+async function collectExactDirectoryFiles(rootDir, label = "Package tree") {
   const records = [];
   async function walk(directory) {
     const entries = await fs.readdir(directory, { withFileTypes: true });
@@ -128,7 +129,7 @@ async function hashExactDirectoryTree(rootDir) {
       const stats = await fs.lstat(absolutePath);
       assert(
         !stats.isSymbolicLink(),
-        `Package tree contains a link: ${absolutePath}`,
+        `${label} contains a link: ${absolutePath}`,
       );
       if (stats.isDirectory()) {
         await walk(absolutePath);
@@ -136,19 +137,147 @@ async function hashExactDirectoryTree(rootDir) {
       }
       assert(
         stats.isFile(),
-        `Package tree contains a special file: ${absolutePath}`,
+        `${label} contains a special file: ${absolutePath}`,
       );
       const bytes = await fs.readFile(absolutePath);
       records.push({
         path: path.relative(rootDir, absolutePath).replaceAll("\\", "/"),
+        sha256: `sha256:${sha256Bytes(bytes)}`,
         bytes: bytes.byteLength,
-        sha256: sha256Bytes(bytes),
       });
     }
   }
   await walk(rootDir);
-  assert(records.length > 0, `Package tree is empty: ${rootDir}`);
+  assert(records.length > 0, `${label} is empty: ${rootDir}`);
+  return records;
+}
+
+async function hashExactDirectoryTree(rootDir) {
+  const records = await collectExactDirectoryFiles(rootDir);
   return sha256Bytes(Buffer.from(JSON.stringify(records), "utf8"));
+}
+
+function assertPortableReportPath(value, label) {
+  assert(
+    typeof value === "string" &&
+      value.length > 0 &&
+      !path.isAbsolute(value) &&
+      !value.split(/[\\/]/u).includes(".."),
+    `${label} is not a safe relative path.`,
+  );
+}
+
+export async function loadExactPackReport(reportPathInput) {
+  const reportPath = path.resolve(repoRoot, reportPathInput);
+  const reportStats = await fs.lstat(reportPath);
+  assert(
+    reportStats.isFile() && !reportStats.isSymbolicLink(),
+    "Pack report must be a regular file, not a link.",
+  );
+  const report = JSON.parse(await fs.readFile(reportPath, "utf8"));
+  assert(
+    report?.contract === "salt-ai-pack-report@1" &&
+      report.schema_version === "1.0.0" &&
+      report.policy_profile === "extraction-parity" &&
+      report.publishable === false,
+    "Pack report is not the nonpublishable Unit 02 extraction-parity profile.",
+  );
+  assert(
+    Array.isArray(report.packages) && report.packages.length === 2,
+    "Pack report must bind exactly the knowledge and MCP packages.",
+  );
+  const packageByName = new Map(
+    report.packages.map((entry) => [entry.name, entry]),
+  );
+  const knowledge = packageByName.get("@salt-ds/knowledge");
+  const mcp = packageByName.get("@salt-ds/mcp");
+  assert(
+    knowledge && mcp && packageByName.size === 2,
+    "Pack report contains an unreported or duplicate package identity.",
+  );
+  const resolveTarball = async (entry) => {
+    assertPortableReportPath(entry.tarball?.path, `${entry.name} tarball path`);
+    const tarballPath = path.resolve(
+      path.dirname(reportPath),
+      ...entry.tarball.path.split("/"),
+    );
+    const relative = path.relative(path.dirname(reportPath), tarballPath);
+    assert(
+      relative.length > 0 &&
+        !relative.startsWith("..") &&
+        !path.isAbsolute(relative),
+      `${entry.name} tarball escapes the report directory.`,
+    );
+    const stats = await fs.lstat(tarballPath);
+    assert(
+      stats.isFile() && !stats.isSymbolicLink(),
+      `${entry.name} tarball is missing or linked.`,
+    );
+    const bytes = await fs.readFile(tarballPath);
+    assert(
+      entry.tarball.bytes === bytes.byteLength &&
+        entry.tarball.sha256 === `sha256:${sha256Bytes(bytes)}`,
+      `${entry.name} tarball bytes are stale relative to the pack report.`,
+    );
+    return tarballPath;
+  };
+  const [knowledgeTarballPath, mcpTarballPath] = await Promise.all([
+    resolveTarball(knowledge),
+    resolveTarball(mcp),
+  ]);
+  const edges = mcp.first_party_dependencies ?? [];
+  assert(
+    edges.length === 1 &&
+      edges[0].name === "@salt-ds/knowledge" &&
+      edges[0].version === knowledge.version &&
+      edges[0].tarball_sha256 === knowledge.tarball.sha256 &&
+      mcp.dependencies?.["@salt-ds/knowledge"] === knowledge.version &&
+      !(mcp.dependencies?.["@salt-ds/knowledge"] ?? "").startsWith(
+        "workspace:",
+      ),
+    "Pack report does not bind MCP to the exact reported knowledge tarball.",
+  );
+
+  const comparison = report.comparison_registry;
+  assert(
+    comparison?.root === "packages/knowledge/generated" &&
+      comparison.semantic_digest === report.extraction_parity?.semantic_digest,
+    "Pack report does not bind the Unit 02 comparison registry identity.",
+  );
+  const comparisonRegistryDir = path.join(
+    repoRoot,
+    ...comparison.root.split("/"),
+  );
+  const currentFiles = await collectExactDirectoryFiles(
+    comparisonRegistryDir,
+    "Comparison registry",
+  );
+  assert(
+    JSON.stringify(currentFiles) === JSON.stringify(comparison.files),
+    "Comparison registry is stale, incomplete, linked, or contains unreported files.",
+  );
+  const manifest = currentFiles.find(
+    (entry) => entry.path === "catalog-manifest.json",
+  );
+  const parity = currentFiles.find(
+    (entry) => entry.path === "extraction-parity.json",
+  );
+  assert(
+    JSON.stringify(manifest) === JSON.stringify(comparison.manifest) &&
+      parity?.sha256 === report.extraction_parity.sha256 &&
+      parity.bytes === report.extraction_parity.bytes,
+    "Pack report manifest or extraction receipt digest is stale.",
+  );
+
+  return {
+    report,
+    reportPath,
+    knowledge,
+    mcp,
+    knowledgeTarballPath,
+    mcpTarballPath,
+    comparisonRegistryDir,
+  };
 }
 
 async function reserveLocalPort() {
@@ -317,16 +446,20 @@ export function parseNpmJsonOutput(output, label) {
 
 export async function ensureBuildArtifacts(skipBuild) {
   if (!skipBuild) {
-    console.log("Building local MCP distribution...");
+    console.log("Building local knowledge and MCP distributions...");
     await runCommand(
       getExecutable("yarn"),
-      ["workspace", "@salt-ds/mcp", "build"],
+      ["build:ai-tooling"],
       {
-        label: "yarn workspace @salt-ds/mcp build",
+        label: "yarn build:ai-tooling",
       },
     );
   }
 
+  assert(
+    await pathExists(distKnowledgeDir),
+    `Missing built knowledge package at ${distKnowledgeDir}. Run with --skip-build only after building it.`,
+  );
   assert(
     await pathExists(distMcpDir),
     `Missing built MCP package at ${distMcpDir}. Run with --skip-build only after building it.`,
@@ -497,7 +630,7 @@ export async function createNewProjectRepo(rootDir) {
   );
 }
 
-export async function installLocalPackages(rootDir) {
+export async function installLocalPackages(rootDir, packReport) {
   await fs.mkdir(rootDir, { recursive: true });
   const packageManagerEnvironment =
     await createIsolatedPackageManagerEnvironment(rootDir);
@@ -517,46 +650,23 @@ export async function installLocalPackages(rootDir) {
     );
   }
 
-  const packedPackageDir = path.join(rootDir, "packed-package");
-  await fs.mkdir(packedPackageDir, { recursive: true });
-
-  console.log("Packing the built MCP package for isolated installation...");
-  const packResult = await runCommand(
-    getExecutable("npm"),
-    ["pack", "--json", "--pack-destination", packedPackageDir, distMcpDir],
-    {
-      cwd: rootDir,
-      env: packageManagerEnvironment,
-      label: "npm pack built Salt MCP package",
-    },
-  );
-  const packMetadata = parseNpmJsonOutput(
-    packResult.stdout,
-    "npm pack built Salt MCP package",
-  );
-  const packedPackage = Array.isArray(packMetadata)
-    ? packMetadata[0]
-    : packMetadata;
-  assert(
-    packedPackage && typeof packedPackage.filename === "string",
-    "npm pack did not report a tarball filename for the built Salt MCP package.",
-  );
-  const tarballPath = path.join(packedPackageDir, packedPackage.filename);
-  assert(
-    await pathExists(tarballPath),
-    `npm pack did not create the expected Salt MCP tarball at ${tarballPath}.`,
-  );
-
   console.log(
-    "Installing the packed MCP tarball into the temp smoke tools directory...",
+    "Installing the exact reported knowledge and MCP tarballs together...",
   );
   await runCommand(
     getExecutable("npm"),
-    ["install", "--save-exact", "--no-audit", "--no-fund", tarballPath],
+    [
+      "install",
+      "--save-exact",
+      "--no-audit",
+      "--no-fund",
+      packReport.knowledgeTarballPath,
+      packReport.mcpTarballPath,
+    ],
     {
       cwd: rootDir,
       env: packageManagerEnvironment,
-      label: "npm install packed Salt MCP tarball",
+      label: "npm install exact reported Salt knowledge and MCP tarballs",
     },
   );
   const localLockfilePath = path.join(rootDir, "package-lock.json");
@@ -597,6 +707,28 @@ export async function installLocalPackages(rootDir) {
   );
   const installedManifest = JSON.parse(
     await fs.readFile(installedManifestPath, "utf8"),
+  );
+  const installedKnowledgeDir = path.join(
+    rootDir,
+    "node_modules",
+    "@salt-ds",
+    "knowledge",
+  );
+  const installedKnowledgeStats = await fs.lstat(installedKnowledgeDir);
+  const installedKnowledgeManifest = JSON.parse(
+    await fs.readFile(
+      path.join(installedKnowledgeDir, "package.json"),
+      "utf8",
+    ),
+  );
+  assert(
+    installedKnowledgeStats.isDirectory() &&
+      !installedKnowledgeStats.isSymbolicLink() &&
+      installedKnowledgeManifest.name === "@salt-ds/knowledge" &&
+      installedKnowledgeManifest.version === packReport.knowledge.version &&
+      installedManifest.dependencies?.["@salt-ds/knowledge"] ===
+        packReport.knowledge.version,
+    "Packed MCP did not resolve to the exact isolated knowledge package.",
   );
   for (const dependencyName of FORBIDDEN_PRIVATE_DEPENDENCIES) {
     assert(
@@ -641,6 +773,11 @@ export async function installLocalPackages(rootDir) {
     "npm dependency tree did not include the installed @salt-ds/mcp package.",
   );
   assert(
+    dependencyTree?.dependencies?.["@salt-ds/knowledge"]?.version ===
+      packReport.knowledge.version,
+    "npm dependency tree did not include the exact reported knowledge package.",
+  );
+  assert(
     !Array.isArray(dependencyTree.problems) ||
       dependencyTree.problems.length === 0,
     `npm dependency tree reported problems: ${(dependencyTree.problems ?? []).join("; ")}`,
@@ -649,8 +786,11 @@ export async function installLocalPackages(rootDir) {
   return {
     installedPackageDir,
     installedTreeSha256: await hashExactDirectoryTree(installedPackageDir),
-    packMetadata: packedPackage,
-    tarballPath,
+    installedKnowledgeTreeSha256:
+      await hashExactDirectoryTree(installedKnowledgeDir),
+    packMetadata: packReport.mcp,
+    tarballPath: packReport.mcpTarballPath,
+    knowledgeTarballPath: packReport.knowledgeTarballPath,
     lockfileSha256: localLockfileSha256,
   };
 }
@@ -873,7 +1013,11 @@ export async function verifyInstalledMcpTypes(rootDir) {
   );
 }
 
-export async function verifyInstalledMcpModuleExports(rootDir, projectRoot) {
+export async function verifyInstalledMcpModuleExports(
+  rootDir,
+  projectRoot,
+  registryDir,
+) {
   const probePath = path.join(
     repoRoot,
     "scripts",
@@ -884,7 +1028,12 @@ export async function verifyInstalledMcpModuleExports(rootDir, projectRoot) {
     await createIsolatedPackageManagerEnvironment(rootDir);
   const result = await runCommand(
     process.execPath,
-    [probePath, rootDir, projectRoot],
+    [
+      probePath,
+      rootDir,
+      projectRoot,
+      ...(registryDir ? [registryDir] : []),
+    ],
     {
       env: probeEnvironment,
       label: "isolated installed MCP module probe",
@@ -901,7 +1050,11 @@ export async function verifyInstalledMcpModuleExports(rootDir, projectRoot) {
   return JSON.parse(receiptLines[0].slice(receiptPrefix.length));
 }
 
-export async function runInstalledMcpModuleProbe(rootDir, projectRoot) {
+export async function runInstalledMcpModuleProbe(
+  rootDir,
+  projectRoot,
+  registryDir,
+) {
   const assertions = [
     'typeof mod.createSaltMcpServer === "function"',
     'typeof mod.runCli === "function"',
@@ -961,6 +1114,7 @@ export async function runInstalledMcpModuleProbe(rootDir, projectRoot) {
 
   for (const [format, mcpModule] of moduleFormats) {
     const server = await mcpModule.createSaltMcpServer({
+      ...(registryDir ? { registryDir } : {}),
       projectAccess: {
         mode: "restricted",
         allowedRoots: [projectRoot],

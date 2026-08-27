@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import type { CatalogStoreV2 } from "../../catalog/catalogStoreV2.js";
-import type { ProjectConventions } from "../../policy/index.js";
-import { compileSaltProjectPolicyIrV2 } from "../../policy/projectPolicyIr.js";
+import type { CatalogStoreV2 } from "@salt-ds/knowledge";
+import type { ProjectConventions } from "@salt-ds/knowledge";
+import { compileSaltProjectPolicyIrV2 } from "@salt-ds/knowledge";
 import {
   jsonUtf8Bytes,
   MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES,
@@ -11,8 +11,8 @@ import type {
   DeprecationRecord,
   SaltRegistry,
   TokenRecord,
-} from "../../types.js";
-import { createReviewCatalogFromLegacyRegistry } from "../reviewCatalogAdapter.js";
+} from "@salt-ds/knowledge";
+import { createReviewCatalogFromLegacyRegistry } from "@salt-ds/knowledge";
 import {
   analyzeSaltCode as analyzeSaltCodeProduction,
   MAX_REVIEW_SUBMITTED_UTF8_BYTES,

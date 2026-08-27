@@ -16,18 +16,18 @@ import {
   getCatalogPublishedManifestGenerationPath,
   parseCatalogArtifactEnvelope,
   SALT_CATALOG_MANIFEST_FILE,
-} from "../core/catalog/catalogSchemaV2.js";
+} from "@salt-ds/knowledge";
 import {
   canonicalJson,
   canonicalJsonFile,
   compareOrdinalStrings,
   sha256Bytes,
-} from "../core/catalog/catalogSerialization.js";
-import { CatalogStoreV2 } from "../core/catalog/catalogStoreV2.js";
+} from "@salt-ds/knowledge";
+import { CatalogStoreV2 } from "@salt-ds/knowledge";
 import {
   loadCatalogRuntimeContext,
   type SaltCatalogRuntimeContext,
-} from "../core/registry/loadRegistry.js";
+} from "@salt-ds/knowledge";
 
 export const REPO_ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -122,7 +122,7 @@ export async function createBuiltCatalogV2Fixture(
     // policy, and loader suites copy that artifact instead of independently
     // repeating the multi-minute source extraction path.
     await copyCatalogV2Artifacts(
-      path.join(REPO_ROOT, "packages", "mcp", "generated"),
+      path.join(REPO_ROOT, "packages", "knowledge", "generated"),
       registryDir,
     );
     return registryDir;

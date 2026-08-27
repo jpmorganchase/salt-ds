@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { CatalogStoreV2 } from "../../catalog/catalogStoreV2.js";
+import type { CatalogStoreV2 } from "@salt-ds/knowledge";
 import { searchSalt, searchSaltRecords } from "../searchSalt.js";
 
 function fixtureStore(): CatalogStoreV2 {

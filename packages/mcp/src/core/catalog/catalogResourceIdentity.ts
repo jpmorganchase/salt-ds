@@ -1,13 +1,34 @@
 import {
   type CatalogManifest,
   type CatalogRuntimeFamilyName,
-  catalogFamilies,
   getCatalogRuntimeFamilyNames,
   isCanonicalCatalogFamily,
-} from "./catalogSchemaV2.js";
+} from "@salt-ds/knowledge";
 
 const DIGEST_PREFIX = "sha256:";
 const CATALOG_URI_PREFIX = "salt://catalog/v2/";
+const CATALOG_RUNTIME_FAMILY_URI_SEGMENTS = {
+  package: "packages",
+  component: "components",
+  icon: "icons",
+  country_symbol: "country-symbols",
+  pattern: "patterns",
+  guide: "guides",
+  page: "pages",
+  token: "tokens",
+  api_symbol: "api-symbols",
+  deprecation: "deprecations",
+  concept: "concepts",
+  declaration_context: "declaration-contexts",
+  token_declaration: "token-declarations",
+  relation: "relations",
+  policy_profile: "policy-profiles",
+  content: "content",
+  evidence: "evidence",
+  source: "sources",
+  accessibility_claim: "accessibility-claims",
+  search_document: "search-documents",
+} as const satisfies Record<CatalogRuntimeFamilyName, string>;
 
 export function catalogIdentitySegment(manifest: CatalogManifest): string {
   const digest = manifest.semantic_digest;
@@ -23,14 +44,7 @@ export function catalogManifestResourceUri(manifest: CatalogManifest): string {
 export function catalogFamilyUriSegment(
   family: CatalogRuntimeFamilyName,
 ): string {
-  const template = catalogFamilies[family].resourceUriTemplate;
-  const match = /^salt:\/\/catalog\/v2\/([^/]+)\/\{id\}$/u.exec(template);
-  if (!match?.[1]) {
-    throw new Error(
-      `Catalog family '${family}' does not declare an exact v2 resource URI template.`,
-    );
-  }
-  return match[1];
+  return CATALOG_RUNTIME_FAMILY_URI_SEGMENTS[family];
 }
 
 export function canonicalCatalogRuntimeFamilies(): CatalogRuntimeFamilyName[] {

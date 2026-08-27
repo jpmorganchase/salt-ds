@@ -3,7 +3,7 @@ import {
   type CatalogManifest,
   type CatalogRecord,
   resolveCatalogRecordContentReferences,
-} from "./catalogSchemaV2.js";
+} from "@salt-ds/knowledge";
 
 export type CatalogResourceRecord = Exclude<
   CatalogRecord,
