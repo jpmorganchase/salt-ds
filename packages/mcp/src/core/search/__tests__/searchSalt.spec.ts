@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import type { CatalogStoreV2 } from "@salt-ds/knowledge";
+import type { KnowledgeRecordStore } from "@salt-ds/knowledge";
 import { searchSalt, searchSaltRecords } from "../searchSalt.js";
 
-function fixtureStore(): CatalogStoreV2 {
+function fixtureStore(): KnowledgeRecordStore {
   const documents = [
     {
       family: "search_document",
@@ -32,7 +32,7 @@ function fixtureStore(): CatalogStoreV2 {
     getFamily(family: string) {
       return family === "search_document" ? documents : [];
     },
-  } as unknown as CatalogStoreV2;
+  } as unknown as KnowledgeRecordStore;
 }
 
 describe("protocol-neutral Salt search", () => {

@@ -6,7 +6,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { detectedValidationFindingCount } from "../core/review/reviewSaltCode.js";
 import {
   reviewSaltCode,
-  type SaltCatalogRuntimeContext,
+  type KnowledgeRuntimeContext,
   searchSalt,
 } from "../core/runtime.js";
 import { inspectSaltProject } from "../server/inspectSaltProject.js";
@@ -18,7 +18,7 @@ import {
 const PRIVATE_CONTROL_PATTERN =
   /salt_workflow_v1|post_action|implementation_ready|canonical_complete|exact_request_safe|repo_specific_workflows_ready|finish_without_changes|can_generate_fix|static_fix_blockers|choice_precedence|final_choice|final_recommendation|canonical_choice/iu;
 let catalogDirectory = "";
-let context: SaltCatalogRuntimeContext;
+let context: KnowledgeRuntimeContext;
 let projectRoot = "";
 let disposeCatalogFixture: () => Promise<void> = async () => undefined;
 

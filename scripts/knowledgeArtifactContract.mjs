@@ -352,6 +352,29 @@ export function verifyKnowledgeArtifactContract({
     if (descriptor.path === "index.json") {
       assert(bytes.byteLength <= LIMITS.indexBytes, "Knowledge index exceeds 512 KiB.");
     }
+    if (
+      descriptor.media_type === "application/json" ||
+      descriptor.media_type === "application/schema+json" ||
+      descriptor.media_type === "text/markdown"
+    ) {
+      const text = bytes.toString("utf8");
+      assert(
+        !/"(?:uri|catalog_version|input_inventory_digest|source_revision)"\s*:/u.test(
+          text,
+        ) &&
+          !/salt:\/\/|catalog-manifest\.json|catalog-generations\//u.test(text),
+        `Knowledge artifact contains a prototype Catalog-v2 field or locator: ${descriptor.path}`,
+      );
+      if (
+        descriptor.path.startsWith("markdown/") ||
+        descriptor.path.startsWith("examples/")
+      ) {
+        assert(
+          !/https?:\/\/[^\s"']*storybook/iu.test(text),
+          `Knowledge consumer projection contains a Storybook URL: ${descriptor.path}`,
+        );
+      }
+    }
     artifactBytes += bytes.byteLength;
     previousPath = descriptor.path;
   }
@@ -377,6 +400,45 @@ export function verifyKnowledgeArtifactContract({
     );
   }
   verifyContentObjects(generatedRoot, artifacts);
+
+  const generationReceiptDescriptor = artifacts.find(
+    (entry) => entry.path === "support/generation-receipt.json",
+  );
+  const generationReceipt = parseJson(
+    readExact(
+      generatedRoot,
+      generationReceiptDescriptor,
+      "Knowledge generation receipt",
+    ),
+    "Knowledge generation receipt",
+  );
+  const projectionDescriptors = artifacts
+    .filter((entry) => entry.path !== "support/generation-receipt.json")
+    .map(({ path: artifactPath, media_type, bytes, sha256: digest }) => ({
+      path: artifactPath,
+      media_type,
+      bytes,
+      sha256: digest,
+    }));
+  const projectionDigest = sha256(
+    Buffer.from(canonicalJson(projectionDescriptors), "utf8"),
+  );
+  assert(
+    generationReceipt.distribution_projections?.contract ===
+      "salt-knowledge-projection-identity/1" &&
+      JSON.stringify(generationReceipt.distribution_projections.excludes) ===
+        JSON.stringify(["support/generation-receipt.json"]) &&
+      generationReceipt.distribution_projections.npm_ready_sha256 ===
+        projectionDigest &&
+      generationReceipt.distribution_projections.web_ready_sha256 ===
+        projectionDigest,
+    "Knowledge npm-ready and web-ready projection identities disagree.",
+  );
+  assert(
+    generationReceipt.bundle_digest === undefined &&
+      generationReceipt.manifest_sha256 === undefined,
+    "Knowledge generation receipt creates a finalized manifest identity cycle.",
+  );
 
   const inputInventories = {};
   for (const [kind, contract, artifactPath] of [

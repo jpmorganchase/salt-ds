@@ -2,7 +2,7 @@ import { parse } from "@babel/parser";
 import traverse, { type NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
 import semver from "semver";
-import { isApiSymbolSpaceAvailable } from "../catalog/catalogApiSymbolV2.js";
+import { isApiSymbolSpaceAvailable } from "../records/apiSymbolIdentity.js";
 import { parseExactSemVer } from "../versionUtils.js";
 
 export interface AnalysisApiSymbolIdentity {

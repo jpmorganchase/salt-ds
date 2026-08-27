@@ -3,7 +3,6 @@
   "tsconfig.json",
   ".yarnrc.yml",
   "yarn.lock",
-  "scripts/catalogArtifactContract.mjs",
   "scripts/catalogBuildIdentity.mjs",
   "packages/knowledge/package.json",
   "packages/knowledge/tsconfig.json",
@@ -14,7 +13,5 @@
   "!packages/knowledge/src/__tests__/**",
   "!packages/knowledge/src/__fixtures__/**",
   "packages/knowledge/src/build/catalogCompilerInputPatterns.json",
-  "packages/knowledge/src/build/catalogInputPatterns.json",
-  "packages/knowledge/src/build/catalogSemanticInputPatterns.json",
-  "packages/knowledge/src/catalog/catalogBudgets.json"
+  "packages/knowledge/src/build/catalogSemanticInputPatterns.json"
 ]

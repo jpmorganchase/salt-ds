@@ -238,10 +238,7 @@ export function createReviewCatalogFromStore(
   );
 
   return {
-    version:
-      store.manifest.bundle_version ??
-      store.manifest.catalog_version ??
-      "0.0.0",
+    version: store.manifest.bundle_version ?? "0.0.0",
     semanticDigest: store.manifest.semantic_digest,
     components,
     deprecations,

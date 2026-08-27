@@ -41,6 +41,11 @@ import {
 import { resolveOperationCapability } from "../compatibility/operationCapabilityRegistry.js";
 import { resolveKnowledgeCompatibility } from "../compatibility/resolveCompatibility.js";
 import { REVIEW_RULE_CHARACTERIZATION } from "../review/reviewRuleCharacterization.js";
+import {
+  readKnowledgeRecord,
+  renderKnowledgeContext,
+  searchKnowledge,
+} from "../search/searchSalt.js";
 
 const temporaryDirectories: string[] = [];
 
@@ -227,7 +232,24 @@ async function buildMinimalKnowledgeBundle(): Promise<{
     contract: "salt-search-shard/1",
     schema_version: "1.0.0",
     family: "search_document",
-    records: [],
+    records: [
+      {
+        key: "record:search_document:search:package:package.core",
+        family: "search_document",
+        id: "search:package:package.core",
+        title: "Salt Core",
+        summary: "Core package",
+        data: {
+          family: "search_document",
+          id: "search:package:package.core",
+          target: { family: "package", id: "package.core" },
+          title: "Salt Core",
+          summary: "Core package",
+          terms: ["core", "package"],
+          facets: { status: ["stable"] },
+        },
+      },
+    ],
   });
   for (const name of [
     "semantic-source-inventory",
@@ -371,11 +393,38 @@ describe("Knowledge-v1 manifest and installed reader", () => {
   it("verifies the complete tree and content pack before returning records", async () => {
     const fixture = await buildMinimalKnowledgeBundle();
     const store = new KnowledgeStore({ bundleDir: fixture.root });
-    expect(store.ensureKnowledgeVerified().records).toBe(2);
+    expect(store.ensureKnowledgeVerified().records).toBe(3);
     expect(store.getRecord("package", "package.core").name).toBe("@salt-ds/core");
     expect(
       store.getContentJson({ id: fixture.contentId, codec: "json" }),
     ).toEqual({ hello: "world" });
+  });
+
+  it("searches deterministically, reads exact records, and bounds rendered context", async () => {
+    const fixture = await buildMinimalKnowledgeBundle();
+    const store = new KnowledgeStore({ bundleDir: fixture.root });
+    const first = searchKnowledge(store, { query: "core", limit: 1 });
+    expect(searchKnowledge(store, { query: "core", limit: 1 })).toEqual(first);
+    expect(first.matches[0]?.reference).toEqual({
+      family: "package",
+      id: "package.core",
+    });
+    expect(
+      readKnowledgeRecord(store, {
+        family: "package",
+        id: "package.core",
+      }),
+    ).toMatchObject({ name: "@salt-ds/core" });
+    expect(
+      readKnowledgeRecord(store, { family: "package", id: "missing" }),
+    ).toBeNull();
+
+    const context = renderKnowledgeContext(store, {
+      query: `core ${"😀".repeat(500)}`,
+      max_utf8_bytes: 256,
+    });
+    expect(Buffer.byteLength(context, "utf8")).toBeLessThanOrEqual(256);
+    expect(context).not.toContain("�");
   });
 });
 
@@ -460,6 +509,18 @@ describe("Knowledge-v1 compatibility", () => {
     expect(() => validateItemApplicabilityDocument(unknownFamily)).toThrow(
       /unknown family/u,
     );
+
+    const invalidUnusedProfile = structuredClone(document);
+    invalidUnusedProfile.profiles.push({
+      id: "unused",
+      mode: "package-ranges",
+      packages: [
+        { name: "@salt-ds/nope", range: "1.0.0", evidence: "fixture" },
+      ],
+    });
+    expect(() =>
+      validateItemApplicabilityDocument(invalidUnusedProfile),
+    ).toThrow(/unknown family/u);
   });
 
   it("detects supported node_modules layouts without executing package code", async () => {

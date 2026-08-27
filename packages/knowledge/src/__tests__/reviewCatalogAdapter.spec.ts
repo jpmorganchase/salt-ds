@@ -1,55 +1,30 @@
-import fs from "node:fs/promises";
-import os from "node:os";
 import path from "node:path";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS } from "./registryTestUtils.js";
-import { buildRegistry } from "../build/buildRegistry.js";
+import { beforeAll, describe, expect, it } from "vitest";
 import { canonicalJson } from "../catalog/catalogSerialization.js";
-import { createCatalogStoreV2 } from "../catalog/catalogStoreV2.js";
-import { loadRegistry } from "../registry/loadRegistry.js";
+import {
+  createKnowledgeStore,
+  type KnowledgeStore,
+} from "../manifest/knowledgeStore.js";
 import {
   createReviewCatalogFromStore,
   type ReviewCatalog,
 } from "../review/reviewCatalogAdapter.js";
-import { createReviewCatalogFromLegacyRegistry } from "../review/reviewLegacyCatalogAdapter.js";
 import { analyzeSaltCode } from "../review/reviewSaltCode.js";
 
 const REPO_ROOT = path.resolve(import.meta.dirname, "../../../..");
-let outputDirectory = "";
-let legacyCatalog: ReviewCatalog;
 let storeCatalog: ReviewCatalog;
-let store: ReturnType<typeof createCatalogStoreV2>;
+let store: KnowledgeStore;
 
-beforeAll(async () => {
-  outputDirectory = await fs.mkdtemp(
-    path.join(os.tmpdir(), "salt-review-catalog-adapter-"),
-  );
-  await buildRegistry({
-    sourceRoot: REPO_ROOT,
-    outputDir: outputDirectory,
-    sourceRevision: "review-catalog-adapter-test-source",
-    generatorVersion: "2.0.0-test",
-    generatorDigest: `sha256:${"3".repeat(64)}`,
+beforeAll(() => {
+  store = createKnowledgeStore({
+    bundleDir: path.join(REPO_ROOT, "packages/knowledge/generated"),
   });
-  const legacy = await loadRegistry({
-    registryDir: outputDirectory,
-    prefetch: true,
-  });
-  store = createCatalogStoreV2({ registryDir: outputDirectory });
-  store.ensureCatalogVerified();
-  legacyCatalog = createReviewCatalogFromLegacyRegistry(legacy);
+  store.ensureKnowledgeVerified();
   storeCatalog = createReviewCatalogFromStore(store);
-}, SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS);
-
-afterAll(async () => {
-  if (outputDirectory) {
-    await fs.rm(outputDirectory, { recursive: true, force: true });
-  }
 });
 
 describe("review catalog adapter", () => {
-  it("matches the narrow legacy review view", () => {
-    expect(canonicalJson(storeCatalog)).toBe(canonicalJson(legacyCatalog));
+  it("exposes only the narrow Knowledge-v1 review view", () => {
     expect(Object.keys(storeCatalog).sort()).toEqual([
       "components",
       "deprecations",
@@ -59,7 +34,7 @@ describe("review catalog adapter", () => {
     ]);
   });
 
-  it("preserves review results across legacy and store-backed views", () => {
+  it("produces deterministic review results from the Knowledge-v1 store", () => {
     const input = {
       artifacts: [
         {
@@ -82,14 +57,8 @@ describe("review catalog adapter", () => {
       ],
       package_versions: { "@salt-ds/core": "1.36.0" },
     };
-    const legacyResult = analyzeSaltCode(
-      { reviewCatalog: legacyCatalog, store },
-      input,
-    );
-    const storeResult = analyzeSaltCode(
-      { reviewCatalog: storeCatalog, store },
-      input,
-    );
-    expect(canonicalJson(storeResult)).toBe(canonicalJson(legacyResult));
+    const first = analyzeSaltCode({ reviewCatalog: storeCatalog, store }, input);
+    const second = analyzeSaltCode({ reviewCatalog: storeCatalog, store }, input);
+    expect(canonicalJson(second)).toBe(canonicalJson(first));
   });
 });

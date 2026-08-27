@@ -70,7 +70,6 @@ export interface KnowledgeRecordStore {
   readonly manifest: {
     semantic_digest: string;
     bundle_version?: string;
-    catalog_version?: string;
     schema_version?: string;
     bundle_digest?: string;
     semantic_source_digest?: string;
@@ -345,6 +344,35 @@ export class KnowledgeStore {
     let recordCount = 0;
     for (const family of KNOWLEDGE_RECORD_FAMILIES) {
       recordCount += this.getKnowledgeFamily(family).length;
+    }
+    const visit = (value: unknown, owner: string): void => {
+      if (Array.isArray(value)) {
+        for (const entry of value) visit(entry, owner);
+        return;
+      }
+      if (!value || typeof value !== "object") return;
+      const candidate = value as Record<string, unknown>;
+      if (
+        typeof candidate.family === "string" &&
+        (KNOWLEDGE_RECORD_FAMILIES as readonly string[]).includes(
+          candidate.family,
+        ) &&
+        typeof candidate.id === "string" &&
+        !this.getKnowledgeRecord(
+          candidate.family as KnowledgeRecordFamily,
+          candidate.id,
+        )
+      ) {
+        throw new Error(
+          `${owner} has unresolved ${candidate.family}:${candidate.id}.`,
+        );
+      }
+      for (const entry of Object.values(candidate)) visit(entry, owner);
+    };
+    for (const family of KNOWLEDGE_RECORD_FAMILIES) {
+      for (const record of this.getKnowledgeFamily(family)) {
+        visit(record.data, `${family}:${record.id}`);
+      }
     }
     this.validationMetrics = Object.freeze({
       artifacts: this.manifest.artifact_tree.artifact_count,

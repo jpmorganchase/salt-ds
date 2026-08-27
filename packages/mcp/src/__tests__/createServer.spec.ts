@@ -35,7 +35,7 @@ import {
   MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES,
   MAX_PUBLIC_TOOL_RESULT_UTF8_BYTES,
   MAX_REVIEW_ARTIFACT_ID_JSON_UTF8_BYTES,
-  type SaltCatalogRuntimeContext,
+  type KnowledgeRuntimeContext,
 } from "../core/runtime.js";
 import { MAX_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES } from "../core/search/searchSalt.js";
 import { MAX_TOOL_DISCOVERY_UTF8_BYTES } from "../publicSurfaceBudgets.js";
@@ -87,7 +87,7 @@ const PROJECT_POLICY_TRUST = {
   authorization_meaning: "read_access_only",
 } as const;
 let catalogFixtureDirectory = "";
-let runtimeContext: SaltCatalogRuntimeContext;
+let runtimeContext: KnowledgeRuntimeContext;
 let disposeCatalogFixture: () => Promise<void> = async () => undefined;
 
 function assertStrictNestedObjects(
@@ -334,13 +334,19 @@ describe("createSaltMcpServer final public boundary", () => {
         "token_declaration",
         (envelope) => {
           const declaration = envelope.records.find(
-            (record): record is unknown[] =>
-              Array.isArray(record) && typeof record[0] === "string",
+            (record): record is {
+              data: { token_ref: { id: string } };
+            } =>
+              record !== null &&
+              typeof record === "object" &&
+              "data" in record &&
+              Boolean((record as { data?: unknown }).data),
           );
           if (!declaration) {
-            throw new Error("Fixture has no stored token declaration.");
+            throw new Error("Fixture has no token declaration.");
           }
-          declaration[8] = "token.missing-server-prefetch-target";
+          declaration.data.token_ref.id =
+            "token.missing-server-prefetch-target";
         },
         { canonicalizeRecords: true },
       );
@@ -374,17 +380,20 @@ describe("createSaltMcpServer final public boundary", () => {
         "concept",
         (envelope) => {
           const concept = envelope.records.find(
-            (record): record is Record<string, unknown> =>
+            (record): record is {
+              id: string;
+              data: { summary: string };
+            } =>
               Boolean(record) &&
               typeof record === "object" &&
               !Array.isArray(record) &&
-              (record as Record<string, unknown>).family === "concept",
+              (record as { family?: unknown }).family === "concept",
           );
           if (!concept || typeof concept.id !== "string") {
             throw new Error("Fixture has no stored concept record.");
           }
           conceptId = concept.id;
-          concept.summary = "x".repeat(MAX_PUBLIC_RESOURCE_UTF8_BYTES);
+          concept.data.summary = "x".repeat(MAX_PUBLIC_RESOURCE_UTF8_BYTES);
         },
         { canonicalizeRecords: true },
       );
@@ -1422,7 +1431,7 @@ describe("createSaltMcpServer final public boundary", () => {
             returned_salt_packages: 0,
             package_assessments_truncated: true,
             applicability_count_scope: "returned_packages_only",
-            exact_catalog_package_version: 0,
+            exact_knowledge_package_version: 0,
             current: 0,
             unknown: 0,
             peer_compatibility: "not_evaluated",
@@ -2643,7 +2652,8 @@ describe("createSaltMcpServer final public boundary", () => {
       >;
       expect(publicManifest).toMatchObject({
         server_version: getSaltMcpPackageManifest().version,
-        catalog_version: runtimeContext.store.manifest.catalog_version,
+        catalog_version:
+          runtimeContext.store.manifest.bundle_version,
         semantic_digest: runtimeContext.store.manifest.semantic_digest,
         negotiated_mcp_protocol_revision:
           SALT_MCP_PREFERRED_LEGACY_PROTOCOL_VERSION,

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import ts from "typescript";
-import { createDeprecationId } from "../catalog/catalogApiSymbolV2.js";
+import { createDeprecationId } from "../records/apiSymbolIdentity.js";
 import { isPortableRepositoryPath } from "../catalog/catalogPortablePath.js";
 import {
   canonicalJson,

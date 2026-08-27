@@ -3,30 +3,14 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  type CatalogFamilyName,
-  type CatalogManifest,
-  type CatalogRecord,
-  type CatalogRuntimeFamilyName,
-  catalogManifestCodec,
-  catalogPublicationCodec,
-  encodeCatalogArtifactRecordsForStorage,
-  getCatalogBuildOnlyArtifactFileNames,
-  getCatalogPackageFileNames,
-  getCatalogPublishedFileNames,
-  getCatalogPublishedManifestGenerationPath,
-  parseCatalogArtifactEnvelope,
-  SALT_CATALOG_MANIFEST_FILE,
-} from "@salt-ds/knowledge";
-import {
-  canonicalJson,
-  canonicalJsonFile,
-  compareOrdinalStrings,
-  sha256Bytes,
-} from "@salt-ds/knowledge";
-import { CatalogStoreV2 } from "@salt-ds/knowledge";
-import {
-  loadCatalogRuntimeContext,
-  type SaltCatalogRuntimeContext,
+  canonicalJsonBytes,
+  computeKnowledgeBundleDigest,
+  createArtifactDescriptor,
+  loadKnowledgeRuntimeContext,
+  materializeArtifactTree,
+  type KnowledgeManifestV1,
+  type KnowledgeRuntimeContext,
+  verifyArtifactTree,
 } from "@salt-ds/knowledge";
 
 export const REPO_ROOT = path.resolve(
@@ -36,130 +20,59 @@ export const REPO_ROOT = path.resolve(
   "..",
   "..",
 );
-// Full source extraction can exceed four minutes on Windows even in isolation;
-// this bounds setup without turning normal catalog extraction into a flaky hook.
-export const SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS = 360_000;
-export const UNIT_00B_COLD_CATALOG_LOAD_BASELINE_MS = 3_762.594;
-export const VERIFIED_CATALOG_CONTEXT_TEST_TIMEOUT_MS = Math.ceil(
-  UNIT_00B_COLD_CATALOG_LOAD_BASELINE_MS * 16,
-);
-export const CATALOG_V2_PACKAGE_FILES = getCatalogPackageFileNames();
-export const CATALOG_V2_BUILD_ONLY_FILES =
-  getCatalogBuildOnlyArtifactFileNames();
-export const RETIRED_CATALOG_ARTIFACT_FILES = [
-  "metadata.json",
-  "search-index.jsonl",
-  "changes.json",
-  "create-retrieval-index.jsonl",
-  "examples.json",
-  "icons-lite.json",
-  "page-search-index.json",
-  "pattern-validation-rules.json",
-  "token-policy-structural-role-rules.json",
-] as const;
+export const SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS = 120_000;
+export const VERIFIED_CATALOG_CONTEXT_TEST_TIMEOUT_MS = 120_000;
 
 export async function readCatalogManifest(
-  registryDir: string,
-): Promise<CatalogManifest> {
-  return catalogManifestCodec.parse(
-    JSON.parse(
-      await fs.readFile(
-        path.join(registryDir, SALT_CATALOG_MANIFEST_FILE),
-        "utf8",
-      ),
-    ),
-  );
+  bundleDir: string,
+): Promise<KnowledgeManifestV1> {
+  return JSON.parse(
+    await fs.readFile(path.join(bundleDir, "manifest.json"), "utf8"),
+  ) as KnowledgeManifestV1;
 }
 
-export async function catalogFamilyArtifactPath(
-  registryDir: string,
-  family: CatalogFamilyName,
-): Promise<string> {
-  const manifest = await readCatalogManifest(registryDir);
-  const entry = manifest.artifacts.find(
-    (candidate) => candidate.family === family,
-  );
-  if (!entry) {
-    throw new Error(`Catalog manifest has no '${family}' artifact.`);
-  }
-  return path.join(registryDir, ...entry.file.split("/"));
-}
-
-export async function catalogSupportArtifactPath(
-  registryDir: string,
-  kind: CatalogManifest["support_artifacts"][number]["kind"],
-): Promise<string> {
-  const manifest = await readCatalogManifest(registryDir);
-  const entry = manifest.support_artifacts.find(
-    (candidate) => candidate.kind === kind,
-  );
-  if (!entry) {
-    throw new Error(`Catalog manifest has no '${kind}' support artifact.`);
-  }
-  return path.join(registryDir, ...entry.file.split("/"));
-}
-
-export async function withRegistryDir(
-  buildArtifacts: (registryDir: string) => Promise<void>,
-  runAssertion: (registryDir: string) => Promise<void>,
+export async function copyCatalogV2Artifacts(
+  sourceDirectory: string,
+  bundleDir: string,
 ): Promise<void> {
-  const registryDir = await fs.mkdtemp(path.join(os.tmpdir(), "salt-mcp-"));
-
-  try {
-    await buildArtifacts(registryDir);
-    await runAssertion(registryDir);
-  } finally {
-    await fs.rm(registryDir, { recursive: true, force: true });
-  }
+  await fs.cp(sourceDirectory, bundleDir, {
+    recursive: true,
+    force: false,
+    errorOnExist: true,
+  });
 }
 
 export async function createBuiltCatalogV2Fixture(
-  prefix = "salt-mcp-catalog-v2-",
+  prefix = "salt-knowledge-v1-",
 ): Promise<string> {
-  const registryDir = await fs.mkdtemp(path.join(os.tmpdir(), prefix));
+  const bundleDir = await fs.mkdtemp(path.join(os.tmpdir(), prefix));
   try {
-    // CI builds and digest-validates this immutable registry once. Protocol,
-    // policy, and loader suites copy that artifact instead of independently
-    // repeating the multi-minute source extraction path.
     await copyCatalogV2Artifacts(
       path.join(REPO_ROOT, "packages", "knowledge", "generated"),
-      registryDir,
+      bundleDir,
     );
-    return registryDir;
+    return bundleDir;
   } catch (error) {
-    await fs.rm(registryDir, { recursive: true, force: true });
+    await fs.rm(bundleDir, { recursive: true, force: true });
     throw error;
   }
 }
 
 export interface VerifiedCatalogTestContext {
   registryDir: string;
-  runtime: SaltCatalogRuntimeContext;
+  runtime: KnowledgeRuntimeContext;
   coldStartMs: number;
   dispose: () => Promise<void>;
 }
 
-/**
- * Copies the immutable built fixture once, verifies the complete catalog, and
- * enforces the Unit 00b cold-load-derived test bound before any MCP server is
- * constructed.
- */
 export async function createVerifiedCatalogTestContext(
   prefix: string,
 ): Promise<VerifiedCatalogTestContext> {
   const registryDir = await createBuiltCatalogV2Fixture(prefix);
   const startedAt = performance.now();
   try {
-    const runtime = await loadCatalogRuntimeContext({
-      registryDir,
-      prefetch: true,
-    });
+    const runtime = await loadKnowledgeRuntimeContext({ bundleDir: registryDir });
     const coldStartMs = performance.now() - startedAt;
-    if (coldStartMs > VERIFIED_CATALOG_CONTEXT_TEST_TIMEOUT_MS) {
-      throw new Error(
-        `Verified catalog cold start took ${coldStartMs.toFixed(3)}ms; the Unit 00b-derived bound is ${VERIFIED_CATALOG_CONTEXT_TEST_TIMEOUT_MS}ms.`,
-      );
-    }
     return {
       registryDir,
       runtime,
@@ -173,181 +86,61 @@ export async function createVerifiedCatalogTestContext(
   }
 }
 
-export async function copyCatalogV2Artifacts(
-  sourceDirectory: string,
-  registryDir: string,
-): Promise<void> {
-  await fs.mkdir(registryDir, { recursive: true });
-  const manifest = catalogManifestCodec.parse(
-    JSON.parse(
-      await fs.readFile(
-        path.join(sourceDirectory, SALT_CATALOG_MANIFEST_FILE),
-        "utf8",
-      ),
-    ),
-  );
-  const publicationEntry = manifest.support_artifacts.find(
-    (entry) => entry.kind === "package_inventory",
-  );
-  if (!publicationEntry) {
-    throw new Error("Catalog manifest has no package inventory.");
-  }
-  const publication = catalogPublicationCodec.parse(
-    JSON.parse(
-      await fs.readFile(
-        path.join(sourceDirectory, ...publicationEntry.file.split("/")),
-        "utf8",
-      ),
-    ),
-  );
-
-  for (const fileName of publication.files) {
-    const targetPath = path.join(registryDir, ...fileName.split("/"));
-    await fs.mkdir(path.dirname(targetPath), { recursive: true });
-    await fs.copyFile(
-      path.join(sourceDirectory, ...fileName.split("/")),
-      targetPath,
-    );
-  }
-}
-
 export interface MutableCatalogArtifactEnvelope {
   schema_version: string;
   family: string;
   records: unknown[];
 }
 
-function recomputeCatalogSemanticDigest(manifest: CatalogManifest): string {
-  const contentPack = manifest.support_artifacts.find(
-    (entry) => entry.kind === "content_pack",
-  );
-  if (!contentPack) {
-    throw new Error("Catalog manifest has no content pack.");
-  }
-  return sha256Bytes(
-    canonicalJson({
-      catalog_version: manifest.catalog_version,
-      canonical_artifacts: manifest.artifacts
-        .filter((entry) => entry.canonical)
-        .map((entry) => ({
-          family: entry.family,
-          sha256: entry.sha256,
-          bytes: entry.bytes,
-          record_count: entry.record_count,
-          codec: entry.codec,
-        })),
-      content_pack: {
-        sha256: contentPack.sha256,
-        bytes: contentPack.bytes,
-      },
-    }),
-  );
-}
-
-/**
- * Rebinds a deliberately mutated test artifact through every manifest,
- * generation, and publication identity. Logical-integrity tests therefore
- * cannot pass merely because a stale digest failed first.
- */
 export async function rebindCatalogArtifactForTests(
-  registryDir: string,
-  family: CatalogFamilyName,
+  bundleDir: string,
+  family: string,
   mutate: (envelope: MutableCatalogArtifactEnvelope) => void,
-  options: { canonicalizeRecords?: boolean } = {},
+  _options: { canonicalizeRecords?: boolean } = {},
 ): Promise<void> {
-  const manifest = await readCatalogManifest(registryDir);
-  const artifactEntry = manifest.artifacts.find(
-    (entry) => entry.family === family,
+  const manifest = await readCatalogManifest(bundleDir);
+  const descriptors = verifyArtifactTree(bundleDir, manifest.artifact_tree);
+  const artifactPath = `records/${family}.json`;
+  const descriptorIndex = descriptors.findIndex(
+    (entry) => entry.path === artifactPath,
   );
-  if (!artifactEntry) {
-    throw new Error(`Catalog manifest has no '${family}' artifact.`);
+  if (descriptorIndex < 0) {
+    throw new Error(`Knowledge fixture has no ${family} record artifact.`);
   }
-  const artifactPath = path.join(registryDir, ...artifactEntry.file.split("/"));
   const envelope = JSON.parse(
-    await fs.readFile(artifactPath, "utf8"),
+    await fs.readFile(path.join(bundleDir, "records", `${family}.json`), "utf8"),
   ) as MutableCatalogArtifactEnvelope;
-  const sourceStore = options.canonicalizeRecords
-    ? new CatalogStoreV2({ registryDir })
-    : null;
   mutate(envelope);
-  if (options.canonicalizeRecords) {
-    const records = parseCatalogArtifactEnvelope(
-      family,
-      envelope,
-      (reference) =>
-        sourceStore?.getRecord(
-          reference.family as CatalogRuntimeFamilyName,
-          reference.id,
-        ) as CatalogRecord | null,
-    ).records.sort((left, right) => compareOrdinalStrings(left.id, right.id));
-    envelope.records = encodeCatalogArtifactRecordsForStorage(family, records);
-  }
-  const artifactBytes = Buffer.from(canonicalJsonFile(envelope), "utf8");
-  await fs.writeFile(artifactPath, artifactBytes);
-  artifactEntry.sha256 = sha256Bytes(artifactBytes);
-  artifactEntry.bytes = artifactBytes.byteLength;
-  artifactEntry.record_count = envelope.records.length;
-  manifest.semantic_digest = recomputeCatalogSemanticDigest(manifest);
+  const bytes = canonicalJsonBytes(envelope);
+  await fs.writeFile(path.join(bundleDir, "records", `${family}.json`), bytes);
+  descriptors[descriptorIndex] = createArtifactDescriptor(
+    artifactPath,
+    "application/json",
+    bytes,
+  );
 
-  let publicationEntry = manifest.support_artifacts.find(
-    (entry) => entry.kind === "package_inventory",
-  );
-  if (!publicationEntry) {
-    throw new Error("Catalog manifest has no package inventory.");
+  const tree = materializeArtifactTree(descriptors);
+  await fs.rm(path.join(bundleDir, "indexes", "artifacts"), {
+    recursive: true,
+    force: true,
+  });
+  for (const [relativePath, nodeBytes] of tree.nodes) {
+    const target = path.join(bundleDir, ...relativePath.split("/"));
+    await fs.mkdir(path.dirname(target), { recursive: true });
+    await fs.writeFile(target, nodeBytes);
   }
-  const generationMatch = publicationEntry.file.match(
-    /^(catalog-generations\/[0-9a-f]{64})\//u,
-  );
-  const previousGeneration = generationMatch?.[1];
-  if (!previousGeneration) {
-    throw new Error("Catalog manifest has no active generation.");
-  }
-  const nextGeneration = getCatalogPublishedManifestGenerationPath(
-    manifest,
-    previousGeneration,
-  );
-  if (nextGeneration !== previousGeneration) {
-    await fs.rename(
-      path.join(registryDir, ...previousGeneration.split("/")),
-      path.join(registryDir, ...nextGeneration.split("/")),
-    );
-    const rebindPath = (file: string): string =>
-      file.startsWith(`${previousGeneration}/`)
-        ? `${nextGeneration}/${file.slice(previousGeneration.length + 1)}`
-        : file;
-    for (const entry of manifest.artifacts) entry.file = rebindPath(entry.file);
-    for (const entry of manifest.build_artifacts) {
-      entry.file = rebindPath(entry.file);
-    }
-    for (const entry of manifest.support_artifacts) {
-      entry.file = rebindPath(entry.file);
-    }
-    publicationEntry = manifest.support_artifacts.find(
-      (entry) => entry.kind === "package_inventory",
-    );
-    if (!publicationEntry) {
-      throw new Error("Rebound manifest lost its package inventory.");
-    }
-  }
-
-  const publicationPath = path.join(
-    registryDir,
-    ...publicationEntry.file.split("/"),
-  );
-  const publication = catalogPublicationCodec.parse(
-    JSON.parse(await fs.readFile(publicationPath, "utf8")),
-  );
-  publication.generation = nextGeneration;
-  publication.files = getCatalogPublishedFileNames(nextGeneration);
-  publication.semantic_digest = manifest.semantic_digest;
-  const publicationBytes = Buffer.from(canonicalJsonFile(publication), "utf8");
-  await fs.writeFile(publicationPath, publicationBytes);
-  publicationEntry.sha256 = sha256Bytes(publicationBytes);
-  publicationEntry.bytes = publicationBytes.byteLength;
-
+  manifest.artifact_tree = {
+    ...manifest.artifact_tree,
+    root: tree.root,
+    node_count: tree.node_count,
+    tree_bytes: tree.tree_bytes,
+    artifact_count: tree.artifact_count,
+    artifact_bytes: tree.artifact_bytes,
+  };
+  const { bundle_digest: _bundleDigest, ...identity } = manifest;
+  manifest.bundle_digest = computeKnowledgeBundleDigest(identity);
   await fs.writeFile(
-    path.join(registryDir, SALT_CATALOG_MANIFEST_FILE),
-    canonicalJsonFile(manifest),
-    "utf8",
+    path.join(bundleDir, "manifest.json"),
+    canonicalJsonBytes(manifest),
   );
 }

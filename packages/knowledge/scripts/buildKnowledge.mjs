@@ -13,13 +13,13 @@ const generatorEntryPath = path.join(
   packageRoot,
   "src",
   "build",
-  "catalogGeneratorEntry.ts",
+  "knowledgeGeneratorEntry.ts",
 );
 const generatorNoSourceMapPath = path.join(
   packageRoot,
   "src",
   "build",
-  "catalogGeneratorNoSourceMap.ts",
+  "knowledgeGeneratorNoSourceMap.ts",
 );
 const SHA256_PATTERN = /^sha256:[0-9a-f]{64}$/u;
 const BUILTIN_MODULES = new Set(
@@ -71,7 +71,7 @@ function assertGeneratorTypeScriptIdentity(
   expectedPackageRoot,
   expectedVersion,
 ) {
-  const identity = generator.catalogGeneratorTypeScriptIdentity;
+  const identity = generator.knowledgeGeneratorTypeScriptIdentity;
   const expectedLibDirectory = path.join(expectedPackageRoot, "lib");
   if (
     !identity ||
@@ -1082,7 +1082,7 @@ export async function buildCatalogRegistry(options = {}) {
           activePackageRoot,
           "src",
           "build",
-          "catalogGeneratorEntry.ts",
+          "knowledgeGeneratorEntry.ts",
         ),
     );
     const activeGeneratorNoSourceMapPath = path.resolve(
@@ -1091,7 +1091,7 @@ export async function buildCatalogRegistry(options = {}) {
           activePackageRoot,
           "src",
           "build",
-          "catalogGeneratorNoSourceMap.ts",
+          "knowledgeGeneratorNoSourceMap.ts",
         ),
     );
     const semanticInputPatternsPath = path.resolve(
@@ -1344,7 +1344,7 @@ export async function buildCatalogRegistry(options = {}) {
       };
       const generatorDigest = createGeneratorDigest(receipt);
       if (
-        generator.createSealedCatalogGeneratorDigest(receipt) !==
+        generator.createSealedKnowledgeGeneratorDigest(receipt) !==
         generatorDigest
       ) {
         throw new Error(
@@ -1360,13 +1360,10 @@ export async function buildCatalogRegistry(options = {}) {
           "Generator dependency inventory",
         );
       };
-      const prototypeOutputDir = `${outputDir}.prototype-${process.pid}`;
-      await fs.rm(prototypeOutputDir, { recursive: true, force: true });
-      try {
-        const registry = await generator.buildRegistry({
+      const built = await generator.buildKnowledgeSource({
           sourceRoot,
           packageRoot: activePackageRoot,
-          outputDir: prototypeOutputDir,
+          outputDir,
           packageVersion,
           semanticInputPatterns,
           compilerInputPatterns,
@@ -1381,37 +1378,8 @@ export async function buildCatalogRegistry(options = {}) {
           assertGeneratorDependenciesStable,
           generatorDependencySnapshotRoot: temporaryToolRoot,
         });
-        await toolSnapshot.assertStable();
-        await assertGeneratorDependenciesStable();
-        const characterizationBaselinePath = path.join(
-          packageRoot,
-          "src",
-          "__fixtures__",
-          "unit01-semantic-characterization.json",
-        );
-        const characterizationBaselineBytes = await fs.readFile(
-          characterizationBaselinePath,
-        );
-        const characterizationBaseline = JSON.parse(
-          characterizationBaselineBytes.toString("utf8"),
-        );
-        const currentCharacterization =
-          await generator.createExtractionParityProjection({
-            sourceRoot,
-            registryDir: prototypeOutputDir,
-          });
-        const extractionParityReceipt =
-          generator.createExtractionParityReceipt({
-            baseline: characterizationBaseline,
-            baselineSource: {
-              path: toPosixPath(
-                path.relative(sourceRoot, characterizationBaselinePath),
-              ),
-              sha256: sha256(characterizationBaselineBytes),
-              bytes: characterizationBaselineBytes.byteLength,
-            },
-            current: currentCharacterization,
-          });
+      await toolSnapshot.assertStable();
+      await assertGeneratorDependenciesStable();
         const [semanticInputInventory, compilerInputInventory] =
           await Promise.all([
             generator.createCatalogInputInventory(
@@ -1426,29 +1394,16 @@ export async function buildCatalogRegistry(options = {}) {
         await generator.buildKnowledgeV1({
           sourceRoot,
           packageRoot: activePackageRoot,
-          prototypeRoot: prototypeOutputDir,
           outputDir,
           packageVersion,
-          registry,
+          registry: built.registry,
+          normalized: built.normalized,
           semanticInputInventory,
           compilerInputInventory,
           generatorReceipt: receipt,
           generatorDigest,
         });
-        await fs.writeFile(
-          path.join(outputDir, "extraction-parity.json"),
-          `${canonicalJson(extractionParityReceipt)}\n`,
-          { flag: "wx" },
-        );
-        return registry;
-      } finally {
-        await fs.rm(prototypeOutputDir, {
-          recursive: true,
-          force: true,
-          maxRetries: 5,
-          retryDelay: 100,
-        });
-      }
+      return built.registry;
     } finally {
       await esbuildToStop?.stop?.();
       await fs.rm(temporaryToolRoot, {

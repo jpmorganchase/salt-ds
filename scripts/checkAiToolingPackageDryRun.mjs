@@ -232,7 +232,9 @@ const preAgentKnowledgePackage = {
   forbiddenTextMarkers: [
     "catalog-generations",
     "catalog-manifest.json",
+    '"catalog_version"',
     "extraction-parity@1",
+    "salt://",
   ],
   allowMarkdown: true,
   knowledgeV1: true,

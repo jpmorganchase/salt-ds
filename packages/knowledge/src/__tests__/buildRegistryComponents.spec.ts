@@ -420,17 +420,17 @@ describe("component registry extraction", () => {
     try {
       const manifests = [
         {
-          directory: "public-fixture",
+          directory: "core",
           manifest: {
-            name: "@salt-ds/public-fixture",
+            name: "@salt-ds/core",
             version: "1.2.3",
             description: "Public fixture package.",
           },
         },
         {
-          directory: "private-fixture",
+          directory: "lab",
           manifest: {
-            name: "@salt-ds/private-fixture",
+            name: "@salt-ds/lab",
             version: "0.0.0",
             private: true,
           },
@@ -448,9 +448,7 @@ describe("component registry extraction", () => {
 
       const packages = await extractPackages(repoRoot, new Set());
 
-      expect(packages.map((pkg) => pkg.name)).toEqual([
-        "@salt-ds/public-fixture",
-      ]);
+      expect(packages.map((pkg) => pkg.name)).toEqual(["@salt-ds/core"]);
     } finally {
       await fs.rm(repoRoot, { recursive: true, force: true });
     }

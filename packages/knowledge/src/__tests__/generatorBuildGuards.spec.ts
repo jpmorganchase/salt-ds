@@ -9,12 +9,12 @@ import {
   validateBundleMetafile,
   withCanonicalGeneratorEnvironment,
 } from "../../scripts/buildKnowledge.mjs";
-import { createSealedCatalogGeneratorDigest } from "../build/generatorDependencyInventory.js";
-import type { CatalogGeneratorReceipt } from "../catalog/catalogSchemaV2.js";
+import { createSealedKnowledgeGeneratorDigest } from "../build/generatorDependencyInventory.js";
+import type { KnowledgeGeneratorReceipt } from "../build/knowledgeGeneratorReceipt.js";
 
 const SHA = `sha256:${"1".repeat(64)}`;
 
-function createReceipt(): CatalogGeneratorReceipt {
+function createReceipt(): KnowledgeGeneratorReceipt {
   return {
     schema_version: "1.1.0",
     orchestrator: {
@@ -253,7 +253,7 @@ describe("canonical generator script guards", () => {
   it("computes the same receipt digest in the orchestrator and bundle", () => {
     const receipt = createReceipt();
     const digest = createGeneratorDigest(receipt);
-    expect(digest).toBe(createSealedCatalogGeneratorDigest(receipt));
+    expect(digest).toBe(createSealedKnowledgeGeneratorDigest(receipt));
     expect(
       createGeneratorDigest({
         ...receipt,

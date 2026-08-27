@@ -1,11 +1,8 @@
 import path from "node:path";
-import { CatalogRegistryProjection } from "../catalog/catalogRegistryProjection.js";
 import {
   canonicalJson,
   compareOrdinalStrings,
 } from "../catalog/catalogSerialization.js";
-import { createCatalogStoreV2 } from "../catalog/catalogStoreV2.js";
-import { registerVerifiedSaltRegistryFingerprint } from "../registry/fingerprint.js";
 import { findSaltRepoRoot } from "../registry/paths.js";
 import { buildTokenPolicyStructuralRoleRulePackBody } from "../tokenPolicyStructuralRoleRules.js";
 import type { BuildRegistryOptions, SaltRegistry } from "../types.js";
@@ -45,17 +42,19 @@ import {
   validateCatalogInputPatterns,
   withCatalogInputTracking,
 } from "./catalogInputInventory.js";
-import { writeCatalogV2 } from "./catalogWriterV2.js";
 import { assertComponentAuthoringOverridesResolved } from "./componentAuthoringOverrides.js";
 import { assertDeprecationMigrationOverridesResolved } from "./deprecationMigrationOverrides.js";
 import { assertDeprecationValueMapOverridesResolved } from "./deprecationValueMapOverrides.js";
 import {
-  createSealedCatalogGeneratorDigest,
+  createSealedKnowledgeGeneratorDigest,
   type GeneratorDependencyInventory,
-  type SealedCatalogGeneratorReceipt,
+  type SealedKnowledgeGeneratorReceipt,
   withGeneratorDependencyInventory,
 } from "./generatorDependencyInventory.js";
-import { normalizeCatalogV2 } from "./normalizeCatalogV2.js";
+import {
+  normalizeKnowledgeRecords,
+  type NormalizedKnowledgeRecords,
+} from "./normalizeKnowledgeRecords.js";
 
 const REGISTRY_VERSION = "0.1.0";
 
@@ -63,26 +62,32 @@ export type ExtendedBuildRegistryOptions = BuildRegistryOptions & {
   inputInventory?: CatalogInputInventory;
   generatorDependencyInventory?: GeneratorDependencyInventory;
   generatorDependencySnapshotRoot?: string;
-  generatorReceipt?: SealedCatalogGeneratorReceipt;
+  generatorReceipt?: SealedKnowledgeGeneratorReceipt;
   assertGeneratorDependenciesStable?: () => Promise<void>;
 };
 
-export type CatalogGeneratorCapability =
+export interface KnowledgeSourceBuild {
+  registry: SaltRegistry;
+  normalized: NormalizedKnowledgeRecords;
+  inventory: CatalogInputInventory;
+}
+
+export type KnowledgeGeneratorCapability =
   | {
       mode: "sealed";
       dependencyInventory: GeneratorDependencyInventory;
       dependencySnapshotRoot: string;
-      receipt: SealedCatalogGeneratorReceipt;
+      receipt: SealedKnowledgeGeneratorReceipt;
       assertStable: () => Promise<void>;
     }
   | {
       mode: "test";
     };
 
-export function resolveCatalogGeneratorCapability(
+export function resolveKnowledgeGeneratorCapability(
   options: ExtendedBuildRegistryOptions,
   requestedSourceRoot: string | null,
-): CatalogGeneratorCapability {
+): KnowledgeGeneratorCapability {
   const dependencyInventory = options.generatorDependencyInventory;
   if (dependencyInventory) {
     if (
@@ -97,12 +102,12 @@ export function resolveCatalogGeneratorCapability(
       !options.assertGeneratorDependenciesStable
     ) {
       throw new Error(
-        "Sealed catalog generation requires explicit source/package/output roots, package version, semantic/compiler input patterns, a receipt, and a final dependency stability check.",
+        "Sealed Knowledge generation requires explicit source/package/output roots, package version, semantic/compiler input patterns, a receipt, and a final dependency stability check.",
       );
     }
     if (options.generatorDigest !== undefined) {
       throw new Error(
-        "Sealed catalog generation derives its digest from the receipt and rejects caller-supplied digests.",
+        "Sealed Knowledge generation derives its digest from the receipt and rejects caller-supplied digests.",
       );
     }
     if (
@@ -110,7 +115,7 @@ export function resolveCatalogGeneratorCapability(
       /(?:^|-)test(?:-|$)/u.test(options.generatorVersion)
     ) {
       throw new Error(
-        "Sealed catalog generation rejects test generator versions.",
+        "Sealed Knowledge generation rejects test generator versions.",
       );
     }
     if (
@@ -150,13 +155,13 @@ export function resolveCatalogGeneratorCapability(
   return { mode: "test" };
 }
 
-export async function buildRegistry(
+export async function buildKnowledgeSource(
   options: ExtendedBuildRegistryOptions = {},
-): Promise<SaltRegistry> {
+): Promise<KnowledgeSourceBuild> {
   const requestedSourceRoot = options.sourceRoot
     ? path.resolve(options.sourceRoot)
     : null;
-  const generatorCapability = resolveCatalogGeneratorCapability(
+  const generatorCapability = resolveKnowledgeGeneratorCapability(
     options,
     requestedSourceRoot,
   );
@@ -195,7 +200,7 @@ export async function buildRegistry(
     (generatorCapability.mode === "test" ? "2.0.0-test-unsealed" : "2.0.0");
   const generatorDigest =
     generatorCapability.mode === "sealed"
-      ? createSealedCatalogGeneratorDigest(generatorCapability.receipt)
+      ? createSealedKnowledgeGeneratorDigest(generatorCapability.receipt)
       : (options.generatorDigest ?? inventory.digest);
   if (!generatorDigest) {
     throw new Error(
@@ -203,7 +208,7 @@ export async function buildRegistry(
     );
   }
 
-  const executeBuild = async (): Promise<SaltRegistry> => {
+  const executeBuild = async (): Promise<KnowledgeSourceBuild> => {
     const built = await withCatalogInputTracking(
       sourceRoot,
       inventory,
@@ -349,7 +354,7 @@ export async function buildRegistry(
         };
         return {
           registry,
-          normalized: normalizeCatalogV2({
+          normalized: normalizeKnowledgeRecords({
             registry,
             inventory,
             tokenPolicyStructuralRoleRulePackBody,
@@ -373,35 +378,12 @@ export async function buildRegistry(
     if (generatorCapability.mode === "sealed") {
       await generatorCapability.assertStable();
     }
-    const result = await writeCatalogV2({
-      outputDir,
-      normalized: built.normalized,
-      inventory,
-      catalogVersion: version,
-      sourceRevision,
-      generator:
-        generatorCapability.mode === "sealed"
-          ? {
-              mode: "sealed",
-              version: generatorVersion,
-              digest: generatorDigest,
-              receipt: generatorCapability.receipt,
-            }
-          : {
-              mode: "test",
-              version: generatorVersion as `${string}test${string}`,
-              digest: generatorDigest,
-            },
-      enforceBudgets: options.enforceBudgets,
-    });
-    const registry = new CatalogRegistryProjection(
-      createCatalogStoreV2({ registryDir: outputDir }),
-    ).asRegistry({ prefetch: true, materialize: true });
-    registerVerifiedSaltRegistryFingerprint(
-      registry,
-      result.manifest.semantic_digest,
-    );
-    return registry;
+    void outputDir;
+    void version;
+    void sourceRevision;
+    void generatorVersion;
+    void generatorDigest;
+    return { ...built, inventory };
   };
 
   return generatorCapability.mode === "sealed"
@@ -412,4 +394,10 @@ export async function buildRegistry(
         generatorCapability.dependencySnapshotRoot,
       )
     : executeBuild();
+}
+
+export async function buildRegistry(
+  options: ExtendedBuildRegistryOptions = {},
+): Promise<SaltRegistry> {
+  return (await buildKnowledgeSource(options)).registry;
 }

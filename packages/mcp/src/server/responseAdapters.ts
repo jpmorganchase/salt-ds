@@ -144,7 +144,7 @@ function searchTextFallback(payload: Record<string, unknown>): string {
     );
   }
   lines.push(
-    `Catalog ${String(provenance.catalog_version ?? "unknown")} (${String(provenance.semantic_digest ?? "unknown")}).`,
+    `Knowledge ${String(provenance.knowledge_version ?? "unknown")} (${String(provenance.semantic_digest ?? "unknown")}).`,
   );
   const limitations = Array.isArray(payload.limitations)
     ? payload.limitations.map(String)
@@ -192,7 +192,7 @@ function nonSearchTextFallback(
       ? untrustedProjectData.resolved_packages
       : [];
     const applicabilityCounts = {
-      exact_catalog_package_version: 0,
+      exact_knowledge_package_version: 0,
       current: 0,
       unknown: 0,
     };
@@ -206,9 +206,9 @@ function nonSearchTextFallback(
         : null;
       if (
         applicability?.state === "applicable" &&
-        applicability.basis === "exact_catalog_package_version"
+        applicability.basis === "exact_knowledge_package_version"
       ) {
-        applicabilityCounts.exact_catalog_package_version += 1;
+        applicabilityCounts.exact_knowledge_package_version += 1;
       } else if (applicability?.state === "current") {
         applicabilityCounts.current += 1;
       } else {

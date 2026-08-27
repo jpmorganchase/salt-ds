@@ -1,9 +1,5 @@
 import { describe, expect, it } from "vitest";
 import {
-  type CatalogProjectionStore,
-  projectCatalogRegistry,
-} from "../catalog/catalogRegistryProjection.js";
-import {
   createSaltRegistryFingerprint,
   getSaltRegistryFingerprint,
   registerSaltRegistryFingerprintVerifier,
@@ -248,27 +244,6 @@ describe("Salt registry semantic fingerprint", () => {
     expect(createSaltRegistryFingerprint(first)).toBe(
       createSaltRegistryFingerprint(second),
     );
-  });
-
-  it("does not self-certify a generic catalog projection", () => {
-    const manifestFingerprint = `sha256:${"e".repeat(64)}`;
-    const projected = projectCatalogRegistry({
-      manifest: {
-        catalog_version: "fixture",
-        semantic_digest: manifestFingerprint,
-      },
-      getFamily: () => [],
-      getRecord: () => null,
-      getContentText: () => {
-        throw new Error("Fixture has no content.");
-      },
-      getContentJson: () => {
-        throw new Error("Fixture has no content.");
-      },
-      prefetch: () => undefined,
-    } as unknown as CatalogProjectionStore);
-
-    expect(getSaltRegistryFingerprint(projected)).not.toBe(manifestFingerprint);
   });
 
   it("hashes structural-rule semantics without self-referential pack identity", () => {

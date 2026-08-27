@@ -1,4 +1,4 @@
-import { createDeprecationId } from "../catalog/catalogApiSymbolV2.js";
+import { createDeprecationId } from "../records/apiSymbolIdentity.js";
 import type { ApiLiteral, ApiSymbolIdentity } from "../types.js";
 
 export interface DeprecationValueMapOverrideCase {

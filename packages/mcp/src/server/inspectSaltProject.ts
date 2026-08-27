@@ -543,7 +543,7 @@ export async function inspectSaltProject(
         applicability: resolvePackageKnowledgeApplicability({
           packageName: entry.name,
           targetVersion: entry.resolvedVersion,
-          catalogVersion: catalogPackageVersions.get(entry.name),
+          knowledgeVersion: catalogPackageVersions.get(entry.name),
         }),
         provenance: {
           observed_version: "untrusted_project_data" as const,

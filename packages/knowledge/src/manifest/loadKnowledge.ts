@@ -19,6 +19,6 @@ export async function loadKnowledgeRuntimeContext(
 ): Promise<KnowledgeRuntimeContext> {
   const bundleDir = options.bundleDir ?? getPackageRoot(import.meta.url);
   const store = createKnowledgeStore({ bundleDir: path.resolve(bundleDir) });
-  store.ensureKnowledgeVerified();
+  store.prefetch({ verifyEveryContentObject: true });
   return { store, reviewCatalog: createReviewCatalogFromStore(store) };
 }

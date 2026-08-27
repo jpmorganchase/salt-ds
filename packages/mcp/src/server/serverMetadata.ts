@@ -50,9 +50,7 @@ export function getSaltMcpRuntimeMetadata(context: KnowledgeRuntimeContext) {
     package_name: packageManifest.name,
     server_version: packageManifest.version,
     catalog_version:
-      context.store.manifest.bundle_version ??
-      context.store.manifest.catalog_version ??
-      "0.0.0",
+      context.store.manifest.bundle_version ?? "0.0.0",
     catalog_digest: context.store.manifest.semantic_digest,
     catalog_manifest_uri: normalizeCatalogPublicCitation({
       kind: "catalog_manifest",

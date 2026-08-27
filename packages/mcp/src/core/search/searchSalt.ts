@@ -151,9 +151,7 @@ export function searchSalt(
     ],
     provenance: {
       catalog_version:
-        store.manifest.bundle_version ??
-        store.manifest.catalog_version ??
-        "0.0.0",
+        store.manifest.bundle_version ?? "0.0.0",
       semantic_digest: store.manifest.semantic_digest,
     },
   });

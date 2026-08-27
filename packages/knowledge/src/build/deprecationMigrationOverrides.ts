@@ -1,4 +1,4 @@
-import { createDeprecationId } from "../catalog/catalogApiSymbolV2.js";
+import { createDeprecationId } from "../records/apiSymbolIdentity.js";
 import type { ApiSymbolIdentity } from "../types.js";
 
 export type NoTargetMigrationStrategy = "remove" | "manual" | "unspecified";

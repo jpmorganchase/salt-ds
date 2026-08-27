@@ -2,10 +2,10 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { resolveCatalogGeneratorCapability } from "../build/buildRegistry.js";
+import { resolveKnowledgeGeneratorCapability } from "../build/buildRegistry.js";
 import {
   assertGeneratorDependencyInventory,
-  createSealedCatalogGeneratorDigest,
+  createSealedKnowledgeGeneratorDigest,
   type GeneratorDependencyInventory,
   generatorDependencyDirectoryExists,
   generatorDependencyFileExists,
@@ -15,16 +15,13 @@ import {
   readGeneratorDependencyFileSyncOrNull,
   withGeneratorDependencyInventory,
 } from "../build/generatorDependencyInventory.js";
-import {
-  type CatalogGeneratorReceipt,
-  catalogManifestCodec,
-} from "../catalog/catalogSchemaV2.js";
+import type { KnowledgeGeneratorReceipt } from "../build/knowledgeGeneratorReceipt.js";
 import { canonicalJson, sha256Bytes } from "../catalog/catalogSerialization.js";
 
 const temporaryDirectories: string[] = [];
 const SHA = `sha256:${"1".repeat(64)}`;
 
-function createReceipt(): CatalogGeneratorReceipt {
+function createReceipt(): KnowledgeGeneratorReceipt {
   return {
     schema_version: "1.1.0",
     orchestrator: {
@@ -265,73 +262,16 @@ describe.sequential("sealed generator dependency inventory", () => {
   });
 });
 
-describe("catalog generator identity modes", () => {
+describe("Knowledge generator identity modes", () => {
   const receipt = createReceipt();
-  const sealedGenerator = {
-    mode: "sealed" as const,
-    version: "2.0.0",
-    digest: createSealedCatalogGeneratorDigest(receipt),
-    receipt,
-  };
-  const manifest = {
-    schema_version: "2.0.0",
-    catalog_version: "0.1.0",
-    source_revision: SHA,
-    generator: sealedGenerator,
-    input_inventory_digest: SHA,
-    inputs: [{ path: "package.json", sha256: SHA, bytes: 0 }],
-    artifacts: [],
-    build_artifacts: [],
-    support_artifacts: [],
-    semantic_digest: SHA,
-  };
 
   it("binds sealed identities to their complete canonical receipt", () => {
-    expect(catalogManifestCodec.safeParse(manifest).success).toBe(true);
-    expect(
-      catalogManifestCodec.safeParse({
-        ...manifest,
-        generator: {
-          ...sealedGenerator,
-          receipt: {
-            ...receipt,
-            runtime: { ...receipt.runtime, platform: "tampered" },
-          },
-        },
-      }).success,
-    ).toBe(false);
-  });
-
-  it("admits explicit test identities without allowing them to impersonate sealed output", () => {
-    expect(
-      catalogManifestCodec.safeParse({
-        ...manifest,
-        generator: {
-          mode: "test",
-          version: "2.0.0-test",
-          digest: SHA,
-        },
-      }).success,
-    ).toBe(true);
-    expect(
-      catalogManifestCodec.safeParse({
-        ...manifest,
-        generator: {
-          mode: "test",
-          version: "2.0.0",
-          digest: SHA,
-        },
-      }).success,
-    ).toBe(false);
-    expect(
-      catalogManifestCodec.safeParse({
-        ...manifest,
-        generator: {
-          ...sealedGenerator,
-          version: "2.0.0-test",
-        },
-      }).success,
-    ).toBe(false);
+    expect(createSealedKnowledgeGeneratorDigest(receipt)).not.toBe(
+      createSealedKnowledgeGeneratorDigest({
+        ...receipt,
+        runtime: { ...receipt.runtime, platform: "tampered" },
+      }),
+    );
   });
 
   it("selects one coherent generator capability before extraction", async () => {
@@ -350,7 +290,7 @@ describe("catalog generator identity modes", () => {
       compilerInputPatterns: ["package.json"],
     };
     expect(() =>
-      resolveCatalogGeneratorCapability(
+      resolveKnowledgeGeneratorCapability(
         {
           ...explicitLayout,
           sourceRoot: repoRoot,
@@ -363,7 +303,7 @@ describe("catalog generator identity modes", () => {
       /requires explicit source\/package\/output roots, package version, semantic\/compiler input patterns, a receipt/u,
     );
     expect(() =>
-      resolveCatalogGeneratorCapability(
+      resolveKnowledgeGeneratorCapability(
         {
           generatorVersion: "2.0.0-test",
           generatorReceipt: boundReceipt,
@@ -372,7 +312,7 @@ describe("catalog generator identity modes", () => {
       ),
     ).toThrow(/require the matching dependency inventory/u);
     expect(() =>
-      resolveCatalogGeneratorCapability(
+      resolveKnowledgeGeneratorCapability(
         {
           ...explicitLayout,
           sourceRoot: repoRoot,
@@ -386,7 +326,7 @@ describe("catalog generator identity modes", () => {
       ),
     ).toThrow(/does not bind the active dependency inventory/u);
     expect(
-      resolveCatalogGeneratorCapability(
+      resolveKnowledgeGeneratorCapability(
         {
           ...explicitLayout,
           sourceRoot: repoRoot,
@@ -400,7 +340,7 @@ describe("catalog generator identity modes", () => {
       ).mode,
     ).toBe("sealed");
     expect(
-      resolveCatalogGeneratorCapability(
+      resolveKnowledgeGeneratorCapability(
         {
           generatorVersion: "2.0.0-test",
         },
@@ -408,7 +348,7 @@ describe("catalog generator identity modes", () => {
       ).mode,
     ).toBe("test");
     expect(() =>
-      resolveCatalogGeneratorCapability(
+      resolveKnowledgeGeneratorCapability(
         {
           ...explicitLayout,
           sourceRoot: repoRoot,

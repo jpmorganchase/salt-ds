@@ -10,7 +10,7 @@ const SRC_ROOT = path.resolve(
 );
 const PACKAGES_ROOT = path.resolve(SRC_ROOT, "..", "..");
 const KNOWLEDGE_ROOT = path.join(PACKAGES_ROOT, "knowledge", "src");
-const KNOWLEDGE_RUNTIME = path.join(KNOWLEDGE_ROOT, "runtime.ts");
+const KNOWLEDGE_RUNTIME = path.join(KNOWLEDGE_ROOT, "public.ts");
 const CORE_ROOT = path.join(SRC_ROOT, "core");
 const CORE_RUNTIME = path.join(CORE_ROOT, "runtime.ts");
 const SALT_TOOL_OPERATIONS = path.join(

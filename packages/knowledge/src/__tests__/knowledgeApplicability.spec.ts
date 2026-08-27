@@ -7,13 +7,13 @@ import {
 } from "../applicability/knowledgeApplicability.js";
 
 describe("knowledge applicability", () => {
-  it("labels catalog search as current guidance without historical claims", () => {
+  it("labels Knowledge search as current guidance without historical claims", () => {
     expect(currentKnowledgeApplicability()).toEqual({
       state: "current",
-      basis: "catalog_current_target",
+      basis: "knowledge_current_target",
       package_name: null,
       target_version: null,
-      catalog_version: null,
+      knowledge_version: null,
       peer_compatibility: "not_evaluated",
       historical_completeness: false,
     });
@@ -24,13 +24,13 @@ describe("knowledge applicability", () => {
       resolvePackageKnowledgeApplicability({
         packageName: "@salt-ds/core",
         targetVersion: "1.69.0",
-        catalogVersion: "1.69.0",
+        knowledgeVersion: "1.69.0",
       }),
     ).toMatchObject({
       state: "applicable",
-      basis: "exact_catalog_package_version",
+      basis: "exact_knowledge_package_version",
       target_version: "1.69.0",
-      catalog_version: "1.69.0",
+      knowledge_version: "1.69.0",
       peer_compatibility: "not_evaluated",
       historical_completeness: false,
     });
@@ -47,7 +47,7 @@ describe("knowledge applicability", () => {
         resolvePackageKnowledgeApplicability({
           packageName: "@salt-ds/core",
           targetVersion,
-          catalogVersion: "1.69.0",
+          knowledgeVersion: "1.69.0",
         }),
       ).toMatchObject({
         state: "unknown",
@@ -61,12 +61,12 @@ describe("knowledge applicability", () => {
       resolvePackageKnowledgeApplicability({
         packageName: "@salt-ds/core",
         targetVersion: "1.69.0-alpha.1+local.1",
-        catalogVersion: "1.69.0-alpha.1+local.1",
+        knowledgeVersion: "1.69.0-alpha.1+local.1",
       }),
     ).toMatchObject({
       state: "applicable",
       target_version: "1.69.0-alpha.1+local.1",
-      catalog_version: "1.69.0-alpha.1+local.1",
+      knowledge_version: "1.69.0-alpha.1+local.1",
     });
   });
 
@@ -75,14 +75,14 @@ describe("knowledge applicability", () => {
       deprecationTimelineKnowledgeApplicability({
         packageName: "@salt-ds/core",
         targetVersion: "1.35.0",
-        catalogVersion: "1.69.0",
+        knowledgeVersion: "1.69.0",
       }),
     ).toEqual({
       state: "applicable",
       basis: "deprecation_timeline",
       package_name: "@salt-ds/core",
       target_version: "1.35.0",
-      catalog_version: "1.69.0",
+      knowledge_version: "1.69.0",
       peer_compatibility: "not_evaluated",
       historical_completeness: false,
     });
@@ -93,14 +93,14 @@ describe("knowledge applicability", () => {
       unknownKnowledgeApplicability({
         packageName: "@salt-ds/ag-grid-theme",
         targetVersion: "workspace:*",
-        catalogVersion: "2.9.0",
+        knowledgeVersion: "2.9.0",
       }),
     ).toEqual({
       state: "unknown",
       basis: "evidence_unavailable",
       package_name: "@salt-ds/ag-grid-theme",
       target_version: null,
-      catalog_version: "2.9.0",
+      knowledge_version: "2.9.0",
       peer_compatibility: "not_evaluated",
       historical_completeness: false,
     });

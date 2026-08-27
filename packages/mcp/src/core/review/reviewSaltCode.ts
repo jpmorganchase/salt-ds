@@ -1,6 +1,5 @@
 import {
   analyzeSaltCode,
-  detectedValidationFindingCount,
   MAX_REVIEW_ARTIFACT_ID_CHARS,
   MAX_REVIEW_ARTIFACT_ID_JSON_UTF8_BYTES,
   MAX_REVIEW_ARTIFACT_UTF8_BYTES,
@@ -25,7 +24,6 @@ import {
 
 export {
   analyzeSaltCode,
-  detectedValidationFindingCount,
   MAX_REVIEW_ARTIFACT_ID_CHARS,
   MAX_REVIEW_ARTIFACT_ID_JSON_UTF8_BYTES,
   MAX_REVIEW_ARTIFACT_UTF8_BYTES,
@@ -33,6 +31,7 @@ export {
   MAX_REVIEW_PACKAGE_VERSIONS,
   MAX_REVIEW_SUBMITTED_UTF8_BYTES,
 };
+export { detectedValidationFindingCount } from "@salt-ds/knowledge";
 export type {
   CompleteReviewArtifactAnalysis,
   CompleteReviewFinding,

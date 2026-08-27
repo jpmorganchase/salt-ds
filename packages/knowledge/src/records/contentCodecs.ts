@@ -1,8 +1,8 @@
 import * as z from "zod/v4";
-import { isSafeAbsoluteHttpsUrl } from "./catalogHttpsUrl.js";
-import { isPortableRepositoryPath } from "./catalogPortablePath.js";
-import { PUBLIC_PACKAGE_ENTRYPOINT_PATTERN } from "./catalogPublicEntrypoint.js";
-import { isCanonicalSiteRoute } from "./catalogSiteRoute.js";
+import { isSafeAbsoluteHttpsUrl } from "../catalog/catalogHttpsUrl.js";
+import { isPortableRepositoryPath } from "../catalog/catalogPortablePath.js";
+import { PUBLIC_PACKAGE_ENTRYPOINT_PATTERN } from "../catalog/catalogPublicEntrypoint.js";
+import { isCanonicalSiteRoute } from "../catalog/catalogSiteRoute.js";
 
 const SHA256_CODEC = z
   .string()

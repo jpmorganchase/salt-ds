@@ -3,7 +3,7 @@ import {
   createApiSymbolId,
   createDeprecationId,
   isApiSymbolSpaceReplacementCompatible,
-} from "../catalog/catalogApiSymbolV2.js";
+} from "../records/apiSymbolIdentity.js";
 import { isSafeAbsoluteHttpsUrl } from "../catalog/catalogHttpsUrl.js";
 import {
   assertNoLegacyContentIds,
@@ -15,7 +15,7 @@ import {
   catalogContentReference,
   MAX_CATALOG_CONTENT_BYTES,
   parseCatalogContentPayload,
-} from "../catalog/catalogPayloadSchemaV2.js";
+} from "../records/contentCodecs.js";
 import { isPortableRepositoryPath } from "../catalog/catalogPortablePath.js";
 import {
   CATALOG_FAMILY_NAMES,
@@ -32,7 +32,7 @@ import {
   policyProfileCodec,
   relationCodec,
   UNVALIDATED_SOURCE_ASSERTION_REASON,
-} from "../catalog/catalogSchemaV2.js";
+} from "../records/knowledgeRecordSchema.js";
 import {
   canonicalJson,
   compareCatalogIds,
@@ -65,7 +65,7 @@ import type {
 } from "./catalogInputInventory.js";
 import { isSemanticCatalogSourcePath } from "./catalogProductionSource.js";
 
-export interface CatalogContentBlob {
+export interface KnowledgeContentBlob {
   id: string;
   codec: CatalogContentCodecName;
   mediaType: CatalogContentMediaType;
@@ -77,9 +77,9 @@ export interface CatalogContentBlob {
     | "compiler_analysis";
 }
 
-export interface NormalizedCatalogV2 {
+export interface NormalizedKnowledgeRecords {
   records: Record<CatalogFamilyName, CatalogRecord[]>;
-  contentBlobs: Map<string, CatalogContentBlob>;
+  contentBlobs: Map<string, KnowledgeContentBlob>;
 }
 
 type SourceRecord = CatalogRecordForFamily<"source">;
@@ -121,12 +121,12 @@ function uniqueOrderedStrings(values: readonly string[]): string[] {
 }
 
 class ContentBuilder {
-  readonly blobs = new Map<string, CatalogContentBlob>();
+  readonly blobs = new Map<string, KnowledgeContentBlob>();
 
   add<Codec extends CatalogContentCodecName>(
     codec: Codec,
     value: CatalogPayloadForCodec<Codec>,
-    extractionMethod: CatalogContentBlob["extractionMethod"],
+    extractionMethod: KnowledgeContentBlob["extractionMethod"],
   ): CatalogContentReference<Codec> {
     assertNoLegacyContentIds(value);
     const parsed = parseCatalogContentPayload(codec, value);
@@ -629,11 +629,11 @@ function inferPageKindOwner(
     : new Error(`Unresolved foundation owner '${example.target_name}'.`);
 }
 
-export function normalizeCatalogV2(input: {
+export function normalizeKnowledgeRecords(input: {
   registry: SaltRegistry;
   inventory: CatalogInputInventory;
   tokenPolicyStructuralRoleRulePackBody?: SaltTokenPolicyStructuralRoleRulePackBody | null;
-}): NormalizedCatalogV2 {
+}): NormalizedKnowledgeRecords {
   const records = Object.fromEntries(
     CATALOG_FAMILY_NAMES.map((family) => [family, []]),
   ) as unknown as Record<CatalogFamilyName, CatalogRecord[]>;

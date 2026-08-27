@@ -2,7 +2,7 @@ import * as z from "zod/v4";
 import {
   isSafeAbsoluteHttpsUrl,
   SAFE_ABSOLUTE_HTTPS_URL_PATTERN,
-} from "./catalogHttpsUrl.js";
+} from "../catalog/catalogHttpsUrl.js";
 import {
   CATALOG_CONTENT_CODEC_NAMES,
   type CatalogContentReference,
@@ -12,37 +12,22 @@ import {
   catalogContentReferenceCodecFor,
   MAX_CATALOG_CONTENT_BYTES,
   MAX_CATALOG_ID_CHARS,
-} from "./catalogPayloadSchemaV2.js";
+} from "./contentCodecs.js";
 import {
   isPortableRepositoryPath,
   PORTABLE_REPOSITORY_PATH_PATTERN,
-} from "./catalogPortablePath.js";
-import { PUBLIC_PACKAGE_ENTRYPOINT_PATTERN } from "./catalogPublicEntrypoint.js";
+} from "../catalog/catalogPortablePath.js";
+import { PUBLIC_PACKAGE_ENTRYPOINT_PATTERN } from "../catalog/catalogPublicEntrypoint.js";
 import {
-  canonicalJson,
-  canonicalJsonFile,
   compareOrdinalStrings,
-  sha256Bytes,
   stableShaId,
-} from "./catalogSerialization.js";
+} from "../catalog/catalogSerialization.js";
 import {
   CANONICAL_SITE_ROUTE_PATTERN,
   isCanonicalSiteRoute,
-} from "./catalogSiteRoute.js";
+} from "../catalog/catalogSiteRoute.js";
 
-export const SALT_CATALOG_SCHEMA_VERSION = "2.0.0" as const;
-export const SALT_CATALOG_MANIFEST_FILE = "catalog-manifest.json" as const;
-export const SALT_CATALOG_JSON_SCHEMA_FILE = "catalog-schema.json" as const;
-export const SALT_CATALOG_PACKAGE_FILES_FILE =
-  "catalog-package-files.json" as const;
-export const SALT_CATALOG_PUBLICATION_FILE =
-  "catalog-publication.json" as const;
-export const SALT_CATALOG_CONTENT_PACK_FILE = "content.pack" as const;
-export const SALT_CATALOG_GENERATIONS_DIRECTORY =
-  "catalog-generations" as const;
-export const MAX_CATALOG_MANIFEST_BYTES = 2 * 1024 * 1024;
-export const MAX_CATALOG_RUNTIME_FILE_BYTES = 32 * 1024 * 1024;
-export const MAX_CATALOG_RUNTIME_TOTAL_BYTES = 128 * 1024 * 1024;
+export const KNOWLEDGE_RECORD_SCHEMA_VERSION = "1.0.0" as const;
 
 const SHA256_CODEC = z
   .string()
@@ -2118,198 +2103,10 @@ export type CatalogRecord = {
   [Family in CatalogFamilyName]: CatalogRecordForFamily<Family>;
 }[CatalogFamilyName];
 
-export const catalogInputEntryCodec = z
-  .object({
-    path: portableRepositoryPathCodec,
-    sha256: SHA256_CODEC,
-    bytes: z.number().int().nonnegative(),
-  })
-  .strict();
-
-const catalogArtifactManifestEntryShape = {
-  file: portableRepositoryPathCodec,
-  sha256: SHA256_CODEC,
-  bytes: z
-    .number()
-    .int()
-    .nonnegative()
-    .max(MAX_CATALOG_RUNTIME_FILE_BYTES),
-  record_count: z.number().int().nonnegative(),
-  codec: z.string().min(1),
-  canonical: z.boolean(),
-} as const;
-
-export const catalogArtifactManifestEntryCodec = z
-  .object({
-    family: z.enum(CATALOG_RUNTIME_FAMILY_NAMES),
-    ...catalogArtifactManifestEntryShape,
-  })
-  .strict();
-
-export const catalogBuildArtifactManifestEntryCodec = z
-  .object({
-    family: z.enum(CATALOG_BUILD_ONLY_FAMILY_NAMES),
-    ...catalogArtifactManifestEntryShape,
-  })
-  .strict();
-
-export const catalogSupportArtifactManifestEntryCodec = z
-  .object({
-    kind: z.enum(["json_schema", "package_inventory", "content_pack"]),
-    file: portableRepositoryPathCodec,
-    sha256: SHA256_CODEC,
-    bytes: z
-      .number()
-      .int()
-      .nonnegative()
-      .max(MAX_CATALOG_RUNTIME_FILE_BYTES),
-    codec: z.string().min(1),
-  })
-  .strict();
-
-export const catalogGeneratorReceiptCodec = z
-  .object({
-    schema_version: z.literal("1.1.0"),
-    orchestrator: z
-      .object({
-        path: portableRepositoryPathCodec,
-        sha256: SHA256_CODEC,
-      })
-      .strict(),
-    generator_bundle: z
-      .object({
-        sha256: SHA256_CODEC,
-        metafile_sha256: SHA256_CODEC,
-      })
-      .strict(),
-    dependencies: z
-      .object({
-        sha256: SHA256_CODEC,
-        esbuild_entry: portableRepositoryPathCodec,
-        esbuild_version: z.string().min(1),
-        esbuild_binary: portableRepositoryPathCodec,
-        esbuild_binary_sha256: SHA256_CODEC,
-        typescript_entry: portableRepositoryPathCodec,
-        typescript_version: z.string().min(1),
-        tool_snapshot_sha256: SHA256_CODEC,
-        tool_snapshot_files: z.number().int().positive(),
-      })
-      .strict(),
-    runtime: z
-      .object({
-        executable_sha256: SHA256_CODEC,
-        version: z.string().min(1),
-        versions: z.record(z.string(), z.string()),
-        platform: z.string().min(1),
-        arch: z.string().min(1),
-        exec_argv: z.array(z.string()).length(0),
-        environment: z
-          .object({
-            policy: z.literal("empty"),
-          })
-          .strict(),
-      })
-      .strict(),
-  })
-  .strict();
-
-const sealedCatalogGeneratorCodec = z
-  .object({
-    mode: z.literal("sealed"),
-    version: z
-      .string()
-      .min(1)
-      .refine((version) => !/(?:^|-)test(?:-|$)/u.test(version), {
-        message: "Sealed generator versions cannot be test identities.",
-      }),
-    digest: SHA256_CODEC,
-    receipt: catalogGeneratorReceiptCodec,
-  })
-  .strict()
-  .superRefine((generator, context) => {
-    const expectedDigest = sha256Bytes(canonicalJson(generator.receipt));
-    if (generator.digest !== expectedDigest) {
-      context.addIssue({
-        code: "custom",
-        path: ["digest"],
-        message: `Sealed generator digest must match its receipt (${expectedDigest}).`,
-      });
-    }
-  });
-
-const testCatalogGeneratorCodec = z
-  .object({
-    mode: z.literal("test"),
-    version: z.string().regex(/(?:^|-)test(?:-|$)/u),
-    digest: SHA256_CODEC,
-  })
-  .strict();
-
-export const catalogManifestCodec = z
-  .object({
-    schema_version: z.literal(SALT_CATALOG_SCHEMA_VERSION),
-    catalog_version: z.string().min(1),
-    source_revision: z.string().min(1),
-    generator: z.union([
-      sealedCatalogGeneratorCodec,
-      testCatalogGeneratorCodec,
-    ]),
-    input_inventory_digest: SHA256_CODEC,
-    inputs: z.array(catalogInputEntryCodec).min(1),
-    artifacts: z.array(catalogArtifactManifestEntryCodec),
-    build_artifacts: z.array(catalogBuildArtifactManifestEntryCodec),
-    support_artifacts: z.array(catalogSupportArtifactManifestEntryCodec),
-    semantic_digest: SHA256_CODEC,
-  })
-  .strict();
-
-export type CatalogManifest = z.infer<typeof catalogManifestCodec>;
-export type CatalogGeneratorReceipt = z.infer<
-  typeof catalogGeneratorReceiptCodec
->;
-export type CatalogArtifactManifestEntry = z.infer<
-  typeof catalogArtifactManifestEntryCodec
->;
-export type CatalogBuildArtifactManifestEntry = z.infer<
-  typeof catalogBuildArtifactManifestEntryCodec
->;
-
-export const catalogPackageFilesCodec = z
-  .object({
-    schema_version: z.literal(SALT_CATALOG_SCHEMA_VERSION),
-    files: z.array(portableRepositoryPathCodec),
-  })
-  .strict();
-
-export const catalogPublicationCodec = z
-  .object({
-    schema_version: z.literal(SALT_CATALOG_SCHEMA_VERSION),
-    generation: portableRepositoryPathCodec.refine(
-      (value) =>
-        new RegExp(
-          `^${SALT_CATALOG_GENERATIONS_DIRECTORY}/[0-9a-f]{64}$`,
-          "u",
-        ).test(value),
-      {
-        message: "Expected a content-addressed catalog generation path.",
-      },
-    ),
-    semantic_digest: SHA256_CODEC,
-    files: z.array(portableRepositoryPathCodec),
-  })
-  .strict();
-
-export type CatalogPublication = z.infer<typeof catalogPublicationCodec>;
-
-export const catalogInventoryCodec = z.union([
-  catalogPackageFilesCodec,
-  catalogPublicationCodec,
-]);
-
 export interface CatalogArtifactEnvelope<
   Family extends CatalogFamilyName = CatalogFamilyName,
 > {
-  schema_version: typeof SALT_CATALOG_SCHEMA_VERSION;
+  schema_version: typeof KNOWLEDGE_RECORD_SCHEMA_VERSION;
   family: Family;
   records: CatalogRecordForFamily<Family>[];
 }
@@ -2322,124 +2119,6 @@ export function isCatalogRuntimeFamilyName(
   family: CatalogFamilyName,
 ): family is CatalogRuntimeFamilyName {
   return catalogFamilies[family].publicationState !== "build-only";
-}
-
-export function getCatalogBuildOnlyFamilyNames(): CatalogBuildOnlyFamilyName[] {
-  return [...CATALOG_BUILD_ONLY_FAMILY_NAMES];
-}
-
-export function getCatalogBuildOnlyArtifactFileNames(): string[] {
-  return [
-    ...new Set(
-      getCatalogBuildOnlyFamilyNames().map(
-        (family) => catalogFamilies[family].artifact,
-      ),
-    ),
-  ].sort(compareOrdinalStrings);
-}
-
-export function getCatalogArtifactFileNames(
-  options: { includeBuildOnly?: boolean } = {},
-): string[] {
-  const familyNames = options.includeBuildOnly
-    ? CATALOG_FAMILY_NAMES
-    : getCatalogRuntimeFamilyNames();
-  return [
-    ...new Set(familyNames.map((family) => catalogFamilies[family].artifact)),
-  ].sort(compareOrdinalStrings);
-}
-
-export function getCatalogPackageFileNames(): string[] {
-  return [
-    ...getCatalogArtifactFileNames(),
-    SALT_CATALOG_CONTENT_PACK_FILE,
-    SALT_CATALOG_JSON_SCHEMA_FILE,
-    SALT_CATALOG_MANIFEST_FILE,
-    SALT_CATALOG_PACKAGE_FILES_FILE,
-  ].sort(compareOrdinalStrings);
-}
-
-export function getCatalogGenerationPayloadFileNames(): string[] {
-  return [
-    ...getCatalogArtifactFileNames(),
-    SALT_CATALOG_CONTENT_PACK_FILE,
-    SALT_CATALOG_JSON_SCHEMA_FILE,
-  ].sort(compareOrdinalStrings);
-}
-
-export function getCatalogGenerationPath(manifestDigest: string): string {
-  const digest = SHA256_CODEC.parse(manifestDigest);
-  return `${SALT_CATALOG_GENERATIONS_DIRECTORY}/${digest.slice("sha256:".length)}`;
-}
-
-export function getCatalogManifestGenerationPath(
-  manifest: CatalogManifest,
-): string {
-  return getCatalogGenerationPath(
-    sha256Bytes(canonicalJson(catalogManifestCodec.parse(manifest))),
-  );
-}
-
-export function getCatalogPublishedManifestGenerationPath(
-  manifest: CatalogManifest,
-  publicationPrefix: string,
-): string {
-  const parsedPrefix =
-    catalogPublicationCodec.shape.generation.parse(publicationPrefix);
-  const prefix = `${parsedPrefix}/`;
-  const stripPrefix = (file: string): string => {
-    if (!file.startsWith(prefix)) {
-      throw new Error(
-        `Catalog artifact '${file}' is outside the active publication generation.`,
-      );
-    }
-    return file.slice(prefix.length);
-  };
-  const packageInventoryBytes = new TextEncoder().encode(
-    canonicalJsonFile(
-      catalogPackageFilesCodec.parse({
-        schema_version: SALT_CATALOG_SCHEMA_VERSION,
-        files: getCatalogPackageFileNames(),
-      }),
-    ),
-  );
-  const generationManifest = catalogManifestCodec.parse({
-    ...manifest,
-    artifacts: manifest.artifacts.map((entry) => ({
-      ...entry,
-      file: stripPrefix(entry.file),
-    })),
-    build_artifacts: manifest.build_artifacts.map((entry) => ({
-      ...entry,
-      file: stripPrefix(entry.file),
-    })),
-    support_artifacts: manifest.support_artifacts.map((entry) =>
-      entry.kind === "package_inventory"
-        ? {
-            ...entry,
-            file: SALT_CATALOG_PACKAGE_FILES_FILE,
-            sha256: sha256Bytes(packageInventoryBytes),
-            bytes: packageInventoryBytes.byteLength,
-          }
-        : {
-            ...entry,
-            file: stripPrefix(entry.file),
-          },
-    ),
-  });
-  return getCatalogManifestGenerationPath(generationManifest);
-}
-
-export function getCatalogPublishedFileNames(generation: string): string[] {
-  const parsedGeneration =
-    catalogPublicationCodec.shape.generation.parse(generation);
-  return [
-    SALT_CATALOG_MANIFEST_FILE,
-    `${parsedGeneration}/${SALT_CATALOG_PUBLICATION_FILE}`,
-    ...getCatalogGenerationPayloadFileNames().map(
-      (fileName) => `${parsedGeneration}/${fileName}`,
-    ),
-  ].sort(compareOrdinalStrings);
 }
 
 export function parseCatalogRecord<Family extends CatalogFamilyName>(
@@ -2961,7 +2640,7 @@ export function parseCatalogArtifactEnvelope<Family extends CatalogFamilyName>(
     );
   }
   const candidate = value as Record<string, unknown>;
-  if (candidate.schema_version !== SALT_CATALOG_SCHEMA_VERSION) {
+  if (candidate.schema_version !== KNOWLEDGE_RECORD_SCHEMA_VERSION) {
     throw new Error(
       `${catalogFamilies[family].artifact} has an unsupported schema_version.`,
     );
@@ -2994,7 +2673,7 @@ export function parseCatalogArtifactEnvelope<Family extends CatalogFamilyName>(
     seen.add(record.id);
   }
   return {
-    schema_version: SALT_CATALOG_SCHEMA_VERSION,
+    schema_version: KNOWLEDGE_RECORD_SCHEMA_VERSION,
     family,
     records,
   };
@@ -3050,7 +2729,7 @@ export function createCatalogJsonSchema(): Record<string, unknown> {
     $schema: "https://json-schema.org/draft/2020-12/schema",
     $id: "https://www.saltdesignsystem.com/schemas/catalog/v2/catalog.json",
     title: "Salt catalog schema v2",
-    schema_version: SALT_CATALOG_SCHEMA_VERSION,
+    schema_version: KNOWLEDGE_RECORD_SCHEMA_VERSION,
     family_names: CATALOG_FAMILY_NAMES,
     artifacts: Object.fromEntries(
       CATALOG_FAMILY_NAMES.map((family) => [

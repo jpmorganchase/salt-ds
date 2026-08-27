@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { brotliCompressSync, constants as zlibConstants } from "node:zlib";
 import {
   createArtifactDescriptor,
   materializeArtifactTree,
@@ -20,10 +21,13 @@ import {
   getCatalogRuntimeFamilyNames,
   type CatalogRecord,
   type CatalogRuntimeFamilyName,
-} from "../catalog/catalogSchemaV2.js";
-import { createCatalogStoreV2 } from "../catalog/catalogStoreV2.js";
+} from "../records/knowledgeRecordSchema.js";
 import { REVIEW_RULE_CHARACTERIZATION } from "../review/reviewRuleCharacterization.js";
 import type { SaltRegistry } from "../types.js";
+import type {
+  KnowledgeContentBlob,
+  NormalizedKnowledgeRecords,
+} from "./normalizeKnowledgeRecords.js";
 
 const SCHEMA_FILES = [
   "artifact-tree-node-1.schema.json",
@@ -61,14 +65,57 @@ interface InputInventory {
 export interface BuildKnowledgeV1Options {
   sourceRoot: string;
   packageRoot: string;
-  prototypeRoot: string;
   outputDir: string;
   packageVersion: string;
   registry: SaltRegistry;
+  normalized: NormalizedKnowledgeRecords;
   semanticInputInventory: InputInventory;
   compilerInputInventory: InputInventory;
   generatorReceipt: unknown;
   generatorDigest: string;
+}
+
+function buildContentPack(blobs: ReadonlyMap<string, KnowledgeContentBlob>): {
+  pack: Buffer;
+  records: CatalogRecord[];
+} {
+  const chunks: Buffer[] = [];
+  const records: CatalogRecord[] = [];
+  let offset = 0;
+  for (const blob of [...blobs.values()].sort((left, right) =>
+    left.id.localeCompare(right.id),
+  )) {
+    const bytes = Buffer.from(blob.bytes);
+    const compressed = brotliCompressSync(bytes, {
+      params: {
+        [zlibConstants.BROTLI_PARAM_MODE]: zlibConstants.BROTLI_MODE_TEXT,
+        [zlibConstants.BROTLI_PARAM_QUALITY]: 6,
+        [zlibConstants.BROTLI_PARAM_SIZE_HINT]: bytes.byteLength,
+      },
+    });
+    const useBrotli = compressed.byteLength < bytes.byteLength;
+    const stored = useBrotli ? compressed : bytes;
+    chunks.push(stored);
+    records.push({
+      family: "content",
+      id: blob.id,
+      codec: blob.codec,
+      media_type: blob.mediaType,
+      bytes: bytes.byteLength,
+      offset,
+      length: stored.byteLength,
+      encoding: useBrotli ? "br" : "identity",
+      extraction_method: blob.extractionMethod,
+      validation: {
+        state: "validated",
+        method: "schema",
+        basis_digest: blob.id,
+        validated_at: null,
+      },
+    } as CatalogRecord);
+    offset += stored.byteLength;
+  }
+  return { pack: Buffer.concat(chunks), records };
 }
 
 export interface KnowledgeRecordV1 {
@@ -182,23 +229,25 @@ export async function buildKnowledgeV1(
   const relativeOutput = path.relative(packageRoot, outputDir);
   if (
     relativeOutput.startsWith("..") ||
-    path.isAbsolute(relativeOutput) ||
-    path.resolve(options.prototypeRoot) === outputDir
+    path.isAbsolute(relativeOutput)
   ) {
     throw new Error("Knowledge-v1 output must be a distinct package-owned directory.");
   }
   await fs.rm(outputDir, { recursive: true, force: true });
   await fs.mkdir(outputDir, { recursive: true });
 
-  const store = createCatalogStoreV2({ registryDir: options.prototypeRoot });
-  store.ensureCatalogVerified();
   const descriptors: ArtifactDescriptor[] = [];
   const recordsByFamily = new Map<CatalogRuntimeFamilyName, KnowledgeRecordV1[]>();
   const recordByKey = new Map<string, KnowledgeRecordV1>();
   const contentOwners = new Map<string, Set<string>>();
 
+  const content = buildContentPack(options.normalized.contentBlobs);
+  const normalizedRecords = {
+    ...options.normalized.records,
+    content: content.records,
+  };
   for (const family of getCatalogRuntimeFamilyNames()) {
-    const records = store.getFamily(family).map((record) => {
+    const records = normalizedRecords[family].map((record) => {
       const key = recordKey(family, record.id);
       const knowledgeRecord: KnowledgeRecordV1 = {
         key,
@@ -239,25 +288,10 @@ export async function buildKnowledgeV1(
     );
   }
 
-  const prototypeContentPack = store.manifest.support_artifacts.find(
-    (entry) => entry.kind === "content_pack",
-  );
-  if (!prototypeContentPack) {
-    throw new Error("The verified extraction baseline has no content pack.");
-  }
-  const contentPackBytes = await fs.readFile(
-    path.join(options.prototypeRoot, ...prototypeContentPack.file.split("/")),
-  );
-  if (
-    contentPackBytes.byteLength !== prototypeContentPack.bytes ||
-    sha256Digest(contentPackBytes) !== prototypeContentPack.sha256
-  ) {
-    throw new Error("The extraction content pack changed after verification.");
-  }
   await writeArtifact(
     outputDir,
     "content/content.pack",
-    contentPackBytes,
+    content.pack,
     "application/octet-stream",
     descriptors,
   );
@@ -512,6 +546,20 @@ export async function buildKnowledgeV1(
   );
 
   const rulesetDigest = sha256Digest(canonicalJson(REVIEW_RULE_CHARACTERIZATION));
+  const projectionDigest = sha256Digest(
+    canonicalJson(
+      [...descriptors]
+        .sort((left, right) =>
+          left.path < right.path ? -1 : left.path > right.path ? 1 : 0,
+        )
+        .map(({ path, media_type, bytes, sha256 }) => ({
+          path,
+          media_type,
+          bytes,
+          sha256,
+        })),
+    ),
+  );
   const generationReceipt = {
     contract: "salt-knowledge-generation-receipt/1",
     schema_version: "1.0.0",
@@ -525,6 +573,12 @@ export async function buildKnowledgeV1(
       artifact_tree: "salt-artifact-tree/1",
       path_codec: "salt-posix-relative-path/1",
       timestamps: "omitted",
+    },
+    distribution_projections: {
+      contract: "salt-knowledge-projection-identity/1",
+      excludes: ["support/generation-receipt.json"],
+      npm_ready_sha256: projectionDigest,
+      web_ready_sha256: projectionDigest,
     },
     output_counts: {
       records: [...recordsByFamily.values()].reduce(
@@ -561,13 +615,29 @@ export async function buildKnowledgeV1(
     await fs.writeFile(absolutePath, bytes, { flag: "wx" });
   }
 
+  const semanticDigest = sha256Digest(
+    canonicalJson({
+      record_schema_version: "1.0.0",
+      records: getCatalogRuntimeFamilyNames()
+        .filter((family) => family !== "search_document")
+        .map((family) => ({ family, records: normalizedRecords[family] })),
+      content_objects: [...options.normalized.contentBlobs.values()]
+        .map((blob) => ({
+          id: blob.id,
+          codec: blob.codec,
+          media_type: blob.mediaType,
+          bytes: blob.bytes.byteLength,
+        }))
+        .sort((left, right) => left.id.localeCompare(right.id)),
+    }),
+  );
   const manifestWithoutDigest: Omit<KnowledgeManifestV1, "bundle_digest"> = {
     $schema:
       "https://www.saltdesignsystem.com/ai/schemas/knowledge-manifest-1.json",
     schema_version: "1.0.0",
     record_schema_version: "1.0.0",
     bundle_version: options.packageVersion,
-    semantic_digest: store.manifest.semantic_digest as `sha256:${string}`,
+    semantic_digest: semanticDigest,
     semantic_source_digest: options.semanticInputInventory.digest as `sha256:${string}`,
     compiler_digest: options.compilerInputInventory.digest as `sha256:${string}`,
     reader_contract: "salt-knowledge-reader/1",

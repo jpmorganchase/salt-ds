@@ -114,30 +114,44 @@ function expectEntriesToExclude(
 }
 
 describe("package publish boundaries", () => {
-  it("keeps the Unit 02 knowledge package private and excludes its comparison corpus", () => {
+  it("publishes only the Knowledge-v1 contract under the release embargo", () => {
     const manifest = readJson<PackageManifest>("../../package.json");
-    const runtime = readFileSync(
-      new URL("../runtime.ts", import.meta.url),
-      "utf8",
-    );
-    const catalogSchema = readFileSync(
-      new URL("../catalog/catalogSchemaV2.ts", import.meta.url),
+    const publicEntry = readFileSync(
+      new URL("../public.ts", import.meta.url),
       "utf8",
     );
 
     expect(manifest.name).toBe("@salt-ds/knowledge");
     expect(manifest.private).toBe(true);
     expect(manifest.engines?.node).toBe(">=22");
-    expect(manifest.files).toEqual([]);
+    expect(manifest.files).toEqual([
+      "manifest.json",
+      "index.json",
+      "indexes",
+      "records",
+      "content",
+      "examples",
+      "markdown",
+      "compatibility",
+      "support",
+      "schemas",
+    ]);
     expect(manifest.publishConfig?.directory).toBe(
       "../../dist/salt-ds-knowledge",
     );
-    expect(manifest.publishExtraCopyPaths).toBeUndefined();
+    expect(manifest.publishEntryPath).toBe("src/public.ts");
+    expect(manifest.typescriptInclude).toEqual(["src/public.ts"]);
+    expect(manifest.publishExtraCopyPaths).toEqual([
+      {
+        from: "generated",
+        to: ".",
+        filesFrom: "generated/publication-files.json",
+      },
+    ]);
     expect(manifest.publishSourceMaps).toBe(false);
     expect(manifest.publishPreserveModules).toBe(false);
-    expect(runtime).not.toContain('from "./build/');
-    expect(runtime).not.toContain("salt://");
-    expect(catalogSchema).not.toContain("salt://");
+    expect(publicEntry).not.toContain('from "./build/');
+    expect(publicEntry).not.toContain("salt://");
   });
 
   it("binds runtime and package-build portable path classifiers to one corpus", () => {
@@ -529,9 +543,13 @@ describe("package publish boundaries", () => {
     );
     expect(registryBuilder).toContain("tsconfigRaw");
     expect(inputInventory).not.toContain("site/src/props");
-    expect(inputInventory).toContain("catalogInputPatterns");
+    expect(inputInventory).toContain("semanticInputPatterns");
+    expect(inputInventory).toContain("compilerInputPatterns");
     expect(buildIdentity).not.toMatch(/import catalogInputPatterns/u);
     expect(semanticInputPatterns).toContain(
+      "packages/core/src/**/*.{ts,tsx,mts,cts,js,jsx,mjs,cjs,css,scss,json}",
+    );
+    expect(semanticInputPatterns).not.toContain(
       "packages/*/src/**/*.{ts,tsx,mts,cts,js,jsx,mjs,cjs,css,scss,json}",
     );
     expect(compilerInputPatterns).toContain("package.json");

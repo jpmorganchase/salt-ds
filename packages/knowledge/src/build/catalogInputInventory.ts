@@ -2,7 +2,8 @@ import fs from "node:fs";
 import fsPromises from "node:fs/promises";
 import path from "node:path";
 import fg from "fast-glob";
-import catalogInputPatterns from "./catalogInputPatterns.json";
+import compilerInputPatterns from "./catalogCompilerInputPatterns.json";
+import semanticInputPatterns from "./catalogSemanticInputPatterns.json";
 import { isPortableRepositoryPath } from "../catalog/catalogPortablePath.js";
 import {
   canonicalJson,
@@ -25,7 +26,7 @@ export interface CatalogInputInventory {
 }
 
 export const CATALOG_INPUT_PATTERNS = Object.freeze([
-  ...catalogInputPatterns,
+  ...new Set([...semanticInputPatterns, ...compilerInputPatterns]),
 ]);
 
 export function validateCatalogInputPatterns(

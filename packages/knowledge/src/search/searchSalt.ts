@@ -1,4 +1,7 @@
-import type { KnowledgeRecordStore } from "../manifest/knowledgeStore.js";
+import type {
+  KnowledgeRecordFamily,
+  KnowledgeRecordStore,
+} from "../manifest/knowledgeStore.js";
 
 export const KNOWLEDGE_SEARCH_TARGET_FAMILY_NAMES = [
   "component",
@@ -224,6 +227,21 @@ export function searchSaltRecords(
 
 export const searchKnowledge = searchSaltRecords;
 
+export function readKnowledgeRecord(
+  store: KnowledgeRecordStore,
+  reference: { family: KnowledgeRecordFamily; id: string },
+): unknown | null {
+  return store.getRecord(reference.family, reference.id);
+}
+
+function truncateUtf8(value: string, maxBytes: number): string {
+  const bytes = Buffer.from(value, "utf8");
+  if (bytes.byteLength <= maxBytes) return value;
+  let boundary = maxBytes;
+  while (boundary > 0 && (bytes[boundary] & 0xc0) === 0x80) boundary -= 1;
+  return bytes.subarray(0, boundary).toString("utf8");
+}
+
 export function renderKnowledgeContext(
   store: KnowledgeRecordStore,
   input: SearchSaltInput & { max_utf8_bytes?: number },
@@ -233,11 +251,17 @@ export function renderKnowledgeContext(
     Math.max(256, input.max_utf8_bytes ?? 16 * 1024),
   );
   const result = searchKnowledge(store, input);
-  const lines = [`# Salt knowledge: ${result.query}`, ""];
+  const header = `${truncateUtf8(
+    `# Salt knowledge: ${result.query}`,
+    maxBytes - 1,
+  )}\n`;
+  let output = header;
   for (const match of result.matches) {
-    const next = `## ${match.title}\n\n${match.summary}\n\nRecord: ${match.reference.family}/${match.reference.id}\n`;
-    if (Buffer.byteLength(`${lines.join("\n")}\n${next}`, "utf8") > maxBytes) break;
-    lines.push(next);
+    const next = `\n## ${match.title}\n\n${match.summary}\n\nRecord: ${match.reference.family}/${match.reference.id}\n`;
+    if (Buffer.byteLength(output, "utf8") + Buffer.byteLength(next, "utf8") > maxBytes) {
+      break;
+    }
+    output += next;
   }
-  return `${lines.join("\n").trimEnd()}\n`;
+  return output;
 }

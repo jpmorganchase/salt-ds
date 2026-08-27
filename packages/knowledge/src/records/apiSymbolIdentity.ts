@@ -1,4 +1,4 @@
-import { stableShaId } from "./catalogSerialization.js";
+import { stableShaId } from "../catalog/catalogSerialization.js";
 
 export interface ApiSymbolIdentityV1 {
   package: string;

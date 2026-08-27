@@ -66,31 +66,39 @@ export function validateItemApplicabilityDocument(
   ) {
     throw new Error("Item applicability identity/cardinality is invalid.");
   }
+  if (
+    value.profiles.some(
+      (entry) => entry.id.length === 0 || entry.id !== entry.id.trim(),
+    ) ||
+    value.items.some(
+      (entry) => entry.key.length === 0 || entry.key !== entry.key.trim(),
+    )
+  ) {
+    throw new Error("Item applicability keys must be non-empty and canonical.");
+  }
   const itemByKey = new Map(value.items.map((entry) => [entry.key, entry]));
   const visiting = new Set<string>();
   const visited = new Set<string>();
-  const visit = (key: string): void => {
-    if (visiting.has(key)) throw new Error(`Cyclic applicability inheritance: ${key}.`);
-    if (visited.has(key)) return;
-    const item = itemByKey.get(key);
-    if (!item) throw new Error(`Dangling applicability item '${key}'.`);
-    visiting.add(key);
-    const declaration = declarationFor(value, item);
+  const validateDeclaration = (
+    declaration: ApplicabilityDeclaration,
+    label: string,
+    visitSource: (source: string) => void,
+  ): void => {
     if (declaration.mode === "inherits") {
       if (
         declaration.source_items.length === 0 ||
         new Set(declaration.source_items).size !== declaration.source_items.length
       ) {
-        throw new Error(`Empty applicability inheritance: ${key}.`);
+        throw new Error(`Empty applicability inheritance: ${label}.`);
       }
-      for (const source of declaration.source_items) visit(source);
+      for (const source of declaration.source_items) visitSource(source);
     } else if (declaration.mode === "package-ranges") {
       if (
         declaration.packages.length === 0 ||
         new Set(declaration.packages.map((entry) => entry.name)).size !==
           declaration.packages.length
       ) {
-        throw new Error(`Invalid applicability package ranges: ${key}.`);
+        throw new Error(`Invalid applicability package ranges: ${label}.`);
       }
       for (const entry of declaration.packages) {
         if (
@@ -108,12 +116,25 @@ export function validateItemApplicabilityDocument(
           declaration.evidence.trim().length === 0)) ||
       (declaration.mode === "unknown" && declaration.reason.trim().length === 0)
     ) {
-      throw new Error(`Incomplete applicability declaration: ${key}.`);
+      throw new Error(`Incomplete applicability declaration: ${label}.`);
     }
+  };
+  const visit = (key: string): void => {
+    if (visiting.has(key)) throw new Error(`Cyclic applicability inheritance: ${key}.`);
+    if (visited.has(key)) return;
+    const item = itemByKey.get(key);
+    if (!item) throw new Error(`Dangling applicability item '${key}'.`);
+    visiting.add(key);
+    const declaration = declarationFor(value, item);
+    validateDeclaration(declaration, key, visit);
     visiting.delete(key);
     visited.add(key);
   };
   for (const key of itemByKey.keys()) visit(key);
+  for (const profile of value.profiles) {
+    const { id, ...declaration } = profile;
+    validateDeclaration(declaration, `profile:${id}`, visit);
+  }
   return value;
 }
 

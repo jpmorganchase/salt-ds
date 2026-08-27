@@ -2,9 +2,9 @@ import fs from "node:fs";
 import path from "node:path";
 import { isPortableRepositoryPath } from "../catalog/catalogPortablePath.js";
 import {
-  type CatalogGeneratorReceipt,
-  catalogGeneratorReceiptCodec,
-} from "../catalog/catalogSchemaV2.js";
+  type KnowledgeGeneratorReceipt,
+  knowledgeGeneratorReceiptCodec,
+} from "./knowledgeGeneratorReceipt.js";
 import { canonicalJson, sha256Bytes } from "../catalog/catalogSerialization.js";
 import { toPosixPath } from "../registry/paths.js";
 
@@ -38,7 +38,7 @@ export interface GeneratorDependencyInventory {
   entries: readonly GeneratorDependencyEntry[];
 }
 
-export type SealedCatalogGeneratorReceipt = CatalogGeneratorReceipt;
+export type SealedKnowledgeGeneratorReceipt = KnowledgeGeneratorReceipt;
 
 interface ActiveGeneratorDependencyInventory {
   repoRoot: string;
@@ -59,11 +59,11 @@ export function isGeneratorDependencyInventoryActive(): boolean {
   return activeInventory !== null;
 }
 
-export function createSealedCatalogGeneratorDigest(
-  receipt: SealedCatalogGeneratorReceipt,
+export function createSealedKnowledgeGeneratorDigest(
+  receipt: SealedKnowledgeGeneratorReceipt,
 ): string {
   return sha256Bytes(
-    canonicalJson(catalogGeneratorReceiptCodec.parse(receipt)),
+    canonicalJson(knowledgeGeneratorReceiptCodec.parse(receipt)),
   );
 }
 

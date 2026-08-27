@@ -526,20 +526,20 @@ function deprecationApplicability(
   if (!version.input) {
     return currentKnowledgeApplicability({
       packageName: deprecation.package,
-      catalogVersion,
+      knowledgeVersion: catalogVersion,
     });
   }
   const exact = resolvePackageKnowledgeApplicability({
     packageName: deprecation.package,
     targetVersion: version.normalized,
-    catalogVersion,
+    knowledgeVersion: catalogVersion,
   });
   return exact.state === "applicable"
     ? exact
     : deprecationTimelineKnowledgeApplicability({
         packageName: deprecation.package,
         targetVersion: version.normalized!,
-        catalogVersion,
+        knowledgeVersion: catalogVersion,
       });
 }
 
@@ -554,20 +554,20 @@ function remediationApplicability(
   if (!version.input) {
     return currentKnowledgeApplicability({
       packageName: deprecation.package,
-      catalogVersion,
+      knowledgeVersion: catalogVersion,
     });
   }
   const exact = resolvePackageKnowledgeApplicability({
     packageName: deprecation.package,
     targetVersion: version.normalized,
-    catalogVersion,
+    knowledgeVersion: catalogVersion,
   });
   return exact.state === "applicable"
     ? exact
     : unknownKnowledgeApplicability({
         packageName: deprecation.package,
         targetVersion: version.normalized,
-        catalogVersion,
+        knowledgeVersion: catalogVersion,
       });
 }
 
@@ -777,7 +777,7 @@ const DEPRECATED_IMPORT_RULE: ReviewRuleDefinition = {
             applicability: unknownKnowledgeApplicability({
               packageName: deprecation.package,
               targetVersion: version.input,
-              catalogVersion: catalogPackageVersion(
+              knowledgeVersion: catalogPackageVersion(
                 indexes,
                 deprecation.package,
               ),
@@ -787,7 +787,7 @@ const DEPRECATED_IMPORT_RULE: ReviewRuleDefinition = {
               ? unknownKnowledgeApplicability({
                   packageName: deprecation.package,
                   targetVersion: version.input,
-                  catalogVersion: catalogPackageVersion(
+                  knowledgeVersion: catalogPackageVersion(
                     indexes,
                     deprecation.package,
                   ),
@@ -813,7 +813,7 @@ const DEPRECATED_IMPORT_RULE: ReviewRuleDefinition = {
             applicability: unknownKnowledgeApplicability({
               packageName: deprecation.package,
               targetVersion: version.normalized,
-              catalogVersion: catalogPackageVersion(
+              knowledgeVersion: catalogPackageVersion(
                 indexes,
                 deprecation.package,
               ),
@@ -823,7 +823,7 @@ const DEPRECATED_IMPORT_RULE: ReviewRuleDefinition = {
               ? unknownKnowledgeApplicability({
                   packageName: deprecation.package,
                   targetVersion: version.normalized,
-                  catalogVersion: catalogPackageVersion(
+                  knowledgeVersion: catalogPackageVersion(
                     indexes,
                     deprecation.package,
                   ),
@@ -850,7 +850,7 @@ const DEPRECATED_IMPORT_RULE: ReviewRuleDefinition = {
             applicability: unknownKnowledgeApplicability({
               packageName: deprecation.package,
               targetVersion: version.normalized,
-              catalogVersion: catalogPackageVersion(
+              knowledgeVersion: catalogPackageVersion(
                 indexes,
                 deprecation.package,
               ),
@@ -860,7 +860,7 @@ const DEPRECATED_IMPORT_RULE: ReviewRuleDefinition = {
               ? unknownKnowledgeApplicability({
                   packageName: deprecation.package,
                   targetVersion: version.normalized,
-                  catalogVersion: catalogPackageVersion(
+                  knowledgeVersion: catalogPackageVersion(
                     indexes,
                     deprecation.package,
                   ),
@@ -881,7 +881,7 @@ const DEPRECATED_IMPORT_RULE: ReviewRuleDefinition = {
             applicability: deprecationTimelineKnowledgeApplicability({
               packageName: deprecation.package,
               targetVersion: version.normalized!,
-              catalogVersion: catalogPackageVersion(
+              knowledgeVersion: catalogPackageVersion(
                 indexes,
                 deprecation.package,
               ),
@@ -1016,7 +1016,7 @@ const DEPRECATED_PROP_RULE: ReviewRuleDefinition = {
             applicability: unknownKnowledgeApplicability({
               packageName: deprecation.package,
               targetVersion: version.input,
-              catalogVersion: catalogPackageVersion(
+              knowledgeVersion: catalogPackageVersion(
                 indexes,
                 deprecation.package,
               ),
@@ -1026,7 +1026,7 @@ const DEPRECATED_PROP_RULE: ReviewRuleDefinition = {
               ? unknownKnowledgeApplicability({
                   packageName: deprecation.package,
                   targetVersion: version.input,
-                  catalogVersion: catalogPackageVersion(
+                  knowledgeVersion: catalogPackageVersion(
                     indexes,
                     deprecation.package,
                   ),
@@ -1052,7 +1052,7 @@ const DEPRECATED_PROP_RULE: ReviewRuleDefinition = {
             applicability: unknownKnowledgeApplicability({
               packageName: deprecation.package,
               targetVersion: version.normalized,
-              catalogVersion: catalogPackageVersion(
+              knowledgeVersion: catalogPackageVersion(
                 indexes,
                 deprecation.package,
               ),
@@ -1062,7 +1062,7 @@ const DEPRECATED_PROP_RULE: ReviewRuleDefinition = {
               ? unknownKnowledgeApplicability({
                   packageName: deprecation.package,
                   targetVersion: version.normalized,
-                  catalogVersion: catalogPackageVersion(
+                  knowledgeVersion: catalogPackageVersion(
                     indexes,
                     deprecation.package,
                   ),
@@ -1089,7 +1089,7 @@ const DEPRECATED_PROP_RULE: ReviewRuleDefinition = {
             applicability: unknownKnowledgeApplicability({
               packageName: deprecation.package,
               targetVersion: version.normalized,
-              catalogVersion: catalogPackageVersion(
+              knowledgeVersion: catalogPackageVersion(
                 indexes,
                 deprecation.package,
               ),
@@ -1099,7 +1099,7 @@ const DEPRECATED_PROP_RULE: ReviewRuleDefinition = {
               ? unknownKnowledgeApplicability({
                   packageName: deprecation.package,
                   targetVersion: version.normalized,
-                  catalogVersion: catalogPackageVersion(
+                  knowledgeVersion: catalogPackageVersion(
                     indexes,
                     deprecation.package,
                   ),
@@ -1120,7 +1120,7 @@ const DEPRECATED_PROP_RULE: ReviewRuleDefinition = {
             applicability: deprecationTimelineKnowledgeApplicability({
               packageName: deprecation.package,
               targetVersion: version.normalized!,
-              catalogVersion: catalogPackageVersion(
+              knowledgeVersion: catalogPackageVersion(
                 indexes,
                 deprecation.package,
               ),

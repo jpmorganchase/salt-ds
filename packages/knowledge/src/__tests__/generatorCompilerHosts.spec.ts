@@ -70,7 +70,9 @@ describe.sequential("sealed TypeScript compiler hosts", () => {
       process.platform === "win32" ? "junction" : "dir",
     );
 
-    const sourceInventory = await createCatalogInputInventory(repoRoot);
+    const sourceInventory = await createCatalogInputInventory(repoRoot, [
+      "packages/captured/src/**/*.ts",
+    ]);
     const dependencyInventory = sealDependencyInventory([
       { kind: "directory", path: "node_modules" },
       { kind: "directory", path: "node_modules/@fixture" },

@@ -3,8 +3,8 @@ import { parseExactSemVer } from "../versionUtils.js";
 export type KnowledgeApplicabilityState = "current" | "applicable" | "unknown";
 
 export type KnowledgeApplicabilityBasis =
-  | "catalog_current_target"
-  | "exact_catalog_package_version"
+  | "knowledge_current_target"
+  | "exact_knowledge_package_version"
   | "deprecation_timeline"
   | "evidence_unavailable";
 
@@ -13,7 +13,7 @@ export interface KnowledgeApplicability {
   basis: KnowledgeApplicabilityBasis;
   package_name: string | null;
   target_version: string | null;
-  catalog_version: string | null;
+  knowledge_version: string | null;
   peer_compatibility: "not_evaluated";
   historical_completeness: false;
 }
@@ -36,14 +36,14 @@ function applicability(
 }
 
 export function currentKnowledgeApplicability(
-  input: { packageName?: string | null; catalogVersion?: string | null } = {},
+  input: { packageName?: string | null; knowledgeVersion?: string | null } = {},
 ): KnowledgeApplicability {
   return applicability({
     state: "current",
-    basis: "catalog_current_target",
+    basis: "knowledge_current_target",
     package_name: input.packageName ?? null,
     target_version: null,
-    catalog_version: exactVersion(input.catalogVersion),
+    knowledge_version: exactVersion(input.knowledgeVersion),
   });
 }
 
@@ -51,7 +51,7 @@ export function unknownKnowledgeApplicability(
   input: {
     packageName?: string | null;
     targetVersion?: string | null;
-    catalogVersion?: string | null;
+    knowledgeVersion?: string | null;
   } = {},
 ): KnowledgeApplicability {
   return applicability({
@@ -59,44 +59,44 @@ export function unknownKnowledgeApplicability(
     basis: "evidence_unavailable",
     package_name: input.packageName ?? null,
     target_version: exactVersion(input.targetVersion),
-    catalog_version: exactVersion(input.catalogVersion),
+    knowledge_version: exactVersion(input.knowledgeVersion),
   });
 }
 
 export function resolvePackageKnowledgeApplicability(input: {
   packageName: string;
   targetVersion: string | null | undefined;
-  catalogVersion: string | null | undefined;
+  knowledgeVersion: string | null | undefined;
 }): KnowledgeApplicability {
   const targetVersion = exactVersion(input.targetVersion);
-  const catalogVersion = exactVersion(input.catalogVersion);
-  if (!targetVersion || !catalogVersion || targetVersion !== catalogVersion) {
+  const knowledgeVersion = exactVersion(input.knowledgeVersion);
+  if (!targetVersion || !knowledgeVersion || targetVersion !== knowledgeVersion) {
     return unknownKnowledgeApplicability({
       packageName: input.packageName,
       targetVersion: input.targetVersion,
-      catalogVersion: input.catalogVersion,
+      knowledgeVersion: input.knowledgeVersion,
     });
   }
   return applicability({
     state: "applicable",
-    basis: "exact_catalog_package_version",
+    basis: "exact_knowledge_package_version",
     package_name: input.packageName,
     target_version: targetVersion,
-    catalog_version: catalogVersion,
+    knowledge_version: knowledgeVersion,
   });
 }
 
 export function deprecationTimelineKnowledgeApplicability(input: {
   packageName: string;
   targetVersion: string;
-  catalogVersion?: string | null;
+  knowledgeVersion?: string | null;
 }): KnowledgeApplicability {
   const targetVersion = exactVersion(input.targetVersion);
   if (!targetVersion) {
     return unknownKnowledgeApplicability({
       packageName: input.packageName,
       targetVersion: input.targetVersion,
-      catalogVersion: input.catalogVersion,
+      knowledgeVersion: input.knowledgeVersion,
     });
   }
   return applicability({
@@ -104,6 +104,6 @@ export function deprecationTimelineKnowledgeApplicability(input: {
     basis: "deprecation_timeline",
     package_name: input.packageName,
     target_version: targetVersion,
-    catalog_version: exactVersion(input.catalogVersion),
+    knowledge_version: exactVersion(input.knowledgeVersion),
   });
 }

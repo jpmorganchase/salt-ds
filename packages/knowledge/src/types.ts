@@ -639,18 +639,3 @@ export interface BuildRegistryOptions {
   generatorDigest?: string;
   enforceBudgets?: boolean;
 }
-
-export interface LoadRegistryOptions {
-  registryDir?: string;
-  /**
-   * When `true`, verify the complete catalog, nested payloads, and recursive
-   * references before returning. Defaults to `false`: only
-   * catalog-manifest.json is read eagerly; semantic identity or collection
-   * access triggers the same cached integrity barrier.
-   *
-   * Pass `true` from hosts that know they will touch most of the
-   * registry and want a single bounded warm-up cost instead of per-touch
-   * latency.
-   */
-  prefetch?: boolean;
-}

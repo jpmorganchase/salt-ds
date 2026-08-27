@@ -168,7 +168,7 @@ export interface CompleteReviewSaltCodeAnalysis {
   };
   limitations: string[];
   provenance: {
-    catalog_version: string;
+    knowledge_version: string;
     semantic_digest: string | null;
     project_context_digest: string | null;
     project_policy_digest: string | null;
@@ -557,7 +557,7 @@ export function analyzeSaltCode(
       "Dynamic expressions, spread props, indirect exports, method calls, runtime values, and rules outside the listed allowlist do not ground findings.",
     ],
     provenance: {
-      catalog_version: registry.version,
+      knowledge_version: registry.version,
       semantic_digest: registry.semanticDigest,
       project_context_digest: projectContextDigest,
       project_policy_digest: policy?.digest ?? null,

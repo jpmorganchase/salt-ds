@@ -257,9 +257,9 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
       const applicability = entry.catalog_assessment?.applicability;
       if (
         applicability?.state === "applicable" &&
-        applicability.basis === "exact_catalog_package_version"
+        applicability.basis === "exact_knowledge_package_version"
       ) {
-        counts.exact_catalog_package_version += 1;
+        counts.exact_knowledge_package_version += 1;
       } else if (applicability?.state === "current") {
         counts.current += 1;
       } else {
@@ -267,7 +267,7 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
       }
       return counts;
     },
-    { exact_catalog_package_version: 0, current: 0, unknown: 0 },
+    { exact_knowledge_package_version: 0, current: 0, unknown: 0 },
   );
   const installation = inspection.data.installation;
   const policy = inspection.data.policy;

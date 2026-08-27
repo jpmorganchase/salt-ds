@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
+import compilerInputPatterns from "../build/catalogCompilerInputPatterns.json";
 import {
   CATALOG_INPUT_PATTERNS,
   createCatalogInputInventory,
@@ -13,6 +14,7 @@ import {
   readCatalogInputFileSyncOrNull,
   withCatalogInputTracking,
 } from "../build/catalogInputInventory.js";
+import semanticInputPatterns from "../build/catalogSemanticInputPatterns.json";
 
 const temporaryDirectories: string[] = [];
 
@@ -39,18 +41,23 @@ afterEach(async () => {
 });
 
 describe("catalog input inventory", () => {
-  it("binds every package-verification module into the catalog identity", () => {
+  it("binds Knowledge sources while excluding downstream release tooling", () => {
     expect(CATALOG_INPUT_PATTERNS).toEqual(
       expect.arrayContaining([
-        "scripts/catalogArtifactContract.mjs",
         "scripts/catalogBuildIdentity.mjs",
-        "scripts/checkAiToolingPackageDryRun.mjs",
-        "vite.config.ts",
-        "packages/knowledge/src/catalog/catalogBudgets.json",
+        "packages/knowledge/schemas/**/*.json",
+        "packages/knowledge/src/**/*.ts",
+        "packages/knowledge/src/build/catalogCompilerInputPatterns.json",
+        "packages/knowledge/src/build/catalogSemanticInputPatterns.json",
       ]),
     );
-    expect(CATALOG_INPUT_PATTERNS).not.toContain(
-      "packages/mcp/public-surface-budgets.json",
+    expect(CATALOG_INPUT_PATTERNS).not.toEqual(
+      expect.arrayContaining([
+        "scripts/catalogArtifactContract.mjs",
+        "scripts/checkAiToolingPackageDryRun.mjs",
+        "packages/mcp/public-surface-budgets.json",
+        "packages/*/src/**/*.{ts,tsx,mts,cts,js,jsx,mjs,cjs,css,scss,json}",
+      ]),
     );
   });
 
@@ -119,6 +126,64 @@ describe("catalog input inventory", () => {
       "inputs/c.txt",
     ]);
     expect(removed.digest).not.toBe(added.digest);
+  });
+
+  it("keeps semantic/compiler closures isolated from adapters, tests, and release tooling", async () => {
+    const root = await createFixture({
+      "package.json": "{}\n",
+      "packages/core/src/index.ts": "export const semantic = 1;\n",
+      "packages/knowledge/src/public.ts": "export const compiler = 1;\n",
+      "packages/cli/src/index.ts": "export const cli = 1;\n",
+      "packages/mcp/src/index.ts": "export const mcp = 1;\n",
+      "packages/knowledge/src/__tests__/fixture.spec.ts":
+        "export const testOnly = 1;\n",
+      "scripts/checkAiToolingPackageDryRun.mjs":
+        "export const releaseTool = 1;\n",
+    });
+    const baselineSemantic = await createCatalogInputInventory(
+      root,
+      semanticInputPatterns,
+    );
+    const baselineCompiler = await createCatalogInputInventory(
+      root,
+      compilerInputPatterns,
+    );
+
+    for (const relativePath of [
+      "packages/cli/src/index.ts",
+      "packages/mcp/src/index.ts",
+      "packages/knowledge/src/__tests__/fixture.spec.ts",
+      "scripts/checkAiToolingPackageDryRun.mjs",
+    ]) {
+      await fs.writeFile(path.join(root, relativePath), "changed\n", "utf8");
+    }
+    expect(
+      (await createCatalogInputInventory(root, semanticInputPatterns)).digest,
+    ).toBe(baselineSemantic.digest);
+    expect(
+      (await createCatalogInputInventory(root, compilerInputPatterns)).digest,
+    ).toBe(baselineCompiler.digest);
+
+    await fs.writeFile(
+      path.join(root, "packages/core/src/index.ts"),
+      "export const semantic = 2;\n",
+      "utf8",
+    );
+    expect(
+      (await createCatalogInputInventory(root, semanticInputPatterns)).digest,
+    ).not.toBe(baselineSemantic.digest);
+    expect(
+      (await createCatalogInputInventory(root, compilerInputPatterns)).digest,
+    ).toBe(baselineCompiler.digest);
+
+    await fs.writeFile(
+      path.join(root, "packages/knowledge/src/public.ts"),
+      "export const compiler = 2;\n",
+      "utf8",
+    );
+    expect(
+      (await createCatalogInputInventory(root, compilerInputPatterns)).digest,
+    ).not.toBe(baselineCompiler.digest);
   });
 
   it("allows declared reads and fails every undeclared read closed", async () => {

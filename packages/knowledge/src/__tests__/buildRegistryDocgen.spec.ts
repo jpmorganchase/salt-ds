@@ -1,5 +1,5 @@
+import path from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
-import { REPO_ROOT } from "./registryTestUtils.js";
 import {
   DOCGEN_PACKAGES,
   loadPropMetadata,
@@ -11,6 +11,7 @@ import {
 } from "../build/buildRegistryDocgen.js";
 import { buildPackageValueExportGraph } from "../build/catalogExportGraph.js";
 
+const REPO_ROOT = path.resolve(import.meta.dirname, "../../../..");
 let metadata: PropMetadata;
 
 beforeAll(async () => {

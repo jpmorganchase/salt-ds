@@ -313,10 +313,10 @@ describe("project inspection truth and trust boundaries", () => {
     expect(assessment("@salt-ds/core")).toEqual({
       applicability: {
         state: "applicable",
-        basis: "exact_catalog_package_version",
+        basis: "exact_knowledge_package_version",
         package_name: "@salt-ds/core",
         target_version: "1.69.0",
-        catalog_version: "1.69.0",
+        knowledge_version: "1.69.0",
         peer_compatibility: "not_evaluated",
         historical_completeness: false,
       },
@@ -329,13 +329,13 @@ describe("project inspection truth and trust boundaries", () => {
       state: "unknown",
       basis: "evidence_unavailable",
       target_version: "2.8.0",
-      catalog_version: "2.9.0",
+      knowledge_version: "2.9.0",
       peer_compatibility: "not_evaluated",
       historical_completeness: false,
     });
     expect(assessment("@salt-ds/embla-carousel").applicability).toMatchObject({
       state: "applicable",
-      basis: "exact_catalog_package_version",
+      basis: "exact_knowledge_package_version",
       peer_compatibility: "not_evaluated",
       historical_completeness: false,
     });
@@ -379,7 +379,7 @@ describe("project inspection truth and trust boundaries", () => {
 
     expect(inverseAssessment("@salt-ds/ag-grid-theme")).toMatchObject({
       state: "applicable",
-      basis: "exact_catalog_package_version",
+      basis: "exact_knowledge_package_version",
       peer_compatibility: "not_evaluated",
       historical_completeness: false,
     });
@@ -387,7 +387,7 @@ describe("project inspection truth and trust boundaries", () => {
       state: "unknown",
       basis: "evidence_unavailable",
       target_version: "0.9.0",
-      catalog_version: "1.0.0",
+      knowledge_version: "1.0.0",
       peer_compatibility: "not_evaluated",
       historical_completeness: false,
     });

@@ -63,14 +63,14 @@ const KNOWLEDGE_APPLICABILITY_SCHEMA = z
   .object({
     state: z.enum(["current", "applicable", "unknown"]),
     basis: z.enum([
-      "catalog_current_target",
-      "exact_catalog_package_version",
+      "knowledge_current_target",
+      "exact_knowledge_package_version",
       "deprecation_timeline",
       "evidence_unavailable",
     ]),
     package_name: z.string().nullable(),
     target_version: z.string().nullable(),
-    catalog_version: z.string().nullable(),
+    knowledge_version: z.string().nullable(),
     peer_compatibility: z.literal("not_evaluated"),
     historical_completeness: z.literal(false),
   })
@@ -637,7 +637,7 @@ const REVIEW_RESULT_SCHEMA = z
     limitations: z.array(z.string()),
     provenance: z
       .object({
-        catalog_version: z.string(),
+        knowledge_version: z.string(),
         semantic_digest: SHA256_SCHEMA.nullable(),
         project_context_digest: SHA256_SCHEMA.nullable(),
         project_policy_digest: SHA256_SCHEMA.nullable(),

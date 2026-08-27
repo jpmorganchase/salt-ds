@@ -7,8 +7,8 @@ import {
   SOURCE_REGISTRY_BUILD_TEST_TIMEOUT_MS,
 } from "../../__tests__/registryTestUtils.js";
 import {
-  loadCatalogRuntimeContext,
-  type SaltCatalogRuntimeContext,
+  loadKnowledgeRuntimeContext,
+  type KnowledgeRuntimeContext,
 } from "../../core/runtime.js";
 import {
   createProjectAccessPolicy,
@@ -33,7 +33,7 @@ import {
 
 let catalogDirectory = "";
 let projectRoot = "";
-let runtimeContext: SaltCatalogRuntimeContext;
+let runtimeContext: KnowledgeRuntimeContext;
 let operationContext: SaltToolOperationContext;
 
 const TEST_WIRE_CONTEXT: SaltToolWireContext = {
@@ -66,9 +66,8 @@ beforeAll(async () => {
     createBuiltCatalogV2Fixture("salt-tool-operations-"),
     fs.mkdtemp(path.join(os.tmpdir(), "salt-tool-operations-project-")),
   ]);
-  runtimeContext = await loadCatalogRuntimeContext({
-    registryDir: catalogDirectory,
-    prefetch: true,
+  runtimeContext = await loadKnowledgeRuntimeContext({
+    bundleDir: catalogDirectory,
   });
   const corePackage = runtimeContext.store
     .getFamily("package")
@@ -150,7 +149,7 @@ describe("typed Salt tool operations", () => {
     ).toBe(true);
     expect(searchResult.applicability).toMatchObject({
       state: "current",
-      basis: "catalog_current_target",
+      basis: "knowledge_current_target",
       historical_completeness: false,
     });
 
@@ -167,7 +166,7 @@ describe("typed Salt tool operations", () => {
       );
     expect(core?.catalog_assessment.applicability).toMatchObject({
       state: "applicable",
-      basis: "exact_catalog_package_version",
+      basis: "exact_knowledge_package_version",
       peer_compatibility: "not_evaluated",
       historical_completeness: false,
     });

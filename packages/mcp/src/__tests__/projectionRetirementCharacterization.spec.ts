@@ -82,12 +82,18 @@ describe("legacy projection retirement characterization", () => {
         "token_declaration",
         (envelope) => {
           const declaration = envelope.records.find(
-            (record): record is unknown[] =>
-              Array.isArray(record) && typeof record[0] === "string",
+            (record): record is {
+              data: { token_ref: { id: string } };
+            } =>
+              record !== null &&
+              typeof record === "object" &&
+              "data" in record &&
+              Boolean((record as { data?: unknown }).data),
           );
           if (!declaration)
             throw new Error("Fixture has no token declaration.");
-          declaration[8] = "token.missing-projection-retirement-target";
+          declaration.data.token_ref.id =
+            "token.missing-projection-retirement-target";
         },
         { canonicalizeRecords: true },
       );
@@ -141,7 +147,7 @@ describe("legacy projection retirement characterization", () => {
         expect(templates.resourceTemplates).toHaveLength(2);
         const payload = toolPayload(result);
         expect(payload.provenance).toMatchObject({
-          catalog_version: expect.any(String),
+          knowledge_version: expect.any(String),
           semantic_digest: expect.stringMatching(/^sha256:[0-9a-f]{64}$/u),
         });
         runs.push(canonicalJson(payload));

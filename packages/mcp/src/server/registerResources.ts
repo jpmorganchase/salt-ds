@@ -55,9 +55,7 @@ function publicCatalogManifest(
     server_version: metadata.server_version,
     schema_version: context.store.manifest.schema_version ?? "1.0.0",
     catalog_version:
-      context.store.manifest.bundle_version ??
-      context.store.manifest.catalog_version ??
-      "0.0.0",
+      context.store.manifest.bundle_version ?? "0.0.0",
     bundle_digest:
       context.store.manifest.bundle_digest ??
       context.store.manifest.semantic_digest,
