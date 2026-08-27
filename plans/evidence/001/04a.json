@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "plan_id": "001",
+  "unit_id": "04a",
+  "tracker_status": "DONE",
+  "completion_sha": "4f26d56bc5c1d06dc67b9addeb21b8889ec21fc3",
+  "entries": [
+    {
+      "kind": "pack-report",
+      "schema_id": "https://www.saltdesignsystem.com/ai/evidence/unit-04a-knowledge-cli-pack-1.json",
+      "schema_version": "1.0.0",
+      "locator": "repo://plans/evidence/artifacts/sha256-7011475dbc1468cd1eac5ca2b5e10bb200e33fa24e74bc72c700a61fb98e6044.json",
+      "sha256": "sha256:7011475dbc1468cd1eac5ca2b5e10bb200e33fa24e74bc72c700a61fb98e6044",
+      "source_sha": "4f26d56bc5c1d06dc67b9addeb21b8889ec21fc3",
+      "completion_sha": "4f26d56bc5c1d06dc67b9addeb21b8889ec21fc3",
+      "workflow_class": "local-ci",
+      "environment_class": "local-worktree-node-24",
+      "retention_expires_at": "2031-08-27T00:00:00.000Z",
+      "parents": [
+        "sha256:55ba9357dd88fba0e33ab334e12d6501e520198f8ede002267e446fa8f5572e3"
+      ],
+      "state": "active",
+      "pack_report_sha256": "sha256:34c5838ef97ccf04d601929929ef466bf5c19f56fc75d2e2b43f9310e6e8988d",
+      "bundle_digest": "sha256:ec1a79137f58ee349235fa66378dff01fad48d9030be5180f3eceb79b5be5fcb",
+      "semantic_digest": "sha256:f2fb02c9e6b999935b1e9727463b4a298492f810e376c434bc3626ab050cccab",
+      "knowledge_tarball_sha256": "sha256:0c12b29d27660219dc8b3f4d45d5382191e6c0ecec54bc66fdf86163c156b855",
+      "cli_tarball_sha256": "sha256:fbd8d7e2f8d08bcced529b4f76705d4e5283bad56b10a675703ea050ead79728",
+      "verification": [
+        "yarn build:ai-tooling",
+        "yarn vitest run packages/cli/src packages/knowledge/src/project --maxWorkers=4",
+        "yarn typecheck:ai-tooling",
+        "yarn test:ai-tooling",
+        "yarn validate:salt-ai:contracts",
+        "yarn check:ai-tooling:pack -- --profile pre-agent-support --report dist/salt-ai-pack/unit-04a.json",
+        "git diff --check"
+      ]
+    },
+    {
+      "kind": "smoke-receipt",
+      "schema_id": "https://www.saltdesignsystem.com/ai/evidence/unit-04a-installed-cli-smoke-1.json",
+      "schema_version": "1.0.0",
+      "locator": "repo://plans/evidence/artifacts/sha256-9bc15839e3fb34119030e14e773a9c677ef7fd338120a71342e3efc8fecb97d2.json",
+      "sha256": "sha256:9bc15839e3fb34119030e14e773a9c677ef7fd338120a71342e3efc8fecb97d2",
+      "source_sha": "4f26d56bc5c1d06dc67b9addeb21b8889ec21fc3",
+      "completion_sha": "4f26d56bc5c1d06dc67b9addeb21b8889ec21fc3",
+      "workflow_class": "local-ci",
+      "environment_class": "local-worktree-node-24",
+      "retention_expires_at": "2031-08-27T00:00:00.000Z",
+      "parents": [
+        "sha256:7011475dbc1468cd1eac5ca2b5e10bb200e33fa24e74bc72c700a61fb98e6044"
+      ],
+      "state": "active",
+      "smoke_result": "passed",
+      "workflow_node_matrix": [
+        22,
+        24
+      ],
+      "pack_report_sha256": "sha256:34c5838ef97ccf04d601929929ef466bf5c19f56fc75d2e2b43f9310e6e8988d",
+      "knowledge_tarball_sha256": "sha256:0c12b29d27660219dc8b3f4d45d5382191e6c0ecec54bc66fdf86163c156b855",
+      "cli_tarball_sha256": "sha256:fbd8d7e2f8d08bcced529b4f76705d4e5283bad56b10a675703ea050ead79728",
+      "verification": [
+        "yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit-04a.json"
+      ]
+    }
+  ]
+}
