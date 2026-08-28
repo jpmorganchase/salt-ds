@@ -7,7 +7,6 @@
   box-sizing: border-box;
 }
 
-/*TODO: check if can use better slot names for all 3 header blocks: container -> content, actionsContainer -> actions, header -> heading*/
 .saltDrawerHeader-header {
   margin: 0;
 }
