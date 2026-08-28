@@ -87,13 +87,7 @@ export const DrawerExamples: StoryFn<QAContainerProps> = (props) => {
   const { ...rest } = props;
 
   return (
-    <QAContainer
-      cols={1}
-      height={2700}
-      itemPadding={20}
-      width={1700}
-      {...rest}
-    >
+    <QAContainer cols={1} height={2700} itemPadding={20} width={1700} {...rest}>
       <DrawerTemplate />
     </QAContainer>
   );
