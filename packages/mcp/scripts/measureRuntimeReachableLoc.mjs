@@ -8,7 +8,10 @@ const packageRoot = path.resolve(
   "..",
 );
 const sourceRoot = path.join(packageRoot, "src");
-const entryPoints = [path.join(sourceRoot, "index.ts")];
+const entryPoints = [
+  path.join(sourceRoot, "index.ts"),
+  path.join(sourceRoot, "cli.ts"),
+];
 const baseline = {
   commit: "f0f6d86db9a5f7b6db434e2b0be4e6d3f57f4f4b",
   physical_lines: 47_540,

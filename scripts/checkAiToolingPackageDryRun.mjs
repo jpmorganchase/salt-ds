@@ -53,10 +53,11 @@ const vitestCli = path.resolve(
 
 function parseOptions(argv) {
   const options = {};
+  const valuedOptions = new Set(["--profile", "--report"]);
   for (let index = 0; index < argv.length; index += 1) {
     const token = argv[index];
     if (token === "--") continue;
-    if (token !== "--report") {
+    if (!valuedOptions.has(token)) {
       throw new Error(`Unknown AI tooling pack option: ${token}`);
     }
     const value = argv[index + 1];
@@ -83,7 +84,11 @@ function parseOptions(argv) {
       "The AI tooling pack report must stay under dist/salt-ai-pack, dist/salt-ai-r1, or dist/salt-pattern-migration.",
     );
   }
-  return { profile: "release-complete", reportPath, reportRoot };
+  const profile = options.profile ?? "release-complete";
+  if (!new Set(["release-complete", "mcp-candidate"]).has(profile)) {
+    throw new Error(`Unsupported AI tooling pack profile: ${profile}`);
+  }
+  return { profile, reportPath, reportRoot };
 }
 
 const options = parseOptions(process.argv.slice(2));
@@ -264,16 +269,25 @@ const mcpPackage = {
   forbiddenManifestFields: [
     "publishEntryPath",
     "publishBuildIdentityManifest",
+    "publishAdditionalEntryPaths",
+    "publishBinEntrypoints",
     "publishTypingEntryPath",
     "publishTypingEntryOnly",
     "publishPreserveModules",
     "publishIncludeReadme",
+    "publishIncludeChangelog",
+    "publishScriptExcludes",
+    "publishSourceMaps",
     "saltDocs",
     "typescriptInclude",
     "typescriptRootDir",
   ],
   forbiddenPublishConfigFields: ["directory"],
-  forbiddenPublishedDependencies: ["@salt-ds/semantic-core", "get-tsconfig"],
+  forbiddenPublishedDependencies: [
+    "@modelcontextprotocol/client",
+    "@salt-ds/semantic-core",
+    "get-tsconfig",
+  ],
   expectedExactDependencies: {
     "@modelcontextprotocol/server": "2.0.0",
     "@salt-ds/knowledge": "0.0.0",
@@ -286,11 +300,12 @@ const mcpPackage = {
   },
   expectedBundleFiles: {
     bin: ["salt-mcp.js"],
-    "dist-cjs": ["index.js", "package.json"],
-    "dist-es": ["index.js", "package.json"],
+    "dist-cjs": ["cli.js", "index.js", "package.json"],
+    "dist-es": ["cli.js", "index.js", "package.json"],
   },
   workspaceBin: "packages/mcp/bin/salt-mcp.js",
   publishedBin: "bin/salt-mcp.js",
+  verifyCliVersion: true,
   allowedTopLevelPaths: [
     "LICENSE",
     "bin",
@@ -298,6 +313,13 @@ const mcpPackage = {
     "dist-es",
     "dist-types",
     "package.json",
+  ],
+  forbiddenTextMarkers: [
+    "CatalogStoreV2",
+    "catalog-manifest.json",
+    "registryDir",
+    "salt://",
+    "unrestricted_local_stdio",
   ],
   maxPackageBytes: 2_000_000,
   maxUnpackedBytes: 8_000_000,
@@ -392,7 +414,10 @@ const cliPackage = {
   maxEntryCount: 16,
 };
 
-const packages = [preAgentKnowledgePackage, cliPackage];
+const packages =
+  options.profile === "mcp-candidate"
+    ? [preAgentKnowledgePackage, cliPackage, mcpPackage]
+    : [preAgentKnowledgePackage, cliPackage];
 
 function fail(message) {
   console.error(`AI tooling package check failed: ${message}`);
@@ -1647,9 +1672,8 @@ for (const packageConfig of packages) {
       path.join(extractedPackageDir, "package.json"),
     );
     const packedManifest = JSON.parse(manifestBytes.toString("utf8"));
-    const readmeBytes = readFileSync(
-      path.join(extractedPackageDir, "README.md"),
-    );
+    const readmePath = path.join(extractedPackageDir, "README.md");
+    const readmeBytes = existsSync(readmePath) ? readFileSync(readmePath) : null;
     packageReports.push({
       name: packageConfig.name,
       version: packedManifest.version,
@@ -1658,11 +1682,13 @@ for (const packageConfig of packages) {
         sha256: sha256(manifestBytes),
         bytes: manifestBytes.byteLength,
       },
-      readme: {
-        path: `${packageConfig.name}/README.md`,
-        sha256: sha256(readmeBytes),
-        bytes: readmeBytes.byteLength,
-      },
+      readme: readmeBytes
+        ? {
+            path: `${packageConfig.name}/README.md`,
+            sha256: sha256(readmeBytes),
+            bytes: readmeBytes.byteLength,
+          }
+        : null,
       tarball: {
         fileName: packed.filename,
         sha256: sha256(tarballBytes),
@@ -1684,24 +1710,30 @@ const knowledgeReport = packageReports.find(
   (entry) => entry.name === "@salt-ds/knowledge",
 );
 const cliReport = packageReports.find((entry) => entry.name === "@salt-ds/cli");
-const adapterReport = cliReport;
+const mcpReport = packageReports.find((entry) => entry.name === "@salt-ds/mcp");
+const adapterReports = packageReports.filter(
+  (entry) => entry.name !== "@salt-ds/knowledge",
+);
 if (
   !knowledgeReport ||
-  !adapterReport ||
+  !cliReport ||
+  (options.profile === "mcp-candidate" && !mcpReport) ||
   packageReports.length !== packages.length
 ) {
   rmSync(stagingArtifactDirectory, { recursive: true, force: true });
   throw new Error(
-    "AI tooling pack did not produce both required package reports.",
+    "AI tooling pack did not produce the required package reports.",
   );
 }
-if (
-  adapterReport.dependencies["@salt-ds/knowledge"] !== knowledgeReport.version
-) {
-  rmSync(stagingArtifactDirectory, { recursive: true, force: true });
-  throw new Error(
-    `${adapterReport.name} does not exact-pin the packed knowledge package version.`,
-  );
+for (const adapterReport of adapterReports) {
+  if (
+    adapterReport.dependencies["@salt-ds/knowledge"] !== knowledgeReport.version
+  ) {
+    rmSync(stagingArtifactDirectory, { recursive: true, force: true });
+    throw new Error(
+      `${adapterReport.name} does not exact-pin the packed knowledge package version.`,
+    );
+  }
 }
 
 let extractionParityBytes = null;
@@ -1758,12 +1790,25 @@ if (options.profile === "extraction-parity") {
 renameSync(stagingArtifactDirectory, finalArtifactDirectory);
 const artifactDirectoryName = path.basename(finalArtifactDirectory);
 const policy =
-  {
-    id: "release-complete@1",
-    publishable: false,
-    required_artifacts: ["agent_support.skill", "agent_support.agents_pointer"],
-    allowed_stages: ["CI_RELEASE_COMPLETE", "R2_BETA", "R3_GA"],
-  };
+  options.profile === "mcp-candidate"
+    ? {
+        id: "mcp-candidate@1",
+        publishable: false,
+        required_artifacts: [
+          "agent_support.skill",
+          "agent_support.agents_pointer",
+        ],
+        allowed_stages: ["UNIT_07_CANDIDATE"],
+      }
+    : {
+        id: "release-complete@1",
+        publishable: false,
+        required_artifacts: [
+          "agent_support.skill",
+          "agent_support.agents_pointer",
+        ],
+        allowed_stages: ["CI_RELEASE_COMPLETE", "R2_BETA", "R3_GA"],
+      };
 const report = {
   schema_version: "1.0.0",
   contract: "salt-ai-pack-report@1",
@@ -1782,7 +1827,7 @@ const report = {
     },
     dependencies: entry.dependencies,
     first_party_dependencies:
-      entry.name === adapterReport.name
+      entry.name !== knowledgeReport.name
         ? [
             {
               name: "@salt-ds/knowledge",

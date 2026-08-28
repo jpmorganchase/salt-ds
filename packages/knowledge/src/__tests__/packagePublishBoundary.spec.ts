@@ -192,7 +192,7 @@ describe("package publish boundaries", () => {
 
     expect(dependencies).not.toHaveProperty("@modelcontextprotocol/sdk");
     expect(dependencies["@modelcontextprotocol/server"]).toBe("2.0.0");
-    expect(dependencies["@modelcontextprotocol/client"]).toMatch(/^\^2\./u);
+    expect(dependencies["@modelcontextprotocol/client"]).toBe("2.0.0");
   });
 
   it("revalidates the complete catalog input path set and rejects linked inputs", async () => {
@@ -592,7 +592,8 @@ describe("package publish boundaries", () => {
     ).toEqual(["salt-mcp.js"]);
     expect(manifest.publishBinEntrypoints).toEqual({
       "bin/salt-mcp.js": {
-        requirePath: "../dist-cjs/index.js",
+        requirePath: "../dist-cjs/cli.js",
+        exportName: "runSaltMcpCli",
         errorPrefix: "salt-mcp error:",
         conciseErrorCodes: ["SALT_MCP_CLI_USAGE"],
       },
@@ -600,7 +601,6 @@ describe("package publish boundaries", () => {
     expect(manifest.publishScriptExcludes).toEqual([
       "build",
       "build:package",
-      "build:registry",
       "measure:runtime-loc",
       "measure:surface",
       "prepack",
@@ -613,6 +613,7 @@ describe("package publish boundaries", () => {
       },
       "./package.json": "./package.json",
     });
+    expect(manifest.publishAdditionalEntryPaths).toEqual(["src/cli.ts"]);
     expect(manifest.publishExtraCopyPaths).toBeUndefined();
   });
 
@@ -877,10 +878,10 @@ describe("package publish boundaries", () => {
     );
   });
 
-  it("does not publish MCP eval runner entrypoints or fixture payloads", () => {
+  it("publishes only the MCP CLI as an additional runtime entrypoint", () => {
     const manifest = readJson<PackageManifest>("../../../mcp/package.json");
 
-    expect(manifest.publishAdditionalEntryPaths).toBeUndefined();
+    expect(manifest.publishAdditionalEntryPaths).toEqual(["src/cli.ts"]);
   });
 
   it("keeps the workspace CLI on the same single bundled entrypoint", () => {
@@ -890,24 +891,20 @@ describe("package publish boundaries", () => {
     );
 
     expect(workspaceBin).toContain(
-      "../../../dist/salt-ds-mcp/dist-cjs/index.js",
+      "../../../dist/salt-ds-mcp/dist-cjs/cli.js",
     );
     expect(workspaceBin).not.toContain("dist-cjs/mcp/src/index.js");
   });
 
-  it("keeps the public-surface measurement compatible with esbuild and ESM", () => {
+  it("measures the clean current-spec public surface before resource warming", () => {
     const measurementScript = readFileSync(
       new URL("../../../mcp/scripts/measurePublicSurface.mjs", import.meta.url),
       "utf8",
     );
 
-    expect(measurementScript).toContain(
-      'onLoad({ filter: /.*/, namespace: "file" }',
-    );
-    expect(measurementScript).not.toContain("filter: /.*/u");
-    expect(measurementScript).toContain(
-      'path.join(builtPackageRoot, "dist-es", "package.json")',
-    );
+    expect(measurementScript).toContain('legacy: "reject"');
+    expect(measurementScript).toContain('pin: "2026-07-28"');
+    expect(measurementScript).not.toContain("CatalogStoreV2");
     const firstHitIndex = measurementScript.indexOf(
       "await client.callTool(firstHitTool)",
     );

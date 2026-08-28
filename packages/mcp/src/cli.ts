@@ -1,6 +1,9 @@
 import { StdioServerTransport, serveStdio } from "@modelcontextprotocol/server/stdio";
-import { createSaltMcpServer } from "./index.js";
-import { getSaltMcpPackageManifest } from "./server/serverMetadata.js";
+import { createRequire } from "node:module";
+
+const packageManifest = createRequire(import.meta.url)(
+  "@salt-ds/mcp/package.json",
+) as { version: string };
 
 const HELP_TEXT = `Usage: salt-mcp [serve] [options]
 
@@ -88,6 +91,7 @@ class ObservableStdioServerTransport extends StdioServerTransport {
 }
 
 async function serve(projectRoots: string[]): Promise<void> {
+  const { createSaltMcpServer } = await import("./index.js");
   const transport = new ObservableStdioServerTransport();
   const handle = serveStdio(() => createSaltMcpServer({ projectRoots }), {
     legacy: "reject",
@@ -109,7 +113,7 @@ export async function runSaltMcpCli(
     return;
   }
   if (parsed.command === "version") {
-    console.log(getSaltMcpPackageManifest().version);
+    console.log(packageManifest.version);
     return;
   }
   await serve(parsed.projectRoots);

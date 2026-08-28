@@ -22,13 +22,15 @@
   "properties": {
     "schema_version": { "const": "1.0.0" },
     "contract": { "const": "salt-ai-pack-report@1" },
-    "policy_profile": { "const": "release-complete" },
+    "policy_profile": {
+      "enum": ["release-complete", "mcp-candidate"]
+    },
     "policy_digest": { "$ref": "#/$defs/sha256" },
     "publishable": { "const": false },
     "packages": {
       "type": "array",
       "minItems": 2,
-      "maxItems": 2,
+      "maxItems": 3,
       "items": { "$ref": "#/$defs/package" }
     },
     "extraction_parity": { "$ref": "#/$defs/extractionParity" },
@@ -97,7 +99,12 @@
         },
         "version": { "type": "string", "pattern": "^0\\.0\\.0$" },
         "manifest": { "$ref": "#/$defs/artifact" },
-        "readme": { "$ref": "#/$defs/artifact" },
+        "readme": {
+          "anyOf": [
+            { "$ref": "#/$defs/artifact" },
+            { "type": "null" }
+          ]
+        },
         "tarball": { "$ref": "#/$defs/artifact" },
         "dependencies": {
           "type": "object",

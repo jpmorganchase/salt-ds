@@ -9,8 +9,6 @@ import { pathToFileURL } from "node:url";
 import { Client, InMemoryTransport } from "@modelcontextprotocol/client";
 import {
   assert,
-  createMcpSurfaceFingerprint,
-  createMcpToolSemanticFingerprint,
   distCliDir,
   distKnowledgeDir,
   getExecutable,
@@ -175,16 +173,22 @@ export async function loadExactPackReport(reportPathInput) {
     "Pack report must be a regular file, not a link.",
   );
   const report = JSON.parse(await fs.readFile(reportPath, "utf8"));
+  const supportedProfile = new Set(["release-complete", "mcp-candidate"]).has(
+    report?.policy_profile,
+  );
   assert(
     report?.contract === "salt-ai-pack-report@1" &&
       report.schema_version === "1.0.0" &&
-      report.policy_profile === "release-complete" &&
+      supportedProfile &&
       report.publishable === false,
-    "Pack report is not the current nonpublishable release-complete profile.",
+    "Pack report is not a current nonpublishable Salt AI profile.",
   );
+  const expectedPackageCount =
+    report.policy_profile === "mcp-candidate" ? 3 : 2;
   assert(
-    Array.isArray(report.packages) && report.packages.length === 2,
-    "Pack report must bind exactly Knowledge and one adapter package.",
+    Array.isArray(report.packages) &&
+      report.packages.length === expectedPackageCount,
+    `Pack report must bind exactly ${expectedPackageCount} selected packages.`,
   );
   const packageByName = new Map(
     report.packages.map((entry) => [entry.name, entry]),
@@ -192,9 +196,11 @@ export async function loadExactPackReport(reportPathInput) {
   const knowledge = packageByName.get("@salt-ds/knowledge");
   const mcp = packageByName.get("@salt-ds/mcp");
   const cli = packageByName.get("@salt-ds/cli");
-  const adapter = cli;
   assert(
-    knowledge && adapter && packageByName.size === 2,
+    knowledge &&
+      cli &&
+      (expectedPackageCount === 2 || mcp) &&
+      packageByName.size === expectedPackageCount,
     "Pack report contains an unreported or duplicate package identity.",
   );
   const resolveTarball = async (entry) => {
@@ -223,22 +229,26 @@ export async function loadExactPackReport(reportPathInput) {
     );
     return tarballPath;
   };
-  const [knowledgeTarballPath, adapterTarballPath] = await Promise.all([
-    resolveTarball(knowledge),
-    resolveTarball(adapter),
-  ]);
-  const edges = adapter.first_party_dependencies ?? [];
-  assert(
-    edges.length === 1 &&
-      edges[0].name === "@salt-ds/knowledge" &&
-      edges[0].version === knowledge.version &&
-      edges[0].tarball_sha256 === knowledge.tarball.sha256 &&
-      adapter.dependencies?.["@salt-ds/knowledge"] === knowledge.version &&
-      !(adapter.dependencies?.["@salt-ds/knowledge"] ?? "").startsWith(
-        "workspace:",
-      ),
-    `Pack report does not bind ${adapter.name} to the exact reported Knowledge tarball.`,
-  );
+  const [knowledgeTarballPath, cliTarballPath, mcpTarballPath] =
+    await Promise.all([
+      resolveTarball(knowledge),
+      resolveTarball(cli),
+      mcp ? resolveTarball(mcp) : null,
+    ]);
+  for (const adapter of [cli, mcp].filter(Boolean)) {
+    const edges = adapter.first_party_dependencies ?? [];
+    assert(
+      edges.length === 1 &&
+        edges[0].name === "@salt-ds/knowledge" &&
+        edges[0].version === knowledge.version &&
+        edges[0].tarball_sha256 === knowledge.tarball.sha256 &&
+        adapter.dependencies?.["@salt-ds/knowledge"] === knowledge.version &&
+        !(adapter.dependencies?.["@salt-ds/knowledge"] ?? "").startsWith(
+          "workspace:",
+        ),
+      `Pack report does not bind ${adapter.name} to the exact reported Knowledge tarball.`,
+    );
+  }
 
   const comparisonRegistryDir = null;
   assert(
@@ -258,13 +268,13 @@ export async function loadExactPackReport(reportPathInput) {
     report,
     reportPath,
     knowledge,
-    adapter,
+    adapter: cli,
     cli,
     mcp,
     knowledgeTarballPath,
-    adapterTarballPath,
-    cliTarballPath: cli ? adapterTarballPath : null,
-    mcpTarballPath: mcp ? adapterTarballPath : null,
+    adapterTarballPath: cliTarballPath,
+    cliTarballPath,
+    mcpTarballPath,
     comparisonRegistryDir,
   };
 }
@@ -709,7 +719,7 @@ export async function installLocalPackages(rootDir, packReport) {
   });
   await runCommand(
     getExecutable("npm"),
-    ["ci", "--ignore-scripts", "--no-audit", "--no-fund"],
+    ["ci", "--ignore-scripts", "--offline", "--no-audit", "--no-fund"],
     {
       cwd: rootDir,
       env: packageManagerEnvironment,
@@ -1135,17 +1145,15 @@ export async function verifyInstalledMcpTypes(rootDir) {
   await fs.writeFile(
     sourcePath,
     [
-      'import { createSaltMcpServer, runCli } from "@salt-ds/mcp";',
+      'import { createSaltMcpServer } from "@salt-ds/mcp";',
       'import type { CreateSaltMcpServerOptions } from "@salt-ds/mcp";',
       "",
       "const options: CreateSaltMcpServerOptions = {",
-      '  registryDir: "./registry",',
+      '  projectRoots: ["."],',
       "};",
       "const server = await createSaltMcpServer(options);",
-      "const cli: (argv?: string[]) => Promise<void> = runCli;",
       "",
       "await server.close();",
-      "void cli;",
       "",
     ].join("\n"),
     "utf8",
@@ -1186,7 +1194,6 @@ export async function verifyInstalledMcpTypes(rootDir) {
 export async function verifyInstalledMcpModuleExports(
   rootDir,
   projectRoot,
-  registryDir,
 ) {
   const probePath = path.join(
     repoRoot,
@@ -1198,7 +1205,7 @@ export async function verifyInstalledMcpModuleExports(
     await createIsolatedPackageManagerEnvironment(rootDir);
   const result = await runCommand(
     process.execPath,
-    [probePath, rootDir, projectRoot, ...(registryDir ? [registryDir] : [])],
+    [probePath, rootDir, projectRoot],
     {
       env: probeEnvironment,
       label: "isolated installed MCP module probe",
@@ -1218,12 +1225,10 @@ export async function verifyInstalledMcpModuleExports(
 export async function runInstalledMcpModuleProbe(
   rootDir,
   projectRoot,
-  registryDir,
 ) {
   const assertions = [
     'typeof mod.createSaltMcpServer === "function"',
-    'typeof mod.runCli === "function"',
-    '!("TOOL_DEFINITIONS" in mod)',
+    'Object.keys(mod).length === 1',
   ];
   const failure =
     'throw new Error("Installed @salt-ds/mcp export contract is incomplete")';
@@ -1267,32 +1272,58 @@ export async function runInstalledMcpModuleProbe(
         pathToFileURL(path.join(installedPackageDir, "dist-es", "index.js"))
           .href
       ),
+      (
+        await import(
+          pathToFileURL(
+            path.join(
+              rootDir,
+              "node_modules",
+              "@modelcontextprotocol",
+              "server",
+              "dist",
+              "stdio.mjs",
+            ),
+          ).href
+        )
+      ).serveStdio,
     ],
     [
       "CommonJS",
       require(path.join(installedPackageDir, "dist-cjs", "index.js")),
+      require(
+        path.join(
+          rootDir,
+          "node_modules",
+          "@modelcontextprotocol",
+          "server",
+          "dist",
+          "stdio.cjs",
+        ),
+      ).serveStdio,
     ],
   ];
-  let esmResourceUris = null;
   let esmFingerprint = null;
-  let esmToolFingerprint = null;
 
-  for (const [format, mcpModule] of moduleFormats) {
+  for (const [format, mcpModule, serveInstalledStdio] of moduleFormats) {
     const server = await mcpModule.createSaltMcpServer({
-      ...(registryDir ? { registryDir } : {}),
-      projectAccess: {
-        mode: "restricted",
-        allowedRoots: [projectRoot],
-        defaultRoot: projectRoot,
+      projectRoots: [projectRoot],
+    });
+    const client = new Client(
+      {
+        name: `salt-packed-${format.toLowerCase()}-probe`,
+        version: "1.0.0",
       },
-    });
-    const client = new Client({
-      name: `salt-packed-${format.toLowerCase()}-probe`,
-      version: "1.0.0",
-    });
+      {
+        enforceStrictCapabilities: true,
+        versionNegotiation: { mode: { pin: "2026-07-28" } },
+      },
+    );
     const [clientTransport, serverTransport] =
       InMemoryTransport.createLinkedPair();
-    await server.connect(serverTransport);
+    const handle = serveInstalledStdio(() => server, {
+      legacy: "reject",
+      transport: serverTransport,
+    });
     await client.connect(clientTransport);
 
     try {
@@ -1307,55 +1338,27 @@ export async function runInstalledMcpModuleProbe(
           ]),
         `Installed MCP ${format} factory exposed an unexpected tool surface.`,
       );
-      const firstPage = await client.request({
-        method: "resources/list",
-        params: {},
-      });
-      assert(
-        firstPage.resources.length === 1 && firstPage.nextCursor === undefined,
-        `Installed MCP ${format} factory did not expose exactly one curated manifest resource.`,
-      );
       const resources = await client.listResources();
       const resourceUris = resources.resources.map((resource) => resource.uri);
       assert(
-        resources.nextCursor === undefined &&
-          resourceUris.length === 1 &&
-          new Set(resourceUris).size === 1 &&
-          JSON.stringify(resourceUris) ===
-            JSON.stringify(firstPage.resources.map((resource) => resource.uri)),
-        `Installed MCP ${format} factory exposed an unexpected curated resource list.`,
+        resourceUris.length === 12 &&
+          new Set(resourceUris).size === 12 &&
+          resourceUris.every((uri) =>
+            /^salt-knowledge:\/\/v1\/sha256-[0-9a-f]{64}\/bootstrap\//u.test(
+              uri,
+            ),
+          ),
+        `Installed MCP ${format} factory exposed an unexpected bootstrap resource list.`,
       );
-      const manifestResult = await client.readResource({
-        uri: resourceUris[0],
-      });
+      const manifestUri = resourceUris.find((uri) =>
+        uri.endsWith("/bootstrap/manifest"),
+      );
+      const manifestResult = await client.readResource({ uri: manifestUri });
       const manifest = JSON.parse(manifestResult.contents[0].text);
       const templates = await client.listResourceTemplates();
-      const catalogTemplate = templates.resourceTemplates.find((template) =>
-        /^salt:\/\/catalog\/v2\/sha256-[0-9a-f]{64}\/\{family\}\/\{id\}$/u.test(
-          template.uriTemplate,
-        ),
-      );
       assert(
-        templates.resourceTemplates.length === 2 &&
-          catalogTemplate &&
-          templates.resourceTemplates.some(
-            (template) =>
-              template.uriTemplate ===
-              "salt://project-policy/v2/{root}/{digest}/{kind}/{id}",
-          ),
+        templates.resourceTemplates.length === 4,
         `Installed MCP ${format} factory exposed an unexpected resource template surface.`,
-      );
-      const fingerprint = createMcpSurfaceFingerprint({
-        client,
-        toolNames,
-        manifestUri: resourceUris[0],
-        manifest,
-        resourceCount: resourceUris.length,
-        resourceTemplate: catalogTemplate.uriTemplate,
-      });
-      const toolFingerprint = await createMcpToolSemanticFingerprint(
-        client,
-        projectRoot,
       );
       const representativeSearch = await client.callTool({
         name: "search_salt",
@@ -1365,14 +1368,13 @@ export async function runInstalledMcpModuleProbe(
           limit: 1,
         },
       });
-      const representativeMatch =
-        representativeSearch.structuredContent?.data?.matches?.[0];
+      const representativeMatch = representativeSearch.structuredContent?.matches?.[0];
       assert(
-        typeof representativeMatch?.uri === "string",
+        typeof representativeMatch?.resource_uri === "string",
         `Installed MCP ${format} factory omitted a representative search resource.`,
       );
       const representativeRecord = await client.readResource({
-        uri: representativeMatch.uri,
+        uri: representativeMatch.resource_uri,
       });
       const representativeText = representativeRecord.contents?.[0]?.text;
       assert(
@@ -1380,67 +1382,53 @@ export async function runInstalledMcpModuleProbe(
         `Installed MCP ${format} factory omitted representative record content.`,
       );
       const representativeEnvelope = JSON.parse(representativeText);
-      const representativeContentUri =
-        representativeEnvelope.content_resources?.[0]?.uri;
-      assert(
-        typeof representativeContentUri === "string",
-        `Installed MCP ${format} factory omitted a representative linked content resource.`,
-      );
-      await client.readResource({ uri: representativeContentUri });
+      const inspection = await client.callTool({
+        name: "inspect_salt_project",
+        arguments: { project_root_index: 0 },
+      });
+      const review = await client.callTool({
+        name: "review_salt_code",
+        arguments: {
+          artifacts: [
+            {
+              id: "probe.tsx",
+              language: "tsx",
+              text: "export const Probe = () => <button>Probe</button>;",
+            },
+          ],
+        },
+      });
+      const fingerprint = {
+        protocol: client.getNegotiatedProtocolVersion(),
+        toolNames,
+        resourceUris,
+        templates: templates.resourceTemplates.map((entry) => entry.uriTemplate),
+        bundleDigest: manifest.bundle_digest,
+        searchIds: representativeSearch.structuredContent.matches.map(
+          (entry) => entry.id,
+        ),
+        recordIdentity: {
+          family: representativeEnvelope.family,
+          id: representativeEnvelope.id,
+        },
+        projectName:
+          inspection.structuredContent.project.package_manifest.name,
+        reviewContract: review.structuredContent.contract,
+      };
       if (format === "ESM") {
-        esmResourceUris = resourceUris;
         esmFingerprint = fingerprint;
-        esmToolFingerprint = toolFingerprint;
       } else {
-        assert(
-          JSON.stringify(resourceUris) === JSON.stringify(esmResourceUris),
-          "Installed MCP CommonJS resources differ from the ESM resource surface.",
-        );
         assert(
           JSON.stringify(fingerprint) === JSON.stringify(esmFingerprint),
           "Installed MCP CommonJS protocol fingerprint differs from ESM.",
         );
-        assert(
-          JSON.stringify(toolFingerprint) ===
-            JSON.stringify(esmToolFingerprint),
-          "Installed MCP CommonJS tool semantics differ from ESM.",
-        );
-      }
-
-      for (const request of [
-        {
-          name: "search_salt",
-          arguments: { query: "Button", families: ["component"], limit: 1 },
-        },
-        {
-          name: "inspect_salt_project",
-          arguments: { root_dir: rootDir, include_policy_ir: false },
-        },
-        {
-          name: "review_salt_code",
-          arguments: {
-            artifacts: [
-              {
-                id: "probe.tsx",
-                language: "tsx",
-                text: "export const Probe = () => <button>Probe</button>;",
-              },
-            ],
-          },
-        },
-      ]) {
-        const result = await client.callTool(request);
-        assert(
-          result.isError !== true,
-          `Installed MCP ${format} factory failed ${request.name}.`,
-        );
       }
     } finally {
       await client.close();
-      await server.close();
+      await handle.close();
     }
   }
-  return { surface: esmFingerprint, tools: esmToolFingerprint };
+  return esmFingerprint;
 }
 
 export async function verifyStandaloneConsumerExample(

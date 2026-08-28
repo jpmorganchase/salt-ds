@@ -2,10 +2,8 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import process from "node:process";
-import {
-  runCliWorkflowCoverage,
-  runMcpWorkflowCoverage,
-} from "./consumer-smoke/checks.mjs";
+import { runCliWorkflowCoverage } from "./consumer-smoke/checks.mjs";
+import { runMcpWorkflowCoverage } from "./consumer-smoke/mcp-checks.mjs";
 import {
   createExactCliInfoRepo,
   createExistingSaltRepo,
@@ -41,6 +39,7 @@ async function main() {
     let standaloneExpectedPackageTreeSha256 = null;
     let comparisonRegistryDir = null;
     let localCliInstallation = null;
+    let localMcpInstallation = null;
     let localPackReport = null;
     if (options.published) {
       const identity = await installPublishedPackage(
@@ -55,18 +54,19 @@ async function main() {
       localPackReport = packReport;
       if (packReport.cli) {
         localCliInstallation = await installLocalCliPackages(
-          installedToolsRoot,
+          path.join(installedToolsRoot, "cli"),
           packReport,
         );
-      } else {
-        const localInstallation = await installLocalPackages(
-          installedToolsRoot,
+      }
+      if (packReport.mcp) {
+        localMcpInstallation = await installLocalPackages(
+          path.join(installedToolsRoot, "mcp"),
           packReport,
         );
-        standaloneMcpSpec = localInstallation.tarballPath;
-        standaloneExpectedVersion = localInstallation.packMetadata.version;
+        standaloneMcpSpec = localMcpInstallation.tarballPath;
+        standaloneExpectedVersion = localMcpInstallation.packMetadata.version;
         standaloneExpectedPackageTreeSha256 =
-          localInstallation.installedTreeSha256;
+          localMcpInstallation.installedTreeSha256;
         comparisonRegistryDir = packReport.comparisonRegistryDir;
       }
     }
@@ -79,12 +79,27 @@ async function main() {
       createNonSaltRepo(nonSaltRepo),
     ]);
     if (localCliInstallation) {
-      const receipt = await runCliWorkflowCoverage(
-        installedToolsRoot,
+      const cliReceipt = await runCliWorkflowCoverage(
+        path.join(installedToolsRoot, "cli"),
         existingSaltRepo,
         nonSaltRepo,
         localPackReport,
       );
+      let mcpReceipt = null;
+      if (localMcpInstallation) {
+        const mcpRoot = path.join(installedToolsRoot, "mcp");
+        const moduleFingerprint = await verifyInstalledMcpModuleExports(
+          mcpRoot,
+          existingSaltRepo,
+        );
+        await verifyInstalledMcpTypes(mcpRoot);
+        mcpReceipt = await runMcpWorkflowCoverage(
+          mcpRoot,
+          existingSaltRepo,
+          nonSaltRepo,
+          moduleFingerprint,
+        );
+      }
       const smokeReceiptPath = path.join(
         path.dirname(localPackReport.reportPath),
         "consumer-smoke-receipt.json",
@@ -92,16 +107,21 @@ async function main() {
       await writeJsonAtomic(smokeReceiptPath, {
         contract: "salt-ai-consumer-smoke/1",
         schema_version: "1.0.0",
-        adapter: "@salt-ds/cli",
+        adapters: localMcpInstallation
+          ? ["@salt-ds/cli", "@salt-ds/mcp"]
+          : ["@salt-ds/cli"],
         pack_report: {
           path: path.basename(localPackReport.reportPath),
           sha256: sha256(await fs.readFile(localPackReport.reportPath)),
         },
         result: "pass",
-        workflows: receipt,
+        workflows: {
+          cli: cliReceipt,
+          ...(mcpReceipt ? { mcp: mcpReceipt } : {}),
+        },
       });
       console.log(
-        `Verified nonpublishable packed CLI workflows: ${JSON.stringify(receipt)}`,
+        `Verified nonpublishable packed workflows: ${JSON.stringify({ cli: cliReceipt, ...(mcpReceipt ? { mcp: mcpReceipt } : {}) })}`,
       );
       console.log(`Wrote consumer smoke receipt: ${smokeReceiptPath}`);
       console.log("");
