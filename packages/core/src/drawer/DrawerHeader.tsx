@@ -14,7 +14,6 @@ import drawerHeaderCss from "./DrawerHeader.css";
 const withBaseName = makePrefixer("saltDrawerHeader");
 
 export interface DrawerHeaderProps extends ComponentPropsWithoutRef<"div"> {
-  // TODO: confirm if DrawerHeader supports rendering status icon instead of accent bar, based on the status prop -> look Dialog in core
   /**
    * Hides the accent bar in the Drawer Header. Defaults to `false`.
    */
@@ -22,12 +21,10 @@ export interface DrawerHeaderProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Displays the header at the top of the Drawer
    */
-  // TODO: technically this should be named heading -> check if can rename, css classes use `header` too
   header: ReactNode;
   /**
    * Displays the preheader just above the header
    **/
-  // TODO: technically this should be named preheading -> check if can rename
   preheader?: ReactNode;
   /**
    * Description text is displayed just below the header
