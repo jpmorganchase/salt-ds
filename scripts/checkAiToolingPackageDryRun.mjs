@@ -77,10 +77,16 @@ function parseOptions(argv) {
     throw new Error("AI package checks require an explicit --report.");
   }
   const reportPath = path.resolve(repoRoot, options.report);
-  const reportRoot = path.join(repoRoot, "dist", "salt-ai-pack");
-  if (!isPathWithinRoot(reportRoot, reportPath) || reportPath === reportRoot) {
+  const allowedReportRoots = [
+    path.join(repoRoot, "dist", "salt-ai-pack"),
+    path.join(repoRoot, "dist", "salt-ai-r1"),
+  ];
+  const reportRoot = allowedReportRoots.find(
+    (root) => isPathWithinRoot(root, reportPath) && reportPath !== root,
+  );
+  if (!reportRoot) {
     throw new Error(
-      "The AI tooling pack report must stay under dist/salt-ai-pack.",
+      "The AI tooling pack report must stay under dist/salt-ai-pack or dist/salt-ai-r1.",
     );
   }
   return { profile: options.profile, reportPath, reportRoot };
