@@ -41,6 +41,11 @@ const SCHEMA_FILES = [
 
 const JSON_MEDIA_TYPE = "application/json";
 const MARKDOWN_MEDIA_TYPE = "text/markdown";
+
+function canonicalTextBytes(text: string): Buffer {
+  return Buffer.from(text.replaceAll("\r\n", "\n"), "utf8");
+}
+
 const RUNTIME_SELECTABLE_FAMILIES = new Set([
   "api_symbol",
   "component",
@@ -346,8 +351,11 @@ export async function buildKnowledgeV1(
   const agentArtifactBytes = new Map<"skill" | "agents_pointer", Buffer>();
   for (const kind of ["skill", "agents_pointer"] as const) {
     const entry = allowedAgentArtifacts.get(kind)!;
-    const bytes = await fs.readFile(
-      path.join(sourceRoot, ...entry.source.split("/")),
+    const bytes = canonicalTextBytes(
+      await fs.readFile(
+        path.join(sourceRoot, ...entry.source.split("/")),
+        "utf8",
+      ),
     );
     agentArtifactBytes.set(kind, bytes);
     await writeArtifact(

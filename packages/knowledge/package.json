@@ -81,9 +81,9 @@
     "prepack": "yarn build"
   },
   "dependencies": {
-    "@babel/parser": "^7.28.4",
-    "@babel/traverse": "^7.28.4",
-    "@babel/types": "^7.28.4",
+    "@babel/parser": "^7.29.7",
+    "@babel/traverse": "^7.29.7",
+    "@babel/types": "^7.29.7",
     "@types/node": "^24.0.0",
     "js-yaml": "^4.1.1",
     "jsonc-parser": "^3.3.1",

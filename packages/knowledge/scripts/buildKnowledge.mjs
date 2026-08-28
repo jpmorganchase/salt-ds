@@ -798,6 +798,11 @@ function bundleOptions(outfile, layout = {}) {
     logLevel: "silent",
     conditions: ["node", "import", "default"],
     alias: {
+      "react-docgen-typescript": path.join(
+        activeRepoRoot,
+        "node_modules",
+        "react-docgen-typescript",
+      ),
       "source-map-js": activeGeneratorNoSourceMapPath,
     },
     resolveExtensions: [
