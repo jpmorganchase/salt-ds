@@ -26,6 +26,10 @@ const SCHEMA_FILES = new Map([
     "https://www.saltdesignsystem.com/ai/schemas/salt-pattern-migration-receipt-1.json",
     "saltPatternMigrationReceiptV1.schema.json",
   ],
+  [
+    "https://www.saltdesignsystem.com/ai/schemas/salt-public-docs-projection-1.json",
+    "saltPublicDocsProjectionV1.schema.json",
+  ],
 ]);
 
 const args = parseArgs(process.argv.slice(2));
