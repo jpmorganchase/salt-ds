@@ -301,6 +301,21 @@ async function verifyPublicApp(appName, registry, compatibility) {
   assert.match(combined, /density/u, `${appName} omits density behavior`);
   assert.match(combined, /mode/u, `${appName} omits color-mode behavior`);
 
+  if (appName === "next-app-router") {
+    const clientBoundaries = [];
+    for (const file of files) {
+      const source = await readFile(file, "utf8");
+      if (/^\s*["']use client["'];/u.test(source)) {
+        clientBoundaries.push(portable(path.relative(appRoot, file)));
+      }
+    }
+    assert.deepEqual(
+      clientBoundaries,
+      ["app/RequestAccess.tsx", "app/providers.tsx"],
+      "Next client boundaries must stay minimal and explicit",
+    );
+  }
+
   const readme = await readFile(path.join(appRoot, "README.md"), "utf8");
   for (const required of [
     "salt-ds info",
@@ -667,13 +682,14 @@ async function browserChecks(appName, appRoot, environment) {
       const html = await (await fetch(url)).text();
       assert.match(
         html,
-        /Request workspace access/u,
+        /A production-minded App Router start/u,
         "Next initial HTML omits Salt UI",
       );
+      assert.match(html, /data-mode="light"/u, "Next initial HTML omits mode");
       assert.match(
         html,
-        /salt-density-/u,
-        "Next initial HTML omits theme state",
+        /data-density="low"/u,
+        "Next initial HTML omits density",
       );
     }
     const browser = await chromium.launch({
@@ -747,6 +763,65 @@ async function browserChecks(appName, appRoot, environment) {
         await page
           .getByRole("navigation", { name: "Primary navigation" })
           .waitFor();
+      } else if (next) {
+        await page
+          .getByRole("heading", {
+            name: "A production-minded App Router start",
+          })
+          .waitFor();
+
+        const mode = page.getByTestId("mode-toggle");
+        await mode.focus();
+        assert(
+          await mode.evaluate((element) => element === document.activeElement),
+        );
+        await mode.click();
+        assert.equal(
+          await page.locator(".appShell").getAttribute("data-mode"),
+          "dark",
+        );
+
+        const density = page.getByTestId("density-toggle");
+        await density.focus();
+        assert(
+          await density.evaluate(
+            (element) => element === document.activeElement,
+          ),
+        );
+        await density.click();
+        assert.equal(
+          await page.locator(".appShell").getAttribute("data-density"),
+          "high",
+        );
+
+        const requestAccess = page.getByRole("button", {
+          name: "Request access",
+        });
+        await requestAccess.focus();
+        assert(
+          await requestAccess.evaluate(
+            (element) => element === document.activeElement,
+          ),
+        );
+        await requestAccess.click();
+        const dialog = page.getByRole("dialog");
+        await dialog.waitFor();
+        await page.keyboard.press("Escape");
+        await dialog.waitFor({ state: "detached" });
+
+        await requestAccess.click();
+        await page
+          .getByLabel("Business reason")
+          .fill("Support operational review");
+        await page.getByRole("button", { name: "Send request" }).click();
+        await page.getByRole("status").waitFor();
+        assert.match(await page.getByRole("status").innerText(), /sent/u);
+        await dialog.waitFor({ state: "detached" });
+
+        await page.setViewportSize({ width: 600, height: 800 });
+        await page
+          .getByRole("navigation", { name: "Primary navigation" })
+          .waitFor();
       }
 
       const axeEntry = nodeRequire.resolve("axe-core");
@@ -767,6 +842,11 @@ async function browserChecks(appName, appRoot, environment) {
         `${appName} attempted external requests`,
       );
       assert.deepEqual(runtimeErrors, [], `${appName} emitted browser errors`);
+      return {
+        ...(next ? { server_render: "pass", hydration: "pass" } : {}),
+        runtime_errors: runtimeErrors.length,
+        external_requests: externalRequests.length,
+      };
     } finally {
       await browser.close();
     }
@@ -976,7 +1056,7 @@ try {
       label: `${app.name} production build`,
     });
     const scan = await scanApp(isolatedRoot, environment);
-    await browserChecks(app.name, isolatedRoot, environment);
+    const browser = await browserChecks(app.name, isolatedRoot, environment);
 
     appReceipts.push({
       name: app.name,
@@ -996,6 +1076,7 @@ try {
       interaction: "pass",
       a11y: "pass",
       keyboard: "pass",
+      ...browser,
       scan,
     });
   }

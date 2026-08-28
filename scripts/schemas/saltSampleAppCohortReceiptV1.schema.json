@@ -208,6 +208,10 @@
           "interaction": { "const": "pass" },
           "a11y": { "const": "pass" },
           "keyboard": { "const": "pass" },
+          "server_render": { "const": "pass" },
+          "hydration": { "const": "pass" },
+          "runtime_errors": { "const": 0 },
+          "external_requests": { "const": 0 },
           "scan": {
             "type": "object",
             "required": [
