@@ -21,7 +21,7 @@ export interface DrawerHeaderProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Displays the header at the top of the Drawer
    */
-  header: ReactNode;
+  header?: ReactNode;
   /**
    * Displays the preheader just above the header
    **/

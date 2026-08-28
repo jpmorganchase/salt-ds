@@ -55,9 +55,15 @@ export const Default: StoryFn<DrawerProps> = (args) => {
         {...args}
         open={openPrimary}
         onOpenChange={(newOpen) => setOpenPrimary(newOpen)}
-        style={{ width: 200 }}
+        style={{ width: 300 }}
       >
-        <DrawerCloseButton onClick={() => setOpenPrimary(false)} />
+        <DrawerHeader
+          header="Primary drawer"
+          actions={<DrawerCloseButton onClick={() => setOpenPrimary(false)} />}
+        />
+        <DrawerContent>
+          <Text>Primary drawers sit on the container primary background.</Text>
+        </DrawerContent>
         <UnmountLogger />
       </Drawer>
       <Button onClick={() => setOpenSecondary(true)}>
@@ -68,9 +74,19 @@ export const Default: StoryFn<DrawerProps> = (args) => {
         open={openSecondary}
         onOpenChange={(newOpen) => setOpenSecondary(newOpen)}
         variant="secondary"
-        style={{ width: 200 }}
+        style={{ width: 300 }}
       >
-        <DrawerCloseButton onClick={() => setOpenSecondary(false)} />
+        <DrawerHeader
+          header="Secondary drawer"
+          actions={
+            <DrawerCloseButton onClick={() => setOpenSecondary(false)} />
+          }
+        />
+        <DrawerContent>
+          <Text>
+            Secondary drawers sit on the container secondary background.
+          </Text>
+        </DrawerContent>
       </Drawer>
       <Button onClick={() => setOpenTertiary(true)}>
         Open Tertiary Drawer
@@ -80,9 +96,17 @@ export const Default: StoryFn<DrawerProps> = (args) => {
         open={openTertiary}
         onOpenChange={(newOpen) => setOpenTertiary(newOpen)}
         variant="tertiary"
-        style={{ width: 200 }}
+        style={{ width: 300 }}
       >
-        <DrawerCloseButton onClick={() => setOpenTertiary(false)} />
+        <DrawerHeader
+          header="Tertiary drawer"
+          actions={<DrawerCloseButton onClick={() => setOpenTertiary(false)} />}
+        />
+        <DrawerContent>
+          <Text>
+            Tertiary drawers sit on the container tertiary background.
+          </Text>
+        </DrawerContent>
       </Drawer>
     </StackLayout>
   );
@@ -101,9 +125,15 @@ export const Position: StoryFn<DrawerProps> = (args) => {
         {...args}
         open={openLeft}
         onOpenChange={(newOpen) => setOpenLeft(newOpen)}
-        style={{ width: 200 }}
+        style={{ width: 300 }}
       >
-        <DrawerCloseButton onClick={() => setOpenLeft(false)} />
+        <DrawerHeader
+          header="Left drawer"
+          actions={<DrawerCloseButton onClick={() => setOpenLeft(false)} />}
+        />
+        <DrawerContent>
+          <Text>Left drawers slide in from the leading edge.</Text>
+        </DrawerContent>
       </Drawer>
       <Button onClick={() => setOpenRight(true)}>Open Right Drawer</Button>
       <Drawer
@@ -111,9 +141,15 @@ export const Position: StoryFn<DrawerProps> = (args) => {
         open={openRight}
         onOpenChange={(newOpen) => setOpenRight(newOpen)}
         position="right"
-        style={{ width: 200 }}
+        style={{ width: 300 }}
       >
-        <DrawerCloseButton onClick={() => setOpenRight(false)} />
+        <DrawerHeader
+          header="Right drawer"
+          actions={<DrawerCloseButton onClick={() => setOpenRight(false)} />}
+        />
+        <DrawerContent>
+          <Text>Right drawers slide in from the trailing edge.</Text>
+        </DrawerContent>
       </Drawer>
       <Button onClick={() => setOpenTop(true)}>Open Top Drawer</Button>
       <Drawer
@@ -123,7 +159,13 @@ export const Position: StoryFn<DrawerProps> = (args) => {
         position="top"
         style={{ height: 200 }}
       >
-        <DrawerCloseButton onClick={() => setOpenTop(false)} />
+        <DrawerHeader
+          header="Top drawer"
+          actions={<DrawerCloseButton onClick={() => setOpenTop(false)} />}
+        />
+        <DrawerContent>
+          <Text>Top drawers slide down from the top of the screen.</Text>
+        </DrawerContent>
       </Drawer>
       <Button onClick={() => setOpenBottom(true)}>Open Bottom Drawer</Button>
       <Drawer
@@ -133,7 +175,13 @@ export const Position: StoryFn<DrawerProps> = (args) => {
         position="bottom"
         style={{ height: 200 }}
       >
-        <DrawerCloseButton onClick={() => setOpenBottom(false)} />
+        <DrawerHeader
+          header="Bottom drawer"
+          actions={<DrawerCloseButton onClick={() => setOpenBottom(false)} />}
+        />
+        <DrawerContent>
+          <Text>Bottom drawers slide up from the bottom of the screen.</Text>
+        </DrawerContent>
       </Drawer>
     </StackLayout>
   );
@@ -407,12 +455,15 @@ export const InitialFocusIndex: StoryFn<DrawerProps> = (args) => {
         onOpenChange={setOpen}
         initialFocus={args.initialFocus ?? 2}
       >
-        <StackLayout>
-          <Button>First</Button>
-          <Button>Second</Button>
-          <Input inputProps={{ "aria-label": "Third" }} />
-          <Button>Fourth</Button>
-        </StackLayout>
+        <DrawerHeader header="Initial focus by index" />
+        <DrawerContent>
+          <StackLayout>
+            <Button>First</Button>
+            <Button>Second</Button>
+            <Input inputProps={{ "aria-label": "Third" }} />
+            <Button>Fourth</Button>
+          </StackLayout>
+        </DrawerContent>
       </Drawer>
     </>
   );
@@ -431,18 +482,21 @@ export const InitialFocusRef: StoryFn<DrawerProps> = (args) => {
         onOpenChange={setOpen}
         initialFocus={inputRef}
       >
-        <StackLayout>
-          <Button>First</Button>
-          <Button>Second</Button>
-          <Input inputRef={inputRef} inputProps={{ "aria-label": "Third" }} />
-          <Button>Fourth</Button>
-        </StackLayout>
+        <DrawerHeader header="Initial focus by ref" />
+        <DrawerContent>
+          <StackLayout>
+            <Button>First</Button>
+            <Button>Second</Button>
+            <Input inputRef={inputRef} inputProps={{ "aria-label": "Third" }} />
+            <Button>Fourth</Button>
+          </StackLayout>
+        </DrawerContent>
       </Drawer>
     </>
   );
 };
 
-export const WithHeader: StoryFn<DrawerProps> = (args) => {
+export const PreheaderAndDescription: StoryFn<DrawerProps> = (args) => {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -460,7 +514,7 @@ export const WithHeader: StoryFn<DrawerProps> = (args) => {
         style={{ width: 400 }}
       >
         <DrawerHeader
-          preheader="bla bla bla"
+          preheader="Payments"
           header="Check deposit #1278"
           description="Pending transaction review"
           actions={<DrawerCloseButton onClick={handleClose} />}
