@@ -39,42 +39,46 @@ const loremText =
 
 const DrawerTemplate: StoryFn<typeof Drawer> = () => {
   return (
-    <StackLayout direction="row" gap={3}>
-      <FakeDrawer>
-        <DrawerHeader
-          preheader="Payments"
-          header="Check deposit #1278"
-          description="Pending transaction review"
-          actions={<DrawerCloseButton />}
-        />
-        <DrawerContent>
-          <Text>{loremText}</Text>
-          <Text>{loremText}</Text>
-        </DrawerContent>
-      </FakeDrawer>
-      <FakeDrawer>
-        <DrawerHeader header="Title" actions={<DrawerCloseButton />} />
-        <DrawerContent>
-          <Text>{loremText}</Text>
-        </DrawerContent>
-      </FakeDrawer>
-      <FakeDrawer>
-        <DrawerHeader
-          disableAccent
-          preheader="Payments"
-          header="Accent bar disabled"
-          description="Pending transaction review"
-        />
-        <DrawerContent>
-          <Text>{loremText}</Text>
-        </DrawerContent>
-      </FakeDrawer>
-      <FakeDrawer>
-        <DrawerHeader actions={<DrawerCloseButton />} />
-        <DrawerContent>
-          <Text>{loremText}</Text>
-        </DrawerContent>
-      </FakeDrawer>
+    <StackLayout gap={3}>
+      <StackLayout direction="row" gap={3}>
+        <FakeDrawer>
+          <DrawerHeader
+            preheader="Payments"
+            header="Check deposit #1278"
+            description="Pending transaction review"
+            actions={<DrawerCloseButton />}
+          />
+          <DrawerContent>
+            <Text>{loremText}</Text>
+            <Text>{loremText}</Text>
+          </DrawerContent>
+        </FakeDrawer>
+        <FakeDrawer>
+          <DrawerHeader header="Title" actions={<DrawerCloseButton />} />
+          <DrawerContent>
+            <Text>{loremText}</Text>
+          </DrawerContent>
+        </FakeDrawer>
+      </StackLayout>
+      <StackLayout direction="row" gap={3}>
+        <FakeDrawer>
+          <DrawerHeader
+            disableAccent
+            preheader="Payments"
+            header="Accent bar disabled"
+            description="Pending transaction review"
+          />
+          <DrawerContent>
+            <Text>{loremText}</Text>
+          </DrawerContent>
+        </FakeDrawer>
+        <FakeDrawer>
+          <DrawerHeader actions={<DrawerCloseButton />} />
+          <DrawerContent>
+            <Text>{loremText}</Text>
+          </DrawerContent>
+        </FakeDrawer>
+      </StackLayout>
     </StackLayout>
   );
 };
@@ -83,7 +87,13 @@ export const DrawerExamples: StoryFn<QAContainerProps> = (props) => {
   const { ...rest } = props;
 
   return (
-    <QAContainer height={2000} itemPadding={20} width={1000} {...rest}>
+    <QAContainer
+      cols={1}
+      height={2700}
+      itemPadding={20}
+      width={1700}
+      {...rest}
+    >
       <DrawerTemplate />
     </QAContainer>
   );

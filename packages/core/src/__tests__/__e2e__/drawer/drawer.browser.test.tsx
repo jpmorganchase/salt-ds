@@ -273,3 +273,50 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
       .toBeVisible();
   });
 });
+
+describe("GIVEN a Drawer with no heading in its header", () => {
+  const longText = "Pending transaction review. ".repeat(200);
+
+  it("falls back to the drawer's aria-label to name the content region", async () => {
+    await renderWithSalt(
+      <Drawer
+        open
+        position="right"
+        style={{ width: 400 }}
+        aria-label="Notifications"
+      >
+        <DrawerHeader actions={<DrawerCloseButton />} />
+        <DrawerContent>
+          <Text>{longText}</Text>
+        </DrawerContent>
+      </Drawer>,
+    );
+
+    const region = page.getByRole("region", { name: "Notifications" });
+    await expect.element(region).toBeVisible();
+    await expect.element(region).toHaveAttribute("tabindex", "0");
+  });
+
+  it("hands its padding to DrawerContent when there is no DrawerHeader", async () => {
+    await renderWithSalt(
+      <Drawer
+        open
+        position="right"
+        style={{ width: 400 }}
+        aria-label="Notifications"
+      >
+        <DrawerContent>
+          <Text>{longText}</Text>
+        </DrawerContent>
+      </Drawer>,
+    );
+
+    const drawer = page.getByRole("dialog");
+    await expect
+      .poll(() => getComputedStyle(drawer.element()).paddingLeft)
+      .toBe("0px");
+    await expect
+      .element(page.getByRole("region", { name: "Notifications" }))
+      .toBeVisible();
+  });
+});

@@ -21,6 +21,7 @@ import {
   useFloatingComponent,
   useFloatingUI,
   useForkRef,
+  useId,
 } from "../utils";
 import drawerCss from "./Drawer.css";
 import { DrawerContext } from "./DrawerContext";
@@ -84,6 +85,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       disableDismiss,
       disableScrim,
       initialFocus,
+      id,
       "aria-labelledby": ariaLabelledBy,
       "aria-describedby": ariaDescribedBy,
       ...rest
@@ -96,9 +98,12 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       window: targetWindow,
     });
 
+    const drawerId = useId(id);
+
     const [showComponent, setShowComponent] = useState(false);
     const [headerId, setHeaderId] = useState<string | undefined>(undefined);
     const [hasHeader, setHasHeader] = useState(false);
+    const [hasContent, setHasContent] = useState(false);
     const [descriptionId, setDescriptionId] = useState<string | undefined>(
       undefined,
     );
@@ -131,20 +136,24 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     const contextValue = useMemo(
       () => ({
+        drawerId,
         headerId,
         setHeaderId,
         hasHeader,
         setHasHeader,
+        hasContent,
+        setHasContent,
         descriptionId,
         setDescriptionId,
       }),
-      [headerId, hasHeader, descriptionId],
+      [drawerId, headerId, hasHeader, hasContent, descriptionId],
     );
 
     return (
       <DrawerContext.Provider value={contextValue}>
         <ConditionalScrimWrapper condition={showComponent && !disableScrim}>
           <FloatingComponent
+            id={drawerId}
             open={showComponent}
             ref={handleRef}
             role={"dialog"}
@@ -165,7 +174,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 [withBaseName("enterAnimation")]: open,
                 [withBaseName("exitAnimation")]: !open,
                 [withBaseName(variant)]: variant,
-                [withBaseName("hasHeader")]: hasHeader,
+                [withBaseName("hasSlots")]: hasHeader || hasContent,
               },
               className,
             )}
