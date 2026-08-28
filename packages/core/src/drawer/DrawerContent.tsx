@@ -33,15 +33,7 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
       window: targetWindow,
     });
 
-    const { drawerId, headerId, setHasContent } = useDrawerContext();
-
-    useIsomorphicLayoutEffect(() => {
-      setHasContent?.(true);
-
-      return () => {
-        setHasContent?.(false);
-      };
-    }, [setHasContent]);
+    const { drawerId, headerId } = useDrawerContext();
 
     const scrollRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef<HTMLDivElement>(scrollRef, ref);

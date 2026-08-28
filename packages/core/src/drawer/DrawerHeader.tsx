@@ -55,19 +55,11 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(
       window: targetWindow,
     });
 
-    const { setHeaderId, setHasHeader, setDescriptionId } = useDrawerContext();
+    const { setHeaderId, setDescriptionId } = useDrawerContext();
     const headingId = useId();
     const descriptionId = useId();
     const hasHeading = Boolean(header || preheader);
     const hasDescription = Boolean(description);
-
-    useIsomorphicLayoutEffect(() => {
-      setHasHeader?.(true);
-
-      return () => {
-        setHasHeader?.(false);
-      };
-    }, [setHasHeader]);
 
     useIsomorphicLayoutEffect(() => {
       setHeaderId?.(hasHeading ? headingId : undefined);
