@@ -1,0 +1,109 @@
+{
+  "schema_version": "1.0.0",
+  "contract": "salt-ai-pack-report@1",
+  "policy_profile": "release-complete",
+  "policy_digest": "sha256:32bfb52c5a1ec84f82abdbd20952c0dfe001657eb51f1219312db733577f6f67",
+  "publishable": false,
+  "packages": [
+    {
+      "name": "@salt-ds/knowledge",
+      "version": "0.0.0",
+      "manifest": {
+        "path": "@salt-ds/knowledge/package.json",
+        "sha256": "sha256:e49f50228c7bd80757a0daeadf21eb81315de68f0e6c7abb4f38f1cc6c1ddd28",
+        "bytes": 1578
+      },
+      "readme": {
+        "path": "@salt-ds/knowledge/README.md",
+        "sha256": "sha256:f376e9ddf2e3389e315f4e9c7ea8b72595ca6e66d523979f70dcdfd4b4b40f42",
+        "bytes": 1495
+      },
+      "tarball": {
+        "path": "unit-06g.artifacts/salt-ds-knowledge-0.0.0.tgz",
+        "sha256": "sha256:3a9152cb13f40f1a30bf4366e2c84b5cd8f0a9aefb28e395b5a1edbf48957f1a",
+        "bytes": 3638618
+      },
+      "dependencies": {
+        "@babel/parser": "^7.29.7",
+        "@babel/traverse": "^7.29.7",
+        "@babel/types": "^7.29.7",
+        "@types/node": "^24.0.0",
+        "js-yaml": "^4.1.1",
+        "jsonc-parser": "^3.3.1",
+        "micromatch": "^4.0.8",
+        "postcss": "^8.5.24",
+        "semver": "^7.7.3",
+        "zod": "^4.2.0"
+      },
+      "first_party_dependencies": [],
+      "content_policy": {
+        "generated_tree": true,
+        "prototype_catalog": false,
+        "workspace_link": false
+      }
+    },
+    {
+      "name": "@salt-ds/cli",
+      "version": "0.0.0",
+      "manifest": {
+        "path": "@salt-ds/cli/package.json",
+        "sha256": "sha256:b2b90db2bc47ead821dc6ba20b89029cff0e5f80ccb20ee896aaabe637bd29e2",
+        "bytes": 1202
+      },
+      "readme": {
+        "path": "@salt-ds/cli/README.md",
+        "sha256": "sha256:d561070b7b10c41b2991b04b04afcdd63a63823dc95d5082bbd7ef133abf5a75",
+        "bytes": 1643
+      },
+      "tarball": {
+        "path": "unit-06g.artifacts/salt-ds-cli-0.0.0.tgz",
+        "sha256": "sha256:4a7ecd31443a8b9d746cc0b113ecf7f6a48c9b6a8919b51d226de6ed33c2ab35",
+        "bytes": 45537
+      },
+      "dependencies": {
+        "@salt-ds/knowledge": "0.0.0"
+      },
+      "first_party_dependencies": [
+        {
+          "name": "@salt-ds/knowledge",
+          "version": "0.0.0",
+          "tarball_sha256": "sha256:3a9152cb13f40f1a30bf4366e2c84b5cd8f0a9aefb28e395b5a1edbf48957f1a"
+        }
+      ],
+      "content_policy": {
+        "generated_tree": false,
+        "prototype_catalog": false,
+        "workspace_link": false
+      }
+    }
+  ],
+  "knowledge_bundle": {
+    "manifest": {
+      "path": "manifest.json",
+      "sha256": "sha256:bc6b3053909198e57554b367a55fab9414a009775fe30f679269f512c02fad44",
+      "bytes": 3434
+    },
+    "bundle_digest": "sha256:2418b7e1248f2475d6f7b0ab2143012b416a38e620d6bdfc33a1dfd63a7f3a21",
+    "semantic_digest": "sha256:a776cf7a83f747d5e7e06c3333b10a018b8005f4194337485065f5353e3d45d9",
+    "semantic_source_digest": "sha256:35f06fecd2625ef5a37782303eecfbced1931c9de6c3999ce38709622b93f4ab",
+    "compiler_digest": "sha256:48bf067eb3218ddb260a1502a983f9952271b5f7fd19bc4c7f78d819e5218e1a",
+    "artifact_tree": {
+      "node_count": 4,
+      "tree_bytes": 104390,
+      "artifact_count": 550,
+      "artifact_bytes": 24281668
+    },
+    "agent_support": {
+      "skill": {
+        "path": "skills/salt-design-system/SKILL.md",
+        "sha256": "sha256:fa646985379e56d2b62248a15f10d9191c4f457378acb58020c5615de490e003",
+        "bytes": 3503
+      },
+      "agents_pointer": {
+        "path": "skills/salt-design-system/references/managed-agents-block.md",
+        "sha256": "sha256:44bd549153b63b348ea20324d4e3f133e7a7d7d72ae8fa901ad20af02e6b0e9e",
+        "bytes": 872
+      }
+    }
+  }
+}

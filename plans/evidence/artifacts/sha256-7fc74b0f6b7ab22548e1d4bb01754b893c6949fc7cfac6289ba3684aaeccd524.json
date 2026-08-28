@@ -1,0 +1,46 @@
+{
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-web-release-receipt-1.json",
+  "agent_support": {
+    "agents_pointer": {
+      "bytes": 872,
+      "npm_path": "skills/salt-design-system/references/managed-agents-block.md",
+      "sha256": "sha256:44bd549153b63b348ea20324d4e3f133e7a7d7d72ae8fa901ad20af02e6b0e9e",
+      "web_path": "/ai/v1/2418b7e1248f2475d6f7b0ab2143012b416a38e620d6bdfc33a1dfd63a7f3a21/skills/salt-design-system/references/managed-agents-block.md"
+    },
+    "skill": {
+      "bytes": 3503,
+      "npm_path": "skills/salt-design-system/SKILL.md",
+      "sha256": "sha256:fa646985379e56d2b62248a15f10d9191c4f457378acb58020c5615de490e003",
+      "web_path": "/ai/v1/2418b7e1248f2475d6f7b0ab2143012b416a38e620d6bdfc33a1dfd63a7f3a21/skills/salt-design-system/SKILL.md"
+    }
+  },
+  "bundle_digest": "sha256:2418b7e1248f2475d6f7b0ab2143012b416a38e620d6bdfc33a1dfd63a7f3a21",
+  "bundle_version": "0.0.0",
+  "channel": "beta-candidate",
+  "contract": "salt-ai-web-release-receipt/1",
+  "deployment": "not-performed",
+  "digest_segment": "2418b7e1248f2475d6f7b0ab2143012b416a38e620d6bdfc33a1dfd63a7f3a21",
+  "distribution_projection_sha256": "sha256:57c2eba73ff1b11e4d3ee5c1d9fc65bc82fa0a367012468c4442b8ace6d02180",
+  "knowledge_manifest": {
+    "bytes": 3434,
+    "path": "packages/knowledge/generated/manifest.json",
+    "sha256": "sha256:bc6b3053909198e57554b367a55fab9414a009775fe30f679269f512c02fad44"
+  },
+  "pointers": {
+    "beta": "/ai/beta/llms.txt",
+    "current": null,
+    "immutable": "/ai/v1/2418b7e1248f2475d6f7b0ab2143012b416a38e620d6bdfc33a1dfd63a7f3a21/llms.txt",
+    "root": null
+  },
+  "production_navigation": false,
+  "public_docs_preview": null,
+  "publishable": false,
+  "route_map": {
+    "bytes": 924451,
+    "path": "dist/salt-ai-web/route-map.json",
+    "routes": 1039,
+    "sha256": "sha256:6b0a87d5840e2fab450abdde8267e8800729fb3ebdac2283fd8768b2f5db87eb"
+  },
+  "schema_version": "1.0.0",
+  "semantic_digest": "sha256:a776cf7a83f747d5e7e06c3333b10a018b8005f4194337485065f5353e3d45d9"
+}
