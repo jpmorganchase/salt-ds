@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { readFileSync, readdirSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import fs from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -51,6 +51,7 @@ type PackageManifest = {
       requirePath?: string;
       errorPrefix?: string;
       conciseErrorCodes?: string[];
+      ignoreBrokenPipe?: boolean;
     }
   >;
   publishConfig?: {
@@ -637,13 +638,19 @@ describe("package publish boundaries", () => {
       "bin/salt-ds.js": {
         requirePath: "../dist-cjs/index.js",
         errorPrefix: "salt-ds error:",
+        ignoreBrokenPipe: true,
         conciseErrorCodes: [
           "SALT_CLI_USAGE",
           "SALT_PROJECT_ROOT_NOT_DIRECTORY",
           "SALT_PROJECT_ROOT_UNAVAILABLE",
+          "SALT_CONFIG_INVALID",
+          "SALT_CLI_SCAN_FAILED",
         ],
       },
     });
+    expect(manifest.publishAdditionalEntryPaths).toEqual([
+      "src/scan/scannerWorker.ts",
+    ]);
     expect(manifest.publishExports).toEqual({
       ".": {
         types: "./dist-types/index.d.ts",

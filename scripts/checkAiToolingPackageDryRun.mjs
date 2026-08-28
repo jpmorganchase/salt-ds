@@ -30,12 +30,12 @@ import {
   parseCatalogBuildBanner,
 } from "./catalogBuildIdentity.mjs";
 import { createWindowsCmdInvocation } from "./consumer-smoke/shared.mjs";
+import { verifyKnowledgeArtifactContract } from "./knowledgeArtifactContract.mjs";
 import {
   isPortableArchivePath,
   resolvePackageArchiveEntry,
   resolvePackageRelativeArchivePath,
 } from "./packageArchivePath.mjs";
-import { verifyKnowledgeArtifactContract } from "./knowledgeArtifactContract.mjs";
 
 const repoRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -66,7 +66,9 @@ function parseOptions(argv) {
     options[token.slice(2)] = value;
     index += 1;
   }
-  if (!new Set(["extraction-parity", "pre-agent-support"]).has(options.profile)) {
+  if (
+    !new Set(["extraction-parity", "pre-agent-support"]).has(options.profile)
+  ) {
     throw new Error(
       "AI package checks require --profile extraction-parity or pre-agent-support.",
     );
@@ -77,7 +79,9 @@ function parseOptions(argv) {
   const reportPath = path.resolve(repoRoot, options.report);
   const reportRoot = path.join(repoRoot, "dist", "salt-ai-pack");
   if (!isPathWithinRoot(reportRoot, reportPath) || reportPath === reportRoot) {
-    throw new Error("The AI tooling pack report must stay under dist/salt-ai-pack.");
+    throw new Error(
+      "The AI tooling pack report must stay under dist/salt-ai-pack.",
+    );
   }
   return { profile: options.profile, reportPath, reportRoot };
 }
@@ -98,57 +102,52 @@ const forbiddenPublishPathSegments = [
 ];
 
 const extractionParityKnowledgePackage = {
-    name: "@salt-ds/knowledge",
-    dir: "dist/salt-ds-knowledge",
-    requiredPaths: ["package.json", "dist-cjs", "dist-es", "dist-types"],
-    expectedFilesField: [
-      "dist-cjs",
-      "dist-es",
-      "dist-types",
-      "CHANGELOG.md",
-    ],
-    forbiddenManifestFields: [
-      "publishEntryPath",
-      "publishBuildIdentityManifest",
-      "publishBuildIdentityInputPatterns",
-      "publishCatalogArtifactPaths",
-      "publishTypingEntryPath",
-      "publishTypingEntryOnly",
-      "publishPreserveModules",
-      "publishIncludeReadme",
-      "publishSourceMaps",
-      "saltDocs",
-      "typescriptInclude",
-      "typescriptRootDir",
-    ],
-    forbiddenPublishConfigFields: ["directory"],
-    forbiddenPublishedDependencies: [
-      "@salt-ds/mcp",
-      "@salt-ds/cli",
-      "@modelcontextprotocol/server",
-    ],
-    expectedModuleMarkers: {
-      "dist-cjs/package.json": "commonjs",
-      "dist-es/package.json": "module",
-    },
-    expectedBundleFiles: {
-      "dist-cjs": ["index.js", "package.json"],
-      "dist-es": ["index.js", "package.json"],
-    },
-    allowedTopLevelPaths: [
-      "LICENSE",
-      "dist-cjs",
-      "dist-es",
-      "dist-types",
-      "package.json",
-    ],
-    forbiddenTextMarkers: ["salt://"],
-    maxPackageBytes: 2_000_000,
-    maxUnpackedBytes: 8_000_000,
-    maxGeneratedBytes: 0,
-    maxSourceMapBytes: 0,
-    maxEntryCount: 80,
-  };
+  name: "@salt-ds/knowledge",
+  dir: "dist/salt-ds-knowledge",
+  requiredPaths: ["package.json", "dist-cjs", "dist-es", "dist-types"],
+  expectedFilesField: ["dist-cjs", "dist-es", "dist-types", "CHANGELOG.md"],
+  forbiddenManifestFields: [
+    "publishEntryPath",
+    "publishBuildIdentityManifest",
+    "publishBuildIdentityInputPatterns",
+    "publishCatalogArtifactPaths",
+    "publishTypingEntryPath",
+    "publishTypingEntryOnly",
+    "publishPreserveModules",
+    "publishIncludeReadme",
+    "publishSourceMaps",
+    "saltDocs",
+    "typescriptInclude",
+    "typescriptRootDir",
+  ],
+  forbiddenPublishConfigFields: ["directory"],
+  forbiddenPublishedDependencies: [
+    "@salt-ds/mcp",
+    "@salt-ds/cli",
+    "@modelcontextprotocol/server",
+  ],
+  expectedModuleMarkers: {
+    "dist-cjs/package.json": "commonjs",
+    "dist-es/package.json": "module",
+  },
+  expectedBundleFiles: {
+    "dist-cjs": ["index.js", "package.json"],
+    "dist-es": ["index.js", "package.json"],
+  },
+  allowedTopLevelPaths: [
+    "LICENSE",
+    "dist-cjs",
+    "dist-es",
+    "dist-types",
+    "package.json",
+  ],
+  forbiddenTextMarkers: ["salt://"],
+  maxPackageBytes: 2_000_000,
+  maxUnpackedBytes: 8_000_000,
+  maxGeneratedBytes: 0,
+  maxSourceMapBytes: 0,
+  maxEntryCount: 80,
+};
 
 const preAgentKnowledgePackage = {
   name: "@salt-ds/knowledge",
@@ -246,65 +245,60 @@ const preAgentKnowledgePackage = {
 };
 
 const mcpPackage = {
-    name: "@salt-ds/mcp",
-    dir: "dist/salt-ds-mcp",
-    requiredPaths: [
-      "package.json",
-      "bin/salt-mcp.js",
-      "dist-cjs",
-      "dist-es",
-      "dist-types",
-    ],
-    expectedFilesField: [
-      "bin",
-      "dist-cjs",
-      "dist-es",
-      "dist-types",
-    ],
-    forbiddenManifestFields: [
-      "publishEntryPath",
-      "publishBuildIdentityManifest",
-      "publishTypingEntryPath",
-      "publishTypingEntryOnly",
-      "publishPreserveModules",
-      "publishIncludeReadme",
-      "saltDocs",
-      "typescriptInclude",
-      "typescriptRootDir",
-    ],
-    forbiddenPublishConfigFields: ["directory"],
-    forbiddenPublishedDependencies: ["@salt-ds/semantic-core", "get-tsconfig"],
-    expectedExactDependencies: {
-      "@modelcontextprotocol/server": "2.0.0",
-      "@salt-ds/knowledge": "0.0.0",
-    },
-    expectedDeclarationFiles: ["dist-types/index.d.ts"],
-    forbiddenDeclarationImports: ["@salt-ds/semantic-core"],
-    expectedModuleMarkers: {
-      "dist-cjs/package.json": "commonjs",
-      "dist-es/package.json": "module",
-    },
-    expectedBundleFiles: {
-      bin: ["salt-mcp.js"],
-      "dist-cjs": ["index.js", "package.json"],
-      "dist-es": ["index.js", "package.json"],
-    },
-    workspaceBin: "packages/mcp/bin/salt-mcp.js",
-    publishedBin: "bin/salt-mcp.js",
-    allowedTopLevelPaths: [
-      "LICENSE",
-      "bin",
-      "dist-cjs",
-      "dist-es",
-      "dist-types",
-      "package.json",
-    ],
-    maxPackageBytes: 2_000_000,
-    maxUnpackedBytes: 8_000_000,
-    maxGeneratedBytes: 0,
-    maxSourceMapBytes: 0,
-    maxEntryCount: 16,
-  };
+  name: "@salt-ds/mcp",
+  dir: "dist/salt-ds-mcp",
+  requiredPaths: [
+    "package.json",
+    "bin/salt-mcp.js",
+    "dist-cjs",
+    "dist-es",
+    "dist-types",
+  ],
+  expectedFilesField: ["bin", "dist-cjs", "dist-es", "dist-types"],
+  forbiddenManifestFields: [
+    "publishEntryPath",
+    "publishBuildIdentityManifest",
+    "publishTypingEntryPath",
+    "publishTypingEntryOnly",
+    "publishPreserveModules",
+    "publishIncludeReadme",
+    "saltDocs",
+    "typescriptInclude",
+    "typescriptRootDir",
+  ],
+  forbiddenPublishConfigFields: ["directory"],
+  forbiddenPublishedDependencies: ["@salt-ds/semantic-core", "get-tsconfig"],
+  expectedExactDependencies: {
+    "@modelcontextprotocol/server": "2.0.0",
+    "@salt-ds/knowledge": "0.0.0",
+  },
+  expectedDeclarationFiles: ["dist-types/index.d.ts"],
+  forbiddenDeclarationImports: ["@salt-ds/semantic-core"],
+  expectedModuleMarkers: {
+    "dist-cjs/package.json": "commonjs",
+    "dist-es/package.json": "module",
+  },
+  expectedBundleFiles: {
+    bin: ["salt-mcp.js"],
+    "dist-cjs": ["index.js", "package.json"],
+    "dist-es": ["index.js", "package.json"],
+  },
+  workspaceBin: "packages/mcp/bin/salt-mcp.js",
+  publishedBin: "bin/salt-mcp.js",
+  allowedTopLevelPaths: [
+    "LICENSE",
+    "bin",
+    "dist-cjs",
+    "dist-es",
+    "dist-types",
+    "package.json",
+  ],
+  maxPackageBytes: 2_000_000,
+  maxUnpackedBytes: 8_000_000,
+  maxGeneratedBytes: 0,
+  maxSourceMapBytes: 0,
+  maxEntryCount: 16,
+};
 
 const cliPackage = {
   name: "@salt-ds/cli",
@@ -321,6 +315,7 @@ const cliPackage = {
   expectedFilesField: ["bin", "schemas", "dist-cjs", "dist-es", "dist-types"],
   forbiddenManifestFields: [
     "publishBinEntrypoints",
+    "publishAdditionalEntryPaths",
     "publishTypingEntryOnly",
     "publishPreserveModules",
     "publishScriptExcludes",
@@ -345,8 +340,8 @@ const cliPackage = {
   expectedBundleFiles: {
     bin: ["salt-ds.js"],
     schemas: ["salt-config-1.schema.json", "scan-result-1.schema.json"],
-    "dist-cjs": ["index.js", "package.json"],
-    "dist-es": ["index.js", "package.json"],
+    "dist-cjs": ["index.js", "package.json", "scannerWorker.js"],
+    "dist-es": ["index.js", "package.json", "scannerWorker.js"],
   },
   allowedTopLevelPaths: [
     "LICENSE",
@@ -362,6 +357,18 @@ const cliPackage = {
     "@storybook/",
     "catalog-generations",
     "salt://",
+  ],
+  forbiddenWorkerTextMarkers: [
+    "node:http",
+    "node:https",
+    "node:net",
+    "node:tls",
+    "node:dns",
+    "node:dgram",
+    "node:child_process",
+    "@modelcontextprotocol",
+    "@storybook",
+    "new Worker(",
   ],
   maxPackageBytes: 1_000_000,
   maxUnpackedBytes: 4_000_000,
@@ -1140,7 +1147,10 @@ function runRealPack(packageConfig, packageDir) {
 
 function assertJsonSchema(value, schemaFileName, label) {
   const schema = JSON.parse(
-    readFileSync(path.join(repoRoot, "scripts", "schemas", schemaFileName), "utf8"),
+    readFileSync(
+      path.join(repoRoot, "scripts", "schemas", schemaFileName),
+      "utf8",
+    ),
   );
   const validator = new Ajv2020({ allErrors: true, strict: true }).compile(
     schema,
@@ -1171,7 +1181,9 @@ function assertPackedKnowledgeV1(packageDir, packedPaths, packageVersion) {
   for (const entry of readdirSync(schemaDirectory, { withFileTypes: true })) {
     if (entry.isFile() && entry.name.endsWith(".schema.json")) {
       ajv.addSchema(
-        JSON.parse(readFileSync(path.join(schemaDirectory, entry.name), "utf8")),
+        JSON.parse(
+          readFileSync(path.join(schemaDirectory, entry.name), "utf8"),
+        ),
       );
     }
   }
@@ -1208,7 +1220,9 @@ function assertPackedKnowledgeV1(packageDir, packedPaths, packageVersion) {
   }
   for (const expectedPath of treePaths) {
     if (!packedPaths.includes(expectedPath)) {
-      throw new Error(`Packed Knowledge omits verified tree path ${expectedPath}.`);
+      throw new Error(
+        `Packed Knowledge omits verified tree path ${expectedPath}.`,
+      );
     }
   }
   return {
@@ -1264,7 +1278,10 @@ function collectExactFileInventory(rootDirectory) {
 
 const reportParent = path.dirname(options.reportPath);
 mkdirSync(reportParent, { recursive: true });
-const reportBaseName = path.basename(options.reportPath, path.extname(options.reportPath));
+const reportBaseName = path.basename(
+  options.reportPath,
+  path.extname(options.reportPath),
+);
 const finalArtifactDirectory = path.join(
   reportParent,
   `${reportBaseName}.artifacts`,
@@ -1563,6 +1580,15 @@ for (const packageConfig of packages) {
             );
           }
         }
+        if (filePath.endsWith("/scannerWorker.js")) {
+          for (const marker of packageConfig.forbiddenWorkerTextMarkers ?? []) {
+            if (content.includes(marker)) {
+              fail(
+                `${packageConfig.name} scanner worker includes forbidden closure marker ${JSON.stringify(marker)} in ${filePath}`,
+              );
+            }
+          }
+        }
       }
 
       const segments = filePath.split("/");
@@ -1628,9 +1654,13 @@ if (
   packageReports.length !== packages.length
 ) {
   rmSync(stagingArtifactDirectory, { recursive: true, force: true });
-  throw new Error("AI tooling pack did not produce both required package reports.");
+  throw new Error(
+    "AI tooling pack did not produce both required package reports.",
+  );
 }
-if (adapterReport.dependencies["@salt-ds/knowledge"] !== knowledgeReport.version) {
+if (
+  adapterReport.dependencies["@salt-ds/knowledge"] !== knowledgeReport.version
+) {
   rmSync(stagingArtifactDirectory, { recursive: true, force: true });
   throw new Error(
     `${adapterReport.name} does not exact-pin the packed knowledge package version.`,

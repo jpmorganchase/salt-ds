@@ -3,10 +3,313 @@
   "$id": "https://www.saltdesignsystem.com/ai/schemas/scan-result-1.json",
   "title": "Salt scan result v1",
   "type": "object",
-  "required": ["contract", "schema_version"],
+  "required": [
+    "contract",
+    "schema_version",
+    "tool",
+    "engine",
+    "knowledge",
+    "root",
+    "workspace_units",
+    "summary",
+    "findings",
+    "coverage",
+    "limitations"
+  ],
   "properties": {
     "contract": { "const": "salt-scan-result/1" },
-    "schema_version": { "const": "1.0.0" }
+    "schema_version": { "const": "1.0.0" },
+    "tool": {
+      "type": "object",
+      "required": ["package", "version"],
+      "properties": {
+        "package": { "const": "@salt-ds/cli" },
+        "version": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "engine": {
+      "type": "object",
+      "required": ["id", "version", "ruleset_version", "ruleset_digest"],
+      "properties": {
+        "id": { "const": "salt-static-scan" },
+        "version": { "const": "1.0.0" },
+        "ruleset_version": { "const": "1.0.0" },
+        "ruleset_digest": { "$ref": "#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "knowledge": {
+      "type": "object",
+      "required": ["package", "version", "bundle_digest", "semantic_digest"],
+      "properties": {
+        "package": { "const": "@salt-ds/knowledge" },
+        "version": { "type": "string", "minLength": 1 },
+        "bundle_digest": { "$ref": "#/$defs/sha256" },
+        "semantic_digest": { "$ref": "#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "root": {
+      "type": "object",
+      "required": ["path", "discovery"],
+      "properties": {
+        "path": { "const": "." },
+        "discovery": { "$ref": "#/$defs/discoveryCounters" }
+      },
+      "additionalProperties": false
+    },
+    "workspace_units": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/workspaceUnit" }
+    },
+    "summary": { "$ref": "#/$defs/summary" },
+    "findings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/finding" }
+    },
+    "coverage": { "$ref": "#/$defs/rootCoverage" },
+    "limitations": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    }
   },
-  "additionalProperties": true
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "nonNegativeInteger": { "type": "integer", "minimum": 0 },
+    "stringArray": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "coverageStatus": {
+      "enum": ["complete", "partial", "failed"]
+    },
+    "discoveryCounters": {
+      "type": "object",
+      "required": [
+        "visited_directories",
+        "directory_entries",
+        "queued_paths",
+        "selected_candidate_files",
+        "selected_files",
+        "selected_bytes"
+      ],
+      "properties": {
+        "visited_directories": { "$ref": "#/$defs/nonNegativeInteger" },
+        "directory_entries": { "$ref": "#/$defs/nonNegativeInteger" },
+        "queued_paths": { "$ref": "#/$defs/nonNegativeInteger" },
+        "selected_candidate_files": { "$ref": "#/$defs/nonNegativeInteger" },
+        "selected_files": { "$ref": "#/$defs/nonNegativeInteger" },
+        "selected_bytes": { "$ref": "#/$defs/nonNegativeInteger" }
+      },
+      "additionalProperties": false
+    },
+    "packageVectorEntry": {
+      "type": "object",
+      "required": [
+        "name",
+        "declared_version",
+        "observed_version",
+        "observed_manifest_path",
+        "satisfies_declaration"
+      ],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "declared_version": { "type": "string", "minLength": 1 },
+        "observed_version": { "type": ["string", "null"] },
+        "observed_manifest_path": { "type": ["string", "null"] },
+        "satisfies_declaration": { "type": ["boolean", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "packageEvidence": {
+      "type": "object",
+      "required": ["manager", "manager_detection", "layout", "status"],
+      "properties": {
+        "manager": { "type": "string" },
+        "manager_detection": { "type": "string" },
+        "layout": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "compatibility": {
+      "type": "object",
+      "required": ["status", "packages", "usable_families"],
+      "properties": {
+        "status": { "enum": ["compatible", "partial", "incompatible"] },
+        "packages": { "type": "array", "items": { "type": "object" } },
+        "usable_families": { "$ref": "#/$defs/stringArray" }
+      },
+      "additionalProperties": false
+    },
+    "fileCounts": {
+      "type": "object",
+      "required": ["selected", "evaluated", "failed"],
+      "properties": {
+        "selected": { "$ref": "#/$defs/nonNegativeInteger" },
+        "evaluated": { "$ref": "#/$defs/nonNegativeInteger" },
+        "failed": { "$ref": "#/$defs/nonNegativeInteger" }
+      },
+      "additionalProperties": false
+    },
+    "unitCoverage": {
+      "type": "object",
+      "required": ["status", "reasons"],
+      "properties": {
+        "status": { "$ref": "#/$defs/coverageStatus" },
+        "reasons": { "$ref": "#/$defs/stringArray" }
+      },
+      "additionalProperties": false
+    },
+    "workspaceUnit": {
+      "type": "object",
+      "required": [
+        "workspace_unit_id",
+        "classification",
+        "classification_evidence",
+        "package_vector",
+        "package_evidence",
+        "compatibility",
+        "files",
+        "coverage",
+        "limitations"
+      ],
+      "properties": {
+        "workspace_unit_id": { "type": "string", "minLength": 1 },
+        "classification": {
+          "enum": ["salt-application", "library", "unknown"]
+        },
+        "classification_evidence": { "$ref": "#/$defs/stringArray" },
+        "package_vector": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/packageVectorEntry" }
+        },
+        "package_evidence": { "$ref": "#/$defs/packageEvidence" },
+        "compatibility": { "$ref": "#/$defs/compatibility" },
+        "files": { "$ref": "#/$defs/fileCounts" },
+        "coverage": { "$ref": "#/$defs/unitCoverage" },
+        "limitations": { "$ref": "#/$defs/stringArray" }
+      },
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "object",
+      "required": ["errors", "warnings", "infos", "total"],
+      "properties": {
+        "errors": { "$ref": "#/$defs/nonNegativeInteger" },
+        "warnings": { "$ref": "#/$defs/nonNegativeInteger" },
+        "infos": { "$ref": "#/$defs/nonNegativeInteger" },
+        "total": { "$ref": "#/$defs/nonNegativeInteger" }
+      },
+      "additionalProperties": false
+    },
+    "location": {
+      "type": "object",
+      "required": [
+        "path",
+        "encoding",
+        "start_offset",
+        "end_offset",
+        "start_line",
+        "start_byte_column",
+        "end_line",
+        "end_byte_column"
+      ],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "encoding": { "const": "utf8_bytes_end_exclusive" },
+        "start_offset": { "$ref": "#/$defs/nonNegativeInteger" },
+        "end_offset": { "$ref": "#/$defs/nonNegativeInteger" },
+        "start_line": { "type": "integer", "minimum": 1 },
+        "start_byte_column": { "type": "integer", "minimum": 1 },
+        "end_line": { "type": "integer", "minimum": 1 },
+        "end_byte_column": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "evidenceReference": {
+      "type": "object",
+      "required": ["locator", "field_path"],
+      "properties": {
+        "locator": { "type": "string", "minLength": 1 },
+        "field_path": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "findingEvidence": {
+      "type": "object",
+      "required": ["validation", "references"],
+      "properties": {
+        "validation": { "const": "source_bound" },
+        "references": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidenceReference" },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "finding": {
+      "type": "object",
+      "required": [
+        "id",
+        "workspace_unit_id",
+        "rule_id",
+        "rule_description",
+        "severity",
+        "confidence",
+        "applicability",
+        "location",
+        "message",
+        "evidence",
+        "remediation",
+        "acceptance_criterion"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/sha256" },
+        "workspace_unit_id": { "type": "string", "minLength": 1 },
+        "rule_id": { "type": "string", "minLength": 1 },
+        "rule_description": { "type": "string", "minLength": 1 },
+        "severity": { "enum": ["info", "warning", "error"] },
+        "confidence": { "const": "high" },
+        "applicability": true,
+        "location": { "$ref": "#/$defs/location" },
+        "message": { "type": "string", "minLength": 1 },
+        "evidence": { "$ref": "#/$defs/findingEvidence" },
+        "remediation": { "type": ["string", "null"] },
+        "acceptance_criterion": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "rootCoverage": {
+      "type": "object",
+      "required": [
+        "status",
+        "reasons",
+        "selected_files",
+        "evaluated_files",
+        "failed_files",
+        "skipped_files",
+        "unsupported_files",
+        "evaluated_rule_ids"
+      ],
+      "properties": {
+        "status": { "$ref": "#/$defs/coverageStatus" },
+        "reasons": { "$ref": "#/$defs/stringArray" },
+        "selected_files": { "$ref": "#/$defs/nonNegativeInteger" },
+        "evaluated_files": { "$ref": "#/$defs/nonNegativeInteger" },
+        "failed_files": { "$ref": "#/$defs/nonNegativeInteger" },
+        "skipped_files": { "$ref": "#/$defs/nonNegativeInteger" },
+        "unsupported_files": { "$ref": "#/$defs/nonNegativeInteger" },
+        "evaluated_rule_ids": { "$ref": "#/$defs/stringArray" }
+      },
+      "additionalProperties": false
+    }
+  }
 }

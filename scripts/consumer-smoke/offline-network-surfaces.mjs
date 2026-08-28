@@ -59,6 +59,6 @@ export const BLOCKED_PROCESS_BINDINGS = Object.freeze([
 
 export function blockedNetworkError(surface) {
   return new Error(
-    `${OFFLINE_NETWORK_ERROR_PREFIX} through ${surface}. Public Salt MCP v1 calls must not use network after install.`,
+    `${OFFLINE_NETWORK_ERROR_PREFIX} through ${surface}. Public Salt tooling must not use network after install.`,
   );
 }

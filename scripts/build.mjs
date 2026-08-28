@@ -25,10 +25,10 @@ import {
   normalizePortableRepositoryBuildPath,
   validateCatalogBuildInputPatterns,
 } from "./catalogBuildIdentity.mjs";
+import { verifyKnowledgeArtifactContract } from "./knowledgeArtifactContract.mjs";
 import { makeTypings } from "./makeTypings.mjs";
 import { transformWorkspaceDeps } from "./transformWorkspaceDeps.mjs";
 import { distinct, getTypescriptConfig } from "./utils.mjs";
-import { verifyKnowledgeArtifactContract } from "./knowledgeArtifactContract.mjs";
 
 const cwd = process.cwd();
 const repoRoot = path.resolve(
@@ -468,7 +468,9 @@ async function copyPublishExtraFile(fromPath, toPath, capturedBytes) {
     return;
   }
   if (path.resolve(fromPath) === path.resolve(toPath)) {
-    throw new Error(`Publish copy source and destination are identical: ${fromPath}`);
+    throw new Error(
+      `Publish copy source and destination are identical: ${fromPath}`,
+    );
   }
   const before = await fs.lstat(fromPath, { bigint: true });
   if (!before.isFile() || before.isSymbolicLink()) {
@@ -484,7 +486,9 @@ async function copyPublishExtraFile(fromPath, toPath, capturedBytes) {
     before.size !== after.size ||
     before.mtimeNs !== after.mtimeNs
   ) {
-    throw new Error(`Publish copy source changed while it was read: ${fromPath}`);
+    throw new Error(
+      `Publish copy source changed while it was read: ${fromPath}`,
+    );
   }
   await fs.outputFile(toPath, bytes);
 }
@@ -595,7 +599,8 @@ async function readManifestBoundInventory(copyConfig, fromPath) {
     );
   }
   const schemaEntries = (manifest.support_artifacts ?? []).filter(
-    (artifact) => artifact.kind === publishCatalogArtifactPaths.schemaArtifactKind,
+    (artifact) =>
+      artifact.kind === publishCatalogArtifactPaths.schemaArtifactKind,
   );
   if (schemaEntries.length !== 1) {
     throw new Error(
@@ -632,7 +637,8 @@ async function readManifestBoundInventory(copyConfig, fromPath) {
     strict: false,
   });
   const buildRecordValidators = new Map();
-  const buildArtifacts = manifest[publishCatalogArtifactPaths.buildArtifactsField];
+  const buildArtifacts =
+    manifest[publishCatalogArtifactPaths.buildArtifactsField];
   if (!Array.isArray(buildArtifacts)) {
     throw new Error(
       `${copyConfig.filesFromManifest} has no configured build-artifact array.`,
@@ -942,6 +948,7 @@ for (const [relativeBinPath, entrypoint] of Object.entries(
     exportName = "runCli",
     errorPrefix = `${packageName} error:`,
     conciseErrorCodes = [],
+    ignoreBrokenPipe = false,
   } = entrypoint;
   const binPath = path.join(outputDir, relativeBinPath);
 
@@ -951,6 +958,13 @@ for (const [relativeBinPath, entrypoint] of Object.entries(
     `#!/usr/bin/env node
 
 const { ${exportName} } = require(${JSON.stringify(requirePath)});
+
+if (${JSON.stringify(ignoreBrokenPipe)}) {
+  process.stdout.on("error", (error) => {
+    if (error?.code === "EPIPE") process.exit(0);
+    throw error;
+  });
+}
 
 ${exportName}(process.argv.slice(2))
   .then((exitCode) => {

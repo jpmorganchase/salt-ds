@@ -57,8 +57,80 @@ describe("review catalog adapter", () => {
       ],
       package_versions: { "@salt-ds/core": "1.36.0" },
     };
-    const first = analyzeSaltCode({ reviewCatalog: storeCatalog, store }, input);
-    const second = analyzeSaltCode({ reviewCatalog: storeCatalog, store }, input);
+    const first = analyzeSaltCode(
+      { reviewCatalog: storeCatalog, store },
+      input,
+    );
+    const second = analyzeSaltCode(
+      { reviewCatalog: storeCatalog, store },
+      input,
+    );
     expect(canonicalJson(second)).toBe(canonicalJson(first));
+  });
+
+  it("allows the isolated scanner to lower per-file execution ceilings", () => {
+    const result = analyzeSaltCode(
+      { reviewCatalog: storeCatalog, store },
+      {
+        artifacts: [
+          {
+            id: "limited.tsx",
+            language: "tsx",
+            text: 'import { Button } from "@salt-ds/core"; export const Demo = () => <Button />;',
+          },
+        ],
+      },
+      null,
+      null,
+      "caller_package_versions",
+      { max_ast_nodes_per_artifact: 1 },
+    );
+    expect(result.results[0]).toMatchObject({
+      outcome: "not_evaluated",
+      findings: [],
+      coverage: { parser: "limited", evaluated_rule_ids: [] },
+    });
+  });
+
+  it("keeps transport defaults intact while permitting a bounded scanner byte ceiling", () => {
+    const text = " ".repeat(300 * 1024);
+    const input = {
+      artifacts: [{ id: "large.ts", language: "typescript" as const, text }],
+    };
+    expect(() =>
+      analyzeSaltCode({ reviewCatalog: storeCatalog, store }, input),
+    ).toThrow(/at most 262144 UTF-8 bytes per artifact/u);
+    expect(() =>
+      analyzeSaltCode(
+        { reviewCatalog: storeCatalog, store },
+        input,
+        null,
+        null,
+        "caller_package_versions",
+        { max_artifact_utf8_bytes: 300 * 1024 },
+      ),
+    ).not.toThrow();
+  });
+
+  it.each([
+    { max_artifact_utf8_bytes: 0 },
+    { max_ast_nodes_per_artifact: 1_000_001 },
+    { max_facts_per_artifact: 100_001 },
+    { max_rule_comparisons_per_artifact: 250_001 },
+  ])("rejects an invalid scanner execution limit %#", (executionLimits) => {
+    expect(() =>
+      analyzeSaltCode(
+        { reviewCatalog: storeCatalog, store },
+        {
+          artifacts: [
+            { id: "valid.ts", language: "typescript", text: "export {};" },
+          ],
+        },
+        null,
+        null,
+        "caller_package_versions",
+        executionLimits,
+      ),
+    ).toThrow(RangeError);
   });
 });

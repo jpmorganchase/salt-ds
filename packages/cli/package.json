@@ -21,10 +21,13 @@
     "bin/salt-ds.js": {
       "requirePath": "../dist-cjs/index.js",
       "errorPrefix": "salt-ds error:",
+      "ignoreBrokenPipe": true,
       "conciseErrorCodes": [
         "SALT_CLI_USAGE",
         "SALT_PROJECT_ROOT_NOT_DIRECTORY",
-        "SALT_PROJECT_ROOT_UNAVAILABLE"
+        "SALT_PROJECT_ROOT_UNAVAILABLE",
+        "SALT_CONFIG_INVALID",
+        "SALT_CLI_SCAN_FAILED"
       ]
     }
   },
@@ -36,6 +39,9 @@
     },
     "./package.json": "./package.json"
   },
+  "publishAdditionalEntryPaths": [
+    "src/scan/scannerWorker.ts"
+  ],
   "typescriptInclude": [
     "src/index.ts"
   ],

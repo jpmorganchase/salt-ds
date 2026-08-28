@@ -73,3 +73,36 @@ export function runOfflineNetworkGuardSelfTest() {
     );
   }
 }
+
+export function runOfflineScannerWorkerContainmentSelfTest() {
+  const source = [
+    'const { Worker } = await import("node:worker_threads");',
+    "let blocked = false;",
+    "try { new Worker('data:text/javascript,export{}', { type: 'module' }); }",
+    `catch (error) { blocked = String(error?.message).includes(${JSON.stringify(OFFLINE_NETWORK_ERROR_PREFIX)}); }`,
+    "if (!blocked) throw new Error('nested scanner Worker was allowed');",
+  ].join("\n");
+  const result = spawnSync(
+    process.execPath,
+    [
+      "--import",
+      offlineNetworkGuardUrl,
+      "--input-type=module",
+      "--eval",
+      source,
+    ],
+    {
+      encoding: "utf8",
+      env: {
+        ...process.env,
+        SALT_OFFLINE_ALLOW_SCANNER_WORKER: "1",
+        SALT_SCANNER_WORKER_CONTEXT: "1",
+      },
+    },
+  );
+  if (result.status !== 0) {
+    throw new Error(
+      `Offline scanner containment self-test failed.\nstdout:\n${result.stdout}\nstderr:\n${result.stderr}`,
+    );
+  }
+}

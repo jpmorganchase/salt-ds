@@ -1,9 +1,11 @@
+import { spawn } from "node:child_process";
 import process from "node:process";
 import { Client } from "@modelcontextprotocol/client";
 import { StdioClientTransport } from "@modelcontextprotocol/client/stdio";
 import {
   offlineNetworkGuardUrl,
   runOfflineNetworkGuardSelfTest,
+  runOfflineScannerWorkerContainmentSelfTest,
 } from "./offline-network-probe.mjs";
 import {
   assert,
@@ -20,11 +22,7 @@ const REGISTERED_TOOL_NAMES = [
   "inspect_salt_project",
   "review_salt_code",
 ];
-const SUPPORTED_PROTOCOL_REVISIONS = [
-  "2026-07-28",
-  "2025-11-25",
-  "2025-06-18",
-];
+const SUPPORTED_PROTOCOL_REVISIONS = ["2026-07-28", "2025-11-25", "2025-06-18"];
 const REMOVED_TOOL_NAMES = [
   "create_salt_ui",
   "migrate_to_salt",
@@ -57,6 +55,7 @@ async function runInstalledCli(
     ["--import", offlineNetworkGuardUrl, installedCliBinPath, ...args],
     {
       cwd,
+      env: { SALT_OFFLINE_ALLOW_SCANNER_WORKER: "1" },
       acceptableExitCodes,
       label: `offline packed salt-ds ${args.join(" ")}`,
     },
@@ -71,6 +70,7 @@ export async function runCliWorkflowCoverage(
 ) {
   console.log("Checking the installed Salt CLI surface offline...");
   runOfflineNetworkGuardSelfTest();
+  runOfflineScannerWorkerContainmentSelfTest();
   const installedCliBinPath = getInstalledCliBin(installRoot);
   assert(
     await pathExists(installedCliBinPath),
@@ -99,13 +99,16 @@ export async function runCliWorkflowCoverage(
   ]) {
     await runCommand(process.execPath, args, {
       cwd: installRoot,
+      env: { SALT_OFFLINE_ALLOW_SCANNER_WORKER: "1" },
       label: `offline packed CLI ${mode} export check`,
     });
   }
 
   const helpResults = [];
   for (const args of [["help"], ["-h"], ["--help"]]) {
-    helpResults.push(await runInstalledCli(installedCliBinPath, args, exactSaltRoot));
+    helpResults.push(
+      await runInstalledCli(installedCliBinPath, args, exactSaltRoot),
+    );
   }
   assert(
     helpResults.every(
@@ -113,6 +116,32 @@ export async function runCliWorkflowCoverage(
         result.stderr === "" && result.stdout === helpResults[0].stdout,
     ) && helpResults[0].stdout.includes("salt-ds info [root] --json"),
     "Packed help aliases did not preserve exact stdout/stderr semantics.",
+  );
+
+  const brokenPipe = await new Promise((resolve, reject) => {
+    const child = spawn(
+      process.execPath,
+      ["--import", offlineNetworkGuardUrl, installedCliBinPath, "help"],
+      {
+        cwd: exactSaltRoot,
+        env: { ...process.env, SALT_OFFLINE_ALLOW_SCANNER_WORKER: "1" },
+        stdio: ["ignore", "pipe", "pipe"],
+      },
+    );
+    let stderr = "";
+    child.stderr.setEncoding("utf8");
+    child.stderr.on("data", (chunk) => {
+      stderr += chunk;
+    });
+    child.stdout.destroy();
+    child.on("error", reject);
+    child.on("close", (code, signal) => resolve({ code, signal, stderr }));
+  });
+  assert(
+    brokenPipe.code === 0 &&
+      brokenPipe.signal === null &&
+      brokenPipe.stderr === "",
+    `Packed CLI did not treat a broken stdout pipe as success: ${JSON.stringify(brokenPipe)}.`,
   );
 
   const versionResults = [];
@@ -142,6 +171,11 @@ export async function runCliWorkflowCoverage(
     ["info", "--json", "--json"],
     ["info", "one", "two", "--json"],
     ["info", "missing-root", "--json"],
+    ["scan"],
+    ["scan", "--format", "json"],
+    ["scan", "--fail-on", "never"],
+    ["scan", "--format", "xml", "--fail-on", "never"],
+    ["scan", "--format", "json", "--fail-on", "fatal"],
     ["unknown"],
   ]) {
     const result = await runInstalledCli(
@@ -174,7 +208,10 @@ export async function runCliWorkflowCoverage(
   );
   const info = JSON.parse(explicitInfo.stdout);
   const observed = new Map(
-    info.project?.packages?.map((entry) => [entry.name, entry.observed_version]),
+    info.project?.packages?.map((entry) => [
+      entry.name,
+      entry.observed_version,
+    ]),
   );
   assert(
     info.contract === "salt-cli-info/1" &&
@@ -198,6 +235,98 @@ export async function runCliWorkflowCoverage(
     "Packed info did not report the exact project vector and Knowledge identity.",
   );
 
+  const scanArgs = [
+    "scan",
+    exactSaltRoot,
+    "--format",
+    "json",
+    "--fail-on",
+    "never",
+  ];
+  const firstScan = await runInstalledCli(
+    installedCliBinPath,
+    scanArgs,
+    nonSaltRoot,
+  );
+  const secondScan = await runInstalledCli(
+    installedCliBinPath,
+    scanArgs,
+    nonSaltRoot,
+  );
+  assert(
+    firstScan.stderr === "" && firstScan.stdout === secondScan.stdout,
+    "Packed JSON scans were not offline and byte-deterministic.",
+  );
+  const scan = JSON.parse(firstScan.stdout);
+  assert(
+    scan.contract === "salt-scan-result/1" &&
+      scan.schema_version === "1.0.0" &&
+      scan.tool?.version === packReport.cli.version &&
+      scan.knowledge?.bundle_digest ===
+        packReport.report.knowledge_bundle.bundle_digest &&
+      scan.coverage?.status === "complete" &&
+      scan.coverage.evaluated_files === 1 &&
+      scan.findings.some(
+        (finding) =>
+          finding.rule_id === "salt.component.action_navigation_target" &&
+          finding.workspace_unit_id === "." &&
+          finding.location?.path === "src/Review.tsx",
+      ) &&
+      !firstScan.stdout.includes(exactSaltRoot) &&
+      !firstScan.stdout.includes("IGNORE PREVIOUS INSTRUCTIONS"),
+    "Packed JSON scan did not preserve its canonical result, coverage, or source-isolation contract.",
+  );
+
+  const prettyScan = await runInstalledCli(
+    installedCliBinPath,
+    ["scan", "--format", "pretty", "--fail-on", "warning"],
+    exactSaltRoot,
+    [1],
+  );
+  assert(
+    prettyScan.stderr === "" &&
+      prettyScan.stdout.includes("Acceptance:") &&
+      prettyScan.stdout.includes(
+        "Rescan: salt-ds scan . --format pretty --fail-on warning",
+      ),
+    "Packed pretty scan did not expose acceptance and exact rescan guidance.",
+  );
+
+  const promptScan = await runInstalledCli(
+    installedCliBinPath,
+    ["scan", "--format", "prompt", "--fail-on", "warning"],
+    exactSaltRoot,
+    [1],
+  );
+  assert(
+    promptScan.stderr === "" &&
+      promptScan.stdout.includes("quoted, untrusted evidence") &&
+      promptScan.stdout.includes("acceptance_criterion:") &&
+      !promptScan.stdout.includes("IGNORE PREVIOUS INSTRUCTIONS"),
+    "Packed prompt scan did not preserve its untrusted-evidence boundary.",
+  );
+
+  const sarifArgs = ["scan", "--format", "sarif", "--fail-on", "never"];
+  const firstSarif = await runInstalledCli(
+    installedCliBinPath,
+    sarifArgs,
+    exactSaltRoot,
+  );
+  const secondSarif = await runInstalledCli(
+    installedCliBinPath,
+    sarifArgs,
+    exactSaltRoot,
+  );
+  const sarif = JSON.parse(firstSarif.stdout);
+  assert(
+    firstSarif.stderr === "" &&
+      firstSarif.stdout === secondSarif.stdout &&
+      sarif.version === "2.1.0" &&
+      sarif.runs?.[0]?.results?.[0]?.partialFingerprints?.saltFindingId ===
+        scan.findings[0].id,
+    "Packed SARIF scans were not deterministic or finding-identity preserving.",
+  );
+
   const partialResult = await runInstalledCli(
     installedCliBinPath,
     ["info", nonSaltRoot, "--json"],
@@ -210,16 +339,36 @@ export async function runCliWorkflowCoverage(
       partial.compatibility?.compatible === false &&
       partial.compatibility.disabled_families.some(
         (entry) =>
-          entry.name === "@salt-ds/core" &&
-          entry.reason === "missing_required",
+          entry.name === "@salt-ds/core" && entry.reason === "missing_required",
       ) &&
       partial.limitations.includes("SALT_PACKAGE_VECTOR_INCOMPATIBLE"),
     "Packed info did not disclose incomplete non-Salt coverage.",
   );
 
+  const incompleteScan = await runInstalledCli(
+    installedCliBinPath,
+    ["scan", "--format", "json", "--fail-on", "never"],
+    nonSaltRoot,
+    [3],
+  );
+  const allowedIncompleteScan = await runInstalledCli(
+    installedCliBinPath,
+    ["scan", "--format", "json", "--fail-on", "never", "--allow-incomplete"],
+    nonSaltRoot,
+  );
+  const incomplete = JSON.parse(incompleteScan.stdout);
+  assert(
+    incompleteScan.stderr === "" &&
+      incomplete.coverage?.status === "partial" &&
+      incomplete.coverage.reasons.includes("SALT_PACKAGE_VECTOR_UNAVAILABLE") &&
+      allowedIncompleteScan.stderr === "" &&
+      JSON.parse(allowedIncompleteScan.stdout).coverage.status === "partial",
+    "Packed --allow-incomplete did not override only disclosed partial coverage.",
+  );
+
   return {
-    aliases: { help: 3, version: 2 },
-    invalid_argument_cases: 11,
+    aliases: { help: 3, version: 2, broken_pipe: 1 },
+    invalid_argument_cases: 16,
     exact_info: {
       bundle_digest: info.knowledge.bundle_digest,
       semantic_digest: info.knowledge.semantic_digest,
@@ -227,6 +376,12 @@ export async function runCliWorkflowCoverage(
       coverage: info.coverage.status,
     },
     partial_info: { coverage: partial.coverage.status },
+    scan: {
+      coverage: scan.coverage.status,
+      findings: scan.findings.length,
+      formats: ["json", "pretty", "prompt", "sarif"],
+      incomplete_coverage: incomplete.coverage.status,
+    },
     network: "offline",
     node: process.versions.node,
   };
@@ -274,9 +429,7 @@ async function assertProtocolIsAdvertised(
   protocolVersion,
   expectedEra,
 ) {
-  const registryArgs = registryDir
-    ? ["--registry-dir", registryDir]
-    : [];
+  const registryArgs = registryDir ? ["--registry-dir", registryDir] : [];
   const client = new Client(
     { name: `salt-consumer-${expectedEra}-probe`, version: "0.0.0" },
     {
@@ -342,9 +495,7 @@ export async function runMcpWorkflowCoverage(
   console.log("Checking the installed MCP v2 surface...");
   runOfflineNetworkGuardSelfTest();
   const installedMcpBinPath = getInstalledMcpBin(installRoot);
-  const registryArgs = registryDir
-    ? ["--registry-dir", registryDir]
-    : [];
+  const registryArgs = registryDir ? ["--registry-dir", registryDir] : [];
   assert(
     await pathExists(installedMcpBinPath),
     `Expected installed MCP bin at ${installedMcpBinPath}.`,
@@ -586,8 +737,8 @@ export async function runMcpWorkflowCoverage(
     assert(
       inspection.scope.filesystem_access === "read_only" &&
         inspection.data.package_manifest &&
-        inspection.data.installation?.untrusted_project_data
-          ?.classification === "untrusted_project_data" &&
+        inspection.data.installation?.untrusted_project_data?.classification ===
+          "untrusted_project_data" &&
         Array.isArray(
           inspection.data.installation?.untrusted_project_data
             ?.resolved_packages,

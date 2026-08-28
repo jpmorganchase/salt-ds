@@ -2,8 +2,8 @@ import { createHash } from "node:crypto";
 import type { KnowledgeRecordStore } from "../manifest/knowledgeStore.js";
 import type { ReviewCatalog } from "./reviewCatalogAdapter.js";
 import {
-  evaluateReviewRules,
   type EvaluatedReviewFinding,
+  evaluateReviewRules,
   MAX_REVIEW_RULE_COMPARISONS,
   type NonFindingVersionDecision,
   REVIEW_RULE_IDS,
@@ -15,7 +15,9 @@ import {
   MAX_SUBMITTED_AGGREGATE_AST_NODES,
   MAX_SUBMITTED_AGGREGATE_FACTS,
   MAX_SUBMITTED_AST_NODES,
+  MAX_SUBMITTED_AST_NODES_ABSOLUTE,
   MAX_SUBMITTED_FACTS,
+  MAX_SUBMITTED_FACTS_ABSOLUTE,
   type ParsedFactKind,
   parseSubmittedArtifact,
   type SubmittedAnalysisBudget,
@@ -40,6 +42,27 @@ export const MAX_REVIEW_ARTIFACTS = 8;
 export const MAX_REVIEW_ARTIFACT_ID_CHARS = 512;
 export const MAX_REVIEW_ARTIFACT_ID_JSON_UTF8_BYTES = 512;
 export const MAX_REVIEW_PACKAGE_VERSIONS = 32;
+export const MAX_REVIEW_SCAN_ARTIFACT_UTF8_BYTES = 5 * 1024 * 1024;
+
+export interface AnalyzeSaltCodeExecutionLimits {
+  max_artifact_utf8_bytes?: number;
+  max_ast_nodes_per_artifact?: number;
+  max_facts_per_artifact?: number;
+  max_rule_comparisons_per_artifact?: number;
+}
+
+function boundedExecutionLimit(
+  value: number | undefined,
+  fallback: number,
+  ceiling: number,
+  label: string,
+): number {
+  const selected = value ?? fallback;
+  if (!Number.isSafeInteger(selected) || selected < 1 || selected > ceiling) {
+    throw new RangeError(`${label} must be an integer from 1 to ${ceiling}.`);
+  }
+  return selected;
+}
 
 function jsonUtf8Bytes(payload: unknown): number {
   return Buffer.byteLength(JSON.stringify(payload), "utf8");
@@ -103,10 +126,7 @@ export interface ReviewSaltCodeContext {
   packageVersionEvidence?: Readonly<Record<string, string | null>>;
 }
 
-export type CompleteReviewFinding = Omit<
-  EvaluatedReviewFinding,
-  "evidence"
-> & {
+export type CompleteReviewFinding = Omit<EvaluatedReviewFinding, "evidence"> & {
   evidence: EvaluatedReviewFinding["evidence"] & {
     submitted_artifact_id: string;
   };
@@ -213,8 +233,33 @@ export function analyzeSaltCode(
   policy: ReviewProjectPolicyContext | null = null,
   projectContextDigest: string | null = null,
   contextSource: ReviewContextSource = "none",
+  executionLimits: AnalyzeSaltCodeExecutionLimits = {},
 ): CompleteReviewSaltCodeAnalysis {
   const { reviewCatalog: registry, store } = context;
+  const maxArtifactBytes = boundedExecutionLimit(
+    executionLimits.max_artifact_utf8_bytes,
+    MAX_REVIEW_ARTIFACT_UTF8_BYTES,
+    MAX_REVIEW_SCAN_ARTIFACT_UTF8_BYTES,
+    "max_artifact_utf8_bytes",
+  );
+  const maxAstNodes = boundedExecutionLimit(
+    executionLimits.max_ast_nodes_per_artifact,
+    MAX_SUBMITTED_AST_NODES,
+    MAX_SUBMITTED_AST_NODES_ABSOLUTE,
+    "max_ast_nodes_per_artifact",
+  );
+  const maxFacts = boundedExecutionLimit(
+    executionLimits.max_facts_per_artifact,
+    MAX_SUBMITTED_FACTS,
+    MAX_SUBMITTED_FACTS_ABSOLUTE,
+    "max_facts_per_artifact",
+  );
+  const maxRuleComparisons = boundedExecutionLimit(
+    executionLimits.max_rule_comparisons_per_artifact,
+    MAX_REVIEW_RULE_COMPARISONS,
+    MAX_REVIEW_RULE_COMPARISONS,
+    "max_rule_comparisons_per_artifact",
+  );
   if (
     input.artifacts.length < 1 ||
     input.artifacts.length > MAX_REVIEW_ARTIFACTS
@@ -261,11 +306,9 @@ export function analyzeSaltCode(
       throw new Error("review_salt_code requires unique artifact ids.");
     }
     artifactIds.add(artifact.id);
-    if (
-      Buffer.byteLength(artifact.text, "utf8") > MAX_REVIEW_ARTIFACT_UTF8_BYTES
-    ) {
+    if (Buffer.byteLength(artifact.text, "utf8") > maxArtifactBytes) {
       throw new Error(
-        `review_salt_code accepts at most ${MAX_REVIEW_ARTIFACT_UTF8_BYTES} UTF-8 bytes per artifact.`,
+        `review_salt_code accepts at most ${maxArtifactBytes} UTF-8 bytes per artifact.`,
       );
     }
   }
@@ -273,9 +316,13 @@ export function analyzeSaltCode(
     (total, artifact) => total + Buffer.byteLength(artifact.text, "utf8"),
     0,
   );
-  if (submittedBytes > MAX_REVIEW_SUBMITTED_UTF8_BYTES) {
+  const maxSubmittedBytes = Math.max(
+    MAX_REVIEW_SUBMITTED_UTF8_BYTES,
+    maxArtifactBytes,
+  );
+  if (submittedBytes > maxSubmittedBytes) {
     throw new Error(
-      `review_salt_code accepts at most ${MAX_REVIEW_SUBMITTED_UTF8_BYTES} aggregate submitted UTF-8 bytes.`,
+      `review_salt_code accepts at most ${maxSubmittedBytes} aggregate submitted UTF-8 bytes.`,
     );
   }
 
@@ -296,16 +343,21 @@ export function analyzeSaltCode(
     input.artifacts.filter((artifact) => /\S/u.test(artifact.text)).length,
   );
   const nodeShare = Math.min(
-    MAX_SUBMITTED_AST_NODES,
-    Math.floor(MAX_SUBMITTED_AGGREGATE_AST_NODES / evaluatedArtifactCount),
+    maxAstNodes,
+    executionLimits.max_ast_nodes_per_artifact === undefined
+      ? Math.floor(MAX_SUBMITTED_AGGREGATE_AST_NODES / evaluatedArtifactCount)
+      : maxAstNodes,
   );
   const factShare = Math.min(
-    MAX_SUBMITTED_FACTS,
-    Math.floor(MAX_SUBMITTED_AGGREGATE_FACTS / evaluatedArtifactCount),
+    maxFacts,
+    executionLimits.max_facts_per_artifact === undefined
+      ? Math.floor(MAX_SUBMITTED_AGGREGATE_FACTS / evaluatedArtifactCount)
+      : maxFacts,
   );
-  const comparisonShare = Math.floor(
-    MAX_REVIEW_RULE_COMPARISONS / evaluatedArtifactCount,
-  );
+  const comparisonShare =
+    executionLimits.max_rule_comparisons_per_artifact === undefined
+      ? Math.floor(MAX_REVIEW_RULE_COMPARISONS / evaluatedArtifactCount)
+      : maxRuleComparisons;
   const analyzedResults = input.artifacts.map((artifact) => {
     const artifactMetadata = {
       id: artifact.id,
@@ -543,8 +595,7 @@ export function analyzeSaltCode(
       location_encoding: "utf8_bytes_end_exclusive",
       project_policy: policyCoverage,
       detected_findings: detectedFindings,
-      detected_nonfinding_version_decisions:
-        detectedNonFindingVersionDecisions,
+      detected_nonfinding_version_decisions: detectedNonFindingVersionDecisions,
     },
     limitations: [
       contextSource === "none"
