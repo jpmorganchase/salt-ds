@@ -20,6 +20,10 @@ import {
   verifyStandaloneConsumerExample,
 } from "./consumer-smoke/fixture.mjs";
 import { parseArgs } from "./consumer-smoke/shared.mjs";
+import {
+  sha256,
+  writeJsonAtomic,
+} from "./saltAiEvidenceUtils.mjs";
 
 async function main() {
   const options = parseArgs(process.argv.slice(2));
@@ -81,9 +85,25 @@ async function main() {
         nonSaltRepo,
         localPackReport,
       );
+      const smokeReceiptPath = path.join(
+        path.dirname(localPackReport.reportPath),
+        "consumer-smoke-receipt.json",
+      );
+      await writeJsonAtomic(smokeReceiptPath, {
+        contract: "salt-ai-consumer-smoke/1",
+        schema_version: "1.0.0",
+        adapter: "@salt-ds/cli",
+        pack_report: {
+          path: path.basename(localPackReport.reportPath),
+          sha256: sha256(await fs.readFile(localPackReport.reportPath)),
+        },
+        result: "pass",
+        workflows: receipt,
+      });
       console.log(
         `Verified nonpublishable packed CLI workflows: ${JSON.stringify(receipt)}`,
       );
+      console.log(`Wrote consumer smoke receipt: ${smokeReceiptPath}`);
       console.log("");
       console.log("Consumer smoke test passed.");
       console.log(`Installed tools root: ${installedToolsRoot}`);

@@ -67,14 +67,7 @@ export const KNOWLEDGE_RECORD_FAMILIES = [
 export type KnowledgeRecordFamily = (typeof KNOWLEDGE_RECORD_FAMILIES)[number];
 
 export interface KnowledgeRecordStore {
-  readonly manifest: {
-    semantic_digest: string;
-    bundle_version?: string;
-    schema_version?: string;
-    bundle_digest?: string;
-    semantic_source_digest?: string;
-    compiler_digest?: string;
-  };
+  readonly manifest: KnowledgeManifestV1;
   getFamily(family: any): readonly any[];
   getRecord(family: any, id: string): any | null;
   getContentValue(reference: {
@@ -190,6 +183,8 @@ export class KnowledgeStore {
         ? raw.contract !== "salt-search-shard/1"
         : raw.contract !== "salt-knowledge-record-set/1") ||
       raw.schema_version !== "1.0.0" ||
+      (family === "search_document" &&
+        raw.scoring_version !== "salt-lexical-ranking/1") ||
       !Array.isArray(raw.records)
     ) {
       throw new Error(`Knowledge ${family} record envelope is invalid.`);

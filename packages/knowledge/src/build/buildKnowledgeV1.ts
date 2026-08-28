@@ -304,6 +304,7 @@ export async function buildKnowledgeV1(
   const searchShardBytes = canonicalJsonBytes({
     contract: "salt-search-shard/1",
     schema_version: "1.0.0",
+    scoring_version: "salt-lexical-ranking/1",
     first_key: searchRecords[0].key,
     last_key: searchRecords.at(-1)?.key,
     records: searchRecords,
@@ -318,6 +319,7 @@ export async function buildKnowledgeV1(
   const indexBytes = canonicalJsonBytes({
     contract: "salt-search-index/1",
     schema_version: "1.0.0",
+    scoring_version: "salt-lexical-ranking/1",
     shards: [
       {
         path: searchShardPath,

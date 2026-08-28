@@ -16,6 +16,7 @@ export * from "./manifest/knowledgeStore.js";
 export * from "./manifest/loadKnowledge.js";
 export * from "./manifest/pathCodec.js";
 export * from "./manifest/recordReferences.js";
+export * from "./markdown/resolveKnowledgeDocument.js";
 export * from "./policy/detection.js";
 export * from "./policy/index.js";
 export * from "./policy/layerDiagnostics.js";

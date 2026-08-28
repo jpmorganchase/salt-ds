@@ -23,123 +23,137 @@
       "id": "api-01",
       "query": "SaltProviderNext setup",
       "category": "guide",
-      "gold": ["record:guide:developing"]
+      "gold": ["record:component:component.saltprovidernext"]
     },
     {
       "id": "api-02",
       "query": "global css",
       "category": "guide",
-      "gold": ["record:guide:developing"]
+      "gold": ["record:package:package.salt-ds-theme"]
     },
     {
       "id": "api-03",
       "query": "theme next css",
       "category": "guide",
-      "gold": ["record:guide:developing"]
+      "gold": [
+        "record:package:package.salt-ds-theme",
+        "record:page:page.salt-components-salt-provider-next-examples"
+      ]
     },
     {
       "id": "api-04",
       "query": "Button appearance sentiment",
       "category": "api",
-      "gold": ["record:core:button"]
+      "gold": ["record:component:component.button"]
     },
     {
       "id": "api-05",
       "query": "deprecated Button variant",
       "category": "migration",
-      "gold": ["record:migration:core-button-variant-to-appearance-sentiment"]
+      "gold": [
+        "record:deprecation:deprecation.d21eac610fc9d6ab8ec1212e52d8c4c0ab5a7a84db9d01b834f8aabdfce372fe"
+      ]
     },
     {
       "id": "api-06",
       "query": "CheckboxIcon error replacement",
       "category": "migration",
-      "gold": ["record:migration:core-checkbox-icon-error-to-validation-status"]
+      "gold": [
+        "record:deprecation:deprecation.32d9f3fa4e06378c2c089193003b973f14c1fc79f537a65660214e618ff3d68b"
+      ]
     },
     {
       "id": "api-07",
       "query": "RadioButtonIcon error replacement",
       "category": "migration",
       "gold": [
-        "record:migration:core-radio-button-icon-error-to-validation-status"
+        "record:deprecation:deprecation.03fbdaa19ca66b9582c764e737d94a35e4388151d5ac8385c9ec258990dc9f81"
       ]
     },
     {
       "id": "api-08",
       "query": "Moment adapter migration",
       "category": "migration",
-      "gold": ["record:migration:date-adapters-moment-to-maintained-adapter"]
+      "gold": [
+        "record:deprecation:deprecation.ced9ce386e59938b987d44f7a72049f195ff5c91f226e6d77dbaba1eccb88f68"
+      ]
     },
     {
       "id": "api-09",
       "query": "spacing token",
       "category": "token",
-      "gold": ["record:token:spacing"]
+      "gold": ["record:token:--salt-spacing-100"]
     },
     {
       "id": "api-10",
       "query": "color token",
       "category": "token",
-      "gold": ["record:token:color"]
+      "gold": ["record:token:--salt-color-aqua-100"]
     },
     {
       "id": "api-11",
       "query": "density",
       "category": "foundation",
-      "gold": ["record:foundation:density"]
+      "gold": ["record:page:page.salt-foundations-density"]
     },
     {
       "id": "api-12",
       "query": "typography",
       "category": "foundation",
-      "gold": ["record:foundation:typography"]
+      "gold": ["record:page:page.salt-foundations-typography"]
     },
     {
       "id": "api-13",
       "query": "responsive layout",
       "category": "foundation",
-      "gold": ["record:foundation:responsiveness"]
+      "gold": ["record:component:component.flex-layout"]
     },
     {
       "id": "api-14",
       "query": "date adapter",
       "category": "api",
-      "gold": ["record:date-adapters:index"]
+      "gold": [
+        "record:page:page.salt-components-localization-provider-usage",
+        "record:component:component.localization-provider"
+      ]
     },
     {
       "id": "api-15",
       "query": "validation status",
       "category": "api",
-      "gold": ["record:core:form-field"]
+      "gold": [
+        "record:api_symbol:api-symbol.8cdff38c8d6b35dc4b1dee1670f39450355dee745484542b6a9ca5d56855537e"
+      ]
     },
     {
       "id": "api-16",
       "query": "SaltProvider mode",
       "category": "api",
-      "gold": ["record:core:salt-provider"]
+      "gold": ["record:component:component.salt-provider"]
     },
     {
       "id": "api-17",
       "query": "custom wrapper policy",
       "category": "guide",
-      "gold": ["record:guide:custom-wrappers"]
+      "gold": ["record:guide:guide.custom-wrappers"]
     },
     {
       "id": "api-18",
       "query": "composition pitfalls",
       "category": "guide",
-      "gold": ["record:guide:composition-pitfalls"]
+      "gold": ["record:guide:guide.composition-pitfalls"]
     },
     {
       "id": "api-19",
       "query": "supported platforms",
       "category": "guide",
-      "gold": ["record:guide:supported-platforms"]
+      "gold": ["record:page:page.salt-about-supported-platforms"]
     },
     {
       "id": "api-20",
       "query": "public support",
       "category": "guide",
-      "gold": ["record:guide:support-and-contributions"]
+      "gold": ["record:page:page.salt-support-and-contributions"]
     }
   ]
 }

@@ -231,6 +231,7 @@ async function buildMinimalKnowledgeBundle(): Promise<{
   await add("indexes/search/all.json", {
     contract: "salt-search-shard/1",
     schema_version: "1.0.0",
+    scoring_version: "salt-lexical-ranking/1",
     family: "search_document",
     records: [
       {

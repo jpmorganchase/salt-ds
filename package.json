@@ -43,6 +43,7 @@
     "eval:salt-ai:report": "node ./evals/salt-ai/scripts/buildReport.mjs",
     "validate:salt-ai:governance-receipts": "node ./scripts/validateSaltAiGovernanceReceipts.mjs",
     "seal:salt-ordinary-baseline": "node ./scripts/sealSaltOrdinaryBaseline.mjs",
+    "candidate:salt-ai:seal": "node ./scripts/sealSaltAiCandidateReceipt.mjs",
     "check:ai-tooling:pack": "node ./scripts/checkAiToolingPackageDryRun.mjs",
     "check:date-adapters:pack": "node ./scripts/checkDateAdaptersPackageDryRun.mjs",
     "check:core-react-types": "node ./scripts/checkCoreReactTypeCompatibility.mjs",

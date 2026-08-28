@@ -3,10 +3,11 @@
   "$id": "https://www.saltdesignsystem.com/ai/schemas/search-index-1.json",
   "title": "Salt knowledge search index v1",
   "type": "object",
-  "required": ["contract", "schema_version", "shards"],
+  "required": ["contract", "schema_version", "scoring_version", "shards"],
   "properties": {
     "contract": { "const": "salt-search-index/1" },
     "schema_version": { "const": "1.0.0" },
+    "scoring_version": { "const": "salt-lexical-ranking/1" },
     "shards": {
       "type": "array",
       "minItems": 1,

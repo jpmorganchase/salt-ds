@@ -107,8 +107,18 @@ const SEARCH_RESULT_SCHEMA = z
               uri: CATALOG_RESOURCE_URI_SCHEMA,
               evidence: z
                 .object({
+                  scoring_version: z.literal("salt-lexical-ranking/1"),
                   matched_fields: z.array(
-                    z.enum(["title", "summary", "terms"]),
+                    z.enum([
+                      "record_id",
+                      "export_name",
+                      "canonical_name",
+                      "title",
+                      "aliases",
+                      "search_terms",
+                      "summary",
+                      "kind",
+                    ]),
                   ),
                   matched_terms: z.array(z.string()).max(8),
                   score: z.number().int().nonnegative(),

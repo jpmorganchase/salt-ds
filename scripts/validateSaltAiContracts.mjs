@@ -341,6 +341,8 @@ async function validateDecisionDocs() {
 async function validateRootScripts() {
   const manifest = await readJson(path.join(repositoryRoot, "package.json"));
   const required = {
+    "candidate:salt-ai:seal":
+      "node ./scripts/sealSaltAiCandidateReceipt.mjs",
     "validate:salt-ai:contracts": "node ./scripts/validateSaltAiContracts.mjs",
     "retire:salt-ai:premerge-evidence":
       "node ./scripts/retireSaltAiPremergeEvidence.mjs",
@@ -355,6 +357,16 @@ async function validateRootScripts() {
     );
 }
 
+schemaValidator(
+  await readJson(
+    path.join(
+      repositoryRoot,
+      "scripts",
+      "schemas",
+      "saltAiCandidateReceiptV1.schema.json",
+    ),
+  ),
+);
 await validatePackageDocs();
 await validateVisibility();
 await validateMigrations();

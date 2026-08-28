@@ -1,6 +1,7 @@
 import {
   searchSaltRecords,
   type KnowledgeRecordStore,
+  type KnowledgeSearchMatchedField,
   type KnowledgeSearchTargetFamilyName,
   type SaltKnowledgeRecordReference,
   type SearchSaltInput,
@@ -24,7 +25,8 @@ export interface SearchSaltMatch {
   summary: string;
   uri: string;
   evidence: {
-    matched_fields: Array<"title" | "summary" | "terms">;
+    scoring_version: "salt-lexical-ranking/1";
+    matched_fields: KnowledgeSearchMatchedField[];
     matched_terms: string[];
     score: number;
   };
@@ -101,7 +103,12 @@ export function searchSalt(
       title: match.title,
       summary: boundedSummary(match.summary),
       uri,
-      evidence: match.evidence,
+      evidence: {
+        scoring_version: match.evidence.scoring_version,
+        matched_fields: match.evidence.matched_fields,
+        matched_terms: match.evidence.matched_terms,
+        score: match.evidence.score,
+      },
       provenance: { resource_uri: uri },
     };
   });

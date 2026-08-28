@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-candidate-receipt-1.json",
+  "title": "Salt AI candidate receipt v1",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "contract",
+    "stage",
+    "source_commit",
+    "source_clean",
+    "publishable",
+    "policy_profile",
+    "pack_report",
+    "packages",
+    "knowledge_bundle",
+    "verification_outputs",
+    "external_mutations",
+    "result"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-candidate-receipt-1.json"
+    },
+    "schema_version": { "const": "1.0.0" },
+    "contract": { "const": "salt-ai-candidate-receipt/1" },
+    "stage": { "const": "R1_PRE_AGENT" },
+    "source_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "source_clean": { "const": true },
+    "publishable": { "const": false },
+    "policy_profile": { "const": "pre-agent-support" },
+    "pack_report": {
+      "type": "object",
+      "required": ["path", "sha256", "contract", "policy_digest"],
+      "properties": {
+        "path": { "$ref": "#/$defs/portablePath" },
+        "sha256": { "$ref": "#/$defs/digest" },
+        "contract": { "const": "salt-ai-pack-report@1" },
+        "policy_digest": { "$ref": "#/$defs/digest" }
+      },
+      "additionalProperties": false
+    },
+    "packages": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["name", "version", "tarball"],
+        "properties": {
+          "name": { "enum": ["@salt-ds/knowledge", "@salt-ds/cli"] },
+          "version": { "const": "0.0.0" },
+          "tarball": {
+            "type": "object",
+            "required": ["path", "sha256", "bytes"],
+            "properties": {
+              "path": { "$ref": "#/$defs/portablePath" },
+              "sha256": { "$ref": "#/$defs/digest" },
+              "bytes": { "type": "integer", "minimum": 1 }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "knowledge_bundle": {
+      "type": "object",
+      "required": [
+        "manifest_sha256",
+        "bundle_digest",
+        "semantic_digest",
+        "semantic_source_digest",
+        "compiler_digest"
+      ],
+      "properties": {
+        "manifest_sha256": { "$ref": "#/$defs/digest" },
+        "bundle_digest": { "$ref": "#/$defs/digest" },
+        "semantic_digest": { "$ref": "#/$defs/digest" },
+        "semantic_source_digest": { "$ref": "#/$defs/digest" },
+        "compiler_digest": { "$ref": "#/$defs/digest" }
+      },
+      "additionalProperties": false
+    },
+    "verification_outputs": {
+      "type": "object",
+      "required": ["retrieval", "consumer_smoke"],
+      "properties": {
+        "retrieval": {
+          "type": "object",
+          "required": [
+            "scoring_version",
+            "query_count",
+            "micro_recall_at_5",
+            "category_macro_recall_at_5",
+            "corpora",
+            "result_sha256"
+          ],
+          "properties": {
+            "scoring_version": { "const": "salt-lexical-ranking/1" },
+            "query_count": { "type": "integer", "minimum": 40 },
+            "micro_recall_at_5": {
+              "type": "number",
+              "minimum": 0.95,
+              "maximum": 1
+            },
+            "category_macro_recall_at_5": {
+              "type": "number",
+              "minimum": 0.95,
+              "maximum": 1
+            },
+            "corpora": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "required": ["path", "sha256", "queries"],
+                "properties": {
+                  "path": { "$ref": "#/$defs/portablePath" },
+                  "sha256": { "$ref": "#/$defs/digest" },
+                  "queries": { "type": "integer", "minimum": 1 }
+                },
+                "additionalProperties": false
+              }
+            },
+            "result_sha256": { "$ref": "#/$defs/digest" }
+          },
+          "additionalProperties": false
+        },
+        "consumer_smoke": {
+          "type": "object",
+          "required": ["path", "sha256", "contract", "result"],
+          "properties": {
+            "path": { "$ref": "#/$defs/portablePath" },
+            "sha256": { "$ref": "#/$defs/digest" },
+            "contract": { "const": "salt-ai-consumer-smoke/1" },
+            "result": { "const": "pass" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "external_mutations": {
+      "type": "array",
+      "maxItems": 0
+    },
+    "result": { "const": "pass" }
+  },
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "portablePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    }
+  },
+  "additionalProperties": false
+}

@@ -171,6 +171,12 @@ export async function runCliWorkflowCoverage(
     ["info", "--json", "--json"],
     ["info", "one", "two", "--json"],
     ["info", "missing-root", "--json"],
+    ["docs"],
+    ["docs", "component.button"],
+    ["docs", "component.button", "--format", "yaml"],
+    ["context"],
+    ["context", "Button", "--format", "json"],
+    ["context", "Button", "--format", "json", "--limit", "0"],
     ["scan"],
     ["scan", "--format", "json"],
     ["scan", "--fail-on", "never"],
@@ -233,6 +239,184 @@ export async function runCliWorkflowCoverage(
       Array.isArray(info.compatibility.disabled_families) &&
       Array.isArray(info.limitations),
     "Packed info did not report the exact project vector and Knowledge identity.",
+  );
+
+  const exactDocsArgs = ["docs", "component.button", "--format", "json"];
+  const firstExactDocs = await runInstalledCli(
+    installedCliBinPath,
+    exactDocsArgs,
+    exactSaltRoot,
+  );
+  const secondExactDocs = await runInstalledCli(
+    installedCliBinPath,
+    exactDocsArgs,
+    exactSaltRoot,
+  );
+  const exactDocs = JSON.parse(firstExactDocs.stdout);
+  assert(
+    firstExactDocs.stderr === "" &&
+      firstExactDocs.stdout === secondExactDocs.stdout &&
+      exactDocs.contract === "salt-knowledge-document/1" &&
+      exactDocs.status === "resolved" &&
+      exactDocs.bundle?.digest ===
+        packReport.report.knowledge_bundle.bundle_digest &&
+      exactDocs.document?.reference?.family === "component" &&
+      exactDocs.document?.reference?.id === "component.button" &&
+      exactDocs.document?.content?.value &&
+      exactDocs.document.citation?.record_key ===
+        "record:component:component.button" &&
+      Array.isArray(exactDocs.document.citation.source_records) &&
+      !firstExactDocs.stdout.includes(exactSaltRoot),
+    "Packed docs did not return deterministic manifest-bound Button content.",
+  );
+  const exactDocsMarkdown = await runInstalledCli(
+    installedCliBinPath,
+    ["docs", "component.button", "--format", "markdown"],
+    exactSaltRoot,
+  );
+  assert(
+    exactDocsMarkdown.stderr === "" &&
+      exactDocsMarkdown.stdout.includes("# Button") &&
+      exactDocsMarkdown.stdout.includes(
+        "Record: record:component:component.button",
+      ) &&
+      exactDocsMarkdown.stdout.includes(
+        packReport.report.knowledge_bundle.bundle_digest,
+      ) &&
+      !/storybook/iu.test(exactDocsMarkdown.stdout),
+    "Packed Markdown docs were not exact, cited, or Storybook-independent.",
+  );
+
+  const ambiguousDocs = JSON.parse(
+    (
+      await runInstalledCli(
+        installedCliBinPath,
+        ["docs", "Vertical navigation", "--format", "json"],
+        exactSaltRoot,
+        [1],
+      )
+    ).stdout,
+  );
+  const missingDocs = JSON.parse(
+    (
+      await runInstalledCli(
+        installedCliBinPath,
+        ["docs", "definitely-missing-record", "--format", "json"],
+        exactSaltRoot,
+        [1],
+      )
+    ).stdout,
+  );
+  const incompatibleDocs = JSON.parse(
+    (
+      await runInstalledCli(
+        installedCliBinPath,
+        [
+          "docs",
+          "component.localization-provider",
+          "--format",
+          "json",
+        ],
+        exactSaltRoot,
+        [1],
+      )
+    ).stdout,
+  );
+  assert(
+    ambiguousDocs.status === "ambiguous" &&
+      ambiguousDocs.choices.some(
+        (choice) =>
+          choice.reference?.id === "component.vertical-navigation",
+      ) &&
+      ambiguousDocs.choices.some(
+        (choice) => choice.reference?.id === "pattern.vertical-navigation",
+      ) &&
+      missingDocs.status === "not_found" &&
+      missingDocs.choices.length === 0 &&
+      incompatibleDocs.status === "incompatible" &&
+      incompatibleDocs.excluded_package_families.some(
+        (entry) =>
+          entry.name === "@salt-ds/date-components" &&
+          entry.state === "missing_optional",
+      ),
+    "Packed docs guessed an ambiguity or omitted missing/version-filtered disclosure.",
+  );
+
+  const contextArgs = [
+    "context",
+    "Button appearance",
+    "--format",
+    "json",
+    "--limit",
+    "5",
+  ];
+  const firstContext = await runInstalledCli(
+    installedCliBinPath,
+    contextArgs,
+    exactSaltRoot,
+  );
+  const secondContext = await runInstalledCli(
+    installedCliBinPath,
+    contextArgs,
+    exactSaltRoot,
+  );
+  const context = JSON.parse(firstContext.stdout);
+  const emptyContext = JSON.parse(
+    (
+      await runInstalledCli(
+        installedCliBinPath,
+        ["context", "", "--format", "json", "--limit", "5"],
+        exactSaltRoot,
+      )
+    ).stdout,
+  );
+  const filteredContext = JSON.parse(
+    (
+      await runInstalledCli(
+        installedCliBinPath,
+        [
+          "context",
+          "Localization provider",
+          "--format",
+          "json",
+          "--limit",
+          "5",
+        ],
+        exactSaltRoot,
+      )
+    ).stdout,
+  );
+  const contextMarkdown = await runInstalledCli(
+    installedCliBinPath,
+    ["context", "Button appearance", "--format", "markdown", "--limit", "5"],
+    exactSaltRoot,
+  );
+  assert(
+    firstContext.stderr === "" &&
+      firstContext.stdout === secondContext.stdout &&
+      Buffer.byteLength(firstContext.stdout, "utf8") <= 16 * 1024 &&
+      context.contract === "salt-knowledge-context/1" &&
+      context.scoring_version === "salt-lexical-ranking/1" &&
+      /^sha256:[0-9a-f]{64}$/u.test(context.context_digest) &&
+      context.bundle_digest ===
+        packReport.report.knowledge_bundle.bundle_digest &&
+      context.matches.some(
+        (match) =>
+          match.reference?.family === "component" &&
+          match.reference?.id === "component.button" &&
+          match.citation?.record_key ===
+            "record:component:component.button",
+      ) &&
+      emptyContext.matches.length === 0 &&
+      filteredContext.matches.every(
+        (match) => match.reference?.id !== "component.localization-provider",
+      ) &&
+      filteredContext.excluded_package_families.some(
+        (entry) => entry.name === "@salt-ds/date-components",
+      ) &&
+      Buffer.byteLength(contextMarkdown.stdout, "utf8") <= 16 * 1024 &&
+      contextMarkdown.stdout.includes("Citation: record:component:component.button"),
+    "Packed context was not deterministic, bounded, cited, empty-safe, or version-filtered.",
   );
 
   const scanArgs = [
@@ -368,7 +552,7 @@ export async function runCliWorkflowCoverage(
 
   return {
     aliases: { help: 3, version: 2, broken_pipe: 1 },
-    invalid_argument_cases: 16,
+    invalid_argument_cases: 22,
     exact_info: {
       bundle_digest: info.knowledge.bundle_digest,
       semantic_digest: info.knowledge.semantic_digest,
@@ -376,6 +560,13 @@ export async function runCliWorkflowCoverage(
       coverage: info.coverage.status,
     },
     partial_info: { coverage: partial.coverage.status },
+    retrieval: {
+      docs: ["exact", "ambiguous", "missing", "version-filtered"],
+      context_matches: context.matches.length,
+      context_digest: context.context_digest,
+      scoring_version: context.scoring_version,
+      max_utf8_bytes: 16 * 1024,
+    },
     scan: {
       coverage: scan.coverage.status,
       findings: scan.findings.length,

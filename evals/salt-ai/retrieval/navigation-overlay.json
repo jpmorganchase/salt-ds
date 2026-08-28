@@ -22,121 +22,124 @@
       "id": "nav-01",
       "query": "button or link for navigation",
       "category": "component",
-      "gold": ["record:core:button", "record:core:link"]
+      "gold": [
+        "record:component:component.button",
+        "record:component:component.link"
+      ]
     },
     {
       "id": "nav-02",
       "query": "vertical navigation",
       "category": "pattern",
-      "gold": ["record:pattern:vertical-navigation"]
+      "gold": ["record:pattern:pattern.vertical-navigation"]
     },
     {
       "id": "nav-03",
       "query": "menu button",
       "category": "pattern",
-      "gold": ["record:pattern:menu-button"]
+      "gold": ["record:pattern:pattern.menu-button"]
     },
     {
       "id": "nav-04",
       "query": "mega menu",
       "category": "component",
-      "gold": ["record:lab:mega-menu"]
+      "gold": ["record:component:component.mega-menu"]
     },
     {
       "id": "nav-05",
       "query": "dialog overlay",
       "category": "component",
-      "gold": ["record:core:dialog"]
+      "gold": ["record:component:component.dialog"]
     },
     {
       "id": "nav-06",
       "query": "drawer",
       "category": "component",
-      "gold": ["record:core:drawer"]
+      "gold": ["record:component:component.drawer"]
     },
     {
       "id": "nav-07",
       "query": "side panel",
       "category": "component",
-      "gold": ["record:core:side-panel"]
+      "gold": ["record:component:component.side-panel"]
     },
     {
       "id": "nav-08",
       "query": "tooltip",
       "category": "component",
-      "gold": ["record:core:tooltip"]
+      "gold": ["record:component:component.tooltip"]
     },
     {
       "id": "nav-09",
       "query": "dropdown",
       "category": "component",
-      "gold": ["record:core:dropdown"]
+      "gold": ["record:component:component.dropdown"]
     },
     {
       "id": "nav-10",
       "query": "combo box",
       "category": "component",
-      "gold": ["record:core:combo-box"]
+      "gold": ["record:component:component.combo-box"]
     },
     {
       "id": "nav-11",
       "query": "labelled field",
       "category": "component",
-      "gold": ["record:core:form-field"]
+      "gold": ["record:component:component.form-field"]
     },
     {
       "id": "nav-12",
       "query": "form pattern",
       "category": "pattern",
-      "gold": ["record:pattern:forms"]
+      "gold": ["record:pattern:pattern.forms"]
     },
     {
       "id": "nav-13",
       "query": "tabs",
       "category": "component",
-      "gold": ["record:core:tabs"]
+      "gold": ["record:component:component.tabs"]
     },
     {
       "id": "nav-14",
       "query": "toolbar",
       "category": "component",
-      "gold": ["record:core:toolbar"]
+      "gold": ["record:component:component.toolbar"]
     },
     {
       "id": "nav-15",
       "query": "breadcrumbs",
       "category": "component",
-      "gold": ["record:core:breadcrumbs"]
+      "gold": ["record:component:component.breadcrumbs"]
     },
     {
       "id": "nav-16",
       "query": "stack layout",
       "category": "component",
-      "gold": ["record:core:stack-layout"]
+      "gold": ["record:component:component.stack-layout"]
     },
     {
       "id": "nav-17",
       "query": "grid layout",
       "category": "component",
-      "gold": ["record:core:grid-layout"]
+      "gold": ["record:component:component.grid-layout"]
     },
     {
       "id": "nav-18",
       "query": "keyboard shortcuts",
       "category": "pattern",
-      "gold": ["record:pattern:keyboard-shortcuts"]
+      "gold": ["record:pattern:pattern.keyboard-shortcuts"]
     },
     {
       "id": "nav-19",
       "query": "search pattern",
       "category": "pattern",
-      "gold": ["record:pattern:search"]
+      "gold": ["record:pattern:pattern.search"]
     },
     {
       "id": "nav-20",
       "query": "file upload",
       "category": "pattern",
-      "gold": ["record:pattern:file-upload"]
+      "gold": ["record:pattern:pattern.file-upload"]
     }
   ]
 }

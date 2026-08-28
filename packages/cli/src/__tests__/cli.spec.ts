@@ -7,8 +7,12 @@ import {
 } from "../cli.js";
 
 const runInfoCommand = vi.hoisted(() => vi.fn());
+const runDocsCommand = vi.hoisted(() => vi.fn());
+const runContextCommand = vi.hoisted(() => vi.fn());
 const runScanCommand = vi.hoisted(() => vi.fn());
 
+vi.mock("../commands/context.js", () => ({ runContextCommand }));
+vi.mock("../commands/docs.js", () => ({ runDocsCommand }));
 vi.mock("../commands/info.js", () => ({ runInfoCommand }));
 vi.mock("../commands/scan.js", () => ({ runScanCommand }));
 
@@ -29,6 +33,16 @@ describe("Salt CLI shell", () => {
   beforeEach(() => {
     runInfoCommand.mockReset();
     runInfoCommand.mockResolvedValue({ contract: "salt-cli-info/1" });
+    runDocsCommand.mockReset();
+    runDocsCommand.mockResolvedValue({
+      output: '{"contract":"salt-knowledge-document/1"}\n',
+      exitCode: 0,
+    });
+    runContextCommand.mockReset();
+    runContextCommand.mockResolvedValue({
+      output: '{"contract":"salt-knowledge-context/1"}\n',
+      exitCode: 0,
+    });
     runScanCommand.mockReset();
     runScanCommand.mockResolvedValue({
       output: '{"contract":"salt-scan-result/1"}\n',
@@ -120,6 +134,75 @@ describe("Salt CLI shell", () => {
       message: "Project root is unavailable.",
     });
     expect(capture.stdout()).toBe("");
+  });
+
+  it("strictly parses docs and context retrieval commands", () => {
+    expect(
+      parseCliArgs(["docs", "component.button", "--format", "markdown"]),
+    ).toEqual({
+      command: "docs",
+      identifier: "component.button",
+      format: "markdown",
+    });
+    expect(
+      parseCliArgs([
+        "context",
+        "button appearance",
+        "--format",
+        "json",
+        "--limit",
+        "5",
+      ]),
+    ).toEqual({
+      command: "context",
+      query: "button appearance",
+      format: "json",
+      limit: 5,
+    });
+  });
+
+  it.each([
+    ["docs"],
+    ["docs", "Button"],
+    ["docs", "Button", "--format", "yaml"],
+    ["docs", "Button", "Link", "--format", "json"],
+    ["context"],
+    ["context", "button", "--format", "json"],
+    ["context", "button", "--format", "json", "--limit", "0"],
+    ["context", "button", "--format", "json", "--limit", "101"],
+  ])("rejects invalid retrieval arguments: %s", (...argv) => {
+    expect(() => parseCliArgs(argv)).toThrow(SaltCliUsageError);
+  });
+
+  it("runs docs and context against cwd and preserves result exit codes", async () => {
+    const docsCapture = captureIo();
+    runDocsCommand.mockResolvedValue({ output: "choices\n", exitCode: 1 });
+    await expect(
+      runCliWithIo(
+        ["docs", "Button", "--format", "markdown"],
+        docsCapture.io,
+      ),
+    ).resolves.toBe(1);
+    expect(runDocsCommand).toHaveBeenCalledWith({
+      rootDir: "D:/fixture",
+      identifier: "Button",
+      format: "markdown",
+    });
+    expect(docsCapture.stdout()).toBe("choices\n");
+
+    const contextCapture = captureIo();
+    await expect(
+      runCliWithIo(
+        ["context", "Button", "--format", "json", "--limit", "5"],
+        contextCapture.io,
+      ),
+    ).resolves.toBe(0);
+    expect(runContextCommand).toHaveBeenCalledWith({
+      rootDir: "D:/fixture",
+      query: "Button",
+      format: "json",
+      limit: 5,
+    });
   });
 
   it("strictly parses the scan command and its required options", () => {
