@@ -1,0 +1,211 @@
+{
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/salt-sample-app-cohort-receipt-1.json",
+  "schema_version": "1.0.0",
+  "contract": "salt-sample-app-cohort-receipt/1",
+  "source_commit": "0fe7bf5a9c739ab3787a101ba0c6eaf81339fed4",
+  "apps": [
+    {
+      "name": "next-app-router",
+      "path": "examples/apps/next-app-router",
+      "manifest_sha256": "sha256:04b10cd5efb9204e32b6a0f53d3dadf79ae0ccc961f6220cd34be979c70cc1d3",
+      "isolated_manifest_sha256": "sha256:6783dab19f0a5f46afdd28dc18517da2130dea0595249fed2a4e12293d5b3bd1"
+    }
+  ],
+  "knowledge_bundle": {
+    "version": "0.0.0",
+    "bundle_digest": "sha256:2418b7e1248f2475d6f7b0ab2143012b416a38e620d6bdfc33a1dfd63a7f3a21",
+    "semantic_digest": "sha256:a776cf7a83f747d5e7e06c3333b10a018b8005f4194337485065f5353e3d45d9",
+    "semantic_source_digest": "sha256:35f06fecd2625ef5a37782303eecfbced1931c9de6c3999ce38709622b93f4ab",
+    "compiler_digest": "sha256:48bf067eb3218ddb260a1502a983f9952271b5f7fd19bc4c7f78d819e5218e1a"
+  },
+  "packages": [
+    {
+      "name": "@salt-ds/cli",
+      "version": "0.0.0",
+      "roles": [
+        "tooling",
+        "transitive"
+      ],
+      "used_by": [
+        "next-app-router"
+      ],
+      "source_manifest_sha256": "sha256:461a331addaf3580621f371ca69ea33c1a3c62f8a276affeae001bfc3ac69f69",
+      "packed_manifest_sha256": "sha256:b2b90db2bc47ead821dc6ba20b89029cff0e5f80ccb20ee896aaabe637bd29e2",
+      "tarball": {
+        "path": "dist/salt-sample-apps/next-app-router.artifacts/salt-ds-cli-0.0.0.tgz",
+        "sha256": "sha256:4a7ecd31443a8b9d746cc0b113ecf7f6a48c9b6a8919b51d226de6ed33c2ab35",
+        "integrity": "sha512-Gh/1RILDbL0ZKx+UiaZ1iwjVNN1xt/RHWw3s/B6ONuJOF2/tBwTgbkPoTII4TbaWZ7lwmQNZBQ4Rj7OjBvgLmw==",
+        "bytes": 45537,
+        "files": 13
+      }
+    },
+    {
+      "name": "@salt-ds/core",
+      "version": "1.70.0",
+      "roles": [
+        "direct"
+      ],
+      "used_by": [
+        "next-app-router"
+      ],
+      "source_manifest_sha256": "sha256:bca0bddf280961f3cd5074edff0b38e5ca3717fe01f3d05cae1b0db629b37686",
+      "packed_manifest_sha256": "sha256:670afb2a369d08c0e3cdd89e3a873166fa704b6946ad3dbe40882485988498d2",
+      "tarball": {
+        "path": "dist/salt-sample-apps/next-app-router.artifacts/salt-ds-core-1.70.0.tgz",
+        "sha256": "sha256:47de8a4ebdbeda20926b9761967cb56ede4a969a386057b88e45bdffea570a13",
+        "integrity": "sha512-zx9rk7kphsVIDVf+u37vrEB6sePvpsS1nq01zWNXNi56hzTS17Y/sCnE+GUteT0n2ILuJT8UkxJrO2DkVDulbQ==",
+        "bytes": 860094,
+        "files": 2229
+      }
+    },
+    {
+      "name": "@salt-ds/icons",
+      "version": "1.18.2",
+      "roles": [
+        "direct"
+      ],
+      "used_by": [
+        "next-app-router"
+      ],
+      "source_manifest_sha256": "sha256:4ec6c422660ff993e32be916b525efee6a4473e73ac180470e1037d85895ab57",
+      "packed_manifest_sha256": "sha256:9d7491f9da8a82d8256183dc189e6ba8d13f41779f21142366aa79392b8d3790",
+      "tarball": {
+        "path": "dist/salt-sample-apps/next-app-router.artifacts/salt-ds-icons-1.18.2.tgz",
+        "sha256": "sha256:5c1eb469ce55f7dabacfd725d95b8945ebd0ace559627d34dc66cfceb357182b",
+        "integrity": "sha512-W+4OkVGHjX2cbuD9RNTqjgUSlR470KqZp3II+LXZNIMZaLhDQdORvxAeMVJ85o2nDic5FcM0qOr87BUWnqmxTw==",
+        "bytes": 431336,
+        "files": 2764
+      }
+    },
+    {
+      "name": "@salt-ds/knowledge",
+      "version": "0.0.0",
+      "roles": [
+        "tooling",
+        "transitive"
+      ],
+      "used_by": [
+        "next-app-router"
+      ],
+      "source_manifest_sha256": "sha256:8224df377e476bbf82c6ccfae7fda1ec7951b9f335ff199b41caf74bea1f649a",
+      "packed_manifest_sha256": "sha256:e49f50228c7bd80757a0daeadf21eb81315de68f0e6c7abb4f38f1cc6c1ddd28",
+      "tarball": {
+        "path": "dist/salt-sample-apps/next-app-router.artifacts/salt-ds-knowledge-0.0.0.tgz",
+        "sha256": "sha256:3a9152cb13f40f1a30bf4366e2c84b5cd8f0a9aefb28e395b5a1edbf48957f1a",
+        "integrity": "sha512-PQuecO/mDLqz2H4Bs0dgmr7uDhBCYmp6QcuWAGg9z9JmDabS6ORo4kCPhzY8UOD2CUYr0f0JW6/xT3z3tI/1kA==",
+        "bytes": 3638618,
+        "files": 598
+      }
+    },
+    {
+      "name": "@salt-ds/styles",
+      "version": "0.4.0",
+      "roles": [
+        "transitive"
+      ],
+      "used_by": [
+        "next-app-router"
+      ],
+      "source_manifest_sha256": "sha256:ca19f3a163a24f2b4258338f997286815f86fa667c950e1a7d5865b6fdd79732",
+      "packed_manifest_sha256": "sha256:da95dbff66d1b367eca80d4e401efcb87a308f574bc7d08a34b091673f8e13cb",
+      "tarball": {
+        "path": "dist/salt-sample-apps/next-app-router.artifacts/salt-ds-styles-0.4.0.tgz",
+        "sha256": "sha256:69915bee0d51f06f24a005e0ced54408392ac749446668b723dd89e4eb2ad067",
+        "integrity": "sha512-8kUBZM2QIG9bvB+d60yZmEdsEkvcZvjsfHHllZSP9rBwguFBucgLxr3k+/2D02kkz/pZVilBMmDYuHcuAJ5zgw==",
+        "bytes": 15480,
+        "files": 37
+      }
+    },
+    {
+      "name": "@salt-ds/theme",
+      "version": "1.45.0",
+      "roles": [
+        "direct"
+      ],
+      "used_by": [
+        "next-app-router"
+      ],
+      "source_manifest_sha256": "sha256:ac77d534c6e0c3d26606bfdb1489c4f3c7e7c6c2e58f6287866ced3efd8cbf74",
+      "packed_manifest_sha256": "sha256:ac77d534c6e0c3d26606bfdb1489c4f3c7e7c6c2e58f6287866ced3efd8cbf74",
+      "tarball": {
+        "path": "dist/salt-sample-apps/next-app-router.artifacts/salt-ds-theme-1.45.0.tgz",
+        "sha256": "sha256:2bbce03f40fcdf2986a0f2e25cac67055263fb406cd86c39e5abb9b256574740",
+        "integrity": "sha512-1D9UGGUASDIbn1Uc/1NcnnCG5P1+y2SlFpPDBGnbtL7FvUQgwFiQJ+/oc3OATABIPqHlNCmBvN2GN9uY5w1xcA==",
+        "bytes": 47181,
+        "files": 6
+      }
+    },
+    {
+      "name": "@salt-ds/window",
+      "version": "0.1.1",
+      "roles": [
+        "transitive"
+      ],
+      "used_by": [
+        "next-app-router"
+      ],
+      "source_manifest_sha256": "sha256:aaf95567878b4e2ab4096b07815bbdfeaa77d0b124436454928bb3cdeef880aa",
+      "packed_manifest_sha256": "sha256:1272e7ff721be27c5720633e11d6e4e47ff8b8af52dc838ab670c6027dbfe2c0",
+      "tarball": {
+        "path": "dist/salt-sample-apps/next-app-router.artifacts/salt-ds-window-0.1.1.tgz",
+        "sha256": "sha256:f2eb6cc8cd313e1bbcb5a73a39bd9fa40e33ab23f1d736acc0994243c25264b3",
+        "integrity": "sha512-zhrgvQowNkpqn+y+kFXHW3MC9qocwsx+OTVyfwno5dk9AhhgLYLfwetuJ3ES+DlyTi6a6/RJEiE1MWTCRy5t/g==",
+        "bytes": 7369,
+        "files": 16
+      }
+    }
+  ],
+  "install": {
+    "package_manager": "npm",
+    "lockfiles": [
+      {
+        "app": "next-app-router",
+        "sha256": "sha256:625af6806e6d6232b559ed9fba3ad93d0b7525993b88db69274abdbcf983ada1",
+        "replay": "unchanged"
+      }
+    ],
+    "source_manifests_unchanged": true,
+    "source_lockfiles_unchanged": true,
+    "workspace_links": 0,
+    "first_party_registry_fallbacks": 0,
+    "physical_first_party_packages": 7
+  },
+  "offline_guard": {
+    "status": "pass",
+    "phase": "post-install",
+    "allowed_hosts": [
+      "127.0.0.1",
+      "::1",
+      "localhost"
+    ],
+    "negative_fixture": {
+      "target": "https://example.invalid/salt-sample-app-offline-guard",
+      "result": "blocked"
+    }
+  },
+  "checks": [
+    {
+      "app": "next-app-router",
+      "build": "pass",
+      "typecheck": "pass",
+      "interaction": "pass",
+      "a11y": "pass",
+      "keyboard": "pass",
+      "server_render": "pass",
+      "hydration": "pass",
+      "runtime_errors": 0,
+      "external_requests": 0,
+      "scan": {
+        "result": "pass",
+        "coverage": "partial",
+        "allow_incomplete": true,
+        "reasons": [
+          "SCAN_UNSUPPORTED_CONSTRUCT"
+        ],
+        "errors": 0,
+        "warnings": 0,
+        "findings": 0
+      }
+    }
+  ]
+}
