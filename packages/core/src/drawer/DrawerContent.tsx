@@ -33,7 +33,15 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
       window: targetWindow,
     });
 
-    const { headerId } = useDrawerContext();
+    const { drawerId, headerId, setHasContent } = useDrawerContext();
+
+    useIsomorphicLayoutEffect(() => {
+      setHasContent?.(true);
+
+      return () => {
+        setHasContent?.(false);
+      };
+    }, [setHasContent]);
 
     const scrollRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef<HTMLDivElement>(scrollRef, ref);
@@ -84,7 +92,8 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
         onScrollCapture={handleScroll}
         {...(isOverflowing && {
           tabIndex: 0,
-          ...(headerId && { role: "region", "aria-labelledby": headerId }),
+          role: "region",
+          "aria-labelledby": headerId ?? drawerId,
         })}
         {...rest}
       >

@@ -14,9 +14,10 @@
   box-sizing: border-box;
 }
 
-/* Styles applied when a DrawerHeader is present. Padding moved into DrawerHeader
-   and DrawerContent. Overflow:hidden allows header to stay pinned. */
-.saltDrawer-hasHeader {
+/* Styles applied when a DrawerHeader or DrawerContent is present. Padding moved
+   into DrawerHeader and DrawerContent. Overflow:hidden allows header to stay
+   pinned and makes DrawerContent the scroll container. */
+.saltDrawer-hasSlots {
   padding: 0;
   overflow: hidden;
 }
