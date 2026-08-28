@@ -18,7 +18,7 @@
   ],
   "publishBinEntrypoints": {
     "bin/salt-mcp.js": {
-      "requirePath": "../dist-cjs/index.js",
+      "requirePath": "../dist-cjs/cli.js",
       "errorPrefix": "salt-mcp error:",
       "conciseErrorCodes": [
         "SALT_MCP_CLI_USAGE"
@@ -33,6 +33,9 @@
     },
     "./package.json": "./package.json"
   },
+  "publishAdditionalEntryPaths": [
+    "src/cli.ts"
+  ],
   "typescriptInclude": [
     "src/index.ts"
   ],
@@ -42,7 +45,6 @@
   "publishScriptExcludes": [
     "build",
     "build:package",
-    "build:registry",
     "measure:runtime-loc",
     "measure:surface",
     "prepack"
@@ -54,7 +56,6 @@
     "salt-mcp": "bin/salt-mcp.js"
   },
   "scripts": {
-    "build:registry": "node ./scripts/buildRegistry.mjs",
     "build:package": "yarn node ../../scripts/build.mjs",
     "build": "yarn build:package",
     "measure:surface": "node --expose-gc ./scripts/measurePublicSurface.mjs",
@@ -68,7 +69,7 @@
     "zod": "^4.2.0"
   },
   "devDependencies": {
-    "@modelcontextprotocol/client": "^2.0.0",
+    "@modelcontextprotocol/client": "2.0.0",
     "ajv": "^8.17.1",
     "typescript": "^6.0.2"
   },

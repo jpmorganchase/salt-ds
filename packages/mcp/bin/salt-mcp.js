@@ -6,7 +6,7 @@ const path = require("node:path");
 function loadBuiltMcpModule() {
   const entryPath = path.resolve(
     __dirname,
-    "../../../dist/salt-ds-mcp/dist-cjs/index.js",
+    "../../../dist/salt-ds-mcp/dist-cjs/cli.js",
   );
 
   if (!fs.existsSync(entryPath)) {
@@ -18,9 +18,9 @@ function loadBuiltMcpModule() {
   return require(entryPath);
 }
 
-const { runCli } = loadBuiltMcpModule();
+const { runSaltMcpCli } = loadBuiltMcpModule();
 
-runCli(process.argv.slice(2))
+runSaltMcpCli(process.argv.slice(2))
   .then((exitCode) => {
     process.exit(exitCode);
   })

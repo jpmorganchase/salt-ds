@@ -1,147 +1,86 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-export type ProjectAccessOptions =
-  | {
-      mode: "restricted";
-      allowedRoots: string[];
-      defaultRoot?: string;
-    }
-  | {
-      mode: "unrestricted_local_stdio";
-      defaultRoot?: string;
-    };
+export const MAX_PROJECT_ROOTS = 16;
 
-export type ProjectAccessPolicy =
-  | {
-      mode: "restricted";
-      allowedRoots: string[];
-      defaultRoot: string | null;
-    }
-  | {
-      mode: "unrestricted_local_stdio";
-      allowedRoots: null;
-      defaultRoot: string;
-    };
-
-export type ProjectRootAuthorization =
-  | {
-      status: "authorized";
-      rootDir: string;
-      authorityRoot: string;
-      mode: ProjectAccessPolicy["mode"];
-    }
-  | {
-      status: "denied";
-      reason:
-        | "no_allowed_roots"
-        | "no_default_root"
-        | "outside_allowed_roots"
-        | "unavailable"
-        | "not_directory";
-    };
-
-function isPathInside(rootDir: string, candidatePath: string): boolean {
-  const relative = path.relative(rootDir, candidatePath);
-  return (
-    relative === "" ||
-    (!relative.startsWith(`..${path.sep}`) &&
-      relative !== ".." &&
-      !path.isAbsolute(relative))
-  );
+export interface ConfiguredProjectRoot {
+  index: number;
+  rootDir: string;
 }
 
-async function canonicalDirectory(directory: string): Promise<string> {
-  const resolved = await fs.realpath(path.resolve(directory));
-  const stats = await fs.stat(resolved);
-  if (!stats.isDirectory()) {
-    throw new Error(`Configured project root is not a directory: ${directory}`);
+export class SaltMcpProjectRootError extends Error {
+  readonly code:
+    | "SALT_MCP_NO_PROJECT_ROOT"
+    | "SALT_MCP_PROJECT_ROOT_AMBIGUOUS"
+    | "SALT_MCP_PROJECT_ROOT_INVALID";
+
+  constructor(code: SaltMcpProjectRootError["code"], message: string) {
+    super(message);
+    this.name = "SaltMcpProjectRootError";
+    this.code = code;
   }
-  return resolved;
 }
 
-export async function createProjectAccessPolicy(
-  options?: ProjectAccessOptions,
-): Promise<ProjectAccessPolicy> {
-  if (options?.mode === "unrestricted_local_stdio") {
-    return {
-      mode: "unrestricted_local_stdio",
-      allowedRoots: null,
-      defaultRoot: await canonicalDirectory(
-        options.defaultRoot ?? process.cwd(),
-      ),
-    };
-  }
-
-  const allowedRoots = [
-    ...new Set(
-      await Promise.all(
-        (options?.allowedRoots ?? []).map((root) => canonicalDirectory(root)),
-      ),
-    ),
-  ];
-  let defaultRoot: string | null = null;
-  if (options?.defaultRoot) {
-    defaultRoot = await canonicalDirectory(options.defaultRoot);
-    if (!allowedRoots.some((root) => isPathInside(root, defaultRoot!))) {
-      throw new Error(
-        "Configured project defaultRoot must be contained by an allowed root after realpath resolution.",
-      );
-    }
-  } else if (allowedRoots.length === 1) {
-    defaultRoot = allowedRoots[0]!;
-  }
-  return { mode: "restricted", allowedRoots, defaultRoot };
-}
-
-export async function authorizeProjectRoot(
-  policy: ProjectAccessPolicy,
-  requestedRoot: string | undefined,
-): Promise<ProjectRootAuthorization> {
-  if (policy.mode === "restricted" && policy.allowedRoots.length === 0) {
-    return { status: "denied", reason: "no_allowed_roots" };
-  }
-  if (!requestedRoot && !policy.defaultRoot) {
-    return { status: "denied", reason: "no_default_root" };
-  }
-
-  const baseRoot =
-    policy.defaultRoot ??
-    (policy.mode === "restricted" ? policy.allowedRoots[0]! : process.cwd());
-  const candidate = requestedRoot
-    ? path.resolve(baseRoot, requestedRoot)
-    : baseRoot;
-  let realCandidate: string;
+async function canonicalDirectory(input: string): Promise<string> {
+  const requested = path.resolve(input);
+  let canonical: string;
   try {
-    realCandidate = await fs.realpath(candidate);
-    const stats = await fs.stat(realCandidate);
-    if (!stats.isDirectory()) {
-      return { status: "denied", reason: "not_directory" };
-    }
+    canonical = await fs.realpath(requested);
   } catch {
-    return { status: "denied", reason: "unavailable" };
+    throw new SaltMcpProjectRootError(
+      "SALT_MCP_PROJECT_ROOT_INVALID",
+      `Configured project root is unavailable: ${requested}.`,
+    );
   }
+  const stats = await fs.lstat(canonical);
+  if (!stats.isDirectory() || stats.isSymbolicLink()) {
+    throw new SaltMcpProjectRootError(
+      "SALT_MCP_PROJECT_ROOT_INVALID",
+      `Configured project root is not a canonical directory: ${requested}.`,
+    );
+  }
+  return canonical;
+}
 
-  if (policy.mode === "unrestricted_local_stdio") {
-    const authorityRoot = isPathInside(policy.defaultRoot, realCandidate)
-      ? policy.defaultRoot
-      : realCandidate;
-    return {
-      status: "authorized",
-      rootDir: realCandidate,
-      authorityRoot,
-      mode: policy.mode,
-    };
+export async function configureProjectRoots(
+  projectRoots: readonly string[],
+): Promise<readonly ConfiguredProjectRoot[]> {
+  if (projectRoots.length > MAX_PROJECT_ROOTS) {
+    throw new SaltMcpProjectRootError(
+      "SALT_MCP_PROJECT_ROOT_INVALID",
+      `Salt MCP accepts at most ${MAX_PROJECT_ROOTS} configured project roots.`,
+    );
   }
-  const authorityRoot = policy.allowedRoots.find((root) =>
-    isPathInside(root, realCandidate),
+  const canonical = await Promise.all(projectRoots.map(canonicalDirectory));
+  const unique = [...new Set(canonical)];
+  return Object.freeze(
+    unique.map((rootDir, index) => Object.freeze({ index, rootDir })),
   );
-  return authorityRoot
-    ? {
-        status: "authorized",
-        rootDir: realCandidate,
-        authorityRoot,
-        mode: policy.mode,
-      }
-    : { status: "denied", reason: "outside_allowed_roots" };
+}
+
+export function selectProjectRoot(
+  roots: readonly ConfiguredProjectRoot[],
+  requestedIndex: number | undefined,
+): ConfiguredProjectRoot {
+  if (roots.length === 0) {
+    throw new SaltMcpProjectRootError(
+      "SALT_MCP_NO_PROJECT_ROOT",
+      "This operation needs a project root. Restart salt-mcp with --root <path> or pass projectRoots to createSaltMcpServer().",
+    );
+  }
+  if (requestedIndex === undefined && roots.length > 1) {
+    throw new SaltMcpProjectRootError(
+      "SALT_MCP_PROJECT_ROOT_AMBIGUOUS",
+      "Multiple project roots are configured; select one with project_root_index.",
+    );
+  }
+  const index = requestedIndex ?? 0;
+  const selected = roots[index];
+  if (!selected) {
+    throw new SaltMcpProjectRootError(
+      "SALT_MCP_PROJECT_ROOT_INVALID",
+      `project_root_index ${index} does not identify a configured root.`,
+    );
+  }
+  return selected;
 }

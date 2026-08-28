@@ -1,27 +1,27 @@
 /// <reference types="node" preserve="true" />
 
 import type { McpServer } from "@modelcontextprotocol/server";
-import { runCli as runCliImplementation } from "./cli.js";
-import { createSaltMcpServer as createSaltMcpServerImplementation } from "./server/createServer.js";
+import { loadKnowledgeRuntimeContext } from "@salt-ds/knowledge";
+import * as z from "zod/v4";
+import { MAX_PROJECT_ROOTS } from "./server/projectAccess.js";
+import { createSaltMcpServerWithContext } from "./server/createServer.js";
 
-export type ProjectAccessOptions =
-  | {
-      mode: "restricted";
-      allowedRoots: string[];
-      defaultRoot?: string;
-    }
-  | {
-      mode: "unrestricted_local_stdio";
-      defaultRoot?: string;
-    };
+const createSaltMcpServerOptionsSchema = z
+  .object({
+    projectRoots: z.array(z.string().min(1)).max(MAX_PROJECT_ROOTS).optional(),
+  })
+  .strict();
 
-export interface CreateSaltMcpServerOptions {
-  registryDir?: string;
-  projectAccess?: ProjectAccessOptions;
-}
+/** Startup-only filesystem authority for the local read-only MCP adapter. */
+export type CreateSaltMcpServerOptions = z.infer<
+  typeof createSaltMcpServerOptionsSchema
+>;
 
-export const runCli: (argv?: string[]) => Promise<void> = runCliImplementation;
-
+/** Create one offline, read-only Salt MCP 2026-07-28 server instance. */
 export const createSaltMcpServer: (
   options?: CreateSaltMcpServerOptions,
-) => Promise<McpServer> = createSaltMcpServerImplementation;
+) => Promise<McpServer> = async (options = {}) =>
+  createSaltMcpServerWithContext(
+    createSaltMcpServerOptionsSchema.parse(options),
+    await loadKnowledgeRuntimeContext(),
+  );

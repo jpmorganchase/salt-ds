@@ -1,49 +1,38 @@
 import { McpServer } from "@modelcontextprotocol/server";
-import { loadKnowledgeRuntimeContext } from "../core/runtime.js";
 import {
-  createProjectAccessPolicy,
-  type ProjectAccessOptions,
-} from "./projectAccess.js";
-import { ProjectPolicySnapshotCache } from "./projectPolicySnapshot.js";
+  type KnowledgeRuntimeContext,
+} from "@salt-ds/knowledge";
+import { configureProjectRoots } from "./projectAccess.js";
 import { registerSaltResources } from "./registerResources.js";
 import { registerSaltTools } from "./registerTools.js";
-import {
-  buildSaltMcpInstructions,
-  buildSaltMcpServerInfo,
-  SALT_MCP_SUPPORTED_LEGACY_PROTOCOL_VERSIONS,
-} from "./serverMetadata.js";
+import { getSaltMcpPackageManifest } from "./serverMetadata.js";
 
-interface CreateServerOptions {
-  registryDir?: string;
-  projectAccess?: ProjectAccessOptions;
-}
-
-export async function createSaltMcpServer(options: CreateServerOptions = {}) {
-  const context = await loadKnowledgeRuntimeContext({
-    bundleDir: options.registryDir,
-  });
-  const projectAccess = await createProjectAccessPolicy(options.projectAccess);
-  const projectPolicySnapshots = new ProjectPolicySnapshotCache();
-  const serverInfo = buildSaltMcpServerInfo(context);
-
-  const server = new McpServer(serverInfo, {
-    instructions: buildSaltMcpInstructions(context),
-    supportedProtocolVersions: [...SALT_MCP_SUPPORTED_LEGACY_PROTOCOL_VERSIONS],
-    capabilities: {
-      resources: { listChanged: false, subscribe: false },
+/** Repository-test seam; deliberately absent from the package-root export. */
+export async function createSaltMcpServerWithContext(
+  options: { projectRoots?: string[] },
+  knowledge: KnowledgeRuntimeContext,
+): Promise<McpServer> {
+  const projectRoots = await configureProjectRoots(options.projectRoots ?? []);
+  const packageManifest = getSaltMcpPackageManifest();
+  const server = new McpServer(
+    { name: packageManifest.name, version: packageManifest.version },
+    {
+      instructions:
+        "Read-only, offline Salt Design System knowledge. Static knowledge needs no project root; project inspection uses only roots configured at startup.",
+      supportedProtocolVersions: ["2026-07-28"],
+      cacheHints: {
+        "tools/list": { ttlMs: 86_400_000, cacheScope: "public" },
+        "resources/list": { ttlMs: 86_400_000, cacheScope: "public" },
+        "resources/templates/list": {
+          ttlMs: 86_400_000,
+          cacheScope: "public",
+        },
+        "resources/read": { ttlMs: 86_400_000, cacheScope: "public" },
+      },
     },
-  });
+  );
 
-  registerSaltResources(server, {
-    ...context,
-    projectAccess,
-    projectPolicySnapshots,
-  });
-  registerSaltTools(server, {
-    ...context,
-    projectAccess,
-    projectPolicySnapshots,
-  }, serverInfo);
-
+  registerSaltResources(server, knowledge.store);
+  registerSaltTools(server, { ...knowledge, projectRoots });
   return server;
 }
