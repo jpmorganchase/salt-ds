@@ -4,11 +4,21 @@ layout: DetailTechnical
 sidebar:
   groupLabel: Layouts
 data:
+  summary: "Choose a Salt layout for the structural relationship between regions before adding one-off wrapper CSS. Core layouts cover common flow, stack, grid, split and parent-child arrangements; experimental Lab layouts cover page decks and overlay layers."
+  applicability: "Salt applications using `@salt-ds/core` layouts or the experimental `DeckLayout` and `LayerLayout` exports from `@salt-ds/lab`."
+  stability: "stable overview; individual Lab layouts are experimental"
+  providers: []
+  deprecations: []
+  relatedRecords:
+    ["component:DeckLayout", "component:LayerLayout", "component:GridLayout"]
+  provenance: "authored_normative_guidance"
   items:
     $ref: ./*/index
 ---
 
-Salt layouts are a special category of components designed to manage the overall structure and arrangement of user interface elements, rather than providing visual UI elements themselves. Layouts are responsible for organizing how other components are positioned and flow within an application or page.
+Salt layouts manage the structure and arrangement of interface regions rather
+than supplying product content themselves. They provide reviewed spacing,
+alignment and responsive behavior over CSS Grid and Flexbox.
 
 <Callout>
   Salt does not provide a Figma equivalent for these layouts. Instead, Figma
@@ -25,5 +35,24 @@ Salt layout components are each tailored to specific structural needs:
 - Prefer a Salt layout before adding a generic wrapper with custom CSS.
 - Each extra container should have a clear structural job such as flow, split,
   stack, grid, or parent-child arrangement.
+- Use [`DeckLayout`](./deck-layout) when one region displays one page at a time.
+- Use [`LayerLayout`](./layer-layout) only for a bespoke overlay shell; prefer
+  Salt's established dialog, drawer, tooltip or menu components when their
+  behavior matches the task.
+- `DeckLayout` and `LayerLayout` come from `@salt-ds/lab` and are experimental.
+  Review their release notes before upgrading.
 
 </Callout>
+
+## Accessibility and keyboard behavior
+
+A layout does not define the reading order or keyboard contract of the content
+inside it. Keep DOM order meaningful, preserve visible focus, and test zoom,
+reflow and keyboard navigation at every supported breakpoint. Overlay and deck
+layouts have additional focus and naming responsibilities described on their
+component pages.
+
+## Deprecations and migrations
+
+There are no current overview-level deprecations. Earlier maintainer-only
+Storybook introductions now resolve to these canonical layout pages.

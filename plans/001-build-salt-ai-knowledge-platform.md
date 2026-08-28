@@ -2651,7 +2651,8 @@ may change the outer `semantic_digest`; the receipt binds their exact paths and
 record hashes instead of misreporting whole-manifest semantic parity. Source
 relocation may change `semantic_source_digest`, descriptors, and `bundle_digest`
 only as enumerated in the tracked contract. The 06c receipt additionally proves
-no story path remains a semantic input, all eight package-story dispositions are
+the exact 13-pattern compiler-closure removal, its configuration hash, and that
+no story path remains a semantic input; all eight package-story dispositions are
 complete with destination/content evidence, and every retained story is only a
 maintainer facade over canonical public guidance. An unclassified identity
 change is a STOP condition, not a snapshot update.

@@ -14,6 +14,25 @@
         "properties": { "semantic_change_review": true },
         "required": ["semantic_change_review"]
       }
+    },
+    {
+      "if": {
+        "properties": { "batch": { "const": "06c" } },
+        "required": ["batch"]
+      },
+      "then": {
+        "properties": {
+          "semantic_change_review": {
+            "type": "object",
+            "properties": {
+              "compiler_closure_change": {
+                "$ref": "#/$defs/compilerClosureChange"
+              }
+            },
+            "required": ["compiler_closure_change"]
+          }
+        }
+      }
     }
   ],
   "required": [
@@ -123,6 +142,9 @@
           "minItems": 1,
           "items": { "$ref": "#/$defs/publicDestination" },
           "uniqueItems": true
+        },
+        "compiler_closure_change": {
+          "$ref": "#/$defs/compilerClosureChange"
         }
       }
     },
@@ -216,6 +238,44 @@
           "pattern": "^record:source:source\\.[a-z0-9]+$"
         },
         "source_record_sha256": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "compilerClosureChange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy",
+        "configuration_path",
+        "configuration_sha256",
+        "predecessor_compiler_digest",
+        "current_compiler_digest",
+        "reviewed_source_paths",
+        "retired_story_patterns",
+        "remaining_story_pattern_count"
+      ],
+      "properties": {
+        "policy": { "const": "storybook-semantic-input-retirement/1" },
+        "configuration_path": {
+          "const": "packages/knowledge/src/build/catalogSemanticInputPatterns.json"
+        },
+        "configuration_sha256": { "$ref": "#/$defs/digest" },
+        "predecessor_compiler_digest": { "$ref": "#/$defs/digest" },
+        "current_compiler_digest": { "$ref": "#/$defs/digest" },
+        "reviewed_source_paths": {
+          "type": "array",
+          "const": ["packages/knowledge/src/build/buildRegistry.ts"]
+        },
+        "retired_story_patterns": {
+          "type": "array",
+          "minItems": 13,
+          "maxItems": 13,
+          "items": {
+            "type": "string",
+            "pattern": "^packages/[a-z0-9-]+/stories/"
+          },
+          "uniqueItems": true
+        },
+        "remaining_story_pattern_count": { "const": 0 }
       }
     },
     "pattern": {

@@ -1,0 +1,132 @@
+---
+title: Deck layout
+data:
+  description: "`DeckLayout` displays one page from an ordered collection inside a stable region and can animate transitions between pages. Applications control the active page with an index and provide the navigation UI."
+  summary: "Use `DeckLayout` for a controlled sequence of same-region pages, with optional slide or fade transitions."
+  applicability: "Experimental `@salt-ds/lab` applications that need page, step or tab content to occupy one shared region."
+  stability: "experimental"
+  providers: []
+  deprecations: []
+  relatedRecords:
+    ["component:Tabstrip", "component:LayerLayout", "component:Card"]
+  provenance: "authored_normative_guidance"
+  sourceCodeUrl: "https://github.com/jpmorganchase/salt-ds/tree/main/packages/lab/src/deck-layout"
+  package:
+    name: "@salt-ds/lab"
+  alsoKnownAs: ["Page deck", "Slide deck", "Step content"]
+  relatedComponents:
+    [
+      { name: "Layer layout", relationship: "similarTo" },
+      { name: "Tabs", relationship: "similarTo" },
+    ]
+keywords:
+  $ref: "#/data/alsoKnownAs"
+layout: DetailTechnical
+---
+
+`DeckLayout` renders an ordered collection in one region. The application owns
+the active index, navigation controls, labels and any workflow state.
+
+## When to use
+
+- To switch between pages, steps or tab panels without changing the surrounding
+  layout.
+- When the next page is selected by controls outside the deck.
+- When an optional `slide` or `fade` transition helps users follow a change of
+  context.
+
+## When not to use
+
+- For content above the current page. Use [`LayerLayout`](../layer-layout) for a
+  bespoke layer, or a Salt dialog or drawer when its complete behavior applies.
+- For ordinary responsive rows or columns. Choose a stable core
+  [layout](..) instead.
+- As the navigation control itself. Use buttons, tabs or another control with a
+  clear selected state and connect it to `activeIndex`.
+
+## Import and provider setup
+
+```tsx
+import { DeckLayout } from "@salt-ds/lab";
+```
+
+No Deck-specific provider or stylesheet is required in a normal Salt
+application. `@salt-ds/lab`, React and React DOM must be direct application
+dependencies. The component follows `WindowProvider` when rendered into a
+same-origin secondary window.
+
+## Controlled example
+
+```tsx
+import { Button, FlowLayout } from "@salt-ds/core";
+import { DeckLayout } from "@salt-ds/lab";
+import { useState } from "react";
+
+const pages = ["Account", "Permissions", "Review"];
+
+export function AccountSetup() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  return (
+    <>
+      <FlowLayout>
+        <Button
+          disabled={activeIndex === 0}
+          onClick={() => setActiveIndex((index) => index - 1)}
+        >
+          Previous
+        </Button>
+        <Button
+          disabled={activeIndex === pages.length - 1}
+          onClick={() => setActiveIndex((index) => index + 1)}
+        >
+          Next
+        </Button>
+      </FlowLayout>
+      <DeckLayout
+        activeIndex={activeIndex}
+        animation="slide"
+        deckItemProps={{ "aria-roledescription": "step" }}
+      >
+        {pages.map((page, index) => (
+          <section
+            aria-label={`${page}, step ${index + 1} of ${pages.length}`}
+            key={page}
+          >
+            <h2>{page}</h2>
+          </section>
+        ))}
+      </DeckLayout>
+    </>
+  );
+}
+```
+
+`activeIndex` is zero-based. Keep it within the number of children. `direction`
+controls whether a slide moves horizontally or vertically; it has no effect
+unless `animation` is set. Use `deckItemProps` for shared roles and accessible
+metadata on the generated `DeckItem` wrappers.
+
+## Accessibility and keyboard behavior
+
+`DeckLayout` does not provide navigation keys, selection semantics or focus
+movement. The owning workflow must expose the current page, label the region,
+and move focus intentionally when a page change requires it. With slide
+animations, verify that interactive controls on off-screen pages cannot enter
+the tab order. Respect reduced-motion preferences in application styling and
+do not rely on transition direction alone to communicate progress.
+
+## Props
+
+<PropsTable packageName="lab" componentName="DeckLayout" />
+
+## Deprecations and migrations
+
+There are no current deprecations. Earlier Storybook-only guidance has moved to
+this public page; keep visual stories for maintainer testing, not application
+links.
+
+## Related records
+
+See [Layouts](..) for stable structural alternatives and
+[`LayerLayout`](../layer-layout) for an experimental overlay shell.

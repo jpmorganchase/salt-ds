@@ -1,0 +1,127 @@
+---
+title: Layer layout
+data:
+  description: "`LayerLayout` renders a positioned, optionally scrimmed region above the current layout. It supplies responsive positioning and animation but leaves dismissal, focus management and product semantics to the application."
+  summary: "Use `LayerLayout` as an experimental shell for bespoke positioned layers when an established Salt overlay component does not fit."
+  applicability: "Experimental `@salt-ds/lab` integrations that need a custom center, edge or responsive full-screen layer."
+  stability: "experimental"
+  providers: []
+  deprecations: []
+  relatedRecords:
+    ["component:Dialog", "component:Drawer", "component:DeckLayout"]
+  provenance: "authored_normative_guidance"
+  sourceCodeUrl: "https://github.com/jpmorganchase/salt-ds/tree/main/packages/lab/src/layer-layout"
+  package:
+    name: "@salt-ds/lab"
+  alsoKnownAs: ["Overlay layout", "Positioned layer", "Responsive layer"]
+  relatedComponents:
+    [
+      { name: "Deck layout", relationship: "similarTo" },
+      { name: "Dialog", relationship: "similarTo" },
+      { name: "Drawer", relationship: "similarTo" },
+    ]
+keywords:
+  $ref: "#/data/alsoKnownAs"
+layout: DetailTechnical
+---
+
+`LayerLayout` provides the visual shell for content positioned above an
+application. It is a low-level experimental component, not a complete dialog
+or drawer interaction pattern.
+
+## When to use
+
+- For a bespoke layer whose positioning cannot be expressed by an established
+  Salt overlay component.
+- When a layer must become full screen at and below a selected Salt breakpoint.
+- When the product owns the complete open, close, focus and accessibility
+  contract.
+
+## When not to use
+
+- For a modal dialog, drawer, menu, tooltip or toggletip with standard behavior.
+  Use the corresponding Salt component so dismissal and focus behavior are
+  provided together.
+- To switch pages inside the normal document flow. Use
+  [`DeckLayout`](../deck-layout) or a stable core [layout](..).
+
+## Import and provider setup
+
+```tsx
+import { LayerLayout } from "@salt-ds/lab";
+```
+
+No Layer-specific provider or stylesheet is required in a normal Salt
+application. `@salt-ds/lab`, React and React DOM must be direct application
+dependencies. The component follows `WindowProvider` when rendered into a
+same-origin secondary window.
+
+## Controlled example
+
+```tsx
+import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
+import { LayerLayout } from "@salt-ds/lab";
+import { useRef, useState } from "react";
+
+export function ReviewLayer() {
+  const [open, setOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  function close() {
+    setOpen(false);
+    requestAnimationFrame(() => triggerRef.current?.focus());
+  }
+
+  return (
+    <>
+      <Button ref={triggerRef} onClick={() => setOpen(true)}>
+        Review changes
+      </Button>
+      <LayerLayout
+        aria-labelledby="review-layer-title"
+        fullScreenAtBreakpoint="sm"
+        isOpen={open}
+        position="right"
+      >
+        <StackLayout>
+          <h2 id="review-layer-title">Review changes</h2>
+          <p>Confirm the details before continuing.</p>
+          <FlowLayout justify="end">
+            <Button onClick={close}>Close</Button>
+          </FlowLayout>
+        </StackLayout>
+      </LayerLayout>
+    </>
+  );
+}
+```
+
+Positions are `center`, `top`, `right`, `bottom` and `left`. The layer is full
+screen at and below `fullScreenAtBreakpoint`. A scrim and motion are enabled by
+default; `disableScrim` and `disableAnimations` opt out. Use `scrimProps` only
+for properties owned by the surrounding scrim.
+
+## Accessibility and keyboard behavior
+
+The application must supply an accessible name, initial focus, Tab containment
+when modal, Escape and outside-press behavior where appropriate, and focus
+restoration when the layer closes. `LayerLayout` does not implement those
+behaviors. Test that the background is unavailable to assistive technology for
+modal use and that the close action remains reachable at every breakpoint.
+Honor `prefers-reduced-motion`; `disableAnimations` can be used when the product
+needs to disable the supplied transitions explicitly.
+
+## Props
+
+<PropsTable packageName="lab" componentName="LayerLayout" />
+
+## Deprecations and migrations
+
+There are no current deprecations. Earlier Storybook-only guidance has moved to
+this public page; keep visual stories for maintainer testing, not application
+links.
+
+## Related records
+
+See [Layouts](..) for stable structural alternatives and
+[`DeckLayout`](../deck-layout) for same-region page transitions.

@@ -204,6 +204,9 @@ function classifiedChanges(baseline) {
     .sort();
   const allowedUnits = batch === "06a" ? ["06a"] : batch === "06b" ? ["06a", "06b"] : ["06a", "06b", "06c"];
   const allowed = new Set(allowedUnits.flatMap((unit) => baseline.allowed_changes[unit]));
+  if (batch === "06c") {
+    allowed.add("packages/knowledge/src/build/buildRegistry.ts");
+  }
   const unclassified = changed.filter((entry) => !allowed.has(entry));
   assert(
     unclassified.length === 0,
@@ -436,21 +439,57 @@ if (batch === "06a") {
   );
 }
 
+let compilerClosureChange = null;
 if (batch === "06c") {
-  const semanticPatterns = await readJson(
-    path.join(
-      repositoryRoot,
-      "packages",
-      "knowledge",
-      "src",
-      "build",
-      "catalogSemanticInputPatterns.json",
+  const configurationPath =
+    "packages/knowledge/src/build/catalogSemanticInputPatterns.json";
+  const configurationBytes = await regularBytes(
+    path.join(repositoryRoot, ...configurationPath.split("/")),
+    "Knowledge semantic input configuration",
+  );
+  const semanticPatterns = JSON.parse(configurationBytes.toString("utf8"));
+  const predecessorPatterns = JSON.parse(
+    execFileSync(
+      "git",
+      ["show", `${predecessor.receipt.source_commit}:${configurationPath}`],
+      {
+        cwd: repositoryRoot,
+        encoding: "utf8",
+        windowsHide: true,
+      },
     ),
   );
-  assert(
-    semanticPatterns.every((entry) => !entry.includes("/stories/")),
-    "06c retained a story path as a semantic input",
+  const retiredStoryPatterns = predecessorPatterns.filter((entry) =>
+    entry.includes("/stories/"),
   );
+  assert(
+    retiredStoryPatterns.length === 13 &&
+      JSON.stringify(semanticPatterns) ===
+        JSON.stringify(
+          predecessorPatterns.filter((entry) => !entry.includes("/stories/")),
+        ),
+    "06c must remove exactly the 13 reviewed story input patterns",
+  );
+  assert(
+    afterIdentity.compiler_digest !==
+      predecessor.receipt.knowledge_identity.after.compiler_digest,
+    "06c story-input retirement did not change the compiler closure identity",
+  );
+  compilerClosureChange = {
+    policy: "storybook-semantic-input-retirement/1",
+    configuration_path: configurationPath,
+    configuration_sha256: sha256(configurationBytes),
+    predecessor_compiler_digest:
+      predecessor.receipt.knowledge_identity.after.compiler_digest,
+    current_compiler_digest: afterIdentity.compiler_digest,
+    reviewed_source_paths: [
+      "packages/knowledge/src/build/buildRegistry.ts",
+    ],
+    retired_story_patterns: retiredStoryPatterns,
+    remaining_story_pattern_count: semanticPatterns.filter((entry) =>
+      entry.includes("/stories/"),
+    ).length,
+  };
 }
 
 const identityChanges = classifiedChanges(baseline);
@@ -512,9 +551,12 @@ const receipt = {
           policy: "canonical-public-destination-expansion/1",
           allowed: true,
           reason:
-            "Executed package-story dispositions add or expand canonical public MDX pages that are selected Knowledge page records; all frozen pattern records and authored example closures remain unchanged.",
+            "Executed package-story dispositions add or expand canonical public MDX pages that are selected Knowledge page records; 06c also retires the reviewed Storybook semantic input patterns. All frozen pattern records and authored example closures remain unchanged.",
           stable_pattern_count: receiptPatterns.length,
           public_destinations: reviewedPublicDestinations,
+          ...(compilerClosureChange
+            ? { compiler_closure_change: compilerClosureChange }
+            : {}),
         },
       }),
   package_version_intent: [

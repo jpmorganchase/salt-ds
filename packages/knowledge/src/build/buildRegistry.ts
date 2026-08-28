@@ -20,10 +20,8 @@ import {
   extractPages,
 } from "./buildRegistryDocs.js";
 import {
-  createPatternNameBySlug,
   derivePatternExampleAccessibilitySignals,
   derivePatternImplementationAccessibilitySignals,
-  extractPatternExamplesFromStories,
   extractPatterns,
 } from "./buildRegistryPatterns.js";
 import { buildTokenPolicySourceRegistry } from "./buildRegistryTokenPolicy.js";
@@ -257,20 +255,9 @@ export async function buildKnowledgeSource(
           rawDeprecations.map((deprecation) => deprecation.id),
         );
         const pages = await extractPages(sourceRoot);
-        const patternStoryExamples = await extractPatternExamplesFromStories(
-          sourceRoot,
-          createPatternNameBySlug(patterns),
-        );
         const enrichedPatternMap = new Map(
           patterns.map((pattern) => [pattern.name, pattern] as const),
         );
-        for (const example of patternStoryExamples) {
-          const pattern = enrichedPatternMap.get(example.target_name);
-          if (!pattern) continue;
-          pattern.examples = [...pattern.examples, example].sort(
-            (left, right) => compareOrdinalStrings(left.id, right.id),
-          );
-        }
 
         for (const pattern of enrichedPatternMap.values()) {
           const accessibilitySignals = [
