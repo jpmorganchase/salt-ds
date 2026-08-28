@@ -2642,15 +2642,19 @@ digest: 06a consumes Unit 05's `R1_PRE_AGENT` cohort receipt, 06b consumes the
 receipts through R3; incremental/cumulative parity never depends on a vanished
 prior-job `dist` directory.
 
-For 06b/06c, canonical record/content bytes and the baseline semantic digest must
-remain unchanged; `compiler_digest` remains unchanged unless the reviewed
-verifier/compiler closure actually changes. Source relocation may change
-`semantic_source_digest`, descriptors, and `bundle_digest` only as enumerated in
-the tracked contract. The 06c receipt additionally proves no story path remains
-a semantic input, all eight package-story dispositions are complete with
-destination/content evidence, and every retained story is only a maintainer
-facade over canonical public guidance. An unclassified identity change is a
-STOP condition, not a snapshot update.
+For 06b/06c, the 24 canonical pattern record/content bytes and authored example
+closures must remain unchanged; `compiler_digest` remains unchanged unless the
+reviewed verifier/compiler closure actually changes. Executing the package-story
+dispositions may add or expand canonical public MDX destinations. Because those
+pages are selected Knowledge page records, their reviewed page/source records
+may change the outer `semantic_digest`; the receipt binds their exact paths and
+record hashes instead of misreporting whole-manifest semantic parity. Source
+relocation may change `semantic_source_digest`, descriptors, and `bundle_digest`
+only as enumerated in the tracked contract. The 06c receipt additionally proves
+no story path remains a semantic input, all eight package-story dispositions are
+complete with destination/content evidence, and every retained story is only a
+maintainer facade over canonical public guidance. An unclassified identity
+change is a STOP condition, not a snapshot update.
 
 Because 06a/06b/06c change selected knowledge/input identity, each subunit's
 pack receipt records cumulative knowledge/CLI version intent but adds no AI
@@ -2829,7 +2833,7 @@ yarn verify:salt-pattern-migration -- --batch 06a --baseline tooling/ai/pattern-
 
 # 06b — all 12 named batch-A entries report complete closures; all exit 0
 yarn build:ai-tooling
-yarn vitest run packages/knowledge/src/build packages/knowledge/src/catalog packages/knowledge/src/examples --maxWorkers=4
+yarn vitest run packages/knowledge/src/__tests__ --maxWorkers=4
 yarn test:ai-tooling
 yarn check:salt-docs-authoring -- --authoring-stage 06b --migration-batch 06b --visibility-stage 06b
 yarn check:ai-tooling:pack -- --profile pre-agent-support --report dist/salt-pattern-migration/06b-pack-report.json
@@ -2840,7 +2844,7 @@ yarn test:components
 
 # 06c — all 24 entries are independent; zero public story URLs/inputs; all exit 0
 yarn build:ai-tooling
-yarn vitest run packages/knowledge/src/build packages/knowledge/src/catalog packages/knowledge/src/examples --maxWorkers=4
+yarn vitest run packages/knowledge/src/__tests__ --maxWorkers=4
 yarn test:ai-tooling
 yarn check:salt-docs-authoring -- --authoring-stage 06c --migration-batch 06c --visibility-stage 06c --require-storybook-independent
 yarn check:ai-tooling:pack -- --profile pre-agent-support --report dist/salt-pattern-migration/06c-pack-report.json

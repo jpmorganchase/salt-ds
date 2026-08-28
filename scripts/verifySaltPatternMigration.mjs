@@ -132,6 +132,22 @@ function knowledgeIdentity(value) {
   };
 }
 
+function pageRecordKeyForPublicDestination(relative) {
+  assert(
+    relative.startsWith("site/docs/") && relative.endsWith(".mdx"),
+    `Reviewed public destination is not a site MDX page: ${relative}`,
+  );
+  const routeSuffix = relative
+    .slice("site/docs/".length)
+    .replace(/\.mdx$/iu, "")
+    .replace(/\/index$/iu, "");
+  const normalizedRoute = `salt${routeSuffix ? `-${routeSuffix}` : ""}`
+    .replace(/[^a-z0-9]+/giu, "-")
+    .replace(/(^-|-$)/gu, "")
+    .toLowerCase();
+  return `record:page:page.${normalizedRoute}`;
+}
+
 async function validatePredecessor(file, expectedBatch, baseline) {
   const bytes = await regularBytes(file, "Predecessor receipt");
   const receipt = JSON.parse(bytes.toString("utf8"));
@@ -254,12 +270,6 @@ assert(
 );
 const beforeIdentity = knowledgeIdentity(baseline.knowledge_identity);
 const afterIdentity = knowledgeIdentity(manifest);
-if (batch !== "06a") {
-  assert(
-    afterIdentity.semantic_digest === beforeIdentity.semantic_digest,
-    `${batch} changed the baseline semantic digest`,
-  );
-}
 if (batch === "06b") {
   assert(
     afterIdentity.compiler_digest ===
@@ -287,8 +297,18 @@ assert(
 const patternRecordSet = await readJson(
   path.join(repositoryRoot, "dist", "salt-ds-knowledge", "records", "pattern.json"),
 );
+const pageRecordSet = await readJson(
+  path.join(repositoryRoot, "dist", "salt-ds-knowledge", "records", "page.json"),
+);
+const sourceRecordSet = await readJson(
+  path.join(repositoryRoot, "dist", "salt-ds-knowledge", "records", "source.json"),
+);
 const patternRecords = new Map(
   patternRecordSet.records.map((record) => [record.key, record]),
+);
+const pageRecords = new Map(pageRecordSet.records.map((record) => [record.key, record]));
+const sourceRecords = new Map(
+  sourceRecordSet.records.map((record) => [record.id, record]),
 );
 const receiptPatterns = [];
 for (const frozen of baseline.patterns) {
@@ -381,6 +401,41 @@ for (const frozen of baseline.package_stories) {
   });
 }
 
+const reviewedPublicDestinations = receiptPackageStories
+  .filter(
+    (entry) =>
+      entry.status === "complete" && entry.destination?.startsWith("site/docs/"),
+  )
+  .map((entry) => {
+    const destination = entry.destination;
+    const pageRecordKey = pageRecordKeyForPublicDestination(destination);
+    const pageRecord = pageRecords.get(pageRecordKey);
+    assert(pageRecord, `Missing reviewed public page record ${pageRecordKey}`);
+    const sourceRecord = sourceRecords.get(pageRecord.data.source_ref.id);
+    assert(
+      sourceRecord?.data.locator === destination,
+      `${pageRecordKey} does not bind reviewed destination ${destination}`,
+    );
+    return {
+      path: destination,
+      page_record_key: pageRecordKey,
+      page_record_sha256: sha256(Buffer.from(compactCanonicalJson(pageRecord))),
+      source_record_key: sourceRecord.key,
+      source_record_sha256: sha256(Buffer.from(compactCanonicalJson(sourceRecord))),
+    };
+  });
+
+const semanticChanged =
+  beforeIdentity.semantic_digest !== afterIdentity.semantic_digest;
+if (batch === "06a") {
+  assert(!semanticChanged, "06a changed the baseline semantic digest");
+} else {
+  assert(
+    semanticChanged && reviewedPublicDestinations.length > 0,
+    `${batch} must bind its semantic change to canonical public destinations`,
+  );
+}
+
 if (batch === "06c") {
   const semanticPatterns = await readJson(
     path.join(
@@ -450,6 +505,18 @@ const receipt = {
       bundle_changed: beforeIdentity.bundle_digest !== afterIdentity.bundle_digest,
     },
   },
+  ...(batch === "06a"
+    ? {}
+    : {
+        semantic_change_review: {
+          policy: "canonical-public-destination-expansion/1",
+          allowed: true,
+          reason:
+            "Executed package-story dispositions add or expand canonical public MDX pages that are selected Knowledge page records; all frozen pattern records and authored example closures remain unchanged.",
+          stable_pattern_count: receiptPatterns.length,
+          public_destinations: reviewedPublicDestinations,
+        },
+      }),
   package_version_intent: [
     {
       name: "@salt-ds/cli",

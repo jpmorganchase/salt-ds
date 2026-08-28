@@ -1,0 +1,126 @@
+---
+title: Floating platform
+data:
+  description: "`FloatingPlatformProvider` and `FloatingComponentProvider` let advanced applications customize how Salt positions and renders floating UI such as tooltips, menus and dropdowns."
+  summary: "Customize Salt floating UI only when an application needs a non-browser coordinate system, custom middleware or a different floating root."
+  applicability: "Advanced `@salt-ds/core` integrations, especially multi-window desktop applications; standard web applications should use Salt's defaults."
+  stability: "stable"
+  providers: ["FloatingPlatformProvider", "FloatingComponentProvider"]
+  deprecations: []
+  relatedRecords:
+    ["component:Tooltip", "component:Dropdown", "component:ComboBox"]
+  provenance: "authored_normative_guidance"
+  sourceCodeUrl: "https://github.com/jpmorganchase/salt-ds/tree/main/packages/core/src/utils/useFloatingUI"
+  package:
+    name: "@salt-ds/core"
+  alsoKnownAs: ["Floating UI platform", "Custom floating root"]
+  relatedComponents:
+    [
+      { name: "Tooltip", relationship: "contains" },
+      { name: "Dropdown", relationship: "contains" },
+      { name: "Combo box", relationship: "contains" },
+    ]
+keywords:
+  $ref: "#/data/alsoKnownAs"
+layout: DetailTechnical
+---
+
+Salt uses [Floating UI](https://floating-ui.com/) to position floating elements
+such as tooltips, menus and dropdown lists relative to their trigger. The
+default platform is the right choice for normal browser applications.
+
+## When to customize the floating platform
+
+Use these providers when the floating element and its trigger use different
+coordinate spaces, such as a multi-window desktop application, or when an
+integration needs reviewed Floating UI middleware that Salt's component API
+doesn't expose directly.
+
+Don't customize the platform merely to change a component's placement or
+offset. Use the component's documented props first. A custom platform changes
+positioning for every compatible floating component below the provider, so
+test clipping, focus order, keyboard interaction and zoom behavior across all
+supported windows.
+
+## Import and dependencies
+
+```tsx
+import {
+  FloatingComponentProvider,
+  FloatingPlatformProvider,
+  Tooltip,
+} from "@salt-ds/core";
+```
+
+`FloatingPlatformProvider` accepts Floating UI platform and middleware values.
+If your application constructs those values itself, declare the matching
+Floating UI package as a direct dependency rather than relying on Salt's
+transitive dependencies.
+
+## Provide a custom platform
+
+The `platform` prop replaces Floating UI's coordinate and measurement
+operations. The `middleware` prop receives Salt's default middleware and must
+return the middleware that should run. Preserve the defaults unless your
+integration intentionally replaces their collision behavior.
+
+```tsx
+import { offset, platform } from "@floating-ui/dom";
+import { FloatingPlatformProvider, Tooltip } from "@salt-ds/core";
+
+const desktopPlatform = {
+  ...platform,
+  // Override only the measurements that cross your window boundary.
+};
+
+export function DesktopTooltip() {
+  return (
+    <FloatingPlatformProvider
+      platform={desktopPlatform}
+      middleware={(defaultMiddleware) => [...defaultMiddleware, offset(10)]}
+    >
+      <Tooltip content="Rendered with desktop-aware positioning">
+        <button type="button">More information</button>
+      </Tooltip>
+    </FloatingPlatformProvider>
+  );
+}
+```
+
+Set `animationFrame` only when the reference can move without normal resize or
+scroll events, for example during an animation in another window. Continuous
+updates cost more than event-driven positioning.
+
+## Provide a custom floating root
+
+`FloatingComponentProvider` replaces the element used as the root of a floating
+surface. The component must forward its ref and all supplied positioning,
+accessibility and event props. It must also honor `open` and `disabled`. This is
+the integration point for rendering into a portal or activating another
+window; it does not configure that window's styles or providers for you.
+
+When rendering into a separate document:
+
+- mount the floating children into that document with a portal;
+- add `SaltProvider` or `SaltProviderNext` in the destination React tree;
+- inject the required Salt component and theme CSS into the destination
+  document;
+- preserve focus restoration, dismissal and accessible naming; and
+- destroy listeners and external window resources when the surface closes.
+
+See [Style injection](/salt/getting-started/style-injection) for styling a
+secondary document.
+
+## Accessibility and keyboard behavior
+
+The providers don't change a component's keyboard contract. Tooltips, menus,
+dropdowns and dialogs must retain their documented roles, focus management,
+dismissal behavior and trigger relationships after customization. Test at
+least Tab and Shift+Tab navigation, Escape dismissal, trigger activation,
+focus restoration and screen-reader naming in the actual host environment.
+
+## Deprecations and migrations
+
+There are no current deprecations for these providers. Earlier maintainer-only
+Storybook guidance has moved to this canonical page; application documentation
+should link here instead of depending on Storybook routes.

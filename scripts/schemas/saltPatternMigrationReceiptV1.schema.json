@@ -4,6 +4,18 @@
   "title": "Salt pattern migration receipt v1",
   "type": "object",
   "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": { "batch": { "enum": ["06b", "06c"] } },
+        "required": ["batch"]
+      },
+      "then": {
+        "properties": { "semantic_change_review": true },
+        "required": ["semantic_change_review"]
+      }
+    }
+  ],
   "required": [
     "$schema",
     "schema_version",
@@ -91,6 +103,29 @@
         }
       }
     },
+    "semantic_change_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy",
+        "allowed",
+        "reason",
+        "stable_pattern_count",
+        "public_destinations"
+      ],
+      "properties": {
+        "policy": { "const": "canonical-public-destination-expansion/1" },
+        "allowed": { "const": true },
+        "reason": { "type": "string", "minLength": 1 },
+        "stable_pattern_count": { "const": 24 },
+        "public_destinations": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/publicDestination" },
+          "uniqueItems": true
+        }
+      }
+    },
     "package_version_intent": {
       "type": "array",
       "minItems": 2,
@@ -157,6 +192,30 @@
         "compiler_digest": { "$ref": "#/$defs/digest" },
         "semantic_digest": { "$ref": "#/$defs/digest" },
         "bundle_digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "publicDestination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "page_record_key",
+        "page_record_sha256",
+        "source_record_key",
+        "source_record_sha256"
+      ],
+      "properties": {
+        "path": { "$ref": "#/$defs/path" },
+        "page_record_key": {
+          "type": "string",
+          "pattern": "^record:page:page\\.[a-z0-9-]+$"
+        },
+        "page_record_sha256": { "$ref": "#/$defs/digest" },
+        "source_record_key": {
+          "type": "string",
+          "pattern": "^record:source:source\\.[a-z0-9]+$"
+        },
+        "source_record_sha256": { "$ref": "#/$defs/digest" }
       }
     },
     "pattern": {
