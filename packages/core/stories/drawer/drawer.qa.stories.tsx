@@ -1,6 +1,5 @@
 import {
   Drawer,
-  DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
   type DrawerProps,
@@ -32,7 +31,7 @@ const DrawerTemplate: StoryFn<typeof Drawer> = () => {
   return (
     <StackLayout>
       <FakeDrawer>
-        <DrawerHeader header="Title" actions={<DrawerCloseButton />} />
+        <DrawerHeader header="Title" />
         <DrawerContent>
           <Text>
             Lorem Ipsum is simply dummy text of the printing and typesetting
