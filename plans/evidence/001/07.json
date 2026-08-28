@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+  "plan_id": "001",
+  "unit_id": "07",
+  "tracker_status": "DONE",
+  "completion_sha": "cbef3fdf1b8abd80f9a5c37fa92642e68e7edcce",
+  "entries": [
+    {
+      "kind": "mcp-candidate-disposition-receipt",
+      "schema_id": "https://www.saltdesignsystem.com/ai/schemas/salt-mcp-candidate-disposition-evidence-1.json",
+      "schema_version": "1.0.0",
+      "locator": "repo://plans/evidence/artifacts/sha256-453d90dc31762c872e89042bda121cb8e915cb04945f921fbc32c55a3f1cd273.json",
+      "sha256": "sha256:453d90dc31762c872e89042bda121cb8e915cb04945f921fbc32c55a3f1cd273",
+      "source_sha": "5e9fe45e3f0a06c101004fc05d6b0e076b36c812",
+      "completion_sha": "cbef3fdf1b8abd80f9a5c37fa92642e68e7edcce",
+      "workflow_class": "local-ci",
+      "environment_class": "local-worktree-node-24",
+      "retention_expires_at": "2031-08-28T00:00:00.000Z",
+      "state": "active",
+      "parents": [],
+      "mcp_candidate_disposition": "omit",
+      "candidate_decision_sha256": "sha256:de296a69f92271c8bb165a859044c43a6b2450efce486b11a770002743f162a1",
+      "candidate_pack_report_sha256": "sha256:85f97dbff887d38b4621a012cfb46c57fb9c24183e9aca609e422c24dc951c2f",
+      "candidate_tarball_sha256": "sha256:d665c1982808e671ac0c1ba4f3f36aa699e7c518f3db75541126286dad8972ee",
+      "candidate_source_sha": "5e9fe45e3f0a06c101004fc05d6b0e076b36c812",
+      "spec_version": "2026-07-28",
+      "sdk_version": "2.0.0",
+      "deterministic_security_interoperability": "pass",
+      "material_value_threshold": "not_proven",
+      "verification": [
+        "yarn vitest run packages/mcp/src --maxWorkers=4",
+        "yarn check:ai-tooling:pack -- --profile mcp-candidate --report dist/salt-ai-pack/unit-07.json",
+        "yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit-07.json",
+        "yarn eval:salt-ai:run -- --cohort mcp-pre-release --candidate dist/salt-ai-pack/unit-07.json",
+        "yarn eval:salt-ai:gate -- --cohort mcp-pre-release --decision-receipt dist/salt-ai-eval/mcp-candidate-disposition.json"
+      ]
+    },
+    {
+      "kind": "selected-graph-receipt",
+      "schema_id": "https://www.saltdesignsystem.com/ai/schemas/salt-selected-graph-receipt-1.json",
+      "schema_version": "1.0.0",
+      "locator": "repo://plans/evidence/artifacts/sha256-4a510fa674f4ed30d06f8410f7c59d80e037e11ee8fcb79db955812731702dd2.json",
+      "sha256": "sha256:4a510fa674f4ed30d06f8410f7c59d80e037e11ee8fcb79db955812731702dd2",
+      "source_sha": "cbef3fdf1b8abd80f9a5c37fa92642e68e7edcce",
+      "completion_sha": "cbef3fdf1b8abd80f9a5c37fa92642e68e7edcce",
+      "workflow_class": "local-ci",
+      "environment_class": "local-worktree-node-24",
+      "retention_expires_at": "2031-08-28T00:00:00.000Z",
+      "state": "active",
+      "parents": [
+        "sha256:453d90dc31762c872e89042bda121cb8e915cb04945f921fbc32c55a3f1cd273"
+      ],
+      "selection_stage": "provisional",
+      "mcp_candidate_disposition": "omit",
+      "package_count": 2,
+      "packages": ["@salt-ds/knowledge", "@salt-ds/cli"],
+      "pack_report_sha256": "sha256:32906616f961b7623a14046ad7db0457f228d7be22c92d4b5b0b68155c1810b2",
+      "bundle_digest": "sha256:e6a496570c7b86221bcec6fe39c5c1ca80e4db75797514ac45c6135a964a0d2c",
+      "semantic_digest": "sha256:a776cf7a83f747d5e7e06c3333b10a018b8005f4194337485065f5353e3d45d9",
+      "production_mcp_exposure": false,
+      "verification": [
+        "yarn build:ai-tooling",
+        "yarn typecheck:ai-tooling",
+        "yarn test:ai-tooling",
+        "yarn check:ai-tooling:pack -- --mcp-candidate-disposition-receipt dist/salt-ai-eval/mcp-candidate-disposition.json --report dist/salt-ai-pack/unit-07-selected.json",
+        "yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit-07-selected.json",
+        "yarn build:salt-ai-web",
+        "yarn check:salt-docs-authoring -- --require-web-route-map dist/salt-ai-web/route-map.json",
+        "yarn verify:salt-ai-web",
+        "yarn workspace @salt-ds/site build"
+      ]
+    }
+  ]
+}

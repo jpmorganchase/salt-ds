@@ -465,6 +465,26 @@ schemaValidator(
     ),
   ),
 );
+schemaValidator(
+  await readJson(
+    path.join(
+      repositoryRoot,
+      "scripts",
+      "schemas",
+      "saltMcpCandidateDispositionEvidenceV1.schema.json",
+    ),
+  ),
+);
+schemaValidator(
+  await readJson(
+    path.join(
+      repositoryRoot,
+      "scripts",
+      "schemas",
+      "saltSelectedGraphReceiptV1.schema.json",
+    ),
+  ),
+);
 await validatePackageDocs();
 await validateVisibility();
 await validateMigrations();

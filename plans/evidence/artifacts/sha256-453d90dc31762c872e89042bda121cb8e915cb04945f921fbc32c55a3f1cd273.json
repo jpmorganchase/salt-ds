@@ -1,0 +1,57 @@
+{
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/salt-mcp-candidate-disposition-evidence-1.json",
+  "schema_version": "1.0.0",
+  "contract": "salt-mcp-candidate-disposition-evidence/1",
+  "source_commit": "5e9fe45e3f0a06c101004fc05d6b0e076b36c812",
+  "plan_id": "001",
+  "unit_id": "07",
+  "candidate_decision": {
+    "sha256": "sha256:de296a69f92271c8bb165a859044c43a6b2450efce486b11a770002743f162a1",
+    "bytes": 6031
+  },
+  "candidate_pack_report": {
+    "sha256": "sha256:85f97dbff887d38b4621a012cfb46c57fb9c24183e9aca609e422c24dc951c2f",
+    "bytes": 4751
+  },
+  "candidate_package": {
+    "name": "@salt-ds/mcp",
+    "version": "0.0.0",
+    "tarball": {
+      "sha256": "sha256:d665c1982808e671ac0c1ba4f3f36aa699e7c518f3db75541126286dad8972ee",
+      "bytes": 23183
+    }
+  },
+  "evaluation_run": {
+    "sha256": "sha256:b3ce5eecf1d6a42d06e4a69488961191f893751db3d8741a734d141b4607517e",
+    "bytes": 5478
+  },
+  "protocol": {
+    "spec_version": "2026-07-28",
+    "server_sdk_version": "2.0.0",
+    "client_sdk_version": "2.0.0"
+  },
+  "threshold": {
+    "required_cells_complete": false,
+    "material_value_passed": false
+  },
+  "security_interoperability": {
+    "all_deterministic_gates_passed": true,
+    "current_spec": true,
+    "legacy_rejected": true,
+    "offline": true,
+    "path_isolation": true,
+    "consumer_smoke": {
+      "sha256": "sha256:07ea37cf063d55b4ebcc803696d6e83a05ac6ca51c5ffa17d9ad4f27f0beee92",
+      "bytes": 2359
+    }
+  },
+  "mcp_candidate_disposition": "omit",
+  "rationale": "The candidate passed deterministic security and interoperability gates, but no credentialed host/model cells were available to prove the frozen material-value and non-regression threshold. Plan 001 therefore requires omission.",
+  "verification": [
+    "yarn vitest run packages/mcp/src --maxWorkers=4",
+    "yarn check:ai-tooling:pack -- --profile mcp-candidate --report dist/salt-ai-pack/unit-07.json",
+    "yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit-07.json",
+    "yarn eval:salt-ai:run -- --cohort mcp-pre-release --candidate dist/salt-ai-pack/unit-07.json",
+    "yarn eval:salt-ai:gate -- --cohort mcp-pre-release --decision-receipt dist/salt-ai-eval/mcp-candidate-disposition.json"
+  ]
+}

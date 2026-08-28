@@ -19,6 +19,14 @@ import {
 const SUPPORTED_PLANS = new Set(["001"]);
 const SCHEMA_FILES = new Map([
   [
+    "https://www.saltdesignsystem.com/ai/schemas/salt-mcp-candidate-disposition-evidence-1.json",
+    "saltMcpCandidateDispositionEvidenceV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/schemas/salt-selected-graph-receipt-1.json",
+    "saltSelectedGraphReceiptV1.schema.json",
+  ],
+  [
     "https://www.saltdesignsystem.com/ai/schemas/salt-ai-candidate-receipt-1.json",
     "saltAiCandidateReceiptV1.schema.json",
   ],

@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/schemas/salt-selected-graph-receipt-1.json",
+  "title": "Salt selected package graph receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "contract",
+    "source_commit",
+    "plan_id",
+    "unit_id",
+    "selection_stage",
+    "mcp_candidate_disposition",
+    "candidate_decision",
+    "pack_report",
+    "packages",
+    "dependency_edges",
+    "excluded_packages",
+    "knowledge_bundle",
+    "production_exposure",
+    "verification"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://www.saltdesignsystem.com/ai/schemas/salt-selected-graph-receipt-1.json"
+    },
+    "schema_version": { "const": "1.0.0" },
+    "contract": { "const": "salt-selected-graph-receipt/1" },
+    "source_commit": { "$ref": "#/$defs/commit" },
+    "plan_id": { "const": "001" },
+    "unit_id": { "const": "07" },
+    "selection_stage": { "const": "provisional" },
+    "mcp_candidate_disposition": { "enum": ["ship", "omit"] },
+    "candidate_decision": { "$ref": "#/$defs/artifact" },
+    "pack_report": { "$ref": "#/$defs/artifact" },
+    "packages": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 3,
+      "items": { "$ref": "#/$defs/package" }
+    },
+    "dependency_edges": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/edge" }
+    },
+    "excluded_packages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "reason"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "knowledge_bundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bundle_digest",
+        "semantic_digest",
+        "semantic_source_digest",
+        "compiler_digest"
+      ],
+      "properties": {
+        "bundle_digest": { "$ref": "#/$defs/digest" },
+        "semantic_digest": { "$ref": "#/$defs/digest" },
+        "semantic_source_digest": { "$ref": "#/$defs/digest" },
+        "compiler_digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "production_exposure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mcp_package", "mcp_binary", "mcp_docs", "mcp_navigation"],
+      "properties": {
+        "mcp_package": { "type": "boolean" },
+        "mcp_binary": { "type": "boolean" },
+        "mcp_docs": { "type": "boolean" },
+        "mcp_navigation": { "type": "boolean" }
+      }
+    },
+    "verification": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sha256", "bytes"],
+      "properties": {
+        "sha256": { "$ref": "#/$defs/digest" },
+        "bytes": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "package": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "tarball_sha256"],
+      "properties": {
+        "name": { "enum": ["@salt-ds/knowledge", "@salt-ds/cli", "@salt-ds/mcp"] },
+        "version": { "type": "string", "minLength": 1 },
+        "tarball_sha256": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to", "specifier"],
+      "properties": {
+        "from": { "type": "string", "minLength": 1 },
+        "to": { "type": "string", "minLength": 1 },
+        "specifier": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/salt-selected-graph-receipt-1.json",
+  "schema_version": "1.0.0",
+  "contract": "salt-selected-graph-receipt/1",
+  "source_commit": "cbef3fdf1b8abd80f9a5c37fa92642e68e7edcce",
+  "plan_id": "001",
+  "unit_id": "07",
+  "selection_stage": "provisional",
+  "mcp_candidate_disposition": "omit",
+  "candidate_decision": {
+    "sha256": "sha256:de296a69f92271c8bb165a859044c43a6b2450efce486b11a770002743f162a1",
+    "bytes": 6031
+  },
+  "pack_report": {
+    "sha256": "sha256:32906616f961b7623a14046ad7db0457f228d7be22c92d4b5b0b68155c1810b2",
+    "bytes": 4047
+  },
+  "packages": [
+    {
+      "name": "@salt-ds/knowledge",
+      "version": "0.0.0",
+      "tarball_sha256": "sha256:4c8aae22d9225fd272fd4a882640b9ff3a89aa9704ee4f8481872666e39e0a4a"
+    },
+    {
+      "name": "@salt-ds/cli",
+      "version": "0.0.0",
+      "tarball_sha256": "sha256:4a7ecd31443a8b9d746cc0b113ecf7f6a48c9b6a8919b51d226de6ed33c2ab35"
+    }
+  ],
+  "dependency_edges": [
+    {
+      "from": "@salt-ds/cli",
+      "to": "@salt-ds/knowledge",
+      "specifier": "0.0.0"
+    }
+  ],
+  "excluded_packages": [
+    {
+      "name": "@salt-ds/mcp",
+      "reason": "The Unit 07 material-value threshold was not proven, so the candidate disposition is omit."
+    }
+  ],
+  "knowledge_bundle": {
+    "bundle_digest": "sha256:e6a496570c7b86221bcec6fe39c5c1ca80e4db75797514ac45c6135a964a0d2c",
+    "semantic_digest": "sha256:a776cf7a83f747d5e7e06c3333b10a018b8005f4194337485065f5353e3d45d9",
+    "semantic_source_digest": "sha256:35f06fecd2625ef5a37782303eecfbced1931c9de6c3999ce38709622b93f4ab",
+    "compiler_digest": "sha256:d4ed8bb85bd7995310fd5f7a23bf78e2b4d6d38f5c0826a8413c57c33d118ccb"
+  },
+  "production_exposure": {
+    "mcp_package": false,
+    "mcp_binary": false,
+    "mcp_docs": false,
+    "mcp_navigation": false
+  },
+  "verification": [
+    "yarn build:ai-tooling",
+    "yarn typecheck:ai-tooling",
+    "yarn test:ai-tooling",
+    "yarn check:ai-tooling:pack -- --mcp-candidate-disposition-receipt dist/salt-ai-eval/mcp-candidate-disposition.json --report dist/salt-ai-pack/unit-07-selected.json",
+    "yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit-07-selected.json",
+    "yarn build:salt-ai-web",
+    "yarn check:salt-docs-authoring -- --require-web-route-map dist/salt-ai-web/route-map.json",
+    "yarn verify:salt-ai-web",
+    "yarn workspace @salt-ds/site build"
+  ]
+}
