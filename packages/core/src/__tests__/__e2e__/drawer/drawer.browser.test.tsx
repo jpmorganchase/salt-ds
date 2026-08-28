@@ -1,6 +1,7 @@
 import {
   Button,
   Drawer,
+  DrawerActions,
   DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
@@ -14,6 +15,7 @@ import { renderWithSalt } from "~browser-test-utils/render";
 import * as drawerStories from "~stories/drawer/drawer.stories";
 
 const {
+  Actions,
   Default,
   OptionalCloseAction,
   InitialFocusIndex,
@@ -354,5 +356,61 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
     await expect
       .element(page.getByRole("button", { name: "Close Drawer" }))
       .toBeVisible();
+  });
+});
+
+describe("GIVEN a Drawer with DrawerActions", () => {
+  it("places the actions last in the focus order", async () => {
+    await renderWithSalt(
+      <Drawer open position="right" style={{ width: 400 }}>
+        <DrawerHeader
+          header="Add your delivery details"
+          actions={<DrawerCloseButton />}
+        />
+        <DrawerContent>
+          <Button>Content action</Button>
+        </DrawerContent>
+        <DrawerActions>
+          <Button>Cancel</Button>
+          <Button>Save</Button>
+        </DrawerActions>
+      </Drawer>,
+    );
+
+    const closeButton = page.getByRole("button", { name: "Close Drawer" });
+    await expect.element(closeButton).toHaveFocus();
+
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "Content action" }))
+      .toHaveFocus();
+
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "Cancel" }))
+      .toHaveFocus();
+
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "Save" }))
+      .toHaveFocus();
+
+    await userEvent.tab();
+    await expect.element(closeButton).toHaveFocus();
+  });
+
+  it("supports actions configured to close the drawer", async () => {
+    await renderWithSalt(<Actions />);
+    const openButton = page.getByRole("button", { name: "Open Drawer" });
+
+    await openButton.click();
+    await expect.element(page.getByRole("dialog")).toBeVisible();
+    await page.getByRole("button", { name: "Save" }).click();
+    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+
+    await openButton.click();
+    await expect.element(page.getByRole("dialog")).toBeVisible();
+    await page.getByRole("button", { name: "Cancel" }).click();
+    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
   });
 });
