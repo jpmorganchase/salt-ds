@@ -25,6 +25,7 @@ import {
   type Mode,
 } from "@salt-ds/core";
 import { AddIcon, DarkIcon, LightIcon, SearchIcon } from "@salt-ds/icons";
+import { Metric, MetricContent, MetricHeader } from "@salt-ds/lab";
 import { type FormEvent, useMemo, useState } from "react";
 
 const services = [
@@ -102,20 +103,35 @@ export function OperationsDashboard() {
           )}
 
           <section className="metrics" aria-label="Operational metrics">
-            <article><span>Healthy services</span><strong>18</strong><Text color="secondary">of 20 monitored</Text></article>
-            <article><span>Open incidents</span><strong>2</strong><Text color="secondary">1 high priority</Text></article>
-            <article><span>Change success</span><strong>99.2%</strong><Text color="secondary">past 30 days</Text></article>
+            <article>
+              <Metric>
+                <MetricHeader title="Healthy services" />
+                <MetricContent value="18" subvalue="of 20 monitored" />
+              </Metric>
+            </article>
+            <article>
+              <Metric>
+                <MetricHeader title="Open incidents" />
+                <MetricContent value="2" subvalue="1 high priority" />
+              </Metric>
+            </article>
+            <article>
+              <Metric>
+                <MetricHeader title="Change success" />
+                <MetricContent value="99.2%" subvalue="past 30 days" />
+              </Metric>
+            </article>
           </section>
 
           <section id="services" className="servicePanel" aria-labelledby="services-title">
             <div className="panelHeader">
               <div><h2 id="services-title">Service health</h2><Text color="secondary">Production services across all regions</Text></div>
               <Input
-                aria-label="Filter services"
                 placeholder="Filter services"
                 startAdornment={<SearchIcon aria-hidden />}
                 value={query}
                 inputProps={{
+                  "aria-label": "Filter services",
                   onChange: (event) => setQuery(event.currentTarget.value),
                 }}
               />

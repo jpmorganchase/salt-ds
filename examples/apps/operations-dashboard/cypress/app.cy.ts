@@ -11,6 +11,19 @@ describe("Salt operations dashboard", () => {
       .should("have.focus")
       .click();
     cy.get(".dashboardShell").should("have.attr", "data-density", "high");
+    cy.get('[data-testid="mode-toggle"]')
+      .focus()
+      .should("have.focus")
+      .click();
+    cy.get(".dashboardShell").should("have.attr", "data-mode", "dark");
+
+    cy.findByRole("button", { name: "Create incident" })
+      .focus()
+      .should("have.focus")
+      .click();
+    cy.findByRole("dialog").should("be.visible");
+    cy.get("body").type("{esc}");
+    cy.findByRole("dialog").should("not.exist");
 
     cy.findByRole("button", { name: "Create incident" }).click();
     cy.findByLabelText("Incident title").type("Latency regression");

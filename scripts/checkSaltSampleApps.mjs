@@ -301,6 +301,18 @@ async function verifyPublicApp(appName, registry, compatibility) {
   assert.match(combined, /density/u, `${appName} omits density behavior`);
   assert.match(combined, /mode/u, `${appName} omits color-mode behavior`);
 
+  if (appName === "operations-dashboard") {
+    assert(
+      directSalt.includes("@salt-ds/lab"),
+      "Operations dashboard must consume the exact Lab candidate",
+    );
+    assert.match(
+      combined,
+      /from ["']@salt-ds\/lab["']/u,
+      "Operations dashboard omits a public Lab component",
+    );
+  }
+
   if (appName === "next-app-router") {
     const clientBoundaries = [];
     for (const file of files) {
@@ -816,6 +828,74 @@ async function browserChecks(appName, appRoot, environment) {
         await page.getByRole("button", { name: "Send request" }).click();
         await page.getByRole("status").waitFor();
         assert.match(await page.getByRole("status").innerText(), /sent/u);
+        await dialog.waitFor({ state: "detached" });
+
+        await page.setViewportSize({ width: 600, height: 800 });
+        await page
+          .getByRole("navigation", { name: "Primary navigation" })
+          .waitFor();
+      } else if (appName === "operations-dashboard") {
+        await page
+          .getByRole("heading", { name: "Operations overview" })
+          .waitFor();
+
+        const mode = page.getByTestId("mode-toggle");
+        await mode.focus();
+        assert(
+          await mode.evaluate((element) => element === document.activeElement),
+        );
+        await mode.click();
+        assert.equal(
+          await page.locator(".dashboardShell").getAttribute("data-mode"),
+          "dark",
+        );
+
+        const density = page.getByTestId("density-toggle");
+        await density.focus();
+        assert(
+          await density.evaluate(
+            (element) => element === document.activeElement,
+          ),
+        );
+        await density.click();
+        assert.equal(
+          await page.locator(".dashboardShell").getAttribute("data-density"),
+          "high",
+        );
+
+        await page.getByLabel("Filter services").fill("risk");
+        await page.getByRole("row", { name: /Risk calculator/u }).waitFor();
+        assert.equal(
+          await page.getByRole("row", { name: /Order gateway/u }).count(),
+          0,
+        );
+
+        const createIncident = page
+          .getByRole("button", { name: "Create incident" })
+          .first();
+        await createIncident.focus();
+        assert(
+          await createIncident.evaluate(
+            (element) => element === document.activeElement,
+          ),
+        );
+        await createIncident.click();
+        const dialog = page.getByRole("dialog");
+        await dialog.waitFor();
+        await page.keyboard.press("Escape");
+        await dialog.waitFor({ state: "detached" });
+
+        await createIncident.click();
+        await page.getByLabel("Incident title").fill("Latency regression");
+        await page.getByLabel("Affected service").fill("Risk calculator");
+        await dialog
+          .getByRole("button", { name: "Create incident" })
+          .click();
+        await page.getByRole("status").waitFor();
+        assert.match(
+          await page.getByRole("status").innerText(),
+          /responders notified/u,
+        );
         await dialog.waitFor({ state: "detached" });
 
         await page.setViewportSize({ width: 600, height: 800 });

@@ -14,7 +14,7 @@ import {
 } from "./saltAiEvidenceUtils.mjs";
 
 const args = parseArgs(process.argv.slice(2));
-const authoringStage = String(args.get("--authoring-stage") ?? "");
+const authoringStage = String(args.get("--authoring-stage") ?? "06d");
 const visibilityStage = String(args.get("--visibility-stage") ?? authoringStage);
 assert(
   ["06a", "06b", "06c", "06d"].includes(authoringStage),
