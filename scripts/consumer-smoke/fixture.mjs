@@ -536,8 +536,8 @@ export async function createExactCliInfoRepo(rootDir) {
         private: true,
         packageManager: "npm@11.0.0",
         dependencies: {
-          "@salt-ds/core": "1.69.0",
-          "@salt-ds/theme": "1.44.0",
+          "@salt-ds/core": "1.70.0",
+          "@salt-ds/theme": "1.45.0",
         },
       },
       null,
@@ -546,8 +546,8 @@ export async function createExactCliInfoRepo(rootDir) {
     "utf8",
   );
   for (const [name, version] of [
-    ["core", "1.69.0"],
-    ["theme", "1.44.0"],
+    ["core", "1.70.0"],
+    ["theme", "1.45.0"],
   ]) {
     await fs.writeFile(
       path.join(rootDir, "node_modules", "@salt-ds", name, "package.json"),

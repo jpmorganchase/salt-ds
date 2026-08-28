@@ -237,8 +237,8 @@ export async function runCliWorkflowCoverage(
         packReport.report.knowledge_bundle.bundle_digest &&
       info.knowledge.semantic_digest ===
         packReport.report.knowledge_bundle.semantic_digest &&
-      observed.get("@salt-ds/core") === "1.69.0" &&
-      observed.get("@salt-ds/theme") === "1.44.0" &&
+      observed.get("@salt-ds/core") === "1.70.0" &&
+      observed.get("@salt-ds/theme") === "1.45.0" &&
       info.coverage?.status === "complete" &&
       info.coverage.exact_project_package_vector === true &&
       info.compatibility?.compatible === true &&

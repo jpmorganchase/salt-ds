@@ -29,13 +29,15 @@ export function sha256(value) {
   return `sha256:${createHash("sha256").update(value).digest("hex")}`;
 }
 
+export function repositoryTextBytes(value) {
+  const bytes = Buffer.isBuffer(value) ? value : Buffer.from(value);
+  return Buffer.from(bytes.toString("utf8").replaceAll("\r\n", "\n"));
+}
 
 export function repositoryTextSha256(value) {
-  const bytes = Buffer.isBuffer(value) ? value : Buffer.from(value);
-  return sha256(
-    Buffer.from(bytes.toString("utf8").replaceAll("\r\n", "\n")),
-  );
+  return sha256(repositoryTextBytes(value));
 }
+
 export async function sha256File(file) {
   return sha256(await readFile(file));
 }

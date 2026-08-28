@@ -176,11 +176,11 @@ const preAgentKnowledgePackage = {
     "markdown",
     "compatibility",
     "support",
+    "skills",
     "schemas",
     "dist-cjs",
     "dist-es",
     "dist-types",
-    "skills",
   ],
   forbiddenManifestFields: [
     "publishEntryPath",
@@ -366,6 +366,7 @@ const cliPackage = {
     "README.md",
     "schemas",
   ],
+  allowMarkdown: true,
   forbiddenTextMarkers: [
     "@modelcontextprotocol/server",
     "@storybook/",
@@ -1773,6 +1774,7 @@ const report = {
     name: entry.name,
     version: entry.version,
     manifest: entry.manifest,
+    readme: entry.readme,
     tarball: {
       path: `${artifactDirectoryName}/${entry.tarball.fileName}`,
       sha256: entry.tarball.sha256,

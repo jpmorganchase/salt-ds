@@ -11,6 +11,7 @@ import {
   portablePath,
   readJson,
   repositoryRoot,
+  repositoryTextBytes,
   sha256,
   stableJson,
   writeJsonAtomic,
@@ -112,9 +113,8 @@ assert(
 );
 const sourceRoot = contained(sourceRootInput);
 const sourceManifestPath = path.join(sourceRoot, "manifest.json");
-const sourceManifestBytes = await regularBytes(
-  sourceManifestPath,
-  "Public-docs source manifest",
+const sourceManifestBytes = repositoryTextBytes(
+  await regularBytes(sourceManifestPath, "Public-docs source manifest"),
 );
 const sourceManifest = JSON.parse(sourceManifestBytes.toString("utf8"));
 assert(
@@ -150,7 +150,9 @@ for (const document of sourceManifest.documents) {
   ids.add(document.id);
   routes.add(document.route);
   const sourcePath = contained(document.source, sourceRoot);
-  const bytes = await regularBytes(sourcePath, `Public document ${document.id}`);
+  const bytes = repositoryTextBytes(
+    await regularBytes(sourcePath, `Public document ${document.id}`),
+  );
   const text = bytes.toString("utf8");
   assert(text.startsWith(`# ${document.title}\n`), `${document.id} title does not match its H1`);
   assert(

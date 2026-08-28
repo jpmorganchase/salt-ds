@@ -12,6 +12,7 @@ import {
   portablePath,
   readJson,
   repositoryRoot,
+  repositoryTextBytes,
   sha256,
   stableJson,
   writeJsonAtomic,
@@ -156,9 +157,11 @@ if (previewInput) {
     "Web build requires the matching nonproduction public-docs preview receipt",
   );
   for (const document of previewReceipt.documents) {
-    const bytes = await regularBytes(
-      contained(repositoryRoot, document.source),
-      `Preview document ${document.id}`,
+    const bytes = repositoryTextBytes(
+      await regularBytes(
+        contained(repositoryRoot, document.source),
+        `Preview document ${document.id}`,
+      ),
     );
     assert(
       bytes.byteLength === document.bytes && sha256(bytes) === document.sha256,

@@ -15,8 +15,8 @@
   ],
   "not": {
     "anyOf": [
-      { "required": ["extraction_parity"] },
-      { "required": ["comparison_registry"] }
+      { "required": ["extraction_parity"], "properties": { "extraction_parity": {} } },
+      { "required": ["comparison_registry"], "properties": { "comparison_registry": {} } }
     ]
   },
   "properties": {

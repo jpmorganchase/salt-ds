@@ -5,6 +5,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { build } from "esbuild";
 
+import { repositoryTextBytes } from "./saltAiEvidenceUtils.mjs";
+
 const repositoryRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "..",
@@ -267,7 +269,7 @@ assert.ok(
   "Every authored example needs explicit visibility, stability, and provenance",
 );
 assert.equal(
-  await readFile(sourceLoadersPath, "utf8"),
+  repositoryTextBytes(await readFile(sourceLoadersPath)).toString("utf8"),
   expectedLoaders,
   "The generated public-example source loader map is stale. Run `yarn examples:manifest` and review the diff.",
 );
