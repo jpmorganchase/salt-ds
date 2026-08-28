@@ -465,6 +465,7 @@ export const WithHeader: StoryFn<DrawerProps> = (args) => {
         style={{ width: 400 }}
       >
         <DrawerHeader
+          preheader="bla bla bla"
           header="Check deposit #1278"
           description="Pending transaction review"
           actions={<DrawerCloseButton onClick={handleClose} />}
@@ -475,16 +476,66 @@ export const WithHeader: StoryFn<DrawerProps> = (args) => {
               Incididunt adipisicing deserunt nostrud ullamco consequat
               consectetur magna id do irure labore fugiat. Eiusmod pariatur
               officia elit ad. Ullamco adipisicing Lorem amet velit in do
-              reprehenderit nostrud eu aute voluptate quis quis.
+              reprehenderit nostrud eu aute voluptate quis quis. Incididunt
+              adipisicing deserunt nostrud ullamco consequat consectetur magna
+              id do irure labore fugiat. Eiusmod pariatur officia elit ad.
+              Ullamco adipisicing Lorem amet velit in do reprehenderit nostrud
+              eu aute voluptate quis quis. reprehenderit nostrud eu aute
+              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
+              quis. reprehenderit nostrud eu aute voluptate quis quis.
+              reprehenderit nostrud eu aute voluptate quis quis. reprehenderit
+              nostrud eu aute voluptate quis quis. reprehenderit nostrud eu aute
+              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
+              quis. reprehenderit nostrud eu aute voluptate quis quis.
+              reprehenderit nostrud eu aute voluptate quis quis. reprehenderit
+              nostrud eu aute voluptate quis quis. reprehenderit nostrud eu aute
+              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
+              quis. reprehenderit nostrud eu aute voluptate quis quis.
+              reprehenderit nostrud eu aute voluptate quis quis. reprehenderit
+              nostrud eu aute voluptate quis quis. reprehenderit nostrud eu aute
+              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
+              quis. reprehenderit nostrud eu aute voluptate quis quis.
+              reprehenderit nostrud eu aute voluptate quis quis. reprehenderit
+              nostrud eu aute voluptate quis quis. reprehenderit nostrud eu aute
+              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
+              quis. reprehenderit nostrud eu aute voluptate quis quis.
+              reprehenderit nostrud eu aute voluptate quis quis. reprehenderit
+              nostrud eu aute voluptate quis quis. reprehenderit nostrud eu aute
+              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
+              quis. reprehenderit nostrud eu aute voluptate quis quis.
+              reprehenderit nostrud eu aute voluptate quis quis. reprehenderit
+              nostrud eu aute voluptate quis quis. reprehenderit nostrud eu aute
+              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
+              quis. reprehenderit nostrud eu aute voluptate quis quis.
+              reprehenderit nostrud eu aute voluptate quis quis. reprehenderit
+              nostrud eu aute voluptate quis quis. reprehenderit nostrud eu aute
+              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
+              quis. reprehenderit nostrud eu aute voluptate quis quis.
+              reprehenderit nostrud eu aute voluptate quis quis. reprehenderit
+              nostrud eu aute voluptate quis quis. reprehenderit nostrud eu aute
+              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
+              quis. reprehenderit nostrud eu aute voluptate quis quis.
+              reprehenderit nostrud eu aute voluptate quis quis. reprehenderit
+              nostrud eu aute voluptate quis quis. reprehenderit nostrud eu aute
+              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
+              quis. reprehenderit nostrud eu aute voluptate quis quis.
+              reprehenderit nostrud eu aute voluptate quis quis. reprehenderit
+              nostrud eu aute voluptate quis quis. reprehenderit nostrud eu aute
+              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
+              quis. reprehenderit nostrud eu aute voluptate quis quis.
+              reprehenderit nostrud eu aute voluptate quis quis. reprehenderit
+              nostrud eu aute voluptate quis quis. reprehenderit nostrud eu aute
+              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
+              quis. reprehenderit nostrud eu aute voluptate quis quis.
+              reprehenderit nostrud eu aute voluptate quis quis. reprehenderit
+              nostrud eu aute voluptate quis quis. reprehenderit nostrud eu aute
+              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
+              quis. reprehenderit nostrud eu aute voluptate quis quis.
+              reprehenderit nostrud eu aute voluptate quis quis. reprehenderit
+              nostrud eu aute voluptate quis quis. reprehenderit nostrud eu aute
+              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
+              quis. reprehenderit nostrud eu aute voluptate quis quis.
             </Text>
-            {Array.from({ length: 12 }, (_, index) => `Field ${index + 1}`).map(
-              (label) => (
-                <FormField key={label}>
-                  <FormFieldLabel>{label}</FormFieldLabel>
-                  <Input />
-                </FormField>
-              ),
-            )}
           </StackLayout>
         </DrawerContent>
       </Drawer>

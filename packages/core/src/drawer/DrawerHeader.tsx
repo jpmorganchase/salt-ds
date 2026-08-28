@@ -55,9 +55,11 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(
       window: targetWindow,
     });
 
-    const { setHeaderId, setHasHeader } = useDrawerContext();
+    const { setHeaderId, setHasHeader, setDescriptionId } = useDrawerContext();
     const headingId = useId();
+    const descriptionId = useId();
     const hasHeading = Boolean(header || preheader);
+    const hasDescription = Boolean(description);
 
     useIsomorphicLayoutEffect(() => {
       setHasHeader?.(true);
@@ -75,6 +77,14 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(
       };
     }, [hasHeading, headingId, setHeaderId]);
 
+    useIsomorphicLayoutEffect(() => {
+      setDescriptionId?.(hasDescription ? descriptionId : undefined);
+
+      return () => {
+        setDescriptionId?.(undefined);
+      };
+    }, [hasDescription, descriptionId, setDescriptionId]);
+
     return (
       <div
         className={clsx(
@@ -90,12 +100,20 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(
         <div className={withBaseName("container")}>
           {hasHeading && (
             <H2 id={headingId} className={withBaseName("header")}>
-              {preheader && <Text color="primary">{preheader}</Text>}
+              {preheader && (
+                <Text as="span" color="primary">
+                  {preheader}
+                </Text>
+              )}
               {header}
             </H2>
           )}
           {description && (
-            <Text color="secondary" className={withBaseName("description")}>
+            <Text
+              id={descriptionId}
+              color="secondary"
+              className={withBaseName("description")}
+            >
               {description}
             </Text>
           )}
