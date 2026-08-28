@@ -8,6 +8,13 @@ import { getTypescriptConfig } from "./utils.mjs";
 const typescriptConfigFilename = "tsconfig.json";
 const cwd = process.cwd();
 const SUPPRESSED_DIAGNOSTIC_CODES = new Set([6059]);
+const DEFAULT_TYPING_TOOLCHAIN = Object.freeze({
+  isCI,
+  fileSystem: fse,
+  typescript: ts,
+  getTypescriptConfig,
+});
+
 
 function normalizeTypingSources(sourceConfig) {
   if (typeof sourceConfig === "string") {
@@ -30,7 +37,7 @@ function normalizeTypingSources(sourceConfig) {
   };
 }
 
-export function reportTSDiagnostics(diagnostics) {
+export function reportTSDiagnostics(diagnostics, typescript = ts) {
   for (const diagnostic of diagnostics) {
     if (SUPPRESSED_DIAGNOSTIC_CODES.has(diagnostic.code)) {
       continue;
@@ -45,7 +52,7 @@ export function reportTSDiagnostics(diagnostics) {
         where.character + 1
       }`;
     }
-    message += `: ${ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")}`;
+    message += `: ${typescript.flattenDiagnosticMessageText(diagnostic.messageText, "\n")}`;
     console.error(message);
   }
 }
@@ -54,11 +61,18 @@ export async function makeTypings(
   outDir,
   sourceConfig,
   typescriptConfigOverride,
+  toolchain = DEFAULT_TYPING_TOOLCHAIN,
 ) {
+  const {
+    isCI: ci,
+    fileSystem,
+    typescript,
+    getTypescriptConfig: loadTypescriptConfig,
+  } = toolchain;
   const normalizedSources = normalizeTypingSources(sourceConfig);
   const typescriptConfig =
     typescriptConfigOverride ??
-    (await getTypescriptConfig(cwd, normalizedSources.tsConfigLookupDir));
+    (await loadTypescriptConfig(cwd, normalizedSources.tsConfigLookupDir));
 
   console.log("generating .d.ts files");
 
@@ -81,41 +95,41 @@ export async function makeTypings(
     emitDeclarationOnly: true,
     declarationDir: path.join(outDir, "dist-types"),
     rootDir: normalizedSources.rootDir,
-    diagnostics: !isCI,
+    diagnostics: !ci,
   };
 
   // Extract config information
-  const configParseResult = ts.parseJsonConfigFileContent(
+  const configParseResult = typescript.parseJsonConfigFileContent(
     tsconfig,
-    ts.sys,
+    typescript.sys,
     path.dirname(typescriptConfigFilename),
   );
 
   if (configParseResult.errors.length > 0) {
-    reportTSDiagnostics(configParseResult.errors);
+    reportTSDiagnostics(configParseResult.errors, typescript);
     throw new Error("Could not parse Typescript configuration");
   }
 
-  const host = ts.createCompilerHost(configParseResult.options);
+  const host = typescript.createCompilerHost(configParseResult.options);
   host.writeFile = (fileName, contents) => {
-    fse.mkdirpSync(path.dirname(fileName));
-    fse.writeFileSync(fileName, contents);
+    fileSystem.mkdirpSync(path.dirname(fileName));
+    fileSystem.writeFileSync(fileName, contents);
   };
 
   // Compile
-  const program = ts.createProgram(
+  const program = typescript.createProgram(
     configParseResult.fileNames,
     configParseResult.options,
     host,
   );
 
   const emitResult = program.emit();
-  const diagnostics = ts
+  const diagnostics = typescript
     .getPreEmitDiagnostics(program)
     .concat(emitResult.diagnostics)
     .filter((diagnostic) => !SUPPRESSED_DIAGNOSTIC_CODES.has(diagnostic.code));
   if (diagnostics.length > 0) {
-    reportTSDiagnostics(diagnostics);
+    reportTSDiagnostics(diagnostics, typescript);
     throw new Error("Could not generate .d.ts files");
   }
   if (emitResult.emitSkipped) {

@@ -5,8 +5,8 @@
   "family": "retrieval",
   "fixture_id": "repo-retrieval-navigation",
   "package_vector": [
-    { "name": "@salt-ds/core", "version": "1.69.0" },
-    { "name": "@salt-ds/lab", "version": "1.0.0-alpha.102" }
+    { "name": "@salt-ds/core", "version": "1.70.0" },
+    { "name": "@salt-ds/lab", "version": "1.0.0-alpha.103" }
   ],
   "goal": "Retrieve exact applicable navigation, overlay, form, and layout records.",
   "modes": ["mode_2_markdown", "mode_3_cli_bootstrap", "mode_4_mcp_candidate"],
@@ -24,7 +24,8 @@
       "category": "component",
       "gold": [
         "record:component:component.button",
-        "record:component:component.link"
+        "record:component:component.link",
+        "record:component:component.link-button"
       ]
     },
     {

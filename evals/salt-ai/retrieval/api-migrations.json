@@ -5,8 +5,8 @@
   "family": "retrieval",
   "fixture_id": "repo-retrieval-api",
   "package_vector": [
-    { "name": "@salt-ds/core", "version": "1.69.0" },
-    { "name": "@salt-ds/theme", "version": "1.44.0" },
+    { "name": "@salt-ds/core", "version": "1.70.0" },
+    { "name": "@salt-ds/theme", "version": "1.45.0" },
     { "name": "@salt-ds/date-adapters", "version": "1.0.2" }
   ],
   "goal": "Retrieve exact API, token, setup, and migration records.",

@@ -29,6 +29,13 @@ export function sha256(value) {
   return `sha256:${createHash("sha256").update(value).digest("hex")}`;
 }
 
+
+export function repositoryTextSha256(value) {
+  const bytes = Buffer.isBuffer(value) ? value : Buffer.from(value);
+  return sha256(
+    Buffer.from(bytes.toString("utf8").replaceAll("\r\n", "\n")),
+  );
+}
 export async function sha256File(file) {
   return sha256(await readFile(file));
 }

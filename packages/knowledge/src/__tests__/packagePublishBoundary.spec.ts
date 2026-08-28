@@ -135,6 +135,7 @@ describe("package publish boundaries", () => {
       "markdown",
       "compatibility",
       "support",
+      "skills",
       "schemas",
     ]);
     expect(manifest.publishConfig?.directory).toBe(
@@ -630,7 +631,7 @@ describe("package publish boundaries", () => {
       "@modelcontextprotocol/server",
     );
     expect(manifest.publishConfig?.directory).toBe("../../dist/salt-ds-cli");
-    expect(manifest.publishIncludeReadme).toBe(false);
+    expect(manifest.publishIncludeReadme).toBe(true);
     expect(manifest.publishTypingEntryOnly).toBe(true);
     expect(manifest.publishPreserveModules).toBe(false);
     expect(manifest.typescriptInclude).toEqual(["src/index.ts"]);

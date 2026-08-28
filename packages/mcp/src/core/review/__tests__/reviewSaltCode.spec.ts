@@ -149,7 +149,7 @@ function button(): ComponentRecord {
     tags: [],
     when_to_use: ["Use for actions."],
     when_not_to_use: [
-      "When the primary action is to take the user to another page or window rather than to trigger a function. Instead, use Link.",
+      "When the interaction navigates the user to a different destination rather than triggering an on-page action. Instead, use Link for inline or lower-priority navigation, or LinkButton when navigation stands alone, should stand out from inline links, or sits alongside buttons and should share their visual weight and alignment.",
     ],
     usage_content_ref: "content.component.button.usage",
     alternatives: [],

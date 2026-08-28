@@ -114,7 +114,7 @@ describe("release verification scripts", () => {
     const scripts = await readScripts();
 
     expect(scripts["lint:check:error"]).toBe(
-      "biome lint --diagnostic-level=error",
+      "biome check --diagnostic-level=error",
     );
     expect(scripts.prettier).toBe("prettier --check .");
     expect(scripts["prettier:ci"]).toBe("prettier --check .");

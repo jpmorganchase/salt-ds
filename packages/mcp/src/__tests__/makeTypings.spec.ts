@@ -1,8 +1,10 @@
 import path from "node:path";
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { makeTypings } from "../../../../scripts/makeTypings.mjs";
 
-const mocks = vi.hoisted(() => {
+
+const mocks = (() => {
   const emit = vi.fn();
   return {
     createCompilerHost: vi.fn(() => ({})),
@@ -16,30 +18,38 @@ const mocks = vi.hoisted(() => {
       options: {},
     })),
   };
-});
+})();
 
-vi.mock("ci-info", () => ({ isCI: true }));
-vi.mock("fs-extra", () => ({
-  default: {
+const testToolchain = {
+  isCI: true,
+  fileSystem: {
     mkdirpSync: vi.fn(),
     writeFileSync: vi.fn(),
   },
-}));
-vi.mock("typescript", () => ({
-  default: {
+  typescript: {
     createCompilerHost: mocks.createCompilerHost,
     createProgram: mocks.createProgram,
-    flattenDiagnosticMessageText: vi.fn((message) => String(message)),
+    flattenDiagnosticMessageText: vi.fn((message: unknown) => String(message)),
     getPreEmitDiagnostics: mocks.getPreEmitDiagnostics,
     parseJsonConfigFileContent: mocks.parseJsonConfigFileContent,
     sys: {},
   },
-}));
-vi.mock("../../../../scripts/utils.mjs", () => ({
   getTypescriptConfig: mocks.getTypescriptConfig,
-}));
+};
 
-import { makeTypings } from "../../../../scripts/makeTypings.mjs";
+function makeTypingsUnderTest(
+  outDir: string,
+  sourceConfig?: string | { include: string[]; rootDir: string },
+  typescriptConfigOverride?: Record<string, unknown>,
+) {
+  return makeTypings(
+    outDir,
+    sourceConfig,
+    typescriptConfigOverride,
+    testToolchain,
+  );
+}
+
 
 const baseTypescriptConfig = {
   compilerOptions: {
@@ -59,7 +69,7 @@ describe("makeTypings call contract", () => {
     const outDir = path.join("fixture", "dist");
     const defaultSource = path.join(process.cwd(), "src");
 
-    await makeTypings(outDir);
+    await makeTypingsUnderTest(outDir);
 
     expect(mocks.getTypescriptConfig).toHaveBeenCalledWith(
       process.cwd(),
@@ -86,7 +96,7 @@ describe("makeTypings call contract", () => {
       "src",
     );
 
-    await makeTypings(path.join("fixture", "dist"), sourceDir);
+    await makeTypingsUnderTest(path.join("fixture", "dist"), sourceDir);
 
     expect(mocks.getTypescriptConfig).toHaveBeenCalledWith(
       process.cwd(),
@@ -119,7 +129,7 @@ describe("makeTypings call contract", () => {
       rootDir: "src",
     };
 
-    await makeTypings("dist", sourceConfig, override);
+    await makeTypingsUnderTest("dist", sourceConfig, override);
 
     expect(mocks.getTypescriptConfig).not.toHaveBeenCalled();
     expect(mocks.parseJsonConfigFileContent).toHaveBeenCalledWith(
@@ -144,7 +154,7 @@ describe("makeTypings call contract", () => {
       { code: 2322, messageText: "Type mismatch" },
     ]);
 
-    await expect(makeTypings("dist")).rejects.toThrow(
+    await expect(makeTypingsUnderTest("dist")).rejects.toThrow(
       "Could not generate .d.ts files",
     );
   });
@@ -152,7 +162,9 @@ describe("makeTypings call contract", () => {
   it("fails when declaration emit is skipped in CI", async () => {
     mocks.emit.mockReturnValue({ diagnostics: [], emitSkipped: true });
 
-    await expect(makeTypings("dist")).rejects.toThrow(/emit was skipped/iu);
+    await expect(makeTypingsUnderTest("dist")).rejects.toThrow(
+      /emit was skipped/iu,
+    );
   });
 
   it("retains the narrow rootDir diagnostic suppression", async () => {
@@ -160,6 +172,6 @@ describe("makeTypings call contract", () => {
       { code: 6059, messageText: "File is outside rootDir" },
     ]);
 
-    await expect(makeTypings("dist")).resolves.toBeUndefined();
+    await expect(makeTypingsUnderTest("dist")).resolves.toBeUndefined();
   });
 });
