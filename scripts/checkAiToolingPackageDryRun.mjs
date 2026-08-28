@@ -80,13 +80,14 @@ function parseOptions(argv) {
   const allowedReportRoots = [
     path.join(repoRoot, "dist", "salt-ai-pack"),
     path.join(repoRoot, "dist", "salt-ai-r1"),
+    path.join(repoRoot, "dist", "salt-pattern-migration"),
   ];
   const reportRoot = allowedReportRoots.find(
     (root) => isPathWithinRoot(root, reportPath) && reportPath !== root,
   );
   if (!reportRoot) {
     throw new Error(
-      "The AI tooling pack report must stay under dist/salt-ai-pack or dist/salt-ai-r1.",
+      "The AI tooling pack report must stay under dist/salt-ai-pack, dist/salt-ai-r1, or dist/salt-pattern-migration.",
     );
   }
   return { profile: options.profile, reportPath, reportRoot };
