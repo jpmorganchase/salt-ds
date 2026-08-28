@@ -25,6 +25,7 @@ import {
 } from "../utils";
 import drawerCss from "./Drawer.css";
 import { DrawerContext } from "./DrawerContext";
+import { hasDrawerSection } from "./hasDrawerSection";
 
 interface ConditionalScrimWrapperProps extends PropsWithChildren {
   condition: boolean;
@@ -100,10 +101,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     const drawerId = useId(id);
 
+    const sectioned = hasDrawerSection(children);
+
     const [showComponent, setShowComponent] = useState(false);
     const [headerId, setHeaderId] = useState<string | undefined>(undefined);
-    const [hasHeader, setHasHeader] = useState(false);
-    const [hasContent, setHasContent] = useState(false);
     const [descriptionId, setDescriptionId] = useState<string | undefined>(
       undefined,
     );
@@ -139,14 +140,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         drawerId,
         headerId,
         setHeaderId,
-        hasHeader,
-        setHasHeader,
-        hasContent,
-        setHasContent,
         descriptionId,
         setDescriptionId,
       }),
-      [drawerId, headerId, hasHeader, hasContent, descriptionId],
+      [drawerId, headerId, descriptionId],
     );
 
     return (
@@ -174,7 +171,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 [withBaseName("enterAnimation")]: open,
                 [withBaseName("exitAnimation")]: !open,
                 [withBaseName(variant)]: variant,
-                [withBaseName("hasSlots")]: hasHeader || hasContent,
+                [withBaseName("sectioned")]: sectioned,
               },
               className,
             )}
