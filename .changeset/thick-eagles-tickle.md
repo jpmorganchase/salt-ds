@@ -2,7 +2,7 @@
 "@salt-ds/core": minor
 ---
 
-Added `DrawerHeader` and `DrawerContent`, implementing header block in core `Drawer`. Composing a `Drawer` from `DrawerHeader` and `DrawerContent` is the recommended approach.
+Added `DrawerHeader`, `DrawerContent` and `DrawerActions`, implementing header block in core `Drawer`. Composing a `Drawer` from `DrawerHeader` and `DrawerContent` is the recommended approach.
 
 `DrawerHeader` takes optional `header`, `preheader`, `description` and `actions`, and displays an accent bar unless `disableAccent` is set. `DrawerCloseButton` should be passed to `actions`. `DrawerHeader` stays pinned to the top, `DrawerContent` is scrollable.
 
@@ -22,5 +22,9 @@ import {
     actions={<DrawerCloseButton onClick={() => setOpen(false)} />}
   />
   <DrawerContent>{content}</DrawerContent>
+  <DrawerActions>
+    <Button appearance="transparent">Cancel</Button>
+    <Button sentiment="accented">Save</Button>
+  </DrawerActions>
 </Drawer>;
 ```
