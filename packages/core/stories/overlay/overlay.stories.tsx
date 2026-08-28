@@ -1,15 +1,25 @@
 import {
+  Avatar,
   Button,
   Checkbox,
   CheckboxGroup,
   Divider,
+  FormField,
+  FormFieldLabel,
+  List,
+  ListItem,
+  ListItemContent,
+  ListItemTrigger,
   Overlay,
   OverlayHeader,
   OverlayPanel,
   OverlayPanelContent,
   type OverlayProps,
   OverlayTrigger,
+  RadioButton,
+  RadioButtonGroup,
   StackLayout,
+  Switch,
   Text,
   Tooltip,
   useId,
@@ -18,7 +28,18 @@ import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type ChangeEvent, useState } from "react";
 
 import "./overlay.stories.css";
-import { CloseIcon, MicroMenuIcon } from "@salt-ds/icons";
+import {
+  ChevronRightIcon,
+  CloseIcon,
+  HelpCircleIcon,
+  LightbulbIcon,
+  MicroMenuIcon,
+  NotificationIcon,
+  SettingsIcon,
+  UserIcon,
+  VisibleIcon,
+} from "@salt-ds/icons";
+import persona from "../assets/avatar.png";
 
 export default {
   title: "Core/Overlay",
@@ -163,6 +184,195 @@ export const CloseButton = ({ onOpenChange }: OverlayProps) => {
       </OverlayPanel>
     </Overlay>
   );
+};
+
+const workspaceSettings = [
+  { icon: VisibleIcon, label: "Appearance" },
+  { icon: NotificationIcon, label: "Notification" },
+  { icon: LightbulbIcon, label: "Keyboard shortcut" },
+];
+const accountSettings = [
+  { icon: UserIcon, label: "Profile" },
+  {
+    icon: SettingsIcon,
+    label: "Account settings",
+    links: [
+      { href: "#personal-details", label: "Personal details" },
+      { href: "#security", label: "Security" },
+      { href: "#privacy", label: "Privacy" },
+    ],
+  },
+  { icon: HelpCircleIcon, label: "Help" },
+];
+
+export const ProfileSettings = () => {
+  const workspaceTitleId = useId();
+  const accountTitleId = useId();
+
+  return (
+    <Overlay placement="bottom" hideArrow>
+      <OverlayTrigger>
+        <Avatar
+          aria-label="Open profile settings"
+          name="Ada Lovelace"
+          render={<button type="button" />}
+          src={persona}
+        />
+      </OverlayTrigger>
+      <OverlayPanel aria-label="Profile settings" style={{ width: 320 }}>
+        <OverlayPanelContent>
+          <StackLayout
+            gap={1}
+            style={{ paddingBlock: "var(--salt-spacing-100)" }}
+          >
+            <StackLayout align="center" direction="row" gap={1}>
+              <Avatar
+                aria-label="Ada Lovelace"
+                name="Ada Lovelace"
+                size={2}
+                src={persona}
+              />
+              <StackLayout gap={0}>
+                <Text>
+                  <strong>Ada Lovelace</strong>
+                </Text>
+                <Text color="secondary">Product designer</Text>
+                <Text color="secondary">ada.lovelace@example.com</Text>
+              </StackLayout>
+            </StackLayout>
+            <Divider variant="tertiary" />
+            <StackLayout gap={0}>
+              <Text
+                color="secondary"
+                id={workspaceTitleId}
+                style={{
+                  paddingBlock: "var(--salt-spacing-50)",
+                  paddingInline: "var(--salt-spacing-100)",
+                }}
+                styleAs="label"
+              >
+                <strong>Workspace</strong>
+              </Text>
+              <List aria-labelledby={workspaceTitleId}>
+                {workspaceSettings.map(({ icon: Icon, label }) => (
+                  <ListItem key={label}>
+                    <ListItemTrigger>
+                      <ListItemContent>
+                        <Icon aria-hidden />
+                        {label}
+                      </ListItemContent>
+                    </ListItemTrigger>
+                  </ListItem>
+                ))}
+              </List>
+            </StackLayout>
+            <Divider variant="tertiary" />
+            <StackLayout gap={0}>
+              <Text
+                color="secondary"
+                id={accountTitleId}
+                style={{
+                  paddingBlock: "var(--salt-spacing-50)",
+                  paddingInline: "var(--salt-spacing-100)",
+                }}
+                styleAs="label"
+              >
+                <strong>Account</strong>
+              </Text>
+              <List aria-labelledby={accountTitleId}>
+                {accountSettings.map(({ icon: Icon, label, links }) => (
+                  <ListItem key={label}>
+                    {links ? (
+                      <Overlay hideArrow placement="right">
+                        <OverlayTrigger>
+                          <ListItemTrigger>
+                            <ListItemContent>
+                              <Icon aria-hidden />
+                              {label}
+                              <ChevronRightIcon
+                                aria-hidden
+                                style={{ marginInlineStart: "auto" }}
+                              />
+                            </ListItemContent>
+                          </ListItemTrigger>
+                        </OverlayTrigger>
+                        <OverlayPanel aria-label={label} style={{ width: 240 }}>
+                          <OverlayPanelContent>
+                            <List aria-label={`${label} links`}>
+                              {links.map((link) => (
+                                <ListItem key={link.href}>
+                                  <ListItemTrigger href={link.href}>
+                                    <ListItemContent>
+                                      {link.label}
+                                    </ListItemContent>
+                                  </ListItemTrigger>
+                                </ListItem>
+                              ))}
+                            </List>
+                          </OverlayPanelContent>
+                        </OverlayPanel>
+                      </Overlay>
+                    ) : (
+                      <ListItemTrigger>
+                        <ListItemContent>
+                          <Icon aria-hidden />
+                          {label}
+                        </ListItemContent>
+                      </ListItemTrigger>
+                    )}
+                  </ListItem>
+                ))}
+              </List>
+            </StackLayout>
+            <Divider variant="tertiary" />
+            <StackLayout gap={1}>
+              <FormField>
+                <FormFieldLabel>Mode</FormFieldLabel>
+                <RadioButtonGroup defaultValue="system" direction="horizontal">
+                  <RadioButton label="Light" value="light" />
+                  <RadioButton label="Dark" value="dark" />
+                  <RadioButton label="System" value="system" />
+                </RadioButtonGroup>
+              </FormField>
+              <FormField>
+                <FormFieldLabel>Theme</FormFieldLabel>
+                <RadioButtonGroup
+                  defaultValue="jpmorgan"
+                  direction="horizontal"
+                >
+                  <RadioButton label="Legacy" value="legacy" />
+                  <RadioButton label="J.P. Morgan" value="jpmorgan" />
+                </RadioButtonGroup>
+              </FormField>
+            </StackLayout>
+            <Divider variant="tertiary" />
+            <Switch
+              label="Focus mode"
+              style={{
+                minHeight: "var(--salt-size-base)",
+                alignItems: "center",
+              }}
+            />
+          </StackLayout>
+        </OverlayPanelContent>
+        <StackLayout padding={1}>
+          <StackLayout gap={1}>
+            <Button sentiment="accented">Logout</Button>
+            <Button sentiment="accented" appearance="bordered">
+              Add another account
+            </Button>
+          </StackLayout>
+          <Text color="secondary" styleAs="notation">
+            {"\u00A9 2026 JPMorgan Chase & Co. All rights reserved."}
+          </Text>
+        </StackLayout>
+      </OverlayPanel>
+    </Overlay>
+  );
+};
+
+ProfileSettings.parameters = {
+  layout: "padded",
 };
 
 export const LongContent = () => {
