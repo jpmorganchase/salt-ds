@@ -19,7 +19,6 @@ import {
   Option,
   StackLayout,
   Text,
-  useId,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
@@ -58,7 +57,10 @@ export const Default: StoryFn<DrawerProps> = (args) => {
         onOpenChange={(newOpen) => setOpenPrimary(newOpen)}
         style={{ width: 200 }}
       >
-        <DrawerCloseButton onClick={() => setOpenPrimary(false)} />
+        <DrawerHeader
+          header="Primary drawer"
+          actions={<DrawerCloseButton onClick={() => setOpenPrimary(false)} />}
+        />
         <UnmountLogger />
       </Drawer>
       <Button onClick={() => setOpenSecondary(true)}>
@@ -71,7 +73,12 @@ export const Default: StoryFn<DrawerProps> = (args) => {
         variant="secondary"
         style={{ width: 200 }}
       >
-        <DrawerCloseButton onClick={() => setOpenSecondary(false)} />
+        <DrawerHeader
+          header="Secondary drawer"
+          actions={
+            <DrawerCloseButton onClick={() => setOpenSecondary(false)} />
+          }
+        />
       </Drawer>
       <Button onClick={() => setOpenTertiary(true)}>
         Open Tertiary Drawer
@@ -83,7 +90,10 @@ export const Default: StoryFn<DrawerProps> = (args) => {
         variant="tertiary"
         style={{ width: 200 }}
       >
-        <DrawerCloseButton onClick={() => setOpenTertiary(false)} />
+        <DrawerHeader
+          header="Tertiary drawer"
+          actions={<DrawerCloseButton onClick={() => setOpenTertiary(false)} />}
+        />
       </Drawer>
     </StackLayout>
   );
@@ -104,7 +114,10 @@ export const Position: StoryFn<DrawerProps> = (args) => {
         onOpenChange={(newOpen) => setOpenLeft(newOpen)}
         style={{ width: 200 }}
       >
-        <DrawerCloseButton onClick={() => setOpenLeft(false)} />
+        <DrawerHeader
+          header="Left drawer"
+          actions={<DrawerCloseButton onClick={() => setOpenLeft(false)} />}
+        />
       </Drawer>
       <Button onClick={() => setOpenRight(true)}>Open Right Drawer</Button>
       <Drawer
@@ -114,7 +127,10 @@ export const Position: StoryFn<DrawerProps> = (args) => {
         position="right"
         style={{ width: 200 }}
       >
-        <DrawerCloseButton onClick={() => setOpenRight(false)} />
+        <DrawerHeader
+          header="Right drawer"
+          actions={<DrawerCloseButton onClick={() => setOpenRight(false)} />}
+        />
       </Drawer>
       <Button onClick={() => setOpenTop(true)}>Open Top Drawer</Button>
       <Drawer
@@ -124,7 +140,10 @@ export const Position: StoryFn<DrawerProps> = (args) => {
         position="top"
         style={{ height: 200 }}
       >
-        <DrawerCloseButton onClick={() => setOpenTop(false)} />
+        <DrawerHeader
+          header="Top drawer"
+          actions={<DrawerCloseButton onClick={() => setOpenTop(false)} />}
+        />
       </Drawer>
       <Button onClick={() => setOpenBottom(true)}>Open Bottom Drawer</Button>
       <Drawer
@@ -134,7 +153,10 @@ export const Position: StoryFn<DrawerProps> = (args) => {
         position="bottom"
         style={{ height: 200 }}
       >
-        <DrawerCloseButton onClick={() => setOpenBottom(false)} />
+        <DrawerHeader
+          header="Bottom drawer"
+          actions={<DrawerCloseButton onClick={() => setOpenBottom(false)} />}
+        />
       </Drawer>
     </StackLayout>
   );
@@ -163,33 +185,30 @@ export const TopDrawerUsageExample = () => {
     setOpen(false);
   };
 
-  const headerId = useId();
-
   return (
     <>
       <Button onClick={handleRequestOpen}>Open Top Drawer</Button>
-      <Drawer
-        open={open}
-        onOpenChange={onOpenChange}
-        position="top"
-        aria-labelledby={headerId}
-      >
-        <StackLayout>
-          <DrawerCloseButton onClick={handleClose} />
-          <H2 id={headerId}>Section title</H2>
-          <Text>
-            Incididunt adipisicing deserunt nostrud ullamco consequat
-            consectetur magna id do irure labore fugiat. Eiusmod pariatur
-            officia elit ad. Ullamco adipisicing Lorem amet velit in do
-            reprehenderit nostrud eu aute voluptate quis quis.
-          </Text>
-          <FlexLayout>
-            <FormFieldExample />
-            <FormFieldExample />
-            <FormFieldExample />
-            <FormFieldExample />
-          </FlexLayout>
-        </StackLayout>
+      <Drawer open={open} onOpenChange={onOpenChange} position="top">
+        <DrawerHeader
+          header="Section title"
+          actions={<DrawerCloseButton onClick={handleClose} />}
+        />
+        <DrawerContent>
+          <StackLayout>
+            <Text>
+              Incididunt adipisicing deserunt nostrud ullamco consequat
+              consectetur magna id do irure labore fugiat. Eiusmod pariatur
+              officia elit ad. Ullamco adipisicing Lorem amet velit in do
+              reprehenderit nostrud eu aute voluptate quis quis.
+            </Text>
+            <FlexLayout>
+              <FormFieldExample />
+              <FormFieldExample />
+              <FormFieldExample />
+              <FormFieldExample />
+            </FlexLayout>
+          </StackLayout>
+        </DrawerContent>
       </Drawer>
     </>
   );
@@ -210,8 +229,6 @@ export const RightDrawerUsageExample = () => {
     setOpen(false);
   };
 
-  const headerId = useId();
-
   return (
     <>
       <Button onClick={handleRequestOpen}>Open Right Drawer</Button>
@@ -220,25 +237,28 @@ export const RightDrawerUsageExample = () => {
         onOpenChange={onOpenChange}
         position="right"
         style={{ width: 500 }}
-        aria-labelledby={headerId}
       >
-        <StackLayout>
-          <DrawerCloseButton onClick={handleClose} />
-          <H2 id={headerId}>Section Title</H2>
-          <Text>
-            Incididunt adipisicing deserunt nostrud ullamco consequat
-            consectetur magna id do irure labore fugiat. Eiusmod pariatur
-            officia elit ad. Ullamco adipisicing Lorem amet velit in do
-            reprehenderit nostrud eu aute voluptate quis quis.
-          </Text>
-          <FormFieldExample />
-          <FormFieldExample />
-          <FormFieldExample />
-          <FormFieldExample />
-          <FormFieldExample />
-          <FormFieldExample />
-          <FormFieldExample />
-        </StackLayout>
+        <DrawerHeader
+          header="Section title"
+          actions={<DrawerCloseButton onClick={handleClose} />}
+        />
+        <DrawerContent>
+          <StackLayout>
+            <Text>
+              Incididunt adipisicing deserunt nostrud ullamco consequat
+              consectetur magna id do irure labore fugiat. Eiusmod pariatur
+              officia elit ad. Ullamco adipisicing Lorem amet velit in do
+              reprehenderit nostrud eu aute voluptate quis quis.
+            </Text>
+            <FormFieldExample />
+            <FormFieldExample />
+            <FormFieldExample />
+            <FormFieldExample />
+            <FormFieldExample />
+            <FormFieldExample />
+            <FormFieldExample />
+          </StackLayout>
+        </DrawerContent>
       </Drawer>
     </>
   );
@@ -277,8 +297,6 @@ export const BottomDrawerUsageExample = () => {
     },
   ];
 
-  const headerId = useId();
-
   return (
     <>
       <Button onClick={handleRequestOpen}>Open Bottom Drawer</Button>
@@ -287,11 +305,12 @@ export const BottomDrawerUsageExample = () => {
         onOpenChange={onOpenChange}
         position="bottom"
         style={{ height: 350 }}
-        aria-labelledby={headerId}
       >
-        <DrawerCloseButton onClick={handleClose} />
-        <StackLayout>
-          <H2 id={headerId}>Bottom drawer use case</H2>
+        <DrawerHeader
+          header="Bottom drawer use case"
+          actions={<DrawerCloseButton onClick={handleClose} />}
+        />
+        <DrawerContent>
           <FlowLayout>
             <Card style={{ width: "256px" }}>
               <H2>{exampleData[0].title}</H2>
@@ -306,7 +325,7 @@ export const BottomDrawerUsageExample = () => {
               <Text>{exampleData[2].content}</Text>
             </Card>
           </FlowLayout>
-        </StackLayout>
+        </DrawerContent>
       </Drawer>
     </>
   );
@@ -342,8 +361,6 @@ export const OptionalCloseAction = () => {
     return newSelected.length === 1 ? setValue(newSelected[0]) : setValue("");
   };
 
-  const headerId = useId();
-
   return (
     <>
       <Button onClick={handleRequestOpen}>Open Drawer</Button>
@@ -352,49 +369,50 @@ export const OptionalCloseAction = () => {
         onOpenChange={onOpenChange}
         position="right"
         style={{ width: 500 }}
-        aria-labelledby={headerId}
       >
-        <StackLayout>
-          <H2 id={headerId}>Add your delivery details</H2>
-          <FormField>
-            <FormFieldLabel>House no.</FormFieldLabel>
-            <Input />
-          </FormField>
-          <FormField>
-            <FormFieldLabel>Street name</FormFieldLabel>
-            <Input />
-          </FormField>
-          <FormField>
-            <FormFieldLabel>Postcode</FormFieldLabel>
-            <ComboBox
-              onChange={handleChange}
-              onSelectionChange={handleSelectionChange}
-              value={value}
-              placeholder="Search for your postcode"
-            >
-              {postcodes.map((postcode) => (
-                <Option value={postcode} key={postcode}>
-                  {postcode}
-                </Option>
-              ))}
-            </ComboBox>
-            <FormFieldHelperText>Do not include space</FormFieldHelperText>
-          </FormField>
-          <FormField>
-            <FormFieldLabel>City/Town</FormFieldLabel>
-            <Input />
-          </FormField>
-          <FormField>
-            <FormFieldLabel>Country</FormFieldLabel>
-            <Input />
-          </FormField>
-          <FormField>
-            <Checkbox label="Dog(s) present at my property" />
-          </FormField>
-          <FlexItem align="end">
-            <Button onClick={handleClose}>Submit</Button>
-          </FlexItem>
-        </StackLayout>
+        <DrawerHeader header="Add your delivery details" />
+        <DrawerContent>
+          <StackLayout>
+            <FormField>
+              <FormFieldLabel>House no.</FormFieldLabel>
+              <Input />
+            </FormField>
+            <FormField>
+              <FormFieldLabel>Street name</FormFieldLabel>
+              <Input />
+            </FormField>
+            <FormField>
+              <FormFieldLabel>Postcode</FormFieldLabel>
+              <ComboBox
+                onChange={handleChange}
+                onSelectionChange={handleSelectionChange}
+                value={value}
+                placeholder="Search for your postcode"
+              >
+                {postcodes.map((postcode) => (
+                  <Option value={postcode} key={postcode}>
+                    {postcode}
+                  </Option>
+                ))}
+              </ComboBox>
+              <FormFieldHelperText>Do not include space</FormFieldHelperText>
+            </FormField>
+            <FormField>
+              <FormFieldLabel>City/Town</FormFieldLabel>
+              <Input />
+            </FormField>
+            <FormField>
+              <FormFieldLabel>Country</FormFieldLabel>
+              <Input />
+            </FormField>
+            <FormField>
+              <Checkbox label="Dog(s) present at my property" />
+            </FormField>
+            <FlexItem align="end">
+              <Button onClick={handleClose}>Submit</Button>
+            </FlexItem>
+          </StackLayout>
+        </DrawerContent>
       </Drawer>
     </>
   );
