@@ -78,6 +78,7 @@
     "check:public-examples": "node ./scripts/checkPublicExamples.mjs",
     "check:public-docs": "node ./scripts/checkPublicDocumentation.mjs && yarn check:public-examples",
     "check:sample-apps": "node ./scripts/checkSampleApps.mjs",
+    "check:salt-sample-apps": "node ./scripts/checkSaltSampleApps.mjs",
     "typecheck": "tsgo --noEmit",
     "typecheck:ai-tooling": "tsc -p packages/knowledge/tsconfig.test.json --noEmit && tsc -p packages/cli/tsconfig.test.json --noEmit && tsc -p packages/mcp/tsconfig.test.json --noEmit",
     "chromatic": "chromatic"
