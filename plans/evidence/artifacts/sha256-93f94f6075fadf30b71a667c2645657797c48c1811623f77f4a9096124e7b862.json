@@ -1,0 +1,51 @@
+{
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-web-release-receipt-1.json",
+  "agent_support": {
+    "agents_pointer": {
+      "bytes": 872,
+      "npm_path": "skills/salt-design-system/references/managed-agents-block.md",
+      "sha256": "sha256:44bd549153b63b348ea20324d4e3f133e7a7d7d72ae8fa901ad20af02e6b0e9e",
+      "web_path": "/ai/v1/5c6c124608a00942e35a29db5d276db9bbd7ee06b89b7aae7061fe2493395413/skills/salt-design-system/references/managed-agents-block.md"
+    },
+    "skill": {
+      "bytes": 3503,
+      "npm_path": "skills/salt-design-system/SKILL.md",
+      "sha256": "sha256:fa646985379e56d2b62248a15f10d9191c4f457378acb58020c5615de490e003",
+      "web_path": "/ai/v1/5c6c124608a00942e35a29db5d276db9bbd7ee06b89b7aae7061fe2493395413/skills/salt-design-system/SKILL.md"
+    }
+  },
+  "bundle_digest": "sha256:5c6c124608a00942e35a29db5d276db9bbd7ee06b89b7aae7061fe2493395413",
+  "bundle_version": "0.0.0",
+  "channel": "beta-candidate",
+  "contract": "salt-ai-web-release-receipt/1",
+  "deployment": "not-performed",
+  "digest_segment": "5c6c124608a00942e35a29db5d276db9bbd7ee06b89b7aae7061fe2493395413",
+  "distribution_projection_sha256": "sha256:146361dfe03a7a171139ef8d56667abd5b08e9e40fdcb5a7965c704cf57c9bbc",
+  "knowledge_manifest": {
+    "bytes": 3434,
+    "path": "packages/knowledge/generated/manifest.json",
+    "sha256": "sha256:93b2b644174488a39ed9605346447d01514ba9473113adc324461b5e82860639"
+  },
+  "pointers": {
+    "beta": "/ai/beta/llms.txt",
+    "current": null,
+    "immutable": "/ai/v1/5c6c124608a00942e35a29db5d276db9bbd7ee06b89b7aae7061fe2493395413/llms.txt",
+    "root": null
+  },
+  "production_navigation": false,
+  "public_docs_preview": {
+    "bytes": 1437,
+    "path": "dist/salt-ai-web/public-docs-preview-receipt.json",
+    "projection_sha256": "sha256:f2cdc6a685383686a37525772a64acf450d4b71711abfac39381491e1d7bbc77",
+    "sha256": "sha256:6cb76a92cd05f431e295f876707dab50871cee8f6b5109bc7ce121ba41a63a0e"
+  },
+  "publishable": false,
+  "route_map": {
+    "bytes": 926705,
+    "path": "dist/salt-ai-web/route-map.json",
+    "routes": 1042,
+    "sha256": "sha256:05a739547e3208df1c1ae81742bc4e9427b920f4b876609a13677bb4d24f8af5"
+  },
+  "schema_version": "1.0.0",
+  "semantic_digest": "sha256:a154172176de0ec8e0ec211f1870e20902e333d5101f697a04044ea7a796af15"
+}
