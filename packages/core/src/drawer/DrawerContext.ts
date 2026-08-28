@@ -6,6 +6,8 @@ export interface DrawerContextValue {
   setHeaderId?: (id: string | undefined) => void;
   hasHeader?: boolean;
   setHasHeader?: (hasHeader: boolean) => void;
+  descriptionId?: string;
+  setDescriptionId?: (id: string | undefined) => void;
 }
 
 export const DrawerContext = createContext<DrawerContextValue>(
@@ -15,6 +17,8 @@ export const DrawerContext = createContext<DrawerContextValue>(
     setHeaderId: () => {},
     hasHeader: false,
     setHasHeader: () => {},
+    descriptionId: undefined,
+    setDescriptionId: () => {},
   },
 );
 

@@ -85,6 +85,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       disableScrim,
       initialFocus,
       "aria-labelledby": ariaLabelledBy,
+      "aria-describedby": ariaDescribedBy,
       ...rest
     } = props;
 
@@ -98,6 +99,9 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const [showComponent, setShowComponent] = useState(false);
     const [headerId, setHeaderId] = useState<string | undefined>(undefined);
     const [hasHeader, setHasHeader] = useState(false);
+    const [descriptionId, setDescriptionId] = useState<string | undefined>(
+      undefined,
+    );
     const { Component: FloatingComponent } = useFloatingComponent();
 
     const { context, floating, elements } = useFloatingUI({
@@ -126,8 +130,15 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     }, [open, showComponent]);
 
     const contextValue = useMemo(
-      () => ({ headerId, setHeaderId, hasHeader, setHasHeader }),
-      [headerId, hasHeader],
+      () => ({
+        headerId,
+        setHeaderId,
+        hasHeader,
+        setHasHeader,
+        descriptionId,
+        setDescriptionId,
+      }),
+      [headerId, hasHeader, descriptionId],
     );
 
     return (
@@ -141,6 +152,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             height={elements.floating?.offsetHeight}
             aria-modal="true"
             aria-labelledby={clsx(ariaLabelledBy, headerId) || undefined}
+            aria-describedby={clsx(ariaDescribedBy, descriptionId) || undefined}
             focusManagerProps={{
               context: context,
               initialFocus,
