@@ -1,4 +1,6 @@
 import { spawn } from "node:child_process";
+import { createHash } from "node:crypto";
+import path from "node:path";
 import process from "node:process";
 import { Client } from "@modelcontextprotocol/client";
 import { StdioClientTransport } from "@modelcontextprotocol/client/stdio";
@@ -177,6 +179,10 @@ export async function runCliWorkflowCoverage(
     ["context"],
     ["context", "Button", "--format", "json"],
     ["context", "Button", "--format", "json", "--limit", "0"],
+    ["skill"],
+    ["skill", "info"],
+    ["skill", "print", "--kind", "fake"],
+    ["skill", "print", "--kind", "skill", "extra"],
     ["scan"],
     ["scan", "--format", "json"],
     ["scan", "--fail-on", "never"],
@@ -239,6 +245,47 @@ export async function runCliWorkflowCoverage(
       Array.isArray(info.compatibility.disabled_families) &&
       Array.isArray(info.limitations),
     "Packed info did not report the exact project vector and Knowledge identity.",
+  );
+
+  const skillInfoResult = await runInstalledCli(
+    installedCliBinPath,
+    ["skill", "info", "--json"],
+    exactSaltRoot,
+  );
+  const skillInfo = JSON.parse(skillInfoResult.stdout);
+  const printedSkill = await runInstalledCli(
+    installedCliBinPath,
+    ["skill", "print", "--kind", "skill"],
+    exactSaltRoot,
+  );
+  const printedAgents = await runInstalledCli(
+    installedCliBinPath,
+    ["skill", "print", "--kind", "agents"],
+    exactSaltRoot,
+  );
+  const digest = (value) =>
+    `sha256:${createHash("sha256").update(value).digest("hex")}`;
+  const expectedAgentSupport = packReport.report.knowledge_bundle.agent_support;
+  assert(
+    skillInfoResult.stderr === "" &&
+      skillInfo.contract === "salt-cli-skill-info/1" &&
+      skillInfo.artifacts.length === 2 &&
+      skillInfo.artifacts.every(
+        (entry) =>
+          entry.provenance === "official" &&
+          !entry.package_relative_path.includes("\\") &&
+          !path.isAbsolute(entry.package_relative_path) &&
+          entry.bundle_digest ===
+            packReport.report.knowledge_bundle.bundle_digest,
+      ) &&
+      digest(printedSkill.stdout) === expectedAgentSupport.skill.sha256 &&
+      Buffer.byteLength(printedSkill.stdout, "utf8") ===
+        expectedAgentSupport.skill.bytes &&
+      digest(printedAgents.stdout) ===
+        expectedAgentSupport.agents_pointer.sha256 &&
+      Buffer.byteLength(printedAgents.stdout, "utf8") ===
+        expectedAgentSupport.agents_pointer.bytes,
+    "Packed skill info/print did not preserve official manifest-selected bytes.",
   );
 
   const exactDocsArgs = ["docs", "component.button", "--format", "json"];
@@ -552,7 +599,7 @@ export async function runCliWorkflowCoverage(
 
   return {
     aliases: { help: 3, version: 2, broken_pipe: 1 },
-    invalid_argument_cases: 22,
+    invalid_argument_cases: 26,
     exact_info: {
       bundle_digest: info.knowledge.bundle_digest,
       semantic_digest: info.knowledge.semantic_digest,
@@ -566,6 +613,11 @@ export async function runCliWorkflowCoverage(
       context_digest: context.context_digest,
       scoring_version: context.scoring_version,
       max_utf8_bytes: 16 * 1024,
+    },
+    agent_support: {
+      skill_sha256: expectedAgentSupport.skill.sha256,
+      agents_pointer_sha256: expectedAgentSupport.agents_pointer.sha256,
+      provenance: "official",
     },
     scan: {
       coverage: scan.coverage.status,

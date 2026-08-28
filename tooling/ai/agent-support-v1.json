@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "bundle_version": "0.0.0",
+  "artifacts": [
+    {
+      "kind": "skill",
+      "source": "skills/salt-design-system/SKILL.md",
+      "artifact": "skills/salt-design-system/SKILL.md",
+      "immutable_url_suffix": "skills/salt-design-system/SKILL.md"
+    },
+    {
+      "kind": "agents_pointer",
+      "source": "skills/salt-design-system/references/managed-agents-block.md",
+      "artifact": "skills/salt-design-system/references/managed-agents-block.md",
+      "immutable_url_suffix": "skills/salt-design-system/references/managed-agents-block.md"
+    }
+  ],
+  "forbidden_sources": [
+    ".github/instructions",
+    "AGENTS.md",
+    "plans",
+    "workflow-examples/consumer-repo/AGENTS.md"
+  ]
+}

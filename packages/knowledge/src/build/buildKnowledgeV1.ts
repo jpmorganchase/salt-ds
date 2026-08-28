@@ -75,6 +75,18 @@ export interface BuildKnowledgeV1Options {
   generatorDigest: string;
 }
 
+interface AgentSupportInventory {
+  schema_version: "1.0.0";
+  bundle_version: string;
+  artifacts: Array<{
+    kind: "skill" | "agents_pointer";
+    source: string;
+    artifact: string;
+    immutable_url_suffix: string;
+  }>;
+  forbidden_sources: string[];
+}
+
 function buildContentPack(blobs: ReadonlyMap<string, KnowledgeContentBlob>): {
   pack: Buffer;
   records: CatalogRecord[];
@@ -241,6 +253,41 @@ export async function buildKnowledgeV1(
   const recordByKey = new Map<string, KnowledgeRecordV1>();
   const contentOwners = new Map<string, Set<string>>();
 
+  const agentSupportInventory = JSON.parse(
+    await fs.readFile(
+      path.join(sourceRoot, "tooling", "ai", "agent-support-v1.json"),
+      "utf8",
+    ),
+  ) as AgentSupportInventory;
+  if (
+    agentSupportInventory.schema_version !== "1.0.0" ||
+    agentSupportInventory.bundle_version !== options.packageVersion ||
+    agentSupportInventory.artifacts.length !== 2 ||
+    agentSupportInventory.artifacts.map((entry) => entry.kind).join("\0") !==
+      "skill\0agents_pointer"
+  ) {
+    throw new Error("Agent-support inventory does not match the closed v1 contract.");
+  }
+  const allowedAgentArtifacts = new Map(
+    agentSupportInventory.artifacts.map((entry) => [entry.kind, entry]),
+  );
+  const expectedAgentArtifacts = {
+    skill: "skills/salt-design-system/SKILL.md",
+    agents_pointer:
+      "skills/salt-design-system/references/managed-agents-block.md",
+  } as const;
+  for (const [kind, expectedPath] of Object.entries(expectedAgentArtifacts)) {
+    const entry = allowedAgentArtifacts.get(kind as "skill" | "agents_pointer");
+    if (
+      !entry ||
+      entry.source !== expectedPath ||
+      entry.artifact !== expectedPath ||
+      entry.immutable_url_suffix !== expectedPath
+    ) {
+      throw new Error(`Agent-support allowlist has an invalid ${kind} artifact.`);
+    }
+  }
+
   const content = buildContentPack(options.normalized.contentBlobs);
   const normalizedRecords = {
     ...options.normalized.records,
@@ -295,6 +342,34 @@ export async function buildKnowledgeV1(
     "application/octet-stream",
     descriptors,
   );
+
+  const agentArtifactBytes = new Map<"skill" | "agents_pointer", Buffer>();
+  for (const kind of ["skill", "agents_pointer"] as const) {
+    const entry = allowedAgentArtifacts.get(kind)!;
+    const bytes = await fs.readFile(
+      path.join(sourceRoot, ...entry.source.split("/")),
+    );
+    agentArtifactBytes.set(kind, bytes);
+    await writeArtifact(
+      outputDir,
+      entry.artifact,
+      bytes,
+      MARKDOWN_MEDIA_TYPE,
+      descriptors,
+    );
+  }
+  const skillDigest = sha256Digest(agentArtifactBytes.get("skill")!);
+  const agentsPointerText = agentArtifactBytes
+    .get("agents_pointer")!
+    .toString("utf8");
+  if (
+    !agentsPointerText.includes(`bundle_version=${options.packageVersion}`) ||
+    !agentsPointerText.includes(`skill_sha256=${skillDigest}`)
+  ) {
+    throw new Error(
+      "Managed AGENTS block does not bind the exact bundle version and Skill hash.",
+    );
+  }
 
   const searchRecords = recordsByFamily.get("search_document") ?? [];
   if (searchRecords.length === 0) {
@@ -503,6 +578,12 @@ export async function buildKnowledgeV1(
           }
       : { key, profile: "version-independent" };
     });
+  for (const entry of agentSupportInventory.artifacts) {
+    applicabilityItems.push({
+      key: `artifact:${entry.artifact}`,
+      profile: "version-independent",
+    });
+  }
   for (const rule of REVIEW_RULE_CHARACTERIZATION) {
     applicabilityItems.push({
       key: `rule:${rule.rule_id}`,
@@ -686,6 +767,10 @@ export async function buildKnowledgeV1(
       },
     ],
     limitations: { historical_completeness: false },
+    agent_support: {
+      skill: { artifact: expectedAgentArtifacts.skill },
+      agents_pointer: { artifact: expectedAgentArtifacts.agents_pointer },
+    },
   };
   const manifest: KnowledgeManifestV1 = {
     ...manifestWithoutDigest,

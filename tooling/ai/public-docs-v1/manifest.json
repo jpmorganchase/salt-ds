@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "contract": "salt-public-docs-source/1",
+  "bundle_version": "0.0.0",
+  "documents": [
+    {
+      "id": "ai-guide",
+      "source": "guide.md",
+      "route": "/ai/guide/",
+      "title": "Build with Salt developer tooling",
+      "summary": "Install an exact local CLI, retrieve version-matched guidance, and scan a Salt project offline.",
+      "visibility": "staged-public"
+    }
+  ],
+  "navigation_activation_targets": [
+    "README.md",
+    "site/docs/getting-started/index.mdx",
+    "site/docs/index.mdx"
+  ],
+  "mcp": "excluded-until-final-disposition"
+}

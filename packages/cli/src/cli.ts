@@ -2,6 +2,7 @@ import packageManifest from "../package.json";
 import { runContextCommand } from "./commands/context.js";
 import { runDocsCommand } from "./commands/docs.js";
 import { runInfoCommand } from "./commands/info.js";
+import { runSkillCommand, type SaltSkillKind } from "./commands/skill.js";
 import {
   runScanCommand,
   type ScanFailOn,
@@ -19,6 +20,8 @@ Usage:
   salt-ds info [root] --json
   salt-ds docs <record-id-or-name> --format markdown|json
   salt-ds context <query> --format markdown|json --limit <n>
+  salt-ds skill info --json
+  salt-ds skill print --kind skill|agents
   salt-ds scan [root] --format pretty|json|sarif|prompt --fail-on error|warning|info|never [--allow-incomplete]
 
 Commands:
@@ -27,6 +30,7 @@ Commands:
   info       Inspect the exact local Salt package vector and Knowledge identity.
   docs       Read one exact, compatible Knowledge record.
   context    Retrieve a bounded, cited Knowledge slice.
+  skill      Inspect or print the verified bundled Skill artifacts.
   scan       Review supported source files with the bundled offline rule engine.
 
 The CLI runs locally and does not use the network, Storybook, MCP, or a model.
@@ -68,7 +72,9 @@ type ParsedCliCommand =
       format: ScanFormat;
       failOn: ScanFailOn;
       allowIncomplete: boolean;
-    };
+    }
+  | { command: "skill"; action: "info"; kind: null }
+  | { command: "skill"; action: "print"; kind: SaltSkillKind };
 
 function requireNoTrailingArguments(command: string, argv: string[]): void {
   if (argv.length > 1) {
@@ -97,6 +103,7 @@ export function parseCliArgs(argv: readonly string[]): ParsedCliCommand {
     command !== "info" &&
     command !== "docs" &&
     command !== "context" &&
+    command !== "skill" &&
     command !== "scan"
   ) {
     throw new SaltCliUsageError(
@@ -107,6 +114,7 @@ export function parseCliArgs(argv: readonly string[]): ParsedCliCommand {
   if (command === "scan") return parseScanArguments(arguments_);
   if (command === "docs") return parseDocsArguments(arguments_);
   if (command === "context") return parseContextArguments(arguments_);
+  if (command === "skill") return parseSkillArguments(arguments_);
 
   let rootDir: string | null = null;
   let jsonCount = 0;
@@ -130,6 +138,29 @@ export function parseCliArgs(argv: readonly string[]): ParsedCliCommand {
     throw new SaltCliUsageError("info requires exactly one --json option.");
   }
   return { command: "info", rootDir, format: "json" };
+}
+
+function parseSkillArguments(arguments_: readonly string[]): ParsedCliCommand {
+  const [action, ...options] = arguments_;
+  if (action === "info") {
+    if (options.length !== 1 || options[0] !== "--json") {
+      throw new SaltCliUsageError("skill info requires exactly one --json option.");
+    }
+    return { command: "skill", action: "info", kind: null };
+  }
+  if (action === "print") {
+    if (
+      options.length !== 2 ||
+      options[0] !== "--kind" ||
+      (options[1] !== "skill" && options[1] !== "agents")
+    ) {
+      throw new SaltCliUsageError(
+        "skill print requires --kind skill or --kind agents.",
+      );
+    }
+    return { command: "skill", action: "print", kind: options[1] };
+  }
+  throw new SaltCliUsageError("skill requires the info or print subcommand.");
 }
 
 function parseRetrievalFormat(
@@ -322,6 +353,15 @@ export async function runCliWithIo(
     });
     io.stdout(result.output);
     return result.exitCode;
+  }
+  if (parsed.command === "skill") {
+    io.stdout(
+      await runSkillCommand({
+        action: parsed.action,
+        ...(parsed.kind ? { kind: parsed.kind } : {}),
+      }),
+    );
+    return 0;
   }
   if (parsed.command === "scan") {
     try {

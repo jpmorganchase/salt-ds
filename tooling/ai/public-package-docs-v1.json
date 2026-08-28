@@ -12,27 +12,13 @@
     {
       "name": "@salt-ds/cli",
       "due_unit": "06d",
-      "deficits": [
-        "bugs",
-        "description",
-        "homepage",
-        "keywords",
-        "packed_readme",
-        "readme"
-      ],
+      "deficits": [],
       "owner": "saltdesignsystem"
     },
     {
       "name": "@salt-ds/knowledge",
       "due_unit": "06d",
-      "deficits": [
-        "bugs",
-        "description",
-        "homepage",
-        "keywords",
-        "packed_readme",
-        "readme"
-      ],
+      "deficits": [],
       "owner": "saltdesignsystem"
     },
     {
@@ -71,13 +57,13 @@
       "lifecycle": "planned",
       "readme_path": "packages/cli/README.md",
       "metadata_fields": {
-        "description": "planned",
+        "description": "present",
         "license": "present",
         "repository": "present",
-        "bugs": "planned",
-        "keywords": "planned"
+        "bugs": "present",
+        "keywords": "present"
       },
-      "packed_readme_status": "required_before_activation",
+      "packed_readme_status": "present",
       "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
       "support_destination": "public_salt_support"
     },
@@ -199,13 +185,13 @@
       "lifecycle": "planned",
       "readme_path": "packages/knowledge/README.md",
       "metadata_fields": {
-        "description": "planned",
+        "description": "present",
         "license": "present",
         "repository": "present",
-        "bugs": "planned",
-        "keywords": "planned"
+        "bugs": "present",
+        "keywords": "present"
       },
-      "packed_readme_status": "required_before_activation",
+      "packed_readme_status": "present",
       "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
       "support_destination": "public_salt_support"
     },

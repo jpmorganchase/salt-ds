@@ -165,6 +165,11 @@ export class KnowledgeStore {
     return bytes;
   }
 
+  /** Read one manifest-selected artifact after verifying its descriptor bytes. */
+  readArtifact(relativePath: string): Buffer {
+    return Buffer.from(this.readVerifiedArtifact(relativePath));
+  }
+
   getKnowledgeFamily(family: KnowledgeRecordFamily): readonly KnowledgeRecordV1[] {
     const cached = this.recordSets.get(family);
     if (cached) return cached;

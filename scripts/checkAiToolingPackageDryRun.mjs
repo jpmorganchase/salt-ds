@@ -56,7 +56,7 @@ function parseOptions(argv) {
   for (let index = 0; index < argv.length; index += 1) {
     const token = argv[index];
     if (token === "--") continue;
-    if (token !== "--profile" && token !== "--report") {
+    if (token !== "--report") {
       throw new Error(`Unknown AI tooling pack option: ${token}`);
     }
     const value = argv[index + 1];
@@ -65,13 +65,6 @@ function parseOptions(argv) {
     }
     options[token.slice(2)] = value;
     index += 1;
-  }
-  if (
-    !new Set(["extraction-parity", "pre-agent-support"]).has(options.profile)
-  ) {
-    throw new Error(
-      "AI package checks require --profile extraction-parity or pre-agent-support.",
-    );
   }
   if (!options.report) {
     throw new Error("AI package checks require an explicit --report.");
@@ -90,7 +83,7 @@ function parseOptions(argv) {
       "The AI tooling pack report must stay under dist/salt-ai-pack, dist/salt-ai-r1, or dist/salt-pattern-migration.",
     );
   }
-  return { profile: options.profile, reportPath, reportRoot };
+  return { profile: "release-complete", reportPath, reportRoot };
 }
 
 const options = parseOptions(process.argv.slice(2));
@@ -169,6 +162,9 @@ const preAgentKnowledgePackage = {
     "dist-cjs/public.js",
     "dist-es/public.js",
     "dist-types/public.d.ts",
+    "README.md",
+    "skills/salt-design-system/SKILL.md",
+    "skills/salt-design-system/references/managed-agents-block.md",
   ],
   expectedFilesField: [
     "manifest.json",
@@ -184,6 +180,7 @@ const preAgentKnowledgePackage = {
     "dist-cjs",
     "dist-es",
     "dist-types",
+    "skills",
   ],
   forbiddenManifestFields: [
     "publishEntryPath",
@@ -231,9 +228,11 @@ const preAgentKnowledgePackage = {
     "manifest.json",
     "markdown",
     "package.json",
+    "README.md",
     "records",
     "schemas",
     "support",
+    "skills",
   ],
   forbiddenTextMarkers: [
     "catalog-generations",
@@ -318,8 +317,15 @@ const cliPackage = {
     "dist-cjs/index.js",
     "dist-es/index.js",
     "dist-types/index.d.ts",
+    "README.md",
   ],
-  expectedFilesField: ["bin", "schemas", "dist-cjs", "dist-es", "dist-types"],
+  expectedFilesField: [
+    "bin",
+    "schemas",
+    "dist-cjs",
+    "dist-es",
+    "dist-types",
+  ],
   forbiddenManifestFields: [
     "publishBinEntrypoints",
     "publishAdditionalEntryPaths",
@@ -357,6 +363,7 @@ const cliPackage = {
     "dist-es",
     "dist-types",
     "package.json",
+    "README.md",
     "schemas",
   ],
   forbiddenTextMarkers: [
@@ -384,12 +391,7 @@ const cliPackage = {
   maxEntryCount: 16,
 };
 
-const packages = [
-  options.profile === "pre-agent-support"
-    ? preAgentKnowledgePackage
-    : extractionParityKnowledgePackage,
-  options.profile === "pre-agent-support" ? cliPackage : mcpPackage,
-];
+const packages = [preAgentKnowledgePackage, cliPackage];
 
 function fail(message) {
   console.error(`AI tooling package check failed: ${message}`);
@@ -1177,10 +1179,10 @@ function assertPackedKnowledgeV1(packageDir, packedPaths, packageVersion) {
   const manifest = verified.manifest;
   if (
     manifest.bundle_version !== packageVersion ||
-    manifest.agent_support !== undefined
+    manifest.agent_support === undefined
   ) {
     throw new Error(
-      "Pre-agent Knowledge-v1 must match its package version and omit only agent_support.",
+      "Release-complete Knowledge-v1 must match its package version and include agent_support.",
     );
   }
   const schemaDirectory = path.join(packageDir, "schemas");
@@ -1213,6 +1215,7 @@ function assertPackedKnowledgeV1(packageDir, packedPaths, packageVersion) {
     "markdown",
     "records",
     "schemas",
+    "skills",
     "support",
   ]);
   for (const packedPath of packedPaths) {
@@ -1232,6 +1235,20 @@ function assertPackedKnowledgeV1(packageDir, packedPaths, packageVersion) {
       );
     }
   }
+  const descriptorByPath = new Map(
+    verified.artifactDescriptors.map((entry) => [entry.path, entry]),
+  );
+  const describeAgentArtifact = (artifact) => {
+    const descriptor = descriptorByPath.get(artifact);
+    if (!descriptor) {
+      throw new Error(`Missing agent-support descriptor ${artifact}.`);
+    }
+    return {
+      path: descriptor.path,
+      sha256: descriptor.sha256,
+      bytes: descriptor.bytes,
+    };
+  };
   return {
     manifest: {
       path: "manifest.json",
@@ -1247,6 +1264,12 @@ function assertPackedKnowledgeV1(packageDir, packedPaths, packageVersion) {
       tree_bytes: manifest.artifact_tree.tree_bytes,
       artifact_count: manifest.artifact_tree.artifact_count,
       artifact_bytes: manifest.artifact_tree.artifact_bytes,
+    },
+    agent_support: {
+      skill: describeAgentArtifact(manifest.agent_support.skill.artifact),
+      agents_pointer: describeAgentArtifact(
+        manifest.agent_support.agents_pointer.artifact,
+      ),
     },
   };
 }
@@ -1623,6 +1646,9 @@ for (const packageConfig of packages) {
       path.join(extractedPackageDir, "package.json"),
     );
     const packedManifest = JSON.parse(manifestBytes.toString("utf8"));
+    const readmeBytes = readFileSync(
+      path.join(extractedPackageDir, "README.md"),
+    );
     packageReports.push({
       name: packageConfig.name,
       version: packedManifest.version,
@@ -1630,6 +1656,11 @@ for (const packageConfig of packages) {
         path: `${packageConfig.name}/package.json`,
         sha256: sha256(manifestBytes),
         bytes: manifestBytes.byteLength,
+      },
+      readme: {
+        path: `${packageConfig.name}/README.md`,
+        sha256: sha256(readmeBytes),
+        bytes: readmeBytes.byteLength,
       },
       tarball: {
         fileName: packed.filename,
@@ -1651,10 +1682,8 @@ if (process.exitCode) {
 const knowledgeReport = packageReports.find(
   (entry) => entry.name === "@salt-ds/knowledge",
 );
-const mcpReport = packageReports.find((entry) => entry.name === "@salt-ds/mcp");
 const cliReport = packageReports.find((entry) => entry.name === "@salt-ds/cli");
-const adapterReport =
-  options.profile === "pre-agent-support" ? cliReport : mcpReport;
+const adapterReport = cliReport;
 if (
   !knowledgeReport ||
   !adapterReport ||
@@ -1728,19 +1757,12 @@ if (options.profile === "extraction-parity") {
 renameSync(stagingArtifactDirectory, finalArtifactDirectory);
 const artifactDirectoryName = path.basename(finalArtifactDirectory);
 const policy =
-  options.profile === "pre-agent-support"
-    ? {
-        id: "pre-agent-support@1",
-        publishable: false,
-        allowed_omission: "agent_support",
-        allowed_stages: ["R1_PRE_AGENT"],
-      }
-    : {
-        id: "extraction-parity@1",
-        publishable: false,
-        allowed_omission: "knowledge_v1",
-        allowed_stages: ["UNIT_02"],
-      };
+  {
+    id: "release-complete@1",
+    publishable: false,
+    required_artifacts: ["agent_support.skill", "agent_support.agents_pointer"],
+    allowed_stages: ["CI_RELEASE_COMPLETE", "R2_BETA", "R3_GA"],
+  };
 const report = {
   schema_version: "1.0.0",
   contract: "salt-ai-pack-report@1",
@@ -1768,33 +1790,12 @@ const report = {
           ]
         : [],
     content_policy: {
-      generated_tree:
-        options.profile === "pre-agent-support" &&
-        entry.name === "@salt-ds/knowledge",
+      generated_tree: entry.name === "@salt-ds/knowledge",
       prototype_catalog: false,
       workspace_link: false,
     },
   })),
-  ...(options.profile === "pre-agent-support"
-    ? { knowledge_bundle: knowledgeBundleReport }
-    : {
-        extraction_parity: {
-          path: "packages/knowledge/generated/extraction-parity.json",
-          sha256: sha256(extractionParityBytes),
-          bytes: extractionParityBytes.byteLength,
-          contract: extractionParity.contract,
-          status: extractionParity.status,
-          semantic_digest: extractionParity.current.semantic_digest,
-          normalized_semantic_projection_sha256:
-            extractionParity.normalized_semantic_projection_sha256,
-        },
-        comparison_registry: {
-          root: "packages/knowledge/generated",
-          semantic_digest: extractionParity.current.semantic_digest,
-          manifest: comparisonManifest,
-          files: comparisonRegistryFiles,
-        },
-      }),
+  knowledge_bundle: knowledgeBundleReport,
 };
 try {
   assertJsonSchema(

@@ -23,6 +23,18 @@
       "reason": "Public repository landing documentation."
     },
     {
+      "path": "packages/cli/README.md",
+      "visibility": "public",
+      "content_kinds": ["docs", "metadata"],
+      "reason": "Staged CLI npm landing documentation."
+    },
+    {
+      "path": "packages/knowledge/README.md",
+      "visibility": "public",
+      "content_kinds": ["docs", "metadata"],
+      "reason": "Staged Knowledge npm landing documentation."
+    },
+    {
       "path": "docs/ai/migrations/records",
       "visibility": "public",
       "content_kinds": ["migration"],
@@ -143,6 +155,12 @@
       "reason": "Site layout implementation is not canonical consumer guidance."
     },
     {
+      "path": "skills/salt-design-system",
+      "visibility": "public",
+      "content_kinds": ["docs", "metadata"],
+      "reason": "Manifest-selected public Salt Agent Skill artifacts."
+    },
+    {
       "path": "evals",
       "visibility": "internal",
       "content_kinds": ["test", "tooling"],
@@ -224,6 +242,11 @@
       "path": "site/docs/index.mdx",
       "visibility": "public",
       "reason": "The public page is selected, but internal links require public fallback or removal."
+    },
+    {
+      "path": "tooling/ai/public-docs-v1",
+      "visibility": "public",
+      "reason": "Manifest-selected staged public AI guide source."
     }
   ],
   "destination_classes": [
@@ -263,58 +286,7 @@
       "path_prefixes": ["/jpmorganchase/salt-ds/issues"]
     }
   ],
-  "unclassified": [
-    {
-      "path": "packages/ag-grid-theme/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    },
-    {
-      "path": "packages/core/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    },
-    {
-      "path": "packages/countries/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    },
-    {
-      "path": "packages/date-components/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    },
-    {
-      "path": "packages/embla-carousel/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    },
-    {
-      "path": "packages/highcharts-theme/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    },
-    {
-      "path": "packages/icons/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    },
-    {
-      "path": "packages/lab/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    },
-    {
-      "path": "packages/react-resizable-panels-theme/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    },
-    {
-      "path": "packages/styles/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    }
-  ],
+  "unclassified": [],
   "closure_batches": [
     {
       "id": "visibility-2",
@@ -332,7 +304,7 @@
       ],
       "owner": "saltdesignsystem",
       "due_unit": "06c",
-      "status": "planned"
+      "status": "complete"
     }
   ]
 }

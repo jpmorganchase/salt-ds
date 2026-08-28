@@ -10,11 +10,13 @@ const runInfoCommand = vi.hoisted(() => vi.fn());
 const runDocsCommand = vi.hoisted(() => vi.fn());
 const runContextCommand = vi.hoisted(() => vi.fn());
 const runScanCommand = vi.hoisted(() => vi.fn());
+const runSkillCommand = vi.hoisted(() => vi.fn());
 
 vi.mock("../commands/context.js", () => ({ runContextCommand }));
 vi.mock("../commands/docs.js", () => ({ runDocsCommand }));
 vi.mock("../commands/info.js", () => ({ runInfoCommand }));
 vi.mock("../commands/scan.js", () => ({ runScanCommand }));
+vi.mock("../commands/skill.js", () => ({ runSkillCommand }));
 
 function captureIo() {
   let stdout = "";
@@ -48,6 +50,8 @@ describe("Salt CLI shell", () => {
       output: '{"contract":"salt-scan-result/1"}\n',
       exitCode: 0,
     });
+    runSkillCommand.mockReset();
+    runSkillCommand.mockResolvedValue("skill-output\n");
   });
 
   it.each([["help"], ["-h"], ["--help"]])(
@@ -159,6 +163,36 @@ describe("Salt CLI shell", () => {
       format: "json",
       limit: 5,
     });
+  });
+
+  it("strictly parses and runs the skill subcommands", async () => {
+    expect(parseCliArgs(["skill", "info", "--json"])).toEqual({
+      command: "skill",
+      action: "info",
+      kind: null,
+    });
+    expect(parseCliArgs(["skill", "print", "--kind", "agents"])).toEqual({
+      command: "skill",
+      action: "print",
+      kind: "agents",
+    });
+    for (const argv of [
+      ["skill"],
+      ["skill", "info"],
+      ["skill", "print", "--kind", "fake"],
+      ["skill", "print", "--kind", "skill", "extra"],
+    ]) {
+      expect(() => parseCliArgs(argv)).toThrow(SaltCliUsageError);
+    }
+    const capture = captureIo();
+    await expect(
+      runCliWithIo(["skill", "print", "--kind", "skill"], capture.io),
+    ).resolves.toBe(0);
+    expect(runSkillCommand).toHaveBeenCalledWith({
+      action: "print",
+      kind: "skill",
+    });
+    expect(capture.stdout()).toBe("skill-output\n");
   });
 
   it.each([

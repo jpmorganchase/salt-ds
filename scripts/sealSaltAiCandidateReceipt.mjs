@@ -21,7 +21,14 @@ import {
 
 const args = parseArgs(process.argv.slice(2));
 const stage = String(args.get("--stage") ?? "");
-assert(stage === "R1_PRE_AGENT", "--stage must be R1_PRE_AGENT");
+assert(
+  stage !== "R1_PRE_AGENT",
+  "R1_PRE_AGENT candidate sealing was retired after agent-support activation",
+);
+assert(
+  false,
+  "Candidate sealing is unavailable until the Unit 08 release-complete inputs exist",
+);
 assert(args.get("--pack-report"), "--pack-report is required");
 assert(args.get("--output"), "--output is required");
 

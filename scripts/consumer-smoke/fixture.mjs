@@ -178,11 +178,9 @@ export async function loadExactPackReport(reportPathInput) {
   assert(
     report?.contract === "salt-ai-pack-report@1" &&
       report.schema_version === "1.0.0" &&
-      new Set(["extraction-parity", "pre-agent-support"]).has(
-        report.policy_profile,
-      ) &&
+      report.policy_profile === "release-complete" &&
       report.publishable === false,
-    "Pack report is not an allowed nonpublishable AI package profile.",
+    "Pack report is not the current nonpublishable release-complete profile.",
   );
   assert(
     Array.isArray(report.packages) && report.packages.length === 2,
@@ -194,7 +192,7 @@ export async function loadExactPackReport(reportPathInput) {
   const knowledge = packageByName.get("@salt-ds/knowledge");
   const mcp = packageByName.get("@salt-ds/mcp");
   const cli = packageByName.get("@salt-ds/cli");
-  const adapter = report.policy_profile === "pre-agent-support" ? cli : mcp;
+  const adapter = cli;
   assert(
     knowledge && adapter && packageByName.size === 2,
     "Pack report contains an unreported or duplicate package identity.",
@@ -242,48 +240,19 @@ export async function loadExactPackReport(reportPathInput) {
     `Pack report does not bind ${adapter.name} to the exact reported Knowledge tarball.`,
   );
 
-  let comparisonRegistryDir = null;
-  if (report.policy_profile === "extraction-parity") {
-    const comparison = report.comparison_registry;
-    assert(
-      comparison?.root === "packages/knowledge/generated" &&
-        comparison.semantic_digest ===
-          report.extraction_parity?.semantic_digest,
-      "Pack report does not bind the Unit 02 comparison registry identity.",
-    );
-    comparisonRegistryDir = path.join(repoRoot, ...comparison.root.split("/"));
-    const currentFiles = await collectExactDirectoryFiles(
-      comparisonRegistryDir,
-      "Comparison registry",
-    );
-    assert(
-      JSON.stringify(currentFiles) === JSON.stringify(comparison.files),
-      "Comparison registry is stale, incomplete, linked, or contains unreported files.",
-    );
-    const manifest = currentFiles.find(
-      (entry) => entry.path === "catalog-manifest.json",
-    );
-    const parity = currentFiles.find(
-      (entry) => entry.path === "extraction-parity.json",
-    );
-    assert(
-      JSON.stringify(manifest) === JSON.stringify(comparison.manifest) &&
-        parity?.sha256 === report.extraction_parity.sha256 &&
-        parity.bytes === report.extraction_parity.bytes,
-      "Pack report manifest or extraction receipt digest is stale.",
-    );
-  } else {
-    assert(
-      /^sha256:[0-9a-f]{64}$/u.test(report.policy_digest) &&
-        report.knowledge_bundle?.bundle_digest &&
-        report.knowledge_bundle.manifest?.path === "manifest.json" &&
-        report.knowledge_bundle.semantic_digest &&
-        report.knowledge_bundle.compiler_digest &&
-        !report.extraction_parity &&
-        !report.comparison_registry,
-      "Pack report does not bind the pre-agent Knowledge-v1 identity.",
-    );
-  }
+  const comparisonRegistryDir = null;
+  assert(
+    /^sha256:[0-9a-f]{64}$/u.test(report.policy_digest) &&
+      report.knowledge_bundle?.bundle_digest &&
+      report.knowledge_bundle.manifest?.path === "manifest.json" &&
+      report.knowledge_bundle.semantic_digest &&
+      report.knowledge_bundle.compiler_digest &&
+      report.knowledge_bundle.agent_support?.skill &&
+      report.knowledge_bundle.agent_support?.agents_pointer &&
+      !report.extraction_parity &&
+      !report.comparison_registry,
+    "Pack report does not bind the release-complete Knowledge-v1 identity.",
+  );
 
   return {
     report,

@@ -8,52 +8,21 @@
     "schema_version",
     "contract",
     "policy_profile",
+    "policy_digest",
     "publishable",
-    "packages"
+    "packages",
+    "knowledge_bundle"
   ],
-  "oneOf": [
-    {
-      "properties": {
-        "policy_profile": { "const": "extraction-parity" },
-        "knowledge_bundle": {},
-        "extraction_parity": {},
-        "comparison_registry": {}
-      },
-      "required": ["extraction_parity", "comparison_registry"],
-      "not": {
-        "properties": { "knowledge_bundle": {} },
-        "required": ["knowledge_bundle"]
-      }
-    },
-    {
-      "properties": {
-        "policy_profile": { "const": "pre-agent-support" },
-        "policy_digest": {},
-        "knowledge_bundle": {},
-        "extraction_parity": {},
-        "comparison_registry": {}
-      },
-      "required": ["policy_digest", "knowledge_bundle"],
-      "not": {
-        "anyOf": [
-          {
-            "properties": { "extraction_parity": {} },
-            "required": ["extraction_parity"]
-          },
-          {
-            "properties": { "comparison_registry": {} },
-            "required": ["comparison_registry"]
-          }
-        ]
-      }
-    }
-  ],
+  "not": {
+    "anyOf": [
+      { "required": ["extraction_parity"] },
+      { "required": ["comparison_registry"] }
+    ]
+  },
   "properties": {
     "schema_version": { "const": "1.0.0" },
     "contract": { "const": "salt-ai-pack-report@1" },
-    "policy_profile": {
-      "enum": ["extraction-parity", "pre-agent-support"]
-    },
+    "policy_profile": { "const": "release-complete" },
     "policy_digest": { "$ref": "#/$defs/sha256" },
     "publishable": { "const": false },
     "packages": {
@@ -116,6 +85,7 @@
         "name",
         "version",
         "manifest",
+        "readme",
         "tarball",
         "dependencies",
         "first_party_dependencies",
@@ -127,6 +97,7 @@
         },
         "version": { "type": "string", "pattern": "^0\\.0\\.0$" },
         "manifest": { "$ref": "#/$defs/artifact" },
+        "readme": { "$ref": "#/$defs/artifact" },
         "tarball": { "$ref": "#/$defs/artifact" },
         "dependencies": {
           "type": "object",
@@ -214,7 +185,8 @@
         "semantic_digest",
         "semantic_source_digest",
         "compiler_digest",
-        "artifact_tree"
+        "artifact_tree",
+        "agent_support"
       ],
       "properties": {
         "manifest": { "$ref": "#/$defs/artifact" },
@@ -222,7 +194,16 @@
         "semantic_digest": { "$ref": "#/$defs/sha256" },
         "semantic_source_digest": { "$ref": "#/$defs/sha256" },
         "compiler_digest": { "$ref": "#/$defs/sha256" },
-        "artifact_tree": { "$ref": "#/$defs/artifactTreeSummary" }
+        "artifact_tree": { "$ref": "#/$defs/artifactTreeSummary" },
+        "agent_support": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["skill", "agents_pointer"],
+          "properties": {
+            "skill": { "$ref": "#/$defs/artifact" },
+            "agents_pointer": { "$ref": "#/$defs/artifact" }
+          }
+        }
       }
     }
   }
