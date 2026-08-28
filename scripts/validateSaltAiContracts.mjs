@@ -73,6 +73,16 @@ async function exists(relative, kind = "file") {
   );
 }
 
+async function pathExists(relative) {
+  try {
+    const value = await stat(withinRepository(relative));
+    return value.isFile() || value.isDirectory();
+  } catch (error) {
+    if (error.code === "ENOENT") return false;
+    throw error;
+  }
+}
+
 async function validatePackageDocs() {
   schemaValidator(
     await readJson(
@@ -108,6 +118,25 @@ async function validatePackageDocs() {
       names.includes("@salt-ds/mcp"),
     "AI package lifecycle entries are incomplete",
   );
+  assert(
+    inventory.authoring_baseline.checkpoint_sha ===
+      "37b1a7dcdecd171fd05e52497d9813bfaa7bb88e",
+    "Public package docs baseline does not bind Unit 05",
+  );
+  const worklistByName = new Map(
+    inventory.remediation_worklist.map((entry) => [entry.name, entry]),
+  );
+  assert(
+    worklistByName.size === inventory.remediation_worklist.length,
+    "Public package docs worklist repeats a package",
+  );
+  assert(
+    JSON.stringify(inventory.remediation_worklist.map((entry) => entry.name)) ===
+      JSON.stringify(
+        inventory.remediation_worklist.map((entry) => entry.name).sort(),
+      ),
+    "Public package docs worklist is not package-sorted",
+  );
   const activeFamilies = inventory.packages
     .filter((entry) => entry.lifecycle === "publishable")
     .map((entry) => entry.name);
@@ -129,7 +158,11 @@ async function validatePackageDocs() {
       continue;
     }
     await exists(`${entry.workspace_path}/package.json`);
-    await exists(entry.readme_path);
+    const readmePresent = await pathExists(entry.readme_path);
+    assert(
+      readmePresent || worklistByName.get(entry.name)?.deficits.includes("readme"),
+      `${entry.name} README absence is not frozen in the remediation worklist`,
+    );
     const manifest = await readJson(
       path.join(repositoryRoot, entry.workspace_path, "package.json"),
     );
@@ -140,10 +173,24 @@ async function validatePackageDocs() {
     for (const field of METADATA_FIELDS) {
       const actual = manifest[field] === undefined ? "missing" : "present";
       assert(
-        entry.metadata_fields[field] === actual,
+        entry.metadata_fields[field] === actual ||
+          (entry.metadata_fields[field] === "planned" && actual === "missing"),
         `${entry.name} metadata state drifted for ${field}`,
       );
     }
+    const actualDeficits = [
+      ...(!readmePresent ? ["readme"] : []),
+      ...(manifest.description === undefined ? ["description"] : []),
+      ...(manifest.homepage === undefined ? ["homepage"] : []),
+      ...(manifest.keywords === undefined ? ["keywords"] : []),
+      ...(manifest.bugs === undefined ? ["bugs"] : []),
+      ...(manifest.publishIncludeReadme === false ? ["packed_readme"] : []),
+    ].sort();
+    const frozenDeficits = [...(worklistByName.get(entry.name)?.deficits ?? [])].sort();
+    assert(
+      JSON.stringify(actualDeficits) === JSON.stringify(frozenDeficits),
+      `${entry.name} remediation deficits drifted: expected ${frozenDeficits.join(", ") || "none"}; found ${actualDeficits.join(", ") || "none"}`,
+    );
   }
 }
 
@@ -158,6 +205,21 @@ async function validateVisibility() {
     path.join(repositoryRoot, "tooling", "ai", "content-visibility-v1.json"),
   );
   const roots = new Set();
+  assert(
+    inventory.authoring_baseline.checkpoint_sha ===
+      "37b1a7dcdecd171fd05e52497d9813bfaa7bb88e",
+    "Visibility authoring baseline does not bind Unit 05",
+  );
+  assert(
+    JSON.stringify(inventory.provenance_kinds) ===
+      JSON.stringify([
+        "authored_normative_guidance",
+        "generated_api_fact",
+        "inferred_implementation_signal",
+        "test_receipt",
+      ]),
+    "Visibility provenance kinds are incomplete or reordered",
+  );
   for (const entry of inventory.source_roots) {
     assert(!roots.has(entry.path), `Duplicate visibility root ${entry.path}`);
     roots.add(entry.path);
@@ -189,6 +251,11 @@ async function validateVisibility() {
   const batches = new Map(
     inventory.closure_batches.map((entry) => [entry.id, entry]),
   );
+  assert(
+    JSON.stringify(inventory.unclassified.map((entry) => entry.path)) ===
+      JSON.stringify(inventory.unclassified.map((entry) => entry.path).sort()),
+    "Visibility unclassified inventory is not path-sorted",
+  );
   for (const entry of inventory.unclassified) {
     const batch = batches.get(entry.closure_batch);
     assert(
@@ -196,6 +263,12 @@ async function validateVisibility() {
       `${entry.path} is not in its closure batch`,
     );
     await stat(withinRepository(entry.path));
+  }
+  for (const batch of inventory.closure_batches) {
+    assert(
+      JSON.stringify(batch.paths) === JSON.stringify([...batch.paths].sort()),
+      `${batch.id} paths are not path-sorted`,
+    );
   }
 }
 
@@ -341,11 +414,17 @@ async function validateDecisionDocs() {
 async function validateRootScripts() {
   const manifest = await readJson(path.join(repositoryRoot, "package.json"));
   const required = {
+    "acquire:salt-ai:evidence":
+      "node ./scripts/acquireSaltAiEvidence.mjs",
     "candidate:salt-ai:seal":
       "node ./scripts/sealSaltAiCandidateReceipt.mjs",
+    "check:salt-docs-authoring":
+      "node ./scripts/checkSaltDocsAuthoring.mjs",
     "validate:salt-ai:contracts": "node ./scripts/validateSaltAiContracts.mjs",
     "retire:salt-ai:premerge-evidence":
       "node ./scripts/retireSaltAiPremergeEvidence.mjs",
+    "verify:salt-pattern-migration":
+      "node ./scripts/verifySaltPatternMigration.mjs",
     "eval:salt-ai:validate": "node ./evals/salt-ai/scripts/validate.mjs",
     "eval:salt-ai:baseline": "node ./evals/salt-ai/scripts/runBaseline.mjs",
     "eval:salt-ai:report": "node ./evals/salt-ai/scripts/buildReport.mjs",
@@ -364,6 +443,26 @@ schemaValidator(
       "scripts",
       "schemas",
       "saltAiCandidateReceiptV1.schema.json",
+    ),
+  ),
+);
+schemaValidator(
+  await readJson(
+    path.join(
+      repositoryRoot,
+      "scripts",
+      "schemas",
+      "saltAuthoredExampleManifestV1.schema.json",
+    ),
+  ),
+);
+schemaValidator(
+  await readJson(
+    path.join(
+      repositoryRoot,
+      "scripts",
+      "schemas",
+      "saltPatternMigrationReceiptV1.schema.json",
     ),
   ),
 );

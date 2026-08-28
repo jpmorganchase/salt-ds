@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/schemas/salt-pattern-migration-receipt-1.json",
+  "title": "Salt pattern migration receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "contract",
+    "batch",
+    "source_commit",
+    "source_clean",
+    "baseline",
+    "predecessor",
+    "pack_report",
+    "knowledge_identity",
+    "package_version_intent",
+    "inventory",
+    "classified_changes",
+    "unclassified_identity_changes",
+    "result"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://www.saltdesignsystem.com/ai/schemas/salt-pattern-migration-receipt-1.json"
+    },
+    "schema_version": { "const": "1.0.0" },
+    "contract": { "const": "salt-pattern-migration-receipt/1" },
+    "batch": { "enum": ["06a", "06b", "06c"] },
+    "source_commit": { "$ref": "#/$defs/commit" },
+    "source_clean": { "const": true },
+    "baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "contract", "checkpoint_sha", "inventory_sha256"],
+      "properties": {
+        "path": { "$ref": "#/$defs/path" },
+        "sha256": { "$ref": "#/$defs/digest" },
+        "contract": { "const": "salt-pattern-migration-baseline/1" },
+        "checkpoint_sha": { "$ref": "#/$defs/commit" },
+        "inventory_sha256": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "predecessor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "contract", "source_commit"],
+      "properties": {
+        "path": { "$ref": "#/$defs/path" },
+        "sha256": { "$ref": "#/$defs/digest" },
+        "contract": {
+          "enum": ["salt-ai-candidate-receipt/1", "salt-pattern-migration-receipt/1"]
+        },
+        "source_commit": { "$ref": "#/$defs/commit" }
+      }
+    },
+    "pack_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "contract", "policy_profile"],
+      "properties": {
+        "path": { "$ref": "#/$defs/path" },
+        "sha256": { "$ref": "#/$defs/digest" },
+        "contract": { "const": "salt-ai-pack-report@1" },
+        "policy_profile": { "const": "pre-agent-support" }
+      }
+    },
+    "knowledge_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["before", "after", "delta"],
+      "properties": {
+        "before": { "$ref": "#/$defs/knowledgeIdentity" },
+        "after": { "$ref": "#/$defs/knowledgeIdentity" },
+        "delta": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "semantic_source_changed",
+            "compiler_changed",
+            "semantic_changed",
+            "bundle_changed"
+          ],
+          "properties": {
+            "semantic_source_changed": { "type": "boolean" },
+            "compiler_changed": { "type": "boolean" },
+            "semantic_changed": { "type": "boolean" },
+            "bundle_changed": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "package_version_intent": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "current_version", "intent", "changeset"],
+        "properties": {
+          "name": { "enum": ["@salt-ds/cli", "@salt-ds/knowledge"] },
+          "current_version": { "const": "0.0.0" },
+          "intent": { "const": "initial-release-pending" },
+          "changeset": { "const": false }
+        }
+      }
+    },
+    "inventory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pattern_count", "package_story_count", "example_manifest_sha256", "patterns", "package_stories"],
+      "properties": {
+        "pattern_count": { "const": 24 },
+        "package_story_count": { "const": 8 },
+        "example_manifest_sha256": { "$ref": "#/$defs/digest" },
+        "patterns": {
+          "type": "array",
+          "minItems": 24,
+          "maxItems": 24,
+          "items": { "$ref": "#/$defs/pattern" }
+        },
+        "package_stories": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "items": { "$ref": "#/$defs/packageStory" }
+        }
+      }
+    },
+    "classified_changes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/path" },
+      "uniqueItems": true
+    },
+    "unclassified_identity_changes": {
+      "type": "array",
+      "maxItems": 0
+    },
+    "result": { "const": "pass" }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "knowledgeIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["semantic_source_digest", "compiler_digest", "semantic_digest", "bundle_digest"],
+      "properties": {
+        "semantic_source_digest": { "$ref": "#/$defs/digest" },
+        "compiler_digest": { "$ref": "#/$defs/digest" },
+        "semantic_digest": { "$ref": "#/$defs/digest" },
+        "bundle_digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "pattern": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "batch", "record_key", "record_sha256", "content_sha256", "example_id", "example_closure_sha256", "status"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "batch": { "enum": ["06b", "06c"] },
+        "record_key": { "type": "string", "pattern": "^record:pattern:pattern\\." },
+        "record_sha256": { "$ref": "#/$defs/digest" },
+        "content_sha256": { "$ref": "#/$defs/digest" },
+        "example_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "example_closure_sha256": { "$ref": "#/$defs/digest" },
+        "status": { "enum": ["tracked", "complete"] }
+      }
+    },
+    "packageStory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_path", "batch", "disposition", "owner", "destination", "source_sha256", "destination_sha256", "retirement_reason", "maintainer_facade", "status"],
+      "properties": {
+        "source_path": { "$ref": "#/$defs/path" },
+        "batch": { "enum": ["06b", "06c"] },
+        "disposition": { "enum": ["migrate", "merge", "retire"] },
+        "owner": { "type": "string", "minLength": 1 },
+        "destination": { "anyOf": [{ "$ref": "#/$defs/path" }, { "type": "null" }] },
+        "source_sha256": { "$ref": "#/$defs/digest" },
+        "destination_sha256": { "anyOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "retirement_reason": { "type": ["string", "null"] },
+        "maintainer_facade": { "anyOf": [{ "$ref": "#/$defs/path" }, { "type": "null" }] },
+        "status": { "enum": ["planned", "complete"] }
+      }
+    }
+  }
+}

@@ -1,5 +1,20 @@
 {
   "schema_version": "1.0.0",
+  "authoring_baseline": {
+    "checkpoint_sha": "37b1a7dcdecd171fd05e52497d9813bfaa7bb88e",
+    "strict_paths": [
+      "templates/component-pages",
+      "templates/pattern-pages"
+    ],
+    "legacy_policy": "no-new-deficits",
+    "closure_unit": "06d"
+  },
+  "provenance_kinds": [
+    "authored_normative_guidance",
+    "generated_api_fact",
+    "inferred_implementation_signal",
+    "test_receipt"
+  ],
   "source_roots": [
     {
       "path": "README.md",
@@ -104,10 +119,28 @@
       "reason": "Public Salt site documentation, subject to item overrides."
     },
     {
+      "path": "site/src/Body",
+      "visibility": "internal",
+      "content_kinds": ["implementation"],
+      "reason": "Site rendering code is not a public guidance authority."
+    },
+    {
+      "path": "site/src/components",
+      "visibility": "internal",
+      "content_kinds": ["implementation"],
+      "reason": "Site presentation components are not canonical consumer guidance."
+    },
+    {
       "path": "site/src/examples",
       "visibility": "public",
       "content_kinds": ["example"],
       "reason": "Canonical public example implementations."
+    },
+    {
+      "path": "site/src/layouts",
+      "visibility": "internal",
+      "content_kinds": ["implementation"],
+      "reason": "Site layout implementation is not canonical consumer guidance."
     },
     {
       "path": "evals",
@@ -138,6 +171,12 @@
       "visibility": "internal",
       "content_kinds": ["tooling"],
       "reason": "Governance inventories are not consumer content."
+    },
+    {
+      "path": "templates",
+      "visibility": "internal",
+      "content_kinds": ["docs", "tooling"],
+      "reason": "Contributor templates are authoring controls rather than consumer guidance."
     }
   ],
   "item_overrides": [
@@ -226,21 +265,6 @@
   ],
   "unclassified": [
     {
-      "path": "site/src/Body",
-      "reason": "Site rendering implementation needs a public-content dependency audit.",
-      "closure_batch": "visibility-1"
-    },
-    {
-      "path": "site/src/components",
-      "reason": "Site component prose/assets need explicit projection classification.",
-      "closure_batch": "visibility-1"
-    },
-    {
-      "path": "site/src/layouts",
-      "reason": "Layout-owned fragments and destinations need explicit classification.",
-      "closure_batch": "visibility-1"
-    },
-    {
       "path": "packages/ag-grid-theme/stories",
       "reason": "Story source is temporary extraction evidence, not a public destination.",
       "closure_batch": "visibility-2"
@@ -292,13 +316,6 @@
     }
   ],
   "closure_batches": [
-    {
-      "id": "visibility-1",
-      "paths": ["site/src/Body", "site/src/components", "site/src/layouts"],
-      "owner": "saltdesignsystem",
-      "due_unit": "06a",
-      "status": "planned"
-    },
     {
       "id": "visibility-2",
       "paths": [

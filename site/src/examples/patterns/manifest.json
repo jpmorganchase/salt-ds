@@ -1,11 +1,21 @@
 {
-  "schemaVersion": 1,
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/salt-authored-example-manifest-1.json",
+  "schemaVersion": "1.0.0",
+  "contract": "salt-authored-example-manifest/1",
   "examples": [
     {
       "id": "announcement-dialog",
       "exportName": "AnnouncementDialog",
       "route": "/salt/patterns/announcement-dialog",
       "entry": "patterns/announcement-dialog/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/announcement-dialog/index.tsx",
+        "guidance": "site/docs/patterns/announcement-dialog.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/announcement-dialog/announcement-dialog.stories.tsx"
+      },
       "files": [
         "patterns/announcement-dialog/example.module.css",
         "patterns/announcement-dialog/index.tsx",
@@ -24,6 +34,14 @@
       "exportName": "AppHeader",
       "route": "/salt/patterns/app-header",
       "entry": "patterns/app-header/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/app-header/index.tsx",
+        "guidance": "site/docs/patterns/app-header.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/app-header/app-header.stories.tsx"
+      },
       "files": [
         "patterns/app-header/index.tsx",
         "patterns/assets/logo.svg"
@@ -41,6 +59,14 @@
       "exportName": "Breadcrumbs",
       "route": "/salt/patterns/breadcrumbs",
       "entry": "patterns/breadcrumbs/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/breadcrumbs/index.tsx",
+        "guidance": "site/docs/patterns/breadcrumbs.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/breadcrumbs/breadcrumbs.stories.tsx"
+      },
       "files": [
         "patterns/breadcrumbs/index.tsx"
       ],
@@ -57,6 +83,14 @@
       "exportName": "ButtonBar",
       "route": "/salt/patterns/button-bar",
       "entry": "patterns/button-bar/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/button-bar/index.tsx",
+        "guidance": "site/docs/patterns/button-bar.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/button-bar/button-bar.stories.tsx"
+      },
       "files": [
         "patterns/button-bar/index.tsx"
       ],
@@ -73,6 +107,14 @@
       "exportName": "Default",
       "route": "/salt/patterns/comments",
       "entry": "patterns/comments/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/comments/index.tsx",
+        "guidance": "site/docs/patterns/comments.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/comments/comments.stories.tsx"
+      },
       "files": [
         "patterns/comments/index.tsx"
       ],
@@ -89,6 +131,14 @@
       "exportName": "ContactDetails",
       "route": "/salt/patterns/contact-details",
       "entry": "patterns/contact-details/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/contact-details/index.tsx",
+        "guidance": "site/docs/patterns/contact-details.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/contact-details/contact-details.stories.tsx"
+      },
       "files": [
         "patterns/assets/avatar.png",
         "patterns/assets/avatar2.png",
@@ -108,6 +158,14 @@
       "exportName": "Info",
       "route": "/salt/patterns/content-status",
       "entry": "patterns/content-status/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/content-status/index.tsx",
+        "guidance": "site/docs/patterns/content-status.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/content-status/content-status.stories.tsx"
+      },
       "files": [
         "patterns/content-status/index.tsx"
       ],
@@ -123,6 +181,14 @@
       "exportName": "StandardControls",
       "route": "/salt/patterns/experience-customization",
       "entry": "patterns/experience-customization/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/experience-customization/index.tsx",
+        "guidance": "site/docs/patterns/experience-customization.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/experience-customization/experience-customization.stories.tsx"
+      },
       "files": [
         "patterns/experience-customization/DataFormatContent.tsx",
         "patterns/experience-customization/FoundationContent.tsx",
@@ -162,6 +228,14 @@
       "exportName": "FileUploadExample",
       "route": "/salt/patterns/file-upload",
       "entry": "patterns/file-upload/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/file-upload/index.tsx",
+        "guidance": "site/docs/patterns/file-upload.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/file-upload/file-upload.stories.tsx"
+      },
       "files": [
         "patterns/file-upload/index.tsx"
       ],
@@ -181,6 +255,14 @@
       "exportName": "PhoneNumber",
       "route": "/salt/patterns/formatted-input",
       "entry": "patterns/formatted-input/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/formatted-input/index.tsx",
+        "guidance": "site/docs/patterns/formatted-input.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/formatted-input/formatted-input.stories.tsx"
+      },
       "files": [
         "patterns/formatted-input/index.tsx",
         "patterns/formatted-input/useFormattedInput.ts"
@@ -197,6 +279,14 @@
       "exportName": "StandardLayout",
       "route": "/salt/patterns/forms",
       "entry": "patterns/forms/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/forms/index.tsx",
+        "guidance": "site/docs/patterns/forms.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/forms/forms.stories.tsx"
+      },
       "files": [
         "patterns/forms/index.tsx"
       ],
@@ -212,6 +302,14 @@
       "exportName": "Status",
       "route": "/salt/patterns/indication",
       "entry": "patterns/indication/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/indication/index.tsx",
+        "guidance": "site/docs/patterns/indication.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/indication/indication.stories.tsx"
+      },
       "files": [
         "patterns/indication/index.tsx"
       ],
@@ -228,6 +326,14 @@
       "exportName": "Column",
       "route": "/salt/patterns/international-phone-number-input",
       "entry": "patterns/international-phone-number-input/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/international-phone-number-input/index.tsx",
+        "guidance": "site/docs/patterns/international-phone-number-input.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/international-phone-number/international-phone-number.stories.tsx"
+      },
       "files": [
         "patterns/international-phone-number-input/index.tsx"
       ],
@@ -244,6 +350,14 @@
       "exportName": "WithDialog",
       "route": "/salt/patterns/keyboard-shortcuts",
       "entry": "patterns/keyboard-shortcuts/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/keyboard-shortcuts/index.tsx",
+        "guidance": "site/docs/patterns/keyboard-shortcuts.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/keyboard-shortcuts/keyboard-shortcuts.stories.tsx"
+      },
       "files": [
         "patterns/keyboard-shortcuts/example.module.css",
         "patterns/keyboard-shortcuts/index.tsx"
@@ -262,6 +376,14 @@
       "exportName": "SingleSelect",
       "route": "/salt/patterns/list-builder",
       "entry": "patterns/list-builder/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/list-builder/index.tsx",
+        "guidance": "site/docs/patterns/list-builder.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/list-builder/list-builder.stories.tsx"
+      },
       "files": [
         "patterns/assets/exampleData.ts",
         "patterns/list-builder/example.module.css",
@@ -280,6 +402,14 @@
       "exportName": "MenuButton",
       "route": "/salt/patterns/menu-button",
       "entry": "patterns/menu-button/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/menu-button/index.tsx",
+        "guidance": "site/docs/patterns/menu-button.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/menu-button/menu-button.stories.tsx"
+      },
       "files": [
         "patterns/menu-button/index.tsx"
       ],
@@ -296,6 +426,14 @@
       "exportName": "Metric",
       "route": "/salt/patterns/metric",
       "entry": "patterns/metric/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/metric/index.tsx",
+        "guidance": "site/docs/patterns/metric.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/metric/metric.stories.tsx"
+      },
       "files": [
         "patterns/metric/index.tsx"
       ],
@@ -312,6 +450,14 @@
       "exportName": "Navigation",
       "route": "/salt/patterns/navigation",
       "entry": "patterns/navigation/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/navigation/index.tsx",
+        "guidance": "site/docs/patterns/navigation.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/navigation/navigation.stories.tsx"
+      },
       "files": [
         "patterns/assets/logo.svg",
         "patterns/navigation/index.tsx"
@@ -329,6 +475,14 @@
       "exportName": "PreferencesDialog",
       "route": "/salt/patterns/preferences-dialog",
       "entry": "patterns/preferences-dialog/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/preferences-dialog/index.tsx",
+        "guidance": "site/docs/patterns/preferences-dialog.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/preferences-dialog/preferences-dialog.stories.tsx"
+      },
       "files": [
         "patterns/preferences-dialog/index.tsx"
       ],
@@ -344,6 +498,14 @@
       "exportName": "DefaultIcon",
       "route": "/salt/patterns/search",
       "entry": "patterns/search/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/search/index.tsx",
+        "guidance": "site/docs/patterns/search.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/search/search.stories.tsx"
+      },
       "files": [
         "patterns/search/index.tsx"
       ],
@@ -360,6 +522,14 @@
       "exportName": "SingleSelection",
       "route": "/salt/patterns/selectable-card",
       "entry": "patterns/selectable-card/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/selectable-card/index.tsx",
+        "guidance": "site/docs/patterns/selectable-card.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/selectable-card/selectable-card.stories.tsx"
+      },
       "files": [
         "patterns/assets/avatar.png",
         "patterns/assets/avatar2.png",
@@ -379,6 +549,14 @@
       "exportName": "Primary",
       "route": "/salt/patterns/split-button",
       "entry": "patterns/split-button/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/split-button/index.tsx",
+        "guidance": "site/docs/patterns/split-button.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/split-button/split-button.stories.tsx"
+      },
       "files": [
         "patterns/split-button/index.tsx"
       ],
@@ -395,6 +573,14 @@
       "exportName": "SingleLevel",
       "route": "/salt/patterns/vertical-navigation",
       "entry": "patterns/vertical-navigation/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/vertical-navigation/index.tsx",
+        "guidance": "site/docs/patterns/vertical-navigation.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/vertical-navigation/vertical-navigation.stories.tsx"
+      },
       "files": [
         "patterns/vertical-navigation/index.tsx"
       ],
@@ -411,6 +597,14 @@
       "exportName": "Horizontal",
       "route": "/salt/patterns/wizard",
       "entry": "patterns/wizard/index.tsx",
+      "visibility": "public",
+      "stability": "stable",
+      "provenance": "authored_example",
+      "sourceAuthority": {
+        "implementation": "site/src/examples/patterns/wizard/index.tsx",
+        "guidance": "site/docs/patterns/wizard.mdx",
+        "maintainerFacade": "packages/core/stories/patterns/wizard/wizard.stories.tsx"
+      },
       "files": [
         "patterns/wizard/AccountCancelDialog.tsx",
         "patterns/wizard/AccountCreatedDialog.tsx",

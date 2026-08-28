@@ -14,6 +14,19 @@ Copy the `pattern-name.mdx/` file into the [`site/docs/patterns/` directory](../
 
 Read the [Salt content style guide](../../content-style-guide.md) to ensure your writing maintains consistency with other documentation.
 
+Every new or edited pattern needs a concise summary, use/avoid guidance,
+canonical imports and providers, applicability and stability, a
+dependency-complete manifest-backed example, keyboard and accessibility
+guidance, deprecations or migrations, and related records where relevant. Use
+an explicit waiver with an owner and reason instead of filler for genuinely
+inapplicable sections.
+
+Keep authored normative guidance, generated API facts, inferred implementation
+signals and test receipts separate. Every source, example, resource and link
+destination must resolve to explicit public or internal visibility. Public
+guidance that refers to an internal resource must include an authored public
+fallback.
+
 ## 2. Filling in
 
 ### Style notes

@@ -149,9 +149,34 @@ async function discover(entry) {
 async function expectedManifest() {
   const entries = [];
   for (const example of examples) {
-    entries.push({ ...example, ...(await discover(example.entry)) });
+    entries.push({
+      ...example,
+      visibility: "public",
+      stability: "stable",
+      provenance: "authored_example",
+      sourceAuthority: {
+        implementation: `site/src/examples/${example.entry}`,
+        guidance: `site/docs/patterns/${example.id}.mdx`,
+        maintainerFacade: `packages/core/stories/patterns/${
+          example.id === "international-phone-number-input"
+            ? "international-phone-number"
+            : example.id
+        }/${
+          example.id === "international-phone-number-input"
+            ? "international-phone-number"
+            : example.id
+        }.stories.tsx`,
+      },
+      ...(await discover(example.entry)),
+    });
   }
-  return { schemaVersion: 1, examples: entries };
+  return {
+    $schema:
+      "https://www.saltdesignsystem.com/ai/schemas/salt-authored-example-manifest-1.json",
+    schemaVersion: "1.0.0",
+    contract: "salt-authored-example-manifest/1",
+    examples: entries,
+  };
 }
 
 function expectedSourceLoaders(manifest) {
@@ -230,7 +255,17 @@ assert.deepEqual(
   expected,
   "The public example manifest is stale or its dependency closure is incomplete. Run `yarn examples:manifest` and review the diff.",
 );
+assert.equal(actual.contract, "salt-authored-example-manifest/1");
 assert.equal(new Set(actual.examples.map(({ id }) => id)).size, 24);
+assert.ok(
+  actual.examples.every(
+    (entry) =>
+      entry.visibility === "public" &&
+      entry.stability === "stable" &&
+      entry.provenance === "authored_example",
+  ),
+  "Every authored example needs explicit visibility, stability, and provenance",
+);
 assert.equal(
   await readFile(sourceLoadersPath, "utf8"),
   expectedLoaders,

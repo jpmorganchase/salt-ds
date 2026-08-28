@@ -1,9 +1,53 @@
 {
   "schema_version": "1.0.0",
+  "authoring_baseline": {
+    "checkpoint_sha": "37b1a7dcdecd171fd05e52497d9813bfaa7bb88e",
+    "policy": "no-new-deficits"
+  },
   "support_destinations": {
     "public_salt_support": "https://www.saltdesignsystem.com/salt/support-and-contributions",
     "none": null
   },
+  "remediation_worklist": [
+    {
+      "name": "@salt-ds/cli",
+      "due_unit": "06d",
+      "deficits": [
+        "bugs",
+        "description",
+        "homepage",
+        "keywords",
+        "packed_readme",
+        "readme"
+      ],
+      "owner": "saltdesignsystem"
+    },
+    {
+      "name": "@salt-ds/knowledge",
+      "due_unit": "06d",
+      "deficits": [
+        "bugs",
+        "description",
+        "homepage",
+        "keywords",
+        "packed_readme",
+        "readme"
+      ],
+      "owner": "saltdesignsystem"
+    },
+    {
+      "name": "@salt-ds/mcp",
+      "due_unit": "08c",
+      "deficits": [
+        "bugs",
+        "description",
+        "homepage",
+        "keywords",
+        "packed_readme"
+      ],
+      "owner": "saltdesignsystem"
+    }
+  ],
   "packages": [
     {
       "name": "@salt-ds/ag-grid-theme",
@@ -23,13 +67,13 @@
     },
     {
       "name": "@salt-ds/cli",
-      "workspace_path": null,
+      "workspace_path": "packages/cli",
       "lifecycle": "planned",
       "readme_path": "packages/cli/README.md",
       "metadata_fields": {
         "description": "planned",
-        "license": "planned",
-        "repository": "planned",
+        "license": "present",
+        "repository": "present",
         "bugs": "planned",
         "keywords": "planned"
       },
@@ -151,13 +195,13 @@
     },
     {
       "name": "@salt-ds/knowledge",
-      "workspace_path": null,
+      "workspace_path": "packages/knowledge",
       "lifecycle": "planned",
       "readme_path": "packages/knowledge/README.md",
       "metadata_fields": {
         "description": "planned",
-        "license": "planned",
-        "repository": "planned",
+        "license": "present",
+        "repository": "present",
         "bugs": "planned",
         "keywords": "planned"
       },

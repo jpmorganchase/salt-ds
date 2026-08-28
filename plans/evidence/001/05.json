@@ -6,7 +6,7 @@
   "completion_sha": "37b1a7dcdecd171fd05e52497d9813bfaa7bb88e",
   "entries": [
     {
-      "kind": "candidate-receipt",
+      "kind": "cohort-receipt",
       "schema_id": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-candidate-receipt-1.json",
       "schema_version": "1.0.0",
       "locator": "repo://plans/evidence/artifacts/sha256-7911494d89df6b23a0a232728367979641aa57187fb77624e4f462babb8135ee.json",

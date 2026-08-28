@@ -10,6 +10,19 @@ Copy the [`component-name/`](./component-name/) folder into the [`site/docs/comp
 
 Read the [Salt content style guide](../../content-style-guide.md) to ensure your writing maintains consistency with other documentation.
 
+Every new or edited component page must declare a concise summary,
+applicability, stability, canonical imports, required providers, deprecations
+and related records. Keep authored normative guidance, generated API facts,
+inferred implementation signals and test receipts as distinct provenance
+kinds. Do not copy a generated fact into prose as a second canonical source.
+
+Examples must be dependency-complete and registered in an authored example
+manifest with explicit public/internal visibility. Public guidance cannot link
+to an internal source unless it also provides an authored public fallback.
+Images need useful alternative text, internal links must resolve, and keyboard
+or accessibility guidance needs an owned waiver when it is genuinely
+inapplicable.
+
 ## 2. Index.mdx
 
 Fill in the `index.mdx` file's frontmatter.
