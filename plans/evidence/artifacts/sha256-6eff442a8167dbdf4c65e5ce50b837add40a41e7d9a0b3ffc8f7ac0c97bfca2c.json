@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0.0",
+  "contract": "unit-04c-installed-cli-scan-smoke-receipt",
+  "plan_id": "001",
+  "unit_id": "04c",
+  "source_sha": "e06e6ebb8a856954ec2111b49250b096a3cdb62f",
+  "completion_sha": "e06e6ebb8a856954ec2111b49250b096a3cdb62f",
+  "pack_report_sha256": "sha256:469c0396efaae0f7651c448d63783966d92f7e5b74c80517f07498dfccd9d141",
+  "pack_receipt_sha256": "sha256:e46f9585c591be9b966fc09a03e3af7711f8c9a669ca78f6b07e3791699c143e",
+  "packages": [
+    {
+      "name": "@salt-ds/knowledge",
+      "version": "0.0.0",
+      "tarball_sha256": "sha256:a5418c3adc44f419f0081a3ef45c30caff74f413163f56d2aed653058749d104"
+    },
+    {
+      "name": "@salt-ds/cli",
+      "version": "0.0.0",
+      "tarball_sha256": "sha256:3a38685e0e35c6e2d14b58c379b817e9645af321b664ccf28bcbed3041a8d17a"
+    }
+  ],
+  "consumer_smoke": {
+    "result": "passed",
+    "local_node_version": "24.10.0",
+    "workflow_node_matrix": [
+      22,
+      24
+    ],
+    "network": "offline",
+    "workspace_links": 0,
+    "first_party_registry_fallbacks": 0,
+    "lockfile_replay": "unchanged",
+    "module_formats": [
+      "cjs",
+      "esm"
+    ],
+    "help_aliases": 3,
+    "version_aliases": 2,
+    "broken_pipe_cases": 1,
+    "invalid_argument_cases": 16,
+    "scan": {
+      "exact_coverage": "complete",
+      "non_salt_coverage": "partial",
+      "findings": 1,
+      "formats": [
+        "json",
+        "pretty",
+        "prompt",
+        "sarif"
+      ],
+      "deterministic_json": true,
+      "deterministic_sarif": true,
+      "absolute_paths": false,
+      "submitted_source_text": false,
+      "allow_incomplete_partial": "exit-0",
+      "disallowed_incomplete_partial": "exit-3",
+      "bundle_digest": "sha256:67149427cce5c355b61cda314e6616fe5571f00a0611d7265192fbc5d44400ba",
+      "semantic_digest": "sha256:f2fb02c9e6b999935b1e9727463b4a298492f810e376c434bc3626ab050cccab"
+    },
+    "isolation": {
+      "worker_threads_allowance": "main-cli-only",
+      "nested_worker_containment_self_test": "passed",
+      "offline_guard_self_test": "passed"
+    }
+  },
+  "verification": [
+    "yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit-04c.json"
+  ]
+}

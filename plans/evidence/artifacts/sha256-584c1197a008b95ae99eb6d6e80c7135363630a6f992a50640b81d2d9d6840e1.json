@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0.0",
+  "contract": "unit-04c-scan-verification-receipt",
+  "plan_id": "001",
+  "unit_id": "04c",
+  "source_sha": "e06e6ebb8a856954ec2111b49250b096a3cdb62f",
+  "completion_sha": "e06e6ebb8a856954ec2111b49250b096a3cdb62f",
+  "source_artifacts": [
+    {
+      "path": "packages/cli/schemas/scan-result-1.schema.json",
+      "sha256": "sha256:3f7d0b9025fb66a1b035dd6daf1d7485959ee98b8d5f32ba602afdf9d421e9f6",
+      "bytes": 10194
+    },
+    {
+      "path": "packages/cli/src/scan/analyzeFiles.ts",
+      "sha256": "sha256:4fa636a9e0cc70cab9a9d1fdce83a190abe8981f90a6f1bdaacb7b1a4c0a1e27",
+      "bytes": 13230
+    },
+    {
+      "path": "packages/cli/src/scan/scannerWorker.ts",
+      "sha256": "sha256:560c0133fdee9c4ec8348d189babbf23fa1638acf8312bb9dcd0e4e28b9b4060",
+      "bytes": 5326
+    },
+    {
+      "path": "packages/cli/src/scan/result.ts",
+      "sha256": "sha256:363392ff190dc970deabce1ce60129adcf2571ebca8540bb5122e435e23b6c04",
+      "bytes": 12251
+    },
+    {
+      "path": "packages/cli/src/renderers/sarif.ts",
+      "sha256": "sha256:2554db2b567bbf336ad345da8db0f3600de32d6647106a663a71a7bc3dff5b79",
+      "bytes": 3279
+    }
+  ],
+  "isolation": {
+    "analysis_granularity": "one-file-per-message",
+    "worker_entry": "scannerWorker.js",
+    "request_contract": "salt-scan-worker-request/1",
+    "response_contract": "salt-scan-worker-response/1",
+    "failed_file_result": "discarded",
+    "failed_worker": "terminated-and-restarted",
+    "heap_ceiling": true,
+    "concurrency_ceiling": true,
+    "per_file_deadline": true,
+    "cumulative_worker_deadline": true,
+    "whole_scan_deadline": true,
+    "network": "blocked-in-offline-smoke",
+    "subprocess": false,
+    "mcp": false,
+    "storybook": false,
+    "nested_workers": "blocked-in-offline-smoke"
+  },
+  "result_contract": {
+    "contract": "salt-scan-result/1",
+    "schema_version": "1.0.0",
+    "workspace_aware": true,
+    "finding_ids": "unit-rule-normalized-evidence-location",
+    "absolute_paths": false,
+    "submitted_source_text": false,
+    "renderers": [
+      "json",
+      "pretty",
+      "prompt",
+      "sarif-2.1.0"
+    ],
+    "sarif_coordinates": "utf8-byte-to-character",
+    "prompt_repository_values": "quoted-untrusted-evidence",
+    "acceptance_criteria": true,
+    "exact_rescan_options": true
+  },
+  "exit_contract": {
+    "success": 0,
+    "finding_threshold": 1,
+    "usage_or_configuration": 2,
+    "failed_or_disallowed_incomplete_coverage": 3,
+    "allow_incomplete_overrides": "partial-only",
+    "broken_pipe": "success"
+  },
+  "verification": {
+    "focused": {
+      "command": "yarn vitest run packages/cli/src packages/knowledge/src/review packages/knowledge/src/__tests__/reviewCatalogAdapter.spec.ts packages/knowledge/src/__tests__/packagePublishBoundary.spec.ts packages/mcp/src/__tests__/offlineNetworkGuard.spec.ts packages/mcp/src/__tests__/releaseVerificationScripts.spec.ts --maxWorkers=4",
+      "test_files": 13,
+      "tests": 129,
+      "result": "passed"
+    },
+    "full": {
+      "command": "yarn test:ai-tooling",
+      "test_files": 67,
+      "tests": 842,
+      "result": "passed"
+    },
+    "typecheck": {
+      "command": "yarn typecheck:ai-tooling",
+      "result": "passed"
+    },
+    "workflow_operating_systems": [
+      "linux",
+      "windows"
+    ],
+    "workflow_node_matrix": [
+      22,
+      24
+    ],
+    "local_node_version": "24.10.0"
+  }
+}
