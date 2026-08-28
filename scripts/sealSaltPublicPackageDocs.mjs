@@ -109,7 +109,6 @@ for (const entry of inventory.packages) {
     entry.lifecycle === "publishable" ||
     entry.name === "@salt-ds/cli" ||
     entry.name === "@salt-ds/knowledge";
-  assert(entry.name !== "@salt-ds/mcp" || !effectivePublic, "Conditional MCP became effective in provisional mode");
   assert(!effectivePublic || metadataComplete, `${entry.name} public metadata is incomplete`);
   if (packed) {
     assert(

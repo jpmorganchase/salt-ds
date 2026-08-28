@@ -115,8 +115,8 @@ async function validatePackageDocs() {
   assert(
     names.includes("@salt-ds/cli") &&
       names.includes("@salt-ds/knowledge") &&
-      names.includes("@salt-ds/mcp"),
-    "AI package lifecycle entries are incomplete",
+      !names.includes("@salt-ds/mcp"),
+    "Selected AI package lifecycle entries are incomplete",
   );
   assert(
     inventory.authoring_baseline.checkpoint_sha ===
@@ -426,7 +426,6 @@ async function validateRootScripts() {
     "verify:salt-pattern-migration":
       "node ./scripts/verifySaltPatternMigration.mjs",
     "eval:salt-ai:validate": "node ./evals/salt-ai/scripts/validate.mjs",
-    "eval:salt-ai:baseline": "node ./evals/salt-ai/scripts/runBaseline.mjs",
     "eval:salt-ai:report": "node ./evals/salt-ai/scripts/buildReport.mjs",
   };
   for (const [name, command] of Object.entries(required))

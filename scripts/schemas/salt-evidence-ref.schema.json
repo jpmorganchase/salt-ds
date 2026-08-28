@@ -1,0 +1,342 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/schemas/salt-evidence-ref.schema.json",
+  "title": "Salt Evidence Reference",
+  "description": "Source locator for a Salt-specific generated claim. Salt facts should resolve to one or more evidence references instead of living only in prompt or template text.",
+  "$comment": "Runtime validation additionally enforces NFC normalization, exact WHATWG HTTPS parsing, and line_end >= line_start; JSON Schema 2020-12 cannot express those relational/string-normalization checks portably.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract", "id", "source_kind", "claim_kind"],
+  "properties": {
+    "contract": {
+      "const": "salt_evidence_ref_v1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": ".*\\S.*"
+    },
+    "source_kind": {
+      "enum": [
+        "registry",
+        "docs",
+        "source",
+        "example",
+        "token",
+        "package",
+        "project_policy",
+        "submitted_text",
+        "runtime"
+      ]
+    },
+    "claim_kind": {
+      "enum": [
+        "component",
+        "pattern",
+        "prop",
+        "token",
+        "import",
+        "package",
+        "provider",
+        "accessibility",
+        "example",
+        "composition",
+        "status",
+        "project_policy"
+      ]
+    },
+    "registry": {
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/registryRef" }]
+    },
+    "source": {
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/sourceRef" }]
+    },
+    "package": {
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/packageRef" }]
+    },
+    "project_policy": {
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/projectPolicyRef" }]
+    },
+    "submitted_text": {
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/submittedTextRef" }]
+    },
+    "note": {
+      "type": ["string", "null"]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "source_kind": { "const": "registry" } },
+        "required": ["source_kind"]
+      },
+      "then": {
+        "required": ["registry"],
+        "properties": {
+          "registry": { "$ref": "#/$defs/registryRef" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "source_kind": {
+            "enum": ["docs", "source", "example", "token"]
+          }
+        },
+        "required": ["source_kind"]
+      },
+      "then": {
+        "required": ["source"],
+        "properties": {
+          "source": {
+            "allOf": [
+              { "$ref": "#/$defs/sourceRef" },
+              {
+                "anyOf": [
+                  {
+                    "required": ["url"],
+                    "properties": {
+                      "url": { "type": "string", "minLength": 1 }
+                    }
+                  },
+                  {
+                    "required": ["repo_path"],
+                    "properties": {
+                      "repo_path": { "type": "string", "minLength": 1 }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "source_kind": { "const": "package" } },
+        "required": ["source_kind"]
+      },
+      "then": {
+        "required": ["package"],
+        "properties": {
+          "package": { "$ref": "#/$defs/packageRef" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "source_kind": { "const": "project_policy" } },
+        "required": ["source_kind"]
+      },
+      "then": {
+        "required": ["project_policy"],
+        "properties": {
+          "project_policy": { "$ref": "#/$defs/projectPolicyRef" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "source_kind": { "const": "submitted_text" } },
+        "required": ["source_kind"]
+      },
+      "then": {
+        "required": ["submitted_text"],
+        "properties": {
+          "submitted_text": { "$ref": "#/$defs/submittedTextRef" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "source_kind": { "const": "runtime" } },
+        "required": ["source_kind"]
+      },
+      "then": {
+        "required": ["source"],
+        "properties": {
+          "source": {
+            "allOf": [
+              { "$ref": "#/$defs/sourceRef" },
+              {
+                "anyOf": [
+                  {
+                    "required": ["url"],
+                    "properties": {
+                      "url": { "type": "string", "minLength": 1 }
+                    }
+                  },
+                  {
+                    "required": ["repo_path"],
+                    "properties": {
+                      "repo_path": { "type": "string", "minLength": 1 }
+                    }
+                  },
+                  {
+                    "required": ["section"],
+                    "properties": {
+                      "section": { "type": "string", "minLength": 1 }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "registryRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entity_type",
+        "entity_id",
+        "field_path",
+        "registry_version",
+        "registry_hash"
+      ],
+      "properties": {
+        "entity_type": {
+          "enum": [
+            "component",
+            "pattern",
+            "guide",
+            "token",
+            "example",
+            "package",
+            "page",
+            "deprecation"
+          ]
+        },
+        "entity_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": ".*\\S.*"
+        },
+        "entity_name": {
+          "type": ["string", "null"]
+        },
+        "field_path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": ".*\\S.*"
+        },
+        "registry_version": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": ".*\\S.*"
+        },
+        "registry_hash": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": ".*\\S.*"
+        }
+      }
+    },
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "string",
+              "pattern": "^(?:(?!//)(?!.*//)(?!.*[\\\\?#%])(?!.*\\/\\.{1,2}(?:\\/|$))(?!.*\\/[iI][nN][dD][eE][xX]$)\\/(?:[A-Za-z0-9._~!$&'()*+,;=:@/-]*[^/])?|https://(?![^/?#]*@)(?!.*\\s)(?!.*\\\\)(?:[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?|\\[(?=[0-9A-Fa-f:.]*[0-9A-Fa-f])(?=[0-9A-Fa-f:.]*:)[0-9A-Fa-f:.]+\\])(?::0*(?:[0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?(?:[/?#].*)?)$"
+            }
+          ]
+        },
+        "repo_path": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "string",
+              "pattern": "^(?!\\s)(?!.*\\s$)(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*//)(?!.*\\/$)(?!.*(?:^|/)\\.\\.?($|/))(?!.*[<>:\"|?*])(?!.*[\\u0000-\\u001F])(?!.*[ .](?:/|$))(?!.*(?:^|/)(?:[cC][oO][nN]|[pP][rR][nN]|[aA][uU][xX]|[nN][uU][lL]|[cC][oO][mM][1-9¹²³]|[lL][pP][tT][1-9¹²³])(?:\\.[^/]*)?(?:/|$)).+$"
+            }
+          ]
+        },
+        "section": {
+          "oneOf": [
+            { "type": "null" },
+            { "type": "string", "minLength": 1, "pattern": ".*\\S.*" }
+          ]
+        },
+        "line_start": {
+          "type": ["integer", "null"],
+          "minimum": 1
+        },
+        "line_end": {
+          "type": ["integer", "null"],
+          "minimum": 1
+        }
+      },
+      "oneOf": [
+        {
+          "required": ["line_start", "line_end"],
+          "properties": {
+            "line_start": { "type": "integer", "minimum": 1 },
+            "line_end": { "type": "integer", "minimum": 1 }
+          }
+        },
+        {
+          "properties": {
+            "line_start": { "type": "null" },
+            "line_end": { "type": "null" }
+          }
+        }
+      ]
+    },
+    "packageRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": ".*\\S.*"
+        },
+        "version": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "projectPolicyRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": ".*\\S.*"
+        },
+        "layer": {
+          "type": ["string", "null"]
+        },
+        "field_path": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "submittedTextRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field_path"],
+      "properties": {
+        "field_path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": ".*\\S.*"
+        },
+        "captured_at": {
+          "type": ["string", "null"]
+        }
+      }
+    }
+  }
+}

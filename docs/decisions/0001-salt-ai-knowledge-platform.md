@@ -114,8 +114,8 @@ Artifact-tree limits are depth 4, 256 internal children, 256 leaf entries,
 ordinary artifacts. The outer manifest target is 32 KiB, search bootstrap index
 512 KiB, default context 16 KiB, ordinary content artifact 64 KiB unless
 allowlisted, compressed package 10 MiB, and unpacked package 25 MiB. Unit 00b's
-current Catalog-v2 baseline is measured by `eval:salt-ai:baseline`; it is not a
-publishable Knowledge-v1 identity. A budget change requires measurements,
+Catalog-v2 baseline is retained as immutable Unit 00b evidence; it is not a
+publishable Knowledge-v1 identity or a regenerable post-omission command. A budget change requires measurements,
 fixtures, ADR review, and owner approval.
 
 Semantic sources are explicit Salt public source/types/tokens/migrations,

@@ -16,7 +16,7 @@ const evidenceSchema = JSON.parse(
   readFileSync(
     path.resolve(
       path.dirname(fileURLToPath(import.meta.url)),
-      "../../../mcp/schemas/salt-evidence-ref.schema.json",
+      "../../../../scripts/schemas/salt-evidence-ref.schema.json",
     ),
     "utf8",
   ),

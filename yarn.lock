@@ -3420,16 +3420,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@modelcontextprotocol/server@npm:2.0.0":
-  version: 2.0.0
-  resolution: "@modelcontextprotocol/server@npm:2.0.0"
-  dependencies:
-    "@modelcontextprotocol/core": "npm:2.0.0"
-    zod: "npm:^4.2.0"
-  checksum: 10/32d50b224f8f00b60886c2c84a53d3c0b6a0e9cd37afe4782c895795cb979c4e57736b6b663966cf50da145f3b926fc559648d521abcdadd22de4366a085e681
-  languageName: node
-  linkType: hard
-
 "@msw/data@npm:^1.0.0":
   version: 1.1.2
   resolution: "@msw/data@npm:1.1.2"
@@ -4501,22 +4491,6 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  languageName: unknown
-  linkType: soft
-
-"@salt-ds/mcp@workspace:packages/mcp":
-  version: 0.0.0-use.local
-  resolution: "@salt-ds/mcp@workspace:packages/mcp"
-  dependencies:
-    "@modelcontextprotocol/client": "npm:^2.0.0"
-    "@modelcontextprotocol/server": "npm:2.0.0"
-    "@salt-ds/knowledge": "workspace:*"
-    "@types/node": "npm:^24.0.0"
-    ajv: "npm:^8.17.1"
-    typescript: "npm:^6.0.2"
-    zod: "npm:^4.2.0"
-  bin:
-    salt-mcp: bin/salt-mcp.js
   languageName: unknown
   linkType: soft
 

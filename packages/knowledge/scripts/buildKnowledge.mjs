@@ -1374,7 +1374,6 @@ export async function buildCatalogRegistry(options = {}) {
           compilerInputPatterns,
           excludedPackageNames: options.excludedPackageNames ?? [
             "@salt-ds/knowledge",
-            "@salt-ds/mcp",
           ],
           generatorVersion: "2.0.0",
           inputInventory: inputBefore,
@@ -1447,7 +1446,7 @@ async function main() {
       "build",
       "catalogCompilerInputPatterns.json",
     ),
-    excludedPackageNames: ["@salt-ds/knowledge", "@salt-ds/mcp"],
+    excludedPackageNames: ["@salt-ds/knowledge"],
   });
   console.error(
     `Built registry at ${outputDir}: ${registry.packages.length} packages, ${registry.components.length} components, ${registry.icons.length} icons, ${registry.country_symbols.length} country symbols, ${registry.patterns.length} patterns, ${registry.tokens.length} tokens.`,

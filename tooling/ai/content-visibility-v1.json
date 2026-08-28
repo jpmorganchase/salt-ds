@@ -167,12 +167,6 @@
       "reason": "Evaluation governance is not consumer knowledge."
     },
     {
-      "path": "packages/mcp",
-      "visibility": "internal",
-      "content_kinds": ["tooling", "implementation"],
-      "reason": "Unreleased adapter/compiler prototype is excluded as semantic content."
-    },
-    {
       "path": "plans",
       "visibility": "internal",
       "content_kinds": ["tooling"],

@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { readdirSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import fs from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -181,18 +181,6 @@ describe("package publish boundaries", () => {
         ),
       ).toThrow("Test portable path boundary");
     }
-  });
-
-  it("uses only the split SDK-v2 packages at the adapter boundary", () => {
-    const manifest = readJson<PackageManifest>("../../../mcp/package.json");
-    const dependencies = {
-      ...manifest.dependencies,
-      ...manifest.devDependencies,
-    };
-
-    expect(dependencies).not.toHaveProperty("@modelcontextprotocol/sdk");
-    expect(dependencies["@modelcontextprotocol/server"]).toBe("2.0.0");
-    expect(dependencies["@modelcontextprotocol/client"]).toBe("2.0.0");
   });
 
   it("revalidates the complete catalog input path set and rejects linked inputs", async () => {
@@ -559,64 +547,6 @@ describe("package publish boundaries", () => {
     expect(compilerInputPatterns).toContain("yarn.lock");
   });
 
-  it("keeps MCP published file roots limited to runtime payload", () => {
-    const manifest = readJson<PackageManifest>("../../../mcp/package.json");
-
-    expect(manifest.publishConfig?.directory).toBe("../../dist/salt-ds-mcp");
-    expect(manifest.engines?.node).toBe(">=22");
-    expect(manifest.files).toEqual(["bin"]);
-    expect(manifest.publishIncludeReadme).toBe(false);
-    expect(manifest.saltDocs).toBeUndefined();
-    expect(manifest.typescriptInclude).toEqual(["src/index.ts"]);
-    expect(manifest.publishEntryPath).toBeUndefined();
-    expect(manifest.publishTypingEntryPath).toBeUndefined();
-    expect(manifest.publishTypingEntryOnly).toBe(true);
-    expect(manifest.publishPreserveModules).toBe(false);
-    expect(manifest.publishBuildIdentityManifest).toBeUndefined();
-    expect(manifest.publishBuildIdentityInputPatterns).toBeUndefined();
-    expect(manifest.publishCatalogArtifactPaths).toBeUndefined();
-    expectEntriesToExclude(manifest.files, FORBIDDEN_RUNTIME_FILE_ENTRIES);
-    expect(manifest.publishBundledWorkspaceDependencies).toBeUndefined();
-    expect(manifest.dependencies).not.toHaveProperty("@salt-ds/semantic-core");
-    expect(manifest.dependencies).not.toHaveProperty("get-tsconfig");
-    expect(manifest.dependencies?.["@salt-ds/knowledge"]).toBe("workspace:*");
-    expect(manifest.dependencies?.["jsonc-parser"]).toBeUndefined();
-    expect(manifest.dependencies?.["js-yaml"]).toBeUndefined();
-    expect(manifest.dependencies?.postcss).toBeUndefined();
-    expect(manifest.dependencies?.["@types/node"]).toMatch(/^\^24\./u);
-    expect(manifest.dependencies?.["@modelcontextprotocol/server"]).toBe(
-      "2.0.0",
-    );
-    expect(
-      readdirSync(new URL("../../../mcp/bin", import.meta.url)).sort(),
-    ).toEqual(["salt-mcp.js"]);
-    expect(manifest.publishBinEntrypoints).toEqual({
-      "bin/salt-mcp.js": {
-        requirePath: "../dist-cjs/cli.js",
-        exportName: "runSaltMcpCli",
-        errorPrefix: "salt-mcp error:",
-        conciseErrorCodes: ["SALT_MCP_CLI_USAGE"],
-      },
-    });
-    expect(manifest.publishScriptExcludes).toEqual([
-      "build",
-      "build:package",
-      "measure:runtime-loc",
-      "measure:surface",
-      "prepack",
-    ]);
-    expect(manifest.publishExports).toEqual({
-      ".": {
-        types: "./dist-types/index.d.ts",
-        import: "./dist-es/index.js",
-        require: "./dist-cjs/index.js",
-      },
-      "./package.json": "./package.json",
-    });
-    expect(manifest.publishAdditionalEntryPaths).toEqual(["src/cli.ts"]);
-    expect(manifest.publishExtraCopyPaths).toBeUndefined();
-  });
-
   it("keeps the private CLI package narrow and exact-pinned to Knowledge", () => {
     const manifest = readJson<PackageManifest>("../../../cli/package.json");
 
@@ -878,55 +808,4 @@ describe("package publish boundaries", () => {
     );
   });
 
-  it("publishes only the MCP CLI as an additional runtime entrypoint", () => {
-    const manifest = readJson<PackageManifest>("../../../mcp/package.json");
-
-    expect(manifest.publishAdditionalEntryPaths).toEqual(["src/cli.ts"]);
-  });
-
-  it("keeps the workspace CLI on the same single bundled entrypoint", () => {
-    const workspaceBin = readFileSync(
-      new URL("../../../mcp/bin/salt-mcp.js", import.meta.url),
-      "utf8",
-    );
-
-    expect(workspaceBin).toContain(
-      "../../../dist/salt-ds-mcp/dist-cjs/cli.js",
-    );
-    expect(workspaceBin).not.toContain("dist-cjs/mcp/src/index.js");
-  });
-
-  it("measures the clean current-spec public surface before resource warming", () => {
-    const measurementScript = readFileSync(
-      new URL("../../../mcp/scripts/measurePublicSurface.mjs", import.meta.url),
-      "utf8",
-    );
-
-    expect(measurementScript).toContain('legacy: "reject"');
-    expect(measurementScript).toContain('pin: "2026-07-28"');
-    expect(measurementScript).not.toContain("CatalogStoreV2");
-    const firstHitIndex = measurementScript.indexOf(
-      "await client.callTool(firstHitTool)",
-    );
-    expect(firstHitIndex).toBeGreaterThan(-1);
-    expect(firstHitIndex).toBeLessThan(
-      measurementScript.indexOf("await client.listResources()"),
-    );
-    expect(firstHitIndex).toBeLessThan(
-      measurementScript.indexOf("await client.listResourceTemplates()"),
-    );
-    expect(measurementScript).toContain(
-      "resource_inventory_warmed_before_first_hit: false",
-    );
-  });
-
-  it("does not declare private workspace or browser-test dependencies", () => {
-    const manifest = readJson<PackageManifest>("../../../mcp/package.json");
-    const dependencyNames = Object.keys(manifest.dependencies ?? {});
-
-    expect(dependencyNames).not.toContain("@salt-ds/semantic-core");
-    expect(dependencyNames).not.toContain("playwright");
-    expect(dependencyNames).not.toContain("playwright-core");
-    expect(dependencyNames).not.toContain("@playwright/test");
-  });
 });

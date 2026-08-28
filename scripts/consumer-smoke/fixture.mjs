@@ -37,7 +37,6 @@ const STANDALONE_CONSUMER_FIXTURE_FILES = [
   "docs/platform-conventions.md",
   "docs/token-aliases.md",
   "docs/workspace-shell.md",
-  "mcp.config.example.json",
   "package.json",
   "scripts/verify-policy.mjs",
   "src/components/AppButton.tsx",
@@ -173,34 +172,24 @@ export async function loadExactPackReport(reportPathInput) {
     "Pack report must be a regular file, not a link.",
   );
   const report = JSON.parse(await fs.readFile(reportPath, "utf8"));
-  const supportedProfile = new Set(["release-complete", "mcp-candidate"]).has(
-    report?.policy_profile,
-  );
   assert(
     report?.contract === "salt-ai-pack-report@1" &&
       report.schema_version === "1.0.0" &&
-      supportedProfile &&
+      report.policy_profile === "release-complete" &&
       report.publishable === false,
-    "Pack report is not a current nonpublishable Salt AI profile.",
+    "Pack report is not the selected nonpublishable Salt AI profile.",
   );
-  const expectedPackageCount =
-    report.policy_profile === "mcp-candidate" ? 3 : 2;
   assert(
-    Array.isArray(report.packages) &&
-      report.packages.length === expectedPackageCount,
-    `Pack report must bind exactly ${expectedPackageCount} selected packages.`,
+    Array.isArray(report.packages) && report.packages.length === 2,
+    "Pack report must bind exactly two selected packages.",
   );
   const packageByName = new Map(
     report.packages.map((entry) => [entry.name, entry]),
   );
   const knowledge = packageByName.get("@salt-ds/knowledge");
-  const mcp = packageByName.get("@salt-ds/mcp");
   const cli = packageByName.get("@salt-ds/cli");
   assert(
-    knowledge &&
-      cli &&
-      (expectedPackageCount === 2 || mcp) &&
-      packageByName.size === expectedPackageCount,
+    knowledge && cli && packageByName.size === 2,
     "Pack report contains an unreported or duplicate package identity.",
   );
   const resolveTarball = async (entry) => {
@@ -229,28 +218,63 @@ export async function loadExactPackReport(reportPathInput) {
     );
     return tarballPath;
   };
-  const [knowledgeTarballPath, cliTarballPath, mcpTarballPath] =
-    await Promise.all([
-      resolveTarball(knowledge),
-      resolveTarball(cli),
-      mcp ? resolveTarball(mcp) : null,
-    ]);
-  for (const adapter of [cli, mcp].filter(Boolean)) {
-    const edges = adapter.first_party_dependencies ?? [];
+  const [knowledgeTarballPath, cliTarballPath] = await Promise.all([
+    resolveTarball(knowledge),
+    resolveTarball(cli),
+  ]);
+  const edges = cli.first_party_dependencies ?? [];
+  assert(
+    edges.length === 1 &&
+      edges[0].name === "@salt-ds/knowledge" &&
+      edges[0].version === knowledge.version &&
+      edges[0].tarball_sha256 === knowledge.tarball.sha256 &&
+      cli.dependencies?.["@salt-ds/knowledge"] === knowledge.version &&
+      !(cli.dependencies?.["@salt-ds/knowledge"] ?? "").startsWith(
+        "workspace:",
+      ),
+    "Pack report does not bind the CLI to the exact reported Knowledge tarball.",
+  );
+
+  const dispositionBinding = report.mcp_candidate_disposition ?? null;
+  if (dispositionBinding) {
+    assertPortableReportPath(
+      dispositionBinding.path,
+      "MCP candidate disposition receipt path",
+    );
+    const dispositionPath = path.resolve(
+      repoRoot,
+      ...dispositionBinding.path.split("/"),
+    );
+    const allowedDispositionRoot = path.join(repoRoot, "dist", "salt-ai-eval");
+    const relativeDispositionPath = path.relative(
+      allowedDispositionRoot,
+      dispositionPath,
+    );
     assert(
-      edges.length === 1 &&
-        edges[0].name === "@salt-ds/knowledge" &&
-        edges[0].version === knowledge.version &&
-        edges[0].tarball_sha256 === knowledge.tarball.sha256 &&
-        adapter.dependencies?.["@salt-ds/knowledge"] === knowledge.version &&
-        !(adapter.dependencies?.["@salt-ds/knowledge"] ?? "").startsWith(
-          "workspace:",
-        ),
-      `Pack report does not bind ${adapter.name} to the exact reported Knowledge tarball.`,
+      relativeDispositionPath.length > 0 &&
+        !relativeDispositionPath.startsWith("..") &&
+        !path.isAbsolute(relativeDispositionPath),
+      "MCP candidate disposition receipt escapes dist/salt-ai-eval.",
+    );
+    const dispositionStats = await fs.lstat(dispositionPath);
+    assert(
+      dispositionStats.isFile() && !dispositionStats.isSymbolicLink(),
+      "MCP candidate disposition receipt must be a regular file.",
+    );
+    const dispositionBytes = await fs.readFile(dispositionPath);
+    const disposition = JSON.parse(dispositionBytes.toString("utf8"));
+    assert(
+      dispositionBinding.bytes === dispositionBytes.byteLength &&
+        dispositionBinding.sha256 ===
+          `sha256:${sha256Bytes(dispositionBytes)}` &&
+        dispositionBinding.disposition === "omit" &&
+        disposition.mcp_candidate_disposition === "omit" &&
+        dispositionBinding.candidate_source_sha ===
+          disposition.candidate_source_sha,
+      "Pack report does not bind the exact sealed MCP omit receipt.",
     );
   }
 
-  const comparisonRegistryDir = null;
   assert(
     /^sha256:[0-9a-f]{64}$/u.test(report.policy_digest) &&
       report.knowledge_bundle?.bundle_digest &&
@@ -270,12 +294,10 @@ export async function loadExactPackReport(reportPathInput) {
     knowledge,
     adapter: cli,
     cli,
-    mcp,
     knowledgeTarballPath,
     adapterTarballPath: cliTarballPath,
     cliTarballPath,
-    mcpTarballPath,
-    comparisonRegistryDir,
+    mcpCandidateDisposition: dispositionBinding,
   };
 }
 
@@ -445,7 +467,7 @@ export function parseNpmJsonOutput(output, label) {
 
 export async function ensureBuildArtifacts(skipBuild) {
   if (!skipBuild) {
-    console.log("Building local Knowledge, CLI, and MCP distributions...");
+    console.log("Building local Knowledge and CLI distributions...");
     await runCommand(getExecutable("yarn"), ["build:ai-tooling"], {
       label: "yarn build:ai-tooling",
     });

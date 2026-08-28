@@ -59,8 +59,8 @@
     },
     "packages": {
       "type": "array",
-      "minItems": 16,
-      "maxItems": 16,
+      "minItems": 15,
+      "maxItems": 15,
       "items": { "$ref": "#/$defs/package" }
     }
   },

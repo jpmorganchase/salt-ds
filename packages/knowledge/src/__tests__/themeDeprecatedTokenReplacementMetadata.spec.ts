@@ -10,7 +10,7 @@ const REPO_ROOT = path.resolve(
 );
 const METADATA_PATH = "packages/theme/css/deprecated/token-replacements.json";
 const SCHEMA_PATH =
-  "packages/mcp/schemas/salt-theme-deprecated-token-replacements.schema.json";
+  "scripts/schemas/saltThemeDeprecatedTokenReplacementsV1.schema.json";
 const POLICY_REPLACEMENT_KINDS = new Set(["direct", "alternative", "scale"]);
 
 interface DeprecatedTokenReplacementMetadata {

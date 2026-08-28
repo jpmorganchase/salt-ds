@@ -1,0 +1,316 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/evals/mcp-candidate-disposition-1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "contract",
+    "cohort_id",
+    "candidate_source_sha",
+    "evaluation_run",
+    "candidate",
+    "knowledge",
+    "protocol",
+    "host_matrix",
+    "task_ids",
+    "outcome_delta",
+    "costs",
+    "security_results",
+    "threshold",
+    "approvers",
+    "rationale",
+    "mcp_candidate_disposition",
+    "sanitization"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "contract": { "const": "salt-mcp-candidate-disposition/1" },
+    "cohort_id": { "const": "mcp-pre-release" },
+    "candidate_source_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "evaluation_run": { "$ref": "#/$defs/artifact" },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pack_report", "package"],
+      "properties": {
+        "pack_report": { "$ref": "#/$defs/artifact" },
+        "package": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "version", "tarball"],
+          "properties": {
+            "name": { "const": "@salt-ds/mcp" },
+            "version": { "const": "0.0.0" },
+            "tarball": { "$ref": "#/$defs/artifact" }
+          }
+        }
+      }
+    },
+    "knowledge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "package_version",
+        "bundle_digest",
+        "semantic_digest",
+        "semantic_source_digest",
+        "compiler_digest",
+        "manifest"
+      ],
+      "properties": {
+        "package_version": { "const": "0.0.0" },
+        "bundle_digest": { "$ref": "#/$defs/digest" },
+        "semantic_digest": { "$ref": "#/$defs/digest" },
+        "semantic_source_digest": { "$ref": "#/$defs/digest" },
+        "compiler_digest": { "$ref": "#/$defs/digest" },
+        "manifest": { "$ref": "#/$defs/artifact" }
+      }
+    },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "spec_version",
+        "server_sdk_version",
+        "client_sdk_version"
+      ],
+      "properties": {
+        "spec_version": { "const": "2026-07-28" },
+        "server_sdk_version": { "const": "2.0.0" },
+        "client_sdk_version": { "const": "2.0.0" }
+      }
+    },
+    "host_matrix": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "host_model_alias",
+          "scheduled_cells_per_mode",
+          "completed_mode_3_cells",
+          "completed_mode_4_cells",
+          "status",
+          "reason"
+        ],
+        "properties": {
+          "host_model_alias": {
+            "enum": ["host_model_a", "host_model_b"]
+          },
+          "scheduled_cells_per_mode": { "const": 36 },
+          "completed_mode_3_cells": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 36
+          },
+          "completed_mode_4_cells": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 36
+          },
+          "status": { "enum": ["complete", "not_run", "failed"] },
+          "reason": { "type": "string", "minLength": 10 }
+        }
+      }
+    },
+    "task_ids": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z0-9-]+$" }
+    },
+    "outcome_delta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode_3", "mode_4", "paired"],
+      "properties": {
+        "mode_3": { "$ref": "#/$defs/outcome" },
+        "mode_4": { "$ref": "#/$defs/outcome" },
+        "paired": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "percentage_point_delta",
+            "additional_successful_cells_by_host_model",
+            "version_correctness_regression",
+            "unsupported_claim_rate_regression",
+            "threshold_passed"
+          ],
+          "properties": {
+            "percentage_point_delta": { "type": ["number", "null"] },
+            "additional_successful_cells_by_host_model": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["host_model_alias", "count"],
+                "properties": {
+                  "host_model_alias": {
+                    "enum": ["host_model_a", "host_model_b"]
+                  },
+                  "count": { "type": "integer" }
+                }
+              }
+            },
+            "version_correctness_regression": {
+              "enum": [false, true, "not_measured"]
+            },
+            "unsupported_claim_rate_regression": {
+              "enum": [false, true, "not_measured"]
+            },
+            "threshold_passed": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "costs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surface_measurement",
+        "runtime_loc_measurement",
+        "setup",
+        "observed_model_usage",
+        "per_cell_ceiling"
+      ],
+      "properties": {
+        "surface_measurement": { "$ref": "#/$defs/artifact" },
+        "runtime_loc_measurement": { "$ref": "#/$defs/artifact" },
+        "setup": { "type": "object" },
+        "observed_model_usage": { "type": "object" },
+        "per_cell_ceiling": { "type": "object" }
+      }
+    },
+    "security_results": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "consumer_smoke",
+        "exact_pack_identity",
+        "bundle_integrity",
+        "offline",
+        "current_spec",
+        "legacy_rejected",
+        "path_isolation",
+        "commonjs_esm_parity",
+        "all_gates_passed"
+      ],
+      "properties": {
+        "consumer_smoke": { "$ref": "#/$defs/artifact" },
+        "exact_pack_identity": { "const": true },
+        "bundle_integrity": { "const": true },
+        "offline": { "const": true },
+        "current_spec": { "const": true },
+        "legacy_rejected": { "const": true },
+        "path_isolation": { "const": true },
+        "commonjs_esm_parity": { "const": true },
+        "all_gates_passed": { "const": true }
+      }
+    },
+    "threshold": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule",
+        "required_cells_complete",
+        "five_percentage_points",
+        "two_additional_cells_per_host_model",
+        "no_regression",
+        "passed"
+      ],
+      "properties": {
+        "rule": { "type": "string", "minLength": 40 },
+        "required_cells_complete": { "type": "boolean" },
+        "five_percentage_points": { "type": "boolean" },
+        "two_additional_cells_per_host_model": { "type": "boolean" },
+        "no_regression": { "type": "boolean" },
+        "passed": { "type": "boolean" }
+      }
+    },
+    "approvers": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["role", "identity", "decision"],
+        "properties": {
+          "role": {
+            "enum": ["plan_001_mechanical_gate", "task_owner_delegate"]
+          },
+          "identity": { "type": "string", "minLength": 3 },
+          "decision": { "enum": ["ship", "omit"] }
+        }
+      }
+    },
+    "rationale": { "type": "string", "minLength": 80 },
+    "mcp_candidate_disposition": { "enum": ["ship", "omit"] },
+    "sanitization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "raw_prompts",
+        "raw_model_outputs",
+        "credentials",
+        "proprietary_fixtures",
+        "absolute_paths"
+      ],
+      "properties": {
+        "raw_prompts": { "const": false },
+        "raw_model_outputs": { "const": false },
+        "credentials": { "const": false },
+        "proprietary_fixtures": { "const": false },
+        "absolute_paths": { "const": false }
+      }
+    }
+  },
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "bytes"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?![A-Za-z]:|/|.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "sha256": { "$ref": "#/$defs/digest" },
+        "bytes": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scheduled_cells",
+        "completed_cells",
+        "successful_cells"
+      ],
+      "properties": {
+        "scheduled_cells": { "const": 72 },
+        "completed_cells": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 72
+        },
+        "successful_cells": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 72
+        }
+      }
+    }
+  }
+}
