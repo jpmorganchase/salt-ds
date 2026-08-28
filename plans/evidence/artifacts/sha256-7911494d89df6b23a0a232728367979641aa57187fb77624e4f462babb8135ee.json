@@ -1,0 +1,72 @@
+{
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-candidate-receipt-1.json",
+  "contract": "salt-ai-candidate-receipt/1",
+  "external_mutations": [],
+  "knowledge_bundle": {
+    "bundle_digest": "sha256:660c2b32f3bee3c6b88bed61a6093b76c8f85e2e401f5693f2d21b4533bf5459",
+    "compiler_digest": "sha256:f9dd74c9e78470360e3d0f53f0916ed81e279ac7dc9a6440625a9790960f4740",
+    "manifest_sha256": "sha256:021947c2d23e75c07ac135c22192fdd8dc4a68e1961517cbf943f10bd471bf81",
+    "semantic_digest": "sha256:f2fb02c9e6b999935b1e9727463b4a298492f810e376c434bc3626ab050cccab",
+    "semantic_source_digest": "sha256:ae6585d7844d552e5d4f648f2f8b9b8cc91b21ffeb103e316093d4567f14f60a"
+  },
+  "pack_report": {
+    "contract": "salt-ai-pack-report@1",
+    "path": "dist/salt-ai-r1/pack-report.json",
+    "policy_digest": "sha256:95d2ee861d089ecc61f413aa43cff973fdef4d0a016996820f69c658dd1dcf67",
+    "sha256": "sha256:99e1cc474bae6c8a0ac15bd83a3ea2f6b0e87a0428ab3a18d577a7651fc55fc4"
+  },
+  "packages": [
+    {
+      "name": "@salt-ds/cli",
+      "tarball": {
+        "bytes": 42711,
+        "path": "dist/salt-ai-r1/pack-report.artifacts/salt-ds-cli-0.0.0.tgz",
+        "sha256": "sha256:3179271a5fb74531950e32e4eed0ecbceaaa3505dc47b69ae4310a2ae9b95599"
+      },
+      "version": "0.0.0"
+    },
+    {
+      "name": "@salt-ds/knowledge",
+      "tarball": {
+        "bytes": 3614924,
+        "path": "dist/salt-ai-r1/pack-report.artifacts/salt-ds-knowledge-0.0.0.tgz",
+        "sha256": "sha256:f21f78e736dc9d2f12b61fc9a631aca706e34a87d82999977ee5f2a2359d6005"
+      },
+      "version": "0.0.0"
+    }
+  ],
+  "policy_profile": "pre-agent-support",
+  "publishable": false,
+  "result": "pass",
+  "schema_version": "1.0.0",
+  "source_clean": true,
+  "source_commit": "37b1a7dcdecd171fd05e52497d9813bfaa7bb88e",
+  "stage": "R1_PRE_AGENT",
+  "verification_outputs": {
+    "consumer_smoke": {
+      "contract": "salt-ai-consumer-smoke/1",
+      "path": "dist/salt-ai-r1/consumer-smoke-receipt.json",
+      "result": "pass",
+      "sha256": "sha256:6590f18a628493d85953ec292443e6d9191fb9d4991d1e3a00d23f85f2063d1b"
+    },
+    "retrieval": {
+      "category_macro_recall_at_5": 1,
+      "corpora": [
+        {
+          "path": "evals/salt-ai/retrieval/api-migrations.json",
+          "queries": 20,
+          "sha256": "sha256:e3166ff209f59b11176d8ed4a2dcd7ce6fc3f6e117753ab10d22b8e03db80de2"
+        },
+        {
+          "path": "evals/salt-ai/retrieval/navigation-overlay.json",
+          "queries": 20,
+          "sha256": "sha256:e42a2e4cd0916385ec59354ab913104793f986d982338ac0119f0becb81c3f44"
+        }
+      ],
+      "micro_recall_at_5": 1,
+      "query_count": 40,
+      "result_sha256": "sha256:95a69bdb526c6152558776d3e7ed93d56a3cf5a225c50291e14b7010d1e1a21b",
+      "scoring_version": "salt-lexical-ranking/1"
+    }
+  }
+}

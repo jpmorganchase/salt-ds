@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0.0",
+  "plan_id": "001",
+  "unit_id": "05",
+  "tracker_status": "DONE",
+  "completion_sha": "37b1a7dcdecd171fd05e52497d9813bfaa7bb88e",
+  "entries": [
+    {
+      "kind": "candidate-receipt",
+      "schema_id": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-candidate-receipt-1.json",
+      "schema_version": "1.0.0",
+      "locator": "repo://plans/evidence/artifacts/sha256-7911494d89df6b23a0a232728367979641aa57187fb77624e4f462babb8135ee.json",
+      "sha256": "sha256:7911494d89df6b23a0a232728367979641aa57187fb77624e4f462babb8135ee",
+      "source_sha": "37b1a7dcdecd171fd05e52497d9813bfaa7bb88e",
+      "completion_sha": "37b1a7dcdecd171fd05e52497d9813bfaa7bb88e",
+      "workflow_class": "local-ci",
+      "environment_class": "local-worktree-node-24",
+      "retention_expires_at": "2031-08-28T00:00:00.000Z",
+      "parents": [
+        "sha256:e46f9585c591be9b966fc09a03e3af7711f8c9a669ca78f6b07e3791699c143e"
+      ],
+      "state": "active",
+      "stage": "R1_PRE_AGENT",
+      "publishable": false,
+      "policy_profile": "pre-agent-support",
+      "pack_report_sha256": "sha256:99e1cc474bae6c8a0ac15bd83a3ea2f6b0e87a0428ab3a18d577a7651fc55fc4",
+      "consumer_smoke_sha256": "sha256:6590f18a628493d85953ec292443e6d9191fb9d4991d1e3a00d23f85f2063d1b",
+      "bundle_digest": "sha256:660c2b32f3bee3c6b88bed61a6093b76c8f85e2e401f5693f2d21b4533bf5459",
+      "semantic_digest": "sha256:f2fb02c9e6b999935b1e9727463b4a298492f810e376c434bc3626ab050cccab",
+      "knowledge_tarball_sha256": "sha256:f21f78e736dc9d2f12b61fc9a631aca706e34a87d82999977ee5f2a2359d6005",
+      "cli_tarball_sha256": "sha256:3179271a5fb74531950e32e4eed0ecbceaaa3505dc47b69ae4310a2ae9b95599",
+      "retrieval_query_count": 40,
+      "retrieval_micro_recall_at_5": 1,
+      "retrieval_category_macro_recall_at_5": 1,
+      "scoring_version": "salt-lexical-ranking/1",
+      "full_test_files": 69,
+      "full_tests": 860,
+      "verification": [
+        "yarn vitest run packages/knowledge/src/search packages/knowledge/src/markdown packages/cli/src/commands packages/cli/src/__tests__/cli.spec.ts --maxWorkers=4",
+        "yarn typecheck:ai-tooling",
+        "yarn test:ai-tooling",
+        "yarn build:ai-tooling",
+        "yarn check:ai-tooling:pack -- --profile pre-agent-support --report dist/salt-ai-r1/pack-report.json",
+        "yarn smoke:consumer --skip-build --pack-report dist/salt-ai-r1/pack-report.json",
+        "yarn candidate:salt-ai:seal -- --stage R1_PRE_AGENT --pack-report dist/salt-ai-r1/pack-report.json --output dist/salt-ai-r1/cohort-receipt.json"
+      ]
+    }
+  ]
+}
