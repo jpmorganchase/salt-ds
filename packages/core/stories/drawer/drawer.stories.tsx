@@ -57,10 +57,7 @@ export const Default: StoryFn<DrawerProps> = (args) => {
         onOpenChange={(newOpen) => setOpenPrimary(newOpen)}
         style={{ width: 200 }}
       >
-        <DrawerHeader
-          header="Primary drawer"
-          actions={<DrawerCloseButton onClick={() => setOpenPrimary(false)} />}
-        />
+        <DrawerCloseButton onClick={() => setOpenPrimary(false)} />
         <UnmountLogger />
       </Drawer>
       <Button onClick={() => setOpenSecondary(true)}>
@@ -73,12 +70,7 @@ export const Default: StoryFn<DrawerProps> = (args) => {
         variant="secondary"
         style={{ width: 200 }}
       >
-        <DrawerHeader
-          header="Secondary drawer"
-          actions={
-            <DrawerCloseButton onClick={() => setOpenSecondary(false)} />
-          }
-        />
+        <DrawerCloseButton onClick={() => setOpenSecondary(false)} />
       </Drawer>
       <Button onClick={() => setOpenTertiary(true)}>
         Open Tertiary Drawer
@@ -90,10 +82,7 @@ export const Default: StoryFn<DrawerProps> = (args) => {
         variant="tertiary"
         style={{ width: 200 }}
       >
-        <DrawerHeader
-          header="Tertiary drawer"
-          actions={<DrawerCloseButton onClick={() => setOpenTertiary(false)} />}
-        />
+        <DrawerCloseButton onClick={() => setOpenTertiary(false)} />
       </Drawer>
     </StackLayout>
   );
@@ -114,10 +103,7 @@ export const Position: StoryFn<DrawerProps> = (args) => {
         onOpenChange={(newOpen) => setOpenLeft(newOpen)}
         style={{ width: 200 }}
       >
-        <DrawerHeader
-          header="Left drawer"
-          actions={<DrawerCloseButton onClick={() => setOpenLeft(false)} />}
-        />
+        <DrawerCloseButton onClick={() => setOpenLeft(false)} />
       </Drawer>
       <Button onClick={() => setOpenRight(true)}>Open Right Drawer</Button>
       <Drawer
@@ -127,10 +113,7 @@ export const Position: StoryFn<DrawerProps> = (args) => {
         position="right"
         style={{ width: 200 }}
       >
-        <DrawerHeader
-          header="Right drawer"
-          actions={<DrawerCloseButton onClick={() => setOpenRight(false)} />}
-        />
+        <DrawerCloseButton onClick={() => setOpenRight(false)} />
       </Drawer>
       <Button onClick={() => setOpenTop(true)}>Open Top Drawer</Button>
       <Drawer
@@ -140,10 +123,7 @@ export const Position: StoryFn<DrawerProps> = (args) => {
         position="top"
         style={{ height: 200 }}
       >
-        <DrawerHeader
-          header="Top drawer"
-          actions={<DrawerCloseButton onClick={() => setOpenTop(false)} />}
-        />
+        <DrawerCloseButton onClick={() => setOpenTop(false)} />
       </Drawer>
       <Button onClick={() => setOpenBottom(true)}>Open Bottom Drawer</Button>
       <Drawer
@@ -153,10 +133,7 @@ export const Position: StoryFn<DrawerProps> = (args) => {
         position="bottom"
         style={{ height: 200 }}
       >
-        <DrawerHeader
-          header="Bottom drawer"
-          actions={<DrawerCloseButton onClick={() => setOpenBottom(false)} />}
-        />
+        <DrawerCloseButton onClick={() => setOpenBottom(false)} />
       </Drawer>
     </StackLayout>
   );
