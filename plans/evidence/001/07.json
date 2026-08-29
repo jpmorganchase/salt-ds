@@ -2,8 +2,8 @@
   "schema_version": "1.0.0",
   "plan_id": "001",
   "unit_id": "07",
-  "tracker_status": "DONE",
-  "completion_sha": "cbef3fdf1b8abd80f9a5c37fa92642e68e7edcce",
+  "tracker_status": "IN PROGRESS — reproducibility repair",
+  "completion_sha": null,
   "entries": [
     {
       "kind": "mcp-candidate-disposition-receipt",

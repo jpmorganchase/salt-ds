@@ -1,7 +1,10 @@
 # Plan 001: Build the Salt AI knowledge platform release candidate, CLI scanner, documentation channels, samples, and optional thin MCP adapter
 
-> **Scope amendment — 2026-08-29:** This plan now ends at the completed Unit 07
-> locally verified release-candidate boundary. Units 08a through 09c below are
+> **Scope amendment — 2026-08-29:** This plan ends at the Unit 07 locally
+> verified release-candidate boundary. Unit 07 is temporarily reopened only to
+> repair clean-checkout and cross-line-ending reproducibility after its original
+> evidence proved dependent on mixed working-tree line endings. Units 08a
+> through 09c below are
 > retained as publication design history, but ownership of version
 > materialization, npm/registry authority, trusted publishing, live web
 > deployment, promotion, rollback, and post-publication activation has moved to
@@ -74,7 +77,7 @@
 
 ## Status
 
-- **Status:** DONE — local release candidate complete through Unit 07
+- **Status:** IN PROGRESS — Unit 07 reproducibility repair
 - **Priority:** P1
 - **Effort:** L — multi-phase program; do not execute in one PR
 - **Risk:** HIGH — moves a large internal package boundary and creates the first
@@ -3080,6 +3083,28 @@ transition still performs Plan 001a's exact snapshot deprecation/tag cleanup.
 In either outcome, the normal production route graph remains pre-release: it
 contains no CLI/MCP install claim or candidate adapter navigation. Only ignored
 preview and immutable candidate artifacts may contain those bytes.
+
+#### Unit 07 reproducibility repair — 2026-08-29
+
+The original Unit 07 feature result and `mcp_candidate_disposition: omit`
+remain unchanged, but the selected Knowledge+CLI graph is not a valid terminal
+candidate until a clean CRLF checkout and a clean LF checkout of the same
+source commit produce identical semantic-source, compiler, semantic, bundle,
+packed-package, and consumer-smoke identities.
+
+Canonicalize every declared catalog input as valid UTF-8 with CRLF and lone CR
+converted to LF before inventory hashing and before any tracked text read.
+Reject invalid UTF-8 rather than replacing bytes. Keep path, link-topology,
+enumeration, and mid-build mutation checks fail-closed. Every copied textual
+source artifact, including package-owned JSON schemas, must use the same LF
+projection; no binary input may be silently decoded or normalized.
+
+Add focused hostile and parity tests for LF, CRLF, lone CR, invalid UTF-8, and
+post-inventory mutation. Then rebuild the exact implementation commit from two
+clean, offline source trees with opposing checkout line endings. The repaired
+Unit 07 evidence index must retain the original MCP decision, supersede the old
+selected-graph receipt with the new exact graph, record both clean-build
+identities, and remain entirely local and unpublished.
 
 ### 08a — Freeze the selected package graph and partition the version plan
 
