@@ -504,6 +504,10 @@ describe("package publish boundaries", () => {
       new URL("../build/buildRegistry.ts", import.meta.url),
       "utf8",
     );
+    const knowledgeV1Builder = readFileSync(
+      new URL("../build/buildKnowledgeV1.ts", import.meta.url),
+      "utf8",
+    );
     const inputInventory = readFileSync(
       new URL("../build/catalogInputInventory.ts", import.meta.url),
       "utf8",
@@ -532,6 +536,14 @@ describe("package publish boundaries", () => {
       "options.sourceRevision ?? inventory.digest",
     );
     expect(registryBuilder).toContain("tsconfigRaw");
+    expect(registryBuilder).toContain("inputInventory: inputBefore");
+    expect(knowledgeV1Builder).toContain("withCatalogInputTracking(");
+    expect(knowledgeV1Builder).toContain(
+      'readCatalogInputFile(path.join(schemaRoot, schemaFile), "utf8")',
+    );
+    expect(knowledgeV1Builder).not.toContain(
+      'fs.readFile(path.join(schemaRoot, schemaFile)',
+    );
     expect(inputInventory).not.toContain("site/src/props");
     expect(inputInventory).toContain("semanticInputPatterns");
     expect(inputInventory).toContain("compilerInputPatterns");
@@ -667,6 +679,20 @@ describe("package publish boundaries", () => {
         sourceBytes,
       ),
     ).toEqual(sourceBytes);
+    expect(
+      assertCatalogInputBytes(
+        identity,
+        "packages/mcp/src/index.ts",
+        Buffer.from("export const fixture = true;\r\n", "utf8"),
+      ),
+    ).toEqual(sourceBytes);
+    expect(() =>
+      assertCatalogInputBytes(
+        identity,
+        "packages/mcp/src/index.ts",
+        Buffer.from([0xc3, 0x28]),
+      ),
+    ).toThrow(/not valid UTF-8/u);
     expect(assertCatalogManifestBytes(identity, manifestBytes)).toEqual(
       manifestBytes,
     );

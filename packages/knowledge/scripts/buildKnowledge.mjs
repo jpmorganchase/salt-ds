@@ -769,6 +769,15 @@ export async function verifySealedGeneratorBundleStability({
     inputAfterBundle,
     "Catalog source inventory",
   );
+  if (
+    typeof finalBundle.generator.assertCatalogInputInventoriesStable ===
+    "function"
+  ) {
+    finalBundle.generator.assertCatalogInputInventoriesStable(
+      inputBefore,
+      inputAfterBundle,
+    );
+  }
   return {
     finalBundle,
     generator: finalBundle.generator,
@@ -1063,6 +1072,15 @@ async function hashFile(filePath) {
   return sha256(await fs.readFile(filePath));
 }
 
+async function hashTextFile(filePath) {
+  const bytes = await fs.readFile(filePath);
+  const text = bytes.toString("utf8");
+  if (!Buffer.from(text, "utf8").equals(bytes)) {
+    throw new Error(`Generator text input is not valid UTF-8: ${filePath}.`);
+  }
+  return sha256(Buffer.from(text.replace(/\r\n?/gu, "\n"), "utf8"));
+}
+
 export function createGeneratorDigest(receipt) {
   const digest = sha256(Buffer.from(canonicalJson(receipt), "utf8"));
   if (!SHA256_PATTERN.test(digest)) {
@@ -1311,7 +1329,7 @@ export async function buildCatalogRegistry(options = {}) {
       const orchestratorPath = assertPortablePath(
         toPosixPath(path.relative(sourceRoot, scriptPath)),
       );
-      const orchestratorSha256 = await hashFile(scriptPath);
+      const orchestratorSha256 = await hashTextFile(scriptPath);
       const orchestratorInput = inputBefore.entries.find(
         (entry) => entry.path === orchestratorPath,
       );
@@ -1400,6 +1418,7 @@ export async function buildCatalogRegistry(options = {}) {
           packageRoot: activePackageRoot,
           outputDir,
           packageVersion,
+          inputInventory: inputBefore,
           registry: built.registry,
           normalized: built.normalized,
           semanticInputInventory,

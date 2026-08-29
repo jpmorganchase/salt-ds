@@ -28,6 +28,11 @@ import type {
   KnowledgeContentBlob,
   NormalizedKnowledgeRecords,
 } from "./normalizeKnowledgeRecords.js";
+import {
+  readCatalogInputFile,
+  type CatalogInputInventory,
+  withCatalogInputTracking,
+} from "./catalogInputInventory.js";
 
 const SCHEMA_FILES = [
   "artifact-tree-node-1.schema.json",
@@ -43,7 +48,7 @@ const JSON_MEDIA_TYPE = "application/json";
 const MARKDOWN_MEDIA_TYPE = "text/markdown";
 
 function canonicalTextBytes(text: string): Buffer {
-  return Buffer.from(text.replaceAll("\r\n", "\n"), "utf8");
+  return Buffer.from(text.replace(/\r\n?/gu, "\n"), "utf8");
 }
 
 const RUNTIME_SELECTABLE_FAMILIES = new Set([
@@ -78,6 +83,7 @@ export interface BuildKnowledgeV1Options {
   compilerInputInventory: InputInventory;
   generatorReceipt: unknown;
   generatorDigest: string;
+  inputInventory?: CatalogInputInventory;
 }
 
 interface AgentSupportInventory {
@@ -237,7 +243,7 @@ function normalizedInventory(inventory: InputInventory, kind: string): unknown {
   };
 }
 
-export async function buildKnowledgeV1(
+async function buildKnowledgeV1Tracked(
   options: BuildKnowledgeV1Options,
 ): Promise<KnowledgeManifestV1> {
   const outputDir = path.resolve(options.outputDir);
@@ -259,7 +265,7 @@ export async function buildKnowledgeV1(
   const contentOwners = new Map<string, Set<string>>();
 
   const agentSupportInventory = JSON.parse(
-    await fs.readFile(
+    await readCatalogInputFile(
       path.join(sourceRoot, "tooling", "ai", "agent-support-v1.json"),
       "utf8",
     ),
@@ -352,7 +358,7 @@ export async function buildKnowledgeV1(
   for (const kind of ["skill", "agents_pointer"] as const) {
     const entry = allowedAgentArtifacts.get(kind)!;
     const bytes = canonicalTextBytes(
-      await fs.readFile(
+      await readCatalogInputFile(
         path.join(sourceRoot, ...entry.source.split("/")),
         "utf8",
       ),
@@ -479,7 +485,7 @@ export async function buildKnowledgeV1(
     "migration-records-v1.json",
   );
   const migrationInventory = JSON.parse(
-    await fs.readFile(migrationInventoryPath, "utf8"),
+    await readCatalogInputFile(migrationInventoryPath, "utf8"),
   ) as { records: Array<{ id: string; status: string; affected_families: string[] }> };
   await writeArtifact(
     outputDir,
@@ -496,7 +502,9 @@ export async function buildKnowledgeV1(
 
   const schemaRoot = path.join(packageRoot, "schemas");
   for (const schemaFile of SCHEMA_FILES) {
-    const bytes = await fs.readFile(path.join(schemaRoot, schemaFile));
+    const bytes = canonicalTextBytes(
+      await readCatalogInputFile(path.join(schemaRoot, schemaFile), "utf8"),
+    );
     await writeArtifact(
       outputDir,
       `schemas/${schemaFile}`,
@@ -804,4 +812,17 @@ export async function buildKnowledgeV1(
     { flag: "wx" },
   );
   return manifest;
+}
+
+export async function buildKnowledgeV1(
+  options: BuildKnowledgeV1Options,
+): Promise<KnowledgeManifestV1> {
+  if (!options.inputInventory) {
+    return buildKnowledgeV1Tracked(options);
+  }
+  return withCatalogInputTracking(
+    options.sourceRoot,
+    options.inputInventory,
+    () => buildKnowledgeV1Tracked(options),
+  );
 }

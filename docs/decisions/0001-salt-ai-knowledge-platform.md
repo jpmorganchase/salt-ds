@@ -124,6 +124,13 @@ Skill/AGENTS projections. Compiler inputs are schemas, generator/runtime source,
 rules, and declared compiler dependencies. Release tooling is recorded only in
 the release receipt. Broad `packages/*` input patterns are forbidden.
 
+Both source inventories operate on a strict text projection: valid UTF-8 with
+CRLF and lone CR converted to LF before hashing and tracked reads. Copied text
+artifacts use the same projection. The builder also retains raw identities for
+the active checkout so any mutation after inventory capture still fails closed.
+Binary inputs require a separate declared contract and are not decoded by this
+pipeline.
+
 ## Current-version boundary and package managers
 
 Plan 001 ships no historical resolver, mutable index, sync, pin, trust
