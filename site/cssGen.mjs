@@ -7,7 +7,7 @@ import glob from "fast-glob";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const themeFolder = "../packages/theme/css";
+const themeFolder = "../packages/theme/src/css";
 const densities = ["high", "medium", "low", "touch", "mobile"];
 
 function getTokensFromCssFile(cssFilePath) {

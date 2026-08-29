@@ -1,10 +1,10 @@
+import type { CarouselEmblaApiType } from "@salt-ds/embla-carousel";
 import { composeStories } from "@storybook/react-vite";
 import ClassNames from "embla-carousel-class-names";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as carouselStories from "~stories/carousel.stories";
-import type { CarouselEmblaApiType } from "../../..";
 
 const { Default, SlideGroup, MultiSlide } = composeStories(carouselStories);
 type CarouselApi = NonNullable<CarouselEmblaApiType>;

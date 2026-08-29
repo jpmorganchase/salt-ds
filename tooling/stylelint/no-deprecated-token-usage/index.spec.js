@@ -31,7 +31,7 @@ async function lintTokens(sourcePath, tokens) {
 describe("salt/no-deprecated-token-usage", () => {
   it("checks legacy theme CSS against shared and legacy deprecations", async () => {
     const warnings = await lintTokens(
-      "packages/theme/css/legacy/characteristics/test.css",
+      "packages/theme/src/css/legacy/characteristics/test.css",
       Object.values(deprecatedTokens),
     );
 
@@ -43,7 +43,7 @@ describe("salt/no-deprecated-token-usage", () => {
 
   it("checks next theme CSS against shared and next deprecations", async () => {
     const warnings = await lintTokens(
-      "packages/theme/css/next/characteristics/test.css",
+      "packages/theme/src/css/next/characteristics/test.css",
       Object.values(deprecatedTokens),
     );
 

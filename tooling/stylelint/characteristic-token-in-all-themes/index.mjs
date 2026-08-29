@@ -9,7 +9,7 @@ const {
   utils: { ruleMessages, report },
 } = stylelint;
 
-const themeFolder = "packages/theme/css";
+const themeFolder = "packages/theme/src/css";
 
 const characteristicFiles = glob.sync("*/characteristics/*.css", {
   cwd: themeFolder,

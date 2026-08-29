@@ -27,11 +27,11 @@ function loadTokens(pattern, options) {
   );
 }
 
-const activeThemeTokens = loadTokens("./packages/theme/css/**/*.css", {
-  ignore: ["./packages/theme/css/**/deprecated/**/*.css"],
+const activeThemeTokens = loadTokens("./packages/theme/src/css/**/*.css", {
+  ignore: ["./packages/theme/src/css/**/deprecated/**/*.css"],
 });
 const sharedDeprecatedTokens = loadTokens(
-  "./packages/theme/css/deprecated/*.css",
+  "./packages/theme/src/css/deprecated/*.css",
 );
 
 for (const token of activeThemeTokens) {
@@ -41,11 +41,11 @@ for (const token of activeThemeTokens) {
 const deprecatedTokensByTheme = {
   legacy: new Set([
     ...sharedDeprecatedTokens,
-    ...loadTokens("./packages/theme/css/legacy/deprecated/*.css"),
+    ...loadTokens("./packages/theme/src/css/legacy/deprecated/*.css"),
   ]),
   next: new Set([
     ...sharedDeprecatedTokens,
-    ...loadTokens("./packages/theme/css/next/deprecated/*.css"),
+    ...loadTokens("./packages/theme/src/css/next/deprecated/*.css"),
   ]),
 };
 const allDeprecatedTokens = new Set(
@@ -55,7 +55,7 @@ const allDeprecatedTokens = new Set(
 function deprecatedTokensForSource(sourcePath) {
   const normalizedPath = sourcePath?.split(path.sep).join("/") ?? "";
   const theme = normalizedPath.match(
-    /(?:^|\/)packages\/theme\/css\/(legacy|next)(?:\/|$)/,
+    /(?:^|\/)packages\/theme\/src\/css\/(legacy|next)(?:\/|$)/,
   )?.[1];
 
   return deprecatedTokensByTheme[theme] ?? allDeprecatedTokens;

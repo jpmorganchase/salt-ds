@@ -1,7 +1,13 @@
+import { mkdir, rm } from "node:fs/promises";
 import { getTsconfig } from "get-tsconfig";
 
 export function distinct(arr) {
   return [...new Set(arr)];
+}
+
+export async function emptyDir(directory) {
+  await rm(directory, { recursive: true, force: true });
+  await mkdir(directory, { recursive: true });
 }
 
 export async function getTypescriptConfig(cwd, srcDir) {

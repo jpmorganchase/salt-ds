@@ -91,7 +91,7 @@ import {
 } from "../../../core/stories/toggle-button-group/toggle-button-group.stories";
 
 import "ag-grid-community/styles/ag-grid.css";
-import "../../../../dist/salt-ds-ag-grid-theme/salt-ag-theme.css";
+import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
 
 export default {
   title: "Experimental/Kitchen Sink",

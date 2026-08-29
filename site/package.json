@@ -9,8 +9,9 @@
   "style": "dist/index.css",
   "scripts": {
     "clean": "rm -fr public/.tmp .next",
-    "build": "yarn workspace @salt-ds/ag-grid-theme build && yarn workspace @salt-ds/react-resizable-panels-theme build && yarn workspace @salt-ds/highcharts-theme build && yarn gen:css && next build --webpack",
-    "dev": "next dev --webpack",
+    "build": "yarn build:css-themes && yarn build:highcharts-theme && yarn gen:css && next build --webpack",
+    "build:css-themes": "yarn workspace @salt-ds/theme build && yarn workspace @salt-ds/ag-grid-theme build && yarn workspace @salt-ds/react-resizable-panels-theme build",
+    "dev": "yarn build:css-themes && concurrently --kill-others \"yarn workspace @salt-ds/theme build:watch\" \"yarn workspace @salt-ds/ag-grid-theme build-watch\" \"yarn workspace @salt-ds/react-resizable-panels-theme build-watch\" \"next dev --webpack\"",
     "start": "next start",
     "gen:snapshot": "yarn gen:props && yarn gen:css && yarn mosaic build --out snapshots --name latest --config mosaic.config.mjs",
     "serve:snapshot:file": "yarn cross-env MOSAIC_MODE='snapshot-file' concurrently --kill-others 'yarn dev'",

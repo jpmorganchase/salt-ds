@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { availableParallelism } from "node:os";
 import path from "node:path";
@@ -6,10 +7,24 @@ import react from "@vitejs/plugin-react";
 import { playwright } from "@vitest/browser-playwright";
 import { isCI } from "ci-info";
 import { cssInline } from "css-inline-plugin";
+import type { Plugin } from "vite";
 import { defineConfig } from "vitest/config";
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
+const rootTsconfig = JSON.parse(
+  readFileSync(path.join(rootDir, "tsconfig.json"), "utf8"),
+) as {
+  compilerOptions?: {
+    paths?: Record<string, string[]>;
+  };
+};
+const rootDevelopmentPaths = Object.entries(
+  rootTsconfig.compilerOptions?.paths ?? {},
+).filter(
+  ([alias]) =>
+    alias.startsWith("~") || (!isCI && alias.startsWith("@salt-ds/")),
+);
 const reactMajorVersion = Number.parseInt(
   (require("react/package.json") as { version: string }).version,
   10,
@@ -30,64 +45,93 @@ const browserDependencies = [
   "tinycolor2",
 ];
 
-const distAliases: Record<string, string> = isCI
-  ? {
-      "@salt-ds/core": path.resolve(rootDir, "./dist/salt-ds-core"),
-      "@salt-ds/countries": path.resolve(rootDir, "./dist/salt-ds-countries"),
-      "@salt-ds/date-adapters/date-fns-tz": path.resolve(
-        rootDir,
-        "./dist/salt-ds-date-adapters/dist-es/date-fns-tz/index.js",
-      ),
-      "@salt-ds/date-adapters/date-fns": path.resolve(
-        rootDir,
-        "./dist/salt-ds-date-adapters/dist-es/date-fns/index.js",
-      ),
-      "@salt-ds/date-adapters/dayjs": path.resolve(
-        rootDir,
-        "./dist/salt-ds-date-adapters/dist-es/dayjs/index.js",
-      ),
-      "@salt-ds/date-adapters/luxon": path.resolve(
-        rootDir,
-        "./dist/salt-ds-date-adapters/dist-es/luxon/index.js",
-      ),
-      "@salt-ds/date-adapters/moment": path.resolve(
-        rootDir,
-        "./dist/salt-ds-date-adapters/dist-es/moment/index.js",
-      ),
-      "@salt-ds/date-adapters": path.resolve(
-        rootDir,
-        "./dist/salt-ds-date-adapters",
-      ),
-      "@salt-ds/date-components": path.resolve(
-        rootDir,
-        "./dist/salt-ds-date-components",
-      ),
-      "@salt-ds/embla-carousel": path.resolve(
-        rootDir,
-        "./dist/salt-ds-embla-carousel",
-      ),
-      "@salt-ds/icons": path.resolve(rootDir, "./dist/salt-ds-icons"),
-      "@salt-ds/lab": path.resolve(rootDir, "./dist/salt-ds-lab"),
-      "@salt-ds/styles": path.resolve(rootDir, "./dist/salt-ds-styles"),
-      "@salt-ds/theme": path.resolve(rootDir, "./dist/salt-ds-theme"),
-      "@salt-ds/window": path.resolve(rootDir, "./dist/salt-ds-window"),
-    }
-  : {};
+type Alias = {
+  find: string | RegExp;
+  replacement: string;
+};
 
-const legacyReactAliases: Record<string, string> =
-  reactMajorVersion < 18
-    ? {
-        // vitest-browser-react uses react-dom/client, which only exists in
-        // React 18+. Keep the same small render contract for Salt's 16/17 lane.
-        "vitest-browser-react": path.resolve(
-          rootDir,
-          "./test/browser/legacy-react-renderer.tsx",
-        ),
+const rootDevelopmentPathsPlugin = (): Plugin => ({
+  name: "salt-root-development-paths",
+  enforce: "pre",
+  async resolveId(source, importer, options) {
+    for (const [pattern, replacements] of rootDevelopmentPaths) {
+      const wildcardIndex = pattern.indexOf("*");
+      if (wildcardIndex === -1 && source !== pattern) {
+        continue;
       }
-    : {};
+
+      const [prefix, suffix = ""] = pattern.split("*");
+      if (!source.startsWith(prefix) || !source.endsWith(suffix)) {
+        continue;
+      }
+
+      const wildcard = source.slice(
+        prefix.length,
+        source.length - suffix.length,
+      );
+      for (const replacement of replacements) {
+        const candidate = path.resolve(
+          rootDir,
+          replacement.replace("*", wildcard),
+        );
+        const resolved = await this.resolve(candidate, importer, {
+          ...options,
+          skipSelf: true,
+        });
+        if (resolved) {
+          return resolved;
+        }
+      }
+    }
+  },
+});
+
+const distAliases: Alias[] = isCI
+  ? [
+      ["core", "core/dist-es/index.js"],
+      ["countries", "countries/dist-es/index.js"],
+      ["date-adapters", "date-adapters/dist-es/types/index.js"],
+      ["date-components", "date-components/dist-es/index.js"],
+      ["embla-carousel", "embla-carousel/dist-es/index.js"],
+      ["icons", "icons/dist-es/index.js"],
+      ["lab", "lab/dist-es/index.js"],
+      ["styles", "styles/dist-es/index.js"],
+      ["window", "window/dist-es/index.js"],
+    ]
+      .map(([packageName, outputPath]) => ({
+        find: new RegExp(`^@salt-ds/${packageName}$`),
+        replacement: path.resolve(rootDir, `./packages/${outputPath}`),
+      }))
+      .concat(
+        ["date-fns-tz", "date-fns", "dayjs", "luxon", "moment"].map(
+          (adapterName) => ({
+            find: new RegExp(`^@salt-ds/date-adapters/${adapterName}$`),
+            replacement: path.resolve(
+              rootDir,
+              `./packages/date-adapters/dist-es/${adapterName}/index.js`,
+            ),
+          }),
+        ),
+      )
+  : [];
+
+const legacyReactAliases: Alias[] =
+  reactMajorVersion < 18
+    ? [
+        {
+          // vitest-browser-react uses react-dom/client, which only exists in
+          // React 18+. Keep the same small render contract for Salt's 16/17 lane.
+          find: "vitest-browser-react",
+          replacement: path.resolve(
+            rootDir,
+            "./test/browser/legacy-react-renderer.tsx",
+          ),
+        },
+      ]
+    : [];
 
 export default defineConfig({
-  plugins: [react(), cssInline()],
+  plugins: [rootDevelopmentPathsPlugin(), react(), cssInline()],
   define: {
     "process.env": {},
   },
@@ -95,11 +139,8 @@ export default defineConfig({
     sourcemap: !isCI,
   },
   resolve: {
-    tsconfigPaths: true,
-    alias: {
-      ...distAliases,
-      ...legacyReactAliases,
-    },
+    tsconfigPaths: !isCI,
+    alias: [...distAliases, ...legacyReactAliases],
   },
   optimizeDeps: {
     include: [
