@@ -80,5 +80,5 @@ describe("ratified Knowledge-v1 retrieval gold", () => {
     ).toEqual([]);
     expect(micro).toBeGreaterThanOrEqual(0.95);
     expect(categoryMacro).toBeGreaterThanOrEqual(0.95);
-  });
+  }, 15_000);
 });

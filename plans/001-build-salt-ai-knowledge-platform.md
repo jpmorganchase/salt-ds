@@ -1,4 +1,14 @@
-# Plan 001: Build the versioned Salt AI knowledge platform, CLI scanner, documentation channels, samples, and optional thin MCP adapter
+# Plan 001: Build the Salt AI knowledge platform release candidate, CLI scanner, documentation channels, samples, and optional thin MCP adapter
+
+> **Scope amendment — 2026-08-29:** This plan now ends at the completed Unit 07
+> locally verified release-candidate boundary. Units 08a through 09c below are
+> retained as publication design history, but ownership of version
+> materialization, npm/registry authority, trusted publishing, live web
+> deployment, promotion, rollback, and post-publication activation has moved to
+> [Plan 003](./003-publish-salt-ai-release-candidate.md). Do not execute those
+> units under Plan 001. A local `npm pack`, clean-room tarball install, consumer
+> smoke test, or web-artifact build is verification rather than publication and
+> remains in Plan 001. Plan 001 authorizes no registry or deployment mutation.
 
 > **Executor instructions:** This is a program plan made of ordered execution
 > units. Implement one code-bearing execution unit per branch and pull request,
@@ -64,7 +74,7 @@
 
 ## Status
 
-- **Status:** TODO
+- **Status:** DONE — local release candidate complete through Unit 07
 - **Priority:** P1
 - **Effort:** L — multi-phase program; do not execute in one PR
 - **Risk:** HIGH — moves a large internal package boundary and creates the first
@@ -103,21 +113,21 @@ architecture; publish only the contracts defined by this plan.
 These decisions are part of the plan. An executor must not silently substitute
 another architecture.
 
-1. Publish `@salt-ds/knowledge` as the only owner of the generated bundle,
+1. Prepare `@salt-ds/knowledge` as the only owner of the generated bundle,
    bundle reader, deterministic query layer, applicability resolver, submitted
    artifact analyzer, and the protocol-neutral project facts shared by CLI and
    MCP.
-2. Publish `@salt-ds/cli` with the executable `salt-ds`. Do not use the binary
+2. Prepare `@salt-ds/cli` with the executable `salt-ds`. Do not use the binary
    name `salt`, which collides with the established Salt infrastructure CLI.
 3. Ship `scan`, `info`, `help`, and `version` first. Add `docs` and `context`
    only after the bundle projection and retrieval quality gates pass.
 4. Build one clean, current-spec `@salt-ds/mcp` candidate as an optional thin
    adapter, not the knowledge owner. Nothing in the current prototype or
    ratified unused test snapshots is a public compatibility requirement.
-   Publish MCP only if the pre-release
-   outcome gate recommends `mcp_candidate_disposition: ship` and Unit 08c
-   confirms the exact final packed bytes; otherwise omit it from the public
-   cohort without a deprecation or migration path.
+   Plan 003 may publish MCP only if a pre-release outcome gate recommends
+   `mcp_candidate_disposition: ship` and independently confirms the exact final
+   packed bytes; otherwise it remains omitted without a deprecation or migration
+   path.
 5. Make Storybook maintainer-only. Stories may wrap canonical example modules
    for visual QA, but no published knowledge, public sample, CLI command, or
    public documentation journey may require a Storybook process or URL.
@@ -3073,6 +3083,10 @@ preview and immutable candidate artifacts may contain those bytes.
 
 ### 08a — Freeze the selected package graph and partition the version plan
 
+> **Transferred to Plan 003.** Units 08a through 09c are retained below so the
+> original release design remains reviewable. They are not executable Plan 001
+> work and do not gate Plan 001 completion.
+
 **Outcome:** the selected Knowledge+CLI graph, plus the MCP candidate only when
 Unit 07 recommends `ship`, and the matching web artifact are closed by one
 reviewed version-plan partition and reproducible packed-consumer receipt. This
@@ -4630,7 +4644,16 @@ quarterly for bundle budgets and, only if shipped, MCP's measured role/cost.
 
 ## Definition of done
 
-This program is complete only when all applicable boxes are true:
+Plan 001 is complete when all applicable local implementation and verification
+boxes are true through Unit 07. In this historical checklist, version
+materialization, protected workflows, npm provenance/publication, registry or
+web mutation/readback, R2/R3 activation, live discovery, and retained release
+operations are Plan 003 acceptance criteria and do not gate Plan 001. Local
+`npm pack`, clean-room install, offline smoke, deterministic web builds, package
+metadata, and consumer validation remain Plan 001 requirements.
+
+The combined original program is complete only when all applicable boxes are
+true across Plans 001 and 003:
 
 - [ ] ADR, public contracts, support matrix, owners, review dates, and baseline
       receipt are approved.

@@ -9,15 +9,11 @@
   "receipt_ttl_hours": 168,
   "compatibility_policy_path": "tooling/ai/snapshot-package-compatibility-v1.json",
   "scope_control": {
-    "expected_maintainer_names": ["brooklynrob", "saltdesignsystem"],
-    "expected_trusted_publisher_provider": "github"
+    "expected_maintainer_names": ["brooklynrob", "saltdesignsystem"]
   },
   "publisher": {
-    "approval_status": "approved",
-    "provider": "github-actions-oidc",
-    "repository": "jpmorganchase/salt-ds",
-    "workflow": ".github/workflows/publish-salt-ai.yml",
-    "environment": "salt-ai-release"
+    "approval_status": "deferred",
+    "plan": "plans/003-publish-salt-ai-release-candidate.md"
   },
   "packages": [
     { "name": "@salt-ds/cli", "expected_repository_directory": "packages/cli", "existing_identity": "approved-test-snapshot-lineage", "compatibility_policy_id": "salt-ai-unused-test-snapshots/1" },

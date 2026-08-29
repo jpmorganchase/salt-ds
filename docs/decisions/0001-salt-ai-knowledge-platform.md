@@ -257,6 +257,15 @@ executor may invent them.
 
 ## Publication modes
 
+Publication is no longer a Plan 001 completion gate. Plan 001 ends with the
+locally packed, consumer-verified Unit 07 release candidate and authorizes no
+version, registry, or deployment mutation. The design below is retained for the
+separately activated Plan 003 publication track; none of its identities or
+controls may be treated as provisioned merely because candidate artifacts
+exist. Plan 001 namespace checks establish package-name and snapshot-lineage
+compatibility only. They do not approve a workflow, environment, credential, or
+registry mutation.
+
 The sole credentialed publisher is operator-dispatched, protected, and bound to
 an immutable approved tag or protected-branch-reachable commit. All modes share
 one repository-wide lock, state machine, target allowlist, journal, CAS rules,
