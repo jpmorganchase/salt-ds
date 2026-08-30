@@ -119,23 +119,34 @@ function loadMcpCandidateDispositionReceipt(receiptPath) {
   }
   const bytes = readFileSync(receiptPath);
   const value = JSON.parse(bytes.toString("utf8"));
-  const schema = JSON.parse(
-    readFileSync(
-      path.join(
-        repoRoot,
-        "evals",
-        "salt-ai",
-        "mcp-candidate-disposition.schema.json",
-      ),
-      "utf8",
-    ),
-  );
-  const ajv = new Ajv2020({ allErrors: true, strict: false });
-  const validate = ajv.compile(schema);
-  if (!validate(value)) {
-    throw new Error(
-      `MCP candidate disposition receipt failed schema validation: ${JSON.stringify(validate.errors)}`,
+  let candidateSourceSha;
+  if (value.contract === "salt-mcp-candidate-disposition-evidence/1") {
+    assertJsonSchema(
+      value,
+      "saltMcpCandidateDispositionEvidenceV1.schema.json",
+      "MCP candidate disposition evidence receipt",
     );
+    candidateSourceSha = value.source_commit;
+  } else {
+    const schema = JSON.parse(
+      readFileSync(
+        path.join(
+          repoRoot,
+          "evals",
+          "salt-ai",
+          "mcp-candidate-disposition.schema.json",
+        ),
+        "utf8",
+      ),
+    );
+    const ajv = new Ajv2020({ allErrors: true, strict: false });
+    const validate = ajv.compile(schema);
+    if (!validate(value)) {
+      throw new Error(
+        `MCP candidate disposition receipt failed schema validation: ${JSON.stringify(validate.errors)}`,
+      );
+    }
+    candidateSourceSha = value.candidate_source_sha;
   }
   if (value.mcp_candidate_disposition !== "omit") {
     throw new Error(
@@ -149,7 +160,7 @@ function loadMcpCandidateDispositionReceipt(receiptPath) {
       sha256: sha256(bytes),
       bytes: bytes.byteLength,
       disposition: value.mcp_candidate_disposition,
-      candidate_source_sha: value.candidate_source_sha,
+      candidate_source_sha: candidateSourceSha,
     },
   };
 }

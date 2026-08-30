@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/schemas/salt-legacy-plan-evidence-receipt-1.json",
+  "title": "Salt legacy local plan evidence receipt",
+  "description": "Closed envelope validation for immutable Plan 001 receipts created before every receipt carried a self-describing schema field.",
+  "type": "object",
+  "required": ["schema_version", "contract"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "contract": { "type": "string", "minLength": 1 }
+  },
+  "allOf": [
+    {
+      "oneOf": [
+        {
+          "properties": {
+            "contract": { "const": "unit-01-normalized-characterization-receipt" },
+            "plan_id": { "const": "001" },
+            "unit_id": { "const": "01" },
+            "source_sha": { "$ref": "#/$defs/commit" },
+            "baseline": { "$ref": "#/$defs/object" },
+            "characterized_surfaces": { "$ref": "#/$defs/stringArray" },
+            "prototype_only_fields": { "$ref": "#/$defs/stringArray" },
+            "verification": { "$ref": "#/$defs/verification" }
+          },
+          "required": ["plan_id", "unit_id", "source_sha", "baseline", "characterized_surfaces", "prototype_only_fields", "verification"]
+        },
+        {
+          "properties": {
+            "contract": { "const": "unit-02-semantic-comparison-receipt" },
+            "plan_id": { "const": "001" },
+            "unit_id": { "const": "02" },
+            "source_sha": { "$ref": "#/$defs/commit" },
+            "completion_sha": { "$ref": "#/$defs/commit" },
+            "baseline": { "$ref": "#/$defs/object" },
+            "extraction_parity": { "$ref": "#/$defs/object" },
+            "determinism": { "$ref": "#/$defs/object" },
+            "verification": { "$ref": "#/$defs/verification" }
+          },
+          "required": ["plan_id", "unit_id", "source_sha", "completion_sha", "baseline", "extraction_parity", "determinism", "verification"]
+        },
+        {
+          "properties": {
+            "contract": { "const": "unit-02-pack-and-smoke-receipt" },
+            "plan_id": { "const": "001" },
+            "unit_id": { "const": "02" },
+            "source_sha": { "$ref": "#/$defs/commit" },
+            "completion_sha": { "$ref": "#/$defs/commit" },
+            "pack_report": { "$ref": "#/$defs/object" },
+            "packages": { "$ref": "#/$defs/objectArray" },
+            "consumer_smoke": { "$ref": "#/$defs/object" },
+            "commands": { "$ref": "#/$defs/stringArray" }
+          },
+          "required": ["plan_id", "unit_id", "source_sha", "completion_sha", "pack_report", "packages", "consumer_smoke", "commands"]
+        },
+        {
+          "properties": {
+            "contract": { "const": "unit-03-consumer-smoke-receipt" },
+            "plan_id": { "const": "001" },
+            "unit_id": { "const": "03" },
+            "source_sha": { "$ref": "#/$defs/commit" },
+            "completion_sha": { "$ref": "#/$defs/commit" },
+            "pack_receipt_sha256": { "$ref": "#/$defs/digest" },
+            "pack_report_sha256": { "$ref": "#/$defs/digest" },
+            "packages": { "$ref": "#/$defs/objectArray" },
+            "consumer_smoke": { "$ref": "#/$defs/object" },
+            "verification": { "$ref": "#/$defs/verification" }
+          },
+          "required": ["plan_id", "unit_id", "source_sha", "completion_sha", "pack_receipt_sha256", "pack_report_sha256", "packages", "consumer_smoke", "verification"]
+        },
+        {
+          "properties": {
+            "contract": { "const": "unit-03-pre-agent-pack-receipt" },
+            "plan_id": { "const": "001" },
+            "unit_id": { "const": "03" },
+            "source_sha": { "$ref": "#/$defs/commit" },
+            "completion_sha": { "$ref": "#/$defs/commit" },
+            "pack_report": { "$ref": "#/$defs/object" },
+            "knowledge_bundle": { "$ref": "#/$defs/object" },
+            "packages": { "$ref": "#/$defs/objectArray" },
+            "verification": { "$ref": "#/$defs/verification" }
+          },
+          "required": ["plan_id", "unit_id", "source_sha", "completion_sha", "pack_report", "knowledge_bundle", "packages", "verification"]
+        },
+        {
+          "properties": {
+            "contract": { "enum": ["unit-04a-knowledge-cli-pack-receipt", "unit-04b-knowledge-cli-pack-receipt", "unit-04c-knowledge-cli-pack-receipt"] },
+            "plan_id": { "const": "001" },
+            "unit_id": { "enum": ["04a", "04b", "04c"] },
+            "source_sha": { "$ref": "#/$defs/commit" },
+            "completion_sha": { "$ref": "#/$defs/commit" },
+            "pack_report": { "$ref": "#/$defs/object" },
+            "knowledge_bundle": { "$ref": "#/$defs/object" },
+            "packages": { "$ref": "#/$defs/objectArray" },
+            "verification": { "$ref": "#/$defs/verification" }
+          },
+          "required": ["plan_id", "unit_id", "source_sha", "completion_sha", "pack_report", "knowledge_bundle", "packages", "verification"]
+        },
+        {
+          "properties": {
+            "contract": { "enum": ["unit-04a-installed-cli-smoke-receipt", "unit-04b-installed-cli-smoke-receipt", "unit-04c-installed-cli-scan-smoke-receipt"] },
+            "plan_id": { "const": "001" },
+            "unit_id": { "enum": ["04a", "04b", "04c"] },
+            "source_sha": { "$ref": "#/$defs/commit" },
+            "completion_sha": { "$ref": "#/$defs/commit" },
+            "pack_receipt_sha256": { "$ref": "#/$defs/digest" },
+            "pack_report_sha256": { "$ref": "#/$defs/digest" },
+            "packages": { "$ref": "#/$defs/objectArray" },
+            "consumer_smoke": { "$ref": "#/$defs/object" },
+            "verification": { "$ref": "#/$defs/verification" }
+          },
+          "required": ["plan_id", "unit_id", "source_sha", "completion_sha", "pack_report_sha256", "packages", "consumer_smoke", "verification"]
+        },
+        {
+          "properties": {
+            "contract": { "const": "unit-04b-discovery-config-verification-receipt" },
+            "plan_id": { "const": "001" },
+            "unit_id": { "const": "04b" },
+            "source_sha": { "$ref": "#/$defs/commit" },
+            "completion_sha": { "$ref": "#/$defs/commit" },
+            "source_artifacts": { "$ref": "#/$defs/objectArray" },
+            "configuration": { "$ref": "#/$defs/object" },
+            "discovery": { "$ref": "#/$defs/object" },
+            "verification": { "$ref": "#/$defs/verification" }
+          },
+          "required": ["plan_id", "unit_id", "source_sha", "completion_sha", "source_artifacts", "configuration", "discovery", "verification"]
+        },
+        {
+          "properties": {
+            "contract": { "const": "unit-04c-scan-verification-receipt" },
+            "plan_id": { "const": "001" },
+            "unit_id": { "const": "04c" },
+            "source_sha": { "$ref": "#/$defs/commit" },
+            "completion_sha": { "$ref": "#/$defs/commit" },
+            "source_artifacts": { "$ref": "#/$defs/objectArray" },
+            "isolation": { "$ref": "#/$defs/object" },
+            "result_contract": { "$ref": "#/$defs/object" },
+            "exit_contract": { "$ref": "#/$defs/object" },
+            "verification": { "$ref": "#/$defs/verification" }
+          },
+          "required": ["plan_id", "unit_id", "source_sha", "completion_sha", "source_artifacts", "isolation", "result_contract", "exit_contract", "verification"]
+        },
+        {
+          "properties": {
+            "contract": { "const": "salt-ai-consumer-smoke/1" },
+            "adapter": { "const": "@salt-ds/cli" },
+            "pack_report": { "$ref": "#/$defs/object" },
+            "result": { "const": "pass" },
+            "workflows": { "$ref": "#/$defs/object" }
+          },
+          "required": ["adapter", "pack_report", "result", "workflows"]
+        }
+      ]
+    }
+  ],
+  "unevaluatedProperties": false,
+  "$defs": {
+    "commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "object": { "type": "object", "minProperties": 1 },
+    "objectArray": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "object", "minProperties": 1 }
+    },
+    "stringArray": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "verification": {
+      "oneOf": [
+        { "$ref": "#/$defs/object" },
+        { "$ref": "#/$defs/stringArray" }
+      ]
+    }
+  }
+}

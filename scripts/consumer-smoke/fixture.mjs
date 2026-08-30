@@ -263,14 +263,23 @@ export async function loadExactPackReport(reportPathInput) {
     );
     const dispositionBytes = await fs.readFile(dispositionPath);
     const disposition = JSON.parse(dispositionBytes.toString("utf8"));
+    const isRawDisposition =
+      disposition.contract === "salt-mcp-candidate-disposition/1";
+    const isAcquiredDisposition =
+      disposition.contract ===
+      "salt-mcp-candidate-disposition-evidence/1";
+    const candidateSourceSha = isAcquiredDisposition
+      ? disposition.source_commit
+      : disposition.candidate_source_sha;
     assert(
       dispositionBinding.bytes === dispositionBytes.byteLength &&
         dispositionBinding.sha256 ===
           `sha256:${sha256Bytes(dispositionBytes)}` &&
+        (isRawDisposition || isAcquiredDisposition) &&
         dispositionBinding.disposition === "omit" &&
         disposition.mcp_candidate_disposition === "omit" &&
         dispositionBinding.candidate_source_sha ===
-          disposition.candidate_source_sha,
+          candidateSourceSha,
       "Pack report does not bind the exact sealed MCP omit receipt.",
     );
   }

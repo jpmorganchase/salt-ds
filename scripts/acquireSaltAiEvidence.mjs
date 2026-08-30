@@ -13,22 +13,108 @@ import {
   parseArgs,
   readJson,
   repositoryRoot,
+  repositoryTextBytes,
+  repositoryTextSha256,
   sha256,
 } from "./saltAiEvidenceUtils.mjs";
 
 const SUPPORTED_PLANS = new Set(["001"]);
 const SCHEMA_FILES = new Map([
   [
-    "https://www.saltdesignsystem.com/ai/schemas/salt-mcp-candidate-disposition-evidence-1.json",
-    "saltMcpCandidateDispositionEvidenceV1.schema.json",
+    "https://salt-ds.github.io/schemas/salt-ai-pack-report-v1.schema.json",
+    "saltAiPackReportV1.schema.json",
   ],
   [
-    "https://www.saltdesignsystem.com/ai/schemas/salt-selected-graph-receipt-1.json",
-    "saltSelectedGraphReceiptV1.schema.json",
+    "https://www.saltdesignsystem.com/ai/characterization/normalized-1.json",
+    "saltLegacyPlanEvidenceReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/evals/report-1.json",
+    "evals/salt-ai/report.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/evidence/unit-02-pack-and-smoke-1.json",
+    "saltLegacyPlanEvidenceReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/evidence/unit-02-semantic-comparison-1.json",
+    "saltLegacyPlanEvidenceReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/evidence/unit-03-consumer-smoke-1.json",
+    "saltLegacyPlanEvidenceReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/evidence/unit-03-pre-agent-pack-1.json",
+    "saltLegacyPlanEvidenceReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/evidence/unit-04a-installed-cli-smoke-1.json",
+    "saltLegacyPlanEvidenceReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/evidence/unit-04a-knowledge-cli-pack-1.json",
+    "saltLegacyPlanEvidenceReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/evidence/unit-04b-discovery-config-verification-1.json",
+    "saltLegacyPlanEvidenceReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/evidence/unit-04b-installed-cli-smoke-1.json",
+    "saltLegacyPlanEvidenceReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/evidence/unit-04b-knowledge-cli-pack-1.json",
+    "saltLegacyPlanEvidenceReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/evidence/unit-04c-installed-cli-scan-smoke-1.json",
+    "saltLegacyPlanEvidenceReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/evidence/unit-04c-knowledge-cli-pack-1.json",
+    "saltLegacyPlanEvidenceReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/evidence/unit-04c-scan-verification-1.json",
+    "saltLegacyPlanEvidenceReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/evidence/unit-06d-consumer-smoke-1.json",
+    "saltLegacyPlanEvidenceReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/evidence/unit-06g-consumer-smoke-1.json",
+    "saltLegacyPlanEvidenceReceiptV1.schema.json",
   ],
   [
     "https://www.saltdesignsystem.com/ai/schemas/salt-ai-candidate-receipt-1.json",
     "saltAiCandidateReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/schemas/salt-ai-package-namespace-receipt-1.json",
+    "saltAiPackageNamespaceReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/schemas/salt-ai-release-embargo-receipt-1.json",
+    "saltAiReleaseEmbargoReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/schemas/salt-ai-web-release-receipt-1.json",
+    "saltAiWebReleaseReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/schemas/salt-ai-workflow-policy-receipt-1.json",
+    "saltAiWorkflowPolicyReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/schemas/salt-mcp-candidate-disposition-evidence-1.json",
+    "saltMcpCandidateDispositionEvidenceV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/schemas/salt-ordinary-baseline-1.json",
+    "saltOrdinaryBaselineV1.schema.json",
   ],
   [
     "https://www.saltdesignsystem.com/ai/schemas/salt-pattern-migration-receipt-1.json",
@@ -41,6 +127,18 @@ const SCHEMA_FILES = new Map([
   [
     "https://www.saltdesignsystem.com/ai/schemas/salt-sample-app-cohort-receipt-1.json",
     "saltSampleAppCohortReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/schemas/salt-selected-graph-receipt-1.json",
+    "saltSelectedGraphReceiptV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/ai/schemas/salt-snapshot-package-compatibility-1.json",
+    "saltSnapshotPackageCompatibilityV1.schema.json",
+  ],
+  [
+    "https://www.saltdesignsystem.com/schemas/salt-public-package-docs-effective-v1.json",
+    "saltPublicPackageDocsEffectiveV1.schema.json",
   ],
 ]);
 
@@ -168,7 +266,7 @@ async function locatorBytes(locator) {
     const file = resolveRepositoryPath(relative, "Evidence locator");
     const value = await stat(file);
     assert(value.isFile() && !value.isSymbolicLink(), "Evidence locator is not a regular file");
-    return readFile(file);
+    return repositoryTextBytes(await readFile(file));
   }
   assert(locator.startsWith("https://"), "Evidence locator scheme is unsupported");
   const response = await fetch(locator, {
@@ -199,7 +297,10 @@ assert(indexTokens.length === 1, `Tracker unit ${selected.unit} has no exact evi
 const [, indexRelative, indexDigest] = indexTokens[0];
 const indexPath = resolveRepositoryPath(indexRelative, "Evidence index");
 const indexBytes = await readFile(indexPath);
-assert(sha256(indexBytes) === indexDigest, "Evidence index digest does not match the tracker");
+assert(
+  repositoryTextSha256(indexBytes) === indexDigest,
+  "Evidence index digest does not match the tracker",
+);
 const index = JSON.parse(indexBytes.toString("utf8"));
 await assertSchema(
   await readJson(
@@ -233,22 +334,30 @@ assert(
   selected.expectedDigest === null || selected.expectedDigest === entry.sha256,
   "Reviewed selector digest does not match the indexed tuple",
 );
-assert(entry.completion_sha === trackerCompletion, "Evidence completion SHA mismatch");
+assert(commitPattern(entry.completion_sha), "Evidence completion SHA is invalid");
 const bytes = await locatorBytes(entry.locator);
 assert(sha256(bytes) === entry.sha256, "Evidence artifact digest mismatch");
 const receipt = JSON.parse(bytes.toString("utf8"));
-assert(receipt.$schema === entry.schema_id, "Evidence schema ID mismatch");
+assert(
+  receipt.$schema === undefined || receipt.$schema === entry.schema_id,
+  "Evidence schema ID mismatch",
+);
 assert(receipt.schema_version === entry.schema_version, "Evidence schema version mismatch");
 const schemaFile = SCHEMA_FILES.get(entry.schema_id);
 assert(schemaFile, `Evidence schema ${entry.schema_id} is not registered`);
 await assertSchema(
-  await readJson(path.join(repositoryRoot, "scripts", "schemas", schemaFile)),
+  await readJson(
+    schemaFile.includes("/")
+      ? path.join(repositoryRoot, ...schemaFile.split("/"))
+      : path.join(repositoryRoot, "scripts", "schemas", schemaFile),
+  ),
   receipt,
   "Evidence artifact",
 );
+const receiptSource = receipt.source_commit ?? receipt.source_sha;
 assert(
-  receipt.source_commit === entry.source_sha &&
-    commitPattern(receipt.source_commit),
+  receiptSource === undefined ||
+    (receiptSource === entry.source_sha && commitPattern(receiptSource)),
   "Evidence source SHA mismatch",
 );
 

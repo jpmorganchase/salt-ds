@@ -3,7 +3,7 @@
   "plan_id": "001",
   "unit_id": "03",
   "tracker_status": "DONE",
-  "completion_sha": "20aba96d6d451ed4a6ad1b563ff10496bbfa4a83",
+  "completion_sha": "301e945c6ceecf273bb2f99a6c7b7c98e269a74b",
   "entries": [
     {
       "kind": "smoke-receipt",

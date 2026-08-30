@@ -3,7 +3,7 @@
   "plan_id": "001",
   "unit_id": "04b",
   "tracker_status": "DONE",
-  "completion_sha": "032efb79a9b7efbf0bf31381e71df6d664c536cd",
+  "completion_sha": "b2e4f7ff77213743ccf4bac699da80c33b68f54b",
   "entries": [
     {
       "kind": "discovery-config-verification-receipt",

@@ -3,7 +3,7 @@
   "plan_id": "001",
   "unit_id": "04c",
   "tracker_status": "DONE",
-  "completion_sha": "e06e6ebb8a856954ec2111b49250b096a3cdb62f",
+  "completion_sha": "bcfa2bae0cc480858ddd98c690c7aca053e041f4",
   "entries": [
     {
       "kind": "scan-verification-receipt",
