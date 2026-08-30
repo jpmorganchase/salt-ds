@@ -51,6 +51,7 @@ const {
   publishBuildIdentityManifest,
   publishBuildIdentityInputPatterns,
   publishCatalogArtifactPaths,
+  publishCanonicalTextPaths = [],
   publishExtraCopyPaths = [],
   publishPreserveModules = true,
   publishSourceMaps = true,
@@ -75,6 +76,19 @@ const FILES_TO_COPY = [
   "LICENSE",
   ...(publishIncludeChangelog ? ["CHANGELOG.md"] : []),
 ].concat(packageJson.files ?? []);
+
+if (
+  !Array.isArray(publishCanonicalTextPaths) ||
+  new Set(publishCanonicalTextPaths).size !== publishCanonicalTextPaths.length
+) {
+  throw new Error("publishCanonicalTextPaths must be a unique array.");
+}
+for (const relativePath of publishCanonicalTextPaths) {
+  normalizePortableRepositoryBuildPath(
+    relativePath,
+    "publishCanonicalTextPaths contains an unsafe path",
+  );
+}
 
 const packageName = packageJson.name;
 const { directory: _publishConfigDirectory, ...publishConfigForPublish } =
@@ -493,6 +507,14 @@ async function copyPublishExtraFile(fromPath, toPath, capturedBytes) {
   await fs.outputFile(toPath, bytes);
 }
 
+function canonicalUtf8TextBytes(bytes, label) {
+  const text = bytes.toString("utf8");
+  if (!Buffer.from(text, "utf8").equals(bytes)) {
+    throw new Error(`Publish text input is not valid UTF-8: ${label}.`);
+  }
+  return Buffer.from(text.replace(/\r\n?/gu, "\n"), "utf8");
+}
+
 function sha256(bytes) {
   return `sha256:${createHash("sha256").update(bytes).digest("hex")}`;
 }
@@ -906,6 +928,20 @@ for (const file of FILES_TO_COPY) {
       throw error;
     }
   }
+}
+
+for (const relativePath of publishCanonicalTextPaths) {
+  const targetPath = path.resolve(outputDir, ...relativePath.split("/"));
+  if (!isPathWithinRoot(outputDir, targetPath)) {
+    throw new Error(
+      `publishCanonicalTextPaths escapes the output directory: ${relativePath}`,
+    );
+  }
+  const bytes = await fs.readFile(targetPath);
+  await fs.writeFile(
+    targetPath,
+    canonicalUtf8TextBytes(bytes, relativePath),
+  );
 }
 
 for (const copyConfig of publishExtraCopyPaths) {

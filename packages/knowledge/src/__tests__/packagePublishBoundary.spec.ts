@@ -18,6 +18,7 @@ import {
   parseCatalogBuildBanner,
 } from "../../../../scripts/catalogBuildIdentity.mjs";
 import {
+  createBundleMetafileDigest,
   materializeVerifiedDependencySnapshot,
   verifySealedGeneratorBundleStability,
 } from "../../scripts/buildKnowledge.mjs";
@@ -44,6 +45,7 @@ type PackageManifest = {
     schemaArtifactKind: string;
     buildArtifactsField: string;
   };
+  publishCanonicalTextPaths?: string[];
   publishBundledWorkspaceDependencies?: string[];
   publishBinEntrypoints?: Record<
     string,
@@ -115,6 +117,45 @@ function expectEntriesToExclude(
 }
 
 describe("package publish boundaries", () => {
+  it("binds generator metafile topology without checkout-dependent input byte counts", () => {
+    const metafile = {
+      inputs: {
+        "src/index.ts": { bytes: 20, imports: [] },
+      },
+      outputs: {
+        "dist/index.js": {
+          bytes: 12,
+          inputs: { "src/index.ts": { bytesInOutput: 12 } },
+          imports: [],
+          exports: [],
+          entryPoint: "src/index.ts",
+        },
+      },
+    };
+    const baseline = createBundleMetafileDigest(metafile);
+    expect(
+      createBundleMetafileDigest({
+        ...metafile,
+        inputs: {
+          "src/index.ts": { bytes: 21, imports: [] },
+        },
+      }),
+    ).toBe(baseline);
+    expect(
+      createBundleMetafileDigest({
+        ...metafile,
+        inputs: {
+          "src/index.ts": {
+            bytes: 20,
+            imports: [
+              { path: "src/dependency.ts", kind: "import-statement" },
+            ],
+          },
+        },
+      }),
+    ).not.toBe(baseline);
+  });
+
   it("publishes only the Knowledge-v1 contract under the release embargo", () => {
     const manifest = readJson<PackageManifest>("../../package.json");
     const publicEntry = readFileSync(
@@ -152,6 +193,10 @@ describe("package publish boundaries", () => {
     ]);
     expect(manifest.publishSourceMaps).toBe(false);
     expect(manifest.publishPreserveModules).toBe(false);
+    expect(manifest.publishCanonicalTextPaths).toEqual([
+      "README.md",
+      "LICENSE",
+    ]);
     expect(publicEntry).not.toContain('from "./build/');
     expect(publicEntry).not.toContain("salt://");
   });
@@ -577,6 +622,12 @@ describe("package publish boundaries", () => {
     expect(manifest.publishIncludeReadme).toBe(true);
     expect(manifest.publishTypingEntryOnly).toBe(true);
     expect(manifest.publishPreserveModules).toBe(false);
+    expect(manifest.publishCanonicalTextPaths).toEqual([
+      "README.md",
+      "LICENSE",
+      "schemas/salt-config-1.schema.json",
+      "schemas/scan-result-1.schema.json",
+    ]);
     expect(manifest.typescriptInclude).toEqual(["src/index.ts"]);
     expect(manifest.publishBinEntrypoints).toEqual({
       "bin/salt-ds.js": {

@@ -908,10 +908,20 @@ export function createBundleMetafileDigest(metafile) {
       "Catalog generator bundle must produce exactly one inspected output.",
     );
   }
+  const inputs = Object.fromEntries(
+    Object.entries(metafile.inputs ?? {}).map(([inputPath, input]) => [
+      inputPath,
+      {
+        ...input,
+        bytes: undefined,
+      },
+    ]),
+  );
   return sha256(
     Buffer.from(
       canonicalJson({
-        inputs: metafile.inputs,
+        contract: "salt-generator-metafile-identity/2",
+        inputs,
         output: outputs[0],
       }),
       "utf8",

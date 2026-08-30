@@ -55,6 +55,10 @@
   "publishSourceMaps": false,
   "publishIncludeReadme": true,
   "publishIncludeChangelog": false,
+  "publishCanonicalTextPaths": [
+    "README.md",
+    "LICENSE"
+  ],
   "publishScriptExcludes": [
     "build",
     "build:knowledge",

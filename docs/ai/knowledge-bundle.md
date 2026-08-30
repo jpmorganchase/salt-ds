@@ -31,6 +31,9 @@ input as UTF-8, convert CRLF and lone CR line endings to LF, and hash/read that
 canonical projection. Invalid UTF-8 fails closed. A private raw-byte snapshot
 still detects any mutation between inventory capture and generation, so line
 ending independence does not weaken mid-build integrity checks.
+Package assembly applies the same strict UTF-8/LF projection to each explicitly
+declared README, license, and package-owned schema text path so clean checkout
+line endings cannot change packed package bytes.
 
 Every runtime-selectable record, rule, example, migration, or projection has one
 manifest-bound applicability entry across the thirteen package families. The
