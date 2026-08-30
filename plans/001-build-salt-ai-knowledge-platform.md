@@ -1,8 +1,8 @@
 # Plan 001: Build the Salt AI knowledge platform release candidate, CLI scanner, documentation channels, samples, and optional thin MCP adapter
 
 > **Scope amendment — 2026-08-29:** This plan ends at the Unit 07 locally
-> verified release-candidate boundary. Unit 07 is temporarily reopened only to
-> repair clean-checkout and cross-line-ending reproducibility after its original
+> verified release-candidate boundary. Unit 07 was reopened and repaired for
+> clean-checkout and cross-line-ending reproducibility after its original
 > evidence proved dependent on mixed working-tree line endings. Units 08a
 > through 09c below are
 > retained as publication design history, but ownership of version
@@ -77,7 +77,7 @@
 
 ## Status
 
-- **Status:** IN PROGRESS — Unit 07 reproducibility repair
+- **Status:** DONE — local release candidate complete through Unit 07
 - **Priority:** P1
 - **Effort:** L — multi-phase program; do not execute in one PR
 - **Risk:** HIGH — moves a large internal package boundary and creates the first
@@ -3105,6 +3105,16 @@ clean, offline source trees with opposing checkout line endings. The repaired
 Unit 07 evidence index must retain the original MCP decision, supersede the old
 selected-graph receipt with the new exact graph, record both clean-build
 identities, and remain entirely local and unpublished.
+
+**Repair completion — 2026-08-30:** Clean CRLF and LF checkouts of
+`37e8372bf52c297bb056c1018b095897d3d2d5c6` produced identical generated and
+distribution trees, Knowledge/CLI tarballs, pack report
+`sha256:1994bf349cb33e0f359a4a24f7191a1a88ae07a190412813e012862bf9deb63f`,
+and consumer-smoke receipt
+`sha256:1b134e1b6adae314f549564d41f8d08de08439b81a57ac2f589fe3124935e6cc`.
+The successor selected graph is
+`sha256:c3a1f771744133756e01c3cc737085bab63b77577564f588b21254b88a899884`;
+no package was published and no deployment or dist-tag was changed.
 
 ### 08a — Freeze the selected package graph and partition the version plan
 
