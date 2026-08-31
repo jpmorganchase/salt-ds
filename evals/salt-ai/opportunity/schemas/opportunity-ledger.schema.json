@@ -1,0 +1,321 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://salt-ds.github.io/schemas/salt-ai-opportunity-ledger-1.schema.json",
+  "title": "Salt AI opportunity external ledger",
+  "oneOf": [
+    { "$ref": "#/$defs/offline" },
+    { "$ref": "#/$defs/alternatives" },
+    { "$ref": "#/$defs/need" }
+  ],
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "alternativeId": {
+      "type": "string",
+      "pattern": "^alt-[a-z0-9][a-z0-9-]{0,39}$"
+    },
+    "alternativeType": {
+      "type": "string",
+      "enum": ["adjacent_ai_tool", "design_system_ai_tool", "salt_docs_search"]
+    },
+    "capability": {
+      "type": "string",
+      "enum": [
+        "answer_design_system_questions",
+        "browse_current_docs",
+        "generate_or_modify_ui_code",
+        "inspect_design_assets",
+        "search_current_docs"
+      ]
+    },
+    "limitation": {
+      "type": "string",
+      "enum": [
+        "adjacent_not_salt_specific",
+        "docs_only",
+        "model_locked",
+        "nonreproducible_configuration",
+        "paid_access"
+      ]
+    },
+    "problemCategory": {
+      "type": "string",
+      "enum": [
+        "component_choice",
+        "composition",
+        "migration",
+        "provider_theme",
+        "repair",
+        "retrieval",
+        "unsupported_change_avoidance"
+      ]
+    },
+    "offline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract",
+        "schema_version",
+        "phase",
+        "target_job",
+        "commands",
+        "participant_contact_authorized",
+        "network_authorized",
+        "model_calls_authorized",
+        "tracked_data"
+      ],
+      "properties": {
+        "contract": { "const": "salt-ai-opportunity-offline/1" },
+        "schema_version": { "const": "1.0.0" },
+        "phase": { "const": "offline" },
+        "target_job": { "type": "string", "minLength": 1 },
+        "commands": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "prepare",
+              "record",
+              "score",
+              "validate",
+              "validate-decision"
+            ],
+            "type": "string"
+          }
+        },
+        "participant_contact_authorized": { "const": false },
+        "network_authorized": { "const": false },
+        "model_calls_authorized": { "const": false },
+        "tracked_data": { "const": "sanitized_receipts_only" }
+      }
+    },
+    "alternativesAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authorization_sha256",
+        "owner_role",
+        "reviewer_role",
+        "approved_on",
+        "expires_on",
+        "retention_until",
+        "working_day_limit",
+        "paid_access_ceiling_minor",
+        "primary_source_domains"
+      ],
+      "properties": {
+        "authorization_sha256": { "$ref": "#/$defs/digest" },
+        "owner_role": { "const": "research_owner" },
+        "reviewer_role": { "const": "independent_reviewer" },
+        "approved_on": { "$ref": "#/$defs/date" },
+        "expires_on": { "$ref": "#/$defs/date" },
+        "retention_until": { "$ref": "#/$defs/date" },
+        "working_day_limit": { "const": 1 },
+        "paid_access_ceiling_minor": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "primary_source_domains": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$"
+          }
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "alternative_id",
+        "alternative_type",
+        "primary_source_domain",
+        "source_date",
+        "capture_sha256",
+        "capabilities",
+        "accessible",
+        "current",
+        "relevant",
+        "known_limitations"
+      ],
+      "properties": {
+        "alternative_id": { "$ref": "#/$defs/alternativeId" },
+        "alternative_type": { "$ref": "#/$defs/alternativeType" },
+        "primary_source_domain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_date": { "$ref": "#/$defs/date" },
+        "capture_sha256": { "$ref": "#/$defs/digest" },
+        "capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/capability" }
+        },
+        "accessible": { "type": "boolean" },
+        "current": { "type": "boolean" },
+        "relevant": { "type": "boolean" },
+        "known_limitations": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/limitation" }
+        }
+      }
+    },
+    "alternatives": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract",
+        "schema_version",
+        "phase",
+        "authority",
+        "external_locator_sha256",
+        "research_completed_on",
+        "paid_access_spent_minor",
+        "sources"
+      ],
+      "properties": {
+        "contract": { "const": "salt-ai-opportunity-alternatives-input/1" },
+        "schema_version": { "const": "1.0.0" },
+        "phase": { "const": "alternatives" },
+        "authority": { "$ref": "#/$defs/alternativesAuthority" },
+        "external_locator_sha256": { "$ref": "#/$defs/digest" },
+        "research_completed_on": { "$ref": "#/$defs/date" },
+        "paid_access_spent_minor": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/source" }
+        }
+      }
+    },
+    "needAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authorization_sha256",
+        "approved_on",
+        "expires_on",
+        "retention_until",
+        "recruitment_channel",
+        "protocol_sha256",
+        "consent_sha256",
+        "compensation_minor",
+        "max_outreach_attempts",
+        "max_business_days",
+        "minimum_consumers",
+        "minimum_teams"
+      ],
+      "properties": {
+        "authorization_sha256": { "$ref": "#/$defs/digest" },
+        "approved_on": { "$ref": "#/$defs/date" },
+        "expires_on": { "$ref": "#/$defs/date" },
+        "retention_until": { "$ref": "#/$defs/date" },
+        "recruitment_channel": {
+          "enum": ["approved_internal", "approved_research_panel"],
+          "type": "string"
+        },
+        "protocol_sha256": { "$ref": "#/$defs/digest" },
+        "consent_sha256": { "$ref": "#/$defs/digest" },
+        "compensation_minor": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_outreach_attempts": { "const": 20 },
+        "max_business_days": { "const": 10 },
+        "minimum_consumers": { "const": 5 },
+        "minimum_teams": { "const": 2 }
+      }
+    },
+    "participant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "participant_id",
+        "team_id",
+        "valid",
+        "recurring_problem",
+        "problem_categories",
+        "current_workflow_alternative_id",
+        "evidence_sha256"
+      ],
+      "properties": {
+        "participant_id": {
+          "type": "string",
+          "pattern": "^participant-[0-9]{2,3}$"
+        },
+        "team_id": {
+          "type": "string",
+          "pattern": "^team-[0-9]{2,3}$"
+        },
+        "valid": { "type": "boolean" },
+        "recurring_problem": { "type": "boolean" },
+        "problem_categories": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/problemCategory" }
+        },
+        "current_workflow_alternative_id": {
+          "oneOf": [{ "$ref": "#/$defs/alternativeId" }, { "const": "other" }]
+        },
+        "evidence_sha256": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "need": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract",
+        "schema_version",
+        "phase",
+        "authority",
+        "alternatives_receipt_sha256",
+        "interviews_completed_on",
+        "outreach_attempt_count",
+        "business_day_count",
+        "boundary_exhausted",
+        "participants"
+      ],
+      "properties": {
+        "contract": { "const": "salt-ai-opportunity-need-input/1" },
+        "schema_version": { "const": "1.0.0" },
+        "phase": { "const": "need" },
+        "authority": { "$ref": "#/$defs/needAuthority" },
+        "alternatives_receipt_sha256": { "$ref": "#/$defs/digest" },
+        "interviews_completed_on": { "$ref": "#/$defs/date" },
+        "outreach_attempt_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 20
+        },
+        "business_day_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "boundary_exhausted": { "type": "boolean" },
+        "participants": {
+          "type": "array",
+          "maxItems": 20,
+          "items": { "$ref": "#/$defs/participant" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://salt-ds.github.io/schemas/salt-ai-development-baseline-1.schema.json",
+  "title": "Salt AI development baseline descriptor",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "schema_version",
+    "unit_id",
+    "target_job",
+    "alternatives_receipt_sha256",
+    "external_locator_sha256",
+    "assets"
+  ],
+  "properties": {
+    "contract": { "const": "salt-ai-development-baseline/1" },
+    "schema_version": { "const": "1.0.0" },
+    "unit_id": { "const": "004/03" },
+    "target_job": { "type": "string", "minLength": 1 },
+    "alternatives_receipt_sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "external_locator_sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "assets": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "asset_id",
+          "sha256",
+          "source_type",
+          "source_date",
+          "permitted_roles",
+          "order",
+          "budgets",
+          "known_limitations"
+        ],
+        "properties": {
+          "asset_id": {
+            "type": "string",
+            "pattern": "^source-alt-[a-z0-9][a-z0-9-]{0,39}$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "source_type": {
+            "enum": [
+              "adjacent_ai_tool",
+              "design_system_ai_tool",
+              "salt_docs_search"
+            ],
+            "type": "string"
+          },
+          "source_date": { "type": "string", "format": "date" },
+          "permitted_roles": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "uniqueItems": true,
+            "items": {
+              "enum": ["read", "search"],
+              "type": "string"
+            }
+          },
+          "order": { "type": "integer", "minimum": 1 },
+          "budgets": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["max_queries", "max_read_bytes"],
+            "properties": {
+              "max_queries": { "type": "integer", "minimum": 1 },
+              "max_read_bytes": { "type": "integer", "minimum": 1 }
+            }
+          },
+          "known_limitations": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "adjacent_not_salt_specific",
+                "docs_only",
+                "model_locked",
+                "nonreproducible_configuration",
+                "paid_access"
+              ],
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,249 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://salt-ds.github.io/schemas/salt-ai-opportunity-decision-1.schema.json",
+  "title": "Salt AI opportunity decision",
+  "oneOf": [
+    { "$ref": "#/$defs/alternativesDecision" },
+    { "$ref": "#/$defs/needDecision" }
+  ],
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "alternativeId": {
+      "type": "string",
+      "pattern": "^alt-[a-z0-9][a-z0-9-]{0,39}$"
+    },
+    "alternativeType": {
+      "type": "string",
+      "enum": ["adjacent_ai_tool", "design_system_ai_tool", "salt_docs_search"]
+    },
+    "capability": {
+      "type": "string",
+      "enum": [
+        "answer_design_system_questions",
+        "browse_current_docs",
+        "generate_or_modify_ui_code",
+        "inspect_design_assets",
+        "search_current_docs"
+      ]
+    },
+    "shortlistEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "alternative_id",
+        "alternative_type",
+        "capabilities",
+        "current_workflow_use_count"
+      ],
+      "properties": {
+        "alternative_id": { "$ref": "#/$defs/alternativeId" },
+        "alternative_type": { "$ref": "#/$defs/alternativeType" },
+        "capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/capability" }
+        },
+        "current_workflow_use_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "primarySource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "alternative_id",
+        "source_type",
+        "source_date",
+        "capture_sha256"
+      ],
+      "properties": {
+        "alternative_id": { "$ref": "#/$defs/alternativeId" },
+        "source_type": { "$ref": "#/$defs/alternativeType" },
+        "source_date": { "type": "string", "format": "date" },
+        "capture_sha256": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "alternativesGates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "at_least_three_accessible_current_alternatives",
+        "includes_ordinary_salt_docs_search",
+        "includes_ai_or_design_system_tool",
+        "primary_sources_captured"
+      ],
+      "properties": {
+        "at_least_three_accessible_current_alternatives": {
+          "type": "boolean"
+        },
+        "includes_ordinary_salt_docs_search": { "type": "boolean" },
+        "includes_ai_or_design_system_tool": { "type": "boolean" },
+        "primary_sources_captured": { "type": "boolean" }
+      }
+    },
+    "alternativesDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract",
+        "schema_version",
+        "unit_id",
+        "phase",
+        "target_job",
+        "authorization_sha256",
+        "external_locator_sha256",
+        "valid_cohort_count",
+        "shortlist",
+        "other_current_workflow_use_count",
+        "primary_sources",
+        "gates",
+        "result"
+      ],
+      "properties": {
+        "contract": {
+          "const": "salt-ai-opportunity-alternatives-decision/1"
+        },
+        "schema_version": { "const": "1.0.0" },
+        "unit_id": { "const": "004/03" },
+        "phase": { "const": "alternatives" },
+        "target_job": { "type": "string", "minLength": 1 },
+        "authorization_sha256": { "$ref": "#/$defs/digest" },
+        "external_locator_sha256": { "$ref": "#/$defs/digest" },
+        "valid_cohort_count": { "const": 0 },
+        "shortlist": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/shortlistEntry" }
+        },
+        "other_current_workflow_use_count": { "const": 0 },
+        "primary_sources": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/primarySource" }
+        },
+        "gates": { "$ref": "#/$defs/alternativesGates" },
+        "result": {
+          "enum": [
+            "READY_FOR_NEED_RESEARCH",
+            "DEFER_ALTERNATIVE_SELECTION_BLOCKED"
+          ],
+          "type": "string"
+        }
+      }
+    },
+    "categoryCount": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["category", "participant_count", "team_count"],
+      "properties": {
+        "category": {
+          "enum": [
+            "component_choice",
+            "composition",
+            "migration",
+            "provider_theme",
+            "repair",
+            "retrieval",
+            "unsupported_change_avoidance"
+          ],
+          "type": "string"
+        },
+        "participant_count": { "type": "integer", "minimum": 1 },
+        "team_count": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "needGates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "viable_comparator_shortlist",
+        "minimum_valid_cohort",
+        "recurring_problem_rate_at_least_80_percent",
+        "repeated_category_across_two_teams"
+      ],
+      "properties": {
+        "viable_comparator_shortlist": { "type": "boolean" },
+        "minimum_valid_cohort": { "type": "boolean" },
+        "recurring_problem_rate_at_least_80_percent": {
+          "type": "boolean"
+        },
+        "repeated_category_across_two_teams": { "type": "boolean" }
+      }
+    },
+    "needDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract",
+        "schema_version",
+        "unit_id",
+        "phase",
+        "target_job",
+        "authorization_sha256",
+        "alternatives_receipt_sha256",
+        "outreach_attempt_count",
+        "business_day_count",
+        "boundary_exhausted",
+        "valid_cohort_count",
+        "recurring_problem_count",
+        "problem_categories",
+        "shortlist",
+        "other_current_workflow_use_count",
+        "gates",
+        "result"
+      ],
+      "properties": {
+        "contract": { "const": "salt-ai-opportunity-need-decision/1" },
+        "schema_version": { "const": "1.0.0" },
+        "unit_id": { "const": "004/03" },
+        "phase": { "const": "need" },
+        "target_job": { "type": "string", "minLength": 1 },
+        "authorization_sha256": { "$ref": "#/$defs/digest" },
+        "alternatives_receipt_sha256": { "$ref": "#/$defs/digest" },
+        "outreach_attempt_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 20
+        },
+        "business_day_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "boundary_exhausted": { "type": "boolean" },
+        "valid_cohort_count": { "type": "integer", "minimum": 0 },
+        "recurring_problem_count": { "type": "integer", "minimum": 0 },
+        "problem_categories": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/categoryCount" }
+        },
+        "shortlist": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/shortlistEntry" }
+        },
+        "other_current_workflow_use_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "gates": { "$ref": "#/$defs/needGates" },
+        "result": {
+          "enum": [
+            "PASS_NEED",
+            "CUT_NEED",
+            "DEFER_INSUFFICIENT_COHORT",
+            "DEFER_ALTERNATIVE_SELECTION_BLOCKED"
+          ],
+          "type": "string"
+        }
+      }
+    }
+  }
+}

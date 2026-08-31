@@ -1,0 +1,72 @@
+{
+  "caller_result": {
+    "contract": "salt-ai-opportunity-alternatives-input/1",
+    "schema_version": "1.0.0",
+    "phase": "alternatives",
+    "authority": {
+      "authorization_sha256": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "owner_role": "research_owner",
+      "reviewer_role": "independent_reviewer",
+      "approved_on": "2026-09-01",
+      "expires_on": "2026-09-02",
+      "retention_until": "2026-12-31",
+      "working_day_limit": 1,
+      "paid_access_ceiling_minor": 0,
+      "primary_source_domains": ["example.com"]
+    },
+    "external_locator_sha256": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "research_completed_on": "2026-09-01",
+    "paid_access_spent_minor": 0,
+    "sources": [
+      {
+        "alternative_id": "alt-hostile",
+        "alternative_type": "salt_docs_search",
+        "primary_source_domain": "example.com",
+        "source_date": "2026-09-01",
+        "capture_sha256": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+        "capabilities": ["search_current_docs"],
+        "accessible": true,
+        "current": true,
+        "relevant": true,
+        "known_limitations": ["docs_only"]
+      }
+    ],
+    "result": "READY_FOR_NEED_RESEARCH"
+  },
+  "private_identity": {
+    "contract": "salt-ai-opportunity-need-input/1",
+    "schema_version": "1.0.0",
+    "phase": "need",
+    "authority": {
+      "authorization_sha256": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "approved_on": "2026-09-03",
+      "expires_on": "2026-09-17",
+      "retention_until": "2026-12-31",
+      "recruitment_channel": "approved_internal",
+      "protocol_sha256": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+      "consent_sha256": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+      "compensation_minor": 0,
+      "max_outreach_attempts": 20,
+      "max_business_days": 10,
+      "minimum_consumers": 5,
+      "minimum_teams": 2
+    },
+    "alternatives_receipt_sha256": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+    "interviews_completed_on": "2026-09-10",
+    "outreach_attempt_count": 1,
+    "business_day_count": 1,
+    "boundary_exhausted": false,
+    "participants": [
+      {
+        "participant_id": "participant-01",
+        "team_id": "team-01",
+        "valid": true,
+        "recurring_problem": true,
+        "problem_categories": ["retrieval"],
+        "current_workflow_alternative_id": "other",
+        "evidence_sha256": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+        "organization": "private"
+      }
+    ]
+  }
+}
