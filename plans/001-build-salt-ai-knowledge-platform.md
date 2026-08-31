@@ -13,6 +13,15 @@
 > smoke test, or web-artifact build is verification rather than publication and
 > remains in Plan 001. Plan 001 authorizes no registry or deployment mutation.
 
+> **Successor amendment — 2026-08-30:** Plan 001 is closed historical ancestry.
+> Do not reopen one of its units for product correction, new evaluation, user
+> research, competitor work, scanner hardening, or release preparation. The sole
+> tracked successor for those decisions is
+> [Plan 004](./004-validate-salt-ai-product-wedge.md). Plan 003 remains
+> ineligible until Plan 004 records a final PASS bound to exact candidate bytes.
+> A Plan 004 `CUT` or `DEFER` is a valid product decision and does not reopen
+> Plan 001.
+
 > **Executor instructions:** This is a program plan made of ordered execution
 > units. Implement one code-bearing execution unit per branch and pull request,
 > subject only to the explicitly bounded Unit 08c release-state refs and Unit
@@ -176,12 +185,12 @@ another architecture.
   contains useful integrity ideas but is explicitly stale and split. Do not
   execute or revive it. This plan uses one cross-package knowledge bundle rather
   than embedding separate documentation in every Salt component package.
-- Active `advisor-plans/016-retire-legacy-registry-projection.md` and
-  `advisor-plans/017-run-salt-delivery-experiment.md` are blocked and are not
-  dependencies. The legacy projection is handled only when safe during this
-  extraction. The 750-run experiment is replaced by the smaller recurring
-  evaluation described here.
-- Do not edit `advisor-plans/`. It is locally excluded historical evidence.
+- Local `advisor-plans/016-retire-legacy-registry-projection.md` and
+  `advisor-plans/017-run-salt-delivery-experiment.md` are rejected historical
+  evidence and are not dependencies. No ignored advisor plan is active. Plan
+  004 owns the tracked post-Unit-07 decision path.
+- Do not edit `advisor-plans/`. It is locally excluded historical evidence,
+  not dispatch authority.
 
 ## Current state
 
@@ -4687,8 +4696,16 @@ operations are Plan 003 acceptance criteria and do not gate Plan 001. Local
 `npm pack`, clean-room install, offline smoke, deterministic web builds, package
 metadata, and consumer validation remain Plan 001 requirements.
 
-The combined original program is complete only when all applicable boxes are
-true across Plans 001 and 003:
+### Superseded original-program checklist
+
+The unchecked list below is retained only as historical design inventory. It is
+not a current combined definition of done for Plans 001 and 003 and cannot
+dispatch work. In particular, its scanner, old four-mode pilot, MCP, R2/R3, and
+Plan-001/08a–09c requirements were superseded by the Plan 004 scan-free product
+decision and the Plan 003 release boundary. Current acceptance is defined only
+by Plan 004's indexed terminal decision and, after a PASS, the separately
+activated Plan 003 units. A historical checkbox below never blocks, expands, or
+weakens either successor.
 
 - [ ] ADR, public contracts, support matrix, owners, review dates, and baseline
       receipt are approved.

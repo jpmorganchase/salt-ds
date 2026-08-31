@@ -1,0 +1,417 @@
+{
+  "contract": "salt-ai-plan-004-evidence-index/1",
+  "schema_version": "1.0.0",
+  "plan_id": "004",
+  "planned_ancestry": "d30dc1f7fca047e5180c15d07bb7be4557305eff",
+  "active_dispatch": {
+    "unit": "004/00",
+    "checkpoint_sha": "d30dc1f7fca047e5180c15d07bb7be4557305eff"
+  },
+  "inherited_worktree": {
+    "base_sha": "d30dc1f7fca047e5180c15d07bb7be4557305eff",
+    "branch": "codex/ai-platform",
+    "reviewed_at": "2026-08-31",
+    "product_paths": [
+      "evals/salt-ai/baselines/baseline-pre-platform.json",
+      "evals/salt-ai/fixtures/repositories.json",
+      "evals/salt-ai/manifest.json",
+      "evals/salt-ai/protocol/budgets.json",
+      "evals/salt-ai/scripts/validate.mjs",
+      "evals/salt-ai/tasks/project-wrapper-policy.json",
+      "packages/cli/src/commands/__tests__/info.spec.ts",
+      "packages/cli/src/commands/__tests__/skill.spec.ts",
+      "packages/cli/src/commands/info.ts",
+      "packages/cli/src/commands/skill.ts",
+      "packages/cli/src/config/__tests__/loadConfig.spec.ts",
+      "packages/cli/src/discovery/__tests__/discoverProject.spec.ts",
+      "packages/cli/src/discovery/discoverProject.ts",
+      "packages/cli/src/scan/__tests__/architectureBoundary.spec.ts",
+      "packages/cli/src/scan/__tests__/result.spec.ts",
+      "packages/cli/src/scan/scannerWorker.ts",
+      "packages/knowledge/src/__tests__/evidence.spec.ts",
+      "packages/knowledge/src/__tests__/projectConventions.spec.ts",
+      "packages/knowledge/src/__tests__/reviewCatalogAdapter.spec.ts",
+      "packages/knowledge/src/build/buildRegistryDocs.ts",
+      "packages/knowledge/src/evidence.ts",
+      "packages/knowledge/src/policy/__tests__/layerDiagnostics.spec.ts",
+      "packages/knowledge/src/policy/__tests__/projectPolicyIr.spec.ts",
+      "packages/knowledge/src/policy/detection.ts",
+      "packages/knowledge/src/policy/index.ts",
+      "packages/knowledge/src/policy/layerDiagnostics.ts",
+      "packages/knowledge/src/policy/projectPolicyIr.ts",
+      "packages/knowledge/src/project/__tests__/inspectSaltProjectFacts.spec.ts",
+      "packages/knowledge/src/project/__tests__/projectFacts.spec.ts",
+      "packages/knowledge/src/project/inspectSaltProjectFacts.ts",
+      "packages/knowledge/src/project/projectFacts.ts",
+      "packages/knowledge/src/public.ts",
+      "packages/knowledge/src/review/reviewRuleRegistry.ts",
+      "packages/knowledge/src/review/reviewSaltCode.ts",
+      "scripts/build.mjs",
+      "scripts/checkAiToolingPackageDryRun.mjs",
+      "scripts/consumer-smoke/checks.mjs",
+      "scripts/consumer-smoke/fixture.mjs",
+      "scripts/consumer-smoke/shared.mjs",
+      "scripts/schemas/project-conventions-stack.schema.json",
+      "scripts/schemas/project-conventions.schema.json",
+      "scripts/schemas/salt-evidence-ref.schema.json",
+      "skills/salt-design-system/references/managed-agents-block.md",
+      "skills/salt-design-system/SKILL.md",
+      "workflow-examples/consumer-repo/.salt/team.json",
+      "workflow-examples/consumer-repo/package.json",
+      "workflow-examples/consumer-repo/README.md",
+      "workflow-examples/consumer-repo/scripts/verify-policy.mjs",
+      "workflow-examples/consumer-repo/src/theme/ConsumerBrandProvider.tsx",
+      "workflow-examples/project-conventions/conventions-pack.happy-path.md",
+      "workflow-examples/project-conventions/lob-policy.example.json",
+      "workflow-examples/project-conventions/project-conventions.example.json",
+      "workflow-examples/project-conventions/project-conventions.pattern-heavy.example.json",
+      "workflow-examples/project-conventions/project-conventions.stack.example.json",
+      "workflow-examples/project-conventions/project-conventions.wrapper-heavy.example.json",
+      "workflow-examples/project-conventions/README.md"
+    ],
+    "path_states": [
+      {
+        "path": "evals/salt-ai/baselines/baseline-pre-platform.json",
+        "state": "modified"
+      },
+      {
+        "path": "evals/salt-ai/fixtures/repositories.json",
+        "state": "modified"
+      },
+      { "path": "evals/salt-ai/manifest.json", "state": "modified" },
+      { "path": "evals/salt-ai/protocol/budgets.json", "state": "modified" },
+      { "path": "evals/salt-ai/scripts/validate.mjs", "state": "modified" },
+      {
+        "path": "evals/salt-ai/tasks/project-wrapper-policy.json",
+        "state": "deleted"
+      },
+      {
+        "path": "packages/cli/src/commands/__tests__/info.spec.ts",
+        "state": "untracked"
+      },
+      {
+        "path": "packages/cli/src/commands/__tests__/skill.spec.ts",
+        "state": "modified"
+      },
+      { "path": "packages/cli/src/commands/info.ts", "state": "modified" },
+      { "path": "packages/cli/src/commands/skill.ts", "state": "modified" },
+      {
+        "path": "packages/cli/src/config/__tests__/loadConfig.spec.ts",
+        "state": "modified"
+      },
+      {
+        "path": "packages/cli/src/discovery/__tests__/discoverProject.spec.ts",
+        "state": "modified"
+      },
+      {
+        "path": "packages/cli/src/discovery/discoverProject.ts",
+        "state": "modified"
+      },
+      {
+        "path": "packages/cli/src/scan/__tests__/architectureBoundary.spec.ts",
+        "state": "modified"
+      },
+      {
+        "path": "packages/cli/src/scan/__tests__/result.spec.ts",
+        "state": "modified"
+      },
+      { "path": "packages/cli/src/scan/scannerWorker.ts", "state": "modified" },
+      {
+        "path": "packages/knowledge/src/__tests__/evidence.spec.ts",
+        "state": "modified"
+      },
+      {
+        "path": "packages/knowledge/src/__tests__/projectConventions.spec.ts",
+        "state": "deleted"
+      },
+      {
+        "path": "packages/knowledge/src/__tests__/reviewCatalogAdapter.spec.ts",
+        "state": "modified"
+      },
+      {
+        "path": "packages/knowledge/src/build/buildRegistryDocs.ts",
+        "state": "modified"
+      },
+      { "path": "packages/knowledge/src/evidence.ts", "state": "modified" },
+      {
+        "path": "packages/knowledge/src/policy/__tests__/layerDiagnostics.spec.ts",
+        "state": "deleted"
+      },
+      {
+        "path": "packages/knowledge/src/policy/__tests__/projectPolicyIr.spec.ts",
+        "state": "deleted"
+      },
+      {
+        "path": "packages/knowledge/src/policy/detection.ts",
+        "state": "deleted"
+      },
+      { "path": "packages/knowledge/src/policy/index.ts", "state": "deleted" },
+      {
+        "path": "packages/knowledge/src/policy/layerDiagnostics.ts",
+        "state": "deleted"
+      },
+      {
+        "path": "packages/knowledge/src/policy/projectPolicyIr.ts",
+        "state": "deleted"
+      },
+      {
+        "path": "packages/knowledge/src/project/__tests__/inspectSaltProjectFacts.spec.ts",
+        "state": "modified"
+      },
+      {
+        "path": "packages/knowledge/src/project/__tests__/projectFacts.spec.ts",
+        "state": "modified"
+      },
+      {
+        "path": "packages/knowledge/src/project/inspectSaltProjectFacts.ts",
+        "state": "modified"
+      },
+      {
+        "path": "packages/knowledge/src/project/projectFacts.ts",
+        "state": "modified"
+      },
+      { "path": "packages/knowledge/src/public.ts", "state": "modified" },
+      {
+        "path": "packages/knowledge/src/review/reviewRuleRegistry.ts",
+        "state": "modified"
+      },
+      {
+        "path": "packages/knowledge/src/review/reviewSaltCode.ts",
+        "state": "modified"
+      },
+      { "path": "scripts/build.mjs", "state": "modified" },
+      {
+        "path": "scripts/checkAiToolingPackageDryRun.mjs",
+        "state": "modified"
+      },
+      { "path": "scripts/consumer-smoke/checks.mjs", "state": "modified" },
+      { "path": "scripts/consumer-smoke/fixture.mjs", "state": "modified" },
+      { "path": "scripts/consumer-smoke/shared.mjs", "state": "modified" },
+      {
+        "path": "scripts/schemas/project-conventions-stack.schema.json",
+        "state": "deleted"
+      },
+      {
+        "path": "scripts/schemas/project-conventions.schema.json",
+        "state": "deleted"
+      },
+      {
+        "path": "scripts/schemas/salt-evidence-ref.schema.json",
+        "state": "modified"
+      },
+      {
+        "path": "skills/salt-design-system/references/managed-agents-block.md",
+        "state": "modified"
+      },
+      { "path": "skills/salt-design-system/SKILL.md", "state": "modified" },
+      {
+        "path": "workflow-examples/consumer-repo/.salt/team.json",
+        "state": "deleted"
+      },
+      {
+        "path": "workflow-examples/consumer-repo/package.json",
+        "state": "modified"
+      },
+      {
+        "path": "workflow-examples/consumer-repo/README.md",
+        "state": "modified"
+      },
+      {
+        "path": "workflow-examples/consumer-repo/scripts/verify-policy.mjs",
+        "state": "deleted"
+      },
+      {
+        "path": "workflow-examples/consumer-repo/src/theme/ConsumerBrandProvider.tsx",
+        "state": "modified"
+      },
+      {
+        "path": "workflow-examples/project-conventions/conventions-pack.happy-path.md",
+        "state": "deleted"
+      },
+      {
+        "path": "workflow-examples/project-conventions/lob-policy.example.json",
+        "state": "deleted"
+      },
+      {
+        "path": "workflow-examples/project-conventions/project-conventions.example.json",
+        "state": "deleted"
+      },
+      {
+        "path": "workflow-examples/project-conventions/project-conventions.pattern-heavy.example.json",
+        "state": "deleted"
+      },
+      {
+        "path": "workflow-examples/project-conventions/project-conventions.stack.example.json",
+        "state": "deleted"
+      },
+      {
+        "path": "workflow-examples/project-conventions/project-conventions.wrapper-heavy.example.json",
+        "state": "deleted"
+      },
+      {
+        "path": "workflow-examples/project-conventions/README.md",
+        "state": "deleted"
+      }
+    ],
+    "staged_product_paths": [],
+    "staged_patch_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unstaged_patch_sha256": "sha256:68b4f007231438842259f76d23c16ed9eb38bc517ac45cde70c54d7636d956a5",
+    "untracked_files": [
+      {
+        "path": "packages/cli/src/commands/__tests__/info.spec.ts",
+        "sha256": "sha256:9fa18b07fb8955ec9c9da7511589f83c0ef07143639f1583d30b9ad374a3ca63"
+      }
+    ],
+    "protected_path": "skills/salt-design-system/references/managed-agents-block.md",
+    "protected_tail_sha256": "sha256:a3aa2f51ae6844baf5a275ed4cc945cb65cc216530688fab93d6a4ec233240b9",
+    "protected_added_lines": 1,
+    "protected_removed_lines": 0
+  },
+  "units": [
+    {
+      "id": "004/00",
+      "status": "IN_PROGRESS",
+      "dependency_unit": null,
+      "dependency_completion_sha": null,
+      "checkpoint_sha": "d30dc1f7fca047e5180c15d07bb7be4557305eff",
+      "completion_sha": null,
+      "scope": {
+        "materialized": true,
+        "exact_paths": [
+          "AGENTS.md",
+          "package.json",
+          "plans/001-build-salt-ai-knowledge-platform.md",
+          "plans/002-add-secure-historical-salt-knowledge.md",
+          "plans/003-publish-salt-ai-release-candidate.md",
+          "plans/004-validate-salt-ai-product-wedge.md",
+          "plans/evidence/004/index.json",
+          "plans/README.md",
+          "scripts/checkChangedQuality.mjs",
+          "scripts/checkChangedQuality.spec.js",
+          "scripts/fixtures/changed-quality/prettierignore",
+          "scripts/schemas/salt-ai-plan-004-evidence-index.schema.json",
+          "scripts/validateSaltAiPlan004.mjs",
+          "scripts/validateSaltAiPlan004.spec.js"
+        ],
+        "allow_inherited_dirty": true
+      },
+      "verification": [],
+      "evidence": null,
+      "successor_eligible": false
+    },
+    {
+      "id": "004/01",
+      "status": "TODO",
+      "dependency_unit": "004/00",
+      "dependency_completion_sha": null,
+      "checkpoint_sha": null,
+      "completion_sha": null,
+      "scope": {
+        "materialized": false,
+        "exact_paths": [],
+        "allow_inherited_dirty": true
+      },
+      "verification": [],
+      "evidence": null,
+      "successor_eligible": false
+    },
+    {
+      "id": "004/02",
+      "status": "TODO",
+      "dependency_unit": "004/01",
+      "dependency_completion_sha": null,
+      "checkpoint_sha": null,
+      "completion_sha": null,
+      "scope": {
+        "materialized": false,
+        "exact_paths": [],
+        "allow_inherited_dirty": false
+      },
+      "verification": [],
+      "evidence": null,
+      "successor_eligible": false
+    },
+    {
+      "id": "004/03",
+      "status": "TODO",
+      "dependency_unit": "004/02",
+      "dependency_completion_sha": null,
+      "checkpoint_sha": null,
+      "completion_sha": null,
+      "scope": {
+        "materialized": false,
+        "exact_paths": [],
+        "allow_inherited_dirty": false
+      },
+      "verification": [],
+      "evidence": null,
+      "successor_eligible": false
+    },
+    {
+      "id": "004/04",
+      "status": "TODO",
+      "dependency_unit": "004/03",
+      "dependency_completion_sha": null,
+      "checkpoint_sha": null,
+      "completion_sha": null,
+      "scope": {
+        "materialized": false,
+        "exact_paths": [],
+        "allow_inherited_dirty": false
+      },
+      "verification": [],
+      "evidence": null,
+      "successor_eligible": false
+    },
+    {
+      "id": "004/05",
+      "status": "TODO",
+      "dependency_unit": "004/04",
+      "dependency_completion_sha": null,
+      "checkpoint_sha": null,
+      "completion_sha": null,
+      "scope": {
+        "materialized": false,
+        "exact_paths": [],
+        "allow_inherited_dirty": false
+      },
+      "verification": [],
+      "evidence": null,
+      "successor_eligible": false
+    },
+    {
+      "id": "004/06",
+      "status": "TODO",
+      "dependency_unit": "004/05",
+      "dependency_completion_sha": null,
+      "checkpoint_sha": null,
+      "completion_sha": null,
+      "scope": {
+        "materialized": false,
+        "exact_paths": [],
+        "allow_inherited_dirty": false
+      },
+      "verification": [],
+      "evidence": null,
+      "successor_eligible": false
+    },
+    {
+      "id": "004/07",
+      "status": "TODO",
+      "dependency_unit": "004/06",
+      "dependency_completion_sha": null,
+      "checkpoint_sha": null,
+      "completion_sha": null,
+      "scope": {
+        "materialized": false,
+        "exact_paths": [],
+        "allow_inherited_dirty": false
+      },
+      "verification": [],
+      "evidence": null,
+      "successor_eligible": false
+    }
+  ],
+  "terminal_decision": null,
+  "plan_003_eligible": false
+}

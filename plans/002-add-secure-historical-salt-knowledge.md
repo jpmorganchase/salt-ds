@@ -1,5 +1,14 @@
 # Plan 002: Add secure historical Salt knowledge resolution only after current-version GA
 
+> **Successor correction — 2026-08-30:** This file is deferred design history,
+> not executable authority. Its Plan-001/09b/09c, scanner, MCP, R2/R3, selector,
+> and command references describe the superseded original launch design. No Unit
+> 002 work may be dispatched until Plan 003 has completed, its actual activation/
+> current-authority/public-discovery receipts validate, owners approve the Unit
+> 00 gates, and a new tracked re-planning pass replaces every stale selector and
+> verification command with the contracts that actually shipped. A placeholder
+> row or old Plan 001 receipt cannot satisfy that re-plan.
+>
 > **Executor instructions:** This plan is intentionally deferred. Unit 00 may
 > start only after every Unit 00 entry gate below is approved and
 > `plans/README.md` records Plan 001/09c `DONE`, its discovery-deployment final
@@ -66,13 +75,16 @@
 
 ## Status
 
-- **Status:** DEFERRED — Plan 001/09c, product mandate, candidate vector, and owners are not yet approved
+- **Status:** DEFERRED — Plan 003 completion, post-release re-plan, product
+  mandate, candidate vector, and owners are absent
 - **Priority:** P2
 - **Effort:** L — security-sensitive multi-phase follow-on
 - **Risk:** HIGH — introduces a network/cache trust path and long-lived metadata operations
-- **Depends on:** Plan 001/09c tracker-complete discovery over the 09b R3 authority and the Unit 00 entry gates below
+- **Depends on:** Plan 003 completion plus validated activation/current-authority/
+  public-discovery receipts, a post-Plan-003 re-plan, and the Unit 00 gates below
 - **Category:** direction / compatibility / supply chain / CLI / release / tests
-- **Planned at:** commit `8c3bd5f1b`, 2026-08-26; rebase checkpoint required after Plan 001
+- **Planned at:** commit `8c3bd5f1b`, 2026-08-26; full re-plan required after
+  Plan 003
 
 ## Why this is separate
 

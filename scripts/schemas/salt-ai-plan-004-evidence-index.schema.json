@@ -1,0 +1,245 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://salt-ds.github.io/schemas/salt-ai-plan-004-evidence-index-1.schema.json",
+  "title": "Salt AI Plan 004 evidence index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "schema_version",
+    "plan_id",
+    "planned_ancestry",
+    "active_dispatch",
+    "inherited_worktree",
+    "units",
+    "terminal_decision",
+    "plan_003_eligible"
+  ],
+  "properties": {
+    "contract": { "const": "salt-ai-plan-004-evidence-index/1" },
+    "schema_version": { "const": "1.0.0" },
+    "plan_id": { "const": "004" },
+    "planned_ancestry": { "$ref": "#/$defs/commit" },
+    "active_dispatch": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["unit", "checkpoint_sha"],
+          "properties": {
+            "unit": { "pattern": "^004/0[0-7]$", "type": "string" },
+            "checkpoint_sha": { "$ref": "#/$defs/commit" }
+          }
+        }
+      ]
+    },
+    "inherited_worktree": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "base_sha",
+        "branch",
+        "reviewed_at",
+        "product_paths",
+        "path_states",
+        "staged_product_paths",
+        "staged_patch_sha256",
+        "unstaged_patch_sha256",
+        "untracked_files",
+        "protected_path",
+        "protected_tail_sha256",
+        "protected_added_lines",
+        "protected_removed_lines"
+      ],
+      "properties": {
+        "base_sha": { "$ref": "#/$defs/commit" },
+        "branch": { "const": "codex/ai-platform" },
+        "reviewed_at": { "format": "date", "type": "string" },
+        "product_paths": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/repositoryPath" }
+        },
+        "path_states": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "state"],
+            "properties": {
+              "path": { "$ref": "#/$defs/repositoryPath" },
+              "state": {
+                "enum": ["deleted", "modified", "untracked"],
+                "type": "string"
+              }
+            }
+          }
+        },
+        "staged_product_paths": {
+          "type": "array",
+          "maxItems": 0,
+          "items": { "$ref": "#/$defs/repositoryPath" }
+        },
+        "staged_patch_sha256": { "$ref": "#/$defs/digest" },
+        "unstaged_patch_sha256": { "$ref": "#/$defs/digest" },
+        "untracked_files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "sha256"],
+            "properties": {
+              "path": { "$ref": "#/$defs/repositoryPath" },
+              "sha256": { "$ref": "#/$defs/digest" }
+            }
+          }
+        },
+        "protected_path": { "$ref": "#/$defs/repositoryPath" },
+        "protected_tail_sha256": { "$ref": "#/$defs/digest" },
+        "protected_added_lines": { "const": 1 },
+        "protected_removed_lines": { "const": 0 }
+      }
+    },
+    "units": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": { "$ref": "#/$defs/unit" }
+    },
+    "terminal_decision": {
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/evidence" }]
+    },
+    "plan_003_eligible": { "type": "boolean" }
+  },
+  "$defs": {
+    "commit": { "pattern": "^[0-9a-f]{40}$", "type": "string" },
+    "digest": { "pattern": "^sha256:[0-9a-f]{64}$", "type": "string" },
+    "repositoryPath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*[\\u0000-\\u001f\\u007f]).+$"
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "locator",
+        "sha256",
+        "schema",
+        "schema_locator",
+        "schema_sha256",
+        "result"
+      ],
+      "properties": {
+        "locator": {
+          "type": "string",
+          "pattern": "^plans/evidence/004/(?:03(?:-development-baseline|-alternatives)?|04|05|06|07)\\.json$"
+        },
+        "sha256": { "$ref": "#/$defs/digest" },
+        "schema": { "type": "string", "minLength": 1 },
+        "schema_locator": {
+          "type": "string",
+          "pattern": "^(?:scripts/schemas/|evals/salt-ai/(?:opportunity|candidate|pilot)/).+\\.schema\\.json$"
+        },
+        "schema_sha256": { "$ref": "#/$defs/digest" },
+        "result": {
+          "enum": [
+            "READY_FOR_NEED_RESEARCH",
+            "PASS_NEED",
+            "CUT_NEED",
+            "DEFER_ALTERNATIVE_SELECTION_BLOCKED",
+            "DEFER_INSUFFICIENT_COHORT",
+            "PASS_CANDIDATE",
+            "DEFER_CONTENT_GAP",
+            "DEFER_RETRIEVAL",
+            "READY_FOR_MODEL_AUTHORIZATION",
+            "PASS_CORE",
+            "CUT_CORE",
+            "DEFER_INVALID",
+            "PASS",
+            "DEFER_AUTHORITY_MISSING_OR_EXPIRED",
+            "DEFER_PROTOCOL_INVALID",
+            "DEFER_LEDGER_INVALID",
+            "CUT_FINAL_TRUST",
+            "CUT_FINAL_COMPETITIVE",
+            "CUT_FINAL_ADOPTION"
+          ],
+          "type": "string"
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "result", "output_sha256"],
+      "properties": {
+        "command": { "type": "string", "minLength": 1 },
+        "result": { "enum": ["pass", "diagnostic-fail"], "type": "string" },
+        "output_sha256": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "unit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "status",
+        "dependency_unit",
+        "dependency_completion_sha",
+        "checkpoint_sha",
+        "completion_sha",
+        "scope",
+        "verification",
+        "evidence",
+        "successor_eligible"
+      ],
+      "properties": {
+        "id": { "pattern": "^004/0[0-7]$", "type": "string" },
+        "status": {
+          "enum": ["TODO", "IN_PROGRESS", "DONE", "DEFERRED", "BLOCKED"],
+          "type": "string"
+        },
+        "dependency_unit": {
+          "oneOf": [
+            { "type": "null" },
+            { "pattern": "^004/0[0-6]$", "type": "string" }
+          ]
+        },
+        "dependency_completion_sha": {
+          "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/commit" }]
+        },
+        "checkpoint_sha": {
+          "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/commit" }]
+        },
+        "completion_sha": {
+          "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/commit" }]
+        },
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["materialized", "exact_paths", "allow_inherited_dirty"],
+          "properties": {
+            "materialized": { "type": "boolean" },
+            "exact_paths": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": { "$ref": "#/$defs/repositoryPath" }
+            },
+            "allow_inherited_dirty": { "type": "boolean" }
+          }
+        },
+        "verification": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/verification" }
+        },
+        "evidence": {
+          "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/evidence" }]
+        },
+        "successor_eligible": { "type": "boolean" }
+      }
+    }
+  }
+}

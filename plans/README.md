@@ -6,19 +6,22 @@ read each plan completely before starting, honor every STOP condition, and
 update the status row when work changes state.
 
 `Planned at` SHAs in plan headers record the audit baseline only. They are never
-execution-unit drift checkpoints. After this complete plan set lands on the
-default branch, a plan-control-only commit must replace Plan 001 Unit 00a's
-placeholder with the latest default-branch SHA containing all three plan files.
-Until that concrete SHA is present, Unit 00a must STOP; this prevents the initial
-plan additions from appearing as implementation drift.
+execution-unit drift checkpoints. After a tracked plan-control change lands, a
+plan-control-only commit must record the concrete checkpoint for the one active
+unit. Plan 001's historical tracker keeps its original evidence semantics;
+Plan 004 uses the separate active-dispatch block below and must not add rows that
+the current tracker parser would misclassify as Plan 001.
+The historical Unit 00a checkpoint rule is retained only as Plan 001 evidence;
+it does not dispatch or block Plan 004.
 
 ## Execution order and status
 
-| Plan                                                 | Title                                                                                                           | Priority | Effort         | Depends on          | Status                                                                       |
-| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | -------- | -------------- | ------------------- | ---------------------------------------------------------------------------- |
-| [001](./001-build-salt-ai-knowledge-platform.md)     | Build the Salt AI knowledge platform, CLI scanner, docs channels, samples, and optional MCP release candidate   | P1       | L, multi-phase | —                   | DONE — local release candidate complete through Unit 07                      |
-| [002](./002-add-secure-historical-salt-knowledge.md) | Add secure historical Salt knowledge resolution only after current GA, public discovery, and ownership approval | P2       | L, conditional | Plan 003 completion | DEFERRED — live authority, candidate vector, and owners not approved         |
-| [003](./003-publish-salt-ai-release-candidate.md)    | Materialize versions and publish an approved Salt AI release candidate through separately owned release systems | P2       | L, conditional | Plan 001 Unit 07    | DEFERRED — publication authority and immutable web provider are not approved |
+| Plan                                                 | Title                                                                                                           | Priority | Effort         | Depends on          | Status                                                        |
+| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | -------- | -------------- | ------------------- | ------------------------------------------------------------- |
+| [001](./001-build-salt-ai-knowledge-platform.md)     | Build the original local Salt AI release candidate and record Unit 07 evidence                                  | P1       | L, multi-phase | —                   | DONE — historical local candidate complete through Unit 07    |
+| [004](./004-validate-salt-ai-product-wedge.md)       | Validate a truthful, exact-current, task-ready Salt AI product wedge before hardening or release                | P0       | L, multi-phase | Plan 001 Unit 07    | IN PROGRESS — Unit 004/00 control plane                       |
+| [003](./003-publish-salt-ai-release-candidate.md)    | Materialize versions and publish an approved Salt AI release candidate through separately owned release systems | P2       | L, conditional | Plan 004 final PASS | DEFERRED — Plan 004 PASS and publication authority are absent |
+| [002](./002-add-secure-historical-salt-knowledge.md) | Add secure historical Salt knowledge resolution only after current GA, public discovery, and ownership approval | P2       | L, conditional | Plan 003 completion | DEFERRED — post-Plan-003 re-plan and entry gates are absent   |
 
 Plan 001 compatibility addendum: [001a](./001a-reuse-test-snapshot-package-identities.md)
 ratifies reuse of the CLI and MCP package names after exact unused pre-stable
@@ -26,18 +29,48 @@ snapshot registry evidence; it changes no execution-unit ordering.
 
 The 2026-08-29 scope amendment separates implementation from publication. Plan
 001 ends at Unit 07 with unversioned, locally packed and consumer-verified
-candidate artifacts. Plan 003 owns every later version, registry, trusted-
-publisher, deployment, promotion, rollback, and live activation decision. The
-historical Plan 001 rows for Units 08a–09c remain visible but must not be
+historical candidate artifacts. The 2026-08-30 successor amendment inserts Plan
+004 as the only tracked product-correction, need, competitor, and validation
+path. Plan 003 owns every later version, registry, trusted-publisher,
+deployment, promotion, rollback, and live activation decision, but is
+ineligible until Plan 004 records a final PASS bound to exact candidate bytes.
+The historical Plan 001 rows for Units 08a–09c remain visible but must not be
 executed there. Publisher fields in immutable Unit 00a evidence remain audit
 history only; the active namespace policy is preflight-only and records
 publication authority as deferred to Plan 003.
 
-Status values: `TODO`, `IN PROGRESS`, `IN PROGRESS — <pending gate>`, `DONE`, `BLOCKED — <reason>`,
-`DEFERRED`, `DEFERRED — <reason>`, `REJECTED — <reason>`, and
-`STALE — <reason>`.
+## Active dispatch
+
+- **Active plan/unit:** `004/00`
+- **Next eligible unit:** none until `004/00` completes
+- **Status:** IN PROGRESS — establishing dispatch/evidence authority and
+  reconciling the inherited worktree
+- **Ancestry checkpoint:** `d30dc1f7fca047e5180c15d07bb7be4557305eff`
+- **Plan 004 evidence authority:**
+  `plans/evidence/004/index.json@sha256:9ae5410688b175808c684b5168c4008f12aa1911fd1e2818fe3c743a4cf27d65`
+- **Product decision:** none; only an indexed Unit `004/07` PASS can enable Plan
+  003
+- **External authority:** none; network, installs, model calls, participant
+  contact, publication, and deployment remain unauthorized
+- **Successor eligibility:** Plan 003 and every hardening successor remain
+  ineligible
+
+Only this block dispatches post-Plan-001 work. A TODO row, local branch,
+ignored plan, generated artifact, or prose status elsewhere is not authority.
+When a unit is dispatched, record exactly one active plan/unit and its concrete
+checkpoint here. A reviewed plan-control follow-up records completion before
+dispatching a successor.
+
+Status values: `TODO`, `IN PROGRESS`, `IN PROGRESS — <pending gate>`, `DONE`,
+`BLOCKED — <reason>`, `DEFERRED`, `DEFERRED — <reason>`,
+`REJECTED — <reason>`, and `STALE — <reason>`.
 
 ### Machine-readable evidence index
+
+The contract below applies to the legacy seven-column Plan 001/002 trackers.
+Plan 004 instead uses the single closed plan-level index defined in Plan 004
+Appendix B; its current locator/digest and terminal decision must be recorded in
+the Active dispatch block above. A Plan 004 prose PASS has no authority.
 
 The tables below state required evidence kinds; prose cells are not locators.
 On every evidence-bearing plan-control update, atomically replace the row's
@@ -198,11 +231,12 @@ required publication, activation, discovery, and live-authority gates.
 ### Plan 002 execution-unit tracker (deferred)
 
 These rows reserve dependencies only; they do not authorize work. After Plan
-003 is complete, the live authority is proven to descend from its R3
-activation, and all Plan 002 Unit 00 entry gates are approved, a plan-control-only
-update changes Plan 002/Unit 00 to `TODO` and replaces its placeholder with the
-latest default-branch commit containing Plan 001/09c, that live authority, and
-those approvals.
+003 is complete, its activation/current-authority and public-discovery receipts
+validate, and all Plan 002 Unit 00 entry gates are approved, Plan 002 must first
+be re-planned against those actual contracts. Only then may a plan-control-only
+update change Plan 002/Unit 00 to `TODO` and replace its placeholder with the
+latest default-branch commit containing Plan 003 completion, that live
+authority, the approved re-plan, and those approvals.
 After each Plan 002 merge or protected post-merge transition, the plan-control
 update records the actual schema-valid receipt/artifact digests in `Gate
 evidence`; a prose claim or workflow URL without immutable digests does not
@@ -254,16 +288,39 @@ digest (or explicitly forward-revoke support).
 - Plan 001 is a program plan. Its execution units are ordered inside the file
   and must land as separate, reviewable pull requests. Do not implement the
   whole program as one change.
-- Plan 002 is intentionally deferred and is not part of Plan 001's GA path. It
-  cannot begin until Plan 001/09c is `DONE`, the live authority is proven to
-  descend from Plan 001/09b's R3 activation, and every Plan 002 Unit 00 entry
-  gate has named approval. Its activation gates are deliberately produced and
-  ratified during Units 00, 01, and 04; all must pass before Unit 05.
-- `advisor-plans/` contains historical MCP work and blocked experiments. It is
-  evidence, not a dependency queue for Plan 001, and must not be edited while
-  executing this plan.
+- Plan 004 is the sole tracked post-Plan-001 product plan. Unit 004/00
+  establishes dispatch/evidence authority without staging inherited product
+  work; Unit 004/01 adopts and completes that exact allowlisted work. Every unit
+  from 004/02 starts clean. `PASS`, `CUT`, and `DEFER` are evidence outcomes,
+  not execution statuses. Only an indexed final Plan 004 PASS makes Plan 003
+  eligible. Unit boundaries are evidence checkpoints, not mandatory user-facing
+  pauses: an already-authorized local execution continues through the next
+  eligible unit and yields only at Plan 004's registered authority, outcome,
+  STOP, or unfixable verification boundary.
+- Plan 003 consumes the exact Plan 004 PASS candidate and Plan 001 Unit 07 as
+  historical ancestry. It never publishes the older Plan 001 bytes after Plan
+  004 changes product or content behavior.
+- Plan 002 is intentionally deferred and is not part of Plan 001's GA path. Its
+  Plan-001/09b/09c selectors are superseded design history. It requires Plan 003
+  completion, validated Plan 003 activation/current-authority/public-discovery
+  receipts, named Unit 00 approvals, and an explicit post-Plan-003 re-plan before
+  any unit can become TODO.
+- `advisor-plans/` contains ignored historical audits, MCP work, and blocked
+  experiments. It is evidence only, is not a dependency queue for any tracked
+  plan, and must not be edited while executing Plans 001–004.
 
 ## Findings considered and rejected
+
+- Execute the ignored `advisor-plans/023 → 018 → 022 → 019 → 020 → 021 → 030`
+  queue: rejected. It is absent from tracked Git authority and contains known
+  impossible drift, lint, scope, declaration, and authorization gates. Plan
+  004 inlines the retained requirements in dependency-closed units.
+- Build a reusable evaluator/broker/condition platform before user need is
+  established: rejected. Plan 004 uses a cheap need/alternative gate first and
+  one experiment-specific four-contract harness only after `PASS_NEED`.
+- Include scanner hardening in the core candidate: rejected. The independent
+  product wedge is scan-free; scanner restoration needs both technical evidence
+  and explicit real-user pull in a new tracked successor.
 
 - Expand `salt-mcp` into the umbrella CLI: rejected because transport and host
   lifecycle do not belong in the general consumer command boundary. The current
