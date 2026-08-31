@@ -2,8 +2,13 @@ name: "Test"
 on:
   push:
     branches:
-      - main
+      - "**"
   workflow_dispatch:
+    inputs:
+      changed_quality_base:
+        description: "Reviewed full commit SHA used as the changed-file quality base"
+        required: true
+        type: string
   pull_request:
 
 permissions: {}
@@ -20,6 +25,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          fetch-depth: 0
           persist-credentials: false
       - name: Use Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
@@ -28,10 +34,23 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn
-      - name: Lint
+      - name: Changed-file quality (blocking; Prettier is authoritative)
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+        run: >-
+          yarn check:changed-quality --
+          --event-name "$GITHUB_EVENT_NAME"
+          --event-path "$GITHUB_EVENT_PATH"
+      - name: Full-repository lint errors (diagnostic)
+        continue-on-error: true
+        run: yarn lint:check:error
+      - name: Full-repository Biome including formatter (diagnostic)
+        continue-on-error: true
         run: yarn biome ci --reporter=github
-      - name: Prettier
-        run: yarn run prettier:ci
+      - name: Full-repository Prettier (diagnostic)
+        continue-on-error: true
+        run: yarn prettier:ci
       - name: Stylelint
         run: yarn run lint:style
       - name: Check no import from src

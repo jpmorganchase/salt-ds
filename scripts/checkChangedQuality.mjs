@@ -43,6 +43,7 @@ const biomeExtensions = new Set([
   ".tsx",
 ]);
 const fullCommit = /^[0-9a-f]{40}$/u;
+const zeroCommit = "0".repeat(40);
 
 function invariant(condition, message) {
   if (!condition) throw new Error(message);
@@ -112,6 +113,83 @@ export function validateExactBase(base, runGit) {
   );
   runGit(["merge-base", "--is-ancestor", base, "HEAD"]);
   return base;
+}
+
+function requiredString(value, label) {
+  invariant(
+    typeof value === "string" && value.length > 0,
+    `${label} is missing`,
+  );
+  return value;
+}
+
+function remoteBranchMergeBase(branch, runGit) {
+  const branchName = requiredString(branch, "GitHub base branch");
+  runGit(["check-ref-format", `refs/heads/${branchName}`]);
+  const remoteRef = `refs/remotes/origin/${branchName}`;
+  const remoteTip = String(
+    runGit(["rev-parse", "--verify", `${remoteRef}^{commit}`]),
+  ).trim();
+  invariant(
+    fullCommit.test(remoteTip),
+    "Fetched GitHub base branch did not resolve to a full commit SHA",
+  );
+  const base = String(runGit(["merge-base", "HEAD", remoteTip])).trim();
+  invariant(
+    fullCommit.test(base),
+    "GitHub base branch has no exact merge-base with HEAD",
+  );
+  return validateExactBase(base, runGit);
+}
+
+export function resolveGitHubEventBase(eventName, event, runGit) {
+  invariant(
+    event !== null && typeof event === "object" && !Array.isArray(event),
+    "GitHub event payload must be an object",
+  );
+  if (eventName === "pull_request") {
+    return remoteBranchMergeBase(event.pull_request?.base?.ref, runGit);
+  }
+  if (eventName === "push") {
+    invariant(
+      typeof event.created === "boolean" && typeof event.forced === "boolean",
+      "GitHub push creation/force metadata is missing",
+    );
+    const before = requiredString(event.before, "GitHub push before SHA");
+    const newBranch = before === zeroCommit;
+    invariant(
+      event.created === newBranch,
+      "GitHub new-branch push metadata is inconsistent",
+    );
+    invariant(!event.forced, "Force-push bases are not accepted");
+    if (newBranch)
+      return remoteBranchMergeBase(event.repository?.default_branch, runGit);
+    return validateExactBase(before, runGit);
+  }
+  if (eventName === "workflow_dispatch") {
+    return validateExactBase(
+      requiredString(
+        event.inputs?.changed_quality_base,
+        "Reviewed workflow-dispatch base",
+      ),
+      runGit,
+    );
+  }
+  throw new Error(`Unsupported GitHub event: ${String(eventName)}`);
+}
+
+export async function readGitHubEventPayload(eventPath) {
+  const locator = requiredString(eventPath, "GitHub event path");
+  const stats = await lstat(locator);
+  invariant(
+    stats.isFile() && !stats.isSymbolicLink(),
+    "GitHub event payload is not a regular file",
+  );
+  try {
+    return JSON.parse(await readFile(locator, "utf8"));
+  } catch {
+    throw new Error("GitHub event payload is not valid JSON");
+  }
 }
 
 export function collectChangedPaths(base, runGit) {
@@ -369,7 +447,7 @@ export async function checkChangedQuality({
         ? Promise.resolve(null)
         : readBaseBlob(base, basePath, git),
     ]);
-    if (crlfAffectsGitObject(file, currentBytes, git))
+    if (basePath === null || crlfAffectsGitObject(file, currentBytes, git))
       assertCrlfNonRegression(file, currentBytes, baseBytes);
     files.push(file);
   }
@@ -379,12 +457,32 @@ export async function checkChangedQuality({
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
-  const allowed = new Set(["--base"]);
+  const allowed = new Set(["--base", "--event-name", "--event-path"]);
   for (const key of args.keys())
     invariant(allowed.has(key), `Unknown option: ${key}`);
-  invariant(typeof args.get("--base") === "string", "--base is required");
+  const directBase = args.get("--base");
+  const eventName = args.get("--event-name");
+  const eventPath = args.get("--event-path");
+  const hasDirectBase = typeof directBase === "string";
+  const hasEvent =
+    typeof eventName === "string" && typeof eventPath === "string";
+  invariant(
+    hasDirectBase !== hasEvent,
+    "Provide exactly one of --base or --event-name with --event-path",
+  );
+  invariant(
+    (eventName === undefined && eventPath === undefined) || hasEvent,
+    "--event-name and --event-path must be provided together",
+  );
+  const base = hasDirectBase
+    ? directBase
+    : resolveGitHubEventBase(
+        eventName,
+        await readGitHubEventPayload(eventPath),
+        createGitRunner(repositoryRoot),
+      );
   const result = await checkChangedQuality({
-    base: String(args.get("--base")),
+    base,
   });
   console.log(
     `Changed quality passed (${result.checked.length} supported files; ${result.changed.length} total paths; base ${result.base}).`,
