@@ -19,7 +19,7 @@ it does not dispatch or block Plan 004.
 | Plan                                                 | Title                                                                                                           | Priority | Effort         | Depends on          | Status                                                        |
 | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | -------- | -------------- | ------------------- | ------------------------------------------------------------- |
 | [001](./001-build-salt-ai-knowledge-platform.md)     | Build the original local Salt AI release candidate and record Unit 07 evidence                                  | P1       | L, multi-phase | —                   | DONE — historical local candidate complete through Unit 07    |
-| [004](./004-validate-salt-ai-product-wedge.md)       | Validate a truthful, exact-current, task-ready Salt AI product wedge before hardening or release                | P0       | L, multi-phase | Plan 001 Unit 07    | IN PROGRESS — Unit 004/01 truthful scan-free core             |
+| [004](./004-validate-salt-ai-product-wedge.md)       | Validate a truthful, exact-current, task-ready Salt AI product wedge before hardening or release                | P0       | L, multi-phase | Plan 001 Unit 07    | IN PROGRESS — Unit 004/02 attainable changed-file quality gate |
 | [003](./003-publish-salt-ai-release-candidate.md)    | Materialize versions and publish an approved Salt AI release candidate through separately owned release systems | P2       | L, conditional | Plan 004 final PASS | DEFERRED — Plan 004 PASS and publication authority are absent |
 | [002](./002-add-secure-historical-salt-knowledge.md) | Add secure historical Salt knowledge resolution only after current GA, public discovery, and ownership approval | P2       | L, conditional | Plan 003 completion | DEFERRED — post-Plan-003 re-plan and entry gates are absent   |
 
@@ -41,12 +41,12 @@ publication authority as deferred to Plan 003.
 
 ## Active dispatch
 
-- **Active plan/unit:** `004/01`
-- **Next eligible unit:** none until `004/01` completes
-- **Status:** IN PROGRESS — completing and adopting the truthful scan-free core
-- **Ancestry checkpoint:** `42046a4c4d866ed04cd2f85864250417db57842d`
+- **Active plan/unit:** `004/02`
+- **Next eligible unit:** none until `004/02` completes
+- **Status:** IN PROGRESS — establishing the attainable changed-file quality gate
+- **Ancestry checkpoint:** `da1d249225c7044dad1c3aa08c960eb08f84dddb`
 - **Plan 004 evidence authority:**
-  `plans/evidence/004/index.json@sha256:413a7e50cf3d2b56b8805f483242140c6dbe10b1b151ee0191273424289f728f`
+  `plans/evidence/004/index.json@sha256:5050150c143d5a223e4c98cbd035b6e7586824360be79e59efce8fe0e5d6cfcb`
 - **Product decision:** none; only an indexed Unit `004/07` PASS can enable Plan
   003
 - **External authority:** none; network, installs, model calls, participant

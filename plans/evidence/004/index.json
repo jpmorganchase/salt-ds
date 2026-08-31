@@ -4,8 +4,8 @@
   "plan_id": "004",
   "planned_ancestry": "d30dc1f7fca047e5180c15d07bb7be4557305eff",
   "active_dispatch": {
-    "unit": "004/01",
-    "checkpoint_sha": "42046a4c4d866ed04cd2f85864250417db57842d"
+    "unit": "004/02",
+    "checkpoint_sha": "da1d249225c7044dad1c3aa08c960eb08f84dddb"
   },
   "inherited_worktree": {
     "base_sha": "d30dc1f7fca047e5180c15d07bb7be4557305eff",
@@ -337,11 +337,11 @@
     },
     {
       "id": "004/01",
-      "status": "IN_PROGRESS",
+      "status": "DONE",
       "dependency_unit": "004/00",
       "dependency_completion_sha": "42046a4c4d866ed04cd2f85864250417db57842d",
       "checkpoint_sha": "42046a4c4d866ed04cd2f85864250417db57842d",
-      "completion_sha": null,
+      "completion_sha": "da1d249225c7044dad1c3aa08c960eb08f84dddb",
       "scope": {
         "materialized": true,
         "exact_paths": [
@@ -430,20 +430,94 @@
         ],
         "allow_inherited_dirty": true
       },
-      "verification": [],
+      "verification": [
+        {
+          "command": "yarn validate:salt-ai:plan-004 --phase preflight --unit 004/01 --checkpoint 42046a4c4d866ed04cd2f85864250417db57842d",
+          "result": "pass",
+          "output_sha256": "sha256:fd1eafe33a8996cddb19650028a83f3ff175750646abcc4e21f85a640d6526a9"
+        },
+        {
+          "command": "yarn vitest run packages/cli/src/commands/__tests__/skill.spec.ts packages/cli/src/commands/__tests__/info.spec.ts packages/cli/src/config/__tests__/loadConfig.spec.ts packages/cli/src/__tests__/cli.spec.ts --maxWorkers=1",
+          "result": "pass",
+          "output_sha256": "sha256:332e93be9fc23944ed74f2b8d8fd0ad5bae3745102c10f925e307049e38b759f"
+        },
+        {
+          "command": "yarn vitest run packages/knowledge/src/compatibility packages/knowledge/src/project packages/cli/src/commands packages/cli/src/discovery --maxWorkers=1",
+          "result": "pass",
+          "output_sha256": "sha256:c0dbaa379fffd00eeb35a17b3426ff38225d7f4a4cf7cf16649a6ed31b3c19ff"
+        },
+        {
+          "command": "yarn typecheck:ai-tooling",
+          "result": "pass",
+          "output_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "command": "yarn eval:salt-ai:validate",
+          "result": "pass",
+          "output_sha256": "sha256:9067c075c1f940ac6cca72e4fd2a1b24b32b373144ca0771587fb2fb78f85d84"
+        },
+        {
+          "command": "yarn validate:salt-ai:contracts",
+          "result": "pass",
+          "output_sha256": "sha256:4e53f1478e29e650dcbeab39261accc13de025642c55c5afa430a18f3c447650"
+        },
+        {
+          "command": "yarn build",
+          "result": "pass",
+          "output_sha256": "sha256:f6847ac148a8843e48cb768e9e4687481b5daeba68101c2fce99c26380771ecf"
+        },
+        {
+          "command": "yarn build:ai-tooling",
+          "result": "pass",
+          "output_sha256": "sha256:ffa02a0c7a897628d99bad23f4d1a4af41b3130e68070c364141a8cd3dc3080d"
+        },
+        {
+          "command": "yarn test:ai-tooling",
+          "result": "pass",
+          "output_sha256": "sha256:0b41e64c0f0991a1b1131a280fa925e15fb8eb1ac1f9fef71bcbe80ea5fed8b2"
+        },
+        {
+          "command": "yarn check:ai-tooling:pack -- --report dist/salt-ai-pack/plan-004-core.json",
+          "result": "pass",
+          "output_sha256": "sha256:6096a85680222d1ae46e5bf7ceeddc6b9138bfbdc8b842356acbf8206992c846"
+        },
+        {
+          "command": "yarn check:changed-quality -- --base 42046a4c4d866ed04cd2f85864250417db57842d",
+          "result": "pass",
+          "output_sha256": "sha256:9e0a05720c040e6afe4b23458a1aa08d98df190a8025f86e3af9520bad6cd580"
+        },
+        {
+          "command": "yarn validate:salt-ai:plan-004 --phase post-commit --unit 004/01 --checkpoint 42046a4c4d866ed04cd2f85864250417db57842d --completion HEAD",
+          "result": "pass",
+          "output_sha256": "sha256:f9ea4a5fe80e4daed0e5fe04b8e8c2046f644de84ddeb0f3d622040d4d494958"
+        },
+        {
+          "command": "git diff --check",
+          "result": "pass",
+          "output_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
       "evidence": null,
-      "successor_eligible": false
+      "successor_eligible": true
     },
     {
       "id": "004/02",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "dependency_unit": "004/01",
-      "dependency_completion_sha": null,
-      "checkpoint_sha": null,
+      "dependency_completion_sha": "da1d249225c7044dad1c3aa08c960eb08f84dddb",
+      "checkpoint_sha": "da1d249225c7044dad1c3aa08c960eb08f84dddb",
       "completion_sha": null,
       "scope": {
-        "materialized": false,
-        "exact_paths": [],
+        "materialized": true,
+        "exact_paths": [
+          ".github/workflows/test.yml",
+          "plans/004-validate-salt-ai-product-wedge.md",
+          "plans/evidence/004/index.json",
+          "plans/README.md",
+          "scripts/checkChangedQuality.mjs",
+          "scripts/checkChangedQuality.spec.js",
+          "scripts/fixtures/changed-quality/prettierignore"
+        ],
         "allow_inherited_dirty": false
       },
       "verification": [],
