@@ -4,8 +4,8 @@
   "plan_id": "004",
   "planned_ancestry": "d30dc1f7fca047e5180c15d07bb7be4557305eff",
   "active_dispatch": {
-    "unit": "004/02",
-    "checkpoint_sha": "da1d249225c7044dad1c3aa08c960eb08f84dddb"
+    "unit": "004/03",
+    "checkpoint_sha": "2e700a90889c7b83e4fab10a59813459343cf6b4"
   },
   "inherited_worktree": {
     "base_sha": "d30dc1f7fca047e5180c15d07bb7be4557305eff",
@@ -502,11 +502,11 @@
     },
     {
       "id": "004/02",
-      "status": "IN_PROGRESS",
+      "status": "DONE",
       "dependency_unit": "004/01",
       "dependency_completion_sha": "da1d249225c7044dad1c3aa08c960eb08f84dddb",
       "checkpoint_sha": "da1d249225c7044dad1c3aa08c960eb08f84dddb",
-      "completion_sha": null,
+      "completion_sha": "2e700a90889c7b83e4fab10a59813459343cf6b4",
       "scope": {
         "materialized": true,
         "exact_paths": [
@@ -520,20 +520,66 @@
         ],
         "allow_inherited_dirty": false
       },
-      "verification": [],
+      "verification": [
+        {
+          "command": "yarn vitest run scripts/checkChangedQuality.spec.js --maxWorkers=1",
+          "result": "pass",
+          "output_sha256": "sha256:2fcf6d3e4e83f64510bd70a15bce76435ca08e84f5587a482b9dfbb3c61e5ee7"
+        },
+        {
+          "command": "yarn check:changed-quality -- --base 42046a4c4d866ed04cd2f85864250417db57842d",
+          "result": "pass",
+          "output_sha256": "sha256:49427c6c61e1944dcde58bfb60b8b72c8ffcbf7943d2a81043bc91409ca56f01"
+        },
+        {
+          "command": "yarn validate:salt-ai:tracker",
+          "result": "pass",
+          "output_sha256": "sha256:71a7b33f55b56bfc7407e0d02a6ec8cc071978ed948180beda72650a8b606da1"
+        },
+        {
+          "command": "yarn validate:salt-ai:plan-004 --phase verify --unit 004/02",
+          "result": "pass",
+          "output_sha256": "sha256:72eb5dfb098b6cc38063a1bdfe7601005f654706ae0ccbb0fbf068f205a2dc58"
+        },
+        {
+          "command": "yarn validate:salt-ai:plan-004 --phase post-commit --unit 004/02 --checkpoint da1d249225c7044dad1c3aa08c960eb08f84dddb --completion HEAD",
+          "result": "pass",
+          "output_sha256": "sha256:e5cb5271fafcac692ccb1f5701a2078bda91d1ee25ef4288bbfa0b35ad5715d4"
+        },
+        {
+          "command": "git diff --check",
+          "result": "pass",
+          "output_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
       "evidence": null,
-      "successor_eligible": false
+      "successor_eligible": true
     },
     {
       "id": "004/03",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "dependency_unit": "004/02",
-      "dependency_completion_sha": null,
-      "checkpoint_sha": null,
+      "dependency_completion_sha": "2e700a90889c7b83e4fab10a59813459343cf6b4",
+      "checkpoint_sha": "2e700a90889c7b83e4fab10a59813459343cf6b4",
       "completion_sha": null,
       "scope": {
-        "materialized": false,
-        "exact_paths": [],
+        "materialized": true,
+        "exact_paths": [
+          "evals/salt-ai/opportunity/aggregate.mjs",
+          "evals/salt-ai/opportunity/fixtures/hostile-ledgers.json",
+          "evals/salt-ai/opportunity/schemas/development-baseline.schema.json",
+          "evals/salt-ai/opportunity/schemas/opportunity-decision.schema.json",
+          "evals/salt-ai/opportunity/schemas/opportunity-ledger.schema.json",
+          "evals/salt-ai/opportunity/workflow.mjs",
+          "evals/salt-ai/opportunity/workflow.spec.js",
+          "package.json",
+          "plans/004-validate-salt-ai-product-wedge.md",
+          "plans/evidence/004/03-alternatives.json",
+          "plans/evidence/004/03-development-baseline.json",
+          "plans/evidence/004/03.json",
+          "plans/evidence/004/index.json",
+          "plans/README.md"
+        ],
         "allow_inherited_dirty": false
       },
       "verification": [],
