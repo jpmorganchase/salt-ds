@@ -1,4 +1,5 @@
-<!-- salt-design-system managed block; bundle_version=0.0.0; skill_sha256=sha256:fa646985379e56d2b62248a15f10d9191c4f457378acb58020c5615de490e003 -->
+<!-- salt-design-system managed block; bundle_version=0.0.0; skill_sha256=sha256:d9018e09090424ce3c63e9ec4dc2b1d1f26d5b65418f0ab8e18c8a43859ecc65 -->
+
 ## Salt Design System
 
 For Salt component, pattern, theme, token, accessibility, migration, or review

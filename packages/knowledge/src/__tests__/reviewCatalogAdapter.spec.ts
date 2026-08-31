@@ -66,6 +66,12 @@ describe("review catalog adapter", () => {
       input,
     );
     expect(canonicalJson(second)).toBe(canonicalJson(first));
+    expect(canonicalJson(first)).not.toMatch(
+      /policy_evaluation|project_policy|project_policy_digest/u,
+    );
+    expect(
+      first.results.every((result) => !("policy" in result.coverage)),
+    ).toBe(true);
   });
 
   it("allows the isolated scanner to lower per-file execution ceilings", () => {
@@ -80,7 +86,6 @@ describe("review catalog adapter", () => {
           },
         ],
       },
-      null,
       null,
       "caller_package_versions",
       { max_ast_nodes_per_artifact: 1 },
@@ -105,7 +110,6 @@ describe("review catalog adapter", () => {
         { reviewCatalog: storeCatalog, store },
         input,
         null,
-        null,
         "caller_package_versions",
         { max_artifact_utf8_bytes: 300 * 1024 },
       ),
@@ -126,7 +130,6 @@ describe("review catalog adapter", () => {
             { id: "valid.ts", language: "typescript", text: "export {};" },
           ],
         },
-        null,
         null,
         "caller_package_versions",
         executionLimits,

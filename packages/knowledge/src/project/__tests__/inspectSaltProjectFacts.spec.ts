@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   inspectSaltProjectFacts,
   SaltProjectInspectionError,
@@ -63,6 +63,36 @@ describe("inspectSaltProjectFacts", () => {
       }),
     ]);
     expect(result.facts.installation.inspection.status).toBe("succeeded");
+  });
+
+  it("does not inspect repository project-policy marker files", async () => {
+    const root = await fixtureRoot();
+    await fs.mkdir(path.join(root, ".salt"), { recursive: true });
+    await fs.writeFile(
+      path.join(root, ".salt", "team.json"),
+      JSON.stringify({ contract: "project_conventions_v1" }),
+      "utf8",
+    );
+    await fs.writeFile(
+      path.join(root, ".salt", "stack.json"),
+      JSON.stringify({ contract: "project_conventions_stack_v1" }),
+      "utf8",
+    );
+    const readFile = vi.spyOn(fs, "readFile");
+
+    const result = await inspectSaltProjectFacts({ rootDir: root });
+
+    expect(result.facts).not.toHaveProperty("policy");
+    expect(
+      readFile.mock.calls.map(([filePath]) =>
+        String(filePath).replaceAll("\\", "/"),
+      ),
+    ).not.toEqual(
+      expect.arrayContaining([
+        expect.stringMatching(/\/\.salt\/(?:team|stack)\.json$/u),
+      ]),
+    );
+    readFile.mockRestore();
   });
 
   it("reports an absent package manifest as bounded partial facts", async () => {

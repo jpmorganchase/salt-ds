@@ -7,7 +7,6 @@ import {
   MAX_REVIEW_RULE_COMPARISONS,
   type NonFindingVersionDecision,
   REVIEW_RULE_IDS,
-  type ReviewProjectPolicyContext,
   ReviewRuleBudgetError,
   type ReviewRuleEvaluation,
 } from "./reviewRuleRegistry.js";
@@ -155,7 +154,6 @@ export interface CompleteReviewArtifactAnalysis {
     returned_nonfinding_version_decisions: number;
     nonfinding_version_decisions_truncated: boolean;
     truncated: boolean;
-    policy: ReviewRuleEvaluation["policy"];
   };
   limitations: string[];
 }
@@ -174,15 +172,6 @@ export interface CompleteReviewSaltCodeAnalysis {
     analyzer: "salt_submitted_fact_rules_v1";
     semantic_validation: "source_bound_allowlist";
     location_encoding: "utf8_bytes_end_exclusive";
-    project_policy: {
-      status: "not_supplied" | "evaluated" | "limited";
-      digest: string | null;
-      unresolved_required_layers: number;
-      evaluated_occurrence_artifact_pairs: number;
-      applicable_occurrence_artifact_pairs: number;
-      contradicted_occurrence_artifact_pairs: number;
-      unknown_occurrence_artifact_pairs: number;
-    };
     detected_findings: number;
     detected_nonfinding_version_decisions: number;
   };
@@ -191,7 +180,6 @@ export interface CompleteReviewSaltCodeAnalysis {
     knowledge_version: string;
     semantic_digest: string | null;
     project_context_digest: string | null;
-    project_policy_digest: string | null;
   };
 }
 
@@ -230,7 +218,6 @@ function firstEvidenceReference(decision: NonFindingVersionDecision) {
 export function analyzeSaltCode(
   context: ReviewSaltCodeContext,
   input: ReviewSaltCodeInput,
-  policy: ReviewProjectPolicyContext | null = null,
   projectContextDigest: string | null = null,
   contextSource: ReviewContextSource = "none",
   executionLimits: AnalyzeSaltCodeExecutionLimits = {},
@@ -326,15 +313,6 @@ export function analyzeSaltCode(
     );
   }
 
-  const unresolvedRequiredLayerCount =
-    policy?.ir.layers.filter(
-      (layer) => !layer.optional && layer.resolution_status !== "resolved",
-    ).length ?? 0;
-  const policyCoverageStatus = !policy
-    ? ("not_supplied" as const)
-    : unresolvedRequiredLayerCount > 0
-      ? ("limited" as const)
-      : ("evaluated" as const);
   const knownTokenNames = new Set(
     registry.tokens.map((token) => token.name.toLowerCase()),
   );
@@ -385,15 +363,6 @@ export function analyzeSaltCode(
           returned_nonfinding_version_decisions: 0,
           nonfinding_version_decisions_truncated: false,
           truncated: false,
-          policy: {
-            status: policyCoverageStatus,
-            digest: policy?.digest ?? null,
-            unresolved_required_layers: unresolvedRequiredLayerCount,
-            evaluated_occurrences: 0,
-            applicable_occurrences: 0,
-            contradicted_occurrences: 0,
-            unknown_occurrences: 0,
-          },
         },
         limitations: ["No submitted source text was available to parse."],
       };
@@ -416,15 +385,6 @@ export function analyzeSaltCode(
       evaluated_rule_ids: [],
       skipped_match_count: 0,
       limitations: [] as string[],
-      policy: {
-        status: policyCoverageStatus,
-        digest: policy?.digest ?? null,
-        unresolved_required_layers: unresolvedRequiredLayerCount,
-        evaluated_occurrences: 0,
-        applicable_occurrences: 0,
-        contradicted_occurrences: 0,
-        unknown_occurrences: 0,
-      },
     });
     let ruleEvaluation: ReviewRuleEvaluation = emptyRuleEvaluation();
     if (parserEvaluated) {
@@ -434,7 +394,6 @@ export function analyzeSaltCode(
           store,
           facts: effectiveFacts,
           packageVersions,
-          policy,
           budget: {
             remaining: comparisonShare,
             limit: comparisonShare,
@@ -539,7 +498,6 @@ export function analyzeSaltCode(
         returned_nonfinding_version_decisions: versionDecisions.length,
         nonfinding_version_decisions_truncated: false,
         truncated: false,
-        policy: ruleEvaluation.policy,
       },
       limitations: contextualLimitations,
     };
@@ -553,29 +511,6 @@ export function analyzeSaltCode(
     (total, result) =>
       total + result.coverage.detected_nonfinding_version_decisions,
     0,
-  );
-  const policyCoverage = analyzedResults.reduce(
-    (summary, result) => {
-      const policyResult = result.coverage.policy;
-      summary.evaluated_occurrence_artifact_pairs +=
-        policyResult.evaluated_occurrences;
-      summary.applicable_occurrence_artifact_pairs +=
-        policyResult.applicable_occurrences;
-      summary.contradicted_occurrence_artifact_pairs +=
-        policyResult.contradicted_occurrences;
-      summary.unknown_occurrence_artifact_pairs +=
-        policyResult.unknown_occurrences;
-      return summary;
-    },
-    {
-      status: policyCoverageStatus,
-      digest: policy?.digest ?? null,
-      unresolved_required_layers: unresolvedRequiredLayerCount,
-      evaluated_occurrence_artifact_pairs: 0,
-      applicable_occurrence_artifact_pairs: 0,
-      contradicted_occurrence_artifact_pairs: 0,
-      unknown_occurrence_artifact_pairs: 0,
-    },
   );
   const completeAnalysis: CompleteReviewSaltCodeAnalysis = {
     results: analyzedResults,
@@ -593,7 +528,6 @@ export function analyzeSaltCode(
       analyzer: "salt_submitted_fact_rules_v1",
       semantic_validation: "source_bound_allowlist",
       location_encoding: "utf8_bytes_end_exclusive",
-      project_policy: policyCoverage,
       detected_findings: detectedFindings,
       detected_nonfinding_version_decisions: detectedNonFindingVersionDecisions,
     },
@@ -603,15 +537,14 @@ export function analyzeSaltCode(
         : contextSource === "caller_package_versions"
           ? "Only submitted artifact text was analyzed; caller-supplied package versions informed version-specific rules, but files that were not submitted, repository state, compilation, runtime behavior, and user acceptance were not analyzed."
           : contextSource === "retained_project_snapshot"
-            ? "Only submitted artifact text was analyzed; a retained authorized project snapshot supplied policy and installed-version facts, but project source that was not submitted, compilation, runtime behavior, and user acceptance were not analyzed."
-            : "Only submitted artifact text was analyzed; a fresh authorized project inspection supplied policy and installed-version facts, but project source that was not submitted, compilation, runtime behavior, and user acceptance were not analyzed.",
+            ? "Only submitted artifact text was analyzed; a retained authorized project snapshot supplied installed-version facts, but project source that was not submitted, compilation, runtime behavior, and user acceptance were not analyzed."
+            : "Only submitted artifact text was analyzed; a fresh authorized project inspection supplied installed-version facts, but project source that was not submitted, compilation, runtime behavior, and user acceptance were not analyzed.",
       "Dynamic expressions, spread props, indirect exports, method calls, runtime values, and rules outside the listed allowlist do not ground findings.",
     ],
     provenance: {
       knowledge_version: registry.version,
       semantic_digest: registry.semanticDigest,
       project_context_digest: projectContextDigest,
-      project_policy_digest: policy?.digest ?? null,
     },
   };
   return completeAnalysis;

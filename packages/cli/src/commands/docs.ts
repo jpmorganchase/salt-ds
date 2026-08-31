@@ -2,7 +2,10 @@ import {
   renderKnowledgeDocumentMarkdown,
   resolveKnowledgeDocument,
 } from "@salt-ds/knowledge";
-import { loadRetrievalRuntime } from "./retrievalRuntime.js";
+import {
+  loadRetrievalRuntime,
+  renderRejectedProjectSelection,
+} from "./retrievalRuntime.js";
 
 export interface RunDocsCommandInput {
   rootDir: string;
@@ -12,6 +15,12 @@ export interface RunDocsCommandInput {
 
 export async function runDocsCommand(input: RunDocsCommandInput) {
   const runtime = await loadRetrievalRuntime(input.rootDir);
+  if (runtime.selection.status !== "selected") {
+    return {
+      output: renderRejectedProjectSelection(runtime.selection, input.format),
+      exitCode: 3,
+    };
+  }
   const result = resolveKnowledgeDocument(runtime.store, {
     identifier: input.identifier,
     installed_versions: runtime.installedVersions,

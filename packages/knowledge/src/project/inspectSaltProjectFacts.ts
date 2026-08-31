@@ -1,7 +1,6 @@
 import type { Stats } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { detectProjectPolicy } from "../policy/detection.js";
 import {
   createSaltProjectFacts,
   type SaltProjectFacts,
@@ -80,19 +79,19 @@ export async function inspectSaltProjectFacts(
   } catch {
     throw new SaltProjectInspectionError(
       "SALT_PROJECT_ROOT_UNAVAILABLE",
-      `Project root is unavailable: ${portable(requestedRoot)}.`,
+      "The project root is unavailable.",
     );
   }
   if (!rootStats.isDirectory() || rootStats.isSymbolicLink()) {
     throw new SaltProjectInspectionError(
       "SALT_PROJECT_ROOT_NOT_DIRECTORY",
-      `Project root is not a canonical directory: ${portable(requestedRoot)}.`,
+      "The project root must be a canonical directory.",
     );
   }
   if (!isPathInside(authorityRoot, rootDir)) {
     throw new SaltProjectInspectionError(
       "SALT_PROJECT_ROOT_UNAVAILABLE",
-      `Project root is outside its filesystem authority: ${portable(requestedRoot)}.`,
+      "The project root is outside its filesystem authority.",
     );
   }
 
@@ -110,7 +109,6 @@ export async function inspectSaltProjectFacts(
     declaredSaltPackages,
     { authorityRoot, workspaceScope },
   );
-  const detectedPolicy = await detectProjectPolicy(rootDir, authorityRoot);
   const limitations = [
     ...(packageInspection.status === "absent"
       ? ["SALT_PACKAGE_MANIFEST_ABSENT"]
@@ -119,7 +117,6 @@ export async function inspectSaltProjectFacts(
         : []),
     ...installation.inspection.limitations,
     ...installation.versionHealth.issues,
-    ...detectedPolicy.markerIssues.map((issue) => issue.toUpperCase()),
   ];
 
   return {
@@ -161,16 +158,6 @@ export async function inspectSaltProjectFacts(
             : null,
         },
       },
-      detectedPolicy: {
-        ...detectedPolicy,
-        teamConfigPath: detectedPolicy.teamConfigPath
-          ? portable(detectedPolicy.teamConfigPath)
-          : null,
-        stackConfigPath: detectedPolicy.stackConfigPath
-          ? portable(detectedPolicy.stackConfigPath)
-          : null,
-      },
-      policyEvaluation: null,
     }),
     limitations: [...new Set(limitations)].sort(),
   };

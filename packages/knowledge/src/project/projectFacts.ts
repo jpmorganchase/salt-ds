@@ -1,6 +1,3 @@
-import type { DetectedProjectPolicy } from "../policy/detection.js";
-import type { SaltProjectPolicyIrV2 } from "../policy/projectPolicyIr.js";
-
 export interface SaltPackageDescriptor {
   name: string;
   version: string;
@@ -78,11 +75,6 @@ export interface SaltProjectFactsInput {
       };
   declaredSaltPackages: readonly SaltPackageDescriptor[];
   installation: SaltInstallationDiagnostics;
-  detectedPolicy: DetectedProjectPolicy;
-  policyEvaluation: {
-    ir: SaltProjectPolicyIrV2;
-    limitations: readonly string[];
-  } | null;
 }
 
 /**
@@ -105,14 +97,6 @@ export function createSaltProjectFacts(input: SaltProjectFactsInput) {
       ),
     installation: input.installation,
     workspace: input.installation.workspace,
-    policy: {
-      detection: {
-        mode: input.detectedPolicy.mode,
-        team_config_path: input.detectedPolicy.teamConfigPath,
-        stack_config_path: input.detectedPolicy.stackConfigPath,
-      },
-      evaluation: input.policyEvaluation,
-    },
   };
 }
 

@@ -1,11 +1,11 @@
 import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
+import fs from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import {
   offlineNetworkGuardUrl,
   runOfflineNetworkGuardSelfTest,
-  runOfflineScannerWorkerContainmentSelfTest,
 } from "./offline-network-probe.mjs";
 import {
   assert,
@@ -25,7 +25,6 @@ async function runInstalledCli(
     ["--import", offlineNetworkGuardUrl, installedCliBinPath, ...args],
     {
       cwd,
-      env: { SALT_OFFLINE_ALLOW_SCANNER_WORKER: "1" },
       acceptableExitCodes,
       label: `offline packed salt-ds ${args.join(" ")}`,
     },
@@ -40,7 +39,6 @@ export async function runCliWorkflowCoverage(
 ) {
   console.log("Checking the installed Salt CLI surface offline...");
   runOfflineNetworkGuardSelfTest();
-  runOfflineScannerWorkerContainmentSelfTest();
   const installedCliBinPath = getInstalledCliBin(installRoot);
   assert(
     await pathExists(installedCliBinPath),
@@ -69,7 +67,6 @@ export async function runCliWorkflowCoverage(
   ]) {
     await runCommand(process.execPath, args, {
       cwd: installRoot,
-      env: { SALT_OFFLINE_ALLOW_SCANNER_WORKER: "1" },
       label: `offline packed CLI ${mode} export check`,
     });
   }
@@ -94,7 +91,7 @@ export async function runCliWorkflowCoverage(
       ["--import", offlineNetworkGuardUrl, installedCliBinPath, "help"],
       {
         cwd: exactSaltRoot,
-        env: { ...process.env, SALT_OFFLINE_ALLOW_SCANNER_WORKER: "1" },
+        env: { ...process.env },
         stdio: ["ignore", "pipe", "pipe"],
       },
     );
@@ -183,7 +180,9 @@ export async function runCliWorkflowCoverage(
   assert(
     explicitInfo.stderr === "" &&
       defaultInfo.stderr === "" &&
-      explicitInfo.stdout === defaultInfo.stdout,
+      explicitInfo.stdout === defaultInfo.stdout &&
+      !explicitInfo.stdout.includes(exactSaltRoot) &&
+      !explicitInfo.stdout.includes(path.dirname(exactSaltRoot)),
     "Packed info root selection was not deterministic.",
   );
   const info = JSON.parse(explicitInfo.stdout);
@@ -240,7 +239,11 @@ export async function runCliWorkflowCoverage(
       skillInfo.artifacts.length === 2 &&
       skillInfo.artifacts.every(
         (entry) =>
-          entry.provenance === "official" &&
+          entry.bundle_source === "installed_package" &&
+          entry.integrity === "manifest_verified" &&
+          entry.origin_authentication === "not_established_by_bundle" &&
+          !Object.hasOwn(entry, "provenance") &&
+          !Object.hasOwn(entry, "immutable_url") &&
           !entry.package_relative_path.includes("\\") &&
           !path.isAbsolute(entry.package_relative_path) &&
           entry.bundle_digest ===
@@ -253,7 +256,103 @@ export async function runCliWorkflowCoverage(
         expectedAgentSupport.agents_pointer.sha256 &&
       Buffer.byteLength(printedAgents.stdout, "utf8") ===
         expectedAgentSupport.agents_pointer.bytes,
-    "Packed skill info/print did not preserve official manifest-selected bytes.",
+    "Packed skill info/print did not preserve manifest-selected bytes and their trust boundary.",
+  );
+
+  const largeOutputRoot = await fs.mkdtemp(
+    path.join(path.dirname(exactSaltRoot), "salt-large-info-"),
+  );
+  let largeOutputBytes = 0;
+  try {
+    const dependencies = Object.fromEntries(
+      Array.from({ length: 128 }, (_, index) => [
+        `@salt-ds/p${String(index).padStart(3, "0")}-${"x".repeat(180)}`,
+        `workspace:${"y".repeat(1_000)}`,
+      ]),
+    );
+    await fs.writeFile(
+      path.join(largeOutputRoot, "package.json"),
+      `${JSON.stringify({
+        name: "salt-large-info-output",
+        private: true,
+        packageManager: "npm@11.0.0",
+        dependencies,
+      })}\n`,
+      "utf8",
+    );
+    const largeOutput = await runInstalledCli(
+      installedCliBinPath,
+      ["info", "--json"],
+      largeOutputRoot,
+    );
+    const parsedLargeOutput = JSON.parse(largeOutput.stdout);
+    const canonicalLargeOutput = `${JSON.stringify(parsedLargeOutput)}\n`;
+    largeOutputBytes = Buffer.byteLength(canonicalLargeOutput, "utf8");
+    assert(
+      largeOutput.stderr === "" &&
+        largeOutput.stdout === canonicalLargeOutput &&
+        largeOutput.stdout.endsWith("\n") &&
+        Buffer.byteLength(largeOutput.stdout, "utf8") === largeOutputBytes &&
+        largeOutputBytes > 64 * 1024,
+      "Packed CLI large piped JSON output was incomplete or non-canonical.",
+    );
+  } finally {
+    await fs.rm(largeOutputRoot, { recursive: true, force: true });
+  }
+
+  const hostileCommand = [
+    "unknown",
+    "x".repeat(1_500),
+    String.fromCodePoint(0x1b, 0x85, 0x202e, 0x2066),
+    String.fromCodePoint(0x1f642).repeat(128),
+  ].join("-");
+  const hostileResult = await runInstalledCli(
+    installedCliBinPath,
+    [hostileCommand],
+    exactSaltRoot,
+    [2],
+  );
+  const errorLine = hostileResult.stderr.slice(0, -1);
+  const containsForbiddenTerminalCharacter = [...errorLine].some(
+    (character) => {
+      const codePoint = character.codePointAt(0);
+      return (
+        codePoint <= 0x1f ||
+        (codePoint >= 0x7f && codePoint <= 0x9f) ||
+        codePoint === 0x061c ||
+        (codePoint >= 0x200e && codePoint <= 0x200f) ||
+        (codePoint >= 0x202a && codePoint <= 0x202e) ||
+        (codePoint >= 0x2066 && codePoint <= 0x2069)
+      );
+    },
+  );
+  assert(
+    hostileResult.stdout === "" &&
+      hostileResult.stderr.endsWith("\n") &&
+      !hostileResult.stderr.slice(0, -1).includes("\n") &&
+      errorLine.startsWith("salt-ds error: [SALT_CLI_USAGE] ") &&
+      errorLine.endsWith("...[truncated]") &&
+      Buffer.byteLength(errorLine, "utf8") <= 1_024 &&
+      !containsForbiddenTerminalCharacter,
+    "Packed CLI concise errors were not single-line, bounded, or terminal-safe.",
+  );
+  const hostileRoot = [
+    "C:\\Users\\private-user\\missing-",
+    String.fromCodePoint(0x1b, 0x202e, 0x2066),
+  ].join("");
+  const invalidRoot = await runInstalledCli(
+    installedCliBinPath,
+    ["info", hostileRoot, "--json"],
+    exactSaltRoot,
+    [2],
+  );
+  assert(
+    invalidRoot.stdout === "" &&
+      invalidRoot.stderr ===
+        "salt-ds error: [SALT_CLI_USAGE] The project root is invalid or unavailable.\n" &&
+      !invalidRoot.stderr.includes("private-user") &&
+      !invalidRoot.stderr.includes("missing-"),
+    "Packed CLI invalid-root errors leaked the selected root or terminal controls.",
   );
 
   const exactDocsArgs = ["docs", "component.button", "--format", "json"];
@@ -326,12 +425,7 @@ export async function runCliWorkflowCoverage(
     (
       await runInstalledCli(
         installedCliBinPath,
-        [
-          "docs",
-          "component.localization-provider",
-          "--format",
-          "json",
-        ],
+        ["docs", "component.localization-provider", "--format", "json"],
         exactSaltRoot,
         [1],
       )
@@ -340,8 +434,7 @@ export async function runCliWorkflowCoverage(
   assert(
     ambiguousDocs.status === "ambiguous" &&
       ambiguousDocs.choices.some(
-        (choice) =>
-          choice.reference?.id === "component.vertical-navigation",
+        (choice) => choice.reference?.id === "component.vertical-navigation",
       ) &&
       ambiguousDocs.choices.some(
         (choice) => choice.reference?.id === "pattern.vertical-navigation",
@@ -419,8 +512,7 @@ export async function runCliWorkflowCoverage(
         (match) =>
           match.reference?.family === "component" &&
           match.reference?.id === "component.button" &&
-          match.citation?.record_key ===
-            "record:component:component.button",
+          match.citation?.record_key === "record:component:component.button",
       ) &&
       emptyContext.matches.length === 0 &&
       filteredContext.matches.every(
@@ -430,100 +522,10 @@ export async function runCliWorkflowCoverage(
         (entry) => entry.name === "@salt-ds/date-components",
       ) &&
       Buffer.byteLength(contextMarkdown.stdout, "utf8") <= 16 * 1024 &&
-      contextMarkdown.stdout.includes("Citation: record:component:component.button"),
-    "Packed context was not deterministic, bounded, cited, empty-safe, or version-filtered.",
-  );
-
-  const scanArgs = [
-    "scan",
-    exactSaltRoot,
-    "--format",
-    "json",
-    "--fail-on",
-    "never",
-  ];
-  const firstScan = await runInstalledCli(
-    installedCliBinPath,
-    scanArgs,
-    nonSaltRoot,
-  );
-  const secondScan = await runInstalledCli(
-    installedCliBinPath,
-    scanArgs,
-    nonSaltRoot,
-  );
-  assert(
-    firstScan.stderr === "" && firstScan.stdout === secondScan.stdout,
-    "Packed JSON scans were not offline and byte-deterministic.",
-  );
-  const scan = JSON.parse(firstScan.stdout);
-  assert(
-    scan.contract === "salt-scan-result/1" &&
-      scan.schema_version === "1.0.0" &&
-      scan.tool?.version === packReport.cli.version &&
-      scan.knowledge?.bundle_digest ===
-        packReport.report.knowledge_bundle.bundle_digest &&
-      scan.coverage?.status === "complete" &&
-      scan.coverage.evaluated_files === 1 &&
-      scan.findings.some(
-        (finding) =>
-          finding.rule_id === "salt.component.action_navigation_target" &&
-          finding.workspace_unit_id === "." &&
-          finding.location?.path === "src/Review.tsx",
-      ) &&
-      !firstScan.stdout.includes(exactSaltRoot) &&
-      !firstScan.stdout.includes("IGNORE PREVIOUS INSTRUCTIONS"),
-    "Packed JSON scan did not preserve its canonical result, coverage, or source-isolation contract.",
-  );
-
-  const prettyScan = await runInstalledCli(
-    installedCliBinPath,
-    ["scan", "--format", "pretty", "--fail-on", "warning"],
-    exactSaltRoot,
-    [1],
-  );
-  assert(
-    prettyScan.stderr === "" &&
-      prettyScan.stdout.includes("Acceptance:") &&
-      prettyScan.stdout.includes(
-        "Rescan: salt-ds scan . --format pretty --fail-on warning",
+      contextMarkdown.stdout.includes(
+        "Citation: record:component:component.button",
       ),
-    "Packed pretty scan did not expose acceptance and exact rescan guidance.",
-  );
-
-  const promptScan = await runInstalledCli(
-    installedCliBinPath,
-    ["scan", "--format", "prompt", "--fail-on", "warning"],
-    exactSaltRoot,
-    [1],
-  );
-  assert(
-    promptScan.stderr === "" &&
-      promptScan.stdout.includes("quoted, untrusted evidence") &&
-      promptScan.stdout.includes("acceptance_criterion:") &&
-      !promptScan.stdout.includes("IGNORE PREVIOUS INSTRUCTIONS"),
-    "Packed prompt scan did not preserve its untrusted-evidence boundary.",
-  );
-
-  const sarifArgs = ["scan", "--format", "sarif", "--fail-on", "never"];
-  const firstSarif = await runInstalledCli(
-    installedCliBinPath,
-    sarifArgs,
-    exactSaltRoot,
-  );
-  const secondSarif = await runInstalledCli(
-    installedCliBinPath,
-    sarifArgs,
-    exactSaltRoot,
-  );
-  const sarif = JSON.parse(firstSarif.stdout);
-  assert(
-    firstSarif.stderr === "" &&
-      firstSarif.stdout === secondSarif.stdout &&
-      sarif.version === "2.1.0" &&
-      sarif.runs?.[0]?.results?.[0]?.partialFingerprints?.saltFindingId ===
-        scan.findings[0].id,
-    "Packed SARIF scans were not deterministic or finding-identity preserving.",
+    "Packed context was not deterministic, bounded, cited, empty-safe, or version-filtered.",
   );
 
   const partialResult = await runInstalledCli(
@@ -535,6 +537,8 @@ export async function runCliWorkflowCoverage(
   assert(
     partial.coverage?.status === "partial" &&
       partial.coverage.exact_project_package_vector === false &&
+      partial.selection?.status === "not_salt" &&
+      partial.selection.reason_code === "SALT_PROJECT_NO_SALT_PACKAGES" &&
       partial.compatibility?.compatible === false &&
       partial.compatibility.disabled_families.some(
         (entry) =>
@@ -544,30 +548,55 @@ export async function runCliWorkflowCoverage(
     "Packed info did not disclose incomplete non-Salt coverage.",
   );
 
-  const incompleteScan = await runInstalledCli(
-    installedCliBinPath,
-    ["scan", "--format", "json", "--fail-on", "never"],
-    nonSaltRoot,
-    [3],
+  const rejectedDocs = JSON.parse(
+    (
+      await runInstalledCli(
+        installedCliBinPath,
+        ["docs", "component.button", "--format", "json"],
+        nonSaltRoot,
+        [3],
+      )
+    ).stdout,
   );
-  const allowedIncompleteScan = await runInstalledCli(
-    installedCliBinPath,
-    ["scan", "--format", "json", "--fail-on", "never", "--allow-incomplete"],
-    nonSaltRoot,
+  const rejectedContext = JSON.parse(
+    (
+      await runInstalledCli(
+        installedCliBinPath,
+        ["context", "Button", "--format", "json", "--limit", "5"],
+        nonSaltRoot,
+        [3],
+      )
+    ).stdout,
   );
-  const incomplete = JSON.parse(incompleteScan.stdout);
   assert(
-    incompleteScan.stderr === "" &&
-      incomplete.coverage?.status === "partial" &&
-      incomplete.coverage.reasons.includes("SALT_PACKAGE_VECTOR_UNAVAILABLE") &&
-      allowedIncompleteScan.stderr === "" &&
-      JSON.parse(allowedIncompleteScan.stdout).coverage.status === "partial",
-    "Packed --allow-incomplete did not override only disclosed partial coverage.",
+    rejectedDocs.status === "not_salt" &&
+      rejectedDocs.reason_code === "SALT_PROJECT_NO_SALT_PACKAGES" &&
+      rejectedContext.status === "not_salt" &&
+      rejectedContext.reason_code === "SALT_PROJECT_NO_SALT_PACKAGES",
+    "Packed retrieval did not stop at the closed non-Salt project decision.",
+  );
+
+  const removedScan = await runInstalledCli(
+    installedCliBinPath,
+    ["scan"],
+    exactSaltRoot,
+    [2],
+  );
+  assert(
+    removedScan.stdout === "" &&
+      removedScan.stderr.includes("[SALT_CLI_USAGE]") &&
+      removedScan.stderr.includes("Unknown command: scan"),
+    "Packed CLI still exposed scan as a product command.",
   );
 
   return {
     aliases: { help: 3, version: 2, broken_pipe: 1 },
     invalid_argument_cases: 26,
+    terminal_safety: {
+      large_output_bytes: largeOutputBytes,
+      invalid_root: "generic",
+      control_characters: "sanitized",
+    },
     exact_info: {
       bundle_digest: info.knowledge.bundle_digest,
       semantic_digest: info.knowledge.semantic_digest,
@@ -585,13 +614,13 @@ export async function runCliWorkflowCoverage(
     agent_support: {
       skill_sha256: expectedAgentSupport.skill.sha256,
       agents_pointer_sha256: expectedAgentSupport.agents_pointer.sha256,
-      provenance: "official",
+      bundle_source: "installed_package",
+      integrity: "manifest_verified",
+      origin_authentication: "not_established_by_bundle",
     },
-    scan: {
-      coverage: scan.coverage.status,
-      findings: scan.findings.length,
-      formats: ["json", "pretty", "prompt", "sarif"],
-      incomplete_coverage: incomplete.coverage.status,
+    rejected_retrieval: {
+      docs: rejectedDocs.reason_code,
+      context: rejectedContext.reason_code,
     },
     network: "offline",
     node: process.versions.node,

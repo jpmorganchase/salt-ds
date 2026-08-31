@@ -3,11 +3,6 @@ import { runContextCommand } from "./commands/context.js";
 import { runDocsCommand } from "./commands/docs.js";
 import { runInfoCommand } from "./commands/info.js";
 import { runSkillCommand, type SaltSkillKind } from "./commands/skill.js";
-import {
-  runScanCommand,
-  type ScanFailOn,
-  type ScanFormat,
-} from "./commands/scan.js";
 
 export const SALT_CLI_HELP = `Salt Design System CLI
 
@@ -22,7 +17,6 @@ Usage:
   salt-ds context <query> --format markdown|json --limit <n>
   salt-ds skill info --json
   salt-ds skill print --kind skill|agents
-  salt-ds scan [root] --format pretty|json|sarif|prompt --fail-on error|warning|info|never [--allow-incomplete]
 
 Commands:
   help       Show this help text.
@@ -31,7 +25,6 @@ Commands:
   docs       Read one exact, compatible Knowledge record.
   context    Retrieve a bounded, cited Knowledge slice.
   skill      Inspect or print the verified bundled Skill artifacts.
-  scan       Review supported source files with the bundled offline rule engine.
 
 The CLI runs locally and does not use the network, Storybook, MCP, or a model.
 `;
@@ -48,7 +41,7 @@ export class SaltCliUsageError extends Error {
 
 export interface SaltCliIo {
   cwd(): string;
-  stdout(value: string): void;
+  stdout(value: string): void | Promise<void>;
 }
 
 type ParsedCliCommand =
@@ -65,13 +58,6 @@ type ParsedCliCommand =
       query: string;
       format: "markdown" | "json";
       limit: number;
-    }
-  | {
-      command: "scan";
-      rootDir: string | null;
-      format: ScanFormat;
-      failOn: ScanFailOn;
-      allowIncomplete: boolean;
     }
   | { command: "skill"; action: "info"; kind: null }
   | { command: "skill"; action: "print"; kind: SaltSkillKind };
@@ -103,15 +89,13 @@ export function parseCliArgs(argv: readonly string[]): ParsedCliCommand {
     command !== "info" &&
     command !== "docs" &&
     command !== "context" &&
-    command !== "skill" &&
-    command !== "scan"
+    command !== "skill"
   ) {
     throw new SaltCliUsageError(
       `Unknown command: ${command}. Run \`salt-ds help\` for usage.`,
     );
   }
 
-  if (command === "scan") return parseScanArguments(arguments_);
   if (command === "docs") return parseDocsArguments(arguments_);
   if (command === "context") return parseContextArguments(arguments_);
   if (command === "skill") return parseSkillArguments(arguments_);
@@ -144,7 +128,9 @@ function parseSkillArguments(arguments_: readonly string[]): ParsedCliCommand {
   const [action, ...options] = arguments_;
   if (action === "info") {
     if (options.length !== 1 || options[0] !== "--json") {
-      throw new SaltCliUsageError("skill info requires exactly one --json option.");
+      throw new SaltCliUsageError(
+        "skill info requires exactly one --json option.",
+      );
     }
     return { command: "skill", action: "info", kind: null };
   }
@@ -197,7 +183,9 @@ function parseDocsArguments(arguments_: readonly string[]): ParsedCliCommand {
       );
     }
     if (argument.includes("\0")) {
-      throw new SaltCliUsageError("The docs identifier contains an invalid byte.");
+      throw new SaltCliUsageError(
+        "The docs identifier contains an invalid byte.",
+      );
     }
     identifier = argument;
   }
@@ -209,7 +197,9 @@ function parseDocsArguments(arguments_: readonly string[]): ParsedCliCommand {
   return { command: "docs", identifier, format };
 }
 
-function parseContextArguments(arguments_: readonly string[]): ParsedCliCommand {
+function parseContextArguments(
+  arguments_: readonly string[],
+): ParsedCliCommand {
   let query: string | null = null;
   let format: "markdown" | "json" | null = null;
   let limit: number | null = null;
@@ -249,7 +239,9 @@ function parseContextArguments(arguments_: readonly string[]): ParsedCliCommand 
       throw new SaltCliUsageError("context accepts exactly one query.");
     }
     if (argument.includes("\0")) {
-      throw new SaltCliUsageError("The context query contains an invalid byte.");
+      throw new SaltCliUsageError(
+        "The context query contains an invalid byte.",
+      );
     }
     query = argument;
   }
@@ -261,78 +253,17 @@ function parseContextArguments(arguments_: readonly string[]): ParsedCliCommand 
   return { command: "context", query, format, limit };
 }
 
-function parseScanArguments(arguments_: readonly string[]): ParsedCliCommand {
-  let rootDir: string | null = null;
-  let format: ScanFormat | null = null;
-  let failOn: ScanFailOn | null = null;
-  let allowIncomplete = false;
-  for (let index = 0; index < arguments_.length; index += 1) {
-    const argument = arguments_[index];
-    if (argument === "--allow-incomplete") {
-      if (allowIncomplete) {
-        throw new SaltCliUsageError(
-          "scan accepts --allow-incomplete at most once.",
-        );
-      }
-      allowIncomplete = true;
-      continue;
-    }
-    if (argument === "--format") {
-      if (format !== null)
-        throw new SaltCliUsageError("scan accepts --format once.");
-      const value = arguments_[index + 1];
-      if (!value || !["pretty", "json", "sarif", "prompt"].includes(value)) {
-        throw new SaltCliUsageError(
-          "scan requires a supported --format value.",
-        );
-      }
-      format = value as ScanFormat;
-      index += 1;
-      continue;
-    }
-    if (argument === "--fail-on") {
-      if (failOn !== null)
-        throw new SaltCliUsageError("scan accepts --fail-on once.");
-      const value = arguments_[index + 1];
-      if (!value || !["error", "warning", "info", "never"].includes(value)) {
-        throw new SaltCliUsageError(
-          "scan requires a supported --fail-on value.",
-        );
-      }
-      failOn = value as ScanFailOn;
-      index += 1;
-      continue;
-    }
-    if (argument.startsWith("-")) {
-      throw new SaltCliUsageError(`Unknown scan option: ${argument}.`);
-    }
-    if (rootDir !== null) {
-      throw new SaltCliUsageError("scan accepts at most one project root.");
-    }
-    if (argument.includes("\0")) {
-      throw new SaltCliUsageError("The project root contains an invalid byte.");
-    }
-    rootDir = argument;
-  }
-  if (format === null || failOn === null) {
-    throw new SaltCliUsageError(
-      "scan requires exactly one --format and --fail-on option.",
-    );
-  }
-  return { command: "scan", rootDir, format, failOn, allowIncomplete };
-}
-
 export async function runCliWithIo(
   argv: readonly string[],
   io: SaltCliIo,
 ): Promise<number> {
   const parsed = parseCliArgs(argv);
   if (parsed.command === "help") {
-    io.stdout(SALT_CLI_HELP);
+    await io.stdout(SALT_CLI_HELP);
     return 0;
   }
   if (parsed.command === "version") {
-    io.stdout(`${packageManifest.version}\n`);
+    await io.stdout(`${packageManifest.version}\n`);
     return 0;
   }
   if (parsed.command === "docs") {
@@ -341,7 +272,7 @@ export async function runCliWithIo(
       identifier: parsed.identifier,
       format: parsed.format,
     });
-    io.stdout(result.output);
+    await io.stdout(result.output);
     return result.exitCode;
   }
   if (parsed.command === "context") {
@@ -351,56 +282,17 @@ export async function runCliWithIo(
       format: parsed.format,
       limit: parsed.limit,
     });
-    io.stdout(result.output);
+    await io.stdout(result.output);
     return result.exitCode;
   }
   if (parsed.command === "skill") {
-    io.stdout(
+    await io.stdout(
       await runSkillCommand({
         action: parsed.action,
         ...(parsed.kind ? { kind: parsed.kind } : {}),
       }),
     );
     return 0;
-  }
-  if (parsed.command === "scan") {
-    try {
-      const scan = await runScanCommand({
-        rootDir: parsed.rootDir ?? io.cwd(),
-        cliVersion: packageManifest.version,
-        format: parsed.format,
-        failOn: parsed.failOn,
-        allowIncomplete: parsed.allowIncomplete,
-      });
-      io.stdout(scan.output);
-      return scan.exitCode;
-    } catch (error) {
-      if (
-        error &&
-        typeof error === "object" &&
-        "exitCode" in error &&
-        error.exitCode === 2
-      ) {
-        throw error;
-      }
-      if (
-        error &&
-        typeof error === "object" &&
-        "code" in error &&
-        (error.code === "SALT_PROJECT_ROOT_NOT_DIRECTORY" ||
-          error.code === "SALT_PROJECT_ROOT_UNAVAILABLE")
-      ) {
-        throw new SaltCliUsageError(
-          error instanceof Error
-            ? error.message
-            : "The project root is invalid.",
-        );
-      }
-      throw Object.assign(new Error("The scan could not be completed."), {
-        code: "SALT_CLI_SCAN_FAILED",
-        exitCode: 3,
-      });
-    }
   }
   let result: Awaited<ReturnType<typeof runInfoCommand>>;
   try {
@@ -417,13 +309,27 @@ export async function runCliWithIo(
         error.code === "SALT_PROJECT_ROOT_UNAVAILABLE")
     ) {
       throw new SaltCliUsageError(
-        error instanceof Error ? error.message : "The project root is invalid.",
+        "The project root is invalid or unavailable.",
       );
     }
     throw error;
   }
-  io.stdout(`${JSON.stringify(result)}\n`);
+  await io.stdout(`${JSON.stringify(result)}\n`);
   return 0;
+}
+
+function writeStandardOutput(value: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const onError = (error: Error) => {
+      process.stdout.off("error", onError);
+      reject(error);
+    };
+    process.stdout.once("error", onError);
+    process.stdout.write(value, () => {
+      process.stdout.off("error", onError);
+      resolve();
+    });
+  });
 }
 
 export async function runCli(
@@ -431,6 +337,6 @@ export async function runCli(
 ): Promise<number> {
   return runCliWithIo(argv, {
     cwd: () => process.cwd(),
-    stdout: (value) => process.stdout.write(value),
+    stdout: writeStandardOutput,
   });
 }

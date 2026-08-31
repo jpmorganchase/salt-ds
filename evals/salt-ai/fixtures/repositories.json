@@ -37,13 +37,6 @@
       }
     },
     {
-      "id": "repo-project-wrapper",
-      "files": {
-        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\"}}",
-        ".salt/team.json": "{\"contract\":\"project_conventions_v1\",\"version\":\"1.0.0\",\"project\":\"fixture\",\"approved_wrappers\":[{\"name\":\"AppButton\",\"wraps\":\"Button\",\"reason\":\"Product analytics\",\"import\":{\"from\":\"./src/AppButton\",\"name\":\"AppButton\"},\"use_when\":[\"product action\"],\"avoid_when\":[\"navigation\"]}]}"
-      }
-    },
-    {
       "id": "repo-partial-package-mismatch",
       "files": {
         "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\",\"@salt-ds/theme\":\"1.43.0\"}}",

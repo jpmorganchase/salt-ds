@@ -9,7 +9,6 @@ export type SaltEvidenceSourceKind =
   | "example"
   | "token"
   | "package"
-  | "project_policy"
   | "submitted_text"
   | "runtime";
 
@@ -24,8 +23,7 @@ export type SaltEvidenceClaimKind =
   | "accessibility"
   | "example"
   | "composition"
-  | "status"
-  | "project_policy";
+  | "status";
 
 export type SaltEvidenceRegistryEntityType =
   | "component"
@@ -59,12 +57,6 @@ export interface SaltEvidencePackageRef {
   version?: string | null;
 }
 
-export interface SaltEvidenceProjectPolicyRef {
-  path: string;
-  layer?: string | null;
-  field_path?: string | null;
-}
-
 export interface SaltEvidenceSubmittedTextRef {
   field_path: string;
   captured_at?: string | null;
@@ -77,7 +69,6 @@ interface SaltEvidenceRefBase {
   registry?: SaltEvidenceRegistryRef | null;
   source?: SaltEvidenceSourceRef | null;
   package?: SaltEvidencePackageRef | null;
-  project_policy?: SaltEvidenceProjectPolicyRef | null;
   submitted_text?: SaltEvidenceSubmittedTextRef | null;
   note?: string | null;
 }
@@ -170,7 +161,6 @@ export type SaltTokenPolicyEvidenceRef = Omit<
   | "source"
   | "registry"
   | "package"
-  | "project_policy"
   | "submitted_text"
 > & {
   source_kind: "docs" | "token";
@@ -232,7 +222,6 @@ export type SaltEvidenceValidationIssueCode =
   | "missing_source_locator"
   | "invalid_source_locator"
   | "conflicting_evidence_ref"
-  | "missing_project_policy_locator"
   | "missing_submitted_text_locator"
   | "missing_runtime_locator"
   | "missing_package_locator"
@@ -262,7 +251,6 @@ const EVIDENCE_SOURCE_KINDS = new Set<SaltEvidenceSourceKind>([
   "example",
   "token",
   "package",
-  "project_policy",
   "submitted_text",
   "runtime",
 ]);
@@ -278,7 +266,6 @@ const EVIDENCE_CLAIM_KINDS = new Set<SaltEvidenceClaimKind>([
   "example",
   "composition",
   "status",
-  "project_policy",
 ]);
 const REGISTRY_ENTITY_TYPES = new Set<SaltEvidenceRegistryEntityType>([
   "component",
@@ -402,7 +389,6 @@ function validateEvidenceRefStructure(
       "registry",
       "source",
       "package",
-      "project_policy",
       "submitted_text",
       "note",
     ]),
@@ -566,34 +552,6 @@ function validateEvidenceRefStructure(
     );
   }
 
-  const policy = validateNestedEvidenceObject(
-    value.project_policy,
-    `${path}.project_policy`,
-    ["path", "layer", "field_path"],
-  );
-  issues.push(...policy.issues);
-  if (policy.record) {
-    issues.push(
-      ...validateNullableStringField(
-        policy.record,
-        "path",
-        `${path}.project_policy`,
-        true,
-        true,
-      ),
-      ...validateNullableStringField(
-        policy.record,
-        "layer",
-        `${path}.project_policy`,
-      ),
-      ...validateNullableStringField(
-        policy.record,
-        "field_path",
-        `${path}.project_policy`,
-      ),
-    );
-  }
-
   const submitted = validateNestedEvidenceObject(
     value.submitted_text,
     `${path}.submitted_text`,
@@ -709,17 +667,6 @@ export function validateEvidenceRef(
       code: "invalid_source_locator",
       message: `Evidence ref '${ref.id}' source line range must have ordered start and end lines.`,
       path: `${path}.source`,
-    });
-  }
-
-  if (
-    ref.source_kind === "project_policy" &&
-    !hasText(ref.project_policy?.path)
-  ) {
-    issues.push({
-      code: "missing_project_policy_locator",
-      message: `Project policy evidence ref '${ref.id}' must include project_policy.path.`,
-      path: `${path}.project_policy.path`,
     });
   }
 

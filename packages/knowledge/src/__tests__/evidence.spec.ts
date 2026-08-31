@@ -11,6 +11,7 @@ import {
   validateEvidenceRef,
   validateGeneratedArtifactEvidence,
 } from "../evidence.js";
+import * as publicApi from "../public.js";
 
 const evidenceSchema = JSON.parse(
   readFileSync(
@@ -114,6 +115,25 @@ function buildSourceEvidenceRef(
 }
 
 describe("evidence source locator validation", () => {
+  it("does not expose repository project-policy parsers or IR", () => {
+    expect(publicApi).not.toHaveProperty("detectProjectPolicy");
+    expect(publicApi).not.toHaveProperty("compileSaltProjectPolicyIrV2");
+    expect(publicApi).not.toHaveProperty("parseProjectConventionsPayload");
+  });
+
+  it("rejects the removed repository project-policy evidence kind", () => {
+    const ref = {
+      contract: SALT_EVIDENCE_REF_CONTRACT,
+      id: "fixture.removed-project-policy",
+      source_kind: "project_policy",
+      claim_kind: "project_policy",
+      project_policy: { path: ".salt/team.json" },
+    } as unknown as SaltEvidenceRef;
+
+    expect(validatePublishedEvidenceRef(ref)).toBe(false);
+    expect(validateEvidenceRef(ref, "ref")).not.toEqual([]);
+  });
+
   it("rejects the removed legacy verified_at field in the published contract", () => {
     expect(
       validatePublishedEvidenceRef({
@@ -275,15 +295,14 @@ describe("evidence source locator validation", () => {
     expect(validatePublishedEvidenceRef(ref)).toBe(false);
   });
 
-  it.each([
-    "https://:",
-    "https://a:bad",
-    "https://[::1",
-  ])("rejects malformed HTTPS authority in the published schema: %s", (url) => {
-    expect(validatePublishedEvidenceRef(buildSourceEvidenceRef({ url }))).toBe(
-      false,
-    );
-  });
+  it.each(["https://:", "https://a:bad", "https://[::1"])(
+    "rejects malformed HTTPS authority in the published schema: %s",
+    (url) => {
+      expect(
+        validatePublishedEvidenceRef(buildSourceEvidenceRef({ url })),
+      ).toBe(false);
+    },
+  );
 
   it.each([
     {
@@ -309,67 +328,66 @@ describe("evidence source locator validation", () => {
         unexpected: true,
       },
     },
-  ])("keeps runtime structural validation at least as strict as the published schema: %j", (candidate) => {
-    expect(validatePublishedEvidenceRef(candidate)).toBe(false);
-    expect(
-      validateEvidenceRef(candidate as unknown as SaltEvidenceRef, "ref"),
-    ).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ code: "invalid_evidence_contract" }),
-      ]),
-    );
-  });
+  ])(
+    "keeps runtime structural validation at least as strict as the published schema: %j",
+    (candidate) => {
+      expect(validatePublishedEvidenceRef(candidate)).toBe(false);
+      expect(
+        validateEvidenceRef(candidate as unknown as SaltEvidenceRef, "ref"),
+      ).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ code: "invalid_evidence_contract" }),
+        ]),
+      );
+    },
+  );
 
-  it.each([
-    undefined,
-    null,
-    "",
-    " ",
-  ])("requires a nonempty registry field path at runtime and in the published schema: %j", (fieldPath) => {
-    const [ref] = buildGeneratedArtifact().evidence_refs;
-    if (!ref) throw new Error("Expected generated artifact evidence");
-    if (fieldPath === undefined) {
-      if (ref.registry) {
-        delete (ref.registry as Partial<typeof ref.registry>).field_path;
+  it.each([undefined, null, "", " "])(
+    "requires a nonempty registry field path at runtime and in the published schema: %j",
+    (fieldPath) => {
+      const [ref] = buildGeneratedArtifact().evidence_refs;
+      if (!ref) throw new Error("Expected generated artifact evidence");
+      if (fieldPath === undefined) {
+        if (ref.registry) {
+          delete (ref.registry as Partial<typeof ref.registry>).field_path;
+        }
+      } else if (ref.registry) {
+        (ref.registry as { field_path: string | null }).field_path = fieldPath;
       }
-    } else if (ref.registry) {
-      (ref.registry as { field_path: string | null }).field_path = fieldPath;
-    }
 
-    expect(validatePublishedEvidenceRef(ref)).toBe(false);
-    expect(validateEvidenceRef(ref, "ref")).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          code: "missing_registry_field_path",
-          path: "ref.registry.field_path",
-        }),
-      ]),
-    );
-  });
+      expect(validatePublishedEvidenceRef(ref)).toBe(false);
+      expect(validateEvidenceRef(ref, "ref")).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            code: "missing_registry_field_path",
+            path: "ref.registry.field_path",
+          }),
+        ]),
+      );
+    },
+  );
 
   it.each([
     { source: { url: "", repo_path: "packages/core/Button.tsx" } },
     { source: { url: "/salt/components/button", repo_path: "" } },
-  ])("rejects an empty present source locator even when its peer is valid: %j", (overrides) => {
-    const ref = buildSourceEvidenceRef(overrides.source);
-    expect(validatePublishedEvidenceRef(ref)).toBe(false);
-    expect(validateEvidenceRef(ref, "ref")).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ code: "invalid_evidence_contract" }),
-      ]),
-    );
-  });
+  ])(
+    "rejects an empty present source locator even when its peer is valid: %j",
+    (overrides) => {
+      const ref = buildSourceEvidenceRef(overrides.source);
+      expect(validatePublishedEvidenceRef(ref)).toBe(false);
+      expect(validateEvidenceRef(ref, "ref")).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ code: "invalid_evidence_contract" }),
+        ]),
+      );
+    },
+  );
 
   it.each([
     {
       source_kind: "package",
       package: { name: " " },
       claim_kind: "package",
-    },
-    {
-      source_kind: "project_policy",
-      project_policy: { path: " " },
-      claim_kind: "project_policy",
     },
     {
       source_kind: "submitted_text",
@@ -381,15 +399,18 @@ describe("evidence source locator validation", () => {
       source: { section: " " },
       claim_kind: "status",
     },
-  ])("rejects whitespace-only locator values at runtime and in schema: %j", (partial) => {
-    const ref = {
-      contract: SALT_EVIDENCE_REF_CONTRACT,
-      id: "fixture.whitespace-locator",
-      ...partial,
-    } as SaltEvidenceRef;
-    expect(validatePublishedEvidenceRef(ref)).toBe(false);
-    expect(validateEvidenceRef(ref, "ref")).not.toEqual([]);
-  });
+  ])(
+    "rejects whitespace-only locator values at runtime and in schema: %j",
+    (partial) => {
+      const ref = {
+        contract: SALT_EVIDENCE_REF_CONTRACT,
+        id: "fixture.whitespace-locator",
+        ...partial,
+      } as SaltEvidenceRef;
+      expect(validatePublishedEvidenceRef(ref)).toBe(false);
+      expect(validateEvidenceRef(ref, "ref")).not.toEqual([]);
+    },
+  );
 });
 
 describe("generated artifact evidence validation", () => {

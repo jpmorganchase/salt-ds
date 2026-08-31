@@ -1,13 +1,55 @@
+import path from "node:path";
 import {
-  inspectSaltProjectFacts,
-  loadKnowledgeRuntimeContext,
-  resolveKnowledgeCompatibility,
   type PackageCompatibilityDecision,
+  resolveKnowledgeCompatibility,
 } from "@salt-ds/knowledge";
+import { loadRetrievalRuntime } from "./retrievalRuntime.js";
 
 export interface RunInfoCommandInput {
   rootDir: string;
   cliVersion: string;
+}
+
+const UNSAFE_INFO_PATH_LIMITATION = "SALT_INFO_PATH_NOT_PORTABLE";
+
+function createProjectPathProjection(
+  selectedRoot: string,
+  pathLimitations: Set<string>,
+) {
+  const authorityRoot = path.resolve(selectedRoot);
+
+  return (observedPath: string | null): string | null => {
+    if (observedPath === null) return null;
+    const nativeAbsolute = path.isAbsolute(observedPath);
+    if (
+      observedPath.includes("\0") ||
+      (!nativeAbsolute &&
+        (path.win32.isAbsolute(observedPath) ||
+          path.posix.isAbsolute(observedPath)))
+    ) {
+      pathLimitations.add(UNSAFE_INFO_PATH_LIMITATION);
+      return null;
+    }
+    const absolutePath = nativeAbsolute
+      ? path.resolve(observedPath)
+      : path.resolve(authorityRoot, observedPath);
+    const relativePath = path.relative(authorityRoot, absolutePath);
+    if (relativePath === "") return ".";
+    const portablePath = relativePath.split(path.sep).join("/");
+    if (
+      path.isAbsolute(relativePath) ||
+      portablePath === ".." ||
+      portablePath.startsWith("../") ||
+      portablePath.includes("\0") ||
+      portablePath.split("/").includes("..") ||
+      path.win32.isAbsolute(portablePath) ||
+      path.posix.isAbsolute(portablePath)
+    ) {
+      pathLimitations.add(UNSAFE_INFO_PATH_LIMITATION);
+      return null;
+    }
+    return portablePath;
+  };
 }
 
 function comparePackages(
@@ -27,21 +69,17 @@ function disabledFamily(entry: PackageCompatibilityDecision) {
 
 /** Build the deterministic JSON result for `salt-ds info`. */
 export async function runInfoCommand(input: RunInfoCommandInput) {
-  const [{ facts, limitations: inspectionLimitations }, knowledge] =
-    await Promise.all([
-      inspectSaltProjectFacts({ rootDir: input.rootDir }),
-      loadKnowledgeRuntimeContext(),
-    ]);
-  const manifest = knowledge.store.manifest;
-  const observedVersions = Object.fromEntries(
-    facts.installation.resolvedPackages.map((entry) => [
-      entry.name,
-      entry.resolvedVersion,
-    ]),
-  );
+  const runtime = await loadRetrievalRuntime(input.rootDir);
+  const { facts, inspectionLimitations, selection } = runtime;
+  const manifest = runtime.store.manifest;
   const compatibility = resolveKnowledgeCompatibility(
     manifest,
-    observedVersions,
+    runtime.installedVersions,
+  );
+  const pathLimitations = new Set<string>();
+  const projectPath = createProjectPathProjection(
+    facts.root_dir,
+    pathLimitations,
   );
   const declaredByName = new Map(
     facts.declared_salt_packages.map((entry) => [entry.name, entry.version]),
@@ -53,21 +91,11 @@ export async function runInfoCommand(input: RunInfoCommandInput) {
       effective_declared_version: entry.effectiveDeclaredVersion,
       declaration_resolution: entry.declarationResolution,
       observed_version: entry.resolvedVersion,
-      observed_manifest_path: entry.resolvedPath,
+      observed_manifest_path: projectPath(entry.resolvedPath),
       satisfies_declaration: entry.satisfiesDeclaredVersion,
     }))
     .sort(comparePackages);
-  const exactProjectPackageVector =
-    facts.package_manifest.status === "valid" &&
-    facts.installation.inspection.status === "succeeded" &&
-    facts.declared_salt_packages.length > 0 &&
-    projectPackages.length === facts.declared_salt_packages.length &&
-    projectPackages.every(
-      (entry) =>
-        entry.declaration_resolution === "verified" &&
-        entry.observed_version !== null &&
-        entry.satisfies_declaration === true,
-    );
+  const exactProjectPackageVector = selection.status === "selected";
   const limitations = [
     ...inspectionLimitations,
     ...compatibility.limitations,
@@ -95,7 +123,25 @@ export async function runInfoCommand(input: RunInfoCommandInput) {
     ...(exactProjectPackageVector
       ? []
       : ["SALT_PROJECT_PACKAGE_VECTOR_NOT_EXACT"]),
+    ...pathLimitations,
   ];
+
+  const packageManifest =
+    facts.package_manifest.path === null
+      ? facts.package_manifest
+      : {
+          ...facts.package_manifest,
+          path: projectPath(facts.package_manifest.path),
+        };
+  const workspace = {
+    ...facts.workspace,
+    packageRoot: projectPath(facts.workspace.packageRoot),
+    workspaceRoot: projectPath(facts.workspace.workspaceRoot),
+  };
+
+  if (pathLimitations.size > 0) {
+    limitations.push(...pathLimitations);
+  }
 
   return {
     contract: "salt-cli-info/1" as const,
@@ -106,8 +152,8 @@ export async function runInfoCommand(input: RunInfoCommandInput) {
       node: process.versions.node,
     },
     project: {
-      root: facts.root_dir,
-      package_manifest: facts.package_manifest,
+      root: "." as const,
+      package_manifest: packageManifest,
       package_manager: {
         name: facts.installation.inspection.packageManager,
         detection_status:
@@ -115,7 +161,7 @@ export async function runInfoCommand(input: RunInfoCommandInput) {
         layout: facts.installation.inspection.packageLayout,
         evidence_status: facts.installation.inspection.status,
       },
-      workspace: facts.workspace,
+      workspace,
       packages: projectPackages,
     },
     knowledge: {
@@ -125,6 +171,7 @@ export async function runInfoCommand(input: RunInfoCommandInput) {
       bundle_digest: manifest.bundle_digest,
       semantic_digest: manifest.semantic_digest,
     },
+    selection,
     compatibility: {
       compatible: compatibility.complete,
       packages: compatibility.packages,

@@ -938,10 +938,7 @@ for (const relativePath of publishCanonicalTextPaths) {
     );
   }
   const bytes = await fs.readFile(targetPath);
-  await fs.writeFile(
-    targetPath,
-    canonicalUtf8TextBytes(bytes, relativePath),
-  );
+  await fs.writeFile(targetPath, canonicalUtf8TextBytes(bytes, relativePath));
 }
 
 for (const copyConfig of publishExtraCopyPaths) {
@@ -995,24 +992,114 @@ for (const [relativeBinPath, entrypoint] of Object.entries(
 
 const { ${exportName} } = require(${JSON.stringify(requirePath)});
 
-if (${JSON.stringify(ignoreBrokenPipe)}) {
-  process.stdout.on("error", (error) => {
-    if (error?.code === "EPIPE") process.exit(0);
-    throw error;
+const MAX_CONCISE_ERROR_LINE_BYTES = 1024;
+
+function isForbiddenTerminalCharacter(character) {
+  const codePoint = character.codePointAt(0);
+  return (
+    codePoint <= 0x1f ||
+    (codePoint >= 0x7f && codePoint <= 0x9f) ||
+    codePoint === 0x061c ||
+    (codePoint >= 0x200e && codePoint <= 0x200f) ||
+    (codePoint >= 0x202a && codePoint <= 0x202e) ||
+    (codePoint >= 0x2066 && codePoint <= 0x2069)
+  );
+}
+
+function sanitizeConciseDetail(value) {
+  let sanitized = "";
+  for (const character of String(value)) {
+    sanitized += isForbiddenTerminalCharacter(character) ? " " : character;
+  }
+  return sanitized.replace(/\\s+/gu, " ").trim();
+}
+
+function truncateUtf8ScalarPrefix(value, maxBytes) {
+  let rendered = "";
+  let renderedBytes = 0;
+  for (const scalar of value) {
+    const scalarBytes = Buffer.byteLength(scalar, "utf8");
+    if (renderedBytes + scalarBytes > maxBytes) break;
+    rendered += scalar;
+    renderedBytes += scalarBytes;
+  }
+  return rendered;
+}
+
+function renderConciseError(prefix, error) {
+  const code = error?.code;
+  if (typeof code !== "string" || code.length === 0) {
+    throw new Error("A concise CLI error must have a stable code.");
+  }
+  const identity = prefix + " [" + code + "]";
+  const detail = sanitizeConciseDetail(
+    error instanceof Error ? error.message : String(error),
+  );
+  const line = detail.length > 0 ? identity + " " + detail : identity;
+  if (Buffer.byteLength(line, "utf8") <= MAX_CONCISE_ERROR_LINE_BYTES) {
+    return line;
+  }
+  const marker = "...[truncated]";
+  const reservedBytes = Buffer.byteLength(identity + " " + marker, "utf8");
+  if (reservedBytes > MAX_CONCISE_ERROR_LINE_BYTES) {
+    throw new Error("A concise CLI error prefix and code exceed the byte budget.");
+  }
+  const availableDetailBytes =
+    MAX_CONCISE_ERROR_LINE_BYTES - reservedBytes;
+  return (
+    identity +
+    " " +
+    truncateUtf8ScalarPrefix(detail, availableDetailBytes) +
+    marker
+  );
+}
+
+function writeStream(stream, value) {
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    const cleanup = () => stream.off("error", onError);
+    const onError = (error) => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      reject(error);
+    };
+    stream.once("error", onError);
+    stream.write(value, () => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      resolve();
+    });
   });
 }
 
 ${exportName}(process.argv.slice(2))
   .then((exitCode) => {
-    process.exit(exitCode);
+    process.exitCode = exitCode;
+  })
+  .catch(async (error) => {
+    if (${JSON.stringify(ignoreBrokenPipe)} && error?.code === "EPIPE") {
+      process.exitCode = 0;
+      return;
+    }
+    const concise = ${JSON.stringify(conciseErrorCodes)}.includes(error?.code);
+    const printableError = concise
+      ? error
+      : Object.assign(new Error("The command failed unexpectedly."), {
+          code: "SALT_CLI_INTERNAL",
+        });
+    await writeStream(
+      process.stderr,
+      renderConciseError(${JSON.stringify(errorPrefix)}, printableError) + "\\n",
+    );
+    process.exitCode = Number.isSafeInteger(error?.exitCode)
+      ? error.exitCode
+      : 1;
   })
   .catch((error) => {
-    const concise = ${JSON.stringify(conciseErrorCodes)}.includes(error?.code);
-    const rendered = concise && error instanceof Error
-      ? error.message
-      : error?.stack ?? String(error);
-    console.error(${JSON.stringify(errorPrefix)}, rendered);
-    process.exit(Number.isSafeInteger(error?.exitCode) ? error.exitCode : 1);
+    if (${JSON.stringify(ignoreBrokenPipe)} && error?.code === "EPIPE") return;
+    process.exitCode = 1;
   });
 `,
     "utf8",

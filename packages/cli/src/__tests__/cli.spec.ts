@@ -9,13 +9,11 @@ import {
 const runInfoCommand = vi.hoisted(() => vi.fn());
 const runDocsCommand = vi.hoisted(() => vi.fn());
 const runContextCommand = vi.hoisted(() => vi.fn());
-const runScanCommand = vi.hoisted(() => vi.fn());
 const runSkillCommand = vi.hoisted(() => vi.fn());
 
 vi.mock("../commands/context.js", () => ({ runContextCommand }));
 vi.mock("../commands/docs.js", () => ({ runDocsCommand }));
 vi.mock("../commands/info.js", () => ({ runInfoCommand }));
-vi.mock("../commands/scan.js", () => ({ runScanCommand }));
 vi.mock("../commands/skill.js", () => ({ runSkillCommand }));
 
 function captureIo() {
@@ -43,11 +41,6 @@ describe("Salt CLI shell", () => {
     runContextCommand.mockReset();
     runContextCommand.mockResolvedValue({
       output: '{"contract":"salt-knowledge-context/1"}\n',
-      exitCode: 0,
-    });
-    runScanCommand.mockReset();
-    runScanCommand.mockResolvedValue({
-      output: '{"contract":"salt-scan-result/1"}\n',
       exitCode: 0,
     });
     runSkillCommand.mockReset();
@@ -125,7 +118,7 @@ describe("Salt CLI shell", () => {
 
   it("maps invalid project roots to the CLI usage contract", async () => {
     runInfoCommand.mockRejectedValue(
-      Object.assign(new Error("Project root is unavailable."), {
+      Object.assign(new Error("C:\\Users\\private\u001b[31mroot"), {
         code: "SALT_PROJECT_ROOT_UNAVAILABLE",
       }),
     );
@@ -135,7 +128,7 @@ describe("Salt CLI shell", () => {
     ).rejects.toMatchObject({
       code: "SALT_CLI_USAGE",
       exitCode: 2,
-      message: "Project root is unavailable.",
+      message: "The project root is invalid or unavailable.",
     });
     expect(capture.stdout()).toBe("");
   });
@@ -212,10 +205,7 @@ describe("Salt CLI shell", () => {
     const docsCapture = captureIo();
     runDocsCommand.mockResolvedValue({ output: "choices\n", exitCode: 1 });
     await expect(
-      runCliWithIo(
-        ["docs", "Button", "--format", "markdown"],
-        docsCapture.io,
-      ),
+      runCliWithIo(["docs", "Button", "--format", "markdown"], docsCapture.io),
     ).resolves.toBe(1);
     expect(runDocsCommand).toHaveBeenCalledWith({
       rootDir: "D:/fixture",
@@ -239,78 +229,30 @@ describe("Salt CLI shell", () => {
     });
   });
 
-  it("strictly parses the scan command and its required options", () => {
-    expect(
-      parseCliArgs([
-        "scan",
-        "D:/project",
-        "--format",
-        "sarif",
-        "--fail-on",
-        "warning",
-        "--allow-incomplete",
-      ]),
-    ).toEqual({
-      command: "scan",
-      rootDir: "D:/project",
-      format: "sarif",
-      failOn: "warning",
-      allowIncomplete: true,
-    });
+  it("rejects scan because it is not a public command", () => {
+    expect(() => parseCliArgs(["scan"])).toThrow(/Unknown command: scan/u);
+    expect(SALT_CLI_HELP).not.toMatch(/\bscan\b/u);
   });
 
-  it.each([
-    ["scan"],
-    ["scan", "--format", "json"],
-    ["scan", "--fail-on", "error"],
-    ["scan", "--format", "xml", "--fail-on", "error"],
-    ["scan", "--format", "json", "--fail-on", "fatal"],
-    ["scan", "--format", "json", "--format", "pretty", "--fail-on", "error"],
-    [
-      "scan",
-      "--format",
-      "json",
-      "--fail-on",
-      "error",
-      "--allow-incomplete",
-      "--allow-incomplete",
-    ],
-  ])("rejects invalid scan arguments: %s", (...argv) => {
-    expect(() => parseCliArgs(argv)).toThrow(SaltCliUsageError);
-  });
-
-  it("writes only the selected scan document and returns its exit code", async () => {
-    runScanCommand.mockResolvedValue({ output: "scan-output\n", exitCode: 1 });
-    const capture = captureIo();
-    await expect(
-      runCliWithIo(
-        ["scan", "--format", "pretty", "--fail-on", "warning"],
-        capture.io,
-      ),
-    ).resolves.toBe(1);
-    expect(runScanCommand).toHaveBeenCalledWith({
-      rootDir: "D:/fixture",
-      cliVersion: "0.0.0",
-      format: "pretty",
-      failOn: "warning",
-      allowIncomplete: false,
+  it("does not resolve until asynchronous stdout has flushed", async () => {
+    let release!: () => void;
+    const pendingWrite = new Promise<void>((resolve) => {
+      release = resolve;
     });
-    expect(capture.stdout()).toBe("scan-output\n");
-  });
-
-  it("keeps operational scan failures on the exit-3 stderr contract", async () => {
-    runScanCommand.mockRejectedValue(new Error("repository secret"));
-    const capture = captureIo();
-    await expect(
-      runCliWithIo(
-        ["scan", "--format", "json", "--fail-on", "never"],
-        capture.io,
-      ),
-    ).rejects.toMatchObject({
-      code: "SALT_CLI_SCAN_FAILED",
-      exitCode: 3,
-      message: "The scan could not be completed.",
+    const stdout = vi.fn(() => pendingWrite);
+    let completed = false;
+    const run = runCliWithIo(["version"], {
+      cwd: () => "D:/fixture",
+      stdout,
+    }).then((exitCode) => {
+      completed = true;
+      return exitCode;
     });
-    expect(capture.stdout()).toBe("");
+
+    expect(stdout).toHaveBeenCalledWith("0.0.0\n");
+    await Promise.resolve();
+    expect(completed).toBe(false);
+    release();
+    await expect(run).resolves.toBe(0);
   });
 });

@@ -6,9 +6,7 @@ import "./consumer-brand.css";
 
 export type ConsumerBrandProviderProps = ComponentProps<typeof SaltProvider>;
 
-/** Repo-owned provider declared by `.salt/team.json`. */
+/** Consumer-owned provider composition used by this package fixture. */
 export function ConsumerBrandProvider(props: ConsumerBrandProviderProps) {
-  return (
-    <SaltProvider density="high" {...props} />
-  );
+  return <SaltProvider density="high" {...props} />;
 }

@@ -98,11 +98,6 @@ export interface DiscoveredWorkspaceUnit {
     status: string;
   };
   owned_files: string[];
-  untrusted_project_context: {
-    salt_policy: "untrusted";
-    team_config: "present" | "absent";
-    stack_config: "present" | "absent";
-  };
   limitations: string[];
 }
 
@@ -808,15 +803,6 @@ export async function discoverSaltProject(input: {
         owned_files: [
           ...(filesByUnit.get(boundary.workspace_unit_id) ?? []),
         ].sort(),
-        untrusted_project_context: {
-          salt_policy: "untrusted" as const,
-          team_config: facts.policy.detection.team_config_path
-            ? ("present" as const)
-            : ("absent" as const),
-          stack_config: facts.policy.detection.stack_config_path
-            ? ("present" as const)
-            : ("absent" as const),
-        },
         limitations: [...new Set(limitations)].sort(),
       };
     },

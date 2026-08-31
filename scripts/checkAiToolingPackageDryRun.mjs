@@ -321,8 +321,17 @@ const preAgentKnowledgePackage = {
     "catalog-generations",
     "catalog-manifest.json",
     '"catalog_version"',
+    ".salt/stack",
+    ".salt/team",
+    "ProjectConventions",
+    "SaltProjectPolicy",
     "extraction-parity@1",
+    "detectProjectPolicy",
+    "project-policy/v",
+    "project_policy",
     "salt://",
+    "stack_config",
+    "team_config",
   ],
   allowMarkdown: true,
   knowledgeV1: true,
@@ -340,15 +349,24 @@ const cliPackage = {
     "package.json",
     "bin/salt-ds.js",
     "schemas/salt-config-1.schema.json",
-    "schemas/scan-result-1.schema.json",
     "dist-cjs/index.js",
     "dist-es/index.js",
     "dist-types/index.d.ts",
     "README.md",
   ],
+  requiredTextMarkers: {
+    "bin/salt-ds.js": [
+      "MAX_CONCISE_ERROR_LINE_BYTES = 1024",
+      "function renderConciseError(",
+      "function writeStream(",
+      "await writeStream(",
+      "process.exitCode = exitCode",
+      "...[truncated]",
+    ],
+  },
   expectedFilesField: [
     "bin",
-    "schemas",
+    "schemas/salt-config-1.schema.json",
     "dist-cjs",
     "dist-es",
     "dist-types",
@@ -380,9 +398,9 @@ const cliPackage = {
   },
   expectedBundleFiles: {
     bin: ["salt-ds.js"],
-    schemas: ["salt-config-1.schema.json", "scan-result-1.schema.json"],
-    "dist-cjs": ["index.js", "package.json", "scannerWorker.js"],
-    "dist-es": ["index.js", "package.json", "scannerWorker.js"],
+    schemas: ["salt-config-1.schema.json"],
+    "dist-cjs": ["index.js", "package.json"],
+    "dist-es": ["index.js", "package.json"],
   },
   allowedTopLevelPaths: [
     "LICENSE",
@@ -398,20 +416,17 @@ const cliPackage = {
   forbiddenTextMarkers: [
     "@modelcontextprotocol/server",
     "@storybook/",
+    ".salt/stack",
+    ".salt/team",
+    "ProjectConventions",
+    "SaltProjectPolicy",
     "catalog-generations",
+    "detectProjectPolicy",
+    "project-policy/v",
+    "project_policy",
     "salt://",
-  ],
-  forbiddenWorkerTextMarkers: [
-    "node:http",
-    "node:https",
-    "node:net",
-    "node:tls",
-    "node:dns",
-    "node:dgram",
-    "node:child_process",
-    "@modelcontextprotocol",
-    "@storybook",
-    "new Worker(",
+    "stack_config",
+    "team_config",
   ],
   maxPackageBytes: 1_000_000,
   maxUnpackedBytes: 4_000_000,
@@ -1560,6 +1575,26 @@ for (const packageConfig of packages) {
       }
     }
 
+    for (const [filePath, markers] of Object.entries(
+      packageConfig.requiredTextMarkers ?? {},
+    )) {
+      if (!hasPath(paths, filePath)) {
+        fail(`${packageConfig.name} pack is missing ${filePath}`);
+        continue;
+      }
+      const content = readFileSync(
+        path.join(extractedPackageDir, filePath),
+        "utf8",
+      );
+      for (const marker of markers) {
+        if (!content.includes(marker)) {
+          fail(
+            `${packageConfig.name} ${filePath} is missing required runtime marker ${JSON.stringify(marker)}`,
+          );
+        }
+      }
+    }
+
     for (const filePath of paths) {
       if (
         !packageConfig.allowMarkdown &&
@@ -1605,15 +1640,6 @@ for (const packageConfig of packages) {
             );
           }
         }
-        if (filePath.endsWith("/scannerWorker.js")) {
-          for (const marker of packageConfig.forbiddenWorkerTextMarkers ?? []) {
-            if (content.includes(marker)) {
-              fail(
-                `${packageConfig.name} scanner worker includes forbidden closure marker ${JSON.stringify(marker)} in ${filePath}`,
-              );
-            }
-          }
-        }
       }
 
       const segments = filePath.split("/");
@@ -1642,7 +1668,9 @@ for (const packageConfig of packages) {
     );
     const packedManifest = JSON.parse(manifestBytes.toString("utf8"));
     const readmePath = path.join(extractedPackageDir, "README.md");
-    const readmeBytes = existsSync(readmePath) ? readFileSync(readmePath) : null;
+    const readmeBytes = existsSync(readmePath)
+      ? readFileSync(readmePath)
+      : null;
     packageReports.push({
       name: packageConfig.name,
       version: packedManifest.version,
@@ -1682,7 +1710,11 @@ const cliReport = packageReports.find((entry) => entry.name === "@salt-ds/cli");
 const adapterReports = packageReports.filter(
   (entry) => entry.name !== "@salt-ds/knowledge",
 );
-if (!knowledgeReport || !cliReport || packageReports.length !== packages.length) {
+if (
+  !knowledgeReport ||
+  !cliReport ||
+  packageReports.length !== packages.length
+) {
   rmSync(stagingArtifactDirectory, { recursive: true, force: true });
   throw new Error(
     "AI tooling pack did not produce the required package reports.",
@@ -1755,10 +1787,7 @@ const artifactDirectoryName = path.basename(finalArtifactDirectory);
 const policy = {
   id: "release-complete@1",
   publishable: false,
-  required_artifacts: [
-    "agent_support.skill",
-    "agent_support.agents_pointer",
-  ],
+  required_artifacts: ["agent_support.skill", "agent_support.agents_pointer"],
   allowed_stages: ["CI_RELEASE_COMPLETE", "R2_BETA", "R3_GA"],
 };
 const report = {

@@ -30,7 +30,6 @@ const FORBIDDEN_PACKED_MIGRATION_MARKERS = [
 ];
 const STANDALONE_CONSUMER_FIXTURE_FILES = [
   ".github/copilot-instructions.md",
-  ".salt/team.json",
   "AGENTS.md",
   "README.md",
   "docs/app-button.md",
@@ -38,7 +37,6 @@ const STANDALONE_CONSUMER_FIXTURE_FILES = [
   "docs/token-aliases.md",
   "docs/workspace-shell.md",
   "package.json",
-  "scripts/verify-policy.mjs",
   "src/components/AppButton.tsx",
   "src/env.d.ts",
   "src/theme/ConsumerBrandProvider.tsx",
@@ -266,8 +264,7 @@ export async function loadExactPackReport(reportPathInput) {
     const isRawDisposition =
       disposition.contract === "salt-mcp-candidate-disposition/1";
     const isAcquiredDisposition =
-      disposition.contract ===
-      "salt-mcp-candidate-disposition-evidence/1";
+      disposition.contract === "salt-mcp-candidate-disposition-evidence/1";
     const candidateSourceSha = isAcquiredDisposition
       ? disposition.source_commit
       : disposition.candidate_source_sha;
@@ -278,8 +275,7 @@ export async function loadExactPackReport(reportPathInput) {
         (isRawDisposition || isAcquiredDisposition) &&
         dispositionBinding.disposition === "omit" &&
         disposition.mcp_candidate_disposition === "omit" &&
-        dispositionBinding.candidate_source_sha ===
-          candidateSourceSha,
+        dispositionBinding.candidate_source_sha === candidateSourceSha,
       "Pack report does not bind the exact sealed MCP omit receipt.",
     );
   }
@@ -489,75 +485,6 @@ export async function ensureBuildArtifacts(skipBuild) {
   assert(
     await pathExists(distCliDir),
     `Missing built CLI package at ${distCliDir}. Run with --skip-build only after building it.`,
-  );
-}
-
-export async function createExistingSaltRepo(rootDir) {
-  await fs.mkdir(path.join(rootDir, ".storybook"), { recursive: true });
-  await fs.mkdir(path.join(rootDir, ".salt"), { recursive: true });
-  await fs.mkdir(path.join(rootDir, "src"), { recursive: true });
-  await fs.writeFile(
-    path.join(rootDir, ".salt", "team.json"),
-    `${JSON.stringify(
-      {
-        contract: "project_conventions_v1",
-        version: "1.0.0",
-        project: "salt-consumer-smoke-existing",
-        approved_wrappers: [],
-        preferred_components: [],
-        banned_choices: [],
-        pattern_preferences: [],
-      },
-      null,
-      2,
-    )}\n`,
-    "utf8",
-  );
-  await fs.writeFile(
-    path.join(rootDir, "package.json"),
-    `${JSON.stringify(
-      {
-        name: "salt-consumer-smoke-existing",
-        private: true,
-        packageManager: "npm@10.9.2",
-        dependencies: {
-          "@salt-ds/core": "1.67.0",
-          "@salt-ds/theme": "1.43.0",
-          react: "^18.3.1",
-          "react-dom": "^18.3.1",
-        },
-        devDependencies: {
-          storybook: "^10.0.0",
-        },
-      },
-      null,
-      2,
-    )}\n`,
-    "utf8",
-  );
-  await fs.writeFile(
-    path.join(rootDir, "src", "App.tsx"),
-    [
-      'import { Button } from "@salt-ds/core";',
-      "",
-      "export function App() {",
-      '  return <Button href="/next">Go</Button>;',
-      "}",
-      "",
-    ].join("\n"),
-    "utf8",
-  );
-  await fs.writeFile(
-    path.join(rootDir, "src", "Clean.tsx"),
-    [
-      'import { Link } from "@salt-ds/core";',
-      "",
-      "export function Clean() {",
-      '  return <Link href="/next">Go</Link>;',
-      "}",
-      "",
-    ].join("\n"),
-    "utf8",
   );
 }
 
@@ -1222,10 +1149,7 @@ export async function verifyInstalledMcpTypes(rootDir) {
   );
 }
 
-export async function verifyInstalledMcpModuleExports(
-  rootDir,
-  projectRoot,
-) {
+export async function verifyInstalledMcpModuleExports(rootDir, projectRoot) {
   const probePath = path.join(
     repoRoot,
     "scripts",
@@ -1253,13 +1177,10 @@ export async function verifyInstalledMcpModuleExports(
   return JSON.parse(receiptLines[0].slice(receiptPrefix.length));
 }
 
-export async function runInstalledMcpModuleProbe(
-  rootDir,
-  projectRoot,
-) {
+export async function runInstalledMcpModuleProbe(rootDir, projectRoot) {
   const assertions = [
     'typeof mod.createSaltMcpServer === "function"',
-    'Object.keys(mod).length === 1',
+    "Object.keys(mod).length === 1",
   ];
   const failure =
     'throw new Error("Installed @salt-ds/mcp export contract is incomplete")';
@@ -1399,7 +1320,8 @@ export async function runInstalledMcpModuleProbe(
           limit: 1,
         },
       });
-      const representativeMatch = representativeSearch.structuredContent?.matches?.[0];
+      const representativeMatch =
+        representativeSearch.structuredContent?.matches?.[0];
       assert(
         typeof representativeMatch?.resource_uri === "string",
         `Installed MCP ${format} factory omitted a representative search resource.`,
@@ -1433,7 +1355,9 @@ export async function runInstalledMcpModuleProbe(
         protocol: client.getNegotiatedProtocolVersion(),
         toolNames,
         resourceUris,
-        templates: templates.resourceTemplates.map((entry) => entry.uriTemplate),
+        templates: templates.resourceTemplates.map(
+          (entry) => entry.uriTemplate,
+        ),
         bundleDigest: manifest.bundle_digest,
         searchIds: representativeSearch.structuredContent.matches.map(
           (entry) => entry.id,
@@ -1442,8 +1366,7 @@ export async function runInstalledMcpModuleProbe(
           family: representativeEnvelope.family,
           id: representativeEnvelope.id,
         },
-        projectName:
-          inspection.structuredContent.project.package_manifest.name,
+        projectName: inspection.structuredContent.project.package_manifest.name,
         reviewContract: review.structuredContent.contract,
       };
       if (format === "ESM") {

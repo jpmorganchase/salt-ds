@@ -10,10 +10,6 @@ import type {
   KnowledgeRecordStore,
 } from "../manifest/knowledgeStore.js";
 import {
-  evaluateProjectPolicyConditionV2,
-  type SaltProjectPolicyIrV2,
-} from "../policy/projectPolicyIr.js";
-import {
   apiSymbolModuleSpecifier,
   createVersionContext,
   deprecationSeverity,
@@ -28,15 +24,15 @@ import type {
   ReviewToken,
 } from "./reviewCatalogAdapter.js";
 import {
+  REVIEW_RULE_CHARACTERIZATION,
+  REVIEW_RULE_DESCRIPTORS,
+} from "./reviewRuleCharacterization.js";
+import {
   type ParsedSubmittedFact,
   type PublicParsedFact,
   publicParsedFact,
   type SubmittedArtifactLocation,
 } from "./submittedArtifactFacts.js";
-import {
-  REVIEW_RULE_CHARACTERIZATION,
-  REVIEW_RULE_DESCRIPTORS,
-} from "./reviewRuleCharacterization.js";
 
 export interface ReviewEvidenceReference {
   locator: string;
@@ -52,19 +48,6 @@ export interface EvaluatedReviewFinding {
   location: SubmittedArtifactLocation;
   remediation: string | null;
   official_decision: OfficialReviewDecision | null;
-  policy_evaluation: {
-    digest: string;
-    applicability: "applicable";
-    salt_version: string | null;
-    trust: "untrusted_advisory";
-    category: SaltProjectPolicyIrV2["occurrences"][number]["category"];
-    conflict_group: string | null;
-    competing_claims: Array<{
-      occurrence_id: string;
-      category: SaltProjectPolicyIrV2["occurrences"][number]["category"];
-      locator: string;
-    }>;
-  } | null;
   evidence: {
     references: ReviewEvidenceReference[];
     validation: "source_bound";
@@ -138,26 +121,15 @@ type ComponentResolution =
   | { status: "resolved"; component: ReviewComponent }
   | { status: "ambiguous"; component: null };
 
-type ComponentExportIdentityResolution =
-  | { status: "resolved"; package_name: string; export_name: string }
-  | { status: "ambiguous" };
-
 interface ReviewIndexes {
   catalogPackageVersions: ReadonlyMap<string, string>;
   componentsByExport: ReadonlyMap<string, ComponentResolution>;
-  componentIdentityByExport: ReadonlyMap<
-    string,
-    ComponentExportIdentityResolution
-  >;
   rootDeprecationsByExport: ReadonlyMap<string, readonly ReviewDeprecation[]>;
   propDeprecationsByPackageAndName: ReadonlyMap<
     string,
     readonly ReviewDeprecation[]
   >;
   tokensByName: ReadonlyMap<string, ReviewToken>;
-  jsxFactsByIdentity: ReadonlyMap<string, readonly ParsedSubmittedFact[]>;
-  importFactsByIdentity: ReadonlyMap<string, readonly ParsedSubmittedFact[]>;
-  tokenFactsByName: ReadonlyMap<string, readonly ParsedSubmittedFact[]>;
   usedNamespaceBindings: ReadonlySet<string>;
 }
 
@@ -198,13 +170,9 @@ function createReviewIndexes(
       : [],
   );
   const componentsByExport = new Map<string, ComponentResolution>();
-  const componentPackagesByExport = new Map<string, Set<string>>();
   for (const component of registry.components) {
     for (const exportName of new Set(componentExportNames(component))) {
       const key = identityKey(component.package.name, exportName);
-      const packages = componentPackagesByExport.get(exportName) ?? new Set();
-      packages.add(component.package.name);
-      componentPackagesByExport.set(exportName, packages);
       const current = componentsByExport.get(key);
       componentsByExport.set(
         key,
@@ -216,26 +184,6 @@ function createReviewIndexes(
             : { status: "ambiguous", component: null },
       );
     }
-  }
-  const componentIdentityByExport = new Map<
-    string,
-    ComponentExportIdentityResolution
-  >();
-  for (const [exportName, packages] of componentPackagesByExport) {
-    const [packageName] = packages;
-    const resolution = packageName
-      ? componentsByExport.get(identityKey(packageName, exportName))
-      : null;
-    componentIdentityByExport.set(
-      exportName,
-      packages.size === 1 && resolution?.status === "resolved"
-        ? {
-            status: "resolved",
-            package_name: packageName!,
-            export_name: exportName,
-          }
-        : { status: "ambiguous" },
-    );
   }
   const rootDeprecationsByExport = new Map<string, ReviewDeprecation[]>();
   const propDeprecationsByPackageAndName = new Map<
@@ -261,31 +209,8 @@ function createReviewIndexes(
       );
     }
   }
-  const jsxFactsByIdentity = new Map<string, ParsedSubmittedFact[]>();
-  const importFactsByIdentity = new Map<string, ParsedSubmittedFact[]>();
-  const tokenFactsByName = new Map<string, ParsedSubmittedFact[]>();
   const usedNamespaceBindings = new Set<string>();
   for (const fact of facts) {
-    if (fact.kind === "jsx_element" && fact.package_name && fact.export_name) {
-      appendIndexValue(
-        jsxFactsByIdentity,
-        identityKey(fact.package_name, fact.export_name),
-        fact,
-      );
-    } else if (
-      fact.kind === "import" &&
-      fact.value_kind === "value_usage" &&
-      fact.package_name &&
-      fact.export_name
-    ) {
-      appendIndexValue(
-        importFactsByIdentity,
-        identityKey(fact.package_name, fact.export_name),
-        fact,
-      );
-    } else if (fact.kind === "token_use") {
-      appendIndexValue(tokenFactsByName, fact.subject, fact);
-    }
     if (
       fact.kind === "import" &&
       fact.value_kind === "value_usage" &&
@@ -301,15 +226,11 @@ function createReviewIndexes(
   return {
     catalogPackageVersions,
     componentsByExport,
-    componentIdentityByExport,
     rootDeprecationsByExport,
     propDeprecationsByPackageAndName,
     tokensByName: new Map(
       registry.tokens.map((token) => [token.name, token] as const),
     ),
-    jsxFactsByIdentity,
-    importFactsByIdentity,
-    tokenFactsByName,
     usedNamespaceBindings,
   };
 }
@@ -327,22 +248,6 @@ export interface ReviewRuleEvaluation {
   evaluated_rule_ids: string[];
   skipped_match_count: number;
   limitations: string[];
-  policy: {
-    status: "not_supplied" | "evaluated" | "limited";
-    digest: string | null;
-    unresolved_required_layers: number;
-    evaluated_occurrences: number;
-    applicable_occurrences: number;
-    contradicted_occurrences: number;
-    unknown_occurrences: number;
-  };
-}
-
-export interface ReviewProjectPolicyContext {
-  ir: SaltProjectPolicyIrV2;
-  root_dir: string;
-  digest: string;
-  salt_version: string | null;
 }
 
 const ACTION_NAVIGATION_BINDINGS = new Map<
@@ -488,7 +393,6 @@ function makeFinding(input: {
             })
           : null,
       } satisfies OfficialReviewDecision),
-    policy_evaluation: null,
     evidence: {
       references: input.references,
       validation: "source_bound",
@@ -1220,390 +1124,11 @@ export const REVIEW_RULES: readonly ReviewRuleDefinition[] = [
 export const REVIEW_RULE_IDS = REVIEW_RULES.map((rule) => rule.rule_id);
 export { REVIEW_RULE_CHARACTERIZATION };
 
-function uniqueValues(values: Array<string | null | undefined>): string[] {
-  return [
-    ...new Set(values.filter((value): value is string => Boolean(value))),
-  ];
-}
-
-function policyCanonicalName(
-  occurrence: SaltProjectPolicyIrV2["occurrences"][number],
-): string | null {
-  return occurrence.category === "approved_wrapper"
-    ? occurrence.declaration.wraps
-    : occurrence.category === "preferred_component"
-      ? occurrence.declaration.salt_name
-      : occurrence.category === "banned_choice"
-        ? occurrence.declaration.name
-        : occurrence.category === "pattern_preference"
-          ? (occurrence.declaration.canonical_salt_start ?? null)
-          : null;
-}
-
-function catalogGroundedCanonicalName(
-  fact: ParsedSubmittedFact,
-  indexes: ReviewIndexes,
-): string | null {
-  if (
-    (fact.kind !== "import" && fact.kind !== "jsx_element") ||
-    !fact.package_name ||
-    !fact.export_name
-  ) {
-    return null;
-  }
-  const resolution = indexes.componentIdentityByExport.get(fact.export_name);
-  return resolution?.status === "resolved" &&
-    resolution.package_name === fact.package_name
-    ? fact.export_name
-    : null;
-}
-
-function policyCandidateFacts(
-  occurrence: SaltProjectPolicyIrV2["occurrences"][number],
-  indexes: ReviewIndexes,
-): ParsedSubmittedFact[] {
-  if (occurrence.category === "token_alias") {
-    return [
-      ...(indexes.tokenFactsByName.get(occurrence.declaration.salt_name) ?? []),
-    ];
-  }
-  if (occurrence.category === "token_family_policy") {
-    return [];
-  }
-  const canonicalName = policyCanonicalName(occurrence);
-  if (!canonicalName) return [];
-  const resolution = indexes.componentIdentityByExport.get(canonicalName);
-  if (resolution?.status !== "resolved") return [];
-  const key = identityKey(resolution.package_name, resolution.export_name);
-  const jsxFacts = [...(indexes.jsxFactsByIdentity.get(key) ?? [])];
-  if (jsxFacts.length > 0) return jsxFacts;
-  return [...(indexes.importFactsByIdentity.get(key) ?? [])];
-}
-
-function policyFinding(
-  policy: ReviewProjectPolicyContext,
-  occurrence: SaltProjectPolicyIrV2["occurrences"][number],
-  fact: ParsedSubmittedFact,
-  effectiveSaltVersion: string | null,
-  conflict: {
-    group: string | null;
-    competing: SaltProjectPolicyIrV2["occurrences"][number][];
-  },
-): EvaluatedReviewFinding | null {
-  let fieldPath = "declaration";
-  switch (occurrence.category) {
-    case "approved_wrapper":
-      if (!approvedWrapperImportVerified(occurrence)) {
-        return null;
-      }
-      fieldPath = "claim.declaration.name";
-      break;
-    case "preferred_component":
-      fieldPath = "claim.declaration.prefer";
-      break;
-    case "token_alias":
-      fieldPath = "claim.declaration.prefer";
-      break;
-    case "banned_choice":
-      fieldPath = occurrence.declaration.replacement
-        ? "claim.declaration.replacement"
-        : "claim.declaration.name";
-      break;
-    case "pattern_preference":
-      fieldPath = "claim.declaration.prefer";
-      break;
-    case "token_family_policy":
-    case "theme_defaults":
-      return null;
-  }
-  const claimLocator = (
-    candidate: SaltProjectPolicyIrV2["occurrences"][number],
-  ) => `knowledge-policy-claim:${encodeURIComponent(candidate.occurrence_id)}`;
-  const referencePaths = [
-    fieldPath,
-    "claim.declaration.reason",
-    ...(occurrence.declaration.docs?.length ? ["claim.declaration.docs"] : []),
-    "claim.selector",
-    "claim.applicability",
-    "claim.source",
-    ...(occurrence.category === "approved_wrapper" &&
-    occurrence.declaration.import
-      ? ["claim.applicability.import_validation"]
-      : []),
-  ];
-  return {
-    id: `${occurrence.policy_type_id}.${occurrence.occurrence_id}.${fact.fact_id}`,
-    rule_id: occurrence.policy_type_id,
-    rule_description:
-      "An untrusted repository-policy claim applies to a parsed submitted fact and is returned as advisory evidence for host arbitration.",
-    severity: "info",
-    parsed_fact: publicParsedFact(fact),
-    location: fact.location,
-    remediation: null,
-    official_decision: null,
-    policy_evaluation: {
-      digest: policy.digest,
-      applicability: "applicable",
-      salt_version: effectiveSaltVersion,
-      trust: "untrusted_advisory",
-      category: occurrence.category,
-      conflict_group: conflict.group,
-      competing_claims: conflict.competing.map((candidate) => ({
-        occurrence_id: candidate.occurrence_id,
-        category: candidate.category,
-        locator: claimLocator(candidate),
-      })),
-    },
-    evidence: {
-      references: referencePaths.map((field_path) => ({
-        locator: claimLocator(occurrence),
-        field_path,
-      })),
-      validation: "source_bound",
-    },
-  };
-}
-
-function approvedWrapperImportVerified(
-  occurrence: Extract<
-    SaltProjectPolicyIrV2["occurrences"][number],
-    { category: "approved_wrapper" }
-  >,
-): boolean {
-  const declaredImport = occurrence.declaration.import;
-  if (!declaredImport) return occurrence.import_checks.length === 0;
-  return occurrence.import_checks.some(
-    (check) =>
-      check.status === "resolved" &&
-      check.slot === "wrapper_import" &&
-      check.from === declaredImport.from &&
-      check.name === declaredImport.name,
-  );
-}
-
-function evaluateProjectPolicyRules(input: {
-  registry: ReviewCatalog;
-  facts: readonly ParsedSubmittedFact[];
-  packageVersions: ReadonlyMap<string, string | null>;
-  policy: ReviewProjectPolicyContext | null;
-  indexes: ReviewIndexes;
-  budget: ReviewRuleBudget;
-}): {
-  findings: EvaluatedReviewFinding[];
-  evaluated_rule_ids: string[];
-  skipped_match_count: number;
-  limitations: string[];
-  policy: ReviewRuleEvaluation["policy"];
-} {
-  if (!input.policy) {
-    return {
-      findings: [],
-      evaluated_rule_ids: [],
-      skipped_match_count: 0,
-      limitations: [],
-      policy: {
-        status: "not_supplied",
-        digest: null,
-        unresolved_required_layers: 0,
-        evaluated_occurrences: 0,
-        applicable_occurrences: 0,
-        contradicted_occurrences: 0,
-        unknown_occurrences: 0,
-      },
-    };
-  }
-  const policy = input.policy;
-  const canonicalNames = uniqueValues(
-    input.facts.map((fact) =>
-      catalogGroundedCanonicalName(fact, input.indexes),
-    ),
-  );
-  const sourceTokens = uniqueValues(
-    input.facts.flatMap((fact) =>
-      fact.kind === "token_use" ? [fact.subject] : [],
-    ),
-  );
-  const tokenByName = new Map(
-    input.registry.tokens.map((token) => [token.name, token] as const),
-  );
-  const tokenFamilies = uniqueValues(
-    sourceTokens.map((token) => tokenByName.get(token)?.category),
-  );
-  const effectiveByOverride = new Map<
-    string,
-    SaltProjectPolicyIrV2["occurrences"][number]
-  >();
-  for (const occurrence of policy.ir.occurrences) {
-    effectiveByOverride.set(
-      `${occurrence.category}\0${occurrence.override_key}`,
-      occurrence,
-    );
-  }
-  const effectiveOccurrences = [...effectiveByOverride.values()].sort(
-    (left, right) => {
-      for (let index = 0; index < 3; index += 1) {
-        const difference =
-          left.provenance.source_order[index]! -
-          right.provenance.source_order[index]!;
-        if (difference !== 0) return difference;
-      }
-      return left.occurrence_id.localeCompare(right.occurrence_id);
-    },
-  );
-  const shadowedOccurrenceCount =
-    policy.ir.occurrences.length - effectiveOccurrences.length;
-  const unresolvedRequiredLayerIndexes = policy.ir.layers
-    .filter(
-      (layer) => !layer.optional && layer.resolution_status !== "resolved",
-    )
-    .map((layer) => layer.layer_index);
-  const unresolvedRequiredLayerCount = unresolvedRequiredLayerIndexes.length;
-  const effectiveSaltVersion = createVersionContext(
-    policy.salt_version ?? input.packageVersions.get("@salt-ds/core"),
-  ).normalized;
-  const applicability = effectiveOccurrences.map((occurrence) => {
-    consumeReviewBudget(input.budget);
-    const blockedByUnresolvedLayer = unresolvedRequiredLayerIndexes.some(
-      (layerIndex) => layerIndex > occurrence.provenance.layer_index,
-    );
-    const canonicalName = policyCanonicalName(occurrence);
-    const blockedByUnresolvedSelector =
-      canonicalName !== null &&
-      input.indexes.componentIdentityByExport.get(canonicalName)?.status !==
-        "resolved";
-    return {
-      occurrence,
-      blockedByUnresolvedLayer,
-      blockedByUnresolvedSelector,
-      status:
-        blockedByUnresolvedLayer || blockedByUnresolvedSelector
-          ? ("unknown" as const)
-          : evaluateProjectPolicyConditionV2(occurrence.condition, {
-              workflow: "review",
-              salt_version: effectiveSaltVersion,
-              facts: {
-                canonical_name: new Set(canonicalNames),
-                source_token: new Set(sourceTokens),
-                token_family: new Set(tokenFamilies),
-              },
-              normalized_facts: {},
-            }),
-    };
-  });
-  const applicable = applicability.filter(
-    (entry) => entry.status === "applicable",
-  );
-  const unknown = applicability.filter((entry) => entry.status === "unknown");
-  const unresolvedPrecedenceCount = unknown.filter(
-    (entry) => entry.blockedByUnresolvedLayer,
-  ).length;
-  const unverifiedWrapperCount = applicable.filter(
-    ({ occurrence }) =>
-      occurrence.category === "approved_wrapper" &&
-      !approvedWrapperImportVerified(occurrence),
-  ).length;
-  const unresolvedSelectorCount = unknown.filter(
-    (entry) => entry.blockedByUnresolvedSelector,
-  ).length;
-  const findingCandidates = applicable.flatMap(({ occurrence }) =>
-    (occurrence.category === "approved_wrapper" &&
-    !approvedWrapperImportVerified(occurrence)
-      ? []
-      : policyCandidateFacts(occurrence, input.indexes)
-    ).map((fact) => {
-      consumeReviewBudget(input.budget);
-      return { occurrence, fact };
-    }),
-  );
-  const candidatesByFact = new Map<string, typeof findingCandidates>();
-  for (const candidate of findingCandidates) {
-    const candidates = candidatesByFact.get(candidate.fact.fact_id) ?? [];
-    candidates.push(candidate);
-    candidatesByFact.set(candidate.fact.fact_id, candidates);
-  }
-  const findings = findingCandidates.flatMap(({ occurrence, fact }) => {
-    const candidates = candidatesByFact.get(fact.fact_id) ?? [];
-    consumeReviewBudget(input.budget);
-    const finding = policyFinding(
-      policy,
-      occurrence,
-      fact,
-      effectiveSaltVersion,
-      {
-        group:
-          candidates.length > 1
-            ? `project-policy-conflict:${fact.fact_id}`
-            : null,
-        competing: candidates
-          .map((candidate) => candidate.occurrence)
-          .filter(
-            (candidate) => candidate.occurrence_id !== occurrence.occurrence_id,
-          ),
-      },
-    );
-    return finding ? [finding] : [];
-  });
-  return {
-    findings,
-    evaluated_rule_ids: uniqueValues(
-      applicability.map(({ occurrence }) => occurrence.policy_type_id),
-    ),
-    skipped_match_count: unknown.length + unverifiedWrapperCount,
-    limitations: [
-      ...(unknown.length > 0
-        ? [
-            `${unknown.length} project-policy occurrence${unknown.length === 1 ? " was" : "s were"} unknown from submitted facts, unresolved catalog ownership, or unresolved higher-precedence required layers and did not ground findings.`,
-          ]
-        : []),
-      ...(unresolvedPrecedenceCount > 0
-        ? [
-            `${unresolvedPrecedenceCount} otherwise-effective project-policy occurrence${unresolvedPrecedenceCount === 1 ? " was" : "s were"} withheld because a required later policy layer was unresolved.`,
-          ]
-        : []),
-      ...(unresolvedRequiredLayerCount > 0
-        ? [
-            `${unresolvedRequiredLayerCount} required project-policy layer${unresolvedRequiredLayerCount === 1 ? " was" : "s were"} unresolved, so project-policy coverage is limited.`,
-          ]
-        : []),
-      ...(unverifiedWrapperCount > 0
-        ? [
-            `${unverifiedWrapperCount} applicable approved-wrapper occurrence${unverifiedWrapperCount === 1 ? " was" : "s were"} not emitted as a finding because a declared import target was not verified.`,
-          ]
-        : []),
-      ...(unresolvedSelectorCount > 0
-        ? [
-            `${unresolvedSelectorCount} project-policy component selector${unresolvedSelectorCount === 1 ? " remained" : "s remained"} unknown because its export did not resolve to one unique canonical catalog package identity.`,
-          ]
-        : []),
-      ...(shadowedOccurrenceCount > 0
-        ? [
-            `${shadowedOccurrenceCount} project-policy occurrence${shadowedOccurrenceCount === 1 ? " was" : "s were"} superseded by a later declaration with the same category and override key.`,
-          ]
-        : []),
-    ],
-    policy: {
-      status:
-        unresolvedRequiredLayerCount > 0 || unresolvedSelectorCount > 0
-          ? "limited"
-          : "evaluated",
-      digest: policy.digest,
-      unresolved_required_layers: unresolvedRequiredLayerCount,
-      evaluated_occurrences: applicability.length,
-      applicable_occurrences: applicable.length,
-      contradicted_occurrences: applicability.filter(
-        (entry) => entry.status === "contradicted",
-      ).length,
-      unknown_occurrences: unknown.length,
-    },
-  };
-}
-
 export function evaluateReviewRules(input: {
   registry: ReviewCatalog;
   store: KnowledgeRecordStore;
   facts: readonly ParsedSubmittedFact[];
   packageVersions: ReadonlyMap<string, string | null>;
-  policy?: ReviewProjectPolicyContext | null;
   budget?: ReviewRuleBudget;
 }): ReviewRuleEvaluation {
   const indexes = createReviewIndexes(input.registry, input.store, input.facts);
@@ -1622,18 +1147,9 @@ export function evaluateReviewRules(input: {
       budget,
     }),
   }));
-  const policyEvaluation = evaluateProjectPolicyRules({
-    registry: input.registry,
-    facts: input.facts,
-    packageVersions: input.packageVersions,
-    policy: input.policy ?? null,
-    indexes,
-    budget,
-  });
-  const allFindings: EvaluatedReviewFinding[] = [
-    ...evaluations.flatMap(({ result }) => result.findings),
-    ...policyEvaluation.findings,
-  ];
+  const allFindings: EvaluatedReviewFinding[] = evaluations.flatMap(
+    ({ result }) => result.findings,
+  );
   const findings = [
     ...new Map(allFindings.map((finding) => [finding.id, finding])).values(),
   ].sort((left, right) => {
@@ -1649,26 +1165,18 @@ export function evaluateReviewRules(input: {
     version_decisions: evaluations.flatMap(
       ({ result }) => result.version_decisions,
     ),
-    evaluated_rule_ids: [
-      ...evaluations
-        .filter(
-          ({ result }) =>
-            !result.limitation?.includes("was not evaluated because"),
-        )
-        .map(({ rule }) => rule.rule_id),
-      ...policyEvaluation.evaluated_rule_ids,
-    ],
-    skipped_match_count:
-      evaluations.reduce(
-        (total, { result }) => total + result.skipped_match_count,
-        0,
-      ) + policyEvaluation.skipped_match_count,
-    limitations: [
-      ...evaluations.flatMap(({ result }) =>
-        result.limitation ? [result.limitation] : [],
-      ),
-      ...policyEvaluation.limitations,
-    ],
-    policy: policyEvaluation.policy,
+    evaluated_rule_ids: evaluations
+      .filter(
+        ({ result }) =>
+          !result.limitation?.includes("was not evaluated because"),
+      )
+      .map(({ rule }) => rule.rule_id),
+    skipped_match_count: evaluations.reduce(
+      (total, { result }) => total + result.skipped_match_count,
+      0,
+    ),
+    limitations: evaluations.flatMap(({ result }) =>
+      result.limitation ? [result.limitation] : [],
+    ),
   };
 }

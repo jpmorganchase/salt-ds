@@ -23,7 +23,7 @@ Knowledge bundle.
   separately evaluated extensions and do not change the Knowledge contract.
 
 See the staged AI guide in the release artifact for `info`, retrieval, build,
-scan, CI, security, limitations, and troubleshooting workflows. Until that
+CI, security, limitations, and troubleshooting workflows. Until that
 artifact is released, use the public Salt component and pattern documentation.
 
 For help, use [Salt support and contributions](https://www.saltdesignsystem.com/salt/support-and-contributions).

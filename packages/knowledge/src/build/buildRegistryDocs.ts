@@ -639,7 +639,7 @@ export async function extractGuides(
               buildGuideStep(
                 "Theme evidence unavailable",
                 [
-                  "Theme provider, import, prop, font, package, and compatibility claims are unsupported until source-backed documentation or project policy supplies evidence.",
+                  "Theme provider, import, prop, font, package, and compatibility claims are unsupported until source-backed documentation supplies evidence.",
                 ],
                 [],
               ),
