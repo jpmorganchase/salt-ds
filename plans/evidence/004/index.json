@@ -4,8 +4,8 @@
   "plan_id": "004",
   "planned_ancestry": "d30dc1f7fca047e5180c15d07bb7be4557305eff",
   "active_dispatch": {
-    "unit": "004/00",
-    "checkpoint_sha": "d30dc1f7fca047e5180c15d07bb7be4557305eff"
+    "unit": "004/01",
+    "checkpoint_sha": "42046a4c4d866ed04cd2f85864250417db57842d"
   },
   "inherited_worktree": {
     "base_sha": "d30dc1f7fca047e5180c15d07bb7be4557305eff",
@@ -270,11 +270,11 @@
   "units": [
     {
       "id": "004/00",
-      "status": "IN_PROGRESS",
+      "status": "DONE",
       "dependency_unit": null,
       "dependency_completion_sha": null,
       "checkpoint_sha": "d30dc1f7fca047e5180c15d07bb7be4557305eff",
-      "completion_sha": null,
+      "completion_sha": "42046a4c4d866ed04cd2f85864250417db57842d",
       "scope": {
         "materialized": true,
         "exact_paths": [
@@ -295,20 +295,139 @@
         ],
         "allow_inherited_dirty": true
       },
-      "verification": [],
+      "verification": [
+        {
+          "command": "yarn vitest run scripts/validateSaltAiPlan004.spec.js --maxWorkers=1",
+          "result": "pass",
+          "output_sha256": "sha256:b239241f5cb2321fe93b0ceef098f0214e129ae401010280fd9615f980035503"
+        },
+        {
+          "command": "yarn vitest run scripts/checkChangedQuality.spec.js --maxWorkers=1",
+          "result": "pass",
+          "output_sha256": "sha256:e22d7aed46f94aa2b814c6755cf9271b5317f14603cac42733135d8d2d1a0b96"
+        },
+        {
+          "command": "yarn validate:salt-ai:plan-004 --phase adopt --checkpoint d30dc1f7fca047e5180c15d07bb7be4557305eff --allow-inherited-dirty",
+          "result": "pass",
+          "output_sha256": "sha256:8905910f923d747ac07c8b0a9b787a43d58742ddf466dfb22855c1c214ecc2e4"
+        },
+        {
+          "command": "yarn validate:salt-ai:tracker",
+          "result": "pass",
+          "output_sha256": "sha256:8ec0d1bee41a9ad941dca2f9218eb4ec16889894b23d9dd2eff6e895b3928ba3"
+        },
+        {
+          "command": "yarn validate:salt-ai:contracts",
+          "result": "pass",
+          "output_sha256": "sha256:e724cef49843b1776be047e2b65a4e0b0ee8ed4fe3d832ded8acc13a64b54b3f"
+        },
+        {
+          "command": "yarn validate:salt-ai:plan-004 --phase post-commit --unit 004/00 --checkpoint d30dc1f7fca047e5180c15d07bb7be4557305eff --completion HEAD --allow-inherited-dirty",
+          "result": "pass",
+          "output_sha256": "sha256:d361f435965e4056e5095427a5b26d6fe5691498012199e724400f386f35fd25"
+        },
+        {
+          "command": "git diff --check",
+          "result": "pass",
+          "output_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
       "evidence": null,
-      "successor_eligible": false
+      "successor_eligible": true
     },
     {
       "id": "004/01",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "dependency_unit": "004/00",
-      "dependency_completion_sha": null,
-      "checkpoint_sha": null,
+      "dependency_completion_sha": "42046a4c4d866ed04cd2f85864250417db57842d",
+      "checkpoint_sha": "42046a4c4d866ed04cd2f85864250417db57842d",
       "completion_sha": null,
       "scope": {
-        "materialized": false,
-        "exact_paths": [],
+        "materialized": true,
+        "exact_paths": [
+          "evals/salt-ai/baselines/baseline-pre-platform.json",
+          "evals/salt-ai/fixtures/repositories.json",
+          "evals/salt-ai/manifest.json",
+          "evals/salt-ai/protocol/budgets.json",
+          "evals/salt-ai/scripts/validate.mjs",
+          "evals/salt-ai/tasks/project-wrapper-policy.json",
+          "packages/cli/package.json",
+          "packages/cli/README.md",
+          "packages/cli/src/__tests__/cli.spec.ts",
+          "packages/cli/src/cli.ts",
+          "packages/cli/src/commands/__tests__/info.spec.ts",
+          "packages/cli/src/commands/__tests__/retrievalCompatibility.spec.ts",
+          "packages/cli/src/commands/__tests__/skill.spec.ts",
+          "packages/cli/src/commands/context.ts",
+          "packages/cli/src/commands/docs.ts",
+          "packages/cli/src/commands/info.ts",
+          "packages/cli/src/commands/retrievalRuntime.ts",
+          "packages/cli/src/commands/skill.ts",
+          "packages/cli/src/config/__tests__/loadConfig.spec.ts",
+          "packages/cli/src/discovery/__tests__/discoverProject.spec.ts",
+          "packages/cli/src/discovery/discoverProject.ts",
+          "packages/cli/src/scan/__tests__/architectureBoundary.spec.ts",
+          "packages/cli/src/scan/__tests__/result.spec.ts",
+          "packages/cli/src/scan/scannerWorker.ts",
+          "packages/knowledge/README.md",
+          "packages/knowledge/schemas/knowledge-manifest-1.schema.json",
+          "packages/knowledge/schemas/operation-capabilities-1.schema.json",
+          "packages/knowledge/src/__tests__/evidence.spec.ts",
+          "packages/knowledge/src/__tests__/knowledgeV1Contracts.spec.ts",
+          "packages/knowledge/src/__tests__/packagePublishBoundary.spec.ts",
+          "packages/knowledge/src/__tests__/projectConventions.spec.ts",
+          "packages/knowledge/src/__tests__/reviewCatalogAdapter.spec.ts",
+          "packages/knowledge/src/build/buildKnowledgeV1.ts",
+          "packages/knowledge/src/build/buildRegistryDocs.ts",
+          "packages/knowledge/src/compatibility/installedPackageResolver.ts",
+          "packages/knowledge/src/compatibility/itemApplicability.ts",
+          "packages/knowledge/src/compatibility/operationCapabilityRegistry.ts",
+          "packages/knowledge/src/compatibility/resolveCompatibility.ts",
+          "packages/knowledge/src/evidence.ts",
+          "packages/knowledge/src/policy/__tests__/layerDiagnostics.spec.ts",
+          "packages/knowledge/src/policy/__tests__/projectPolicyIr.spec.ts",
+          "packages/knowledge/src/policy/detection.ts",
+          "packages/knowledge/src/policy/index.ts",
+          "packages/knowledge/src/policy/layerDiagnostics.ts",
+          "packages/knowledge/src/policy/projectPolicyIr.ts",
+          "packages/knowledge/src/project/__tests__/decideSaltProject.spec.ts",
+          "packages/knowledge/src/project/__tests__/inspectSaltProjectFacts.spec.ts",
+          "packages/knowledge/src/project/__tests__/projectFacts.spec.ts",
+          "packages/knowledge/src/project/decideSaltProject.ts",
+          "packages/knowledge/src/project/inspectSaltProjectFacts.ts",
+          "packages/knowledge/src/project/projectFacts.ts",
+          "packages/knowledge/src/public.ts",
+          "packages/knowledge/src/review/reviewRuleRegistry.ts",
+          "packages/knowledge/src/review/reviewSaltCode.ts",
+          "packages/knowledge/src/schemas/knowledgeManifestV1.ts",
+          "scripts/build.mjs",
+          "scripts/checkAiToolingPackageDryRun.mjs",
+          "scripts/consumer-smoke/checks.mjs",
+          "scripts/consumer-smoke/fixture.mjs",
+          "scripts/consumer-smoke/shared.mjs",
+          "scripts/knowledgeArtifactContract.mjs",
+          "scripts/schemas/project-conventions-stack.schema.json",
+          "scripts/schemas/project-conventions.schema.json",
+          "scripts/schemas/salt-evidence-ref.schema.json",
+          "scripts/schemas/saltAiPackReportV1.schema.json",
+          "skills/salt-design-system/references/managed-agents-block.md",
+          "skills/salt-design-system/SKILL.md",
+          "tooling/ai/agent-support-v1.json",
+          "tooling/ai/public-docs-v1/guide.md",
+          "tooling/ai/public-docs-v1/manifest.json",
+          "workflow-examples/consumer-repo/.salt/team.json",
+          "workflow-examples/consumer-repo/package.json",
+          "workflow-examples/consumer-repo/README.md",
+          "workflow-examples/consumer-repo/scripts/verify-policy.mjs",
+          "workflow-examples/consumer-repo/src/theme/ConsumerBrandProvider.tsx",
+          "workflow-examples/project-conventions/conventions-pack.happy-path.md",
+          "workflow-examples/project-conventions/lob-policy.example.json",
+          "workflow-examples/project-conventions/project-conventions.example.json",
+          "workflow-examples/project-conventions/project-conventions.pattern-heavy.example.json",
+          "workflow-examples/project-conventions/project-conventions.stack.example.json",
+          "workflow-examples/project-conventions/project-conventions.wrapper-heavy.example.json",
+          "workflow-examples/project-conventions/README.md"
+        ],
         "allow_inherited_dirty": true
       },
       "verification": [],
