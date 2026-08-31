@@ -19,7 +19,7 @@ it does not dispatch or block Plan 004.
 | Plan                                                 | Title                                                                                                           | Priority | Effort         | Depends on          | Status                                                        |
 | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | -------- | -------------- | ------------------- | ------------------------------------------------------------- |
 | [001](./001-build-salt-ai-knowledge-platform.md)     | Build the original local Salt AI release candidate and record Unit 07 evidence                                  | P1       | L, multi-phase | —                   | DONE — historical local candidate complete through Unit 07    |
-| [004](./004-validate-salt-ai-product-wedge.md)       | Validate a truthful, exact-current, task-ready Salt AI product wedge before hardening or release                | P0       | L, multi-phase | Plan 001 Unit 07    | IN PROGRESS — Unit 004/03 offline opportunity protocol        |
+| [004](./004-validate-salt-ai-product-wedge.md)       | Validate a truthful, exact-current, task-ready Salt AI product wedge before hardening or release                | P0       | L, multi-phase | Plan 001 Unit 07    | IN PROGRESS — Unit 004/03 alternatives authority required     |
 | [003](./003-publish-salt-ai-release-candidate.md)    | Materialize versions and publish an approved Salt AI release candidate through separately owned release systems | P2       | L, conditional | Plan 004 final PASS | DEFERRED — Plan 004 PASS and publication authority are absent |
 | [002](./002-add-secure-historical-salt-knowledge.md) | Add secure historical Salt knowledge resolution only after current GA, public discovery, and ownership approval | P2       | L, conditional | Plan 003 completion | DEFERRED — post-Plan-003 re-plan and entry gates are absent   |
 
@@ -43,14 +43,15 @@ publication authority as deferred to Plan 003.
 
 - **Active plan/unit:** `004/03`
 - **Next eligible unit:** none until `004/03` completes
-- **Status:** IN PROGRESS — building the offline opportunity protocol before external authority
+- **Status:** IN PROGRESS — offline checkpoint `ebd03c0f952a257ec261fd0693ae21a497cb7984` complete; Phase A authority required
 - **Ancestry checkpoint:** `2e700a90889c7b83e4fab10a59813459343cf6b4`
 - **Plan 004 evidence authority:**
-  `plans/evidence/004/index.json@sha256:15dcbc7610c21b1a0c7b3da848915eb27237e91b99db92629fcd384d777dcf3f`
+  `plans/evidence/004/index.json@sha256:9ad3f02f9043058f70c8f01ba5a4af285e44db1ccfaec2452bc49cd3587f089d`
 - **Product decision:** none; only an indexed Unit `004/07` PASS can enable Plan
   003
-- **External authority:** none; network, installs, model calls, participant
-  contact, publication, and deployment remain unauthorized
+- **External authority:** none; Phase A primary-source research, network,
+  installs, model calls, participant contact, publication, and deployment
+  remain unauthorized
 - **Successor eligibility:** Plan 003 and every hardening successor remain
   ineligible
 

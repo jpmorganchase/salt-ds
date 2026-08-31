@@ -582,7 +582,53 @@
         ],
         "allow_inherited_dirty": false
       },
-      "verification": [],
+      "verification": [
+        {
+          "command": "yarn eval:salt-ai:opportunity:test",
+          "result": "pass",
+          "output_sha256": "sha256:b8455f123c9ee976e690e0ba29a2722a0445b3f6a5ca1664e02bc02fc74644f3"
+        },
+        {
+          "command": "yarn eval:salt-ai:opportunity:prepare --phase offline --evidence-root <fresh-guarded-root>",
+          "result": "pass",
+          "output_sha256": "sha256:653afc071675bdc7598c3f2ca17ba238ff6a538d702503ffc97460f22bf195ee"
+        },
+        {
+          "command": "yarn eval:salt-ai:opportunity:validate --phase offline --evidence-root <fresh-guarded-root>",
+          "result": "pass",
+          "output_sha256": "sha256:0c0f9e6e7057fbb3ac5a74083cc6c53cd16ce04ff372dc811229aa3eb15b5fca"
+        },
+        {
+          "command": "yarn typecheck:ai-tooling",
+          "result": "pass",
+          "output_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "command": "yarn test:ai-tooling",
+          "result": "pass",
+          "output_sha256": "sha256:d9f47d40d50c451841d43c28e5239474013e2ebb76876b8544b83eae89d81ac2"
+        },
+        {
+          "command": "yarn check:changed-quality -- --base 2e700a90889c7b83e4fab10a59813459343cf6b4",
+          "result": "pass",
+          "output_sha256": "sha256:750452afe2653601647cdacc62086391721375ecbbddd5ffe9b20d9aca7bc07a"
+        },
+        {
+          "command": "yarn validate:salt-ai:plan-004 --phase verify --unit 004/03",
+          "result": "pass",
+          "output_sha256": "sha256:73d1b7bd0c2d4e19511a491d02bab43f95cd5402372538360f56687d1afbd7e3"
+        },
+        {
+          "command": "yarn validate:salt-ai:plan-004 --phase post-commit --unit 004/03 --checkpoint 2e700a90889c7b83e4fab10a59813459343cf6b4 --completion ebd03c0f952a257ec261fd0693ae21a497cb7984",
+          "result": "pass",
+          "output_sha256": "sha256:29cc9f9cd2d3830f6f00edb7116c94e3ed6586c58164cfcfe5d3a868cd12f952"
+        },
+        {
+          "command": "git diff --check",
+          "result": "pass",
+          "output_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
       "evidence": null,
       "successor_eligible": false
     },
