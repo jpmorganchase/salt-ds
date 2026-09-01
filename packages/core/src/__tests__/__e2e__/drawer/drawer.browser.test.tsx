@@ -18,7 +18,7 @@ const {
   OptionalCloseAction,
   InitialFocusIndex,
   InitialFocusRef,
-  PreheaderAndDescription,
+  Header,
 } = composeStories(drawerStories);
 
 afterEach(() => {
@@ -157,7 +157,7 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
   const headingName = "Payments Check deposit #1278";
 
   it("names and describes the drawer from the header", async () => {
-    await renderWithSalt(<PreheaderAndDescription />);
+    await renderWithSalt(<Header />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
 
     const drawer = page.getByRole("dialog");
@@ -171,7 +171,7 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
   });
 
   it("closes from a close button placed in the header actions", async () => {
-    await renderWithSalt(<PreheaderAndDescription />);
+    await renderWithSalt(<Header />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
 
     const closeButton = page.getByRole("button", { name: "Close Drawer" });
@@ -181,7 +181,7 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
   });
 
   it("exposes overflowing content as a region reachable by keyboard", async () => {
-    await renderWithSalt(<PreheaderAndDescription />);
+    await renderWithSalt(<Header />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
 
     const content = page.getByRole("region", { name: headingName });

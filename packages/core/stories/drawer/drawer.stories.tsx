@@ -496,7 +496,7 @@ export const InitialFocusRef: StoryFn<DrawerProps> = (args) => {
   );
 };
 
-export const PreheaderAndDescription: StoryFn<DrawerProps> = (args) => {
+export const Header: StoryFn<DrawerProps> = (args) => {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
