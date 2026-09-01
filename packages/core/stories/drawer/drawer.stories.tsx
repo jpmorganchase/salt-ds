@@ -4,9 +4,9 @@ import {
   Checkbox,
   ComboBox,
   Drawer,
-  DrawerActions,
   DrawerCloseButton,
   DrawerContent,
+  DrawerFooter,
   DrawerHeader,
   type DrawerProps,
   FlexItem,
@@ -590,14 +590,14 @@ export const HeaderAndActions: StoryFn<DrawerProps> = (args) => {
             </Text>
           </StackLayout>
         </DrawerContent>
-        <DrawerActions>
+        <DrawerFooter>
           <Button appearance="transparent" onClick={handleClose}>
             Cancel
           </Button>
           <Button sentiment="accented" onClick={handleClose}>
             Save
           </Button>
-        </DrawerActions>
+        </DrawerFooter>
       </Drawer>
     </>
   );
