@@ -378,4 +378,85 @@ describe("GIVEN a Drawer with DrawerFooter", () => {
     await page.getByRole("button", { name: "Cancel" }).click();
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
   });
+
+  it("keeps the footer pinned to the bottom while the content scrolls", async () => {
+    await renderWithSalt(<HeaderAndActions />);
+    await page.getByRole("button", { name: "Open Drawer" }).click();
+
+    const drawer = page.getByRole("dialog");
+    const header = drawer.element().querySelector(".saltDrawerHeader");
+    const footer = drawer.element().querySelector(".saltDrawerFooter");
+    const region = page.getByRole("region");
+    await expect.element(region).toBeVisible();
+
+    const footerBottom = footer?.getBoundingClientRect().bottom;
+    const headerTop = header?.getBoundingClientRect().top;
+    expect(footerBottom).toBeCloseTo(
+      drawer.element().getBoundingClientRect().bottom,
+      1,
+    );
+
+    const scrollContainer = region.element();
+    scrollContainer.scrollTop = scrollContainer.scrollHeight;
+    await expect.poll(() => scrollContainer.scrollTop).toBeGreaterThan(0);
+
+    expect(footer?.getBoundingClientRect().bottom).toBeCloseTo(
+      footerBottom as number,
+      1,
+    );
+    expect(header?.getBoundingClientRect().top).toBeCloseTo(
+      headerTop as number,
+      1,
+    );
+  });
+
+  it("shows an overflow divider above the footer until the content is fully scrolled", async () => {
+    await renderWithSalt(<HeaderAndActions />);
+    await page.getByRole("button", { name: "Open Drawer" }).click();
+
+    const region = page.getByRole("region");
+    await expect.element(region).toBeVisible();
+    await expect
+      .poll(() =>
+        region.element().classList.contains("saltDrawerContent-scrollBottom"),
+      )
+      .toBe(true);
+
+    const scrollContainer = region.element();
+    scrollContainer.scrollTop = scrollContainer.scrollHeight;
+    await expect
+      .poll(() =>
+        region.element().classList.contains("saltDrawerContent-scrollBottom"),
+      )
+      .toBe(false);
+  });
+
+  it("shows no overflow divider above the footer when the content fits", async () => {
+    await renderWithSalt(
+      <Drawer open position="right" style={{ width: 400 }}>
+        <DrawerHeader
+          header="Add your delivery details"
+          actions={<DrawerCloseButton />}
+        />
+        <DrawerContent>
+          <Text>Pending transaction review</Text>
+        </DrawerContent>
+        <DrawerFooter>
+          <Button>Cancel</Button>
+          <Button>Save</Button>
+        </DrawerFooter>
+      </Drawer>,
+    );
+
+    const drawer = page.getByRole("dialog");
+    await expect.element(page.getByRole("region")).not.toBeInTheDocument();
+    await expect
+      .poll(() =>
+        drawer
+          .element()
+          .querySelector(".saltDrawerContent-inner")
+          ?.classList.contains("saltDrawerContent-scrollBottom"),
+      )
+      .toBe(false);
+  });
 });
