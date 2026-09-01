@@ -9,6 +9,7 @@ import {
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
+import { type ReactNode, useLayoutEffect, useRef } from "react";
 
 export default {
   title: "Core/Drawer/Drawer QA",
@@ -101,5 +102,66 @@ export const DrawerExamples: StoryFn<QAContainerProps> = (props) => {
   );
 };
 DrawerExamples.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+function ScrolledDrawerContent({
+  children,
+  scrollTo,
+}: {
+  children: ReactNode;
+  scrollTo: "middle" | "bottom";
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const scroller = ref.current?.querySelector<HTMLElement>(
+      ".saltDrawerContent-inner",
+    );
+    if (!scroller) return;
+    const max = scroller.scrollHeight - scroller.clientHeight;
+    scroller.scrollTop = scrollTo === "bottom" ? max : Math.round(max / 2);
+  }, [scrollTo]);
+
+  return <DrawerContent ref={ref}>{children}</DrawerContent>;
+}
+
+const DrawerOverflowTemplate: StoryFn<typeof Drawer> = () => {
+  return (
+    <StackLayout direction="row" gap={3}>
+      <FakeDrawer>
+        <DrawerHeader
+          header="Scrolled to middle"
+          actions={<DrawerCloseButton />}
+        />
+        <ScrolledDrawerContent scrollTo="middle">
+          <Text>{loremText}</Text>
+          <Text>{loremText}</Text>
+        </ScrolledDrawerContent>
+      </FakeDrawer>
+      <FakeDrawer>
+        <DrawerHeader
+          header="Scrolled to bottom"
+          actions={<DrawerCloseButton />}
+        />
+        <ScrolledDrawerContent scrollTo="bottom">
+          <Text>{loremText}</Text>
+          <Text>{loremText}</Text>
+        </ScrolledDrawerContent>
+      </FakeDrawer>
+    </StackLayout>
+  );
+};
+
+export const DrawerOverflow: StoryFn<QAContainerProps> = (props) => {
+  const { ...rest } = props;
+
+  return (
+    <QAContainer cols={1} height={1600} itemPadding={20} width={1700} {...rest}>
+      <DrawerOverflowTemplate />
+    </QAContainer>
+  );
+};
+DrawerOverflow.parameters = {
   chromatic: { disableSnapshot: false },
 };
