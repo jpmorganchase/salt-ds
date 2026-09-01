@@ -1,5 +1,5 @@
+import { LinkButton } from "@salt-ds/core";
 import { StackoverflowIcon } from "@salt-ds/icons";
-import { LinkButton } from "@salt-ds/lab";
 import { describe, expect, it } from "vitest";
 import { page } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";

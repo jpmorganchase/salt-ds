@@ -1,6 +1,5 @@
-import { StackLayout } from "@salt-ds/core";
+import { LinkButton, StackLayout } from "@salt-ds/core";
 import { ArrowLeftIcon, ArrowRightIcon, SaltShakerIcon } from "@salt-ds/icons";
-import { LinkButton } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const WithIcon = (): ReactElement => (

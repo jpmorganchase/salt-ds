@@ -1,11 +1,10 @@
-import { StackLayout } from "@salt-ds/core";
+import { LinkButton, StackLayout } from "@salt-ds/core";
 import { ArrowLeftIcon, ArrowRightIcon } from "@salt-ds/icons";
-import { LinkButton } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { MemoryRouter, Link as RouterLink } from "react-router";
 
 export default {
-  title: "Lab/Link Button",
+  title: "Core/Link Button",
   component: LinkButton,
 } as Meta<typeof LinkButton>;
 

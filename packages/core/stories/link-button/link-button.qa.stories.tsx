@@ -1,10 +1,10 @@
+import { LinkButton } from "@salt-ds/core";
 import { ArrowRightIcon, UserIcon } from "@salt-ds/icons";
-import { LinkButton } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Link Button/Link Button QA",
+  title: "Core/Link Button/Link Button QA",
   component: LinkButton,
 } as Meta<typeof LinkButton>;
 
