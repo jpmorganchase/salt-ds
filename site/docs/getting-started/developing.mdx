@@ -220,7 +220,7 @@ Salt injects component styles at runtime by default, so you don’t need to impo
 
 #### (Optional) Apply the CSS baseline reset
 
-Salt's text styles control typography, but browsers also add margins to semantic elements such as headings and paragraphs. Those margins remain when Markdown content is rendered with `Text` using the semantic `as` prop; changing its visual style with `styleAs` does not change the element's spacing. This mixes browser-defined spacing with Salt's spacing system.
+Browsers add margins to the document body, headings and paragraphs. Salt's text styles don't override these margins. For example, the `styleAs` prop on `Text` changes the text style, but it doesn't change the browser margin for the element selected by `as`.
 
 To remove that browser spacing, `@salt-ds/theme` ships an opt-in baseline reset. Import it once at the root of your app, before the theme CSS:
 
@@ -230,18 +230,7 @@ import "@salt-ds/theme/css/global.css";
 import "@salt-ds/theme/css/theme-next.css";
 ```
 
-The reset only removes the default margin from:
-
-- The document `<body>`, removing the browser's spacing around the application viewport.
-- Heading elements (`<h1>`–`<h6>`), allowing each semantic level to use any appropriate Salt visual style.
-- Paragraphs (`<p>`), allowing applications to compose text spacing with Salt layout and spacing tokens.
-
-It does not change box sizing, typography, lists, media, form controls, buttons, tables, links, motion, or page colors. Those behaviors are already owned by Salt components or need an application-specific decision. Salt components remain self-contained and work whether or not you import the baseline.
-
-<Callout title="Not using the reset?">
-  You can skip the baseline import if your existing reset already removes body,
-  heading and paragraph margins, or if you prefer to keep that browser spacing.
-</Callout>
+If you're using the Legacy theme, import it before `@salt-ds/theme/index.css` instead.
 
 ### 4. Import components
 

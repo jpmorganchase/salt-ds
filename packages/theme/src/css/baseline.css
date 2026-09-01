@@ -6,29 +6,14 @@
  * self-contained and do not depend on this file.
  */
 
-/* Remove the HTML default canvas inset so application layout owns viewport spacing. */
-body {
-  margin: 0;
-}
-
-/*
- *`Text` can preserve each level
- * with `as` while `styleAs` independently selects an available Salt visual
- * style
- */
+/* Browsers put margins on these tags - reset for Salt typography and body */
+body,
 h1,
 h2,
 h3,
 h4,
 h5,
-h6 {
-  margin: 0;
-}
-
-/*
- * Paragraphs are a documented `Text` target. Remove only their browser margin
- * so content layouts can apply Salt spacing tokens explicitly.
- */
+h6,
 p {
   margin: 0;
 }
