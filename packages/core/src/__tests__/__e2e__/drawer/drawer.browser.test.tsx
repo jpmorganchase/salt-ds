@@ -322,4 +322,3 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
       .toBeVisible();
   });
 });
-
