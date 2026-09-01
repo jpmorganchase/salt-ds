@@ -11,7 +11,7 @@ import {
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
-import { type ReactNode, useLayoutEffect, useRef } from "react";
+import  type { ReactNode, useLayoutEffect, useRef, CSSProperties } from "react";
 
 export default {
   title: "Core/Drawer/Drawer QA",
@@ -21,15 +21,18 @@ export default {
 function FakeDrawer({ children, ...rest }: DrawerProps) {
   return (
     <div
-      style={{
-        width: 350,
-        height: 280,
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
-        background: "var(--salt-container-primary-background)",
-        boxShadow: "var(--salt-overlayable-shadow-modal)",
-      }}
+      style={
+        {
+          width: 350,
+          height: 280,
+          display: "flex",
+          flexDirection: "column",
+          overflow: "hidden",
+          "--drawer-background": "var(--salt-container-primary-background)",
+          background: "var(--drawer-background)",
+          boxShadow: "var(--salt-overlayable-shadow-modal)",
+        } as CSSProperties
+      }
       {...rest}
     >
       {children}
