@@ -11,7 +11,6 @@ import {
 } from "react";
 import {
   makePrefixer,
-  useForkRef,
   useIsomorphicLayoutEffect,
   useResizeObserver,
 } from "../utils";
@@ -36,7 +35,6 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
     const { drawerId, headerId } = useDrawerContext();
 
     const scrollRef = useRef<HTMLDivElement>(null);
-    const handleRef = useForkRef<HTMLDivElement>(scrollRef, ref);
     const [isOverflowing, setIsOverflowing] = useState(false);
     const [canScrollUp, setCanScrollUp] = useState(false);
     const [canScrollDown, setCanScrollDown] = useState(false);
@@ -71,25 +69,22 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
     }, [readScrollPosition]);
 
     return (
-      <div
-        ref={handleRef}
-        className={clsx(
-          withBaseName(),
-          {
+      <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
+        <div
+          ref={scrollRef}
+          className={clsx(withBaseName("inner"), {
             [withBaseName("scrollTop")]: canScrollUp,
             [withBaseName("scrollBottom")]: canScrollDown,
-          },
-          className,
-        )}
-        onScrollCapture={handleScroll}
-        {...(isOverflowing && {
-          tabIndex: 0,
-          role: "region",
-          "aria-labelledby": headerId ?? drawerId,
-        })}
-        {...rest}
-      >
-        {children}
+          })}
+          onScrollCapture={handleScroll}
+          {...(isOverflowing && {
+            tabIndex: 0,
+            role: "region",
+            "aria-labelledby": headerId ?? drawerId,
+          })}
+        >
+          {children}
+        </div>
       </div>
     );
   },
