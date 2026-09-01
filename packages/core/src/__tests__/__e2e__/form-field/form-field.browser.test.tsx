@@ -8,6 +8,7 @@ import {
   RadioButton,
   Tooltip,
 } from "@salt-ds/core";
+import { Fragment } from "react";
 import { describe, expect, it } from "vitest";
 import { page } from "vitest/browser";
 import { runAxeScan } from "~browser-test-utils/accessibility";
@@ -24,6 +25,41 @@ function MockChildren() {
 }
 
 describe("GIVEN a FormField", () => {
+  describe("WHEN controls are provided", () => {
+    it("THEN it identifies multiple controls without adding a wrapper", async () => {
+      const { container } = await renderWithSalt(
+        <FormField>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Fragment key="controls">
+            <Input defaultValue="First value" />
+            <Input defaultValue="Second value" />
+          </Fragment>
+        </FormField>,
+      );
+      const formField = container.querySelector(".saltFormField");
+
+      expect(formField).toHaveClass("saltFormField-hasControls");
+      expect(formField?.children).toHaveLength(3);
+    });
+  });
+
+  describe("WHEN controls are not provided", () => {
+    it("THEN it does not add the controls modifier", async () => {
+      const { container } = await renderWithSalt(
+        <FormField>
+          <Fragment key="non-controls">
+            <FormFieldLabel>Label</FormFieldLabel>
+            <FormFieldHelperText>Helper text</FormFieldHelperText>
+          </Fragment>
+        </FormField>,
+      );
+
+      expect(container.querySelector(".saltFormField")).not.toHaveClass(
+        "saltFormField-hasControls",
+      );
+    });
+  });
+
   describe("WHEN FormFieldLabel is provided", () => {
     it("THEN the label is rendered", async () => {
       await renderWithSalt(
