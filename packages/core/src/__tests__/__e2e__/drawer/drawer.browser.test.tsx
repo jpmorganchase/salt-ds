@@ -195,7 +195,7 @@ describe("GIVEN a Drawer", () => {
   });
 
   it("exposes overflowing content as a region reachable by keyboard", async () => {
-    await renderWithSalt(<Header />);
+    await renderWithSalt(<HeaderAndActions />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
 
     const content = page.getByRole("region", { name: headingName });
