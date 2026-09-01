@@ -14,17 +14,14 @@
   box-sizing: border-box;
 }
 
-/* Styles applied when a DrawerHeader or DrawerContent is present. Padding moved
-   into DrawerHeader and DrawerContent. Overflow:hidden allows header to stay
-   pinned and makes DrawerContent the scroll container. */
 .saltDrawer.saltDrawer-sectioned {
-  padding: 0;
+  padding: var(--salt-spacing-300) 0;
   overflow: hidden;
 }
 
 @supports selector(:has(*)) {
   .saltDrawer:has(> .saltDrawerHeader, > .saltDrawerContent) {
-    padding: 0;
+    padding: var(--salt-spacing-300) 0;
     overflow: hidden;
   }
 }
