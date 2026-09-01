@@ -5,6 +5,7 @@ import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
+  type FormFieldLabelPlacement,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
@@ -45,11 +46,16 @@ const CheckboxGroupExample = ({
   );
 };
 
-const CheckboxInFormFieldExample = () => {
+const CheckboxFormField = ({
+  direction,
+  labelPlacement,
+}: Pick<CheckboxGroupProps, "direction"> & {
+  labelPlacement: FormFieldLabelPlacement;
+}) => {
   return (
-    <FormField labelPlacement="left">
+    <FormField labelPlacement={labelPlacement}>
       <FormFieldLabel>Assignment</FormFieldLabel>
-      <CheckboxGroup>
+      <CheckboxGroup direction={direction}>
         <Checkbox label="Private placement of equity or debt securities" />
         <Checkbox defaultChecked label="Syndicated credit facility or loan" />
         <Checkbox label="Interest rate, foreign exchange or commodity hedging or equity derivative" />
@@ -66,7 +72,8 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
     <QAContainer cols={1} itemPadding={8} {...props}>
       <CheckboxGroupExample direction="vertical" />
       <CheckboxGroupExample direction="horizontal" />
-      <CheckboxInFormFieldExample />
+      <CheckboxFormField direction="horizontal" labelPlacement="top" />
+      <CheckboxFormField direction="vertical" labelPlacement="left" />
     </QAContainer>
   );
 };
