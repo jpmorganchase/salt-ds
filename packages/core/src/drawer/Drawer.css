@@ -20,7 +20,7 @@
 }
 
 @supports selector(:has(*)) {
-  .saltDrawer:has(> .saltDrawerHeader, > .saltDrawerContent, > .saltDrawerActions) {
+  .saltDrawer:has(> .saltDrawerHeader, > .saltDrawerContent, > .saltDrawerFooter) {
     padding: var(--salt-spacing-300) 0;
     overflow: hidden;
   }

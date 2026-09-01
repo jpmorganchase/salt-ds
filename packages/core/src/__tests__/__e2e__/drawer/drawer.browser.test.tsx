@@ -1,9 +1,9 @@
 import {
   Button,
   Drawer,
-  DrawerActions,
   DrawerCloseButton,
   DrawerContent,
+  DrawerFooter,
   DrawerHeader,
   Text,
 } from "@salt-ds/core";
@@ -358,7 +358,7 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
   });
 });
 
-describe("GIVEN a Drawer with DrawerActions", () => {
+describe("GIVEN a Drawer with DrawerFooter", () => {
   it("places the actions last in the focus order", async () => {
     await renderWithSalt(
       <Drawer open position="right" style={{ width: 400 }}>
@@ -369,10 +369,10 @@ describe("GIVEN a Drawer with DrawerActions", () => {
         <DrawerContent>
           <Button>Content action</Button>
         </DrawerContent>
-        <DrawerActions>
+        <DrawerFooter>
           <Button>Cancel</Button>
           <Button>Save</Button>
-        </DrawerActions>
+        </DrawerFooter>
       </Drawer>,
     );
 
