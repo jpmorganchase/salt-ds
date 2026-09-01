@@ -133,6 +133,34 @@ describe("GIVEN a Drawer", () => {
       .toHaveFocus();
   });
 
+  it("returns focus to the trigger when closed from the close button", async () => {
+    await renderWithSalt(<Default />);
+    const openButton = page.getByRole("button", {
+      name: "Open Primary Drawer",
+    });
+
+    await openButton.click();
+    await expect.element(page.getByRole("dialog")).toBeVisible();
+
+    await page.getByRole("button", { name: "Close Drawer" }).click();
+    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+    await expect.element(openButton).toHaveFocus();
+  });
+
+  it("returns focus to the trigger when dismissed with Escape", async () => {
+    await renderWithSalt(<Default />);
+    const openButton = page.getByRole("button", {
+      name: "Open Primary Drawer",
+    });
+
+    await openButton.click();
+    await expect.element(page.getByRole("dialog")).toBeVisible();
+
+    await userEvent.keyboard("{Escape}");
+    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+    await expect.element(openButton).toHaveFocus();
+  });
+
   it("supports an action configured to close the drawer", async () => {
     await renderWithSalt(<OptionalCloseAction />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
