@@ -15,12 +15,11 @@ import { renderWithSalt } from "~browser-test-utils/render";
 import * as drawerStories from "~stories/drawer/drawer.stories";
 
 const {
-  Actions,
   Default,
   OptionalCloseAction,
   InitialFocusIndex,
   InitialFocusRef,
-  Header,
+  HeaderAndActions,
 } = composeStories(drawerStories);
 
 const headingName = "Payments Check deposit #1278";
@@ -218,7 +217,7 @@ describe("GIVEN a Drawer", () => {
 
 describe("GIVEN a Drawer with a DrawerHeader", () => {
   it("names and describes the drawer from the header", async () => {
-    await renderWithSalt(<Header />);
+    await renderWithSalt(<HeaderAndActions />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
 
     const drawer = page.getByRole("dialog");
@@ -232,7 +231,7 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
   });
 
   it("closes from a close button placed in the header actions", async () => {
-    await renderWithSalt(<Header />);
+    await renderWithSalt(<HeaderAndActions />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
 
     const closeButton = page.getByRole("button", { name: "Close Drawer" });
@@ -366,7 +365,7 @@ describe("GIVEN a Drawer with DrawerActions", () => {
   });
 
   it("supports actions configured to close the drawer", async () => {
-    await renderWithSalt(<Actions />);
+    await renderWithSalt(<HeaderAndActions />);
     const openButton = page.getByRole("button", { name: "Open Drawer" });
 
     await openButton.click();

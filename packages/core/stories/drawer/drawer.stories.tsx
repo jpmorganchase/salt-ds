@@ -497,7 +497,7 @@ export const InitialFocusRef: StoryFn<DrawerProps> = (args) => {
   );
 };
 
-export const Header: StoryFn<DrawerProps> = (args) => {
+export const HeaderAndActions: StoryFn<DrawerProps> = (args) => {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -588,55 +588,6 @@ export const Header: StoryFn<DrawerProps> = (args) => {
               voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
               quis.
             </Text>
-          </StackLayout>
-        </DrawerContent>
-      </Drawer>
-    </>
-  );
-};
-
-export const Actions: StoryFn<DrawerProps> = (args) => {
-  const [open, setOpen] = useState(false);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <>
-      <Button onClick={() => setOpen(true)}>Open Drawer</Button>
-      <Drawer
-        {...args}
-        open={open}
-        onOpenChange={setOpen}
-        position="right"
-        style={{ width: 400 }}
-      >
-        <DrawerHeader
-          header="Add your delivery details"
-          actions={<DrawerCloseButton onClick={handleClose} />}
-        />
-        <DrawerContent>
-          <StackLayout>
-            <FormField>
-              <FormFieldLabel>House no.</FormFieldLabel>
-              <Input />
-            </FormField>
-            <FormField>
-              <FormFieldLabel>Street name</FormFieldLabel>
-              <Input />
-            </FormField>
-            <FormField>
-              <FormFieldLabel>City/Town</FormFieldLabel>
-              <Input />
-            </FormField>
-            <FormField>
-              <FormFieldLabel>Country</FormFieldLabel>
-              <Input />
-            </FormField>
-            <FormField>
-              <Checkbox label="Dog(s) present at my property" />
-            </FormField>
           </StackLayout>
         </DrawerContent>
         <DrawerActions>
