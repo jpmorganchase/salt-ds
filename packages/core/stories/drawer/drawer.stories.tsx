@@ -34,6 +34,9 @@ export default {
   component: Drawer,
 } as Meta<typeof Drawer>;
 
+const loremText =
+  "Incididunt adipisicing deserunt nostrud ullamco consequat consectetur magna id do irure labore fugiat. Eiusmod pariatur officia elit ad. Ullamco adipisicing Lorem amet velit in do reprehenderit nostrud eu aute voluptate quis quis. ";
+
 const UnmountLogger = () => {
   useEffect(() => {
     return () => {
@@ -221,10 +224,7 @@ export const TopDrawerUsageExample = () => {
         <DrawerContent>
           <StackLayout>
             <Text>
-              Incididunt adipisicing deserunt nostrud ullamco consequat
-              consectetur magna id do irure labore fugiat. Eiusmod pariatur
-              officia elit ad. Ullamco adipisicing Lorem amet velit in do
-              reprehenderit nostrud eu aute voluptate quis quis.
+              {loremText}
             </Text>
             <FlexLayout>
               <FormFieldExample />
@@ -269,12 +269,7 @@ export const RightDrawerUsageExample = () => {
         />
         <DrawerContent>
           <StackLayout>
-            <Text>
-              Incididunt adipisicing deserunt nostrud ullamco consequat
-              consectetur magna id do irure labore fugiat. Eiusmod pariatur
-              officia elit ad. Ullamco adipisicing Lorem amet velit in do
-              reprehenderit nostrud eu aute voluptate quis quis.
-            </Text>
+            <Text>{loremText}</Text>
             <FormFieldExample />
             <FormFieldExample />
             <FormFieldExample />
@@ -521,72 +516,7 @@ export const Header: StoryFn<DrawerProps> = (args) => {
         />
         <DrawerContent>
           <StackLayout>
-            <Text>
-              Incididunt adipisicing deserunt nostrud ullamco consequat
-              consectetur magna id do irure labore fugiat. Eiusmod pariatur
-              officia elit ad. Ullamco adipisicing Lorem amet velit in do
-              reprehenderit nostrud eu aute voluptate quis quis. Incididunt
-              adipisicing deserunt nostrud ullamco consequat consectetur magna
-              id do irure labore fugiat. Eiusmod pariatur officia elit ad.
-              Ullamco adipisicing Lorem amet velit in do reprehenderit nostrud
-              eu aute voluptate quis quis. reprehenderit nostrud eu aute
-              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
-              quis. Incididunt adipisicing deserunt nostrud ullamco consequat
-              consectetur magna id do irure labore fugiat. Eiusmod pariatur
-              officia elit ad. Ullamco adipisicing Lorem amet velit in do
-              reprehenderit nostrud eu aute voluptate quis quis. Incididunt
-              adipisicing deserunt nostrud ullamco consequat consectetur magna
-              id do irure labore fugiat. Eiusmod pariatur officia elit ad.
-              Ullamco adipisicing Lorem amet velit in do reprehenderit nostrud
-              eu aute voluptate quis quis. reprehenderit nostrud eu aute
-              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
-              quis. Incididunt adipisicing deserunt nostrud ullamco consequat
-              consectetur magna id do irure labore fugiat. Eiusmod pariatur
-              officia elit ad. Ullamco adipisicing Lorem amet velit in do
-              reprehenderit nostrud eu aute voluptate quis quis. Incididunt
-              adipisicing deserunt nostrud ullamco consequat consectetur magna
-              id do irure labore fugiat. Eiusmod pariatur officia elit ad.
-              Ullamco adipisicing Lorem amet velit in do reprehenderit nostrud
-              eu aute voluptate quis quis. reprehenderit nostrud eu aute
-              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
-              quis. Incididunt adipisicing deserunt nostrud ullamco consequat
-              consectetur magna id do irure labore fugiat. Eiusmod pariatur
-              officia elit ad. Ullamco adipisicing Lorem amet velit in do
-              reprehenderit nostrud eu aute voluptate quis quis. Incididunt
-              adipisicing deserunt nostrud ullamco consequat consectetur magna
-              id do irure labore fugiat. Eiusmod pariatur officia elit ad.
-              Ullamco adipisicing Lorem amet velit in do reprehenderit nostrud
-              eu aute voluptate quis quis. reprehenderit nostrud eu aute
-              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
-              quis. Incididunt adipisicing deserunt nostrud ullamco consequat
-              consectetur magna id do irure labore fugiat. Eiusmod pariatur
-              officia elit ad. Ullamco adipisicing Lorem amet velit in do
-              reprehenderit nostrud eu aute voluptate quis quis. Incididunt
-              adipisicing deserunt nostrud ullamco consequat consectetur magna
-              id do irure labore fugiat. Eiusmod pariatur officia elit ad.
-              Ullamco adipisicing Lorem amet velit in do reprehenderit nostrud
-              eu aute voluptate quis quis. reprehenderit nostrud eu aute
-              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
-              quis. Incididunt adipisicing deserunt nostrud ullamco consequat
-              consectetur magna id do irure labore fugiat. Eiusmod pariatur
-              officia elit ad. Ullamco adipisicing Lorem amet velit in do
-              reprehenderit nostrud eu aute voluptate quis quis. Incididunt
-              adipisicing deserunt nostrud ullamco consequat consectetur magna
-              id do irure labore fugiat. Eiusmod pariatur officia elit ad.
-              Ullamco adipisicing Lorem amet velit in do reprehenderit nostrud
-              eu aute voluptate quis quis. reprehenderit nostrud eu aute
-              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
-              quis. Incididunt adipisicing deserunt nostrud ullamco consequat
-              consectetur magna id do irure labore fugiat. Eiusmod pariatur
-              officia elit ad. Ullamco adipisicing Lorem amet velit in do
-              reprehenderit nostrud eu aute voluptate quis quis. Incididunt
-              adipisicing deserunt nostrud ullamco consequat consectetur magna
-              id do irure labore fugiat. Eiusmod pariatur officia elit ad.
-              Ullamco adipisicing Lorem amet velit in do reprehenderit nostrud
-              eu aute voluptate quis quis. reprehenderit nostrud eu aute
-              voluptate quis quis. reprehenderit nostrud eu aute voluptate quis
-              quis.
-            </Text>
+            <Text>{loremText.repeat(17)}</Text>
           </StackLayout>
         </DrawerContent>
       </Drawer>
