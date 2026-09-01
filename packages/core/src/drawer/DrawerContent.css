@@ -7,10 +7,7 @@
   box-sizing: border-box;
 }
 
-/* The scroll container is inset by the horizontal padding of the root element,
-   so the overflow dividers are inset left and right by --salt-spacing-300. */
 .saltDrawerContent-inner {
-  padding-bottom: var(--salt-spacing-300);
   flex: 1;
   min-width: 0;
   overflow-y: auto;
