@@ -79,6 +79,14 @@ const DrawerTemplate: StoryFn<typeof Drawer> = () => {
           </DrawerContent>
         </FakeDrawer>
       </StackLayout>
+      <StackLayout direction="row" gap={3}>
+        <FakeDrawer>
+          <DrawerContent>
+            <Text>{loremText}</Text>
+            <Text>{loremText}</Text>
+          </DrawerContent>
+        </FakeDrawer>
+      </StackLayout>
     </StackLayout>
   );
 };
@@ -87,7 +95,7 @@ export const DrawerExamples: StoryFn<QAContainerProps> = (props) => {
   const { ...rest } = props;
 
   return (
-    <QAContainer cols={1} height={2700} itemPadding={20} width={1700} {...rest}>
+    <QAContainer cols={1} height={3900} itemPadding={20} width={1700} {...rest}>
       <DrawerTemplate />
     </QAContainer>
   );

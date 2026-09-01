@@ -21,6 +21,9 @@ const {
   Header,
 } = composeStories(drawerStories);
 
+const headingName = "Payments Check deposit #1278";
+const longText = "Pending transaction review. ".repeat(200);
+
 afterEach(() => {
   vi.restoreAllMocks();
 });
@@ -179,11 +182,39 @@ describe("GIVEN a Drawer", () => {
       .element(page.getByRole("textbox", { name: "Third" }))
       .toHaveFocus();
   });
+
+  it("exposes overflowing content as a region reachable by keyboard", async () => {
+    await renderWithSalt(<Header />);
+    await page.getByRole("button", { name: "Open Drawer" }).click();
+
+    const content = page.getByRole("region", { name: headingName });
+    await expect.element(content).toBeVisible();
+    await userEvent.tab();
+    await expect.element(content).toHaveFocus();
+  });
+
+  it("falls back to the drawer's aria-label to name the content region", async () => {
+    await renderWithSalt(
+      <Drawer
+        open
+        position="right"
+        style={{ width: 400 }}
+        aria-label="Notifications"
+      >
+        <DrawerHeader actions={<DrawerCloseButton />} />
+        <DrawerContent>
+          <Text>{longText}</Text>
+        </DrawerContent>
+      </Drawer>,
+    );
+
+    const region = page.getByRole("region", { name: "Notifications" });
+    await expect.element(region).toBeVisible();
+    await expect.element(region).toHaveAttribute("tabindex", "0");
+  });
 });
 
 describe("GIVEN a Drawer with a DrawerHeader", () => {
-  const headingName = "Payments Check deposit #1278";
-
   it("names and describes the drawer from the header", async () => {
     await renderWithSalt(<Header />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
@@ -206,16 +237,6 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
     await expect.element(closeButton).toHaveFocus();
     await closeButton.click();
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
-  });
-
-  it("exposes overflowing content as a region reachable by keyboard", async () => {
-    await renderWithSalt(<Header />);
-    await page.getByRole("button", { name: "Open Drawer" }).click();
-
-    const content = page.getByRole("region", { name: headingName });
-    await expect.element(content).toBeVisible();
-    await userEvent.tab();
-    await expect.element(content).toHaveFocus();
   });
 
   it("leaves content that fits out of the tab order", async () => {
@@ -302,49 +323,3 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
   });
 });
 
-describe("GIVEN a Drawer with no heading in its header", () => {
-  const longText = "Pending transaction review. ".repeat(200);
-
-  it("falls back to the drawer's aria-label to name the content region", async () => {
-    await renderWithSalt(
-      <Drawer
-        open
-        position="right"
-        style={{ width: 400 }}
-        aria-label="Notifications"
-      >
-        <DrawerHeader actions={<DrawerCloseButton />} />
-        <DrawerContent>
-          <Text>{longText}</Text>
-        </DrawerContent>
-      </Drawer>,
-    );
-
-    const region = page.getByRole("region", { name: "Notifications" });
-    await expect.element(region).toBeVisible();
-    await expect.element(region).toHaveAttribute("tabindex", "0");
-  });
-
-  it("hands its padding to DrawerContent when there is no DrawerHeader", async () => {
-    await renderWithSalt(
-      <Drawer
-        open
-        position="right"
-        style={{ width: 400 }}
-        aria-label="Notifications"
-      >
-        <DrawerContent>
-          <Text>{longText}</Text>
-        </DrawerContent>
-      </Drawer>,
-    );
-
-    const drawer = page.getByRole("dialog");
-    await expect
-      .poll(() => getComputedStyle(drawer.element()).paddingLeft)
-      .toBe("0px");
-    await expect
-      .element(page.getByRole("region", { name: "Notifications" }))
-      .toBeVisible();
-  });
-});
