@@ -1,4 +1,4 @@
-.saltDrawerActions {
+.saltDrawerFooter {
   background: var(--drawer-background);
   padding: var(--salt-spacing-300);
   display: flex;
@@ -10,6 +10,6 @@
   box-sizing: border-box;
 }
 
-.saltDrawerContent + .saltDrawerActions {
+.saltDrawerContent + .saltDrawerFooter {
   padding-top: 0;
 }
