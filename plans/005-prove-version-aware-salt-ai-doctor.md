@@ -230,12 +230,39 @@ Plan 003 authority, and that the successor tree:
    and
 7. proves Plan 003 is unchanged and still deferred.
 
-After activation, this file is immutable. Later validation hashes its raw
-`HEAD` blob bytes and compares them with the control record and README. Unit
-state, checkpoint SHAs, and terminal outcomes live in
+After activation, this file is immutable except through the newly reviewed
+plan/hash replacement required by a reproducible STOP. Later validation hashes
+its raw `HEAD` blob bytes and compares them with the control record and README.
+Unit state, checkpoint SHAs, and terminal outcomes live in
 `plans/evidence/005/control.json`; the README mirrors them and the final
 sanitized pilot summary supplies product evidence only. A needed plan edit is a
-STOP and a newly reviewed plan/hash, not an in-place status update.
+STOP and a newly reviewed plan/hash, never an edit inside a unit implementation.
+
+The user-authorized 2026-09-02 corrective replacement is that one reviewed
+exception. The exact packed Node 24 proof reached the inherited broken-pipe
+gate and reproduced an unhandled callback-delivered `EPIPE` in the published
+CLI before Doctor performance was measured. It replaces the unmerged `005/02`
+dispatch commit as another direct child of the unchanged `005/01` completion,
+binds this amended blob through a new control/README hash, and changes only this
+plan, the two control mirrors, and the existing validator/spec. It adds only
+`packages/cli/src/cli.ts` and its existing focused spec to `005/02` scope. The
+correction must preserve the public CLI surface and make callback- and
+event-delivered broken-pipe failure settle once; it cannot relax or bypass the
+existing smoke. Every other scope, limit, STOP, decision, and verification gate
+remains unchanged.
+
+For this replacement only, stage exactly the five paths named above, recompute
+the staged plan blob with `--phase plan-005-hash --tree index`, update both hash
+mirrors, and run:
+
+```powershell
+yarn vitest run scripts/validateSaltAiPlan004.spec.js --maxWorkers=1
+node ./scripts/validateSaltAiPlan004.mjs --phase plan-005-amend --checkpoint 786540d940f114c20b2cf132aef1758ba23cdc8e
+```
+
+Only after both pass may the unmerged dispatch commit be amended. The ordinary
+`plan-005-preflight` must then prove the rewritten dispatch before any `005/02`
+implementation work is restored.
 
 The existing validator must enforce all of these invariants:
 
@@ -752,6 +779,8 @@ ask for separately authorized access to a small real pilot.
 ### Closed scope
 
 - `package.json` only for the packed/performance and pilot commands;
+- `packages/cli/src/cli.ts` and its existing focused spec only for the reviewed
+  callback/event `EPIPE` correction required by the packed Node 24 STOP;
 - `scripts/checkAiToolingPackageDryRun.mjs` and focused tests;
 - `scripts/consumer-smoke/**`;
 - `.github/workflows/test.yml` only to make clean-checkout packed Doctor smoke
@@ -882,7 +911,7 @@ repositories or replace consumers with more synthetic fixtures.
 ```powershell
 yarn build:ai-tooling
 node ./evals/salt-ai/doctor/run.mjs --mode decide-packed --pack-report dist/salt-ai-pack/plan-005-doctor.json --access-summary plans/evidence/005/consumer-access.json
-yarn vitest run scripts/checkAiToolingPackageDryRun.spec.js scripts/consumer-smoke evals/salt-ai/doctor --maxWorkers=1
+yarn vitest run packages/cli/src/__tests__/cli.spec.ts scripts/checkAiToolingPackageDryRun.spec.js scripts/consumer-smoke evals/salt-ai/doctor --maxWorkers=1
 yarn typecheck:ai-tooling
 yarn test:ai-tooling
 yarn validate:salt-ai:contracts

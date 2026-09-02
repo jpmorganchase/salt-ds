@@ -135,6 +135,13 @@ const plan005ControlPaths = [
   "plans/README.md",
   "plans/evidence/005/control.json",
 ].toSorted((left, right) => left.localeCompare(right));
+const plan005Unit02CorrectiveDispatchPaths = [
+  "plans/005-prove-version-aware-salt-ai-doctor.md",
+  "plans/README.md",
+  "plans/evidence/005/control.json",
+  "scripts/validateSaltAiPlan004.mjs",
+  "scripts/validateSaltAiPlan004.spec.js",
+].toSorted((left, right) => left.localeCompare(right));
 const plan005ActivationPaths = [
   "AGENTS.md",
   "plans/001-build-salt-ai-knowledge-platform.md",
@@ -198,6 +205,8 @@ const plan005Scope = new Map([
         ".github/workflows/test.yml",
         "docs/ai/doctor-pilot.md",
         "package.json",
+        "packages/cli/src/__tests__/cli.spec.ts",
+        "packages/cli/src/cli.ts",
         "plans/evidence/005/consumer-access.json",
         "scripts/checkAiToolingPackageDryRun.mjs",
         "scripts/checkAiToolingPackageDryRun.spec.js",
@@ -992,6 +1001,19 @@ export function assertPlan005ActivationPaths(paths) {
   );
 }
 
+export function assertPlan005Unit02CorrectiveDispatchPaths(paths) {
+  const actual = [...paths].toSorted((left, right) =>
+    left.localeCompare(right),
+  );
+  invariant(
+    actual.length === plan005Unit02CorrectiveDispatchPaths.length &&
+      actual.every(
+        (value, index) => value === plan005Unit02CorrectiveDispatchPaths[index],
+      ),
+    "Plan 005 Unit 02 corrective dispatch differs from its exact allowlist",
+  );
+}
+
 export function assertPlan004Superseded(before, after) {
   const expected = structuredClone(before);
   invariant(
@@ -1316,6 +1338,11 @@ function assertPlan005DispatchCommit(unit, checkpoint, head, root) {
   );
   const paths = changedPathNames(checkpoint, head, root);
   if (unit === "005/00") assertPlan005ActivationPaths(paths);
+  else if (
+    unit === "005/02" &&
+    paths.length === plan005Unit02CorrectiveDispatchPaths.length
+  )
+    assertPlan005Unit02CorrectiveDispatchPaths(paths);
   else
     invariant(
       paths.length === plan005ControlPaths.length &&
@@ -1622,7 +1649,7 @@ function resolveFullCommit(value, label) {
   return resolved;
 }
 
-async function readPlan005HeadState() {
+async function readPlan005HeadState({ requireExecutingAtHead = true } = {}) {
   const controlBytes = readHeadRegularFile(
     repositoryRoot,
     "plans/evidence/005/control.json",
@@ -1647,10 +1674,11 @@ async function readPlan005HeadState() {
   const executingValidatorBytes = await readFile(
     fileURLToPath(import.meta.url),
   );
-  invariant(
-    executingValidatorBytes.equals(validatorBytes),
-    "Executing Plan 005 validator differs from the validator at HEAD",
-  );
+  if (requireExecutingAtHead)
+    invariant(
+      executingValidatorBytes.equals(validatorBytes),
+      "Executing Plan 005 validator differs from the validator at HEAD",
+    );
   const control = validatePlan005Control(
     JSON.parse(controlBytes.toString("utf8")),
     {
@@ -1685,6 +1713,7 @@ async function readPlan005HeadState() {
 async function mainPlan005(args, phase) {
   const allowedByPhase = new Map([
     ["plan-005-hash", new Set(["--phase", "--tree"])],
+    ["plan-005-amend", new Set(["--phase", "--checkpoint"])],
     ["supersede", new Set(["--phase", "--successor", "--checkpoint"])],
     ["plan-005-preflight", new Set(["--phase", "--unit", "--checkpoint"])],
     ["plan-005-worktree", new Set(["--phase", "--unit", "--checkpoint"])],
@@ -1728,6 +1757,73 @@ async function mainPlan005(args, phase) {
         ),
       )}\n`,
     );
+    return;
+  }
+
+  if (phase === "plan-005-amend") {
+    const checkpoint = String(args.get("--checkpoint") ?? "");
+    resolveFullCommit(checkpoint, "Plan 005 amendment checkpoint");
+    const head = String(runGit(["rev-parse", "HEAD"])).trim();
+    invariant(
+      directParent(head, repositoryRoot) === checkpoint,
+      "Plan 005 amendment does not replace the active dispatch child",
+    );
+    const dirtyEntries = plan005StatusEntries();
+    assertNoUnstagedOrUntracked(dirtyEntries, "Plan 005 amendment");
+    assertPlan005Unit02CorrectiveDispatchPaths(
+      changedPathNames("HEAD", null, repositoryRoot, { cached: true }),
+    );
+    const readStaged = (locator, label = locator) =>
+      readIndexRegularFile(repositoryRoot, locator, label);
+    invariant(
+      (await readFile(fileURLToPath(import.meta.url))).equals(
+        readStaged("scripts/validateSaltAiPlan004.mjs"),
+      ),
+      "Executing Plan 005 amendment validator differs from the staged validator",
+    );
+    const before = await readPlan005HeadState({
+      requireExecutingAtHead: false,
+    });
+    invariant(
+      before.control.active_dispatch?.unit === "005/02" &&
+        before.control.active_dispatch.checkpoint_sha === checkpoint,
+      "Plan 005 amendment parent is not the active Unit 005/02 dispatch",
+    );
+    const planBytes = readStaged(
+      "plans/005-prove-version-aware-salt-ai-doctor.md",
+    );
+    invariant(
+      planBytes.includes(
+        Buffer.from("2026-09-02 corrective replacement", "utf8"),
+      ),
+      "Plan 005 amendment lacks its corrective replacement declaration",
+    );
+    const readmeBytes = readStaged("plans/README.md");
+    const control = validatePlan005Control(
+      JSON.parse(
+        readStaged("plans/evidence/005/control.json").toString("utf8"),
+      ),
+      {
+        planBytes,
+        readmeText: readmeBytes.toString("utf8"),
+        verifyCommit: createCommitVerifier(repositoryRoot),
+      },
+    );
+    const expectedControl = structuredClone(before.control);
+    expectedControl.plan_sha256 = control.plan_sha256;
+    invariant(
+      control.plan_sha256 !== before.control.plan_sha256 &&
+        JSON.stringify(control) === JSON.stringify(expectedControl),
+      "Plan 005 amendment changed control state beyond the plan hash",
+    );
+    const expectedReadme = before.readmeBytes
+      .toString("utf8")
+      .replace(before.control.plan_sha256, control.plan_sha256);
+    invariant(
+      readmeBytes.toString("utf8") === expectedReadme,
+      "Plan 005 amendment changed README state beyond the plan hash",
+    );
+    console.log("Plan 005 corrective amendment validated (005/02).");
     return;
   }
 

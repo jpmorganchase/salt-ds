@@ -18,6 +18,7 @@ import {
   assertPlan005ActivationPaths,
   assertPlan005PathsAuthorized,
   assertPlan005Transition,
+  assertPlan005Unit02CorrectiveDispatchPaths,
   assertRealPathContained,
   derivePlan005Transition,
   enumerateCommittedEntries,
@@ -248,6 +249,35 @@ describe("validateSaltAiPlan004", () => {
       ),
     ).toThrow(/out-of-scope/u);
     expect(() => assertPlan005ActivationPaths([])).toThrow(/allowlist/u);
+    const correctiveDispatch = [
+      "plans/005-prove-version-aware-salt-ai-doctor.md",
+      "plans/README.md",
+      "plans/evidence/005/control.json",
+      "scripts/validateSaltAiPlan004.mjs",
+      "scripts/validateSaltAiPlan004.spec.js",
+    ];
+    expect(() =>
+      assertPlan005Unit02CorrectiveDispatchPaths(correctiveDispatch),
+    ).not.toThrow();
+    expect(() =>
+      assertPlan005Unit02CorrectiveDispatchPaths(correctiveDispatch.slice(1)),
+    ).toThrow(/corrective dispatch/u);
+    expect(() =>
+      assertPlan005PathsAuthorized(
+        [
+          {
+            path: "packages/cli/src/cli.ts",
+            renameOrCopy: false,
+          },
+          {
+            path: "packages/cli/src/__tests__/cli.spec.ts",
+            renameOrCopy: false,
+          },
+        ],
+        "005/02",
+        "corrective implementation",
+      ),
+    ).not.toThrow();
   });
 
   it("supersedes only Plan 004 Unit 004/03", () => {
