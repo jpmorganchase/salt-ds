@@ -110,16 +110,18 @@ const DefaultStory: StoryFn<typeof SkipLink> = (args) => {
               {cardHeaders.map((title) => {
                 return (
                   <Card key={title}>
-                    <H2 styleAs="h4">{title}</H2>
-                    <Text>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Aliquam, consequuntur culpa dolor excepturi.
-                    </Text>
-                    <Text>
-                      Fugit in ipsa iusto laudantium magnam minima
-                      necessitatibus odio qui quia repellendus sit tempore
-                      veniam. At, veritatis.
-                    </Text>
+                    <StackLayout gap={1}>
+                      <H2 styleAs="h4">{title}</H2>
+                      <Text>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Aliquam, consequuntur culpa dolor excepturi.
+                      </Text>
+                      <Text>
+                        Fugit in ipsa iusto laudantium magnam minima
+                        necessitatibus odio qui quia repellendus sit tempore
+                        veniam. At, veritatis.
+                      </Text>
+                    </StackLayout>
                   </Card>
                 );
               })}

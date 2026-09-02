@@ -292,16 +292,22 @@ export const BottomDrawerUsageExample = () => {
           <H2 id={headerId}>Bottom drawer use case</H2>
           <FlowLayout>
             <Card style={{ width: "256px" }}>
-              <H2>{exampleData[0].title}</H2>
-              <Text>{exampleData[0].content}</Text>
+              <StackLayout gap={2}>
+                <H2>{exampleData[0].title}</H2>
+                <Text>{exampleData[0].content}</Text>
+              </StackLayout>
             </Card>
             <Card style={{ width: "256px" }}>
-              <H2>{exampleData[1].title}</H2>
-              <Text>{exampleData[1].content}</Text>
+              <StackLayout gap={2}>
+                <H2>{exampleData[1].title}</H2>
+                <Text>{exampleData[1].content}</Text>
+              </StackLayout>
             </Card>
             <Card style={{ width: "256px" }}>
-              <H2>{exampleData[2].title}</H2>
-              <Text>{exampleData[2].content}</Text>
+              <StackLayout gap={2}>
+                <H2>{exampleData[2].title}</H2>
+                <Text>{exampleData[2].content}</Text>
+              </StackLayout>
             </Card>
           </FlowLayout>
         </StackLayout>
