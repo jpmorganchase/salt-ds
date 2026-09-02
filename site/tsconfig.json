@@ -2,13 +2,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "jsx": "preserve",
-    "incremental": true,
-    "paths": {
-      "@salt-ds/date-adapters/*": [
-        "../packages/date-adapters/src/*-adapter/index.ts"
-      ],
-      "src/*": ["./src/*"]
-    }
+    "incremental": true
   },
   "include": ["src/**/*", "globals.d.ts"],
   "exclude": ["node_modules"]

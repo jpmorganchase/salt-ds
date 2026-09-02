@@ -9,6 +9,12 @@
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "main": "src/index.ts",
+  "typings": "dist-types/index.d.ts",
+  "files": [
+    "dist-cjs",
+    "dist-es",
+    "dist-types"
+  ],
   "sideEffects": false,
   "peerDependencies": {
     "@types/react": ">=16.14.0",
@@ -21,7 +27,8 @@
     }
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-window",
+    "main": "dist-cjs/index.js",
+    "module": "dist-es/index.js",
     "provenance": true
   },
   "scripts": {

@@ -1,22 +1,6 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "target": "es2020",
-    "lib": ["dom", "dom.iterable", "esnext", "WebWorker"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "sourceMap": true,
-    "noImplicitAny": true,
-    "jsx": "react-jsx",
     "paths": {
       "~browser-test-utils/*": ["./test/browser/*"],
       "~storybook-decorators/*": ["./.storybook/decorators/*"],
@@ -30,11 +14,29 @@
         "./packages/embla-carousel/stories/*",
         "./packages/theme/stories/*"
       ],
+      "@salt-ds/ag-grid-theme/salt-ag-theme.css": [
+        "./packages/ag-grid-theme/src/salt-ag-theme.css"
+      ],
+      "@salt-ds/core": ["./packages/core/src/index.ts"],
+      "@salt-ds/countries": ["./packages/countries/src/index.ts"],
+      "@salt-ds/date-adapters": ["./packages/date-adapters/src/index.ts"],
       "@salt-ds/date-adapters/*": [
         "./packages/date-adapters/src/*-adapter/index.ts"
-      ]
-    },
-    "types": ["node", "vite/client"]
+      ],
+      "@salt-ds/date-components": ["./packages/date-components/src/index.ts"],
+      "@salt-ds/embla-carousel": ["./packages/embla-carousel/src/index.ts"],
+      "@salt-ds/highcharts-theme": ["./packages/highcharts-theme/src/index.ts"],
+      "@salt-ds/icons": ["./packages/icons/src/index.ts"],
+      "@salt-ds/lab": ["./packages/lab/src/index.ts"],
+      "@salt-ds/react-resizable-panels-theme/index.css": [
+        "./packages/react-resizable-panels-theme/src/index.css"
+      ],
+      "@salt-ds/styles": ["./packages/styles/src/index.ts"],
+      "@salt-ds/theme/css/*": ["./packages/theme/src/css/*"],
+      "@salt-ds/theme/index.css": ["./packages/theme/src/index.css"],
+      "@salt-ds/window": ["./packages/window/src/index.ts"],
+      "src/*": ["./site/src/*"]
+    }
   },
   "include": [
     "packages",

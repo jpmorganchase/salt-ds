@@ -1,11 +1,3 @@
-import {
-  capitalize,
-  makePrefixer,
-  type RenderPropsType,
-  renderProps,
-  useButton,
-  useIcon,
-} from "@salt-ds/core";
 import type { IconProps } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -16,6 +8,14 @@ import {
   cloneElement,
   forwardRef,
 } from "react";
+import { useButton } from "../button";
+import { useIcon } from "../semantic-icon-provider";
+import {
+  capitalize,
+  makePrefixer,
+  type RenderPropsType,
+  renderProps,
+} from "../utils";
 
 import linkButtonCss from "./LinkButton.css";
 

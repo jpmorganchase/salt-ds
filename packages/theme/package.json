@@ -24,7 +24,6 @@
     "del": "^8.0.0"
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-theme",
     "provenance": true
   }
 }

@@ -1,7 +1,7 @@
 import { AgGridReact } from "ag-grid-react";
 
 import "ag-grid-community/styles/ag-grid.css";
-import "../salt-ag-theme.css";
+import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
 
 import "@salt-ds/countries/saltSharpCountries.css";
 

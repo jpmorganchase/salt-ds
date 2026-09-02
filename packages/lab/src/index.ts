@@ -31,7 +31,6 @@ export {
   StaticInputAdornment,
 } from "./input-legacy";
 export * from "./layer-layout";
-export * from "./link-button";
 export * from "./list";
 export type {
   ListChangeHandler as ListChangeHandlerDeprecated,

@@ -39,8 +39,8 @@ import {
   NotificationIcon,
   SearchIcon,
 } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react-vite";
 import "@salt-ds/react-resizable-panels-theme/index.css";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import type React from "react";
 import {
   type ChangeEvent,

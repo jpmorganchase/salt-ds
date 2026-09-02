@@ -8,10 +8,19 @@
     "directory": "packages/icons"
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "forbiddenDependencies": [
+    "@salt-ds/icons",
+    "@salt-ds/core",
+    "@salt-ds/lab"
+  ],
   "main": "src/index.ts",
+  "typings": "dist-types/index.d.ts",
   "files": [
     "css",
-    "saltIcons.css"
+    "saltIcons.css",
+    "dist-cjs",
+    "dist-es",
+    "dist-types"
   ],
   "sideEffects": [
     "*.css"
@@ -44,7 +53,8 @@
     "svgo": "^4.0.0"
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-icons",
+    "main": "dist-cjs/index.js",
+    "module": "dist-es/index.js",
     "provenance": true
   }
 }

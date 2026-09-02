@@ -1,5 +1,4 @@
-import { StackLayout } from "@salt-ds/core";
-import { LinkButton } from "@salt-ds/lab";
+import { LinkButton, StackLayout } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const Underline = (): ReactElement => (

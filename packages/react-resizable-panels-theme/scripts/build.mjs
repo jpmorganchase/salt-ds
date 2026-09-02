@@ -3,10 +3,6 @@ import { argv } from "node:process";
 import url from "node:url";
 import { deleteSync } from "del";
 import esbuild from "esbuild";
-import fs from "fs-extra";
-import { transformWorkspaceDeps } from "../../../scripts/transformWorkspaceDeps.mjs";
-
-const FILES_TO_COPY = ["README.md", "LICENSE", "CHANGELOG.md"];
 
 const cwd = process.cwd();
 const packageJson = (
@@ -14,20 +10,19 @@ const packageJson = (
     with: { type: "json" },
   })
 ).default;
-const buildFolder = packageJson.publishConfig.directory;
 const packageName = packageJson.name;
 
 console.log(`Building ${packageName}`);
 
 if (!argv.includes("--watch")) {
-  deleteSync([buildFolder], { force: true });
+  deleteSync([path.join(cwd, "index.css")], { force: true });
 }
 
 const context = await esbuild.context({
-  absWorkingDir: cwd,
+  absWorkingDir: path.join(cwd, "src"),
   entryPoints: ["index.css"],
   assetNames: "[dir]/[name]",
-  outdir: buildFolder,
+  outdir: cwd,
   write: true,
   bundle: true,
   logLevel: "info",
@@ -40,33 +35,4 @@ if (argv.includes("--watch")) {
   await context.dispose();
 }
 
-await fs.writeJSON(
-  path.join(buildFolder, "package.json"),
-  {
-    ...packageJson,
-    peerDependencies: await transformWorkspaceDeps(
-      packageJson.peerDependencies,
-    ),
-  },
-  { spaces: 2 },
-);
-
-for (const file of FILES_TO_COPY) {
-  const from = path.join(cwd, file);
-  const to = path.join(buildFolder, file);
-  try {
-    await fs.copyFile(from, to);
-    console.log(
-      `${path.relative(process.cwd(), from)} copied to ${path.relative(
-        process.cwd(),
-        to,
-      )}`,
-    );
-  } catch (error) {
-    if (error.code !== "ENOENT") {
-      throw error;
-    }
-  }
-}
-
-console.log(`Built ${packageName} into ${buildFolder}`);
+console.log(`Built ${packageName} into ${cwd}`);
