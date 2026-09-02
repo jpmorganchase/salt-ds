@@ -21,7 +21,7 @@ const withBaseName = makePrefixer("saltInteractableCard");
 
 export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Accent border position: defaults to "bottom"
+   * If provided an accent is shown in the specified position.
    */
   accent?: "bottom" | "top" | "left" | "right";
   /**
