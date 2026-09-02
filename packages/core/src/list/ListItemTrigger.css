@@ -74,6 +74,7 @@
 .saltListItemTrigger:focus-visible::before {
   outline: var(--salt-focused-outline);
   outline-offset: calc(var(--salt-size-fixed-100) * -2);
+  background: var(--salt-navigable-background-hover);
 }
 
 .saltListItemTrigger:active:not(:disabled)::before {
