@@ -23,7 +23,7 @@ export type DrawerContentProps = ComponentPropsWithoutRef<"div">;
 
 export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
   function DrawerContent(props, ref) {
-    const { children, className, onScrollCapture, ...rest } = props;
+    const { children, className, onScroll, onScrollCapture, ...rest } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -57,7 +57,7 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
       );
     }, []);
 
-    const handleScroll: UIEventHandler<HTMLDivElement> = (event) => {
+    const handleScrollCapture: UIEventHandler<HTMLDivElement> = (event) => {
       targetWindow?.requestAnimationFrame(readScrollPosition);
       onScrollCapture?.(event);
     };
@@ -76,7 +76,8 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
             [withBaseName("scrollTop")]: canScrollUp,
             [withBaseName("scrollBottom")]: canScrollDown,
           })}
-          onScrollCapture={handleScroll}
+          onScroll={onScroll}
+          onScrollCapture={handleScrollCapture}
           {...(isOverflowing && {
             tabIndex: 0,
             role: "region",
