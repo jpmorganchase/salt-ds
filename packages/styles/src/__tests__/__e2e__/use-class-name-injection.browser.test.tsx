@@ -158,6 +158,26 @@ describe("Given useClassNameInjection", () => {
     await expect.element(button()).toHaveAttribute("foo", "skip");
   });
 
+  it("SHOULD not add a class but SHOULD delete the key when the injector returns an empty string", async () => {
+    const registry: ClassNameInjectionRegistry = new Map();
+    registerClassInjector<{ foo?: string }, "foo">(
+      registry,
+      "Widget",
+      ["foo"],
+      () => "",
+    );
+    await renderWithSalt(
+      <ClassNameInjectionProvider value={registry}>
+        <TestComponent
+          componentName="Widget"
+          props={{ className: "base", foo: "skip" }}
+        />
+      </ClassNameInjectionProvider>,
+    );
+    await expect.element(button()).toHaveAttribute("class", "base");
+    await expect.element(button()).not.toHaveAttribute("foo");
+  });
+
   it("SHOULD leave every injector key intact when a multi-key injector opts out", async () => {
     const registry: ClassNameInjectionRegistry = new Map();
     registerClassInjector<
