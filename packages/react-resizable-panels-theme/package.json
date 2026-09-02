@@ -20,7 +20,6 @@
     "build-watch": "yarn node ./scripts/build.mjs --watch"
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-react-resizable-panels-theme",
     "provenance": true
   },
   "devDependencies": {

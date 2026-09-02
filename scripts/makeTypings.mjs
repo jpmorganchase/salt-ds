@@ -1,6 +1,6 @@
+import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { isCI } from "ci-info";
-import fse from "fs-extra";
 import ts from "typescript";
 
 import { getTypescriptConfig } from "./utils.mjs";
@@ -65,8 +65,8 @@ export async function makeTypings(outDir, srcDir = path.join(cwd, "src")) {
 
   const host = ts.createCompilerHost(configParseResult.options);
   host.writeFile = (fileName, contents) => {
-    fse.mkdirpSync(path.dirname(fileName));
-    fse.writeFileSync(fileName, contents);
+    mkdirSync(path.dirname(fileName), { recursive: true });
+    writeFileSync(fileName, contents);
   };
 
   // Compile

@@ -9,6 +9,12 @@
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "main": "src/index.ts",
+  "typings": "dist-types/types/index.d.ts",
+  "files": [
+    "dist-cjs",
+    "dist-es",
+    "dist-types"
+  ],
   "sideEffects": false,
   "peerDependencies": {
     "@date-fns/tz": "^1.4.1",
@@ -38,7 +44,40 @@
     }
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-date-adapters",
+    "main": "dist-cjs/types/index.js",
+    "module": "dist-es/types/index.js",
+    "exports": {
+      ".": {
+        "types": "./dist-types/types/index.d.ts",
+        "import": "./dist-es/types/index.js",
+        "require": "./dist-cjs/types/index.js"
+      },
+      "./date-fns": {
+        "types": "./dist-types/date-fns-adapter/index.d.ts",
+        "import": "./dist-es/date-fns/index.js",
+        "require": "./dist-cjs/date-fns/index.js"
+      },
+      "./date-fns-tz": {
+        "types": "./dist-types/date-fns-tz-adapter/index.d.ts",
+        "import": "./dist-es/date-fns-tz/index.js",
+        "require": "./dist-cjs/date-fns-tz/index.js"
+      },
+      "./dayjs": {
+        "types": "./dist-types/dayjs-adapter/index.d.ts",
+        "import": "./dist-es/dayjs/index.js",
+        "require": "./dist-cjs/dayjs/index.js"
+      },
+      "./luxon": {
+        "types": "./dist-types/luxon-adapter/index.d.ts",
+        "import": "./dist-es/luxon/index.js",
+        "require": "./dist-cjs/luxon/index.js"
+      },
+      "./moment": {
+        "types": "./dist-types/moment-adapter/index.d.ts",
+        "import": "./dist-es/moment/index.js",
+        "require": "./dist-cjs/moment/index.js"
+      }
+    },
     "provenance": true
   },
   "scripts": {

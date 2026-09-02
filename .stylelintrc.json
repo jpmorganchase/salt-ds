@@ -38,7 +38,7 @@
       }
     },
     {
-      "files": ["**/theme/css/**/*.css"],
+      "files": ["**/theme/src/css/**/*.css"],
       "rules": {
         "salt/correct-theme-token-usage": null,
         "salt/custom-property-attributes-kebab-case": null,
@@ -46,19 +46,22 @@
       }
     },
     {
-      "files": ["**/theme/css/*/characteristics/*.css"],
+      "files": ["**/theme/src/css/*/characteristics/*.css"],
       "rules": {
         "salt/characteristic-token-in-all-themes": true
       }
     },
     {
-      "files": ["**/theme/css/theme.css", "**/theme/css/theme-next.css"],
+      "files": [
+        "**/theme/src/css/theme.css",
+        "**/theme/src/css/theme-next.css"
+      ],
       "rules": {
         "salt/theme-self-containment": true
       }
     },
     {
-      "files": ["**/theme/css/**/deprecated/**/*.css"],
+      "files": ["**/theme/src/css/**/deprecated/**/*.css"],
       "rules": {
         "salt/no-deprecated-token-usage": null
       }

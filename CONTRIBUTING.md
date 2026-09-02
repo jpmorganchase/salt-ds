@@ -65,7 +65,7 @@ Additions and updates to the theme come from our designers. Any changes to the t
 
 #### How to add new tokens
 
-1. Add the token to the appropriate `.css` file in `packages/theme/css`
+1. Add the token to the appropriate `.css` file in `packages/theme/src/css`
 2. Document the token if appropriate in the foundations section on the site.
 3. Add a changeset listing the new tokens.
 
@@ -73,7 +73,7 @@ Additions and updates to the theme come from our designers. Any changes to the t
 
 If tokens are for some reason removed from the theme, this is a breaking change, and you must add them to the `deprecated` folder.
 
-1. Move the token and its value to the respective `theme/css/deprecated/<characteristics | fade | foundations | palette>` file.
+1. Move the token and its value to the respective `theme/src/css/deprecated/<characteristics | fade | foundations | palette>` file.
 2. Remove the token from its original file.
 3. [Optional]: If you have renamed the token but kept the value the same, point the token to the renamed.
 4. [Optional]: If you want to fully remove the token, but there is a token with a different value that should be used as a replacement, note this in the deprecation comments.
@@ -93,7 +93,7 @@ i.e. In `characteristics/text.css`, 3 tokens are to be fully removed:
 }
 ```
 
-In `theme/css/deprecated/characteristics.css`, add these 3 tokens:
+In `theme/src/css/deprecated/characteristics.css`, add these 3 tokens:
 
 ```css
 .salt-theme {

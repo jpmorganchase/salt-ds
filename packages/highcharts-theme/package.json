@@ -13,8 +13,15 @@
     "build": "yarn node ../../scripts/build.mjs"
   },
   "main": "src/index.ts",
+  "typings": "dist-types/index.d.ts",
+  "files": [
+    "dist-cjs",
+    "dist-es",
+    "dist-types"
+  ],
   "publishConfig": {
-    "directory": "../../dist/salt-ds-highcharts-theme",
+    "main": "dist-cjs/index.js",
+    "module": "dist-es/index.js",
     "provenance": true
   },
   "dependencies": {
