@@ -20,7 +20,7 @@ it does not dispatch or block Plan 004.
 | ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- | -------- | -------------- | -------------------- | ------------------------------------------------------------- |
 | [001](./archive/completed/001-build-salt-ai-knowledge-platform.md) | Build the original local Salt AI release candidate and record Unit 07 evidence                                  | P1       | L, multi-phase | —                    | DONE — archived historical candidate complete through Unit 07 |
 | [004](./004-validate-salt-ai-product-wedge.md)                     | Validate a truthful, exact-current, task-ready Salt AI product wedge before hardening or release                | P0       | L, multi-phase | Plan 001 Unit 07     | DEFERRED — Units 00–02 preserved; Unit 004/03 superseded      |
-| [005](./005-prove-version-aware-salt-ai-doctor.md)                 | Prove an exact-current Salt Doctor with executable tests and a real-consumer pilot                              | P0       | M, four units  | Plan 004 Units 00–02 | IN PROGRESS — Unit 005/02 packed runtime and access gate      |
+| [005](./005-prove-version-aware-salt-ai-doctor.md)                 | Prove an exact-current Salt Doctor with executable tests and a real-consumer pilot                              | P0       | M, four units  | Plan 004 Units 00–02 | DONE — CUT_DOCTOR at Unit 005/02; performance gate missed     |
 | [003](./003-publish-salt-ai-release-candidate.md)                  | Materialize versions and publish an approved Salt AI release candidate through separately owned release systems | P2       | L, conditional | Plan 004 final PASS  | DEFERRED — Plan 004 PASS and publication authority are absent |
 | [002](./002-add-secure-historical-salt-knowledge.md)               | Add secure historical Salt knowledge resolution only after current GA, public discovery, and ownership approval | P2       | L, conditional | Plan 003 completion  | DEFERRED — post-Plan-003 re-plan and entry gates are absent   |
 
@@ -36,11 +36,11 @@ never dispatch work. The archive relocation is part of Plan 005's atomic
 activation transaction and must not be committed separately while `004/03`
 remains active.
 
-Plan 005 is the active successor created from the 2026-09-01 code/artifact
+Plan 005 was the active successor created from the 2026-09-01 code/artifact
 audit. Its reviewed activation preserves completed Plan 004 Units
 `004/00`–`004/02`, retires the unfinished `004/03` index dispatch, and
 dispatches only `005/00` through one minimal machine-validated control record.
-Its four units close the untrusted-Markdown boundary, characterize
+Its planned four units close the untrusted-Markdown boundary, characterize
 the five existing rules, expose one exact-current read-only Doctor, execute six
 physical regression repositories including a nested Salt workspace, prove the
 packed worker in both module formats under offline runtime and performance
@@ -55,10 +55,11 @@ only; they are never consumer or competitor evidence. A competitor-analysis
 successor requires one frozen alternative descriptor and exact task stratum to
 have been used in at least two valid comparator attempts across two consumers.
 Model hosting, MCP, provider abstractions, generic evaluator infrastructure, and
-a broad competitor matrix are out of scope. Plan 003 stays deferred for every
-Plan 005 outcome.
-The Active dispatch block below and the Plan 005 control record are the only
-current execution authority.
+a broad competitor matrix are out of scope. Unit `005/02` returned
+`CUT_DOCTOR` at the frozen packed-performance gate, so `005/03` was never
+dispatched. Plan 003 stays deferred for every Plan 005 outcome. The Active
+dispatch block below and the Plan 005 control record are the only current
+execution authority; both now record no active unit.
 
 The 2026-08-29 scope amendment separates implementation from publication. Plan
 001 ends at Unit 07 with unversioned, locally packed and consumer-verified
@@ -74,19 +75,23 @@ publication authority as deferred to Plan 003.
 
 ## Active dispatch
 
-- **Active plan/unit:** `005/02`
-- **Next eligible unit:** none until `005/02` records a closed result
-- **Status:** IN PROGRESS — packed offline/performance proof and consumer-access gate
-- **Ancestry checkpoint:** `786540d940f114c20b2cf132aef1758ba23cdc8e`
+- **Active plan/unit:** none
+- **Next eligible unit:** none; Plan 005 is terminal
+- **Status:** DONE — `CUT_DOCTOR` at Unit `005/02`
 - **Plan 004 evidence authority:**
   `plans/evidence/004/index.json@sha256:28b981e295669c477de97c5ca453aa56fe4beb59d2ab81115aaa99cfe4dafc72`
 - **Plan 005 contract:** `5e048a9db36abb4409279856ace70e1f5e1af3125886940bede04584dfbd646f`
-- **Plan 005 terminal result:** none
-- **Product decision:** none; Plan 005 outcomes do not enable Plan 003
+- **Plan 005 terminal result:** `CUT_DOCTOR`
+- **Product decision:** cut the packed Doctor candidate. The trustworthy
+  Node 24/Windows diagnostic sample missed both frozen p90 gates (3,039 ms
+  versus 3,000 ms; 368,214,016 bytes versus 268,435,456 bytes). Preserve the
+  exact-current Knowledge, structured rules, and Unit `005/01` source behavior
+  as reusable local foundations, but do not run a consumer pilot or imply
+  release eligibility.
 - **External authority:** none; network, installs, model calls, participant
   contact, publication, and deployment remain unauthorized
-- **Successor eligibility:** only the closed Plan 005 result transition may
-  dispatch another unit; Plan 003 remains ineligible
+- **Successor eligibility:** none; Unit `005/03` was not reached and Plan 003
+  remains ineligible
 
 Only this block dispatches post-Plan-001 work. A TODO row, local branch,
 ignored plan, generated artifact, or prose status elsewhere is not authority.
