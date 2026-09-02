@@ -8,7 +8,6 @@ import {
   H3,
   H4,
   Label as LabelText,
-  StackLayout,
   Text,
   TextAction,
   TextNotation,
@@ -116,32 +115,35 @@ export const Display = FigureTextComponent.bind({});
 //********** Headings H1, H2, H3 and H4 ***********/
 
 const HeadingsComponent: StoryFn<typeof Text> = () => (
-  <StackLayout>
-    <H1>
+  <>
+    <H1 style={{ marginBottom: "var(--salt-spacing-300)" }}>
       This is header 1 <strong>emphasis high</strong>
     </H1>
-    <H1>
+    <H1 style={{ marginBottom: "var(--salt-spacing-300)" }}>
       This is header 1 <small>emphasis low</small>
     </H1>
-    <H2>
+    <br />
+    <H2 style={{ marginBottom: "var(--salt-spacing-200)" }}>
       This is header 2 <strong>emphasis high</strong>
     </H2>
-    <H2>
+    <H2 style={{ marginBottom: "var(--salt-spacing-200)" }}>
       This is header 2 <small>emphasis low</small>
     </H2>
-    <H3>
+    <br />
+    <H3 style={{ marginBottom: "var(--salt-spacing-100)" }}>
       This is header 3 <strong>emphasis high</strong>
     </H3>
-    <H3>
+    <H3 style={{ marginBottom: "var(--salt-spacing-100)" }}>
       This is header 3 <small>emphasis low</small>
     </H3>
+    <br />
     <H4>
       This is header 4 <strong>emphasis high</strong>
     </H4>
     <H4>
       This is header 4 <small>emphasis low</small>
     </H4>
-  </StackLayout>
+  </>
 );
 export const Headings = HeadingsComponent.bind({});
 

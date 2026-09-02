@@ -40,7 +40,7 @@ export const Default: StoryFn<typeof Collapsible> = (args) => (
     <CollapsiblePanel data-testid="collapsible-panel">
       <p
         data-testid="panel-content"
-        style={{ paddingTop: "var(--salt-spacing-100)", maxWidth: "80ch" }}
+        style={{ marginTop: "var(--salt-spacing-100)", maxWidth: "80ch" }}
       >
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
