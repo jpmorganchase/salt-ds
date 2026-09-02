@@ -223,9 +223,7 @@ export const TopDrawerUsageExample = () => {
         />
         <DrawerContent>
           <StackLayout>
-            <Text>
-              {loremText}
-            </Text>
+            <Text>{loremText}</Text>
             <FlexLayout>
               <FormFieldExample />
               <FormFieldExample />
