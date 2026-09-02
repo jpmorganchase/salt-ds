@@ -6,11 +6,11 @@ import {
   Divider,
   FormField,
   FormFieldLabel,
+  H3,
   List,
   ListItem,
   ListItemContent,
   ListItemTrigger,
-  H3,
   Overlay,
   OverlayHeader,
   OverlayPanel,
@@ -222,10 +222,7 @@ export const ProfileSettings = () => {
       </OverlayTrigger>
       <OverlayPanel aria-label="Profile settings" style={{ width: 320 }}>
         <OverlayPanelContent>
-          <StackLayout
-            gap={1}
-            style={{ paddingBlock: "var(--salt-spacing-100)" }}
-          >
+          <StackLayout gap={1}>
             <StackLayout align="center" direction="row" gap={1}>
               <Avatar
                 aria-label="Ada Lovelace"
