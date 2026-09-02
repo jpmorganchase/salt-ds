@@ -12,6 +12,7 @@
   text-decoration: none;
   transition: box-shadow var(--salt-duration-instant) ease-in-out;
   --linkCard-accent-color: var(--salt-sentiment-accent-background);
+  --linkCard-borderColor: var(--salt-container-bold-borderColor);
   --card-padding: var(--salt-spacing-200);
 }
 
@@ -32,19 +33,16 @@
 /* Styles applied to LinkCard when variant="primary" */
 .saltLinkCard-primary {
   background: var(--saltLinkCard-background, var(--salt-container-primary-background));
-  --linkCard-borderColor: var(--salt-container-bold-borderColor);
 }
 
 /* Styles applied to LinkCard when variant="secondary" */
 .saltLinkCard-secondary {
   background: var(--saltLinkCard-background, var(--salt-container-secondary-background));
-  --linkCard-borderColor: var(--salt-container-bold-borderColor);
 }
 
 /* Styles applied to LinkCard when variant="tertiary" */
 .saltLinkCard-tertiary {
   background: var(--saltLinkCard-background, var(--salt-container-tertiary-background));
-  --linkCard-borderColor: var(--salt-container-bold-borderColor);
 }
 
 /* Styles applied when elevation="flat" */
@@ -84,7 +82,7 @@
   background-color: var(--saltLinkCard-accent-color, var(--linkCard-accent-color));
 }
 
-/* Styles applied to LinkCard if `accent="bottom"` (default) */
+/* Styles applied to LinkCard if `accent="bottom"` */
 .saltLinkCard-accentBottom::after {
   left: calc(-1 * var(--salt-size-fixed-100));
   bottom: calc(-1 * var(--salt-size-fixed-100));

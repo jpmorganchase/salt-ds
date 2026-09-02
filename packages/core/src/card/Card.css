@@ -11,6 +11,7 @@
   border-radius: var(--saltCard-borderRadius, var(--salt-palette-corner, 0));
   overflow: hidden;
   --card-accent-color: var(--salt-sentiment-accent-background);
+  --card-borderColor: var(--salt-container-bold-borderColor);
   --card-padding: var(--salt-spacing-200);
 }
 
@@ -30,21 +31,21 @@
 
 .saltCard-primary {
   background: var(--saltCard-background, var(--salt-container-primary-background));
-  --card-borderColor: var(--salt-container-bold-borderColor);
 }
 
 .saltCard-secondary {
   background: var(--saltCard-background, var(--salt-container-secondary-background));
-  --card-borderColor: var(--salt-container-bold-borderColor);
 }
 
 .saltCard-tertiary {
   background: var(--saltCard-background, var(--salt-container-tertiary-background));
-  --card-borderColor: var(--salt-container-bold-borderColor);
 }
 
 .saltCard-ghost {
   background: var(--saltCard-background, var(--salt-container-ghost-background));
+}
+
+.saltCard-ghost:not(.saltCard-borderColorNone) {
   --card-borderColor: var(--salt-container-ghost-borderColor);
 }
 
@@ -85,7 +86,7 @@
   background-color: var(--saltCard-accent-color, var(--card-accent-color));
 }
 
-/* Styles applied to Card if `accent="bottom"` (default) */
+/* Styles applied to Card if `accent="bottom"` */
 .saltCard-accentBottom::after {
   left: calc(-1 * var(--salt-size-fixed-100));
   bottom: calc(-1 * var(--salt-size-fixed-100));
@@ -117,36 +118,31 @@
   width: var(--salt-size-bar);
 }
 
-/*
- * **Deprecated:** The following styles are deprecated
- *  Use Interactable Card component instead
- *  for interactable styling
- */
+/* Deprecated interactable styles. Use InteractableCard instead. */
 
-/* **Deprecated:** Styles applied if `interactable={true}` */
+/* Styles applied if `interactable={true}` */
 .saltCard-interactable {
   display: block;
   transition: none;
 }
 
-/* **Deprecated:** Styles applied on hover if `interactable={true}` */
+/* Styles applied on hover if `interactable={true}` */
 a:focus .saltCard-interactable,
 .saltCard-interactable:hover {
   box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
   cursor: var(--saltCard-cursor-hover, var(--salt-cursor-hover));
   border-color: var(--salt-actionable-accented-borderColor-hover);
-  position: relative;
 }
 
 /* Styles applied if `hoverable` is set */
 @media (hover: hover) {
-  .saltCard-hoverable:hover {
+  .saltCard-hoverable:not(.saltCard-disabled):hover {
     box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
     border-color: var(--salt-actionable-accented-borderColor-hover);
   }
 }
 
-/* **Deprecated:** Styles applied on active state if `interactable={true}` */
+/* Styles applied on active state if `interactable={true}` */
 .saltCard-interactable:active {
   border-color: var(--salt-actionable-accented-borderColor-active);
   box-shadow: var(--saltCard-boxShadow-active, var(--salt-overlayable-shadow-hover));
@@ -154,14 +150,14 @@ a:focus .saltCard-interactable,
   outline-offset: var(--salt-focused-outlineOffset);
 }
 
-/* **Deprecated:** Styles applied on hover if `interactable={true}` and `disabled={true}` */
+/* Styles applied to disabled interactable states */
 a:focus .saltCard-interactable.saltCard-disabled,
 .saltCard-interactable.saltCard-disabled:hover,
 .saltCard-interactable.saltCard-disabled:active {
   box-shadow: var(--saltCard-boxShadow-disabled, var(--salt-overlayable-shadow));
 }
 
-/* **Deprecated:** Styles applied if `disabled={true}` */
+/* Styles applied if `disabled={true}` */
 .saltCard-disabled,
 .saltCard-disabled.saltCard-interactable,
 a:focus .saltCard-interactable.saltCard-disabled {
@@ -171,7 +167,7 @@ a:focus .saltCard-interactable.saltCard-disabled {
   outline: none;
 }
 
-/* **Deprecated:** Styles applied to nested divs if `disabled={true}` */
+/* Styles applied to nested divs if `disabled={true}` */
 .saltCard-disabled div {
   pointer-events: none;
 }
