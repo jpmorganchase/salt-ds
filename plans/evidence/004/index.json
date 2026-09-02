@@ -3,10 +3,7 @@
   "schema_version": "1.0.0",
   "plan_id": "004",
   "planned_ancestry": "d30dc1f7fca047e5180c15d07bb7be4557305eff",
-  "active_dispatch": {
-    "unit": "004/03",
-    "checkpoint_sha": "2e700a90889c7b83e4fab10a59813459343cf6b4"
-  },
+  "active_dispatch": null,
   "inherited_worktree": {
     "base_sha": "d30dc1f7fca047e5180c15d07bb7be4557305eff",
     "branch": "codex/ai-platform",
@@ -557,7 +554,7 @@
     },
     {
       "id": "004/03",
-      "status": "IN_PROGRESS",
+      "status": "DEFERRED",
       "dependency_unit": "004/02",
       "dependency_completion_sha": "2e700a90889c7b83e4fab10a59813459343cf6b4",
       "checkpoint_sha": "2e700a90889c7b83e4fab10a59813459343cf6b4",

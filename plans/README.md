@@ -16,16 +16,49 @@ it does not dispatch or block Plan 004.
 
 ## Execution order and status
 
-| Plan                                                 | Title                                                                                                           | Priority | Effort         | Depends on          | Status                                                        |
-| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | -------- | -------------- | ------------------- | ------------------------------------------------------------- |
-| [001](./001-build-salt-ai-knowledge-platform.md)     | Build the original local Salt AI release candidate and record Unit 07 evidence                                  | P1       | L, multi-phase | —                   | DONE — historical local candidate complete through Unit 07    |
-| [004](./004-validate-salt-ai-product-wedge.md)       | Validate a truthful, exact-current, task-ready Salt AI product wedge before hardening or release                | P0       | L, multi-phase | Plan 001 Unit 07    | IN PROGRESS — Unit 004/03 alternatives authority required     |
-| [003](./003-publish-salt-ai-release-candidate.md)    | Materialize versions and publish an approved Salt AI release candidate through separately owned release systems | P2       | L, conditional | Plan 004 final PASS | DEFERRED — Plan 004 PASS and publication authority are absent |
-| [002](./002-add-secure-historical-salt-knowledge.md) | Add secure historical Salt knowledge resolution only after current GA, public discovery, and ownership approval | P2       | L, conditional | Plan 003 completion | DEFERRED — post-Plan-003 re-plan and entry gates are absent   |
+| Plan                                                               | Title                                                                                                           | Priority | Effort         | Depends on           | Status                                                        |
+| ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- | -------- | -------------- | -------------------- | ------------------------------------------------------------- |
+| [001](./archive/completed/001-build-salt-ai-knowledge-platform.md) | Build the original local Salt AI release candidate and record Unit 07 evidence                                  | P1       | L, multi-phase | —                    | DONE — archived historical candidate complete through Unit 07 |
+| [004](./004-validate-salt-ai-product-wedge.md)                     | Validate a truthful, exact-current, task-ready Salt AI product wedge before hardening or release                | P0       | L, multi-phase | Plan 001 Unit 07     | DEFERRED — Units 00–02 preserved; Unit 004/03 superseded      |
+| [005](./005-prove-version-aware-salt-ai-doctor.md)                 | Prove an exact-current Salt Doctor with executable tests and a real-consumer pilot                              | P0       | M, four units  | Plan 004 Units 00–02 | IN PROGRESS — Unit 005/00 trust boundary and rule proof       |
+| [003](./003-publish-salt-ai-release-candidate.md)                  | Materialize versions and publish an approved Salt AI release candidate through separately owned release systems | P2       | L, conditional | Plan 004 final PASS  | DEFERRED — Plan 004 PASS and publication authority are absent |
+| [002](./002-add-secure-historical-salt-knowledge.md)               | Add secure historical Salt knowledge resolution only after current GA, public discovery, and ownership approval | P2       | L, conditional | Plan 003 completion  | DEFERRED — post-Plan-003 re-plan and entry gates are absent   |
 
-Plan 001 compatibility addendum: [001a](./001a-reuse-test-snapshot-package-identities.md)
+Plan 001 compatibility addendum:
+[001a](./archive/completed/001a-reuse-test-snapshot-package-identities.md)
 ratifies reuse of the CLI and MCP package names after exact unused pre-stable
 snapshot registry evidence; it changes no execution-unit ordering.
+
+Completed plan documents are indexed in the
+[plan archive](./archive/README.md). Tracker rows and evidence stay here because
+they remain inputs to current provenance and validation tooling; archived plans
+never dispatch work. The archive relocation is part of Plan 005's atomic
+activation transaction and must not be committed separately while `004/03`
+remains active.
+
+Plan 005 is the active successor created from the 2026-09-01 code/artifact
+audit. Its reviewed activation preserves completed Plan 004 Units
+`004/00`–`004/02`, retires the unfinished `004/03` index dispatch, and
+dispatches only `005/00` through one minimal machine-validated control record.
+Its four units close the untrusted-Markdown boundary, characterize
+the five existing rules, expose one exact-current read-only Doctor, execute six
+physical regression repositories including a nested Salt workspace, prove the
+packed worker in both module formats under offline runtime and performance
+gates, and then make a bounded integrated-candidate decision from four
+family-stratified real-consumer comparison pairs. Two small decision probes make
+valid negative outcomes first-class data while treating malformed or untrusted
+evidence as STOPs. Pilot rows remain private; Git contains only recomputed,
+closed aggregates and digests. The pilot never claims Doctor causality:
+qualified Doctor use controls Doctor-specific hardening and positioning, while
+the integrated value rule controls beta investment. Fixtures prove correctness
+only; they are never consumer or competitor evidence. A competitor-analysis
+successor requires one frozen alternative descriptor and exact task stratum to
+have been used in at least two valid comparator attempts across two consumers.
+Model hosting, MCP, provider abstractions, generic evaluator infrastructure, and
+a broad competitor matrix are out of scope. Plan 003 stays deferred for every
+Plan 005 outcome.
+The Active dispatch block below and the Plan 005 control record are the only
+current execution authority.
 
 The 2026-08-29 scope amendment separates implementation from publication. Plan
 001 ends at Unit 07 with unversioned, locally packed and consumer-verified
@@ -41,19 +74,19 @@ publication authority as deferred to Plan 003.
 
 ## Active dispatch
 
-- **Active plan/unit:** `004/03`
-- **Next eligible unit:** none until `004/03` completes
-- **Status:** IN PROGRESS — offline checkpoint `ebd03c0f952a257ec261fd0693ae21a497cb7984` complete; Phase A authority required
-- **Ancestry checkpoint:** `2e700a90889c7b83e4fab10a59813459343cf6b4`
+- **Active plan/unit:** `005/00`
+- **Next eligible unit:** none until `005/00` records `PASS_RULES`
+- **Status:** IN PROGRESS — trust boundary and five-rule characterization
+- **Ancestry checkpoint:** `55879a3d826812270dde79353028ac2e56eb879d`
 - **Plan 004 evidence authority:**
-  `plans/evidence/004/index.json@sha256:9ad3f02f9043058f70c8f01ba5a4af285e44db1ccfaec2452bc49cd3587f089d`
-- **Product decision:** none; only an indexed Unit `004/07` PASS can enable Plan
-  003
-- **External authority:** none; Phase A primary-source research, network,
-  installs, model calls, participant contact, publication, and deployment
-  remain unauthorized
-- **Successor eligibility:** Plan 003 and every hardening successor remain
-  ineligible
+  `plans/evidence/004/index.json@sha256:28b981e295669c477de97c5ca453aa56fe4beb59d2ab81115aaa99cfe4dafc72`
+- **Plan 005 contract:** `2ab6f9ad9a1de918e574562590030ffd1ca867a47347bcbd1894975ab422a85e`
+- **Plan 005 terminal result:** none
+- **Product decision:** none; Plan 005 outcomes do not enable Plan 003
+- **External authority:** none; network, installs, model calls, participant
+  contact, publication, and deployment remain unauthorized
+- **Successor eligibility:** only the closed Plan 005 result transition may
+  dispatch another unit; Plan 003 remains ineligible
 
 Only this block dispatches post-Plan-001 work. A TODO row, local branch,
 ignored plan, generated artifact, or prose status elsewhere is not authority.

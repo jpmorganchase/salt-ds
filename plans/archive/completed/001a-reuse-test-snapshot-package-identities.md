@@ -1,5 +1,9 @@
 # Plan 001a: Reuse the CLI and MCP names after unused test snapshots
 
+> **Archived complete:** This approved one-shot compatibility decision is
+> preserved for provenance only and dispatches no work. Use the
+> [current plan index](../../README.md) for active authority.
+
 **Status:** APPROVED on 2026-08-27 by the package owner.
 
 ## Scope

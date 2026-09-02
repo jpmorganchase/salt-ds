@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -13,13 +14,19 @@ import {
   assertDispatchFollowsCheckpoint,
   assertInheritedAuthorityPreserved,
   assertNoHiddenIndexRecords,
+  assertPlan004Superseded,
+  assertPlan005ActivationPaths,
+  assertPlan005PathsAuthorized,
+  assertPlan005Transition,
   assertRealPathContained,
+  derivePlan005Transition,
   enumerateCommittedEntries,
   parseNameStatusZ,
   parsePorcelainV1Z,
   readUniqueMarkdownField,
   resolveCheckpoint,
   validatePlan004Index,
+  validatePlan005Control,
   validateRepositoryLocator,
   validateSchemaLocator,
 } from "./validateSaltAiPlan004.mjs";
@@ -94,7 +101,174 @@ const validOptions = {
   plan003Text: "- **Status:** DEFERRED\n",
 };
 
+const plan005Rows = [
+  ["005/00", "PASS_RULES", "005/01"],
+  ["005/00", "CUT_DOCTOR", null],
+  ["005/01", "PASS_DOCTOR", "005/02"],
+  ["005/01", "CUT_DOCTOR", null],
+  ["005/02", "READY_CONSUMER_PILOT", "005/03"],
+  ["005/02", "CUT_DOCTOR", null],
+  ["005/02", "DEFER_CONSUMER_ACCESS", null],
+  ["005/03", "ADVANCE_INTEGRATED_BETA_DOCTOR_USE_OBSERVED", null],
+  ["005/03", "ADVANCE_INTEGRATED_BETA_DOCTOR_USE_NOT_ESTABLISHED", null],
+  ["005/03", "CUT_INTEGRATED_CANDIDATE", null],
+  ["005/03", "DEFER_INVALID_EVIDENCE", null],
+];
+const plan005PassingResults = [
+  "PASS_RULES",
+  "PASS_DOCTOR",
+  "READY_CONSUMER_PILOT",
+];
+
+function initialPlan005Control(planHash = "9".repeat(64)) {
+  const checkpoint = "a".repeat(40);
+  return {
+    contract: "salt-ai-plan-005-control/1",
+    plan_id: "005",
+    plan_sha256: planHash,
+    active_dispatch: { unit: "005/00", checkpoint_sha: checkpoint },
+    units: [
+      {
+        id: "005/00",
+        status: "IN_PROGRESS",
+        checkpoint_sha: checkpoint,
+        completion_sha: null,
+        result: null,
+      },
+      ...["005/01", "005/02", "005/03"].map((id) => ({
+        id,
+        status: "TODO",
+        checkpoint_sha: null,
+        completion_sha: null,
+        result: null,
+      })),
+    ],
+    terminal_result: null,
+  };
+}
+
+function activePlan005Control(unitId) {
+  let control = initialPlan005Control();
+  const position = Number(unitId.slice(-1));
+  for (let index = 0; index < position; index += 1)
+    control = derivePlan005Transition(
+      control,
+      `005/0${index}`,
+      plan005PassingResults[index],
+      String(index + 1).repeat(40),
+    );
+  return control;
+}
+
+function plan005Readme(control) {
+  const active = control.active_dispatch;
+  return [
+    `- **Active plan/unit:** ${active === null ? "none" : `\`${active.unit}\``}`,
+    ...(active === null
+      ? []
+      : [`- **Ancestry checkpoint:** \`${active.checkpoint_sha}\``]),
+    `- **Plan 005 contract:** \`${control.plan_sha256}\``,
+    `- **Plan 005 terminal result:** ${
+      control.terminal_result === null
+        ? "none"
+        : `\`${control.terminal_result}\``
+    }`,
+    "",
+  ].join("\n");
+}
+
 describe("validateSaltAiPlan004", () => {
+  it.each(plan005Rows)(
+    "accepts the closed Plan 005 transition %s %s",
+    (unitId, result, successor) => {
+      const before = activePlan005Control(unitId);
+      const completion = "f".repeat(40);
+      const after = derivePlan005Transition(before, unitId, result, completion);
+      expect(() =>
+        assertPlan005Transition(before, after, {
+          unit: unitId,
+          result,
+          completion,
+          successor,
+        }),
+      ).not.toThrow();
+      expect(() =>
+        validatePlan005Control(after, { readmeText: plan005Readme(after) }),
+      ).not.toThrow();
+    },
+  );
+
+  it("rejects Plan 005 unit, checkpoint, result, hash, and README drift", () => {
+    const control = initialPlan005Control();
+    const wrongUnit = structuredClone(control);
+    wrongUnit.active_dispatch.unit = "005/01";
+    expect(() => validatePlan005Control(wrongUnit)).toThrow(/active dispatch/u);
+
+    const wrongCheckpoint = structuredClone(control);
+    wrongCheckpoint.active_dispatch.checkpoint_sha = "b".repeat(40);
+    expect(() => validatePlan005Control(wrongCheckpoint)).toThrow(
+      /active dispatch/u,
+    );
+    expect(() =>
+      derivePlan005Transition(control, "005/00", "UNKNOWN", "b".repeat(40)),
+    ).toThrow(/not registered/u);
+
+    const planBytes = Buffer.from("frozen plan\n", "utf8");
+    const planHash = createHash("sha256").update(planBytes).digest("hex");
+    const hashedControl = initialPlan005Control(planHash);
+    expect(() =>
+      validatePlan005Control(hashedControl, {
+        planBytes: Buffer.from("changed plan\n", "utf8"),
+      }),
+    ).toThrow(/hash mismatch/u);
+    expect(() =>
+      validatePlan005Control(hashedControl, {
+        planBytes,
+        readmeText: plan005Readme(control),
+      }),
+    ).toThrow(/hash differs/u);
+  });
+
+  it("rejects a wrong Plan 005 parent and implementation scope", () => {
+    expect(() =>
+      assertDispatchFollowsCheckpoint("b".repeat(40), "a".repeat(40), "005/00"),
+    ).toThrow(/immediately follow/u);
+    expect(() =>
+      assertPlan005PathsAuthorized(
+        [{ path: "plans/README.md", renameOrCopy: false }],
+        "005/00",
+        "implementation",
+      ),
+    ).toThrow(/out-of-scope/u);
+    expect(() =>
+      assertPlan005PathsAuthorized(
+        [{ path: "outside.ts", renameOrCopy: false }],
+        "005/00",
+        "implementation",
+      ),
+    ).toThrow(/out-of-scope/u);
+    expect(() => assertPlan005ActivationPaths([])).toThrow(/allowlist/u);
+  });
+
+  it("supersedes only Plan 004 Unit 004/03", () => {
+    const before = validIndex();
+    before.active_dispatch = {
+      unit: "004/03",
+      checkpoint_sha: "c".repeat(40),
+    };
+    before.units[0].status = "DONE";
+    before.units[3].status = "IN_PROGRESS";
+    before.units[3].checkpoint_sha = "c".repeat(40);
+    const after = structuredClone(before);
+    after.active_dispatch = null;
+    after.units[3].status = "DEFERRED";
+    expect(() => assertPlan004Superseded(before, after)).not.toThrow();
+    after.units[4].status = "BLOCKED";
+    expect(() => assertPlan004Superseded(before, after)).toThrow(
+      /outside the closed/u,
+    );
+  });
+
   it("accepts the bootstrap index and inherited dirty allowlist", async () => {
     await expect(
       validatePlan004Index(validIndex(), validOptions),

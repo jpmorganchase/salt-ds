@@ -1,5 +1,9 @@
 # Plan 001: Build the Salt AI knowledge platform release candidate, CLI scanner, documentation channels, samples, and optional thin MCP adapter
 
+> **Archived complete:** This is closed Plan 001 ancestry, preserved for
+> provenance only. It dispatches no work. Use the
+> [current plan index](../../README.md) for active authority.
+
 > **Scope amendment — 2026-08-29:** This plan ends at the Unit 07 locally
 > verified release-candidate boundary. Unit 07 was reopened and repaired for
 > clean-checkout and cross-line-ending reproducibility after its original
@@ -8,7 +12,7 @@
 > retained as publication design history, but ownership of version
 > materialization, npm/registry authority, trusted publishing, live web
 > deployment, promotion, rollback, and post-publication activation has moved to
-> [Plan 003](./003-publish-salt-ai-release-candidate.md). Do not execute those
+> [Plan 003](../../003-publish-salt-ai-release-candidate.md). Do not execute those
 > units under Plan 001. A local `npm pack`, clean-room tarball install, consumer
 > smoke test, or web-artifact build is verification rather than publication and
 > remains in Plan 001. Plan 001 authorizes no registry or deployment mutation.
@@ -17,7 +21,7 @@
 > Do not reopen one of its units for product correction, new evaluation, user
 > research, competitor work, scanner hardening, or release preparation. The sole
 > tracked successor for those decisions is
-> [Plan 004](./004-validate-salt-ai-product-wedge.md). Plan 003 remains
+> [Plan 004](../../004-validate-salt-ai-product-wedge.md). Plan 003 remains
 > ineligible until Plan 004 records a final PASS bound to exact candidate bytes.
 > A Plan 004 `CUT` or `DEFER` is a valid product decision and does not reopen
 > Plan 001.
@@ -4882,6 +4886,6 @@ Stop the current execution unit and ask maintainers to reconcile the plan if:
 - Quarterly, compare CLI/Skill/Markdown outcomes and, if MCP shipped, its
   incremental outcomes plus maintenance cost. Expand or retire a public adapter
   only through a new plan and the compatibility policy established at v1.
-- Update `plans/README.md` and this plan's status as units merge. Archive the
-  plan only after every non-deferred done criterion and the GA review are
-  complete.
+- Update `plans/README.md` and this plan's status as units merge. The 2026-08-30
+  scope amendment transferred GA/publication review to Plan 003; Plan 001's
+  local Unit 07 boundary is complete and this file is now archived.

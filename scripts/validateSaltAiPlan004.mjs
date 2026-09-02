@@ -82,6 +82,138 @@ const terminalResults = new Set([
   "CUT_FINAL_ADOPTION",
 ]);
 const plan004InitialAncestry = "d30dc1f7fca047e5180c15d07bb7be4557305eff";
+const plan005UnitIds = ["005/00", "005/01", "005/02", "005/03"];
+const plan005ControlKeys = [
+  "contract",
+  "plan_id",
+  "plan_sha256",
+  "active_dispatch",
+  "units",
+  "terminal_result",
+];
+const plan005UnitKeys = [
+  "id",
+  "status",
+  "checkpoint_sha",
+  "completion_sha",
+  "result",
+];
+const plan005Transitions = new Map([
+  [
+    "005/00",
+    new Map([
+      ["PASS_RULES", "005/01"],
+      ["CUT_DOCTOR", null],
+    ]),
+  ],
+  [
+    "005/01",
+    new Map([
+      ["PASS_DOCTOR", "005/02"],
+      ["CUT_DOCTOR", null],
+    ]),
+  ],
+  [
+    "005/02",
+    new Map([
+      ["READY_CONSUMER_PILOT", "005/03"],
+      ["CUT_DOCTOR", null],
+      ["DEFER_CONSUMER_ACCESS", null],
+    ]),
+  ],
+  [
+    "005/03",
+    new Map([
+      ["ADVANCE_INTEGRATED_BETA_DOCTOR_USE_OBSERVED", null],
+      ["ADVANCE_INTEGRATED_BETA_DOCTOR_USE_NOT_ESTABLISHED", null],
+      ["CUT_INTEGRATED_CANDIDATE", null],
+      ["DEFER_INVALID_EVIDENCE", null],
+    ]),
+  ],
+]);
+const plan005ControlPaths = [
+  "plans/README.md",
+  "plans/evidence/005/control.json",
+].toSorted((left, right) => left.localeCompare(right));
+const plan005ActivationPaths = [
+  "AGENTS.md",
+  "plans/001-build-salt-ai-knowledge-platform.md",
+  "plans/001a-reuse-test-snapshot-package-identities.md",
+  "plans/004-validate-salt-ai-product-wedge.md",
+  "plans/005-prove-version-aware-salt-ai-doctor.md",
+  "plans/README.md",
+  "plans/archive/README.md",
+  "plans/archive/completed/001-build-salt-ai-knowledge-platform.md",
+  "plans/archive/completed/001a-reuse-test-snapshot-package-identities.md",
+  "plans/evidence/004/index.json",
+  "plans/evidence/005/control.json",
+  "scripts/validateSaltAiPlan004.mjs",
+  "scripts/validateSaltAiPlan004.spec.js",
+].toSorted((left, right) => left.localeCompare(right));
+const plan005Scope = new Map([
+  [
+    "005/00",
+    {
+      exact: [
+        "evals/salt-ai/doctor/run.mjs",
+        "evals/salt-ai/doctor/run.spec.js",
+        "packages/knowledge/src/__tests__/reviewCatalogAdapter.spec.ts",
+        "packages/knowledge/src/review/reviewCatalogAdapter.ts",
+        "packages/knowledge/src/review/reviewRuleCharacterization.ts",
+        "packages/knowledge/src/review/reviewRuleRegistry.spec.ts",
+        "packages/knowledge/src/review/reviewRuleRegistry.ts",
+        "packages/knowledge/src/search/searchSalt.spec.ts",
+        "packages/knowledge/src/search/searchSalt.ts",
+      ],
+      prefixes: ["packages/knowledge/src/markdown/"],
+    },
+  ],
+  [
+    "005/01",
+    {
+      exact: [
+        "package.json",
+        "packages/cli/README.md",
+        "packages/cli/package.json",
+        "packages/cli/schemas/doctor-result-1.schema.json",
+        "packages/cli/src/__tests__/cli.spec.ts",
+        "packages/cli/src/cli.ts",
+        "packages/cli/src/commands/__tests__/doctor.spec.ts",
+        "packages/cli/src/commands/doctor.ts",
+        "packages/knowledge/src/__tests__/packagePublishBoundary.spec.ts",
+      ],
+      prefixes: [
+        "evals/salt-ai/doctor/",
+        "packages/cli/src/discovery/",
+        "packages/cli/src/renderers/",
+        "packages/cli/src/scan/",
+        "skills/salt-design-system/",
+      ],
+    },
+  ],
+  [
+    "005/02",
+    {
+      exact: [
+        ".github/workflows/test.yml",
+        "docs/ai/doctor-pilot.md",
+        "package.json",
+        "plans/evidence/005/consumer-access.json",
+        "scripts/checkAiToolingPackageDryRun.mjs",
+        "scripts/checkAiToolingPackageDryRun.spec.js",
+      ],
+      prefixes: ["evals/salt-ai/doctor/", "scripts/consumer-smoke/"],
+    },
+  ],
+  [
+    "005/03",
+    {
+      exact: ["plans/evidence/005/pilot-summary.json"],
+      prefixes: [],
+    },
+  ],
+]);
+const rawSha256 = /^[0-9a-f]{64}$/u;
 
 function compileSchema(schema) {
   const validator = new Ajv2020({ allErrors: true, strict: true });
@@ -597,6 +729,288 @@ export async function validatePlan004Index(
   return index;
 }
 
+function exactObjectKeys(value, expected, label) {
+  invariant(
+    value !== null &&
+      typeof value === "object" &&
+      !Array.isArray(value) &&
+      Object.keys(value).length === expected.length &&
+      Object.keys(value).every((key, index) => key === expected[index]),
+    `${label} has unknown, missing, or reordered keys`,
+  );
+}
+
+function rawDigest(value) {
+  return createHash("sha256").update(value).digest("hex");
+}
+
+export function validatePlan005Control(
+  control,
+  { planBytes = null, readmeText = null, verifyCommit = () => {} } = {},
+) {
+  exactObjectKeys(control, plan005ControlKeys, "Plan 005 control");
+  invariant(
+    control.contract === "salt-ai-plan-005-control/1" &&
+      control.plan_id === "005",
+    "Plan 005 control identity is invalid",
+  );
+  invariant(
+    rawSha256.test(control.plan_sha256),
+    "Plan 005 control has an invalid plan hash",
+  );
+  if (planBytes !== null)
+    invariant(
+      rawDigest(planBytes) === control.plan_sha256,
+      "Plan 005 canonical plan hash mismatch",
+    );
+  invariant(
+    Array.isArray(control.units) &&
+      control.units.length === plan005UnitIds.length,
+    "Plan 005 control must contain four units",
+  );
+
+  let completedPrefix = 0;
+  const activeUnits = [];
+  for (const [position, unit] of control.units.entries()) {
+    exactObjectKeys(
+      unit,
+      plan005UnitKeys,
+      `Plan 005 ${plan005UnitIds[position]}`,
+    );
+    invariant(
+      unit.id === plan005UnitIds[position],
+      "Plan 005 units are missing, duplicated, or reordered",
+    );
+    invariant(
+      ["TODO", "IN_PROGRESS", "DONE"].includes(unit.status),
+      `${unit.id} has an invalid status`,
+    );
+    for (const [label, value] of [
+      ["checkpoint", unit.checkpoint_sha],
+      ["completion", unit.completion_sha],
+    ]) {
+      invariant(
+        value === null || fullCommit.test(value),
+        `${unit.id} has an invalid ${label} SHA`,
+      );
+      if (value !== null) verifyCommit(value, `${unit.id} ${label}`);
+    }
+    invariant(
+      unit.result === null || plan005Transitions.get(unit.id)?.has(unit.result),
+      `${unit.id} has an unknown result`,
+    );
+    if (unit.status === "DONE") {
+      invariant(
+        position === completedPrefix &&
+          unit.checkpoint_sha !== null &&
+          unit.completion_sha !== null &&
+          unit.result !== null,
+        `${unit.id} breaks the completed prefix`,
+      );
+      completedPrefix += 1;
+    } else if (unit.status === "IN_PROGRESS") {
+      activeUnits.push(unit);
+      invariant(
+        position === completedPrefix &&
+          unit.checkpoint_sha !== null &&
+          unit.completion_sha === null &&
+          unit.result === null,
+        `${unit.id} has invalid active state`,
+      );
+    } else {
+      invariant(
+        position >= completedPrefix &&
+          unit.checkpoint_sha === null &&
+          unit.completion_sha === null &&
+          unit.result === null,
+        `${unit.id} has invalid TODO state`,
+      );
+    }
+  }
+  invariant(activeUnits.length <= 1, "Plan 005 has multiple active units");
+
+  for (let position = 0; position < completedPrefix; position += 1) {
+    const unit = control.units[position];
+    const next = plan005Transitions.get(unit.id).get(unit.result);
+    const hasSuccessor =
+      position + 1 < completedPrefix || activeUnits.length === 1;
+    invariant(
+      hasSuccessor ? next === plan005UnitIds[position + 1] : next === null,
+      `${unit.id} result does not match the recorded successor state`,
+    );
+    if (position > 0)
+      invariant(
+        unit.checkpoint_sha === control.units[position - 1].completion_sha,
+        `${unit.id} checkpoint differs from predecessor completion`,
+      );
+  }
+
+  if (activeUnits.length === 1) {
+    const active = activeUnits[0];
+    exactObjectKeys(
+      control.active_dispatch,
+      ["unit", "checkpoint_sha"],
+      "Plan 005 active dispatch",
+    );
+    invariant(
+      control.active_dispatch.unit === active.id &&
+        control.active_dispatch.checkpoint_sha === active.checkpoint_sha,
+      "Plan 005 active dispatch differs from the active unit",
+    );
+    invariant(
+      control.terminal_result === null,
+      "Plan 005 cannot be active and terminal",
+    );
+    if (completedPrefix > 0)
+      invariant(
+        active.checkpoint_sha ===
+          control.units[completedPrefix - 1].completion_sha,
+        "Plan 005 active checkpoint differs from predecessor completion",
+      );
+  } else {
+    invariant(
+      control.active_dispatch === null,
+      "Plan 005 has dispatch without an active unit",
+    );
+    invariant(
+      completedPrefix > 0,
+      "Plan 005 has neither active nor completed work",
+    );
+    const last = control.units[completedPrefix - 1];
+    invariant(
+      control.terminal_result === last.result &&
+        plan005Transitions.get(last.id).get(last.result) === null,
+      "Plan 005 terminal result differs from the completed prefix",
+    );
+  }
+
+  if (readmeText !== null) {
+    const active = control.active_dispatch;
+    invariant(
+      readUniqueMarkdownField(readmeText, "Active plan/unit") ===
+        (active === null ? "none" : `\`${active.unit}\``),
+      "README Plan 005 active unit differs from control",
+    );
+    if (active !== null)
+      invariant(
+        readUniqueMarkdownField(readmeText, "Ancestry checkpoint") ===
+          `\`${active.checkpoint_sha}\``,
+        "README Plan 005 checkpoint differs from control",
+      );
+    invariant(
+      readUniqueMarkdownField(readmeText, "Plan 005 contract") ===
+        `\`${control.plan_sha256}\``,
+      "README Plan 005 hash differs from control",
+    );
+    invariant(
+      readUniqueMarkdownField(readmeText, "Plan 005 terminal result") ===
+        (control.terminal_result === null
+          ? "none"
+          : `\`${control.terminal_result}\``),
+      "README Plan 005 terminal result differs from control",
+    );
+  }
+  return control;
+}
+
+export function derivePlan005Transition(control, unitId, result, completion) {
+  const current = structuredClone(control);
+  const active = current.active_dispatch;
+  invariant(active?.unit === unitId, "Plan 005 transition uses the wrong unit");
+  invariant(
+    fullCommit.test(completion),
+    "Plan 005 transition completion is invalid",
+  );
+  const transition = plan005Transitions.get(unitId);
+  invariant(
+    transition?.has(result),
+    "Plan 005 transition result is not registered",
+  );
+  const position = plan005UnitIds.indexOf(unitId);
+  const unit = current.units[position];
+  unit.status = "DONE";
+  unit.completion_sha = completion;
+  unit.result = result;
+  const successor = transition.get(result);
+  if (successor === null) {
+    current.active_dispatch = null;
+    current.terminal_result = result;
+  } else {
+    const nextUnit = current.units[position + 1];
+    nextUnit.status = "IN_PROGRESS";
+    nextUnit.checkpoint_sha = completion;
+    current.active_dispatch = {
+      unit: successor,
+      checkpoint_sha: completion,
+    };
+  }
+  return current;
+}
+
+export function assertPlan005Transition(
+  before,
+  after,
+  { unit, result, completion, successor = null },
+) {
+  invariant(
+    JSON.stringify(after) ===
+      JSON.stringify(derivePlan005Transition(before, unit, result, completion)),
+    "Plan 005 transition control does not match the derived state",
+  );
+  const expectedSuccessor = plan005Transitions.get(unit).get(result);
+  invariant(
+    successor === expectedSuccessor,
+    "Plan 005 transition successor option is incorrect",
+  );
+}
+
+export function assertPlan005PathsAuthorized(entries, unit, label) {
+  const scope = plan005Scope.get(unit);
+  invariant(scope !== undefined, `Unknown Plan 005 unit scope: ${unit}`);
+  const exact = new Set(scope.exact);
+  for (const entry of entries) {
+    invariant(
+      !entry.renameOrCopy,
+      `${label} contains a rename/copy: ${entry.path}`,
+    );
+    invariant(
+      exact.has(entry.path) ||
+        scope.prefixes.some((prefix) => entry.path.startsWith(prefix)),
+      `${label} contains an out-of-scope path: ${entry.path}`,
+    );
+  }
+}
+
+export function assertPlan005ActivationPaths(paths) {
+  const actual = [...paths].toSorted((left, right) =>
+    left.localeCompare(right),
+  );
+  invariant(
+    actual.length === plan005ActivationPaths.length &&
+      actual.every((value, index) => value === plan005ActivationPaths[index]),
+    "Plan 005 activation staged path set differs from the exact allowlist",
+  );
+}
+
+export function assertPlan004Superseded(before, after) {
+  const expected = structuredClone(before);
+  invariant(
+    before.active_dispatch?.unit === "004/03" &&
+      before.units[3].status === "IN_PROGRESS" &&
+      before.units[3].completion_sha === null &&
+      before.terminal_decision === null &&
+      before.plan_003_eligible === false,
+    "Plan 004 parent is not the eligible 004/03 supersession state",
+  );
+  expected.active_dispatch = null;
+  expected.units[3].status = "DEFERRED";
+  expected.units[3].successor_eligible = false;
+  invariant(
+    JSON.stringify(after) === JSON.stringify(expected),
+    "Plan 004 supersession changed fields outside the closed 004/03 transition",
+  );
+}
+
 function runGit(arguments_, { root = repositoryRoot, encoding = "utf8" } = {}) {
   return execFileSync(
     "git",
@@ -834,6 +1248,130 @@ async function readMatchingIndexFile(root, locator, label = locator) {
   return indexBytes;
 }
 
+function changedPathNames(from, to, root, { cached = false } = {}) {
+  const arguments_ = [
+    "diff",
+    "--no-ext-diff",
+    "--no-textconv",
+    "--no-renames",
+    "--name-only",
+    "-z",
+    "--diff-filter=ACDMRTUX",
+  ];
+  if (cached) arguments_.push("--cached");
+  if (from !== null) arguments_.push(to === null ? from : `${from}..${to}`);
+  return splitNul(runGit(arguments_, { root, encoding: null })).toSorted(
+    (left, right) => left.localeCompare(right),
+  );
+}
+
+function assertNoUnstagedOrUntracked(entries, label) {
+  for (const entry of entries)
+    invariant(
+      entry.code !== "??" && entry.code[1] === " ",
+      `${label} contains unstaged or untracked path: ${entry.path}`,
+    );
+}
+
+function assertClean(entries, label) {
+  invariant(entries.length === 0, `${label} requires a clean worktree`);
+}
+
+function directParent(commit, root) {
+  const ancestry = String(
+    runGit(["rev-list", "--parents", "-n", "1", commit], { root }),
+  )
+    .trim()
+    .split(/\s+/u);
+  invariant(ancestry.length === 2, `${commit} must have exactly one parent`);
+  return ancestry[1];
+}
+
+function assertPlan004IndexSuperseded(index) {
+  invariant(
+    index.active_dispatch === null &&
+      index.units[3].status === "DEFERRED" &&
+      index.units[3].completion_sha === null &&
+      index.units[3].successor_eligible === false &&
+      index.units
+        .slice(4)
+        .every(
+          (unit) =>
+            unit.status === "TODO" &&
+            unit.checkpoint_sha === null &&
+            unit.completion_sha === null &&
+            unit.evidence === null &&
+            unit.successor_eligible === false,
+        ) &&
+      index.terminal_decision === null &&
+      index.plan_003_eligible === false,
+    "Plan 004 is not in the closed superseded state",
+  );
+}
+
+function assertPlan005DispatchCommit(unit, checkpoint, head, root) {
+  invariant(
+    directParent(head, root) === checkpoint,
+    `${unit} dispatch commit does not immediately follow its checkpoint`,
+  );
+  const paths = changedPathNames(checkpoint, head, root);
+  if (unit === "005/00") assertPlan005ActivationPaths(paths);
+  else
+    invariant(
+      paths.length === plan005ControlPaths.length &&
+        paths.every((value, index) => value === plan005ControlPaths[index]),
+      `${unit} dispatch commit is not control-only`,
+    );
+}
+
+function assertReadmePlan004Authority(readmeText, indexBytes) {
+  invariant(
+    readUniqueMarkdownField(readmeText, "Plan 004 evidence authority") ===
+      `\`plans/evidence/004/index.json@${sha256(indexBytes)}\``,
+    "README Plan 004 index digest differs from the superseded index",
+  );
+}
+
+function assertArchiveRelocation(root, readStaged) {
+  const archived001 = readStaged(
+    "plans/archive/completed/001-build-salt-ai-knowledge-platform.md",
+  ).toString("utf8");
+  const archived001a = readStaged(
+    "plans/archive/completed/001a-reuse-test-snapshot-package-identities.md",
+  ).toString("utf8");
+  const archiveIndex = readStaged("plans/archive/README.md").toString("utf8");
+  invariant(
+    archived001.includes("**Archived complete:**") &&
+      archived001.includes(
+        "[Plan 003](../../003-publish-salt-ai-release-candidate.md)",
+      ) &&
+      archived001.includes(
+        "[Plan 004](../../004-validate-salt-ai-product-wedge.md)",
+      ),
+    "Archived Plan 001 lacks its closed banner or rebased links",
+  );
+  invariant(
+    archived001a.includes("**Archived complete:**"),
+    "Archived Plan 001a lacks its closed banner",
+  );
+  invariant(
+    archiveIndex.includes(
+      "./completed/001-build-salt-ai-knowledge-platform.md",
+    ) &&
+      archiveIndex.includes(
+        "./completed/001a-reuse-test-snapshot-package-identities.md",
+      ) &&
+      archiveIndex.includes("do not dispatch work"),
+    "Plan archive index is incomplete",
+  );
+  invariant(
+    changedPathNames("HEAD", null, root, { cached: true }).includes(
+      "plans/001-build-salt-ai-knowledge-platform.md",
+    ),
+    "Plan 001 source was not removed during archival",
+  );
+}
+
 function authorizedScopeForUnit(unit, checkpoint, end, root) {
   if (unit === "004/00") return unit00ExactPaths;
   invariant(checkpoint !== null, `${unit} lacks a trusted scope checkpoint`);
@@ -1064,8 +1602,380 @@ function currentUnitResult(index, unit) {
   return index.terminal_decision?.result ?? null;
 }
 
+function plan005StatusEntries() {
+  return parsePorcelainV1Z(
+    runGit(["status", "--porcelain=v1", "-z", "--untracked-files=all"], {
+      root: repositoryRoot,
+      encoding: null,
+    }),
+  );
+}
+
+function resolveFullCommit(value, label) {
+  invariant(fullCommit.test(value), `${label} must be a full commit SHA`);
+  const resolved = String(
+    runGit(["rev-parse", "--verify", `${value}^{commit}`], {
+      root: repositoryRoot,
+    }),
+  ).trim();
+  invariant(resolved === value, `${label} did not resolve exactly`);
+  return resolved;
+}
+
+async function readPlan005HeadState() {
+  const controlBytes = readHeadRegularFile(
+    repositoryRoot,
+    "plans/evidence/005/control.json",
+  );
+  const readmeBytes = readHeadRegularFile(repositoryRoot, "plans/README.md");
+  const planBytes = readHeadRegularFile(
+    repositoryRoot,
+    "plans/005-prove-version-aware-salt-ai-doctor.md",
+  );
+  const plan004IndexBytes = readHeadRegularFile(
+    repositoryRoot,
+    "plans/evidence/004/index.json",
+  );
+  const plan003Bytes = readHeadRegularFile(
+    repositoryRoot,
+    "plans/003-publish-salt-ai-release-candidate.md",
+  );
+  const validatorBytes = readHeadRegularFile(
+    repositoryRoot,
+    "scripts/validateSaltAiPlan004.mjs",
+  );
+  const executingValidatorBytes = await readFile(
+    fileURLToPath(import.meta.url),
+  );
+  invariant(
+    executingValidatorBytes.equals(validatorBytes),
+    "Executing Plan 005 validator differs from the validator at HEAD",
+  );
+  const control = validatePlan005Control(
+    JSON.parse(controlBytes.toString("utf8")),
+    {
+      planBytes,
+      readmeText: readmeBytes.toString("utf8"),
+      verifyCommit: createCommitVerifier(repositoryRoot),
+    },
+  );
+  const plan004Index = JSON.parse(plan004IndexBytes.toString("utf8"));
+  invariant(
+    defaultIndexSchemaValidation.validate(plan004Index),
+    `Plan 004 superseded index failed schema validation: ${defaultIndexSchemaValidation.validator.errorsText(defaultIndexSchemaValidation.validate.errors, { separator: "; " })}`,
+  );
+  assertPlan004IndexSuperseded(plan004Index);
+  assertReadmePlan004Authority(readmeBytes.toString("utf8"), plan004IndexBytes);
+  invariant(
+    /^DEFERRED(?:\s|—|$)/u.test(
+      readUniqueMarkdownField(plan003Bytes.toString("utf8"), "Status"),
+    ),
+    "Plan 003 is not deferred during Plan 005",
+  );
+  return {
+    control,
+    controlBytes,
+    readmeBytes,
+    planBytes,
+    plan004Index,
+    plan004IndexBytes,
+  };
+}
+
+async function mainPlan005(args, phase) {
+  const allowedByPhase = new Map([
+    ["plan-005-hash", new Set(["--phase", "--tree"])],
+    ["supersede", new Set(["--phase", "--successor", "--checkpoint"])],
+    ["plan-005-preflight", new Set(["--phase", "--unit", "--checkpoint"])],
+    ["plan-005-worktree", new Set(["--phase", "--unit", "--checkpoint"])],
+    [
+      "plan-005-post-commit",
+      new Set(["--phase", "--unit", "--checkpoint", "--completion"]),
+    ],
+    [
+      "plan-005-transition",
+      new Set([
+        "--phase",
+        "--unit",
+        "--checkpoint",
+        "--completion",
+        "--result",
+        "--successor",
+      ]),
+    ],
+    ["plan-005-final", new Set(["--phase", "--result"])],
+  ]);
+  const allowed = allowedByPhase.get(phase);
+  invariant(allowed !== undefined, "Unknown Plan 005 phase");
+  for (const key of args.keys())
+    invariant(allowed.has(key), `Unknown option for ${phase}: ${key}`);
+  invariant(
+    String(runGit(["rev-parse", "--is-shallow-repository"])).trim() === "false",
+    "Plan 005 validation requires a complete, non-shallow Git repository",
+  );
+  assertNoHiddenIndexEntries(repositoryRoot);
+
+  if (phase === "plan-005-hash") {
+    invariant(
+      args.get("--tree") === "index",
+      "plan-005-hash requires --tree index",
+    );
+    process.stdout.write(
+      `${rawDigest(
+        readIndexRegularFile(
+          repositoryRoot,
+          "plans/005-prove-version-aware-salt-ai-doctor.md",
+        ),
+      )}\n`,
+    );
+    return;
+  }
+
+  if (phase === "supersede") {
+    const checkpoint = String(args.get("--checkpoint") ?? "");
+    const successor = String(args.get("--successor") ?? "");
+    resolveFullCommit(checkpoint, "supersede checkpoint");
+    invariant(successor === "005/00", "supersede must dispatch 005/00");
+    const head = String(runGit(["rev-parse", "HEAD"])).trim();
+    invariant(head === checkpoint, "supersede checkpoint must be HEAD");
+    const dirtyEntries = plan005StatusEntries();
+    assertNoUnstagedOrUntracked(dirtyEntries, "Plan 005 activation");
+    assertPlan005ActivationPaths(
+      changedPathNames("HEAD", null, repositoryRoot, { cached: true }),
+    );
+
+    const readStaged = (locator, label = locator) =>
+      readIndexRegularFile(repositoryRoot, locator, label);
+    const validatorBytes = readStaged("scripts/validateSaltAiPlan004.mjs");
+    const executingValidatorBytes = await readFile(
+      fileURLToPath(import.meta.url),
+    );
+    invariant(
+      executingValidatorBytes.equals(validatorBytes),
+      "Executing Plan 005 validator differs from the staged validator",
+    );
+    const beforeIndex = JSON.parse(
+      readHeadRegularFile(
+        repositoryRoot,
+        "plans/evidence/004/index.json",
+      ).toString("utf8"),
+    );
+    const afterIndexBytes = readStaged("plans/evidence/004/index.json");
+    const afterIndex = JSON.parse(afterIndexBytes.toString("utf8"));
+    assertPlan004Superseded(beforeIndex, afterIndex);
+    await validatePlan004Index(afterIndex, {
+      root: repositoryRoot,
+      verifyCommit: createCommitVerifier(repositoryRoot),
+      verifyAncestry: createAncestryVerifier(repositoryRoot),
+      plan003Text: readStaged(
+        "plans/003-publish-salt-ai-release-candidate.md",
+      ).toString("utf8"),
+      readTrackedFile: (locator, label) =>
+        Promise.resolve(readStaged(locator, label)),
+      indexSchemaValidation: defaultIndexSchemaValidation,
+    });
+    assertPlan004IndexSuperseded(afterIndex);
+
+    const readmeBytes = readStaged("plans/README.md");
+    const planBytes = readStaged(
+      "plans/005-prove-version-aware-salt-ai-doctor.md",
+    );
+    const control = validatePlan005Control(
+      JSON.parse(
+        readStaged("plans/evidence/005/control.json").toString("utf8"),
+      ),
+      {
+        planBytes,
+        readmeText: readmeBytes.toString("utf8"),
+        verifyCommit: createCommitVerifier(repositoryRoot),
+      },
+    );
+    invariant(
+      control.active_dispatch?.unit === successor &&
+        control.active_dispatch.checkpoint_sha === checkpoint,
+      "Plan 005 activation dispatch differs from requested successor",
+    );
+    assertReadmePlan004Authority(readmeBytes.toString("utf8"), afterIndexBytes);
+    invariant(
+      readStaged("AGENTS.md")
+        .toString("utf8")
+        .includes("plans/005-prove-version-aware-salt-ai-doctor.md"),
+      "AGENTS.md does not dispatch Plan 005",
+    );
+    invariant(
+      readStaged("plans/004-validate-salt-ai-product-wedge.md")
+        .toString("utf8")
+        .includes("SUPERSEDED"),
+      "Plan 004 does not record supersession",
+    );
+    invariant(
+      readStaged("plans/003-publish-salt-ai-release-candidate.md").equals(
+        readHeadRegularFile(
+          repositoryRoot,
+          "plans/003-publish-salt-ai-release-candidate.md",
+        ),
+      ),
+      "Plan 003 changed during Plan 005 activation",
+    );
+    assertArchiveRelocation(repositoryRoot, readStaged);
+    console.log("Plan 005 activation validated (005/00).");
+    return;
+  }
+
+  const state = await readPlan005HeadState();
+  const head = String(runGit(["rev-parse", "HEAD"])).trim();
+  const dirtyEntries = plan005StatusEntries();
+  const unit = args.has("--unit") ? String(args.get("--unit")) : null;
+  const checkpoint = args.has("--checkpoint")
+    ? String(args.get("--checkpoint"))
+    : null;
+
+  if (phase === "plan-005-final") {
+    assertClean(dirtyEntries, "Plan 005 final validation");
+    const result = String(args.get("--result") ?? "");
+    invariant(
+      state.control.active_dispatch === null &&
+        state.control.terminal_result === result,
+      "Plan 005 final result differs from control",
+    );
+    const completed = state.control.units.filter(
+      (entry) => entry.status === "DONE",
+    );
+    const last = completed.at(-1);
+    invariant(last !== undefined, "Plan 005 final state has no completed unit");
+    invariant(
+      directParent(head, repositoryRoot) === last.completion_sha,
+      "Plan 005 final transition does not immediately follow completion",
+    );
+    const paths = changedPathNames(last.completion_sha, head, repositoryRoot);
+    invariant(
+      paths.length === plan005ControlPaths.length &&
+        paths.every((value, index) => value === plan005ControlPaths[index]),
+      "Plan 005 final transition is not control-only",
+    );
+    console.log(`Plan 005 validated (terminal ${result}).`);
+    return;
+  }
+
+  invariant(
+    unit !== null && plan005UnitIds.includes(unit),
+    `${phase} requires a registered --unit`,
+  );
+  invariant(
+    checkpoint !== null && fullCommit.test(checkpoint),
+    `${phase} requires a full --checkpoint`,
+  );
+  resolveFullCommit(checkpoint, `${phase} checkpoint`);
+  invariant(
+    state.control.active_dispatch?.unit === unit &&
+      state.control.active_dispatch.checkpoint_sha === checkpoint,
+    `${phase} unit/checkpoint differs from active control`,
+  );
+  const dispatch =
+    phase === "plan-005-post-commit" || phase === "plan-005-transition"
+      ? directParent(head, repositoryRoot)
+      : head;
+  assertPlan005DispatchCommit(unit, checkpoint, dispatch, repositoryRoot);
+
+  if (phase === "plan-005-preflight") {
+    assertClean(dirtyEntries, "Plan 005 preflight");
+    console.log(`Plan 005 validated (preflight ${unit}).`);
+    return;
+  }
+
+  if (phase === "plan-005-worktree") {
+    assertPlan005PathsAuthorized(dirtyEntries, unit, `${unit} worktree`);
+    invariant(
+      head === dispatch,
+      `${unit} worktree must start at its dispatch commit`,
+    );
+    console.log(
+      `Plan 005 validated (worktree ${unit}; ${dirtyEntries.length} dirty paths).`,
+    );
+    return;
+  }
+
+  const completion = String(args.get("--completion") ?? "");
+  resolveFullCommit(completion, `${phase} completion`);
+  invariant(completion === head, `${phase} completion must be HEAD`);
+  invariant(
+    directParent(completion, repositoryRoot) === dispatch,
+    `${unit} implementation must be one direct child of its dispatch commit`,
+  );
+  assertPlan005PathsAuthorized(
+    changedEntriesBetween(dispatch, repositoryRoot, completion),
+    unit,
+    `${unit} implementation`,
+  );
+
+  if (phase === "plan-005-post-commit") {
+    assertClean(dirtyEntries, "Plan 005 post-commit validation");
+    console.log(`Plan 005 validated (post-commit ${unit}).`);
+    return;
+  }
+
+  assertNoUnstagedOrUntracked(dirtyEntries, "Plan 005 transition");
+  const stagedPaths = changedPathNames("HEAD", null, repositoryRoot, {
+    cached: true,
+  });
+  invariant(
+    stagedPaths.length === plan005ControlPaths.length &&
+      stagedPaths.every((value, index) => value === plan005ControlPaths[index]),
+    "Plan 005 transition staged path set is not control-only",
+  );
+  const result = String(args.get("--result") ?? "");
+  const expectedSuccessor = plan005Transitions.get(unit)?.get(result);
+  invariant(
+    expectedSuccessor !== undefined,
+    "Plan 005 transition result is not registered",
+  );
+  const successor = args.has("--successor")
+    ? String(args.get("--successor"))
+    : null;
+  invariant(
+    (expectedSuccessor === null && successor === null) ||
+      successor === expectedSuccessor,
+    "Plan 005 transition requires exactly the registered successor",
+  );
+  const stagedReadmeBytes = await readMatchingIndexFile(
+    repositoryRoot,
+    "plans/README.md",
+  );
+  const after = validatePlan005Control(
+    JSON.parse(
+      (
+        await readMatchingIndexFile(
+          repositoryRoot,
+          "plans/evidence/005/control.json",
+        )
+      ).toString("utf8"),
+    ),
+    {
+      planBytes: state.planBytes,
+      readmeText: stagedReadmeBytes.toString("utf8"),
+      verifyCommit: createCommitVerifier(repositoryRoot),
+    },
+  );
+  assertPlan005Transition(state.control, after, {
+    unit,
+    result,
+    completion,
+    successor,
+  });
+  assertReadmePlan004Authority(
+    stagedReadmeBytes.toString("utf8"),
+    state.plan004IndexBytes,
+  );
+  console.log(`Plan 005 validated (transition ${unit}: ${result}).`);
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
+  const phase = String(args.get("--phase") ?? "");
+  if (phase === "supersede" || phase.startsWith("plan-005-")) {
+    await mainPlan005(args, phase);
+    return;
+  }
   const allowed = new Set([
     "--phase",
     "--unit",
@@ -1077,7 +1987,6 @@ async function main() {
   ]);
   for (const key of args.keys())
     invariant(allowed.has(key), `Unknown option: ${key}`);
-  const phase = String(args.get("--phase") ?? "");
   invariant(
     [
       "adopt",

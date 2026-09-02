@@ -1,5 +1,10 @@
 # Plan 004: Validate the Salt AI product wedge before production hardening
 
+> **SUPERSEDED — 2026-09-02:** Units `004/00`–`004/02` and their evidence are
+> preserved. The unfinished `004/03` dispatch is deferred and ineligible.
+> Continue only through [Plan 005](./005-prove-version-aware-salt-ai-doctor.md)
+> and its machine control record; Plan 003 remains deferred.
+
 > **Executor instructions:** This is the sole tracked product successor to
 > closed Plan 001. Execute only the unit and phase named by the **Active
 > dispatch** block in `plans/README.md`. Read the whole active unit before
