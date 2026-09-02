@@ -74,6 +74,16 @@ describe("GIVEN a Drawer", () => {
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
   });
 
+  it("disableDismiss ignores the scrim but still permits Escape", async () => {
+    await renderWithSalt(<Default disableDismiss />);
+    await page.getByRole("button", { name: "Open Primary Drawer" }).click();
+    await expect.element(page.getByRole("dialog")).toBeVisible();
+    dismissViaScrim();
+    await expect.element(page.getByRole("dialog")).toBeInTheDocument();
+    await userEvent.keyboard("{Escape}");
+    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+  });
+
   it("traps focus when a close action is present", async () => {
     await renderWithSalt(<Default />);
     const closeButton = page.getByRole("button", { name: "Close Drawer" });
