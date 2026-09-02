@@ -11,7 +11,8 @@ import {
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
-import  type { ReactNode, useLayoutEffect, useRef, CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
+import { useLayoutEffect, useRef } from "react";
 
 export default {
   title: "Core/Drawer/Drawer QA",
