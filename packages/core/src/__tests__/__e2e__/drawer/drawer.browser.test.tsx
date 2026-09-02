@@ -224,6 +224,30 @@ describe("GIVEN a Drawer", () => {
   });
 });
 
+describe("GIVEN a Drawer with sections nested in a fragment", () => {
+  it("still applies the sectioned layout", async () => {
+    await renderWithSalt(
+      <Drawer
+        open
+        position="right"
+        style={{ width: 400 }}
+        aria-label="Notifications"
+      >
+        <>
+          <DrawerHeader actions={<DrawerCloseButton />} />
+          <DrawerContent>
+            <Text>Pending transaction review</Text>
+          </DrawerContent>
+        </>
+      </Drawer>,
+    );
+
+    await expect
+      .element(page.getByRole("dialog"))
+      .toHaveClass("saltDrawer-sectioned");
+  });
+});
+
 describe("GIVEN a Drawer with a DrawerHeader", () => {
   it("names and describes the drawer from the header", async () => {
     await renderWithSalt(<Header />);
