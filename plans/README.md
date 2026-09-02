@@ -20,7 +20,7 @@ it does not dispatch or block Plan 004.
 | ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- | -------- | -------------- | -------------------- | ------------------------------------------------------------- |
 | [001](./archive/completed/001-build-salt-ai-knowledge-platform.md) | Build the original local Salt AI release candidate and record Unit 07 evidence                                  | P1       | L, multi-phase | —                    | DONE — archived historical candidate complete through Unit 07 |
 | [004](./004-validate-salt-ai-product-wedge.md)                     | Validate a truthful, exact-current, task-ready Salt AI product wedge before hardening or release                | P0       | L, multi-phase | Plan 001 Unit 07     | DEFERRED — Units 00–02 preserved; Unit 004/03 superseded      |
-| [005](./005-prove-version-aware-salt-ai-doctor.md)                 | Prove an exact-current Salt Doctor with executable tests and a real-consumer pilot                              | P0       | M, four units  | Plan 004 Units 00–02 | IN PROGRESS — Unit 005/00 trust boundary and rule proof       |
+| [005](./005-prove-version-aware-salt-ai-doctor.md)                 | Prove an exact-current Salt Doctor with executable tests and a real-consumer pilot                              | P0       | M, four units  | Plan 004 Units 00–02 | IN PROGRESS — Unit 005/01 Doctor and source fixtures          |
 | [003](./003-publish-salt-ai-release-candidate.md)                  | Materialize versions and publish an approved Salt AI release candidate through separately owned release systems | P2       | L, conditional | Plan 004 final PASS  | DEFERRED — Plan 004 PASS and publication authority are absent |
 | [002](./002-add-secure-historical-salt-knowledge.md)               | Add secure historical Salt knowledge resolution only after current GA, public discovery, and ownership approval | P2       | L, conditional | Plan 003 completion  | DEFERRED — post-Plan-003 re-plan and entry gates are absent   |
 
@@ -74,10 +74,10 @@ publication authority as deferred to Plan 003.
 
 ## Active dispatch
 
-- **Active plan/unit:** `005/00`
-- **Next eligible unit:** none until `005/00` records `PASS_RULES`
-- **Status:** IN PROGRESS — trust boundary and five-rule characterization
-- **Ancestry checkpoint:** `55879a3d826812270dde79353028ac2e56eb879d`
+- **Active plan/unit:** `005/01`
+- **Next eligible unit:** none until `005/01` records `PASS_DOCTOR`
+- **Status:** IN PROGRESS — exact-current Doctor and six source fixtures
+- **Ancestry checkpoint:** `936660d73d0b3637fa864c61939bff71ff84a8cb`
 - **Plan 004 evidence authority:**
   `plans/evidence/004/index.json@sha256:28b981e295669c477de97c5ca453aa56fe4beb59d2ab81115aaa99cfe4dafc72`
 - **Plan 005 contract:** `2ab6f9ad9a1de918e574562590030ffd1ca867a47347bcbd1894975ab422a85e`
