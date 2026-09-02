@@ -184,7 +184,7 @@ export const AccentVariations: StoryFn<typeof Card> = (args) => {
 
   return (
     <StackLayout style={{ width: "266px" }}>
-      <Card {...args} accent={placement} hoverable>
+      <Card {...args} accent={placement}>
         <CardContent>
           <StackLayout gap={1}>
             <H3>Sustainable investing products</H3>
