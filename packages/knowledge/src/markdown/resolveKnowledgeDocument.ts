@@ -5,6 +5,7 @@ import {
   resolveKnowledgeRecordCompatibility,
   type SaltKnowledgeRecordReference,
 } from "../search/searchSalt.js";
+import { renderUntrustedMarkdownEvidence } from "./untrustedMarkdown.js";
 
 interface SearchDocument {
   target: SaltKnowledgeRecordReference;
@@ -14,7 +15,12 @@ interface SearchDocument {
 export interface KnowledgeDocumentChoice {
   reference: SaltKnowledgeRecordReference;
   title: string;
-  matched_by: "record_id" | "export_name" | "canonical_name" | "alias" | "title";
+  matched_by:
+    | "record_id"
+    | "export_name"
+    | "canonical_name"
+    | "alias"
+    | "title";
 }
 
 export interface ResolveKnowledgeDocumentInput {
@@ -126,7 +132,9 @@ export function resolveKnowledgeDocument(
 ): KnowledgeDocumentResult {
   const identifier = input.identifier.trim();
   const normalized = normalizeKnowledgeQuery(identifier);
-  const documents = store.getFamily("search_document") as readonly SearchDocument[];
+  const documents = store.getFamily(
+    "search_document",
+  ) as readonly SearchDocument[];
   const rawChoices = documents.flatMap((document) => {
     if (
       !KNOWLEDGE_SEARCH_TARGET_FAMILY_NAMES.includes(document.target.family)
@@ -139,7 +147,9 @@ export function resolveKnowledgeDocument(
   const exactIdChoices = rawChoices.filter(
     (choice) => choice.matched_by === "record_id",
   );
-  const choices = (exactIdChoices.length > 0 ? exactIdChoices : rawChoices).sort(
+  const choices = (
+    exactIdChoices.length > 0 ? exactIdChoices : rawChoices
+  ).sort(
     (left, right) =>
       left.reference.id.localeCompare(right.reference.id) ||
       left.reference.family.localeCompare(right.reference.family),
@@ -257,42 +267,66 @@ export function renderKnowledgeDocumentMarkdown(
             .map(
               (choice) =>
                 "- " +
-                choice.title +
+                renderUntrustedMarkdownEvidence(choice.title, {
+                  mode: "inline",
+                }) +
                 " (" +
-                choice.reference.family +
+                renderUntrustedMarkdownEvidence(choice.reference.family, {
+                  mode: "inline",
+                }) +
                 "/" +
-                choice.reference.id +
+                renderUntrustedMarkdownEvidence(choice.reference.id, {
+                  mode: "inline",
+                }) +
                 ")",
             )
             .join("\n");
     return (
       "# Salt docs: " +
-      (result.identifier || "(empty)") +
+      renderUntrustedMarkdownEvidence(result.identifier || "(empty)", {
+        mode: "inline",
+      }) +
       "\n\nStatus: " +
       result.status +
       choices +
       "\n\nBundle: " +
-      result.bundle.digest +
+      renderUntrustedMarkdownEvidence(result.bundle.digest, {
+        mode: "inline",
+      }) +
       "\n"
     );
   }
   const content = result.document.content
-    ? "\n\n## Verified detail\n\n\u0060\u0060\u0060json\n" +
-      JSON.stringify(result.document.content.value, null, 2) +
-      "\n\u0060\u0060\u0060"
+    ? "\n\n## Verified detail\n\n" +
+      renderUntrustedMarkdownEvidence(result.document.content.value, {
+        mode: "block",
+      })
     : "";
   const sources = result.document.citation.source_records.length
-    ? "\nSources: " + result.document.citation.source_records.join(", ")
+    ? "\nSources: " +
+      result.document.citation.source_records
+        .map((source) =>
+          renderUntrustedMarkdownEvidence(source, { mode: "inline" }),
+        )
+        .join(", ")
     : "";
   return (
     "# " +
-    result.document.title +
-    "\n\n" +
-    result.document.summary +
+    renderUntrustedMarkdownEvidence(result.document.title, {
+      mode: "inline",
+    }) +
+    "\n\nEvidence:\n\n" +
+    renderUntrustedMarkdownEvidence(result.document.summary, {
+      mode: "block",
+    }) +
     "\n\nRecord: " +
-    result.document.citation.record_key +
+    renderUntrustedMarkdownEvidence(result.document.citation.record_key, {
+      mode: "inline",
+    }) +
     "\nBundle: " +
-    result.document.citation.bundle_digest +
+    renderUntrustedMarkdownEvidence(result.document.citation.bundle_digest, {
+      mode: "inline",
+    }) +
     sources +
     content +
     "\n"

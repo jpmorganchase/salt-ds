@@ -1124,6 +1124,22 @@ export const REVIEW_RULES: readonly ReviewRuleDefinition[] = [
 export const REVIEW_RULE_IDS = REVIEW_RULES.map((rule) => rule.rule_id);
 export { REVIEW_RULE_CHARACTERIZATION };
 
+const reviewRuleDescriptorIds = REVIEW_RULE_DESCRIPTORS.map(
+  (rule) => rule.rule_id,
+);
+const reviewRuleCharacterizationIds = REVIEW_RULE_CHARACTERIZATION.map(
+  (rule) => rule.rule_id,
+);
+if (
+  JSON.stringify(REVIEW_RULE_IDS) !== JSON.stringify(reviewRuleDescriptorIds) ||
+  JSON.stringify(REVIEW_RULE_IDS) !==
+    JSON.stringify(reviewRuleCharacterizationIds)
+) {
+  throw new Error(
+    "Review rule runtime, descriptor, and characterization IDs must match exactly.",
+  );
+}
+
 export function evaluateReviewRules(input: {
   registry: ReviewCatalog;
   store: KnowledgeRecordStore;
