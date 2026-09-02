@@ -8,7 +8,12 @@
     "directory": "packages/core"
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "forbiddenDependencies": [
+    "@salt-ds/core",
+    "@salt-ds/lab"
+  ],
   "main": "src/index.ts",
+  "typings": "dist-types/index.d.ts",
   "sideEffects": [
     "*.css"
   ],
@@ -38,7 +43,8 @@
     }
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-core",
+    "main": "dist-cjs/index.js",
+    "module": "dist-es/index.js",
     "provenance": true
   },
   "scripts": {
@@ -46,6 +52,9 @@
     "bundle:css": "yarn node ./scripts/bundleCSS.mjs"
   },
   "files": [
-    "css"
+    "css",
+    "dist-cjs",
+    "dist-es",
+    "dist-types"
   ]
 }

@@ -16,7 +16,7 @@ import {
 } from "../src/examples";
 
 import "ag-grid-community/styles/ag-grid.css";
-import "../salt-ag-theme.css";
+import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
 
 export default {
   title: "Ag Grid/Ag Grid Theme/Ag Grid Theme QA",

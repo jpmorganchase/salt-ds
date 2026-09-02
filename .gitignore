@@ -26,6 +26,17 @@ node_modules
 /packages/*/dist-cjs/
 /packages/*/dist-es/
 /packages/*/dist-types/
+/packages/ag-grid-theme/fonts/
+/packages/ag-grid-theme/salt-ag-theme.css
+/packages/core/css/
+/packages/countries/css/
+/packages/date-components/css/
+/packages/embla-carousel/css/
+/packages/icons/css/
+/packages/lab/css/
+/packages/react-resizable-panels-theme/index.css
+/packages/theme/css/
+/packages/theme/index.css
 
 dist
 storybook-static

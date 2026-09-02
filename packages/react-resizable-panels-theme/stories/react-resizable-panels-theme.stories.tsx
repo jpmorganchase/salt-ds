@@ -5,7 +5,7 @@ import {
   PanelResizeHandle,
 } from "react-resizable-panels";
 
-import "../index.css";
+import "@salt-ds/react-resizable-panels-theme/index.css";
 import "./splitter.stories.css";
 
 import {
