@@ -8,8 +8,6 @@ Added `DrawerHeader` and `DrawerContent`, implementing header block in core `Dra
 
 `DrawerHeader` names `Drawer` with its `header` and `preheader`, and describes it with its `description`, so `aria-labelledby` and `aria-describedby` no longer need to be set manually.
 
-`DrawerCloseButton` is no longer positioned with `position: fixed`. Drawers that place it directly inside `Drawer`, rather than in the `actions` of `DrawerHeader`, will see it move into the normal content flow.
-
 ```tsx
 import {
   Drawer,
