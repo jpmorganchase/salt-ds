@@ -56,7 +56,7 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    */
   variant?: "primary" | "secondary" | "tertiary";
   /**
-   * Prevent the dialog closing on click away
+   * Prevent the drawer closing on click away
    * */
   disableDismiss?: boolean;
   /**
@@ -117,7 +117,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     const { getFloatingProps } = useInteractions([
       useClick(context),
-      useDismiss(context, { enabled: !disableDismiss }),
+      useDismiss(context, { outsidePress: !disableDismiss }),
     ]);
 
     const handleRef = useForkRef<HTMLDivElement>(floating, ref);
