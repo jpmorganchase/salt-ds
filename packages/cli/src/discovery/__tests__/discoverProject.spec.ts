@@ -122,6 +122,56 @@ describe("bounded workspace discovery", () => {
     ]);
   });
 
+  it("can retain a workspace package with no selected source for project decisions", async () => {
+    const root = await fixtureRoot();
+    await json(root, "package.json", {
+      name: "workspace",
+      private: true,
+      packageManager: "npm@11.0.0",
+      workspaces: ["packages/*"],
+    });
+    await json(root, "packages/app/package.json", {
+      name: "app",
+      private: true,
+      dependencies: { "@salt-ds/core": "1.70.0" },
+    });
+    await json(root, "packages/app/node_modules/@salt-ds/core/package.json", {
+      name: "@salt-ds/core",
+      version: "1.70.0",
+    });
+
+    const defaultResult = await discoverSaltProject({ rootDir: root });
+    expect(
+      defaultResult.workspace_units.map((unit) => unit.workspace_unit_id),
+    ).toEqual(["."]);
+    expect(defaultResult.skipped_units).toContainEqual(
+      expect.objectContaining({
+        workspace_unit_id: "packages/app",
+        reason: "SCAN_WORKSPACE_NO_SELECTED_FILES",
+      }),
+    );
+
+    const doctorResult = await discoverSaltProject({
+      rootDir: root,
+      includeEmptyWorkspaceUnits: true,
+    });
+    expect(
+      doctorResult.workspace_units.map((unit) => unit.workspace_unit_id),
+    ).toEqual([".", "packages/app"]);
+    expect(doctorResult.skipped_units).toEqual([]);
+    expect(doctorResult.workspace_units[1]).toMatchObject({
+      workspace_unit_id: "packages/app",
+      owned_files: [],
+      package_vector: [
+        {
+          name: "@salt-ds/core",
+          observed_version: "1.70.0",
+          satisfies_declaration: true,
+        },
+      ],
+    });
+  });
+
   it("classifies a shared package boundary as a library with explicit evidence", async () => {
     const root = await fixtureRoot();
     await json(root, "package.json", {
