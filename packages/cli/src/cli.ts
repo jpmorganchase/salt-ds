@@ -413,14 +413,26 @@ export async function runCliWithIo(
 
 function writeStandardOutput(value: string): Promise<void> {
   return new Promise((resolve, reject) => {
+    let settled = false;
+    const settle = (error?: Error | null) => {
+      if (settled) return;
+      settled = true;
+      if (error) reject(error);
+      else resolve();
+    };
     const onError = (error: Error) => {
       process.stdout.off("error", onError);
-      reject(error);
+      settle(error);
     };
     process.stdout.once("error", onError);
-    process.stdout.write(value, () => {
+    process.stdout.write(value, (error) => {
+      if (error) {
+        settle(error);
+        setImmediate(() => process.stdout.off("error", onError));
+        return;
+      }
       process.stdout.off("error", onError);
-      resolve();
+      settle();
     });
   });
 }

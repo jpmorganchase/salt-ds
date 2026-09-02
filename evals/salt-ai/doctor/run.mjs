@@ -15,6 +15,19 @@ import os from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import Ajv2020 from "ajv/dist/2020.js";
+import { runAiToolingPackCheck } from "../../../scripts/checkAiToolingPackageDryRun.mjs";
+import { runCliWorkflowCoverage } from "../../../scripts/consumer-smoke/checks.mjs";
+import {
+  createExactCliInfoRepo,
+  createNonSaltRepo,
+  installLocalCliPackages,
+  loadExactPackReport,
+} from "../../../scripts/consumer-smoke/fixture.mjs";
+import {
+  candidateDigestFromPackReport,
+  deriveAccessDecision,
+  loadAccessSummary,
+} from "./pilot.mjs";
 
 const REPO_ROOT = path.resolve(import.meta.dirname, "../../..");
 const KNOWLEDGE_ENTRY = path.join(
@@ -47,11 +60,14 @@ const EXPECTED_RULE_IDS = [
   "salt.deprecation.static_prop",
   "salt.token.deprecated_identity",
 ];
+const SHA256 = /^sha256:[0-9a-f]{64}$/u;
 
 export class RulesHarnessError extends Error {}
 export class RulesIntegrityError extends Error {}
 export class DoctorHarnessError extends Error {}
 export class DoctorIntegrityError extends Error {}
+export class PackedHarnessError extends Error {}
+export class PackedIntegrityError extends Error {}
 
 function failHarness(message) {
   throw new RulesHarnessError(message);
@@ -348,7 +364,7 @@ const EXPECTED_FIXTURE_IDS = [
   "incomplete-analysis",
 ];
 
-function requireFixtureManifest() {
+export function requireFixtureManifest() {
   if (
     FIXTURE_MANIFEST.contract !== "salt-ai-doctor-fixtures/1" ||
     !Array.isArray(FIXTURE_MANIFEST.fixtures) ||
@@ -411,7 +427,28 @@ function packageVersion(candidateManifest, packageName, mismatch) {
     : record.tested_version;
 }
 
-async function materializeFixture(root, fixture, candidateManifest) {
+async function materializeFixtureTooling(root, candidateManifest) {
+  await writeFixtureJson(root, "node_modules/@salt-ds/knowledge/package.json", {
+    name: "@salt-ds/knowledge",
+    version: candidateManifest.bundle_version,
+    main: "index.cjs",
+  });
+  await writeFixtureFile(
+    root,
+    "node_modules/@salt-ds/knowledge/index.cjs",
+    "module.exports = require(" + JSON.stringify(KNOWLEDGE_CJS_ENTRY) + ");\n",
+  );
+  await cp(CLI_PACKAGE, path.join(root, "node_modules", "@salt-ds", "cli"), {
+    recursive: true,
+  });
+}
+
+export async function materializeFixture(
+  root,
+  fixture,
+  candidateManifest,
+  options = {},
+) {
   const dependencies = Object.fromEntries(
     fixture.packages.map((packageName) => [
       packageName,
@@ -469,19 +506,9 @@ async function materializeFixture(root, fixture, candidateManifest) {
   if (fixture.config) {
     await writeFixtureJson(root, "salt.config.json", fixture.config);
   }
-  await writeFixtureJson(root, "node_modules/@salt-ds/knowledge/package.json", {
-    name: "@salt-ds/knowledge",
-    version: candidateManifest.bundle_version,
-    main: "index.cjs",
-  });
-  await writeFixtureFile(
-    root,
-    "node_modules/@salt-ds/knowledge/index.cjs",
-    "module.exports = require(" + JSON.stringify(KNOWLEDGE_CJS_ENTRY) + ");\n",
-  );
-  await cp(CLI_PACKAGE, path.join(root, "node_modules", "@salt-ds", "cli"), {
-    recursive: true,
-  });
+  if (options.externalTooling !== true) {
+    await materializeFixtureTooling(root, candidateManifest);
+  }
 }
 
 async function snapshotFiles(root, directory = root, snapshot = new Map()) {
@@ -517,9 +544,9 @@ function snapshotsEqual(left, right) {
   return sameJson([...left.entries()], [...right.entries()]);
 }
 
-function executeDoctor(root, validate) {
+function executeDoctor(root, validate, toolingRoot = root) {
   const fixtureCli = path.join(
-    root,
+    toolingRoot,
     "node_modules",
     "@salt-ds",
     "cli",
@@ -534,7 +561,7 @@ function executeDoctor(root, validate) {
       encoding: "utf8",
       env: {
         ...process.env,
-        NODE_PATH: path.join(root, "node_modules"),
+        NODE_PATH: path.join(toolingRoot, "node_modules"),
       },
       maxBuffer: 10 * 1024 * 1024,
       windowsHide: true,
@@ -635,9 +662,14 @@ function assessFixtureProduct(fixture, observation) {
   return findings.length === 0 ? "pass" : "finding_inaccurate";
 }
 
-async function collectFixtureObservation(root, fixture, validate) {
+export async function collectFixtureObservation(
+  root,
+  fixture,
+  validate,
+  execute = executeDoctor,
+) {
   const before = await snapshotFiles(root);
-  const first = executeDoctor(root, validate);
+  const first = await execute(root, validate);
   const after = await snapshotFiles(root);
   const observation = {
     id: fixture.id,
@@ -657,7 +689,7 @@ async function collectFixtureObservation(root, fixture, validate) {
     await writeFixtureFile(root, fixture.source_path, fixture.repaired_source);
     const repaired = await readFile(sourcePath, "utf8");
     const repairBefore = await snapshotFiles(root);
-    const second = executeDoctor(root, validate);
+    const second = await execute(root, validate);
     const repairAfter = await snapshotFiles(root);
     observation.repair = {
       changed: original !== repaired,
@@ -671,7 +703,7 @@ async function collectFixtureObservation(root, fixture, validate) {
   return observation;
 }
 
-function assertFixtureHarness(fixture, observation) {
+export function assertFixtureHarness(fixture, observation) {
   if (
     !observation ||
     observation.id !== fixture.id ||
@@ -782,6 +814,25 @@ function assertFixtureHarness(fixture, observation) {
   }
 }
 
+export function projectDoctorParity(result) {
+  return {
+    status: result.status,
+    reason_code: result.reason_code,
+    knowledge: { semantic_digest: result.knowledge.semantic_digest },
+    workspace_units: result.workspace_units.map((unit) => ({
+      workspace_unit_id: unit.workspace_unit_id,
+      project_decision: unit.project_decision,
+      files: unit.files,
+      operational_reasons: unit.operational_reasons,
+      limitations: unit.limitations,
+    })),
+    summary: result.summary,
+    findings: result.findings,
+    coverage: result.coverage,
+    limitations: result.limitations,
+  };
+}
+
 export function deriveDoctorDecision(observation) {
   const fixtureManifest = requireFixtureManifest();
   if (
@@ -835,11 +886,16 @@ export async function collectDoctorObservation() {
     );
   }
   try {
+    const toolingRoot = path.join(parent, "source-tools");
+    await mkdir(toolingRoot);
+    await materializeFixtureTooling(toolingRoot, candidateManifest);
     const roots = [];
     for (const fixture of fixtureManifest.fixtures) {
       const root = path.join(parent, fixture.id);
       await mkdir(root);
-      await materializeFixture(root, fixture, candidateManifest);
+      await materializeFixture(root, fixture, candidateManifest, {
+        externalTooling: true,
+      });
       roots.push(root);
     }
     const fixtures = [];
@@ -849,6 +905,8 @@ export async function collectDoctorObservation() {
           roots[index],
           fixtureManifest.fixtures[index],
           validate,
+          (root, schemaValidate) =>
+            executeDoctor(root, schemaValidate, toolingRoot),
         ),
       );
     }
@@ -881,14 +939,408 @@ export function runDoctorObservation(observation, io = process) {
   }
 }
 
+function digestSnapshot(snapshot) {
+  return (
+    "sha256:" +
+    createHash("sha256")
+      .update(JSON.stringify([...snapshot.entries()]))
+      .digest("hex")
+  );
+}
+
+function trackedTreeDigest() {
+  const listed = spawnSync("git", ["ls-files", "-z"], {
+    cwd: REPO_ROOT,
+    encoding: "utf8",
+    windowsHide: true,
+  });
+  if (listed.error || listed.status !== 0) {
+    throw new PackedHarnessError(
+      "Could not inventory tracked repository files.",
+    );
+  }
+  const hash = createHash("sha256");
+  for (const relativePath of listed.stdout.split("\0").filter(Boolean)) {
+    hash.update(relativePath);
+    hash.update("\0");
+    hash.update(readFileSync(path.join(REPO_ROOT, relativePath)));
+    hash.update("\0");
+  }
+  return "sha256:" + hash.digest("hex");
+}
+
+function sortedObjects(values) {
+  return [...values].sort((left, right) =>
+    JSON.stringify(left).localeCompare(JSON.stringify(right)),
+  );
+}
+
+function derivePackageThresholdMisses(packageMetrics) {
+  return packageMetrics.flatMap((entry) =>
+    [
+      "compressed_bytes",
+      "unpacked_bytes",
+      "generated_bytes",
+      "entry_count",
+    ].flatMap((metric) =>
+      entry[metric] > entry.limits[metric]
+        ? [
+            {
+              package: entry.name,
+              metric,
+              observed: entry[metric],
+              limit: entry.limits[metric],
+            },
+          ]
+        : [],
+    ),
+  );
+}
+
+function p90(values) {
+  return [...values].sort((left, right) => left - right)[10];
+}
+
+function validatePackedPerformance(performance) {
+  if (
+    !performance ||
+    performance.observation_class !== "single_host_operational" ||
+    performance.node !== process.versions.node ||
+    performance.platform !== process.platform ||
+    performance.warmups !== 3 ||
+    performance.measured_runs !== 12 ||
+    !Array.isArray(performance.wall_times_ms) ||
+    performance.wall_times_ms.length !== 12 ||
+    !Array.isArray(performance.peak_rss_bytes) ||
+    performance.peak_rss_bytes.length !== 12 ||
+    performance.wall_times_ms.some(
+      (value) => !Number.isSafeInteger(value) || value < 0,
+    ) ||
+    performance.peak_rss_bytes.some(
+      (value) => !Number.isSafeInteger(value) || value <= 0,
+    ) ||
+    performance.max_wall_ms !== Math.max(...performance.wall_times_ms) ||
+    performance.p90_wall_ms !== p90(performance.wall_times_ms) ||
+    performance.p90_peak_rss_bytes !== p90(performance.peak_rss_bytes) ||
+    performance.limits?.max_run_ms !== 5_000 ||
+    performance.limits?.p90_wall_ms !== 3_000 ||
+    performance.limits?.p90_peak_rss_bytes !== 256 * 1024 * 1024
+  ) {
+    throw new PackedIntegrityError(
+      "Packed Doctor performance evidence is malformed.",
+    );
+  }
+  const passed =
+    performance.max_wall_ms <= performance.limits.max_run_ms &&
+    performance.p90_wall_ms <= performance.limits.p90_wall_ms &&
+    performance.p90_peak_rss_bytes <= performance.limits.p90_peak_rss_bytes;
+  if (performance.threshold_passed !== passed) {
+    throw new PackedIntegrityError(
+      "Packed Doctor performance result was not derived from measurements.",
+    );
+  }
+  return passed;
+}
+
+export function derivePackedDecision(observation) {
+  if (
+    !observation ||
+    observation.contract !== "salt-ai-doctor-packed-observation/1"
+  ) {
+    throw new PackedHarnessError("Packed Doctor observation is missing.");
+  }
+  if (
+    !SHA256.test(observation.candidate_sha256 ?? "") ||
+    !SHA256.test(observation.knowledge_semantic_digest ?? "") ||
+    !SHA256.test(observation.pack_report_sha256 ?? "")
+  ) {
+    throw new PackedIntegrityError("Packed candidate identity is malformed.");
+  }
+  const integrityKeys = [
+    "pack_report_valid",
+    "tarballs_exact",
+    "worker_inventory",
+    "worker_execution",
+    "source_parity",
+    "offline",
+    "read_only",
+    "exact_versions",
+    "semantic_digest_match",
+    "tracked_files_unchanged",
+    "candidate_bytes_unchanged",
+    "cjs_missing_worker_rejected",
+    "esm_missing_worker_rejected",
+  ];
+  if (
+    !observation.integrity ||
+    !sameJson(
+      Object.keys(observation.integrity).sort(),
+      [...integrityKeys].sort(),
+    ) ||
+    integrityKeys.some((key) => observation.integrity[key] !== true)
+  ) {
+    throw new PackedIntegrityError("Packed Doctor integrity evidence failed.");
+  }
+  if (
+    !Array.isArray(observation.package_metrics) ||
+    observation.package_metrics.length !== 2 ||
+    !sameJson(observation.package_metrics.map((entry) => entry.name).sort(), [
+      "@salt-ds/cli",
+      "@salt-ds/knowledge",
+    ])
+  ) {
+    throw new PackedIntegrityError(
+      "Packed package measurements are incomplete.",
+    );
+  }
+  for (const entry of observation.package_metrics) {
+    if (
+      !Array.isArray(entry.inventory) ||
+      [
+        "compressed_bytes",
+        "unpacked_bytes",
+        "generated_bytes",
+        "entry_count",
+      ].some(
+        (metric) =>
+          !Number.isSafeInteger(entry[metric]) ||
+          entry[metric] < 0 ||
+          !Number.isSafeInteger(entry.limits?.[metric]) ||
+          entry.limits[metric] < 0,
+      )
+    ) {
+      throw new PackedIntegrityError("Packed package metrics are malformed.");
+    }
+  }
+  const cliMetrics = observation.package_metrics.find(
+    (entry) => entry.name === "@salt-ds/cli",
+  );
+  if (
+    !cliMetrics.inventory.includes("dist-cjs/scannerWorker.js") ||
+    !cliMetrics.inventory.includes("dist-es/scannerWorker.js")
+  ) {
+    throw new PackedIntegrityError("Packed worker inventory is incomplete.");
+  }
+  const derivedPackageMisses = derivePackageThresholdMisses(
+    observation.package_metrics,
+  );
+  if (
+    !Array.isArray(observation.package_threshold_misses) ||
+    !sameJson(
+      sortedObjects(observation.package_threshold_misses),
+      sortedObjects(derivedPackageMisses),
+    )
+  ) {
+    throw new PackedIntegrityError("Packed size result was not derived.");
+  }
+  const performancePassed = validatePackedPerformance(observation.performance);
+  const technicalMiss =
+    derivedPackageMisses.length > 0 || performancePassed === false;
+  if (technicalMiss) {
+    if (
+      observation.access_summary_read !== false ||
+      observation.access_summary !== null
+    ) {
+      throw new PackedIntegrityError(
+        "Access evidence was read before a technical CUT decision.",
+      );
+    }
+    return "CUT_DOCTOR";
+  }
+  if (observation.access_summary_read !== true || !observation.access_summary) {
+    throw new PackedHarnessError(
+      "Passing technical evidence requires a consumer access summary.",
+    );
+  }
+  return deriveAccessDecision(observation.access_summary, {
+    candidate_sha256: observation.candidate_sha256,
+    knowledge_semantic_digest: observation.knowledge_semantic_digest,
+  });
+}
+
+export async function collectPackedObservation({
+  packReportPath,
+  accessSummaryPath,
+}) {
+  const trackedBefore = trackedTreeDigest();
+  const candidateBefore = await Promise.all([
+    snapshotFiles(CLI_PACKAGE).then(digestSnapshot),
+    snapshotFiles(KNOWLEDGE_BUNDLE).then(digestSnapshot),
+  ]);
+  const relativeReportPath = path
+    .relative(REPO_ROOT, path.resolve(packReportPath))
+    .replaceAll("\\", "/");
+  const pack = runAiToolingPackCheck(["--report", relativeReportPath], {
+    log() {},
+  });
+  let exactPack;
+  try {
+    exactPack = await loadExactPackReport(packReportPath);
+  } catch (error) {
+    throw new PackedIntegrityError(
+      `Packed report or tarball integrity failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+  const parent = await mkdtemp(path.join(os.tmpdir(), "salt-doctor-packed-"));
+  const expectedPrefix = path.join(os.tmpdir(), "salt-doctor-packed-");
+  if (!parent.startsWith(expectedPrefix)) {
+    throw new PackedHarnessError("Refusing an unexpected packed smoke root.");
+  }
+  try {
+    const installRoot = path.join(parent, "installed-tools");
+    const exactSaltRoot = path.join(parent, "exact-salt-app");
+    const nonSaltRoot = path.join(parent, "non-salt-app");
+    await installLocalCliPackages(installRoot, exactPack, { log() {} });
+    await Promise.all([mkdir(exactSaltRoot), mkdir(nonSaltRoot)]);
+    await Promise.all([
+      createExactCliInfoRepo(exactSaltRoot),
+      createNonSaltRepo(nonSaltRoot),
+    ]);
+    const smoke = await runCliWorkflowCoverage(
+      installRoot,
+      exactSaltRoot,
+      nonSaltRoot,
+      exactPack,
+      {
+        captureThresholdMisses: true,
+        log() {},
+        doctorHarness: {
+          assertFixtureHarness,
+          collectDoctorObservation,
+          collectFixtureObservation,
+          materializeFixture,
+          projectDoctorParity,
+          requireFixtureManifest,
+        },
+      },
+    );
+    const candidateAfter = await Promise.all([
+      snapshotFiles(CLI_PACKAGE).then(digestSnapshot),
+      snapshotFiles(KNOWLEDGE_BUNDLE).then(digestSnapshot),
+    ]);
+    const candidateSha256 = candidateDigestFromPackReport(pack.report);
+    const performance = smoke.doctor.performance;
+    const technicalMiss =
+      pack.threshold_misses.length > 0 || performance.threshold_passed !== true;
+    let accessSummary = null;
+    let accessSummaryRead = false;
+    if (!technicalMiss) {
+      try {
+        accessSummary = await loadAccessSummary(accessSummaryPath, {
+          candidate_sha256: candidateSha256,
+          knowledge_semantic_digest:
+            pack.report.knowledge_bundle.semantic_digest,
+        });
+        accessSummaryRead = true;
+      } catch (error) {
+        throw new PackedIntegrityError(
+          `Consumer access summary failed validation: ${error instanceof Error ? error.message : String(error)}`,
+        );
+      }
+    }
+    const workerInventory = pack.package_metrics.find(
+      (entry) => entry.name === "@salt-ds/cli",
+    )?.inventory;
+    return {
+      contract: "salt-ai-doctor-packed-observation/1",
+      candidate_sha256: candidateSha256,
+      knowledge_semantic_digest: pack.report.knowledge_bundle.semantic_digest,
+      pack_report_sha256: pack.report_sha256,
+      integrity: {
+        pack_report_valid: pack.report.contract === "salt-ai-pack-report@1",
+        tarballs_exact: true,
+        worker_inventory:
+          workerInventory?.includes("dist-cjs/scannerWorker.js") === true &&
+          workerInventory?.includes("dist-es/scannerWorker.js") === true,
+        worker_execution:
+          smoke.doctor.export_modes.cjs === true &&
+          smoke.doctor.export_modes.esm === true &&
+          smoke.doctor.fixtures.every(
+            (fixture) =>
+              fixture.worker_backed ||
+              fixture.result.coverage.selected_files === 0,
+          ),
+        source_parity: smoke.doctor.source_parity === true,
+        offline: smoke.network === "offline" && smoke.doctor.offline === true,
+        read_only: smoke.doctor.read_only === true,
+        exact_versions:
+          smoke.exact_info.cli_version === exactPack.cli.version &&
+          smoke.exact_info.knowledge_version === exactPack.knowledge.version &&
+          exactPack.cli.version ===
+            pack.report.packages.find((entry) => entry.name === "@salt-ds/cli")
+              ?.version &&
+          exactPack.knowledge.version ===
+            pack.report.packages.find(
+              (entry) => entry.name === "@salt-ds/knowledge",
+            )?.version,
+        semantic_digest_match:
+          smoke.doctor.semantic_digest ===
+          pack.report.knowledge_bundle.semantic_digest,
+        tracked_files_unchanged: trackedBefore === trackedTreeDigest(),
+        candidate_bytes_unchanged: sameJson(candidateBefore, candidateAfter),
+        cjs_missing_worker_rejected:
+          smoke.doctor.worker_mutations.cjs_missing_rejected === true,
+        esm_missing_worker_rejected:
+          smoke.doctor.worker_mutations.esm_missing_rejected === true,
+      },
+      package_metrics: pack.package_metrics,
+      package_threshold_misses: pack.threshold_misses,
+      performance,
+      access_summary_read: accessSummaryRead,
+      access_summary: accessSummary,
+    };
+  } finally {
+    await rm(parent, { recursive: true, force: true });
+  }
+}
+
+export function runPackedObservation(observation, io = process) {
+  try {
+    const result = derivePackedDecision(observation);
+    io.stdout.write(
+      `${JSON.stringify({ contract: "salt-ai-plan-005-decision/1", unit: "005/02", result })}\n`,
+    );
+    return 0;
+  } catch (error) {
+    io.stderr.write(
+      `salt-ai Doctor packed harness failure: ${error instanceof Error ? error.message : String(error)}\n`,
+    );
+    return error instanceof PackedIntegrityError ? 3 : 4;
+  }
+}
+
 export async function runCli(args, io = process) {
   const rulesMode = sameJson(args, ["--mode", "decide-rules"]);
   const sourceMode = sameJson(args, ["--mode", "decide-source"]);
-  if (!rulesMode && !sourceMode) {
+  const packedMode =
+    args.length === 6 &&
+    args[0] === "--mode" &&
+    args[1] === "decide-packed" &&
+    args[2] === "--pack-report" &&
+    typeof args[3] === "string" &&
+    args[3].length > 0 &&
+    args[4] === "--access-summary" &&
+    typeof args[5] === "string" &&
+    args[5].length > 0;
+  if (!rulesMode && !sourceMode && !packedMode) {
     io.stderr.write(
-      "Usage: node ./evals/salt-ai/doctor/run.mjs --mode decide-rules|decide-source\n",
+      "Usage: node ./evals/salt-ai/doctor/run.mjs --mode decide-rules|decide-source OR --mode decide-packed --pack-report <path> --access-summary <path>\n",
     );
     return 2;
+  }
+  if (packedMode) {
+    try {
+      const observation = await collectPackedObservation({
+        packReportPath: path.resolve(REPO_ROOT, args[3]),
+        accessSummaryPath: path.resolve(REPO_ROOT, args[5]),
+      });
+      return runPackedObservation(observation, io);
+    } catch (error) {
+      io.stderr.write(
+        `salt-ai Doctor packed harness failure: ${error instanceof Error ? error.message : String(error)}\n`,
+      );
+      return error instanceof PackedIntegrityError ? 3 : 4;
+    }
   }
   if (sourceMode) {
     try {

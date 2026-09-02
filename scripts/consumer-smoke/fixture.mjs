@@ -793,7 +793,11 @@ export async function installLocalPackages(rootDir, packReport) {
   };
 }
 
-export async function installLocalCliPackages(rootDir, packReport) {
+export async function installLocalCliPackages(
+  rootDir,
+  packReport,
+  options = {},
+) {
   await fs.mkdir(rootDir, { recursive: true });
   const packageManagerEnvironment =
     await createIsolatedPackageManagerEnvironment(rootDir);
@@ -807,7 +811,7 @@ export async function installLocalCliPackages(rootDir, packReport) {
     "utf8",
   );
 
-  console.log(
+  (options.log ?? console.log)(
     "Installing the exact reported Knowledge and CLI tarballs together...",
   );
   await runCommand(

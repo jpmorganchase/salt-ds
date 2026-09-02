@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   parseCliArgs,
+  runCli,
   runCliWithIo,
   SALT_CLI_HELP,
   SaltCliUsageError,
@@ -321,4 +322,29 @@ describe("Salt CLI shell", () => {
     release();
     await expect(run).resolves.toBe(0);
   });
+
+  it.each(["callback-then-event", "event-only"] as const)(
+    "settles once when stdout reports EPIPE via %s",
+    async (delivery) => {
+      const listenerCount = process.stdout.listenerCount("error");
+      const brokenPipe = Object.assign(new Error("broken pipe"), {
+        code: "EPIPE",
+      });
+      const write = vi.spyOn(process.stdout, "write").mockImplementation(((
+        _: string,
+        callback: (error?: Error | null) => void,
+      ) => {
+        if (delivery === "callback-then-event") callback(brokenPipe);
+        process.stdout.emit("error", brokenPipe);
+        return false;
+      }) as typeof process.stdout.write);
+
+      try {
+        await expect(runCli(["help"])).rejects.toBe(brokenPipe);
+        expect(process.stdout.listenerCount("error")).toBe(listenerCount);
+      } finally {
+        write.mockRestore();
+      }
+    },
+  );
 });

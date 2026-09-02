@@ -3,32 +3,477 @@ import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
+import { pathToFileURL } from "node:url";
+import Ajv2020 from "ajv/dist/2020.js";
 import {
   offlineNetworkGuardUrl,
   runOfflineNetworkGuardSelfTest,
+  runOfflineScannerWorkerContainmentSelfTest,
 } from "./offline-network-probe.mjs";
 import {
   assert,
+  distKnowledgeDir,
   getInstalledCliBin,
   pathExists,
   runCommand,
 } from "./shared.mjs";
+
+const DOCTOR_OFFLINE_ENV = Object.freeze({
+  SALT_OFFLINE_ALLOW_SCANNER_WORKER: "1",
+});
 
 async function runInstalledCli(
   installedCliBinPath,
   args,
   cwd,
   acceptableExitCodes = [0],
+  env = DOCTOR_OFFLINE_ENV,
 ) {
   return runCommand(
     process.execPath,
     ["--import", offlineNetworkGuardUrl, installedCliBinPath, ...args],
     {
       cwd,
+      env,
       acceptableExitCodes,
       label: `offline packed salt-ds ${args.join(" ")}`,
     },
   );
+}
+
+const DOCTOR_PERFORMANCE_LIMITS = Object.freeze({
+  warmups: 3,
+  measured_runs: 12,
+  max_run_ms: 5_000,
+  p90_wall_ms: 3_000,
+  p90_peak_rss_bytes: 256 * 1024 * 1024,
+  max_source_files: 25,
+  max_source_bytes: 256 * 1024,
+});
+const DOCTOR_METRIC_PREFIX = "SALT_DOCTOR_PROCESS_METRIC ";
+
+function sameJson(left, right) {
+  return JSON.stringify(left) === JSON.stringify(right);
+}
+
+function parseDoctorOutput(result, validate, label, allowMetric = false) {
+  assert(
+    result.stdout.endsWith("\n") && !result.stdout.trim().includes("\n"),
+    `${label} did not emit one compact JSON line.`,
+  );
+  let value;
+  try {
+    value = JSON.parse(result.stdout);
+  } catch {
+    throw new Error(`${label} emitted malformed JSON.`);
+  }
+  assert(
+    validate(value),
+    `${label} failed the installed Doctor schema: ${JSON.stringify(validate.errors)}.`,
+  );
+  let metric = null;
+  if (allowMetric) {
+    const lines = result.stderr.trim().split("\n");
+    assert(
+      lines.length === 1 && lines[0].startsWith(DOCTOR_METRIC_PREFIX),
+      `${label} emitted invalid process metrics.`,
+    );
+    metric = JSON.parse(lines[0].slice(DOCTOR_METRIC_PREFIX.length));
+    assert(
+      Number.isSafeInteger(metric.max_rss_kib) && metric.max_rss_kib > 0,
+      `${label} emitted invalid peak RSS.`,
+    );
+  } else {
+    assert(result.stderr === "", `${label} emitted unexpected stderr.`);
+  }
+  return { value, metric };
+}
+
+function doctorModuleScript(entryPath, args, moduleKind, includeMetric) {
+  const metricLine = includeMetric
+    ? `process.stderr.write(${JSON.stringify(DOCTOR_METRIC_PREFIX)} + JSON.stringify({max_rss_kib: process.resourceUsage().maxRSS}) + "\\n");`
+    : "";
+  if (moduleKind === "esm") {
+    return [
+      "(async () => {",
+      `  const { runCli } = await import(${JSON.stringify(pathToFileURL(entryPath).href)});`,
+      `  const exitCode = await runCli(${JSON.stringify(args)});`,
+      metricLine ? `  ${metricLine}` : "",
+      "  process.exitCode = exitCode;",
+      "})().catch((error) => { console.error(error?.stack ?? String(error)); process.exitCode = 4; });",
+    ]
+      .filter(Boolean)
+      .join("\n");
+  }
+  return [
+    "(async () => {",
+    `  const { runCli } = require(${JSON.stringify(entryPath)});`,
+    `  const exitCode = await runCli(${JSON.stringify(args)});`,
+    metricLine ? `  ${metricLine}` : "",
+    "  process.exitCode = exitCode;",
+    "})().catch((error) => { console.error(error?.stack ?? String(error)); process.exitCode = 4; });",
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+async function runInstalledDoctorModule({
+  installRoot,
+  fixtureRoot,
+  validate,
+  moduleKind,
+  failOn,
+  acceptableExitCodes,
+  includeMetric = false,
+}) {
+  const installedCliDir = path.join(
+    installRoot,
+    "node_modules",
+    "@salt-ds",
+    "cli",
+  );
+  const entryPath = path.join(
+    installedCliDir,
+    moduleKind === "esm" ? "dist-es" : "dist-cjs",
+    "index.js",
+  );
+  const args = ["doctor", ".", "--format", "json", "--fail-on", failOn];
+  const nodeArgs = ["--import", offlineNetworkGuardUrl];
+  const moduleScript = doctorModuleScript(
+    entryPath,
+    args,
+    moduleKind,
+    includeMetric,
+  );
+  const esmProbePath =
+    moduleKind === "esm"
+      ? path.join(path.dirname(installRoot), "doctor-esm-export-probe.mjs")
+      : null;
+  if (esmProbePath) {
+    await fs.writeFile(esmProbePath, moduleScript, {
+      encoding: "utf8",
+      flag: "wx",
+    });
+    nodeArgs.push(esmProbePath);
+  } else {
+    nodeArgs.push("--eval", moduleScript);
+  }
+  const startedAt = process.hrtime.bigint();
+  let result;
+  try {
+    result = await runCommand(process.execPath, nodeArgs, {
+      cwd: fixtureRoot,
+      env: DOCTOR_OFFLINE_ENV,
+      acceptableExitCodes,
+      label: `offline packed Doctor ${moduleKind} export`,
+    });
+  } finally {
+    if (esmProbePath) await fs.rm(esmProbePath, { force: true });
+  }
+  const wallMs = Number((process.hrtime.bigint() - startedAt) / 1_000_000n);
+  const parsed = parseDoctorOutput(
+    result,
+    validate,
+    `Packed Doctor ${moduleKind} export`,
+    includeMetric,
+  );
+  return {
+    exit_code: result.exitCode,
+    result: parsed.value,
+    wall_ms: wallMs,
+    peak_rss_bytes: parsed.metric ? parsed.metric.max_rss_kib * 1024 : null,
+  };
+}
+
+function percentile90(values) {
+  const sorted = [...values].sort((left, right) => left - right);
+  assert(sorted.length === 12, "Doctor p90 requires exactly 12 measurements.");
+  return sorted[10];
+}
+
+async function runDoctorPerformance({
+  installRoot,
+  fixtureRoot,
+  validate,
+  expectedParity,
+  projectDoctorParity,
+  installedCliBinPath,
+}) {
+  const runOnce = async () => {
+    const measured = await runInstalledDoctorModule({
+      installRoot,
+      fixtureRoot,
+      validate,
+      moduleKind: "cjs",
+      failOn: "never",
+      acceptableExitCodes: [0],
+      includeMetric: true,
+    });
+    assert(
+      sameJson(projectDoctorParity(measured.result), expectedParity) &&
+        measured.result.status === "complete" &&
+        measured.result.coverage.status === "complete",
+      "A measured packed Doctor process lost expected semantics or coverage.",
+    );
+    return measured;
+  };
+  for (let index = 0; index < DOCTOR_PERFORMANCE_LIMITS.warmups; index += 1) {
+    await runOnce();
+  }
+  const measured = [];
+  for (
+    let index = 0;
+    index < DOCTOR_PERFORMANCE_LIMITS.measured_runs;
+    index += 1
+  ) {
+    measured.push(await runOnce());
+  }
+  const wallTimesMs = measured.map((entry) => entry.wall_ms);
+  const peakRssBytes = measured.map((entry) => entry.peak_rss_bytes);
+  const infoTimingsMs = [];
+  for (let index = 0; index < 3; index += 1) {
+    const startedAt = process.hrtime.bigint();
+    const info = await runInstalledCli(
+      installedCliBinPath,
+      ["info", ".", "--json"],
+      fixtureRoot,
+    );
+    infoTimingsMs.push(
+      Number((process.hrtime.bigint() - startedAt) / 1_000_000n),
+    );
+    assert(
+      JSON.parse(info.stdout).knowledge.semantic_digest ===
+        expectedParity.knowledge.semantic_digest,
+      "Packed info diagnostic used a different Knowledge candidate.",
+    );
+  }
+  return {
+    observation_class: "single_host_operational",
+    node: process.versions.node,
+    platform: process.platform,
+    warmups: DOCTOR_PERFORMANCE_LIMITS.warmups,
+    measured_runs: DOCTOR_PERFORMANCE_LIMITS.measured_runs,
+    wall_times_ms: wallTimesMs,
+    peak_rss_bytes: peakRssBytes,
+    max_wall_ms: Math.max(...wallTimesMs),
+    p90_wall_ms: percentile90(wallTimesMs),
+    p90_peak_rss_bytes: percentile90(peakRssBytes),
+    info_timings_ms: infoTimingsMs,
+    limits: {
+      max_run_ms: DOCTOR_PERFORMANCE_LIMITS.max_run_ms,
+      p90_wall_ms: DOCTOR_PERFORMANCE_LIMITS.p90_wall_ms,
+      p90_peak_rss_bytes: DOCTOR_PERFORMANCE_LIMITS.p90_peak_rss_bytes,
+    },
+  };
+}
+
+export async function runPackedDoctorWorkflow(
+  installRoot,
+  packReport,
+  harness,
+) {
+  runOfflineScannerWorkerContainmentSelfTest();
+  const fixtureManifest = harness.requireFixtureManifest();
+  const candidateManifest = JSON.parse(
+    await fs.readFile(path.join(distKnowledgeDir, "manifest.json"), "utf8"),
+  );
+  assert(
+    candidateManifest.semantic_digest ===
+      packReport.report.knowledge_bundle.semantic_digest,
+    "Packed Doctor fixture versions came from a different Knowledge candidate.",
+  );
+  const installedCliDir = path.join(
+    installRoot,
+    "node_modules",
+    "@salt-ds",
+    "cli",
+  );
+  const schema = JSON.parse(
+    await fs.readFile(
+      path.join(installedCliDir, "schemas", "doctor-result-1.schema.json"),
+      "utf8",
+    ),
+  );
+  const validate = new Ajv2020({ strict: true }).compile(schema);
+  const installedCliManifest = JSON.parse(
+    await fs.readFile(path.join(installedCliDir, "package.json"), "utf8"),
+  );
+  assert(
+    !JSON.stringify(installedCliManifest.exports).includes("scannerWorker") &&
+      !Object.keys(installedCliManifest.exports ?? {}).some((key) =>
+        key.includes("scannerWorker"),
+      ),
+    "Packed scanner worker became a public package export.",
+  );
+  const installedCliBinPath = getInstalledCliBin(installRoot);
+  const sourceObservation = await harness.collectDoctorObservation();
+  const sourceById = new Map(
+    sourceObservation.fixtures.map((fixture) => [fixture.id, fixture]),
+  );
+  const fixtureParent = path.join(path.dirname(installRoot), "doctor-fixtures");
+  await fs.mkdir(fixtureParent);
+  const roots = new Map();
+  for (const fixture of fixtureManifest.fixtures) {
+    const root = path.join(fixtureParent, fixture.id);
+    await fs.mkdir(root);
+    await harness.materializeFixture(root, fixture, candidateManifest, {
+      externalTooling: true,
+    });
+    roots.set(fixture.id, root);
+  }
+
+  const workspaceFixture = fixtureManifest.fixtures[0];
+  const workspaceRoot = roots.get(workspaceFixture.id);
+  const expectedWorkspaceParity = harness.projectDoctorParity(
+    sourceById.get(workspaceFixture.id).result,
+  );
+  const exportModes = {};
+  for (const moduleKind of ["cjs", "esm"]) {
+    const result = await runInstalledDoctorModule({
+      installRoot,
+      fixtureRoot: workspaceRoot,
+      validate,
+      moduleKind,
+      failOn: "warning",
+      acceptableExitCodes: [1],
+    });
+    const actualWorkspaceParity = harness.projectDoctorParity(result.result);
+    assert(
+      sameJson(actualWorkspaceParity, expectedWorkspaceParity) &&
+        result.result.coverage.evaluated_files >= 1 &&
+        result.result.coverage.evaluated_rule_ids.includes(
+          workspaceFixture.expected_rule_id,
+        ),
+      `Packed Doctor ${moduleKind} export did not execute the expected worker-backed finding: ${JSON.stringify(
+        {
+          actual: actualWorkspaceParity,
+          expected: expectedWorkspaceParity,
+        },
+      )}.`,
+    );
+    exportModes[moduleKind] = true;
+  }
+
+  const workerMutationResults = {};
+  for (const moduleKind of ["cjs", "esm"]) {
+    const mutationRoot = path.join(
+      path.dirname(installRoot),
+      `doctor-missing-${moduleKind}-worker`,
+    );
+    await fs.cp(installRoot, mutationRoot, { recursive: true });
+    await fs.rm(
+      path.join(
+        mutationRoot,
+        "node_modules",
+        "@salt-ds",
+        "cli",
+        moduleKind === "esm" ? "dist-es" : "dist-cjs",
+        "scannerWorker.js",
+      ),
+    );
+    let rejected = false;
+    try {
+      const result = await runInstalledDoctorModule({
+        installRoot: mutationRoot,
+        fixtureRoot: workspaceRoot,
+        validate,
+        moduleKind,
+        failOn: "warning",
+        acceptableExitCodes: [0, 1, 2, 3, 4],
+      });
+      rejected =
+        result.exit_code !== 1 ||
+        !sameJson(
+          harness.projectDoctorParity(result.result),
+          expectedWorkspaceParity,
+        );
+    } catch {
+      rejected = true;
+    }
+    assert(rejected, `Missing ${moduleKind} Doctor worker was not rejected.`);
+    workerMutationResults[`${moduleKind}_missing_rejected`] = true;
+  }
+
+  const performance = await runDoctorPerformance({
+    installRoot,
+    fixtureRoot: workspaceRoot,
+    validate,
+    expectedParity: expectedWorkspaceParity,
+    projectDoctorParity: harness.projectDoctorParity,
+    installedCliBinPath,
+  });
+  assert(
+    expectedWorkspaceParity.coverage.selected_files <=
+      DOCTOR_PERFORMANCE_LIMITS.max_source_files &&
+      sourceById.get(workspaceFixture.id).result.root.discovery
+        .selected_bytes <= DOCTOR_PERFORMANCE_LIMITS.max_source_bytes,
+    "Frozen Doctor performance fixture exceeds its source-size budget.",
+  );
+
+  const executeInstalled = async (root, schemaValidate) => {
+    const child = await runInstalledCli(
+      installedCliBinPath,
+      ["doctor", ".", "--format", "json", "--fail-on", "warning"],
+      root,
+      [0, 1, 3],
+      DOCTOR_OFFLINE_ENV,
+    );
+    const parsed = parseDoctorOutput(
+      child,
+      schemaValidate,
+      "Packed Doctor binary",
+    );
+    return {
+      command_executed: true,
+      invocation_root: ".",
+      json_valid: true,
+      exit_code: child.exitCode,
+      stderr: child.stderr,
+      result: parsed.value,
+    };
+  };
+  const fixtures = [];
+  for (const fixture of fixtureManifest.fixtures) {
+    const observation = await harness.collectFixtureObservation(
+      roots.get(fixture.id),
+      fixture,
+      validate,
+      executeInstalled,
+    );
+    harness.assertFixtureHarness(fixture, observation);
+    const source = sourceById.get(fixture.id);
+    assert(
+      sameJson(
+        harness.projectDoctorParity(observation.result),
+        harness.projectDoctorParity(source.result),
+      ) &&
+        sameJson(
+          observation.repair
+            ? harness.projectDoctorParity(observation.repair.after_result)
+            : null,
+          source.repair
+            ? harness.projectDoctorParity(source.repair.after_result)
+            : null,
+        ),
+      `${fixture.id}: packed Doctor differs from source-built semantics.`,
+    );
+    fixtures.push(observation);
+  }
+  return {
+    contract: "salt-ai-packed-doctor-smoke/1",
+    physical_fixture_count: fixtures.length,
+    source_parity: true,
+    offline: true,
+    read_only: fixtures.every(
+      (fixture) =>
+        fixture.read_only === true && fixture.repair?.read_only !== false,
+    ),
+    semantic_digest: candidateManifest.semantic_digest,
+    export_modes: exportModes,
+    worker_mutations: workerMutationResults,
+    fixtures,
+    performance,
+  };
 }
 
 export async function runCliWorkflowCoverage(
@@ -36,8 +481,11 @@ export async function runCliWorkflowCoverage(
   exactSaltRoot,
   nonSaltRoot,
   packReport,
+  options = {},
 ) {
-  console.log("Checking the installed Salt CLI surface offline...");
+  (options.log ?? console.log)(
+    "Checking the installed Salt CLI surface offline...",
+  );
   runOfflineNetworkGuardSelfTest();
   const installedCliBinPath = getInstalledCliBin(installRoot);
   assert(
@@ -67,6 +515,7 @@ export async function runCliWorkflowCoverage(
   ]) {
     await runCommand(process.execPath, args, {
       cwd: installRoot,
+      env: DOCTOR_OFFLINE_ENV,
       label: `offline packed CLI ${mode} export check`,
     });
   }
@@ -91,7 +540,7 @@ export async function runCliWorkflowCoverage(
       ["--import", offlineNetworkGuardUrl, installedCliBinPath, "help"],
       {
         cwd: exactSaltRoot,
-        env: { ...process.env },
+        env: { ...process.env, ...DOCTOR_OFFLINE_ENV },
         stdio: ["ignore", "pipe", "pipe"],
       },
     );
@@ -390,9 +839,9 @@ export async function runCliWorkflowCoverage(
   );
   assert(
     exactDocsMarkdown.stderr === "" &&
-      exactDocsMarkdown.stdout.includes("# Button") &&
+      exactDocsMarkdown.stdout.includes("# `Button`") &&
       exactDocsMarkdown.stdout.includes(
-        "Record: record:component:component.button",
+        "Record: `record:component:component.button`",
       ) &&
       exactDocsMarkdown.stdout.includes(
         packReport.report.knowledge_bundle.bundle_digest,
@@ -523,11 +972,10 @@ export async function runCliWorkflowCoverage(
       ) &&
       Buffer.byteLength(contextMarkdown.stdout, "utf8") <= 16 * 1024 &&
       contextMarkdown.stdout.includes(
-        "Citation: record:component:component.button",
+        "Citation: `record:component:component.button`",
       ),
     "Packed context was not deterministic, bounded, cited, empty-safe, or version-filtered.",
   );
-
   const partialResult = await runInstalledCli(
     installedCliBinPath,
     ["info", nonSaltRoot, "--json"],
@@ -547,7 +995,6 @@ export async function runCliWorkflowCoverage(
       partial.limitations.includes("SALT_PACKAGE_VECTOR_INCOMPATIBLE"),
     "Packed info did not disclose incomplete non-Salt coverage.",
   );
-
   const rejectedDocs = JSON.parse(
     (
       await runInstalledCli(
@@ -575,7 +1022,6 @@ export async function runCliWorkflowCoverage(
       rejectedContext.reason_code === "SALT_PROJECT_NO_SALT_PACKAGES",
     "Packed retrieval did not stop at the closed non-Salt project decision.",
   );
-
   const removedScan = await runInstalledCli(
     installedCliBinPath,
     ["scan"],
@@ -588,6 +1034,27 @@ export async function runCliWorkflowCoverage(
       removedScan.stderr.includes("Unknown command: scan"),
     "Packed CLI still exposed scan as a product command.",
   );
+  let doctorHarness = options.doctorHarness;
+  if (!doctorHarness) {
+    doctorHarness = await import("../../evals/salt-ai/doctor/run.mjs");
+  }
+  const doctor = await runPackedDoctorWorkflow(
+    installRoot,
+    packReport,
+    doctorHarness,
+  );
+  const performancePassed =
+    doctor.performance.max_wall_ms <= doctor.performance.limits.max_run_ms &&
+    doctor.performance.p90_wall_ms <= doctor.performance.limits.p90_wall_ms &&
+    doctor.performance.p90_peak_rss_bytes <=
+      doctor.performance.limits.p90_peak_rss_bytes;
+  if (options.captureThresholdMisses !== true) {
+    assert(
+      performancePassed,
+      `Packed Doctor exceeded its frozen performance budget: ${JSON.stringify(doctor.performance)}.`,
+    );
+  }
+  doctor.performance.threshold_passed = performancePassed;
 
   return {
     aliases: { help: 3, version: 2, broken_pipe: 1 },
@@ -598,6 +1065,8 @@ export async function runCliWorkflowCoverage(
       control_characters: "sanitized",
     },
     exact_info: {
+      cli_version: info.tool.version,
+      knowledge_version: info.knowledge.package_version,
       bundle_digest: info.knowledge.bundle_digest,
       semantic_digest: info.knowledge.semantic_digest,
       package_count: info.project.packages.length,
@@ -622,6 +1091,7 @@ export async function runCliWorkflowCoverage(
       docs: rejectedDocs.reason_code,
       context: rejectedContext.reason_code,
     },
+    doctor,
     network: "offline",
     node: process.versions.node,
   };

@@ -145,29 +145,48 @@ jobs:
         run: yarn workspace @salt-ds/knowledge build:knowledge
       - run: yarn run test
   consumer-smoke:
-    name: Consumer smoke (Node ${{ matrix.node }})
-    strategy:
-      fail-fast: false
-      matrix:
-        node: [22, 24]
+    name: Consumer smoke (Node 22 and 24)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           persist-credentials: false
-      - name: Use Node.js
+      - name: Verify clean checkout
+        run: |
+          test ! -e dist
+          test ! -e packages/knowledge/generated
+          git diff --exit-code
+          git diff --cached --exit-code
+      - name: Use Node.js 24 for build
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 24
           cache: "yarn"
       - name: Install dependencies
         run: yarn
-      - name: Consumer smoke test
+      - name: Build and pack once
         run: |
           yarn build:ai-tooling
           yarn check:ai-tooling:pack -- --report dist/salt-ai-pack/release-complete.json
-          yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/release-complete.json
+      - name: Use Node.js 22 for consumer smoke
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: 22
+          cache: "yarn"
+      - name: Consumer smoke on Node.js 22
+        run: yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/release-complete.json
+      - name: Use Node.js 24 for consumer smoke
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: 24
+          cache: "yarn"
+      - name: Consumer smoke on Node.js 24
+        run: yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/release-complete.json
+      - name: Verify tracked files remain unchanged
+        run: |
+          git diff --exit-code
+          git diff --cached --exit-code
   browser-tests:
     name: Browser Tests (React ${{ matrix.react }})
     strategy:
