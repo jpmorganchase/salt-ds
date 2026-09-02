@@ -77,3 +77,35 @@ export const AllExamples: StoryFn<QAContainerProps> = (props) => {
 AllExamples.parameters = {
   chromatic: { disableSnapshot: false },
 };
+
+export const VisualStyles: StoryFn<QAContainerProps> = (props) => (
+  <QAContainer itemPadding={4} cols={4} itemWidthAuto {...props}>
+    <LinkCard borderColor="strong" href="#">
+      <H1>Strong border</H1>
+      <Text>Content</Text>
+    </LinkCard>
+    <LinkCard borderColor="default" href="#">
+      <H1>Default border</H1>
+      <Text>Content</Text>
+    </LinkCard>
+    <LinkCard borderColor="subtle" href="#">
+      <H1>Subtle border</H1>
+      <Text>Content</Text>
+    </LinkCard>
+    <LinkCard borderColor="none" href="#">
+      <H1>No border</H1>
+      <Text>Content</Text>
+    </LinkCard>
+    <LinkCard elevation="flat" href="#">
+      <H1>Flat elevation</H1>
+      <Text>Content</Text>
+    </LinkCard>
+    <LinkCard elevation="raised" href="#">
+      <H1>Raised elevation</H1>
+      <Text>Content</Text>
+    </LinkCard>
+  </QAContainer>
+);
+VisualStyles.parameters = {
+  chromatic: { disableSnapshot: false },
+};
