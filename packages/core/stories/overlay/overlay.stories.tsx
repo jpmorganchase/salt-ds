@@ -223,7 +223,6 @@ export const ProfileSettings = () => {
         <OverlayPanelContent>
           <StackLayout
             gap={1}
-            style={{ paddingBlock: "var(--salt-spacing-100)" }}
           >
             <StackLayout align="center" direction="row" gap={1}>
               <Avatar
