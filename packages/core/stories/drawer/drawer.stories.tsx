@@ -9,7 +9,6 @@ import {
   DrawerFooter,
   DrawerHeader,
   type DrawerProps,
-  FlexItem,
   FlexLayout,
   FlowLayout,
   FormField,
@@ -427,11 +426,11 @@ export const OptionalCloseAction = () => {
             <FormField>
               <Checkbox label="Dog(s) present at my property" />
             </FormField>
-            <FlexItem align="end">
-              <Button onClick={handleClose}>Submit</Button>
-            </FlexItem>
           </StackLayout>
         </DrawerContent>
+        <DrawerFooter>
+          <Button onClick={handleClose}>Submit</Button>
+        </DrawerFooter>
       </Drawer>
     </>
   );
