@@ -95,31 +95,38 @@ const DefaultStory: StoryFn<typeof SkipLink> = (args) => {
         </FlexLayout>
       </BorderItem>
       <BorderItem position="center" className="center">
-        <StackLayout as="article">
+        <StackLayout
+          as="article"
+          style={{ paddingTop: "var(--salt-spacing-200)" }}
+        >
           <StackLayout as="section">
-            <H1 id={args.targetId} className="header">
-              Explore our offering
-            </H1>
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam,
-              consequuntur culpa dolor excepturi fugit in ipsa iusto laudantium
-              magnam minima necessitatibus odio qui quia repellendus sit tempore
-              veniam. At, veritatis.
-            </Text>
+            <div>
+              <H1 id={args.targetId} className="header">
+                Explore our offering
+              </H1>
+              <Text>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Aliquam, consequuntur culpa dolor excepturi fugit in ipsa iusto
+                laudantium magnam minima necessitatibus odio qui quia
+                repellendus sit tempore veniam. At, veritatis.
+              </Text>
+            </div>
             <GridLayout columns={3}>
               {cardHeaders.map((title) => {
                 return (
                   <Card key={title}>
                     <H2 styleAs="h4">{title}</H2>
-                    <Text>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Aliquam, consequuntur culpa dolor excepturi.
-                    </Text>
-                    <Text>
-                      Fugit in ipsa iusto laudantium magnam minima
-                      necessitatibus odio qui quia repellendus sit tempore
-                      veniam. At, veritatis.
-                    </Text>
+                    <StackLayout gap={1}>
+                      <Text>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Aliquam, consequuntur culpa dolor excepturi.
+                      </Text>
+                      <Text>
+                        Fugit in ipsa iusto laudantium magnam minima
+                        necessitatibus odio qui quia repellendus sit tempore
+                        veniam. At, veritatis.
+                      </Text>
+                    </StackLayout>
                   </Card>
                 );
               })}

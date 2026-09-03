@@ -14,11 +14,13 @@
   margin: 0;
 }
 .center {
-  margin: calc(var(--salt-spacing-300) * 2) auto;
+  margin: auto;
+  padding: var(--salt-spacing-200);
   max-width: 700px;
 }
 .header {
-  padding-top: calc(var(--salt-spacing-300) * 2);
+  margin-top: calc(var(--salt-spacing-300) * 2);
+  margin-bottom: var(--salt-spacing-300);
 }
 .help-text {
   position: absolute;

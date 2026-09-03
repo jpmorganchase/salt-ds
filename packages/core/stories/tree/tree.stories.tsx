@@ -1,4 +1,5 @@
 import {
+  StackLayout,
   Tooltip,
   Tree,
   TreeNode,
@@ -66,7 +67,7 @@ const renderSecretFiles = (show = true) =>
   ) : null;
 
 export const WithConditionalFragment: StoryFn<typeof Tree> = (args) => (
-  <>
+  <StackLayout align="start">
     <p>
       Use this story to check keyboard navigation and model-driven selection
       state for TreeNodes rendered from a conditional fragment.
@@ -90,7 +91,7 @@ export const WithConditionalFragment: StoryFn<typeof Tree> = (args) => (
         <TreeNode value="project/tests/tree" label="tree.test.tsx" />
       </TreeNode>
     </Tree>
-  </>
+  </StackLayout>
 );
 
 export const WithIcons: StoryFn<typeof Tree> = (args) => {

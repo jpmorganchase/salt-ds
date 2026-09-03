@@ -36,7 +36,14 @@ const featuredResource = (
     />
     <StackLayout gap={1}>
       <StackLayout gap={0}>
-        <Text styleAs="h2" as="h2">
+        <Text
+          styleAs="h2"
+          as="h2"
+          style={{
+            marginTop: "var(--salt-spacing-200)",
+            marginBottom: "var(--salt-spacing-200)",
+          }}
+        >
           Featured Resource
         </Text>
         <Text className={styles.customRegionRightDescription}>
