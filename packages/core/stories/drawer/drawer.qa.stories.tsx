@@ -1,7 +1,9 @@
 import {
+  Button,
   Drawer,
   DrawerCloseButton,
   DrawerContent,
+  DrawerFooter,
   DrawerHeader,
   type DrawerProps,
   StackLayout,
@@ -53,6 +55,10 @@ const DrawerTemplate: StoryFn<typeof Drawer> = () => {
             <Text>{loremText}</Text>
             <Text>{loremText}</Text>
           </DrawerContent>
+          <DrawerFooter>
+            <Button appearance="transparent">Cancel</Button>
+            <Button sentiment="accented">Save</Button>
+          </DrawerFooter>
         </FakeDrawer>
         <FakeDrawer>
           <DrawerHeader header="Title" actions={<DrawerCloseButton />} />
@@ -78,6 +84,20 @@ const DrawerTemplate: StoryFn<typeof Drawer> = () => {
           <DrawerContent>
             <Text>{loremText}</Text>
           </DrawerContent>
+          <DrawerFooter>
+            <Button sentiment="accented">Save</Button>
+          </DrawerFooter>
+        </FakeDrawer>
+      </StackLayout>
+      <StackLayout direction="row" gap={3}>
+        <FakeDrawer>
+          <DrawerContent>
+            <Text>Pending transaction review</Text>
+          </DrawerContent>
+          <DrawerFooter>
+            <Button appearance="transparent">Discard changes</Button>
+            <Button sentiment="accented">Save and continue</Button>
+          </DrawerFooter>
         </FakeDrawer>
       </StackLayout>
       <StackLayout direction="row" gap={3}>
