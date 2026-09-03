@@ -1,0 +1,42 @@
+{
+  "contract": "salt-ai-plan-006-control/1",
+  "plan_id": "006",
+  "plan_sha256": "d74db6ec4d4c2fd7be23fa61ff6d430224653f6c89bdbb61798b523db7160b76",
+  "predecessor": {
+    "plan_id": "005",
+    "terminal_commit": "25a93f131f824ea767e9412c2b10213588133cbb",
+    "terminal_result": "CUT_DOCTOR",
+    "control_sha256": "260b27e1cecd304a831b035872c2a23a1583f52fe6bb45dd78e30a96eb1a09c8"
+  },
+  "active_dispatch": {
+    "unit": "006/00",
+    "checkpoint_sha": "519d9855bd7e222e6e66e3a746ad84d03bed407b"
+  },
+  "units": [
+    {
+      "id": "006/00",
+      "status": "IN_PROGRESS",
+      "checkpoint_sha": "519d9855bd7e222e6e66e3a746ad84d03bed407b",
+      "completion_sha": null,
+      "result": null,
+      "evidence": null
+    },
+    {
+      "id": "006/01",
+      "status": "TODO",
+      "checkpoint_sha": null,
+      "completion_sha": null,
+      "result": null,
+      "evidence": null
+    },
+    {
+      "id": "006/02",
+      "status": "TODO",
+      "checkpoint_sha": null,
+      "completion_sha": null,
+      "result": null,
+      "evidence": null
+    }
+  ],
+  "terminal_result": null
+}

@@ -21,7 +21,7 @@ it does not dispatch or block Plan 004.
 | [001](./archive/completed/001-build-salt-ai-knowledge-platform.md) | Build the original local Salt AI release candidate and record Unit 07 evidence                                  | P1       | L, multi-phase | —                    | DONE — archived historical candidate complete through Unit 07 |
 | [004](./004-validate-salt-ai-product-wedge.md)                     | Validate a truthful, exact-current, task-ready Salt AI product wedge before hardening or release                | P0       | L, multi-phase | Plan 001 Unit 07     | DEFERRED — Units 00–02 preserved; Unit 004/03 superseded      |
 | [005](./005-prove-version-aware-salt-ai-doctor.md)                 | Prove an exact-current Salt Doctor with executable tests and a real-consumer pilot                              | P0       | M, four units  | Plan 004 Units 00–02 | DONE — CUT_DOCTOR at Unit 005/02; performance gate missed     |
-| [006](./006-make-salt-doctor-lightweight-or-retire.md)             | Make packed Salt Doctor lightweight through one bounded correction or retire the interactive shape              | P0       | M, three units | Plan 005 CUT_DOCTOR  | TODO                                                          |
+| [006](./006-make-salt-doctor-lightweight-or-retire.md)             | Make packed Salt Doctor lightweight through one bounded correction or retire the interactive shape              | P0       | M, three units | Plan 005 CUT_DOCTOR  | IN PROGRESS — Unit 006/00                                     |
 | [003](./003-publish-salt-ai-release-candidate.md)                  | Materialize versions and publish an approved Salt AI release candidate through separately owned release systems | P2       | L, conditional | Plan 004 final PASS  | DEFERRED — Plan 004 PASS and publication authority are absent |
 | [002](./002-add-secure-historical-salt-knowledge.md)               | Add secure historical Salt knowledge resolution only after current GA, public discovery, and ownership approval | P2       | L, conditional | Plan 003 completion  | DEFERRED — post-Plan-003 re-plan and entry gates are absent   |
 
@@ -58,11 +58,11 @@ have been used in at least two valid comparator attempts across two consumers.
 Model hosting, MCP, provider abstractions, generic evaluator infrastructure, and
 a broad competitor matrix are out of scope. Unit `005/02` returned
 `CUT_DOCTOR` at the frozen packed-performance gate, so `005/03` was never
-dispatched. Plan 003 stays deferred for every Plan 005 outcome. The Active
-dispatch block below and the Plan 005 control record are the only current
-execution authority; both now record no active unit.
+dispatched. Plan 003 stays deferred for every Plan 005 outcome. The Plan 005
+control remains the terminal predecessor record; the Active dispatch block
+below and Plan 006 control are the current execution authority.
 
-Plan 006 is an inactive proposal written from the terminal Plan 005 code and
+Plan 006 is the active technical successor written from the terminal Plan 005 code and
 artifact evidence. It first corrects the missing product-shaped Linux/Windows
 runtime measurements, then permits exactly one correction for duplicated eager
 Knowledge/parser loading, and finally either makes a separately reviewed
@@ -70,15 +70,14 @@ real-task evaluation eligible or retires the unreleased interactive Doctor
 shape. It keeps offline execution, exact provenance, worker isolation,
 read-only behavior, package limits, and the existing performance ceilings. It
 does not authorize synthetic product-value evals, consumer contact, another
-optimization cycle, competitor analysis, release, or production. Its TODO row
-is not authority: Plan 006 remains inactive until a reviewed activation creates
-its closed control and dispatches only Unit `006/00`.
+optimization cycle, competitor analysis, release, or production. Its tracker
+row is backed by a reviewed closed control that dispatches only Unit `006/00`.
 
 The 2026-08-29 scope amendment separates implementation from publication. Plan
 001 ends at Unit 07 with unversioned, locally packed and consumer-verified
 historical candidate artifacts. At that time, the 2026-08-30 successor amendment
 inserted Plan 004 as the tracked product-correction, need, competitor, and
-validation path; the Plan 005 terminal and inactive Plan 006 successor notes
+validation path; the Plan 005 terminal and active Plan 006 successor notes
 above now govern that line. Plan 003 owns every later version, registry, trusted-publisher,
 deployment, promotion, rollback, and live activation decision, but is
 ineligible until Plan 004 records a final PASS bound to exact candidate bytes.
@@ -89,9 +88,10 @@ publication authority as deferred to Plan 003.
 
 ## Active dispatch
 
-- **Active plan/unit:** none
-- **Next eligible unit:** none; Plan 005 is terminal
-- **Status:** DONE — `CUT_DOCTOR` at Unit `005/02`
+- **Active plan/unit:** Plan 006 / Unit `006/00`
+- **Checkpoint:** `519d9855bd7e222e6e66e3a746ad84d03bed407b`
+- **Status:** IN PROGRESS — establish product-shaped packed Doctor runtime truth
+- **Plan 006 contract:** `d74db6ec4d4c2fd7be23fa61ff6d430224653f6c89bdbb61798b523db7160b76`
 - **Plan 004 evidence authority:**
   `plans/evidence/004/index.json@sha256:28b981e295669c477de97c5ca453aa56fe4beb59d2ab81115aaa99cfe4dafc72`
 - **Plan 005 contract:** `5e048a9db36abb4409279856ace70e1f5e1af3125886940bede04584dfbd646f`
@@ -102,10 +102,11 @@ publication authority as deferred to Plan 003.
   exact-current Knowledge, structured rules, and Unit `005/01` source behavior
   as reusable local foundations, but do not run a consumer pilot or imply
   release eligibility.
-- **External authority:** none; network, installs, model calls, participant
-  contact, publication, and deployment remain unauthorized
-- **Successor eligibility:** none; Unit `005/03` was not reached and Plan 003
-  remains ineligible
+- **External authority:** only the Plan 006 Unit `006/00` explicitly dispatched
+  CI artifact/dependency setup is authorized; Doctor runtime network, model
+  calls, participant contact, publication, and deployment remain unauthorized
+- **Successor eligibility:** determined only by the registered Unit `006/00`
+  runtime decision; Unit `005/03` and Plan 003 remain ineligible
 
 Only this block dispatches post-Plan-001 work. A TODO row, local branch,
 ignored plan, generated artifact, or prose status elsewhere is not authority.
@@ -349,10 +350,9 @@ digest (or explicitly forward-revoke support).
   pauses: an already-authorized local execution continues through the next
   eligible unit and yields only at Plan 004's registered authority, outcome,
   STOP, or unfixable verification boundary.
-- Plan 006 is the only proposed technical successor to Plan 005's terminal
-  `CUT_DOCTOR`. It is not active. A reviewed activation must preserve Plan 005
-  bytes and terminal result, create a separate closed Plan 006 control, and
-  dispatch only `006/00`. A technical PASS can make a new real-task evaluation
+- Plan 006 is the only active technical successor to Plan 005's terminal
+  `CUT_DOCTOR`. Its activation preserves Plan 005 bytes and terminal result,
+  uses a separate closed Plan 006 control, and dispatches only `006/00`. A technical PASS can make a new real-task evaluation
   plan eligible; it cannot revive `005/03` or make Plan 003 eligible.
 - Plan 003 consumes the exact Plan 004 PASS candidate and Plan 001 Unit 07 as
   historical ancestry. It never publishes the older Plan 001 bytes after Plan

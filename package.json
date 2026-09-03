@@ -39,6 +39,7 @@
     "verify:salt-ai:package-namespaces": "node ./scripts/verifySaltAiPackageNamespaces.mjs",
     "validate:salt-ai:tracker": "node ./scripts/validateSaltAiTracker.mjs",
     "validate:salt-ai:plan-004": "node ./scripts/validateSaltAiPlan004.mjs",
+    "validate:salt-ai:plan-006": "node ./scripts/validateSaltAiPlan006.mjs",
     "validate:salt-ai:contracts": "node ./scripts/validateSaltAiContracts.mjs",
     "check:changed-quality": "node ./scripts/checkChangedQuality.mjs",
     "retire:salt-ai:premerge-evidence": "node ./scripts/retireSaltAiPremergeEvidence.mjs",
