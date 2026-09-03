@@ -47,6 +47,15 @@ AllExamplesGrid.parameters = {
 
 export const FormFieldAlignments: StoryFn<QAContainerProps> = (props) => (
   <QAContainer height={500} width={1000} cols={2} {...props}>
+    <FormField>
+      <FormFieldLabel>Reference</FormFieldLabel>
+      <Input defaultValue="Value" />
+      <FormFieldHelperText>Helpertext</FormFieldHelperText>
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Label</FormFieldLabel>
+      <Switch />
+    </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Reference</FormFieldLabel>
       <Input defaultValue="Value" />
