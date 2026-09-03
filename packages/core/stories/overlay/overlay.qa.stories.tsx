@@ -1,14 +1,18 @@
 import {
   Button,
   Overlay,
+  OverlayFooter,
   OverlayHeader,
   OverlayPanel,
   OverlayPanelCloseButton,
   OverlayPanelContent,
   OverlayTrigger,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
+import type { CSSProperties } from "react";
 
 import "./overlay.stories.css";
 import { CloseIcon } from "@salt-ds/icons";
@@ -89,6 +93,63 @@ export const CloseButton: StoryFn<QAContainerProps> = (props) => {
 };
 
 CloseButton.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+  },
+};
+
+const footerFrameStyle = {
+  alignItems: "flex-end",
+  blockSize: 360,
+  display: "flex",
+  inlineSize: 360,
+  justifyContent: "center",
+} satisfies CSSProperties;
+
+export const WithFooter: StoryFn<QAContainerProps> = (props) => {
+  return (
+    <QAContainer
+      height="auto"
+      itemWidthAuto
+      transposeDensity
+      vertical
+      {...props}
+    >
+      <div style={footerFrameStyle}>
+        <Overlay open>
+          <OverlayTrigger>
+            <Button>Show Overlay</Button>
+          </OverlayTrigger>
+          <OverlayPanel style={{ width: 320 }}>
+            <OverlayHeader header="Review changes" />
+            <OverlayPanelContent style={{ height: 120 }}>
+              <StackLayout>
+                <Text>
+                  Review the account updates before saving. The footer remains
+                  available while this content scrolls.
+                </Text>
+                <Text>
+                  Contact details, notification preferences, and security
+                  settings will be updated when you save.
+                </Text>
+                <Text>
+                  You can cancel to close the overlay without applying these
+                  changes.
+                </Text>
+              </StackLayout>
+            </OverlayPanelContent>
+            <OverlayFooter>
+              <Button appearance="bordered">Cancel</Button>
+              <Button>Save changes</Button>
+            </OverlayFooter>
+          </OverlayPanel>
+        </Overlay>
+      </div>
+    </QAContainer>
+  );
+};
+
+WithFooter.parameters = {
   chromatic: {
     disableSnapshot: false,
   },

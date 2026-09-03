@@ -8,9 +8,9 @@ data:
   $ref: ./#/data
 ---
 
-## Default overlay
+## Default
 
-The basic overlay component allows the user to expose and interact with supplemental information. The overlay remains persistent until the user dismisses it.
+The `Overlay` component allows the user to expose and interact with supplemental information. The overlay remains persistent until the user dismisses it.
 
 <LivePreview componentName="overlay" exampleName="Default" />
 
@@ -20,15 +20,17 @@ Use the `placement` prop to position overlay content to the `top`, `bottom`, `le
 
 <LivePreview componentName="overlay" exampleName="Placement" />
 
-## Header
+## Sections
 
-`OverlayHeader` follows our standardized header for container components and app regions, and it can be added as a child of the `OverlayPanel` component to provide a structured header for overlay. The header includes a title and actions that follows our [Header Block pattern](/salt/patterns/header-block). This approach is recommended over using the `OverlayPanelCloseButton` separately.
+Use `OverlayHeader`, `OverlayPanelContent` and `OverlayFooter` to create distinct padded sections within `OverlayPanel`. Sections need to be direct children of `OverlayPanel` so their spacing rules apply; adjacent sections share a single `--salt-spacing-100` gap.
 
-<LivePreview componentName="overlay" exampleName="WithHeader" />
+`OverlayHeader` follows the [Header Block pattern](/salt/patterns/header-block). Pass the title to `header`, add `preheader` or `description` when needed and put controls such as the close button in `actions`.
+
+<LivePreview componentName="overlay" exampleName="WithFooter" />
 
 ## Long content
 
-When overlay content extends beyond the set height, the content defaults to scroll. The close button remains sticky and accessible at all times.
+When content in `OverlayPanelContent` extends beyond its set height, it scrolls while the header and its close button stay in place.
 
 <LivePreview componentName="overlay" exampleName="LongContent" />
 
