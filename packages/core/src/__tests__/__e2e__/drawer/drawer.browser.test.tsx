@@ -199,6 +199,9 @@ describe("GIVEN a Drawer", () => {
 
     const content = page.getByRole("region", { name: headingName });
     await expect.element(content).toBeVisible();
+    await expect
+      .element(page.getByRole("button", { name: "Close Drawer" }))
+      .toHaveFocus();
     await userEvent.tab();
     await expect.element(content).toHaveFocus();
   });
