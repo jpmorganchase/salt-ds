@@ -1,5 +1,17 @@
 # @salt-ds/highcharts-theme
 
+## 1.0.4
+
+### Patch Changes
+
+- f943db1: Fixed legend titles to use Salt typography.
+- Updated dependencies [2e1da8e]
+- Updated dependencies [5da6723]
+- Updated dependencies [1417fa9]
+- Updated dependencies [dd17c26]
+  - @salt-ds/theme@1.46.0
+  - @salt-ds/core@1.71.0
+
 ## 1.0.3
 
 ### Patch Changes

@@ -1,5 +1,18 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.104
+
+### Minor Changes
+
+- 5da6723: Removed `LinkButton` from lab and promoted it to core. Import it from `@salt-ds/core` instead.
+
+### Patch Changes
+
+- Updated dependencies [5da6723]
+- Updated dependencies [1417fa9]
+- Updated dependencies [dd17c26]
+  - @salt-ds/core@1.71.0
+
 ## 1.0.0-alpha.103
 
 ### Minor Changes
