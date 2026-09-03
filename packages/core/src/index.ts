@@ -34,6 +34,7 @@ export * from "./kbd";
 export * from "./link";
 export * from "./link-button";
 export * from "./link-card";
+export * from "./list";
 export * from "./list-box";
 export * from "./list-control";
 export * from "./mega-menu";

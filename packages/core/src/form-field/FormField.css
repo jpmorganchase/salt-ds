@@ -17,6 +17,7 @@
   grid-template-areas:
     "label"
     "controls";
+  grid-template-rows: min-content minmax(var(--salt-size-base), auto);
 }
 
 .saltFormField-labelTop .saltFormFieldHelperText {
@@ -26,11 +27,13 @@
 .saltFormField-labelLeft {
   grid-template-columns: var(--saltFormField-label-width, var(--formField-label-width, 40%)) 1fr;
   grid-template-areas: "label controls";
+  grid-template-rows: minmax(var(--salt-size-base), auto);
 }
 
 .saltFormField-labelRight {
   grid-template-columns: var(--saltFormField-label-width, var(--formField-label-width, 40%)) 1fr;
   grid-template-areas: "label controls";
+  grid-template-rows: minmax(var(--salt-size-base), auto);
 }
 
 .saltFormField-labelLeft .saltFormFieldHelperText,
@@ -63,6 +66,10 @@
   grid-area: helperText;
 }
 
+.saltFormField > :not(.saltFormFieldLabel):not(.saltFormFieldHelperText) {
+  align-self: center;
+}
+
 .saltFormField-disabled {
   --saltInput-outline: none;
   --saltCheckbox-outline: none;
@@ -72,5 +79,6 @@
 @supports selector(:has(*)) {
   .saltFormField:not(:has(.saltFormFieldLabel)) {
     grid-template-areas: "controls";
+    grid-template-rows: minmax(var(--salt-size-base), auto);
   }
 }

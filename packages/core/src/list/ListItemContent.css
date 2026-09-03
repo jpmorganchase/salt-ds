@@ -1,0 +1,30 @@
+.saltListItemContent {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  flex: 1 1 auto;
+  gap: var(--salt-spacing-100);
+  grid-column: 1;
+  grid-row: 1;
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  min-width: 0;
+  overflow-wrap: anywhere;
+  padding: calc(var(--salt-spacing-50) + ((var(--salt-size-base) - var(--salt-text-lineHeight)) / 2)) var(--salt-spacing-100);
+  width: 100%;
+
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  letter-spacing: var(--salt-text-letterSpacing);
+  line-height: var(--salt-text-lineHeight);
+  text-align: var(--salt-text-textAlign);
+}
+
+.saltListItemContent > * {
+  min-width: 0;
+}
+
+.saltListItemContent > .saltIcon {
+  flex-shrink: 0;
+  margin-top: calc((var(--salt-text-lineHeight) - var(--icon-size, max(var(--salt-size-icon), 12px))) / 2);
+}
