@@ -24,6 +24,7 @@ const context = await esbuild.context({
   absWorkingDir: path.join(cwd, "src"),
   entryPoints: [
     "index.css",
+    "css/baseline.css",
     "css/theme.css",
     "css/global.css",
     "css/theme-next.css",

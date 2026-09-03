@@ -16,6 +16,7 @@ import {
   FormFieldLabel,
   H2,
   Input,
+  Link,
   Option,
   StackLayout,
   Text,
@@ -514,7 +515,15 @@ export const HeaderAndFooter: StoryFn<DrawerProps> = (args) => {
         />
         <DrawerContent>
           <StackLayout>
-            <Text>{loremText.repeat(17)}</Text>
+            <Text>{loremText.repeat(8)}</Text>
+            <Text>
+              Read the <Link href="#">transaction policy</Link> before
+              approving.
+            </Text>
+            <Text>{loremText.repeat(8)}</Text>
+            <Text>
+              Questions? <Link href="#">Contact the payments team</Link>.
+            </Text>
           </StackLayout>
         </DrawerContent>
         <DrawerFooter>
