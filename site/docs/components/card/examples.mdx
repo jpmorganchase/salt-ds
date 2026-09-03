@@ -53,12 +53,6 @@ Cards support strong, default, and subtle border colors, as well as no border. C
 
 <LivePreview componentName="card" exampleName="Accents" />
 
-## Hoverable
-
-The `hoverable` prop adds hover styling to a static `Card`; it doesn't add interaction, semantics, or keyboard behavior. Use `LinkCard` or `InteractableCard` when the entire card is interactive.
-
-<LivePreview componentName="card" exampleName="HoverStyling" />
-
 ## Actions
 
 You can incorporate actions like [links](../link) or [buttons](../button) into a card. Don't embed actions into a link card or an interactable card, as the card itself is the interactive element.
@@ -138,3 +132,9 @@ Use `defaultValue` to set the initial selection, or use `value` with `onChange` 
 Set `disabled` on `InteractableCardGroup` to disable every card in the group.
 
 <LivePreview componentName="card" exampleName="DisabledSelectionGroup" />
+
+## Hoverable (deprecated)
+
+The `hoverable` prop is deprecated. Static cards shouldn't use hover styling because it can imply that they are interactive. Use `LinkCard` or `InteractableCard` when the entire card is interactive.
+
+<LivePreview componentName="card" exampleName="HoverStyling" />

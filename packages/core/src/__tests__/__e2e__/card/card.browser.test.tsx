@@ -15,7 +15,7 @@ import { renderWithSalt } from "~browser-test-utils/render";
 import * as cardStories from "~stories/card/card.stories";
 
 const composedStories = composeStories(cardStories);
-const { Default, AccentVariations } = composedStories;
+const { Default } = composedStories;
 
 function DynamicCard() {
   const [showContent, setShowContent] = useState(true);
@@ -74,13 +74,10 @@ describe("Given a Card", () => {
   });
 
   it("applies hover styling when hoverable", async () => {
-    await renderWithSalt(<AccentVariations />);
-    const cards = document.querySelectorAll(".saltCard");
+    await renderWithSalt(<Card data-testid="hoverable-card" hoverable />);
+    const card = page.getByTestId("hoverable-card");
 
-    expect(cards.length).toBeGreaterThan(0);
-    for (const card of cards) {
-      expect(card).toHaveClass("saltCard-hoverable");
-    }
+    await expect.element(card).toHaveClass("saltCard-hoverable");
   });
 
   it("applies sectioned layout for direct sections", async () => {

@@ -134,7 +134,7 @@ a:focus .saltCard-interactable,
   border-color: var(--salt-actionable-accented-borderColor-hover);
 }
 
-/* Styles applied if `hoverable` is set */
+/* Deprecated hoverable styles retained for backward compatibility. */
 @media (hover: hover) {
   .saltCard-hoverable:not(.saltCard-disabled):hover {
     box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
