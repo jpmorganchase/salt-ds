@@ -18,7 +18,7 @@ import {
   runCommand,
 } from "./shared.mjs";
 
-const DOCTOR_OFFLINE_ENV = Object.freeze({
+export const DOCTOR_OFFLINE_ENV = Object.freeze({
   SALT_OFFLINE_ALLOW_SCANNER_WORKER: "1",
 });
 
@@ -41,7 +41,7 @@ async function runInstalledCli(
   );
 }
 
-const DOCTOR_PERFORMANCE_LIMITS = Object.freeze({
+export const DOCTOR_PERFORMANCE_LIMITS = Object.freeze({
   warmups: 3,
   measured_runs: 12,
   max_run_ms: 5_000,
@@ -50,7 +50,7 @@ const DOCTOR_PERFORMANCE_LIMITS = Object.freeze({
   max_source_files: 25,
   max_source_bytes: 256 * 1024,
 });
-const DOCTOR_METRIC_PREFIX = "SALT_DOCTOR_PROCESS_METRIC ";
+export const DOCTOR_METRIC_PREFIX = "SALT_DOCTOR_PROCESS_METRIC ";
 
 function sameJson(left, right) {
   return JSON.stringify(left) === JSON.stringify(right);
@@ -87,6 +87,53 @@ function parseDoctorOutput(result, validate, label, allowMetric = false) {
     assert(result.stderr === "", `${label} emitted unexpected stderr.`);
   }
   return { value, metric };
+}
+
+export async function runInstalledDoctorBinaryProcess({
+  installedCliBinPath,
+  fixtureRoot,
+  validate,
+  metricProbeUrl,
+  acceptableExitCodes,
+  failOn = "warning",
+}) {
+  const startedAt = process.hrtime.bigint();
+  const result = await runCommand(
+    process.execPath,
+    [
+      "--import",
+      offlineNetworkGuardUrl,
+      "--import",
+      metricProbeUrl,
+      installedCliBinPath,
+      "doctor",
+      ".",
+      "--format",
+      "json",
+      "--fail-on",
+      failOn,
+    ],
+    {
+      cwd: fixtureRoot,
+      env: DOCTOR_OFFLINE_ENV,
+      acceptableExitCodes,
+      label: "offline packed Doctor installed binary",
+      timeoutMs: 30_000,
+    },
+  );
+  const wallMs = Number((process.hrtime.bigint() - startedAt) / 1_000_000n);
+  const parsed = parseDoctorOutput(
+    result,
+    validate,
+    "Packed Doctor installed binary",
+    true,
+  );
+  return {
+    exit_code: result.exitCode,
+    result: parsed.value,
+    wall_ms: wallMs,
+    peak_rss_bytes: parsed.metric.max_rss_kib * 1024,
+  };
 }
 
 function doctorModuleScript(entryPath, args, moduleKind, includeMetric) {
