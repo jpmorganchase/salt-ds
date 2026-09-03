@@ -295,11 +295,16 @@ Preheader.args = {
 };
 
 const AlertDialogTemplate: StoryFn<
-  DialogProps & { header: string; content: ReactNode }
+  DialogProps & {
+    header: string;
+    content: ReactNode;
+    description?: ReactNode;
+  }
 > = ({
   open: openProp = false,
   status,
   header,
+  description,
   size = "small",
   content,
   ...args
@@ -356,7 +361,7 @@ const AlertDialogTemplate: StoryFn<
         // focus the ok instead of the cancel button
         initialFocus={initialFocusButtonIndex}
       >
-        <DialogHeader header={header} />
+        <DialogHeader header={header} description={description} />
         <DialogContent>{content}</DialogContent>
         <DialogActions>
           {direction === "column" ? (
@@ -398,6 +403,34 @@ export const ErrorStatus = AlertDialogTemplate.bind({});
 ErrorStatus.args = {
   status: "error",
   header: "Error",
+};
+
+export const InfoStatusWithDescription = AlertDialogTemplate.bind({});
+InfoStatusWithDescription.args = {
+  status: "info",
+  header: "File update",
+  description: "A new version is available with important changes.",
+};
+
+export const SuccessStatusWithDescription = AlertDialogTemplate.bind({});
+SuccessStatusWithDescription.args = {
+  status: "success",
+  header: "Transaction complete",
+  description: "Your payment has been processed successfully.",
+};
+
+export const WarningStatusWithDescription = AlertDialogTemplate.bind({});
+WarningStatusWithDescription.args = {
+  status: "warning",
+  header: "Session expiring",
+  description: "Your session will expire in 5 minutes.",
+};
+
+export const ErrorStatusWithDescription = AlertDialogTemplate.bind({});
+ErrorStatusWithDescription.args = {
+  status: "error",
+  header: "Connection failed",
+  description: "Unable to connect to the server. Please try again.",
 };
 
 export const MandatoryAction: StoryFn<typeof Dialog> = ({
