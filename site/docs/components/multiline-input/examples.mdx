@@ -60,6 +60,8 @@ You can add a character count as a label using `endAdornment` props. The example
 
 If the user goes over the character count limit, display an error state and change the Label to `primary` variant with a weight of `"strong"`.
 
+Use `useAriaAnnouncer` to announce character count updates to screen reader users without moving focus. When the user first exceeds the limit, make the announcement assertive so they receive immediate feedback.
+
 <LivePreview componentName="multiline-input" exampleName="CharacterCount" />
 
 ## Validation status
