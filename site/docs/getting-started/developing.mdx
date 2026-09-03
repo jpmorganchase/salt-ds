@@ -218,6 +218,20 @@ Refer to the [SaltProvider](../components/salt-provider) docs for the full API.
 
 Salt injects component styles at runtime by default, so you don’t need to import component CSS for the setup above. If you need static component CSS or your application uses a Content Security Policy that requires a nonce for injected styles, see [Style injection](./style-injection).
 
+#### (Optional) Apply the CSS baseline reset
+
+Browsers add margins to the document body, headings and paragraphs. Salt's text styles don't override these margins. For example, the `styleAs` prop on `Text` changes the text style, but it doesn't change the browser margin for the element selected by `as`.
+
+To remove that browser spacing, `@salt-ds/theme` ships an opt-in baseline reset. Import it once at the root of your app, before the theme CSS:
+
+```tsx
+import "@salt-ds/theme/css/baseline.css";
+import "@salt-ds/theme/css/global.css";
+import "@salt-ds/theme/css/theme-next.css";
+```
+
+If you're using the Legacy theme, import it before `@salt-ds/theme/index.css` instead.
+
 ### 4. Import components
 
 To use a Salt UI component, import it from the `@salt-ds/core` package and reference it in your JSX.
