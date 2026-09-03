@@ -1,6 +1,7 @@
 .saltDrawerFooter {
   background: var(--drawer-background);
   padding: var(--salt-spacing-300);
+  padding-bottom: 0;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -8,8 +9,4 @@
   gap: var(--salt-spacing-100);
   flex-shrink: 0;
   box-sizing: border-box;
-}
-
-.saltDrawerContent + .saltDrawerFooter {
-  padding-top: 0;
 }
