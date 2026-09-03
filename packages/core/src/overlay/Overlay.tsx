@@ -10,7 +10,11 @@ import {
   useRole,
 } from "@floating-ui/react";
 import { type ReactNode, useMemo, useRef } from "react";
-import { useControlled, useFloatingUI } from "../utils";
+import {
+  type UseFloatingUIProps,
+  useControlled,
+  useFloatingUI,
+} from "../utils";
 import { OverlayContext, type OverlayContextValue } from "./OverlayContext";
 
 export interface OverlayProps {
@@ -29,7 +33,7 @@ export interface OverlayProps {
   /**
    * Set the placement of the Overlay component relative to the trigger element. Defaults to `top`.
    */
-  placement?: "top" | "bottom" | "left" | "right";
+  placement?: UseFloatingUIProps["placement"];
   /**
    * When `true`, the arrow indicator is hidden
    */
