@@ -19,7 +19,7 @@ const {
   OptionalCloseAction,
   InitialFocusIndex,
   InitialFocusRef,
-  HeaderAndActions,
+  HeaderAndFooter,
 } = composeStories(drawerStories);
 
 const headingName = "Payments Check deposit #1278";
@@ -195,7 +195,7 @@ describe("GIVEN a Drawer", () => {
   });
 
   it("exposes overflowing content as a region reachable by keyboard", async () => {
-    await renderWithSalt(<HeaderAndActions />);
+    await renderWithSalt(<HeaderAndFooter />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
 
     const content = page.getByRole("region", { name: headingName });
@@ -254,7 +254,7 @@ describe("GIVEN a Drawer with sections nested in a fragment", () => {
 
 describe("GIVEN a Drawer with a DrawerHeader", () => {
   it("names and describes the drawer from the header", async () => {
-    await renderWithSalt(<HeaderAndActions />);
+    await renderWithSalt(<HeaderAndFooter />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
 
     const drawer = page.getByRole("dialog");
@@ -268,7 +268,7 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
   });
 
   it("closes from a close button placed in the header actions", async () => {
-    await renderWithSalt(<HeaderAndActions />);
+    await renderWithSalt(<HeaderAndFooter />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
 
     const closeButton = page.getByRole("button", { name: "Close Drawer" });
@@ -402,7 +402,7 @@ describe("GIVEN a Drawer with DrawerFooter", () => {
   });
 
   it("supports actions configured to close the drawer", async () => {
-    await renderWithSalt(<HeaderAndActions />);
+    await renderWithSalt(<HeaderAndFooter />);
     const openButton = page.getByRole("button", { name: "Open Drawer" });
 
     await openButton.click();
@@ -417,7 +417,7 @@ describe("GIVEN a Drawer with DrawerFooter", () => {
   });
 
   it("keeps the footer pinned to the bottom while the content scrolls", async () => {
-    await renderWithSalt(<HeaderAndActions />);
+    await renderWithSalt(<HeaderAndFooter />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
 
     const drawer = page.getByRole("dialog");
@@ -452,7 +452,7 @@ describe("GIVEN a Drawer with DrawerFooter", () => {
   });
 
   it("shows an overflow divider above the footer until the content is fully scrolled", async () => {
-    await renderWithSalt(<HeaderAndActions />);
+    await renderWithSalt(<HeaderAndFooter />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
 
     const region = page.getByRole("region");
