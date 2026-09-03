@@ -11,7 +11,7 @@ export type DrawerFooterProps = ComponentPropsWithoutRef<"div">;
 
 export const DrawerFooter = forwardRef<HTMLDivElement, DrawerFooterProps>(
   function DrawerFooter(props, ref) {
-    const { children, className, ...rest } = props;
+    const { className, ...rest } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -21,9 +21,7 @@ export const DrawerFooter = forwardRef<HTMLDivElement, DrawerFooterProps>(
     });
 
     return (
-      <div className={clsx(withBaseName(), className)} ref={ref} {...rest}>
-        {children}
-      </div>
+      <div className={clsx(withBaseName(), className)} ref={ref} {...rest} />
     );
   },
 );
