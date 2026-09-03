@@ -1,5 +1,22 @@
 # @salt-ds/core
 
+## 1.71.0
+
+### Minor Changes
+
+- 5da6723: Added `LinkButton`, a button-styled link for prominent navigation. Supports neutral and accented sentiments, icons, icon-only labels, and routing-library integration via the `render` prop.
+
+  ```tsx
+  import { LinkButton } from "@salt-ds/core";
+
+  <LinkButton href="/reports">View reports</LinkButton>;
+  ```
+
+### Patch Changes
+
+- 1417fa9: Fixed Tabs from announcing an ignored overflow selection when that value was later selected externally.
+- dd17c26: Fixed duplicate menu close notifications during keyboard activation and prevented announcements from being queued after `AriaAnnouncerProvider` unmounts.
+
 ## 1.70.0
 
 ### Minor Changes
