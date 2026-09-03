@@ -428,8 +428,12 @@ describe("GIVEN a Drawer with DrawerFooter", () => {
 
     const footerBottom = footer?.getBoundingClientRect().bottom;
     const headerTop = header?.getBoundingClientRect().top;
+    const drawerElement = drawer.element();
+    const drawerPaddingBottom = Number.parseFloat(
+      getComputedStyle(drawerElement).paddingBottom,
+    );
     expect(footerBottom).toBeCloseTo(
-      drawer.element().getBoundingClientRect().bottom,
+      drawerElement.getBoundingClientRect().bottom - drawerPaddingBottom,
       1,
     );
 
