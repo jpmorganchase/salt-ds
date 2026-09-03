@@ -2,7 +2,7 @@
   color: var(--salt-content-primary-foreground);
   padding: 0 var(--salt-spacing-300);
   flex: 1 1 auto;
-  min-height: 0;
+  min-height: var(--salt-text-lineHeight);
   display: flex;
   box-sizing: border-box;
 }
