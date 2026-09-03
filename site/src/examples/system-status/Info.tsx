@@ -1,5 +1,4 @@
-import { Text } from "@salt-ds/core";
-import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
+import { SystemStatus, SystemStatusContent, Text } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const Info = (): ReactElement => (
