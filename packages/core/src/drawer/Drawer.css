@@ -14,6 +14,16 @@
   box-sizing: border-box;
 }
 
+.saltDrawer.saltDrawer-sectioned {
+  padding: var(--salt-spacing-300) 0;
+}
+
+@supports selector(:has(*)) {
+  .saltDrawer:has(> .saltDrawerHeader, > .saltDrawerContent) {
+    padding: var(--salt-spacing-300) 0;
+  }
+}
+
 /* Styles applied when variant = "primary" */
 .saltDrawer-primary {
   --drawer-background: var(--salt-container-primary-background);
