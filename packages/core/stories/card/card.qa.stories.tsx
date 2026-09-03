@@ -113,3 +113,61 @@ AllExamplesUsingText.parameters = {
     disableSnapshot: false,
   },
 };
+
+export const VisualStyles: StoryFn<QAContainerProps> = (props) => (
+  <QAContainer cols={4} itemPadding={10} itemWidthAuto {...props}>
+    <Card borderColor="strong">
+      <H1>Strong border</H1>
+      <Text>Content</Text>
+    </Card>
+    <Card borderColor="default">
+      <H1>Default border</H1>
+      <Text>Content</Text>
+    </Card>
+    <Card borderColor="subtle">
+      <H1>Subtle border</H1>
+      <Text>Content</Text>
+    </Card>
+    <Card borderColor="none">
+      <H1>No border</H1>
+      <Text>Content</Text>
+    </Card>
+    <Card elevation="flat">
+      <H1>Flat elevation</H1>
+      <Text>Content</Text>
+    </Card>
+    <Card elevation="raised">
+      <H1>Raised elevation</H1>
+      <Text>Content</Text>
+    </Card>
+    <Panel variant="tertiary">
+      <Card borderColor="strong" variant="ghost">
+        <H1>Ghost card with strong border</H1>
+        <Text>Ghost border is preserved</Text>
+      </Card>
+    </Panel>
+    <Panel variant="tertiary">
+      <Card borderColor="default" variant="ghost">
+        <H1>Ghost card with default border</H1>
+        <Text>Ghost border is preserved</Text>
+      </Card>
+    </Panel>
+    <Panel variant="tertiary">
+      <Card borderColor="subtle" variant="ghost">
+        <H1>Ghost card with subtle border</H1>
+        <Text>Ghost border is preserved</Text>
+      </Card>
+    </Panel>
+    <Panel variant="tertiary">
+      <Card borderColor="none" variant="ghost">
+        <H1>Ghost card without border</H1>
+        <Text>Content</Text>
+      </Card>
+    </Panel>
+  </QAContainer>
+);
+VisualStyles.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+  },
+};

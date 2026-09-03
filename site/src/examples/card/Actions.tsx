@@ -3,6 +3,7 @@ import {
   Card,
   CardContent,
   CardFooter,
+  FlowLayout,
   H3,
   Link,
   StackLayout,
@@ -12,7 +13,7 @@ import type { ReactElement } from "react";
 
 export const Actions = (): ReactElement => {
   return (
-    <StackLayout direction={"row"} align="start">
+    <FlowLayout align="start">
       <Card style={{ width: "260px" }} accent="top">
         <CardContent>
           <StackLayout gap={1}>
@@ -42,6 +43,6 @@ export const Actions = (): ReactElement => {
           <Link href="#">See our approach</Link>
         </CardFooter>
       </Card>
-    </StackLayout>
+    </FlowLayout>
   );
 };
