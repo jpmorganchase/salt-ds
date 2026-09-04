@@ -143,7 +143,7 @@ describe("Given a Menu", () => {
     expect(await menuCount()).toBe(1);
     await page.getByRole("menuitem", { name: "Edit styling" }).hover();
     await expect.poll(menuCount).toBe(2);
-    await page.getByRole("menuitem", { name: "Copy" }).hover();
+    await page.getByRole("menuitem", { name: "Copy" }).hover({ force: true });
     await expect.poll(menuCount).toBe(1);
   });
 

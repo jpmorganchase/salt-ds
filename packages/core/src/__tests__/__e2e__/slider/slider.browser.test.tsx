@@ -70,7 +70,7 @@ describe("Given a Slider", () => {
     const rect = track.getBoundingClientRect();
     await userEvent.click(track, {
       delay: 100,
-      position: { x: Math.round(rect.width * 0.75), y: rect.height / 2 },
+      position: { x: Math.round(rect.width * 0.7), y: rect.height / 2 },
     });
     await expect.element(slider()).toHaveValue("7");
     expect(onChange.mock.lastCall?.[1]).toBe(7);
