@@ -22,7 +22,9 @@ describe("<Stepper />", () => {
       .element(page.getByText("Step 1.1", { exact: true }))
       .not.toBeVisible();
 
-    await page.getByRole("button", { name: "Step 1" }).click();
+    await page
+      .getByRole("button", { name: "Step 1 pending toggle substeps" })
+      .click();
 
     await expect
       .element(page.getByText("Step 1", { exact: true }))
@@ -57,7 +59,9 @@ describe("<Stepper />", () => {
       .element(page.getByText("Step 1.1.1", { exact: true }))
       .not.toBeVisible();
 
-    await page.getByRole("button", { name: "Step 1" }).click();
+    await page
+      .getByRole("button", { name: "Step 1 pending toggle substeps" })
+      .click();
     await expect
       .element(page.getByText("Step 1.1", { exact: true }))
       .toBeVisible();
@@ -65,7 +69,9 @@ describe("<Stepper />", () => {
       .element(page.getByText("Step 1.1.1", { exact: true }))
       .not.toBeVisible();
 
-    await page.getByRole("button", { name: "Step 1.1" }).click();
+    await page
+      .getByRole("button", { name: "Step 1.1 pending toggle substeps" })
+      .click();
     await expect
       .element(page.getByText("Step 1.1.1", { exact: true }))
       .toBeVisible();

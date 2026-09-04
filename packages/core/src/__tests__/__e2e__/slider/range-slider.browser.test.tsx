@@ -74,7 +74,7 @@ describe("Given a Range Slider", () => {
     const rect = track.getBoundingClientRect();
     await userEvent.click(track, {
       delay: 100,
-      position: { x: Math.round(rect.width * 0.75), y: rect.height / 2 },
+      position: { x: Math.round(rect.width * 0.7), y: rect.height / 2 },
     });
     await expectValues("0", "7");
     expect(onChange.mock.lastCall?.[1]).toEqual([0, 7]);

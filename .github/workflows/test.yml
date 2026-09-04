@@ -128,5 +128,7 @@ jobs:
         if: failure()
         with:
           name: browser-screenshots-${{ matrix.react }}
-          path: test/browser/screenshots
+          path: |
+            .vitest/attachments
+            test/browser/screenshots
           if-no-files-found: ignore
