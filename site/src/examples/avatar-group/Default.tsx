@@ -9,7 +9,7 @@ export const Default = (): ReactElement => {
       <Avatar name="Peter Piper" color="category-2" />
       <Avatar name="John Doe" color="category-3" />
       <Avatar name="Jane Smith" color="category-4" />
-      <AvatarGroupCount aria-label="3 more">+3</AvatarGroupCount>
+      <AvatarGroupCount count={3} />
     </AvatarGroup>
   );
 };

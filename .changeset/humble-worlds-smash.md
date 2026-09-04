@@ -14,6 +14,6 @@ import { AvatarGroup, AvatarGroupCount } from "@salt-ds/lab";
   <Avatar name="Alex Brailescu" />
   <Avatar name="Peter Piper" />
   <Avatar name="John Doe" />
-  <AvatarGroupCount aria-label="1 more">+1</AvatarGroupCount>
+  <AvatarGroupCount count={1} />
 </AvatarGroup>;
 ```

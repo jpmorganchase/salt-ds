@@ -27,18 +27,31 @@ describe("Given an AvatarGroup", () => {
     await expect.element(page.getByRole("group")).not.toBeInTheDocument();
   });
 
-  it("should render the count as a visible label with its own accessible name", async () => {
+  it("should render the count as a visible label with a default accessible name", async () => {
     await renderWithSalt(
       <AvatarGroup>
         <Avatar name="Alex Brailescu" />
         <Avatar name="Peter Piper" />
-        <AvatarGroupCount aria-label="2 more">+2</AvatarGroupCount>
+        <AvatarGroupCount count={2} />
       </AvatarGroup>,
     );
 
     await expect.element(page.getByText("+2")).toBeVisible();
     await expect
       .element(page.getByRole("img", { name: "2 more" }))
+      .toBeVisible();
+  });
+
+  it("should allow the count's visible label and accessible name to be overridden", async () => {
+    await renderWithSalt(
+      <AvatarGroupCount count={3} aria-label="3 more team members">
+        3+
+      </AvatarGroupCount>,
+    );
+
+    await expect.element(page.getByText("3+")).toBeVisible();
+    await expect
+      .element(page.getByRole("img", { name: "3 more team members" }))
       .toBeVisible();
   });
 
@@ -70,7 +83,7 @@ describe("Given an AvatarGroup", () => {
     await renderWithSalt(
       <AvatarGroup render={renderSpy}>
         <Avatar name="Alex Brailescu" />
-        <AvatarGroupCount aria-label="1 more">+1</AvatarGroupCount>
+        <AvatarGroupCount count={1} />
       </AvatarGroup>,
     );
 

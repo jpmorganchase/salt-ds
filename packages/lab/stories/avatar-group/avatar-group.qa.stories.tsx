@@ -21,7 +21,7 @@ export const AvatarGroupGrid: StoryFn<QAContainerProps> = (props) => (
       <Avatar name="Alex Brailescu" src={persona1} />
       <Avatar name="Peter Piper" color="category-2" />
       <Avatar name="John Doe" color="category-3" />
-      <AvatarGroupCount aria-label="2 more">+2</AvatarGroupCount>
+      <AvatarGroupCount count={2} />
     </AvatarGroup>
 
     <AvatarGroup aria-label="Divisions">
@@ -34,9 +34,7 @@ export const AvatarGroupGrid: StoryFn<QAContainerProps> = (props) => (
       <Avatar kind="entity" name="Alpha" color="category-2" />
       <Avatar kind="entity" name="Beta" color="category-3" />
       <Avatar kind="entity" name="Gamma" color="category-4" />
-      <AvatarGroupCount kind="entity" aria-label="2 more">
-        +2
-      </AvatarGroupCount>
+      <AvatarGroupCount kind="entity" count={2} />
     </AvatarGroup>
   </QAContainer>
 );

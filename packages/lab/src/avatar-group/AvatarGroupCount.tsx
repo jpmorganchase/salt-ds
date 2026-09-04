@@ -2,16 +2,16 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef, type HTMLAttributes } from "react";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
 
 import avatarGroupCountCss from "./AvatarGroupCount.css";
 
 export interface AvatarGroupCountProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, "color"> {
+  extends Omit<ComponentPropsWithoutRef<"div">, "color"> {
   /**
-   * The visible label of the count, for example `+3`.
+   * The number of members the count represents. Used in rendering `aria-label` and `+{count}` inside component as default.
    */
-  children: string;
+  count: number;
   /**
    * Matches the shape of the avatars the count summarizes.
    *
@@ -26,7 +26,7 @@ export const AvatarGroupCount = forwardRef<
   HTMLDivElement,
   AvatarGroupCountProps
 >(function AvatarGroupCount(
-  { children, className, kind = "person", ...rest },
+  { children, className, count, kind = "person", ...rest },
   ref,
 ) {
   const targetWindow = useWindow();
@@ -40,10 +40,11 @@ export const AvatarGroupCount = forwardRef<
     <div
       ref={ref}
       role="img"
+      aria-label={`${count} more`}
       className={clsx(withBaseName(), withBaseName(kind), className)}
       {...rest}
     >
-      {children}
+      {children ?? `+${count}`}
     </div>
   );
 });

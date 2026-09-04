@@ -23,9 +23,7 @@ export const Entity = (): ReactElement => {
         nameToInitials={() => "RSK"}
         color="category-4"
       />
-      <AvatarGroupCount kind="entity" aria-label="2 more">
-        +2
-      </AvatarGroupCount>
+      <AvatarGroupCount kind="entity" count={2} />
     </AvatarGroup>
   );
 };
