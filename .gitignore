@@ -16,7 +16,7 @@ node_modules
 /.yarn/plugins/** binary
 
 # testing
-/.vitest-attachments
+/.vitest
 /test/browser/screenshots
 /coverage
 .nyc_output
