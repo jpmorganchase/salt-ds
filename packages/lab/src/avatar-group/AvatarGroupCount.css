@@ -1,0 +1,25 @@
+.saltAvatarGroupCount {
+  --avatarGroupCount-size: var(--avatarGroup-item-size, var(--salt-size-base));
+  color: var(--salt-content-bold-foreground);
+  background: var(--salt-sentiment-neutral-background);
+  font-family: var(--salt-text-notation-fontFamily);
+  font-size: calc(var(--salt-text-notation-fontSize) * var(--avatarGroup-size-multiplier, 1));
+  font-weight: var(--salt-text-notation-fontWeight);
+  line-height: var(--salt-text-notation-lineHeight);
+  width: var(--avatarGroupCount-size);
+  min-width: var(--avatarGroupCount-size);
+  height: var(--avatarGroupCount-size);
+  min-height: var(--avatarGroupCount-size);
+  border-radius: var(--salt-palette-corner-strongest, 50%);
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  user-select: none;
+}
+
+.saltAvatarGroupCount-entity {
+  border-radius: var(--salt-palette-corner-weak, 0);
+}
