@@ -1,5 +1,5 @@
 import { Avatar } from "@salt-ds/core";
-import { AvatarGroup, AvatarGroupCount } from "@salt-ds/lab";
+import { AvatarGroup } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const Default = (): ReactElement => {
@@ -9,7 +9,6 @@ export const Default = (): ReactElement => {
       <Avatar name="Peter Piper" color="category-2" />
       <Avatar name="John Doe" color="category-3" />
       <Avatar name="Jane Smith" color="category-4" />
-      <AvatarGroupCount count={3} />
     </AvatarGroup>
   );
 };

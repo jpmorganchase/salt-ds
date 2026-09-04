@@ -12,8 +12,6 @@ data:
 
 `AvatarGroup` represents a group of related users, entities or objects in a compact space, using a horizontal stack of overlapping avatars.
 
-When members are hidden, add an `AvatarGroupCount` as the last child to indicate how many aren’t displayed. Set the number of hidden members with the `count` prop, which renders a “+N” inside component and gives the count an accessible name.
-
 <LivePreview componentName="avatar-group" exampleName="Default" />
 
 {/* TODO:  confirm with design if that docs entry is coming in */}
@@ -25,6 +23,8 @@ When members are hidden, add an `AvatarGroupCount` as the last child to indicate
 ## Visible avatars
 
 Choose how many avatars to display based on the space available and how recognizable the individual members need to be.
+
+When members are hidden, add an `AvatarGroupCount` as the last child to indicate how many aren’t displayed. Set the number of hidden members with the `count` prop, which renders a “+N” inside the component and gives the count an accessible name.
 
 <LivePreview componentName="avatar-group" exampleName="Visible" />
 
