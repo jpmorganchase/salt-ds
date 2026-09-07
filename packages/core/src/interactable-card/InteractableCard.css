@@ -61,7 +61,7 @@
 }
 
 /* Styles applied when borderColor="default" */
-.saltInteractableCard-borderColorDefault {
+.saltInteractableCard-borderColor {
   --interactableCard-borderColor: var(--salt-container-borderColor);
 }
 

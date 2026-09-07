@@ -61,7 +61,7 @@
 }
 
 /* Styles applied when borderColor="default" */
-.saltLinkCard-borderColorDefault {
+.saltLinkCard-borderColor {
   --linkCard-borderColor: var(--salt-container-borderColor);
 }
 

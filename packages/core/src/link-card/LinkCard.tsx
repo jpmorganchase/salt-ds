@@ -60,8 +60,11 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
             [withBaseName("accent")]: accent,
             [withBaseName(`accent${capitalize(accent ?? "")}`)]: accent,
             [withBaseName(elevation || "")]: elevation,
-            [withBaseName(`borderColor${capitalize(borderColor ?? "")}`)]:
-              borderColor,
+            [withBaseName(
+              borderColor === "default"
+                ? "borderColor"
+                : `borderColor${capitalize(borderColor ?? "")}`,
+            )]: borderColor,
             [withBaseName("sectioned")]: sectioned,
           },
           className,

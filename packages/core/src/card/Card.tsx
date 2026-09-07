@@ -19,7 +19,7 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
    */
   elevation?: "flat" | "raised";
   /**
-   * Border color strength. For `variant="ghost"`, only `"none"` is applied.
+   * Border color strength.
    */
   borderColor?: "strong" | "default" | "subtle" | "none";
   /**
@@ -78,8 +78,11 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
             [withBaseName("accent")]: accent,
             [withBaseName(`accent${capitalize(accent || "")}`)]: accent,
             [withBaseName(elevation || "")]: elevation,
-            [withBaseName(`borderColor${capitalize(borderColor || "")}`)]:
-              borderColor,
+            [withBaseName(
+              borderColor === "default"
+                ? "borderColor"
+                : `borderColor${capitalize(borderColor || "")}`,
+            )]: borderColor,
             [withBaseName("hoverable")]: hoverable,
             /* **Deprecated:** InteractableCard should be used instead for these features */
             [withBaseName("disabled")]: disabled,
