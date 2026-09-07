@@ -12,7 +12,7 @@
   text-decoration: none;
   transition: box-shadow var(--salt-duration-instant) ease-in-out;
   --linkCard-accent-color: var(--salt-sentiment-accent-background);
-  --linkCard-borderColor: var(--salt-container-bold-borderColor);
+  --linkCard-borderColor: var(--salt-container-borderColor);
   --card-padding: var(--salt-spacing-200);
 }
 
@@ -58,11 +58,6 @@
 /* Styles applied when borderColor="strong" */
 .saltLinkCard-borderColorStrong {
   --linkCard-borderColor: var(--salt-container-bold-borderColor);
-}
-
-/* Styles applied when borderColor="default" */
-.saltLinkCard-borderColor {
-  --linkCard-borderColor: var(--salt-container-borderColor);
 }
 
 /* Styles applied when borderColor="subtle" */

@@ -165,16 +165,14 @@ export const InteractableCard = forwardRef<
       className={clsx(
         withBaseName(),
         withBaseName(variant),
+        borderColor &&
+          borderColor !== "default" &&
+          withBaseName(`borderColor${capitalize(borderColor)}`),
         {
           [withBaseName("accent")]: accentValue,
           [withBaseName(`accent${capitalize(accentValue ?? "")}`)]: accentValue,
           [withBaseName(elevation || "")]: elevation,
           [withBaseName("active")]: role === "button" && active,
-          [withBaseName(
-            borderColor === "default"
-              ? "borderColor"
-              : `borderColor${capitalize(borderColor ?? "")}`,
-          )]: borderColor,
           [withBaseName("disabled")]: disabled,
           [withBaseName("selected")]: selected,
           [withBaseName("sectioned")]: sectioned,

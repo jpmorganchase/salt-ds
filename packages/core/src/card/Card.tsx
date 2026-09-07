@@ -74,15 +74,13 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
         className={clsx(
           withBaseName(),
           withBaseName(variant),
+          borderColor &&
+            borderColor !== "default" &&
+            withBaseName(`borderColor${capitalize(borderColor)}`),
           {
             [withBaseName("accent")]: accent,
             [withBaseName(`accent${capitalize(accent || "")}`)]: accent,
             [withBaseName(elevation || "")]: elevation,
-            [withBaseName(
-              borderColor === "default"
-                ? "borderColor"
-                : `borderColor${capitalize(borderColor || "")}`,
-            )]: borderColor,
             [withBaseName("hoverable")]: hoverable,
             /* **Deprecated:** InteractableCard should be used instead for these features */
             [withBaseName("disabled")]: disabled,

@@ -56,15 +56,13 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
         className={clsx(
           withBaseName(),
           withBaseName(variant),
+          borderColor &&
+            borderColor !== "default" &&
+            withBaseName(`borderColor${capitalize(borderColor)}`),
           {
             [withBaseName("accent")]: accent,
             [withBaseName(`accent${capitalize(accent ?? "")}`)]: accent,
             [withBaseName(elevation || "")]: elevation,
-            [withBaseName(
-              borderColor === "default"
-                ? "borderColor"
-                : `borderColor${capitalize(borderColor ?? "")}`,
-            )]: borderColor,
             [withBaseName("sectioned")]: sectioned,
           },
           className,
