@@ -28,11 +28,10 @@ export async function runContextCommand(input: RunContextCommandInput) {
     installed_versions: runtime.installedVersions,
     max_utf8_bytes: 16 * 1024,
   };
-  const result = buildKnowledgeContext(runtime.store, query);
   return {
     output:
       input.format === "json"
-        ? JSON.stringify(result) + "\n"
+        ? JSON.stringify(buildKnowledgeContext(runtime.store, query)) + "\n"
         : renderKnowledgeContext(runtime.store, query),
     exitCode: 0,
   };

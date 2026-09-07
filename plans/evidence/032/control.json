@@ -1,7 +1,7 @@
 {
   "contract": "salt-ai-plan-032-control/1",
   "plan_id": "032",
-  "plan_sha256": "69863700c93470e46725982a1a2acacdcee5436f555f071440c7398090520208",
+  "plan_sha256": "11fc8ab8b737d43ee32cef68b271244c9a61c67931e0d9c85ade4ab3c05cc201",
   "predecessor": {
     "plan_id": "006",
     "unit": "006/00",
@@ -11,20 +11,20 @@
     "control_sha256": "f02b2345cacd48f5900871c5a28263538272eb82413131e71821e6a39500c0d8"
   },
   "active_dispatch": {
-    "unit": "032/01",
-    "checkpoint_sha": "db9f97d76fc8ee7b1a1e64974542d8b48e65b41f"
+    "unit": "032/02",
+    "checkpoint_sha": "ddb9db667fa52d132ebe702023ce672ec87a9462"
   },
   "units": [
     {
       "id": "032/01",
-      "status": "IN_PROGRESS",
+      "status": "DONE",
       "checkpoint_sha": "db9f97d76fc8ee7b1a1e64974542d8b48e65b41f",
-      "completion_sha": null
+      "completion_sha": "ddb9db667fa52d132ebe702023ce672ec87a9462"
     },
     {
       "id": "032/02",
-      "status": "TODO",
-      "checkpoint_sha": null,
+      "status": "IN_PROGRESS",
+      "checkpoint_sha": "ddb9db667fa52d132ebe702023ce672ec87a9462",
       "completion_sha": null
     },
     {

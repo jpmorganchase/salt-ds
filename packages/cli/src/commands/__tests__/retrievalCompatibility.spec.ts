@@ -135,4 +135,25 @@ describe("retrieval project-selection gate", () => {
     expect(harness.resolveKnowledgeDocument).toHaveBeenCalledOnce();
     expect(harness.buildKnowledgeContext).toHaveBeenCalledOnce();
   });
+
+  it("renders selected Markdown without assembling an unused JSON context", async () => {
+    harness.decideSaltProject.mockReturnValue(selection("selected"));
+    harness.renderKnowledgeContext.mockReturnValue("# Salt knowledge\n");
+
+    await expect(
+      runContextCommand({
+        rootDir: "D:/fixture",
+        query: "button",
+        format: "markdown",
+        limit: 5,
+      }),
+    ).resolves.toEqual({ exitCode: 0, output: "# Salt knowledge\n" });
+    expect(harness.buildKnowledgeContext).not.toHaveBeenCalled();
+    expect(harness.renderKnowledgeContext).toHaveBeenCalledWith(harness.store, {
+      query: "button",
+      limit: 5,
+      installed_versions: {},
+      max_utf8_bytes: 16 * 1024,
+    });
+  });
 });

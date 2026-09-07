@@ -2,7 +2,7 @@
 
 ## Status and execution boundary
 
-- Status: IN PROGRESS — Unit 032/01. Product implementation follows the checked and reviewed M0 adoption.
+- Status: IN PROGRESS — Unit 032/02. Unit 032/01 is complete at `ddb9db667fa52d132ebe702023ce672ec87a9462`.
 - Priority: P0 foundation for the proposed product roadmap.
 - Effort: 5–8 engineering days, split into the units below.
 - Risk: MED, concentrated in project selection and discovery.
@@ -110,7 +110,7 @@ Verify: selector/discovery tests, types, contracts, then exact build/pack and sa
 
 ## Unit 032/02 — Repair document and context contracts
 
-Scope: `packages/knowledge/src/markdown/resolveKnowledgeDocument.ts`, `packages/knowledge/src/search/searchSalt.ts`, their tests, and CLI retrieval tests. Do not redesign ranking or author new recipes in this unit.
+Scope: `packages/knowledge/src/markdown/resolveKnowledgeDocument.ts`, `packages/knowledge/src/search/searchSalt.ts`, their tests, CLI retrieval tests, and the context caller/error handling in `packages/cli/src/commands/context.ts` and `packages/cli/src/cli.ts`. Update only the retrieval contract in `docs/ai/knowledge-bundle.md` to document final byte accounting and digest inputs. These caller/documentation paths make the existing bounded-output requirement explicit; they do not add another feature. Do not redesign ranking or author new recipes in this unit.
 
 1. Choose primary content by record kind: pages use their body, component detail remains component detail. Model the supported reference shape explicitly instead of expanding generic `any` handling.
 2. Accept strictly parsed canonical `record:<family>:<id>` keys before existing bare-ID/name resolution. Preserve ambiguity handling and compatibility checks. Every returned search reference must round-trip to the same record.

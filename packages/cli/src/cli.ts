@@ -1,3 +1,4 @@
+import { KnowledgeContextInputError } from "@salt-ds/knowledge";
 import packageManifest from "../package.json";
 import { runContextCommand } from "./commands/context.js";
 import { runDocsCommand } from "./commands/docs.js";
@@ -344,12 +345,22 @@ export async function runCliWithIo(
     return result.exitCode;
   }
   if (parsed.command === "context") {
-    const result = await runContextCommand({
-      rootDir: io.cwd(),
-      query: parsed.query,
-      format: parsed.format,
-      limit: parsed.limit,
-    });
+    let result: Awaited<ReturnType<typeof runContextCommand>>;
+    try {
+      result = await runContextCommand({
+        rootDir: io.cwd(),
+        query: parsed.query,
+        format: parsed.format,
+        limit: parsed.limit,
+      });
+    } catch (error) {
+      if (error instanceof KnowledgeContextInputError) {
+        throw new SaltCliUsageError(
+          "Context input cannot fit the 16 KiB output budget. Use a shorter query.",
+        );
+      }
+      throw error;
+    }
     await io.stdout(result.output);
     return result.exitCode;
   }

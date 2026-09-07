@@ -1,3 +1,4 @@
+import { KnowledgeContextInputError } from "@salt-ds/knowledge";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   parseCliArgs,
@@ -294,6 +295,48 @@ describe("Salt CLI shell", () => {
       format: "json",
       limit: 5,
     });
+  });
+
+  it.each(["json", "markdown"])(
+    "maps context budget rejection to a concise usage error for %s",
+    async (format) => {
+      runContextCommand.mockRejectedValue(
+        new KnowledgeContextInputError("private query content"),
+      );
+      const capture = captureIo();
+      await expect(
+        runCliWithIo(
+          [
+            "context",
+            "private query content",
+            "--format",
+            format,
+            "--limit",
+            "5",
+          ],
+          capture.io,
+        ),
+      ).rejects.toMatchObject({
+        code: "SALT_CLI_USAGE",
+        exitCode: 2,
+        message:
+          "Context input cannot fit the 16 KiB output budget. Use a shorter query.",
+      });
+      expect(capture.stdout()).toBe("");
+    },
+  );
+
+  it("preserves unexpected context failures instead of labelling them usage errors", async () => {
+    const failure = new Error("unexpected retrieval failure");
+    runContextCommand.mockRejectedValue(failure);
+    const capture = captureIo();
+    await expect(
+      runCliWithIo(
+        ["context", "Button", "--format", "json", "--limit", "5"],
+        capture.io,
+      ),
+    ).rejects.toBe(failure);
+    expect(capture.stdout()).toBe("");
   });
 
   it("rejects scan because it is not a public command", () => {
