@@ -32,7 +32,7 @@ it does not dispatch or block the active successor.
 | [005](./005-prove-version-aware-salt-ai-doctor.md)                 | Prove an exact-current Salt Doctor with executable tests and a real-consumer pilot                              | P0       | M, four units  | Plan 004 Units 00–02        | DONE — CUT_DOCTOR at Unit 005/02; performance gate missed     |
 | [006](./006-make-salt-doctor-lightweight-or-retire.md)             | Establish packed Doctor runtime evidence                                                                        | P0       | M              | Plan 005 CUT_DOCTOR         | SUPERSEDED — Unit 006/00 unfinished; no technical result      |
 | [032](./032-fix-the-real-consumer-entry-path.md)                   | Make the real consumer installation and retrieval journey work                                                  | P0       | M, four units  | Preserved Plan 006 snapshot | DONE — all four units complete                                |
-| [033](./033-deliver-verified-salt-workflows.md)                    | Deliver one reusable form and shared canonical form/Button guidance                                             | P0       | M, three units | Plan 032 complete           | IN PROGRESS — Unit 033/01                                     |
+| [033](./033-deliver-verified-salt-workflows.md)                    | Deliver one reusable form and shared canonical form/Button guidance                                             | P0       | M, three units | Plan 032 complete           | IN PROGRESS — Unit 033/02                                     |
 | [003](./003-publish-salt-ai-release-candidate.md)                  | Materialize versions and publish an approved Salt AI release candidate through separately owned release systems | P2       | L, conditional | Plan 004 final PASS         | DEFERRED — Plan 004 PASS and publication authority are absent |
 | [002](./002-add-secure-historical-salt-knowledge.md)               | Add secure historical Salt knowledge resolution only after current GA, public discovery, and ownership approval | P2       | L, conditional | Plan 003 completion         | DEFERRED — post-Plan-003 re-plan and entry gates are absent   |
 
@@ -104,9 +104,9 @@ publication authority as deferred to Plan 003.
 
 ## Active dispatch
 
-- **Active plan/unit:** Plan 033 / Unit `033/01`
-- **Checkpoint:** `d2c7000865da920655d6461eb46e95f7eb84db43`
-- **Status:** IN PROGRESS — Unit 033/01
+- **Active plan/unit:** Plan 033 / Unit `033/02`
+- **Checkpoint:** `dc7315a08f4356c3796d98196017e4e0f81fb877`
+- **Status:** IN PROGRESS — Unit 033/02
 - **Current control:** `plans/evidence/033/control.json`
 - **Predecessor disposition:** Plan 006 / Unit `006/00` is superseded unfinished
   at `e55fa54e215503b4a0e521e2f5ee054b9f0068ce`. Its unchanged plan/control,
@@ -118,9 +118,11 @@ publication authority as deferred to Plan 003.
   route. Selectively rebuild existing AI delivery/loading code and retire unused
   paths; the current Doctor product surface is selected for later retirement
   before the supported preview. Plan 032 completed installation, retrieval,
-  evaluation metadata and explicit workspace selection. Unit 033/01 builds a
-  reusable record form inside the existing operations dashboard, preserves its
-  application seams and verifies form failure/recovery and accessibility.
+  evaluation metadata and explicit workspace selection. Unit 033/01 completed
+  the reusable record form and automated packed application acceptance. Unit
+  033/02 removes unused catalog storage code, then shares canonical form/Button
+  guidance and portable recipe files across local outputs. Manual workflow
+  promotion reviews remain pending; the form is runnable.
 - **Foundation completion:** Plan 032 is DONE at
   `d2c7000865da920655d6461eb46e95f7eb84db43`; its terminal control is
   `plans/evidence/032/control.json`.
