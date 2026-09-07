@@ -1,7 +1,8 @@
 # Contributing to Salt AI tooling
 
-Start with the active unit and checkpoint in `plans/README.md`. Plan 032 is the
-current consumer-entry successor; Plan 006 is superseded unfinished, and
+Start with the active unit and checkpoint in `plans/README.md`. Plan 033 is the
+current workflow successor after the completed Plan 032 consumer-entry fixes.
+Plan 006 is superseded unfinished, and
 Plan 005 remains `CUT_DOCTOR`. Keep one execution unit per review and update
 its affected implementation, contracts, tests and docs together. Work outside
 that unit needs an explicit scope decision; release authority remains separate.
@@ -38,15 +39,15 @@ evaluated rules found nothing.
 
 ## Local verification
 
-Use the single Plan 032 consistency check for the current worktree and recorded
+Use the single Plan 033 consistency check for the current worktree and recorded
 control. There are no lifecycle phases or prescribed commit sequences. Record
 actual unit start and completion commits, keep README/control status consistent,
-and update the plan digest after reviewed plan edits. The retained Plan 006
-validator has historical semantics and does not establish current dispatch or
+and update the plan digest after reviewed plan edits. The retained Plan 032 and
+Plan 006 validators have historical semantics and do not establish current dispatch or
 Doctor fitness.
 
 ```shell
-yarn validate:salt-ai:plan-032
+yarn validate:salt-ai:plan-033
 yarn validate:salt-ai:contracts
 yarn test:ai-tooling
 yarn verify:salt-ai-release-embargo
@@ -63,7 +64,7 @@ For an explicit historical audit or a change to those readers, use
 `yarn test:salt-ai-governance` and
 `yarn validate:salt-ai:contracts:historical`. Preserve their rejection tests and
 frozen inputs. Phase-based Plan 006 commands remain historical; they do not
-replace the current Plan 032 check.
+replace the current Plan 033 check.
 
 Also run the exact verification block for the active execution unit. Record
 commands, package-size changes, semantic/bundle identities, and limitations in

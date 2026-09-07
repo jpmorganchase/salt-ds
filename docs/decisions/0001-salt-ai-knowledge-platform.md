@@ -19,8 +19,11 @@ artifacts and create no runtime compatibility obligation.
 
 The 2026-09-07 consumer-product adoption supersedes unfinished Plan 006 at
 `e55fa54e215503b4a0e521e2f5ee054b9f0068ce` without changing its evidence or
-claiming a technical result. Plan 032 repairs actual project-local installation
-and retrieval first. GitHub Copilot with npm is the first consumer route.
+claiming a technical result. Plan 032 completed actual project-local installation,
+retrieval and explicit workspace selection. Plan 033 now starts one reusable
+record form in the existing operations dashboard, followed by shared form/Button
+guidance for the website, portable files, Markdown and local tools. GitHub Copilot
+with npm is the first consumer route.
 Known CLI/Knowledge tooling identities are distinct from UI compatibility;
 unknown Salt UI families and unverifiable UI installs remain explicit. Doctor
 is technically unqualified and selected for retirement before supported preview
@@ -33,7 +36,7 @@ The AI platform is unreleased and carries no backwards-compatibility obligation.
 Current implementation, schemas and interfaces may be rewritten together with
 their callers, tests and documentation. Historical contracts below record the
 original candidate architecture; they do not require compatibility shims or
-retention of retired commands in the new product. Plan 032 uses a small
+retention of retired commands in the new product. Plan 033 continues with a small
 current-state consistency check and ordinary reviewed commits, with no lifecycle
 phases or custom amendment protocol. Product and release boundary changes still
 need an explicit decision.

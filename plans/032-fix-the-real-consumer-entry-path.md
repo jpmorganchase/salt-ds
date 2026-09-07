@@ -2,7 +2,7 @@
 
 ## Status and execution boundary
 
-- Status: IN PROGRESS — Unit 032/04. Units 032/01–03 are complete; the latest completion is `899afdfe849b02a9e6122b58f5bba1b316d013a6`.
+- Status: DONE — all four units complete at `d2c7000865da920655d6461eb46e95f7eb84db43`. Plan 033 owns the next product work; this plan and its control are terminal implementation history.
 - Priority: P0 foundation for the proposed product roadmap.
 - Effort: 5–8 engineering days, split into the units below.
 - Risk: MED, concentrated in project selection and discovery.
@@ -154,16 +154,18 @@ Verify: selector/discovery and CLI tests, types, full tooling checks, exact buil
 
 ## Done criteria and boundaries
 
-- [ ] All four units have the stated regression coverage and passing relevant commands.
-- [ ] The intended local-devDependency installation and workspace arrangement succeed through the packed binary.
-- [ ] Normal Node 22/24 consumer CI invokes the real installation journey with the same candidate pack report and separate correctness receipt.
-- [ ] Core CI retains applicable smoke correctness/safety guarantees and does not require the separate, unqualified Doctor performance result.
-- [ ] Canonical search references resolve, page content is useful, and final context bytes/digest agree.
-- [ ] Unsupported UI evidence cannot be converted into clean analysis by filtering tooling.
-- [ ] Core selection uses bounded package metadata without source traversal; authority boundaries hold and runtime remains read-only/offline.
-- [ ] Omitted MCP helpers/dependency and obsolete generic evaluation defaults are removed; current checks remain explicit and historical evidence is preserved.
-- [ ] Current evaluation definitions match their fixtures, with explicit intentional exceptions.
-- [ ] No generated bundle, tarball, private repository, prompt/output, credential, or absolute local path enters Git.
+- [x] All four units have the stated regression coverage and passing relevant commands.
+- [x] The intended local-devDependency installation and workspace arrangement succeed through the packed binary.
+- [x] Normal Node 22/24 consumer CI invokes the real installation journey with the same candidate pack report and separate correctness receipt.
+- [x] Core CI retains applicable smoke correctness/safety guarantees and does not require the separate, unqualified Doctor performance result.
+- [x] Canonical search references resolve, page content is useful, and final context bytes/digest agree.
+- [x] Unsupported UI evidence cannot be converted into clean analysis by filtering tooling.
+- [x] Core selection uses bounded package metadata without source traversal; authority boundaries hold and runtime remains read-only/offline.
+- [x] Omitted MCP helpers/dependency and obsolete generic evaluation defaults are removed; current checks remain explicit and historical evidence is preserved.
+- [x] Current evaluation definitions match their fixtures, with explicit intentional exceptions.
+- [x] No generated bundle, tarball, private repository, prompt/output, credential, or absolute local path enters Git.
+
+Completion verification: the final tooling suite passed 49 files / 687 tests, with focused selection regressions, types, current contracts, quality and release embargo checks passing. The same exact packed cohort passed the offline, read-only npm application and hoisted-workspace journeys on Windows with Node 22.17.1 and 24.10.0. The ordinary CI jobs now invoke that journey for Node 22/24; Linux execution remains pending CI. The local fixture used built Icons/Styles artifacts alongside actual registry dependencies, so registry-only installation is not established. No Doctor performance qualification, consumer/host trial, publication or deployment occurred.
 
 Stop the affected unit if its success would require weakening integrity, fabricating compatibility, touching unactivated Plan 006 controls, or changing a different product surface. Correct ordinary defects within the unit; a failed experiment is not permission to adjust its expected outcome. Missing consumer access does not block the independent local regression work.
 

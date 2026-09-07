@@ -40,7 +40,6 @@
     "validate:salt-ai:tracker": "node ./scripts/validateSaltAiTracker.mjs",
     "validate:salt-ai:plan-004": "node ./scripts/validateSaltAiPlan004.mjs",
     "validate:salt-ai:plan-006": "node ./scripts/validateSaltAiPlan006.mjs",
-    "validate:salt-ai:plan-032": "node ./scripts/validateSaltAiPlan032.mjs",
     "validate:salt-ai:contracts": "node ./scripts/validateSaltAiContracts.mjs",
     "validate:salt-ai:contracts:historical": "node ./scripts/validateSaltAiContracts.mjs --historical",
     "check:changed-quality": "node ./scripts/checkChangedQuality.mjs",
@@ -91,7 +90,9 @@
     "check:salt-sample-apps": "node ./scripts/checkSaltSampleApps.mjs",
     "typecheck": "tsgo --noEmit",
     "typecheck:ai-tooling": "tsc -p packages/knowledge/tsconfig.test.json --noEmit && tsc -p packages/cli/tsconfig.test.json --noEmit",
-    "chromatic": "chromatic"
+    "chromatic": "chromatic",
+    "validate:salt-ai:plan-033": "node ./scripts/validateSaltAiPlan033.mjs",
+    "validate:salt-ai:plan-032": "node ./scripts/validateSaltAiPlan032.mjs"
   },
   "dependencies": {
     "@biomejs/biome": "^2.5.10",

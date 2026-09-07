@@ -7,8 +7,9 @@ For Salt AI platform work, start with the active dispatch and checkpoint in
 [`plans/README.md`](plans/README.md). Plan 001 is closed historical ancestry;
 Plan 004 completed Units 00–02 and is superseded. Plan 005 is terminal at
 `CUT_DOCTOR`. Plan 006 is superseded with Unit 006/00 unfinished; its unchanged
-plan/control and evidence establish no runtime result. The active successor is
-[`plans/032-fix-the-real-consumer-entry-path.md`](plans/032-fix-the-real-consumer-entry-path.md).
+plan/control and evidence establish no runtime result. Plan 032 completed the
+consumer entry fixes. The active successor is
+[`plans/033-deliver-verified-salt-workflows.md`](plans/033-deliver-verified-salt-workflows.md).
 Plan 001 ends at the locally verified Unit 07 release-candidate boundary. Version
 materialization, npm publication, trusted-publisher configuration, web
 deployment, promotion, and rollback belong to the separately activated
@@ -33,6 +34,6 @@ Detailed contracts live in:
 
 Do not commit generated knowledge, tarballs, raw model prompts or output,
 credentials, proprietary fixtures, local caches, or absolute local paths.
-Use `yarn validate:salt-ai:plan-032`,
+Use `yarn validate:salt-ai:plan-033`,
 `yarn validate:salt-ai:contracts`, and the verification block for the active
 execution unit before requesting review.

@@ -154,7 +154,7 @@ jobs:
       - name: Validate current AI contracts and execution plan
         run: |
           yarn validate:salt-ai:contracts
-          yarn validate:salt-ai:plan-032
+          yarn validate:salt-ai:plan-033
           yarn verify:salt-ai-release-embargo
   consumer-smoke:
     name: Consumer smoke (Node 22 and 24)
