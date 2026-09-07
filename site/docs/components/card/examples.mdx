@@ -36,10 +36,10 @@ Use a raised card when the content needs stronger prominence and separation from
 
 ## Border color
 
-Cards support strong, default, and subtle border colors, as well as no border. Cards use a strong border when `borderColor` isn't set. The `borderColor` prop doesn't apply to ghost cards, so their border color remains unchanged.
+Cards support strong, default, and subtle border colors, as well as no border. Cards use the default border token for their variant when `borderColor` isn't set. Setting `borderColor="none"` makes the border transparent.
 
 - Use `borderColor="strong"` for higher-priority client experiences or when a stronger structural boundary is needed.
-- For most cards, use `borderColor="default"` unless there is a specific reason to increase or reduce visual emphasis.
+- Use the default border color for most cards unless there is a specific reason to increase or reduce visual emphasis.
 - Use `borderColor="subtle"` when the interface needs additional structure without increasing visual noise.
 - Use `borderColor="none"` to create a subtle color-blocking effect behind key information or controls when the container shouldn't compete visually with surrounding content.
 

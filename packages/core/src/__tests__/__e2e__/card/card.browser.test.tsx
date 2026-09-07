@@ -83,29 +83,6 @@ describe("Given a Card", () => {
     }
   });
 
-  it("omits Default from default border color class names", async () => {
-    await renderWithSalt(
-      <>
-        <Card borderColor="default" data-testid="card" />
-        <InteractableCard
-          borderColor="default"
-          data-testid="interactable-card"
-        />
-        <LinkCard borderColor="default" data-testid="link-card" href="#" />
-      </>,
-    );
-
-    await expect
-      .element(page.getByTestId("card"))
-      .toHaveClass("saltCard-borderColor");
-    await expect
-      .element(page.getByTestId("interactable-card"))
-      .toHaveClass("saltInteractableCard-borderColor");
-    await expect
-      .element(page.getByTestId("link-card"))
-      .toHaveClass("saltLinkCard-borderColor");
-  });
-
   it("applies sectioned layout for direct sections", async () => {
     await renderWithSalt(
       <Card data-testid="card">
