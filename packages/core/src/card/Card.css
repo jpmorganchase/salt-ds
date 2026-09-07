@@ -11,7 +11,10 @@
   border-radius: var(--saltCard-borderRadius, var(--salt-palette-corner, 0));
   overflow: hidden;
   --card-accent-color: var(--salt-sentiment-accent-background);
-  --card-borderColor: var(--salt-container-bold-borderColor);
+  --card-borderColor-strong: var(--salt-container-bold-borderColor);
+  --card-borderColor-default: var(--salt-container-borderColor);
+  --card-borderColor-subtle: var(--salt-container-subtle-borderColor);
+  --card-borderColor: var(--card-borderColor-strong);
   --card-padding: var(--salt-spacing-200);
 }
 
@@ -43,10 +46,10 @@
 
 .saltCard-ghost {
   background: var(--saltCard-background, var(--salt-container-ghost-background));
-}
-
-.saltCard-ghost:not(.saltCard-borderColorNone) {
-  --card-borderColor: var(--salt-container-ghost-borderColor);
+  --card-borderColor-strong: var(--salt-container-ghost-bold-borderColor);
+  --card-borderColor-default: var(--salt-container-ghost-borderColor);
+  --card-borderColor-subtle: var(--salt-container-ghost-subtle-borderColor);
+  --card-borderColor: var(--card-borderColor-default);
 }
 
 /* Styles applied when elevation="flat" */
@@ -61,17 +64,17 @@
 
 /* Styles applied when borderColor="strong" */
 .saltCard-borderColorStrong {
-  --card-borderColor: var(--salt-container-bold-borderColor);
+  --card-borderColor: var(--card-borderColor-strong);
 }
 
 /* Styles applied when borderColor="default" */
-.saltCard-borderColorDefault {
-  --card-borderColor: var(--salt-container-borderColor);
+.saltCard-borderColor {
+  --card-borderColor: var(--card-borderColor-default);
 }
 
 /* Styles applied when borderColor="subtle" */
 .saltCard-borderColorSubtle {
-  --card-borderColor: var(--salt-container-subtle-borderColor);
+  --card-borderColor: var(--card-borderColor-subtle);
 }
 
 /* Styles applied when borderColor="none" */
