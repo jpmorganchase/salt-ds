@@ -38,6 +38,32 @@ export const RenderProp: StoryFn<typeof AvatarGroup> = (args) => {
   );
 };
 
+export const Entity: StoryFn<typeof AvatarGroup> = (args) => {
+  return (
+    <AvatarGroup aria-label="Divisions" {...args}>
+      <Avatar
+        kind="entity"
+        name="Operations"
+        nameToInitials={() => "OPS"}
+        color="category-2"
+      />
+      <Avatar
+        kind="entity"
+        name="Technology"
+        nameToInitials={() => "TEC"}
+        color="category-3"
+      />
+      <Avatar
+        kind="entity"
+        name="Risk"
+        nameToInitials={() => "RSK"}
+        color="category-4"
+      />
+      <AvatarGroupCount kind="entity" count={2} />
+    </AvatarGroup>
+  );
+};
+
 export const CustomCountLabel: StoryFn<typeof AvatarGroup> = (args) => {
   return (
     <AvatarGroup aria-label="Team members" {...args}>
