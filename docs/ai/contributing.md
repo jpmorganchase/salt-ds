@@ -48,10 +48,22 @@ Doctor fitness.
 ```shell
 yarn validate:salt-ai:plan-032
 yarn validate:salt-ai:contracts
-yarn eval:salt-ai:validate
-yarn validate:salt-ai:tracker
 yarn test:ai-tooling
+yarn verify:salt-ai-release-embargo
 ```
+
+`test:ai-tooling` runs product regressions. It does not replay historical
+governance acquisition. `eval:salt-ai:validate` is the standalone evaluation
+metadata check, also called by current contracts; it verifies definitions and
+identities without executing model trials or establishing retrieval quality.
+See [evaluation.md](./evaluation.md) for current counts and frozen baseline
+provenance.
+
+For an explicit historical audit or a change to those readers, use
+`yarn test:salt-ai-governance` and
+`yarn validate:salt-ai:contracts:historical`. Preserve their rejection tests and
+frozen inputs. Phase-based Plan 006 commands remain historical; they do not
+replace the current Plan 032 check.
 
 Also run the exact verification block for the active execution unit. Record
 commands, package-size changes, semantic/bundle identities, and limitations in
