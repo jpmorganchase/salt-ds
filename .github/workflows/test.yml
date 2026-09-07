@@ -210,6 +210,10 @@ jobs:
           CHANGED_QUALITY_BASE: ${{ inputs.changed_quality_base }}
           PLAN_006_UNIT: ${{ inputs.plan_006_unit }}
         run: |
+          if test -e plans/evidence/032/control.json; then
+            echo "Plan 006 is superseded; use the current product dispatch." >&2
+            exit 1
+          fi
           test "$(git rev-parse --verify HEAD)" = "$GITHUB_SHA"
           test "$(git rev-parse --is-shallow-repository)" = "false"
           test "$CHANGED_QUALITY_BASE" = "$(if test "$PLAN_006_UNIT" = "006/00"; then git rev-parse "$GITHUB_SHA^"; else printf '%s' "$GITHUB_SHA"; fi)"
