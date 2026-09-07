@@ -1082,14 +1082,14 @@ export async function installToolingWorkspaceJourney(
   sourceArtifactOverrides,
   options = {},
 ) {
-  const childRoot = path.join(rootDir, "packages", "app");
+  const childRoot = path.join(rootDir, "apps", "child");
   await fs.mkdir(childRoot, { recursive: true });
   const environment = await createIsolatedPackageManagerEnvironment(rootDir);
   const rootManifest = {
     name: "salt-consumer-journey-tooling-root",
     private: true,
     packageManager: "npm@11.0.0",
-    workspaces: ["packages/app"],
+    workspaces: ["apps/child"],
     devDependencies: {
       "@salt-ds/cli": localTarballSpec(packReport.cliTarballPath),
       "@salt-ds/knowledge": localTarballSpec(packReport.knowledgeTarballPath),
@@ -1163,11 +1163,11 @@ export async function installToolingWorkspaceJourney(
       }) &&
       Object.entries(uiCohort).every(
         ([name, version]) =>
-          lockfile.packages?.["packages/app"]?.dependencies?.[name] === version,
+          lockfile.packages?.["apps/child"]?.dependencies?.[name] === version,
       ) &&
       Object.entries(JOURNEY_FRAMEWORK_DEPENDENCIES).every(
         ([name, version]) =>
-          lockfile.packages?.["packages/app"]?.dependencies?.[name] === version,
+          lockfile.packages?.["apps/child"]?.dependencies?.[name] === version,
       ),
     "Workspace lockfile did not preserve tooling-root and child UI declarations.",
   );

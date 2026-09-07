@@ -2,7 +2,7 @@
 
 ## Status and execution boundary
 
-- Status: IN PROGRESS — Unit 032/03. Units 032/01 and 032/02 are complete; the latest completion is `ec99adab550d2c32d849e6af51a741a53b18e5be`.
+- Status: IN PROGRESS — Unit 032/04. Units 032/01–03 are complete; the latest completion is `899afdfe849b02a9e6122b58f5bba1b316d013a6`.
 - Priority: P0 foundation for the proposed product roadmap.
 - Effort: 5–8 engineering days, split into the units below.
 - Risk: MED, concentrated in project selection and discovery.

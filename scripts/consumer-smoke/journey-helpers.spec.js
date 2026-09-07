@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   assertConsumerJourneyReceipt,
   assertJourneyDoctorSelection,
+  assertRepositoryAuthorityInfo,
 } from "./checks.mjs";
 import {
   selectJourneySourceOverrideCohort,
@@ -123,8 +124,15 @@ function createJourneyReceipt() {
     workflows: {
       cli: {
         aliases: { help: 3, version: 2, broken_pipe: 1 },
-        invalid_argument_cases: 26,
+        invalid_argument_cases: 33,
         terminal_safety: { control_characters: "sanitized" },
+        repository_authority: {
+          project_root: "apps/child",
+          invocation_outside_repository: true,
+          info_paths: "repository_relative",
+          docs: "resolved",
+          context: "resolved",
+        },
         exact_info: {
           cli_version: packReport.cli.version,
           knowledge_version: packReport.knowledge.version,
@@ -149,7 +157,7 @@ function createJourneyReceipt() {
           status: "complete",
         },
         tooling_root: {
-          selected_workspace: "packages/app",
+          selected_workspace: "apps/child",
           status: "complete",
         },
         performance_qualification: "not_run",
@@ -259,8 +267,8 @@ describe("journey Doctor selection proof", () => {
       }),
     ).not.toThrow();
     expect(() =>
-      assertJourneyDoctorSelection(createDoctorResult("packages/app", true), {
-        selectedWorkspace: "packages/app",
+      assertJourneyDoctorSelection(createDoctorResult("apps/child", true), {
+        selectedWorkspace: "apps/child",
         uiCohort,
         packReport,
         toolingRoot: true,
@@ -285,17 +293,17 @@ describe("journey Doctor selection proof", () => {
   });
 
   it("rejects a broken selected workspace", () => {
-    const result = createDoctorResult("packages/app", true);
+    const result = createDoctorResult("apps/child", true);
     result.workspace_units[1].project_decision.status = "unsupported";
 
     expect(() =>
       assertJourneyDoctorSelection(result, {
-        selectedWorkspace: "packages/app",
+        selectedWorkspace: "apps/child",
         uiCohort,
         packReport,
         toolingRoot: true,
       }),
-    ).toThrow(/did not select the real packages\/app UI cohort/u);
+    ).toThrow(/did not select the real apps\/child UI cohort/u);
   });
 });
 
@@ -358,5 +366,51 @@ describe("consumer journey receipt proof", () => {
     expect(() => assertConsumerJourneyReceipt(receipt)).toThrow(
       /omitted a required installation, safety, identity, or selection proof/u,
     );
+  });
+});
+
+describe("repository authority info proof", () => {
+  function authorityInfo() {
+    return {
+      project: {
+        root: "apps/child",
+        package_manifest: { path: "apps/child/package.json" },
+        workspace: { packageRoot: "apps/child", workspaceRoot: "." },
+        packages: Object.entries(uiCohort).map(([name, observedVersion]) => ({
+          name,
+          observed_version: observedVersion,
+          observed_manifest_path: `node_modules/${name}/package.json`,
+        })),
+      },
+      selection: {
+        status: "selected",
+        reason_code: "SALT_PROJECT_SELECTED",
+      },
+    };
+  }
+
+  it("accepts repository-relative observations for an explicit child", () => {
+    expect(() =>
+      assertRepositoryAuthorityInfo(authorityInfo(), {
+        project: "apps/child",
+        expectedUiVersions: uiCohort,
+        authorityRoot: "C:\\private\\repository",
+      }),
+    ).not.toThrow();
+  });
+
+  it.each([
+    ["an absolute leak", "C:\\private\\repository\\package.json"],
+    ["a traversal", "../package.json"],
+  ])("rejects %s in observed paths", (_label, observedPath) => {
+    const info = authorityInfo();
+    info.project.packages[0].observed_manifest_path = observedPath;
+    expect(() =>
+      assertRepositoryAuthorityInfo(info, {
+        project: "apps/child",
+        expectedUiVersions: uiCohort,
+        authorityRoot: "C:\\private\\repository",
+      }),
+    ).toThrow(/leaked its authority/u);
   });
 });

@@ -34,6 +34,8 @@ export interface InspectSaltProjectFactsInput {
 }
 
 export interface InspectedSaltProjectFacts {
+  /** Canonical filesystem authority used for every bounded inspection. */
+  authorityRoot: string;
   facts: SaltProjectFacts;
   limitations: string[];
 }
@@ -120,6 +122,7 @@ export async function inspectSaltProjectFacts(
   ];
 
   return {
+    authorityRoot,
     facts: createSaltProjectFacts({
       rootDir: portable(rootDir),
       packageManifest:

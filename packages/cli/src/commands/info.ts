@@ -3,10 +3,12 @@ import {
   type PackageCompatibilityDecision,
   resolveKnowledgeCompatibility,
 } from "@salt-ds/knowledge";
-import { loadRetrievalRuntime } from "./retrievalRuntime.js";
+import {
+  loadRetrievalRuntime,
+  type ProjectSelectionInput,
+} from "./retrievalRuntime.js";
 
-export interface RunInfoCommandInput {
-  rootDir: string;
+export interface RunInfoCommandInput extends ProjectSelectionInput {
   cliVersion: string;
 }
 
@@ -69,7 +71,7 @@ function disabledFamily(entry: PackageCompatibilityDecision) {
 
 /** Build the deterministic JSON result for `salt-ds info`. */
 export async function runInfoCommand(input: RunInfoCommandInput) {
-  const runtime = await loadRetrievalRuntime(input.rootDir);
+  const runtime = await loadRetrievalRuntime(input);
   const { facts, inspectionLimitations, selection } = runtime;
   const manifest = runtime.store.manifest;
   const compatibility = resolveKnowledgeCompatibility(
@@ -78,7 +80,7 @@ export async function runInfoCommand(input: RunInfoCommandInput) {
   );
   const pathLimitations = new Set<string>();
   const projectPath = createProjectPathProjection(
-    facts.root_dir,
+    runtime.authorityRoot,
     pathLimitations,
   );
   const declaredByName = new Map(
@@ -152,7 +154,7 @@ export async function runInfoCommand(input: RunInfoCommandInput) {
       node: process.versions.node,
     },
     project: {
-      root: "." as const,
+      root: runtime.projectRelative,
       package_manifest: packageManifest,
       package_manager: {
         name: facts.installation.inspection.packageManager,

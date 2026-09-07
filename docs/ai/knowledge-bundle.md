@@ -76,6 +76,28 @@ The supported root API is `loadKnowledgeBundle`, `getKnowledgeManifest`,
 transitive bundle shipped with their adapter, perform no network/cache access,
 and never import consumer-project JavaScript.
 
+## Project selection
+
+`info`, `docs`, and `context` share an explicit repository authority and selected
+application. `--root <repo>` defaults to the current working directory, and
+`--project <relative-path>` defaults to `.` within that root. A root containing
+only tooling does not automatically select a Salt child. Multiple applications
+must be selected by their individual relative paths.
+
+The inspector canonicalizes both paths and rejects a selected project outside
+the authority, including escaping symlinks. Contained symlinks are supported.
+It reads bounded package/workspace metadata and installed package evidence;
+hoisted dependencies must remain within the authority. Selection does not walk
+application source, invoke Doctor, execute repository configuration or PnP
+loaders, or run package-manager commands. Unsupported or incomplete metadata
+keeps its explicit selection outcome.
+
+`info.project.root`, package-manifest paths, workspace paths, and observed
+dependency paths are relative to the canonical repository authority. They may
+point outside the selected child but cannot expose absolute or out-of-authority
+paths. Selecting `apps/customer-portal`, for example, can yield a hoisted
+`node_modules/@salt-ds/core/package.json` evidence path.
+
 ## Retrieval contract
 
 The compact search index declares salt-lexical-ranking/1. Queries use Unicode
@@ -94,8 +116,8 @@ are excluded and disclosed. Version-independent records remain eligible.
 
 The packed CLI exposes the same contract offline:
 
-    salt-ds docs <record-id-or-name> --format markdown|json
-    salt-ds context <query> --format markdown|json --limit <n>
+    salt-ds docs <record-id-or-name> [--root <repo>] [--project <relative-path>] --format markdown|json
+    salt-ds context <query> [--root <repo>] [--project <relative-path>] --format markdown|json --limit <n>
 
 The docs command accepts a canonical `record:<family>:<id>` citation, an exact
 record ID, export, canonical name, title, or alias. Canonical citations identify

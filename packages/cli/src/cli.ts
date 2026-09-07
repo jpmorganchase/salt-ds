@@ -1,3 +1,4 @@
+import path from "node:path";
 import { KnowledgeContextInputError } from "@salt-ds/knowledge";
 import packageManifest from "../package.json";
 import { runContextCommand } from "./commands/context.js";
@@ -18,9 +19,9 @@ Usage:
   salt-ds -h
   salt-ds --help
   salt-ds --version
-  salt-ds info [root] --json
-  salt-ds docs <record-id-or-name> --format markdown|json
-  salt-ds context <query> --format markdown|json --limit <n>
+  salt-ds info [--root <repo>] [--project <relative-workspace>] --json
+  salt-ds docs <record-id-or-name> [--root <repo>] [--project <relative-workspace>] --format markdown|json
+  salt-ds context <query> [--root <repo>] [--project <relative-workspace>] --format markdown|json --limit <n>
   salt-ds doctor [root] --format json|prompt --fail-on error|warning|never
   salt-ds skill info --json
   salt-ds skill print --kind skill|agents
@@ -28,11 +29,14 @@ Usage:
 Commands:
   help       Show this help text.
   version    Print the installed CLI version.
-  info       Inspect the exact local Salt package vector and Knowledge identity.
-  docs       Read one exact, compatible Knowledge record.
-  context    Retrieve a bounded, cited Knowledge slice.
+  info       Inspect the selected Salt application's package vector and Knowledge identity.
+  docs       Read one exact, compatible Knowledge record for the selected application.
+  context    Retrieve a bounded, cited Knowledge slice for the selected application.
   doctor     Analyze an exact-version Salt project with read-only evidence.
   skill      Inspect or print the verified bundled Skill artifacts.
+
+For info, docs, and context, --root defaults to the current directory and
+--project defaults to . within it. Child applications are never selected automatically.
 
 The CLI runs locally and does not use the network, Storybook, MCP, or a model.
 `;
@@ -55,14 +59,23 @@ export interface SaltCliIo {
 type ParsedCliCommand =
   | { command: "help" }
   | { command: "version" }
-  | { command: "info"; rootDir: string | null; format: "json" }
+  | {
+      command: "info";
+      rootDir: string | null;
+      project: string;
+      format: "json";
+    }
   | {
       command: "docs";
+      rootDir: string | null;
+      project: string;
       identifier: string;
       format: "markdown" | "json";
     }
   | {
       command: "context";
+      rootDir: string | null;
+      project: string;
       query: string;
       format: "markdown" | "json";
       limit: number;
@@ -82,6 +95,106 @@ function requireNoTrailingArguments(command: string, argv: string[]): void {
       `${command} accepts no arguments. Run \`salt-ds help\` for usage.`,
     );
   }
+}
+
+interface ProjectSelectionArguments {
+  rootDir: string | null;
+  project: string;
+  rootSpecified: boolean;
+  projectSpecified: boolean;
+}
+
+function createProjectSelectionArguments(): ProjectSelectionArguments {
+  return {
+    rootDir: null,
+    project: ".",
+    rootSpecified: false,
+    projectSpecified: false,
+  };
+}
+
+function isProjectPathAbsolute(value: string): boolean {
+  return (
+    path.isAbsolute(value) ||
+    path.win32.isAbsolute(value) ||
+    path.posix.isAbsolute(value) ||
+    /^[A-Za-z]:/u.test(value)
+  );
+}
+
+function hasProjectTraversal(value: string): boolean {
+  return value.split(/[\\\\/]+/u).includes("..");
+}
+
+function parseProjectSelectionOption(
+  arguments_: readonly string[],
+  index: number,
+  selection: ProjectSelectionArguments,
+): boolean {
+  const argument = arguments_[index];
+  if (argument !== "--root" && argument !== "--project") return false;
+
+  const value = arguments_[index + 1];
+  if (value === undefined || value === "" || value.startsWith("--")) {
+    throw new SaltCliUsageError(
+      argument === "--root"
+        ? "--root requires a non-empty project root."
+        : "--project requires a non-empty relative workspace.",
+    );
+  }
+  if (value.includes("\0")) {
+    throw new SaltCliUsageError(
+      argument === "--root"
+        ? "The project root contains an invalid byte."
+        : "The project workspace contains an invalid byte.",
+    );
+  }
+
+  if (argument === "--root") {
+    if (selection.rootSpecified) {
+      throw new SaltCliUsageError(
+        "info, docs, and context accept --root once.",
+      );
+    }
+    selection.rootDir = value;
+    selection.rootSpecified = true;
+    return true;
+  }
+
+  if (selection.projectSpecified) {
+    throw new SaltCliUsageError(
+      "info, docs, and context accept --project once.",
+    );
+  }
+  if (isProjectPathAbsolute(value) || hasProjectTraversal(value)) {
+    throw new SaltCliUsageError(
+      "--project requires a relative workspace contained by --root.",
+    );
+  }
+  selection.project = value;
+  selection.projectSpecified = true;
+  return true;
+}
+
+function resolveProjectRoot(rootDir: string | null, cwd: string): string {
+  return rootDir === null ? cwd : path.resolve(cwd, rootDir);
+}
+
+function isProjectRootInspectionError(error: unknown): boolean {
+  return (
+    !!error &&
+    typeof error === "object" &&
+    "code" in error &&
+    (error.code === "SALT_PROJECT_ROOT_NOT_DIRECTORY" ||
+      error.code === "SALT_PROJECT_ROOT_UNAVAILABLE")
+  );
+}
+
+function mapProjectRootInspectionError(error: unknown): never {
+  if (isProjectRootInspectionError(error)) {
+    throw new SaltCliUsageError("The project root is invalid or unavailable.");
+  }
+  throw error;
 }
 
 export function parseCliArgs(argv: readonly string[]): ParsedCliCommand {
@@ -116,9 +229,14 @@ export function parseCliArgs(argv: readonly string[]): ParsedCliCommand {
   if (command === "doctor") return parseDoctorArguments(arguments_);
   if (command === "skill") return parseSkillArguments(arguments_);
 
-  let rootDir: string | null = null;
+  const selection = createProjectSelectionArguments();
   let jsonCount = 0;
-  for (const argument of arguments_) {
+  for (let index = 0; index < arguments_.length; index += 1) {
+    const argument = arguments_[index];
+    if (parseProjectSelectionOption(arguments_, index, selection)) {
+      index += 1;
+      continue;
+    }
     if (argument === "--json") {
       jsonCount += 1;
       continue;
@@ -126,18 +244,17 @@ export function parseCliArgs(argv: readonly string[]): ParsedCliCommand {
     if (argument.startsWith("-")) {
       throw new SaltCliUsageError(`Unknown info option: ${argument}.`);
     }
-    if (rootDir !== null) {
-      throw new SaltCliUsageError("info accepts at most one project root.");
-    }
-    if (argument.includes("\0")) {
-      throw new SaltCliUsageError("The project root contains an invalid byte.");
-    }
-    rootDir = argument;
+    throw new SaltCliUsageError("info accepts no positional arguments.");
   }
   if (jsonCount !== 1) {
     throw new SaltCliUsageError("info requires exactly one --json option.");
   }
-  return { command: "info", rootDir, format: "json" };
+  return {
+    command: "info",
+    rootDir: selection.rootDir,
+    project: selection.project,
+    format: "json",
+  };
 }
 
 function parseDoctorArguments(arguments_: readonly string[]): ParsedCliCommand {
@@ -231,10 +348,15 @@ function parseRetrievalFormat(
 }
 
 function parseDocsArguments(arguments_: readonly string[]): ParsedCliCommand {
+  const selection = createProjectSelectionArguments();
   let identifier: string | null = null;
   let format: "markdown" | "json" | null = null;
   for (let index = 0; index < arguments_.length; index += 1) {
     const argument = arguments_[index];
+    if (parseProjectSelectionOption(arguments_, index, selection)) {
+      index += 1;
+      continue;
+    }
     if (argument === "--format") {
       if (format !== null) {
         throw new SaltCliUsageError("docs accepts --format once.");
@@ -263,17 +385,28 @@ function parseDocsArguments(arguments_: readonly string[]): ParsedCliCommand {
       "docs requires one record ID or name and exactly one --format option.",
     );
   }
-  return { command: "docs", identifier, format };
+  return {
+    command: "docs",
+    rootDir: selection.rootDir,
+    project: selection.project,
+    identifier,
+    format,
+  };
 }
 
 function parseContextArguments(
   arguments_: readonly string[],
 ): ParsedCliCommand {
+  const selection = createProjectSelectionArguments();
   let query: string | null = null;
   let format: "markdown" | "json" | null = null;
   let limit: number | null = null;
   for (let index = 0; index < arguments_.length; index += 1) {
     const argument = arguments_[index];
+    if (parseProjectSelectionOption(arguments_, index, selection)) {
+      index += 1;
+      continue;
+    }
     if (argument === "--format") {
       if (format !== null) {
         throw new SaltCliUsageError("context accepts --format once.");
@@ -319,7 +452,14 @@ function parseContextArguments(
       "context requires one query, exactly one --format, and exactly one --limit.",
     );
   }
-  return { command: "context", query, format, limit };
+  return {
+    command: "context",
+    rootDir: selection.rootDir,
+    project: selection.project,
+    query,
+    format,
+    limit,
+  };
 }
 
 export async function runCliWithIo(
@@ -336,11 +476,17 @@ export async function runCliWithIo(
     return 0;
   }
   if (parsed.command === "docs") {
-    const result = await runDocsCommand({
-      rootDir: io.cwd(),
-      identifier: parsed.identifier,
-      format: parsed.format,
-    });
+    let result: Awaited<ReturnType<typeof runDocsCommand>>;
+    try {
+      result = await runDocsCommand({
+        rootDir: resolveProjectRoot(parsed.rootDir, io.cwd()),
+        project: parsed.project,
+        identifier: parsed.identifier,
+        format: parsed.format,
+      });
+    } catch (error) {
+      mapProjectRootInspectionError(error);
+    }
     await io.stdout(result.output);
     return result.exitCode;
   }
@@ -348,7 +494,8 @@ export async function runCliWithIo(
     let result: Awaited<ReturnType<typeof runContextCommand>>;
     try {
       result = await runContextCommand({
-        rootDir: io.cwd(),
+        rootDir: resolveProjectRoot(parsed.rootDir, io.cwd()),
+        project: parsed.project,
         query: parsed.query,
         format: parsed.format,
         limit: parsed.limit,
@@ -359,7 +506,7 @@ export async function runCliWithIo(
           "Context input cannot fit the 16 KiB output budget. Use a shorter query.",
         );
       }
-      throw error;
+      mapProjectRootInspectionError(error);
     }
     await io.stdout(result.output);
     return result.exitCode;
@@ -384,39 +531,18 @@ export async function runCliWithIo(
       await io.stdout(result.output);
       return result.exitCode;
     } catch (error) {
-      if (
-        error &&
-        typeof error === "object" &&
-        "code" in error &&
-        (error.code === "SALT_PROJECT_ROOT_NOT_DIRECTORY" ||
-          error.code === "SALT_PROJECT_ROOT_UNAVAILABLE")
-      ) {
-        throw new SaltCliUsageError(
-          "The project root is invalid or unavailable.",
-        );
-      }
-      throw error;
+      mapProjectRootInspectionError(error);
     }
   }
   let result: Awaited<ReturnType<typeof runInfoCommand>>;
   try {
     result = await runInfoCommand({
-      rootDir: parsed.rootDir ?? io.cwd(),
+      rootDir: resolveProjectRoot(parsed.rootDir, io.cwd()),
+      project: parsed.project,
       cliVersion: packageManifest.version,
     });
   } catch (error) {
-    if (
-      error &&
-      typeof error === "object" &&
-      "code" in error &&
-      (error.code === "SALT_PROJECT_ROOT_NOT_DIRECTORY" ||
-        error.code === "SALT_PROJECT_ROOT_UNAVAILABLE")
-    ) {
-      throw new SaltCliUsageError(
-        "The project root is invalid or unavailable.",
-      );
-    }
-    throw error;
+    mapProjectRootInspectionError(error);
   }
   await io.stdout(`${JSON.stringify(result)}\n`);
   return 0;

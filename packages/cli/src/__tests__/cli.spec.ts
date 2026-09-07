@@ -1,3 +1,4 @@
+import path from "node:path";
 import { KnowledgeContextInputError } from "@salt-ds/knowledge";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
@@ -87,20 +88,26 @@ describe("Salt CLI shell", () => {
     }
   });
 
-  it("parses info with one optional root and one required JSON renderer", () => {
+  it("parses info selection flags and a required JSON renderer", () => {
     expect(parseCliArgs(["info", "--json"])).toEqual({
       command: "info",
       rootDir: null,
+      project: ".",
       format: "json",
     });
-    expect(parseCliArgs(["info", "D:/project", "--json"])).toEqual({
+    expect(
+      parseCliArgs([
+        "info",
+        "--project",
+        "apps/one",
+        "--json",
+        "--root",
+        "D:/project",
+      ]),
+    ).toEqual({
       command: "info",
       rootDir: "D:/project",
-      format: "json",
-    });
-    expect(parseCliArgs(["info", "--json", "D:/project"])).toEqual({
-      command: "info",
-      rootDir: "D:/project",
+      project: "apps/one",
       format: "json",
     });
   });
@@ -109,6 +116,7 @@ describe("Salt CLI shell", () => {
     ["info"],
     ["info", "--json", "--json"],
     ["info", "one", "two", "--json"],
+    ["info", "one", "--json"],
     ["info", "--yaml"],
     ["unknown"],
   ])("rejects invalid arguments: %s", (...argv) => {
@@ -120,6 +128,7 @@ describe("Salt CLI shell", () => {
     await runCliWithIo(["info", "--json"], capture.io);
     expect(runInfoCommand).toHaveBeenCalledWith({
       rootDir: "D:/fixture",
+      project: ".",
       cliVersion: "0.0.0",
     });
     expect(capture.stdout()).toBe('{"contract":"salt-cli-info/1"}\n');
@@ -133,7 +142,7 @@ describe("Salt CLI shell", () => {
     );
     const capture = captureIo();
     await expect(
-      runCliWithIo(["info", "missing", "--json"], capture.io),
+      runCliWithIo(["info", "--root", "missing", "--json"], capture.io),
     ).rejects.toMatchObject({
       code: "SALT_CLI_USAGE",
       exitCode: 2,
@@ -147,6 +156,8 @@ describe("Salt CLI shell", () => {
       parseCliArgs(["docs", "component.button", "--format", "markdown"]),
     ).toEqual({
       command: "docs",
+      rootDir: null,
+      project: ".",
       identifier: "component.button",
       format: "markdown",
     });
@@ -161,10 +172,80 @@ describe("Salt CLI shell", () => {
       ]),
     ).toEqual({
       command: "context",
+      rootDir: null,
+      project: ".",
       query: "button appearance",
       format: "json",
       limit: 5,
     });
+  });
+
+  it("shares bounded selection grammar across project-bound commands", () => {
+    expect(
+      parseCliArgs([
+        "docs",
+        "--root",
+        "repo",
+        "Button",
+        "--project",
+        "apps/one",
+        "--format",
+        "json",
+      ]),
+    ).toEqual({
+      command: "docs",
+      rootDir: "repo",
+      project: "apps/one",
+      identifier: "Button",
+      format: "json",
+    });
+    expect(
+      parseCliArgs([
+        "context",
+        "--project",
+        "apps/two",
+        "Button",
+        "--limit",
+        "5",
+        "--root",
+        "repo",
+        "--format",
+        "markdown",
+      ]),
+    ).toEqual({
+      command: "context",
+      rootDir: "repo",
+      project: "apps/two",
+      query: "Button",
+      format: "markdown",
+      limit: 5,
+    });
+  });
+
+  it.each([
+    ["info", "--root", "", "--json"],
+    ["info", "--root", "\0", "--json"],
+    ["info", "--root", "one", "--root", "two", "--json"],
+    ["info", "--project", "", "--json"],
+    ["info", "--project", "\0", "--json"],
+    ["info", "--project", "apps/one", "--project", "apps/two", "--json"],
+    ["info", "--project", "/absolute", "--json"],
+    ["info", "--project", "C:/absolute", "--json"],
+    ["info", "--project", "C:child", "--json"],
+    ["info", "--project", "apps/../two", "--json"],
+    ["docs", "Button", "--root", "--format", "json"],
+    [
+      "context",
+      "Button",
+      "--project",
+      "..",
+      "--format",
+      "json",
+      "--limit",
+      "5",
+    ],
+  ])("rejects unsafe or incomplete selection arguments: %s", (...argv) => {
+    expect(() => parseCliArgs(argv)).toThrow(SaltCliUsageError);
   });
 
   it("strictly parses and runs the skill subcommands", async () => {
@@ -277,6 +358,7 @@ describe("Salt CLI shell", () => {
     ).resolves.toBe(1);
     expect(runDocsCommand).toHaveBeenCalledWith({
       rootDir: "D:/fixture",
+      project: ".",
       identifier: "Button",
       format: "markdown",
     });
@@ -291,11 +373,94 @@ describe("Salt CLI shell", () => {
     ).resolves.toBe(0);
     expect(runContextCommand).toHaveBeenCalledWith({
       rootDir: "D:/fixture",
+      project: ".",
       query: "Button",
       format: "json",
       limit: 5,
     });
   });
+
+  it("forwards an explicit authority and selected application without auto-selection", async () => {
+    const capture = captureIo();
+    await runCliWithIo(
+      [
+        "docs",
+        "Button",
+        "--project",
+        "apps/one",
+        "--root",
+        "repository",
+        "--format",
+        "json",
+      ],
+      capture.io,
+    );
+    expect(runDocsCommand).toHaveBeenCalledWith({
+      rootDir: path.resolve("D:/fixture", "repository"),
+      project: "apps/one",
+      identifier: "Button",
+      format: "json",
+    });
+
+    await runCliWithIo(
+      [
+        "context",
+        "Button",
+        "--root",
+        "repository",
+        "--format",
+        "json",
+        "--limit",
+        "5",
+        "--project",
+        "apps/two",
+      ],
+      capture.io,
+    );
+    expect(runContextCommand).toHaveBeenCalledWith({
+      rootDir: path.resolve("D:/fixture", "repository"),
+      project: "apps/two",
+      query: "Button",
+      format: "json",
+      limit: 5,
+    });
+  });
+
+  it.each(["docs", "context", "info"])(
+    "maps %s root inspection errors to usage without echoing a path",
+    async (command) => {
+      const failure = Object.assign(new Error("C:\\private\\repository"), {
+        code: "SALT_PROJECT_ROOT_UNAVAILABLE",
+      });
+      if (command === "docs") runDocsCommand.mockRejectedValue(failure);
+      else if (command === "context")
+        runContextCommand.mockRejectedValue(failure);
+      else runInfoCommand.mockRejectedValue(failure);
+
+      const arguments_ =
+        command === "docs"
+          ? ["docs", "Button", "--root", "missing", "--format", "json"]
+          : command === "context"
+            ? [
+                "context",
+                "Button",
+                "--root",
+                "missing",
+                "--format",
+                "json",
+                "--limit",
+                "5",
+              ]
+            : ["info", "--root", "missing", "--json"];
+      const capture = captureIo();
+      await expect(runCliWithIo(arguments_, capture.io)).rejects.toMatchObject({
+        code: "SALT_CLI_USAGE",
+        exitCode: 2,
+        message: "The project root is invalid or unavailable.",
+      });
+      expect(capture.stdout()).toBe("");
+    },
+  );
 
   it.each(["json", "markdown"])(
     "maps context budget rejection to a concise usage error for %s",

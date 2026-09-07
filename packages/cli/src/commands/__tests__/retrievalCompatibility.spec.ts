@@ -1,3 +1,4 @@
+import path from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const harness = vi.hoisted(() => {
@@ -41,6 +42,8 @@ vi.mock("@salt-ds/knowledge", () => ({
 import { runContextCommand } from "../context.js";
 import { runDocsCommand } from "../docs.js";
 
+const fixtureRoot = path.resolve("fixture");
+
 function selection(
   status: "selected" | "not_salt" | "unverifiable" | "unsupported",
 ) {
@@ -64,7 +67,8 @@ beforeEach(() => {
   vi.clearAllMocks();
   harness.createKnowledgeStore.mockReturnValue(harness.store);
   harness.inspectSaltProjectFacts.mockResolvedValue({
-    facts: { installation: { resolvedPackages: [] } },
+    authorityRoot: fixtureRoot,
+    facts: { root_dir: fixtureRoot, installation: { resolvedPackages: [] } },
     limitations: [],
   });
 });
@@ -76,12 +80,14 @@ describe("retrieval project-selection gate", () => {
       harness.decideSaltProject.mockReturnValue(selection(status));
 
       const docs = await runDocsCommand({
-        rootDir: "D:/fixture",
+        rootDir: fixtureRoot,
+        project: ".",
         identifier: "Button",
         format: "json",
       });
       const context = await runContextCommand({
-        rootDir: "D:/fixture",
+        rootDir: fixtureRoot,
+        project: ".",
         query: "button",
         format: "markdown",
         limit: 5,
@@ -119,14 +125,16 @@ describe("retrieval project-selection gate", () => {
 
     await expect(
       runDocsCommand({
-        rootDir: "D:/fixture",
+        rootDir: fixtureRoot,
+        project: ".",
         identifier: "Button",
         format: "json",
       }),
     ).resolves.toMatchObject({ exitCode: 0 });
     await expect(
       runContextCommand({
-        rootDir: "D:/fixture",
+        rootDir: fixtureRoot,
+        project: ".",
         query: "button",
         format: "json",
         limit: 5,
@@ -142,7 +150,8 @@ describe("retrieval project-selection gate", () => {
 
     await expect(
       runContextCommand({
-        rootDir: "D:/fixture",
+        rootDir: fixtureRoot,
+        project: ".",
         query: "button",
         format: "markdown",
         limit: 5,
@@ -155,5 +164,44 @@ describe("retrieval project-selection gate", () => {
       installed_versions: {},
       max_utf8_bytes: 16 * 1024,
     });
+  });
+
+  it("inspects the explicitly selected workspace for both retrieval commands", async () => {
+    const project = "apps/customer-portal";
+    harness.inspectSaltProjectFacts.mockResolvedValue({
+      authorityRoot: fixtureRoot,
+      facts: {
+        root_dir: path.join(fixtureRoot, project),
+        installation: { resolvedPackages: [] },
+      },
+      limitations: [],
+    });
+    harness.decideSaltProject.mockReturnValue(selection("selected"));
+    harness.resolveKnowledgeDocument.mockReturnValue({ status: "resolved" });
+    harness.buildKnowledgeContext.mockReturnValue({ matches: [] });
+
+    await runDocsCommand({
+      rootDir: fixtureRoot,
+      project,
+      identifier: "Button",
+      format: "json",
+    });
+    await runContextCommand({
+      rootDir: fixtureRoot,
+      project,
+      query: "button",
+      format: "json",
+      limit: 5,
+    });
+
+    expect(harness.inspectSaltProjectFacts).toHaveBeenCalledTimes(2);
+    for (const call of harness.inspectSaltProjectFacts.mock.calls) {
+      expect(call).toEqual([
+        {
+          rootDir: path.join(fixtureRoot, project),
+          authorityRoot: fixtureRoot,
+        },
+      ]);
+    }
   });
 });

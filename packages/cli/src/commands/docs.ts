@@ -4,17 +4,17 @@ import {
 } from "@salt-ds/knowledge";
 import {
   loadRetrievalRuntime,
+  type ProjectSelectionInput,
   renderRejectedProjectSelection,
 } from "./retrievalRuntime.js";
 
-export interface RunDocsCommandInput {
-  rootDir: string;
+export interface RunDocsCommandInput extends ProjectSelectionInput {
   identifier: string;
   format: "markdown" | "json";
 }
 
 export async function runDocsCommand(input: RunDocsCommandInput) {
-  const runtime = await loadRetrievalRuntime(input.rootDir);
+  const runtime = await loadRetrievalRuntime(input);
   if (runtime.selection.status !== "selected") {
     return {
       output: renderRejectedProjectSelection(runtime.selection, input.format),

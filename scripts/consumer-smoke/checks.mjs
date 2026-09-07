@@ -282,7 +282,7 @@ async function runDoctorPerformance({
     const startedAt = process.hrtime.bigint();
     const info = await runInstalledCli(
       installedCliBinPath,
-      ["info", ".", "--json"],
+      ["info", "--root", fixtureRoot, "--json"],
       fixtureRoot,
     );
     infoTimingsMs.push(
@@ -584,7 +584,13 @@ export async function runCliWorkflowCoverage(
     helpResults.every(
       (result) =>
         result.stderr === "" && result.stdout === helpResults[0].stdout,
-    ) && helpResults[0].stdout.includes("salt-ds info [root] --json"),
+    ) &&
+      helpResults[0].stdout.includes(
+        "salt-ds info [--root <repo>] [--project <relative-workspace>] --json",
+      ) &&
+      helpResults[0].stdout.includes(
+        "--project defaults to . within it. Child applications are never selected automatically.",
+      ),
     "Packed help aliases did not preserve exact stdout/stderr semantics.",
   );
 
@@ -640,7 +646,25 @@ export async function runCliWorkflowCoverage(
     ["info"],
     ["info", "--json", "--json"],
     ["info", "one", "two", "--json"],
-    ["info", "missing-root", "--json"],
+    ["info", ".", "--json"],
+    ["info", "--root", exactSaltRoot, "--root", exactSaltRoot, "--json"],
+    ["info", "--root", "--json"],
+    ["info", "--project", "..", "--json"],
+    ["info", "--project", "../child", "--json"],
+    ["info", "--project", "C:child", "--json"],
+    ["info", "--project", path.resolve(exactSaltRoot), "--json"],
+    [
+      "context",
+      "Button",
+      "--project",
+      "app",
+      "--project",
+      "child",
+      "--format",
+      "json",
+      "--limit",
+      "5",
+    ],
     ["docs"],
     ["docs", "component.button"],
     ["docs", "component.button", "--format", "yaml"],
@@ -672,7 +696,7 @@ export async function runCliWorkflowCoverage(
 
   const explicitInfo = await runInstalledCli(
     installedCliBinPath,
-    ["info", exactSaltRoot, "--json"],
+    ["info", "--root", exactSaltRoot, "--json"],
     nonSaltRoot,
   );
   const defaultInfo = await runInstalledCli(
@@ -840,7 +864,7 @@ export async function runCliWorkflowCoverage(
     );
     const largeOutput = await runInstalledCli(
       installedCliBinPath,
-      ["info", "--json"],
+      ["info", "--root", largeOutputRoot, "--json"],
       largeOutputRoot,
     );
     const parsedLargeOutput = JSON.parse(largeOutput.stdout);
@@ -900,7 +924,7 @@ export async function runCliWorkflowCoverage(
   ].join("");
   const invalidRoot = await runInstalledCli(
     installedCliBinPath,
-    ["info", hostileRoot, "--json"],
+    ["info", "--root", hostileRoot, "--json"],
     exactSaltRoot,
     [2],
   );
@@ -1087,7 +1111,7 @@ export async function runCliWorkflowCoverage(
   );
   const partialResult = await runInstalledCli(
     installedCliBinPath,
-    ["info", nonSaltRoot, "--json"],
+    ["info", "--root", nonSaltRoot, "--json"],
     exactSaltRoot,
   );
   const partial = JSON.parse(partialResult.stdout);
@@ -1108,8 +1132,8 @@ export async function runCliWorkflowCoverage(
     (
       await runInstalledCli(
         installedCliBinPath,
-        ["docs", "component.button", "--format", "json"],
-        nonSaltRoot,
+        ["docs", "component.button", "--root", nonSaltRoot, "--format", "json"],
+        exactSaltRoot,
         [3],
       )
     ).stdout,
@@ -1118,8 +1142,17 @@ export async function runCliWorkflowCoverage(
     (
       await runInstalledCli(
         installedCliBinPath,
-        ["context", "Button", "--format", "json", "--limit", "5"],
-        nonSaltRoot,
+        [
+          "context",
+          "Button",
+          "--root",
+          nonSaltRoot,
+          "--format",
+          "json",
+          "--limit",
+          "5",
+        ],
+        exactSaltRoot,
         [3],
       )
     ).stdout,
@@ -1170,7 +1203,7 @@ export async function runCliWorkflowCoverage(
 
   return {
     aliases: { help: 3, version: 2, broken_pipe: 1 },
-    invalid_argument_cases: 26,
+    invalid_argument_cases: 33,
     terminal_safety: {
       large_output_bytes: largeOutputBytes,
       invalid_root: "generic",
@@ -1262,6 +1295,131 @@ export function assertJourneyDoctorSelection(
   }
 }
 
+function isPortableRepositoryPath(value) {
+  return (
+    typeof value === "string" &&
+    value.length > 0 &&
+    !value.includes("\\") &&
+    !path.posix.isAbsolute(value) &&
+    !path.win32.isAbsolute(value) &&
+    !value.split("/").includes("..")
+  );
+}
+
+export function assertRepositoryAuthorityInfo(
+  info,
+  { project, expectedUiVersions, authorityRoot },
+) {
+  const observed = new Map(
+    info?.project?.packages?.map((entry) => [
+      entry.name,
+      entry.observed_version,
+    ]) ?? [],
+  );
+  const observedPaths = [
+    info?.project?.package_manifest?.path,
+    info?.project?.workspace?.packageRoot,
+    info?.project?.workspace?.workspaceRoot,
+    ...(info?.project?.packages?.map((entry) => entry.observed_manifest_path) ??
+      []),
+  ];
+  const serialized = JSON.stringify(info);
+  const encodedAuthority = JSON.stringify(authorityRoot).slice(1, -1);
+  assert(
+    info?.project?.root === project &&
+      info.selection?.status === "selected" &&
+      info.selection.reason_code === "SALT_PROJECT_SELECTED" &&
+      Object.entries(expectedUiVersions).every(
+        ([name, version]) => observed.get(name) === version,
+      ) &&
+      observed.size === Object.keys(expectedUiVersions).length &&
+      observedPaths.every(isPortableRepositoryPath) &&
+      !serialized.includes(encodedAuthority) &&
+      !serialized.includes(authorityRoot.replaceAll("\\", "/")),
+    "Packed repository-authority info leaked its authority or selected the wrong workspace.",
+  );
+}
+
+export async function runRepositoryAuthorityCoverage({
+  installRoot,
+  authorityRoot,
+  project,
+  invocationRoot,
+  packReport,
+  expectedUiVersions,
+}) {
+  const resolvedInvocationRoot = path.resolve(invocationRoot);
+  const resolvedAuthorityRoot = path.resolve(authorityRoot);
+  const invocationOutsideRepository =
+    resolvedInvocationRoot !== resolvedAuthorityRoot &&
+    !resolvedInvocationRoot.startsWith(`${resolvedAuthorityRoot}${path.sep}`);
+  assert(
+    invocationOutsideRepository,
+    "Repository-authority coverage must invoke the CLI outside the repository.",
+  );
+  const installedCliBinPath = getInstalledCliBin(installRoot);
+  const selection = ["--root", authorityRoot, "--project", project];
+  const infoResult = await runInstalledCli(
+    installedCliBinPath,
+    ["info", ...selection, "--json"],
+    invocationRoot,
+  );
+  const info = JSON.parse(infoResult.stdout);
+  assert(infoResult.stderr === "", "Repository-authority info wrote stderr.");
+  assertRepositoryAuthorityInfo(info, {
+    project,
+    expectedUiVersions,
+    authorityRoot,
+  });
+
+  const docsResult = await runInstalledCli(
+    installedCliBinPath,
+    ["docs", "component.button", ...selection, "--format", "json"],
+    invocationRoot,
+  );
+  const docs = JSON.parse(docsResult.stdout);
+  const contextResult = await runInstalledCli(
+    installedCliBinPath,
+    [
+      "context",
+      "Button appearance",
+      ...selection,
+      "--format",
+      "json",
+      "--limit",
+      "5",
+    ],
+    invocationRoot,
+  );
+  const context = JSON.parse(contextResult.stdout);
+  const encodedAuthority = JSON.stringify(authorityRoot).slice(1, -1);
+  assert(
+    docsResult.stderr === "" &&
+      docs.status === "resolved" &&
+      docs.document?.reference?.id === "component.button" &&
+      docs.bundle?.digest ===
+        packReport.report.knowledge_bundle.bundle_digest &&
+      contextResult.stderr === "" &&
+      context.matches?.some(
+        (match) => match.reference?.id === "component.button",
+      ) &&
+      context.bundle_digest ===
+        packReport.report.knowledge_bundle.bundle_digest &&
+      !docsResult.stdout.includes(encodedAuthority) &&
+      !docsResult.stdout.includes(authorityRoot.replaceAll("\\", "/")) &&
+      !contextResult.stdout.includes(encodedAuthority) &&
+      !contextResult.stdout.includes(authorityRoot.replaceAll("\\", "/")),
+    "Packed repository-authority retrieval did not use the selected child application safely.",
+  );
+  return {
+    project_root: project,
+    invocation_outside_repository: invocationOutsideRepository,
+    info_paths: "repository_relative",
+    docs: docs.status,
+    context: "resolved",
+  };
+}
+
 export async function runJourneyDoctorCoverage(
   installRoot,
   sameProjectRoot,
@@ -1299,7 +1457,7 @@ export async function runJourneyDoctorCoverage(
     "Tooling-root packed Doctor",
   );
   assertJourneyDoctorSelection(toolingWorkspace, {
-    selectedWorkspace: "packages/app",
+    selectedWorkspace: "apps/child",
     uiCohort,
     packReport,
     toolingRoot: true,
@@ -1312,7 +1470,7 @@ export async function runJourneyDoctorCoverage(
       reason_code: sameProject.reason_code,
     },
     tooling_root: {
-      selected_workspace: "packages/app",
+      selected_workspace: "apps/child",
       status: toolingWorkspace.status,
       reason_code: toolingWorkspace.reason_code,
     },
@@ -1383,8 +1541,13 @@ export function assertConsumerJourneyReceipt(receipt) {
       cli?.aliases?.help === 3 &&
       cli.aliases.version === 2 &&
       cli.aliases.broken_pipe === 1 &&
-      cli.invalid_argument_cases === 26 &&
+      cli.invalid_argument_cases === 33 &&
       cli.terminal_safety?.control_characters === "sanitized" &&
+      cli.repository_authority?.project_root === "apps/child" &&
+      cli.repository_authority.invocation_outside_repository === true &&
+      cli.repository_authority.info_paths === "repository_relative" &&
+      cli.repository_authority.docs === "resolved" &&
+      cli.repository_authority.context === "resolved" &&
       cli.exact_info?.cli_version &&
       cli.exact_info.knowledge_version &&
       cli.agent_support?.integrity === "manifest_verified" &&
@@ -1397,7 +1560,7 @@ export function assertConsumerJourneyReceipt(receipt) {
       cli.doctor.read_only === true &&
       projectDoctor?.same_project?.selected_workspace === "." &&
       projectDoctor.same_project.status === "complete" &&
-      projectDoctor.tooling_root?.selected_workspace === "packages/app" &&
+      projectDoctor.tooling_root?.selected_workspace === "apps/child" &&
       projectDoctor.tooling_root.status === "complete" &&
       projectDoctor.performance_qualification === "not_run" &&
       receipt.runtime?.offline === true &&

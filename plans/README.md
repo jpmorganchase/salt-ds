@@ -31,7 +31,7 @@ it does not dispatch or block the active successor.
 | [004](./004-validate-salt-ai-product-wedge.md)                     | Validate a truthful, exact-current, task-ready Salt AI product wedge before hardening or release                | P0       | L, multi-phase | Plan 001 Unit 07            | DEFERRED — Units 00–02 preserved; Unit 004/03 superseded      |
 | [005](./005-prove-version-aware-salt-ai-doctor.md)                 | Prove an exact-current Salt Doctor with executable tests and a real-consumer pilot                              | P0       | M, four units  | Plan 004 Units 00–02        | DONE — CUT_DOCTOR at Unit 005/02; performance gate missed     |
 | [006](./006-make-salt-doctor-lightweight-or-retire.md)             | Establish packed Doctor runtime evidence                                                                        | P0       | M              | Plan 005 CUT_DOCTOR         | SUPERSEDED — Unit 006/00 unfinished; no technical result      |
-| [032](./032-fix-the-real-consumer-entry-path.md)                   | Make the real consumer installation and retrieval journey work                                                  | P0       | M, four units  | Preserved Plan 006 snapshot | IN PROGRESS — Unit 032/03                                     |
+| [032](./032-fix-the-real-consumer-entry-path.md)                   | Make the real consumer installation and retrieval journey work                                                  | P0       | M, four units  | Preserved Plan 006 snapshot | IN PROGRESS — Unit 032/04                                     |
 | [003](./003-publish-salt-ai-release-candidate.md)                  | Materialize versions and publish an approved Salt AI release candidate through separately owned release systems | P2       | L, conditional | Plan 004 final PASS         | DEFERRED — Plan 004 PASS and publication authority are absent |
 | [002](./002-add-secure-historical-salt-knowledge.md)               | Add secure historical Salt knowledge resolution only after current GA, public discovery, and ownership approval | P2       | L, conditional | Plan 003 completion         | DEFERRED — post-Plan-003 re-plan and entry gates are absent   |
 
@@ -102,9 +102,9 @@ publication authority as deferred to Plan 003.
 
 ## Active dispatch
 
-- **Active plan/unit:** Plan 032 / Unit `032/03`
-- **Checkpoint:** `ec99adab550d2c32d849e6af51a741a53b18e5be`
-- **Status:** IN PROGRESS — Unit 032/03
+- **Active plan/unit:** Plan 032 / Unit `032/04`
+- **Checkpoint:** `899afdfe849b02a9e6122b58f5bba1b316d013a6`
+- **Status:** IN PROGRESS — Unit 032/04
 - **Current control:** `plans/evidence/032/control.json`
 - **Predecessor disposition:** Plan 006 / Unit `006/00` is superseded unfinished
   at `e55fa54e215503b4a0e521e2f5ee054b9f0068ce`. Its unchanged plan/control,
@@ -115,9 +115,9 @@ publication authority as deferred to Plan 003.
   consumers and their existing agents. GitHub Copilot with npm is the first
   route. Selectively rebuild existing AI delivery/loading code and retire unused
   paths; the current Doctor product surface is selected for later retirement
-  before the supported preview. Units 032/01–02 fixed installation and retrieval;
-  the current unit binds evaluation metadata to fixtures and separates current
-  verification from historical replay.
+  before the supported preview. Units 032/01–03 fixed installation, retrieval,
+  and evaluation metadata. The current unit selects an explicit application
+  through bounded package metadata and verifies the combined packed journey.
 - **External authority:** only the active unit's named temporary fixture setup
   is authorized. Product runtime remains offline/read-only. Consumer contact,
   product model trials, actual consumer installation, publication, versioning,

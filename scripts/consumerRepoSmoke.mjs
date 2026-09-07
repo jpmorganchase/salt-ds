@@ -6,6 +6,7 @@ import {
   assertConsumerJourneyReceipt,
   runCliWorkflowCoverage,
   runJourneyDoctorCoverage,
+  runRepositoryAuthorityCoverage,
 } from "./consumer-smoke/checks.mjs";
 import {
   createExactCliInfoRepo,
@@ -94,6 +95,14 @@ async function runConsumerJourney(tempRoot, packReport) {
       verifyIdentityTamper: true,
     },
   );
+  cliReceipt.repository_authority = await runRepositoryAuthorityCoverage({
+    installRoot: toolingWorkspaceRoot,
+    authorityRoot: toolingWorkspaceRoot,
+    project: "apps/child",
+    invocationRoot: nonSaltRoot,
+    packReport,
+    expectedUiVersions: sameProjectInstall.uiCohort,
+  });
   const projectDoctor = await runJourneyDoctorCoverage(
     appRoot,
     appRoot,
