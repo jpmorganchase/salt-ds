@@ -103,7 +103,7 @@ publication authority as deferred to Plan 003.
 ## Active dispatch
 
 - **Active plan/unit:** Plan 032 / Unit `032/01`
-- **Checkpoint:** `e55fa54e215503b4a0e521e2f5ee054b9f0068ce`
+- **Checkpoint:** `db9f97d76fc8ee7b1a1e64974542d8b48e65b41f`
 - **Status:** IN PROGRESS — Unit 032/01
 - **Current control:** `plans/evidence/032/control.json`
 - **Predecessor disposition:** Plan 006 / Unit `006/00` is superseded unfinished

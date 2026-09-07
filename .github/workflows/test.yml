@@ -172,6 +172,8 @@ jobs:
         run: yarn
       - name: Build and pack once
         run: |
+          yarn workspace @salt-ds/styles build
+          yarn workspace @salt-ds/icons exec node ../../scripts/build.mjs
           yarn build:ai-tooling
           yarn check:ai-tooling:pack -- --report dist/salt-ai-pack/release-complete.json
       - name: Use Node.js 22 for consumer smoke
@@ -180,14 +182,14 @@ jobs:
           node-version: 22
           cache: "yarn"
       - name: Consumer smoke on Node.js 22
-        run: yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/release-complete.json
+        run: yarn smoke:consumer --journey --skip-build --pack-report dist/salt-ai-pack/release-complete.json
       - name: Use Node.js 24 for consumer smoke
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: 24
           cache: "yarn"
       - name: Consumer smoke on Node.js 24
-        run: yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/release-complete.json
+        run: yarn smoke:consumer --journey --skip-build --pack-report dist/salt-ai-pack/release-complete.json
       - name: Verify tracked files remain unchanged
         run: |
           git diff --exit-code

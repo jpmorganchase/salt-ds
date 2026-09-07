@@ -145,6 +145,115 @@ describe("closed Salt project decision", () => {
     });
   });
 
+  it.each([
+    ["CLI", [{ name: "@salt-ds/cli", version: "0.0.0" }]],
+    ["Knowledge", [{ name: "@salt-ds/knowledge", version: "0.0.0" }]],
+    [
+      "both tools",
+      [
+        { name: "@salt-ds/cli", version: "0.0.0" },
+        { name: "@salt-ds/knowledge", version: "0.0.0" },
+      ],
+    ],
+  ] as const)(
+    "selects Core with %s without treating tooling as UI evidence",
+    (_, tools) => {
+      const result = decideSaltProject(
+        projectFacts([
+          exactCore,
+          ...tools.map(({ name, version }) => ({
+            name,
+            declaredVersion: `^${version}`,
+            resolvedVersion: version,
+          })),
+        ]),
+        manifest,
+      );
+
+      expect(result).toMatchObject({
+        status: "selected",
+        reason_code: "SALT_PROJECT_SELECTED",
+        installed_package_vector: [
+          { name: "@salt-ds/core", version: "1.70.0" },
+        ],
+      });
+    },
+  );
+
+  it("treats a tooling-only repository as non-Salt", () => {
+    expect(
+      decideSaltProject(
+        projectFacts([
+          {
+            name: "@salt-ds/cli",
+            declaredVersion: "file:../cli",
+            resolvedVersion: null,
+            declarationResolution: "unverifiable",
+          },
+          {
+            name: "@salt-ds/knowledge",
+            declaredVersion: "^0.0.0",
+            resolvedVersion: "0.0.0",
+          },
+        ]),
+        manifest,
+      ),
+    ).toMatchObject({
+      status: "not_salt",
+      reason_code: "SALT_PROJECT_NO_SALT_PACKAGES",
+      installed_package_vector: [],
+    });
+  });
+
+  it("ignores missing or file tooling while retaining missing Core evidence", () => {
+    expect(
+      decideSaltProject(
+        projectFacts([
+          {
+            ...exactCore,
+            resolvedVersion: null,
+            declarationResolution: "unverifiable",
+          },
+          {
+            name: "@salt-ds/cli",
+            declaredVersion: "file:../cli",
+            resolvedVersion: null,
+            declarationResolution: "unverifiable",
+          },
+        ]),
+        manifest,
+      ),
+    ).toMatchObject({
+      status: "unverifiable",
+      reason_code: "SALT_PROJECT_INSPECTION_INCOMPLETE",
+    });
+  });
+
+  it("ignores duplicate tooling evidence", () => {
+    expect(
+      decideSaltProject(
+        projectFacts([
+          exactCore,
+          {
+            name: "@salt-ds/cli",
+            declaredVersion: "^0.0.0",
+            resolvedVersion: "0.0.0",
+          },
+          {
+            name: "@salt-ds/cli",
+            declaredVersion: "file:../cli",
+            resolvedVersion: null,
+            declarationResolution: "unverifiable",
+          },
+        ]),
+        manifest,
+      ),
+    ).toMatchObject({
+      status: "selected",
+      reason_code: "SALT_PROJECT_SELECTED",
+    });
+  });
+
   it("selects independently versioned exact package families", () => {
     expect(
       decideSaltProject(

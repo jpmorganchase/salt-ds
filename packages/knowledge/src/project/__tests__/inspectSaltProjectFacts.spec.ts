@@ -65,6 +65,61 @@ describe("inspectSaltProjectFacts", () => {
     expect(result.facts.installation.inspection.status).toBe("succeeded");
   });
 
+  it("collects only UI packages before resolution and version-health checks", async () => {
+    const root = await fixtureRoot();
+    await fs.writeFile(
+      path.join(root, "package.json"),
+      JSON.stringify({
+        name: "fixture",
+        packageManager: "npm@11.0.0",
+        dependencies: {
+          "@salt-ds/core": "1.69.0",
+          "@salt-ds/cli": "file:../cli",
+          "@salt-ds/knowledge": "^0.0.0",
+        },
+        devDependencies: { "@salt-ds/cli": "^999.0.0" },
+      }),
+      "utf8",
+    );
+
+    const result = await inspectSaltProjectFacts({ rootDir: root });
+
+    expect(result.facts.declared_salt_packages).toEqual([
+      { name: "@salt-ds/core", version: "1.69.0" },
+    ]);
+    expect(result.facts.installation.resolvedPackages).toEqual([
+      expect.objectContaining({ name: "@salt-ds/core" }),
+    ]);
+    expect(result.facts.installation.versionHealth).toMatchObject({
+      multipleDeclaredVersions: false,
+      mismatchedPackages: [],
+      unverifiablePackages: [],
+    });
+  });
+
+  it("treats a tooling-only manifest as having no Salt UI evidence", async () => {
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "salt-info-tools-"));
+    tempDirectories.push(root);
+    await fs.writeFile(
+      path.join(root, "package.json"),
+      JSON.stringify({
+        dependencies: {
+          "@salt-ds/cli": "file:../cli",
+          "@salt-ds/knowledge": "^0.0.0",
+        },
+      }),
+      "utf8",
+    );
+
+    const result = await inspectSaltProjectFacts({ rootDir: root });
+
+    expect(result.facts.declared_salt_packages).toEqual([]);
+    expect(result.facts.installation.resolvedPackages).toEqual([]);
+    expect(
+      result.facts.installation.versionHealth.unverifiablePackages,
+    ).toEqual([]);
+  });
+
   it("does not inspect repository project-policy marker files", async () => {
     const root = await fixtureRoot();
     await fs.mkdir(path.join(root, ".salt"), { recursive: true });
