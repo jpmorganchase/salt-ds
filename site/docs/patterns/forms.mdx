@@ -7,13 +7,29 @@ tags:
 aliases:
   - /salt/patterns/forms
 data:
-  components: ["Button", "Checkbox", "Combo box", "Dropdown", "Form field", "Radio button"]
+  components:
+    [
+      "Button",
+      "Checkbox",
+      "Combo box",
+      "Dropdown",
+      "Form field",
+      "Radio button",
+    ]
   relatedPatterns: ["Button bar"]
   resources:
     [
-      { href: "https://www.figma.com/community/plugin/1243516701438091943", label: "Form Builder plugin (Beta)", internal: true },
-      { href: "https://www.figma.com/file/6QFnnVZo4a7lBY1s16rZcN/Untitled?type=design&node-id=1%3A4775&mode=design", label: "Form examples", internal: true },
-    ]  
+      {
+        href: "https://www.figma.com/community/plugin/1243516701438091943",
+        label: "Form Builder plugin (Beta)",
+        internal: true,
+      },
+      {
+        href: "https://www.figma.com/file/6QFnnVZo4a7lBY1s16rZcN/Untitled?type=design&node-id=1%3A4775&mode=design",
+        label: "Form examples",
+        internal: true,
+      },
+    ]
 ---
 
 <LivePreview componentName="patterns/forms" exampleName="StandardLayout" />
@@ -42,6 +58,16 @@ Use the pattern when:
 
 ## How to build
 
+### Submission and recovery
+
+Keep a form's draft in the application that owns the workflow. When validation
+fails, preserve entered values, explain the problem alongside the relevant
+field, announce a concise error summary, and move focus to the first field that
+needs attention. While a submission is pending, make progress clear and avoid
+accepting another submission or closing the form. If it fails, retain the draft
+and offer a retry. A cancel action should state whether it preserves the draft
+or asks for confirmation before discarding it.
+
 ### Anatomy
 
 You can display a form as a dedicated page, within a dialog, nested into drawers, or within a side panel. Independently of how a form is displayed, you would generally include the following elements in a form:
@@ -65,6 +91,7 @@ Keep the heading, fields, helper text, and button bar in a consistent vertical r
 Form controls align to a column layout with an even number of columns across breakpoints.
 
 A form control consists of a [form field](/salt/components/form-field) wrapped around:
+
 - An input.
 - A combo box.
 - A dropdown.
@@ -81,9 +108,11 @@ A form control consists of a [form field](/salt/components/form-field) wrapped a
 Read more in the [spacing foundation](../foundations/spacing).
 
 <GuidanceCallout type="positive" customPillText="Best practices">
+
 - Align the width of a form field to the number of columns that best reflect the length of its expected text.
 - Use the Figma “Salt Layout Grid” style library, which aligns to Salt breakpoints. Pick the style that fits to your density and frame width.
 - Use “Compact layout” for very data-dense forms.
+
 </GuidanceCallout>
 
 #### Headings
@@ -110,14 +139,19 @@ Use horizontal separators to increase visual hierarchy alongside fills and headi
 <ImageSwitcher
   images={[
     { src: "/img/patterns/forms/form-sections-separators.png", alt: "" },
-    { src: "/img/patterns/forms/form-sections-separators-spacing.png", alt: "" },
+    {
+      src: "/img/patterns/forms/form-sections-separators-spacing.png",
+      alt: "",
+    },
   ]}
   label="Show spacing"
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
+
 - Break a long form up into sections (or sequential steps) of, ideally, 7 (+/-2) form fields (Miller’s Law).
 - Inset separators so that they don’t extend into the column layout margin.
+
 </GuidanceCallout>
 
 ### Multiple columns
@@ -193,7 +227,7 @@ An overlay typically displays smaller forms that:
 
 Salt provides primary and secondary variants of both form fields and backgrounds.
 
-To keep busy forms as simple as  possible, choose a combination of these fills to achieve a visual hierarchy. Rather than adding background colors, if you need further visual separation, use:
+To keep busy forms as simple as possible, choose a combination of these fills to achieve a visual hierarchy. Rather than adding background colors, if you need further visual separation, use:
 
 - Headings.
 - Sections and separators.
@@ -213,12 +247,15 @@ Choose the combination that best fits:
     contentPosition="top"
     border
   >
-    ### 1a Primary field on primary background
+
+### 1a Primary field on primary background
+
     Effective for a form that:
     - Is 'non-specialist' or infrequently used.
     - Isn't space constrained/doesn't need to be entirely visible.
     - Has minimal sections/columns.
-  </Diagram>
+
+</Diagram>
   <Diagram
     src="/img/patterns/forms/field-background-2.png"
     alt="Example showing secondary field on secondary background"
@@ -226,21 +263,27 @@ Choose the combination that best fits:
     border
     background="secondary"
   >
-    ### 1b Secondary field on secondary background
+
+### 1b Secondary field on secondary background
+
     Alternate option to form 1a, but not a common combination.
-  </Diagram>
+
+</Diagram>
   <Diagram
     src="/img/patterns/forms/field-background-3.png"
     alt="Example showing secondary field on primary background"
     contentPosition="bottom"
     border
   >
-    ### 2a Secondary field on primary background
+
+### 2a Secondary field on primary background
+
     Effective for a form that:
     - Is used by experts/is frequently used.
     - Is compact and data-dense.
     - Has multiple sections/columns.
-  </Diagram>
+
+</Diagram>
   <Diagram
     src="/img/patterns/forms/field-background-4.png"
     alt="Example showing secondary field on secondary background"
@@ -248,13 +291,18 @@ Choose the combination that best fits:
     border
     background="secondary"
   >
-    ### 2a Primary field on secondary background
+
+### 2a Primary field on secondary background
+
     Alternate option to form 2a, to display the form as a secondary priority.
-  </Diagram>
+
+</Diagram>
 </Diagrams>
 
 <GuidanceCallout type="positive" label="Best practices">
-  Use a bordered multiline field when the form field fill matches the background fill.
+
+Use a bordered multiline field when the form field fill matches the background fill.
+
 </GuidanceCallout>
 
 ## Label or question
@@ -270,23 +318,29 @@ You can display form fields with either:
   alt="Example showing a form field label."
   border
   >
-    ### Label
+
+### Label
+
     - Default choice for form fields.
     - Field labels should be short and descriptive, with no more than 3-5 words.
     - Uses a secondary "Label strong" type style.
-  </Diagram>
+
+</Diagram>
   <Diagram
   src="/img/patterns/forms/form-field-question-label.png"
   alt="Example showing a form field question label."
   border
   >
-    ### Question
+
+### Question
+
     - Full sentence question.
     - Generally no limit to the word count of a field question (it wraps over multiple lines).
     - Brings emphasis to the question over the field content.
     - Commonly used to create questionnaires and surveys.
     - Uses a primary "Body strong" type style.
-  </Diagram>
+
+</Diagram>
 </Diagrams>
 
 ## Label placement
@@ -319,30 +373,40 @@ The default label placement for form fields. Top placement offers:
   src="/img/patterns/forms/form-label-placement-left-rightAligned.png"
   alt="Example showing a form with labels right aligned."
   >
-    #### Right aligned
+
+#### Right aligned
+
     - Default alignment for left placement.
     - Maintains proximity of labels to fields.
     - Often used for dense, editable forms, such as tickets.
-  </Diagram>
+
+</Diagram>
   <Diagram
   src="/img/patterns/forms/form-label-placement-left-leftAligned.png"
   alt="Example showing a form with labels left aligned."
   >
-    #### Left aligned
+
+#### Left aligned
+
     - Commonly when users need to review, or take care entering form information.
     - Generally slower completion time (due to variable label proximity to field).
     - Use cases include form summaries or to collect sensitive information.
-  </Diagram>
+
+</Diagram>
 </Diagrams>
 
 <GuidanceCallout type="positive">
+
 - Ensure both top and left placed labels align to the same layout grid configuration.
 - All left placement labels in the form should have the same width (determined by the field with the longest label).
 - Avoid left placement when the form is displayed in different languages, or on mobile/smaller viewports.
+
 </GuidanceCallout>
 
 <GuidanceCallout type="negative">
+
 - Don't mix label placements across the same form.
+
 </GuidanceCallout>
 
 ## Compact form
@@ -365,11 +429,13 @@ Use these layouts to display a:
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
+
 If a compact form is editable, display it with:
 
 - Secondary fields.
 - Primary background.
 - Right-aligned labels (see “Label placement”).
+
 </GuidanceCallout>
 
 ### Read-only summary
@@ -382,12 +448,14 @@ If a compact form is editable, display it with:
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
+
 If a compact form is for reference (e.g., a summary/comparison), display it with:
 
 - Primary fields.
 - Primary background.
 - Read-only state.
 - Left-aligned labels (see “Label placement”).
+
 </GuidanceCallout>
 
 ## Progressive disclosure
@@ -407,14 +475,19 @@ These use accordions to progressively reveal fields in long, dense forms. Sectio
 <ImageSwitcher
   images={[
     { src: "/img/patterns/forms/form-expandable-sections.png", alt: "" },
-    { src: "/img/patterns/forms/form-expandable-sections-expanded.png", alt: "" },
+    {
+      src: "/img/patterns/forms/form-expandable-sections-expanded.png",
+      alt: "",
+    },
   ]}
   label="Expand sections"
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
+
 - Expand the first section on displaying the form.
 - Align the left edge of fields to the accordion label and the right edge to the underlying layout grid.
+
 </GuidanceCallout>
 
 ### Combining non-expandable and expandable sections
