@@ -1,6 +1,7 @@
 import {
   Button,
   Card,
+  FlexItem,
   GridItem,
   GridLayout,
   Spinner,
@@ -132,25 +133,31 @@ export const WithButton: StoryFn = () => {
 
   return (
     <StackLayout>
-      <StackLayout gap={1} align="start">
+      <StackLayout gap={2} align="start">
         <Text>Default</Text>
-        {exampleOneIsLoading && <Spinner />}
+        {exampleOneIsLoading && (
+          <FlexItem align="center">
+            <Spinner />
+          </FlexItem>
+        )}
         <Button onClick={() => setExampleOneIsLoading(!exampleOneIsLoading)}>
           {exampleOneIsLoading ? "Stop" : "Start"}
         </Button>
       </StackLayout>
-      <StackLayout gap={1} align="start">
+      <StackLayout gap={2} align="start">
         <Text>
           Custom interval (2s), custom announcer timeout (60s), custom aria
           label and custom finishing message
         </Text>
         {exampleTwoIsLoading && (
-          <Spinner
-            announcerInterval={2000}
-            announcerTimeout={60000}
-            aria-label="dashboard panel loading"
-            completionAnnouncement="dashboard panel loading successful"
-          />
+          <FlexItem align="center">
+            <Spinner
+              announcerInterval={2000}
+              announcerTimeout={60000}
+              aria-label="dashboard panel loading"
+              completionAnnouncement="dashboard panel loading successful"
+            />
+          </FlexItem>
         )}
         <Button onClick={() => setExampleTwoIsLoading(!exampleTwoIsLoading)}>
           {exampleTwoIsLoading ? "Stop" : "Start"}

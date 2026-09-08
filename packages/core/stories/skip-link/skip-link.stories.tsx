@@ -98,7 +98,9 @@ const DefaultStory: StoryFn<typeof SkipLink> = (args) => {
         <StackLayout as="article">
           <StackLayout as="section">
             <StackLayout gap={1}>
-              <H1 id={args.targetId}>Explore our offering</H1>
+              <H1 id={args.targetId} className="header">
+                Explore our offering
+              </H1>
               <Text>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                 Aliquam, consequuntur culpa dolor excepturi fugit in ipsa iusto

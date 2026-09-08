@@ -152,7 +152,7 @@ export const CloseButton = ({ onOpenChange }: OverlayProps) => {
       <OverlayPanel aria-labelledby={id}>
         <OverlayHeader header="Title" actions={closeButton} id={id} />
         <OverlayPanelContent>
-          <StackLayout gap={1}>
+          <StackLayout gap={2}>
             <Text>Content of Overlay</Text>
             <div>
               <Tooltip content={"I'm a tooltip"}>
