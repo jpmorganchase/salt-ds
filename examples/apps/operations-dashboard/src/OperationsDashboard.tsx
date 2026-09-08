@@ -2,83 +2,119 @@ import {
   Banner,
   BannerContent,
   Button,
+  Card,
+  CardContent,
   type Density,
   Dialog,
   DialogHeader,
   FlexLayout,
   H1,
-  Input,
+  Link,
   type Mode,
   SaltProviderNext,
   StackLayout,
-  StatusIndicator,
-  Table,
-  TBody,
-  TD,
   Text,
-  TH,
-  THead,
-  TR,
 } from "@salt-ds/core";
-import { AddIcon, DarkIcon, LightIcon, SearchIcon } from "@salt-ds/icons";
+import { AddIcon, DarkIcon, LightIcon } from "@salt-ds/icons";
 import { Metric, MetricContent, MetricHeader } from "@salt-ds/lab";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createLocalDemoAdapter } from "./workflows/record-form/localDemoAdapter";
 import { RecordForm } from "./workflows/record-form/RecordForm";
-import {
-  type RecordDraft,
-  type RecordFormSubmission,
+import type {
+  RecordDraft,
+  RecordFormSubmission,
 } from "./workflows/record-form/types";
+import { IncidentInspector } from "./workflows/service-worklist/IncidentInspector";
+import {
+  IncidentWorklist,
+  type WorklistState,
+} from "./workflows/service-worklist/IncidentWorklist";
+import {
+  createLocalWorklistAdapter,
+  initialIncidents,
+  initialServices,
+} from "./workflows/service-worklist/localWorklistAdapter";
+import type {
+  IncidentRecord,
+  ServiceRecord,
+} from "./workflows/service-worklist/types";
 
-const services = [
-  {
-    name: "Order gateway",
-    owner: "Trading platform",
-    region: "London",
-    status: "Operational",
-    latency: "42 ms",
-  },
-  {
-    name: "Risk calculator",
-    owner: "Risk engineering",
-    region: "New York",
-    status: "Degraded",
-    latency: "187 ms",
-  },
-  {
-    name: "Reference data",
-    owner: "Data services",
-    region: "Singapore",
-    status: "Operational",
-    latency: "65 ms",
-  },
-  {
-    name: "Client reporting",
-    owner: "Digital channels",
-    region: "London",
-    status: "Maintenance",
-    latency: "—",
-  },
-];
+type DialogMode = "create" | "edit";
+type ActivityNotice =
+  | { kind: "created"; record: RecordDraft }
+  | { kind: "updated"; incidentId: string }
+  | undefined;
+
+function sectionFromLocationHash(): "services" | "incidents" {
+  return window.location.hash === "#incidents" ? "incidents" : "services";
+}
 
 export function OperationsDashboard() {
   const [mode, setMode] = useState<Mode>("light");
   const [density, setDensity] = useState<Density>("low");
+  const [activeSection, setActiveSection] = useState(sectionFromLocationHash);
   const [query, setQuery] = useState("");
+  const [services, setServices] = useState<ServiceRecord[]>([]);
+  const [worklistState, setWorklistState] = useState<WorklistState>("loading");
+  const [refreshMessage, setRefreshMessage] = useState<string>();
+  const [emptyDemo, setEmptyDemo] = useState(false);
+  const [incidents, setIncidents] =
+    useState<IncidentRecord[]>(initialIncidents);
+  const [selectedServiceId, setSelectedServiceId] = useState<string>();
+  const [selectedIncidentId, setSelectedIncidentId] = useState<string>();
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [lastCreatedRecord, setLastCreatedRecord] =
-    useState<RecordDraft | null>(null);
-  const [draft, setDraft] = useState<RecordDraft>({
+  const [dialogMode, setDialogMode] = useState<DialogMode>("create");
+  const [editingIncidentId, setEditingIncidentId] = useState<string>();
+  const [activityNotice, setActivityNotice] = useState<ActivityNotice>();
+  const [createDraft, setCreateDraft] = useState<RecordDraft>({
     title: "",
-    service: services[1].name,
+    service: initialServices[1].name,
   });
+  const [hasStartedCreateDraft, setHasStartedCreateDraft] = useState(false);
+  const [editDrafts, setEditDrafts] = useState<Record<string, RecordDraft>>({});
   const [submission, setSubmission] = useState<RecordFormSubmission>({
     status: "idle",
   });
   const [localDemoAdapter] = useState(createLocalDemoAdapter);
+  const [worklistAdapter] = useState(() =>
+    createLocalWorklistAdapter(initialServices),
+  );
   const submitting = useRef(false);
+  const nextIncidentId = useRef(1043);
+  const createTriggerRef = useRef<HTMLButtonElement>(null);
+  const inspectorTriggerRef = useRef<HTMLButtonElement>(null);
+  const dialogTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const [restoreDialogFocus, setRestoreDialogFocus] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    void worklistAdapter.load().then((loadedServices) => {
+      if (!active) return;
+      setServices(loadedServices);
+      setWorklistState("ready");
+    });
+    return () => {
+      active = false;
+    };
+  }, [worklistAdapter]);
+
+  useEffect(() => {
+    if (!dialogOpen && restoreDialogFocus) {
+      dialogTriggerRef.current?.focus();
+      setRestoreDialogFocus(false);
+    }
+  }, [dialogOpen, restoreDialogFocus]);
+
+  useEffect(() => {
+    const syncActiveSection = () => {
+      setActiveSection(sectionFromLocationHash());
+    };
+    window.addEventListener("hashchange", syncActiveSection);
+    return () => window.removeEventListener("hashchange", syncActiveSection);
+  }, []);
 
   const visibleServices = useMemo(() => {
+    if (emptyDemo) return [];
     const normalized = query.trim().toLowerCase();
     return normalized
       ? services.filter((service) =>
@@ -87,25 +123,112 @@ export function OperationsDashboard() {
           ),
         )
       : services;
-  }, [query]);
+  }, [emptyDemo, query, services]);
+
+  const selectedIncident = selectedIncidentId
+    ? incidents.find((incident) => incident.id === selectedIncidentId)
+    : undefined;
+  const selectedService = selectedIncident
+    ? services.find((service) => service.name === selectedIncident.service)
+    : services.find((service) => service.id === selectedServiceId);
+  const activeDraft =
+    dialogMode === "edit" && editingIncidentId
+      ? (editDrafts[editingIncidentId] ??
+        (selectedIncident
+          ? { title: selectedIncident.title, service: selectedIncident.service }
+          : createDraft))
+      : createDraft;
+  const healthyServiceCount = services.filter(
+    (service) => service.status === "Operational",
+  ).length;
+  const regionCount = new Set(services.map((service) => service.region)).size;
 
   const closeRecordForm = () => {
     if (submitting.current || submission.status === "pending") return;
     setSubmission({ status: "idle" });
     setDialogOpen(false);
+    setRestoreDialogFocus(true);
   };
 
-  const createIncident = (nextDraft: RecordDraft) => {
+  const openCreateIncident = (trigger: HTMLButtonElement | null) => {
+    dialogTriggerRef.current = trigger;
+    setDialogMode("create");
+    setEditingIncidentId(undefined);
+    if (!hasStartedCreateDraft) {
+      setCreateDraft({
+        title: "",
+        service: selectedService?.name ?? initialServices[1].name,
+      });
+      setHasStartedCreateDraft(true);
+    }
+    setSubmission({ status: "idle" });
+    setDialogOpen(true);
+  };
+
+  const openEditIncident = () => {
+    if (!selectedIncident) return;
+    dialogTriggerRef.current = inspectorTriggerRef.current;
+    setDialogMode("edit");
+    setEditingIncidentId(selectedIncident.id);
+    setEditDrafts((currentDrafts) =>
+      currentDrafts[selectedIncident.id]
+        ? currentDrafts
+        : {
+            ...currentDrafts,
+            [selectedIncident.id]: {
+              title: selectedIncident.title,
+              service: selectedIncident.service,
+            },
+          },
+    );
+    setSubmission({ status: "idle" });
+    setDialogOpen(true);
+  };
+
+  const submitIncident = (nextDraft: RecordDraft) => {
     if (submitting.current) return;
     submitting.current = true;
-    setLastCreatedRecord(null);
+    setActivityNotice(undefined);
     setSubmission({ status: "pending" });
     void localDemoAdapter
       .submit(nextDraft)
       .then((record) => {
-        setLastCreatedRecord(record);
+        if (dialogMode === "edit" && editingIncidentId) {
+          setIncidents((currentIncidents) =>
+            currentIncidents.map((incident) =>
+              incident.id === editingIncidentId
+                ? { ...incident, ...record, updated: "Just now" }
+                : incident,
+            ),
+          );
+          setEditDrafts((currentDrafts) => {
+            const { [editingIncidentId]: _completedDraft, ...remainingDrafts } =
+              currentDrafts;
+            return remainingDrafts;
+          });
+          setActivityNotice({ kind: "updated", incidentId: editingIncidentId });
+        } else {
+          const createdIncident: IncidentRecord = {
+            id: `INC-${nextIncidentId.current++}`,
+            ...record,
+            status: "Open",
+            updated: "Just now",
+          };
+          setIncidents((currentIncidents) => [
+            ...currentIncidents,
+            createdIncident,
+          ]);
+          setActivityNotice({ kind: "created", record });
+          setSelectedServiceId(
+            services.find((service) => service.name === record.service)?.id,
+          );
+          setSelectedIncidentId(createdIncident.id);
+          setCreateDraft({ title: "", service: initialServices[1].name });
+          setHasStartedCreateDraft(false);
+        }
         setSubmission({ status: "idle" });
         setDialogOpen(false);
+        setRestoreDialogFocus(true);
       })
       .catch((error: unknown) => {
         const message =
@@ -119,6 +242,51 @@ export function OperationsDashboard() {
       });
   };
 
+  const refreshWorklist = () => {
+    if (worklistState === "loading" || worklistState === "refreshing") return;
+    setWorklistState("refreshing");
+    setRefreshMessage(undefined);
+    void worklistAdapter
+      .refresh()
+      .then((loadedServices) => {
+        setServices(loadedServices);
+        setWorklistState("ready");
+        setRefreshMessage(
+          `Worklist refreshed. Showing ${loadedServices.length} of ${initialServices.length} services.`,
+        );
+      })
+      .catch(() => {
+        setWorklistState("error");
+      });
+  };
+
+  const inspectService = (service: ServiceRecord) => {
+    setSelectedServiceId(service.id);
+    setSelectedIncidentId(
+      incidents.find((incident) => incident.service === service.name)?.id,
+    );
+  };
+
+  const inspectIncident = (incidentId: string) => {
+    const incident = incidents.find((current) => current.id === incidentId);
+    if (!incident) return;
+    setSelectedIncidentId(incident.id);
+    setSelectedServiceId(
+      services.find((service) => service.name === incident.service)?.id,
+    );
+  };
+
+  const updateActiveDraft = (nextDraft: RecordDraft) => {
+    if (dialogMode === "edit" && editingIncidentId) {
+      setEditDrafts((currentDrafts) => ({
+        ...currentDrafts,
+        [editingIncidentId]: nextDraft,
+      }));
+      return;
+    }
+    setCreateDraft(nextDraft);
+  };
+
   return (
     <SaltProviderNext
       mode={mode}
@@ -128,15 +296,35 @@ export function OperationsDashboard() {
     >
       <div className="dashboardShell" data-mode={mode} data-density={density}>
         <header className="topBar">
-          <a className="brand" href="#main">
+          <Link
+            className="brand"
+            color="inherit"
+            href="#main"
+            underline="never"
+          >
             Northstar operations
-          </a>
+          </Link>
           <nav aria-label="Primary navigation">
-            <a aria-current="page" href="#services">
+            <Link
+              aria-current={
+                activeSection === "services" ? "location" : undefined
+              }
+              color="inherit"
+              href="#services"
+              underline="never"
+            >
               Services
-            </a>
-            <a href="#incidents">Incidents</a>
-            <a href="#changes">Changes</a>
+            </Link>
+            <Link
+              aria-current={
+                activeSection === "incidents" ? "location" : undefined
+              }
+              color="inherit"
+              href="#incidents"
+              underline="never"
+            >
+              Incidents
+            </Link>
           </nav>
           <FlexLayout className="topActions" gap={1}>
             <Button
@@ -164,110 +352,117 @@ export function OperationsDashboard() {
         <main id="main" className="dashboardMain">
           <section className="pageHeading" aria-labelledby="page-title">
             <StackLayout gap={1}>
-              <Text color="secondary">Live service health</Text>
+              <Text color="secondary">Local operations worklist</Text>
               <H1 id="page-title">Operations overview</H1>
-              <Text>Last refreshed today at 09:42 UTC</Text>
+              <Text>Local fixture data. No external requests are made.</Text>
             </StackLayout>
-            <Button sentiment="accented" onClick={() => setDialogOpen(true)}>
+            <Button
+              sentiment="accented"
+              onClick={() => openCreateIncident(createTriggerRef.current)}
+              ref={createTriggerRef}
+            >
               <AddIcon aria-hidden /> Create incident
             </Button>
           </section>
 
-          {lastCreatedRecord && (
+          {activityNotice?.kind === "created" && (
             <Banner status="success">
               <BannerContent role="status">
-                Local demo recorded {lastCreatedRecord.title} for{" "}
-                {lastCreatedRecord.service}. No notification was sent.
+                Local demo recorded {activityNotice.record.title} for{" "}
+                {activityNotice.record.service}. No notification was sent.
+              </BannerContent>
+            </Banner>
+          )}
+          {activityNotice?.kind === "updated" && (
+            <Banner status="success">
+              <BannerContent role="status">
+                Incident {activityNotice.incidentId} updated.
               </BannerContent>
             </Banner>
           )}
 
           <section className="metrics" aria-label="Operational metrics">
-            <article>
-              <Metric>
-                <MetricHeader title="Healthy services" />
-                <MetricContent value="18" subvalue="of 20 monitored" />
-              </Metric>
-            </article>
-            <article>
-              <Metric>
-                <MetricHeader title="Open incidents" />
-                <MetricContent value="2" subvalue="1 high priority" />
-              </Metric>
-            </article>
-            <article>
-              <Metric>
-                <MetricHeader title="Change success" />
-                <MetricContent value="99.2%" subvalue="past 30 days" />
-              </Metric>
-            </article>
+            <Card>
+              <CardContent>
+                <Metric>
+                  <MetricHeader title="Healthy services" />
+                  <MetricContent
+                    value={String(healthyServiceCount)}
+                    subvalue={`of ${services.length} local services`}
+                  />
+                </Metric>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent>
+                <Metric>
+                  <MetricHeader title="Open incidents" />
+                  <MetricContent
+                    value={String(incidents.length)}
+                    subvalue="local worklist records"
+                  />
+                </Metric>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent>
+                <Metric>
+                  <MetricHeader title="Regions represented" />
+                  <MetricContent
+                    value={String(regionCount)}
+                    subvalue="in the local fixture"
+                  />
+                </Metric>
+              </CardContent>
+            </Card>
           </section>
 
-          <section
-            id="services"
-            className="servicePanel"
-            aria-labelledby="services-title"
-          >
-            <div className="panelHeader">
-              <div>
-                <h2 id="services-title">Service health</h2>
-                <Text color="secondary">
-                  Production services across all regions
-                </Text>
-              </div>
-              <Input
-                placeholder="Filter services"
-                startAdornment={<SearchIcon aria-hidden />}
-                value={query}
-                inputProps={{
-                  "aria-label": "Filter services",
-                  onChange: (event) => setQuery(event.currentTarget.value),
-                }}
-              />
-            </div>
-            <div
-              className="tableScroller"
-              role="region"
-              aria-label="Service health table"
-              tabIndex={0}
-            >
-              <Table>
-                <THead>
-                  <TR>
-                    <TH>Service</TH>
-                    <TH>Owner</TH>
-                    <TH>Region</TH>
-                    <TH>Status</TH>
-                    <TH>Latency</TH>
-                  </TR>
-                </THead>
-                <TBody>
-                  {visibleServices.map((service) => (
-                    <TR key={service.name}>
-                      <TH scope="row">{service.name}</TH>
-                      <TD>{service.owner}</TD>
-                      <TD>{service.region}</TD>
-                      <TD>
-                        <FlexLayout gap={1} align="center">
-                          <StatusIndicator
-                            status={
-                              service.status === "Operational"
-                                ? "success"
-                                : service.status === "Degraded"
-                                  ? "warning"
-                                  : "info"
-                            }
-                          />
-                          {service.status}
-                        </FlexLayout>
-                      </TD>
-                      <TD>{service.latency}</TD>
-                    </TR>
-                  ))}
-                </TBody>
-              </Table>
-            </div>
-          </section>
+          <div className="worklistLayout">
+            <IncidentWorklist
+              allServiceCount={emptyDemo ? 0 : services.length}
+              incidents={emptyDemo ? [] : incidents}
+              localDemoControls={
+                emptyDemo ? (
+                  <Button
+                    appearance="transparent"
+                    onClick={() => setEmptyDemo(false)}
+                  >
+                    Restore worklist (local demo)
+                  </Button>
+                ) : (
+                  <Button
+                    appearance="transparent"
+                    onClick={() => {
+                      setEmptyDemo(true);
+                      setSelectedServiceId(undefined);
+                      setSelectedIncidentId(undefined);
+                    }}
+                  >
+                    Show empty worklist (local demo)
+                  </Button>
+                )
+              }
+              onInspect={inspectService}
+              onInspectIncident={inspectIncident}
+              onQueryChange={setQuery}
+              onRefresh={refreshWorklist}
+              onRetryRefresh={refreshWorklist}
+              query={query}
+              refreshLabel="Refresh worklist (local demo)"
+              refreshMessage={refreshMessage}
+              retryLabel="Retry worklist refresh (local demo)"
+              selectedIncidentId={selectedIncidentId}
+              services={visibleServices}
+              state={worklistState}
+            />
+            <IncidentInspector
+              incident={selectedIncident}
+              onCreate={() => openCreateIncident(inspectorTriggerRef.current)}
+              onEdit={openEditIncident}
+              service={selectedService}
+              triggerRef={inspectorTriggerRef}
+            />
+          </div>
         </main>
 
         <Dialog
@@ -280,15 +475,23 @@ export function OperationsDashboard() {
           status="warning"
         >
           <DialogHeader
-            header="Create incident"
-            description="Save a local incident record for the selected service. No data leaves this demo."
+            header={dialogMode === "edit" ? "Edit incident" : "Create incident"}
+            description={
+              dialogMode === "edit"
+                ? "Update this local incident record. No data leaves this demo."
+                : "Save a local incident record for the selected service. No data leaves this demo."
+            }
           />
           <RecordForm
-            draft={draft}
+            draft={activeDraft}
+            formLabel={
+              dialogMode === "edit" ? "Edit incident record" : undefined
+            }
             onCancel={closeRecordForm}
-            onChange={setDraft}
-            onSubmit={createIncident}
+            onChange={updateActiveDraft}
+            onSubmit={submitIncident}
             submission={submission}
+            submitLabel={dialogMode === "edit" ? "Update incident" : undefined}
           />
         </Dialog>
       </div>

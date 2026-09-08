@@ -113,7 +113,7 @@ export const DetailPattern: FC<LayoutProps> = ({ children }) => {
           <div className={styles.workflowContent}>
             <WorkflowPreview registration={workflowPreview} />
             <a className={styles.referenceLink} href="#primitive-reference">
-              Browse the Forms pattern reference
+              Browse the pattern reference
             </a>
             <div id="primitive-reference">{children}</div>
           </div>

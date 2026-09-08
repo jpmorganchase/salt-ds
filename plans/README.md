@@ -5,9 +5,9 @@ implementation handoffs, not production code. Execute them in dependency order,
 read each plan completely before starting, honor every STOP condition, and
 update the status row when work changes state.
 
-Plan 032 completed the consumer entry fixes. Plan 033 continues with one reusable
-form and shared canonical guidance, using a small current-state consistency
-check. Plan 006 remains superseded unfinished at
+Plan 032 completed the consumer entry fixes. Plan 033 continues with a complete
+service-operations workflow and shared canonical guidance, using a small
+current-state consistency check. Plan 006 remains superseded unfinished at
 `e55fa54e215503b4a0e521e2f5ee054b9f0068ce`; no runtime result is inferred.
 Product work starts after its adoption change passes checks and review.
 
@@ -32,7 +32,7 @@ it does not dispatch or block the active successor.
 | [005](./005-prove-version-aware-salt-ai-doctor.md)                 | Prove an exact-current Salt Doctor with executable tests and a real-consumer pilot                              | P0       | M, four units  | Plan 004 Units 00–02        | DONE — CUT_DOCTOR at Unit 005/02; performance gate missed     |
 | [006](./006-make-salt-doctor-lightweight-or-retire.md)             | Establish packed Doctor runtime evidence                                                                        | P0       | M              | Plan 005 CUT_DOCTOR         | SUPERSEDED — Unit 006/00 unfinished; no technical result      |
 | [032](./032-fix-the-real-consumer-entry-path.md)                   | Make the real consumer installation and retrieval journey work                                                  | P0       | M, four units  | Preserved Plan 006 snapshot | DONE — all four units complete                                |
-| [033](./033-deliver-verified-salt-workflows.md)                    | Deliver one reusable form and shared canonical form/Button guidance                                             | P0       | M, three units | Plan 032 complete           | IN PROGRESS — Unit 033/02a                                    |
+| [033](./033-deliver-verified-salt-workflows.md)                    | Deliver a complete service-operations workflow through shared canonical guidance and files                      | P0       | M, three units | Plan 032 complete           | IN PROGRESS — Unit 033/02a                                    |
 | [003](./003-publish-salt-ai-release-candidate.md)                  | Materialize versions and publish an approved Salt AI release candidate through separately owned release systems | P2       | L, conditional | Plan 004 final PASS         | DEFERRED — Plan 004 PASS and publication authority are absent |
 | [002](./002-add-secure-historical-salt-knowledge.md)               | Add secure historical Salt knowledge resolution only after current GA, public discovery, and ownership approval | P2       | L, conditional | Plan 003 completion         | DEFERRED — post-Plan-003 re-plan and entry gates are absent   |
 
@@ -123,8 +123,11 @@ publication authority as deferred to Plan 003.
   033/02 completed canonical form/Button guidance and portable recipe files
   across local outputs at `4f009ec3601b801856a69c0ac56928fc65c7bc65`.
   Unit 033/02a serves the same verified material on the selected website pages
-  and establishes the author update path. Manual workflow promotion reviews
-  and the independent maintainer exercise remain pending; the form is runnable.
+  and establishes the author update path. The 2026-09-08 user-directed iteration
+  expands the runnable recipe into a coherent operations-dashboard journey with
+  navigation, worklist states and record inspection/editing through that same
+  delivery path. Manual workflow promotion reviews and the independent
+  maintainer exercise remain pending; local implementation does not promote it.
 - **Foundation completion:** Plan 032 is DONE at
   `d2c7000865da920655d6461eb46e95f7eb84db43`; its terminal control is
   `plans/evidence/032/control.json`.

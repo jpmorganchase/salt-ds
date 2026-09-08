@@ -375,13 +375,13 @@ export async function buildKnowledgeSource(
               registration.workflows.length !== 1
             )
               throw new Error(
-                "The current example manifest must register exactly the selected record-form workflow.",
+                "The current example manifest must register exactly the selected service-worklist workflow.",
               );
             const workflow = registration.workflows[0];
             if (
-              workflow.id !== "operations-dashboard.record-form" ||
+              workflow.id !== "operations-dashboard.service-worklist" ||
               workflow.recipe !==
-                "examples/apps/operations-dashboard/src/workflows/record-form/recipe.json"
+                "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json"
             )
               throw new Error(
                 "The current example manifest registers an unsupported workflow source.",

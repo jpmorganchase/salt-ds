@@ -94,18 +94,19 @@ describe("CLI retrieval serialization with the generated Knowledge corpus", () =
         .update(JSON.stringify(canonicalValue(digestInput)), "utf8")
         .digest("hex")}`,
     );
-    expect(result.matches.length).toBeGreaterThan(0);
+    const canonical = result.canonical_documents?.[0];
     const match = result.matches[0];
+    const identifier = canonical?.reference ?? match?.citation.record_key;
+    expect(identifier).toEqual(expect.any(String));
     const docsCapture = captureIo();
     await expect(
-      runCliWithIo(
-        ["docs", match.citation.record_key, "--format", "json"],
-        docsCapture.io,
-      ),
+      runCliWithIo(["docs", identifier, "--format", "json"], docsCapture.io),
     ).resolves.toBe(0);
     expect(JSON.parse(docsCapture.output())).toMatchObject({
       status: "resolved",
-      document: { reference: match.reference },
+      document: canonical
+        ? { canonical: { reference: canonical.reference } }
+        : { reference: match.reference },
     });
   });
 

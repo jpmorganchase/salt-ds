@@ -151,14 +151,14 @@ export type WorkflowPreviewRegistration = {
 };
 
 export const workflowPreviewByRoute = {
-  "/salt/patterns/forms": {
-    id: "operations-dashboard.record-form",
-    route: "/salt/patterns/forms",
-    title: "Validated incident record form",
+  "/salt/patterns/analytical-dashboard": {
+    id: "operations-dashboard.service-worklist",
+    route: "/salt/patterns/analytical-dashboard",
+    title: "Service operations worklist",
     recipeSourcePath:
-      "examples/apps/operations-dashboard/src/workflows/record-form/recipe.json",
-    guideReference: "record:guide:operations-dashboard.record-form",
-    previewLocator: "workflow-preview:operations-dashboard.record-form",
+      "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json",
+    guideReference: "record:guide:operations-dashboard.service-worklist",
+    previewLocator: "workflow-preview:operations-dashboard.service-worklist",
   },
 } as const satisfies Record<string, WorkflowPreviewRegistration>;
 

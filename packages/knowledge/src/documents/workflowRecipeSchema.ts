@@ -57,7 +57,7 @@ const uniqueStringsCodec = z
 
 export const authoredWorkflowRecipeCodec = z
   .object({
-    id: z.literal("operations-dashboard.record-form"),
+    id: z.literal("operations-dashboard.service-worklist"),
     title: z.string().min(1),
     intent: z
       .object({
@@ -70,7 +70,7 @@ export const authoredWorkflowRecipeCodec = z
     source: z
       .object({
         application: z.literal("examples/apps/operations-dashboard"),
-        reusable_form_files: z
+        reusable_workflow_files: z
           .array(applicationPathCodec)
           .min(1)
           .refine(
@@ -127,7 +127,7 @@ export const authoredWorkflowRecipeCodec = z
   })
   .strict()
   .superRefine((recipe, context) => {
-    const reusable = new Set(recipe.source.reusable_form_files);
+    const reusable = new Set(recipe.source.reusable_workflow_files);
     for (const file of recipe.source.demo_application_files) {
       if (reusable.has(file)) {
         context.addIssue({
@@ -138,14 +138,14 @@ export const authoredWorkflowRecipeCodec = z
       }
     }
     if (
-      recipe.source.reusable_form_files.length !== 3 ||
-      recipe.source.demo_application_files.length !== 9
+      recipe.source.reusable_workflow_files.length !== 7 ||
+      recipe.source.demo_application_files.length !== 10
     ) {
       context.addIssue({
         code: "custom",
         path: ["source"],
         message:
-          "The selected source inventory must contain 3 reusable files and 9 demo/setup files.",
+          "The selected source inventory must contain 7 reusable workflow files and 10 demo/setup files.",
       });
     }
     if (
@@ -250,12 +250,12 @@ export const emittedWorkflowRecipeCodec = z
   })
   .strict()
   .superRefine((recipe, context) => {
-    if (recipe.id !== "operations-dashboard.record-form") {
+    if (recipe.id !== "operations-dashboard.service-worklist") {
       context.addIssue({
         code: "custom",
         path: ["id"],
         message:
-          "The initial workflow contract only registers operations-dashboard.record-form.",
+          "The current workflow contract only registers operations-dashboard.service-worklist.",
       });
     }
     if (recipe.source.application !== "examples/apps/operations-dashboard") {
@@ -272,15 +272,15 @@ export const emittedWorkflowRecipeCodec = z
     const setupFiles = recipe.files.filter((file) => file.role === "setup");
     const demoFiles = recipe.files.filter((file) => file.role === "demo-only");
     if (
-      reusableFiles.length !== 3 ||
+      reusableFiles.length !== 7 ||
       setupFiles.length !== 1 ||
-      demoFiles.length !== 8
+      demoFiles.length !== 9
     ) {
       context.addIssue({
         code: "custom",
         path: ["files"],
         message:
-          "The selected workflow must contain 3 reusable, 1 setup, and 8 demo-only public files.",
+          "The selected workflow must contain 7 reusable, 1 setup, and 9 demo-only public files.",
       });
     }
     for (const key of ["id", "path", "artifact_path"] as const) {

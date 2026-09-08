@@ -89,11 +89,11 @@
           "provenance"
         ],
         "properties": {
-          "id": { "const": "operations-dashboard.record-form" },
+          "id": { "const": "operations-dashboard.service-worklist" },
           "title": { "type": "string", "minLength": 1 },
-          "route": { "const": "/salt/patterns/forms" },
+          "route": { "const": "/salt/patterns/analytical-dashboard" },
           "recipe": {
-            "const": "examples/apps/operations-dashboard/src/workflows/record-form/recipe.json"
+            "const": "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json"
           },
           "visibility": { "const": "public" },
           "stability": { "enum": ["experimental", "stable", "deprecated"] },

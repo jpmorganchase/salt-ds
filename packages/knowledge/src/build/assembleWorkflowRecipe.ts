@@ -98,9 +98,9 @@ export function parseWorkflowRecipeDeclaration(
 }
 
 const DEFAULT_REGISTRATION: WorkflowRecipeRegistration = Object.freeze({
-  id: "operations-dashboard.record-form",
+  id: "operations-dashboard.service-worklist",
   recipePath:
-    "examples/apps/operations-dashboard/src/workflows/record-form/recipe.json",
+    "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json",
 });
 
 const CSS_URL_PATTERN = /url\(\s*["']?([^"')]+)["']?\s*\)/gu;
@@ -459,7 +459,7 @@ function recipeSourcePaths(
 ): string[] {
   return [
     registration.recipePath,
-    ...recipe.source.reusable_form_files.map(
+    ...recipe.source.reusable_workflow_files.map(
       (file) => `${recipe.source.application}/${file}`,
     ),
     `${recipe.source.application}/${recipe.setup.dependency_manifest}`,
@@ -502,7 +502,7 @@ export async function assembleWorkflowRecipe(
   assertInventoryBytes(recipeInventoryEntry, recipeBytes);
 
   const allApplicationFiles = [
-    ...recipe.source.reusable_form_files,
+    ...recipe.source.reusable_workflow_files,
     ...recipe.source.demo_application_files,
   ];
   if (new Set(allApplicationFiles).size !== allApplicationFiles.length) {
@@ -512,7 +512,7 @@ export async function assembleWorkflowRecipe(
   const sourceByApplicationPath = new Map<string, string>();
   const publicFileRecords: EmittedWorkflowRecipe["files"] = [];
   const publicFiles: WorkflowRecipePublicFile[] = [];
-  const reusable = new Set(recipe.source.reusable_form_files);
+  const reusable = new Set(recipe.source.reusable_workflow_files);
   for (const relativePath of [...allApplicationFiles].sort(
     compareOrdinalStrings,
   )) {
@@ -749,11 +749,11 @@ export async function assembleWorkflowRecipe(
     },
   });
 
-  const entryFile = recipe.source.reusable_form_files.find((file) =>
-    file.endsWith("RecordForm.tsx"),
+  const entryFile = recipe.source.demo_application_files.find(
+    (file) => file === "src/main.tsx",
   );
   if (!entryFile) {
-    throw new Error("Workflow reusable inventory omits RecordForm.tsx.");
+    throw new Error("Workflow demo application inventory omits src/main.tsx.");
   }
   const reusableArtifacts = publicFileRecords.filter(
     (file) => file.role === "reusable",

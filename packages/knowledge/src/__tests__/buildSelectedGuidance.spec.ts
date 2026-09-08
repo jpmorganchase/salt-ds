@@ -13,10 +13,17 @@ import {
 
 const repoRoot = process.cwd();
 const workflowRoot = "examples/apps/operations-dashboard";
-const recipeSourcePath = `${workflowRoot}/src/workflows/record-form/recipe.json`;
+const recipeSourcePath = `${workflowRoot}/src/workflows/service-worklist/recipe.json`;
 const manifestPath =
-  "examples/workflows/operations-dashboard.record-form/recipe.json";
+  "examples/workflows/operations-dashboard.service-worklist/recipe.json";
 const formsPath = "site/docs/patterns/forms.mdx";
+const analyticalDashboardPath = "site/docs/patterns/analytical-dashboard.mdx";
+const navigationPath = "site/docs/patterns/navigation.mdx";
+const contentStatusPath = "site/docs/patterns/content-status.mdx";
+const choosingPrimitivePath =
+  "site/docs/getting-started/choosing-the-right-primitive.mdx";
+const compositionPitfallsPath =
+  "site/docs/getting-started/composition-pitfalls.mdx";
 const buttonPath = "site/docs/components/button/examples.mdx";
 const formsPreviewPath = "site/src/examples/patterns/forms/index.tsx";
 const buttonPreviewPath = "site/src/examples/button/Loading.tsx";
@@ -24,11 +31,20 @@ const reusablePaths = [
   `${workflowRoot}/src/workflows/record-form/RecordForm.tsx`,
   `${workflowRoot}/src/workflows/record-form/RecordForm.css`,
   `${workflowRoot}/src/workflows/record-form/types.ts`,
+  `${workflowRoot}/src/workflows/service-worklist/types.ts`,
+  `${workflowRoot}/src/workflows/service-worklist/IncidentWorklist.tsx`,
+  `${workflowRoot}/src/workflows/service-worklist/IncidentInspector.tsx`,
+  `${workflowRoot}/src/workflows/service-worklist/ServiceWorklist.css`,
 ];
 const packagePath = `${workflowRoot}/package.json`;
 const fixtureRoots: string[] = [];
 
 const semanticSourcePaths = [
+  analyticalDashboardPath,
+  navigationPath,
+  contentStatusPath,
+  choosingPrimitivePath,
+  compositionPitfallsPath,
   formsPath,
   buttonPath,
   recipeSourcePath,
@@ -68,8 +84,8 @@ function input(
   return {
     sourceRoot: repoRoot,
     workflow: {
-      id: "operations-dashboard.record-form",
-      title: "Validated incident record form",
+      id: "operations-dashboard.service-worklist",
+      title: "Service operations worklist",
       recipeSourcePath,
       manifestPath,
       semanticSourcePaths: paths,
@@ -93,7 +109,7 @@ describe("buildSelectedGuidance", () => {
     ).resolves.toEqual([]);
   });
 
-  it("builds exactly the Forms workflow and Button Loading guides from declared inputs", async () => {
+  it("builds the service-worklist workflow and Button Loading guides from declared inputs", async () => {
     const inventory = await createCatalogInputInventory(
       repoRoot,
       trackedSourcePaths,
@@ -103,25 +119,44 @@ describe("buildSelectedGuidance", () => {
     );
 
     expect(guides.map((guide) => guide.id)).toEqual([
-      "operations-dashboard.record-form",
+      "operations-dashboard.service-worklist",
       "guide.button.loading",
     ]);
     const workflow = guides[0];
     expect(workflow.summary).toBe(
-      "Create or adapt an incident record form with host-owned draft, validation, pending submission, failure recovery, retry, and cancellation state.",
+      "Build a runnable service-operations dashboard with a persistent shell, worklist filters, local loading, empty and error recovery states, incident inspection, and an editable record form.",
     );
     expect(workflow.aliases).toEqual(
       expect.arrayContaining([
-        "Validated incident record form",
-        "incident form",
+        "Service operations worklist",
+        "service worklist",
       ]),
     );
     expect(workflow.recipeManifest).toBe(manifestPath);
+    expect(workflow.componentNames).toEqual(
+      expect.arrayContaining([
+        "Card",
+        "Panel",
+        "Link",
+        "Table",
+        "Input",
+        "Banner",
+      ]),
+    );
     expect(workflow.files.map((file) => file.sourcePath)).toEqual([
       formsPreviewPath,
     ]);
     expect(workflow.sourcePaths).toEqual(
-      expect.arrayContaining([formsPath, recipeSourcePath, formsPreviewPath]),
+      expect.arrayContaining([
+        analyticalDashboardPath,
+        navigationPath,
+        contentStatusPath,
+        choosingPrimitivePath,
+        compositionPitfallsPath,
+        formsPath,
+        recipeSourcePath,
+        formsPreviewPath,
+      ]),
     );
     expect(workflow.sourcePaths).not.toContain(buttonPath);
     expect(workflow.sourcePaths).not.toContain(
@@ -129,8 +164,38 @@ describe("buildSelectedGuidance", () => {
     );
     expect(workflow.attach).toEqual({
       componentNames: [],
-      patternNames: ["Forms"],
-      pageSourcePaths: [formsPath],
+      patternNames: [
+        "Analytical dashboard",
+        "Navigation",
+        "Content status",
+        "Forms",
+        "Metric",
+      ],
+      pageSourcePaths: [
+        analyticalDashboardPath,
+        navigationPath,
+        contentStatusPath,
+        formsPath,
+        choosingPrimitivePath,
+        compositionPitfallsPath,
+      ],
+    });
+    expect(
+      Object.fromEntries(
+        workflow.document.sections.map((section) => [
+          section.id,
+          {
+            source_path: section.source?.source_path,
+          },
+        ]),
+      ),
+    ).toMatchObject({
+      "dashboard.overview": { source_path: analyticalDashboardPath },
+      "navigation.overview": { source_path: navigationPath },
+      "content-status.overview": { source_path: contentStatusPath },
+      "forms.overview": { source_path: formsPath },
+      "primitive.overview": { source_path: choosingPrimitivePath },
+      "composition.overview": { source_path: compositionPitfallsPath },
     });
     const buildHeading = workflow.document.sections.findIndex(
       (section) => section.id === "forms.how-to-build",
@@ -183,7 +248,7 @@ describe("buildSelectedGuidance", () => {
     ]);
   });
 
-  it("keeps selected MDX expressions inert while surfacing their diagnostics and limitations", async () => {
+  it("reports an unsupported selected source with its own provenance", async () => {
     const sourceRoot = await copiedFixture();
     const fixtureFormsPath = path.join(sourceRoot, formsPath);
     const original = await readFile(fixtureFormsPath, "utf8");
@@ -196,14 +261,14 @@ describe("buildSelectedGuidance", () => {
       "utf8",
     );
 
-    const guides = await buildSelectedGuidance({ ...input(), sourceRoot });
-    const workflow = guides.find(
-      (guide) => guide.id === "operations-dashboard.record-form",
+    await expect(
+      buildSelectedGuidance({ ...input(), sourceRoot }),
+    ).rejects.toThrow(
+      new RegExp(
+        `${formsPath.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&")}.*MDX_EXPRESSION_INERT`,
+        "u",
+      ),
     );
-    expect(
-      workflow?.document.diagnostics.map((diagnostic) => diagnostic.code),
-    ).toContain("MDX_EXPRESSION_INERT");
-    expect(workflow?.limitations.join("\n")).toContain("MDX_EXPRESSION_INERT");
   });
 
   it("rejects an AST-selected LivePreview absent from the tracked inventory", async () => {

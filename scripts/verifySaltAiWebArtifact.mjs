@@ -194,8 +194,7 @@ if (receipt.workflow_preview) {
       bootstrap.development === true &&
       bootstrap.publishable === false &&
       bootstrap.bundle_digest === receipt.bundle_digest &&
-      bootstrap.workflow?.id === "operations-dashboard.record-form" &&
-      bootstrap.workflow.route === "/salt/patterns/forms" &&
+      typeof bootstrap.workflow?.id === "string" &&
       bootstrap.button?.route === "/salt/components/button/examples",
     "Invalid selected development workflow",
   );
@@ -205,9 +204,10 @@ if (receipt.workflow_preview) {
   const recipeBytes = store.readArtifact(retained.descriptor.recipe.artifact);
   const recipe = JSON.parse(recipeBytes.toString("utf8"));
   assert(
-    (
-      await descriptorBytes(bootstrap.workflow.recipe, "Workflow recipe")
-    ).equals(recipeBytes) &&
+    bootstrap.workflow.id === recipe.id &&
+      (
+        await descriptorBytes(bootstrap.workflow.recipe, "Workflow recipe")
+      ).equals(recipeBytes) &&
       bootstrap.workflow.recipe.content_identity ===
         recipe.source_identity.content_identity,
     "Website recipe is not the verified packed recipe",
@@ -241,11 +241,15 @@ if (receipt.workflow_preview) {
       identifier: `record:guide:${id}`,
     });
     const canonical = result.document?.canonical;
+    const detail = store.getContentValue(
+      store.getRecord("guide", id).detail_content_ref,
+    );
     assert(
       result.status === "resolved" &&
         canonical &&
         selected.guidance.reference === canonical.reference &&
-        selected.guidance.content_identity === canonical.content_identity,
+        selected.guidance.content_identity === canonical.content_identity &&
+        selected.route === detail.document?.source.route,
       `Website and local-tool guidance identity differ: ${id}`,
     );
     const canonicalBytes = Buffer.from(stableJson(canonical), "utf8");
@@ -262,9 +266,6 @@ if (receipt.workflow_preview) {
       `Website Markdown differs: ${id}`,
     );
     if (id === "guide.button.loading") {
-      const detail = store.getContentValue(
-        store.getRecord("guide", id).detail_content_ref,
-      );
       assert(
         selected.files.length === canonical.files.length,
         "Button file inventory differs",

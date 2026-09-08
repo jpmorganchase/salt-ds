@@ -452,6 +452,9 @@
             "required": [
               "contract",
               "status",
+              "navigation_current_location",
+              "worklist",
+              "theme",
               "validation",
               "cancellation_retains_draft",
               "pending_duplicate_rejected",
@@ -462,13 +465,48 @@
               "viewport_css_px",
               "zoom_claim",
               "screenshots",
-              "validation_removed_variant"
+              "validation_removed_variant",
+              "missing_worklist_behavior_variant"
             ],
             "properties": {
               "contract": {
-                "const": "salt-sample-app-record-form-workflow/1"
+                "const": "salt-sample-app-operations-dashboard-journey/1"
               },
               "status": {
+                "const": "pass"
+              },
+              "navigation_current_location": {
+                "const": "pass"
+              },
+              "worklist": {
+                "type": "object",
+                "required": [
+                  "initial_loading",
+                  "refresh_disabled_during_initial_load",
+                  "loaded_service_count",
+                  "filtering",
+                  "no_match",
+                  "no_data",
+                  "refresh_failure_preserves_data",
+                  "retry_succeeds",
+                  "inspection",
+                  "editing"
+                ],
+                "properties": {
+                  "initial_loading": { "const": "pass" },
+                  "refresh_disabled_during_initial_load": { "const": true },
+                  "loaded_service_count": { "const": 4 },
+                  "filtering": { "const": "pass" },
+                  "no_match": { "const": "pass" },
+                  "no_data": { "const": "pass" },
+                  "refresh_failure_preserves_data": { "const": true },
+                  "retry_succeeds": { "const": true },
+                  "inspection": { "const": "pass" },
+                  "editing": { "const": "pass" }
+                },
+                "additionalProperties": false
+              },
+              "theme": {
                 "const": "pass"
               },
               "validation": {
@@ -507,6 +545,9 @@
                 ]
               },
               "validation_removed_variant": {
+                "const": "rejected"
+              },
+              "missing_worklist_behavior_variant": {
                 "const": "rejected"
               },
               "preview": {
@@ -827,7 +868,7 @@
           "required": ["artifact", "artifact_sha256", "content_identity"],
           "properties": {
             "artifact": {
-              "const": "examples/workflows/operations-dashboard.record-form/recipe.json"
+              "const": "examples/workflows/operations-dashboard.service-worklist/recipe.json"
             },
             "artifact_sha256": {
               "$ref": "#/$defs/digest"

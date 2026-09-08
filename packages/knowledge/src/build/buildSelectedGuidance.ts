@@ -16,8 +16,16 @@ import {
   type SelectedMdxSectionSelector,
 } from "./selectedMdxDocument.js";
 
+const ANALYTICAL_DASHBOARD_DOCUMENT_PATH =
+  "site/docs/patterns/analytical-dashboard.mdx";
+const NAVIGATION_DOCUMENT_PATH = "site/docs/patterns/navigation.mdx";
+const CONTENT_STATUS_DOCUMENT_PATH = "site/docs/patterns/content-status.mdx";
 const FORMS_DOCUMENT_PATH = "site/docs/patterns/forms.mdx";
 const BUTTON_DOCUMENT_PATH = "site/docs/components/button/examples.mdx";
+const CHOOSING_PRIMITIVE_DOCUMENT_PATH =
+  "site/docs/getting-started/choosing-the-right-primitive.mdx";
+const COMPOSITION_PITFALLS_DOCUMENT_PATH =
+  "site/docs/getting-started/composition-pitfalls.mdx";
 const FORMS_STANDARD_LAYOUT_SOURCE_PATH =
   "site/src/examples/patterns/forms/index.tsx";
 const BUTTON_LOADING_SOURCE_PATH = "site/src/examples/button/Loading.tsx";
@@ -60,6 +68,114 @@ const FORMS_SELECTORS: readonly SelectedMdxSectionSelector[] = [
     id: "forms.standard-layout",
     heading_path: ["How to build", "Standard layout"],
     include_descendants: true,
+  },
+];
+
+const ANALYTICAL_DASHBOARD_SELECTORS: readonly SelectedMdxSectionSelector[] = [
+  { id: "dashboard.overview", heading_path: [], include_descendants: false },
+  {
+    id: "dashboard.when-to-use",
+    heading_path: ["When to use"],
+    include_descendants: false,
+  },
+  {
+    id: "dashboard.when-not-to-use",
+    heading_path: ["When not to use"],
+    include_descendants: false,
+  },
+  {
+    id: "dashboard.how-to-build",
+    heading_path: ["How to build"],
+    include_descendants: false,
+  },
+  {
+    id: "dashboard.anatomy",
+    heading_path: ["How to build", "Anatomy"],
+    include_descendants: false,
+  },
+  {
+    id: "dashboard.layout",
+    heading_path: ["How to build", "Dashboard layout"],
+    include_descendants: false,
+  },
+];
+
+const NAVIGATION_SELECTORS: readonly SelectedMdxSectionSelector[] = [
+  { id: "navigation.overview", heading_path: [], include_descendants: false },
+  {
+    id: "navigation.when-to-use",
+    heading_path: ["When to use"],
+    include_descendants: false,
+  },
+  {
+    id: "navigation.when-not-to-use",
+    heading_path: ["When not to use"],
+    include_descendants: false,
+  },
+  {
+    id: "navigation.how-to-build",
+    heading_path: ["How to build"],
+    include_descendants: false,
+  },
+  {
+    id: "navigation.anatomy",
+    heading_path: ["How to build", "Anatomy"],
+    include_descendants: false,
+  },
+];
+
+const CONTENT_STATUS_SELECTORS: readonly SelectedMdxSectionSelector[] = [
+  {
+    id: "content-status.overview",
+    heading_path: [],
+    include_descendants: false,
+  },
+  {
+    id: "content-status.when-to-use",
+    heading_path: ["When to use"],
+    include_descendants: false,
+  },
+  {
+    id: "content-status.when-not-to-use",
+    heading_path: ["When not to use"],
+    include_descendants: false,
+  },
+  {
+    id: "content-status.how-to-build",
+    heading_path: ["How to build"],
+    include_descendants: false,
+  },
+  {
+    id: "content-status.supporting-messages",
+    heading_path: ["How to build", "Supporting messages"],
+    include_descendants: false,
+  },
+];
+
+const CHOOSING_PRIMITIVE_SELECTORS: readonly SelectedMdxSectionSelector[] = [
+  { id: "primitive.overview", heading_path: [], include_descendants: false },
+  {
+    id: "primitive.start-with-intent",
+    heading_path: ["Start with user intent"],
+    include_descendants: false,
+  },
+  {
+    id: "primitive.component-or-pattern",
+    heading_path: ["Common decisions", "Component or pattern"],
+    include_descendants: false,
+  },
+];
+
+const COMPOSITION_PITFALLS_SELECTORS: readonly SelectedMdxSectionSelector[] = [
+  {
+    id: "composition.overview",
+    heading_path: [],
+    include_descendants: false,
+  },
+  {
+    id: "composition.recreating-primitives",
+    heading_path: ["Pitfalls to avoid", "Recreating standard Salt primitives"],
+    include_descendants: false,
   },
 ];
 
@@ -284,6 +400,41 @@ function diagnosticsLimitations(
   );
 }
 
+function requireSupportedDocument(document: DocumentModel): void {
+  if (document.diagnostics.length === 0) return;
+  const diagnostic = document
+    .diagnostics[0] as DocumentModel["diagnostics"][number];
+  throw new Error(
+    `Selected guidance source ${document.source.source_path}:${diagnostic.range.start_line} ${diagnostic.code}: ${diagnostic.message}`,
+  );
+}
+
+function mergeWorkflowDocuments(
+  documents: readonly ParsedSelectedDocument[],
+): DocumentModel {
+  for (const parsed of documents) requireSupportedDocument(parsed.document);
+  const primary = documents[0];
+  if (!primary)
+    throw new Error("Workflow guidance requires a primary document.");
+  const seen = new Set<string>();
+  const sections = documents.flatMap(({ document }) =>
+    document.sections.map((section) => {
+      const id = section.id;
+      if (seen.has(id)) {
+        throw new Error(`Workflow guidance section id is duplicated: ${id}.`);
+      }
+      seen.add(id);
+      return { ...section, source: section.source ?? document.source };
+    }),
+  );
+  return {
+    contract: "salt-document/1",
+    source: primary.document.source,
+    sections,
+    diagnostics: [],
+  };
+}
+
 function languageFor(sourcePath: string): SelectedGuidanceFile["language"] {
   if (sourcePath.endsWith(".tsx")) return "tsx";
   if (sourcePath.endsWith(".css")) return "css";
@@ -448,17 +599,63 @@ export async function buildSelectedGuidance(
     );
   }
 
-  const canonicalGuidance = new Set(recipe.source.canonical_guidance);
+  const canonicalGuidance = recipe.source.canonical_guidance;
+  const requiredGuidance = [
+    ANALYTICAL_DASHBOARD_DOCUMENT_PATH,
+    NAVIGATION_DOCUMENT_PATH,
+    CONTENT_STATUS_DOCUMENT_PATH,
+    FORMS_DOCUMENT_PATH,
+    `${BUTTON_DOCUMENT_PATH}#loading`,
+    CHOOSING_PRIMITIVE_DOCUMENT_PATH,
+    COMPOSITION_PITFALLS_DOCUMENT_PATH,
+  ];
   if (
-    !canonicalGuidance.has(FORMS_DOCUMENT_PATH) ||
-    !canonicalGuidance.has(`${BUTTON_DOCUMENT_PATH}#loading`)
+    canonicalGuidance.length !== requiredGuidance.length ||
+    canonicalGuidance.some(
+      (sourcePath, index) => sourcePath !== requiredGuidance[index],
+    )
   ) {
     throw new Error(
-      `Workflow recipe ${recipeSourcePath} must declare the canonical Forms and Button Loading guidance sources.`,
+      `Workflow recipe ${recipeSourcePath} must declare the ordered service-worklist guidance sources.`,
     );
   }
 
-  const [forms, button] = await Promise.all([
+  const [
+    analyticalDashboard,
+    navigation,
+    contentStatus,
+    forms,
+    button,
+    choosingPrimitive,
+    compositionPitfalls,
+  ] = await Promise.all([
+    parseSelectedDocument({
+      sourceRoot: input.sourceRoot,
+      declared,
+      sourcePath: assertDeclared(declared, ANALYTICAL_DASHBOARD_DOCUMENT_PATH),
+      documentId: recipe.id,
+      route: "/salt/patterns/analytical-dashboard",
+      selectors: ANALYTICAL_DASHBOARD_SELECTORS,
+      fallbackTitle: "Analytical dashboard",
+    }),
+    parseSelectedDocument({
+      sourceRoot: input.sourceRoot,
+      declared,
+      sourcePath: assertDeclared(declared, NAVIGATION_DOCUMENT_PATH),
+      documentId: recipe.id,
+      route: "/salt/patterns/navigation",
+      selectors: NAVIGATION_SELECTORS,
+      fallbackTitle: "Navigation",
+    }),
+    parseSelectedDocument({
+      sourceRoot: input.sourceRoot,
+      declared,
+      sourcePath: assertDeclared(declared, CONTENT_STATUS_DOCUMENT_PATH),
+      documentId: recipe.id,
+      route: "/salt/patterns/content-status",
+      selectors: CONTENT_STATUS_SELECTORS,
+      fallbackTitle: "Content status",
+    }),
     parseSelectedDocument({
       sourceRoot: input.sourceRoot,
       declared,
@@ -477,6 +674,24 @@ export async function buildSelectedGuidance(
       selectors: BUTTON_LOADING_SELECTORS,
       fallbackTitle: "Button",
     }),
+    parseSelectedDocument({
+      sourceRoot: input.sourceRoot,
+      declared,
+      sourcePath: assertDeclared(declared, CHOOSING_PRIMITIVE_DOCUMENT_PATH),
+      documentId: recipe.id,
+      route: "/salt/getting-started/choosing-the-right-primitive",
+      selectors: CHOOSING_PRIMITIVE_SELECTORS,
+      fallbackTitle: "Choosing the right primitive",
+    }),
+    parseSelectedDocument({
+      sourceRoot: input.sourceRoot,
+      declared,
+      sourcePath: assertDeclared(declared, COMPOSITION_PITFALLS_DOCUMENT_PATH),
+      documentId: recipe.id,
+      route: "/salt/getting-started/composition-pitfalls",
+      selectors: COMPOSITION_PITFALLS_SELECTORS,
+      fallbackTitle: "Composition pitfalls",
+    }),
   ]);
 
   const formsPreviewPath = requiredPreview(
@@ -491,11 +706,12 @@ export async function buildSelectedGuidance(
     "Loading",
     BUTTON_LOADING_SOURCE_PATH,
   );
-  const reusablePaths = recipe.source.reusable_form_files.map((sourcePath) =>
-    assertDeclared(
-      declared,
-      applicationPath(recipe.source.application, sourcePath),
-    ),
+  const reusablePaths = recipe.source.reusable_workflow_files.map(
+    (sourcePath) =>
+      assertDeclared(
+        declared,
+        applicationPath(recipe.source.application, sourcePath),
+      ),
   );
   const packagePath = assertDeclared(
     declared,
@@ -535,19 +751,28 @@ export async function buildSelectedGuidance(
     );
   }
   const buttonName = `Button ${buttonHeading}`;
-  const formsLimitations = diagnosticsLimitations(forms.document, forms.title);
+  const workflowDocument = mergeWorkflowDocuments([
+    analyticalDashboard,
+    navigation,
+    contentStatus,
+    forms,
+    choosingPrimitive,
+    compositionPitfalls,
+  ]);
   const buttonLimitations = diagnosticsLimitations(button.document, buttonName);
   const workflowSourcePaths = unique([
+    ANALYTICAL_DASHBOARD_DOCUMENT_PATH,
+    NAVIGATION_DOCUMENT_PATH,
+    CONTENT_STATUS_DOCUMENT_PATH,
     FORMS_DOCUMENT_PATH,
+    CHOOSING_PRIMITIVE_DOCUMENT_PATH,
+    COMPOSITION_PITFALLS_DOCUMENT_PATH,
     recipeSourcePath,
     ...reusablePaths,
     packagePath,
     formsPreviewPath,
   ]);
-  const workflowLimitations = unique([
-    ...recipe.limitations,
-    ...formsLimitations,
-  ]);
+  const workflowLimitations = [...recipe.limitations];
 
   return [
     {
@@ -556,15 +781,39 @@ export async function buildSelectedGuidance(
       aliases: unique([recipe.title, ...recipe.intent.aliases]),
       summary: recipe.intent.summary,
       kind: "workflow",
-      document: forms.document,
+      document: workflowDocument,
       recipeManifest: manifestPath,
       sourcePaths: workflowSourcePaths,
-      componentNames: ["Button", "Dialog", "Form field", "Input"],
+      componentNames: [
+        "Table",
+        "Form field",
+        "Input",
+        "Banner",
+        "Dialog",
+        "Button",
+        "Navigation item",
+        "Card",
+        "Panel",
+        "Link",
+      ],
       packageNames: packages,
       attach: {
         componentNames: [],
-        patternNames: [forms.title],
-        pageSourcePaths: [FORMS_DOCUMENT_PATH],
+        patternNames: [
+          analyticalDashboard.title,
+          navigation.title,
+          contentStatus.title,
+          forms.title,
+          "Metric",
+        ],
+        pageSourcePaths: [
+          ANALYTICAL_DASHBOARD_DOCUMENT_PATH,
+          NAVIGATION_DOCUMENT_PATH,
+          CONTENT_STATUS_DOCUMENT_PATH,
+          FORMS_DOCUMENT_PATH,
+          CHOOSING_PRIMITIVE_DOCUMENT_PATH,
+          COMPOSITION_PITFALLS_DOCUMENT_PATH,
+        ],
       },
       files: [formsFile],
       limitations: workflowLimitations,

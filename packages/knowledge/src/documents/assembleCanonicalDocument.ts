@@ -27,6 +27,9 @@ export interface CanonicalDocumentSection {
   id: string;
   title: string;
   reference: string;
+  /** Exact MDX provenance when this is a selected documentation section. */
+  source_path?: string;
+  source_url?: string;
   purpose:
     | "guidance"
     | "prerequisites"
@@ -110,6 +113,10 @@ function readRecipe(
   );
 }
 
+function canonicalSourceUrl(route: string): string {
+  return new URL(route, "https://www.saltdesignsystem.com").href;
+}
+
 function recipeSections(
   recipe: EmittedWorkflowRecipe,
   base: string,
@@ -148,14 +155,14 @@ function recipeSections(
       "prerequisites",
       "Prerequisites and setup",
       "prerequisites",
-      `Reusable form dependencies:\n\n${markdownList(reusablePackages)}\n\nProvider: ${escapeUntrustedMarkdownText(recipe.support.provider)}.\n\nImport the theme CSS once in the host application:\n\n${renderUntrustedMarkdownCode(recipe.support.theme_css.map((file) => `import ${JSON.stringify(file)};`).join("\n"), "tsx")}\n\n${escapeUntrustedMarkdownText(recipe.setup.dialog_wrapper.owner)} supplies ${recipe.setup.dialog_wrapper.required_components.map((name) => renderUntrustedMarkdownEvidence(name, { mode: "inline" })).join(" and ")}.\n\nThe complete demo also uses:\n\n${markdownList(demoPackages)}`,
+      `Reusable workflow dependencies:\n\n${markdownList(reusablePackages)}\n\nProvider: ${escapeUntrustedMarkdownText(recipe.support.provider)}.\n\nImport the theme CSS once in the host application:\n\n${renderUntrustedMarkdownCode(recipe.support.theme_css.map((file) => `import ${JSON.stringify(file)};`).join("\n"), "tsx")}\n\n${escapeUntrustedMarkdownText(recipe.setup.dialog_wrapper.owner)} supplies ${recipe.setup.dialog_wrapper.required_components.map((name) => renderUntrustedMarkdownEvidence(name, { mode: "inline" })).join(" and ")}.\n\nThe complete demo also uses:\n\n${markdownList(demoPackages)}`,
       `${reusablePackages.join(" ")} ${recipe.support.provider} ${recipe.support.theme_css.join(" ")} provider theme dependencies install setup`,
     ),
     section(
       "implementation",
       "Complete files and application setup",
       "implementation",
-      `Use these reusable files with your application's existing state and services:\n\n${files.map((file) => `- ${renderUntrustedMarkdownEvidence(file.path, { mode: "inline" })}: ${renderUntrustedMarkdownEvidence(sourceReference(file), { mode: "inline" })}`).join("\n")}\n\nThe file inventory also includes the complete local demonstration application. Its package manifest supplies the declared dependency versions and build commands. Fetch complete files by their references; the demonstration adapter simulates submission locally.`,
+      `Use these reusable files with your application's existing state and services:\n\n${files.map((file) => `- ${renderUntrustedMarkdownEvidence(file.path, { mode: "inline" })}: ${renderUntrustedMarkdownEvidence(sourceReference(file), { mode: "inline" })}`).join("\n")}\n\nThe file inventory also includes the complete local demonstration application. Its package manifest supplies the declared dependency versions and build commands. Fetch complete files by their references; local adapters simulate worklist loading, refresh, and submission.`,
       `implementation complete reusable files application setup ${files.map((file) => file.path).join(" ")}`,
     ),
     section(
@@ -250,18 +257,27 @@ export function assembleCanonicalDocument(
     detail.files.some((file) => file.source_path === sourcePath)
       ? `${base}#file/${sourcePath}`
       : null;
-  const options = { route: detail.document.source.route, fileReference };
+  const options = { fileReference };
   const sections: CanonicalDocumentSection[] = detail.document.sections.map(
-    (section) => ({
-      id: section.id,
-      title: section.heading
-        ? documentInlineText(section.heading)
-        : record.name,
-      reference: `${base}#${section.id}`,
-      purpose: "guidance",
-      markdown: renderDocumentSection(section, options),
-      search_text: documentSectionText(section),
-    }),
+    (section) => {
+      const source = section.source ?? detail.document.source;
+      const sourceUrl = canonicalSourceUrl(source.route);
+      return {
+        id: section.id,
+        title: section.heading
+          ? documentInlineText(section.heading)
+          : record.name,
+        reference: `${base}#${section.id}`,
+        source_path: source.source_path,
+        source_url: sourceUrl,
+        purpose: "guidance",
+        markdown: `${renderDocumentSection(section, {
+          ...options,
+          route: source.route,
+        })}\n\nSource: [${escapeUntrustedMarkdownText(source.source_path)}](${sourceUrl}).`,
+        search_text: documentSectionText(section),
+      };
+    },
   );
   if (recipe) sections.push(...recipeSections(recipe, base));
   sections.push(...propSections(store, detail, base));
@@ -291,10 +307,7 @@ export function assembleCanonicalDocument(
     contract: "salt-canonical-document/1",
     reference: fragment ? `${base}#${fragment}` : base,
     title: record.name,
-    source_url: new URL(
-      detail.document.source.route,
-      "https://www.saltdesignsystem.com",
-    ).href,
+    source_url: canonicalSourceUrl(detail.document.source.route),
     source_records: detail.source_refs.map((entry) => entry.id),
     content_identity: record.detail_content_ref.id,
     recipe_identity: recipe?.source_identity ?? null,

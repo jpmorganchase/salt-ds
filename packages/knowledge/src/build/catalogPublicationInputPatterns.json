@@ -6,5 +6,6 @@
   "examples/apps/operations-dashboard/src/main.tsx",
   "examples/apps/operations-dashboard/src/dashboard.css",
   "examples/apps/operations-dashboard/src/OperationsDashboard.tsx",
-  "examples/apps/operations-dashboard/src/workflows/record-form/localDemoAdapter.ts"
+  "examples/apps/operations-dashboard/src/workflows/record-form/localDemoAdapter.ts",
+  "examples/apps/operations-dashboard/src/workflows/service-worklist/localWorklistAdapter.ts"
 ]

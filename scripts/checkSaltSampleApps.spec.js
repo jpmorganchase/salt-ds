@@ -71,8 +71,22 @@ function commandResults() {
 
 function workflowProof() {
   return {
-    contract: "salt-sample-app-record-form-workflow/1",
+    contract: "salt-sample-app-operations-dashboard-journey/1",
     status: "pass",
+    navigation_current_location: "pass",
+    worklist: {
+      initial_loading: "pass",
+      refresh_disabled_during_initial_load: true,
+      loaded_service_count: 4,
+      filtering: "pass",
+      no_match: "pass",
+      no_data: "pass",
+      refresh_failure_preserves_data: true,
+      retry_succeeds: true,
+      inspection: "pass",
+      editing: "pass",
+    },
+    theme: "pass",
     validation: "pass",
     cancellation_retains_draft: true,
     pending_duplicate_rejected: true,
@@ -89,6 +103,7 @@ function workflowProof() {
       "narrow-320-css-px.png",
     ],
     validation_removed_variant: "rejected",
+    missing_worklist_behavior_variant: "rejected",
   };
 }
 
@@ -106,7 +121,7 @@ function workflowPreviewProof() {
     tree_sha256: digest,
     recipe: {
       artifact:
-        "examples/workflows/operations-dashboard.record-form/recipe.json",
+        "examples/workflows/operations-dashboard.service-worklist/recipe.json",
       artifact_sha256: digest,
       content_identity: digest,
     },
@@ -219,7 +234,7 @@ describe("current sample-app selection", () => {
 });
 
 describe("packed workflow reconstruction input", () => {
-  const workflowId = "operations-dashboard.record-form";
+  const workflowId = "operations-dashboard.service-worklist";
   const recipePath = `examples/workflows/${workflowId}/recipe.json`;
   const filePaths = [
     "index.html",
@@ -232,6 +247,11 @@ describe("packed workflow reconstruction input", () => {
     "src/workflows/record-form/RecordForm.tsx",
     "src/workflows/record-form/localDemoAdapter.ts",
     "src/workflows/record-form/types.ts",
+    "src/workflows/service-worklist/IncidentInspector.tsx",
+    "src/workflows/service-worklist/IncidentWorklist.tsx",
+    "src/workflows/service-worklist/ServiceWorklist.css",
+    "src/workflows/service-worklist/localWorklistAdapter.ts",
+    "src/workflows/service-worklist/types.ts",
     "tsconfig.json",
     "vite.config.ts",
   ];
@@ -301,8 +321,9 @@ describe("packed workflow reconstruction input", () => {
         filePath === "package.json"
           ? packageBytes
           : Buffer.from(`packed ${filePath}\n`);
-      const role = filePath.startsWith("src/workflows/record-form/")
-        ? filePath.endsWith("localDemoAdapter.ts")
+      const role = filePath.startsWith("src/workflows/")
+        ? filePath.endsWith("localDemoAdapter.ts") ||
+          filePath.endsWith("localWorklistAdapter.ts")
           ? "demo-only"
           : "reusable"
         : filePath === "package.json"
@@ -325,7 +346,7 @@ describe("packed workflow reconstruction input", () => {
       source: {
         application: "examples/apps/operations-dashboard",
         recipe:
-          "examples/apps/operations-dashboard/src/workflows/record-form/recipe.json",
+          "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json",
       },
       files: files.map(({ value, ...file }) => file),
       source_identity: {
@@ -566,6 +587,38 @@ describe("current sample-app receipt", () => {
     const unsafe = structuredClone(withPreview);
     unsafe.checks[0].workflow.preview.files[0].path = "../index.html";
     expect(validate(unsafe)).toBe(false);
+  });
+
+  it.each([
+    "navigation_current_location",
+    "worklist",
+    "theme",
+    "missing_worklist_behavior_variant",
+  ])("rejects operations journey proof missing %s", async (field) => {
+    const commands = await currentCommands();
+    const validate = await receiptValidator();
+    const missing = receipt(commands);
+    delete missing.checks[0].workflow[field];
+    expect(validate(missing)).toBe(false);
+  });
+
+  it.each([
+    "initial_loading",
+    "refresh_disabled_during_initial_load",
+    "loaded_service_count",
+    "filtering",
+    "no_match",
+    "no_data",
+    "refresh_failure_preserves_data",
+    "retry_succeeds",
+    "inspection",
+    "editing",
+  ])("rejects operations worklist proof missing %s", async (field) => {
+    const commands = await currentCommands();
+    const validate = await receiptValidator();
+    const missing = receipt(commands);
+    delete missing.checks[0].workflow.worklist[field];
+    expect(validate(missing)).toBe(false);
   });
 
   it("accepts one check for every member of the full app cohort", async () => {

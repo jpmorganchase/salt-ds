@@ -28,15 +28,24 @@ const repositoryRoot = path.resolve(
 );
 
 const recipePath =
-  "examples/apps/operations-dashboard/src/workflows/record-form/recipe.json";
+  "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json";
 const semanticPaths = [
   recipePath,
   "examples/apps/operations-dashboard/package.json",
   "examples/apps/operations-dashboard/src/workflows/record-form/RecordForm.css",
   "examples/apps/operations-dashboard/src/workflows/record-form/RecordForm.tsx",
   "examples/apps/operations-dashboard/src/workflows/record-form/types.ts",
+  "examples/apps/operations-dashboard/src/workflows/service-worklist/IncidentInspector.tsx",
+  "examples/apps/operations-dashboard/src/workflows/service-worklist/IncidentWorklist.tsx",
+  "examples/apps/operations-dashboard/src/workflows/service-worklist/ServiceWorklist.css",
+  "examples/apps/operations-dashboard/src/workflows/service-worklist/types.ts",
   "site/docs/components/button/examples.mdx",
+  "site/docs/patterns/analytical-dashboard.mdx",
+  "site/docs/patterns/navigation.mdx",
+  "site/docs/patterns/content-status.mdx",
   "site/docs/patterns/forms.mdx",
+  "site/docs/getting-started/choosing-the-right-primitive.mdx",
+  "site/docs/getting-started/composition-pitfalls.mdx",
 ];
 const publicationPaths = [
   "examples/apps/operations-dashboard/index.html",
@@ -45,6 +54,7 @@ const publicationPaths = [
   "examples/apps/operations-dashboard/src/main.tsx",
   "examples/apps/operations-dashboard/src/vite-env.d.ts",
   "examples/apps/operations-dashboard/src/workflows/record-form/localDemoAdapter.ts",
+  "examples/apps/operations-dashboard/src/workflows/service-worklist/localWorklistAdapter.ts",
   "examples/apps/operations-dashboard/tsconfig.json",
   "examples/apps/operations-dashboard/vite.config.ts",
 ];
@@ -124,7 +134,7 @@ describe("assembleWorkflowRecipe", () => {
         }),
     );
 
-    expect(result.recipeArtifact.files).toHaveLength(12);
+    expect(result.recipeArtifact.files).toHaveLength(17);
     expect(() =>
       result.publicFiles.map((file) =>
         createArtifactDescriptor(file.artifactPath, file.mediaType, file.bytes),
@@ -132,15 +142,16 @@ describe("assembleWorkflowRecipe", () => {
     ).not.toThrow();
     expect(
       result.recipeArtifact.files.filter((file) => file.role === "reusable"),
-    ).toHaveLength(3);
+    ).toHaveLength(7);
     expect(
       result.recipeArtifact.files.filter((file) => file.role === "setup"),
     ).toHaveLength(1);
     expect(
       result.recipeArtifact.files.filter((file) => file.role === "demo-only"),
-    ).toHaveLength(8);
+    ).toHaveLength(9);
     expect(result.recipeArtifact.support.reusable_packages).toEqual([
       { name: "@salt-ds/core", version: "1.70.0", role: "reusable" },
+      { name: "@salt-ds/icons", version: "1.18.2", role: "reusable" },
       { name: "@salt-ds/theme", version: "1.45.0", role: "reusable" },
     ]);
     expect(result.recipeArtifact.support.external_dependencies).toEqual([
@@ -149,6 +160,7 @@ describe("assembleWorkflowRecipe", () => {
     ]);
     expect(result.semanticMetadata.packageNames).toEqual([
       "@salt-ds/core",
+      "@salt-ds/icons",
       "@salt-ds/theme",
       "react",
     ]);
@@ -157,7 +169,7 @@ describe("assembleWorkflowRecipe", () => {
       "examples/apps/operations-dashboard/src/OperationsDashboard.tsx",
     );
     expect(result.indexEntry.recipe_manifest).toBe(
-      "examples/workflows/operations-dashboard.record-form/recipe.json",
+      "examples/workflows/operations-dashboard.service-worklist/recipe.json",
     );
     expect(result.recipeArtifact.readiness).toMatchObject({
       delivered: "runnable",
@@ -306,14 +318,22 @@ describe("assembleWorkflowRecipe", () => {
 
   it("does not allow editable declarations to self-promote pending work", () => {
     const declaration = {
-      id: "operations-dashboard.record-form",
+      id: "operations-dashboard.service-worklist",
       title: "Record form",
       intent: { summary: "Create a record.", aliases: ["record form"] },
       owner: "Maintainers",
       readiness: "workflow-verified",
       source: {
         application: "examples/apps/operations-dashboard",
-        reusable_form_files: ["a.ts", "b.ts", "c.css"],
+        reusable_workflow_files: [
+          "a.ts",
+          "b.ts",
+          "c.css",
+          "d.ts",
+          "e.ts",
+          "f.ts",
+          "g.css",
+        ],
         demo_application_files: [
           "package.json",
           "1.ts",
@@ -324,6 +344,7 @@ describe("assembleWorkflowRecipe", () => {
           "6.ts",
           "7.ts",
           "8.ts",
+          "9.ts",
         ],
         canonical_guidance: ["site/docs/patterns/forms.mdx"],
       },
@@ -382,7 +403,7 @@ describe("assembleWorkflowRecipe", () => {
         readiness: "runnable",
         source: {
           ...declaration.source,
-          reusable_form_files: ["../a.ts", "b.ts", "c.css"],
+          reusable_workflow_files: ["../a.ts", "b.ts", "c.css"],
         },
       }),
     ).toThrow(/portable repository-relative path/u);

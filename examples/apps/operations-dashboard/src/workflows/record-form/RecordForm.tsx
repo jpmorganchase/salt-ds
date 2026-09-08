@@ -23,10 +23,12 @@ function hasErrors(errors: RecordDraftErrors): boolean {
 
 export function RecordForm({
   draft,
+  formLabel = "Create incident record",
   onChange,
   onSubmit,
   onCancel,
   submission,
+  submitLabel = "Create incident",
 }: RecordFormProps) {
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [errors, setErrors] = useState<RecordDraftErrors>({});
@@ -69,7 +71,7 @@ export function RecordForm({
 
   return (
     <form
-      aria-label="Create incident record"
+      aria-label={formLabel}
       className="recordForm"
       noValidate
       onSubmit={submit}
@@ -147,7 +149,7 @@ export function RecordForm({
           loading={isPending}
           {...(isPending ? { loadingAnnouncement: "Saving incident." } : {})}
         >
-          {submission.status === "failed" ? "Retry save" : "Create incident"}
+          {submission.status === "failed" ? "Retry save" : submitLabel}
         </Button>
       </DialogActions>
     </form>

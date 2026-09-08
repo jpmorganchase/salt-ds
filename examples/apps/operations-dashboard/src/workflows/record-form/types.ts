@@ -10,10 +10,12 @@ export type RecordFormSubmission =
 
 export interface RecordFormProps {
   draft: RecordDraft;
+  formLabel?: string;
   onChange: (draft: RecordDraft) => void;
   onSubmit: (draft: RecordDraft) => void;
   onCancel: () => void;
   submission: RecordFormSubmission;
+  submitLabel?: string;
 }
 
 export type RecordDraftErrors = Partial<Record<keyof RecordDraft, string>>;

@@ -58,7 +58,7 @@ function portable(value) {
   );
 }
 
-const WORKFLOW_ID = "operations-dashboard.record-form";
+const WORKFLOW_ID = "operations-dashboard.service-worklist";
 const WORKFLOW_MANIFEST = `examples/workflows/${WORKFLOW_ID}/recipe.json`;
 const WORKFLOW_GUIDE_ID = WORKFLOW_ID;
 const PREVIEW_ENTRY = "index.html";
@@ -77,6 +77,11 @@ const WORKFLOW_FILE_PATHS = Object.freeze([
   "src/workflows/record-form/RecordForm.tsx",
   "src/workflows/record-form/localDemoAdapter.ts",
   "src/workflows/record-form/types.ts",
+  "src/workflows/service-worklist/IncidentInspector.tsx",
+  "src/workflows/service-worklist/IncidentWorklist.tsx",
+  "src/workflows/service-worklist/ServiceWorklist.css",
+  "src/workflows/service-worklist/localWorklistAdapter.ts",
+  "src/workflows/service-worklist/types.ts",
   "tsconfig.json",
   "vite.config.ts",
 ]);
@@ -429,7 +434,7 @@ export function readPackedWorkflowRecipe(store) {
   );
   assert.equal(
     recipe.source?.recipe,
-    "examples/apps/operations-dashboard/src/workflows/record-form/recipe.json",
+    "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json",
   );
   assert(Array.isArray(recipe.files), "Packed workflow recipe has no files");
 
@@ -443,7 +448,7 @@ export function readPackedWorkflowRecipe(store) {
     result[file.role] = (result[file.role] ?? 0) + 1;
     return result;
   }, {});
-  assert.deepEqual(roles, { "demo-only": 8, reusable: 3, setup: 1 });
+  assert.deepEqual(roles, { "demo-only": 9, reusable: 7, setup: 1 });
 
   const files = recipe.files
     .map((file) => {

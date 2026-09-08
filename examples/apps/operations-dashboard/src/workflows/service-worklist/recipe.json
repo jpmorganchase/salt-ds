@@ -1,0 +1,108 @@
+{
+  "id": "operations-dashboard.service-worklist",
+  "title": "Service operations worklist",
+  "intent": {
+    "summary": "Build a runnable service-operations dashboard with a persistent shell, worklist filters, local loading, empty and error recovery states, incident inspection, and an editable record form.",
+    "aliases": [
+      "service worklist",
+      "operations dashboard",
+      "incident worklist",
+      "service operations",
+      "worklist retry",
+      "incident form",
+      "record form",
+      "validated form"
+    ]
+  },
+  "owner": "Salt Design System maintainers",
+  "readiness": "runnable",
+  "source": {
+    "application": "examples/apps/operations-dashboard",
+    "reusable_workflow_files": [
+      "src/workflows/record-form/RecordForm.tsx",
+      "src/workflows/record-form/RecordForm.css",
+      "src/workflows/record-form/types.ts",
+      "src/workflows/service-worklist/types.ts",
+      "src/workflows/service-worklist/IncidentWorklist.tsx",
+      "src/workflows/service-worklist/IncidentInspector.tsx",
+      "src/workflows/service-worklist/ServiceWorklist.css"
+    ],
+    "demo_application_files": [
+      "package.json",
+      "index.html",
+      "vite.config.ts",
+      "tsconfig.json",
+      "src/vite-env.d.ts",
+      "src/main.tsx",
+      "src/dashboard.css",
+      "src/OperationsDashboard.tsx",
+      "src/workflows/record-form/localDemoAdapter.ts",
+      "src/workflows/service-worklist/localWorklistAdapter.ts"
+    ],
+    "canonical_guidance": [
+      "site/docs/patterns/analytical-dashboard.mdx",
+      "site/docs/patterns/navigation.mdx",
+      "site/docs/patterns/content-status.mdx",
+      "site/docs/patterns/forms.mdx",
+      "site/docs/components/button/examples.mdx#loading",
+      "site/docs/getting-started/choosing-the-right-primitive.mdx",
+      "site/docs/getting-started/composition-pitfalls.mdx"
+    ]
+  },
+  "setup": {
+    "provider": "The host-owned SaltProviderNext provider",
+    "theme_css": [
+      "@salt-ds/theme/css/global.css",
+      "@salt-ds/theme/css/theme-next.css"
+    ],
+    "dependency_manifest": "package.json",
+    "dialog_wrapper": {
+      "owner": "host application",
+      "required_components": ["Dialog", "DialogHeader"],
+      "form_components": ["DialogContent", "DialogActions"]
+    }
+  },
+  "adaptation": {
+    "draft_owner": "OperationsDashboard",
+    "inputs": [
+      "RecordForm: draft (title and service), submission",
+      "IncidentWorklist: services, incidents, query, state, selectedIncidentId",
+      "IncidentInspector: incident and service"
+    ],
+    "callbacks": [
+      "onQueryChange",
+      "onInspect",
+      "onInspectIncident",
+      "onRefresh",
+      "onRetryRefresh",
+      "onCreate",
+      "onEdit",
+      "onChange",
+      "onSubmit",
+      "onCancel"
+    ],
+    "submission_state": ["idle", "pending", "failed"],
+    "cancellation": "Filters, selection, and the form draft are owned by the dashboard. Cancel closes the editor without clearing the host-owned draft; reopening restores it.",
+    "simulation": "The host owns worklist state (loading, ready, refreshing, or error), query and selected incident ID separately from form submission. Empty and no-match views derive from the available records and query. The local worklist adapter refresh fails once, preserves the current worklist, and succeeds on retry. The local record adapter delays a save, rejects the first save once per application session, and succeeds on retry. Neither adapter makes a network request or sends a notification."
+  },
+  "acceptance": {
+    "automated": [
+      "the shell keeps navigation, filters, and the selected incident available while the worklist refreshes",
+      "the worklist exposes loading, empty, and error states in its content region and retry preserves the visible worklist",
+      "filters refine the local service worklist and an incident can be selected for inspection and editing",
+      "invalid submission retains the draft, announces an error summary, and focuses the first invalid field",
+      "pending submission makes fields read-only and prevents duplicate submit or dialog closure",
+      "failed submission retains the draft and supports retry; successful submission announces local completion",
+      "keyboard, narrow layout, reflow, and accessibility checks run in the packed application harness"
+    ],
+    "manual_review_pending": [
+      "workflow owner review",
+      "design review",
+      "accessibility review"
+    ]
+  },
+  "limitations": [
+    "The local demo uses deterministic in-memory incidents. It does not model a backend, notifications, offline persistence, concurrent edits, localization, authorization, or production-scale data.",
+    "Automation supports runnable readiness only; it does not certify arbitrary consumer adaptations."
+  ]
+}

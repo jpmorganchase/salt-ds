@@ -14,7 +14,7 @@ import {
 import { buildKnowledgeContext, renderKnowledgeContext } from "./searchSalt.js";
 
 const REPO_ROOT = path.resolve(import.meta.dirname, "../../../..");
-const WORKFLOW_GUIDE_ID = "operations-dashboard.record-form";
+const WORKFLOW_GUIDE_ID = "operations-dashboard.service-worklist";
 const BUTTON_GUIDE_ID = "guide.button.loading";
 const CONTEXT_LIMIT = 16 * 1024;
 
@@ -89,6 +89,38 @@ describe("generated canonical retrieval", () => {
     expect(rendered).not.toContain("Prerequisites and setup");
   });
 
+  it("routes dashboard metric-card requests to the selected guide with Card API evidence", () => {
+    const card = store
+      .getFamily("component")
+      .find((record) => record.name === "Card");
+    expect(card).toBeTruthy();
+
+    const { canonical } = resolved(`record:guide:${WORKFLOW_GUIDE_ID}`);
+    expect(canonical.reference).toBe(`record:guide:${WORKFLOW_GUIDE_ID}`);
+    expect(canonical.sections).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "primitive.component-or-pattern",
+          purpose: "guidance",
+        }),
+        expect.objectContaining({ id: "api/Card/variant", purpose: "api" }),
+        expect.objectContaining({ id: "api/Card/accent", purpose: "api" }),
+      ]),
+    );
+
+    const context = buildKnowledgeContext(store, {
+      query:
+        "build dashboard metric cards with Salt instead of token-styled custom cards",
+      limit: 8,
+    });
+    expect(
+      context.canonical_documents?.some(
+        (document) =>
+          document.reference === `record:guide:${WORKFLOW_GUIDE_ID}`,
+      ),
+    ).toBe(true);
+  });
+
   it("exposes the verified workflow recipe, support, seams, state and file references for create and adapt requests", () => {
     const { canonical: workflow } = resolved(
       `record:guide:${WORKFLOW_GUIDE_ID}`,
@@ -102,16 +134,16 @@ describe("generated canonical retrieval", () => {
       JSON.parse(store.readArtifact(detail.recipe_manifest).toString("utf8")),
     );
     expect(recipe.id).toBe(WORKFLOW_GUIDE_ID);
-    expect(recipe.files).toHaveLength(12);
+    expect(recipe.files).toHaveLength(17);
     expect(
       recipe.files.filter((file) => file.role === "reusable"),
-    ).toHaveLength(3);
+    ).toHaveLength(7);
     expect(recipe.files.filter((file) => file.role === "setup")).toHaveLength(
       1,
     );
     expect(
       recipe.files.filter((file) => file.role === "demo-only"),
-    ).toHaveLength(8);
+    ).toHaveLength(9);
     for (const file of recipe.files) {
       const bytes = store.readArtifact(file.artifact_path);
       expect(bytes.byteLength).toBe(file.bytes);
@@ -230,9 +262,9 @@ describe("generated canonical retrieval", () => {
       CONTEXT_LIMIT,
     );
 
-    const compact = contextDocument("create incident record form", 2 * 1024);
+    const compact = contextDocument("create incident record form", 3 * 1024);
     expect(compact.result.truncated).toBe(true);
-    expect(compact.result.utf8_bytes).toBeLessThanOrEqual(2 * 1024);
+    expect(compact.result.utf8_bytes).toBeLessThanOrEqual(3 * 1024);
     expect(compact.document.sections.length).toBeGreaterThan(0);
     const omission = compact.document.omissions.find((entry) =>
       entry.reference.startsWith(`record:guide:${WORKFLOW_GUIDE_ID}#`),
@@ -244,6 +276,38 @@ describe("generated canonical retrieval", () => {
       resolveKnowledgeDocument(store, { identifier: omission.reference })
         .status,
     ).toBe("resolved");
+    expect(
+      Buffer.byteLength(
+        renderKnowledgeContext(store, {
+          query: "create incident record form",
+          limit: 8,
+          max_utf8_bytes: 3 * 1024,
+        }),
+        "utf8",
+      ),
+    ).toBeLessThanOrEqual(3 * 1024);
+
+    const tiny = buildKnowledgeContext(store, {
+      query: "create incident record form",
+      limit: 8,
+      max_utf8_bytes: 2 * 1024,
+    });
+    expect(tiny.matches).toEqual([]);
+    expect(tiny.canonical_documents).toBeUndefined();
+    expect(tiny.answer_status).toBe("contextual");
+    const limitation = tiny.limitations?.find((entry) =>
+      entry.includes("Canonical guidance was omitted to fit the output budget"),
+    );
+    expect(limitation).toContain(`record:guide:${WORKFLOW_GUIDE_ID}`);
+    const omittedReference = limitation?.match(
+      /resolve (record:[^ ]+) for/u,
+    )?.[1];
+    expect(omittedReference).toBe(`record:guide:${WORKFLOW_GUIDE_ID}`);
+    expect(
+      resolveKnowledgeDocument(store, { identifier: omittedReference ?? "" })
+        .status,
+    ).toBe("resolved");
+    expect(tiny.utf8_bytes).toBeLessThanOrEqual(2 * 1024);
     expect(
       Buffer.byteLength(
         renderKnowledgeContext(store, {

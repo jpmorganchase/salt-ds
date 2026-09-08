@@ -472,10 +472,10 @@
   ],
   "workflows": [
     {
-      "id": "operations-dashboard.record-form",
-      "title": "Validated incident record form",
-      "route": "/salt/patterns/forms",
-      "recipe": "examples/apps/operations-dashboard/src/workflows/record-form/recipe.json",
+      "id": "operations-dashboard.service-worklist",
+      "title": "Service operations worklist",
+      "route": "/salt/patterns/analytical-dashboard",
+      "recipe": "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json",
       "visibility": "public",
       "stability": "experimental",
       "provenance": "authored_workflow"

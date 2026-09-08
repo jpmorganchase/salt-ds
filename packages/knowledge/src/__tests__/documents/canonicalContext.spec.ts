@@ -9,14 +9,18 @@ import {
 
 const application = "examples/apps/operations-dashboard";
 const recipePath =
-  "examples/workflows/operations-dashboard.record-form/recipe.json";
+  "examples/workflows/operations-dashboard.service-worklist/recipe.json";
 const reusablePaths = [
   "src/workflows/record-form/RecordForm.tsx",
   "src/workflows/record-form/RecordForm.css",
   "src/workflows/record-form/types.ts",
+  "src/workflows/service-worklist/types.ts",
+  "src/workflows/service-worklist/IncidentWorklist.tsx",
+  "src/workflows/service-worklist/IncidentInspector.tsx",
+  "src/workflows/service-worklist/ServiceWorklist.css",
 ];
 const demoPaths = Array.from(
-  { length: 8 },
+  { length: 9 },
   (_, index) => `src/demo/Demo${index + 1}.tsx`,
 );
 
@@ -32,7 +36,7 @@ function workflowRecipe() {
   return {
     contract: "salt-workflow-recipe/1",
     schema_version: "1.0.0",
-    id: "operations-dashboard.record-form",
+    id: "operations-dashboard.service-worklist",
     title: "Incident record form",
     intent: {
       summary: "Create or adapt an incident record form.",
@@ -46,7 +50,7 @@ function workflowRecipe() {
     },
     source: {
       application,
-      recipe: `${application}/src/workflows/record-form/recipe.json`,
+      recipe: `${application}/src/workflows/service-worklist/recipe.json`,
       canonical_guidance: ["site/docs/patterns/forms.mdx"],
     },
     files,
@@ -103,10 +107,10 @@ function workflowFile(path: string, role: "reusable" | "setup" | "demo-only") {
   const source = `export const ${path.replaceAll(/[^A-Za-z]/gu, "")} = true;\n`;
   const bytes = Buffer.from(source, "utf8");
   return {
-    id: `workflow-file:operations-dashboard.record-form:${path}`,
+    id: `workflow-file:operations-dashboard.service-worklist:${path}`,
     source_path: `${application}/${path}`,
     path,
-    artifact_path: `examples/workflows/operations-dashboard.record-form/files/${path}`,
+    artifact_path: `examples/workflows/operations-dashboard.service-worklist/files/${path}`,
     role,
     media_type: path.endsWith(".css")
       ? "text/css; charset=utf-8"

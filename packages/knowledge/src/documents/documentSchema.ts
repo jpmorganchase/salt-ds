@@ -78,6 +78,11 @@ export type DocumentBlock =
 
 export interface DocumentSection {
   id: string;
+  /**
+   * Present when a selected section has been composed with sections from
+   * another document. Absent sections inherit DocumentModel.source.
+   */
+  source?: DocumentSource;
   heading_path: string[];
   heading: DocumentInline[] | null;
   level: number | null;
@@ -275,6 +280,7 @@ const blockCodec: z.ZodType<DocumentBlock> = z.lazy(() =>
 const sectionCodec: z.ZodType<DocumentSection> = z
   .object({
     id: sectionIdCodec,
+    source: sourceCodec.optional(),
     heading_path: z.array(z.string()),
     heading: z.array(inlineCodec).nullable(),
     level: z.number().int().min(1).max(6).nullable(),

@@ -73,10 +73,14 @@ do not add AI-scoped GitHub Issues routing.
 
 ## Current workflow authoring
 
-The record-form workflow is maintained from its application recipe and the
-selected Forms and Button source guidance. Do not edit generated manifests,
-Knowledge output, web files, or a second prose copy. After changing behaviour
-or guidance, first regenerate the public-example inventory:
+The service-operations workflow is maintained from its application recipe at
+`examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json`
+and its declared canonical pattern and component-selection guidance. Button
+loading retains its component example. The recipe declares the complete public
+file inventory; keep reusable components and their styles separate from local
+demo adapters and simulation controls. Do not edit
+generated manifests, Knowledge output, web files, or a second prose copy. After
+changing behaviour or guidance, first regenerate the public-example inventory:
 
 ```shell
 yarn examples:manifest
@@ -121,14 +125,14 @@ explicit offline-author preview.
 yarn workspace @salt-ds/site gen:snapshot:offline-author
 yarn workspace @salt-ds/site build:offline-author
 yarn workspace @salt-ds/site serve:offline-author
-# Inspect the served Forms and Button pages in a browser.
+# Inspect /salt/patterns/analytical-dashboard and /salt/components/button/examples.
 # Separately, test the generated static-artifact component surface:
 yarn vitest run --config vitest.browser.config.mts --browser.headless test/browser/salt-workflow-preview.browser.test.tsx
 ```
 
 The automated path proves generated-source consistency and the current
 workflow's installed-package reconstruction. A maintainer who did not build
-the compiler must also make one realistic record-form behaviour and guidance
+the compiler must also make one realistic workflow behaviour and guidance
 change using this guide, regenerate, preview, and review the four rendered
 surfaces. Record active elapsed time, manually edited source files, repeated
 facts, and friction in the ordinary review. Deliberately remove a declared

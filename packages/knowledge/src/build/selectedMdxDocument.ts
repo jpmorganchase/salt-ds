@@ -871,6 +871,7 @@ export function parseSelectedMdxDocument(
     );
     return {
       id,
+      source: { ...input.source },
       heading_path: [...section.heading_path],
       heading: section.heading
         ? converter.inline(section.heading.children ?? [])

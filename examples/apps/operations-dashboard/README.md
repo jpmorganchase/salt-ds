@@ -1,64 +1,110 @@
 # Salt operations dashboard
 
-A realistic responsive operations workflow built with public Salt packages. It
-demonstrates dashboard navigation, operational metrics, filtering, a data
-table, density and light/dark controls, and a validated incident record form in
-a dialog.
+A complete local service-operations journey built with public Salt packages:
+navigate between services and incidents, filter the service table, inspect an
+incident, and create or edit its record. The dashboard includes light/dark and
+density controls, keyboard navigation, and a narrow layout with a contained
+horizontal table region.
 
-The record form keeps its draft in the dashboard host. Cancel closes the dialog
-without discarding that draft, so reopening restores it. Submission is a local
-demo: every save is delayed for 1.5 seconds, and the first save in an app
-session fails once to show the retained-input retry path. It does not contact a
-backend or notify responders.
-
-The reusable form accepts a `RecordDraft` with `title` and `service`, plus
-`draft`, `onChange`, `onSubmit`, `onCancel`, and a submission state of `idle`,
-`pending`, or `failed` with a message. The host owns the draft and submission
-state, starts and catches its asynchronous work behind a duplicate-submit ref,
-and keeps the draft on cancel. The host also owns the `Dialog` and its header;
-the form supplies the dialog content and actions. Replace the local adapter
-with the application's service, state, or routing layer when adapting this
-form to a real workflow.
+All data is an in-memory fixture. Loading, refresh failures and save failures
+are deliberate local simulations; the application makes no runtime network
+requests, persists no data, and sends no notifications.
 
 ```sh
 npm install
 npm run dev
 ```
 
-Use `npm run typecheck` and `npm run build` for local validation. The dashboard
-uses the exact Core, Theme, Icons, and Lab candidate versions through public
-package entry points. No source file depends on Storybook, repository-only
-aliases, MCP, or a network connection at runtime.
+Use `npm run typecheck` and `npm run build` for local validation. This example
+uses the exact Core, Theme, Icons and Lab versions in its package manifest.
+It has no Storybook, repository-only source alias or MCP prerequisite.
 
-Repository maintainers validate the complete release-candidate package cohort
-from local package archives with:
+## Try the journey
 
-```sh
-yarn build
-yarn check:salt-sample-apps -- --app operations-dashboard
-yarn check:salt-sample-apps
-```
+1. Filter services with `Risk`, then try a term with no matches. Clearing the
+   filter restores the full service list.
+2. Inspect a service or select an incident from the incident worklist. Edit its
+   title or affected service/process. Cancel and reopen the same record to see
+   the retained draft.
+3. Submit an invalid title to inspect validation and focus movement. A valid
+   first save waits 1.5 seconds and fails once per app session; retry saves the
+   record without losing its values. Pending saves prevent duplicate submission
+   and dialog closure.
+4. Create another incident. Each created record has its own identity and can be
+   selected independently. A successful create starts a fresh draft for the
+   next record; cancellation preserves an unfinished draft.
+5. Refresh the worklist. The first refresh fails while the existing data remains
+   available; retry restores the ready state. Use the labelled local demo
+   controls to inspect the distinct empty-data state.
 
-The gate exercises filtering, light/dark and density behavior, record-form
-validation, pending and retry behavior, keyboard focus, responsive navigation,
-axe, and the packed application with post-install networking blocked.
+## Adapt the reusable pieces
 
-For an ordinary consumer, install the exact `@salt-ds/cli` version named by the
-matching Salt release receipt, then keep the workflow project-local and
-offline:
+`src/workflows/service-worklist/recipe.json` declares the complete application
+files and canonical guidance. Its runnable entry is `src/main.tsx`.
+`IncidentWorklist`, `IncidentInspector`, their types and imported
+`ServiceWorklist.css`, and `RecordForm` with its stylesheet are reusable. Keep
+those styles with the components when adapting them; they include the narrow
+table's contained scrolling. The two local adapters contain the fixture data
+and failure simulation.
+
+`OperationsDashboard` owns the service/incident collections, query, selected
+incident ID and asynchronous state. It keeps an unfinished create draft and a
+separate edit draft for each incident. Selection uses the incident ID so changing
+an affected service does not lose the selected record.
+
+`RecordForm` accepts `draft`, `onChange`, `onSubmit`, `onCancel`, and a submission
+state of `idle`, `pending`, or `failed` with a message. The host owns the `Dialog`
+and header; the form supplies its content and actions. `formLabel` and
+`submitLabel` distinguish creating from editing.
+
+Replace the local adapters with the application's existing data services. Keep
+its provider, routing and state conventions; wire the component callbacks to
+those existing seams. The worklist's loading/ready/refreshing/error state is
+separate from form submission. No-data and no-match views derive from records
+and the query. The host supplies empty-data simulation controls through the
+optional `localDemoControls` slot; omit it for an ordinary application.
+The example does not establish support for concurrent editing,
+persistence, authorization, localization or production-scale datasets.
+
+## Retrieve the same material
+
+The AI packages are an unpublished local candidate. In an authorized preview
+with the matching CLI and Knowledge packages already installed, use the
+project-local executable:
 
 ```sh
 npx --no-install salt-ds info --json
-npx --no-install salt-ds docs button --format json
-npx --no-install salt-ds context operations --format json --limit 5
+npx --no-install salt-ds context "service worklist with filtering and failure recovery" --format markdown --limit 5
+npx --no-install salt-ds docs record:guide:operations-dashboard.service-worklist --format markdown
+npx --no-install salt-ds docs record:guide:guide.button.loading --format markdown
 ```
 
-The selection flags are optional: `--root <repo>` selects a repository
-authority and `--project <relative-workspace>` selects one application within
-it. Omit both when the current directory is the intended application.
+For an app inside a workspace, use `--root <repo>` and
+`--project <relative-app-path>` consistently. Omit both when the current
+directory is the application. Follow returned section and file references for
+the specific change; the recipe contains the complete reconstruction inventory.
+The local website preview is on `/salt/patterns/analytical-dashboard` and offers
+the same guidance, recipe, source files and copyable context.
 
-The dashboard intentionally requires neither Storybook nor MCP. To inspect the
-official agent guidance before manually registering it with a host, run
-`npx --no-install salt-ds skill print --kind skill`. The companion managed block
-is available with `--kind agents`; review it before copying it into an
-`AGENTS.md`. Neither command edits the consumer repository.
+To inspect the bundled agent instructions, run
+`npx --no-install salt-ds skill print --kind skill`. Review those instructions
+before manually registering them with an agent host. The companion `AGENTS.md`
+block is available with `--kind agents`; neither command edits the repository.
+
+## Maintainer verification
+
+```sh
+yarn build:ai-tooling
+yarn check:salt-sample-apps -- --app operations-dashboard
+```
+
+The sample-app gate reconstructs the application from the locally packed
+recipe, installs the exact candidate cohort in its temporary fixture, and runs
+type/build and browser checks with post-install networking blocked. Its shared
+assertions reject deliberate removal of form validation and worklist failure
+recovery. The complete authoring/build path is in
+[the contributor guide](../../../docs/ai/contributing.md).
+
+Readiness remains **runnable**. Automated acceptance supports the stated local
+scope; independent maintainer, owner/design and manual accessibility reviews
+remain required before workflow promotion.

@@ -39,6 +39,13 @@ Avoid rebuilding Salt buttons, links, navigation items, or other common
 components from raw HTML, custom roles, and ad hoc styling when Salt already
 provides the correct primitive.
 
+Derive the UI roles and check existing Salt component and pattern coverage
+before composing custom structure. Tokens may customize or complement the
+chosen component or pattern; they do not turn a token-styled generic element
+into a replacement for its behavior or semantics. When coverage has a real
+gap, state the missing role or behavior and keep the custom addition scoped to
+that gap.
+
 ### Extra layout wrappers
 
 Avoid stacking multiple layout containers when one Salt layout component can

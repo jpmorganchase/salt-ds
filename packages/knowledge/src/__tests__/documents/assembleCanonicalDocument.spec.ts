@@ -11,14 +11,18 @@ import type { KnowledgeRecordStore } from "../../manifest/knowledgeStore.js";
 
 const application = "examples/apps/operations-dashboard";
 const recipePath =
-  "examples/workflows/operations-dashboard.record-form/recipe.json";
+  "examples/workflows/operations-dashboard.service-worklist/recipe.json";
 const reusablePaths = [
   "src/workflows/record-form/RecordForm.tsx",
   "src/workflows/record-form/RecordForm.css",
   "src/workflows/record-form/types.ts",
+  "src/workflows/service-worklist/types.ts",
+  "src/workflows/service-worklist/IncidentWorklist.tsx",
+  "src/workflows/service-worklist/IncidentInspector.tsx",
+  "src/workflows/service-worklist/ServiceWorklist.css",
 ];
 const demoPaths = Array.from(
-  { length: 8 },
+  { length: 9 },
   (_, index) => `src/demo/Demo${index + 1}.tsx`,
 );
 
@@ -29,10 +33,10 @@ function recipeFile(
 ) {
   const bytes = Buffer.from(source, "utf8");
   return {
-    id: `workflow-file:operations-dashboard.record-form:${path}`,
+    id: `workflow-file:operations-dashboard.service-worklist:${path}`,
     source_path: `${application}/${path}`,
     path,
-    artifact_path: `examples/workflows/operations-dashboard.record-form/files/${path}`,
+    artifact_path: `examples/workflows/operations-dashboard.service-worklist/files/${path}`,
     role,
     media_type: path.endsWith(".css")
       ? "text/css; charset=utf-8"
@@ -63,7 +67,7 @@ function emittedRecipe() {
   return {
     contract: "salt-workflow-recipe/1",
     schema_version: "1.0.0",
-    id: "operations-dashboard.record-form",
+    id: "operations-dashboard.service-worklist",
     title: "Validated incident record form",
     intent: {
       summary: "Create or adapt an incident record form.",
@@ -77,7 +81,7 @@ function emittedRecipe() {
     },
     source: {
       application,
-      recipe: `${application}/src/workflows/record-form/recipe.json`,
+      recipe: `${application}/src/workflows/service-worklist/recipe.json`,
       canonical_guidance: [
         "site/docs/patterns/forms.mdx",
         "site/docs/components/button/examples.mdx#loading",
@@ -155,14 +159,45 @@ Do not discard user input.
   return document;
 }
 
+function composedDocument() {
+  const button = buttonDocument();
+  const forms = parseSelectedMdxDocument({
+    source: {
+      document_id: "guide.forms.spacing",
+      source_path: "site/docs/patterns/forms.mdx",
+      route: "/salt/patterns/forms",
+    },
+    mdx: "## Spacing\n\nRead [spacing](../foundations/spacing).\n",
+    selectors: [
+      {
+        id: "forms.spacing",
+        heading_path: ["Spacing"],
+        include_descendants: true,
+      },
+    ],
+  });
+  return {
+    ...button,
+    source: {
+      document_id: "guide.dashboard.workflow",
+      source_path: "site/docs/patterns/analytical-dashboard.mdx",
+      route: "/salt/patterns/analytical-dashboard",
+    },
+    sections: [...button.sections, ...forms.sections],
+  };
+}
+
 function fixtureStore(
   options: {
     corruptRecipeFile?: boolean;
     recipeAdaptationChange?: boolean;
     buttonPropFactChange?: boolean;
+    composedSources?: boolean;
   } = {},
 ): KnowledgeRecordStore {
-  const document = buttonDocument();
+  const document = options.composedSources
+    ? composedDocument()
+    : buttonDocument();
   const recipe = emittedRecipe();
   if (options.recipeAdaptationChange) {
     recipe.adaptation.cancellation =
@@ -304,6 +339,45 @@ function fixtureStore(
 }
 
 describe("assembleCanonicalDocument", () => {
+  it("preserves each selected MDX section's source path, range, and route when composing documents", () => {
+    const selection = assembleCanonicalDocument(
+      fixtureStore({ composedSources: true }),
+      { family: "guide", id: "guide.button.loading" },
+    );
+    const loading = selection?.sections.find(
+      (section) => section.id === "loading",
+    );
+    const spacing = selection?.sections.find(
+      (section) => section.id === "forms.spacing",
+    );
+    expect(loading).toMatchObject({
+      source_path: "site/docs/components/button/examples.mdx",
+      source_url:
+        "https://www.saltdesignsystem.com/salt/components/button/examples",
+    });
+    expect(spacing).toMatchObject({
+      source_path: "site/docs/patterns/forms.mdx",
+      source_url: "https://www.saltdesignsystem.com/salt/patterns/forms",
+    });
+    expect(loading?.markdown).toContain(
+      "Source: [site/docs/components/button/examples\\.mdx]",
+    );
+    expect(spacing?.markdown).toContain(
+      "Source: [site/docs/patterns/forms\\.mdx]",
+    );
+    const markdown = renderCanonicalDocument(selection!);
+    expect(markdown).toContain(
+      "[Forms](https://www.saltdesignsystem.com/salt/patterns/forms#submission)",
+    );
+    expect(markdown).toContain(
+      "[spacing](https://www.saltdesignsystem.com/salt/foundations/spacing)",
+    );
+    expect(markdown).toContain(
+      "Source: [site/docs/components/button/examples\\.mdx]",
+    );
+    expect(markdown).toContain("Source: [site/docs/patterns/forms\\.mdx]");
+  });
+
   it("assembles parent Button loading guidance, matching API props, verified workflow support, and contextual diagnostics", () => {
     const store = fixtureStore();
     expect(
@@ -348,10 +422,10 @@ describe("assembleCanonicalDocument", () => {
     expect(prerequisites).toContain("vite@7\\.0\\.0");
     expect(
       selection?.files.filter((file) => file.role === "reusable"),
-    ).toHaveLength(3);
+    ).toHaveLength(7);
     expect(
       selection?.files.filter((file) => file.role === "demo-only"),
-    ).toHaveLength(8);
+    ).toHaveLength(9);
     expect(selection?.limitations.join("\n")).toContain("MDX_EXPRESSION_INERT");
 
     const markdown = renderCanonicalDocument(selection!);

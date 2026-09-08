@@ -281,13 +281,23 @@ describe("catalog input inventory", () => {
         "export {};\n",
       "examples/apps/operations-dashboard/src/workflows/record-form/localDemoAdapter.ts":
         "export {};\n",
-      "examples/apps/operations-dashboard/src/workflows/record-form/recipe.json":
+      "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json":
         "{}\n",
       "examples/apps/operations-dashboard/src/workflows/record-form/RecordForm.tsx":
         "export {};\n",
       "examples/apps/operations-dashboard/src/workflows/record-form/RecordForm.css":
         ".form {}\n",
       "examples/apps/operations-dashboard/src/workflows/record-form/types.ts":
+        "export {};\n",
+      "examples/apps/operations-dashboard/src/workflows/service-worklist/types.ts":
+        "export {};\n",
+      "examples/apps/operations-dashboard/src/workflows/service-worklist/IncidentWorklist.tsx":
+        "export {};\n",
+      "examples/apps/operations-dashboard/src/workflows/service-worklist/IncidentInspector.tsx":
+        "export {};\n",
+      "examples/apps/operations-dashboard/src/workflows/service-worklist/ServiceWorklist.css":
+        ".worklist {}\n",
+      "examples/apps/operations-dashboard/src/workflows/service-worklist/localWorklistAdapter.ts":
         "export {};\n",
       "examples/apps/unselected/package.json": "{}\n",
       "examples/apps/operations-dashboard/src/unselected.ts": "export {};\n",
@@ -309,8 +319,12 @@ describe("catalog input inventory", () => {
       "examples/apps/operations-dashboard/package.json",
       "examples/apps/operations-dashboard/src/workflows/record-form/RecordForm.css",
       "examples/apps/operations-dashboard/src/workflows/record-form/RecordForm.tsx",
-      "examples/apps/operations-dashboard/src/workflows/record-form/recipe.json",
       "examples/apps/operations-dashboard/src/workflows/record-form/types.ts",
+      "examples/apps/operations-dashboard/src/workflows/service-worklist/IncidentInspector.tsx",
+      "examples/apps/operations-dashboard/src/workflows/service-worklist/IncidentWorklist.tsx",
+      "examples/apps/operations-dashboard/src/workflows/service-worklist/ServiceWorklist.css",
+      "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json",
+      "examples/apps/operations-dashboard/src/workflows/service-worklist/types.ts",
     ]);
     expect(publication.entries.map((entry) => entry.path)).toEqual([
       "examples/apps/operations-dashboard/index.html",
@@ -319,6 +333,7 @@ describe("catalog input inventory", () => {
       "examples/apps/operations-dashboard/src/main.tsx",
       "examples/apps/operations-dashboard/src/vite-env.d.ts",
       "examples/apps/operations-dashboard/src/workflows/record-form/localDemoAdapter.ts",
+      "examples/apps/operations-dashboard/src/workflows/service-worklist/localWorklistAdapter.ts",
       "examples/apps/operations-dashboard/tsconfig.json",
       "examples/apps/operations-dashboard/vite.config.ts",
     ]);

@@ -238,18 +238,15 @@ async function verifyCurrentProductAuthoring() {
     "Current authoring requires the V2 workflow-aware example manifest",
   );
   const [workflow] = examples.workflows;
-  assert(
-    workflow.id === "operations-dashboard.record-form" &&
-      workflow.route === "/salt/patterns/forms" &&
-      workflow.recipe ===
-        "examples/apps/operations-dashboard/src/workflows/record-form/recipe.json",
-    "Current authoring workflow selection is not the operations dashboard record form",
+  const recipe = await readJson(absolute(workflow.recipe));
+  const guidancePaths = recipe.source.canonical_guidance.map(
+    (reference) => reference.split("#")[0],
   );
-  for (const relative of [
-    workflow.recipe,
-    "site/docs/patterns/forms.mdx",
-    "site/docs/components/button/examples.mdx",
-  ]) {
+  assert(
+    workflow.id === recipe.id && workflow.route === docRoute(guidancePaths[0]),
+    "Current authoring workflow selection differs from its canonical recipe",
+  );
+  for (const relative of new Set([workflow.recipe, ...guidancePaths])) {
     assert(
       await exists(relative),
       `Current authoring source is missing: ${relative}`,
@@ -298,10 +295,7 @@ async function verifyCurrentProductAuthoring() {
       );
     }
   }
-  for (const id of [
-    "operations-dashboard.record-form",
-    "guide.button.loading",
-  ]) {
+  for (const id of [workflow.id, "guide.button.loading"]) {
     const result = resolveKnowledgeDocument(store, {
       identifier: `record:guide:${id}`,
     });
@@ -475,8 +469,10 @@ if (currentProduct) {
       await exists(workflow.recipe),
       `${workflow.id} recipe is missing: ${workflow.recipe}`,
     );
+    const recipe = await readJson(absolute(workflow.recipe));
     assert(
-      workflow.route === "/salt/patterns/forms",
+      workflow.route ===
+        docRoute(recipe.source.canonical_guidance[0].split("#")[0]),
       `${workflow.id} route is not an existing canonical route`,
     );
   }

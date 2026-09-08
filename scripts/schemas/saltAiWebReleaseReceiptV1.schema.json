@@ -180,7 +180,7 @@
             },
             "route": {
               "type": "string",
-              "pattern": "^/ai/v1/[0-9a-f]{64}/examples/workflows/operations-dashboard\\.record-form/preview/[0-9a-f]{64}/index\\.html$"
+              "pattern": "^/ai/v1/[0-9a-f]{64}/examples/workflows/operations-dashboard\\.service-worklist/preview/[0-9a-f]{64}/index\\.html$"
             },
             "bootstrap": {
               "type": "object",

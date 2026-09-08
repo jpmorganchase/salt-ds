@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 import { code, p, ul } from "../mdx/index";
 import {
   type WorkflowPreviewRegistration,
-  workflowPreviewForRoute,
+  workflowPreviewByRoute,
 } from "./patternSourceLoaders";
 import styles from "./WorkflowPreview.module.css";
 
@@ -505,9 +505,15 @@ export function WorkflowPreview({
             Current development workflow: {registration.title}
           </h2>
           {loaded && (
-            <p className={styles.workflowIntent}>
-              {loaded.recipe.intent.summary}
-            </p>
+            <>
+              <p className={styles.workflowIntent}>
+                {loaded.recipe.intent.summary}
+              </p>
+              <p className={styles.workflowIntent}>
+                Workflow delivery: {loaded.recipe.readiness.delivered}; manual
+                review: {loaded.recipe.readiness.manual_review}.
+              </p>
+            </>
           )}
         </div>
       </div>
@@ -520,6 +526,13 @@ export function WorkflowPreview({
       )}
       {loaded && (
         <>
+          <iframe
+            className={styles.frame}
+            data-testid="workflow-preview-frame"
+            sandbox="allow-forms allow-same-origin allow-scripts"
+            src={loaded.bootstrap.workflow.preview.url}
+            title={`${registration.title} workflow preview`}
+          />
           <GuidanceContext
             document={loaded.guidance}
             documentUrl={loaded.bootstrap.workflow.guidance.document.url}
@@ -527,13 +540,6 @@ export function WorkflowPreview({
             recipeUrl={loaded.bootstrap.workflow.recipe.url}
             fileUrls={loaded.bootstrap.workflow.files.map((file) => file.url)}
             recipe={loaded.recipe}
-          />
-          <iframe
-            className={styles.frame}
-            data-testid="workflow-preview-frame"
-            sandbox="allow-forms allow-same-origin allow-scripts"
-            src={loaded.bootstrap.workflow.preview.url}
-            title={`${registration.title} workflow preview`}
           />
           <div className={styles.resources}>
             <h3>Verified development resources</h3>
@@ -584,7 +590,7 @@ export function WorkflowPreview({
 }
 
 export function ButtonLoadingResources() {
-  const registration = workflowPreviewForRoute("/salt/patterns/forms");
+  const registration = Object.values(workflowPreviewByRoute)[0];
   const [bootstrap, setBootstrap] = useState<DevelopmentBootstrap>();
   const [guidance, setGuidance] = useState<CanonicalDocument>();
 

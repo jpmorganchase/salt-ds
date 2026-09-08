@@ -1212,7 +1212,9 @@ export function buildKnowledgeContext(
           truncated:
             matchCount < search.matches.length || candidate.truncated === true,
         },
-        ...(candidate.documents.length > 0 && matchCount > 0
+        ...((candidate.documents.length > 0 ||
+          candidate.omitted_document_reference !== undefined) &&
+        matchCount > 0
           ? [{ matches: [], truncated: true }]
           : []),
       ];

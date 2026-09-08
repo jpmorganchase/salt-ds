@@ -69,9 +69,13 @@ describe("verified development workflow preview", () => {
     const digest = bootstrap.bundle_digest.slice("sha256:".length);
     const immutableBase = `/ai/v1/${digest}/`;
 
-    const registration = workflowPreviewForRoute("/salt/patterns/forms");
+    const registration = workflowPreviewForRoute(
+      "/salt/patterns/analytical-dashboard",
+    );
     if (!registration)
-      throw new Error("Forms must register its workflow preview");
+      throw new Error(
+        "Analytical dashboard must register its workflow preview",
+      );
     await render(<WorkflowPreview registration={registration} />);
 
     await expect
@@ -80,13 +84,13 @@ describe("verified development workflow preview", () => {
     await expect
       .element(
         page.getByText(
-          "Create or adapt an incident record form with host-owned draft, validation, pending submission, failure recovery, retry, and cancellation state.",
+          "Build a runnable service-operations dashboard with a persistent shell, worklist filters, local loading, empty and error recovery states, incident inspection, and an editable record form.",
         ),
       )
       .toBeVisible();
     await expect.element(page.getByText("Readiness: runnable")).toBeVisible();
     await expect
-      .element(page.getByText("Manual review: pending"))
+      .element(page.getByText("Manual review: pending", { exact: true }))
       .toBeVisible();
     await expect
       .element(
@@ -125,7 +129,32 @@ describe("verified development workflow preview", () => {
         verifyArtifact(file, immutableBase),
       ),
     ]);
-    expect(bootstrap.workflow.files).toHaveLength(12);
+    expect(bootstrap.workflow.files.map((file) => file.path)).toEqual(
+      expect.arrayContaining([
+        "src/main.tsx",
+        "src/OperationsDashboard.tsx",
+        "src/workflows/service-worklist/IncidentWorklist.tsx",
+        "src/workflows/service-worklist/IncidentInspector.tsx",
+        "src/workflows/service-worklist/ServiceWorklist.css",
+        "src/workflows/record-form/RecordForm.tsx",
+      ]),
+    );
+
+    await frame.getByRole("textbox", { name: "Filter services" }).fill("Risk");
+    await expect
+      .element(frame.getByText("Showing 1 of 4 services"))
+      .toBeVisible();
+    await frame
+      .getByRole("button", { name: "Inspect Risk calculator" })
+      .click();
+    await expect
+      .element(
+        frame
+          .getByRole("region", { name: "Incident details" })
+          .getByText("INC-1042"),
+      )
+      .toBeVisible();
+    await frame.getByRole("textbox", { name: "Filter services" }).fill("");
 
     const indexHtmlFile = page.getByRole("listitem", { hasText: "index.html" });
     await indexHtmlFile.getByText("index.html", { exact: true }).click();
@@ -152,7 +181,7 @@ describe("verified development workflow preview", () => {
     await expect.element(submit).toHaveAttribute("data-loading", "true");
     await expect.element(submit).toHaveAttribute("type", "button");
     await expect
-      .element(frame.getByRole("status"))
+      .element(form.getByRole("status"))
       .toHaveTextContent("Saving incident.");
     await expect.element(title).toHaveAttribute("readonly");
     await expect.element(service).toHaveAttribute("readonly");
@@ -171,9 +200,13 @@ describe("verified development workflow preview", () => {
   }, 20_000);
 
   it("rejects a bootstrap whose verified recipe identity does not match", async () => {
-    const registration = workflowPreviewForRoute("/salt/patterns/forms");
+    const registration = workflowPreviewForRoute(
+      "/salt/patterns/analytical-dashboard",
+    );
     if (!registration)
-      throw new Error("Forms must register its workflow preview");
+      throw new Error(
+        "Analytical dashboard must register its workflow preview",
+      );
     const bundle = `sha256:${"a".repeat(64)}`;
     const base = `/ai/v1/${bundle.slice("sha256:".length)}`;
     const recipeIdentity = `sha256:${"b".repeat(64)}`;
@@ -246,7 +279,7 @@ describe("verified development workflow preview", () => {
         files: [],
       },
     };
-    const responses = new Map([
+    const responses = new Map<string, unknown>([
       ["/ai/development/bootstrap.json", bootstrap],
       [
         recipeUrl,

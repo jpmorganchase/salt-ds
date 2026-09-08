@@ -39,7 +39,7 @@ vi.mock("../build/catalogInputInventory.js", async (importOriginal) => {
 
 const repositoryRoot = path.resolve(import.meta.dirname, "../../../..");
 const recipePath =
-  "examples/apps/operations-dashboard/src/workflows/record-form/recipe.json";
+  "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json";
 const manifestPath = "site/src/examples/patterns/manifest.json";
 const semanticPaths = [
   recipePath,
@@ -47,8 +47,17 @@ const semanticPaths = [
   "examples/apps/operations-dashboard/src/workflows/record-form/RecordForm.css",
   "examples/apps/operations-dashboard/src/workflows/record-form/RecordForm.tsx",
   "examples/apps/operations-dashboard/src/workflows/record-form/types.ts",
+  "examples/apps/operations-dashboard/src/workflows/service-worklist/IncidentInspector.tsx",
+  "examples/apps/operations-dashboard/src/workflows/service-worklist/IncidentWorklist.tsx",
+  "examples/apps/operations-dashboard/src/workflows/service-worklist/ServiceWorklist.css",
+  "examples/apps/operations-dashboard/src/workflows/service-worklist/types.ts",
+  "site/docs/patterns/analytical-dashboard.mdx",
+  "site/docs/patterns/navigation.mdx",
+  "site/docs/patterns/content-status.mdx",
   "site/docs/components/button/examples.mdx",
   "site/docs/patterns/forms.mdx",
+  "site/docs/getting-started/choosing-the-right-primitive.mdx",
+  "site/docs/getting-started/composition-pitfalls.mdx",
 ];
 const publicationPaths = [
   "examples/apps/operations-dashboard/index.html",
@@ -57,6 +66,7 @@ const publicationPaths = [
   "examples/apps/operations-dashboard/src/main.tsx",
   "examples/apps/operations-dashboard/src/vite-env.d.ts",
   "examples/apps/operations-dashboard/src/workflows/record-form/localDemoAdapter.ts",
+  "examples/apps/operations-dashboard/src/workflows/service-worklist/localWorklistAdapter.ts",
   "examples/apps/operations-dashboard/tsconfig.json",
   "examples/apps/operations-dashboard/vite.config.ts",
 ];
@@ -87,7 +97,7 @@ async function createWorkflowFixture(): Promise<string> {
     JSON.stringify({
       contract: "salt-authored-example-manifest/2",
       workflows: [
-        { id: "operations-dashboard.record-form", recipe: recipePath },
+        { id: "operations-dashboard.service-worklist", recipe: recipePath },
       ],
     }),
     "utf8",
@@ -145,12 +155,12 @@ afterEach(async () => {
 });
 
 describe("buildKnowledgeSource publication defaults", () => {
-  it("inventories all eight demo files for the selected workflow", async () => {
+  it("inventories all nine demo files for the selected workflow", async () => {
     const root = await createWorkflowFixture();
     const inventory = await captureBuildInventory(root);
     const workflow = await assembleWithCapturedInventory(root, inventory);
 
-    expect(workflow.recipeArtifact.files).toHaveLength(12);
+    expect(workflow.recipeArtifact.files).toHaveLength(17);
     expect(
       workflow.recipeArtifact.files.filter((file) => file.role === "demo-only"),
     ).toHaveLength(publicationPaths.length);

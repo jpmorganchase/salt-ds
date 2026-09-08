@@ -467,6 +467,14 @@ if (workflowInput) {
       `Canonical guidance is unavailable: ${id}`,
     );
     const canonical = result.document.canonical;
+    const detail = store.getContentValue(
+      store.getRecord("guide", id).detail_content_ref,
+    );
+    const route = detail.document?.source.route;
+    assert(
+      typeof route === "string" && route.startsWith("/salt/"),
+      `Canonical guidance route is unavailable: ${id}`,
+    );
     const markdown = markdownDocuments.find(
       (entry) => entry.sourceArtifact === `markdown/guides/${id}.md`,
     );
@@ -481,6 +489,7 @@ if (workflowInput) {
     });
     return {
       canonical,
+      route,
       descriptor: {
         url: markdown.markdownRoute,
         sha256: sha256(markdown.bytes),
@@ -491,11 +500,11 @@ if (workflowInput) {
       },
     };
   }
-  const form = await guidance(recipe.id);
+  const workflowGuidance = await guidance(recipe.id);
   assert(
-    form.canonical.recipe_identity?.content_identity ===
+    workflowGuidance.canonical.recipe_identity?.content_identity ===
       recipe.source_identity.content_identity,
-    "Form guidance and recipe identity differ",
+    "Workflow guidance and recipe identity differ",
   );
   const button = await guidance("guide.button.loading");
   const buttonRecord = store.getRecord("guide", "guide.button.loading");
@@ -539,14 +548,14 @@ if (workflowInput) {
     bundle_digest: manifest.bundle_digest,
     workflow: {
       id: recipe.id,
-      route: "/salt/patterns/forms",
+      route: workflowGuidance.route,
       recipe: {
         url: recipeUrl,
         sha256: sha256(recipeBytes),
         bytes: recipeBytes.byteLength,
         content_identity: recipe.source_identity.content_identity,
       },
-      guidance: form.descriptor,
+      guidance: workflowGuidance.descriptor,
       preview: {
         url: `${previewBase}/${retained.descriptor.entry}`,
         tree_sha256: retained.descriptor.tree_sha256,
@@ -554,7 +563,7 @@ if (workflowInput) {
       files,
     },
     button: {
-      route: "/salt/components/button/examples",
+      route: button.route,
       guidance: button.descriptor,
       files: buttonFiles,
     },

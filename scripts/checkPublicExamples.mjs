@@ -34,7 +34,7 @@ const sourceLoadersPath = path.join(
 );
 const workflowApplication = "examples/apps/operations-dashboard";
 const workflowApplicationRoot = path.join(repositoryRoot, workflowApplication);
-const workflowRecipePath = `${workflowApplication}/src/workflows/record-form/recipe.json`;
+const workflowRecipePath = `${workflowApplication}/src/workflows/service-worklist/recipe.json`;
 const workflowRecipeAbsolutePath = path.join(
   repositoryRoot,
   workflowRecipePath,
@@ -207,7 +207,7 @@ async function expectedManifest() {
       {
         id: workflowRecipe.id,
         title: workflowRecipe.title,
-        route: "/salt/patterns/forms",
+        route: "/salt/patterns/analytical-dashboard",
         recipe: workflowRecipePath,
         visibility: "public",
         stability: "experimental",
@@ -248,7 +248,7 @@ async function workflowInputPaths(assembler) {
   );
   const semanticPaths = [
     workflowRecipePath,
-    ...recipe.source.reusable_form_files.map(
+    ...recipe.source.reusable_workflow_files.map(
       (file) => `${workflowApplication}/${file}`,
     ),
     `${workflowApplication}/${recipe.setup.dependency_manifest}`,
@@ -552,7 +552,7 @@ assert.equal(actual.contract, "salt-authored-example-manifest/2");
 assert.equal(new Set(actual.examples.map(({ id }) => id)).size, 24);
 assert.deepEqual(
   actual.workflows.map(({ id }) => id),
-  ["operations-dashboard.record-form"],
+  ["operations-dashboard.service-worklist"],
   "The current manifest must register exactly the selected workflow",
 );
 assert.ok(
