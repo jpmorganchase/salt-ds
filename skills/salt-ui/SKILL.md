@@ -66,6 +66,11 @@ that cover each selected component or pattern, and any precisely bounded
 uncovered role. Do not use a fixed component checklist or treat a component
 chosen for one screen as the answer for another.
 
+For compound components, retrieve composition guidance or a complete example
+and check the parent, child, and sibling arrangement before implementation.
+The independent review must compare that arrangement with the resulting source;
+importing and rendering the named parts is insufficient evidence of correct use.
+
 ### Implement, verify, and report
 
 Make the smallest authorized change through the application's real route, data,

@@ -5,6 +5,9 @@ independent reviewer and repair workflow. Both saved preview copies passed an
 independent typecheck, production build, unchanged initial browser acceptance
 and the additional checks in `follow-up-acceptance.mjs`.
 
+Those passes missed a dialog composition defect later identified by the user.
+The correction below is a supervised follow-up, not a native-agent success.
+
 | Application   | Reusable checker coverage                                                                                                                                                                                             | Final native review                                                                                                                                              |
 | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Saved reports | Create two reports, search/no match/clear, select details, validate and cancel editing without changing the saved name or description, save one report while retaining the other; report actions activate by keyboard | Pass after source repair; reviewer retrieved FormField, Badge and Card records and viewed four labelled screenshots                                              |
@@ -49,9 +52,34 @@ captured settled evidence and obtained a fresh pass without further app edits.
 
 These are supervised follow-up results. The lead supplied the first repair
 findings and corrected review-evidence requirements; the native creator made
-the app repairs. This does not establish that the initial workflow reliably
+the repairs described above. This does not establish that the initial workflow reliably
 finds every defect without supervision. The original four attempts, their
 briefs, `acceptance.mjs` and `RESULTS.md` remain unchanged.
+
+## User-identified dialog composition correction
+
+The user subsequently found misplaced Cancel/Create report actions. Both report
+dialogs rendered `DialogActions` inside the form inside `DialogContent`. Matching
+local Dialog guidance describes separate header, content and action areas; the
+named components were present but incorrectly arranged. The final native review
+retrieved FormField, Badge and Card guidance and viewed screenshots, yet missed
+this composition error. The lead's review also missed it. Passing behavior and
+accessibility checks did not establish correct Salt composition.
+
+The lead corrected both dialogs in the saved preview: `DialogHeader`,
+`DialogContent` and `DialogActions` are siblings, and each external submit button
+targets its content form with the HTML `form` attribute. The shared Skill now
+requires creator and reviewer to compare compound-component arrangements with
+retrieved composition guidance or a complete example. This instruction change
+has not been validated in a new native-agent trial.
+
+The corrected report app passed typecheck, production build and the existing
+desktop/320px keyboard acceptance, with evidence retained separately at
+`.evidence/dialog-composition-correction/`. Its corrected `src/App.tsx` SHA-256 is
+`7d1dfb428cd9567575ef4b3914ef99bd3be3cdfbd1eb4167098297fb1e9fe241`.
+The native-reviewed source and earlier evidence remain preserved. The source
+hashes below identify the original native-reviewed applications, not this later
+report correction.
 
 ## Native host and retained evidence
 
@@ -77,7 +105,7 @@ directories. Their source and package files were compared byte-for-byte with
 the reviewed originals before independent verification. The initial native
 source/evidence snapshots and original comparison apps were retained separately.
 
-| Final source file            | SHA-256                                                            |
+| Native-reviewed source file  | SHA-256                                                            |
 | ---------------------------- | ------------------------------------------------------------------ |
 | Report library `src/App.tsx` | `3e0a6c8740ef025bacf60b818be259c85b1963403992b333a492d7b4db78787f` |
 | Report library `src/app.css` | `a17951a88f0266ec2925a6370c2dacf0f1ee8480635558b758ebe10756cd108f` |
