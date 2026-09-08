@@ -9,7 +9,6 @@ import {
   H3,
   H4,
   Label,
-  StackLayout,
   Text,
   TextAction,
   TextNotation,
