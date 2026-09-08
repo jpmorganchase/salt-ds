@@ -1,42 +1,13 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { Biome } from "@biomejs/js-api/nodejs";
 import { glob } from "glob";
 import Mustache from "mustache";
 import { optimize } from "svgo";
-
+import { formatGeneratedFiles } from "../../../scripts/formatGeneratedFiles.mjs";
 import { svgAttributeMap } from "./svgAttributeMap.mjs";
 
-const biome = new Biome();
-
-const project = biome.openProject();
-
-biome.applyConfiguration(project.projectKey, {
-  assist: { actions: { source: { organizeImports: "on" } } },
-  formatter: {
-    enabled: true,
-    indentStyle: "space",
-  },
-});
-
-function biomeFormat(content, filePath) {
-  const formattedResult = biome.formatContent(project.projectKey, content, {
-    filePath: filePath,
-  });
-
-  // Linting is needed to sort imports.
-  const result = biome.lintContent(
-    project.projectKey,
-    formattedResult.content,
-    {
-      filePath: filePath,
-      fixFileMode: "safeFixes",
-    },
-  );
-
-  return result.content;
-}
+const generatedFiles = [];
 
 const REPLACE_START = "$START";
 const REPLACE_END = "$END";
@@ -100,14 +71,12 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
 
   const ALL_CSS = `[class*=' saltCountry-'],[class^='saltCountry-'] {background-size: cover;height:var(--salt-size-base, 20px);width:var(--salt-size-base, 20px);}\n`;
 
-  const result = biomeFormat(
-    CSS_GENERATED_WARNING_COMMENT.concat(ALL_CSS, countryCss),
+  fs.writeFileSync(
     cssOutputPath,
+    CSS_GENERATED_WARNING_COMMENT.concat(ALL_CSS, countryCss),
+    { encoding: "utf8" },
   );
-
-  fs.writeFileSync(cssOutputPath, result, {
-    encoding: "utf8",
-  });
+  generatedFiles.push(cssOutputPath);
 };
 
 /** Generate all sharp country SVG as background image, in a single CSS */
@@ -141,14 +110,12 @@ const generateSharpCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
 
   const ALL_CSS = `[class*=' saltCountrySharp-'],[class^='saltCountrySharp-'] {background-size: cover;height:var(--salt-size-base, 20px);width:calc(var(--salt-size-base, 20px) * 1.44);}\n`;
 
-  const result = biomeFormat(
-    CSS_GENERATED_WARNING_COMMENT.concat(ALL_CSS, countryCss),
+  fs.writeFileSync(
     cssOutputPath,
+    CSS_GENERATED_WARNING_COMMENT.concat(ALL_CSS, countryCss),
+    { encoding: "utf8" },
   );
-
-  fs.writeFileSync(cssOutputPath, result, {
-    encoding: "utf8",
-  });
+  generatedFiles.push(cssOutputPath);
 };
 
 function capitalize(value) {
@@ -195,8 +162,6 @@ const generateCountrySymbolComponents = ({
       countryCode,
       countryName,
     };
-
-    console.log("processing", fileName, "to", newFilePath);
 
     // SVGO is a separate step to enable multi-pass optimizations.
     const optimizeOptions = {
@@ -328,14 +293,12 @@ const generateCountrySymbolComponents = ({
       .replaceAll(`"${REPLACE_START}`, "")
       .replaceAll(`${REPLACE_END}"`, "");
 
-    const result = biomeFormat(
-      GENERATED_WARNING_COMMENT.concat(replacedText),
+    fs.writeFileSync(
       newFilePath,
+      GENERATED_WARNING_COMMENT.concat(replacedText),
+      { encoding: "utf8" },
     );
-
-    fs.writeFileSync(newFilePath, result, {
-      encoding: "utf8",
-    });
+    generatedFiles.push(newFilePath);
   }
 
   return countryMetaMap;
@@ -362,11 +325,10 @@ const generateIndex = ({ countryMetaMap, componentsPath }) => {
 
   const outputFile = path.join(componentsPath, "index.ts");
 
-  const result = biomeFormat(joinedText, outputFile);
-
   console.log("creating index at:", outputFile);
 
-  fs.writeFileSync(outputFile, result, { encoding: "utf8" });
+  fs.writeFileSync(outputFile, joinedText, { encoding: "utf8" });
+  generatedFiles.push(outputFile);
 };
 
 // Generate countryMetaMap for use in stories and by consumers to map code to countryMeta
@@ -400,9 +362,8 @@ const generateCountryMetaMap = ({ countryMetaMap, basePath }) => {
     endText,
   ].join("\n");
 
-  const result = biomeFormat(joinedText, outputFile);
-
-  fs.writeFileSync(outputFile, result, { encoding: "utf8" });
+  fs.writeFileSync(outputFile, joinedText, { encoding: "utf8" });
+  generatedFiles.push(outputFile);
 };
 
 // generate lazyMap for use in the LazyCountrySymbol component
@@ -436,9 +397,8 @@ const generateLazyMap = ({ countryMetaMap, basePath }) => {
     lazyMapText.join("\n"),
   ].join("\n");
 
-  const result = biomeFormat(joinedText, outputFile);
-
-  fs.writeFileSync(outputFile, result, { encoding: "utf8" });
+  fs.writeFileSync(outputFile, joinedText, { encoding: "utf8" });
+  generatedFiles.push(outputFile);
 };
 
 // Run the script
@@ -450,23 +410,30 @@ const cssOutputPath = path.join(__dirname, "../saltCountries.css");
 const sharpCssOutputPath = path.join(__dirname, "../saltSharpCountries.css");
 const fileArg = process.argv.splice(2).join("|");
 
-generateComponentsFolder(basePath);
-const countryMetaMap = generateCountrySymbolComponents({
-  templatePath,
-  componentsPath,
-  basePath,
-  fileArg,
-});
-generateCssAsBg({
-  basePath,
-  cssOutputPath,
-  fileArg,
-});
-generateSharpCssAsBg({
-  basePath,
-  cssOutputPath: sharpCssOutputPath,
-  fileArg,
-});
-generateCountryMetaMap({ countryMetaMap, basePath });
-generateLazyMap({ countryMetaMap, basePath });
-generateIndex({ countryMetaMap, componentsPath });
+const generate = async () => {
+  generateComponentsFolder(basePath);
+  const countryMetaMap = generateCountrySymbolComponents({
+    templatePath,
+    componentsPath,
+    basePath,
+    fileArg,
+  });
+  generateCssAsBg({
+    basePath,
+    cssOutputPath,
+    fileArg,
+  });
+  generateSharpCssAsBg({
+    basePath,
+    cssOutputPath: sharpCssOutputPath,
+    fileArg,
+  });
+  generateCountryMetaMap({ countryMetaMap, basePath });
+  generateLazyMap({ countryMetaMap, basePath });
+  generateIndex({ countryMetaMap, componentsPath });
+  await formatGeneratedFiles(generatedFiles, {
+    cwd: path.join(__dirname, ".."),
+  });
+};
+
+await generate();

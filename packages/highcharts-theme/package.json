@@ -10,7 +10,7 @@
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "sideEffects": false,
   "scripts": {
-    "build": "yarn node ../../scripts/build.mjs"
+    "build": "node ../../scripts/build.mjs"
   },
   "main": "src/index.ts",
   "typings": "dist-types/index.d.ts",

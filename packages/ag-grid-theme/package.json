@@ -17,7 +17,7 @@
     "*.css"
   ],
   "scripts": {
-    "build": "yarn node ./scripts/build.mjs",
+    "build": "node ./scripts/build.mjs",
     "build-watch": "yarn node ./scripts/build.mjs --watch"
   },
   "publishConfig": {

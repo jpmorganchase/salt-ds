@@ -22,10 +22,10 @@
     "*.css"
   ],
   "scripts": {
-    "build": "yarn clean && yarn build:countries && yarn node ../../scripts/build.mjs",
+    "build": "yarn clean && yarn build:countries && node ../../scripts/build.mjs",
     "build:countries": "node ./scripts/generateCountrySymbol.mjs '*.svg'",
     "clean": "rimraf ./src/components",
-    "copy:css": "yarn node ./scripts/copyCss.mjs"
+    "copy:css": "node ./scripts/copyCss.mjs"
   },
   "dependencies": {
     "@salt-ds/core": "workspace:^",

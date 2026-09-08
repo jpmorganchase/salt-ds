@@ -1,92 +1,38 @@
-import { mkdirSync, writeFileSync } from "node:fs";
+import { randomUUID } from "node:crypto";
+import { rm, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { isCI } from "ci-info";
-import ts from "typescript";
-
+import { runTypeScript } from "./typescript.mjs";
 import { getTypescriptConfig } from "./utils.mjs";
 
-const typescriptConfigFilename = "tsconfig.json";
-const cwd = process.cwd();
-
-export function reportTSDiagnostics(diagnostics) {
-  for (const diagnostic of diagnostics) {
-    let message = "Error";
-    if (diagnostic.file) {
-      const where = diagnostic.file.getLineAndCharacterOfPosition(
-        diagnostic.start,
-      );
-      message += ` ${diagnostic.file.fileName} ${where.line}, ${
-        where.character + 1
-      }`;
-    }
-    message += `: ${ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")}`;
-    console.error(message);
-  }
-}
-
-export async function makeTypings(outDir, srcDir = path.join(cwd, "src")) {
+export async function makeTypings(packageDir) {
+  const cwd = path.resolve(packageDir);
+  const srcDir = path.join(cwd, "src");
   const typescriptConfig = await getTypescriptConfig(cwd, srcDir);
-
-  console.log("generating .d.ts files");
-
-  // make a shallow copy of the configuration
-  const tsconfig = {
+  const config = {
     ...typescriptConfig,
+    include: [srcDir],
     compilerOptions: {
       ...typescriptConfig.compilerOptions,
+      noEmit: false,
+      noEmitOnError: true,
+      declaration: true,
+      emitDeclarationOnly: true,
+      declarationDir: path.join(cwd, "dist-types"),
+      rootDir: srcDir,
     },
   };
 
-  // then add our custom stuff
-  // Only include src files from the package to prevent already built
-  // files from interferring with the compile
-  tsconfig.include = [path.join(cwd, "src")];
-  tsconfig.compilerOptions = {
-    ...tsconfig.compilerOptions,
-    noEmit: false,
-    declaration: true,
-    emitDeclarationOnly: true,
-    declarationDir: path.join(outDir, "dist-types"),
-    rootDir: path.join(cwd, "src"),
-    diagnostics: !isCI,
-  };
+  // Keep relative compiler options anchored to the package's tsconfig directory.
+  const configPath = path.join(cwd, `.salt-types-${randomUUID()}.json`);
+  await writeFile(configPath, JSON.stringify(config), { flag: "wx" });
 
-  // Extract config information
-  const configParseResult = ts.parseJsonConfigFileContent(
-    tsconfig,
-    ts.sys,
-    path.dirname(typescriptConfigFilename),
-  );
+  console.log("generating .d.ts files");
 
-  if (configParseResult.errors.length > 0) {
-    reportTSDiagnostics(configParseResult.errors);
-    throw new Error("Could not parse Typescript configuration");
-  }
-
-  const host = ts.createCompilerHost(configParseResult.options);
-  host.writeFile = (fileName, contents) => {
-    mkdirSync(path.dirname(fileName), { recursive: true });
-    writeFileSync(fileName, contents);
-  };
-
-  // Compile
-  const program = ts.createProgram(
-    configParseResult.fileNames,
-    configParseResult.options,
-    host,
-  );
-
-  const emitResult = program.emit();
-
-  // Skip diagnostic reporting in CI
-  if (isCI) {
-    return;
-  }
-  const diagnostics = ts
-    .getPreEmitDiagnostics(program)
-    .concat(emitResult.diagnostics);
-  if (diagnostics.length > 0) {
-    reportTSDiagnostics(diagnostics);
-    throw new Error("Could not generate .d.ts files");
+  try {
+    await runTypeScript(["--project", configPath, "--pretty", "false"], {
+      cwd,
+    });
+  } finally {
+    await rm(configPath, { force: true });
   }
 }
