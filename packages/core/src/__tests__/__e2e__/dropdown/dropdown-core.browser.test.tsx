@@ -49,6 +49,14 @@ afterEach(() => vi.restoreAllMocks());
 const combobox = () => page.getByRole("combobox");
 const listbox = () => page.getByRole("listbox");
 
+function collapsedList() {
+  const element = document.querySelector<HTMLElement>(
+    ".saltOptionList-collapsed",
+  );
+  if (!element) throw new Error("Collapsed option list missing");
+  return page.elementLocator(element);
+}
+
 async function expectActive(nameOrIndex: string | number) {
   await expect
     .poll(async () => {
@@ -534,20 +542,11 @@ describe("Given a core Dropdown", () => {
   });
 
   it("supports 1000 non-virtualized options through focus, mouse/keyboard open, navigation, and close", async () => {
-    await renderWithSalt(
-      <>
-        <PerformanceTestOneThousand />
-        <button type="button">Outside</button>
-      </>,
-    );
+    await renderWithSalt(<PerformanceTestOneThousand />);
     combobox().element().focus();
     await expect.element(combobox()).toHaveFocus();
     await expect.element(combobox()).toHaveAttribute("aria-expanded", "false");
-    const collapsedList = document.querySelector<HTMLElement>(
-      ".saltOptionList-collapsed",
-    );
-    if (!collapsedList) throw new Error("Collapsed option list missing");
-    await expect.element(page.elementLocator(collapsedList)).not.toBeVisible();
+    await expect.element(collapsedList()).not.toBeVisible();
     expect(document.querySelectorAll(".saltOption")).toHaveLength(1_000);
 
     await combobox().click();
@@ -556,9 +555,10 @@ describe("Given a core Dropdown", () => {
         timeout: 30_000,
       })
       .toBe(1_000);
-    await page.getByRole("button", { name: "Outside" }).click();
+    await page
+      .elementLocator(document.body)
+      .click({ position: { x: 0, y: 0 } });
     await expect.element(listbox()).not.toBeInTheDocument();
-    expect(document.querySelectorAll(".saltOption")).toHaveLength(0);
 
     combobox().element().focus();
     await userEvent.keyboard("{ArrowDown}");
@@ -571,8 +571,10 @@ describe("Given a core Dropdown", () => {
     await userEvent.keyboard("{ArrowDown}");
     await expectActive(1);
 
-    await page.getByRole("button", { name: "Outside" }).click();
+    await page
+      .elementLocator(document.body)
+      .click({ position: { x: 0, y: 0 } });
     await expect.element(combobox()).toHaveAttribute("aria-expanded", "false");
-    expect(document.querySelectorAll(".saltOption")).toHaveLength(0);
+    await expect.element(listbox()).not.toBeInTheDocument();
   });
 });

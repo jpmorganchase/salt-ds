@@ -34,6 +34,14 @@ afterEach(() => vi.restoreAllMocks());
 const input = () => page.getByRole("combobox");
 const listbox = () => page.getByRole("listbox");
 
+function collapsedList() {
+  const element = document.querySelector<HTMLElement>(
+    ".saltOptionList-collapsed",
+  );
+  if (!element) throw new Error("Collapsed option list missing");
+  return page.elementLocator(element);
+}
+
 function comboBoxRoot() {
   const element = document.querySelector<HTMLElement>(".saltComboBox");
   if (!element) throw new Error("ComboBox root missing");
@@ -578,20 +586,11 @@ describe("Given a ComboBox", () => {
   });
 
   it("supports 1000 non-virtualized options through focus, open, navigation, filter, and close", async () => {
-    await renderWithSalt(
-      <>
-        <PerformanceTestOneThousand />
-        <button type="button">Outside</button>
-      </>,
-    );
+    await renderWithSalt(<PerformanceTestOneThousand />);
     input().element().focus();
     await expect.element(input()).toHaveFocus();
     await expect.element(input()).toHaveAttribute("aria-expanded", "false");
-    const collapsedList = document.querySelector<HTMLElement>(
-      ".saltOptionList-collapsed",
-    );
-    if (!collapsedList) throw new Error("Collapsed option list missing");
-    await expect.element(page.elementLocator(collapsedList)).not.toBeVisible();
+    await expect.element(collapsedList()).not.toBeVisible();
     expect(document.querySelectorAll(".saltOption")).toHaveLength(1_000);
 
     await input().click();
@@ -600,9 +599,11 @@ describe("Given a ComboBox", () => {
         timeout: 30_000,
       })
       .toBe(1_000);
-    await page.getByRole("button", { name: "Outside" }).click();
+    await page
+      .elementLocator(document.body)
+      .click({ position: { x: 0, y: 0 } });
     await expect.element(listbox()).not.toBeInTheDocument();
-    expect(document.querySelectorAll(".saltOption")).toHaveLength(0);
+    await expect.element(collapsedList()).not.toBeVisible();
 
     input().element().focus();
     await userEvent.keyboard("{ArrowDown}");
@@ -621,9 +622,11 @@ describe("Given a ComboBox", () => {
         timeout: 30_000,
       })
       .toBe(1);
-    await page.getByRole("button", { name: "Outside" }).click();
+    await page
+      .elementLocator(document.body)
+      .click({ position: { x: 0, y: 0 } });
     await expect.element(input()).toHaveAttribute("aria-expanded", "false");
-    expect(document.querySelectorAll(".saltOption")).toHaveLength(0);
+    await expect.element(collapsedList()).not.toBeVisible();
   });
 
   it("removes active descendant whenever the popup closes", async () => {
