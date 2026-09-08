@@ -24,7 +24,7 @@ export default {
 
 export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
   <QAContainer height={500} width={1000} cols={1} {...props}>
-    <StackLayout gap={1}>
+    
       <Text>
         Primary <strong>strong</strong> and <small>small</small> text
       </Text>
@@ -88,7 +88,7 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
       <Code>
         Code <strong>strong</strong> and <small>small</small> text
       </Code>
-    </StackLayout>
+    
   </QAContainer>
 );
 
