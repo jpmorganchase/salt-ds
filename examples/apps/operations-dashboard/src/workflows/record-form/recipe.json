@@ -1,6 +1,10 @@
 {
   "id": "operations-dashboard.record-form",
   "title": "Validated incident record form",
+  "intent": {
+    "summary": "Create or adapt an incident record form with host-owned draft, validation, pending submission, failure recovery, retry, and cancellation state.",
+    "aliases": ["incident form", "record form", "validated form"]
+  },
   "owner": "Salt Design System maintainers",
   "readiness": "runnable",
   "source": {

@@ -19,7 +19,10 @@ import {
 
 const args = parseArgs(process.argv.slice(2));
 const batch = String(args.get("--batch") ?? "");
-assert(["06a", "06b", "06c"].includes(batch), "--batch must be 06a, 06b, or 06c");
+assert(
+  ["06a", "06b", "06c"].includes(batch),
+  "--batch must be 06a, 06b, or 06c",
+);
 for (const required of [
   "--baseline",
   "--predecessor-receipt",
@@ -31,7 +34,9 @@ for (const required of [
 
 function insideRepository(value, label, requiredPrefix = null) {
   const resolved = path.resolve(repositoryRoot, String(value));
-  const relative = path.relative(repositoryRoot, resolved).replaceAll("\\", "/");
+  const relative = path
+    .relative(repositoryRoot, resolved)
+    .replaceAll("\\", "/");
   assert(
     relative.length > 0 &&
       !relative.startsWith("../") &&
@@ -40,7 +45,10 @@ function insideRepository(value, label, requiredPrefix = null) {
     `${label} escapes the repository`,
   );
   if (requiredPrefix) {
-    assert(relative.startsWith(requiredPrefix), `${label} must stay in ${requiredPrefix}`);
+    assert(
+      relative.startsWith(requiredPrefix),
+      `${label} must stay in ${requiredPrefix}`,
+    );
   }
   return resolved;
 }
@@ -63,7 +71,10 @@ function compactCanonicalJson(value) {
 
 async function regularBytes(file, label) {
   const value = await stat(file);
-  assert(value.isFile() && !value.isSymbolicLink(), `${label} is not a regular file`);
+  assert(
+    value.isFile() && !value.isSymbolicLink(),
+    `${label} is not a regular file`,
+  );
   return readFile(file);
 }
 
@@ -173,19 +184,25 @@ async function validatePredecessor(file, expectedBatch, baseline) {
       `${expectedBatch} predecessor must be the ${previous} migration receipt`,
     );
   }
-  assert(/^[0-9a-f]{40}$/u.test(receipt.source_commit), "Predecessor source commit is invalid");
+  assert(
+    /^[0-9a-f]{40}$/u.test(receipt.source_commit),
+    "Predecessor source commit is invalid",
+  );
   return { bytes, receipt };
 }
 
 function isIdentitySource(relative) {
   return (
     relative === "package.json" ||
-    relative === "packages/knowledge/src/build/catalogSemanticInputPatterns.json" ||
+    relative ===
+      "packages/knowledge/src/build/catalogSemanticInputPatterns.json" ||
     relative === "site/src/examples/patterns/manifest.json" ||
     relative.startsWith("site/docs/") ||
     relative.startsWith("site/src/examples/") ||
     /^packages\/[^/]+\/(?:stories|src)\//u.test(relative) ||
-    /^packages\/[^/]+\/(?:package\.json|CHANGELOG\.md|README\.md)$/u.test(relative) ||
+    /^packages\/[^/]+\/(?:package\.json|CHANGELOG\.md|README\.md)$/u.test(
+      relative,
+    ) ||
     relative === "tooling/ai/migration-records-v1.json" ||
     relative.startsWith("docs/ai/migrations/records/")
   );
@@ -194,7 +211,12 @@ function isIdentitySource(relative) {
 function classifiedChanges(baseline) {
   const changed = execFileSync(
     "git",
-    ["diff", "--name-only", "--diff-filter=ACDMRT", `${baseline.checkpoint_sha}..HEAD`],
+    [
+      "diff",
+      "--name-only",
+      "--diff-filter=ACDMRT",
+      `${baseline.checkpoint_sha}..HEAD`,
+    ],
     { cwd: repositoryRoot, encoding: "utf8", windowsHide: true },
   )
     .split(/\r?\n/u)
@@ -202,8 +224,15 @@ function classifiedChanges(baseline) {
     .map((entry) => entry.replaceAll("\\", "/"))
     .filter(isIdentitySource)
     .sort();
-  const allowedUnits = batch === "06a" ? ["06a"] : batch === "06b" ? ["06a", "06b"] : ["06a", "06b", "06c"];
-  const allowed = new Set(allowedUnits.flatMap((unit) => baseline.allowed_changes[unit]));
+  const allowedUnits =
+    batch === "06a"
+      ? ["06a"]
+      : batch === "06b"
+        ? ["06a", "06b"]
+        : ["06a", "06b", "06c"];
+  const allowed = new Set(
+    allowedUnits.flatMap((unit) => baseline.allowed_changes[unit]),
+  );
   if (batch === "06c") {
     allowed.add("packages/knowledge/src/build/buildRegistry.ts");
   }
@@ -218,23 +247,42 @@ function classifiedChanges(baseline) {
 async function exampleClosure(example) {
   const entries = [];
   for (const relative of example.files) {
-    const absolute = path.join(repositoryRoot, "site", "src", "examples", ...relative.split("/"));
+    const absolute = path.join(
+      repositoryRoot,
+      "site",
+      "src",
+      "examples",
+      ...relative.split("/"),
+    );
     entries.push({
       path: `site/src/examples/${relative}`,
-      sha256: sha256(await regularBytes(absolute, `Example closure ${relative}`)),
+      sha256: sha256(
+        await regularBytes(absolute, `Example closure ${relative}`),
+      ),
     });
   }
   return sha256(Buffer.from(compactCanonicalJson(entries)));
 }
 
-const baselinePath = insideRepository(args.get("--baseline"), "Migration baseline");
+const baselinePath = insideRepository(
+  args.get("--baseline"),
+  "Migration baseline",
+);
 const predecessorPath = insideRepository(
   args.get("--predecessor-receipt"),
   "Predecessor receipt",
   "dist/",
 );
-const packReportPath = insideRepository(args.get("--pack-report"), "Pack report", "dist/");
-const outputPath = insideRepository(args.get("--output"), "Migration receipt output", "dist/");
+const packReportPath = insideRepository(
+  args.get("--pack-report"),
+  "Pack report",
+  "dist/",
+);
+const outputPath = insideRepository(
+  args.get("--output"),
+  "Migration receipt output",
+  "dist/",
+);
 
 const baselineBytes = await regularBytes(baselinePath, "Migration baseline");
 const baseline = JSON.parse(baselineBytes.toString("utf8"));
@@ -252,15 +300,24 @@ assert(
   "Migration verification requires an exact pre-agent-support pack report",
 );
 assert(
-  packReport.packages.every((entry) =>
-    ["@salt-ds/cli", "@salt-ds/knowledge"].includes(entry.name) &&
-    entry.version === "0.0.0",
+  packReport.packages.every(
+    (entry) =>
+      ["@salt-ds/cli", "@salt-ds/knowledge"].includes(entry.name) &&
+      entry.version === "0.0.0",
   ),
   "Migration pack report must contain private 0.0.0 Knowledge and CLI packages",
 );
 
-const manifestPath = path.join(repositoryRoot, "dist", "salt-ds-knowledge", "manifest.json");
-const manifestBytes = await regularBytes(manifestPath, "Built Knowledge manifest");
+const manifestPath = path.join(
+  repositoryRoot,
+  "dist",
+  "salt-ds-knowledge",
+  "manifest.json",
+);
+const manifestBytes = await regularBytes(
+  manifestPath,
+  "Built Knowledge manifest",
+);
 const manifest = JSON.parse(manifestBytes.toString("utf8"));
 const reported = packReport.knowledge_bundle;
 assert(
@@ -289,27 +346,52 @@ const exampleManifestPath = path.join(
   "patterns",
   "manifest.json",
 );
-const exampleManifestBytes = await regularBytes(exampleManifestPath, "Authored example manifest");
+const exampleManifestBytes = await regularBytes(
+  exampleManifestPath,
+  "Authored example manifest",
+);
 const exampleManifest = JSON.parse(exampleManifestBytes.toString("utf8"));
 assert(
-  exampleManifest.contract === "salt-authored-example-manifest/1" &&
+  (exampleManifest.contract === "salt-authored-example-manifest/1" ||
+    (exampleManifest.contract === "salt-authored-example-manifest/2" &&
+      exampleManifest.workflows?.length === 1)) &&
     exampleManifest.examples.length === 24,
   "Authored example manifest contract is invalid",
 );
 
 const patternRecordSet = await readJson(
-  path.join(repositoryRoot, "dist", "salt-ds-knowledge", "records", "pattern.json"),
+  path.join(
+    repositoryRoot,
+    "dist",
+    "salt-ds-knowledge",
+    "records",
+    "pattern.json",
+  ),
 );
 const pageRecordSet = await readJson(
-  path.join(repositoryRoot, "dist", "salt-ds-knowledge", "records", "page.json"),
+  path.join(
+    repositoryRoot,
+    "dist",
+    "salt-ds-knowledge",
+    "records",
+    "page.json",
+  ),
 );
 const sourceRecordSet = await readJson(
-  path.join(repositoryRoot, "dist", "salt-ds-knowledge", "records", "source.json"),
+  path.join(
+    repositoryRoot,
+    "dist",
+    "salt-ds-knowledge",
+    "records",
+    "source.json",
+  ),
 );
 const patternRecords = new Map(
   patternRecordSet.records.map((record) => [record.key, record]),
 );
-const pageRecords = new Map(pageRecordSet.records.map((record) => [record.key, record]));
+const pageRecords = new Map(
+  pageRecordSet.records.map((record) => [record.key, record]),
+);
 const sourceRecords = new Map(
   sourceRecordSet.records.map((record) => [record.id, record]),
 );
@@ -318,7 +400,8 @@ for (const frozen of baseline.patterns) {
   const record = patternRecords.get(frozen.record_key);
   assert(record, `Missing frozen pattern record ${frozen.record_key}`);
   assert(
-    sha256(Buffer.from(compactCanonicalJson(record))) === frozen.record_sha256 &&
+    sha256(Buffer.from(compactCanonicalJson(record))) ===
+      frozen.record_sha256 &&
       record.data.detail_content_ref.id === frozen.content_sha256,
     `Canonical record/content identity changed for ${frozen.id}`,
   );
@@ -330,7 +413,8 @@ for (const frozen of baseline.patterns) {
     (await exampleClosure(example)) === frozen.example_closure_sha256,
     `Authored example closure changed for ${frozen.id}`,
   );
-  const complete = batch === "06c" || (batch === "06b" && frozen.batch === "06b");
+  const complete =
+    batch === "06c" || (batch === "06b" && frozen.batch === "06b");
   if (!complete) {
     const storyBytes = await regularBytes(
       path.join(repositoryRoot, ...frozen.story_path.split("/")),
@@ -366,25 +450,42 @@ for (const frozen of baseline.patterns) {
 
 const receiptPackageStories = [];
 for (const frozen of baseline.package_stories) {
-  const complete = batch === "06c" || (batch === "06b" && frozen.batch === "06b");
-  const sourcePath = path.join(repositoryRoot, ...frozen.source_path.split("/"));
+  const complete =
+    batch === "06c" || (batch === "06b" && frozen.batch === "06b");
+  const sourcePath = path.join(
+    repositoryRoot,
+    ...frozen.source_path.split("/"),
+  );
   let destinationSha256 = null;
   let retirementReason = null;
   let maintainerFacade = null;
   if (!complete) {
     const sourceBytes = await regularBytes(sourcePath, frozen.source_path);
-    assert(sha256(sourceBytes) === frozen.source_sha256, `${frozen.source_path} changed before its assigned batch`);
+    assert(
+      sha256(sourceBytes) === frozen.source_sha256,
+      `${frozen.source_path} changed before its assigned batch`,
+    );
   } else if (frozen.disposition === "retire") {
-    assert((await maybeRegularBytes(sourcePath)) === null, `${frozen.source_path} must be removed when retired`);
-    retirementReason = "The source only redirected readers to the canonical Salt website and retained no unique supported guidance.";
+    assert(
+      (await maybeRegularBytes(sourcePath)) === null,
+      `${frozen.source_path} must be removed when retired`,
+    );
+    retirementReason =
+      "The source only redirected readers to the canonical Salt website and retained no unique supported guidance.";
   } else {
-    const destinationPath = path.join(repositoryRoot, ...frozen.destination.split("/"));
-    destinationSha256 = sha256(await regularBytes(destinationPath, frozen.destination));
+    const destinationPath = path.join(
+      repositoryRoot,
+      ...frozen.destination.split("/"),
+    );
+    destinationSha256 = sha256(
+      await regularBytes(destinationPath, frozen.destination),
+    );
     const retained = await maybeRegularBytes(sourcePath);
     if (retained) {
       const source = retained.toString("utf8");
       assert(
-        !source.includes("@storybook/addon-docs") && source.includes(frozen.destination),
+        !source.includes("@storybook/addon-docs") &&
+          source.includes(frozen.destination),
         `${frozen.source_path} is not a small maintainer-only facade`,
       );
       maintainerFacade = frozen.source_path;
@@ -407,7 +508,8 @@ for (const frozen of baseline.package_stories) {
 const reviewedPublicDestinations = receiptPackageStories
   .filter(
     (entry) =>
-      entry.status === "complete" && entry.destination?.startsWith("site/docs/"),
+      entry.status === "complete" &&
+      entry.destination?.startsWith("site/docs/"),
   )
   .map((entry) => {
     const destination = entry.destination;
@@ -424,7 +526,9 @@ const reviewedPublicDestinations = receiptPackageStories
       page_record_key: pageRecordKey,
       page_record_sha256: sha256(Buffer.from(compactCanonicalJson(pageRecord))),
       source_record_key: sourceRecord.key,
-      source_record_sha256: sha256(Buffer.from(compactCanonicalJson(sourceRecord))),
+      source_record_sha256: sha256(
+        Buffer.from(compactCanonicalJson(sourceRecord)),
+      ),
     };
   });
 
@@ -482,9 +586,7 @@ if (batch === "06c") {
     predecessor_compiler_digest:
       predecessor.receipt.knowledge_identity.after.compiler_digest,
     current_compiler_digest: afterIdentity.compiler_digest,
-    reviewed_source_paths: [
-      "packages/knowledge/src/build/buildRegistry.ts",
-    ],
+    reviewed_source_paths: ["packages/knowledge/src/build/buildRegistry.ts"],
     retired_story_patterns: retiredStoryPatterns,
     remaining_story_pattern_count: semanticPatterns.filter((entry) =>
       entry.includes("/stories/"),
@@ -498,13 +600,19 @@ const gitStatus = execFileSync(
   ["status", "--porcelain=v1", "--untracked-files=all"],
   { cwd: repositoryRoot, encoding: "utf8", windowsHide: true },
 );
-assert(gitStatus.trim() === "", "Migration sealing requires a clean source commit");
+assert(
+  gitStatus.trim() === "",
+  "Migration sealing requires a clean source commit",
+);
 const sourceCommit = execFileSync("git", ["rev-parse", "HEAD"], {
   cwd: repositoryRoot,
   encoding: "utf8",
   windowsHide: true,
 }).trim();
-assert(/^[0-9a-f]{40}$/u.test(sourceCommit), "Migration source commit is invalid");
+assert(
+  /^[0-9a-f]{40}$/u.test(sourceCommit),
+  "Migration source commit is invalid",
+);
 
 const receipt = {
   $schema:
@@ -538,10 +646,14 @@ const receipt = {
     after: afterIdentity,
     delta: {
       semantic_source_changed:
-        beforeIdentity.semantic_source_digest !== afterIdentity.semantic_source_digest,
-      compiler_changed: beforeIdentity.compiler_digest !== afterIdentity.compiler_digest,
-      semantic_changed: beforeIdentity.semantic_digest !== afterIdentity.semantic_digest,
-      bundle_changed: beforeIdentity.bundle_digest !== afterIdentity.bundle_digest,
+        beforeIdentity.semantic_source_digest !==
+        afterIdentity.semantic_source_digest,
+      compiler_changed:
+        beforeIdentity.compiler_digest !== afterIdentity.compiler_digest,
+      semantic_changed:
+        beforeIdentity.semantic_digest !== afterIdentity.semantic_digest,
+      bundle_changed:
+        beforeIdentity.bundle_digest !== afterIdentity.bundle_digest,
     },
   },
   ...(batch === "06a"

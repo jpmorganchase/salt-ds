@@ -69,7 +69,8 @@
   "publishKnowledgePublicationInventory": "generated/publication-files.json",
   "publishKnowledgeInputPatterns": {
     "semantic": "src/build/catalogSemanticInputPatterns.json",
-    "compiler": "src/build/catalogCompilerInputPatterns.json"
+    "compiler": "src/build/catalogCompilerInputPatterns.json",
+    "publication": "src/build/catalogPublicationInputPatterns.json"
   },
   "publishExtraCopyPaths": [
     {

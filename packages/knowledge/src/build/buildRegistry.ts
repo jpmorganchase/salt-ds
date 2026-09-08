@@ -6,6 +6,10 @@ import {
 import { findSaltRepoRoot } from "../registry/paths.js";
 import { buildTokenPolicyStructuralRoleRulePackBody } from "../tokenPolicyStructuralRoleRules.js";
 import type { BuildRegistryOptions, SaltRegistry } from "../types.js";
+import {
+  type AssembledWorkflowRecipe,
+  assembleWorkflowRecipe,
+} from "./assembleWorkflowRecipe.js";
 import { extractCountrySymbols, extractIcons } from "./buildRegistryAssets.js";
 import { linkDeprecationsToComponents } from "./buildRegistryComponentDeprecations.js";
 import {
@@ -29,18 +33,21 @@ import {
   extractTokens,
   linkTokensToComponents,
 } from "./buildRegistryTokens.js";
+import { buildSelectedGuidance } from "./buildSelectedGuidance.js";
 import {
   assertGuideEditorialOverridesResolved,
   assertPatternEditorialOverridesResolved,
 } from "./catalogEditorialOverrides.js";
 import {
-  CATALOG_INPUT_PATTERNS,
   assertCatalogInputInventoriesStable,
+  CATALOG_INPUT_PATTERNS,
   type CatalogInputInventory,
   createCatalogInputInventory,
+  readCatalogInputFileOrNull,
   validateCatalogInputPatterns,
   withCatalogInputTracking,
 } from "./catalogInputInventory.js";
+import defaultPublicationInputPatterns from "./catalogPublicationInputPatterns.json";
 import { assertComponentAuthoringOverridesResolved } from "./componentAuthoringOverrides.js";
 import { assertDeprecationMigrationOverridesResolved } from "./deprecationMigrationOverrides.js";
 import { assertDeprecationValueMapOverridesResolved } from "./deprecationValueMapOverrides.js";
@@ -51,8 +58,8 @@ import {
   withGeneratorDependencyInventory,
 } from "./generatorDependencyInventory.js";
 import {
-  normalizeKnowledgeRecords,
   type NormalizedKnowledgeRecords,
+  normalizeKnowledgeRecords,
 } from "./normalizeKnowledgeRecords.js";
 
 const REGISTRY_VERSION = "0.1.0";
@@ -178,7 +185,9 @@ export async function buildKnowledgeSource(
   const version = options.version ?? REGISTRY_VERSION;
   const packageVersion = options.packageVersion ?? "0.0.0";
   if (!/^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$/u.test(packageVersion)) {
-    throw new Error("Catalog packageVersion must be an exact semantic version.");
+    throw new Error(
+      "Catalog packageVersion must be an exact semantic version.",
+    );
   }
   const semanticInputPatterns = validateCatalogInputPatterns(
     options.semanticInputPatterns ?? CATALOG_INPUT_PATTERNS,
@@ -188,7 +197,24 @@ export async function buildKnowledgeSource(
     options.compilerInputPatterns ?? ["package.json"],
     "compilerInputPatterns",
   );
-  const inputPatterns = [...semanticInputPatterns, ...compilerInputPatterns];
+  const publicationInputPatterns =
+    options.publicationInputPatterns ?? defaultPublicationInputPatterns;
+  if (!Array.isArray(publicationInputPatterns)) {
+    throw new Error(
+      "publicationInputPatterns must be an array of glob patterns.",
+    );
+  }
+  const validatedPublicationInputPatterns = publicationInputPatterns.length
+    ? validateCatalogInputPatterns(
+        publicationInputPatterns,
+        "publicationInputPatterns",
+      )
+    : [];
+  const inputPatterns = [
+    ...semanticInputPatterns,
+    ...compilerInputPatterns,
+    ...validatedPublicationInputPatterns,
+  ];
   const excludedPackageNames = new Set(options.excludedPackageNames ?? []);
   const inventory =
     options.inputInventory ??
@@ -233,11 +259,7 @@ export async function buildKnowledgeSource(
             extractPatterns(sourceRoot),
             extractGuides(sourceRoot, components),
             extractTokens(sourceRoot, tokenPolicySources),
-            extractDeprecations(
-              sourceRoot,
-              packages,
-              excludedPackageNames,
-            ),
+            extractDeprecations(sourceRoot, packages, excludedPackageNames),
           ]);
         assertPatternEditorialOverridesResolved(
           patterns
@@ -340,12 +362,97 @@ export async function buildKnowledgeSource(
           examples,
           token_policy_structural_role_rule_pack: null,
         };
+        const registrationSource = await readCatalogInputFileOrNull(
+          path.join(sourceRoot, "site/src/examples/patterns/manifest.json"),
+          "utf8",
+        );
+        const workflowRecipes: AssembledWorkflowRecipe[] = [];
+        if (registrationSource !== null) {
+          const registration = JSON.parse(registrationSource);
+          if (registration.contract === "salt-authored-example-manifest/2") {
+            if (
+              !Array.isArray(registration.workflows) ||
+              registration.workflows.length !== 1
+            )
+              throw new Error(
+                "The current example manifest must register exactly the selected record-form workflow.",
+              );
+            const workflow = registration.workflows[0];
+            if (
+              workflow.id !== "operations-dashboard.record-form" ||
+              workflow.recipe !==
+                "examples/apps/operations-dashboard/src/workflows/record-form/recipe.json"
+            )
+              throw new Error(
+                "The current example manifest registers an unsupported workflow source.",
+              );
+            const [semanticInputInventory, publicationInputInventory] =
+              await Promise.all([
+                createCatalogInputInventory(sourceRoot, semanticInputPatterns),
+                createCatalogInputInventory(
+                  sourceRoot,
+                  validatedPublicationInputPatterns,
+                ),
+              ]);
+            workflowRecipes.push(
+              await assembleWorkflowRecipe({
+                sourceRoot,
+                registration: { id: workflow.id, recipePath: workflow.recipe },
+                semanticInputInventory,
+                publicationInputInventory,
+                compatibility: {
+                  packages: registry.packages.map((entry) => ({
+                    name: entry.name,
+                    tested_version: entry.version,
+                  })),
+                },
+              }),
+            );
+          } else {
+            throw new Error(
+              "The authored example manifest contract is unsupported.",
+            );
+          }
+        }
+        const selectedGuidance = await buildSelectedGuidance({
+          sourceRoot,
+          workflow: workflowRecipes[0]
+            ? {
+                id: workflowRecipes[0].semanticMetadata.id,
+                title: workflowRecipes[0].semanticMetadata.title,
+                manifestPath: workflowRecipes[0].semanticMetadata.manifestPath,
+                recipeSourcePath:
+                  workflowRecipes[0].recipeArtifact.source.recipe,
+                semanticSourcePaths: [
+                  ...workflowRecipes[0].semanticMetadata.sourcePaths,
+                ],
+                minimumPackageNames:
+                  workflowRecipes[0].semanticMetadata.packageNames.filter(
+                    (name) => name.startsWith("@salt-ds/"),
+                  ),
+              }
+            : null,
+        });
+        for (const workflow of workflowRecipes) {
+          if (
+            selectedGuidance.some(
+              (guidance) => guidance.document.diagnostics.length > 0,
+            )
+          ) {
+            workflow.recipeArtifact.readiness.delivered = "contextual";
+            workflow.indexEntry.status = "contextual";
+            workflow.indexEntry.limitation +=
+              " Selected canonical guidance contains unsupported content; see the document diagnostics.";
+          }
+        }
         return {
           registry,
           normalized: normalizeKnowledgeRecords({
             registry,
             inventory,
             tokenPolicyStructuralRoleRulePackBody,
+            selectedGuidance,
+            workflowRecipes,
           }),
         };
       },

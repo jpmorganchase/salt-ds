@@ -2,8 +2,6 @@ import fs from "node:fs";
 import fsPromises from "node:fs/promises";
 import path from "node:path";
 import fg from "fast-glob";
-import compilerInputPatterns from "./catalogCompilerInputPatterns.json";
-import semanticInputPatterns from "./catalogSemanticInputPatterns.json";
 import { isPortableRepositoryPath } from "../catalog/catalogPortablePath.js";
 import {
   canonicalJson,
@@ -11,6 +9,9 @@ import {
   sha256Bytes,
 } from "../catalog/catalogSerialization.js";
 import { toPosixPath } from "../registry/paths.js";
+import compilerInputPatterns from "./catalogCompilerInputPatterns.json";
+import publicationInputPatterns from "./catalogPublicationInputPatterns.json";
+import semanticInputPatterns from "./catalogSemanticInputPatterns.json";
 
 export interface CatalogInputInventoryEntry {
   path: string;
@@ -23,14 +24,15 @@ export interface CatalogInputInventory {
   digest: string;
   absolutePaths: ReadonlySet<string>;
   expectedByAbsolutePath: ReadonlyMap<string, CatalogInputInventoryEntry>;
-  readonly rawExpectedByPath?: ReadonlyMap<
-    string,
-    CatalogInputInventoryEntry
-  >;
+  readonly rawExpectedByPath?: ReadonlyMap<string, CatalogInputInventoryEntry>;
 }
 
 export const CATALOG_INPUT_PATTERNS = Object.freeze([
-  ...new Set([...semanticInputPatterns, ...compilerInputPatterns]),
+  ...new Set([
+    ...semanticInputPatterns,
+    ...compilerInputPatterns,
+    ...publicationInputPatterns,
+  ]),
 ]);
 
 export function validateCatalogInputPatterns(

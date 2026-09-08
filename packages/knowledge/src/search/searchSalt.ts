@@ -1,4 +1,11 @@
 import { resolveKnowledgeCompatibility } from "../compatibility/resolveCompatibility.js";
+import {
+  assembleCanonicalDocument,
+  type CanonicalDocumentSection,
+  type CanonicalDocumentSelection,
+  canonicalDocumentReference,
+  renderCanonicalDocument,
+} from "../documents/assembleCanonicalDocument.js";
 import { canonicalJson } from "../manifest/canonicalJson.js";
 import { sha256Digest } from "../manifest/digestCodec.js";
 import type {
@@ -556,8 +563,28 @@ export interface KnowledgeContextResult {
   context_digest: string;
   matches: SearchSaltRecordMatch[];
   excluded_package_families: SearchSaltRecordsResult["excluded_package_families"];
+  /** Present only when verified canonical guidance was relevant to the query. */
+  canonical_documents?: KnowledgeContextCanonicalDocument[];
+  /** Omitted for legacy record-only context where no canonical guide exists. */
+  answer_status?: "applicable" | "contextual" | "no_applicable_evidence";
+  limitations?: string[];
   truncated: boolean;
   utf8_bytes: number;
+}
+
+export interface KnowledgeContextCanonicalDocument {
+  contract: "salt-canonical-document/1";
+  reference: string;
+  title: string;
+  source_url: string;
+  source_records: string[];
+  content_identity: string;
+  recipe_identity?: CanonicalDocumentSelection["recipe_identity"];
+  readiness: CanonicalDocumentSelection["readiness"];
+  sections: Array<Omit<CanonicalDocumentSection, "search_text">>;
+  files?: CanonicalDocumentSelection["files"];
+  limitations?: string[];
+  omissions: CanonicalDocumentSelection["omissions"];
 }
 
 export const MIN_KNOWLEDGE_CONTEXT_UTF8_BYTES = 512;
@@ -589,6 +616,478 @@ function contextBudget(input: { max_utf8_bytes?: number }): number {
   return Math.min(requested, MAX_KNOWLEDGE_CONTEXT_UTF8_BYTES);
 }
 
+type CanonicalContextIntent = "general" | "workflow" | "adaptation";
+
+interface CanonicalContextCandidates {
+  documents: KnowledgeContextCanonicalDocument[];
+  had_canonical_document: boolean;
+  had_incompatible_canonical_document: boolean;
+  intent: CanonicalContextIntent;
+  /** A compact variant withheld canonical sections or complete-file metadata. */
+  truncated?: boolean;
+  omitted_document_reference?: string;
+}
+
+const WORKFLOW_INTENT_WORDS = new Set([
+  "add",
+  "build",
+  "create",
+  "make",
+  "new",
+  "start",
+]);
+const ADAPTATION_INTENT_WORDS = new Set([
+  "adapt",
+  "application",
+  "existing",
+  "integrate",
+  "integration",
+  "migrate",
+  "reuse",
+]);
+const API_INTENT_WORDS = new Set([
+  "api",
+  "argument",
+  "attribute",
+  "option",
+  "parameter",
+  "prop",
+  "props",
+]);
+const CONTEXT_QUESTION_WORDS = new Set([
+  "can",
+  "could",
+  "do",
+  "does",
+  "i",
+  "is",
+  "it",
+  "my",
+  "please",
+  "set",
+  "should",
+  "this",
+  "use",
+  "want",
+  "what",
+  "which",
+  "will",
+]);
+
+function canonicalContextIntent(
+  queryWords: readonly string[],
+): CanonicalContextIntent {
+  if (queryWords.some((word) => ADAPTATION_INTENT_WORDS.has(word))) {
+    return "adaptation";
+  }
+  if (queryWords.some((word) => WORKFLOW_INTENT_WORDS.has(word))) {
+    return "workflow";
+  }
+  return "general";
+}
+
+function sectionWords(section: CanonicalDocumentSection): Set<string> {
+  return new Set(allWords(`${section.title}\n${section.markdown}`));
+}
+
+function coversAny(
+  section: CanonicalDocumentSection,
+  words: readonly string[],
+): boolean {
+  const covered = sectionWords(section);
+  return words.some((word) => covered.has(word));
+}
+
+function topicWordsForDocument(
+  document: CanonicalDocumentSelection,
+  queryWords: readonly string[],
+): string[] {
+  const titleWords = new Set(allWords(document.title));
+  const intentWords = new Set([
+    ...WORKFLOW_INTENT_WORDS,
+    ...ADAPTATION_INTENT_WORDS,
+    ...API_INTENT_WORDS,
+  ]);
+  const contentWords = queryWords.filter(
+    (word) =>
+      !STOP_WORDS.has(word) &&
+      !CONTEXT_QUESTION_WORDS.has(word) &&
+      !intentWords.has(word),
+  );
+  const novelWords = contentWords.filter((word) => !titleWords.has(word));
+  // A title-only request is still eligible only when its content word occurs
+  // in selected evidence. Novel terms take precedence so a weak "create"
+  // ranking hit cannot pull in an unrelated workflow.
+  if (novelWords.length > 0) return novelWords;
+  return document.sections.some(
+    (section) =>
+      section.purpose === "prerequisites" ||
+      section.purpose === "implementation" ||
+      section.purpose === "adaptation" ||
+      section.purpose === "acceptance",
+  )
+    ? contentWords
+    : [];
+}
+
+function hasTopicCoverage(
+  document: CanonicalDocumentSelection,
+  topicWords: readonly string[],
+): boolean {
+  return (
+    topicWords.length > 0 &&
+    document.sections.some((section) => coversAny(section, topicWords))
+  );
+}
+
+function isNarrowCanonicalQuestion(
+  document: CanonicalDocumentSelection,
+  queryWords: readonly string[],
+): boolean {
+  if (queryWords.some((word) => API_INTENT_WORDS.has(word))) return true;
+  const titleWords = new Set(allWords(document.title));
+  if (
+    queryWords.length > 1 &&
+    queryWords.every((word) => titleWords.has(word))
+  ) {
+    return true;
+  }
+  return document.sections.some(
+    (section) =>
+      section.purpose === "guidance" &&
+      queryWords.some((word) => allWords(section.title).includes(word)),
+  );
+}
+
+function selectedCanonicalSections(
+  document: CanonicalDocumentSelection,
+  queryWords: readonly string[],
+  intent: CanonicalContextIntent,
+): CanonicalDocumentSection[] {
+  const selected = new Set<CanonicalDocumentSection>();
+  const guidance = document.sections.filter(
+    (section) => section.purpose === "guidance",
+  );
+  const topicWords = topicWordsForDocument(document, queryWords);
+  const topicCovered = hasTopicCoverage(document, topicWords);
+  const narrow = isNarrowCanonicalQuestion(document, queryWords);
+
+  if (intent === "workflow" || intent === "adaptation") {
+    if (!topicCovered) return [];
+    for (const section of document.sections) {
+      if (
+        section.purpose === "prerequisites" ||
+        section.purpose === "implementation" ||
+        section.purpose === "adaptation" ||
+        section.purpose === "acceptance"
+      ) {
+        selected.add(section);
+      }
+    }
+    for (const section of guidance) {
+      if (coversAny(section, topicWords)) selected.add(section);
+    }
+  } else if (narrow) {
+    for (const section of guidance) {
+      if (coversAny(section, queryWords)) selected.add(section);
+    }
+    for (const section of document.sections) {
+      if (
+        section.purpose === "api" &&
+        (queryWords.some((word) => API_INTENT_WORDS.has(word)) ||
+          coversAny(section, queryWords))
+      ) {
+        selected.add(section);
+      }
+    }
+  } else if (topicCovered) {
+    for (const section of guidance) {
+      if (coversAny(section, topicWords)) selected.add(section);
+    }
+  }
+
+  return document.sections.filter((section) => selected.has(section));
+}
+
+function toCanonicalContextDocument(
+  document: CanonicalDocumentSelection,
+  sections: readonly CanonicalDocumentSection[],
+): KnowledgeContextCanonicalDocument {
+  const selected = new Set(sections);
+  const omissions = [
+    ...document.omissions,
+    ...document.sections
+      .filter((section) => !selected.has(section))
+      .map((section) => ({
+        reference: section.reference,
+        title: section.title,
+        reason: "Outside the selected query evidence.",
+      })),
+  ];
+  return {
+    contract: document.contract,
+    reference: document.reference,
+    title: document.title,
+    source_url: document.source_url,
+    source_records: [...document.source_records],
+    content_identity: document.content_identity,
+    recipe_identity: document.recipe_identity,
+    readiness: document.readiness,
+    sections: sections.map(
+      ({ search_text: _searchText, ...section }) => section,
+    ),
+    files: document.files.map((file) => ({ ...file })),
+    limitations: [...document.limitations],
+    omissions,
+  };
+}
+
+function canonicalSelectionForContext(
+  document: KnowledgeContextCanonicalDocument,
+): CanonicalDocumentSelection {
+  return {
+    ...document,
+    recipe_identity: document.recipe_identity ?? null,
+    files: document.files ?? [],
+    limitations: document.limitations ?? [],
+    sections: document.sections.map((section) => ({
+      ...section,
+      search_text: "",
+    })),
+  };
+}
+
+function canonicalContextCandidates(
+  store: KnowledgeRecordStore,
+  matches: readonly SearchSaltRecordMatch[],
+  query: string,
+  installedVersions?: Readonly<Record<string, string | null | undefined>>,
+): CanonicalContextCandidates {
+  const queryWords = meaningfulWords(query);
+  const intent = canonicalContextIntent(queryWords);
+  const guides = new Set<string>();
+  const documents: KnowledgeContextCanonicalDocument[] = [];
+  let hadCanonicalDocument = false;
+  let hadIncompatibleCanonicalDocument = false;
+  for (const match of matches) {
+    const guide = canonicalDocumentReference(store, match.reference);
+    if (!guide || guides.has(guide.id)) continue;
+    guides.add(guide.id);
+    if (
+      !resolveKnowledgeRecordCompatibility(store, guide, installedVersions)
+        .included
+    ) {
+      hadIncompatibleCanonicalDocument = true;
+      continue;
+    }
+    const document = assembleCanonicalDocument(store, match.reference);
+    if (!document) continue;
+    hadCanonicalDocument = true;
+    const sections = selectedCanonicalSections(document, queryWords, intent);
+    if (sections.length > 0) {
+      documents.push(toCanonicalContextDocument(document, sections));
+    }
+  }
+  return {
+    documents,
+    had_canonical_document: hadCanonicalDocument,
+    had_incompatible_canonical_document: hadIncompatibleCanonicalDocument,
+    intent,
+  };
+}
+
+function contextSectionPriority(
+  section: KnowledgeContextCanonicalDocument["sections"][number],
+  intent: CanonicalContextIntent,
+): number {
+  if (intent === "adaptation") {
+    if (section.purpose === "adaptation") return 100;
+    if (section.purpose === "prerequisites") return 95;
+    if (section.purpose === "acceptance") return 90;
+    if (section.purpose === "implementation") return 85;
+  }
+  if (intent === "workflow") {
+    if (section.purpose === "prerequisites") return 100;
+    if (section.purpose === "adaptation") return 95;
+    if (section.purpose === "acceptance") return 90;
+    if (section.purpose === "implementation") return 85;
+  }
+  if (section.purpose === "guidance" || section.purpose === "api") return 80;
+  return 70;
+}
+
+function compactCanonicalDocument(
+  document: KnowledgeContextCanonicalDocument,
+  sectionCount: number,
+  intent: CanonicalContextIntent,
+  selectedSectionId?: string,
+): KnowledgeContextCanonicalDocument {
+  const rankedSections = [...document.sections].sort(
+    (left, right) =>
+      contextSectionPriority(right, intent) -
+        contextSectionPriority(left, intent) ||
+      document.sections.indexOf(left) - document.sections.indexOf(right),
+  );
+  const selected = new Set(
+    selectedSectionId
+      ? rankedSections.filter((section) => section.id === selectedSectionId)
+      : rankedSections.slice(0, sectionCount),
+  );
+  const sections = document.sections.filter((section) => selected.has(section));
+  const unselected = rankedSections.find((section) => !selected.has(section));
+  const nextFile =
+    document.files?.find((file) => file.path.endsWith("RecordForm.tsx")) ??
+    document.files?.find((file) => file.role === "reusable") ??
+    document.files?.[0];
+  const omissions = [
+    ...(unselected
+      ? [
+          {
+            reference: unselected.reference,
+            title: unselected.title,
+            reason:
+              "Outside the bounded context; resolve this section for further detail.",
+          },
+        ]
+      : []),
+    ...(nextFile
+      ? [
+          {
+            reference: nextFile.reference,
+            title: nextFile.path,
+            reason:
+              "Complete file available separately; resolve this file without truncation.",
+          },
+        ]
+      : []),
+  ];
+  return {
+    contract: document.contract,
+    reference: document.reference,
+    title: document.title,
+    source_url: document.source_url,
+    source_records: document.source_records,
+    content_identity: document.content_identity,
+    readiness: document.readiness,
+    sections,
+    omissions,
+  };
+}
+
+function canonicalContextVariants(
+  candidates: CanonicalContextCandidates,
+): CanonicalContextCandidates[] {
+  if (candidates.documents.length === 0) return [candidates];
+  const variants = [candidates];
+  for (
+    let documentCount = candidates.documents.length;
+    documentCount >= 1;
+    documentCount -= 1
+  ) {
+    const documents = candidates.documents.slice(0, documentCount);
+    const maximumSections = Math.max(
+      ...documents.map((document) => document.sections.length),
+    );
+    for (
+      let sectionCount = maximumSections;
+      sectionCount >= 1;
+      sectionCount -= 1
+    ) {
+      variants.push({
+        ...candidates,
+        truncated: true,
+        documents: documents.map((document) =>
+          compactCanonicalDocument(document, sectionCount, candidates.intent),
+        ),
+      });
+    }
+    // When the highest-priority whole section cannot fit, preserve a smaller
+    // authored section before giving up canonical evidence. The first omitted
+    // reference still points to the highest-priority next step.
+    for (const document of documents) {
+      const rankedSections = [...document.sections].sort(
+        (left, right) =>
+          contextSectionPriority(right, candidates.intent) -
+            contextSectionPriority(left, candidates.intent) ||
+          document.sections.indexOf(left) - document.sections.indexOf(right),
+      );
+      for (const section of rankedSections) {
+        variants.push({
+          ...candidates,
+          truncated: true,
+          documents: [
+            compactCanonicalDocument(
+              document,
+              1,
+              candidates.intent,
+              section.id,
+            ),
+          ],
+        });
+      }
+    }
+  }
+  variants.push({
+    ...candidates,
+    documents: [],
+    truncated: true,
+    omitted_document_reference: candidates.documents[0].reference,
+  });
+  return variants;
+}
+
+function contextualResultFields(
+  candidates: CanonicalContextCandidates,
+  matchCount: number,
+): Pick<
+  KnowledgeContextResult,
+  "canonical_documents" | "answer_status" | "limitations"
+> {
+  if (candidates.documents.length > 0) {
+    const contextual = candidates.documents.some(
+      (document) => document.readiness === "contextual",
+    );
+    return {
+      canonical_documents: candidates.documents,
+      answer_status: contextual ? "contextual" : "applicable",
+      limitations: contextual
+        ? ["Selected canonical evidence remains contextual."]
+        : undefined,
+    };
+  }
+  if (candidates.omitted_document_reference) {
+    return {
+      answer_status: "contextual",
+      limitations: [
+        `Canonical guidance was omitted to fit the output budget; resolve ${candidates.omitted_document_reference} for the complete document.`,
+      ],
+    };
+  }
+  if (candidates.had_canonical_document) {
+    return {
+      answer_status: "contextual",
+      limitations: [
+        "The focused canonical guidance does not cover this neutral query.",
+      ],
+    };
+  }
+  if (candidates.had_incompatible_canonical_document) {
+    return {
+      answer_status: "contextual",
+      limitations: [
+        "Attached canonical guidance is incompatible with the installed package vector.",
+      ],
+    };
+  }
+  if (matchCount === 0) return { answer_status: "no_applicable_evidence" };
+  return {
+    answer_status: "contextual",
+    limitations: [
+      "Matched records are contextual references; no verified canonical guidance is available for this query.",
+    ],
+  };
+}
+
 function finalizeKnowledgeContext(
   digestInput: KnowledgeContextDigestInput,
 ): KnowledgeContextResult {
@@ -601,6 +1100,15 @@ function finalizeKnowledgeContext(
     context_digest: contextDigest,
     matches: digestInput.matches,
     excluded_package_families: digestInput.excluded_package_families,
+    ...(digestInput.canonical_documents
+      ? { canonical_documents: digestInput.canonical_documents }
+      : {}),
+    ...(digestInput.answer_status
+      ? { answer_status: digestInput.answer_status }
+      : {}),
+    ...(digestInput.limitations
+      ? { limitations: digestInput.limitations }
+      : {}),
     truncated: digestInput.truncated,
     utf8_bytes: utf8Bytes,
   });
@@ -623,7 +1131,7 @@ function renderFinalKnowledgeContext(result: KnowledgeContextResult): string {
     mode: "inline",
   })}\nTruncated: ${
     result.truncated
-      ? "yes; lower-ranked matches were removed to fit the output budget"
+      ? "yes; evidence was omitted to fit the output budget"
       : "no"
   }\n`;
   for (const match of result.matches) {
@@ -644,6 +1152,27 @@ function renderFinalKnowledgeContext(result: KnowledgeContextResult): string {
     )}${sources}; bundle ${renderUntrustedMarkdownEvidence(
       match.citation.bundle_digest,
       { mode: "inline" },
+    )}\n`;
+  }
+  if (result.answer_status) {
+    output += `\nAnswer status: ${renderUntrustedMarkdownEvidence(
+      result.answer_status,
+      { mode: "inline" },
+    )}\n`;
+  }
+  if (result.limitations?.length) {
+    output += `\n## Context limits\n\n${result.limitations
+      .map(
+        (limitation) =>
+          `- ${renderUntrustedMarkdownEvidence(limitation, {
+            mode: "inline",
+          })}`,
+      )
+      .join("\n")}\n`;
+  }
+  for (const document of result.canonical_documents ?? []) {
+    output += `\n${renderCanonicalDocument(
+      canonicalSelectionForContext(document),
     )}\n`;
   }
   return output;
@@ -670,16 +1199,37 @@ export function buildKnowledgeContext(
     matchCount >= 0;
     matchCount -= 1
   ) {
-    const result = finalizeKnowledgeContext({
-      ...base,
-      matches: search.matches.slice(0, matchCount),
-      truncated: matchCount < search.matches.length,
-    });
-    if (
-      result.utf8_bytes + 1 <= maxBytes &&
-      Buffer.byteLength(renderFinalKnowledgeContext(result), "utf8") <= maxBytes
-    ) {
-      return result;
+    const candidates = canonicalContextCandidates(
+      store,
+      search.matches.slice(0, matchCount),
+      search.query,
+      input.installed_versions,
+    );
+    for (const candidate of canonicalContextVariants(candidates)) {
+      const matchVariants = [
+        {
+          matches: search.matches.slice(0, matchCount),
+          truncated:
+            matchCount < search.matches.length || candidate.truncated === true,
+        },
+        ...(candidate.documents.length > 0 && matchCount > 0
+          ? [{ matches: [], truncated: true }]
+          : []),
+      ];
+      for (const selectedMatches of matchVariants) {
+        const result = finalizeKnowledgeContext({
+          ...base,
+          ...selectedMatches,
+          ...contextualResultFields(candidate, selectedMatches.matches.length),
+        });
+        if (
+          result.utf8_bytes + 1 <= maxBytes &&
+          Buffer.byteLength(renderFinalKnowledgeContext(result), "utf8") <=
+            maxBytes
+        ) {
+          return result;
+        }
+      }
     }
   }
   throw new KnowledgeContextInputError(KNOWLEDGE_CONTEXT_INPUT_ERROR);

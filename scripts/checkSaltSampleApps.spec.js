@@ -1,9 +1,12 @@
+import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 
 import Ajv2020 from "ajv/dist/2020.js";
 import { describe, expect, it } from "vitest";
 
 import {
+  assertPackedWorkflowManifestMatchesSource,
+  readPackedWorkflowRecipe,
   selectSampleAppNames,
   unavailableAnalysis,
   verifyCurrentCliCommands,
@@ -189,6 +192,234 @@ describe("current sample-app selection", () => {
     ]);
     expect(() => selectSampleAppNames("new-dashboard")).toThrow(
       /Unknown sample app/u,
+    );
+  });
+});
+
+describe("packed workflow reconstruction input", () => {
+  const workflowId = "operations-dashboard.record-form";
+  const recipePath = `examples/workflows/${workflowId}/recipe.json`;
+  const filePaths = [
+    "index.html",
+    "package.json",
+    "src/OperationsDashboard.tsx",
+    "src/dashboard.css",
+    "src/main.tsx",
+    "src/vite-env.d.ts",
+    "src/workflows/record-form/RecordForm.css",
+    "src/workflows/record-form/RecordForm.tsx",
+    "src/workflows/record-form/localDemoAdapter.ts",
+    "src/workflows/record-form/types.ts",
+    "tsconfig.json",
+    "vite.config.ts",
+  ];
+
+  it("accepts canonical packed manifest bytes from a CRLF repository source", () => {
+    const packed = Buffer.from(
+      '{\n  "name": "salt-operations-dashboard",\n  "private": true\n}\n',
+    );
+    const source = Buffer.from(
+      packed.toString("utf8").replaceAll("\n", "\r\n"),
+    );
+
+    expect(() =>
+      assertPackedWorkflowManifestMatchesSource(packed, source),
+    ).not.toThrow();
+  });
+
+  it("rejects a packed manifest whose content differs from the source", () => {
+    const source = Buffer.from(
+      '{\r\n  "name": "salt-operations-dashboard",\r\n  "private": true\r\n}\r\n',
+    );
+    const packed = Buffer.from(
+      '{\n  "name": "salt-operations-dashboard",\n  "private": false\n}\n',
+    );
+
+    expect(() =>
+      assertPackedWorkflowManifestMatchesSource(packed, source),
+    ).toThrow(/differs from the declared operations dashboard manifest/u);
+  });
+
+  function sha256(value) {
+    return `sha256:${createHash("sha256").update(value).digest("hex")}`;
+  }
+
+  function canonical(value) {
+    if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
+    if (value && typeof value === "object") {
+      return `{${Object.entries(value)
+        .sort(([left], [right]) => left.localeCompare(right))
+        .map(([key, entry]) => `${JSON.stringify(key)}:${canonical(entry)}`)
+        .join(",")}}`;
+    }
+    return JSON.stringify(value);
+  }
+
+  function fixture() {
+    const packageBytes = Buffer.from(
+      `${JSON.stringify(
+        {
+          name: "salt-operations-dashboard",
+          private: true,
+          type: "module",
+          scripts: { typecheck: "tsc --noEmit", build: "vite build" },
+          dependencies: {
+            "@salt-ds/core": "1.0.0",
+            "@salt-ds/theme": "1.0.0",
+            react: "18.3.1",
+          },
+          devDependencies: { vite: "7.1.0" },
+        },
+        null,
+        2,
+      )}\n`,
+    );
+    const files = filePaths.map((filePath) => {
+      const bytes =
+        filePath === "package.json"
+          ? packageBytes
+          : Buffer.from(`packed ${filePath}\n`);
+      const role = filePath.startsWith("src/workflows/record-form/")
+        ? filePath.endsWith("localDemoAdapter.ts")
+          ? "demo-only"
+          : "reusable"
+        : filePath === "package.json"
+          ? "setup"
+          : "demo-only";
+      return {
+        id: `workflow-file:${workflowId}:${filePath}`,
+        path: filePath,
+        artifact_path: `examples/workflows/${workflowId}/files/${filePath}`,
+        role,
+        sha256: sha256(bytes),
+        bytes: bytes.byteLength,
+        value: bytes,
+      };
+    });
+    const recipe = {
+      contract: "salt-workflow-recipe/1",
+      schema_version: "1.0.0",
+      id: workflowId,
+      source: {
+        application: "examples/apps/operations-dashboard",
+        recipe:
+          "examples/apps/operations-dashboard/src/workflows/record-form/recipe.json",
+      },
+      files: files.map(({ value, ...file }) => file),
+      source_identity: {
+        content_identity: sha256(
+          Buffer.from(
+            canonical(
+              files.map(({ path, sha256: digest, bytes }) => ({
+                path,
+                sha256: digest,
+                bytes,
+              })),
+            ),
+          ),
+        ),
+      },
+      support: {
+        reusable_packages: [
+          { name: "@salt-ds/core", version: "1.0.0", role: "reusable" },
+          { name: "@salt-ds/theme", version: "1.0.0", role: "reusable" },
+        ],
+        demo_packages: [],
+        external_dependencies: [
+          { name: "react", version: "18.3.1", role: "reusable" },
+        ],
+        theme_css: ["@salt-ds/theme/css/global.css"],
+      },
+    };
+    const artifacts = new Map([
+      [recipePath, Buffer.from(JSON.stringify(recipe))],
+      ...files.map((file) => [file.artifact_path, file.value]),
+    ]);
+    const calls = [];
+    return {
+      artifacts,
+      calls,
+      store: {
+        manifest: {
+          compatibility: {
+            packages: [
+              { name: "@salt-ds/core", tested_version: "1.0.0" },
+              { name: "@salt-ds/theme", tested_version: "1.0.0" },
+            ],
+          },
+        },
+        getRecord: (family, id) =>
+          family === "guide" && id === workflowId
+            ? { id, detail_content_ref: { id: "content.forms.detail" } }
+            : null,
+        getContentValue: () => ({ recipe_manifest: recipePath }),
+        readArtifact: (artifactPath) => {
+          calls.push(artifactPath);
+          const value = artifacts.get(artifactPath);
+          if (!value)
+            throw new Error(`Knowledge artifact is absent: ${artifactPath}`);
+          return value;
+        },
+      },
+    };
+  }
+
+  it("uses only installed Knowledge artifacts and never reads a repository app", () => {
+    const { store, calls } = fixture();
+    const workflow = readPackedWorkflowRecipe(store);
+    expect(workflow.id).toBe(workflowId);
+    expect(workflow.files.map((file) => file.path)).toEqual(
+      expect.arrayContaining(filePaths),
+    );
+    expect(calls).toContain(recipePath);
+    expect(calls).not.toContain(
+      "examples/apps/operations-dashboard/package.json",
+    );
+    expect(calls.every((path) => path.startsWith("examples/workflows/"))).toBe(
+      true,
+    );
+  });
+
+  it("rejects a missing, tampered, redirected, or extra recipe artifact", () => {
+    const missing = fixture();
+    missing.artifacts.delete(
+      `examples/workflows/${workflowId}/files/src/main.tsx`,
+    );
+    expect(() => readPackedWorkflowRecipe(missing.store)).toThrow(
+      /artifact is absent/u,
+    );
+
+    const tampered = fixture();
+    tampered.artifacts.set(
+      `examples/workflows/${workflowId}/files/src/main.tsx`,
+      Buffer.from("x".repeat("packed src/main.tsx\n".length)),
+    );
+    expect(() => readPackedWorkflowRecipe(tampered.store)).toThrow(/digest/u);
+
+    const redirected = fixture();
+    const recipe = JSON.parse(
+      redirected.artifacts.get(recipePath).toString("utf8"),
+    );
+    recipe.files[0].artifact_path =
+      "examples/workflows/elsewhere/files/index.html";
+    redirected.artifacts.set(recipePath, Buffer.from(JSON.stringify(recipe)));
+    expect(() => readPackedWorkflowRecipe(redirected.store)).toThrow(
+      /artifact path is inconsistent/u,
+    );
+
+    const extra = fixture();
+    const extraRecipe = JSON.parse(
+      extra.artifacts.get(recipePath).toString("utf8"),
+    );
+    extraRecipe.files.push({
+      ...extraRecipe.files[0],
+      id: `workflow-file:${workflowId}:README.md`,
+      path: "README.md",
+      artifact_path: `examples/workflows/${workflowId}/files/README.md`,
+    });
+    extra.artifacts.set(recipePath, Buffer.from(JSON.stringify(extraRecipe)));
+    expect(() => readPackedWorkflowRecipe(extra.store)).toThrow(
+      /extra public files/u,
     );
   });
 });

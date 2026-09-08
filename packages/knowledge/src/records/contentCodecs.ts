@@ -3,6 +3,7 @@ import { isSafeAbsoluteHttpsUrl } from "../catalog/catalogHttpsUrl.js";
 import { isPortableRepositoryPath } from "../catalog/catalogPortablePath.js";
 import { PUBLIC_PACKAGE_ENTRYPOINT_PATTERN } from "../catalog/catalogPublicEntrypoint.js";
 import { isCanonicalSiteRoute } from "../catalog/catalogSiteRoute.js";
+import { documentModelCodec } from "../documents/documentSchema.js";
 
 const SHA256_CODEC = z
   .string()
@@ -71,6 +72,7 @@ export const CATALOG_CONTENT_CODEC_NAMES = [
   "country_symbol_detail",
   "pattern_detail",
   "guide_detail",
+  "document_detail",
   "guide_snippet_code",
   "deprecation_detail",
   "page_detail",
@@ -384,6 +386,27 @@ const guideDetailCodec = z
         overview: DOCUMENTATION_LOCATOR_CODEC.nullable(),
       })
       .strict(),
+  })
+  .strict();
+
+const documentDetailCodec = z
+  .object({
+    document: documentModelCodec,
+    recipe_manifest: PORTABLE_REPOSITORY_PATH_CODEC.nullable(),
+    source_refs: z.array(sourceReferenceCodec).min(1),
+    component_refs: z.array(referenceFor("component")),
+    files: z.array(
+      z
+        .object({
+          source_path: PORTABLE_REPOSITORY_PATH_CODEC,
+          language: z.string(),
+          source_ref: sourceReferenceCodec,
+          code_ref: catalogContentReferenceCodecFor("guide_snippet_code"),
+          readiness: z.literal("contextual"),
+        })
+        .strict(),
+    ),
+    limitations: STRING_ARRAY_CODEC,
   })
   .strict();
 
@@ -891,6 +914,10 @@ const payloadCodecs = {
   guide_detail: {
     mediaType: "application/vnd.salt.guide+json",
     codec: guideDetailCodec,
+  },
+  document_detail: {
+    mediaType: "application/vnd.salt.guide+json",
+    codec: documentDetailCodec,
   },
   guide_snippet_code: {
     mediaType: "text/vnd.salt.guide-snippet",

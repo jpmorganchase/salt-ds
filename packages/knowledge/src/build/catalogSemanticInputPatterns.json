@@ -73,5 +73,10 @@
   "site/src/components/css-display/descriptions.ts",
   "site/src/components/icon-preview/salt-icon-synonym.json",
   "site/src/examples/**/*.{ts,tsx,css,scss,json}",
+  "examples/apps/operations-dashboard/package.json",
+  "examples/apps/operations-dashboard/src/workflows/record-form/recipe.json",
+  "examples/apps/operations-dashboard/src/workflows/record-form/RecordForm.tsx",
+  "examples/apps/operations-dashboard/src/workflows/record-form/RecordForm.css",
+  "examples/apps/operations-dashboard/src/workflows/record-form/types.ts",
   "tooling/ai/migration-records-v1.json"
 ]

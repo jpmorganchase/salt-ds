@@ -1,16 +1,13 @@
-import { brotliDecompressSync } from "node:zlib";
 import fs from "node:fs";
 import path from "node:path";
+import { brotliDecompressSync } from "node:zlib";
 import {
-  verifyArtifactTree,
-  type ArtifactDescriptor,
-} from "./artifactTree.js";
+  type KnowledgeManifestV1,
+  validateKnowledgeManifestV1,
+} from "../schemas/knowledgeManifestV1.js";
+import { type ArtifactDescriptor, verifyArtifactTree } from "./artifactTree.js";
 import { sha256Digest } from "./digestCodec.js";
 import { parseKnowledgeArtifactPath } from "./pathCodec.js";
-import {
-  validateKnowledgeManifestV1,
-  type KnowledgeManifestV1,
-} from "../schemas/knowledgeManifestV1.js";
 
 export interface KnowledgeRecordV1 {
   key: string;
@@ -68,6 +65,7 @@ export type KnowledgeRecordFamily = (typeof KNOWLEDGE_RECORD_FAMILIES)[number];
 
 export interface KnowledgeRecordStore {
   readonly manifest: KnowledgeManifestV1;
+  readArtifact?(relativePath: string): Buffer;
   getFamily(family: any): readonly any[];
   getRecord(family: any, id: string): any | null;
   getContentValue(reference: {
@@ -80,11 +78,7 @@ export interface KnowledgeRecordStore {
     id: string;
     codec: any;
   }): string;
-  getContentJson(reference: {
-    family: "content";
-    id: string;
-    codec: any;
-  }): any;
+  getContentJson(reference: { family: "content"; id: string; codec: any }): any;
   getContentText(reference: {
     family: "content";
     id: string;
@@ -103,7 +97,9 @@ function readRegularFile(rootDir: string, relativePath: string): Buffer {
   }
   const stats = fs.lstatSync(absolutePath);
   if (!stats.isFile() || stats.isSymbolicLink()) {
-    throw new Error(`Knowledge artifact is not a regular file: ${artifactPath}`);
+    throw new Error(
+      `Knowledge artifact is not a regular file: ${artifactPath}`,
+    );
   }
   return fs.readFileSync(absolutePath);
 }
@@ -127,7 +123,10 @@ export class KnowledgeStore {
   readonly manifest: KnowledgeManifestV1;
   private readonly artifactByPath: ReadonlyMap<string, ArtifactDescriptor>;
   private readonly recordSets = new Map<string, readonly KnowledgeRecordV1[]>();
-  private readonly recordsById = new Map<string, ReadonlyMap<string, KnowledgeRecordV1>>();
+  private readonly recordsById = new Map<
+    string,
+    ReadonlyMap<string, KnowledgeRecordV1>
+  >();
   private contentPack: Buffer | null = null;
   private validationMetrics: KnowledgeValidationMetrics | null = null;
 
@@ -153,7 +152,9 @@ export class KnowledgeStore {
     const artifactPath = parseKnowledgeArtifactPath(relativePath);
     const descriptor = this.artifactByPath.get(artifactPath);
     if (!descriptor) {
-      throw new Error(`Knowledge artifact is absent from the tree: ${artifactPath}`);
+      throw new Error(
+        `Knowledge artifact is absent from the tree: ${artifactPath}`,
+      );
     }
     const bytes = readRegularFile(this.bundleDir, artifactPath);
     if (
@@ -170,7 +171,9 @@ export class KnowledgeStore {
     return Buffer.from(this.readVerifiedArtifact(relativePath));
   }
 
-  getKnowledgeFamily(family: KnowledgeRecordFamily): readonly KnowledgeRecordV1[] {
+  getKnowledgeFamily(
+    family: KnowledgeRecordFamily,
+  ): readonly KnowledgeRecordV1[] {
     const cached = this.recordSets.get(family);
     if (cached) return cached;
     const raw =
@@ -236,9 +239,8 @@ export class KnowledgeStore {
   }
 
   private getContentPack(): Buffer {
-    return (this.contentPack ??= this.readVerifiedArtifact(
-      "content/content.pack",
-    ));
+    this.contentPack ??= this.readVerifiedArtifact("content/content.pack");
+    return this.contentPack;
   }
 
   getContentBytes(reference: {
@@ -246,9 +248,10 @@ export class KnowledgeStore {
     id: string;
     codec: string;
   }): Buffer {
-    const record = this.getRecord("content", reference.id) as
-      | ContentRecordData
-      | null;
+    const record = this.getRecord(
+      "content",
+      reference.id,
+    ) as ContentRecordData | null;
     if (
       !record ||
       record.codec !== reference.codec ||
@@ -312,7 +315,10 @@ export class KnowledgeStore {
     const text = this.getContentSourceText(reference);
     return record.media_type.startsWith("text/")
       ? text
-      : parseJson(Buffer.from(text, "utf8"), `Knowledge content ${reference.id}`);
+      : parseJson(
+          Buffer.from(text, "utf8"),
+          `Knowledge content ${reference.id}`,
+        );
   }
 
   getContentText(reference: {

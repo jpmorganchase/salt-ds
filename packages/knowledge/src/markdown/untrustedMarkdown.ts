@@ -1,5 +1,61 @@
 export const MAX_UNTRUSTED_MARKDOWN_EVIDENCE_UTF8_BYTES = 64 * 1024;
 
+/** Escape an authored text node while keeping Markdown structure compiler-owned. */
+export function escapeUntrustedMarkdownText(value: string): string {
+  return value
+    .replace(/\r\n?/gu, "\n")
+    .replace(
+      // biome-ignore lint/suspicious/noControlCharactersInRegex: Escape control and directional formatting characters in untrusted prose.
+      /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f-\u009f\u202a-\u202e\u2066-\u2069]/gu,
+      (character) =>
+        `\\u${character.codePointAt(0)!.toString(16).padStart(4, "0")}`,
+    )
+    .replace(/&/gu, "&amp;")
+    .replace(/</gu, "&lt;")
+    .replace(/>/gu, "&gt;")
+    .replace(/[\\`*_{}[\]()#+.!|~-]/gu, "\\$&");
+}
+
+/** A whole code block is evidence. Its fence cannot be closed by source bytes. */
+export function renderUntrustedMarkdownCode(
+  value: string,
+  language = "",
+): string {
+  // biome-ignore lint/suspicious/noControlCharactersInRegex: A Markdown fence does not stop terminal controls; reject rather than alter a complete file.
+  if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f-\u009f]/u.test(value)) {
+    throw new Error("Code evidence contains unsupported control characters.");
+  }
+  const longestRun = Math.max(
+    0,
+    ...Array.from(value.matchAll(/`+/gu), (match) => match[0].length),
+  );
+  const fence = "`".repeat(Math.max(3, longestRun + 1));
+  const safeLanguage = /^[a-zA-Z0-9_+-]{0,32}$/u.test(language) ? language : "";
+  return `${fence}${safeLanguage}\n${value}\n${fence}`;
+}
+
+/** Resolve documentation links without executing expressions or loading a URL. */
+export function resolveUntrustedMarkdownLink(
+  value: string,
+  route: string,
+): string | null {
+  if (
+    // biome-ignore lint/suspicious/noControlCharactersInRegex: Reject URL control characters before normalization can erase them.
+    /[\u0000-\u0020\u007f<>\\]/u.test(value) ||
+    /^(?:javascript|data|file):/iu.test(value)
+  )
+    return null;
+  try {
+    const base = new URL(route, "https://www.saltdesignsystem.com");
+    const target = new URL(value, base);
+    if (target.protocol !== "https:" || target.username || target.password)
+      return null;
+    return target.href.replace(/\(/gu, "%28").replace(/\)/gu, "%29");
+  } catch {
+    return null;
+  }
+}
+
 export interface UntrustedMarkdownEvidenceOptions {
   mode: "inline" | "block";
   max_utf8_bytes?: number;

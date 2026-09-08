@@ -23,6 +23,8 @@ import Ajv2020 from "ajv/dist/2020.js";
 import { execa } from "execa";
 import { chromium } from "playwright";
 import {
+  assertPackedWorkflowManifestMatchesSource,
+  readPackedWorkflowRecipe,
   selectSampleAppNames,
   unavailableAnalysis,
   verifyCurrentCliCommands,
@@ -1281,6 +1283,99 @@ async function currentCliChecks(appRoot, environment, knowledgeManifest) {
   return commands;
 }
 
+function isolatedManifest(appManifest, packed) {
+  const manifest = structuredClone(appManifest);
+  manifest.dependencies ??= {};
+  manifest.devDependencies ??= {};
+  for (const entry of packed) {
+    const target = Object.hasOwn(manifest.dependencies, entry.name)
+      ? manifest.dependencies
+      : manifest.devDependencies;
+    target[entry.name] = `file:../packs/${entry.filename}`;
+  }
+  return Buffer.from(`${JSON.stringify(manifest, null, 2)}\n`);
+}
+
+async function installPackedCohort({ appName, appRoot, packed }) {
+  const manifestPath = path.join(appRoot, "package.json");
+  const originalManifestBytes = await readFile(manifestPath);
+  const manifest = JSON.parse(originalManifestBytes.toString("utf8"));
+  const installedManifestBytes = isolatedManifest(manifest, packed);
+  await writeFile(manifestPath, installedManifestBytes);
+  await run(
+    executable("npm"),
+    [
+      "install",
+      "--package-lock-only",
+      "--no-audit",
+      "--no-fund",
+      "--prefer-offline",
+    ],
+    { cwd: appRoot, label: `${appName} lockfile generation` },
+  );
+  const lockfilePath = path.join(appRoot, "package-lock.json");
+  const generatedLockfileBytes = await readFile(lockfilePath);
+  await run(executable("npm"), ["ci", "--no-audit", "--no-fund"], {
+    cwd: appRoot,
+    label: `${appName} lockfile replay`,
+  });
+  const replayedLockfileBytes = await readFile(lockfilePath);
+  assert(
+    replayedLockfileBytes.equals(generatedLockfileBytes),
+    `${appName} lockfile changed during replay`,
+  );
+  assert(
+    (await readFile(manifestPath)).equals(installedManifestBytes),
+    `${appName} isolated manifest changed during install`,
+  );
+  return { installedManifestBytes, replayedLockfileBytes };
+}
+
+async function readInstalledWorkflowRecipe(appRoot, knowledgeManifest) {
+  const requireFromApp = createRequire(path.join(appRoot, "package.json"));
+  const knowledge = requireFromApp("@salt-ds/knowledge");
+  assert.equal(
+    typeof knowledge.KnowledgeStore,
+    "function",
+    "Packed Knowledge does not export KnowledgeStore",
+  );
+  const knowledgePackagePath = requireFromApp.resolve(
+    "@salt-ds/knowledge/package.json",
+  );
+  const store = new knowledge.KnowledgeStore({
+    bundleDir: path.dirname(knowledgePackagePath),
+  });
+  assert.equal(
+    store.manifest.bundle_digest,
+    knowledgeManifest.bundle_digest,
+    "Installed KnowledgeStore reads a different bundle",
+  );
+  assert.equal(
+    store.manifest.semantic_digest,
+    knowledgeManifest.semantic_digest,
+    "Installed KnowledgeStore reads a different semantic bundle",
+  );
+  return readPackedWorkflowRecipe(store);
+}
+
+async function materializePackedWorkflow({ root, workflow }) {
+  await mkdir(root, { recursive: true });
+  for (const file of workflow.files) {
+    const target = path.join(root, ...file.path.split("/"));
+    inside(root, target, `Packed workflow file ${file.path}`);
+    await mkdir(path.dirname(target), { recursive: true });
+    await writeFile(target, file.bytes, { flag: "wx" });
+  }
+  const materializedPaths = (await sourceFiles(root)).map((file) =>
+    portable(path.relative(root, file)),
+  );
+  assert.deepEqual(
+    materializedPaths,
+    workflow.files.map((file) => file.path).toSorted(),
+    "Reconstructed workflow contains a file outside the packed recipe",
+  );
+}
+
 async function validateReceipt(receipt) {
   const schema = await readJson(
     path.join(
@@ -1363,51 +1458,78 @@ try {
   let hostileFixtureVerified = false;
   for (const app of apps) {
     const isolatedRoot = path.join(tempRoot, app.name);
-    await cp(app.appRoot, isolatedRoot, { recursive: true });
-    const isolatedManifestPath = path.join(isolatedRoot, "package.json");
-    const isolatedManifest = await readJson(isolatedManifestPath);
-    isolatedManifest.dependencies ??= {};
-    isolatedManifest.devDependencies ??= {};
-    for (const entry of packed) {
-      const target = Object.hasOwn(isolatedManifest.dependencies, entry.name)
-        ? isolatedManifest.dependencies
-        : isolatedManifest.devDependencies;
-      target[entry.name] = `file:../packs/${entry.filename}`;
+    let isolatedManifestBytes;
+    let replayedLockfileBytes;
+    if (app.name === "operations-dashboard") {
+      // Bootstrap only enough consumer state to install the packed cohort. The
+      // fresh app below is written exclusively from the installed Knowledge
+      // recipe and its Store-verified artifacts.
+      const bootstrapRoot = path.join(
+        tempRoot,
+        "operations-dashboard-bootstrap",
+      );
+      await mkdir(bootstrapRoot, { recursive: true });
+      await writeFile(
+        path.join(bootstrapRoot, "package.json"),
+        app.manifestBytes,
+        {
+          flag: "wx",
+        },
+      );
+      ({
+        installedManifestBytes: isolatedManifestBytes,
+        replayedLockfileBytes,
+      } = await installPackedCohort({
+        appName: app.name,
+        appRoot: bootstrapRoot,
+        packed,
+      }));
+      const bootstrapLockfile = JSON.parse(
+        replayedLockfileBytes.toString("utf8"),
+      );
+      await verifyInstalledCohort(bootstrapRoot, packed, bootstrapLockfile);
+      const workflow = await readInstalledWorkflowRecipe(
+        bootstrapRoot,
+        knowledgeManifest,
+      );
+      assertPackedWorkflowManifestMatchesSource(
+        workflow.manifestBytes,
+        app.manifestBytes,
+      );
+      await materializePackedWorkflow({ root: isolatedRoot, workflow });
+      await cp(
+        path.join(bootstrapRoot, "node_modules"),
+        path.join(isolatedRoot, "node_modules"),
+        {
+          recursive: true,
+        },
+      );
+      await writeFile(
+        path.join(isolatedRoot, "package-lock.json"),
+        replayedLockfileBytes,
+        { flag: "wx" },
+      );
+      const reconstructedLockfile = JSON.parse(
+        replayedLockfileBytes.toString("utf8"),
+      );
+      await verifyInstalledCohort(isolatedRoot, packed, reconstructedLockfile);
+    } else {
+      await cp(app.appRoot, isolatedRoot, { recursive: true });
+      ({
+        installedManifestBytes: isolatedManifestBytes,
+        replayedLockfileBytes,
+      } = await installPackedCohort({
+        appName: app.name,
+        appRoot: isolatedRoot,
+        packed,
+      }));
+      const lockfile = JSON.parse(replayedLockfileBytes.toString("utf8"));
+      await verifyInstalledCohort(isolatedRoot, packed, lockfile);
+      await writeFile(
+        path.join(isolatedRoot, "package.json"),
+        app.manifestBytes,
+      );
     }
-    const isolatedManifestBytes = Buffer.from(
-      `${JSON.stringify(isolatedManifest, null, 2)}\n`,
-    );
-    await writeFile(isolatedManifestPath, isolatedManifestBytes);
-
-    await run(
-      executable("npm"),
-      [
-        "install",
-        "--package-lock-only",
-        "--no-audit",
-        "--no-fund",
-        "--prefer-offline",
-      ],
-      { cwd: isolatedRoot, label: `${app.name} lockfile generation` },
-    );
-    const lockfilePath = path.join(isolatedRoot, "package-lock.json");
-    const generatedLockfileBytes = await readFile(lockfilePath);
-    await run(executable("npm"), ["ci", "--no-audit", "--no-fund"], {
-      cwd: isolatedRoot,
-      label: `${app.name} lockfile replay`,
-    });
-    const replayedLockfileBytes = await readFile(lockfilePath);
-    assert(
-      replayedLockfileBytes.equals(generatedLockfileBytes),
-      `${app.name} lockfile changed during replay`,
-    );
-    assert(
-      (await readFile(isolatedManifestPath)).equals(isolatedManifestBytes),
-      `${app.name} isolated manifest changed during install`,
-    );
-    const lockfile = JSON.parse(replayedLockfileBytes.toString("utf8"));
-    await verifyInstalledCohort(isolatedRoot, packed, lockfile);
-    await writeFile(isolatedManifestPath, app.manifestBytes);
 
     if (!hostileFixtureVerified) {
       await verifyNegativeNetworkFixture(environment);

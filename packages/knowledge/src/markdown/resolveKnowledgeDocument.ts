@@ -1,3 +1,9 @@
+import {
+  assembleCanonicalDocument,
+  type CanonicalDocumentSelection,
+  canonicalDocumentReference,
+  renderCanonicalDocument,
+} from "../documents/assembleCanonicalDocument.js";
 import type { KnowledgeRecordStore } from "../manifest/knowledgeStore.js";
 import {
   KNOWLEDGE_SEARCH_TARGET_FAMILY_NAMES,
@@ -76,6 +82,8 @@ export interface KnowledgeDocumentResult {
       source_records: string[];
       bundle_digest: string;
     };
+    canonical?: CanonicalDocumentSelection;
+    limitations?: string[];
   };
 }
 
@@ -205,16 +213,53 @@ function canonicalChoice(
     : [];
 }
 
+function addExcludedPackageFamilies(
+  target: Map<
+    string,
+    KnowledgeDocumentResult["excluded_package_families"][number]
+  >,
+  compatibility: ReturnType<typeof resolveKnowledgeRecordCompatibility>,
+): void {
+  for (const entry of compatibility.packages) {
+    if (!entry.usable) {
+      target.set(entry.name, {
+        name: entry.name,
+        state: entry.state,
+        observed_version: entry.installed_version,
+        supported_range: entry.supported_range,
+      });
+    }
+  }
+}
+
+function sortedExcludedPackageFamilies(
+  excluded: ReadonlyMap<
+    string,
+    KnowledgeDocumentResult["excluded_package_families"][number]
+  >,
+): KnowledgeDocumentResult["excluded_package_families"] {
+  return [...excluded.values()].sort((left, right) =>
+    left.name.localeCompare(right.name),
+  );
+}
+
 export function resolveKnowledgeDocument(
   store: KnowledgeRecordStore,
   input: ResolveKnowledgeDocumentInput,
 ): KnowledgeDocumentResult {
   const identifier = input.identifier.trim();
-  const normalized = normalizeKnowledgeQuery(identifier);
+  const fragmentOffset = identifier.startsWith("record:")
+    ? identifier.indexOf("#")
+    : -1;
+  const baseIdentifier =
+    fragmentOffset < 0 ? identifier : identifier.slice(0, fragmentOffset);
+  const fragment =
+    fragmentOffset < 0 ? undefined : identifier.slice(fragmentOffset + 1);
+  const normalized = normalizeKnowledgeQuery(baseIdentifier);
   const documents = store.getFamily(
     "search_document",
   ) as readonly SearchDocument[];
-  const canonicalReference = parseCanonicalRecordKey(identifier);
+  const canonicalReference = parseCanonicalRecordKey(baseIdentifier);
   const rawChoices = canonicalReference
     ? canonicalChoice(store, documents, canonicalReference)
     : identifier.startsWith("record:")
@@ -252,16 +297,7 @@ export function resolveKnowledgeDocument(
       choice.reference,
       input.installed_versions,
     );
-    for (const entry of compatibility.packages) {
-      if (!entry.usable) {
-        excludedPackageFamilies.set(entry.name, {
-          name: entry.name,
-          state: entry.state,
-          observed_version: entry.installed_version,
-          supported_range: entry.supported_range,
-        });
-      }
-    }
+    addExcludedPackageFamilies(excludedPackageFamilies, compatibility);
     return compatibility.included;
   });
   const bundle = {
@@ -269,9 +305,6 @@ export function resolveKnowledgeDocument(
     digest: store.manifest.bundle_digest,
     semantic_digest: store.manifest.semantic_digest,
   };
-  const excluded = [...excludedPackageFamilies.values()].sort((left, right) =>
-    left.name.localeCompare(right.name),
-  );
   if (choices.length === 0) {
     return {
       contract: "salt-knowledge-document/1",
@@ -290,7 +323,9 @@ export function resolveKnowledgeDocument(
       identifier,
       bundle,
       choices,
-      excluded_package_families: excluded,
+      excluded_package_families: sortedExcludedPackageFamilies(
+        excludedPackageFamilies,
+      ),
       document: null,
     };
   }
@@ -301,7 +336,9 @@ export function resolveKnowledgeDocument(
       identifier,
       bundle,
       choices: applicable,
-      excluded_package_families: excluded,
+      excluded_package_families: sortedExcludedPackageFamilies(
+        excludedPackageFamilies,
+      ),
       document: null,
     };
   }
@@ -312,13 +349,66 @@ export function resolveKnowledgeDocument(
   const contentRef = primaryContentReference(record, choice.reference.family);
   const sources = new Set<string>();
   collectSourceReferences(record, sources);
+  let canonical: CanonicalDocumentSelection | null = null;
+  let canonicalLimitation: string | undefined;
+  const attachedGuideReference = canonicalDocumentReference(
+    store,
+    choice.reference,
+  );
+  if (attachedGuideReference) {
+    const canonicalCompatibility = resolveKnowledgeRecordCompatibility(
+      store,
+      attachedGuideReference,
+      input.installed_versions,
+    );
+    addExcludedPackageFamilies(excludedPackageFamilies, canonicalCompatibility);
+    if (!canonicalCompatibility.included) {
+      if (fragment !== undefined || choice.reference.family === "guide") {
+        return {
+          contract: "salt-knowledge-document/1",
+          status: "incompatible",
+          identifier,
+          bundle,
+          choices: [choice],
+          excluded_package_families: sortedExcludedPackageFamilies(
+            excludedPackageFamilies,
+          ),
+          document: null,
+        };
+      }
+      canonicalLimitation =
+        "Attached canonical guidance is incompatible with the installed package vector.";
+    } else {
+      canonical = assembleCanonicalDocument(store, choice.reference, fragment);
+    }
+  }
+  if (fragment !== undefined && (!fragment || !canonical)) {
+    return {
+      contract: "salt-knowledge-document/1",
+      status: "not_found",
+      identifier,
+      bundle,
+      choices: [],
+      excluded_package_families: sortedExcludedPackageFamilies(
+        excludedPackageFamilies,
+      ),
+      document: null,
+    };
+  }
+  if (!canonical && !canonicalLimitation) {
+    canonicalLimitation =
+      "Contextual reference: complete workflow setup and acceptance are not supplied for this unconverted material.";
+  }
+  for (const source of canonical?.source_records ?? []) sources.add(source);
   return {
     contract: "salt-knowledge-document/1",
     status: "resolved",
     identifier,
     bundle,
     choices: [choice],
-    excluded_package_families: excluded,
+    excluded_package_families: sortedExcludedPackageFamilies(
+      excludedPackageFamilies,
+    ),
     document: {
       reference: choice.reference,
       title: choice.title,
@@ -340,6 +430,8 @@ export function resolveKnowledgeDocument(
         source_records: [...sources].sort(),
         bundle_digest: store.manifest.bundle_digest,
       },
+      ...(canonical ? { canonical } : {}),
+      ...(canonicalLimitation ? { limitations: [canonicalLimitation] } : {}),
     },
   };
 }
@@ -385,6 +477,15 @@ export function renderKnowledgeDocumentMarkdown(
       "\n"
     );
   }
+  if (result.document.canonical) {
+    const nativeComponentDetail =
+      result.document.reference.family === "component" &&
+      !result.identifier.includes("#") &&
+      result.document.content
+        ? `\n## Component reference\n\n${renderUntrustedMarkdownEvidence(result.document.content.value, { mode: "block" })}\n`
+        : "";
+    return `${renderCanonicalDocument(result.document.canonical)}${nativeComponentDetail}\nBundle: ${renderUntrustedMarkdownEvidence(result.bundle.digest, { mode: "inline" })}\n`;
+  }
   const content = result.document.content
     ? "\n\n## Verified detail\n\n" +
       renderUntrustedMarkdownEvidence(result.document.content.value, {
@@ -398,6 +499,16 @@ export function renderKnowledgeDocumentMarkdown(
           renderUntrustedMarkdownEvidence(source, { mode: "inline" }),
         )
         .join(", ")
+    : "";
+  const limitations = result.document.limitations?.length
+    ? "\n\n## Context limits\n\n" +
+      result.document.limitations
+        .map(
+          (limitation) =>
+            "- " +
+            renderUntrustedMarkdownEvidence(limitation, { mode: "inline" }),
+        )
+        .join("\n")
     : "";
   return (
     "# " +
@@ -418,6 +529,7 @@ export function renderKnowledgeDocumentMarkdown(
     }) +
     sources +
     content +
+    limitations +
     "\n"
   );
 }

@@ -4,8 +4,8 @@ import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import compilerInputPatterns from "../build/catalogCompilerInputPatterns.json";
 import {
-  CATALOG_INPUT_PATTERNS,
   assertCatalogInputInventoriesStable,
+  CATALOG_INPUT_PATTERNS,
   createCatalogInputInventory,
   globCatalogInputs,
   isCatalogInputTrackingActive,
@@ -15,6 +15,7 @@ import {
   readCatalogInputFileSyncOrNull,
   withCatalogInputTracking,
 } from "../build/catalogInputInventory.js";
+import publicationInputPatterns from "../build/catalogPublicationInputPatterns.json";
 import semanticInputPatterns from "../build/catalogSemanticInputPatterns.json";
 
 const temporaryDirectories: string[] = [];
@@ -50,6 +51,7 @@ describe("catalog input inventory", () => {
         "packages/knowledge/src/**/*.ts",
         "packages/knowledge/src/build/catalogCompilerInputPatterns.json",
         "packages/knowledge/src/build/catalogSemanticInputPatterns.json",
+        "packages/knowledge/src/build/catalogPublicationInputPatterns.json",
       ]),
     );
     expect(CATALOG_INPUT_PATTERNS).not.toEqual(
@@ -148,9 +150,7 @@ describe("catalog input inventory", () => {
         await expect(readCatalogInputFile(targetPath, "utf8")).resolves.toBe(
           variants[0],
         );
-        expect(readCatalogInputFileSync(targetPath, "utf-8")).toBe(
-          variants[0],
-        );
+        expect(readCatalogInputFileSync(targetPath, "utf-8")).toBe(variants[0]);
       });
     }
 
@@ -262,6 +262,82 @@ describe("catalog input inventory", () => {
     expect(
       (await createCatalogInputInventory(root, compilerInputPatterns)).digest,
     ).not.toBe(baselineCompiler.digest);
+  });
+
+  it("keeps the selected workflow's semantic and publication inputs explicit and separate", async () => {
+    const root = await createFixture({
+      "package.json": "{}\n",
+      "examples/apps/operations-dashboard/package.json": "{}\n",
+      "examples/apps/operations-dashboard/index.html":
+        '<div id="root"></div>\n',
+      "examples/apps/operations-dashboard/vite.config.ts":
+        "export default {};\n",
+      "examples/apps/operations-dashboard/tsconfig.json": "{}\n",
+      "examples/apps/operations-dashboard/src/vite-env.d.ts":
+        "declare const value: string;\n",
+      "examples/apps/operations-dashboard/src/main.tsx": "export {};\n",
+      "examples/apps/operations-dashboard/src/dashboard.css": ".root {}\n",
+      "examples/apps/operations-dashboard/src/OperationsDashboard.tsx":
+        "export {};\n",
+      "examples/apps/operations-dashboard/src/workflows/record-form/localDemoAdapter.ts":
+        "export {};\n",
+      "examples/apps/operations-dashboard/src/workflows/record-form/recipe.json":
+        "{}\n",
+      "examples/apps/operations-dashboard/src/workflows/record-form/RecordForm.tsx":
+        "export {};\n",
+      "examples/apps/operations-dashboard/src/workflows/record-form/RecordForm.css":
+        ".form {}\n",
+      "examples/apps/operations-dashboard/src/workflows/record-form/types.ts":
+        "export {};\n",
+      "examples/apps/unselected/package.json": "{}\n",
+      "examples/apps/operations-dashboard/src/unselected.ts": "export {};\n",
+    });
+    const semantic = await createCatalogInputInventory(
+      root,
+      semanticInputPatterns,
+    );
+    const publication = await createCatalogInputInventory(
+      root,
+      publicationInputPatterns,
+    );
+    const compiler = await createCatalogInputInventory(
+      root,
+      compilerInputPatterns,
+    );
+
+    expect(semantic.entries.map((entry) => entry.path)).toEqual([
+      "examples/apps/operations-dashboard/package.json",
+      "examples/apps/operations-dashboard/src/workflows/record-form/RecordForm.css",
+      "examples/apps/operations-dashboard/src/workflows/record-form/RecordForm.tsx",
+      "examples/apps/operations-dashboard/src/workflows/record-form/recipe.json",
+      "examples/apps/operations-dashboard/src/workflows/record-form/types.ts",
+    ]);
+    expect(publication.entries.map((entry) => entry.path)).toEqual([
+      "examples/apps/operations-dashboard/index.html",
+      "examples/apps/operations-dashboard/src/OperationsDashboard.tsx",
+      "examples/apps/operations-dashboard/src/dashboard.css",
+      "examples/apps/operations-dashboard/src/main.tsx",
+      "examples/apps/operations-dashboard/src/vite-env.d.ts",
+      "examples/apps/operations-dashboard/src/workflows/record-form/localDemoAdapter.ts",
+      "examples/apps/operations-dashboard/tsconfig.json",
+      "examples/apps/operations-dashboard/vite.config.ts",
+    ]);
+    expect(compiler.entries.map((entry) => entry.path)).toEqual([
+      "package.json",
+    ]);
+
+    await fs.writeFile(
+      path.join(root, "examples/apps/operations-dashboard/src/main.tsx"),
+      "export const changed = true;\n",
+      "utf8",
+    );
+    expect(
+      (await createCatalogInputInventory(root, semanticInputPatterns)).digest,
+    ).toBe(semantic.digest);
+    expect(
+      (await createCatalogInputInventory(root, publicationInputPatterns))
+        .digest,
+    ).not.toBe(publication.digest);
   });
 
   it("allows declared reads and fails every undeclared read closed", async () => {

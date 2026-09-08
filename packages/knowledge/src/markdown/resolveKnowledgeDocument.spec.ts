@@ -83,6 +83,9 @@ describe("resolveKnowledgeDocument", () => {
         expect.stringContaining("To allow the user to execute an action"),
       ]),
     );
+    expect(result.document?.limitations).toEqual([
+      "Contextual reference: complete workflow setup and acceptance are not supplied for this unconverted material.",
+    ]);
   });
 
   it("retains component detail content", () => {

@@ -1,0 +1,10 @@
+[
+  "examples/apps/operations-dashboard/index.html",
+  "examples/apps/operations-dashboard/vite.config.ts",
+  "examples/apps/operations-dashboard/tsconfig.json",
+  "examples/apps/operations-dashboard/src/vite-env.d.ts",
+  "examples/apps/operations-dashboard/src/main.tsx",
+  "examples/apps/operations-dashboard/src/dashboard.css",
+  "examples/apps/operations-dashboard/src/OperationsDashboard.tsx",
+  "examples/apps/operations-dashboard/src/workflows/record-form/localDemoAdapter.ts"
+]

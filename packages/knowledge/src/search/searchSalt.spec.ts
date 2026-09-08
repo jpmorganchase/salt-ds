@@ -179,6 +179,42 @@ describe("Salt Knowledge deterministic retrieval", () => {
     ).toBeLessThanOrEqual(MIN_KNOWLEDGE_CONTEXT_UTF8_BYTES);
   });
 
+  it("labels an unconverted matching record as contextual with an explicit limitation", () => {
+    const unconvertedStore = {
+      manifest: {
+        bundle_digest: `sha256:${"a".repeat(64)}`,
+        semantic_digest: `sha256:${"b".repeat(64)}`,
+      },
+      getFamily: (family: string) =>
+        family === "search_document"
+          ? [
+              {
+                target: { family: "component", id: "component.legacy" },
+                title: "Legacy component",
+                summary: "A contextual component reference.",
+                terms: ["legacy", "component"],
+                facets: {},
+              },
+            ]
+          : [],
+      getRecord: () => ({
+        family: "component",
+        id: "component.legacy",
+        name: "Legacy component",
+      }),
+    } as unknown as KnowledgeStore;
+
+    const result = buildKnowledgeContext(unconvertedStore, {
+      query: "legacy component",
+    });
+    expect(result.matches).toHaveLength(1);
+    expect(result.canonical_documents).toBeUndefined();
+    expect(result.answer_status).toBe("contextual");
+    expect(result.limitations).toEqual([
+      "Matched records are contextual references; no verified canonical guidance is available for this query.",
+    ]);
+  });
+
   it("rejects an explicit budget below the supported minimum", () => {
     expect(() =>
       buildKnowledgeContext(store, {
@@ -225,7 +261,7 @@ describe("Salt Knowledge deterministic retrieval", () => {
     expect(result.matches).toEqual([]);
     expect(result.truncated).toBe(true);
     expect(renderKnowledgeContext(oneMatchStore, input)).toContain(
-      "Truncated: yes; lower-ranked matches were removed",
+      "Truncated: yes; evidence was omitted to fit the output budget",
     );
 
     const {
@@ -296,7 +332,7 @@ describe("Salt Knowledge deterministic retrieval", () => {
     expect(result.context_digest).toBe(finalDigest);
     expect(result.context_digest).not.toBe(staleFullSelectionDigest);
     expect(renderKnowledgeContext(markdownExpansionStore, input)).toContain(
-      "Truncated: yes; lower-ranked matches were removed",
+      "Truncated: yes; evidence was omitted to fit the output budget",
     );
   });
 

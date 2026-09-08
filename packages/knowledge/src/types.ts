@@ -633,6 +633,7 @@ export interface BuildRegistryOptions {
   packageVersion?: string;
   semanticInputPatterns?: readonly string[];
   compilerInputPatterns?: readonly string[];
+  publicationInputPatterns?: readonly string[];
   excludedPackageNames?: readonly string[];
   sourceRevision?: string;
   generatorVersion?: string;

@@ -34,6 +34,8 @@ async function writeFixtureRepo(
   options: {
     accessibilityContent?: string;
     componentExportAliases?: FixtureComponentExportAlias[];
+    exampleName?: string;
+    examplesMdxContent?: string;
     exampleSourceContent?: string;
     sourceContent?: string;
     sourceCodeUrl?: string;
@@ -149,7 +151,8 @@ Fixture source-backed action component overview.
   );
   await fs.writeFile(
     path.join(componentDir, "examples.mdx"),
-    `## Basic fixture action
+    options.examplesMdxContent ??
+      `## Basic fixture action
 
 Fixture source-backed example.
 
@@ -158,7 +161,7 @@ Fixture source-backed example.
     "utf8",
   );
   await fs.writeFile(
-    path.join(exampleDir, "BasicFixtureAction.tsx"),
+    path.join(exampleDir, `${options.exampleName ?? "BasicFixtureAction"}.tsx`),
     options.exampleSourceContent ??
       `export function BasicFixtureAction() {
   return <FixtureAction />;
@@ -393,10 +396,7 @@ Source-backed alias-scope fixture.
     await fs.writeFile(
       path.join(sourceDirectory, "index.tsx"),
       `${exportNames
-        .map(
-          (exportName) =>
-            `export function ${exportName}() { return null; }`,
-        )
+        .map((exportName) => `export function ${exportName}() { return null; }`)
         .join("\n")}\n`,
       "utf8",
     );
@@ -670,6 +670,51 @@ export function BasicFixtureAction() {
         repo_path: "packages/fixture/src/fixture-action/Foo.tsx",
         export_name: "FixtureAction",
       });
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("keeps a nested live preview in its parent component-example section", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-component-loading-example-fixture-"),
+    );
+
+    try {
+      await writeFixtureRepo(repoRoot, {
+        exampleName: "Loading",
+        examplesMdxContent: `## Loading
+
+Use the loading state when an action is happening and a user must wait.
+
+A button with \`loading={true}\` displays a spinner while the action is in progress.
+
+### Best practices
+
+**Accessibility** - Pair \`loading\` with \`loadingAnnouncement\` to give screen readers additional context.
+
+<LivePreview componentName="fixture-action" exampleName="Loading" />
+`,
+      });
+      const [component] = await extractComponents(
+        repoRoot,
+        new Map([[buildFixturePackage().name, buildFixturePackage()]]),
+        { byPackage: new Map() },
+      );
+      const [example] = component.examples;
+
+      expect(example).toMatchObject({
+        id: "fixture-action.loading",
+        title: "Loading",
+        source_path: "site/src/examples/fixture-action/Loading.tsx",
+        target_type: "component",
+        target_name: "Fixture action",
+      });
+      expect(example.description).toContain(
+        "Use the loading state when an action is happening",
+      );
+      expect(example.description).toContain("loadingAnnouncement");
+      expect(example.description).not.toContain("Best practices");
     } finally {
       await fs.rm(repoRoot, { recursive: true, force: true });
     }
