@@ -17,8 +17,8 @@
     "*.css"
   ],
   "scripts": {
-    "build": "yarn node ./scripts/build.mjs",
-    "build:watch": "yarn node ./scripts/build.mjs --watch"
+    "build": "node ./scripts/build.mjs",
+    "build:watch": "node ./scripts/build.mjs --watch"
   },
   "devDependencies": {
     "del": "^8.0.0"

@@ -26,9 +26,9 @@
     "*.css"
   ],
   "scripts": {
-    "build": "yarn clean && yarn build:icons && yarn node ../../scripts/build.mjs",
-    "build:icons": "yarn node ./scripts/generateIcons.mjs '*.svg'",
-    "copy:css": "yarn node ./scripts/copyCss.mjs",
+    "build": "yarn clean && yarn build:icons && node ../../scripts/build.mjs",
+    "build:icons": "node ./scripts/generateIcons.mjs '*.svg'",
+    "copy:css": "node ./scripts/copyCss.mjs",
     "clean": "rimraf ./src/components"
   },
   "dependencies": {

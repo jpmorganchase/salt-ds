@@ -7,6 +7,18 @@ Follow below instructions to contribute to Salt.
 3. Run `yarn storybook` to run a local instance of [storybook](https://storybook.js.org/docs/get-started/install#start-storybook) for development
 4. Run `cd site && yarn serve` to run a local instance of the [documentation](https://www.saltdesignsystem.com/) site.
 
+## Build tooling
+
+Package JavaScript is built with Rolldown into `dist-cjs` and `dist-es`. Component CSS is imported as text so Salt's style injection continues to control nonces and target windows. The separate CSS bundles and themes use esbuild.
+
+TypeScript 7 generates `dist-types` declarations with full type inference and runs `yarn typecheck`. The native compiler is installed as `@typescript/native` and invoked through `scripts/typescript.mjs` to avoid relying on the shared `tsc` executable. TypeScript 6 remains installed as `typescript` for tools that use its JavaScript API, including Storybook's prop documentation.
+
+Run `node scripts/checkPackages.mjs` after `yarn build` to validate package outputs and dependency boundaries.
+
+`yarn build` uses Yarn workspaces to build independent packages in parallel and dependencies before their consumers. Each JavaScript package builds both module formats alongside its declarations. Package build commands also work individually.
+
+Every build clears package outputs and regenerates assets, with no build cache. Generated files are formatted in batches with the native Biome CLI. The CSS jobs share one process while preserving stylesheet import order.
+
 ## Packages
 
 The repo contains below packages under `/packages`

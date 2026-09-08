@@ -13,11 +13,11 @@
   ],
   "scripts": {
     "start": "yarn storybook",
-    "build": "yarn workspaces foreach --exclude @salt-ds/site -Apt run build && yarn bundle:css",
+    "build": "yarn workspaces foreach --exclude @salt-ds/site --exclude @salt-ds/root -Apt run build && yarn bundle:css",
     "release": "yarn build && yarn changeset publish",
     "build:ag-grid-theme": "yarn workspace @salt-ds/ag-grid-theme build",
     "build:highcharts-theme": "yarn workspaces foreach -Rpt --from @salt-ds/highcharts-theme run build",
-    "bundle:css": "yarn bundle:core:css && yarn bundle:lab:css && yarn bundle:date-components:css && yarn bundle:embla-carousel:css && yarn copy:icon:css && yarn copy:countries:css",
+    "bundle:css": "node ./scripts/bundleCss.mjs",
     "bundle:core:css": "yarn workspace @salt-ds/core bundle:css",
     "bundle:date-components:css": "yarn workspace @salt-ds/date-components bundle:css",
     "bundle:lab:css": "yarn workspace @salt-ds/lab bundle:css",
@@ -43,7 +43,7 @@
     "lint:style:theme": "yarn stylelint -f verbose \"packages/theme/src/css/**/*.css\"",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "yarn build:ag-grid-theme && yarn bundle:css && storybook build --stats-json",
-    "typecheck": "tsgo --noEmit",
+    "typecheck": "yarn node ./scripts/typecheck.mjs",
     "chromatic": "chromatic"
   },
   "dependencies": {
@@ -65,7 +65,7 @@
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.3.7",
     "@types/tinycolor2": "^1.4.3",
-    "@typescript/native-preview": "7.0.0-dev.20260601.1",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "@vitejs/plugin-react": "^6.0.4",
     "ag-grid-community": "^36.0.0",
     "ag-grid-enterprise": "^36.0.0",
@@ -122,17 +122,14 @@
   "packageManager": "yarn@4.17.0",
   "devDependencies": {
     "@date-fns/tz": "^1.4.1",
-    "@rollup/plugin-commonjs": "^28.0.1",
-    "@rollup/plugin-json": "^6.1.0",
-    "@rollup/plugin-node-resolve": "^15.3.0",
     "@vitest/browser-playwright": "^4.1.11",
     "browserslist-to-esbuild": "^2.1.1",
+    "esbuild": "^0.28.0",
     "execa": "^10.0.0",
+    "fast-glob": "^3.3.3",
     "get-tsconfig": "^4.7.5",
     "playwright": "1.62.1",
-    "rollup": "^4.24.2",
-    "rollup-plugin-esbuild": "^6.1.1",
-    "rollup-plugin-postcss": "^4.0.2",
+    "rolldown": "^1.2.1",
     "vitest-browser-react": "2.2.0"
   },
   "dependenciesMeta": {
