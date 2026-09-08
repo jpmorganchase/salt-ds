@@ -8,6 +8,7 @@ import {
   H3,
   H4,
   Label as LabelText,
+  StackLayout,
   Text,
   TextAction,
   TextNotation,
@@ -100,13 +101,11 @@ export const Truncation: StoryFn<typeof Text> = () => {
 
 const FigureTextComponent: StoryFn<typeof Text> = () => {
   return (
-    <>
+    <StackLayout>
       <Display1>Display 1</Display1>
-      <br />
       <Display2>Display 2</Display2>
-      <br />
       <Display3>Display 3</Display3>
-    </>
+    </StackLayout>
   );
 };
 
@@ -115,35 +114,40 @@ export const Display = FigureTextComponent.bind({});
 //********** Headings H1, H2, H3 and H4 ***********/
 
 const HeadingsComponent: StoryFn<typeof Text> = () => (
-  <>
-    <H1 style={{ marginBottom: "var(--salt-spacing-300)" }}>
-      This is header 1 <strong>emphasis high</strong>
-    </H1>
-    <H1 style={{ marginBottom: "var(--salt-spacing-300)" }}>
-      This is header 1 <small>emphasis low</small>
-    </H1>
-    <br />
-    <H2 style={{ marginBottom: "var(--salt-spacing-200)" }}>
-      This is header 2 <strong>emphasis high</strong>
-    </H2>
-    <H2 style={{ marginBottom: "var(--salt-spacing-200)" }}>
-      This is header 2 <small>emphasis low</small>
-    </H2>
-    <br />
-    <H3 style={{ marginBottom: "var(--salt-spacing-100)" }}>
-      This is header 3 <strong>emphasis high</strong>
-    </H3>
-    <H3 style={{ marginBottom: "var(--salt-spacing-100)" }}>
-      This is header 3 <small>emphasis low</small>
-    </H3>
-    <br />
-    <H4>
-      This is header 4 <strong>emphasis high</strong>
-    </H4>
-    <H4>
-      This is header 4 <small>emphasis low</small>
-    </H4>
-  </>
+  <StackLayout>
+    <StackLayout gap={3}>
+      <H1>
+        This is header 1 <strong>emphasis high</strong>
+      </H1>
+      <H1>
+        This is header 1 <small>emphasis low</small>
+      </H1>
+    </StackLayout>
+    <StackLayout gap={2}>
+      <H2>
+        This is header 2 <strong>emphasis high</strong>
+      </H2>
+      <H2>
+        This is header 2 <small>emphasis low</small>
+      </H2>
+    </StackLayout>
+    <StackLayout gap={1}>
+      <H3>
+        This is header 3 <strong>emphasis high</strong>
+      </H3>
+      <H3>
+        This is header 3 <small>emphasis low</small>
+      </H3>
+    </StackLayout>
+    <StackLayout gap={1}>
+      <H4>
+        This is header 4 <strong>emphasis high</strong>
+      </H4>
+      <H4>
+        This is header 4 <small>emphasis low</small>
+      </H4>
+    </StackLayout>
+  </StackLayout>
 );
 export const Headings = HeadingsComponent.bind({});
 
@@ -151,21 +155,19 @@ export const Headings = HeadingsComponent.bind({});
 
 const LabelCaptionTextComponent: StoryFn<typeof Text> = () => {
   return (
-    <>
+    <StackLayout>
       <LabelText>
         Label text - label - His seasons Shall without form fourth seed so.
       </LabelText>
-      <br />
       <LabelText>
         Label text
         <strong> emphasis high</strong>
       </LabelText>
-      <br />
       <LabelText>
         Label text
         <small> emphasis low</small>
       </LabelText>
-    </>
+    </StackLayout>
   );
 };
 
@@ -175,22 +177,20 @@ export const Label = LabelCaptionTextComponent.bind({});
 
 const TextNotationComponent: StoryFn<typeof Text> = () => {
   return (
-    <>
+    <StackLayout>
       <TextNotation>
         Notation text - notation - His seasons Shall without form fourth seed
         so.
       </TextNotation>
-      <br />
       <TextNotation>
         Notation text
         <strong> emphasis high</strong>
       </TextNotation>
-      <br />
       <TextNotation>
         Notation text
         <small> emphasis low</small>
       </TextNotation>
-    </>
+    </StackLayout>
   );
 };
 
@@ -200,21 +200,19 @@ export const Notation = TextNotationComponent.bind({});
 
 const TextActionComponent: StoryFn<typeof Text> = () => {
   return (
-    <>
+    <StackLayout>
       <TextAction>
         Action text - action - His seasons Shall without form fourth seed so.
       </TextAction>
-      <br />
       <TextAction>
         Action text
         <strong> emphasis high</strong>
       </TextAction>
-      <br />
       <TextAction>
         Action text
         <small> emphasis low</small>
       </TextAction>
-    </>
+    </StackLayout>
   );
 };
 
@@ -224,21 +222,19 @@ export const Action = TextActionComponent.bind({});
 
 const CodeComponent: StoryFn<typeof Text> = () => {
   return (
-    <>
+    <StackLayout>
       <CodeText>
         Code text - code - His seasons Shall without form fourth seed so.
       </CodeText>
-      <br />
       <CodeText>
         Code text
         <strong> emphasis high</strong>
       </CodeText>
-      <br />
       <CodeText>
         Code text
         <small> emphasis low</small>
       </CodeText>
-    </>
+    </StackLayout>
   );
 };
 

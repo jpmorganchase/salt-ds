@@ -23,12 +23,10 @@ export const Default = () => {
   return (
     <SaltProvider density="high" mode="light">
       <Card>
-        <div>
-          <h1 style={{ marginBottom: "var(--salt-spacing-300)" }}>
-            This is Card
-          </h1>
+        <StackLayout>
+          <h1>This is Card</h1>
           <span>Using Nested DOM Elements</span>
-        </div>
+        </StackLayout>
       </Card>
     </SaltProvider>
   );
@@ -44,10 +42,8 @@ export const ToggleTheme = () => {
   return (
     <SaltProvider mode={mode}>
       <Card>
-        <h1 style={{ marginBottom: "var(--salt-spacing-300)" }}>
-          This Card is wrapped with a SaltProvider
-        </h1>
         <StackLayout>
+          <h1>This Card is wrapped with a SaltProvider</h1>
           <ToggleButtonGroup onChange={handleChangeTheme} value={mode}>
             <ToggleButton aria-label="light theme" value="light">
               Light
@@ -104,10 +100,8 @@ export const NestedProviders = () => {
       mode={outerMode === "unset" ? undefined : outerMode}
     >
       <Card>
-        <h1 style={{ marginBottom: "var(--salt-spacing-300)" }}>
-          This Card is wrapped with a SaltProvider
-        </h1>
         <StackLayout>
+          <h1>This Card is wrapped with a SaltProvider</h1>
           <StackLayout gap={1}>
             <ToggleButtonGroup
               aria-label="Outer theme selection"
@@ -139,10 +133,8 @@ export const NestedProviders = () => {
             density={innerDensity === "unset" ? undefined : innerDensity}
           >
             <Card>
-              <h1 style={{ marginBottom: "var(--salt-spacing-300)" }}>
-                Nested Card
-              </h1>
               <StackLayout>
+                <h1>Nested Card</h1>
                 <StackLayout gap={1}>
                   <ToggleButtonGroup
                     aria-label="Inner theme selection"

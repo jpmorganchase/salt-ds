@@ -38,10 +38,7 @@ export const Default: StoryFn<typeof Collapsible> = (args) => (
       <Button>Click</Button>
     </CollapsibleTrigger>
     <CollapsiblePanel data-testid="collapsible-panel">
-      <p
-        data-testid="panel-content"
-        style={{ marginTop: "var(--salt-spacing-100)", maxWidth: "80ch" }}
-      >
+      <Text as="p" data-testid="panel-content" style={{ maxWidth: "80ch" }}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
@@ -49,7 +46,7 @@ export const Default: StoryFn<typeof Collapsible> = (args) => (
         velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
         occaecat cupidatat non proident, sunt in culpa qui officia deserunt
         mollit anim id est laborum.
-      </p>
+      </Text>
     </CollapsiblePanel>
   </Collapsible>
 );

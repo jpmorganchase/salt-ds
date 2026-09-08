@@ -16,52 +16,68 @@ export default {
   component: Card,
 } as Meta<typeof Card>;
 
-const headingStyle = { marginBottom: "var(--salt-spacing-300)" };
-
 export const AllExamplesUsingText: StoryFn<
   QAContainerProps & { className?: string }
 > = (props) => {
   return (
     <QAContainer itemPadding={10} itemWidthAuto {...props}>
       <Card>
-        <H1 style={headingStyle}>Primary card</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Primary card</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card variant="secondary">
-        <H1 style={headingStyle}>Secondary card</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Secondary card</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card variant="tertiary">
-        <H1 style={headingStyle}>Tertiary card</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Tertiary card</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card accent="top">
-        <H1 style={headingStyle}>Accent top</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Accent top</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card accent="right">
-        <H1 style={headingStyle}>Accent right</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Accent right</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card accent="bottom">
-        <H1 style={headingStyle}>Accent bottom</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Accent bottom</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card accent="left">
-        <H1 style={headingStyle}>Accent left</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Accent left</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card>
         <CardContent>
-          <H1 style={headingStyle}>With CardContent</H1>
-          <Text>Content</Text>
+          <StackLayout gap={1}>
+            <H1>With CardContent</H1>
+            <Text>Content</Text>
+          </StackLayout>
         </CardContent>
       </Card>
       <Card accent="top">
         <Panel variant="secondary" style={{ height: 20 }} />
         <CardContent>
-          <H1 style={headingStyle}>Panel + CardContent</H1>
-          <Text>Content</Text>
+          <StackLayout gap={1}>
+            <H1>Panel + CardContent</H1>
+            <Text>Content</Text>
+          </StackLayout>
         </CardContent>
       </Card>
       <Card>
@@ -103,8 +119,10 @@ export const AllExamplesUsingText: StoryFn<
       </StackLayout>
       <Panel variant="tertiary">
         <Card variant="ghost">
-          <H1 style={headingStyle}>Ghost card</H1>
-          <Text>Content</Text>
+          <StackLayout gap={1}>
+            <H1>Ghost card</H1>
+            <Text>Content</Text>
+          </StackLayout>
         </Card>
       </Panel>
     </QAContainer>

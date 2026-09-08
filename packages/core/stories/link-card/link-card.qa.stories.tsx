@@ -5,6 +5,7 @@ import {
   H1,
   LinkCard,
   Panel,
+  StackLayout,
   Text,
 } from "@salt-ds/core";
 
@@ -16,50 +17,66 @@ export default {
   component: LinkCard,
 } as Meta<typeof LinkCard>;
 
-const headingStyle = { marginBottom: "var(--salt-spacing-300)" };
-
 export const AllExamples: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer itemPadding={4} cols={4} itemWidthAuto {...props}>
       <LinkCard>
-        <H1 style={headingStyle}>Primary card</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Primary card</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </LinkCard>
       <LinkCard variant="secondary">
-        <H1 style={headingStyle}>Secondary card</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Secondary card</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </LinkCard>
       <LinkCard variant="tertiary">
-        <H1 style={headingStyle}>Tertiary card</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Tertiary card</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </LinkCard>
       <LinkCard accent="top">
-        <H1 style={headingStyle}>Accent top</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Accent top</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </LinkCard>
       <LinkCard accent="right">
-        <H1 style={headingStyle}>Accent right</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Accent right</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </LinkCard>
       <LinkCard accent="bottom">
-        <H1 style={headingStyle}>Accent bottom</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Accent bottom</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </LinkCard>
       <LinkCard accent="left">
-        <H1 style={headingStyle}>Accent left</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Accent left</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </LinkCard>
       <LinkCard>
         <CardContent>
-          <H1 style={headingStyle}>With CardContent</H1>
-          <Text>Content</Text>
+          <StackLayout gap={1}>
+            <H1>With CardContent</H1>
+            <Text>Content</Text>
+          </StackLayout>
         </CardContent>
       </LinkCard>
       <LinkCard>
         <Panel variant="secondary" style={{ height: 20 }} />
         <CardContent>
-          <H1 style={headingStyle}>Panel + CardContent</H1>
-          <Text>Content</Text>
+          <StackLayout gap={1}>
+            <H1>Panel + CardContent</H1>
+            <Text>Content</Text>
+          </StackLayout>
         </CardContent>
       </LinkCard>
       <LinkCard>
