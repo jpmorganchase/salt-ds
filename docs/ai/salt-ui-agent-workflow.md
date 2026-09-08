@@ -1,56 +1,86 @@
-# Salt UI agent prototype
+# Salt UI local preview with GitHub Copilot CLI
 
-This repository-local prototype uses one authored shared Skill for behavior and
-host-specific profiles only to select creator or reviewer roles. It is not a
-Salt component reference, a package artifact, or an installation mechanism.
+Use this repository-local preview to make an authorized Salt UI change with a
+creator, independent reviewer, and repair loop. It is not a package installer,
+a registry workflow, or a second source of Salt component guidance.
 
-## Copy to another repository
+## Prerequisites
 
-Copy `skills/salt-ui/SKILL.md` and the selected host profiles together,
-preserving their repository-relative paths:
+Install and authenticate the official [GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/install-copilot-cli).
+The native preview was exercised with version 1.0.83 on Windows. Available models
+and authentication depend on the host account; the Skill does not supply either.
 
-- GitHub Copilot: `.github/agents/salt-ui-creator.agent.md` and, when an
-  independent review is useful, `.github/agents/salt-ui-reviewer.agent.md`.
-- Codex: `.codex/agents/salt-ui-creator.toml` and, when an independent review
-  is useful, `.codex/agents/salt-ui-reviewer.toml`.
+Use a project that already has the matching local Salt CLI and Knowledge cohort,
+its manifest and lockfile, and its ordinary browser and project checks. The
+project-local CLI must report compatible packages before Salt-specific choices:
 
-The receiving project must already have matching Salt CLI and Knowledge packages
-available locally. The Skill invokes the installed CLI's declared binary
-directly with Node. If that package or binary is absent, it reports the limitation
-without invoking a package manager, fetching documentation, or substituting a
-static copy of Salt guidance.
+```sh
+node ./node_modules/@salt-ds/cli/bin/salt-ds.js info --json
+```
 
-For an isolated review, include the project's manifest and lockfile with the
-installed cohort so `info` can verify its context. Label screenshots by state
-and supply the current check definitions and results; exclude obsolete diagnostic
-images. The [initial comparison](../../evals/salt-ai/ui-agent/RESULTS.md) found no
-creator-quality advantage, while independent retrieval exposed missed Card reuse.
+If the project uses a different package layout, locate the declared local CLI
+binary instead. Do not use `npx`, a registry, or a cache to fill a missing
+package. The candidate is unreleased; maintainers prepare and verify its local
+package cohort through the existing [contributor build and pack guide](contributing.md#current-workflow-authoring).
+Use the existing [CLI workflow](../../packages/cli/README.md#workflow) for
+workspace selection and bounded local retrieval.
 
-The profile layouts follow the official [GitHub Copilot custom-agent
-format](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-custom-agents)
-and [Codex subagent configuration](https://learn.chatgpt.com/docs/agent-configuration/subagents).
-They are portable configuration, not evidence that every local client supports
-native activation. In this workspace, native Codex activation is unverified:
-the local client exposes model selection but rejected the custom profile type as
-an unknown model. Copilot has only received static validation because an
-executable host is unavailable here.
+Copy these three files together, keeping their repository-relative paths:
 
-When native Codex activation is unavailable, ask an ordinary Codex agent to
-read `skills/salt-ui/SKILL.md` and carry out the creator or reviewer role. For a
-controlled comparison, supply the corresponding TOML profile's
-`developer_instructions` directly with that request. This fallback tests Skill
-and profile behavior; it does not claim that the local host registered the
-profile.
+```text
+skills/salt-ui/SKILL.md
+.github/agents/salt-ui-creator.agent.md
+.github/agents/salt-ui-reviewer.agent.md
+```
 
-The separate Codex CLI smoke test also blocked shell file reads. The desktop
-fresh-agent fallback uses this session's working execution tools to test the
-Skill, profile behavior and Salt retrieval. It does not establish native profile
-activation in that CLI build.
+## Run the preview
 
-## Architecture boundary
+Start the creator interactively:
 
-`skills/salt-ui/SKILL.md` is the sole authored behavioral source. The two
-Copilot and two Codex profiles explicitly load it. The existing
-`skills/salt-design-system/SKILL.md`, Knowledge compiler inputs, and published
-agent-support contract remain unchanged. No installer, launcher, plugin,
-framework, or second Salt knowledge corpus is part of this prototype.
+```sh
+copilot --agent salt-ui-creator
+```
+
+Supply the authorized task in that session. For example, ask the creator to add incident editing to an existing operations
+dashboard, select local Salt coverage for the visible roles, preserve an
+unfinished draft when moving to the worklist and back, cover validation,
+pending, failure and retry, and verify a second created incident without losing
+the first. Supply the application's route, data, state, and acceptance seams;
+the creator does not replace them with a demo stack.
+
+After its initial diff and browser/project evidence, the creator hands the task,
+diff, selection evidence, browser states, and check results to the named,
+read-only `salt-ui-reviewer` subagent. The reviewer independently retrieves only
+needed local Salt records and returns findings, limitations, or `REVIEW PASS`.
+The creator repairs actionable in-scope findings and reruns affected checks. A
+source-changing repair receives a fresh independent confirmation. The flow stops
+after two repair cycles; unresolved findings, missing evidence, or unavailable
+delegation are reported as incomplete rather than self-reviewed success.
+
+## What the preview currently establishes
+
+On Windows, GitHub Copilot CLI 1.0.83 loaded `salt-ui-creator` through `--agent`
+and delegated to the named `salt-ui-reviewer`. A saved-report library and a
+project-team modification completed native creation, review and repair. Both
+saved preview copies passed independent type, build and browser checks. Their
+final native reviewers retrieved task-relevant local records and viewed actual
+screenshots after source edits stopped. The team review required a further
+evidence repair before passing.
+
+See the [follow-up outcome](../../evals/salt-ai/ui-agent/FOLLOW_UP_RESULTS.md)
+for the observed defects, repairs, retained evidence and exact limits. This is
+a supervised local delivery result: it does not establish unattended success,
+model availability for another account, cost or a quality advantage. The apps
+use in-memory fixture state, so refreshing clears their records.
+
+Codex native profile activation and VS Code extension activation remain
+unverified. If a host cannot discover the profiles, create the named reviewer,
+or retain the reviewer's read-only role, stop and report that limit. Supplying
+the instructions to an ordinary agent can test role behavior, but does not prove
+native profile activation or an independent review-and-repair result.
+
+The profiles follow the official [GitHub Copilot custom-agent
+configuration](https://docs.github.com/en/copilot/reference/custom-agents-configuration).
+`skills/salt-ui/SKILL.md` remains the sole authored behavioral source. The
+existing `skills/salt-design-system/SKILL.md`, Knowledge inputs, and published
+agent-support contract remain unchanged.

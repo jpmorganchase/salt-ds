@@ -246,6 +246,53 @@ records the scope, timing, host limitations and unchanged initial outputs.
 The shared `salt-ui` Skill and thin profiles remain experimental and outside the
 published agent-support artifacts. Unit 033/02a remains in progress.
 
+### User-directed usable local agent preview
+
+After reviewing the prototype comparison, the user explicitly authorized
+continuing to a usable native Salt AI preview: a substantial application creation
+and an existing-application modification must complete creation, independent
+review, repair and browser verification through the supported host entrypoint.
+This continues Unit 033/02a from `bd9f302da9887278b7e149cf3408332f6a64fc5a`.
+Preserve the original four attempts, their acceptance script and reported results.
+
+Finish the existing shared Skill, thin host profiles and local setup guide. Use
+native Copilot agent discovery and delegation where available; establish actual
+host behavior before claiming support. This scope permits installing an official
+host client in a task-owned local directory, using existing host authentication,
+and running bounded local creation/review/repair sessions against prepared public
+fixtures. It permits the declared fixture dependencies and exact local Salt
+candidate packages. Model connections belong to the host; Salt retrieval and
+application execution remain local. Do not change account subscriptions or use
+actual consumer repositories. Report any host or account blocker specifically
+and continue independent implementation work.
+
+Reuse the existing task fixtures, application seams and browser checks. Add
+clearly separate follow-up acceptance for repeated additive actions, retained
+drafts across navigation, appropriate covered Salt reuse, and inspectable desktop
+and narrow states. Extend creation into a coherent usable reports workspace;
+preserve the existing project application while adding invitations. Exercise the
+native creator/reviewer repair cycle, then independently check the resulting
+applications. Do not promote a repaired result as an original comparison success.
+Keep generated applications and raw host evidence outside Git, with repeatable
+local setup, usable previews and a concise aggregate outcome in authored docs.
+
+No new personas, orchestration service, installer product, broad content corpus,
+or evaluation framework is needed. Fix observed delivery friction at its existing
+owner. Run affected checks, current-plan/contracts/quality and source review, and
+commit unsigned. Local preview completion does not waive human promotion reviews,
+qualify Doctor, or authorize publication, deployment, consumer contact or release.
+
+The local native preview completed on 8 September 2026. Copilot CLI 1.0.83 ran
+the named creator/reviewer profiles on the reports and project-team fixtures.
+Observed Salt reuse, validation and review-evidence defects were repaired; fresh
+native reviews retrieved local records and viewed screenshots after source
+edits stopped. Both saved preview copies passed independent types, production
+builds and the unchanged initial plus separate follow-up browser checks. The
+authored outcome and limits are in
+`evals/salt-ai/ui-agent/FOLLOW_UP_RESULTS.md`. This is a supervised local delivery
+result, not an unattended-quality or cost result; Unit 033/02a remains in progress
+with its human promotion gates unchanged.
+
 ## Conditional Unit 033/03 — Expand workflows from observed need
 
 Scope: adopt only a genuinely additional workflow or modification case justified by observed need, extending canonical examples/docs and the same schema/assembler/harness. Navigation, the operational worklist and record editing now belong to the single service-worklist journey in Unit 033/02a; do not reimplement them as separate workflow families merely to complete this backlog. Reuse that workflow's preview and fixture setup. Create a separate integration fixture only when it proves a distinct supported environment, as the existing Next App Router fixture does. Reuse selected public material from the operations dashboard without importing repository-only source into consumer output.

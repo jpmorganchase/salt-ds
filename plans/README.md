@@ -133,8 +133,11 @@ publication authority as deferred to Plan 003.
   `plans/evidence/032/control.json`.
 - **External authority:** the active unit's named temporary fixture setup and
   the 2026-09-08 user-authorized Salt UI agent prototype comparison are permitted.
-  The comparison permits four paired local model attempts, a profile smoke check
-  and one reviewer pass; application execution and Salt retrieval remain local.
+  The completed comparison covered four paired local model attempts, a profile
+  smoke check and one reviewer pass. The subsequent user-authorized usable local
+  preview permits task-owned official host setup and native creation/review/repair
+  sessions for the two prepared application journeys; application execution and
+  Salt retrieval remain local.
   Consumer contact, other product model trials, actual consumer installation,
   publication, versioning, dist-tags and deployment remain outside this dispatch.
 - **Successor eligibility:** each next unit requires a reviewed control

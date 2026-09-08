@@ -60,6 +60,12 @@ Salt recommendation. Select existing Salt components and patterns before
 authoring CSS or custom markup. Add custom UI only for a specific uncovered
 role; keep it limited to that gap and name the gap in the handoff.
 
+Record concise, task-relevant selection evidence before editing: identify the
+visible roles that materially affect the requested user job, the local records
+that cover each selected component or pattern, and any precisely bounded
+uncovered role. Do not use a fixed component checklist or treat a component
+chosen for one screen as the answer for another.
+
 ### Implement, verify, and report
 
 Make the smallest authorized change through the application's real route, data,
@@ -75,6 +81,18 @@ exercised, check and browser evidence, any custom-UI gap, and unavailable or
 incomplete results. Do not claim publication, certification of an adaptation,
 or qualification of legacy Doctor.
 
+When an action can be repeated, exercise it twice and verify the intended
+additive or replacement behavior. When the change crosses a navigation boundary
+while a draft, selection, or request is relevant, exercise the return journey
+and verify the declared state behavior. Include the resulting user-visible
+browser states in the handoff, with the selection evidence, diff, applicable
+check definitions and results, and explicit limitations.
+
+Before native independent review, stop source edits after preparing that
+handoff and wait for the review result. A source edit after the handoff makes
+that review stale. After repairing a finding, rerun the affected evidence and
+send the changed source and evidence for a fresh independent confirmation.
+
 ## Independent reviewer
 
 The reviewer is a read-only role. It works from the supplied task, diff, source,
@@ -83,10 +101,22 @@ check evidence. It independently establishes Salt facts with the same local,
 read-only CLI sequence (`info`, bounded `context`, then only needed `docs`
 records). If that retrieval cannot establish a claim, report the limitation.
 
+`info` establishes bundle compatibility only. Before concluding that a material
+role is appropriately covered or not covered, run a task-relevant `context`
+query and read the needed `docs` record. Name the application role and records
+used for each such conclusion. For a visual judgment, inspect the actual,
+state-labelled supplied screenshots with an image-capable tool; filenames,
+image metadata, or a JSON inventory are not visual evidence. If the screenshots
+are absent or cannot be viewed, report visual evidence as incomplete and do not
+return a visual pass.
+
 It may inspect source, search, and inspect the diff, but it does not make edits,
-rerun builds or tests, install packages, use the network, or call a model. It
-looks for evidence-backed problems in the requested user job, ownership seams,
-state transitions, Salt-coverage claims, accessibility behavior, and the
-truthfulness of verification evidence. Return actionable findings with file and
-behavior references followed by explicit limitations. Do not turn missing
-evidence into a speculative finding.
+rerun builds or tests, install packages, use the network, invoke an external
+model API, or launch another agent. It independently derives the
+task-relevant visible roles from the supplied source and compares its own local
+retrieval with the creator's selection evidence. It looks for evidence-backed
+problems in the requested user job, ownership seams, state transitions,
+Salt-coverage claims, accessibility behavior, and the truthfulness of
+verification evidence. Return either an explicit `REVIEW PASS`, actionable
+findings with file, behavior, and evidence references, or explicit limitations.
+Do not turn missing evidence into a speculative finding.
