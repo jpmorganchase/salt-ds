@@ -280,11 +280,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
       setOpen(true, "input");
     }
 
-    let newOption = getOptionFromSearch(typeaheadString.current, activeState);
-
-    if (!newOption) {
-      newOption = getOptionFromSearch(typeaheadString.current);
-    }
+    const newOption = getOptionFromSearch(typeaheadString.current, activeState);
 
     if (newOption) {
       setActive(newOption);

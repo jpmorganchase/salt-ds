@@ -111,11 +111,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
       typeaheadString.current = "";
     }, 500);
 
-    let newOption = getOptionFromSearch(typeaheadString.current, activeState);
-
-    if (!newOption) {
-      newOption = getOptionFromSearch(typeaheadString.current);
-    }
+    const newOption = getOptionFromSearch(typeaheadString.current, activeState);
 
     if (newOption) {
       setActive(newOption);

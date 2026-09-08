@@ -88,9 +88,9 @@ export class ListControlOptionStore<Item> {
 
   getSnapshot(
     id: string,
-    fallbackOption?: OptionValue<Item>,
+    currentOption?: OptionValue<Item>,
   ): OptionStateSnapshot {
-    const option = fallbackOption ?? this.#options.get(id)?.option;
+    const option = currentOption ?? this.#options.get(id)?.option;
     if (!option) return 0;
 
     let snapshot = 0;

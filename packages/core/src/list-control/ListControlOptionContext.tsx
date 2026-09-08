@@ -1,10 +1,10 @@
 import {
-  createContext,
   type ReactNode,
   type RefObject,
   type SyntheticEvent,
   useContext,
 } from "react";
+import { createContext } from "../utils";
 import type { OptionValue } from "./ListControlContext";
 import { ListControlOptionStore } from "./ListControlOptionStore";
 
@@ -36,7 +36,10 @@ const defaultListControlOptionContext: ListControlOptionContextValue<unknown> =
     valueToString: (item) => String(item),
   };
 
-const ListControlOptionContext = createContext(defaultListControlOptionContext);
+const ListControlOptionContext = createContext(
+  "ListControlOptionContext",
+  defaultListControlOptionContext,
+);
 
 export function ListControlOptionContextProvider<Item>({
   children,

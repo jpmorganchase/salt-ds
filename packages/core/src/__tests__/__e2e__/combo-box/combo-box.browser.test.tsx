@@ -603,7 +603,6 @@ describe("Given a ComboBox", () => {
       .elementLocator(document.body)
       .click({ position: { x: 0, y: 0 } });
     await expect.element(listbox()).not.toBeInTheDocument();
-    await expect.element(collapsedList()).not.toBeVisible();
 
     input().element().focus();
     await userEvent.keyboard("{ArrowDown}");
@@ -626,7 +625,7 @@ describe("Given a ComboBox", () => {
       .elementLocator(document.body)
       .click({ position: { x: 0, y: 0 } });
     await expect.element(input()).toHaveAttribute("aria-expanded", "false");
-    await expect.element(collapsedList()).not.toBeVisible();
+    await expect.element(listbox()).not.toBeInTheDocument();
   });
 
   it("removes active descendant whenever the popup closes", async () => {
