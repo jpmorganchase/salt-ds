@@ -203,6 +203,49 @@ Local verification of the service-worklist iteration on 2026-09-08 passed all 73
 
 This local candidate is bundle `sha256:481a857e8a9125d24ef900aa93efedf8e9439ed17010e447a13f8bfb9fd0717b`; the sample-app receipt is `sha256:cabbd97b883a08e5fe6c783015cb0b5e4b5cb1d9814ed9e9d4b9c5cf3427471f`. Knowledge contains 624 packed files, 3,799,560 compressed bytes and 25,699,352 unpacked bytes; CLI remains 13 files, 52,343 compressed bytes and 230,914 unpacked bytes. These results establish local runnable coverage only. Owner/design/manual accessibility review, the independent maintainer exercise and actual consumer observations remain pending, and Unit 033/02a remains in progress. Nothing was published or deployed.
 
+### User-directed Salt UI agent prototype and local comparison
+
+On 2026-09-08 the user authorized a holistic Salt UI creator, a separate reviewer,
+and a small comparison against an ordinary agent using the current guidance,
+including delegation to less expensive models. This is bounded work within
+Unit 033/02a. Add thin Copilot and Codex profiles with one shared workflow that
+uses the existing installed Knowledge and public Salt APIs. The profiles do
+not create another API corpus or depend on the unqualified Doctor product.
+Keep the existing published support artifacts and candidate unchanged.
+
+The exception to the model-trial boundary authorizes four local attempts: two
+prepared Vite fixtures, each run once with ordinary current guidance and once
+with the creator workflow. One task creates a saved-reports screen; the other
+adds team invitations while preserving the starter's existing actions. Freeze
+task briefs and acceptance before inspecting outputs. Use the same source,
+installed cohort, model, reasoning effort, tools and time budget in each pair.
+Fixture setup may obtain declared dependencies and install exact local Salt
+tarballs in temporary evaluation directories. Only the host model connection
+is online during attempts; application execution and Salt retrieval stay local.
+Do not install in actual consumer projects or contact consumers.
+
+Allow a small host-profile smoke check and one independent reviewer pass after
+the four attempts. Record initial acceptance separately from any subsequent
+repair. Compare public Salt reuse, working behavior, browser appearance,
+corrections, elapsed time and available usage counts. Keep raw prompts,
+transcripts and model-produced trial applications outside Git. Commit only
+authored profiles, task fixtures/checks and an aggregate report with limitations.
+Two task pairs cannot establish general model superiority, human design
+acceptance or consumer value. An unavailable host is untested, not passed.
+
+This prototype does not dispatch another unit, change workflow readiness or
+authorize publication, versioning, deployment or consumer installation. Manual
+promotion reviews and the independent maintainer exercise remain outstanding.
+
+The local comparison completed four Terra attempts using the same candidate
+bundle. Both conditions passed the two named automated checklists, but neither
+reused Salt Card for the report summary. Independent review and later diagnostic
+probes found additional layout and state-retention gaps; the prototype did not
+demonstrate a creator-quality advantage. The [comparison report](../evals/salt-ai/ui-agent/RESULTS.md)
+records the scope, timing, host limitations and unchanged initial outputs.
+The shared `salt-ui` Skill and thin profiles remain experimental and outside the
+published agent-support artifacts. Unit 033/02a remains in progress.
+
 ## Conditional Unit 033/03 — Expand workflows from observed need
 
 Scope: adopt only a genuinely additional workflow or modification case justified by observed need, extending canonical examples/docs and the same schema/assembler/harness. Navigation, the operational worklist and record editing now belong to the single service-worklist journey in Unit 033/02a; do not reimplement them as separate workflow families merely to complete this backlog. Reuse that workflow's preview and fixture setup. Create a separate integration fixture only when it proves a distinct supported environment, as the existing Next App Router fixture does. Reuse selected public material from the operations dashboard without importing repository-only source into consumer output.

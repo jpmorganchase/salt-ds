@@ -131,10 +131,12 @@ publication authority as deferred to Plan 003.
 - **Foundation completion:** Plan 032 is DONE at
   `d2c7000865da920655d6461eb46e95f7eb84db43`; its terminal control is
   `plans/evidence/032/control.json`.
-- **External authority:** only the active unit's named temporary fixture setup
-  is authorized. Product runtime remains offline/read-only. Consumer contact,
-  product model trials, actual consumer installation, publication, versioning,
-  dist-tags and deployment remain outside this dispatch.
+- **External authority:** the active unit's named temporary fixture setup and
+  the 2026-09-08 user-authorized Salt UI agent prototype comparison are permitted.
+  The comparison permits four paired local model attempts, a profile smoke check
+  and one reviewer pass; application execution and Salt retrieval remain local.
+  Consumer contact, other product model trials, actual consumer installation,
+  publication, versioning, dist-tags and deployment remain outside this dispatch.
 - **Successor eligibility:** each next unit requires a reviewed control
   transition with actual completion evidence; Plan 003 remains deferred.
 
