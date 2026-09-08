@@ -70,3 +70,68 @@ Also run the exact verification block for the active execution unit. Record
 commands, package-size changes, semantic/bundle identities, and limitations in
 the review description. Use Salt's public support-and-contributions destination;
 do not add AI-scoped GitHub Issues routing.
+
+## Current workflow authoring
+
+The record-form workflow is maintained from its application recipe and the
+selected Forms and Button source guidance. Do not edit generated manifests,
+Knowledge output, web files, or a second prose copy. After changing behaviour
+or guidance, first regenerate the public-example inventory:
+
+```shell
+yarn examples:manifest
+```
+
+Then run the ordinary heavy verification path. It deliberately separates
+generation from checks, and needs built packages before checks that read them:
+
+```shell
+yarn check:public-examples
+yarn build:ai-tooling
+yarn vitest run packages/knowledge/src packages/cli/src --maxWorkers=1
+yarn typecheck:ai-tooling
+yarn validate:salt-ai:contracts
+yarn check:ai-tooling:pack -- --report dist/salt-ai-pack/plan-033.json
+yarn check:salt-sample-apps -- --app operations-dashboard
+yarn build:salt-ai-web -- --workflow-cohort-receipt dist/salt-sample-apps/operations-dashboard-cohort-receipt.json --prepare-site-preview
+yarn verify:salt-ai-web -- --verify-site-preview
+yarn check:salt-docs-authoring -- --current-product --require-web-route-map dist/salt-ai-web/route-map.json
+yarn check:public-docs
+```
+
+`check:salt-docs-authoring -- --current-product` checks current source
+generation, the selected recipe and guidance, then reruns the existing web
+preview verifier against the explicit generated route map. It rejects stale
+bundle, bootstrap, route-map, or selected-guidance identities. It is not the
+historical stage-based authoring audit, and it requires the route map produced
+by the web build. `check:public-examples` and `check:public-docs` remain
+separate checks.
+
+For a local, offline author preview, opt in before producing the Mosaic
+snapshot and site build. The opt-in replaces Google font loading with the
+declared Fontsource assets and omits the release-data HTTP source; it leaves
+the normal site path unchanged.
+
+The generated `site/public/ai` directory is only for local previews. Ordinary
+site builds reject it; remove that generated directory before returning to a
+normal build. The workflow and Button resource panels appear only in the
+explicit offline-author preview.
+
+```shell
+yarn workspace @salt-ds/site gen:snapshot:offline-author
+yarn workspace @salt-ds/site build:offline-author
+yarn workspace @salt-ds/site serve:offline-author
+# Inspect the served Forms and Button pages in a browser.
+# Separately, test the generated static-artifact component surface:
+yarn vitest run --config vitest.browser.config.mts --browser.headless test/browser/salt-workflow-preview.browser.test.tsx
+```
+
+The automated path proves generated-source consistency and the current
+workflow's installed-package reconstruction. A maintainer who did not build
+the compiler must also make one realistic record-form behaviour and guidance
+change using this guide, regenerate, preview, and review the four rendered
+surfaces. Record active elapsed time, manually edited source files, repeated
+facts, and friction in the ordinary review. Deliberately remove a declared
+file or use unsupported content once, and record the diagnostic and the source
+correction it identifies. That exercise is human review evidence; it does not
+replace the automated checks above.

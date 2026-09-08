@@ -9,3 +9,15 @@
   flex-direction: row;
   gap: var(--salt-spacing-100);
 }
+
+.referenceLink {
+  display: inline-block;
+  margin-bottom: var(--salt-spacing-400);
+}
+
+.workflowContent {
+  display: block;
+  max-width: var(--site-content-max-width);
+  min-width: 0;
+  width: 100%;
+}

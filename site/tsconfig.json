@@ -4,6 +4,7 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
+      "@site/fonts": ["./src/fonts/index.ts"],
       "@salt-ds/date-adapters/*": [
         "../packages/date-adapters/src/*-adapter/index.ts"
       ],

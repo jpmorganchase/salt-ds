@@ -13,6 +13,9 @@
     "dev": "next dev --webpack",
     "start": "next start",
     "gen:snapshot": "yarn gen:props && yarn gen:css && yarn mosaic build --out snapshots --name latest --config mosaic.config.mjs",
+    "gen:snapshot:offline-author": "yarn gen:props && yarn gen:css && yarn node ./cleanOfflineAuthorSnapshot.mjs && yarn cross-env SALT_OFFLINE_AUTHOR_PREVIEW=1 yarn mosaic build --out snapshots --name offline-author --config mosaic.config.mjs",
+    "build:offline-author": "yarn cross-env SALT_OFFLINE_AUTHOR_PREVIEW=1 MOSAIC_MODE='snapshot-file' MOSAIC_SNAPSHOT_DIR='snapshots/offline-author' yarn build",
+    "serve:offline-author": "yarn cross-env SALT_OFFLINE_AUTHOR_PREVIEW=1 MOSAIC_MODE='snapshot-file' MOSAIC_SNAPSHOT_DIR='snapshots/offline-author' yarn dev",
     "serve:snapshot:file": "yarn cross-env MOSAIC_MODE='snapshot-file' concurrently --kill-others 'yarn dev'",
     "serve:snapshot:s3": "yarn cross-env MOSAIC_MODE='snapshot-s3' concurrently --kill-others 'yarn dev'",
     "serve:mosaic": "yarn mosaic serve -c ./mosaic.config.mjs -p 8080",
@@ -23,6 +26,8 @@
   },
   "dependencies": {
     "@date-fns/tz": "^1.4.1",
+    "@fontsource/open-sans": "^5.0.0",
+    "@fontsource/pt-mono": "^5.0.12",
     "@jpmorganchase/mosaic-cli": "0.1.0-beta.98",
     "@jpmorganchase/mosaic-layouts": "0.1.0-beta.98",
     "@jpmorganchase/mosaic-plugins": "0.1.0-beta.98",

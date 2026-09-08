@@ -6,6 +6,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   assertPackedWorkflowManifestMatchesSource,
+  assertWorkflowPreviewReferenceClosure,
   readPackedWorkflowRecipe,
   selectSampleAppNames,
   unavailableAnalysis,
@@ -88,6 +89,27 @@ function workflowProof() {
       "narrow-320-css-px.png",
     ],
     validation_removed_variant: "rejected",
+  };
+}
+
+function workflowPreviewProof() {
+  return {
+    entry: "index.html",
+    files: [
+      {
+        path: "index.html",
+        media_type: "text/html; charset=utf-8",
+        bytes: 1,
+        sha256: digest,
+      },
+    ],
+    tree_sha256: digest,
+    recipe: {
+      artifact:
+        "examples/workflows/operations-dashboard.record-form/recipe.json",
+      artifact_sha256: digest,
+      content_identity: digest,
+    },
   };
 }
 
@@ -365,9 +387,10 @@ describe("packed workflow reconstruction input", () => {
   }
 
   it("uses only installed Knowledge artifacts and never reads a repository app", () => {
-    const { store, calls } = fixture();
+    const { store, calls, artifacts } = fixture();
     const workflow = readPackedWorkflowRecipe(store);
     expect(workflow.id).toBe(workflowId);
+    expect(workflow.recipeBytes).toEqual(artifacts.get(recipePath));
     expect(workflow.files.map((file) => file.path)).toEqual(
       expect.arrayContaining(filePaths),
     );
@@ -424,6 +447,81 @@ describe("packed workflow reconstruction input", () => {
   });
 });
 
+describe("compiled workflow preview closure", () => {
+  const file = (path, media_type, source) => ({
+    path,
+    media_type,
+    content: Buffer.from(source),
+  });
+
+  it("accepts a closed relative Vite HTML and CSS tree", () => {
+    const files = [
+      file(
+        "index.html",
+        "text/html; charset=utf-8",
+        '<link href="./assets/app.css" rel="stylesheet"><script src="./assets/app.js"></script>',
+      ),
+      file(
+        "assets/app.css",
+        "text/css; charset=utf-8",
+        '@import "./theme.css";a{background:url("./mark.svg#icon")}b{background:url(data:image/png;base64,AA==)}c{src:url(data:font/woff2;base64,AA==)}',
+      ),
+      file("assets/app.js", "text/javascript; charset=utf-8", "export {};"),
+      file("assets/mark.svg", "image/svg+xml", "<svg></svg>"),
+      file("assets/theme.css", "text/css; charset=utf-8", "a{color:red}"),
+    ];
+    expect(() => assertWorkflowPreviewReferenceClosure(files)).not.toThrow();
+  });
+
+  it("rejects missing local and external HTML references", () => {
+    expect(() =>
+      assertWorkflowPreviewReferenceClosure([
+        file(
+          "index.html",
+          "text/html; charset=utf-8",
+          '<script src="./missing.js"></script>',
+        ),
+      ]),
+    ).toThrow(/missing from the retained tree/u);
+    expect(() =>
+      assertWorkflowPreviewReferenceClosure([
+        file(
+          "index.html",
+          "text/html; charset=utf-8",
+          '<script src="https://example.invalid/app.js"></script>',
+        ),
+      ]),
+    ).toThrow(/external or root-absolute/u);
+  });
+
+  it("rejects missing local and external CSS references", () => {
+    expect(() =>
+      assertWorkflowPreviewReferenceClosure([
+        file(
+          "index.html",
+          "text/html; charset=utf-8",
+          '<link href="./app.css" rel="stylesheet">',
+        ),
+        file("app.css", "text/css; charset=utf-8", '@import "./missing.css";'),
+      ]),
+    ).toThrow(/missing from the retained tree/u);
+    expect(() =>
+      assertWorkflowPreviewReferenceClosure([
+        file(
+          "index.html",
+          "text/html; charset=utf-8",
+          '<link href="./app.css" rel="stylesheet">',
+        ),
+        file(
+          "app.css",
+          "text/css; charset=utf-8",
+          "a{background:url(//cdn.example.invalid/a.png)}",
+        ),
+      ]),
+    ).toThrow(/external or root-absolute/u);
+  });
+});
+
 describe("current sample-app CLI checks", () => {
   it("propagates a supported command failure", async () => {
     const outputs = commandResults();
@@ -456,6 +554,18 @@ describe("current sample-app receipt", () => {
     expect(validate(receipt(commands)), JSON.stringify(validate.errors)).toBe(
       true,
     );
+  });
+
+  it("keeps preview optional while validating a present descriptor", async () => {
+    const commands = await currentCommands();
+    const validate = await receiptValidator();
+    const withPreview = receipt(commands);
+    withPreview.checks[0].workflow.preview = workflowPreviewProof();
+    expect(validate(withPreview), JSON.stringify(validate.errors)).toBe(true);
+
+    const unsafe = structuredClone(withPreview);
+    unsafe.checks[0].workflow.preview.files[0].path = "../index.html";
+    expect(validate(unsafe)).toBe(false);
   });
 
   it("accepts one check for every member of the full app cohort", async () => {

@@ -87,6 +87,7 @@ const legacyReactAliases: Record<string, string> =
     : {};
 
 export default defineConfig({
+  publicDir: path.resolve(rootDir, "./site/public"),
   plugins: [react(), cssInline()],
   define: {
     "process.env": {},

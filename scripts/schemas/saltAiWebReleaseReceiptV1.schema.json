@@ -24,29 +24,65 @@
     "deployment"
   ],
   "properties": {
-    "$schema": { "const": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-web-release-receipt-1.json" },
-    "schema_version": { "const": "1.0.0" },
-    "contract": { "const": "salt-ai-web-release-receipt/1" },
-    "channel": { "const": "beta-candidate" },
-    "publishable": { "const": false },
-    "bundle_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$" },
-    "bundle_digest": { "$ref": "#/$defs/digest" },
-    "semantic_digest": { "$ref": "#/$defs/digest" },
-    "digest_segment": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-    "knowledge_manifest": { "$ref": "#/$defs/artifact" },
-    "distribution_projection_sha256": { "$ref": "#/$defs/digest" },
+    "$schema": {
+      "const": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-web-release-receipt-1.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "contract": {
+      "const": "salt-ai-web-release-receipt/1"
+    },
+    "channel": {
+      "const": "beta-candidate"
+    },
+    "publishable": {
+      "const": false
+    },
+    "bundle_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "bundle_digest": {
+      "$ref": "#/$defs/digest"
+    },
+    "semantic_digest": {
+      "$ref": "#/$defs/digest"
+    },
+    "digest_segment": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "knowledge_manifest": {
+      "$ref": "#/$defs/artifact"
+    },
+    "distribution_projection_sha256": {
+      "$ref": "#/$defs/digest"
+    },
     "public_docs_preview": {
       "anyOf": [
-        { "type": "null" },
+        {
+          "type": "null"
+        },
         {
           "type": "object",
           "additionalProperties": false,
           "required": ["path", "sha256", "bytes", "projection_sha256"],
           "properties": {
-            "path": { "type": "string", "minLength": 1 },
-            "sha256": { "$ref": "#/$defs/digest" },
-            "bytes": { "type": "integer", "minimum": 1 },
-            "projection_sha256": { "$ref": "#/$defs/digest" }
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "$ref": "#/$defs/digest"
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "projection_sha256": {
+              "$ref": "#/$defs/digest"
+            }
           }
         }
       ]
@@ -56,10 +92,20 @@
       "additionalProperties": false,
       "required": ["path", "sha256", "bytes", "routes"],
       "properties": {
-        "path": { "const": "dist/salt-ai-web/route-map.json" },
-        "sha256": { "$ref": "#/$defs/digest" },
-        "bytes": { "type": "integer", "minimum": 1 },
-        "routes": { "type": "integer", "minimum": 1 }
+        "path": {
+          "const": "dist/salt-ai-web/route-map.json"
+        },
+        "sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "routes": {
+          "type": "integer",
+          "minimum": 1
+        }
       }
     },
     "pointers": {
@@ -67,10 +113,19 @@
       "additionalProperties": false,
       "required": ["beta", "immutable", "current", "root"],
       "properties": {
-        "beta": { "const": "/ai/beta/llms.txt" },
-        "immutable": { "type": "string", "pattern": "^/ai/v1/[0-9a-f]{64}/llms\\.txt$" },
-        "current": { "type": "null" },
-        "root": { "type": "null" }
+        "beta": {
+          "const": "/ai/beta/llms.txt"
+        },
+        "immutable": {
+          "type": "string",
+          "pattern": "^/ai/v1/[0-9a-f]{64}/llms\\.txt$"
+        },
+        "current": {
+          "type": "null"
+        },
+        "root": {
+          "type": "null"
+        }
       }
     },
     "agent_support": {
@@ -78,23 +133,98 @@
       "additionalProperties": false,
       "required": ["skill", "agents_pointer"],
       "properties": {
-        "skill": { "$ref": "#/$defs/agentArtifact" },
-        "agents_pointer": { "$ref": "#/$defs/agentArtifact" }
+        "skill": {
+          "$ref": "#/$defs/agentArtifact"
+        },
+        "agents_pointer": {
+          "$ref": "#/$defs/agentArtifact"
+        }
       }
     },
-    "production_navigation": { "const": false },
-    "deployment": { "const": "not-performed" }
+    "production_navigation": {
+      "const": false
+    },
+    "deployment": {
+      "const": "not-performed"
+    },
+    "workflow_preview": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "sha256",
+            "bytes",
+            "tree_sha256",
+            "route",
+            "bootstrap"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "$ref": "#/$defs/digest"
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "tree_sha256": {
+              "$ref": "#/$defs/digest"
+            },
+            "route": {
+              "type": "string",
+              "pattern": "^/ai/v1/[0-9a-f]{64}/examples/workflows/operations-dashboard\\.record-form/preview/[0-9a-f]{64}/index\\.html$"
+            },
+            "bootstrap": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "sha256", "bytes"],
+              "properties": {
+                "path": {
+                  "const": "/ai/development/bootstrap.json"
+                },
+                "sha256": {
+                  "$ref": "#/$defs/digest"
+                },
+                "bytes": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
   },
   "$defs": {
-    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
     "artifact": {
       "type": "object",
       "additionalProperties": false,
       "required": ["path", "sha256", "bytes"],
       "properties": {
-        "path": { "type": "string", "minLength": 1 },
-        "sha256": { "$ref": "#/$defs/digest" },
-        "bytes": { "type": "integer", "minimum": 1 }
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        }
       }
     },
     "agentArtifact": {
@@ -102,10 +232,21 @@
       "additionalProperties": false,
       "required": ["npm_path", "web_path", "sha256", "bytes"],
       "properties": {
-        "npm_path": { "type": "string", "pattern": "^skills/salt-design-system/" },
-        "web_path": { "type": "string", "pattern": "^/ai/v1/[0-9a-f]{64}/skills/salt-design-system/" },
-        "sha256": { "$ref": "#/$defs/digest" },
-        "bytes": { "type": "integer", "minimum": 1 }
+        "npm_path": {
+          "type": "string",
+          "pattern": "^skills/salt-design-system/"
+        },
+        "web_path": {
+          "type": "string",
+          "pattern": "^/ai/v1/[0-9a-f]{64}/skills/salt-design-system/"
+        },
+        "sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        }
       }
     }
   }

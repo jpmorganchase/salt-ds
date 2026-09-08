@@ -4568,6 +4568,8 @@ __metadata:
   resolution: "@salt-ds/site@workspace:site"
   dependencies:
     "@date-fns/tz": "npm:^1.4.1"
+    "@fontsource/open-sans": "npm:^5.0.0"
+    "@fontsource/pt-mono": "npm:^5.0.12"
     "@jpmorganchase/mosaic-cli": "npm:0.1.0-beta.98"
     "@jpmorganchase/mosaic-layouts": "npm:0.1.0-beta.98"
     "@jpmorganchase/mosaic-plugins": "npm:0.1.0-beta.98"

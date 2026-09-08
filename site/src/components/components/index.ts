@@ -3,3 +3,4 @@ export * from "./LivePreview";
 export * from "./LivePreviewProvider";
 export * from "./PropsTable";
 export * from "./ReactResizablePanelsThemeProvider";
+export * from "./WorkflowPreview";

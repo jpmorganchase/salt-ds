@@ -16,6 +16,7 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { type SyntheticEvent, useEffect } from "react";
 import { LivePreviewProvider } from "../../components/components/LivePreviewProvider";
+import { ButtonLoadingResources } from "../../components/components/WorkflowPreview";
 import { LinkList } from "../../components/link-list/LinkList";
 import { PageNavigation } from "../../components/navigation/PageNavigation";
 import { TableOfContents } from "../../components/toc/index";
@@ -72,6 +73,8 @@ export interface Data {
 }
 
 export type CustomSiteState = SiteState & { data?: Data };
+const offlineAuthorPreview =
+  process.env.NEXT_PUBLIC_SALT_OFFLINE_AUTHOR_PREVIEW === "1";
 
 function getRelatedComponentLinks(
   relatedComponents: Data["relatedComponents"],
@@ -101,6 +104,8 @@ export const DetailComponent = ({ children }: LayoutProps) => {
   );
 
   const isOverview = route?.endsWith("components/index");
+  const hasButtonLoadingResources =
+    offlineAuthorPreview && route === "/salt/components/button/examples";
 
   const currentTab = tabs.find(({ name }) => route?.includes(name));
   const currentTabName = currentTab?.name ?? tabs[0].name;
@@ -168,7 +173,12 @@ export const DetailComponent = ({ children }: LayoutProps) => {
             </TabBar>
             {tabs.map(({ name }) => (
               <TabPanel className={styles.tabPanel} key={name} value={name}>
-                {name === currentTabName ? children : null}
+                {name === currentTabName ? (
+                  <>
+                    {children}
+                    {hasButtonLoadingResources && <ButtonLoadingResources />}
+                  </>
+                ) : null}
               </TabPanel>
             ))}
           </Tabs>

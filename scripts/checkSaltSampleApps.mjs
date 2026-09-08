@@ -25,6 +25,7 @@ import { chromium } from "playwright";
 import {
   assertPackedWorkflowManifestMatchesSource,
   readPackedWorkflowRecipe,
+  retainViteWorkflowPreview,
   selectSampleAppNames,
   unavailableAnalysis,
   verifyCurrentCliCommands,
@@ -1459,6 +1460,7 @@ try {
   for (const app of apps) {
     const isolatedRoot = path.join(tempRoot, app.name);
     let isolatedManifestBytes;
+    let packedWorkflow;
     let replayedLockfileBytes;
     if (app.name === "operations-dashboard") {
       // Bootstrap only enough consumer state to install the packed cohort. The
@@ -1488,15 +1490,18 @@ try {
         replayedLockfileBytes.toString("utf8"),
       );
       await verifyInstalledCohort(bootstrapRoot, packed, bootstrapLockfile);
-      const workflow = await readInstalledWorkflowRecipe(
+      packedWorkflow = await readInstalledWorkflowRecipe(
         bootstrapRoot,
         knowledgeManifest,
       );
       assertPackedWorkflowManifestMatchesSource(
-        workflow.manifestBytes,
+        packedWorkflow.manifestBytes,
         app.manifestBytes,
       );
-      await materializePackedWorkflow({ root: isolatedRoot, workflow });
+      await materializePackedWorkflow({
+        root: isolatedRoot,
+        workflow: packedWorkflow,
+      });
       await cp(
         path.join(bootstrapRoot, "node_modules"),
         path.join(isolatedRoot, "node_modules"),
@@ -1604,6 +1609,11 @@ try {
         "Validation-removed operations dashboard was not rejected by the shared workflow assertions",
       );
       browser.workflow.validation_removed_variant = "rejected";
+      browser.workflow.preview = await retainViteWorkflowPreview({
+        appRoot: isolatedRoot,
+        receiptArtifactRoot: artifactRoot,
+        workflow: packedWorkflow,
+      });
     }
 
     appReceipts.push({
