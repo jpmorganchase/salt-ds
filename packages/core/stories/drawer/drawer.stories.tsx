@@ -174,20 +174,15 @@ export const TopDrawerUsageExample = () => {
       >
         <StackLayout>
           <DrawerCloseButton onClick={handleClose} />
-          <div>
-            <H2
-              id={headerId}
-              style={{ marginBottom: "var(--salt-spacing-200)" }}
-            >
-              Section title
-            </H2>
+          <StackLayout gap={1}>
+            <H2 id={headerId}>Section title</H2>
             <Text>
               Incididunt adipisicing deserunt nostrud ullamco consequat
               consectetur magna id do irure labore fugiat. Eiusmod pariatur
               officia elit ad. Ullamco adipisicing Lorem amet velit in do
               reprehenderit nostrud eu aute voluptate quis quis.
             </Text>
-          </div>
+          </StackLayout>
           <FlexLayout>
             <FormFieldExample />
             <FormFieldExample />
@@ -229,20 +224,15 @@ export const RightDrawerUsageExample = () => {
       >
         <StackLayout>
           <DrawerCloseButton onClick={handleClose} />
-          <div>
-            <H2
-              id={headerId}
-              style={{ marginBottom: "var(--salt-spacing-200)" }}
-            >
-              Section Title
-            </H2>
+          <StackLayout gap={1}>
+            <H2 id={headerId}>Section Title</H2>
             <Text>
               Incididunt adipisicing deserunt nostrud ullamco consequat
               consectetur magna id do irure labore fugiat. Eiusmod pariatur
               officia elit ad. Ullamco adipisicing Lorem amet velit in do
               reprehenderit nostrud eu aute voluptate quis quis.
             </Text>
-          </div>
+          </StackLayout>
           <FormFieldExample />
           <FormFieldExample />
           <FormFieldExample />
@@ -302,25 +292,23 @@ export const BottomDrawerUsageExample = () => {
         aria-labelledby={headerId}
       >
         <DrawerCloseButton onClick={handleClose} />
-        <StackLayout gap={0}>
-          <H2 id={headerId} style={{ marginBottom: "var(--salt-spacing-200)" }}>
-            Bottom drawer use case
-          </H2>
+        <StackLayout>
+          <H2 id={headerId}>Bottom drawer use case</H2>
           <FlowLayout>
             <Card style={{ width: "256px" }}>
-              <StackLayout gap={2}>
+              <StackLayout gap={1}>
                 <H2>{exampleData[0].title}</H2>
                 <Text>{exampleData[0].content}</Text>
               </StackLayout>
             </Card>
             <Card style={{ width: "256px" }}>
-              <StackLayout gap={2}>
+              <StackLayout gap={1}>
                 <H2>{exampleData[1].title}</H2>
                 <Text>{exampleData[1].content}</Text>
               </StackLayout>
             </Card>
             <Card style={{ width: "256px" }}>
-              <StackLayout gap={2}>
+              <StackLayout gap={1}>
                 <H2>{exampleData[2].title}</H2>
                 <Text>{exampleData[2].content}</Text>
               </StackLayout>
@@ -374,10 +362,8 @@ export const OptionalCloseAction = () => {
         style={{ width: 500 }}
         aria-labelledby={headerId}
       >
-        <H2 id={headerId} style={{ marginBottom: "var(--salt-spacing-200)" }}>
-          Add your delivery details
-        </H2>
         <StackLayout>
+          <H2 id={headerId}>Add your delivery details</H2>
           <FormField>
             <FormFieldLabel>House no.</FormFieldLabel>
             <Input />

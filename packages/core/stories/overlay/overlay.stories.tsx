@@ -3,6 +3,7 @@ import {
   Checkbox,
   CheckboxGroup,
   Divider,
+  H3,
   Overlay,
   OverlayHeader,
   OverlayPanel,
@@ -151,14 +152,14 @@ export const CloseButton = ({ onOpenChange }: OverlayProps) => {
       <OverlayPanel aria-labelledby={id}>
         <OverlayHeader header="Title" actions={closeButton} id={id} />
         <OverlayPanelContent>
-          <div>
-            Content of Overlay
-            <br />
-            <br />
-            <Tooltip content={"I'm a tooltip"}>
-              <Button>hover me</Button>
-            </Tooltip>
-          </div>
+          <StackLayout gap={1}>
+            <Text>Content of Overlay</Text>
+            <div>
+              <Tooltip content={"I'm a tooltip"}>
+                <Button>hover me</Button>
+              </Tooltip>
+            </div>
+          </StackLayout>
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
@@ -279,35 +280,28 @@ const WithActionsContent = ({
   };
 
   return (
-    <>
-      <h3 id={id} style={{ marginBottom: "var(--salt-spacing-100)" }}>
+    <StackLayout gap={1}>
+      <H3 id={id}>Export</H3>
+      <Checkbox
+        indeterminate={indeterminate}
+        checked={!indeterminate}
+        label={`${controlledValues.length} of 2 selected`}
+        onChange={handleChange}
+      />
+      <Divider variant="secondary" />
+      <CheckboxGroup
+        checkedValues={controlledValues}
+        onChange={handleGroupChange}
+      >
+        {checkboxesData.map((data) => (
+          <Checkbox key={data.value} {...data} />
+        ))}
+      </CheckboxGroup>
+      <Divider variant="secondary" />
+      <Button style={{ float: "right", marginRight: 2 }} onClick={handleExport}>
         Export
-      </h3>
-      <StackLayout gap={1}>
-        <Checkbox
-          indeterminate={indeterminate}
-          checked={!indeterminate}
-          label={`${controlledValues.length} of 2 selected`}
-          onChange={handleChange}
-        />
-        <Divider variant="secondary" />
-        <CheckboxGroup
-          checkedValues={controlledValues}
-          onChange={handleGroupChange}
-        >
-          {checkboxesData.map((data) => (
-            <Checkbox key={data.value} {...data} />
-          ))}
-        </CheckboxGroup>
-        <Divider variant="secondary" />
-        <Button
-          style={{ float: "right", marginRight: 2 }}
-          onClick={handleExport}
-        >
-          Export
-        </Button>
-      </StackLayout>
-    </>
+      </Button>
+    </StackLayout>
   );
 };
 
