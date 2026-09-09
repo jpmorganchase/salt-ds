@@ -25,6 +25,14 @@ package cohort through the existing [contributor build and pack guide](contribut
 Use the existing [CLI workflow](../../packages/cli/README.md#workflow) for
 workspace selection and bounded local retrieval.
 
+For component adaptation, follow the example references returned by local
+`context` or `docs`, then resolve the selected `#example/` reference with `docs`
+to read its complete source and available supporting files. The example's
+limitations distinguish source illustrations from independently verified
+recipes. Assess the adaptation against the task, usage guidance and observable
+behavior; the reference demonstrates one arrangement without defining every
+valid arrangement.
+
 Copy these three files together, keeping their repository-relative paths:
 
 ```text

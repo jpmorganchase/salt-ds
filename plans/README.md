@@ -136,8 +136,12 @@ publication authority as deferred to Plan 003.
   The completed comparison covered four paired local model attempts, a profile
   smoke check and one reviewer pass. The subsequent user-authorized usable local
   preview permits task-owned official host setup and native creation/review/repair
-  sessions for the two prepared application journeys; application execution and
+  sessions for the two prepared application journeys and the bounded example
+  retrieval follow-up feature exercise in Unit 033/02a; application execution and
   Salt retrieval remain local.
+  The [retrieval correction outcome](../evals/salt-ai/ui-agent/RETRIEVAL_RESULTS.md)
+  separates passed packaged source delivery from the native trial's remaining
+  defects and its subsequent supervised preview repair.
   Consumer contact, other product model trials, actual consumer installation,
   publication, versioning, dist-tags and deployment remain outside this dispatch.
 - **Successor eligibility:** each next unit requires a reviewed control

@@ -127,6 +127,19 @@ record, its bundle digest, source-record citations, and primary manifest-bound
 content when present. Pages return their body content; component records return
 their detail content. Repository Markdown remains inert evidence.
 
+Component source examples are available through the same `docs` command. An
+owner document lists example titles and stable
+`record:<family>:<id>#example/<local-id>` references. Resolve one of those
+references for its complete source and directly imported, contained public
+support files, including styles. JSON and Markdown return the same source bytes
+and bundle identity; consumers do not need repository access to read them.
+Missing local imports are disclosed. These source-extracted examples remain
+unvalidated illustrations: direct support files do not establish transitive
+dependency closure, application setup, or portable workflow verification.
+The separately tested recipe retains its own readiness and exported-file
+contract. Example retrieval does not make its particular JSX arrangement a
+universal constraint on valid adaptations.
+
 The context command applies deterministic ranking and returns record/source
 citations, the bundle digest, and a digest of the final selected context. The
 `context_digest` is SHA-256 of RFC 8785 canonical JSON for the complete result

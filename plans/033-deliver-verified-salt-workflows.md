@@ -293,6 +293,50 @@ authored outcome and limits are in
 result, not an unattended-quality or cost result; Unit 033/02a remains in progress
 with its human promotion gates unchanged.
 
+### User-directed example retrieval correction
+
+The 2026-09-08 user request to address evidence delivery continues Unit 033/02a
+from `38703d080e5db7d43cf49aae6d9fdabb53593ca9`. Improve the existing Knowledge
+example extraction, normalization, docs resolution and task retrieval so an
+agent can discover complete component examples and their contained supporting
+source through the installed CLI. Reuse existing evidence records and document
+references. Public component examples remain contextual and unvalidated unless
+separate execution evidence establishes readiness; do not label them portable
+verified recipes. Keep unresolved dependencies and budget omissions explicit.
+Reconcile the canonical primitive chooser with navigation usage guidance.
+No new scanner, universal composition rules, second guidance corpus, or broader
+workflow family is authorized by this correction.
+
+Verify focused extraction/resolution/ranking fixtures, the rebuilt Knowledge/CLI
+suite, tooling types, current plan/contracts, public examples/docs, packed
+consumer retrieval and changed-file quality. Follow actual returned references
+from differently worded task queries to complete source, preserving the current
+16 KiB context budget and unrelated retrieval regressions. Run a closeout review.
+
+The request also permits one fresh feature exercise through the existing native
+Copilot creator/reviewer path, using the prepared project fixture with its exact
+local candidate packages. Freeze a bounded unfamiliar task and its behavior
+acceptance before seeing agent output. Keep fixture setup, host-only model
+connections, local application execution, retained raw evidence, and reporting
+boundaries from the usable preview above. Record initial results separately from
+repairs and any lead-supplied Salt decisions; a local result does not establish
+general reliability. Human promotion gates, the unit checkpoint and release
+embargo remain unchanged.
+
+This correction completed local implementation and packaged retrieval checks on
+2026-09-08: 755 tests, tooling types/build, current contracts, public examples/docs,
+exact package validation and packed dashboard acceptance with both negatives
+passed. Four installed task probes exposed eight complete example references;
+all resolved through JSON and Markdown within the context budget. The native
+Luna exercise completed three reviewer passes and two repairs but retained Salt
+selection and narrow-layout defects despite a reviewer pass. After a disclosed
+asynchronous close/focus correction to the acceptance harness, a separate
+supervised repair produced the passing, visually inspected preview. The initial
+native result, harness correction and supervised result remain distinct in
+[`RETRIEVAL_RESULTS.md`](../evals/salt-ai/ui-agent/RETRIEVAL_RESULTS.md).
+This completes the bounded correction, not Unit 033/02a's pending human gates or
+an unattended-reliability claim.
+
 ## Conditional Unit 033/03 — Expand workflows from observed need
 
 Scope: adopt only a genuinely additional workflow or modification case justified by observed need, extending canonical examples/docs and the same schema/assembler/harness. Navigation, the operational worklist and record editing now belong to the single service-worklist journey in Unit 033/02a; do not reimplement them as separate workflow families merely to complete this backlog. Reuse that workflow's preview and fixture setup. Create a separate integration fixture only when it proves a distinct supported environment, as the existing Next App Router fixture does. Reuse selected public material from the operations dashboard without importing repository-only source into consumer output.

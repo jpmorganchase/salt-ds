@@ -2114,6 +2114,16 @@ export function normalizeKnowledgeRecords(input: {
         example.code,
         "source_extraction",
       ),
+      supporting_files: (example.supporting_files ?? []).map((file) => ({
+        source_path: file.source_path,
+        source_ref: sources.fromRepoPath(file.source_path),
+        code_content_ref: content.add(
+          "executable_example_code",
+          file.code,
+          "source_extraction",
+        ),
+      })),
+      unresolved_local_imports: example.unresolved_local_imports ?? [],
       source_ref: sourceRef,
       package_ref: packageReference,
       extraction_method: "source_extraction",

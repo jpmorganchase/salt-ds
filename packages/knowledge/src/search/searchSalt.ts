@@ -356,12 +356,20 @@ function rankDocument(
   );
   const exactTitle =
     normalizeKnowledgeQuery(document.title) === normalizedQuery;
+  const explicitComponentName =
+    document.target.family === "component" &&
+    allWords(canonicalName).length > 0 &&
+    allWords(canonicalName).every((word) => queryWords.includes(word));
   const components: Record<string, number> = {};
   if (exactId) components.exact_record_id = 12_000;
   if (exactExport) components.exact_export_name = 11_000;
   if (exactCanonical) components.exact_canonical_name = 10_000;
   if (exactAlias) components.exact_alias = 9_000;
   if (exactTitle && !exactCanonical) components.exact_title = 8_500;
+  // Task language commonly names a Salt component alongside the work to do.
+  // Keep that named component among the bounded results so its verified source
+  // evidence remains available beside broader pattern or workflow guidance.
+  if (explicitComponentName) components.explicit_component_name = 1_600;
 
   const matchedFields = new Set<KnowledgeSearchMatchedField>();
   const matchedTerms = new Set<string>();
@@ -565,6 +573,8 @@ export interface KnowledgeContextResult {
   excluded_package_families: SearchSaltRecordsResult["excluded_package_families"];
   /** Present only when verified canonical guidance was relevant to the query. */
   canonical_documents?: KnowledgeContextCanonicalDocument[];
+  /** Read-only source examples; resolve the reference for exact extracted code. */
+  contextual_examples?: KnowledgeContextSourceExample[];
   /** Omitted for legacy record-only context where no canonical guide exists. */
   answer_status?: "applicable" | "contextual" | "no_applicable_evidence";
   limitations?: string[];
@@ -585,6 +595,16 @@ export interface KnowledgeContextCanonicalDocument {
   files?: CanonicalDocumentSelection["files"];
   limitations?: string[];
   omissions: CanonicalDocumentSelection["omissions"];
+}
+
+export interface KnowledgeContextSourceExample {
+  reference: string;
+  title: string;
+  description: string;
+  readiness: "contextual";
+  validation: "unvalidated";
+  source_records: string[];
+  supporting_files: string[];
 }
 
 export const MIN_KNOWLEDGE_CONTEXT_UTF8_BYTES = 512;
@@ -620,9 +640,12 @@ type CanonicalContextIntent = "general" | "workflow" | "adaptation";
 
 interface CanonicalContextCandidates {
   documents: KnowledgeContextCanonicalDocument[];
+  source_examples: KnowledgeContextSourceExample[];
   had_canonical_document: boolean;
   had_incompatible_canonical_document: boolean;
   intent: CanonicalContextIntent;
+  query_words: string[];
+  direct_evidence_focus: boolean;
   /** A compact variant withheld canonical sections or complete-file metadata. */
   truncated?: boolean;
   omitted_document_reference?: string;
@@ -638,7 +661,6 @@ const WORKFLOW_INTENT_WORDS = new Set([
 ]);
 const ADAPTATION_INTENT_WORDS = new Set([
   "adapt",
-  "application",
   "existing",
   "integrate",
   "integration",
@@ -686,16 +708,47 @@ function canonicalContextIntent(
   return "general";
 }
 
-function sectionWords(section: CanonicalDocumentSection): Set<string> {
-  return new Set(allWords(`${section.title}\n${section.markdown}`));
+type CanonicalSectionEvidence = Pick<
+  CanonicalDocumentSection,
+  "title" | "markdown"
+> &
+  Partial<Pick<CanonicalDocumentSection, "search_text">>;
+
+function sectionWords(section: CanonicalSectionEvidence): Set<string> {
+  return new Set(
+    allWords(
+      `${section.title}\n${section.markdown}\n${section.search_text ?? ""}`,
+    ),
+  );
 }
 
 function coversAny(
-  section: CanonicalDocumentSection,
+  section: CanonicalSectionEvidence,
   words: readonly string[],
 ): boolean {
+  return sectionCoverage(section, words) > 0;
+}
+
+/**
+ * A canonical section is the smallest authored unit that can establish a
+ * task-specific answer. Keep the coverage count separate from record ranking:
+ * this only chooses among evidence that has already been selected and
+ * compatibility-checked.
+ */
+function sectionCoverage(
+  section: CanonicalSectionEvidence,
+  words: readonly string[],
+): number {
   const covered = sectionWords(section);
-  return words.some((word) => covered.has(word));
+  return words.filter((word) => covered.has(word)).length;
+}
+
+function titleCoverage(
+  section: CanonicalSectionEvidence,
+  words: readonly string[],
+): number {
+  const title = new Set(allWords(section.title));
+  return words.filter((word) => title.has(word)).length;
 }
 
 function topicWordsForDocument(
@@ -746,16 +799,8 @@ function isNarrowCanonicalQuestion(
 ): boolean {
   if (queryWords.some((word) => API_INTENT_WORDS.has(word))) return true;
   const titleWords = new Set(allWords(document.title));
-  if (
-    queryWords.length > 1 &&
-    queryWords.every((word) => titleWords.has(word))
-  ) {
-    return true;
-  }
-  return document.sections.some(
-    (section) =>
-      section.purpose === "guidance" &&
-      queryWords.some((word) => allWords(section.title).includes(word)),
+  return (
+    queryWords.length > 1 && queryWords.every((word) => titleWords.has(word))
   );
 }
 
@@ -801,8 +846,22 @@ function selectedCanonicalSections(
       }
     }
   } else if (topicCovered) {
-    for (const section of guidance) {
-      if (coversAny(section, topicWords)) selected.add(section);
+    // A neutral request can still ask how an identified component is used or
+    // composed. Include each directly relevant authored section instead of
+    // treating guidance headings as the only usable evidence. This preserves
+    // implementation, adaptation, and acceptance evidence when it actually
+    // covers the request, without promoting a weak title-only match.
+    for (const section of document.sections) {
+      if (
+        (section.purpose === "guidance" ||
+          section.purpose === "implementation" ||
+          section.purpose === "adaptation" ||
+          section.purpose === "acceptance" ||
+          section.purpose === "api") &&
+        coversAny(section, topicWords)
+      ) {
+        selected.add(section);
+      }
     }
   }
 
@@ -857,6 +916,104 @@ function canonicalSelectionForContext(
   };
 }
 
+function sourceExamplesForMatches(
+  store: KnowledgeRecordStore,
+  matches: readonly SearchSaltRecordMatch[],
+  queryWords: readonly string[],
+): KnowledgeContextSourceExample[] {
+  const matchKeys = new Set(
+    matches.map((match) => `${match.reference.family}:${match.reference.id}`),
+  );
+  const matchedOwnerRank = new Map(
+    matches.map((match, index) => [
+      `${match.reference.family}:${match.reference.id}`,
+      index,
+    ]),
+  );
+  return (store.getFamily("evidence") as readonly any[])
+    .filter(
+      (evidence) =>
+        evidence?.evidence_kind === "executable_example" &&
+        typeof evidence.local_id === "string" &&
+        evidence.owner &&
+        matchKeys.has(`${evidence.owner.family}:${evidence.owner.id}`),
+    )
+    .map((evidence) => {
+      const owner = evidence.owner as { family: string; id: string };
+      const ownerRecord = store.getRecord(owner.family, owner.id);
+      const ownerName =
+        typeof ownerRecord?.name === "string"
+          ? ownerRecord.name
+          : typeof ownerRecord?.title === "string"
+            ? ownerRecord.title
+            : "";
+      const ownerWords = allWords(ownerName);
+      const explicitlyNamedOwner =
+        ownerWords.length > 0 &&
+        ownerWords.every((word) => queryWords.includes(word));
+      const searchable = [
+        evidence.title,
+        evidence.description,
+        ...(Array.isArray(evidence.intent) ? evidence.intent : []),
+      ]
+        .filter((value): value is string => typeof value === "string")
+        .join(" ");
+      const searchableWords = new Set(allWords(searchable));
+      const coverage = queryWords.filter((word) =>
+        searchableWords.has(word),
+      ).length;
+      return {
+        reference: `record:${owner.family}:${owner.id}#example/${evidence.local_id}`,
+        title:
+          typeof evidence.title === "string"
+            ? evidence.title
+            : evidence.local_id,
+        description:
+          typeof evidence.description === "string" ? evidence.description : "",
+        readiness: "contextual" as const,
+        validation: "unvalidated" as const,
+        source_records: [evidence.source_ref?.id]
+          .filter((id): id is string => typeof id === "string")
+          .sort(),
+        supporting_files: Array.isArray(evidence.supporting_files)
+          ? evidence.supporting_files
+              .map((file: any) => file?.source_path)
+              .filter(
+                (path: unknown): path is string => typeof path === "string",
+              )
+              .sort()
+          : [],
+        coverage,
+        explicitly_named_owner: explicitlyNamedOwner,
+        owner_rank:
+          matchedOwnerRank.get(`${owner.family}:${owner.id}`) ??
+          Number.MAX_SAFE_INTEGER,
+        ordinal:
+          typeof evidence.owner_ordinal === "number"
+            ? evidence.owner_ordinal
+            : Number.MAX_SAFE_INTEGER,
+      };
+    })
+    .filter((example) => example.coverage > 0 || example.explicitly_named_owner)
+    .sort(
+      (left, right) =>
+        right.coverage - left.coverage ||
+        left.owner_rank - right.owner_rank ||
+        left.ordinal - right.ordinal ||
+        left.title.localeCompare(right.title),
+    )
+    .slice(0, 2)
+    .map(
+      ({
+        coverage: _coverage,
+        explicitly_named_owner: _explicitlyNamedOwner,
+        owner_rank: _ownerRank,
+        ordinal: _ordinal,
+        ...example
+      }) => example,
+    );
+}
+
 function canonicalContextCandidates(
   store: KnowledgeRecordStore,
   matches: readonly SearchSaltRecordMatch[],
@@ -867,6 +1024,7 @@ function canonicalContextCandidates(
   const intent = canonicalContextIntent(queryWords);
   const guides = new Set<string>();
   const documents: KnowledgeContextCanonicalDocument[] = [];
+  const sourceExamples = sourceExamplesForMatches(store, matches, queryWords);
   let hadCanonicalDocument = false;
   let hadIncompatibleCanonicalDocument = false;
   for (const match of matches) {
@@ -890,42 +1048,90 @@ function canonicalContextCandidates(
   }
   return {
     documents,
+    source_examples: sourceExamples,
     had_canonical_document: hadCanonicalDocument,
     had_incompatible_canonical_document: hadIncompatibleCanonicalDocument,
     intent,
+    query_words: queryWords,
+    direct_evidence_focus:
+      intent === "general" &&
+      queryWords.length > 2 &&
+      sourceExamples.length > 0,
   };
 }
 
 function contextSectionPriority(
   section: KnowledgeContextCanonicalDocument["sections"][number],
   intent: CanonicalContextIntent,
+  queryWords: readonly string[],
 ): number {
+  let purpose = 70;
   if (intent === "adaptation") {
-    if (section.purpose === "adaptation") return 100;
-    if (section.purpose === "prerequisites") return 95;
-    if (section.purpose === "acceptance") return 90;
-    if (section.purpose === "implementation") return 85;
+    if (section.purpose === "adaptation") purpose = 100;
+    else if (section.purpose === "prerequisites") purpose = 95;
+    else if (section.purpose === "acceptance") purpose = 90;
+    else if (section.purpose === "implementation") purpose = 85;
   }
   if (intent === "workflow") {
-    if (section.purpose === "prerequisites") return 100;
-    if (section.purpose === "adaptation") return 95;
-    if (section.purpose === "acceptance") return 90;
-    if (section.purpose === "implementation") return 85;
+    if (section.purpose === "prerequisites") purpose = 100;
+    else if (section.purpose === "adaptation") purpose = 95;
+    else if (section.purpose === "acceptance") purpose = 90;
+    else if (section.purpose === "implementation") purpose = 85;
   }
-  if (section.purpose === "guidance" || section.purpose === "api") return 80;
-  return 70;
+  if (section.purpose === "guidance" || section.purpose === "api") {
+    purpose = Math.max(purpose, 80);
+  }
+  if (intent === "workflow" || intent === "adaptation") {
+    // A create or integration request needs the authored workflow sequence.
+    // Direct matching only breaks ties within that sequence.
+    return (
+      purpose * 1_000 +
+      sectionCoverage(section, queryWords) * 10 +
+      titleCoverage(section, queryWords)
+    );
+  }
+  // Direct evidence of the query is more useful than a generic workflow step
+  // once output must be compacted. Title matches win ties because they are the
+  // author's explicit subject label; section coverage keeps usage and
+  // composition details ahead of unrelated dashboard headings.
+  return (
+    sectionCoverage(section, queryWords) * 1_000 +
+    titleCoverage(section, queryWords) * 100 +
+    purpose
+  );
+}
+
+function filePriority(
+  file: NonNullable<KnowledgeContextCanonicalDocument["files"]>[number],
+  queryWords: readonly string[],
+): number {
+  const pathWords = new Set(allWords(file.path));
+  const coverage = queryWords.filter((word) => pathWords.has(word)).length;
+  const role = file.role === "reusable" ? 2 : file.role === "setup" ? 1 : 0;
+  const extension = file.path.split(".").at(-1)?.toLocaleLowerCase("en-US");
+  const executable =
+    extension === "ts" ||
+    extension === "tsx" ||
+    extension === "js" ||
+    extension === "jsx"
+      ? 2
+      : extension === "json" || extension === "html"
+        ? 1
+        : 0;
+  return coverage * 100 + role * 10 + executable;
 }
 
 function compactCanonicalDocument(
   document: KnowledgeContextCanonicalDocument,
   sectionCount: number,
   intent: CanonicalContextIntent,
+  queryWords: readonly string[],
   selectedSectionId?: string,
 ): KnowledgeContextCanonicalDocument {
   const rankedSections = [...document.sections].sort(
     (left, right) =>
-      contextSectionPriority(right, intent) -
-        contextSectionPriority(left, intent) ||
+      contextSectionPriority(right, intent, queryWords) -
+        contextSectionPriority(left, intent, queryWords) ||
       document.sections.indexOf(left) - document.sections.indexOf(right),
   );
   const selected = new Set(
@@ -935,10 +1141,11 @@ function compactCanonicalDocument(
   );
   const sections = document.sections.filter((section) => selected.has(section));
   const unselected = rankedSections.find((section) => !selected.has(section));
-  const nextFile =
-    document.files?.find((file) => file.path.endsWith("RecordForm.tsx")) ??
-    document.files?.find((file) => file.role === "reusable") ??
-    document.files?.[0];
+  const nextFile = [...(document.files ?? [])].sort(
+    (left, right) =>
+      filePriority(right, queryWords) - filePriority(left, queryWords) ||
+      left.path.localeCompare(right.path),
+  )[0];
   const omissions = [
     ...(unselected
       ? [
@@ -977,7 +1184,15 @@ function compactCanonicalDocument(
 function canonicalContextVariants(
   candidates: CanonicalContextCandidates,
 ): CanonicalContextCandidates[] {
-  if (candidates.documents.length === 0) return [candidates];
+  if (candidates.documents.length === 0) {
+    return candidates.source_examples.length > 0
+      ? [candidates, { ...candidates, source_examples: [], truncated: true }]
+      : [candidates];
+  }
+  // General task wording benefits from a cited, focused section plus its
+  // resolvable source reference before a large whole guide crowds matched
+  // component evidence out of the fixed transport budget. Create and adapt
+  // requests keep their authored whole-workflow variant first.
   const variants = [candidates];
   for (
     let documentCount = candidates.documents.length;
@@ -988,16 +1203,23 @@ function canonicalContextVariants(
     const maximumSections = Math.max(
       ...documents.map((document) => document.sections.length),
     );
-    for (
-      let sectionCount = maximumSections;
-      sectionCount >= 1;
-      sectionCount -= 1
-    ) {
+    const sectionCounts = candidates.direct_evidence_focus
+      ? Array.from({ length: maximumSections }, (_, index) => index + 1)
+      : Array.from(
+          { length: maximumSections },
+          (_, index) => maximumSections - index,
+        );
+    for (const sectionCount of sectionCounts) {
       variants.push({
         ...candidates,
         truncated: true,
         documents: documents.map((document) =>
-          compactCanonicalDocument(document, sectionCount, candidates.intent),
+          compactCanonicalDocument(
+            document,
+            sectionCount,
+            candidates.intent,
+            candidates.query_words,
+          ),
         ),
       });
     }
@@ -1007,8 +1229,16 @@ function canonicalContextVariants(
     for (const document of documents) {
       const rankedSections = [...document.sections].sort(
         (left, right) =>
-          contextSectionPriority(right, candidates.intent) -
-            contextSectionPriority(left, candidates.intent) ||
+          contextSectionPriority(
+            right,
+            candidates.intent,
+            candidates.query_words,
+          ) -
+            contextSectionPriority(
+              left,
+              candidates.intent,
+              candidates.query_words,
+            ) ||
           document.sections.indexOf(left) - document.sections.indexOf(right),
       );
       for (const section of rankedSections) {
@@ -1020,6 +1250,7 @@ function canonicalContextVariants(
               document,
               1,
               candidates.intent,
+              candidates.query_words,
               section.id,
             ),
           ],
@@ -1033,7 +1264,21 @@ function canonicalContextVariants(
     truncated: true,
     omitted_document_reference: candidates.documents[0].reference,
   });
-  return variants;
+  return candidates.source_examples.length > 0
+    ? variants.flatMap((variant) => {
+        const withoutExamples = {
+          ...variant,
+          source_examples: [],
+          truncated: true,
+        };
+        // A tiny workflow response must still identify its omitted complete
+        // guide. Source illustrations do not replace those setup/acceptance facts.
+        return candidates.intent !== "general" &&
+          variant.omitted_document_reference
+          ? [withoutExamples, variant]
+          : [variant, withoutExamples];
+      })
+    : variants;
 }
 
 function contextualResultFields(
@@ -1041,7 +1286,10 @@ function contextualResultFields(
   matchCount: number,
 ): Pick<
   KnowledgeContextResult,
-  "canonical_documents" | "answer_status" | "limitations"
+  | "canonical_documents"
+  | "contextual_examples"
+  | "answer_status"
+  | "limitations"
 > {
   if (candidates.documents.length > 0) {
     const contextual = candidates.documents.some(
@@ -1049,10 +1297,33 @@ function contextualResultFields(
     );
     return {
       canonical_documents: candidates.documents,
+      contextual_examples:
+        candidates.source_examples.length > 0
+          ? candidates.source_examples
+          : undefined,
       answer_status: contextual ? "contextual" : "applicable",
-      limitations: contextual
-        ? ["Selected canonical evidence remains contextual."]
-        : undefined,
+      limitations:
+        contextual || candidates.source_examples.length > 0
+          ? [
+              ...(contextual
+                ? ["Selected canonical evidence remains contextual."]
+                : []),
+              ...(candidates.source_examples.length > 0
+                ? [
+                    "Source examples remain contextual illustrations; their adaptations and dependency closure are not independently verified.",
+                  ]
+                : []),
+            ]
+          : undefined,
+    };
+  }
+  if (candidates.source_examples.length > 0) {
+    return {
+      contextual_examples: candidates.source_examples,
+      answer_status: "contextual",
+      limitations: [
+        "Selected source examples are contextual; resolve their references for exact code and support evidence.",
+      ],
     };
   }
   if (candidates.omitted_document_reference) {
@@ -1102,6 +1373,9 @@ function finalizeKnowledgeContext(
     excluded_package_families: digestInput.excluded_package_families,
     ...(digestInput.canonical_documents
       ? { canonical_documents: digestInput.canonical_documents }
+      : {}),
+    ...(digestInput.contextual_examples
+      ? { contextual_examples: digestInput.contextual_examples }
       : {}),
     ...(digestInput.answer_status
       ? { answer_status: digestInput.answer_status }
@@ -1170,6 +1444,20 @@ function renderFinalKnowledgeContext(result: KnowledgeContextResult): string {
       )
       .join("\n")}\n`;
   }
+  if (result.contextual_examples?.length) {
+    output += `\n## Contextual source examples\n\n${result.contextual_examples
+      .map((example) => {
+        const sources = example.source_records.length
+          ? `; sources ${example.source_records
+              .map((source) =>
+                renderUntrustedMarkdownEvidence(source, { mode: "inline" }),
+              )
+              .join(", ")}`
+          : "";
+        return `- ${renderUntrustedMarkdownEvidence(example.title, { mode: "inline" })}: ${renderUntrustedMarkdownEvidence(example.reference, { mode: "inline" })}${example.description ? ` — ${renderUntrustedMarkdownEvidence(example.description, { mode: "inline" })}` : ""}${sources}`;
+      })
+      .join("\n")}\n`;
+  }
   for (const document of result.canonical_documents ?? []) {
     output += `\n${renderCanonicalDocument(
       canonicalSelectionForContext(document),
@@ -1212,7 +1500,13 @@ export function buildKnowledgeContext(
           truncated:
             matchCount < search.matches.length || candidate.truncated === true,
         },
-        ...((candidate.documents.length > 0 ||
+        ...(!(
+          candidates.direct_evidence_focus &&
+          candidate.documents.length > 0 &&
+          candidate.truncated !== true
+        ) &&
+        (candidate.documents.length > 0 ||
+          candidate.source_examples.length > 0 ||
           candidate.omitted_document_reference !== undefined) &&
         matchCount > 0
           ? [{ matches: [], truncated: true }]

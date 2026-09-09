@@ -174,6 +174,14 @@ export interface ComponentImplementationRequirements {
   required_imports: ComponentImplementationImport[];
 }
 
+/** A repository-local module required by a source-backed component example. */
+export interface ExampleSupportFile {
+  /** Repository-relative path, retained as the stable source locator. */
+  source_path: string;
+  /** Exact source bytes decoded as UTF-8 from the catalog input inventory. */
+  code: string;
+}
+
 export type ExampleRecord = {
   id: string;
   title: string;
@@ -181,6 +189,13 @@ export type ExampleRecord = {
   intent: string[];
   complexity: "basic" | "intermediate" | "advanced";
   code: string;
+  /**
+   * Direct local modules imported by a component example.
+   * Examples extracted from documentation or stories need not have one.
+   */
+  supporting_files?: ExampleSupportFile[];
+  /** Relative imports whose source file was not available to this extraction. */
+  unresolved_local_imports?: string[];
   package: string | null;
   target_type: "component" | "pattern" | "foundation";
   target_name: string;

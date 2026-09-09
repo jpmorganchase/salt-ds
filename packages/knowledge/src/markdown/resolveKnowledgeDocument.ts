@@ -11,7 +11,10 @@ import {
   resolveKnowledgeRecordCompatibility,
   type SaltKnowledgeRecordReference,
 } from "../search/searchSalt.js";
-import { renderUntrustedMarkdownEvidence } from "./untrustedMarkdown.js";
+import {
+  renderUntrustedMarkdownCode,
+  renderUntrustedMarkdownEvidence,
+} from "./untrustedMarkdown.js";
 
 interface SearchDocument {
   target: SaltKnowledgeRecordReference;
@@ -34,6 +37,77 @@ interface DocumentRecord {
   aliases?: unknown;
   summary?: unknown;
   semantic_intent?: unknown;
+}
+
+interface SourceRecord {
+  family?: unknown;
+  id?: unknown;
+  source_kind?: unknown;
+  locator?: unknown;
+}
+
+interface ExecutableExampleRecord {
+  family?: unknown;
+  id?: unknown;
+  evidence_kind?: unknown;
+  local_id?: unknown;
+  owner?: unknown;
+  owner_ordinal?: unknown;
+  title?: unknown;
+  description?: unknown;
+  intent?: unknown;
+  complexity?: unknown;
+  code_content_ref?: unknown;
+  source_ref?: unknown;
+  supporting_files?: unknown;
+  unresolved_local_imports?: unknown;
+  package_ref?: unknown;
+  validation?: unknown;
+}
+
+interface EvidenceReference {
+  family: "evidence";
+  id: string;
+}
+
+interface EvidenceIndex {
+  executable_by_owner: ReadonlyMap<string, readonly unknown[]>;
+  documented_owners_by_page: ReadonlyMap<
+    string,
+    readonly SaltKnowledgeRecordReference[]
+  >;
+}
+
+const evidenceIndexByStore = new WeakMap<object, EvidenceIndex>();
+
+export interface KnowledgeDocumentExample {
+  reference: string;
+  evidence_reference: EvidenceReference;
+  local_id: string;
+  title: string;
+  description: string;
+  intent: string[];
+  complexity: "basic" | "intermediate" | "advanced";
+  readiness: "contextual";
+  /** Present only for an explicit `#example/<local_id>` request. */
+  code?: string;
+  source: {
+    reference: { family: "source"; id: string };
+    path: string | null;
+  };
+  supporting_files: Array<{
+    path: string;
+    reference: { family: "source"; id: string };
+    /** Present only for an explicit `#example/<local_id>` request. */
+    code?: string;
+  }>;
+  unresolved_local_imports: string[];
+  package: { family: "package"; id: string } | null;
+  validation: {
+    state: "unvalidated";
+    reason: string;
+  };
+  limitation: string;
 }
 
 export interface KnowledgeDocumentChoice {
@@ -83,6 +157,7 @@ export interface KnowledgeDocumentResult {
       bundle_digest: string;
     };
     canonical?: CanonicalDocumentSelection;
+    examples?: KnowledgeDocumentExample[];
     limitations?: string[];
   };
 }
@@ -125,6 +200,217 @@ function contentReference(value: unknown): ContentReference | null {
     value.codec.length > 0
     ? { family: "content", id: value.id, codec: value.codec }
     : null;
+}
+
+function reference<
+  T extends "source" | "package" | "component" | "pattern" | "page",
+>(value: unknown, family: T): { family: T; id: string } | null {
+  if (
+    !isRecord(value) ||
+    value.family !== family ||
+    typeof value.id !== "string"
+  )
+    return null;
+  return { family, id: value.id };
+}
+
+function executableExampleRecord(
+  value: unknown,
+): ExecutableExampleRecord | null {
+  if (!isRecord(value) || value.family !== "evidence") return null;
+  return value.evidence_kind === "executable_example" ? value : null;
+}
+
+function sourcePath(
+  store: KnowledgeRecordStore,
+  source: { family: "source"; id: string },
+): string | null {
+  const record = store.getRecord("source", source.id) as SourceRecord | null;
+  return record?.family === "source" &&
+    record.id === source.id &&
+    record.source_kind === "repository_file" &&
+    typeof record.locator === "string"
+    ? record.locator
+    : null;
+}
+
+function exampleReference(
+  owner: SaltKnowledgeRecordReference,
+  localId: string,
+): string {
+  return `record:${owner.family}:${owner.id}#example/${localId}`;
+}
+
+function exampleOwnerReference(
+  value: unknown,
+): SaltKnowledgeRecordReference | null {
+  if (!isRecord(value) || typeof value.id !== "string") return null;
+  if (
+    value.family !== "component" &&
+    value.family !== "pattern" &&
+    value.family !== "page"
+  ) {
+    return null;
+  }
+  return { family: value.family, id: value.id };
+}
+
+function evidenceIndex(store: KnowledgeRecordStore): EvidenceIndex {
+  const cached = evidenceIndexByStore.get(store);
+  if (cached) return cached;
+  const executableByOwner = new Map<string, unknown[]>();
+  const documentedOwnersByPage = new Map<
+    string,
+    SaltKnowledgeRecordReference[]
+  >();
+  for (const candidate of store.getFamily("evidence") as unknown[]) {
+    if (!isRecord(candidate) || candidate.family !== "evidence") continue;
+    if (candidate.evidence_kind === "executable_example") {
+      const owner = exampleOwnerReference(candidate.owner);
+      if (!owner) continue;
+      const key = `${owner.family}:${owner.id}`;
+      const entries = executableByOwner.get(key) ?? [];
+      entries.push(candidate);
+      executableByOwner.set(key, entries);
+      continue;
+    }
+    if (candidate.evidence_kind !== "documentation_link") continue;
+    const page = reference(candidate.page_ref, "page");
+    const owner = exampleOwnerReference(candidate.owner);
+    const validation = isRecord(candidate.validation)
+      ? candidate.validation
+      : null;
+    if (!page || !owner || validation?.state !== "validated") continue;
+    const entries = documentedOwnersByPage.get(page.id) ?? [];
+    if (
+      !entries.some(
+        (entry) => entry.family === owner.family && entry.id === owner.id,
+      )
+    ) {
+      entries.push(owner);
+      documentedOwnersByPage.set(page.id, entries);
+    }
+  }
+  const index = {
+    executable_by_owner: executableByOwner,
+    documented_owners_by_page: new Map(
+      [...documentedOwnersByPage].map(([page, owners]) => [
+        page,
+        owners.sort(
+          (left, right) =>
+            left.family.localeCompare(right.family) ||
+            left.id.localeCompare(right.id),
+        ),
+      ]),
+    ),
+  } satisfies EvidenceIndex;
+  evidenceIndexByStore.set(store, index);
+  return index;
+}
+
+/**
+ * A page may name an example owner only through a validated documentation
+ * link. This preserves the authored source relation and never guesses from a
+ * route, page title, or filename.
+ */
+function pageLinkedExampleOwners(
+  store: KnowledgeRecordStore,
+  page: SaltKnowledgeRecordReference,
+): SaltKnowledgeRecordReference[] {
+  if (page.family !== "page") return [];
+  return (
+    evidenceIndex(store).documented_owners_by_page.get(page.id) ?? []
+  ).filter((owner) => owner.family !== page.family || owner.id !== page.id);
+}
+
+const SOURCE_EXAMPLE_LIMITATION =
+  "Source-extracted illustration only; it is not an independently verified portable recipe or complete application setup. Direct local support files exclude transitive dependencies and are not independently verified.";
+
+function examplesForDocument(
+  store: KnowledgeRecordStore,
+  owner: SaltKnowledgeRecordReference,
+  includeCode: boolean,
+): KnowledgeDocumentExample[] {
+  const entries: KnowledgeDocumentExample[] = [];
+  for (const candidate of evidenceIndex(store).executable_by_owner.get(
+    `${owner.family}:${owner.id}`,
+  ) ?? []) {
+    const evidence = executableExampleRecord(candidate);
+    const evidenceId = typeof evidence?.id === "string" ? evidence.id : null;
+    const localId =
+      typeof evidence?.local_id === "string" ? evidence.local_id : null;
+    const evidenceOwner = reference(
+      evidence?.owner,
+      owner.family as "component" | "pattern" | "page",
+    );
+    const code = contentReference(evidence?.code_content_ref);
+    const source = reference(evidence?.source_ref, "source");
+    const packageRef = reference(evidence?.package_ref, "package");
+    const validation = isRecord(evidence?.validation)
+      ? evidence.validation
+      : null;
+    if (
+      !evidence ||
+      !evidenceId ||
+      !localId ||
+      !evidenceOwner ||
+      evidenceOwner.id !== owner.id ||
+      !code ||
+      !source ||
+      !validation ||
+      validation.state !== "unvalidated" ||
+      typeof validation.reason !== "string" ||
+      (evidence.complexity !== "basic" &&
+        evidence.complexity !== "intermediate" &&
+        evidence.complexity !== "advanced")
+    ) {
+      continue;
+    }
+    const supportingFiles = Array.isArray(evidence.supporting_files)
+      ? evidence.supporting_files.flatMap((file) => {
+          if (!isRecord(file) || typeof file.source_path !== "string")
+            return [];
+          const supportSource = reference(file.source_ref, "source");
+          const supportCode = contentReference(file.code_content_ref);
+          return supportSource && supportCode
+            ? [
+                {
+                  path: file.source_path,
+                  reference: supportSource,
+                  ...(includeCode
+                    ? { code: store.getContentSourceText(supportCode) }
+                    : {}),
+                },
+              ]
+            : [];
+        })
+      : [];
+    entries.push({
+      reference: exampleReference(owner, localId),
+      evidence_reference: { family: "evidence", id: evidenceId },
+      local_id: localId,
+      title: typeof evidence.title === "string" ? evidence.title : localId,
+      description:
+        typeof evidence.description === "string" ? evidence.description : "",
+      intent: strings(evidence.intent),
+      complexity: evidence.complexity,
+      readiness: "contextual",
+      ...(includeCode ? { code: store.getContentSourceText(code) } : {}),
+      source: { reference: source, path: sourcePath(store, source) },
+      supporting_files: supportingFiles.sort((left, right) =>
+        left.path.localeCompare(right.path),
+      ),
+      unresolved_local_imports: strings(evidence.unresolved_local_imports),
+      package: packageRef,
+      validation: { state: "unvalidated", reason: validation.reason },
+      limitation: SOURCE_EXAMPLE_LIMITATION,
+    });
+  }
+  return entries.sort(
+    (left, right) =>
+      left.local_id.localeCompare(right.local_id) ||
+      left.evidence_reference.id.localeCompare(right.evidence_reference.id),
+  );
 }
 
 function primaryContentReference(
@@ -346,7 +632,53 @@ export function resolveKnowledgeDocument(
   const record = documentRecord(
     store.getRecord(choice.reference.family, choice.reference.id),
   );
-  const contentRef = primaryContentReference(record, choice.reference.family);
+  const requestedExample = fragment?.startsWith("example/")
+    ? fragment.slice("example/".length)
+    : null;
+  const examples = examplesForDocument(
+    store,
+    choice.reference,
+    requestedExample !== null,
+  );
+  if (requestedExample === null) {
+    for (const owner of pageLinkedExampleOwners(store, choice.reference)) {
+      const compatibility = resolveKnowledgeRecordCompatibility(
+        store,
+        owner,
+        input.installed_versions,
+      );
+      addExcludedPackageFamilies(excludedPackageFamilies, compatibility);
+      if (compatibility.included) {
+        examples.push(...examplesForDocument(store, owner, false));
+      }
+    }
+    examples.sort(
+      (left, right) =>
+        left.reference.localeCompare(right.reference) ||
+        left.evidence_reference.id.localeCompare(right.evidence_reference.id),
+    );
+  }
+  const selectedExamples =
+    requestedExample === null
+      ? examples
+      : examples.filter((example) => example.local_id === requestedExample);
+  if (requestedExample !== null && selectedExamples.length === 0) {
+    return {
+      contract: "salt-knowledge-document/1",
+      status: "not_found",
+      identifier,
+      bundle,
+      choices: [],
+      excluded_package_families: sortedExcludedPackageFamilies(
+        excludedPackageFamilies,
+      ),
+      document: null,
+    };
+  }
+  const contentRef =
+    requestedExample === null
+      ? primaryContentReference(record, choice.reference.family)
+      : null;
   const sources = new Set<string>();
   collectSourceReferences(record, sources);
   let canonical: CanonicalDocumentSelection | null = null;
@@ -355,7 +687,7 @@ export function resolveKnowledgeDocument(
     store,
     choice.reference,
   );
-  if (attachedGuideReference) {
+  if (attachedGuideReference && requestedExample === null) {
     const canonicalCompatibility = resolveKnowledgeRecordCompatibility(
       store,
       attachedGuideReference,
@@ -382,7 +714,10 @@ export function resolveKnowledgeDocument(
       canonical = assembleCanonicalDocument(store, choice.reference, fragment);
     }
   }
-  if (fragment !== undefined && (!fragment || !canonical)) {
+  if (
+    fragment !== undefined &&
+    (!fragment || (requestedExample === null && !canonical))
+  ) {
     return {
       contract: "salt-knowledge-document/1",
       status: "not_found",
@@ -400,6 +735,10 @@ export function resolveKnowledgeDocument(
       "Contextual reference: complete workflow setup and acceptance are not supplied for this unconverted material.";
   }
   for (const source of canonical?.source_records ?? []) sources.add(source);
+  for (const example of selectedExamples) {
+    sources.add(example.source.reference.id);
+    for (const file of example.supporting_files) sources.add(file.reference.id);
+  }
   return {
     contract: "salt-knowledge-document/1",
     status: "resolved",
@@ -431,6 +770,7 @@ export function resolveKnowledgeDocument(
         bundle_digest: store.manifest.bundle_digest,
       },
       ...(canonical ? { canonical } : {}),
+      examples: selectedExamples,
       ...(canonicalLimitation ? { limitations: [canonicalLimitation] } : {}),
     },
   };
@@ -477,6 +817,42 @@ export function renderKnowledgeDocumentMarkdown(
       "\n"
     );
   }
+  const examples = result.document.examples ?? [];
+  const renderedExamples = examples.length
+    ? "\n\n## Source examples\n\n" +
+      examples
+        .map((example) => {
+          const source = example.source.path
+            ? `${example.source.path} (${example.source.reference.id})`
+            : example.source.reference.id;
+          const support =
+            typeof example.code === "string" && example.supporting_files.length
+              ? "\n\nSupporting files:\n\n" +
+                example.supporting_files
+                  .map(
+                    (file) =>
+                      `#### ${renderUntrustedMarkdownEvidence(file.path, { mode: "inline" })}\n\nSource: ${renderUntrustedMarkdownEvidence(file.reference.id, { mode: "inline" })}\n\n${renderUntrustedMarkdownCode(file.code ?? "", file.path.split(".").at(-1))}`,
+                  )
+                  .join("\n\n")
+              : "";
+          const unresolved = example.unresolved_local_imports.length
+            ? "\n\nUnresolved local imports: " +
+              example.unresolved_local_imports
+                .map((specifier) =>
+                  renderUntrustedMarkdownEvidence(specifier, {
+                    mode: "inline",
+                  }),
+                )
+                .join(", ")
+            : "";
+          const code =
+            typeof example.code === "string"
+              ? `\n\n${renderUntrustedMarkdownCode(example.code, example.source.path?.split(".").at(-1))}${support}`
+              : "\n\nCode: omitted from this owner catalogue; resolve the example reference to retrieve its complete extracted source and direct support files.";
+          return `### ${renderUntrustedMarkdownEvidence(example.title, { mode: "inline" })}\n\nReference: ${renderUntrustedMarkdownEvidence(example.reference, { mode: "inline" })}\n\nSource: ${renderUntrustedMarkdownEvidence(source, { mode: "inline" })}\n\nReadiness: ${example.readiness}. Validation: ${renderUntrustedMarkdownEvidence(example.validation.state, { mode: "inline" })} — ${renderUntrustedMarkdownEvidence(example.validation.reason, { mode: "inline" })}${code}${unresolved}\n\nLimit: ${renderUntrustedMarkdownEvidence(example.limitation, { mode: "inline" })}`;
+        })
+        .join("\n\n")
+    : "";
   if (result.document.canonical) {
     const nativeComponentDetail =
       result.document.reference.family === "component" &&
@@ -484,7 +860,7 @@ export function renderKnowledgeDocumentMarkdown(
       result.document.content
         ? `\n## Component reference\n\n${renderUntrustedMarkdownEvidence(result.document.content.value, { mode: "block" })}\n`
         : "";
-    return `${renderCanonicalDocument(result.document.canonical)}${nativeComponentDetail}\nBundle: ${renderUntrustedMarkdownEvidence(result.bundle.digest, { mode: "inline" })}\n`;
+    return `${renderCanonicalDocument(result.document.canonical)}${nativeComponentDetail}${renderedExamples}\n\nBundle: ${renderUntrustedMarkdownEvidence(result.bundle.digest, { mode: "inline" })}\n`;
   }
   const content = result.document.content
     ? "\n\n## Verified detail\n\n" +
@@ -530,6 +906,7 @@ export function renderKnowledgeDocumentMarkdown(
     sources +
     content +
     limitations +
+    renderedExamples +
     "\n"
   );
 }
