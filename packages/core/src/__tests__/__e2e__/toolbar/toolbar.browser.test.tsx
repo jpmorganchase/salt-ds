@@ -1473,19 +1473,19 @@ describe("Toolbar keyboard, focus and portals", () => {
     await page.getByTestId("toolbar-before").click();
     await userEvent.tab();
     await expect
-      .element(page.getByRole("button", { name: "New" }))
+      .element(page.getByRole("button", { name: "Remove New" }))
       .toHaveFocus();
     await userEvent.keyboard("{ArrowRight}");
     await expect
-      .element(page.getByRole("button", { name: "Working" }))
+      .element(page.getByRole("button", { name: "Remove Working" }))
       .toHaveFocus();
     await userEvent.keyboard("{ArrowRight}{ArrowLeft}");
     await expect
-      .element(page.getByRole("button", { name: "Working" }))
+      .element(page.getByRole("button", { name: "Remove Working" }))
       .toHaveFocus();
     await userEvent.keyboard("{ArrowLeft}");
     await expect
-      .element(page.getByRole("button", { name: "New" }))
+      .element(page.getByRole("button", { name: "Remove New" }))
       .toHaveFocus();
   });
 
