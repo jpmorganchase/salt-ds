@@ -23,7 +23,7 @@ describe("Given an AvatarGroup", () => {
 
     await expect
       .element(page.getByRole("button", { name: "Team members" }))
-      .toBeInTheDocument();
+      .toBeVisible();
     await expect.element(page.getByRole("group")).not.toBeInTheDocument();
   });
 

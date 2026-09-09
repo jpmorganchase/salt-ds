@@ -7,7 +7,7 @@ import { type ComponentPropsWithoutRef, forwardRef } from "react";
 import avatarGroupCountCss from "./AvatarGroupCount.css";
 
 export interface AvatarGroupCountProps
-  extends Omit<ComponentPropsWithoutRef<"div">, "color"> {
+  extends ComponentPropsWithoutRef<"div"> {
   /**
    * The number of members the count represents. Used in rendering `aria-label` and `+{count}` inside component as default.
    */
