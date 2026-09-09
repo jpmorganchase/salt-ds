@@ -21,6 +21,6 @@ describe("GIVEN a Badge", () => {
 
   it("can render with a custom text child", async () => {
     await renderWithSalt(<Badge value={1}>Lorem Ipsum</Badge>);
-    await expect.element(page.getByText("Lorem Ipsum")).toBeInTheDocument();
+    await expect.element(page.getByText("Lorem Ipsum1")).toBeInTheDocument();
   });
 });

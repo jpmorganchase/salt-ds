@@ -42,5 +42,7 @@ jobs:
         if: failure()
         with:
           name: vitest-browser-screenshots-canary
-          path: test/browser/screenshots
+          path: |
+            .vitest/attachments
+            test/browser/screenshots
           if-no-files-found: ignore

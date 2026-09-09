@@ -42,7 +42,12 @@ export const DictTabs = ({
         onActiveChange={(tabIndex: number) => onTabClick(tabIndex)}
       >
         {[...Object.keys(tabs)].map((label, i) => (
-          <Tab className={clsx(withBaseName("text"))} label={label} key={i} />
+          <Tab
+            aria-label={label}
+            className={clsx(withBaseName("text"))}
+            label={label}
+            key={i}
+          />
         ))}
       </Tabstrip>
       {[...Object.values(tabs)].map((tab, idx) => {
