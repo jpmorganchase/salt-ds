@@ -42,14 +42,12 @@ describe("Given an AvatarGroup", () => {
       .toBeVisible();
   });
 
-  it("should allow the count's visible label and accessible name to be overridden", async () => {
+  it("should allow the count's accessible name to be overridden", async () => {
     await renderWithSalt(
-      <AvatarGroupCount count={3} aria-label="3 more team members">
-        3+
-      </AvatarGroupCount>,
+      <AvatarGroupCount count={3} aria-label="3 more team members" />,
     );
 
-    await expect.element(page.getByText("3+")).toBeVisible();
+    await expect.element(page.getByText("+3")).toBeVisible();
     await expect
       .element(page.getByRole("img", { name: "3 more team members" }))
       .toBeVisible();

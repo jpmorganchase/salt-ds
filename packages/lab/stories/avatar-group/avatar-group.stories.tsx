@@ -70,9 +70,7 @@ export const CustomCountLabel: StoryFn<typeof AvatarGroup> = (args) => {
       <Avatar name="Alex Brailescu" src={persona1} />
       <Avatar name="Peter Piper" color="category-2" />
       <Avatar name="John Doe" color="category-3" />
-      <AvatarGroupCount count={3} aria-label="3 more team members">
-        3+
-      </AvatarGroupCount>
+      <AvatarGroupCount count={3} aria-label="3 more team members" />
     </AvatarGroup>
   );
 };

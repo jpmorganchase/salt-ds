@@ -6,9 +6,11 @@ import { type ComponentPropsWithoutRef, forwardRef } from "react";
 
 import avatarGroupCountCss from "./AvatarGroupCount.css";
 
-export interface AvatarGroupCountProps extends ComponentPropsWithoutRef<"div"> {
+export interface AvatarGroupCountProps
+  extends Omit<ComponentPropsWithoutRef<"div">, "children"> {
   /**
-   * The number of members the count represents. Used in rendering `aria-label` and `+{count}` inside component as default.
+   * The number of members the count represents. Rendered as `+{count}`, and used
+   * as the default `aria-label` of `{count} more`.
    */
   count: number;
   /**
@@ -25,7 +27,13 @@ export const AvatarGroupCount = forwardRef<
   HTMLDivElement,
   AvatarGroupCountProps
 >(function AvatarGroupCount(
-  { children, className, count, kind = "person", ...rest },
+  {
+    className,
+    count,
+    kind = "person",
+    "aria-label": ariaLabel = `${count} more`,
+    ...rest
+  },
   ref,
 ) {
   const targetWindow = useWindow();
@@ -39,11 +47,11 @@ export const AvatarGroupCount = forwardRef<
     <div
       ref={ref}
       role="img"
-      aria-label={`${count} more`}
+      aria-label={ariaLabel}
       className={clsx(withBaseName(), withBaseName(kind), className)}
       {...rest}
     >
-      {children ?? `+${count}`}
+      {`+${count}`}
     </div>
   );
 });
