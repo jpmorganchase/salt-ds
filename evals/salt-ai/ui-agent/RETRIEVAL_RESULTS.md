@@ -175,3 +175,10 @@ comparison. Better source availability did not ensure correct adoption or a
 sound reviewer verdict. Manual workflow promotion reviews and the independent
 maintainer exercise remain pending in Unit 033/02a. No workflow promotion,
 publication or deployment follows from this result.
+
+The 2026-09-09 [reviewer qualification](REVIEWER_RESULTS.md) subsequently found
+that the supervised application still implemented a disclosure role with custom
+state/content composition despite matching installed Collapsible coverage.
+That finding invalidated its use as a fully corrected, expected-pass review
+fixture. The passing behavior and visual evidence above remain historical
+results; they do not establish complete Salt component selection.

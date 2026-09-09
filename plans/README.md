@@ -142,6 +142,12 @@ publication authority as deferred to Plan 003.
   The [retrieval correction outcome](../evals/salt-ai/ui-agent/RETRIEVAL_RESULTS.md)
   separates passed packaged source delivery from the native trial's remaining
   defects and its subsequent supervised preview repair.
+  The 2026-09-09 continuation permits the bounded blind reviewer qualification
+  and conditional fresh native task in Unit 033/02a, beginning at retrieval
+  checkpoint `4dff7713b1df25608c1ec3821de82d655217bd28`.
+  Its [qualification outcome](../evals/salt-ai/ui-agent/REVIEWER_RESULTS.md)
+  established no qualified reviewer: the expected-pass fixture contained an
+  additional coverage gap, and the conditional fresh task did not run.
   Consumer contact, other product model trials, actual consumer installation,
   publication, versioning, dist-tags and deployment remain outside this dispatch.
 - **Successor eligibility:** each next unit requires a reviewed control

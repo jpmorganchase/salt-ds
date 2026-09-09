@@ -337,6 +337,58 @@ native result, harness correction and supervised result remain distinct in
 This completes the bounded correction, not Unit 033/02a's pending human gates or
 an unattended-reliability claim.
 
+### User-directed reviewer qualification
+
+On 2026-09-09 the user authorized committing the completed retrieval correction,
+testing the native reviewer blindly against the preserved flawed and corrected
+applications, comparing a stronger reviewer only if the cheaper reviewer fails,
+and then running one fresh end-to-end task if a reviewer qualifies. This
+continues Unit 033/02a from retrieval commit
+`4dff7713b1df25608c1ec3821de82d655217bd28` without changing its pending human gates.
+
+The bounded [reviewer protocol](../evals/salt-ai/ui-agent/REVIEWER_PROTOCOL.md)
+adds one incomplete-evidence packet to distinguish missing verification from a
+valid pass. Freeze neutral packet identities, scoring and settings before
+reviewer output. Use three fresh native Luna reviewer sessions; only after a
+required discrimination fails may three equivalent Sol sessions run through the
+same existing account and host. After Copilot could not pin Luna and its three
+review requests routed elsewhere, those attempts were stopped ungraded. Before
+scored output, the qualification moved to the already installed Codex native Salt
+roles with explicit model selection, unchanged packets and unchanged scoring.
+Codex results cannot establish Copilot reviewer reliability. The setup may copy the already verified local
+packages into temporary fixtures and use existing host authentication.
+One unscored setup probe may check authentication, profile loading, local
+retrieval permissions and image reading without assessing a candidate. Model
+connections belong to the host; retrieval and application checks remain local.
+No subscription changes, consumer contact or actual consumer installation are
+authorized. Record native role/path restrictions honestly, without claiming an
+operating-system sandbox that the host does not provide.
+
+If one reviewer qualifies on all three cases, freeze one fresh modification task
+and independent acceptance, then exercise native creation, qualified independent
+review and at most two native repair cycles. Do not supply Salt choices or make
+supervised source repairs during that scored exercise. If no reviewer qualifies,
+stop before the new creation task and report the observed limitation. Keep all
+initial outputs and raw evidence outside Git; commit only authored protocol,
+bounded fixtures/checks, any directly justified existing-owner correction and an
+aggregate outcome. Run affected checks, current plan/contracts/changed-quality
+and closeout source review for introduced code, and commit unsigned. This
+authorizes no new workflow family, orchestration service, generic scanner,
+publication, deployment or promotion.
+
+The six scored Codex reviews completed on 2026-09-09. Luna approved the known
+flawed application; Sol caught the clipped email but did not establish the
+navigation coverage defect. Both rejected missing verification. Sol also found
+a genuine remaining disclosure-coverage issue in the expected-pass fixture;
+independent diagnosis confirmed matching installed Collapsible coverage. That
+invalidated the expected approval, so no three-case accuracy score or reviewer
+qualification is claimed. The fresh creation exercise was not started. A replay
+of Sol's navigation query also exposed icon-dominated retrieval. Initial outputs,
+the unchanged packets and the host switch are distinguished in the
+[qualification outcome](../evals/salt-ai/ui-agent/REVIEWER_RESULTS.md). These
+results leave the unit's human gates unchanged and require a corrected positive
+reference before any future qualification.
+
 ## Conditional Unit 033/03 — Expand workflows from observed need
 
 Scope: adopt only a genuinely additional workflow or modification case justified by observed need, extending canonical examples/docs and the same schema/assembler/harness. Navigation, the operational worklist and record editing now belong to the single service-worklist journey in Unit 033/02a; do not reimplement them as separate workflow families merely to complete this backlog. Reuse that workflow's preview and fixture setup. Create a separate integration fixture only when it proves a distinct supported environment, as the existing Next App Router fixture does. Reuse selected public material from the operations dashboard without importing repository-only source into consumer output.
