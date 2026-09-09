@@ -1,4 +1,5 @@
 .salt-theme[data-mode="light"] {
+  --salt-palette-neutral-background: var(--salt-color-gray-200);
   --salt-palette-neutral-border: var(--salt-color-gray-50);
   --salt-palette-neutral-border-disabled: var(--salt-color-gray-50-40a);
   --salt-palette-neutral-primary-background: var(--salt-color-white);
@@ -14,6 +15,7 @@
 }
 
 .salt-theme[data-mode="dark"] {
+  --salt-palette-neutral-background: var(--salt-color-gray-100);
   --salt-palette-neutral-border: var(--salt-color-gray-300);
   --salt-palette-neutral-border-disabled: var(--salt-color-gray-300-40a);
   --salt-palette-neutral-primary-background: var(--salt-color-gray-800);
