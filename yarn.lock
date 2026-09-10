@@ -2315,6 +2315,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource/roboto@npm:^5.0.0":
+  version: 5.2.10
+  resolution: "@fontsource/roboto@npm:5.2.10"
+  checksum: 10/2fc9e9db66cfab68ff45b573cc2bf20fe8d7e962f09b6edd32d53681fdcd7bdedd65440012683491785583383a585bdbfb67903171159bf4c3520f2f0d26d92a
+  languageName: node
+  linkType: hard
+
 "@icons/material@npm:^0.2.4":
   version: 0.2.4
   resolution: "@icons/material@npm:0.2.4"
@@ -4475,6 +4482,7 @@ __metadata:
     "@faker-js/faker": "npm:^10.5.0"
     "@fontsource/open-sans": "npm:^5.0.0"
     "@fontsource/pt-mono": "npm:^5.0.12"
+    "@fontsource/roboto": "npm:^5.0.0"
     "@rollup/plugin-commonjs": "npm:^28.0.1"
     "@rollup/plugin-json": "npm:^6.1.0"
     "@rollup/plugin-node-resolve": "npm:^15.3.0"

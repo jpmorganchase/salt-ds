@@ -1,0 +1,23 @@
+/* Generated from the commercial Figma token exports. */
+.salt-theme.commercial[data-mode="light"] {
+  --salt-palette-neutral: var(--salt-color-gray-500);
+  --salt-palette-neutral-disabled: var(--salt-color-gray-500-40a);
+  --salt-palette-neutral-readonly: var(--salt-color-gray-500-10a);
+  --salt-palette-neutral-strong: var(--salt-color-gray-600);
+  --salt-palette-neutral-stronger: var(--salt-color-gray-700);
+  --salt-palette-neutral-strongest: var(--salt-color-gray-800);
+  --salt-palette-neutral-weak: var(--salt-color-gray-400);
+  --salt-palette-neutral-weaker: var(--salt-color-gray-200);
+  --salt-palette-neutral-weakest: var(--salt-color-gray-100);
+}
+.salt-theme.commercial[data-mode="dark"] {
+  --salt-palette-neutral: var(--salt-color-gray-500);
+  --salt-palette-neutral-disabled: var(--salt-color-gray-500-40a);
+  --salt-palette-neutral-readonly: var(--salt-color-gray-500-10a);
+  --salt-palette-neutral-strong: var(--salt-color-gray-400);
+  --salt-palette-neutral-stronger: var(--salt-color-gray-200);
+  --salt-palette-neutral-strongest: var(--salt-color-gray-100);
+  --salt-palette-neutral-weak: var(--salt-color-gray-600);
+  --salt-palette-neutral-weaker: var(--salt-color-gray-800);
+  --salt-palette-neutral-weakest: var(--salt-color-gray-900);
+}

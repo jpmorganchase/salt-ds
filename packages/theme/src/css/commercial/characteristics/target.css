@@ -1,0 +1,14 @@
+/* Generated from the commercial Figma token exports. */
+
+
+.salt-theme.commercial {
+  --salt-target-borderColor-hover: var(--salt-color-accent-500);
+}
+
+.salt-theme.commercial[data-mode="light"] {
+  --salt-target-background-hover: var(--salt-color-accent-100);
+}
+
+.salt-theme.commercial[data-mode="dark"] {
+  --salt-target-background-hover: var(--salt-color-accent-900);
+}

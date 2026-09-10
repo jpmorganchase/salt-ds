@@ -1,0 +1,27 @@
+/* Generated from the commercial Figma token exports. */
+
+
+.salt-theme.commercial {
+  --salt-content-bold-foreground-disabled: var(--salt-color-white-40a);
+  --salt-content-bold-foreground: var(--salt-color-white);
+}
+
+.salt-theme.commercial[data-mode="light"] {
+  --salt-content-primary-foreground-disabled: var(--salt-color-black-40a);
+  --salt-content-accent-foreground: var(--salt-color-accent-600);
+  --salt-content-primary-foreground: var(--salt-color-black);
+  --salt-content-foreground-visited: var(--salt-color-purple-800);
+  --salt-content-secondary-foreground: var(--salt-color-dove-gray-700);
+  --salt-content-attention-foreground: var(--salt-color-red-600);
+  --salt-content-secondary-foreground-disabled: var(--salt-color-dove-gray-700-40a);
+}
+
+.salt-theme.commercial[data-mode="dark"] {
+  --salt-content-primary-foreground-disabled: var(--salt-color-white-40a);
+  --salt-content-accent-foreground: var(--salt-color-accent-400);
+  --salt-content-primary-foreground: var(--salt-color-white);
+  --salt-content-foreground-visited: var(--salt-color-purple-200);
+  --salt-content-secondary-foreground: var(--salt-color-pigeon-gray-300);
+  --salt-content-attention-foreground: var(--salt-color-red-400);
+  --salt-content-secondary-foreground-disabled: var(--salt-color-pigeon-gray-300-40a);
+}
