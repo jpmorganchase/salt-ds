@@ -39,6 +39,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
             corner="rounded"
             headingFont="Amplitude"
             actionFont="Amplitude"
+            theme={theme}
           >
             <Panel>
               <StoryFn />
@@ -59,6 +60,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
       corner="rounded"
       headingFont="Amplitude"
       actionFont="Amplitude"
+      theme={theme}
     >
       <StoryFn />
     </Provider>
