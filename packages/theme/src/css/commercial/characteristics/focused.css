@@ -2,7 +2,7 @@
 .salt-theme.commercial {
   --salt-focused-outlineColor: var(--salt-palette-accent-stronger);
   --salt-focused-onSolid-outlineColor: var(--salt-palette-alpha-light-highest);
-  --salt-focused-outlineStyle: var(--salt-borderStyle-dashed);
+  --salt-focused-outlineStyle: var(--salt-borderStyle-solid);
   --salt-focused-outlineWidth: var(--salt-size-fixed-100);
   --salt-focused-outlineInset: 0;
   --salt-focused-outlineOffset: var(--salt-size-fixed-100);

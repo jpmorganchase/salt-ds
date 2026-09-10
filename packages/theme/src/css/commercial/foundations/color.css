@@ -456,12 +456,6 @@
   --salt-color-pigeon-gray-800-rgb: 43, 48, 54;
   --salt-color-pigeon-gray-900-rgb: 24, 28, 33;
 
-  --salt-color-accent-dark-alpha-15-low-rgb: 28, 113, 131;
-  --salt-color-dove-gray-dark-alpha-15-low-rgb: 112, 102, 101;
-  --salt-color-green-dark-alpha-15-low-rgb: 5, 119, 31;
-  --salt-color-orange-dark-alpha-15-low-rgb: 175, 74, 3;
-  --salt-color-red-dark-alpha-15-low-rgb: 205, 4, 3;
-
   /* Core color palettes */
   --salt-color-gray-100: rgb(var(--salt-color-gray-100-rgb));
   --salt-color-gray-200: rgb(var(--salt-color-gray-200-rgb));
@@ -920,11 +914,4 @@
   --salt-color-pigeon-gray-700: rgb(var(--salt-color-pigeon-gray-700-rgb));
   --salt-color-pigeon-gray-800: rgb(var(--salt-color-pigeon-gray-800-rgb));
   --salt-color-pigeon-gray-900: rgb(var(--salt-color-pigeon-gray-900-rgb));
-
-  /* Preblended interaction colors */
-  --salt-color-accent-dark-alpha-15-low: rgb(var(--salt-color-accent-dark-alpha-15-low-rgb));
-  --salt-color-dove-gray-dark-alpha-15-low: rgb(var(--salt-color-dove-gray-dark-alpha-15-low-rgb));
-  --salt-color-green-dark-alpha-15-low: rgb(var(--salt-color-green-dark-alpha-15-low-rgb));
-  --salt-color-orange-dark-alpha-15-low: rgb(var(--salt-color-orange-dark-alpha-15-low-rgb));
-  --salt-color-red-dark-alpha-15-low: rgb(var(--salt-color-red-dark-alpha-15-low-rgb));
 }

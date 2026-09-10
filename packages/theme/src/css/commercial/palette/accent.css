@@ -2,7 +2,6 @@
 .salt-theme.commercial[data-mode="light"] {
   --salt-palette-accent: var(--salt-color-accent-500);
   --salt-palette-accent-disabled: var(--salt-color-accent-500-40a);
-  --salt-palette-accent-hover: var(--salt-color-accent-dark-alpha-15-low);
   --salt-palette-accent-selected: var(--salt-color-accent-200);
   --salt-palette-accent-strong: var(--salt-color-accent-600);
   --salt-palette-accent-stronger: var(--salt-color-accent-700);
@@ -16,7 +15,6 @@
 .salt-theme.commercial[data-mode="dark"] {
   --salt-palette-accent: var(--salt-color-accent-500);
   --salt-palette-accent-disabled: var(--salt-color-accent-500-40a);
-  --salt-palette-accent-hover: var(--salt-color-accent-dark-alpha-15-low);
   --salt-palette-accent-selected: var(--salt-color-accent-900);
   --salt-palette-accent-strong: var(--salt-color-accent-400);
   --salt-palette-accent-stronger: var(--salt-color-accent-300);

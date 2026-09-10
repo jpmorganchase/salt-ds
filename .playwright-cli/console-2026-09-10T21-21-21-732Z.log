@@ -1,0 +1,7 @@
+[    3027ms] [WARNING] The `TabsState` class is deprecated. Use `TabsView` instead. @ https://fusion-universal-storybook.dev.sch.jpmchase.net/assets/vendor-Bj0rChPk.js:580
+[    3027ms] [WARNING] The `Tabs` component is deprecated. Use `TabsView` instead. @ https://fusion-universal-storybook.dev.sch.jpmchase.net/assets/vendor-Bj0rChPk.js:580
+[    3027ms] [WARNING] The `childrenToList` tabs helper is deprecated. Use `TabsView` instead. @ https://fusion-universal-storybook.dev.sch.jpmchase.net/assets/vendor-Bj0rChPk.js:580
+[    3027ms] [WARNING] The `useList` tabs hook is deprecated. Use `TabsView` instead. @ https://fusion-universal-storybook.dev.sch.jpmchase.net/assets/vendor-Bj0rChPk.js:580
+[    3028ms] [WARNING] FlexBar is deprecated. Use Bar with justifyContent: "space-between" instead. @ https://fusion-universal-storybook.dev.sch.jpmchase.net/assets/vendor-Bj0rChPk.js:580
+[    3028ms] [WARNING] The `TabBar` component is deprecated. Use `TabsView` instead. @ https://fusion-universal-storybook.dev.sch.jpmchase.net/assets/vendor-Bj0rChPk.js:580
+[    3028ms] [WARNING] The `TabButton` component is deprecated. Use `TabList` instead. @ https://fusion-universal-storybook.dev.sch.jpmchase.net/assets/vendor-Bj0rChPk.js:580
