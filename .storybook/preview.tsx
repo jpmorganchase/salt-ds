@@ -11,8 +11,10 @@ import "@fontsource/open-sans/700.css";
 import "@fontsource/open-sans/800-italic.css";
 import "@fontsource/open-sans/800.css";
 import "@fontsource/pt-mono";
+import "@fontsource/roboto"
 import "@salt-ds/theme/css/baseline.css";
 import "@salt-ds/theme/css/theme-next.css";
+import "@salt-ds/theme/css/salt-interim.css";
 import "@salt-ds/theme/index.css";
 import "./styles.css";
 
@@ -45,6 +47,7 @@ const preview: Preview = {
         items: [
           { value: "brand", title: "Brand" },
           { value: "legacy", title: "Legacy" },
+          { value: "salt-interim", title: "Salt (Interim)" },
         ],
         title: "Theme",
       },
