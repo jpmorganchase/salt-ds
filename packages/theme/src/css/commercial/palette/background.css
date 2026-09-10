@@ -1,17 +1,18 @@
 /* Generated from the commercial Figma token exports. */
 .salt-theme.commercial[data-mode="light"] {
-  --salt-palette-background-primary: var(--salt-color-background-snow);
-  --salt-palette-background-primary-disabled: var(--salt-color-background-snow-40a);
-  --salt-palette-background-secondary: var(--salt-color-background-marble);
-  --salt-palette-background-secondary-disabled: var(--salt-color-background-marble-40a);
-  --salt-palette-background-tertiary: var(--salt-color-background-limestone);
-  --salt-palette-background-tertiary-disabled: var(--salt-color-background-limestone-40a);
+  --salt-palette-background-primary: var(--salt-color-snow);
+  --salt-palette-background-primary-disabled: var(--salt-color-snow-40a);
+  --salt-palette-background-secondary: var(--salt-color-wheat-15);
+  --salt-palette-background-secondary-disabled: var(--salt-color-wheat-15-40a);
+  --salt-palette-background-tertiary: var(--salt-color-wheat-25);
+  --salt-palette-background-tertiary-disabled: var(--salt-color-wheat-25-40a);
 }
+
 .salt-theme.commercial[data-mode="dark"] {
-  --salt-palette-background-primary: var(--salt-color-background-jet);
-  --salt-palette-background-primary-disabled: var(--salt-color-background-jet-40a);
-  --salt-palette-background-secondary: var(--salt-color-background-granite);
-  --salt-palette-background-secondary-disabled: var(--salt-color-background-granite-40a);
-  --salt-palette-background-tertiary: var(--salt-color-background-leather);
-  --salt-palette-background-tertiary-disabled: var(--salt-color-background-leather-40a);
+  --salt-palette-background-primary: var(--salt-color-jet);
+  --salt-palette-background-primary-disabled: var(--salt-color-jet-40a);
+  --salt-palette-background-secondary: var(--salt-color-jet-95);
+  --salt-palette-background-secondary-disabled: var(--salt-color-jet-95-40a);
+  --salt-palette-background-tertiary: var(--salt-color-jet-91);
+  --salt-palette-background-tertiary-disabled: var(--salt-color-jet-91-40a);
 }

@@ -1,25 +1,12 @@
 /* Generated from the commercial Figma token exports. */
-
-
 .salt-theme.commercial {
-  --salt-separable-foreground-active: var(--salt-color-white);
-  --salt-separable-background-active: var(--salt-color-accent-500);
-}
+  --salt-separable-primary-borderColor: var(--salt-palette-alpha-contrast-mediumHigh);
+  --salt-separable-secondary-borderColor: var(--salt-palette-alpha-contrast-medium);
+  --salt-separable-tertiary-borderColor: var(--salt-palette-alpha-contrast-mediumLow);
 
-.salt-theme.commercial[data-mode="light"] {
-  --salt-separable-background-hover: var(--salt-color-dove-gray-900-10a);
-  --salt-separable-tertiary-borderColor: var(--salt-color-dove-gray-900-20a);
-  --salt-separable-foreground: var(--salt-color-black);
-  --salt-separable-foreground-hover: var(--salt-color-black);
-  --salt-separable-primary-borderColor: var(--salt-color-dove-gray-900-40a);
-  --salt-separable-secondary-borderColor: var(--salt-color-dove-gray-900-30a);
-}
-
-.salt-theme.commercial[data-mode="dark"] {
-  --salt-separable-background-hover: var(--salt-color-white-10a);
-  --salt-separable-tertiary-borderColor: var(--salt-color-white-20a);
-  --salt-separable-foreground: var(--salt-color-white);
-  --salt-separable-foreground-hover: var(--salt-color-white);
-  --salt-separable-primary-borderColor: var(--salt-color-white-40a);
-  --salt-separable-secondary-borderColor: var(--salt-color-white-30a);
+  --salt-separable-foreground: var(--salt-palette-foreground-primary);
+  --salt-separable-foreground-hover: var(--salt-palette-foreground-primary);
+  --salt-separable-foreground-active: var(--salt-palette-foreground-primary-alt);
+  --salt-separable-background-hover: var(--salt-palette-alpha-contrast-lower);
+  --salt-separable-background-active: var(--salt-palette-accent);
 }

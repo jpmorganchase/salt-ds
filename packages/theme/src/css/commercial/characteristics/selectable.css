@@ -1,31 +1,18 @@
 /* Generated from the commercial Figma token exports. */
-
-
 .salt-theme.commercial {
-  --salt-selectable-background-disabled: var(--salt-color-transparent);
-  --salt-selectable-borderColor-hover: var(--salt-color-accent-500);
-  --salt-selectable-foreground-hover: var(--salt-color-accent-500);
-  --salt-selectable-borderColor-selected: var(--salt-color-accent-500);
-  --salt-selectable-borderColor-selectedDisabled: var(--salt-color-accent-500-40a);
-  --salt-selectable-foreground-selectedDisabled: var(--salt-color-accent-500-40a);
-  --salt-selectable-foreground-selected: var(--salt-color-accent-500);
+  --salt-selectable-borderColor: var(--salt-palette-neutral);
+  --salt-selectable-borderColor-hover: var(--salt-palette-accent);
+  --salt-selectable-borderColor-selected: var(--salt-palette-accent);
+  --salt-selectable-borderColor-selectedDisabled: var(--salt-palette-accent-disabled);
+  --salt-selectable-borderColor-readonly: var(--salt-palette-neutral);
+
+  --salt-selectable-foreground: var(--salt-palette-neutral-strong);
+  --salt-selectable-foreground-hover: var(--salt-palette-accent);
+  --salt-selectable-foreground-selected: var(--salt-palette-accent);
+  --salt-selectable-foreground-selectedDisabled: var(--salt-palette-accent-disabled);
   --salt-selectable-background: var(--salt-color-transparent);
-}
-
-.salt-theme.commercial[data-mode="light"] {
-  --salt-selectable-background-hover: var(--salt-color-accent-100);
-  --salt-selectable-background-selected: var(--salt-color-accent-200);
-  --salt-selectable-background-selectedDisabled: var(--salt-color-accent-200-40a);
-  --salt-selectable-borderColor-readonly: var(--salt-color-dove-gray-500);
-  --salt-selectable-foreground: var(--salt-color-dove-gray-600);
-  --salt-selectable-borderColor: var(--salt-color-dove-gray-500);
-}
-
-.salt-theme.commercial[data-mode="dark"] {
-  --salt-selectable-background-hover: var(--salt-color-accent-900);
-  --salt-selectable-background-selected: var(--salt-color-accent-900);
-  --salt-selectable-background-selectedDisabled: var(--salt-color-accent-800-40a);
-  --salt-selectable-borderColor-readonly: var(--salt-color-pigeon-gray-500);
-  --salt-selectable-foreground: var(--salt-color-pigeon-gray-400);
-  --salt-selectable-borderColor: var(--salt-color-pigeon-gray-500);
+  --salt-selectable-background-hover: var(--salt-palette-accent-weakest);
+  --salt-selectable-background-selected: var(--salt-palette-accent-selected);
+  --salt-selectable-background-disabled: var(--salt-color-transparent);
+  --salt-selectable-background-selectedDisabled: var(--salt-palette-accent-weaker-disabled);
 }

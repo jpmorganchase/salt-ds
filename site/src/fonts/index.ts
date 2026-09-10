@@ -1,4 +1,4 @@
-import { Open_Sans, PT_Mono } from "next/font/google";
+import { Open_Sans, PT_Mono, Roboto } from "next/font/google";
 import localFont from "next/font/local";
 
 export const ptMono = PT_Mono({
@@ -13,6 +13,12 @@ export const openSans = Open_Sans({
   subsets: ["latin"],
   display: "swap",
   variable: "--site-font-family-openSans",
+});
+
+export const roboto = Roboto({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--site-font-family-roboto",
 });
 
 export const amplitude = localFont({

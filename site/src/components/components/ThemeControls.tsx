@@ -58,6 +58,7 @@ export function ThemeControls() {
         >
           <ToggleButton value="legacy">Legacy</ToggleButton>
           <ToggleButton value="brand">J.P. Morgan</ToggleButton>
+          <ToggleButton value="commercial">Commercial</ToggleButton>
         </ToggleButtonGroup>
       </StackLayout>
     </StackLayout>
