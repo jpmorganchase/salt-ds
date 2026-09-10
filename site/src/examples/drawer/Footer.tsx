@@ -5,10 +5,7 @@ import {
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
-  FormField,
-  FormFieldHelperText,
-  FormFieldLabel,
-  Input,
+  Link,
   StackLayout,
   Text,
 } from "@salt-ds/core";
@@ -17,15 +14,7 @@ import { type ReactElement, useState } from "react";
 const placeholderText =
   "This placeholder text is provided to illustrate how content will appear within the component. The sentences are intended for demonstration only and do not convey specific information. Generic examples like this help review layout, spacing, and overall design. Adjust the wording as needed to fit your use case or display requirements. ";
 
-const FormFieldExample = () => (
-  <FormField>
-    <FormFieldLabel>Label</FormFieldLabel>
-    <Input />
-    <FormFieldHelperText>Help text appears here</FormFieldHelperText>
-  </FormField>
-);
-
-export const RightDrawer = (): ReactElement => {
+export const Footer = (): ReactElement => {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -34,23 +23,26 @@ export const RightDrawer = (): ReactElement => {
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Open Right Drawer</Button>
+      <Button onClick={() => setOpen(true)}>Open Drawer</Button>
       <Drawer
         open={open}
         onOpenChange={setOpen}
         position="right"
-        style={{ width: 500 }}
+        style={{ width: 400 }}
       >
         <DrawerHeader
-          header="Section title"
+          header="Check deposit #1278"
+          description="Pending transaction review"
           actions={<DrawerCloseButton onClick={handleClose} />}
         />
         <DrawerContent>
           <StackLayout>
-            <Text>{placeholderText}</Text>
-            {Array.from({ length: 7 }, (_, index) => (
-              <FormFieldExample key={index} />
-            ))}
+            <Text>{placeholderText.repeat(4)}</Text>
+            <Text>
+              Read the <Link href="#">transaction policy</Link> before
+              approving.
+            </Text>
+            <Text>{placeholderText.repeat(4)}</Text>
           </StackLayout>
         </DrawerContent>
         <DrawerFooter>

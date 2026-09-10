@@ -4,12 +4,13 @@ import {
   Display3,
   Drawer,
   DrawerCloseButton,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
   FlowLayout,
-  H2,
   H3,
   StackLayout,
   Text,
-  useId,
 } from "@salt-ds/core";
 import { AgGridReact } from "ag-grid-react";
 import { type ReactElement, useState } from "react";
@@ -121,15 +122,6 @@ const defaultData = [
 export const BottomDrawer = (): ReactElement => {
   const [open, setOpen] = useState(false);
   const { containerProps, agGridProps } = useAgGridHelpers();
-  const id = useId();
-
-  const handleRequestOpen = () => {
-    setOpen(true);
-  };
-
-  const onOpenChange = (newOpen: boolean) => {
-    setOpen(newOpen);
-  };
 
   const handleClose = () => {
     setOpen(false);
@@ -137,74 +129,77 @@ export const BottomDrawer = (): ReactElement => {
 
   return (
     <>
-      <Button onClick={handleRequestOpen}>Open Bottom Drawer</Button>
+      <Button onClick={() => setOpen(true)}>Open Bottom Drawer</Button>
       <Drawer
         open={open}
-        onOpenChange={onOpenChange}
+        onOpenChange={setOpen}
         position="bottom"
         style={{ height: "max-content" }}
-        aria-labelledby={id}
       >
-        <DrawerCloseButton onClick={handleClose} />
-        <StackLayout gap={3}>
-          <H2 id={id}>Marginal Tiering</H2>
-          <div
-            {...containerProps}
-            style={{ height: "calc(3 * var(--salt-size-base))" }}
-          >
-            <AgGridReact
-              columnDefs={columns}
-              rowData={defaultData}
-              {...agGridProps}
-            />
-          </div>
-          <FlowLayout gap={1}>
-            <H3 style={{ margin: 0 }}>Threshold Summary</H3>
-            <Text>(Projected Revenue)</Text>
-          </FlowLayout>
-          <FlowLayout justify="space-between">
-            <StackLayout direction="row" gap={3}>
-              <StackLayout gap={0}>
-                <Text>Below Threshold 1</Text>
-                <Display3>$1,000,000</Display3>
+        <DrawerHeader
+          header="Marginal Tiering"
+          actions={<DrawerCloseButton onClick={handleClose} />}
+        />
+        <DrawerContent>
+          <StackLayout gap={3}>
+            <div
+              {...containerProps}
+              style={{ height: "calc(3 * var(--salt-size-base))" }}
+            >
+              <AgGridReact
+                columnDefs={columns}
+                rowData={defaultData}
+                {...agGridProps}
+              />
+            </div>
+            <FlowLayout gap={1}>
+              <H3 style={{ margin: 0 }}>Threshold Summary</H3>
+              <Text>(Projected Revenue)</Text>
+            </FlowLayout>
+            <FlowLayout justify="space-between">
+              <StackLayout direction="row" gap={3}>
+                <StackLayout gap={0}>
+                  <Text>Below Threshold 1</Text>
+                  <Display3>$1,000,000</Display3>
+                </StackLayout>
+                <StackLayout gap={0}>
+                  <Text>Below Threshold 1 & 2</Text>
+                  <Display3>$450,000</Display3>
+                </StackLayout>
+                <StackLayout gap={0}>
+                  <Text>Below Threshold 2 & 3</Text>
+                  <Display3>$0</Display3>
+                </StackLayout>
+                <StackLayout gap={0}>
+                  <Text>Below Threshold 3 & 4</Text>
+                  <Display3>$0</Display3>
+                </StackLayout>
+                <StackLayout gap={0}>
+                  <Text>Total</Text>
+                  <Display3>$1,450,000</Display3>
+                </StackLayout>
               </StackLayout>
               <StackLayout gap={0}>
-                <Text>Below Threshold 1 & 2</Text>
-                <Display3>$450,000</Display3>
+                <Text
+                  style={{
+                    position: "absolute",
+                  }}
+                >
+                  Blended bps
+                </Text>
+                <Display2>0.968</Display2>
               </StackLayout>
-              <StackLayout gap={0}>
-                <Text>Below Threshold 2 & 3</Text>
-                <Display3>$0</Display3>
-              </StackLayout>
-              <StackLayout gap={0}>
-                <Text>Below Threshold 3 & 4</Text>
-                <Display3>$0</Display3>
-              </StackLayout>
-              <StackLayout gap={0}>
-                <Text>Total</Text>
-                <Display3>$1,450,000</Display3>
-              </StackLayout>
-            </StackLayout>
-            <StackLayout gap={0}>
-              <Text
-                style={{
-                  position: "absolute",
-                }}
-              >
-                Blended bps
-              </Text>
-              <Display2>0.968</Display2>
-            </StackLayout>
-          </FlowLayout>
-          <FlowLayout justify="end">
-            <Button appearance="transparent" onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button sentiment="accented" onClick={handleClose}>
-              Update Tier
-            </Button>
-          </FlowLayout>
-        </StackLayout>
+            </FlowLayout>
+          </StackLayout>
+        </DrawerContent>
+        <DrawerFooter>
+          <Button appearance="transparent" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button sentiment="accented" onClick={handleClose}>
+            Update Tier
+          </Button>
+        </DrawerFooter>
       </Drawer>
     </>
   );

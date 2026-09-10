@@ -1,4 +1,12 @@
-import { Button, Drawer, DrawerCloseButton, StackLayout } from "@salt-ds/core";
+import {
+  Button,
+  Drawer,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import { type ReactElement, useState } from "react";
 
 export const DisableScrim = (): ReactElement => {
@@ -8,13 +16,18 @@ export const DisableScrim = (): ReactElement => {
     <StackLayout>
       <Button onClick={() => setOpen(true)}>Open Primary Drawer</Button>
       <Drawer
-        aria-label="Drawer without scrim"
         open={open}
-        onOpenChange={(newOpen) => setOpen(newOpen)}
-        style={{ width: 200 }}
+        onOpenChange={setOpen}
+        style={{ width: 300 }}
         disableScrim
       >
-        <DrawerCloseButton onClick={() => setOpen(false)} />
+        <DrawerHeader
+          header="Drawer without scrim"
+          actions={<DrawerCloseButton onClick={() => setOpen(false)} />}
+        />
+        <DrawerContent>
+          <Text>The content behind this drawer isn't obscured.</Text>
+        </DrawerContent>
       </Drawer>
     </StackLayout>
   );

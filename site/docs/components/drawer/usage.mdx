@@ -12,6 +12,10 @@ data:
 
 Drawers are always modal. This means that the content behind them is inert and can't be interacted with. A [`Scrim`](../scrim) is used to visually obscure the content behind the drawer.
 
+Compose a drawer from `DrawerHeader` and `DrawerContent`. `DrawerHeader` stays pinned to the edge the drawer is anchored to, while `DrawerContent` scrolls when its content overflows. Pass `DrawerCloseButton` to the `actions` prop of `DrawerHeader`.
+
+`DrawerHeader` names the drawer using its `header` and `preheader`, and describes it using its `description`, so you don't need to set `aria-labelledby` or `aria-describedby` manually.
+
 Left and right drawers cover the entire height of the viewport, and top and bottom drawers cover its entire width.
 
 Always set a logical width suitable for the content inside the drawer. Refer to Salt's [Forms](/salt/patterns/forms) pattern for information on logical forms width, and the [typography foundation](/salt/foundations/typography) for guidance on paragraph text width.
@@ -31,7 +35,12 @@ Always set a logical width suitable for the content inside the drawer. Refer to 
 To import `Drawer` and related components from the core Salt package, use:
 
 ```js
-import { Drawer, DrawerCloseButton } from "@salt-ds/core";
+import {
+  Drawer,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+} from "@salt-ds/core";
 ```
 
 ## Props
@@ -39,6 +48,14 @@ import { Drawer, DrawerCloseButton } from "@salt-ds/core";
 ### `Drawer`
 
 <PropsTable packageName="core" componentName="Drawer" />
+
+### `DrawerHeader`
+
+<PropsTable packageName="core" componentName="DrawerHeader" />
+
+### `DrawerContent`
+
+<PropsTable packageName="core" componentName="DrawerContent" />
 
 ### `DrawerCloseButton`
 
