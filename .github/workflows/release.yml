@@ -38,7 +38,7 @@ jobs:
         run: yarn install
       - name: Select Changesets mode
         id: select-mode
-        uses: changesets/action/select-mode@8488615a623b1b9c987934bb89eae8af6a946ac1 # v2.1.1
+        uses: changesets/action/select-mode@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
 
   version:
     name: Version Packages
@@ -62,7 +62,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Version packages
-        uses: changesets/action/version@8488615a623b1b9c987934bb89eae8af6a946ac1 # v2.1.1
+        uses: changesets/action/version@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
           script: yarn changeset version
 
@@ -89,7 +89,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Publish packages
-        uses: changesets/action/publish@8488615a623b1b9c987934bb89eae8af6a946ac1 # v2.1.1
+        uses: changesets/action/publish@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
           script: yarn release
         env:
