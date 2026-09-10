@@ -4439,7 +4439,7 @@ __metadata:
     deepmerge: "npm:^4.2.2"
     react-color: "npm:^2.19.3"
     react-window: "npm:^1.8.6"
-    rifm: "npm:^0.12.0"
+    rifm: "npm:^1.0.0"
     tinycolor2: "npm:^1.4.2"
   peerDependencies:
     "@types/react": ">=16.14.0"
@@ -14344,12 +14344,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rifm@npm:^0.12.0":
-  version: 0.12.1
-  resolution: "rifm@npm:0.12.1"
+"rifm@npm:^1.0.0":
+  version: 1.1.0
+  resolution: "rifm@npm:1.1.0"
   peerDependencies:
     react: ">=16.8"
-  checksum: 10/292ed0f06148162ac3ea3c95d167b765f214ac314be16e480ac7d5d65a20a171c7b642f18a18aeff492fffde1934f344fd93b919fbd35d5bdcb1eccd291cd37d
+  checksum: 10/754b7f4f0b4c04f4fc68013a7863497f0854cfe77324d3ef042aabb57c604e223abbc06b2e36d39e7738f1dcfc879312a95e41d14620cb089ae9cb91afc66740
   languageName: node
   linkType: hard
 
