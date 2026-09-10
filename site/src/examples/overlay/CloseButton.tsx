@@ -1,15 +1,15 @@
 import {
   Button,
+  H3,
   Overlay,
   OverlayPanel,
   OverlayPanelCloseButton,
   OverlayPanelContent,
   OverlayTrigger,
+  Text,
   useId,
 } from "@salt-ds/core";
 import { type ReactElement, useState } from "react";
-
-import styles from "./index.module.css";
 
 export const CloseButton = (): ReactElement => {
   const [open, setOpen] = useState(false);
@@ -27,10 +27,13 @@ export const CloseButton = (): ReactElement => {
       <OverlayPanel aria-labelledby={id}>
         <OverlayPanelCloseButton onClick={handleClose} />
         <OverlayPanelContent>
-          <h3 className={styles.contentHeading} id={id}>
+          <H3
+            id={id}
+            style={{ margin: 0, marginBottom: "var(--salt-spacing-100)" }}
+          >
             Title
-          </h3>
-          <div>Content of Overlay</div>
+          </H3>
+          <Text>Content of Overlay</Text>
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
