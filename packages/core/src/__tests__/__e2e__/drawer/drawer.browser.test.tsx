@@ -3,6 +3,7 @@ import {
   Drawer,
   DrawerCloseButton,
   DrawerContent,
+  DrawerFooter,
   DrawerHeader,
   Text,
 } from "@salt-ds/core";
@@ -18,7 +19,7 @@ const {
   OptionalCloseAction,
   InitialFocusIndex,
   InitialFocusRef,
-  Header,
+  HeaderAndFooter,
 } = composeStories(drawerStories);
 
 const headingName = "Payments Check deposit #1278";
@@ -194,7 +195,7 @@ describe("GIVEN a Drawer", () => {
   });
 
   it("exposes overflowing content as a region reachable by keyboard", async () => {
-    await renderWithSalt(<Header />);
+    await renderWithSalt(<HeaderAndFooter />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
 
     const content = page.getByRole("region", { name: headingName });
@@ -204,6 +205,51 @@ describe("GIVEN a Drawer", () => {
       .toHaveFocus();
     await userEvent.tab();
     await expect.element(content).toHaveFocus();
+  });
+
+  it("shows an overflow divider until the content is fully scrolled", async () => {
+    await renderWithSalt(<HeaderAndFooter />);
+    await page.getByRole("button", { name: "Open Drawer" }).click();
+
+    const region = page.getByRole("region");
+    await expect.element(region).toBeVisible();
+    await expect
+      .poll(() =>
+        region.element().classList.contains("saltDrawerContent-scrollBottom"),
+      )
+      .toBe(true);
+
+    const scrollContainer = region.element();
+    scrollContainer.scrollTop = scrollContainer.scrollHeight;
+    await expect
+      .poll(() =>
+        region.element().classList.contains("saltDrawerContent-scrollBottom"),
+      )
+      .toBe(false);
+  });
+
+  it("shows no overflow divider when the content fits", async () => {
+    await renderWithSalt(
+      <Drawer open position="right" style={{ width: 400 }}>
+        <DrawerHeader
+          header="Add your delivery details"
+          actions={<DrawerCloseButton />}
+        />
+        <DrawerContent>
+          <Text>Pending transaction review</Text>
+        </DrawerContent>
+      </Drawer>,
+    );
+
+    await expect
+      .poll(() =>
+        page
+          .getByRole("dialog")
+          .element()
+          .querySelector(".saltDrawerContent-inner")
+          ?.classList.contains("saltDrawerContent-scrollBottom"),
+      )
+      .toBe(false);
   });
 
   it("falls back to the drawer's aria-label to name the content region", async () => {
@@ -253,7 +299,7 @@ describe("GIVEN a Drawer with sections nested in a fragment", () => {
 
 describe("GIVEN a Drawer with a DrawerHeader", () => {
   it("names and describes the drawer from the header", async () => {
-    await renderWithSalt(<Header />);
+    await renderWithSalt(<HeaderAndFooter />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
 
     const drawer = page.getByRole("dialog");
@@ -267,7 +313,7 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
   });
 
   it("closes from a close button placed in the header actions", async () => {
-    await renderWithSalt(<Header />);
+    await renderWithSalt(<HeaderAndFooter />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
 
     const closeButton = page.getByRole("button", { name: "Close Drawer" });
@@ -357,5 +403,93 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
     await expect
       .element(page.getByRole("button", { name: "Close Drawer" }))
       .toBeVisible();
+  });
+});
+
+describe("GIVEN a Drawer with DrawerFooter", () => {
+  it("places the actions last in the focus order", async () => {
+    await renderWithSalt(
+      <Drawer open position="right" style={{ width: 400 }}>
+        <DrawerHeader
+          header="Add your delivery details"
+          actions={<DrawerCloseButton />}
+        />
+        <DrawerContent>
+          <Button>Content action</Button>
+        </DrawerContent>
+        <DrawerFooter>
+          <Button>Cancel</Button>
+          <Button>Save</Button>
+        </DrawerFooter>
+      </Drawer>,
+    );
+
+    const closeButton = page.getByRole("button", { name: "Close Drawer" });
+    await expect.element(closeButton).toHaveFocus();
+
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "Content action" }))
+      .toHaveFocus();
+
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "Cancel" }))
+      .toHaveFocus();
+
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "Save" }))
+      .toHaveFocus();
+
+    await userEvent.tab();
+    await expect.element(closeButton).toHaveFocus();
+  });
+
+  it("supports actions configured to close the drawer", async () => {
+    await renderWithSalt(<HeaderAndFooter />);
+    const openButton = page.getByRole("button", { name: "Open Drawer" });
+
+    await openButton.click();
+    await expect.element(page.getByRole("dialog")).toBeVisible();
+    await page.getByRole("button", { name: "Save" }).click();
+    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+
+    await openButton.click();
+    await expect.element(page.getByRole("dialog")).toBeVisible();
+    await page.getByRole("button", { name: "Cancel" }).click();
+    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("keeps the footer pinned to the bottom while the content scrolls", async () => {
+    await renderWithSalt(<HeaderAndFooter />);
+    await page.getByRole("button", { name: "Open Drawer" }).click();
+
+    const drawerElement = page.getByRole("dialog").element();
+    const rectOf = (selector: string) => {
+      const section = drawerElement.querySelector(selector);
+      if (!section) throw new Error(`${selector} was not rendered`);
+      return section.getBoundingClientRect();
+    };
+
+    const region = page.getByRole("region");
+    await expect.element(region).toBeVisible();
+
+    const footerBottom = rectOf(".saltDrawerFooter").bottom;
+    const headerTop = rectOf(".saltDrawerHeader").top;
+    const drawerPaddingBottom = Number.parseFloat(
+      getComputedStyle(drawerElement).paddingBottom,
+    );
+    expect(footerBottom).toBeCloseTo(
+      drawerElement.getBoundingClientRect().bottom - drawerPaddingBottom,
+      1,
+    );
+
+    const scrollContainer = region.element();
+    scrollContainer.scrollTop = scrollContainer.scrollHeight;
+    await expect.poll(() => scrollContainer.scrollTop).toBeGreaterThan(0);
+
+    expect(rectOf(".saltDrawerFooter").bottom).toBeCloseTo(footerBottom, 1);
+    expect(rectOf(".saltDrawerHeader").top).toBeCloseTo(headerTop, 1);
   });
 });
