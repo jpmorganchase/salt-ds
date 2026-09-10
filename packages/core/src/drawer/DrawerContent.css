@@ -1,0 +1,30 @@
+.saltDrawerContent {
+  color: var(--salt-content-primary-foreground);
+  padding: 0 var(--salt-spacing-300);
+  flex: 1 1 auto;
+  min-height: var(--salt-text-lineHeight);
+  display: flex;
+  box-sizing: border-box;
+}
+
+.saltDrawerContent-inner {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+  box-sizing: border-box;
+}
+
+.saltDrawerContent-inner:focus-visible {
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
+}
+
+.saltDrawerContent-inner.saltDrawerContent-scrollTop {
+  border-top-color: var(--salt-separable-tertiary-borderColor);
+}
+
+.saltDrawerContent-inner.saltDrawerContent-scrollBottom {
+  border-bottom-color: var(--salt-separable-tertiary-borderColor);
+}
