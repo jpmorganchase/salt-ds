@@ -18,7 +18,7 @@
 @import url(commercial/palette/shadow.css);
 @import url(commercial/palette/warning.css);
 
-/* Each characteristic file references values from above foundations */
+/* Characteristics (semantic values referencing the palette above) */
 @import url(commercial/characteristics/actionable.css);
 @import url(commercial/characteristics/category.css);
 @import url(commercial/characteristics/container.css);
@@ -34,3 +34,6 @@
 @import url(commercial/characteristics/status.css);
 @import url(commercial/characteristics/target.css);
 @import url(commercial/characteristics/text.css);
+
+/* Deprecated */
+@import url(commercial/deprecated/characteristics.css);

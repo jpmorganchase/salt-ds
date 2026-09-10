@@ -1,45 +1,31 @@
 /* Generated from the commercial Figma token exports. */
-
-
 .salt-theme.commercial {
-  --salt-status-info-bold-background: var(--salt-color-blue-500);
-  --salt-status-error-foreground-decorative: var(--salt-color-red-500);
-  --salt-status-warning-borderColor: var(--salt-color-orange-500);
-  --salt-status-info-foreground-decorative: var(--salt-color-blue-500);
-  --salt-status-success-foreground-decorative: var(--salt-color-green-500);
-  --salt-status-warning-foreground-decorative: var(--salt-color-orange-500);
-  --salt-status-error-bold-background: var(--salt-color-red-500);
-  --salt-status-warning-bold-background: var(--salt-color-orange-500);
-  --salt-status-success-borderColor: var(--salt-color-green-500);
-  --salt-status-error-borderColor: var(--salt-color-red-500);
-  --salt-status-success-bold-background: var(--salt-color-green-500);
-  --salt-status-info-borderColor: var(--salt-color-blue-500);
-}
+  --salt-status-info-foreground-decorative: var(--salt-palette-info);
+  --salt-status-success-foreground-decorative: var(--salt-palette-positive);
+  --salt-status-warning-foreground-decorative: var(--salt-palette-warning);
+  --salt-status-error-foreground-decorative: var(--salt-palette-negative);
 
-.salt-theme.commercial[data-mode="light"] {
-  --salt-status-warning-background: var(--salt-color-orange-100);
-  --salt-status-error-background-selected: var(--salt-color-red-200);
-  --salt-status-warning-foreground-informative: var(--salt-color-orange-600);
-  --salt-status-info-background: var(--salt-color-blue-100);
-  --salt-status-info-foreground-informative: var(--salt-color-blue-600);
-  --salt-status-success-background-selected: var(--salt-color-green-200);
-  --salt-status-success-background: var(--salt-color-green-100);
-  --salt-status-error-background: var(--salt-color-red-100);
-  --salt-status-success-foreground-informative: var(--salt-color-green-600);
-  --salt-status-warning-background-selected: var(--salt-color-orange-200);
-  --salt-status-error-foreground-informative: var(--salt-color-red-600);
-}
+  --salt-status-info-foreground-informative: var(--salt-palette-info-strong);
+  --salt-status-success-foreground-informative: var(--salt-palette-positive-strong);
+  --salt-status-warning-foreground-informative: var(--salt-palette-warning-strong);
+  --salt-status-error-foreground-informative: var(--salt-palette-negative-strong);
 
-.salt-theme.commercial[data-mode="dark"] {
-  --salt-status-warning-background: var(--salt-color-orange-900);
-  --salt-status-error-background-selected: var(--salt-color-red-800);
-  --salt-status-warning-foreground-informative: var(--salt-color-orange-400);
-  --salt-status-info-background: var(--salt-color-blue-900);
-  --salt-status-info-foreground-informative: var(--salt-color-blue-400);
-  --salt-status-success-background-selected: var(--salt-color-green-800);
-  --salt-status-success-background: var(--salt-color-green-900);
-  --salt-status-error-background: var(--salt-color-red-900);
-  --salt-status-success-foreground-informative: var(--salt-color-green-400);
-  --salt-status-warning-background-selected: var(--salt-color-orange-800);
-  --salt-status-error-foreground-informative: var(--salt-color-red-400);
+  --salt-status-info-borderColor: var(--salt-palette-info);
+  --salt-status-success-borderColor: var(--salt-palette-positive);
+  --salt-status-warning-borderColor: var(--salt-palette-warning);
+  --salt-status-error-borderColor: var(--salt-palette-negative);
+
+  --salt-status-info-background: var(--salt-palette-info-weakest);
+  --salt-status-success-background: var(--salt-palette-positive-weakest);
+  --salt-status-warning-background: var(--salt-palette-warning-weakest);
+  --salt-status-error-background: var(--salt-palette-negative-weakest);
+
+  --salt-status-info-bold-background: var(--salt-palette-info);
+  --salt-status-error-bold-background: var(--salt-palette-negative);
+  --salt-status-warning-bold-background: var(--salt-palette-warning);
+  --salt-status-success-bold-background: var(--salt-palette-positive);
+
+  --salt-status-success-background-selected: var(--salt-palette-positive-weaker);
+  --salt-status-warning-background-selected: var(--salt-palette-warning-weaker);
+  --salt-status-error-background-selected: var(--salt-palette-negative-weaker);
 }

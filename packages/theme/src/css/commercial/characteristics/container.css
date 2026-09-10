@@ -1,32 +1,19 @@
 /* Generated from the commercial Figma token exports. */
+.salt-theme.commercial {
+  --salt-container-primary-background: var(--salt-palette-background-primary);
+  --salt-container-primary-background-disabled: var(--salt-palette-background-primary-disabled);
 
+  --salt-container-secondary-background: var(--salt-palette-background-secondary);
+  --salt-container-secondary-background-disabled: var(--salt-palette-background-secondary-disabled);
 
-.salt-theme.commercial[data-mode="light"] {
-  --salt-container-primary-background: var(--salt-color-snow);
-  --salt-container-secondary-background: var(--salt-color-wheat-15);
-  --salt-container-subtle-borderColor: var(--salt-color-dove-gray-900-30a);
-  --salt-container-bold-borderColor-disabled: var(--salt-color-dove-gray-900-10a);
-  --salt-container-primary-background-disabled: var(--salt-color-snow-40a);
-  --salt-container-bold-borderColor: var(--salt-color-dove-gray-900-30a);
-  --salt-container-borderColor: var(--salt-color-dove-gray-900-30a);
-  --salt-container-ghost-borderColor: var(--salt-color-dove-gray-900-30a);
-  --salt-container-tertiary-background-disabled: var(--salt-color-wheat-25-40a);
-  --salt-container-ghost-background: var(--salt-color-white-30a);
-  --salt-container-tertiary-background: var(--salt-color-wheat-25);
-  --salt-container-secondary-background-disabled: var(--salt-color-wheat-15-40a);
-}
+  --salt-container-tertiary-background: var(--salt-palette-background-tertiary);
+  --salt-container-tertiary-background-disabled: var(--salt-palette-background-tertiary-disabled);
 
-.salt-theme.commercial[data-mode="dark"] {
-  --salt-container-primary-background: var(--salt-color-jet);
-  --salt-container-secondary-background: var(--salt-color-jet-95);
-  --salt-container-subtle-borderColor: var(--salt-color-white-30a);
-  --salt-container-bold-borderColor-disabled: var(--salt-color-white-10a);
-  --salt-container-primary-background-disabled: var(--salt-color-jet-40a);
-  --salt-container-bold-borderColor: var(--salt-color-white-30a);
-  --salt-container-borderColor: var(--salt-color-white-30a);
-  --salt-container-ghost-borderColor: var(--salt-color-white-30a);
-  --salt-container-tertiary-background-disabled: var(--salt-color-jet-91-40a);
-  --salt-container-ghost-background: var(--salt-color-black-30a);
-  --salt-container-tertiary-background: var(--salt-color-jet-91);
-  --salt-container-secondary-background-disabled: var(--salt-color-jet-95-40a);
+  --salt-container-ghost-background: var(--salt-palette-alpha-medium);
+  --salt-container-ghost-borderColor: var(--salt-palette-alpha-contrast-medium);
+
+  --salt-container-bold-borderColor: var(--salt-palette-alpha-contrast-medium);
+  --salt-container-bold-borderColor-disabled: var(--salt-palette-alpha-contrast-lower);
+  --salt-container-borderColor: var(--salt-palette-alpha-contrast-medium);
+  --salt-container-subtle-borderColor: var(--salt-palette-alpha-contrast-medium);
 }

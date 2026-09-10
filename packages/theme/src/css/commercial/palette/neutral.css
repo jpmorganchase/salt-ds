@@ -1,23 +1,26 @@
 /* Generated from the commercial Figma token exports. */
 .salt-theme.commercial[data-mode="light"] {
-  --salt-palette-neutral: var(--salt-color-gray-500);
-  --salt-palette-neutral-disabled: var(--salt-color-gray-500-40a);
-  --salt-palette-neutral-readonly: var(--salt-color-gray-500-10a);
-  --salt-palette-neutral-strong: var(--salt-color-gray-600);
+  --salt-palette-neutral: var(--salt-color-dove-gray-500);
+  --salt-palette-neutral-disabled: var(--salt-color-dove-gray-500-40a);
+  --salt-palette-neutral-readonly: var(--salt-color-dove-gray-500-10a);
+  --salt-palette-neutral-hover: var(--salt-color-dove-gray-dark-alpha-15-low);
+  --salt-palette-neutral-strong: var(--salt-color-dove-gray-600);
   --salt-palette-neutral-stronger: var(--salt-color-gray-700);
   --salt-palette-neutral-strongest: var(--salt-color-gray-800);
   --salt-palette-neutral-weak: var(--salt-color-gray-400);
-  --salt-palette-neutral-weaker: var(--salt-color-gray-200);
-  --salt-palette-neutral-weakest: var(--salt-color-gray-100);
+  --salt-palette-neutral-weaker: var(--salt-color-dove-gray-200);
+  --salt-palette-neutral-weakest: var(--salt-color-dove-gray-100);
 }
+
 .salt-theme.commercial[data-mode="dark"] {
-  --salt-palette-neutral: var(--salt-color-gray-500);
-  --salt-palette-neutral-disabled: var(--salt-color-gray-500-40a);
-  --salt-palette-neutral-readonly: var(--salt-color-gray-500-10a);
-  --salt-palette-neutral-strong: var(--salt-color-gray-400);
+  --salt-palette-neutral: var(--salt-color-pigeon-gray-500);
+  --salt-palette-neutral-disabled: var(--salt-color-white-40a);
+  --salt-palette-neutral-readonly: var(--salt-color-white-10a);
+  --salt-palette-neutral-hover: var(--salt-color-white-15a);
+  --salt-palette-neutral-strong: var(--salt-color-pigeon-gray-400);
   --salt-palette-neutral-stronger: var(--salt-color-gray-200);
   --salt-palette-neutral-strongest: var(--salt-color-gray-100);
   --salt-palette-neutral-weak: var(--salt-color-gray-600);
-  --salt-palette-neutral-weaker: var(--salt-color-gray-800);
-  --salt-palette-neutral-weakest: var(--salt-color-gray-900);
+  --salt-palette-neutral-weaker: var(--salt-color-pigeon-gray-800);
+  --salt-palette-neutral-weakest: var(--salt-color-pigeon-gray-900);
 }

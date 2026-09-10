@@ -1,12 +1,6 @@
 /* Generated from the commercial Figma token exports. */
 .salt-theme.commercial {
-  --salt-color-blue-200-40a: rgba(var(--salt-color-blue-200-rgb), 0.4);
-  --salt-color-blue-300-40a: rgba(var(--salt-color-blue-300-rgb), 0.4);
-  --salt-color-blue-400-40a: rgba(var(--salt-color-blue-400-rgb), 0.4);
-  --salt-color-blue-500-40a: rgba(var(--salt-color-blue-500-rgb), 0.4);
-  --salt-color-blue-600-40a: rgba(var(--salt-color-blue-600-rgb), 0.4);
-  --salt-color-blue-700-40a: rgba(var(--salt-color-blue-700-rgb), 0.4);
-  --salt-color-blue-800-40a: rgba(var(--salt-color-blue-800-rgb), 0.4);
+  /* Alpha colors */
   --salt-color-gray-300-10a: rgba(var(--salt-color-gray-300-rgb), 0.1);
   --salt-color-gray-300-40a: rgba(var(--salt-color-gray-300-rgb), 0.4);
   --salt-color-gray-500-10a: rgba(var(--salt-color-gray-500-rgb), 0.1);
@@ -14,15 +8,19 @@
   --salt-color-gray-600-40a: rgba(var(--salt-color-gray-600-rgb), 0.4);
   --salt-color-gray-700-10a: rgba(var(--salt-color-gray-700-rgb), 0.1);
   --salt-color-gray-700-40a: rgba(var(--salt-color-gray-700-rgb), 0.4);
+
+  --salt-color-blue-200-40a: rgba(var(--salt-color-blue-200-rgb), 0.4);
+  --salt-color-blue-300-40a: rgba(var(--salt-color-blue-300-rgb), 0.4);
+  --salt-color-blue-400-40a: rgba(var(--salt-color-blue-400-rgb), 0.4);
+  --salt-color-blue-500-40a: rgba(var(--salt-color-blue-500-rgb), 0.4);
+  --salt-color-blue-600-40a: rgba(var(--salt-color-blue-600-rgb), 0.4);
+  --salt-color-blue-700-40a: rgba(var(--salt-color-blue-700-rgb), 0.4);
+  --salt-color-blue-800-40a: rgba(var(--salt-color-blue-800-rgb), 0.4);
+
   --salt-color-green-400-40a: rgba(var(--salt-color-green-400-rgb), 0.4);
   --salt-color-green-500-40a: rgba(var(--salt-color-green-500-rgb), 0.4);
   --salt-color-green-600-40a: rgba(var(--salt-color-green-600-rgb), 0.4);
-  --salt-color-orange-400-40a: rgba(var(--salt-color-orange-400-rgb), 0.4);
-  --salt-color-orange-500-40a: rgba(var(--salt-color-orange-500-rgb), 0.4);
-  --salt-color-orange-600-40a: rgba(var(--salt-color-orange-600-rgb), 0.4);
-  --salt-color-red-400-40a: rgba(var(--salt-color-red-400-rgb), 0.4);
-  --salt-color-red-500-40a: rgba(var(--salt-color-red-500-rgb), 0.4);
-  --salt-color-red-600-40a: rgba(var(--salt-color-red-600-rgb), 0.4);
+
   --salt-color-teal-200-40a: rgba(var(--salt-color-teal-200-rgb), 0.4);
   --salt-color-teal-300-40a: rgba(var(--salt-color-teal-300-rgb), 0.4);
   --salt-color-teal-400-40a: rgba(var(--salt-color-teal-400-rgb), 0.4);
@@ -30,10 +28,70 @@
   --salt-color-teal-600-40a: rgba(var(--salt-color-teal-600-rgb), 0.4);
   --salt-color-teal-700-40a: rgba(var(--salt-color-teal-700-rgb), 0.4);
   --salt-color-teal-800-40a: rgba(var(--salt-color-teal-800-rgb), 0.4);
-  --salt-color-background-snow-40a: rgba(var(--salt-color-background-snow-rgb), 0.4);
-  --salt-color-background-marble-40a: rgba(var(--salt-color-background-marble-rgb), 0.4);
-  --salt-color-background-limestone-40a: rgba(var(--salt-color-background-limestone-rgb), 0.4);
+
+  --salt-color-orange-400-40a: rgba(var(--salt-color-orange-400-rgb), 0.4);
+  --salt-color-orange-500-40a: rgba(var(--salt-color-orange-500-rgb), 0.4);
+  --salt-color-orange-600-40a: rgba(var(--salt-color-orange-600-rgb), 0.4);
+
+  --salt-color-red-400-40a: rgba(var(--salt-color-red-400-rgb), 0.4);
+  --salt-color-red-500-40a: rgba(var(--salt-color-red-500-rgb), 0.4);
+  --salt-color-red-600-40a: rgba(var(--salt-color-red-600-rgb), 0.4);
+
   --salt-color-background-granite-40a: rgba(var(--salt-color-background-granite-rgb), 0.4);
   --salt-color-background-jet-40a: rgba(var(--salt-color-background-jet-rgb), 0.4);
   --salt-color-background-leather-40a: rgba(var(--salt-color-background-leather-rgb), 0.4);
+  --salt-color-background-limestone-40a: rgba(var(--salt-color-background-limestone-rgb), 0.4);
+  --salt-color-background-marble-40a: rgba(var(--salt-color-background-marble-rgb), 0.4);
+  --salt-color-background-snow-40a: rgba(var(--salt-color-background-snow-rgb), 0.4);
+
+  --salt-color-snow-40a: rgba(var(--salt-color-snow-rgb), 0.4);
+
+  --salt-color-wheat-15-40a: rgba(var(--salt-color-wheat-15-rgb), 0.4);
+  --salt-color-wheat-25-40a: rgba(var(--salt-color-wheat-25-rgb), 0.4);
+
+  --salt-color-jet-40a: rgba(var(--salt-color-jet-rgb), 0.4);
+  --salt-color-jet-91-40a: rgba(var(--salt-color-jet-91-rgb), 0.4);
+  --salt-color-jet-95-40a: rgba(var(--salt-color-jet-95-rgb), 0.4);
+
+  --salt-color-black-0a: rgba(var(--salt-color-black-rgb), 0);
+  --salt-color-black-5a: rgba(var(--salt-color-black-rgb), 0.05);
+  --salt-color-black-10a: rgba(var(--salt-color-black-rgb), 0.1);
+  --salt-color-black-15a: rgba(var(--salt-color-black-rgb), 0.15);
+  --salt-color-black-20a: rgba(var(--salt-color-black-rgb), 0.2);
+  --salt-color-black-30a: rgba(var(--salt-color-black-rgb), 0.3);
+  --salt-color-black-40a: rgba(var(--salt-color-black-rgb), 0.4);
+  --salt-color-black-50a: rgba(var(--salt-color-black-rgb), 0.5);
+  --salt-color-black-65a: rgba(var(--salt-color-black-rgb), 0.65);
+  --salt-color-black-80a: rgba(var(--salt-color-black-rgb), 0.8);
+
+  --salt-color-white-0a: rgba(var(--salt-color-white-rgb), 0);
+  --salt-color-white-5a: rgba(var(--salt-color-white-rgb), 0.05);
+  --salt-color-white-10a: rgba(var(--salt-color-white-rgb), 0.1);
+  --salt-color-white-15a: rgba(var(--salt-color-white-rgb), 0.15);
+  --salt-color-white-20a: rgba(var(--salt-color-white-rgb), 0.2);
+  --salt-color-white-30a: rgba(var(--salt-color-white-rgb), 0.3);
+  --salt-color-white-40a: rgba(var(--salt-color-white-rgb), 0.4);
+  --salt-color-white-50a: rgba(var(--salt-color-white-rgb), 0.5);
+  --salt-color-white-65a: rgba(var(--salt-color-white-rgb), 0.65);
+  --salt-color-white-80a: rgba(var(--salt-color-white-rgb), 0.8);
+
+  --salt-color-accent-200-40a: rgba(var(--salt-color-accent-200-rgb), 0.4);
+  --salt-color-accent-500-0a: rgba(var(--salt-color-accent-500-rgb), 0);
+  --salt-color-accent-500-40a: rgba(var(--salt-color-accent-500-rgb), 0.4);
+  --salt-color-accent-800-40a: rgba(var(--salt-color-accent-800-rgb), 0.4);
+
+  --salt-color-dove-gray-500-10a: rgba(var(--salt-color-dove-gray-500-rgb), 0.1);
+  --salt-color-dove-gray-500-40a: rgba(var(--salt-color-dove-gray-500-rgb), 0.4);
+  --salt-color-dove-gray-700-40a: rgba(var(--salt-color-dove-gray-700-rgb), 0.4);
+  --salt-color-dove-gray-900-5a: rgba(var(--salt-color-dove-gray-900-rgb), 0.05);
+  --salt-color-dove-gray-900-10a: rgba(var(--salt-color-dove-gray-900-rgb), 0.1);
+  --salt-color-dove-gray-900-15a: rgba(var(--salt-color-dove-gray-900-rgb), 0.15);
+  --salt-color-dove-gray-900-20a: rgba(var(--salt-color-dove-gray-900-rgb), 0.2);
+  --salt-color-dove-gray-900-30a: rgba(var(--salt-color-dove-gray-900-rgb), 0.3);
+  --salt-color-dove-gray-900-40a: rgba(var(--salt-color-dove-gray-900-rgb), 0.4);
+  --salt-color-dove-gray-900-50a: rgba(var(--salt-color-dove-gray-900-rgb), 0.5);
+  --salt-color-dove-gray-900-65a: rgba(var(--salt-color-dove-gray-900-rgb), 0.65);
+  --salt-color-dove-gray-900-80a: rgba(var(--salt-color-dove-gray-900-rgb), 0.8);
+
+  --salt-color-pigeon-gray-300-40a: rgba(var(--salt-color-pigeon-gray-300-rgb), 0.4);
 }

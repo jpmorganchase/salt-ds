@@ -1,33 +1,19 @@
 /* Generated from the commercial Figma token exports. */
-
-
 .salt-theme.commercial {
-  --salt-editable-borderColor-hover: var(--salt-color-accent-500);
+  --salt-editable-borderColor: var(--salt-palette-neutral);
+  --salt-editable-borderColor-active: var(--salt-palette-accent-stronger);
+  --salt-editable-borderColor-disabled: var(--salt-palette-neutral-disabled);
+  --salt-editable-borderColor-hover: var(--salt-palette-accent);
+  --salt-editable-borderColor-readonly: var(--salt-palette-neutral-readonly);
+
   --salt-editable-background-readonly: var(--salt-color-transparent);
-}
 
-.salt-theme.commercial[data-mode="light"] {
-  --salt-editable-secondary-background-disabled: var(--salt-color-wheat-15-40a);
-  --salt-editable-borderColor-disabled: var(--salt-color-dove-gray-500-40a);
-  --salt-editable-tertiary-background: var(--salt-color-wheat-25);
-  --salt-editable-borderColor-readonly: var(--salt-color-dove-gray-500-10a);
-  --salt-editable-primary-background: var(--salt-color-snow);
-  --salt-editable-borderColor: var(--salt-color-dove-gray-500);
-  --salt-editable-tertiary-background-disabled: var(--salt-color-wheat-25-40a);
-  --salt-editable-secondary-background: var(--salt-color-wheat-15);
-  --salt-editable-primary-background-disabled: var(--salt-color-snow-40a);
-  --salt-editable-borderColor-active: var(--salt-color-accent-700);
-}
+  --salt-editable-primary-background: var(--salt-palette-background-primary);
+  --salt-editable-primary-background-disabled: var(--salt-palette-background-primary-disabled);
 
-.salt-theme.commercial[data-mode="dark"] {
-  --salt-editable-secondary-background-disabled: var(--salt-color-jet-95-40a);
-  --salt-editable-borderColor-disabled: var(--salt-color-white-40a);
-  --salt-editable-tertiary-background: var(--salt-color-jet-91);
-  --salt-editable-borderColor-readonly: var(--salt-color-white-10a);
-  --salt-editable-primary-background: var(--salt-color-jet);
-  --salt-editable-borderColor: var(--salt-color-pigeon-gray-500);
-  --salt-editable-tertiary-background-disabled: var(--salt-color-jet-91-40a);
-  --salt-editable-secondary-background: var(--salt-color-jet-95);
-  --salt-editable-primary-background-disabled: var(--salt-color-jet-40a);
-  --salt-editable-borderColor-active: var(--salt-color-accent-300);
+  --salt-editable-secondary-background: var(--salt-palette-background-secondary);
+  --salt-editable-secondary-background-disabled: var(--salt-palette-background-secondary-disabled);
+
+  --salt-editable-tertiary-background: var(--salt-palette-background-tertiary);
+  --salt-editable-tertiary-background-disabled: var(--salt-palette-background-tertiary-disabled);
 }

@@ -4,6 +4,7 @@
   --salt-palette-info-strong: var(--salt-color-blue-600);
   --salt-palette-info-weakest: var(--salt-color-blue-100);
 }
+
 .salt-theme.commercial[data-mode="dark"] {
   --salt-palette-info: var(--salt-color-blue-500);
   --salt-palette-info-strong: var(--salt-color-blue-400);

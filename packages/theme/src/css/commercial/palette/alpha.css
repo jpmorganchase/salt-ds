@@ -12,13 +12,13 @@
 
   --salt-palette-alpha-contrast-highest: var(--salt-color-black-80a);
   --salt-palette-alpha-contrast-higher: var(--salt-color-black-65a);
-  --salt-palette-alpha-contrast-high: var(--salt-color-black-50a);
-  --salt-palette-alpha-contrast-mediumHigh: var(--salt-color-black-40a);
-  --salt-palette-alpha-contrast-medium: var(--salt-color-black-30a);
-  --salt-palette-alpha-contrast-mediumLow: var(--salt-color-black-20a);
-  --salt-palette-alpha-contrast-low: var(--salt-color-black-15a);
-  --salt-palette-alpha-contrast-lower: var(--salt-color-black-10a);
-  --salt-palette-alpha-contrast-lowest: var(--salt-color-black-5a);
+  --salt-palette-alpha-contrast-high: var(--salt-color-dove-gray-900-50a);
+  --salt-palette-alpha-contrast-mediumHigh: var(--salt-color-dove-gray-900-40a);
+  --salt-palette-alpha-contrast-medium: var(--salt-color-dove-gray-900-30a);
+  --salt-palette-alpha-contrast-mediumLow: var(--salt-color-dove-gray-900-20a);
+  --salt-palette-alpha-contrast-low: var(--salt-color-dove-gray-900-15a);
+  --salt-palette-alpha-contrast-lower: var(--salt-color-dove-gray-900-10a);
+  --salt-palette-alpha-contrast-lowest: var(--salt-color-dove-gray-900-5a);
 
   --salt-palette-alpha-dark-highest: var(--salt-color-black-80a);
   --salt-palette-alpha-dark-higher: var(--salt-color-black-65a);

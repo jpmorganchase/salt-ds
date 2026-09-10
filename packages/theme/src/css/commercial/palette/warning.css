@@ -3,6 +3,7 @@
   --salt-palette-warning-stronger: var(--salt-color-orange-700);
   --salt-palette-warning-strong: var(--salt-color-orange-600);
   --salt-palette-warning: var(--salt-color-orange-500);
+  --salt-palette-warning-hover: var(--salt-color-orange-dark-alpha-15-low);
   --salt-palette-warning-weaker: var(--salt-color-orange-200);
   --salt-palette-warning-weakest: var(--salt-color-orange-100);
 }
@@ -11,6 +12,7 @@
   --salt-palette-warning-stronger: var(--salt-color-orange-300);
   --salt-palette-warning-strong: var(--salt-color-orange-400);
   --salt-palette-warning: var(--salt-color-orange-500);
+  --salt-palette-warning-hover: var(--salt-color-orange-dark-alpha-15-low);
   --salt-palette-warning-weaker: var(--salt-color-orange-800);
   --salt-palette-warning-weakest: var(--salt-color-orange-900);
 }

@@ -2,6 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { argv } from "node:process";
 
+import { formatCommercialTheme } from "./format-commercial-theme.mjs";
+
 const [lightTokensPath, darkTokensPath, colorTokensPath] = argv.slice(2);
 
 if (!lightTokensPath || !darkTokensPath || !colorTokensPath) {
@@ -18,26 +20,14 @@ const generatedComment =
   "/* Generated from the commercial Figma token exports. */";
 
 const codeSyntaxCorrections = new Map([
-  [
-    "editable/tertiary-background",
-    "--salt-editable-tertiary-background",
-  ],
+  ["editable/tertiary-background", "--salt-editable-tertiary-background"],
   [
     "editable/tertiary-background-disabled",
     "--salt-editable-tertiary-background-disabled",
   ],
-  [
-    "actionable/background-selected",
-    "--salt-actionable-background-selected",
-  ],
-  [
-    "actionable/border-selected",
-    "--salt-actionable-borderColor-selected",
-  ],
-  [
-    "actionable/foreground-selected",
-    "--salt-actionable-foreground-selected",
-  ],
+  ["actionable/background-selected", "--salt-actionable-background-selected"],
+  ["actionable/border-selected", "--salt-actionable-borderColor-selected"],
+  ["actionable/foreground-selected", "--salt-actionable-foreground-selected"],
   [
     "actionable/negative/background-selected",
     "--salt-actionable-negative-background-selected",
@@ -86,46 +76,22 @@ const codeSyntaxCorrections = new Map([
     "actionable/positive/foreground-selected",
     "--salt-actionable-positive-foreground-selected",
   ],
-  [
-    "text/label-fontWeight-small",
-    "--salt-text-label-fontWeight-small",
-  ],
-  [
-    "text/label-fontWeight-strong",
-    "--salt-text-label-fontWeight-strong",
-  ],
-  [
-    "overlayable/background-hover",
-    "--salt-overlayable-background-hover",
-  ],
-  [
-    "focused/onSolid-Outline",
-    "--salt-focused-onSolid-outlineColor",
-  ],
+  ["text/label-fontWeight-small", "--salt-text-label-fontWeight-small"],
+  ["text/label-fontWeight-strong", "--salt-text-label-fontWeight-strong"],
+  ["overlayable/background-hover", "--salt-overlayable-background-hover"],
+  ["focused/onSolid-Outline", "--salt-focused-onSolid-outlineColor"],
   ["focused/Outline", "--salt-focused-outlineColor"],
 ]);
 
 const paletteVariableCorrections = new Map([
-  [
-    "--salt-container-borderColor",
-    "--salt-palette-alpha-contrast-medium",
-  ],
+  ["--salt-container-borderColor", "--salt-palette-alpha-contrast-medium"],
   [
     "--salt-container-subtle-borderColor",
     "--salt-palette-alpha-contrast-medium",
   ],
-  [
-    "--salt-selectable-background-selected",
-    "--salt-palette-accent-selected",
-  ],
-  [
-    "--salt-category-1-dataviz",
-    "--salt-palette-categorical-1-dataviz",
-  ],
-  [
-    "--salt-actionable-bold-background-hover",
-    "--salt-palette-neutral-hover",
-  ],
+  ["--salt-selectable-background-selected", "--salt-palette-accent-selected"],
+  ["--salt-category-1-dataviz", "--salt-palette-categorical-1-dataviz"],
+  ["--salt-actionable-bold-background-hover", "--salt-palette-neutral-hover"],
   [
     "--salt-actionable-negative-bold-background-hover",
     "--salt-palette-negative-hover",
@@ -358,12 +324,7 @@ function paletteVariableFor(variableName, token, characteristicValues) {
   );
 }
 
-function addPaletteDeclaration(
-  declarations,
-  variableName,
-  value,
-  sourcePath,
-) {
+function addPaletteDeclaration(declarations, variableName, value, sourcePath) {
   const existing = declarations.get(variableName);
 
   if (existing && existing.value !== value) {
@@ -476,11 +437,7 @@ function writeGeneratedFile(filePath, css) {
 }
 
 function copyNextThemeFiles(exportedVariableNames) {
-  for (const directory of [
-    "foundations",
-    "palette",
-    "characteristics",
-  ]) {
+  for (const directory of ["foundations", "palette", "characteristics"]) {
     const sourceDirectory = path.join(nextThemePath, directory);
 
     for (const fileName of fs.readdirSync(sourceDirectory)) {
@@ -547,29 +504,26 @@ function generateColorFoundation(colorTokens) {
 
     emittedColors.add(property);
 
-    if (
-      token.$value.alpha === 1 &&
-      sourceProperties.has(`${property}-rgb`)
-    ) {
+    if (token.$value.alpha === 1 && sourceProperties.has(`${property}-rgb`)) {
       return `${indentation}${property}: rgb(var(${property}-rgb));`;
     }
 
     return `${indentation}${property}: ${colorValue(token.$value)};`;
   });
-  const closingBraceIndex = lines.findLastIndex(
-    (line) => line.trim() === "}",
-  );
+  const closingBraceIndex = lines.findLastIndex((line) => line.trim() === "}");
   const newColors = [...colors]
     .filter(([property]) => !emittedColors.has(property))
-    .map(
-      ([property, token]) => `  ${property}: ${colorValue(token.$value)};`,
-    );
+    .map(([property, token]) => `  ${property}: ${colorValue(token.$value)};`);
 
   lines.splice(closingBraceIndex, 0, ...newColors);
   writeGeneratedFile(destinationPath, lines.join("\n"));
 }
 
 function destinationFor(variableName) {
+  if (variableName === "--salt-navigable-background-hover") {
+    return path.join("deprecated", "characteristics.css");
+  }
+
   if (variableName === "--salt-palette-transparent") {
     return path.join("palette", "alpha.css");
   }
@@ -612,9 +566,11 @@ function addDeclarations(light, dark) {
     }
 
     const destination = destinationFor(variableName);
-    const groups =
-      declarationsByFile.get(destination) ??
-      { common: [], light: [], dark: [] };
+    const groups = declarationsByFile.get(destination) ?? {
+      common: [],
+      light: [],
+      dark: [],
+    };
 
     if (lightToken.value === darkToken.value) {
       groups.common.push([variableName, lightToken.value]);
@@ -630,21 +586,13 @@ function addDeclarations(light, dark) {
     const destinationPath = path.join(commercialThemePath, relativePath);
 
     if (!fs.existsSync(destinationPath)) {
-      throw new Error(
-        `No commercial theme file exists for "${relativePath}"`,
-      );
+      throw new Error(`No commercial theme file exists for "${relativePath}"`);
     }
 
     const generatedRules = [
       renderRule(".salt-theme.commercial", groups.common),
-      renderRule(
-        '.salt-theme.commercial[data-mode="light"]',
-        groups.light,
-      ),
-      renderRule(
-        '.salt-theme.commercial[data-mode="dark"]',
-        groups.dark,
-      ),
+      renderRule('.salt-theme.commercial[data-mode="light"]', groups.light),
+      renderRule('.salt-theme.commercial[data-mode="dark"]', groups.dark),
     ].filter(Boolean);
 
     fs.appendFileSync(destinationPath, `\n${generatedRules.join("\n\n")}\n`);
@@ -673,7 +621,7 @@ function generateThemeEntry() {
     "@import url(commercial/palette/shadow.css);",
     "@import url(commercial/palette/warning.css);",
     "",
-    "/* Each characteristic file references values from above foundations */",
+    "/* Characteristics (semantic values referencing the palette above) */",
     "@import url(commercial/characteristics/actionable.css);",
     "@import url(commercial/characteristics/category.css);",
     "@import url(commercial/characteristics/container.css);",
@@ -689,6 +637,9 @@ function generateThemeEntry() {
     "@import url(commercial/characteristics/status.css);",
     "@import url(commercial/characteristics/target.css);",
     "@import url(commercial/characteristics/text.css);",
+    "",
+    "/* Deprecated */",
+    "@import url(commercial/deprecated/characteristics.css);",
     "",
   ];
 
@@ -709,12 +660,8 @@ if (
   throw new Error("Light and dark exports do not define the same variables");
 }
 
-const {
-  paletteDark,
-  paletteLight,
-  semanticDark,
-  semanticLight,
-} = createThemeLayers(light, dark, characteristicValues);
+const { paletteDark, paletteLight, semanticDark, semanticLight } =
+  createThemeLayers(light, dark, characteristicValues);
 const generatedVariableNames = new Set([
   ...semanticLight.keys(),
   ...paletteLight.keys(),
@@ -723,8 +670,13 @@ const generatedVariableNames = new Set([
 fs.rmSync(commercialThemePath, { force: true, recursive: true });
 copyNextThemeFiles(generatedVariableNames);
 generateColorFoundation(colorTokens);
+writeGeneratedFile(
+  path.join(commercialThemePath, "deprecated/characteristics.css"),
+  "",
+);
 addDeclarations(paletteLight, paletteDark);
 addDeclarations(semanticLight, semanticDark);
+formatCommercialTheme();
 generateThemeEntry();
 
 console.log(

@@ -4,13 +4,14 @@ import { LocalizationProvider } from "@salt-ds/date-components";
 import { clsx } from "clsx";
 import type { AppProps } from "next/app";
 import * as saltComponents from "../components";
-import { amplitude, openSans, ptMono } from "../fonts";
+import { amplitude, openSans, ptMono, roboto } from "../fonts";
 import * as saltLayouts from "../layouts";
 import { LayoutProvider } from "../layouts/LayoutProvider";
 import { ThemeProvider } from "../ThemeProvider";
 import type { MyAppProps } from "../types/mosaic";
 
 import "@salt-ds/theme/css/theme-next.css";
+import "@salt-ds/theme/css/commercial.css";
 import "@salt-ds/theme/index.css";
 
 import "../css/index.css";
@@ -54,6 +55,7 @@ export default function MyApp({
             ptMono.variable,
             openSans.variable,
             amplitude.variable,
+            roboto.variable
           )}
         >
           <LayoutProvider

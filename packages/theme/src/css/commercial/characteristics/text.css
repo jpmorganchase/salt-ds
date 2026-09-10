@@ -5,29 +5,39 @@
   --salt-text-textAlign: left;
   --salt-text-textAlign-embedded: center;
 
-  /* Action */
-  --salt-text-action-fontFamily: "roboto";
-  --salt-text-action-letterSpacing: 0;
-  --salt-text-action-textTransform: none;
-  --salt-text-action-textAlign: center;
-  --salt-text-action-fontWeight: var(--salt-typography-fontWeight-semiBold);
-  --salt-text-action-fontWeight-small: var(--salt-typography-fontWeight-regular);
-  --salt-text-action-fontWeight-strong: var(--salt-typography-fontWeight-bold);
-
   /* Body text (should be used as default) */
-  --salt-text-fontFamily: "roboto";
+  --salt-text-fontFamily: var(--salt-typography-fontFamily-roboto);
   --salt-text-fontWeight: var(--salt-typography-fontWeight-regular);
   --salt-text-fontWeight-small: var(--salt-typography-fontWeight-light);
   --salt-text-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
 
   /* Notation */
-  --salt-text-notation-fontFamily: "roboto";
+  --salt-text-notation-fontFamily: var(--salt-typography-fontFamily-roboto);
   --salt-text-notation-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-text-notation-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 
+  /* Label */
+  --salt-text-label-fontFamily: var(--salt-typography-fontFamily-roboto);
+  --salt-text-label-fontWeight: var(--salt-typography-fontWeight-regular);
+  --salt-text-label-fontWeight-small: var(--salt-typography-fontWeight-light);
+  --salt-text-label-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
+
+  /* Code */
+  --salt-text-code-fontFamily: var(--salt-typography-fontFamily-ptMono);
+  --salt-text-code-fontWeight: var(--salt-typography-fontWeight-regular);
+
+  /* Action */
+  --salt-text-action-letterSpacing: 0;
+  --salt-text-action-textTransform: none;
+  --salt-text-action-textAlign: center;
+  --salt-text-action-fontFamily: var(--salt-typography-fontFamily-roboto);
+  --salt-text-action-fontWeight: var(--salt-typography-fontWeight-semiBold);
+  --salt-text-action-fontWeight-small: var(--salt-typography-fontWeight-regular);
+  --salt-text-action-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+
   /* Heading */
-  --salt-text-heading-fontFamily: "roboto";
+  --salt-text-heading-fontFamily: var(--salt-typography-fontFamily-roboto);
   --salt-text-heading-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-text-heading-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-heading-fontWeight-strong: var(--salt-typography-fontWeight-bold);
@@ -56,41 +66,35 @@
   --salt-text-h4-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-h4-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 
-  /* Label */
-  --salt-text-label-fontFamily: "roboto";
-  --salt-text-label-fontWeight: var(--salt-typography-fontWeight-regular);
-  --salt-text-label-fontWeight-small: var(--salt-typography-fontWeight-light);
-  --salt-text-label-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
-
   /* Display text */
-  --salt-text-display-fontFamily: "roboto";
+  --salt-text-display-fontFamily: var(--salt-typography-fontFamily-roboto);
   --salt-text-display-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-text-display-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-display-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 
+  /* Display 1 */
   --salt-text-display1-fontFamily: var(--salt-typography-fontFamily-amplitude);
   --salt-text-display1-fontWeight: var(--salt-typography-fontWeight-medium);
   --salt-text-display1-fontWeight-strong: var(--salt-typography-fontWeight-bold);
   --salt-text-display1-fontWeight-small: var(--salt-typography-fontWeight-regular);
 
+  /* Display 2 */
   --salt-text-display2-fontFamily: var(--salt-typography-fontFamily-amplitude);
   --salt-text-display2-fontWeight: var(--salt-typography-fontWeight-medium);
   --salt-text-display2-fontWeight-strong: var(--salt-typography-fontWeight-bold);
   --salt-text-display2-fontWeight-small: var(--salt-typography-fontWeight-regular);
 
+  /* Display 3 */
   --salt-text-display3-fontFamily: var(--salt-typography-fontFamily-amplitude);
   --salt-text-display3-fontWeight: var(--salt-typography-fontWeight-medium);
   --salt-text-display3-fontWeight-strong: var(--salt-typography-fontWeight-bold);
   --salt-text-display3-fontWeight-small: var(--salt-typography-fontWeight-regular);
 
+  /* Display 4 */
   --salt-text-display4-fontFamily: var(--salt-typography-fontFamily-amplitude);
   --salt-text-display4-fontWeight: var(--salt-typography-fontWeight-medium);
   --salt-text-display4-fontWeight-strong: var(--salt-typography-fontWeight-bold);
   --salt-text-display4-fontWeight-small: var(--salt-typography-fontWeight-regular);
-
-  /* Code */
-  --salt-text-code-fontFamily: var(--salt-typography-fontFamily-ptMono);
-  --salt-text-code-fontWeight: var(--salt-typography-fontWeight-regular);
 }
 
 /* Sizes by density */
