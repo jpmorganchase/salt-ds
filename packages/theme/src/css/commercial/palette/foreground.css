@@ -6,7 +6,6 @@
   --salt-palette-foreground-primary-alt-disabled: var(--salt-color-white-40a);
   --salt-palette-foreground-secondary: var(--salt-color-dove-gray-700);
   --salt-palette-foreground-secondary-disabled: var(--salt-color-dove-gray-700-40a);
-  --salt-palette-foreground-visited: var(--salt-color-purple-800);
 }
 
 .salt-theme.commercial[data-mode="dark"] {
@@ -16,5 +15,4 @@
   --salt-palette-foreground-primary-alt-disabled: var(--salt-color-white-40a);
   --salt-palette-foreground-secondary: var(--salt-color-pigeon-gray-300);
   --salt-palette-foreground-secondary-disabled: var(--salt-color-pigeon-gray-300-40a);
-  --salt-palette-foreground-visited: var(--salt-color-purple-200);
 }
