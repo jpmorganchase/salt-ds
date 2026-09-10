@@ -1,0 +1,36 @@
+/* Foundations (base values) */
+@import url(foundations/index.css);
+
+@import url(commercial/foundations/alpha.css);
+@import url(commercial/foundations/color.css);
+
+/* Intermediate palette (refined colors) */
+@import url(commercial/palette/accent.css);
+@import url(commercial/palette/alpha.css);
+@import url(commercial/palette/background.css);
+@import url(commercial/palette/categorical.css);
+@import url(commercial/palette/corner.css);
+@import url(commercial/palette/foreground.css);
+@import url(commercial/palette/info.css);
+@import url(commercial/palette/negative.css);
+@import url(commercial/palette/neutral.css);
+@import url(commercial/palette/positive.css);
+@import url(commercial/palette/shadow.css);
+@import url(commercial/palette/warning.css);
+
+/* Each characteristic file references values from above foundations */
+@import url(commercial/characteristics/actionable.css);
+@import url(commercial/characteristics/category.css);
+@import url(commercial/characteristics/container.css);
+@import url(commercial/characteristics/content.css);
+@import url(commercial/characteristics/editable.css);
+@import url(commercial/characteristics/focused.css);
+@import url(commercial/characteristics/layout.css);
+@import url(commercial/characteristics/navigable.css);
+@import url(commercial/characteristics/overlayable.css);
+@import url(commercial/characteristics/selectable.css);
+@import url(commercial/characteristics/sentiment.css);
+@import url(commercial/characteristics/separable.css);
+@import url(commercial/characteristics/status.css);
+@import url(commercial/characteristics/target.css);
+@import url(commercial/characteristics/text.css);

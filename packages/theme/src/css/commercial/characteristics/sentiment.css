@@ -1,0 +1,28 @@
+/* Generated from the commercial Figma token exports. */
+
+
+.salt-theme.commercial {
+  --salt-sentiment-positive-foreground-decorative: var(--salt-color-green-500);
+  --salt-sentiment-negative-dataviz: var(--salt-color-red-500);
+  --salt-sentiment-accent-dataviz: var(--salt-color-accent-500);
+  --salt-sentiment-accent-borderColor: var(--salt-color-accent-500);
+  --salt-sentiment-accent-background: var(--salt-color-accent-500);
+  --salt-sentiment-caution-dataviz: var(--salt-color-orange-500);
+  --salt-sentiment-positive-dataviz: var(--salt-color-green-500);
+  --salt-sentiment-accent-background-disabled: var(--salt-color-accent-500-40a);
+  --salt-sentiment-negative-foreground-decorative: var(--salt-color-red-500);
+}
+
+.salt-theme.commercial[data-mode="light"] {
+  --salt-sentiment-negative-foreground-informative: var(--salt-color-red-600);
+  --salt-sentiment-positive-foreground-informative: var(--salt-color-green-600);
+  --salt-sentiment-neutral-dataviz: var(--salt-color-dove-gray-500);
+  --salt-sentiment-neutral-track: var(--salt-color-dove-gray-900-50a);
+}
+
+.salt-theme.commercial[data-mode="dark"] {
+  --salt-sentiment-negative-foreground-informative: var(--salt-color-red-400);
+  --salt-sentiment-positive-foreground-informative: var(--salt-color-green-400);
+  --salt-sentiment-neutral-dataviz: var(--salt-color-pigeon-gray-500);
+  --salt-sentiment-neutral-track: var(--salt-color-white-50a);
+}

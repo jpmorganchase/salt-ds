@@ -1,0 +1,11 @@
+/* Generated from the commercial Figma token exports. */
+.salt-theme.commercial {
+  --salt-focused-outlineColor: var(--salt-palette-accent-stronger);
+  --salt-focused-onSolid-outlineColor: var(--salt-palette-alpha-light-highest);
+  --salt-focused-outlineStyle: var(--salt-borderStyle-dashed);
+  --salt-focused-outlineWidth: var(--salt-size-fixed-100);
+  --salt-focused-outlineInset: 0;
+  --salt-focused-outlineOffset: var(--salt-size-fixed-100);
+
+  --salt-focused-outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor); /* CSS shortcut token: not in Figma */
+}

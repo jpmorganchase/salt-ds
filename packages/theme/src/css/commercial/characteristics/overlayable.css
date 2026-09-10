@@ -1,0 +1,24 @@
+/* Generated from the commercial Figma token exports. */
+.salt-theme.commercial {
+  --salt-overlayable-shadow-scroll: var(--salt-shadow-lowest);
+  --salt-overlayable-shadow-region: var(--salt-shadow-lower);
+  --salt-overlayable-shadow: var(--salt-shadow-lower);
+  --salt-overlayable-shadow-hover: var(--salt-shadow-low);
+  --salt-overlayable-shadow-popout: var(--salt-shadow-mediumLow);
+  --salt-overlayable-shadow-drag: var(--salt-shadow-mediumLow);
+  --salt-overlayable-shadow-modal: var(--salt-shadow-medium);
+
+  --salt-overlayable-background-hover: var(--salt-palette-alpha-contrast-lowest);
+}
+
+.salt-theme.commercial[data-mode="light"] {
+  --salt-overlayable-background-rangeSelection: var(--salt-color-dove-gray-900-20a);
+  --salt-overlayable-background: var(--salt-color-white-65a);
+  --salt-overlayable-background-highlight: var(--salt-color-dove-gray-900-30a);
+}
+
+.salt-theme.commercial[data-mode="dark"] {
+  --salt-overlayable-background-rangeSelection: var(--salt-color-white-20a);
+  --salt-overlayable-background: var(--salt-color-black-65a);
+  --salt-overlayable-background-highlight: var(--salt-color-white-30a);
+}

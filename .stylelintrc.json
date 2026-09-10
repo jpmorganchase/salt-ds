@@ -52,7 +52,14 @@
       }
     },
     {
+      "files": ["**/theme/src/css/commercial/characteristics/*.css"],
+      "rules": {
+        "salt/characteristic-token-in-all-themes": null
+      }
+    },
+    {
       "files": [
+        "**/theme/src/css/commercial.css",
         "**/theme/src/css/theme.css",
         "**/theme/src/css/theme-next.css"
       ],
