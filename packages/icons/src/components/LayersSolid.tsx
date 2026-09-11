@@ -16,12 +16,12 @@ export const LayersSolidIcon = forwardRef<SVGSVGElement, LayersSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
-          <path fillRule="evenodd" d="M8 1.833 14.167 5 8 8.167 1.833 5Z" />
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
+          <path fillRule="evenodd" d="m8 .238 7.34 3.77L8 7.776.66 4.007Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.833 8 8 11.167 14.167 8M1.833 11 8 14.167 14.167 11"
+            d="M.66 7.578 8 11.348l7.34-3.77M.66 11.15 8 14.92l7.34-3.77"
           />
         </g>
       </Icon>

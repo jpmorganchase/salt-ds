@@ -16,11 +16,11 @@ export const LoaderIcon = forwardRef<SVGSVGElement, LoaderIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8 1.833A6.167 6.167 0 1 1 1.833 8"
+            d="M8 .988A7.012 7.012 0 1 1 .988 8"
           />
         </g>
       </Icon>

@@ -16,8 +16,11 @@ export const FilterSolidIcon = forwardRef<SVGSVGElement, FilterSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
-          <path fillRule="evenodd" d="M2.5 3h11l-4 4.5v5l-3 1.5V7.5Z" />
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
+          <path
+            fillRule="evenodd"
+            d="M.25.25h15.5l-5.636 6.34v7.046L5.886 15.75V6.59Z"
+          />
         </g>
       </Icon>
     );

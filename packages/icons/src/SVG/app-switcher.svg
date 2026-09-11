@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" stroke-width="0.67">
-  <g fill="none" stroke="currentColor">
-    <path d="M2.5 2.5h2v2h-2Z"/>
-    <path d="M2.5 7h2v2h-2Z"/>
-    <path d="M2.5 11.5h2v2h-2Z"/>
-    <path d="M7 2.5h2v2H7Z"/>
-    <path d="M7 7h2v2H7Z"/>
-    <path d="M7 11.5h2v2H7Z"/>
-    <path d="M11.5 2.5h2v2h-2Z"/>
-    <path d="M11.5 7h2v2h-2Z"/>
-    <path d="M11.5 11.5h2v2h-2Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" stroke-width="0.67" viewBox="0 0 16 16">
+  <g fill="none" stroke="currentColor" stroke-width="0.67">
+    <path d="M1 1h2.545454v2.545454H1Z"/>
+    <path d="M1 6.727271h2.545454v2.545454H1Z"/>
+    <path d="M1 12.454542h2.545454v2.545454H1Z"/>
+    <path d="M6.727271 1h2.545454v2.545454H6.727271Z"/>
+    <path d="M6.727271 6.727271h2.545454v2.545454H6.727271Z"/>
+    <path d="M6.727271 12.454542h2.545454v2.545454H6.727271Z"/>
+    <path d="M12.454542 1h2.545454v2.545454h-2.545454Z"/>
+    <path d="M12.454542 6.727271h2.545454v2.545454h-2.545454Z"/>
+    <path d="M12.454542 12.454542h2.545454v2.545454h-2.545454Z"/>
   </g>
 </svg>

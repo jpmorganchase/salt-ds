@@ -16,11 +16,11 @@ export const DragRowIcon = forwardRef<SVGSVGElement, DragRowIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4 3h8M4 6.333h8M4 9.667h8M4 13h8"
+            d="M2.4 1h11.2M2.4 5.667h11.2M2.4 10.333h11.2M2.4 15h11.2"
           />
         </g>
       </Icon>

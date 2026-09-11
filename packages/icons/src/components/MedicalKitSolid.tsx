@@ -18,10 +18,10 @@ export const MedicalKitSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M1.833 3h12.334v10H1.833Zm1.5 1h1v8h-1Zm8.334 0h1v8h-1ZM7.5 6h1v1.5H10v1H8.5V10h-1V8.5H6v-1h1.5Z"
+          d="M.237 1.706h15.526v12.588H.237Zm1.888 1.258h1.26v10.072h-1.26Zm10.49 0h1.26v10.072h-1.26ZM7.372 5.482H8.63v1.889h1.889v1.258h-1.89v1.889H7.371V8.629H5.482V7.371h1.889Z"
         />
       </g>
     </Icon>

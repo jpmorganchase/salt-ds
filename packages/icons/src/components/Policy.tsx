@@ -16,15 +16,18 @@ export const PolicyIcon = forwardRef<SVGSVGElement, PolicyIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M7.5 14.5h-4v-13H10L12.5 4" />
-            <path d="M10 1.5V4h2.5m-7 1.5h2m-2 3h2" />
-            <path strokeWidth=".4824" d="M10 11.5v3l2-.6 2 .6v-3" />
-            <path d="M9 9a3 3 0 1 0 6 0 3 3 0 1 0-6 0Z" />
+            <path d="M6.115 15H1.808V1h7L11.5 3.692" />
+            <path d="M8.808 1v2.692H11.5M3.962 5.308h2.153m-2.153 3.23h2.153" />
+            <path
+              strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.72)"
+              d="M8.808 11.77V15l2.154-.646 2.153.646v-3.23"
+            />
+            <path d="M7.73 9.077a3.23 3.23 0 1 0 6.462 0 3.23 3.23 0 1 0-6.461 0Z" />
           </g>
         </g>
       </Icon>

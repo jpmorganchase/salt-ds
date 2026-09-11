@@ -16,11 +16,11 @@ export const EqualIcon = forwardRef<SVGSVGElement, EqualIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.5 5.5h11m-11 5h11"
+            d="M.25 5.02h15.5M.25 10.98h15.5"
           />
         </g>
       </Icon>

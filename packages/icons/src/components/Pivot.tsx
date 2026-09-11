@@ -16,13 +16,13 @@ export const PivotIcon = forwardRef<SVGSVGElement, PivotIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M1.5 1.5h13v13h-13Z" />
-            <path d="M4.5 10.167h5.333v-5.5m-2 2 2-2 2 2M6.5 8.167l-2 2 2 2" />
+            <path d="M1 1h14v14H1Z" />
+            <path d="M4.23 10.333h5.744V4.41M7.82 6.564 9.974 4.41l2.154 2.154M6.385 8.18 4.23 10.333l2.154 2.154" />
           </g>
         </g>
       </Icon>

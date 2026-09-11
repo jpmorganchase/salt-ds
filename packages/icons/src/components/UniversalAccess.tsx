@@ -18,15 +18,15 @@ export const UniversalAccessIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0Z"
+          d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Z"
         />
         <path
           fillRule="evenodd"
-          d="M7.1 4.5a.9.9 0 1 0 1.8 0 .9.9 0 1 0-1.8 0M7 7l-3-.5-.2.9L7 8l-1 4h1l1-2.5L9 12h1L9 8l3.2-.6-.2-.9L9 7Z"
+          d="M7.03 4.23a.97.97 0 1 0 1.94 0 .97.97 0 1 0-1.94 0m-.107 2.693-3.23-.538-.216.969L6.923 8l-1.077 4.308h1.077L8 9.615l1.077 2.693h1.077L9.077 8l3.446-.646-.215-.97-3.231.54Z"
         />
       </g>
     </Icon>

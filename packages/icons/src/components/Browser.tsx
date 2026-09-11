@@ -16,20 +16,20 @@ export const BrowserIcon = forwardRef<SVGSVGElement, BrowserIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.667 2.333h12.666v11.334H1.667Z"
+            d="M1.012 1.747h13.976v12.506H1.012Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.5 5.5h11q.833 0 .833.833v6.5q0 .834-.833.834h-11q-.833 0-.833-.834v-6.5q0-.833.833-.833Z"
+            d="M1.931 5.241h12.138q.92 0 .92.92v7.172q0 .92-.92.92H1.931q-.92 0-.92-.92V6.161q0-.92.92-.92Z"
           />
           <path
             fillRule="evenodd"
-            d="M3 3.917a.333.333 0 1 0 .667 0 .333.333 0 1 0-.667 0m1.667 0a.333.333 0 1 0 .666 0 .333.333 0 1 0-.666 0"
+            d="M2.483 3.494a.368.368 0 1 0 .735 0 .368.368 0 1 0-.735 0m1.839 0a.368.368 0 1 0 .735 0 .368.368 0 1 0-.735 0"
           />
         </g>
       </Icon>

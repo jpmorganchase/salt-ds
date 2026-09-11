@@ -16,11 +16,11 @@ export const PlaceInIcon = forwardRef<SVGSVGElement, PlaceInIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8 2.5H2.5v11h11V8m.5-6L7 9m0-4v4h4"
+            d="M7.812 1.392H1.008V15h13.608V8.196m.618-7.422-8.659 8.66m0-4.949v4.948h4.948"
           />
         </g>
       </Icon>

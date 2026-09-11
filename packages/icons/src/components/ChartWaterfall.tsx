@@ -18,15 +18,15 @@ export const ChartWaterfallIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1.5 14.5H15"
+          d="M.25 14.514h15.5"
         />
         <path
           fillRule="evenodd"
-          d="M2 9.5h2v3H2Zm3.5-3h2v3h-2Zm3.5-4h2v4H9Zm4 0h2v10h-2Z"
+          d="M.824 8.773H3.12v3.445H.824ZM4.843 5.33h2.296v3.444H4.843ZM8.86.736h2.296V5.33H8.861Zm4.593 0h2.296v11.482h-2.296Z"
         />
       </g>
     </Icon>

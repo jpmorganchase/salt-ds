@@ -18,31 +18,31 @@ export const SortAlphaAscendIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M12 2.5v11m2.5-2.5L12 13.5 9.5 11"
+          d="M12.342 1.46v12.775m2.903-2.904-2.903 2.904-2.904-2.904"
         />
         <path
           fillRule="evenodd"
-          d="m5.061 6.333-.533-1.375H2.79l-.53 1.375h-.51l1.695-4.35h.453l1.684 4.35Zm-.684-1.822L3.87 3.144l-.058-.175-.082-.252q-.041-.13-.068-.21-.03.121-.064.241t-.066.223l-.056.173L2.96 4.51Z"
+          d="m4.283 5.912-.62-1.597H1.646L1.03 5.912H.438L2.408.859h.526l1.955 5.053Zm-.795-2.117-.589-1.587-.067-.203-.095-.293-.079-.244q-.034.14-.074.28t-.077.258l-.066.202-.598 1.587Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          strokeWidth=".124419"
-          d="m5.061 6.333-.533-1.375H2.79l-.53 1.375h-.51l1.695-4.35h.453l1.684 4.35Zm-.684-1.822L3.87 3.144l-.058-.175-.082-.252q-.041-.13-.068-.21-.03.121-.064.241t-.066.223l-.056.173L2.96 4.51Z"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.1857)"
+          d="m4.283 5.912-.62-1.597H1.646L1.03 5.912H.438L2.408.859h.526l1.955 5.053Zm-.795-2.117-.589-1.587-.067-.203-.095-.293-.079-.244q-.034.14-.074.28t-.077.258l-.066.202-.598 1.587Z"
         />
         <path
           fillRule="evenodd"
-          d="M5.17 14H2.164v-.38l2.332-3.503H2.243v-.45h2.866v.38l-2.336 3.502h2.398Z"
+          d="M4.41 14.816H.917v-.441l2.709-4.069H1.009v-.523h3.33v.44l-2.713 4.07H4.41Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          strokeWidth=".124419"
-          d="M5.17 14H2.164v-.38l2.332-3.503H2.243v-.45h2.866v.38l-2.336 3.502h2.398Z"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.1857)"
+          d="M4.41 14.816H.917v-.441l2.709-4.069H1.009v-.523h3.33v.44l-2.713 4.07H4.41Z"
         />
       </g>
     </Icon>

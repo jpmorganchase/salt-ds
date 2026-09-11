@@ -18,11 +18,11 @@ export const GreaterThanEqualToIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="m4.5 2.5 7 4-7 4m0 3h7"
+          d="m2.969.893 8.977 5.13-8.977 5.13m0 3.847h8.977"
         />
       </g>
     </Icon>

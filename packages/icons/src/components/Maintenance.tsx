@@ -16,11 +16,11 @@ export const MaintenanceIcon = forwardRef<SVGSVGElement, MaintenanceIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M5.4 1.867A3.833 3.833 0 0 1 8.5 7.1l5.167 5.167q.7.7 0 1.4t-1.4 0L7.1 8.5a3.833 3.833 0 0 1-5.233-3.1L4.5 7 7 4.5Z"
+            d="M5.2 1.178a4.363 4.363 0 0 1 3.527 5.956l5.88 5.88q.797.797 0 1.594t-1.593 0l-5.88-5.88a4.363 4.363 0 0 1-5.956-3.529L4.175 7.02 7.02 4.175Z"
           />
         </g>
       </Icon>

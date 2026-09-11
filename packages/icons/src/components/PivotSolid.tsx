@@ -16,10 +16,10 @@ export const PivotSolidIcon = forwardRef<SVGSVGElement, PivotSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M1.5 1.5h13v13h-13Zm5.98 4.813L9.833 3.96l2.354 2.353-.707.707-1.147-1.146v4.793H5.707l1.147 1.146-.708.707-2.353-2.353 2.353-2.354.708.707-1.147 1.147h3.626V5.874L8.187 7.02Z"
+            d="M.25.25h15.5v15.5H.25Zm7.13 5.739 2.806-2.806 2.806 2.806-.843.843-1.367-1.367v5.714H5.266l1.367 1.367-.843.843-2.806-2.806L5.79 7.777l.843.843-1.367 1.367H9.59V5.465L8.223 6.832Z"
           />
         </g>
       </Icon>

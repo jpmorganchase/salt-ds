@@ -16,13 +16,13 @@ export const ChartBubbleIcon = forwardRef<SVGSVGElement, ChartBubbleIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M1.5 1.5v13h13" />
-            <path d="M3.5 10.5a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0ZM8 5a3 3 0 1 0 6 0 3 3 0 1 0-6 0Zm3.5 6.5a1 1 0 1 0 2 0 1 1 0 1 0-2 0Z" />
+            <path d="M1 .44V15h14.56" />
+            <path d="M3.24 10.52a1.68 1.68 0 1 0 3.36 0 1.68 1.68 0 1 0-3.36 0Zm5.04-6.16a3.36 3.36 0 1 0 6.72 0 3.36 3.36 0 1 0-6.72 0Zm3.92 7.28a1.12 1.12 0 1 0 2.24 0 1.12 1.12 0 1 0-2.24 0Z" />
           </g>
         </g>
       </Icon>

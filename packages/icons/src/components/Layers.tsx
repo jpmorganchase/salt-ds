@@ -16,13 +16,13 @@ export const LayersIcon = forwardRef<SVGSVGElement, LayersIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M8 1.833 14.167 5 8 8.167 1.833 5Z" />
-            <path d="M1.833 8 8 11.167 14.167 8M1.833 11 8 14.167 14.167 11" />
+            <path d="m8 1.865 6.135 3.15L8 8.165l-6.135-3.15Z" />
+            <path d="M1.865 8 8 11.15 14.135 8m-12.27 2.985L8 14.135l6.135-3.15" />
           </g>
         </g>
       </Icon>

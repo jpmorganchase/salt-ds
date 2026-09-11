@@ -16,10 +16,10 @@ export const CloudSolidIcon = forwardRef<SVGSVGElement, CloudSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M4.7 12.585q-1.506 0-2.57-1.065T1.065 8.95q0-3.009 2.887-3.56Q5.312 3.116 8 3.116q3.59 0 4.538 3.374 2.397.475 2.397 3.011 0 3.085-3.085 3.085Z"
+            d="M4.314 13.28q-1.683 0-2.872-1.19T.252 9.218q0-3.36 3.226-3.976Q4.998 2.7 8 2.7q4.01 0 5.07 3.769 2.677.53 2.677 3.364 0 3.446-3.446 3.446Z"
           />
         </g>
       </Icon>

@@ -18,11 +18,11 @@ export const ChartBoxPlotIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M4.5 1.5v3m0 7v3m-2-13h4m-4 13h4M2.5 8h4m5-5.5v3m0 7v2m-2-12h4m-4 12h4M9.5 9h4m-11-4.5h4v7h-4Zm7 1h4v7h-4Z"
+          d="M4.23 1v3.23m0 7.54V15M2.078 1h4.308M2.077 15h4.308M2.077 8h4.308m5.384-5.923v3.23m0 7.54V15M9.615 2.077h4.308M9.615 15h4.308M9.615 9.077h4.308M2.077 4.23h4.308v7.54H2.077Zm7.538 1.078h4.308v7.538H9.615Z"
         />
       </g>
     </Icon>

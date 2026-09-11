@@ -18,13 +18,13 @@ export const MicrophoneDisabledIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <g
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
         >
-          <path d="M8 1.5q2.5 0 2.5 2.5v3.672m-2.841 2.816q-1.995-.152-2.146-2.147m.163-5.493Q6.164 1.5 8 1.5" />
-          <path d="M3.5 7v1A4.5 4.5 0 0 0 8 12.5a4.5 4.5 0 0 0 1.437-.234m2.829-2.829A4.5 4.5 0 0 0 12.5 8V7M8 12.5v2m-2.5 0h5M2 2l12 12" />
+          <path d="M8 1q2.692 0 2.692 2.692v3.954m-3.06 3.033q-2.147-.164-2.31-2.312m.176-5.915Q6.023 1 8 1" />
+          <path d="M3.154 6.923V8A4.846 4.846 0 0 0 8 12.846a4.9 4.9 0 0 0 1.548-.252m3.046-3.046A4.9 4.9 0 0 0 12.846 8V6.923M8 12.846V15m-2.692 0h5.384M1.538 1.538l12.924 12.924" />
         </g>
       </g>
     </Icon>

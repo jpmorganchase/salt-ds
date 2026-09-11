@@ -18,15 +18,15 @@ export const PresentationSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M2 2.333h12V12H2ZM2 4.5h12v1H2Zm2.533 2.333h6.934q.2 0 .2.2v.6q0 .2-.2.2H4.533q-.2 0-.2-.2v-.6q0-.2.2-.2m0 2.334h6.934q.2 0 .2.2v.6q0 .2-.2.2H4.533q-.2 0-.2-.2v-.6q0-.2.2-.2"
+          d="M.72.237h14.56v11.728H.72Zm0 2.629h14.56v1.213H.72Zm3.074 2.83h8.412q.242 0 .242.243v.728q0 .243-.242.243H3.794q-.242 0-.242-.243V5.94q0-.242.242-.242m0 2.83h8.412q.242 0 .242.243v.728q0 .243-.242.243H3.794q-.242 0-.242-.243V8.77q0-.242.242-.242"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M5 14.667 8 12l3 2.667"
+          d="M4.36 15.2 8 11.965l3.64 3.235"
         />
       </g>
     </Icon>

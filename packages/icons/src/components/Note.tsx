@@ -16,13 +16,13 @@ export const NoteIcon = forwardRef<SVGSVGElement, NoteIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M2.5 2.5h11v7l-4 4h-7Z" />
-            <path d="M9.5 13.5v-4h4m-9-4h7m-7 2h4" />
+            <path d="M1 1h14v8.91L9.91 15H1Z" />
+            <path d="M9.91 15V9.91H15M3.545 4.817h8.91m-8.91 2.546h5.091" />
           </g>
         </g>
       </Icon>

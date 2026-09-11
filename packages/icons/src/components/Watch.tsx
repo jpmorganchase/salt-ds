@@ -16,13 +16,13 @@ export const WatchIcon = forwardRef<SVGSVGElement, WatchIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M5.5 4.5v-3h5v3m-5 7v3h5v-3m-6-7h7q1 0 1 1v5q0 1-1 1h-7q-1 0-1-1v-5q0-1 1-1Z" />
-            <path d="M8 6v2l1.333.889" />
+            <path d="M5.308 4.23V1h5.384v3.23m-5.384 7.54V15h5.384v-3.23M4.23 4.23h7.54q1.076 0 1.076 1.078v5.384q0 1.077-1.077 1.077H4.231q-1.077 0-1.077-1.077V5.308q0-1.077 1.077-1.077Z" />
+            <path d="M8 5.846V8l1.436.957" />
           </g>
         </g>
       </Icon>

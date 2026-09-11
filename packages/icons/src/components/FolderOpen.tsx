@@ -16,13 +16,13 @@ export const FolderOpenIcon = forwardRef<SVGSVGElement, FolderOpenIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M2.5 13.5V3h4l2 2h4v2" />
-            <path d="M2.5 13.5h10L14 7H4Z" />
+            <path d="M1.188 14.22V1.78h4.739l2.37 2.37h4.738v2.369" />
+            <path d="M1.188 14.22h11.847l1.778-7.701H2.965Z" />
           </g>
         </g>
       </Icon>

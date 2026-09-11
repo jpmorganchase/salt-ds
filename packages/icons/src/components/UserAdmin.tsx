@@ -16,15 +16,15 @@ export const UserAdminIcon = forwardRef<SVGSVGElement, UserAdminIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="m8 1.5 6 2q0 8-6 11-6-3-6-11Z" />
+            <path d="m8 1.033 6.403 2.135q0 8.537-6.403 11.738-6.403-3.201-6.403-11.738Z" />
             <path
-              strokeWidth=".536"
-              d="M6.6 5.667a1.4 1.4 0 1 0 2.8 0 1.4 1.4 0 1 0-2.8 0ZM5 11.5Q5 9 8 9t3 2.5"
+              strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.8)"
+              d="M6.506 5.48a1.494 1.494 0 1 0 2.988 0 1.494 1.494 0 1 0-2.988 0Zm-1.707 6.225q0-2.668 3.201-2.668t3.201 2.668"
             />
           </g>
         </g>

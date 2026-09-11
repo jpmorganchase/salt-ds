@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
+import { brandIconNames } from "./brands.mjs";
 import { checkClearance } from "./check-clearance.mjs";
 import { checkCutoutActions } from "./check-cutout-actions.mjs";
 import { checkCutoutClearance } from "./check-cutout-clearance.mjs";
@@ -14,6 +15,11 @@ import { checkPaintedBounds } from "./check-painted-bounds.mjs";
 import { checkPairFeatures } from "./check-pair-features.mjs";
 import { checkPairStrokes } from "./check-pair-strokes.mjs";
 import { checkSchoolCutout } from "./check-school-cutout.mjs";
+import {
+  checkViewBoxFit,
+  validateViewBoxTransforms,
+} from "./check-view-box-fit.mjs";
+import { restoreReferenceGeometry } from "./view-box.mjs";
 
 const root = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -36,8 +42,15 @@ const records = await Promise.all(
   })),
 );
 for (const { name, svg } of records) {
-  if (!svg.includes('viewBox="0 0 16 16"'))
-    throw new Error(`Incorrect viewBox: ${name}`);
+  const rootElement = svg.match(/<svg\b[^>]*>/)?.[0] ?? "";
+  if (
+    !rootElement.includes('viewBox="0 0 16 16"') ||
+    !/\bwidth="16"/.test(rootElement) ||
+    !/\bheight="16"/.test(rootElement)
+  )
+    throw new Error(`Incorrect icon canvas: ${name}`);
+  if (/\btransform=/.test(svg))
+    throw new Error(`Unbaked export transform: ${name}`);
   if (/<(?:text|mask|clipPath|image|script)\b|\b(?:NaN|undefined)\b/.test(svg))
     throw new Error(`Unsupported geometry: ${name}`);
   for (const [, width] of svg.matchAll(/stroke-width="([^"]+)"/g)) {
@@ -45,6 +58,25 @@ for (const { name, svg } of records) {
       throw new Error(`Stroke width must be a fixed positive number: ${name}`);
   }
 }
+const transforms = JSON.parse(
+  await fs.readFile(
+    path.join(root, "packages/icons/scripts/artwork/view-box-transforms.json"),
+    "utf8",
+  ),
+);
+validateViewBoxTransforms(records, transforms);
+// Invert only the export fit on the actual files. Keep reference-width shape
+// regressions separate from the final exported paint and occupancy checks.
+const referenceRecords = await Promise.all(
+  records.map(async ({ name, svg }) => ({
+    name,
+    svg: await restoreReferenceGeometry(
+      svg,
+      transforms[name],
+      brandIconNames.has(name.replace(/_solid\.svg$|\.svg$/g, "")),
+    ),
+  })),
+);
 const browser = await chromium.launch({ headless: true, channel: "chrome" });
 try {
   const page = await browser.newPage({
@@ -70,24 +102,23 @@ try {
       for (const el of svg.querySelectorAll("path")) {
         const style = getComputedStyle(el);
         const b = el.getBBox();
-        const s =
-          style.stroke === "none"
-            ? 0
-            : Number.parseFloat(style.strokeWidth) / 2;
+        // getBBox reports path geometry. Expanding every axis by half a stroke
+        // falsely extends flat line terminals; padded raster checks below own
+        // the complete painted bounds, including acute joins and stroke caps.
         if (b.width || b.height) drawable++;
         if (
-          b.x - s < -0.03 ||
-          b.y - s < -0.03 ||
-          b.x + b.width + s > 16.03 ||
-          b.y + b.height + s > 16.03
+          b.x < -0.03 ||
+          b.y < -0.03 ||
+          b.x + b.width > 16.03 ||
+          b.y + b.height > 16.03
         )
           bounds.push({
             name,
             d: el.getAttribute("d"),
-            x: b.x - s,
-            y: b.y - s,
-            right: b.x + b.width + s,
-            bottom: b.y + b.height + s,
+            x: b.x,
+            y: b.y,
+            right: b.x + b.width,
+            bottom: b.y + b.height,
           });
         if (style.stroke !== "none") strokeElements++;
       }
@@ -95,22 +126,25 @@ try {
     }
     return { bounds, empty, strokeElements };
   });
-  const centering = await checkNumberCentering(page, records);
+  const fit = await checkViewBoxFit(page, records, transforms);
+  result.viewBoxFitFailures = fit.failures;
+  result.viewBoxFitSamples = fit.samples;
+  const centering = await checkNumberCentering(page, referenceRecords);
   result.numberCenteringFailures = centering.failures;
   result.numberCenteringSamples = centering.results.length;
-  const pairFeatures = await checkPairFeatures(page, records);
+  const pairFeatures = await checkPairFeatures(page, referenceRecords);
   result.pairFeatureFailures = pairFeatures.failures;
   result.pairFeatureSamples = pairFeatures.results.length;
-  const pairStrokes = await checkPairStrokes(page, records);
+  const pairStrokes = await checkPairStrokes(page, referenceRecords);
   result.pairStrokeFailures = pairStrokes.failures;
   result.pairStrokeSamples = pairStrokes.results.length;
-  const alignment = await checkFeatureAlignment(page, records);
+  const alignment = await checkFeatureAlignment(page, referenceRecords);
   result.featureAlignmentFailures = alignment.failures;
   result.featureAlignmentSamples = alignment.results.length;
-  const clearance = await checkClearance(page, records);
+  const clearance = await checkClearance(page, referenceRecords);
   result.clearanceFailures = clearance.failures;
   result.clearanceSamples = clearance.results.length;
-  const cutout = await checkCutoutClearance(page, records);
+  const cutout = await checkCutoutClearance(page, referenceRecords);
   for (const check of [
     checkCutoutActions,
     checkCutoutComposites,
@@ -118,7 +152,7 @@ try {
     checkCutoutPeople,
     checkSchoolCutout,
   ]) {
-    const checked = await check(page, records);
+    const checked = await check(page, referenceRecords);
     cutout.results.push(...checked.results);
     cutout.failures.push(...checked.failures);
   }
@@ -147,6 +181,7 @@ try {
     errors.length ||
     result.empty.length ||
     result.bounds.length ||
+    result.viewBoxFitFailures.length ||
     result.numberCenteringFailures.length ||
     result.pairFeatureFailures.length ||
     result.pairStrokeFailures.length ||

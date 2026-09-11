@@ -19,7 +19,7 @@ export const SuccessSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
           d="M0 0h16v16H0Zm3.5 7.5 3 3 5.5-6 .75.75L6.5 12 2.75 8.25Z"

@@ -18,11 +18,11 @@ export const VideoDisabledIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M6.328 3.5H10q.5 0 .5.5v3.672M9.672 12.5H2q-.5 0-.5-.5V4.328M10.5 6l4-1.5v7l-.274-.103M10.5 7.672V6M2 2l12 12"
+          d="M6.2 3.154h3.954q.538 0 .538.538v3.954m-.892 5.2H1.538q-.538 0-.538-.538V4.046m9.692 1.8L15 4.231v7.538l-.296-.11m-4.012-4.013v-1.8M1.538 1.538l12.924 12.924"
         />
       </g>
     </Icon>

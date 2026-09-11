@@ -16,11 +16,11 @@ export const ProtectionIcon = forwardRef<SVGSVGElement, ProtectionIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8 1.5c-2.167 1.333-3.8 1.7-5.5 2 0 4.833 1.167 8.967 5.5 11 4.333-2.033 5.5-6.167 5.5-11-1.7-.3-3.333-.667-5.5-2Zm0 0v13"
+            d="M8 1.121C5.698 2.538 3.963 2.927 2.156 3.246c0 5.135 1.24 9.527 5.844 11.688 4.604-2.16 5.844-6.553 5.844-11.688-1.806-.319-3.542-.708-5.844-2.125Zm0 0v13.813"
           />
         </g>
       </Icon>

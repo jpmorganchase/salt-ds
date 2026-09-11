@@ -18,15 +18,15 @@ export const HierarchySolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M2 2h4v4H2Zm6.5 4.5H14v3H8.5Zm0 5H14v3H8.5Z"
+          d="M.56.25h4.96v4.96H.56Zm8.06 5.58h6.82v3.72H8.62Zm0 6.2h6.82v3.72H8.62Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M4 6v7h4.5M4 8h4.5"
+          d="M3.04 5.21v8.68h5.58m-5.58-6.2h5.58"
         />
       </g>
     </Icon>

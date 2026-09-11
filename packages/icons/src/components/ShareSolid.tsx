@@ -16,15 +16,15 @@ export const ShareSolidIcon = forwardRef<SVGSVGElement, ShareSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m5 7 6-3.5M5 9l6 3.5"
+            d="m4.793 6.931 6.414-3.741M4.793 9.069l6.414 3.741"
           />
           <path
             fillRule="evenodd"
-            d="M1.25 8a2.25 2.25 0 1 0 4.5 0 2.25 2.25 0 1 0-4.5 0m9-5a2.25 2.25 0 1 0 4.5 0 2.25 2.25 0 1 0-4.5 0m0 10a2.25 2.25 0 1 0 4.5 0 2.25 2.25 0 1 0-4.5 0"
+            d="M.784 8a2.405 2.405 0 1 0 4.81 0 2.405 2.405 0 1 0-4.81 0m9.621-5.345a2.405 2.405 0 1 0 4.81 0 2.405 2.405 0 1 0-4.81 0m0 10.69a2.405 2.405 0 1 0 4.81 0 2.405 2.405 0 1 0-4.81 0"
           />
         </g>
       </Icon>

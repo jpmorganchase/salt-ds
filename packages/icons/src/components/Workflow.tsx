@@ -16,13 +16,13 @@ export const WorkflowIcon = forwardRef<SVGSVGElement, WorkflowIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M5 3h7a3 3 0 0 1 0 6h-2M6 9H5a2.167 2.167 0 0 0 0 4.333h9m-2-2 2 2-2 2M1 3a2 2 0 1 0 4 0 2 2 0 1 0-4 0Z" />
-            <path d="M6 9a2 2 0 1 0 4 0 2 2 0 1 0-4 0Z" />
+            <path d="M5.02 2.987h6.954a2.98 2.98 0 0 1 0 5.96H9.987m-3.974 0H5.02a2.153 2.153 0 0 0 0 4.306h8.94m-1.986-1.987 1.987 1.987-1.987 1.987" />
+            <path d="M1.046 2.987a1.987 1.987 0 1 0 3.974 0 1.987 1.987 0 1 0-3.974 0Zm4.967 5.961a1.987 1.987 0 1 0 3.974 0 1.987 1.987 0 1 0-3.974 0Z" />
           </g>
         </g>
       </Icon>

@@ -16,15 +16,15 @@ export const DivideIcon = forwardRef<SVGSVGElement, DivideIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.5 8h11"
+            d="M.25 8h15.5"
           />
           <path
             fillRule="evenodd"
-            d="M7 3.5a1 1 0 1 0 2 0 1 1 0 1 0-2 0m0 9a1 1 0 1 0 2 0 1 1 0 1 0-2 0"
+            d="M6.59 1.66a1.41 1.41 0 1 0 2.82 0 1.41 1.41 0 1 0-2.82 0m0 12.68a1.41 1.41 0 1 0 2.82 0 1.41 1.41 0 1 0-2.82 0"
           />
         </g>
       </Icon>

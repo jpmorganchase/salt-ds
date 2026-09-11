@@ -16,11 +16,11 @@ export const SendIcon = forwardRef<SVGSVGElement, SendIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 2.5 13.833 8 1.5 13.5l2-5.5Zm2 5.5h10.333"
+            d="M1.563 2.472 13.958 8 1.563 13.528 3.573 8ZM3.573 8h10.385"
           />
         </g>
       </Icon>

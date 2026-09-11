@@ -18,11 +18,11 @@ export const PinIcon = forwardRef<SVGSVGElement, PinIconProps>(function PinIcon(
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M5.5 2.5h5v2l-1 1v3l2 2v1h-7v-1l2-2v-3l-1-1Zm2.5 9v3"
+          d="M4.927 1h6.146v2.458l-1.23 1.23v3.687l2.46 2.458v1.23H3.697v-1.23l2.458-2.458V4.688l-1.229-1.23ZM8 12.063v3.687"
         />
       </g>
     </Icon>

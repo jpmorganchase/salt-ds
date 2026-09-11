@@ -16,15 +16,15 @@ export const ChartColumnIcon = forwardRef<SVGSVGElement, ChartColumnIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 14.5h13"
+            d="M.625 15h14.75"
           />
           <path
             fillRule="evenodd"
-            d="M3 9h2v3.5H3Zm4.5-3.5h2v7h-2Zm4.5-4h2v11h-2Z"
+            d="M2.327 8.76h2.27v3.97h-2.27Zm5.106-3.972h2.269v7.943h-2.27ZM12.538.25h2.27v12.48h-2.27Z"
           />
         </g>
       </Icon>

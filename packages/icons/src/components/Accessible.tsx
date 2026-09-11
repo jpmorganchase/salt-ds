@@ -16,11 +16,11 @@ export const AccessibleIcon = forwardRef<SVGSVGElement, AccessibleIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M5.5 3a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0ZM7 5.5V9h4l2 4h2M7 6.5h4M5 7a3.5 3.5 0 1 0 4.5 5"
+            d="M4.326 2.728a1.728 1.728 0 1 0 3.455 0 1.728 1.728 0 1 0-3.455 0Zm1.728 2.879v4.03h4.606l2.304 4.607h2.303M6.054 6.758h4.606m-6.91.576a4.03 4.03 0 1 0 5.183 5.759"
           />
         </g>
       </Icon>

@@ -18,11 +18,11 @@ export const MoveVerticalIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M8 1.5v13m3-10-3-3-3 3m6 7-3 3-3-3"
+          d="M8 1.281V14.69m3.094-10.314L8 1.281 4.906 4.375m6.188 7.22L8 14.69l-3.094-3.094"
         />
       </g>
     </Icon>

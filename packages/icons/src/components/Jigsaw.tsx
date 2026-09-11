@@ -16,11 +16,11 @@ export const JigsawIcon = forwardRef<SVGSVGElement, JigsawIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M3 3h3.5c-.333-1.5 3.333-1.5 3 0H13v3.5c1.5-.333 1.5 3.333 0 3V13H9.5c.333-1.5-3.333-1.5-3 0H3V9.5c1.5.333 1.5-3.333 0-3Z"
+            d="M1 2.416h4.404C4.985.528 9.6.528 9.18 2.416h4.404V6.82c1.888-.42 1.888 4.195 0 3.776V15H9.18c.42-1.888-4.195-1.888-3.776 0H1v-4.404c1.888.419 1.888-4.195 0-3.776Z"
           />
         </g>
       </Icon>

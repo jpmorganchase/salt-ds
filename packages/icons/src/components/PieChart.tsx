@@ -17,11 +17,11 @@ export const PieChartIcon = forwardRef<SVGSVGElement, PieChartIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M7 2a6 6 0 1 0 7 7H7Zm2-.5V7h5.5A6.5 6.5 0 0 0 9 1.5Z"
+            d="M6.49 1.677a6.714 6.714 0 1 0 7.833 7.833H6.49Zm2.238-.56v6.155h6.154a7.27 7.27 0 0 0-6.154-6.154Z"
           />
         </g>
       </Icon>

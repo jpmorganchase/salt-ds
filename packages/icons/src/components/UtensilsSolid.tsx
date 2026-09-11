@@ -18,15 +18,15 @@ export const UtensilsSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M3 5.5Q3 7 5 7t2-1.5Zm10-3c-1.25 0-2.5 1.5-2.5 3.5v2.5H13Z"
+          d="M1.587 4.848q0 1.924 2.565 1.924t2.565-1.924ZM14.413 1c-1.603 0-3.206 1.924-3.206 4.49v3.206h3.206Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M3 2v3.5Q3 7 5 7t2-1.5V2M5 2v12m8-11.5c-1.25 0-2.5 1.5-2.5 3.5v2.5H13Zm0 6V14"
+          d="M1.587.359v4.489q0 1.924 2.565 1.924t2.565-1.924V.358m-2.565 0V15.75M14.413 1c-1.603 0-3.206 1.924-3.206 4.49v3.206h3.206Zm0 7.696v7.054"
         />
       </g>
     </Icon>

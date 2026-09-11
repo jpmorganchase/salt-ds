@@ -16,11 +16,11 @@ export const ChatIcon = forwardRef<SVGSVGElement, ChatIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2 2.5h12v9H6L3 14v-2.5H2Z"
+            d="M1.136 1h13.728v10.296H5.712l-3.432 2.86v-2.86H1.136Z"
           />
         </g>
       </Icon>

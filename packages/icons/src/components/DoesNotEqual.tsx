@@ -18,11 +18,11 @@ export const DoesNotEqualIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2.5 5.5h11m-11 5h11M11 2 5 14"
+          d="M.25 5.02h15.5M.25 10.98h15.5M11.577.847 4.423 15.154"
         />
       </g>
     </Icon>

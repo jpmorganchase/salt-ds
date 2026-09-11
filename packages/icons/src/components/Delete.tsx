@@ -16,11 +16,11 @@ export const DeleteIcon = forwardRef<SVGSVGElement, DeleteIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2 4h12M6 4V1.5h4V4M3.5 4 4 14.5h8L12.5 4Zm3 2.5V12m3-5.5V12"
+            d="M1.538 3.692h12.924m-8.616 0V1h4.308v2.692m-7 0L3.692 15h8.616l.538-11.308Zm3.23 2.693v5.923m3.231-5.923v5.923"
           />
         </g>
       </Icon>

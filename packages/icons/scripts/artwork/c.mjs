@@ -7,6 +7,7 @@ import {
   F,
   group,
   L,
+  opticalScale,
   R,
   S,
   textLabel,
@@ -320,7 +321,7 @@ put(
   "refresh",
   S("M20.5 8C19 4.6 16 2.5 12 2.5A9.5 9.5 0 1 0 21.15 14.5M14.5 8H20.5V2.5"),
 );
-put("remove", S("M3.75 12h16.5"));
+put("remove", S("M2.25 12h19.5"));
 put(
   "remove-document",
   S(
@@ -406,12 +407,15 @@ put(
 const searchHandle = S("M15.3 15.3l6.45 6.45");
 put(
   "search",
-  C(10.5, 10.5, 6.75) + searchHandle,
-  // Retain the original filled lens and inverse glint, with the shared handle.
-  F(
-    circ(10.5, 10.5, 7.5) +
-      "M10.5 6A4.5 4.5 0 0 1 15 10.5H16.5A6 6 0 0 0 10.5 4.5Z",
-  ) + searchHandle,
+  opticalScale(C(10.5, 10.5, 6.75) + searchHandle, 1.125),
+  // The filled lens, inverse glint and shared handle use the same optical fit.
+  opticalScale(
+    F(
+      circ(10.5, 10.5, 7.5) +
+        "M10.5 6A4.5 4.5 0 0 1 15 10.5H16.5A6 6 0 0 0 10.5 4.5Z",
+    ) + searchHandle,
+    1.125,
+  ),
 );
 // The solid face uses fixed transparent counters around its facial features.
 // Closed mouth areas and pupil centers keep the same expression geometry.

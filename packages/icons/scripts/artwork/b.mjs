@@ -9,7 +9,11 @@ const add = (name, outline, solid) => {
   icons[name] = [outline, solid];
 };
 const turn = (body, angle) => group(body, `rotate(${angle} 12 12)`);
-const chevrons = S("M6 5.25L12 11.25L18 5.25M6 12.75L12 18.75L18 12.75");
+// Match the single chevrons' broad arms; stacked strokes keep clear separation
+// at 12px without changing their primary weight.
+const chevrons = S(
+  "M2.625 2.625L12 12L21.375 2.625M2.625 11.25L12 20.625L21.375 11.25",
+);
 for (const [direction, angle] of [
   ["down", 0],
   ["left", 90],
@@ -32,7 +36,7 @@ add(
     "M5.0303 15.2197L14.25 6L18 9.75L8.7803 18.9697Z M4.3485 16.6591L7.3409 19.6515L3.75 20.25Z M15.3 4.95L16.5 3.75L20.25 7.5L19.05 8.7Z",
   ),
 );
-add("equal", S("M3.75 8.25H20.25M3.75 15.75H20.25"));
+add("equal", S("M2.25 8.25H21.75M2.25 15.75H21.75"));
 const octagon =
   "M8.25 2.75H15.75L21.25 8.25V15.75L15.75 21.25H8.25L2.75 15.75V8.25Z";
 add(

@@ -16,11 +16,11 @@ export const SwapIcon = forwardRef<SVGSVGElement, SwapIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 4.5h12m-3-3 3 3-3 3m4 4h-12m3-3-3 3 3 3"
+            d="M.778 4.111H14.11M10.778.778 14.11 4.11l-3.333 3.333m4.444 4.445H1.89m3.333-3.333L1.89 11.889l3.333 3.333"
           />
         </g>
       </Icon>

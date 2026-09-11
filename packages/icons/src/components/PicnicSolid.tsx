@@ -16,12 +16,12 @@ export const PicnicSolidIcon = forwardRef<SVGSVGElement, PicnicSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
-          <path fillRule="evenodd" d="m11.5 2.5 3 7h-6Z" />
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
+          <path fillRule="evenodd" d="m12.173.453 3.577 8.346H8.596Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 14.5h13m-3-7v7m-10-5h6m-4 0v5m-2-2h4"
+            d="M.25 14.76h15.5m-3.577-8.346v8.346M.25 8.8h7.154m-4.77 0v5.961M.25 12.376h4.77"
           />
         </g>
       </Icon>

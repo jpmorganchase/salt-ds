@@ -18,11 +18,11 @@ export const CloudDisabledIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M4.7 12.25a3.3 3.3 0 0 1-1.512-6.234M6.53 3.702A4.4 4.4 0 0 1 8 3.45a4.4 4.4 0 0 1 4.27 3.332A2.75 2.75 0 0 1 14.6 9.5a2.74 2.74 0 0 1-.581 1.69m-4.597 1.06H4.7M2 2l12 12"
+          d="M4.497 12.512A3.503 3.503 0 0 1 2.89 5.894m3.55-2.457A4.7 4.7 0 0 1 8 3.17a4.67 4.67 0 0 1 4.532 3.537 2.92 2.92 0 0 1 2.475 2.885 2.9 2.9 0 0 1-.617 1.795m-4.88 1.125H4.496M1.63 1.63l12.74 12.74"
         />
       </g>
     </Icon>

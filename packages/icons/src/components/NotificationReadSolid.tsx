@@ -21,15 +21,15 @@ export const NotificationReadSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M4.5 6a3.5 3.5 0 0 1 6.882-.906l-.943 1.077-1.586-1.585-1.767 1.767L10.56 9.83l1.036-1.184L13.5 11.5h-11l2-3Z"
+          d="M3.11 5.781a4.302 4.302 0 0 1 8.458-1.113L10.41 5.992 8.46 4.043 6.289 6.216l4.271 4.271 1.273-1.455 2.34 3.51H.65l2.458-3.688Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M6.5 13.5h3M8 2.5v-1M8.5 6l2 2L14 4"
+          d="M5.568 15h3.687M7.411 1.48V.25m.615 5.531 2.458 2.459 4.302-4.917"
         />
       </g>
     </Icon>

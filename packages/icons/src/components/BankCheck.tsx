@@ -16,13 +16,13 @@ export const BankCheckIcon = forwardRef<SVGSVGElement, BankCheckIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M1.5 3.5h13v9h-13Z" />
-            <path d="M1.5 5q0 .5.5.5h12q.5 0 .5-.5m-13 1q0-.5.5-.5h12q.5 0 .5.5M3.25 8H8m2.25 0h2.5m-9.5 2.25H11" />
+            <path d="M1 3.154h14v9.692H1Z" />
+            <path d="M1 4.77q0 .538.538.538h12.924q.538 0 .538-.539M1 5.846q0-.538.538-.538h12.924q.538 0 .538.538M2.885 8H8m2.423 0h2.692m-10.23 2.423h8.346" />
           </g>
         </g>
       </Icon>

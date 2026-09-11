@@ -16,11 +16,11 @@ export const LinkedIcon = forwardRef<SVGSVGElement, LinkedIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m6 5 1.833-1.833a3.536 3.536 0 0 1 5 5L11 10m-1 1-1.833 1.833a3.536 3.536 0 0 1-5-5L5 6m.5 4.5 5-5"
+            d="M5.617 4.426 7.801 2.24A4.213 4.213 0 0 1 13.76 8.2l-2.185 2.184m-1.191 1.191L8.199 13.76A4.213 4.213 0 0 1 2.24 7.8l2.185-2.184m.595 5.362 5.96-5.958"
           />
         </g>
       </Icon>

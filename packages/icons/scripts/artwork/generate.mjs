@@ -13,6 +13,7 @@ import fileFormats from "./file-formats.mjs";
 import referenceControls from "./reference-controls.mjs";
 import referenceFrames from "./reference-frames.mjs";
 import referenceSymbols from "./reference-symbols.mjs";
+import { fitViewBoxes, iconAliases } from "./view-box.mjs";
 
 const dir = path.dirname(fileURLToPath(import.meta.url));
 const target = path.resolve(dir, "../../src/SVG");
@@ -40,18 +41,7 @@ for (const batch of [
 }
 // Deprecated aliases follow their supported replacement. The historic filled
 // step-success badge is retained by its drawing recipe.
-const aliases = {
-  "bar-chart": "chart-bar",
-  "pie-chart": "chart-pie",
-  "line-chart": "chart-line",
-  "error-execute": "not-allowed",
-  help: "help-circle",
-  "icon-figma": "figma",
-  success: "checkmark",
-  "success-tick": "checkmark",
-  success_small: "checkmark",
-};
-for (const [alias, canonical] of Object.entries(aliases)) {
+for (const [alias, canonical] of Object.entries(iconAliases)) {
   if (drawings[alias]) throw new Error(`Duplicate drawing: ${alias}`);
   drawings[alias] = drawings[canonical];
 }
@@ -60,6 +50,7 @@ const expected = new Set(
 );
 for (const name of Object.keys(drawings))
   if (!expected.has(name)) throw new Error(`Unexpected drawing: ${name}`);
+const referenceRecords = [];
 for (const file of inventory) {
   const solid = file.endsWith("_solid.svg");
   const name = file.replace(/_solid\.svg$|\.svg$/g, "");
@@ -132,8 +123,16 @@ for (const file of inventory) {
     ],
     js2svg: { pretty: true, indent: 2 },
   }).data;
+  referenceRecords.push({ name: file, svg: result });
+}
+const { records, transforms } = await fitViewBoxes(referenceRecords);
+await fs.writeFile(
+  path.join(dir, "view-box-transforms.json"),
+  `${JSON.stringify(transforms, null, 2)}\n`,
+);
+for (const { name: file, svg: result } of records) {
   await fs.writeFile(path.join(target, file), result);
-  if (name === "github") {
+  if (file === "github.svg") {
     // Keep the site's standalone image synchronized with the package mark.
     await fs.writeFile(
       path.resolve(dir, "../../../../site/public/img/github_logo.svg"),

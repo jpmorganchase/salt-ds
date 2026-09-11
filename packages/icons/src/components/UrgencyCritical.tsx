@@ -18,12 +18,15 @@ export const UrgencyCriticalIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
-        <path fillRule="evenodd" d="M2 5.5 8 2l6 3.5v3L8 5 2 8.5Z" />
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
+        <path
+          fillRule="evenodd"
+          d="M.625 5.224 8 .922l7.375 4.302v3.688L8 4.61.625 8.912Z"
+        />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="m2 13 6-3.5 6 3.5"
+          d="M.625 14.443 8 10.141l7.375 4.302"
         />
       </g>
     </Icon>

@@ -16,13 +16,16 @@ export const MapSolidIcon = forwardRef<SVGSVGElement, MapSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m2 3.5 4-1.667L10 3.5l4-1.667V12.5l-4 1.667L6 12.5l-4 1.667Zm4-1.667V12.5m4-9v10.667"
+            d="m1.543 3.157 4.305-1.793 4.304 1.793 4.305-1.793v11.479l-4.305 1.793-4.304-1.793-4.305 1.793Zm4.305-1.793v11.479m4.304-9.686v11.48"
           />
-          <path fillRule="evenodd" d="M6 1.833 10 3.5v10.667L6 12.5Z" />
+          <path
+            fillRule="evenodd"
+            d="m5.848 1.364 4.304 1.793v11.48l-4.304-1.794Z"
+          />
         </g>
       </Icon>
     );

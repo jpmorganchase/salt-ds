@@ -16,13 +16,13 @@ export const HospitalIcon = forwardRef<SVGSVGElement, HospitalIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M4.5 1.833h7v12.334h-7ZM6 5.5h4m-2-2v4" />
-            <path d="M2 14.167h12M6 9.5h1m2 0h1M7 14v-2h2v2" />
+            <path d="M4.038 1.02h7.924v13.96H4.038Zm1.698 4.15h4.528M8 2.906v4.528" />
+            <path d="M1.208 14.98h13.584M5.736 9.699h1.132m2.264 0h1.132m-3.396 5.094v-2.264h2.264v2.264" />
           </g>
         </g>
       </Icon>

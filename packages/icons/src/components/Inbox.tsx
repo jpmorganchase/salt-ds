@@ -16,11 +16,11 @@ export const InboxIcon = forwardRef<SVGSVGElement, InboxIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.5 6.5v7h11v-7M2.5 9h3l1 2h3l1-2h3M8 1.5v7m-3-3 3 3 3-3"
+            d="M1.24 6.396V15h13.52V6.396M1.24 9.469h3.687l1.23 2.458h3.687l1.229-2.458h3.687M8 .25v8.604M4.313 5.167 8 8.854l3.688-3.687"
           />
         </g>
       </Icon>

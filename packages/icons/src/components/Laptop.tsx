@@ -16,11 +16,11 @@ export const LaptopIcon = forwardRef<SVGSVGElement, LaptopIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.333 3.333h11.334v7q0 .667-.667.667H3q-.667 0-.667-.667ZM1.667 11h12.666v1q0 .667-.666.667H2.333q-.666 0-.666-.667Z"
+            d="M1.747 2.85h12.506v7.725q0 .735-.736.735H2.483q-.736 0-.736-.735Zm-.735 8.46h13.976v1.104q0 .735-.735.735H1.747q-.735 0-.735-.735Z"
           />
         </g>
       </Icon>

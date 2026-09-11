@@ -16,15 +16,15 @@ export const DatabaseIcon = forwardRef<SVGSVGElement, DatabaseIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 1.5h13V7h-13Zm0 7.5h13v5.5h-13Z"
+            d="M1 1h14v5.923H1Zm0 8.077h14V15H1Z"
           />
           <path
             fillRule="evenodd"
-            d="M3.75 3.5h1q.25 0 .25.25v1Q5 5 4.75 5h-1q-.25 0-.25-.25v-1q0-.25.25-.25m2.5 0h1q.25 0 .25.25v1q0 .25-.25.25h-1Q6 5 6 4.75v-1q0-.25.25-.25M3.75 11h1q.25 0 .25.25v1q0 .25-.25.25h-1q-.25 0-.25-.25v-1q0-.25.25-.25m2.5 0h1q.25 0 .25.25v1q0 .25-.25.25h-1q-.25 0-.25-.25v-1q0-.25.25-.25"
+            d="M3.423 3.154H4.5q.27 0 .27.27V4.5q0 .27-.27.27H3.423q-.27 0-.27-.27V3.423q0-.27.27-.27m2.692 0h1.077q.27 0 .27.27V4.5q0 .27-.27.27H6.115q-.269 0-.269-.27V3.423q0-.27.27-.27m-2.693 8.078H4.5q.27 0 .27.269v1.077q0 .27-.27.27H3.423q-.27 0-.27-.27V11.5q0-.27.27-.27m2.692 0h1.077q.27 0 .27.27v1.077q0 .27-.27.27H6.115q-.269 0-.269-.27V11.5q0-.27.27-.27"
           />
         </g>
       </Icon>

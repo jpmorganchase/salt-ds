@@ -16,11 +16,11 @@ export const GrowthIcon = forwardRef<SVGSVGElement, GrowthIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m2 12.5 4-4L8.5 11 14 4.5m-4.5 0H14V9"
+            d="m.756 12.86 4.748-4.748L8.47 11.08 15 3.364m-5.342 0H15v5.342"
           />
         </g>
       </Icon>

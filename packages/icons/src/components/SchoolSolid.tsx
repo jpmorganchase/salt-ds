@@ -16,15 +16,15 @@ export const SchoolSolidIcon = forwardRef<SVGSVGElement, SchoolSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="m8 2.167 6.167 3.666L8 9.5 1.833 5.833Zm-4.5 5.89L8 10.734l4.5-2.675v2.775l-4.5 2.5-4.5-2.5Z"
+            d="m7.625 1.311 7.388 4.393-7.388 4.392L.237 5.704ZM2.235 8.37l5.39 3.205 5.39-3.205v3.325l-5.39 2.995-5.39-2.995Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M14.167 5.833v4"
+            d="M15.013 5.704v4.792"
           />
         </g>
       </Icon>

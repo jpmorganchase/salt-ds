@@ -20,6 +20,16 @@ export const dot = (x, y, r = 0.8) => F(circ(x, y, r));
 export const L = (x1, y1, x2, y2) => S(`M${x1} ${y1}L${x2} ${y2}`);
 export const group = (body, transform) =>
   `<g transform="${transform}">${body}</g>`;
+// Adjust an entire family's optical size without changing its line weights.
+// Keep paired surfaces and counters together; the exporter bakes this transform.
+export const opticalScale = (body, scale) =>
+  group(
+    body.replace(
+      /stroke-width="([\d.]+)"/g,
+      (_, width) => `stroke-width="${Number(width) / scale}"`,
+    ),
+    `translate(${12 * (1 - scale)} ${12 * (1 - scale)}) scale(${scale})`,
+  );
 export const slash = () => S("M3 3L21 21");
 export const plus = (x = 12, y = 12, r = 3) =>
   S(`M${x - r} ${y}h${r * 2}M${x} ${y - r}v${r * 2}`);

@@ -18,12 +18,12 @@ export const DisplaySolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
-        <path fillRule="evenodd" d="M1.333 2h13.334v10H1.333Z" />
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
+        <path fillRule="evenodd" d="M.238.64h15.524v11.642H.238Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2.667 14h10.666M2.667 14h4Q7 14 7 13.667V12q0-.333-.333-.333m2.666 0Q9 11.667 9 12v1.667Q9 14 9.333 14h4"
+          d="M1.79 14.61h12.42m-12.42 0h4.658q.388 0 .388-.387v-1.94q0-.389-.388-.389m3.104 0q-.388 0-.388.388v1.94q0 .389.388.389h4.658"
         />
       </g>
     </Icon>

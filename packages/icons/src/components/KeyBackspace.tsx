@@ -18,11 +18,11 @@ export const KeyBackspaceIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M6 3.5h8v9H6L1.5 8ZM8 6l4 4m0-4-4 4"
+          d="M6.22 3.061H15v9.878H6.22L1.281 8Zm2.195 2.744 4.39 4.39m0-4.39-4.39 4.39"
         />
       </g>
     </Icon>

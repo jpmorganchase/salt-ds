@@ -16,13 +16,14 @@ export const StorefrontIcon = forwardRef<SVGSVGElement, StorefrontIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M3.5 2.5h9l2 4q-2 2-4 0-2.5 2-5 0-2 2-4 0Zm-1 6v5h11v-5M1 13.5h14" />
-            <path d="M4.5 9.5h3v2h-3Zm5 4v-4h2v4" />
+            <path d="M3.26 2.208h9.48l2.105 4.212q-2.106 2.107-4.212 0Q8 8.527 5.367 6.42q-2.106 2.107-4.212 0Z" />
+            <path d="M2.208 8.527v5.265h11.584V8.527M.628 13.792h14.744" />
+            <path d="M4.314 9.58h3.16v2.106h-3.16Zm5.266 4.212V9.58h2.106v4.212" />
           </g>
         </g>
       </Icon>

@@ -16,11 +16,11 @@ export const FilterIcon = forwardRef<SVGSVGElement, FilterIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.5 3h11l-4 4.5v5l-3 1.5V7.5Z"
+            d="M1.903 1.668h12.194l-4.434 4.99V12.2l-3.326 1.663V6.657Z"
           />
         </g>
       </Icon>

@@ -16,13 +16,13 @@ export const CloudSyncIcon = forwardRef<SVGSVGElement, CloudSyncIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M4.43 10.74a3.3 3.3 0 0 1-.266-6.547 4.402 4.402 0 0 1 8.106 1.088 2.75 2.75 0 0 1 .379 5.351" />
-            <path d="M11 9.5H6m2-2-2 2 2 2m-1 1.75h5m-2-2 2 2-2 2" />
+            <path d="M4.21 10.371a3.504 3.504 0 0 1-.282-6.949 4.673 4.673 0 0 1 8.605 1.156 2.92 2.92 0 0 1 .402 5.68" />
+            <path d="M11.185 9.056H5.877M8 6.933 5.877 9.056 8 11.179m-1.062 1.858h5.308m-2.123-2.123 2.123 2.123-2.123 2.123" />
           </g>
         </g>
       </Icon>

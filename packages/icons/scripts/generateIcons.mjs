@@ -291,6 +291,19 @@ const generateIconComponents = async ({
                       node.attributes.stroke =
                         "var(--saltIcon-color, var(--icon-color, currentColor))";
                     }
+                    const strokeWidth = node.attributes["stroke-width"];
+                    if (strokeWidth && !preserveBrandContours) {
+                      // Numeric SVG masters retain the reference weight. Inline
+                      // icons expose a primary width without flattening the
+                      // authored proportions of secondary lines and lettering.
+                      const ratio = Number(
+                        (Number(strokeWidth) / 0.67).toFixed(8),
+                      );
+                      node.attributes["stroke-width"] =
+                        ratio === 1
+                          ? "var(--icon-strokeWidth, 1)"
+                          : `calc(var(--icon-strokeWidth, 1) * ${ratio})`;
+                    }
                     const newAttributes = {};
                     // preserve an order of attributes
                     for (const [name, value] of Object.entries(

@@ -16,15 +16,15 @@ export const SlideSolidIcon = forwardRef<SVGSVGElement, SlideSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 4.5h6m4 0h3m-13 7h2m4 0h7"
+            d="M.25 3.827h7.154m4.77 0h3.576M.25 12.173h2.385m4.769 0h8.346"
           />
           <path
             fillRule="evenodd"
-            d="M7 4.5a2.5 2.5 0 1 0 5 0 2.5 2.5 0 1 0-5 0m-4 7a2.5 2.5 0 1 0 5 0 2.5 2.5 0 1 0-5 0"
+            d="M6.808 3.827a2.98 2.98 0 1 0 5.961 0 2.98 2.98 0 1 0-5.961 0m-4.77 8.346a2.98 2.98 0 1 0 5.962 0 2.98 2.98 0 1 0-5.962 0"
           />
         </g>
       </Icon>

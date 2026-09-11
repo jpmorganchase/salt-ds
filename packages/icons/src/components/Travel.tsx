@@ -16,12 +16,14 @@ export const TravelIcon = forwardRef<SVGSVGElement, TravelIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
-          <path
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
+          <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.167 4.5h5.166Q8 4.5 8 5.167v6.666q0 .667-.667.667H2.167q-.667 0-.667-.667V5.167q0-.667.667-.667Zm8.5 3h3.666q.667 0 .667.667v4.666q0 .667-.667.667h-3.666q-.667 0-.667-.667V8.167q0-.667.667-.667Zm-7.417-3v-2h3v2m5 3v-2h2.5v2m-11.25 5V14M7 12.5V14m4-.5V15m3-1.5V15"
-          />
+          >
+            <path d="M1.691 3.968H7.05q.692 0 .692.691v6.913q0 .692-.692.692H1.691q-.691 0-.691-.692V4.66q0-.691.691-.691Zm8.815 3.111h3.803q.691 0 .691.691v4.84q0 .69-.691.69h-3.803q-.691 0-.691-.69V7.77q0-.691.691-.691Z" />
+            <path d="M2.815 3.968V1.894h3.11v2.074m5.186 3.11V5.006h2.593V7.08M2.037 12.264v1.555m4.667-1.555v1.555m4.148-.518v1.555m3.111-1.555v1.555" />
+          </g>
         </g>
       </Icon>
     );

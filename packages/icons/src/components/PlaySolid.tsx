@@ -16,8 +16,8 @@ export const PlaySolidIcon = forwardRef<SVGSVGElement, PlaySolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
-          <path fillRule="evenodd" d="m4.5 2.5 9 5.5-9 5.5Z" />
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
+          <path fillRule="evenodd" d="M1.681.25 14.363 8 1.68 15.75Z" />
         </g>
       </Icon>
     );

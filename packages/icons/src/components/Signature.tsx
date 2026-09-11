@@ -16,21 +16,21 @@ export const SignatureIcon = forwardRef<SVGSVGElement, SignatureIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            strokeWidth=".469"
-            d="m1.25 8.75 2.5 2.5m0-2.5-2.5 2.5"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.7)"
+            d="m.59 8.514 2.772 2.771m0-2.771L.59 11.285"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M5 11.5c2-1.5 5.333-7.167 4.333-8.667-1-1.666-3.166 3.5-3.166 7 0 2.5 1.833 2.5 2.833.5L10 8.5c-.5 2.5.5 2.833 1.5 1.5l.833-1c-.5 2.333.5 2.333 2.167 1"
+            d="M4.748 11.563c2.218-1.663 5.913-7.946 4.805-9.61C8.443.106 6.042 5.834 6.042 9.715c0 2.772 2.032 2.772 3.141.554l1.109-2.033c-.554 2.772.554 3.142 1.663 1.664l.924-1.11c-.554 2.588.554 2.588 2.402 1.11"
           />
           <path
             fillRule="evenodd"
-            d="M2.25 13.25h1.5v1.5h-1.5Zm2.5 0h1.5v1.5h-1.5Zm2.5 0h1.5v1.5h-1.5Zm2.5 0h1.5v1.5h-1.5Zm2.5 0h1.5v1.5h-1.5Z"
+            d="M1.7 13.503h1.662v1.663H1.7Zm2.771 0h1.663v1.663H4.471Zm2.772 0h1.663v1.663H7.243Zm2.772 0h1.663v1.663h-1.663Zm2.772 0h1.663v1.663h-1.663Z"
           />
         </g>
       </Icon>

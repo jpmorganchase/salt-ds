@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" stroke-width="0.67">
-  <path fill="currentColor" fill-rule="evenodd" d="M14.3333 1.6667V5H1.6667V1.6667Z"/>
-  <path fill="none" stroke="currentColor" d="M14.3333 1.6667v12.6666H1.6667V1.6667Z"/>
-  <path fill="none" stroke="currentColor" d="M14.3333 2.1667v11.6666q0 .5-.5.5H2.1667q-.5 0-.5-.5V2.1667q0-.5.5-.5h11.6666q.5 0 .5.5Z"/>
-  <path fill="none" stroke="currentColor" d="M14.3333 5H1.6667m12.6666-.5q0 .5-.5.5m.5.5q0-.5-.5-.5M1.6667 4.5q0 .5.5.5m-.5.5q0-.5.5-.5"/>
-  <path fill="none" stroke="currentColor" d="M8 12.3333V7.6667M10.3333 10 8 7.6667 5.6667 10"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" stroke-width="0.67" viewBox="0 0 16 16">
+  <path fill="currentColor" fill-rule="evenodd" d="M14.988465 1.01153v3.678124H1.011531V1.011531Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M14.988465 1.01153v13.976935H1.011531V1.011531Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M14.988465 1.563255V14.43674q0 .551724-.551724.551724H1.563255q-.551724 0-.551724-.551724V1.563255q0-.551724.551724-.551724H14.43674q.551724 0 .551724.551724Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M14.988465 4.689654H1.011531m13.976934-.551724q0 .551724-.551724.551724m.551724.551724q0-.551724-.551724-.551724M1.011531 4.13793q0 .551724.551724.551724m-.551724.551724q0-.551724.551724-.551724"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M7.999998 12.78157V7.632218m2.574675 2.574675L7.999998 7.632219l-2.574675 2.574675"/>
 </svg>

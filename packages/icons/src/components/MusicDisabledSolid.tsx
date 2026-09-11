@@ -18,20 +18,20 @@ export const MusicDisabledSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M6.5 11v-.672m0-5.656V3.5l7-2V10M7.922 6.094 13.5 4.5"
+          d="M6.706 11.08v-.695m0-5.854V3.32l7.245-2.07v8.796M8.178 6.003l5.773-1.65"
         />
         <path
           fillRule="evenodd"
-          d="m6.5 3.5 7-2v3L7.097 6.33 6.5 5.731Zm0 7.5c0 1.1-1.133 2-2.5 2s-2-.7-2-1.5 1.133-2 2.5-2 2 .7 2 1.5m7-1c0 .68-.433 1.284-1.087 1.645l-2.55-2.55c.44-.346 1.015-.595 1.637-.595 1.367 0 2 .7 2 1.5"
+          d="m6.706 3.319 7.245-2.07v3.105L7.324 6.247l-.618-.618Zm0 7.761c0 1.139-1.172 2.07-2.587 2.07s-2.07-.724-2.07-1.552 1.173-2.07 2.588-2.07 2.07.724 2.07 1.552m7.244-1.035c0 .704-.449 1.329-1.125 1.703l-2.64-2.639c.457-.358 1.05-.616 1.695-.616 1.414 0 2.07.725 2.07 1.552"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1.5 2.5 14 15"
+          d="M1.532 2.284 14.468 15.22"
         />
       </g>
     </Icon>

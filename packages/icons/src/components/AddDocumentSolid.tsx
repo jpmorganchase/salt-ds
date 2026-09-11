@@ -18,10 +18,10 @@ export const AddDocumentSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M2.5 1.5h8l3 3v10h-11Zm8 1V4q0 .5.5.5h1.5ZM7.5 7h1v2h2v1h-2v2h-1v-2h-2V9h2Z"
+          d="M1.442.25h9.539l3.577 3.577V15.75H1.442Zm9.539 1.192v1.789q0 .596.596.596h1.788ZM7.404 6.808h1.192v2.384h2.385v1.193H8.596v2.384H7.404v-2.384H5.019V9.192h2.385Z"
         />
       </g>
     </Icon>

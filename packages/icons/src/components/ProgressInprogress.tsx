@@ -18,13 +18,13 @@ export const ProgressInprogressIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2 8a6 6 0 1 0 12 0A6 6 0 1 0 2 8Z"
+          d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Z"
         />
-        <path fillRule="evenodd" d="M8 2a6 6 0 0 1 0 12Z" />
+        <path fillRule="evenodd" d="M8 1a7 7 0 0 1 0 14Z" />
       </g>
     </Icon>
   );

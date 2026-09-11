@@ -16,15 +16,15 @@ export const WifiIcon = forwardRef<SVGSVGElement, WifiIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 5q6.5-6 13 0m-11 2.5q4.5-4.5 9 0m-7 2.5q2.5-2.5 5 0"
+            d="M.754 5.083q7.246-6.69 14.492 0M2.983 7.87Q8 2.853 13.017 7.87m-7.804 2.787q2.787-2.787 5.574 0"
           />
           <path
             fillRule="evenodd"
-            d="M7.1 13a.9.9 0 1 0 1.8 0 .9.9 0 1 0-1.8 0"
+            d="M6.997 14.001a1.003 1.003 0 1 0 2.006 0 1.003 1.003 0 1 0-2.006 0"
           />
         </g>
       </Icon>

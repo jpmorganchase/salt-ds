@@ -16,11 +16,11 @@ export const KeyOptionIcon = forwardRef<SVGSVGElement, KeyOptionIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2 4.5h3.5l5 8H14m-4.5-8H14"
+            d="M.25 2.833h4.52l6.46 10.334h4.52M9.938 2.833h5.812"
           />
         </g>
       </Icon>

@@ -18,15 +18,15 @@ export const WorkflowSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M5 3h7a3 3 0 0 1 0 6h-2M6 9H5a2.167 2.167 0 0 0 0 4.333h9m-2-2 2 2-2 2"
+          d="M4.488 2.341h7.32a3.137 3.137 0 0 1 0 6.274H9.716m-4.182 0H4.488a2.266 2.266 0 0 0 0 4.531h9.41m-2.09-2.091 2.09 2.091-2.09 2.092"
         />
         <path
           fillRule="evenodd"
-          d="M1 3a2 2 0 1 0 4 0 2 2 0 1 0-4 0m5 6a2 2 0 1 0 4 0 2 2 0 1 0-4 0"
+          d="M.305 2.341a2.091 2.091 0 1 0 4.183 0 2.091 2.091 0 1 0-4.183 0m5.229 6.274a2.091 2.091 0 1 0 4.182 0 2.091 2.091 0 1 0-4.182 0"
         />
       </g>
     </Icon>

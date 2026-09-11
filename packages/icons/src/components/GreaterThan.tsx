@@ -16,11 +16,11 @@ export const GreaterThanIcon = forwardRef<SVGSVGElement, GreaterThanIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m4.5 3.5 7 4.5-7 4.5"
+            d="M1.975.888 13.038 8 1.975 15.112"
           />
         </g>
       </Icon>

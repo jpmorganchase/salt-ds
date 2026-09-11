@@ -16,10 +16,10 @@ export const ManSolidIcon = forwardRef<SVGSVGElement, ManSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M6.5 3a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0m-1 3.5h5v4H10v4H6v-4h-.5Zm2 4h1v4h-1Z"
+            d="M6.212 2.038a1.788 1.788 0 1 0 3.576 0 1.788 1.788 0 1 0-3.576 0M5.019 6.212h5.962v4.769h-.596v4.769h-4.77v-4.77H5.02Zm2.385 4.769h1.192v4.769H7.404Z"
           />
         </g>
       </Icon>

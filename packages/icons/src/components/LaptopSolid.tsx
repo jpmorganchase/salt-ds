@@ -16,15 +16,15 @@ export const LaptopSolidIcon = forwardRef<SVGSVGElement, LaptopSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M2.333 3.333h11.334v7q0 .667-.667.667H3q-.667 0-.667-.667Z"
+            d="M1.747 2.476h12.506V10.2q0 .735-.736.735H2.483q-.736 0-.736-.735Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.667 11h12.666v1q0 .667-.666.667H2.333q-.666 0-.666-.667Z"
+            d="M1.012 10.935h13.976v1.104q0 .735-.735.735H1.747q-.735 0-.735-.735Z"
           />
         </g>
       </Icon>

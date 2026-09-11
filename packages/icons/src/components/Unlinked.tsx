@@ -16,11 +16,11 @@ export const UnlinkedIcon = forwardRef<SVGSVGElement, UnlinkedIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M6 3.5 7.5 2a3 3 0 0 1 4.24 4.24l-1.5 1.5M10 12.5 8.5 14a3 3 0 0 1-4.24-4.24l1.5-1.5M1.5 5.5h2m0-4v2m9 9v2m0-4h2"
+            d="m5.945 3.376 1.541-1.541a3.083 3.083 0 0 1 4.357 4.357l-1.541 1.54m-.247 4.892-1.541 1.541a3.083 3.083 0 0 1-4.357-4.357l1.541-1.54M1.321 5.43h2.055m0-4.11v2.055m9.248 9.248v2.055m0-4.11h2.055"
           />
         </g>
       </Icon>

@@ -18,15 +18,15 @@ export const FavoriteHalfIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M8 1.833 9.9 5.8l4.367.6L11.1 9.467l.767 4.366L8 11.8l-3.867 2.033.767-4.366L1.733 6.4 6.1 5.8Z"
+          d="m8 2.298 1.862 3.887 4.28.588-3.104 3.006.752 4.28L8 12.066l-3.79 1.993.752-4.28-3.104-3.006 4.28-.588Z"
         />
         <path
           fillRule="evenodd"
-          d="M8 1.833V11.8l-3.867 2.033.767-4.366L1.733 6.4 6.1 5.8Z"
+          d="M8 2.298v9.768l-3.79 1.993.752-4.28-3.104-3.006 4.28-.588Z"
         />
       </g>
     </Icon>

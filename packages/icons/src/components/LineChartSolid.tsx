@@ -18,20 +18,20 @@ export const LineChartSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1.5 1.5v13h13"
+          d="M1 .338v14.574h14.575"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="m4 11.5 3-4 3 2 3.5-5"
+          d="m3.803 11.549 3.363-4.485 3.364 2.243L14.454 3.7"
         />
         <path
           fillRule="evenodd"
-          d="M2.833 11.5a1.167 1.167 0 1 0 2.334 0 1.167 1.167 0 1 0-2.334 0m3-4a1.167 1.167 0 1 0 2.334 0 1.167 1.167 0 1 0-2.334 0m3 2a1.167 1.167 0 1 0 2.334 0 1.167 1.167 0 1 0-2.334 0m3.5-5a1.167 1.167 0 1 0 2.334 0 1.167 1.167 0 1 0-2.334 0"
+          d="M2.495 11.549a1.308 1.308 0 1 0 2.616 0 1.308 1.308 0 1 0-2.616 0m3.363-4.485a1.308 1.308 0 1 0 2.616 0 1.308 1.308 0 1 0-2.616 0m3.364 2.243a1.308 1.308 0 1 0 2.616 0 1.308 1.308 0 1 0-2.616 0m3.924-5.606a1.308 1.308 0 1 0 2.616 0 1.308 1.308 0 1 0-2.616 0"
         />
       </g>
     </Icon>

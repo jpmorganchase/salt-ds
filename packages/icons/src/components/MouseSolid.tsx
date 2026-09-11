@@ -16,10 +16,10 @@ export const MouseSolidIcon = forwardRef<SVGSVGElement, MouseSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M8 1.5A4.5 4.5 0 0 1 12.5 6v4a4.5 4.5 0 0 1-9 0V6A4.5 4.5 0 0 1 8 1.5m-.5 2.167h1q.5 0 .5.5V5.5q0 .5-.5.5h-1Q7 6 7 5.5V4.167q0-.5.5-.5M4.5 7.5h7v1h-7Z"
+            d="M8 .25a5.365 5.365 0 0 1 5.365 5.365v4.77a5.365 5.365 0 0 1-10.73 0v-4.77A5.365 5.365 0 0 1 8 .25m-.596 2.583h1.192q.596 0 .596.597v1.59q0 .595-.596.595H7.404q-.596 0-.596-.596V3.43q0-.596.596-.596m-3.577 4.57h8.346v1.193H3.827Z"
           />
         </g>
       </Icon>

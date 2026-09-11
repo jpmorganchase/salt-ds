@@ -18,15 +18,15 @@ export const MicrophoneSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M8 1.5q2.5 0 2.5 2.5v4q0 2.5-2.5 2.5T5.5 8V4q0-2.5 2.5-2.5"
+          d="M8 .25q2.837 0 2.837 2.837v4.538q0 2.837-2.837 2.837T5.163 7.625V3.087Q5.163.25 8 .25"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M3.5 7v1a4.5 4.5 0 0 0 9 0V7M8 12.5v2m-2.5 0h5"
+          d="M2.894 6.49v1.135a5.106 5.106 0 0 0 10.212 0V6.49M8 12.73V15m-2.837 0h5.674"
         />
       </g>
     </Icon>

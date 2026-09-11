@@ -18,11 +18,11 @@ export const ApiIcon = forwardRef<SVGSVGElement, ApiIconProps>(function ApiIcon(
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M5 3.5 1.5 8 5 12.5m6-9L14.5 8 11 12.5m-1.5-10-3 11"
+          d="M4.856 3.284 1.188 8l3.668 4.716m6.288-9.432L14.813 8l-3.669 4.716M9.572 2.236 6.428 13.764"
         />
       </g>
     </Icon>

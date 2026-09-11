@@ -16,13 +16,13 @@ export const HomeIcon = forwardRef<SVGSVGElement, HomeIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M1.833 7.5 8 2l6.167 5.5" />
-            <path d="M3.5 6.014V13.5h3V9h3v4.5h3V6.014" />
+            <path d="M.743 7.828 8 1.356l7.257 6.472" />
+            <path d="M2.705 6.079v8.81h3.53V9.593h3.53v5.296h3.53v-8.81" />
           </g>
         </g>
       </Icon>

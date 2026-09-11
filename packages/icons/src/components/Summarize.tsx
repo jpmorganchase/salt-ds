@@ -16,11 +16,11 @@ export const SummarizeIcon = forwardRef<SVGSVGElement, SummarizeIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.5 2v9q0 1.5 1.5 1.5h10m-3-3 3 3-3 3m-5.5-12h8m-8 3h8m-8 3h4"
+            d="M1.362.25v10.17q0 1.695 1.695 1.695h11.3m-3.108-3.107 3.108 3.107-3.108 3.108M4.752 1.945h9.04m-9.04 3.39h9.04m-9.04 3.39h4.52"
           />
         </g>
       </Icon>

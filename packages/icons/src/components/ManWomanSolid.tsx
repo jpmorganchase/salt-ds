@@ -18,10 +18,10 @@ export const ManWomanSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M2.833 3a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0m-1 3.5h5v4h-.5v4h-4v-4h-.5Zm2 4h1v4h-1ZM10.167 3a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0m.5 3.5h2l1.666 5h-.666v3h-4v-3H9Zm.5 5h1v3h-1Z"
+          d="M1.747 2.038a1.788 1.788 0 1 0 3.576 0 1.788 1.788 0 1 0-3.576 0M.554 6.212h5.962v4.769H5.92v4.769H1.15v-4.77H.554ZM2.94 10.98h1.19v4.769H2.94Zm7.551-8.943a1.788 1.788 0 1 0 3.577 0 1.788 1.788 0 1 0-3.577 0m.596 4.174h2.385l1.987 5.961h-.795v3.577h-4.77v-3.577H9.1Zm.597 5.961h1.192v3.577h-1.192Z"
         />
       </g>
     </Icon>

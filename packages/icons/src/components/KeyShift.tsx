@@ -16,11 +16,11 @@ export const KeyShiftIcon = forwardRef<SVGSVGElement, KeyShiftIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m2.5 7.5 5.5-5 5.5 5h-3v6h-5v-6Z"
+            d="M2.186 7.596 8 2.31l5.814 5.286h-3.171v6.342H5.357V7.596Z"
           />
         </g>
       </Icon>

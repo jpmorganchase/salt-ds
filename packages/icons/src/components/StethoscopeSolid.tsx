@@ -18,13 +18,16 @@ export const StethoscopeSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2.5 2v3.5a3 3 0 0 0 6 0V2m-6 1.5H4m4.5 0H7m-1.5 5v2a3.25 3 0 0 0 6.5 0V9"
+          d="M1 .25v4.49a3.848 3.848 0 0 0 7.696 0V.25M1 2.174h1.924m5.772 0H6.772M4.848 8.587v2.565a4.168 3.848 0 0 0 8.337 0V9.228"
         />
-        <path fillRule="evenodd" d="M10 7a2 2 0 1 0 4 0 2 2 0 1 0-4 0" />
+        <path
+          fillRule="evenodd"
+          d="M10.62 6.663a2.565 2.565 0 1 0 5.13 0 2.565 2.565 0 1 0-5.13 0"
+        />
       </g>
     </Icon>
   );

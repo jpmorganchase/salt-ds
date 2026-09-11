@@ -16,11 +16,11 @@ export const PriceLadderIcon = forwardRef<SVGSVGElement, PriceLadderIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.5 1.5v13m7-13v13m-7-10h7M4.5 8h7m-7 3.5h7"
+            d="M3.827.25v15.5M12.173.25v15.5M3.827 3.827h8.346M3.827 8h8.346m-8.346 4.173h8.346"
           />
         </g>
       </Icon>

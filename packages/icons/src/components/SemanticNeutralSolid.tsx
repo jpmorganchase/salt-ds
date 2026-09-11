@@ -18,10 +18,10 @@ export const SemanticNeutralSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0M5 10h6v1H5Zm0-4a.5.5 0 1 0 1 0 .5.5 0 1 0-1 0m5 0a.5.5 0 1 0 1 0 .5.5 0 1 0-1 0"
+          d="M.25 8a7.75 7.75 0 1 0 15.5 0A7.75 7.75 0 1 0 .25 8m4.173 2.385h7.154v1.192H4.423Zm0-4.77a.596.596 0 1 0 1.192 0 .596.596 0 1 0-1.192 0m5.962 0a.596.596 0 1 0 1.192 0 .596.596 0 1 0-1.192 0"
         />
       </g>
     </Icon>

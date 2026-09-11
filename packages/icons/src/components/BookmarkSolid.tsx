@@ -18,8 +18,8 @@ export const BookmarkSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
-        <path fillRule="evenodd" d="M4 1.5h8v13l-4-3-4 3Z" />
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
+        <path fillRule="evenodd" d="M3.23.25h9.54v15.5L8 12.173 3.23 15.75Z" />
       </g>
     </Icon>
   );

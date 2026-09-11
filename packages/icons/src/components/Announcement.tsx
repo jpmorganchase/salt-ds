@@ -18,11 +18,11 @@ export const AnnouncementIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2 6h3.5L13 3v9L5.5 9H2Zm3.5 0v3m-2 0v4.5H6L5.5 9M15 5.5v4"
+          d="M1 5.751h3.77l8.076-3.23v9.692L4.77 8.982H1Zm3.77 0v3.231m-2.155 0v4.846h2.693l-.539-4.846M15 5.212V9.52"
         />
       </g>
     </Icon>

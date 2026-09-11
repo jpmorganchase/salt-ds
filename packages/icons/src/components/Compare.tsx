@@ -16,13 +16,13 @@ export const CompareIcon = forwardRef<SVGSVGElement, CompareIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M2 3.5a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0Zm9 9a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0Z" />
-            <path d="M3.5 5v7H8M5.5 9.5 8 12l-2.5 2.5m7-3.5V4H8m2.5-2.5L8 4l2.5 2.5" />
+            <path d="M1.333 3a1.667 1.667 0 1 0 3.334 0 1.667 1.667 0 1 0-3.334 0Zm10 10a1.667 1.667 0 1 0 3.334 0 1.667 1.667 0 1 0-3.334 0Z" />
+            <path d="M3 4.667v7.777h5M5.222 9.667 8 12.444l-2.778 2.778M13 11.333V3.556H8M10.778.778 8 3.556l2.778 2.777" />
           </g>
         </g>
       </Icon>

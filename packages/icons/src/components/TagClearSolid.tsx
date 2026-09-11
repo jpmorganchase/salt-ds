@@ -18,15 +18,15 @@ export const TagClearSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M1.5 9 9 1.5h5.5V7l-2.866 2.866-.75-.75a.5.5 0 0 0-.707 0l-1.061 1.06a.5.5 0 0 0 0 .708l.75.75L7 14.5Zm9-4.5a1 1 0 1 0 2 0 1 1 0 1 0-2 0"
+          d="M.25 8.786 8.786.25h6.26v6.26l-3.264 3.26-.853-.853a.57.57 0 0 0-.805 0l-1.207 1.207a.57.57 0 0 0 0 .805l.853.853-3.261 3.262Zm10.243-5.122a1.138 1.138 0 1 0 2.276 0 1.138 1.138 0 1 0-2.276 0"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="m10 10 4.667 4.667m0-4.667L10 14.667"
+          d="m9.924 9.924 5.311 5.311m0-5.311-5.311 5.311"
         />
       </g>
     </Icon>

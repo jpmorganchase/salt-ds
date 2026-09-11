@@ -16,11 +16,11 @@ export const ChevronDownIcon = forwardRef<SVGSVGElement, ChevronDownIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M12.5 5.5 8 10 3.5 5.5"
+            d="M15.245 4.114 8 11.36.755 4.114"
           />
         </g>
       </Icon>

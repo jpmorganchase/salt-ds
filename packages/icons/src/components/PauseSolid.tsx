@@ -16,8 +16,11 @@ export const PauseSolidIcon = forwardRef<SVGSVGElement, PauseSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
-          <path fillRule="evenodd" d="M3 2h4v12H3Zm6 0h4v12H9Z" />
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
+          <path
+            fillRule="evenodd"
+            d="M1.542.25h5.166v15.5H1.542Zm7.75 0h5.166v15.5H9.292Z"
+          />
         </g>
       </Icon>
     );

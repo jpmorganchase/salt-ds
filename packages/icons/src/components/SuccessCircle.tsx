@@ -18,13 +18,13 @@ export const SuccessCircleIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <g
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
         >
-          <path d="M2 8a6 6 0 1 0 12 0A6 6 0 1 0 2 8Z" />
-          <path d="m4.5 8 2.333 2.333L11.5 5.667" />
+          <path d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Z" />
+          <path d="m3.917 8 2.722 2.722 5.444-5.444" />
         </g>
       </g>
     </Icon>

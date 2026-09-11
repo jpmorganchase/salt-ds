@@ -16,11 +16,11 @@ export const LastIcon = forwardRef<SVGSVGElement, LastIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M13 3v10M4 3l6 5-6 5"
+            d="M14.328.813v14.375M1.391.813 10.016 8 1.39 15.188"
           />
         </g>
       </Icon>

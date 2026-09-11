@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" stroke-width="0.67">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" stroke-width="0.67" viewBox="0 0 16 16">
   <g fill="currentColor" fill-rule="evenodd">
-    <path d="M6.5 3a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0"/>
-    <path d="M7 6.5h2l1.6667 5H5.3333Zm-1 5h4v3H8.5v-3h-1v3H6Z"/>
+    <path d="M6.21154 2.038462a1.788462 1.788462 0 1 0 3.576924 0 1.788462 1.788462 0 1 0-3.576924 0"/>
+    <path d="M6.807694 6.21154H9.19231l1.98722 5.96154H4.820474Zm-1.192308 5.96154h4.769232v3.576924H8.596156V12.17308H7.403848v3.576924H5.615386Z"/>
   </g>
 </svg>

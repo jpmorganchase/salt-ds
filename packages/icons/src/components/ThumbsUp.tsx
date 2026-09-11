@@ -16,11 +16,11 @@ export const ThumbsUpIcon = forwardRef<SVGSVGElement, ThumbsUpIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 6.5h2v7h-2Zm4 7v-7L8 2h1.5v4H13q1.5 0 1.5 1.5l-1.5 6Z"
+            d="M1 6.654h2.154v7.538H1Zm4.308 7.538V6.654L8 1.808h1.615v4.307h3.77Q15 6.115 15 7.731l-1.615 6.461Z"
           />
         </g>
       </Icon>

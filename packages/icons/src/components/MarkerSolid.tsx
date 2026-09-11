@@ -16,12 +16,15 @@ export const MarkerSolidIcon = forwardRef<SVGSVGElement, MarkerSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
-          <path fillRule="evenodd" d="M3.5 3.5H11L13.5 6 11 8.5H3.5Z" />
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
+          <path
+            fillRule="evenodd"
+            d="M2.038 2.635h8.943l2.98 2.98-2.98 2.981H2.038Z"
+          />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M6.5 1.5v2m0 5v6"
+            d="M5.615.25v2.385m0 5.961v7.154"
           />
         </g>
       </Icon>

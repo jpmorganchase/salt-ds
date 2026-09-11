@@ -16,11 +16,11 @@ export const PlayIcon = forwardRef<SVGSVGElement, PlayIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m4.5 2.5 9 5.5-9 5.5Z"
+            d="M2.405 1.563 12.939 8 2.405 14.438Z"
           />
         </g>
       </Icon>

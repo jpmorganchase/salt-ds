@@ -16,11 +16,11 @@ export const GridIcon = forwardRef<SVGSVGElement, GridIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.5 2.5h4v4h-4Zm7 0h4v4h-4Zm-7 7h4v4h-4Zm7 0h4v4h-4Z"
+            d="M1 1h5.09v5.09H1Zm8.91 0H15v5.09H9.91ZM1 9.91h5.09V15H1Zm8.91 0H15V15H9.91Z"
           />
         </g>
       </Icon>

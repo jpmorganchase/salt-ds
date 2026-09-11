@@ -18,11 +18,11 @@ export const ExponentiationIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="m4.5 7.5 3.5-5 3.5 5"
+          d="M.845 13.548 8 3.327l7.155 10.221"
         />
       </g>
     </Icon>

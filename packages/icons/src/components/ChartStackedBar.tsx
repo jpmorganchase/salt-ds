@@ -18,15 +18,15 @@ export const ChartStackedBarIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1.5 1.5v13"
+          d="M1 .625v14.75"
         />
         <path
           fillRule="evenodd"
-          d="M3.5 2.5h5v2h-5Zm6 0h5v2h-5ZM3.5 7h2v2h-2Zm3 0h4v2h-4Zm-3 4.5h4v2h-4Zm5 0h4v2h-4Z"
+          d="M3.27 1.76h5.672v2.269H3.27Zm6.807 0h5.673v2.269h-5.673ZM3.269 6.865h2.27v2.27h-2.27Zm3.404 0h4.539v2.27H6.673ZM3.27 11.971h4.539v2.27h-4.54Zm5.673 0h4.539v2.27h-4.54Z"
         />
       </g>
     </Icon>

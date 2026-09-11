@@ -44,6 +44,7 @@
 .salt-density-medium,
 .salt-density-high,
 .salt-density-mobile {
+  --salt-size-icon-strokeWidth: 1;
   --salt-size-fixed-100: 1px;
   --salt-size-fixed-200: 2px;
   --salt-size-fixed-300: 3px;

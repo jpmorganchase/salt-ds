@@ -16,15 +16,15 @@ export const BooleanIcon = forwardRef<SVGSVGElement, BooleanIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.25 1.5h7.5a2.75 2.75 0 0 1 0 5.5h-7.5a2.75 2.75 0 0 1 0-5.5Zm0 7.5h7.5a2.75 2.75 0 0 1 0 5.5h-7.5a2.75 2.75 0 0 1 0-5.5Z"
+            d="M3.962 1h8.076a2.962 2.962 0 0 1 0 5.923H3.962a2.962 2.962 0 0 1 0-5.923Zm0 8.077h8.076a2.962 2.962 0 0 1 0 5.923H3.962a2.962 2.962 0 0 1 0-5.923Z"
           />
           <path
             fillRule="evenodd"
-            d="M3 4.25a1.25 1.25 0 1 0 2.5 0 1.25 1.25 0 1 0-2.5 0m7.5 7.5a1.25 1.25 0 1 0 2.5 0 1.25 1.25 0 1 0-2.5 0"
+            d="M2.615 3.962a1.346 1.346 0 1 0 2.693 0 1.346 1.346 0 1 0-2.693 0m8.077 8.076a1.346 1.346 0 1 0 2.693 0 1.346 1.346 0 1 0-2.693 0"
           />
         </g>
       </Icon>

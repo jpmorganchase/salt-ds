@@ -16,15 +16,15 @@ export const ToteSolidIcon = forwardRef<SVGSVGElement, ToteSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M2.5 5.5h11v8h-11Zm2.5 1h1v1H5Zm5 0h1v1h-1Z"
+            d="M1.24 5.917h13.52v9.833H1.24Zm3.073 1.229h1.229v1.229h-1.23Zm6.145 0h1.23v1.229h-1.23Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M5.5 5.5V4a2.5 2.5 0 0 1 5 0v1.5"
+            d="M4.927 5.917V4.073a3.073 3.073 0 0 1 6.146 0v1.844"
           />
         </g>
       </Icon>

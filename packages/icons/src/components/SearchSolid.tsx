@@ -16,15 +16,15 @@ export const SearchSolidIcon = forwardRef<SVGSVGElement, SearchSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M2 7a5 5 0 1 0 10 0A5 5 0 1 0 2 7m5-3a3 3 0 0 1 3 3h1a4 4 0 0 0-4-4Z"
+            d="M.25 6.238a5.988 5.988 0 1 0 11.977 0 5.988 5.988 0 1 0-11.977 0m5.988-3.593a3.593 3.593 0 0 1 3.593 3.593h1.198a4.79 4.79 0 0 0-4.79-4.79Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m10.2 10.2 4.3 4.3"
+            d="m10.07 10.07 5.15 5.15"
           />
         </g>
       </Icon>

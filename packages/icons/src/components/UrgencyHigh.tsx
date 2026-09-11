@@ -16,11 +16,11 @@ export const UrgencyHighIcon = forwardRef<SVGSVGElement, UrgencyHighIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m2 7 6-3.5L14 7M2 10.5 8 7l6 3.5M2 14l6-3.5 6 3.5"
+            d="M.625 5.953 8 1.651l7.375 4.302M.625 10.256 8 5.953l7.375 4.303M.625 14.558 8 10.256l7.375 4.302"
           />
         </g>
       </Icon>

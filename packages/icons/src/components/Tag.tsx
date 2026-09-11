@@ -18,13 +18,16 @@ export const TagIcon = forwardRef<SVGSVGElement, TagIconProps>(function TagIcon(
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <g
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
         >
-          <path d="M1.5 9 9 1.5h5.5V7L7 14.5Z" />
-          <path strokeWidth=".469" d="M10.5 4.5a1 1 0 1 0 2 0 1 1 0 1 0-2 0Z" />
+          <path d="M1.295 8.899 9.194 1h5.792v5.792l-7.899 7.899Z" />
+          <path
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.7)"
+            d="M10.773 4.16a1.053 1.053 0 1 0 2.107 0 1.053 1.053 0 1 0-2.107 0Z"
+          />
         </g>
       </g>
     </Icon>

@@ -16,12 +16,15 @@ export const CoffeeSolidIcon = forwardRef<SVGSVGElement, CoffeeSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
-          <path fillRule="evenodd" d="M2.5 5.5H11v5q0 2-2 2H4.5q-2 0-2-2Z" />
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
+          <path
+            fillRule="evenodd"
+            d="M1.343 4.894h9.287v5.462q0 2.186-2.186 2.186H3.528q-2.185 0-2.185-2.186Z"
+          />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M11 6h2a2 2 0 0 1 0 4h-2m-9.5 4.5H13m-8.5-13v2m4-2v2"
+            d="M10.63 5.44h2.185a2.185 2.185 0 0 1 0 4.37H10.63M.25 14.727h12.565M3.528.523v2.185M7.898.523v2.185"
           />
         </g>
       </Icon>

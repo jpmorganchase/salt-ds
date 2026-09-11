@@ -17,20 +17,20 @@ export const LineChartIcon = forwardRef<SVGSVGElement, LineChartIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 1.5v13h13"
+            d="M1 .25V15h14.75"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m4 11.5 3-4 3 2 3.5-5"
+            d="M3.837 11.596 7.24 7.058l3.404 2.269 3.971-5.673"
           />
           <path
             fillRule="evenodd"
-            d="M3 11.5a1 1 0 1 0 2 0 1 1 0 1 0-2 0m3-4a1 1 0 1 0 2 0 1 1 0 1 0-2 0m3 2a1 1 0 1 0 2 0 1 1 0 1 0-2 0m3.5-5a1 1 0 1 0 2 0 1 1 0 1 0-2 0"
+            d="M2.702 11.596a1.135 1.135 0 1 0 2.27 0 1.135 1.135 0 1 0-2.27 0m3.404-4.538a1.135 1.135 0 1 0 2.269 0 1.135 1.135 0 1 0-2.27 0M9.51 9.327a1.135 1.135 0 1 0 2.269 0 1.135 1.135 0 1 0-2.27 0m3.971-5.673a1.135 1.135 0 1 0 2.27 0 1.135 1.135 0 1 0-2.27 0"
           />
         </g>
       </Icon>

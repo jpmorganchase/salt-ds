@@ -13,7 +13,7 @@ Browse the catalogue below to choose an icon. The [icon design guidelines](/salt
 
 ## Icon variants
 
-Icons are available as **outline** and **solid** variants. Each icon has an outline version; selected icons also have a solid version. Both variants preserve the same meaning and shared landmarks.
+Icons are available as **outline** and **solid** variants. Each icon has an outline version; selected icons also have a solid version. Both variants preserve the same meaning and defining features. Each export is fitted to its own painted bounds so outline and solid icons use a consistent frame.
 
 Outline icons use open space to keep their visual weight light. Solid variants introduce filled surfaces to provide greater emphasis, while retaining the open lines needed to describe the shape or action. Choose the variant that fits the surrounding interface and use it consistently.
 
@@ -26,6 +26,8 @@ Outline icons use open space to keep their visual weight light. Solid variants i
 ## Scaling icons
 
 Icon size will vary based on use case and system requirements. Standard sizing ensures components maintain a consistent spatial relationship with surrounding elements.
+
+Each ordinary icon is centered in its 16×16 viewBox and uniformly fitted to a **15.5-unit longest painted dimension at stroke width 1.5**. Its aspect ratio is preserved, so narrow icons retain space along their shorter axis. Outline and solid exports are fitted independently. Official brand marks and full-canvas solid checkmark control surfaces retain their 16-unit framing. See [Canvas and optical size](/salt/foundations/assets/icon-design#canvas-and-optical-size) for the design rules.
 
 We recommend using a size multiplier for icons when its purpose needs to be emphasized; typically standalone and not paired with text.
 
@@ -60,11 +62,11 @@ for icon sizing and spacing."
 
 ## Stroke weight
 
-The primary stroke is authored at a fixed **0.67 units** in the icon’s 16×16 viewBox. Secondary details retain their lighter proportions. These widths are part of the artwork and scale with its geometry when an icon is resized.
+Generated React icons use a primary stroke of **1 unit** in the 16×16 viewBox by default. Adjust `--salt-size-icon-strokeWidth` for an application or subtree, or use `--saltIcon-strokeWidth` for an individual icon. Secondary details retain their lighter proportions, and all strokes scale with the icon. See [Icon stroke width](/salt/foundations/size#stroke-width) for examples.
 
 <IconDesignExamples example="stroke" />
 
-React icons, inline SVGs and the CSS mask classes in `saltIcons.css` use the same authored stroke widths.
+At 12px, the default 1-unit primary stroke renders at 0.75px. The viewBox fit reserves space for widths up to 1.5; thinner strokes occupy slightly less of the frame, especially at sharp joins. Numeric SVG masters retain a 0.67-unit reference stroke, which renders at 0.5025px at 12px. Standalone SVG images and the CSS mask classes in `saltIcons.css` use those baked widths and do not inherit stroke variables from their host element. Filled contours and official brand logos retain their supplied shapes.
 
 ## Accessible use
 

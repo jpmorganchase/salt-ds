@@ -16,10 +16,10 @@ export const KeySolidIcon = forwardRef<SVGSVGElement, KeySolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M6.933 9.067a3.5 3.5 0 1 1 2.134-2.134L14 11.867V14h-2.133v-2h-2v-2Zm-2.166-3.3a1 1 0 1 0 2 0 1 1 0 1 0-2 0"
+            d="M6.403 9.225a4.63 4.63 0 1 1 2.822-2.822l6.525 6.525v2.822h-2.822v-2.645h-2.645v-2.646ZM3.537 4.86a1.323 1.323 0 1 0 2.646 0 1.323 1.323 0 1 0-2.646 0"
           />
         </g>
       </Icon>

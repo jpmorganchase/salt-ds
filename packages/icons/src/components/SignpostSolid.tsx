@@ -18,15 +18,15 @@ export const SignpostSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M7.5 3.5H12l2.5 2-2.5 2H7.5Zm0 4H4l-2.5 2 2.5 2h3.5Z"
+          d="M7.404 2.635h5.365l2.981 2.384-2.98 2.385H7.403Zm0 4.769H3.23L.25 9.788l2.98 2.385h4.174Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M7.5 1.5v13"
+          d="M7.404.25v15.5"
         />
       </g>
     </Icon>

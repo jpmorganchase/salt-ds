@@ -16,11 +16,11 @@ export const PercentageIcon = forwardRef<SVGSVGElement, PercentageIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.5 4.5a2 2 0 1 0 4 0 2 2 0 1 0-4 0Zm7 7a2 2 0 1 0 4 0 2 2 0 1 0-4 0Zm-6 2 9-11"
+            d="M1 3.545a2.545 2.545 0 1 0 5.09 0 2.545 2.545 0 1 0-5.09 0Zm8.91 8.91a2.545 2.545 0 1 0 5.09 0 2.545 2.545 0 1 0-5.09 0ZM2.273 15 13.727 1"
           />
         </g>
       </Icon>

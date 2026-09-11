@@ -16,15 +16,15 @@ export const TreeSolidIcon = forwardRef<SVGSVGElement, TreeSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8 5.5v3m-4.5 2v-2h9v2"
+            d="M8 5.02v3.576m-5.365 2.385V8.596h10.73v2.385"
           />
           <path
             fillRule="evenodd"
-            d="M6 1.5h4v4H6Zm-4.5 9h4v4h-4Zm9 0h4v4h-4Z"
+            d="M5.615.25h4.77v4.77h-4.77ZM.25 10.98h4.77v4.77H.25Zm10.73 0h4.77v4.77h-4.77Z"
           />
         </g>
       </Icon>

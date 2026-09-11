@@ -16,10 +16,10 @@ export const SumSolidIcon = forwardRef<SVGSVGElement, SumSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M2.5 2h11v3H12V3.5H5L9 8l-4 4.5h7V11h1.5v3h-11v-1.5l4-4.5-4-4.5Z"
+            d="M.896.25h14.208v3.875h-1.937V2.188H4.125L9.292 8l-5.167 5.813h9.042v-1.938h1.937v3.875H.896v-1.937L6.063 8 .896 2.188Z"
           />
         </g>
       </Icon>

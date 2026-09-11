@@ -16,11 +16,11 @@ export const UndoIcon = forwardRef<SVGSVGElement, UndoIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.5 2.5v4h4m-4 0a5.5 5.5 0 1 1 5 7.5"
+            d="M1.239.364v5.09h5.09m-5.09 0A7 7 0 1 1 7.602 15"
           />
         </g>
       </Icon>

@@ -16,15 +16,15 @@ export const MusicSolidIcon = forwardRef<SVGSVGElement, MusicSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M6.5 11V3.5l7-2V10m-7-3.5 7-2"
+            d="M6.048 13.227V3.765l8.831-2.523v10.723M6.048 7.55l8.831-2.523"
           />
           <path
             fillRule="evenodd"
-            d="m6.5 3.5 7-2v3l-7 2Zm0 7.5c0 1.1-1.133 2-2.5 2s-2-.7-2-1.5 1.133-2 2.5-2 2 .7 2 1.5m7-1c0 1.1-1.133 2-2.5 2s-2-.7-2-1.5 1.133-2 2.5-2 2 .7 2 1.5"
+            d="m6.048 3.765 8.831-2.523v3.785L6.048 7.55Zm0 9.462c0 1.388-1.43 2.523-3.154 2.523S.371 14.867.371 13.858s1.43-2.524 3.154-2.524 2.523.884 2.523 1.893m8.831-1.262c0 1.388-1.43 2.523-3.154 2.523s-2.523-.883-2.523-1.892 1.43-2.523 3.154-2.523 2.523.883 2.523 1.892"
           />
         </g>
       </Icon>

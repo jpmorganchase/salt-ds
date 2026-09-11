@@ -16,11 +16,11 @@ export const SortAscendIcon = forwardRef<SVGSVGElement, SortAscendIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M12 13.5v-11M9.5 5 12 2.5 14.5 5m-13-1.5h2M1.5 8h4m-4 4.5h6"
+            d="M12.362 14.86V2.172M9.478 5.055l2.884-2.883 2.883 2.883M.25 3.325h2.307M.25 8.515h4.614M.25 13.707h6.92"
           />
         </g>
       </Icon>

@@ -16,25 +16,25 @@ export const ScheduleIcon = forwardRef<SVGSVGElement, ScheduleIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M14.333 10.417v-6.75H1.667V13h9.083"
+            d="M14.998 10.498V3.039H1.002v10.313H11.04"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.667 5.833q0 .5.5.5h11.666q.5 0 .5-.5m-12.666 1q0-.5.5-.5h11.666q.5 0 .5.5m-9-4.5V5m5.334-2.667V5M4.833 3.667q.5 0 .5-.5m.5.5q-.5 0-.5-.5m-.5.5q.5 0 .5.5m.5-.5q-.5 0-.5.5m4.834-.5q.5 0 .5-.5m.5.5q-.5 0-.5-.5m-.5.5q.5 0 .5.5m.5-.5q-.5 0-.5.5"
+            d="M1.002 5.433q0 .553.553.553h12.89q.553 0 .553-.553M1.002 6.538q0-.552.553-.552h12.89q.553 0 .553.552M5.054 1.566v2.947m5.892-2.947v2.947M4.501 3.04q.553 0 .553-.553m.552.552q-.552 0-.552-.552m-.553.552q.553 0 .553.553m.552-.553q-.552 0-.552.553m5.34-.552q.552 0 .552-.553m.553.552q-.553 0-.553-.552m-.552.552q.552 0 .552.553m.553-.553q-.553 0-.553.553"
           />
           <path
             fillRule="evenodd"
-            d="M3 7.667h.667v.666H3Zm2.333 0H6v.666h-.667ZM3 10h.667v.667H3Zm2.333 0H6v.667h-.667Z"
+            d="M2.383 7.367h.921v.92h-.92Zm2.578 0h.921v.92h-.92ZM2.383 9.945h.921v.92h-.92Zm2.578 0h.921v.92h-.92Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M9.667 11.667h4.666M12 9.333V14"
+            d="M9.842 11.879h5.156M12.42 9.3v5.156"
           />
         </g>
       </Icon>

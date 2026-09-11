@@ -18,12 +18,12 @@ export const ColumnChooserSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
-        <path fillRule="evenodd" d="M1.5 2h13v3h-13Z" />
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
+        <path fillRule="evenodd" d="M1 1.538h14V4.77H1Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1.5 2h13v12h-13Zm0 3h13M8 5v9M3.5 7H6M3.5 9.5H6M3.5 12H6m4-5h2.5M10 9.5h2.5M10 12h2.5"
+          d="M1 1.538h14v12.924H1ZM1 4.77h14m-7 0v9.692M3.154 6.923h2.692M3.154 9.615h2.692m-2.692 2.693h2.692m4.308-5.385h2.692m-2.692 2.692h2.692m-2.692 2.693h2.692"
         />
       </g>
     </Icon>

@@ -16,11 +16,11 @@ export const FilterClearIcon = forwardRef<SVGSVGElement, FilterClearIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.03 5.206 2 2.5h12l-2.03 2.706M9 11.828V14H7v-2.172M5.5 5.5l5 5m0-5-5 5"
+            d="M3.864 4.83 1.75 2.01h12.5l-2.114 2.82m-3.094 6.898v2.262H6.958v-2.262M5.396 5.135l5.208 5.209m0-5.209-5.208 5.209"
           />
         </g>
       </Icon>

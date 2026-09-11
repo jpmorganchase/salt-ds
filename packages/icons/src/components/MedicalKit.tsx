@@ -16,11 +16,11 @@ export const MedicalKitIcon = forwardRef<SVGSVGElement, MedicalKitIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.833 3h12.334v10H1.833Zm2 0v10m8.334-10v10M6 8h4M8 6v4"
+            d="M.988 2.315h14.024v11.37H.988Zm2.274 0v11.37m9.476-11.37v11.37M5.726 8h4.548M8 5.726v4.548"
           />
         </g>
       </Icon>

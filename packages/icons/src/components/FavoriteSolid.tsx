@@ -18,10 +18,10 @@ export const FavoriteSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M8 1.833 9.9 5.8l4.367.6L11.1 9.467l.767 4.366L8 11.8l-3.867 2.033.767-4.366L1.733 6.4 6.1 5.8Z"
+          d="m8 .547 2.356 4.919 5.415.744-3.927 3.802.95 5.415L8 12.906l-4.795 2.521.951-5.415L.229 6.21l5.415-.744Z"
         />
       </g>
     </Icon>

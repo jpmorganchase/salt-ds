@@ -16,14 +16,14 @@ export const GroupIcon = forwardRef<SVGSVGElement, GroupIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M1.833 1.833h12.334v12.334H1.833Z" />
-            <path d="M8.5 7V4.5h-4v4H7" />
-            <path d="M7 7h4.5v4.5H7Z" />
+            <path d="M1.02 1.02h13.96v13.96H1.02Z" />
+            <path d="M8.566 6.868v-2.83H4.038v4.528h2.83" />
+            <path d="M6.868 6.868h5.094v5.094H6.868Z" />
           </g>
         </g>
       </Icon>

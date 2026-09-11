@@ -16,11 +16,11 @@ export const AppSwitcherIcon = forwardRef<SVGSVGElement, AppSwitcherIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.5 2.5h2v2h-2Zm0 4.5h2v2h-2Zm0 4.5h2v2h-2Zm4.5-9h2v2H7ZM7 7h2v2H7Zm0 4.5h2v2H7Zm4.5-9h2v2h-2Zm0 4.5h2v2h-2Zm0 4.5h2v2h-2Z"
+            d="M1 1h2.545v2.545H1Zm0 5.727h2.545v2.546H1Zm0 5.728h2.545V15H1ZM6.727 1h2.546v2.545H6.727Zm0 5.727h2.546v2.546H6.727Zm0 5.728h2.546V15H6.727ZM12.455 1H15v2.545h-2.545Zm0 5.727H15v2.546h-2.545Zm0 5.728H15V15h-2.545Z"
           />
         </g>
       </Icon>

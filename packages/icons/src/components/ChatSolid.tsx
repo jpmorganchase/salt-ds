@@ -16,8 +16,11 @@ export const ChatSolidIcon = forwardRef<SVGSVGElement, ChatSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
-          <path fillRule="evenodd" d="M2 2.5h12v9H6L3 14v-2.5H2Z" />
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
+          <path
+            fillRule="evenodd"
+            d="M.25.573h15.5v11.625H5.417l-3.875 3.23v-3.23H.25Z"
+          />
         </g>
       </Icon>
     );

@@ -16,17 +16,17 @@ export const SplitViewIcon = forwardRef<SVGSVGElement, SplitViewIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 2.5h13v11h-13Z"
+            d="M1 2.077h14v11.846H1Z"
           />
-          <path fillRule="evenodd" d="M8 2.5h6.5v11H8Z" />
+          <path fillRule="evenodd" d="M8 2.077h7v11.846H8Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M3.5 5.5H6m-2.5 2H6m-2.5 2H5"
+            d="M3.154 5.308h2.692M3.154 7.462h2.692M3.154 9.615h1.615"
           />
         </g>
       </Icon>

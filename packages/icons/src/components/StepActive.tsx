@@ -16,8 +16,11 @@ export const StepActiveIcon = forwardRef<SVGSVGElement, StepActiveIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
-          <path fillRule="evenodd" d="M2 8a6 6 0 1 0 12 0A6 6 0 1 0 2 8" />
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
+          <path
+            fillRule="evenodd"
+            d="M.25 8a7.75 7.75 0 1 0 15.5 0A7.75 7.75 0 1 0 .25 8"
+          />
         </g>
       </Icon>
     );

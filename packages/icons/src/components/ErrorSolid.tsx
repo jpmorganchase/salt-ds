@@ -16,10 +16,10 @@ export const ErrorSolidIcon = forwardRef<SVGSVGElement, ErrorSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M5.5 1.833h5L14.167 5.5v5L10.5 14.167h-5L1.833 10.5v-5Zm1.933 2.334h1.134v5H7.433Zm-.2 7.333a.767.767 0 1 0 1.534 0 .767.767 0 1 0-1.534 0"
+            d="M4.865.268h6.27l4.597 4.597v6.27l-4.597 4.597h-6.27L.268 11.135v-6.27ZM7.29 3.194h1.422v6.269H7.289Zm-.25 9.194a.961.961 0 1 0 1.922 0 .961.961 0 1 0-1.922 0"
           />
         </g>
       </Icon>

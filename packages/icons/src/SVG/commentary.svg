@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" stroke-width="0.67">
-  <g fill="none" stroke="currentColor">
-    <path d="M2 2.5h12v9H6L3 14v-2.5H2Z"/>
-    <path d="M4.5 5h7m-7 2h7m-7 2H9"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" stroke-width="0.67" viewBox="0 0 16 16">
+  <g fill="none" stroke="currentColor" stroke-width="0.67">
+    <path d="M1.13587 1.000001h13.728264v10.296198H5.711958l-3.432066 2.860055v-2.860055H1.13587Z"/>
+    <path d="M3.995925 3.860056h8.008154M3.995925 6.1481h8.008154M3.995925 8.436144h5.148099"/>
   </g>
 </svg>

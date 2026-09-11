@@ -16,13 +16,13 @@ export const CopySolidIcon = forwardRef<SVGSVGElement, CopySolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M5.5 1.5h8v10"
+            d="M4.788 1h9.077v11.346"
           />
-          <path fillRule="evenodd" d="M2.5 4.5h8v10h-8Z" />
+          <path fillRule="evenodd" d="M1.385 4.404h9.077V15.75H1.385Z" />
         </g>
       </Icon>
     );

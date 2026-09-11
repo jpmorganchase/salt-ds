@@ -18,10 +18,10 @@ export const UserAdminSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="m8 1.5 6 2q0 8-6 11-6-3-6-11ZM6.6 5.667a1.4 1.4 0 1 0 2.8 0 1.4 1.4 0 1 0-2.8 0M5 11.5Q5 9 8 9t3 2.5l-3 2Z"
+          d="m8 .25 7.154 2.385q0 9.538-7.154 13.115Q.846 12.173.846 2.635ZM6.33 5.218a1.67 1.67 0 1 0 3.34 0 1.67 1.67 0 1 0-3.34 0m-1.907 6.955q0-2.98 3.577-2.98t3.577 2.98L8 14.558Z"
         />
       </g>
     </Icon>

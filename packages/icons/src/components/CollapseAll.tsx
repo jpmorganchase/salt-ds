@@ -16,11 +16,11 @@ export const CollapseAllIcon = forwardRef<SVGSVGElement, CollapseAllIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M3.5 2 8 6.5 12.5 2m-9 12L8 9.5l4.5 4.5"
+            d="M2.581.775 8 6.194l5.419-5.42M2.58 15.226 8 9.806l5.419 5.42"
           />
         </g>
       </Icon>

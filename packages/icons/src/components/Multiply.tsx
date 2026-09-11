@@ -16,11 +16,11 @@ export const MultiplyIcon = forwardRef<SVGSVGElement, MultiplyIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m3.5 3.5 9 9m0-9-9 9"
+            d="m.769.769 14.462 14.462m0-14.462L.769 15.231"
           />
         </g>
       </Icon>

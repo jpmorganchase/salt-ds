@@ -16,15 +16,15 @@ export const SparkleIcon = forwardRef<SVGSVGElement, SparkleIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M7.333 2c.934 3.867 1.467 4.4 5.334 5.333-3.867.934-4.4 1.467-5.334 5.334C6.4 8.8 5.867 8.267 2 7.333 5.867 6.4 6.4 5.867 7.333 2Z"
+            d="M6.586 2.322c1.077 4.458 1.691 5.073 6.15 6.149-4.459 1.076-5.073 1.69-6.15 6.149C5.51 10.162 4.896 9.547.438 8.47 4.896 7.396 5.51 6.78 6.586 2.323Z"
           />
           <path
             fillRule="evenodd"
-            d="m13.333 1 .534 1.467L15.333 3l-1.466.533L13.333 5 12.8 3.533 11.333 3l1.467-.533Z"
+            d="m13.504 1.169.615 1.69 1.691.616-1.69.614-.616 1.692-.615-1.692-1.69-.614 1.69-.615Z"
           />
         </g>
       </Icon>

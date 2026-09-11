@@ -16,8 +16,8 @@ export const TriangleUpIcon = forwardRef<SVGSVGElement, TriangleUpIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
-          <path fillRule="evenodd" d="M13 11H3l5-6Z" />
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
+          <path fillRule="evenodd" d="M15.75 12.626H.25L8 3.326Z" />
         </g>
       </Icon>
     );

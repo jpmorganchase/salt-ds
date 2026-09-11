@@ -18,15 +18,15 @@ export const TextHighlightIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M4.5 9 11 2.5 13.5 5 7 11.5Z"
+          d="m3.938 8.805 7.524-7.524 2.894 2.894-7.524 7.524Z"
         />
         <path
           fillRule="evenodd"
-          d="M4.5 9 7 11.5 5.5 13h-3v-1Zm-3 5h13v1h-13Z"
+          d="m3.938 8.805 2.894 2.894-1.736 1.736H1.623v-1.157ZM.466 14.593h15.047v1.157H.466Z"
         />
       </g>
     </Icon>

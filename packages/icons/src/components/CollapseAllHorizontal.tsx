@@ -21,11 +21,11 @@ export const CollapseAllHorizontalIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2 3.5 6.5 8 2 12.5m12-9L9.5 8l4.5 4.5"
+          d="M.756 2.567 6.19 8 .756 13.433M15.244 2.567 9.81 8l5.433 5.433"
         />
       </g>
     </Icon>

@@ -18,13 +18,13 @@ export const DocumentDraftIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <g
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
         >
-          <path d="M9.454 1.5H2.5v13h8l3-3V6.546m-3 7.954V12q0-.5.5-.5h2.5" />
-          <path d="m8 5.5 4-4 2 2-4 4-2.5.5Zm3-3 2 2M5 10h2m-2 2h3.333" />
+          <path d="M9.13 1.281H1.791V15h8.443l3.166-3.166V6.606M10.234 15v-2.638q0-.528.527-.528H13.4" />
+          <path d="m7.596 5.502 4.22-4.22 2.111 2.11-4.22 4.221-2.64.528Zm3.165-3.165 2.111 2.11M4.43 10.251h2.11m-2.11 2.11h3.517" />
         </g>
       </g>
     </Icon>

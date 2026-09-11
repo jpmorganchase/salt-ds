@@ -18,10 +18,10 @@ export const OverflowMenuIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M2.75 7.25h1.5v1.5h-1.5Zm4.5 0h1.5v1.5h-1.5Zm4.5 0h1.5v1.5h-1.5Z"
+          d="M.25 6.893h2.214v2.214H.25Zm6.643 0h2.214v2.214H6.893Zm6.643 0h2.214v2.214h-2.214Z"
         />
       </g>
     </Icon>

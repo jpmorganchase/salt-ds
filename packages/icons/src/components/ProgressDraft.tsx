@@ -18,11 +18,11 @@ export const ProgressDraftIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2 8a6 6 0 1 0 12 0A6 6 0 1 0 2 8Z"
+          d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Z"
         />
       </g>
     </Icon>

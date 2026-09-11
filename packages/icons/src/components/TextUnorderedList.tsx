@@ -18,33 +18,33 @@ export const TextUnorderedListIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M1.767 3.5a.733.733 0 1 0 1.466 0 .733.733 0 1 0-1.466 0"
+          d="M.232 2.516a.894.894 0 1 0 1.788 0 .894.894 0 1 0-1.788 0"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M5.5 3.5h9"
+          d="M4.782 2.516H15.75"
         />
         <path
           fillRule="evenodd"
-          d="M1.767 8a.733.733 0 1 0 1.466 0 .733.733 0 1 0-1.466 0"
+          d="M.232 8A.894.894 0 1 0 2.02 8 .894.894 0 1 0 .232 8"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M5.5 8h9"
+          d="M4.782 8H15.75"
         />
         <path
           fillRule="evenodd"
-          d="M1.767 12.5a.733.733 0 1 0 1.466 0 .733.733 0 1 0-1.466 0"
+          d="M.232 13.484a.894.894 0 1 0 1.788 0 .894.894 0 1 0-1.788 0"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M5.5 12.5h9"
+          d="M4.782 13.484H15.75"
         />
       </g>
     </Icon>

@@ -18,10 +18,10 @@ export const VisibleSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <g fillRule="evenodd">
-          <path d="M1.5 8Q8-2.5 14.5 8 8 18.5 1.5 8m4 0a2.5 2.5 0 1 0 5 0 2.5 2.5 0 1 0-5 0" />
-          <path d="M6.5 8a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0" />
+          <path d="M.25 8Q8-4.52 15.75 8 8 20.52.25 8m4.77 0a2.98 2.98 0 1 0 5.96 0 2.98 2.98 0 1 0-5.96 0" />
+          <path d="M6.212 8a1.788 1.788 0 1 0 3.576 0 1.788 1.788 0 1 0-3.576 0" />
         </g>
       </g>
     </Icon>

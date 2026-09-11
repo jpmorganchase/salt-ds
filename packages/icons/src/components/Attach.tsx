@@ -16,11 +16,11 @@ export const AttachIcon = forwardRef<SVGSVGElement, AttachIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m5.875 10.75 4.25-4.25a1.275 1.275 0 0 0-1.802-1.802L3.648 9.373a2.55 2.55 0 0 0 3.604 3.604l5.525-5.525a3.402 3.402 0 0 0-4.811-4.811L3.75 6.925"
+            d="m5.083 11.61 4.959-4.959a1.488 1.488 0 0 0-2.103-2.102l-5.454 5.454a2.975 2.975 0 0 0 4.205 4.205l6.446-6.446a3.969 3.969 0 0 0-5.613-5.613L2.604 7.147"
           />
         </g>
       </Icon>

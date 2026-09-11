@@ -88,20 +88,21 @@ const figures: Record<IconDesignExample, Figure> = {
       pixels,
     })),
     caption:
-      "The same artwork at 12px, 16px, and 64px. The authored line weight scales with the icon. Judge recognition at native size and construction in the enlarged view.",
+      "The same artwork at 12px, 16px, and 64px. The configured line weight scales with the icon. Judge recognition at native size and construction in the enlarged view.",
   },
   stroke: {
     groups: [
       {
         label: "Primary strokes",
         samples: [{ Icon: BankIcon, label: "Bank" }],
-        description: "The main outline uses a fixed 0.67-unit stroke.",
+        description:
+          "The main outline defaults to a configurable 1-unit stroke.",
       },
       {
         label: "Secondary details",
         samples: [{ Icon: ScheduleTimeIcon, label: "Schedule time" }],
         description:
-          "The clock hands use a finer authored stroke than the surrounding frame.",
+          "The clock hands retain their finer proportion as the stroke width changes.",
       },
       {
         label: "Filled surfaces and lines",
@@ -111,7 +112,7 @@ const figures: Record<IconDesignExample, Figure> = {
       },
     ],
     caption:
-      "The 16-unit artwork uses fixed primary strokes of 0.67 units, with finer secondary details where needed. These 64px views show the authored balance between lines and filled surfaces.",
+      "These React icons default to 1-unit primary strokes on the 16-unit canvas, with proportional secondary details. The 64px views use the configured weight; filled contours retain their geometry.",
   },
   geometry: {
     groups: [

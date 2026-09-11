@@ -18,11 +18,11 @@ export const FolderClosedIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2.5 13.5V3h4l2 2h5v8.5Zm0-6.5h11"
+          d="M1 14.682V1.318h5.09l2.546 2.546H15v10.818ZM1 6.41h14"
         />
       </g>
     </Icon>

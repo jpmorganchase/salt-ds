@@ -21,13 +21,16 @@ export const ChartCandlestickSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M4.5 1.5v3m0 6v4m7-13v5m0 5v3"
+          d="M3.827.25v3.577m0 7.154v4.769M12.173.25v5.962m0 5.961v3.577"
         />
-        <path fillRule="evenodd" d="M2.5 4.5h4v6h-4Zm7 2h4v5h-4Z" />
+        <path
+          fillRule="evenodd"
+          d="M1.442 3.827h4.77v7.154h-4.77Zm8.346 2.385h4.77v5.961h-4.77Z"
+        />
       </g>
     </Icon>
   );

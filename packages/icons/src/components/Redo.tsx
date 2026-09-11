@@ -16,11 +16,11 @@ export const RedoIcon = forwardRef<SVGSVGElement, RedoIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M13.5 2.5v4h-4m4 0a5.5 5.5 0 1 0-5 7.5"
+            d="M14.761.364v5.09h-5.09m5.09 0A7 7 0 1 0 8.398 15"
           />
         </g>
       </Icon>

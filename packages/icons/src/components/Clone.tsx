@@ -16,11 +16,11 @@ export const CloneIcon = forwardRef<SVGSVGElement, CloneIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 5V1.5H5m2.5 0H11V3M1.5 7.5v2h9M8 7l2.5 2.5L8 12M5 8.25V4.5h9.5v10H5v-3.75"
+            d="M1 4.77V1h3.77m2.692 0h3.769v1.615M1 7.462v2.153h9.692M8 6.923l2.692 2.692L8 12.308M4.77 8.269V4.231H15V15H4.77v-4.038"
           />
         </g>
       </Icon>

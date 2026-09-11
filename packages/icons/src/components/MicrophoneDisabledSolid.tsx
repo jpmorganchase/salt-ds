@@ -21,15 +21,15 @@ export const MicrophoneDisabledSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M8 1.5q2.5 0 2.5 2.5v4q0 .366-.054.679l-4.939-4.94Q5.634 1.5 8 1.5M5.5 7.268l3.179 3.178Q8.366 10.5 8 10.5q-2.5 0-2.5-2.5z"
+          d="M8 .273q2.832 0 2.832 2.832v4.531q0 .415-.06.77L5.175 2.81Q5.32.273 8 .273M5.168 6.807l3.6 3.6q-.353.062-.768.062-2.832 0-2.832-2.833z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M3.5 7v1A4.5 4.5 0 0 0 8 12.5a4.5 4.5 0 0 0 1.437-.234m2.829-2.829A4.5 4.5 0 0 0 12.5 8V7M8 12.5v2m-2.5 0h5M2 2l12 12"
+          d="M2.902 6.504v1.132A5.1 5.1 0 0 0 8 12.734a5.1 5.1 0 0 0 1.628-.265m3.204-3.204a5.1 5.1 0 0 0 .266-1.629V6.504M8 12.734V15m-2.832 0h5.664M1.203.84l13.594 13.594"
         />
       </g>
     </Icon>

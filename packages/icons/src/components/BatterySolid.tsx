@@ -18,10 +18,10 @@ export const BatterySolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M4.5 3H6V1.5h4V3h1.5v11.5h-7Zm1.25 1h4.5q.25 0 .25.25v.5q0 .25-.25.25h-4.5q-.25 0-.25-.25v-.5q0-.25.25-.25"
+          d="M3.827 2.038h1.788V.25h4.77v1.788h1.788V15.75H3.827Zm1.49 1.193h5.366q.298 0 .298.298v.596q0 .298-.298.298H5.317q-.298 0-.298-.298v-.596q0-.298.298-.298"
         />
       </g>
     </Icon>

@@ -16,16 +16,16 @@ export const TextItalicsIcon = forwardRef<SVGSVGElement, TextItalicsIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M5.76 2.5h7.23l-.283 1.129H9.732L7.547 12.37h2.974l-.281 1.13H3.011l.282-1.129h2.975L8.453 3.63H5.48Z"
+            d="M4.993.615H14.7l-.379 1.516h-3.994L7.391 13.869h3.994l-.378 1.516H1.3l.379-1.516h3.994L8.609 2.131H4.615Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            strokeWidth=".315838"
-            d="M5.76 2.5h7.23l-.283 1.129H9.732L7.547 12.37h2.974l-.281 1.13H3.011l.282-1.129h2.975L8.453 3.63H5.48Z"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.4714)"
+            d="M4.993.615H14.7l-.379 1.516h-3.994L7.391 13.869h3.994l-.378 1.516H1.3l.379-1.516h3.994L8.609 2.131H4.615Z"
           />
         </g>
       </Icon>

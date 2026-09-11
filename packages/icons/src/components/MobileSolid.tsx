@@ -16,20 +16,20 @@ export const MobileSolidIcon = forwardRef<SVGSVGElement, MobileSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M4 3.667h8v10q0 .666-.667.666H4.667q-.667 0-.667-.666ZM7.5 12.5a.5.5 0 1 0 1 0 .5.5 0 1 0-1 0"
+            d="M3.586 3.218h8.828v11.035q0 .735-.736.735H4.322q-.736 0-.736-.735Zm3.862 9.748a.552.552 0 1 0 1.104 0 .552.552 0 1 0-1.104 0"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.667 1.667h6.666q.667 0 .667.666v11.334q0 .666-.667.666H4.667q-.667 0-.667-.666V2.333q0-.666.667-.666Z"
+            d="M4.322 1.012h7.356q.736 0 .736.735v12.506q0 .735-.736.735H4.322q-.736 0-.736-.735V1.747q0-.735.736-.735Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4 3.167q0 .5.5.5h7q.5 0 .5-.5m-8 1q0-.5.5-.5h7q.5 0 .5.5"
+            d="M3.586 2.667q0 .551.552.551h7.724q.552 0 .552-.551M3.586 3.77q0-.552.552-.552h7.724q.552 0 .552.552"
           />
         </g>
       </Icon>

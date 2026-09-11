@@ -57,7 +57,7 @@ export async function checkPairStrokes(page, records) {
     {
       name: "calendar",
       feature: "top header rim",
-      point: [8, 11 / 3],
+      point: [8, 8 + (11 / 3 - 8) * 1.1],
       axis: "y",
       span: 1,
     },

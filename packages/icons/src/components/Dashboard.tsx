@@ -16,13 +16,13 @@ export const DashboardIcon = forwardRef<SVGSVGElement, DashboardIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M1.938 12.5a7 7 0 1 1 12.124 0ZM2.5 8H4m-.5-3.5L5 6m3-3.5V4m5.5 4H12m-3-.167L11.5 5" />
-            <path d="M6.5 9a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0Z" />
+            <path d="M1.938 13.25a7 7 0 1 1 12.124 0Zm.562-4.5H4m-.5-3.5L5 6.75m3-3.5v1.5m5.5 4H12m-3-.167 2.5-2.833" />
+            <path d="M6.5 9.75a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0Z" />
           </g>
         </g>
       </Icon>

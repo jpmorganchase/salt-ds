@@ -16,11 +16,11 @@ export const DatasetIcon = forwardRef<SVGSVGElement, DatasetIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.5 4.5c0-3.333 11-3.333 11 0s-11 3.333-11 0Zm0 0v7c0 3.333 11 3.333 11 0v-7M2.5 8c0 3.333 11 3.333 11 0"
+            d="M1.583 3.917c0-3.89 12.834-3.89 12.834 0s-12.834 3.889-12.834 0Zm0 0v8.166c0 3.89 12.834 3.89 12.834 0V3.917M1.583 8c0 3.889 12.834 3.889 12.834 0"
           />
         </g>
       </Icon>

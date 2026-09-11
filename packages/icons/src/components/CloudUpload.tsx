@@ -16,13 +16,13 @@ export const CloudUploadIcon = forwardRef<SVGSVGElement, CloudUploadIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M4.7 12.25a3.3 3.3 0 0 1-.536-6.557 4.402 4.402 0 0 1 8.106 1.089 2.75 2.75 0 0 1-.42 5.468H10m-4 0H4.7" />
-            <path d="M8 14.25v-7M5.75 9.5 8 7.25l2.25 2.25" />
+            <path d="M4.497 11.975a3.503 3.503 0 0 1-.57-6.961 4.673 4.673 0 0 1 8.605 1.156 2.92 2.92 0 0 1-.445 5.805h-1.964m-4.246 0h-1.38" />
+            <path d="M8 14.098V6.666m-2.389 2.39L8 6.665l2.389 2.39" />
           </g>
         </g>
       </Icon>

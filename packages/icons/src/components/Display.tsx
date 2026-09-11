@@ -16,13 +16,14 @@ export const DisplayIcon = forwardRef<SVGSVGElement, DisplayIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M1.667 2.333h12.666v9.334H1.667Z" />
-            <path d="M2.5 2.333h11q.833 0 .833.834v7.666q0 .834-.833.834h-11q-.833 0-.833-.834V3.167q0-.834.833-.834ZM2.667 14h10.666M2.667 14h4Q7 14 7 13.667V12q0-.333-.333-.333m2.666 0Q9 11.667 9 12v1.667Q9 14 9.333 14h4" />
+            <path d="M1.012 1.557h13.976v10.3H1.012Z" />
+            <path d="M1.931 1.557h12.138q.92 0 .92.92v8.46q0 .92-.92.92H1.931q-.92 0-.92-.92v-8.46q0-.92.92-.92Z" />
+            <path d="M2.115 14.431h11.77m-11.77 0h4.414q.368 0 .368-.368v-1.839q0-.368-.368-.368m2.942 0q-.368 0-.368.368v1.84q0 .367.368.367h4.414" />
           </g>
         </g>
       </Icon>

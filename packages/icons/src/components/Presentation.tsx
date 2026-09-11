@@ -18,11 +18,11 @@ export const PresentationIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2 2.333h12V12H2ZM2 5h12M4.667 7.333h6.666M4.667 9.667h6.666m-6.333 5L8 12l3 2.667"
+          d="M1.086.988h13.828v11.139H1.086Zm0 3.072h13.828M4.159 6.75h7.682M4.159 9.437h7.682M4.543 15.2 8 12.127l3.457 3.073"
         />
       </g>
     </Icon>
