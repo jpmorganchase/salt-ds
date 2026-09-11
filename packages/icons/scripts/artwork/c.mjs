@@ -12,6 +12,7 @@ import {
   S,
   textLabel,
 } from "./primitives.mjs";
+import { successTick } from "./tick.mjs";
 
 // Each drawing is composed on the shared 24-unit construction grid, then
 // published at 16px. Filled versions retain real transparent counters.
@@ -140,19 +141,21 @@ put(
 const bell = "M6.75 9a5.25 5.25 0 0 1 10.5 0v3.75l3 4.5H3.75l3-4.5Z";
 const bellTip = S("M9.75 20.25h4.5M12 3.75v-1.5");
 put("notification", S(bell) + bellTip, F(bell) + bellTip);
-// Shared base geometry is cut only beneath the foreground mark.
+// A compact check leaves the bell's shoulder legible. Both cutouts follow the
+// foreground's sides, flat ends and elbow while retaining the shared bell.
+const notificationReadCheck = S("M13.75 9L16.25 11.5L21 6.75");
 put(
   "notification-read",
   S(
-    "M6.75 9C6.75 6.10051 9.10051 3.75 12 3.75C13.98253 3.75 15.7084 4.8489 16.60173 6.47081M18.04137 13.93706L20.25 17.25L3.75 17.25L6.75 12.75L6.75 9",
+    "M6.75 9C6.75 6.10051 9.10051 3.75 12 3.75C14.21198 3.75 16.10445 5.11798 16.87755 7.05407M17.87735 13.69103L20.25 17.25L3.75 17.25L6.75 12.75L6.75 9",
   ) +
-    S("M9.75 20.25L14.25 20.25M12 3.75L12 2.25") +
-    S("M12.75 9L15.75 12 21 6"),
+    bellTip +
+    notificationReadCheck,
   F(
-    "M6.75 9.0C6.75 6.1005048751831055 9.100504875183105 3.75 12.0 3.75C14.42960262298584 3.75 16.47373390197754 5.400391101837158 17.07246971130371 7.641245365142822L15.658668518066406 9.25701904296875L13.280324935913086 6.8786749839782715L10.62867546081543 9.530324935913086L15.841331481933594 14.742981910705566L17.394947052001953 12.967421531677246L20.25 17.25H3.75L6.75 12.75Z",
+    "M6.75 9C6.75 6.10051 9.10051 3.75 12 3.75C14.54089 3.75 16.6602 5.55506 17.14555 7.9528L16.25 8.84835L14.28033 6.87868L11.62868 9.53033L14.92417 12.82583L16.25 14.15165L17.41066 12.99099L20.25 17.25L3.75 17.25L6.75 12.75L6.75 9Z",
   ) +
-    S("M9.75 20.25L14.25 20.25M12 3.75L12 2.25") +
-    S("M12.75 9L15.75 12 21 6"),
+    bellTip +
+    notificationReadCheck,
 );
 put(
   "outdent",
@@ -265,10 +268,7 @@ put(
   ),
 );
 put("progress-closed", progressDisk(box(7.5, 7.5, 9, 9)) + F(box(9, 9, 6, 6)));
-put(
-  "progress-complete",
-  progressDisk("M6.75 12l3.75 3.75 7.5-8.25 1.1 1-8.6 9.5-4.85-4.95Z"),
-);
+put("progress-complete", F(circ(12, 12, 9) + successTick.counter));
 put("progress-draft", C(12, 12, 9));
 put("progress-inprogress", C(12, 12, 9) + F("M12 3a9 9 0 0 1 0 18Z"));
 put(

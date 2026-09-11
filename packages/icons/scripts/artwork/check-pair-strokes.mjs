@@ -118,9 +118,12 @@ export async function checkPairStrokes(page, records) {
     },
     {
       name: "globe",
-      feature: "right outer rim",
-      point: [43 / 3, 8],
+      feature: "right rim beside upper latitude",
+      // At reference weight, this lies between the outline latitude paint and
+      // the solid latitude gap edge, isolating the shared circular rim.
+      point: [8 + (2 / 3) * Math.sqrt(9.5 ** 2 - 4.05 ** 2), 5.3],
       axis: "x",
+      factor: 9.5 / Math.sqrt(9.5 ** 2 - 4.05 ** 2),
     },
   ];
   const samples = features.map((feature) => ({

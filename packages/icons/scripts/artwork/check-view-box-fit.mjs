@@ -1,4 +1,5 @@
 import { brandIconNames } from "./brands.mjs";
+import { getOpticalFit, validateOpticalFits } from "./optical-fits.mjs";
 import { getViewBoxGroupKey } from "./view-box.mjs";
 
 // Validate the generated fit metadata independently of its measurements. Every
@@ -13,6 +14,9 @@ export function validateViewBoxTransforms(records, transforms) {
   const names = records.map(({ name }) => name).sort();
   if (JSON.stringify(Object.keys(transforms).sort()) !== JSON.stringify(names))
     throw new Error("ViewBox fit manifest does not match the icon inventory");
+
+  const registeredGroups = new Set(names.map(getViewBoxGroupKey));
+  validateOpticalFits(registeredGroups);
 
   const groups = new Map();
   for (const { name, svg } of records) {
@@ -34,10 +38,15 @@ export function validateViewBoxTransforms(records, transforms) {
       : fit.groupKey === "checkmark_solid.svg"
         ? "full-canvas-badge"
         : undefined;
+    const optical = getOpticalFit(fit.groupKey);
+    if (optical && exemption)
+      throw new Error(`Exempt artwork cannot have an optical fit: ${name}`);
     if (
       fit.fitted !== !exemption ||
-      fit.targetSpan !== (exemption ? 16 : 15.5) ||
-      fit.reason !== exemption
+      fit.targetSpan !== (exemption ? 16 : (optical?.targetSpan ?? 15.5)) ||
+      fit.reason !== exemption ||
+      fit.opticalReason !== optical?.reason ||
+      JSON.stringify(fit.opticalCenter) !== JSON.stringify(optical?.center)
     )
       throw new Error(`Invalid viewBox fit target or exemption: ${name}`);
 
@@ -147,10 +156,12 @@ export async function checkViewBoxFit(page, records, transforms) {
         const span = bounds
           ? Math.max(bounds[2] - bounds[0], bounds[3] - bounds[1])
           : 0;
+        const targetCenter = fit.opticalCenter ?? [8, 8];
         const result = {
           name,
           weight,
           targetSpan: fit.targetSpan,
+          targetCenter,
           bounds,
           center,
           span,
@@ -165,8 +176,8 @@ export async function checkViewBoxFit(page, records, transforms) {
           bounds[2] > 16 ||
           bounds[3] > 16 ||
           Math.abs(span - fit.targetSpan) > tolerance ||
-          Math.abs(center[0] - 8) > tolerance ||
-          Math.abs(center[1] - 8) > tolerance
+          Math.abs(center[0] - targetCenter[0]) > tolerance ||
+          Math.abs(center[1] - targetCenter[1]) > tolerance
         )
           failures.push(result);
       } finally {

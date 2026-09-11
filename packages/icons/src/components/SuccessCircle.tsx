@@ -24,7 +24,7 @@ export const SuccessCircleIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
         >
           <path d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Z" />
-          <path d="m3.917 8 2.722 2.722 5.444-5.444" />
+          <path d="m3.917 7.708 2.722 2.723 5.444-5.445" />
         </g>
       </g>
     </Icon>

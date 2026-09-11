@@ -21,7 +21,7 @@ export const SuccessCircleSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M.25 8a7.75 7.75 0 1 0 15.5 0A7.75 7.75 0 1 0 .25 8m2.325 0 .904-.904 3.014 3.014 5.167-5.167.904.904-6.071 6.071Z"
+          d="M.25 8a7.75 7.75 0 1 0 15.5 0A7.75 7.75 0 1 0 .25 8m2.772.134 3.471 3.47 6.485-6.484-.914-.913-5.57 5.57L3.935 7.22Z"
         />
       </g>
     </Icon>

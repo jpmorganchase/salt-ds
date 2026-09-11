@@ -21,7 +21,7 @@ export const FavoriteSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="m8 .547 2.356 4.919 5.415.744-3.927 3.802.95 5.415L8 12.906l-4.795 2.521.951-5.415L.229 6.21l5.415-.744Z"
+          d="m8 .797 2.28 4.76 5.24.72-3.8 3.68.92 5.24L8 12.757l-4.64 2.44.92-5.24-3.8-3.68 5.24-.72Z"
         />
       </g>
     </Icon>
