@@ -12,12 +12,17 @@ export const LinkedIcon = forwardRef<SVGSVGElement, LinkedIconProps>(
       <Icon
         data-testid="LinkedIcon"
         aria-label="linked"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M8.475 1.371a1 1 0 0 1 1.414 0l.707.707a1 1 0 0 1 0 1.415L7.414 6.675a1 1 0 0 1-1.414 0l-.354-.354-.707.707.354.354a2 2 0 0 0 2.828 0L11.303 4.2a2 2 0 0 0 0-2.829l-.707-.707a2 2 0 0 0-2.828 0L6 2.432l.707.707z" />
-        <path d="M3.525 10.564a1 1 0 0 1-1.414 0l-.707-.707a1 1 0 0 1 0-1.415L4.586 5.26A1 1 0 0 1 6 5.26l.354.354.707-.707-.354-.354a2 2 0 0 0-2.828 0L.697 7.735a2 2 0 0 0 0 2.829l.707.707a2 2 0 0 0 2.828 0L6 9.503l-.707-.707z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m6 5 1.833-1.833a3.536 3.536 0 0 1 5 5L11 10m-1 1-1.833 1.833a3.536 3.536 0 0 1-5-5L5 6m.5 4.5 5-5"
+          />
+        </g>
       </Icon>
     );
   },

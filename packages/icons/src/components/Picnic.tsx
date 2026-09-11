@@ -12,15 +12,17 @@ export const PicnicIcon = forwardRef<SVGSVGElement, PicnicIconProps>(
       <Icon
         data-testid="PicnicIcon"
         aria-label="picnic"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M12 8.5 9.5 0 7 8.5h2V11H5V8h1V7H3v1h1v3H2v-1h1V9H0v1h1v1H0v1h12v-1h-2V8.5zm-2-1h.7l-1.2-4-1.15 4H9v-1h1z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m11.5 2.5 3 7h-6Zm-10 12h13m-3-7v7m-10-5h6m-4 0v5m-2-2h4"
+          />
+        </g>
       </Icon>
     );
   },

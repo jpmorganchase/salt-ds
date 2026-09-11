@@ -12,16 +12,18 @@ export const CoffeeSolidIcon = forwardRef<SVGSVGElement, CoffeeSolidIconProps>(
       <Icon
         data-testid="CoffeeSolidIcon"
         aria-label="coffee solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M9 1H1v6a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6h1a2 2 0 1 0 0-4H9zm1 4H9V3h1a1 1 0 1 1 0 2M7.857 2H2.143v2h5.714z"
-          clipRule="evenodd"
-        />
-        <path d="M9 10H1v1h8z" />
+        <g strokeWidth=".67">
+          <path fillRule="evenodd" d="M2.5 5.5H11v5q0 2-2 2H4.5q-2 0-2-2Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11 6h2a2 2 0 0 1 0 4h-2m-9.5 4.5H13m-8.5-13v2m4-2v2"
+          />
+        </g>
       </Icon>
     );
   },

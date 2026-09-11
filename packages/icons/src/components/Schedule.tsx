@@ -12,16 +12,31 @@ export const ScheduleIcon = forwardRef<SVGSVGElement, ScheduleIconProps>(
       <Icon
         data-testid="ScheduleIcon"
         aria-label="schedule"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M10 9h2v1h-2v2H9v-2H7V9h2V7h1z" />
-        <path
-          fillRule="evenodd"
-          d="M12 6h-1V4H1v7h5v1H0V1h3V0h1v1h4V0h1v1h3zM3 3h1V2H3zm5 0h1V2H8z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M14.333 10.417v-6.75H1.667V13h9.083"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.667 5.833q0 .5.5.5h11.666q.5 0 .5-.5m-12.666 1q0-.5.5-.5h11.666q.5 0 .5.5m-9-4.5V5m5.334-2.667V5M4.833 3.667q.5 0 .5-.5m.5.5q-.5 0-.5-.5m-.5.5q.5 0 .5.5m.5-.5q-.5 0-.5.5m4.834-.5q.5 0 .5-.5m.5.5q-.5 0-.5-.5m-.5.5q.5 0 .5.5m.5-.5q-.5 0-.5.5"
+          />
+          <path
+            fillRule="evenodd"
+            d="M3 7.667h.667v.666H3Zm2.333 0H6v.666h-.667ZM3 10h.667v.667H3Zm2.333 0H6v.667h-.667Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.667 11.667h4.666M12 9.333V14"
+          />
+        </g>
       </Icon>
     );
   },

@@ -12,11 +12,17 @@ export const EqualIcon = forwardRef<SVGSVGElement, EqualIconProps>(
       <Icon
         data-testid="EqualIcon"
         aria-label="equal"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M10 8H2V7h8zm0-3H2V4h8z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 5.5h11m-11 5h11"
+          />
+        </g>
       </Icon>
     );
   },

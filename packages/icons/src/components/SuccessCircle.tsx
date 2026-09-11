@@ -14,16 +14,19 @@ export const SuccessCircleIcon = forwardRef<
     <Icon
       data-testid="SuccessCircleIcon"
       aria-label="success circle"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M9.75 4.016 4.952 9.332 2 6.582l1.027-1.098L4.875 7.2l3.772-4.208z" />
-      <path
-        fillRule="evenodd"
-        d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12m5-6A5 5 0 1 1 1 6a5 5 0 0 1 10 0"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <g
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+        >
+          <path d="M2 8a6 6 0 1 0 12 0A6 6 0 1 0 2 8Z" />
+          <path d="m4.5 8 2.333 2.333L11.5 5.667" />
+        </g>
+      </g>
     </Icon>
   );
 });

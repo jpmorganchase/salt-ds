@@ -12,16 +12,16 @@ export const CookieSolidIcon = forwardRef<SVGSVGElement, CookieSolidIconProps>(
       <Icon
         data-testid="CookieSolidIcon"
         aria-label="cookie solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M6 0a6 6 0 1 0 5.917 6.998A2 2 0 0 1 10 5a3 3 0 0 1-2.989-3.261A2 2 0 0 1 6 0M4 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-2 .5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0M4.5 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"
-          clipRule="evenodd"
-        />
-        <path d="M9 1.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m2 2a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m1-3a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0" />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M8 1.5a2.5 2.5 0 0 0 3.5 3 2.5 2.5 0 0 0 3 3.5A6.5 6.5 0 1 1 8 1.5m-3.667 4a.667.667 0 1 0 1.334 0 .667.667 0 1 0-1.334 0m-.5 4a.667.667 0 1 0 1.334 0 .667.667 0 1 0-1.334 0m3.5-1.5a.667.667 0 1 0 1.334 0 .667.667 0 1 0-1.334 0m0 4a.667.667 0 1 0 1.334 0 .667.667 0 1 0-1.334 0m3.5-1.5a.667.667 0 1 0 1.334 0 .667.667 0 1 0-1.334 0"
+          />
+        </g>
       </Icon>
     );
   },

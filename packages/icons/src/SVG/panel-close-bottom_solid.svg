@@ -1,3 +1,7 @@
-<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M0 12V0H12V12H0ZM1 8V11H11V8H1ZM8.12109 3.46484L6.5 5.08594V2H5.5V5.08594L3.87891 3.46484L3.17188 4.17188L6 7L8.82812 4.17188L8.12109 3.46484Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" stroke-width="0.67">
+  <path fill="currentColor" fill-rule="evenodd" d="M1.6667 14.3333V11h12.6666v3.3333Z"/>
+  <path fill="none" stroke="currentColor" d="M1.6667 14.3333V1.6667h12.6666v12.6666Z"/>
+  <path fill="none" stroke="currentColor" d="M1.6667 13.8333V2.1667q0-.5.5-.5h11.6666q.5 0 .5.5v11.6666q0 .5-.5.5H2.1667q-.5 0-.5-.5Z"/>
+  <path fill="none" stroke="currentColor" d="M1.6667 11h12.6666m-12.6666.5q0-.5.5-.5m-.5-.5q0 .5.5.5m12.1666.5q0-.5-.5-.5m.5-.5q0 .5-.5.5"/>
+  <path fill="none" stroke="currentColor" d="M8 3.6667v4.6666M5.6667 6 8 8.3333 10.3333 6"/>
 </svg>

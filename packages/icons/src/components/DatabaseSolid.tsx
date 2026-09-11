@@ -14,15 +14,16 @@ export const DatabaseSolidIcon = forwardRef<
     <Icon
       data-testid="DatabaseSolidIcon"
       aria-label="database solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M0 5.5V0h12v5.5zm2-3.25h1v1H2zm2 0h1v1H4zM0 12V6.5h12V12zm2-3.25h1v1H2zm2 0h1v1H4z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M1.5 1.5h13V7h-13Zm0 7.5h13v5.5h-13Zm2.25-5.5h1q.25 0 .25.25v1Q5 5 4.75 5h-1q-.25 0-.25-.25v-1q0-.25.25-.25m2.5 0h1q.25 0 .25.25v1q0 .25-.25.25h-1Q6 5 6 4.75v-1q0-.25.25-.25M3.75 11h1q.25 0 .25.25v1q0 .25-.25.25h-1q-.25 0-.25-.25v-1q0-.25.25-.25m2.5 0h1q.25 0 .25.25v1q0 .25-.25.25h-1q-.25 0-.25-.25v-1q0-.25.25-.25"
+        />
+      </g>
     </Icon>
   );
 });

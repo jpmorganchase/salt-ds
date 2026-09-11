@@ -12,21 +12,19 @@ export const StorefrontIcon = forwardRef<SVGSVGElement, StorefrontIconProps>(
       <Icon
         data-testid="StorefrontIcon"
         aria-label="storefront"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M.736 5.368q.083.027.173.05c.179.044.378.074.591.074C2.367 5.492 3 5 3 5s.617.492 1.5.492S6 5 6 5s.633.492 1.5.492S9 5 9 5s.648.492 1.5.492a2.4 2.4 0 0 0 .778-.13A2.8 2.8 0 0 0 12 5l-2-4H2L0 5s.285.222.736.368M9.382 2l1.243 2.486a1 1 0 0 1-.125.006 1.6 1.6 0 0 1-.653-.155A2 2 0 0 1 9.6 4.2l-.002-.002-.605-.46-.6.467-.04.027a1.7 1.7 0 0 1-.853.26 1.7 1.7 0 0 1-.893-.287l-.615-.478-.607.484-.037.025a2 2 0 0 1-.189.103 1.6 1.6 0 0 1-.659.153 1.6 1.6 0 0 1-.66-.153 1.6 1.6 0 0 1-.225-.128l-.607-.484-.614.478-.041.027a1.7 1.7 0 0 1-.853.26q-.063 0-.125-.006L2.618 2z"
-          clipRule="evenodd"
-        />
-        <path d="M3 9V8h3v1z" />
-        <path
-          fillRule="evenodd"
-          d="M11 11V6H1v5H0v1h12v-1zm-9 0h5V7H2zm6 0h2V7H8z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M3.5 2.5h9l2 4q-2 2-4 0-2.5 2-5 0-2 2-4 0Zm-1 6v5h11v-5M1 13.5h14" />
+            <path d="M4.5 9.5h3v2h-3Zm5 4v-4h2v4" />
+          </g>
+        </g>
       </Icon>
     );
   },

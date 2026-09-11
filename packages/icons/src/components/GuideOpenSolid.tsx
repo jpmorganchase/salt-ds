@@ -14,15 +14,16 @@ export const GuideOpenSolidIcon = forwardRef<
     <Icon
       data-testid="GuideOpenSolidIcon"
       aria-label="guide open solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M7 1h5v9.5H7c-.22 0-.327.073-.385.14A.55.55 0 0 0 6.5 11h-1a.5.5 0 0 0-.166-.334A.5.5 0 0 0 5 10.5H0V1h5c.37 0 .707.162.959.382C6.22 1.138 6.577 1 7 1M4.5 3H2v1h2.5zm3 0H10v1H7.5zm0 2H10v1H7.5zM2 5h2.5v1H2zm5.5 2H10v1H7.5zM2 7h2.5v1H2z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M8 4Q7 2.5 5 2.5H1.833v10H5q2 0 3 1.5 1-1.5 3-1.5h3.167v-10H11Q9 2.5 8 4m-.5.667h1v7.666h-1ZM3.6 5h2.467q.266 0 .266.267v.466q0 .267-.266.267H3.6q-.267 0-.267-.267v-.466Q3.333 5 3.6 5m0 3h2.467q.266 0 .266.267v.466q0 .267-.266.267H3.6q-.267 0-.267-.267v-.466Q3.333 8 3.6 8m6.333-3H12.4q.267 0 .267.267v.466q0 .267-.267.267H9.933q-.266 0-.266-.267v-.466q0-.267.266-.267m0 3H12.4q.267 0 .267.267v.466q0 .267-.267.267H9.933q-.266 0-.266-.267v-.466q0-.267.266-.267"
+        />
+      </g>
     </Icon>
   );
 });

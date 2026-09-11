@@ -14,12 +14,21 @@ export const CloudSuccessSolidIcon = forwardRef<
     <Icon
       data-testid="CloudSuccessSolidIcon"
       aria-label="cloud success solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M6 2c.942 0 1.809.326 2.492.871l-3.37 3.371-1.415-1.414L1.586 6.95 4.636 10H3a3 3 0 0 1-.487-5.96A4 4 0 0 1 6 2m3.5 8H5.606l4.822-4.822A2.5 2.5 0 0 1 9.5 10" />
-      <path d="M10.778 2 5.12 7.657 3.707 6.242 3 6.95l2.121 2.122 6.364-6.364z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M4.7 12.585q-1.506 0-2.57-1.065T1.065 8.95q0-3.009 2.887-3.56Q5.312 3.116 8 3.116q1.905 0 3.067.95L7 8.133 5.354 6.486 3.586 8.254 7 11.668l5.455-5.455q.044.135.083.276 2.397.475 2.397 3.011 0 3.085-3.085 3.085Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="m5 7.9 2 2 5.85-5.85"
+        />
+      </g>
     </Icon>
   );
 });

@@ -12,15 +12,23 @@ export const BuildReportIcon = forwardRef<SVGSVGElement, BuildReportIconProps>(
       <Icon
         data-testid="BuildReportIcon"
         aria-label="build report"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M0 3h3V1h6v2h3v9H0zm1 1v2h3V5h4v1h3V4zm0 7V7h3v1h4V7h3v4zm7-9H4v1h4z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2 5h12v9H2Zm0 3h3.5m5 0H14"
+          />
+          <path fillRule="evenodd" d="M5.5 6.5h5v3h-5Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.5 5V2.5h5V5"
+          />
+        </g>
       </Icon>
     );
   },

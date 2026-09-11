@@ -14,15 +14,21 @@ export const FavoriteHalfIcon = forwardRef<
     <Icon
       data-testid="FavoriteHalfIcon"
       aria-label="favorite half"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M5.546.303a.502.502 0 0 1 .902 0l1.554 3.213 3.57.684a.5.5 0 0 1 .277.827L9.403 7.71l.591 3.69a.5.5 0 0 1-.647.556l-3.35-1.648-3.277 1.618a.5.5 0 0 1-.716-.527l.592-3.689L.151 5.027A.5.5 0 0 1 .426 4.2l3.57-.684zm.45 8.89 2.858 1.409-.515-3.208 2.17-2.382-3.188-.61-1.323-2.734z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8 1.833 9.9 5.8l4.367.6L11.1 9.467l.767 4.366L8 11.8l-3.867 2.033.767-4.366L1.733 6.4 6.1 5.8Z"
+        />
+        <path
+          fillRule="evenodd"
+          d="M8 1.833V11.8l-3.867 2.033.767-4.366L1.733 6.4 6.1 5.8Z"
+        />
+      </g>
     </Icon>
   );
 });

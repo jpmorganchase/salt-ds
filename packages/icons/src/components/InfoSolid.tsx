@@ -12,15 +12,16 @@ export const InfoSolidIcon = forwardRef<SVGSVGElement, InfoSolidIconProps>(
       <Icon
         data-testid="InfoSolidIcon"
         aria-label="info solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M0 0h12v12H0zm6 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2m1 3v5H5V5z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M1.5 1.5h13v13h-13Zm5.667 3a.833.833 0 1 0 1.666 0 .833.833 0 1 0-1.666 0M7 7h1.5v4h1v1h-3v-1h1V8H7Z"
+          />
+        </g>
       </Icon>
     );
   },

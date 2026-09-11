@@ -12,12 +12,21 @@ export const PasteSolidIcon = forwardRef<SVGSVGElement, PasteSolidIconProps>(
       <Icon
         data-testid="PasteSolidIcon"
         aria-label="paste solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M9 0v1H8v1H4V1H3V0z" />
-        <path d="M3 1v2h6V1h2v11H1V1z" />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M2 2.5h12v12H2Zm3 0h6v2H5ZM4.5 7h7v1h-7Zm0 3h7v1h-7Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5 1.5h6v3H5Z"
+          />
+        </g>
       </Icon>
     );
   },

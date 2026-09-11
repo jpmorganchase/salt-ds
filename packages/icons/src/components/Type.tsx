@@ -12,16 +12,32 @@ export const TypeIcon = forwardRef<SVGSVGElement, TypeIconProps>(
       <Icon
         data-testid="TypeIcon"
         aria-label="type"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M3 3v2h2v4h2V5h2V3z" />
-        <path
-          fillRule="evenodd"
-          d="M0 0h3v1h6V0h3v3h-1v6h1v3H9v-1H3v1H0V9h1V3H0zm3 10h6V9h1V3H9V2H3v1H2v6h1zM1 1h1v1H1zm0 9h1v1H1zm10-9h-1v1h1zm-1 9h1v1h-1z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.5 2.5h9m-10 1v9m11-9v9m-10 1h9"
+          />
+          <path
+            fillRule="evenodd"
+            d="M8.414 11.5h-.819V5.218H5.393V4.5h5.214v.718H8.414Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth=".201"
+            d="M8.414 11.5h-.819V5.218H5.393V4.5h5.214v.718H8.414Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 1.5h2v2h-2Zm11 0h2v2h-2Zm-11 11h2v2h-2Zm11 0h2v2h-2Z"
+          />
+        </g>
       </Icon>
     );
   },

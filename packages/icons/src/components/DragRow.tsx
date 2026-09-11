@@ -12,11 +12,17 @@ export const DragRowIcon = forwardRef<SVGSVGElement, DragRowIconProps>(
       <Icon
         data-testid="DragRowIcon"
         aria-label="drag row"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M3 10h6v1H3zm0-3h6v1H3zm0-3h6v1H3zm0-3h6v1H3z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4 3h8M4 6.333h8M4 9.667h8M4 13h8"
+          />
+        </g>
       </Icon>
     );
   },

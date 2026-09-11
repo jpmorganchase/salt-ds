@@ -14,11 +14,21 @@ export const CloudDisabledSolidIcon = forwardRef<
     <Icon
       data-testid="CloudDisabledSolidIcon"
       aria-label="cloud disabled solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M2.033 4.16A3.001 3.001 0 0 0 3 10h4.889zm9.307 5.033a2.5 2.5 0 0 0-1.458-4.164 4.002 4.002 0 0 0-5.435-2.716zM10.307 11 1 1.716 1.716 1 11 10.267z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M4.7 12.585q-1.506 0-2.57-1.065T1.065 8.95q0-2.864 2.616-3.5l7.136 7.135Zm9.145-.508L5.523 3.755q1.052-.64 2.477-.64 3.59 0 4.538 3.374 2.397.475 2.397 3.011 0 1.834-1.09 2.577"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="m2 2 12 12"
+        />
+      </g>
     </Icon>
   );
 });

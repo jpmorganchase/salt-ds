@@ -12,11 +12,17 @@ export const CollapseAllIcon = forwardRef<SVGSVGElement, CollapseAllIconProps>(
       <Icon
         data-testid="CollapseAllIcon"
         aria-label="collapse all"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="m6 6.5-4 4 1 1 3-3 3 3 1-1zm0-1-4-4 1-1 3 3 3-3 1 1z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.5 2 8 6.5 12.5 2m-9 12L8 9.5l4.5 4.5"
+          />
+        </g>
       </Icon>
     );
   },

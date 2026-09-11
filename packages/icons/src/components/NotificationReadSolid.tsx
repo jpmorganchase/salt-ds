@@ -17,16 +17,21 @@ export const NotificationReadSolidIcon = forwardRef<
     <Icon
       data-testid="NotificationReadSolidIcon"
       aria-label="notification read solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M9.51 1.368a2.8 2.8 0 0 0-.393-.477 3 3 0 0 0-.949-.657A3 3 0 0 0 6.996 0H5.004q-.621 0-1.172.234a3.2 3.2 0 0 0-.96.657 3 3 0 0 0-.634.949q-.234.54-.234 1.16v3q-.153.855-.41 1.36-.246.503-.598.644H0V9h12v-.996h-.996q-.328-.14-.574-.574-.235-.446-.387-1.207l-.047-.211v-.887L7.121 8 3.586 4.464l2.121-2.12 1.414 1.413zM4.934 11.59Q5.379 12 6 12t1.055-.41q.445-.399.445-.973v-.61h-3v.61q0 .574.434.973" />
-      <path
-        fillRule="evenodd"
-        d="M7.121 5.172 11.293 1l.707.707-4.879 4.879L5 4.464l.707-.707z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M4.5 6a3.5 3.5 0 0 1 6.882-.906l-.943 1.077-1.586-1.585-1.767 1.767L10.56 9.83l1.036-1.184L13.5 11.5h-11l2-3Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.5 13.5h3M8 2.5v-1M8.5 6l2 2L14 4"
+        />
+      </g>
     </Icon>
   );
 });

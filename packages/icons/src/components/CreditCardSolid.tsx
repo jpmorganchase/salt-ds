@@ -14,16 +14,16 @@ export const CreditCardSolidIcon = forwardRef<
     <Icon
       data-testid="CreditCardSolidIcon"
       aria-label="credit card solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M0 4V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1z" />
-      <path
-        fillRule="evenodd"
-        d="M0 5v4a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V5zm1 3h3v1H1zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M1.5 3.5h13v9h-13Zm0 2h13v2h-13Zm2 4h3v1h-3Z"
+        />
+      </g>
     </Icon>
   );
 });

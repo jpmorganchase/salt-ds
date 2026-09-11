@@ -29,7 +29,9 @@
     "build": "yarn clean && yarn build:icons && yarn node ../../scripts/build.mjs",
     "build:icons": "yarn node ./scripts/generateIcons.mjs '*.svg'",
     "copy:css": "yarn node ./scripts/copyCss.mjs",
-    "clean": "rimraf ./src/components"
+    "clean": "rimraf ./src/components",
+    "generate:icons": "yarn node ./scripts/artwork/generate.mjs && yarn build:icons",
+    "validate:icons": "yarn node ./scripts/artwork/validate.mjs"
   },
   "dependencies": {
     "@salt-ds/styles": "workspace:*",

@@ -12,11 +12,26 @@ export const CalendarIcon = forwardRef<SVGSVGElement, CalendarIconProps>(
       <Icon
         data-testid="CalendarIcon"
         aria-label="calendar"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M4 0v1h4V0h1v1h3v11H0V1h3V0zm7 4H1v7h10zM9 2H8v1h1zM4 2H3v1h1z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.667 3.667h12.666V13H1.667Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.667 5.833q0 .5.5.5h11.666q.5 0 .5-.5m-12.666 1q0-.5.5-.5h11.666q.5 0 .5.5m-9-4.5V5m5.334-2.667V5M4.833 3.667q.5 0 .5-.5m.5.5q-.5 0-.5-.5m-.5.5q.5 0 .5.5m.5-.5q-.5 0-.5.5m4.834-.5q.5 0 .5-.5m.5.5q-.5 0-.5-.5m-.5.5q.5 0 .5.5m.5-.5q-.5 0-.5.5"
+          />
+          <path
+            fillRule="evenodd"
+            d="M3 7.667h.667v.666H3Zm2.333 0H6v.666h-.667Zm2.334 0h.666v.666h-.666Zm2.333 0h.667v.666H10Zm2.333 0H13v.666h-.667ZM3 9.333h.667V10H3Zm2.333 0H6V10h-.667Zm2.334 0h.666V10h-.666Zm2.333 0h.667V10H10Zm2.333 0H13V10h-.667ZM3 11h.667v.667H3Zm2.333 0H6v.667h-.667Zm2.334 0h.666v.667h-.666ZM10 11h.667v.667H10Zm2.333 0H13v.667h-.667Z"
+          />
+        </g>
       </Icon>
     );
   },

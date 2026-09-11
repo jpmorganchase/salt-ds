@@ -12,11 +12,17 @@ export const SwapIcon = forwardRef<SVGSVGElement, SwapIconProps>(
       <Icon
         data-testid="SwapIcon"
         aria-label="swap"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M1 4.035V2.977h8.588L7.957 1.248 8.663.5 11.5 3.506 8.674 6.5l-.706-.748 1.62-1.717zm10 3.93v1.058H2.412l1.631 1.729-.706.748L.5 8.494 3.326 5.5l.706.748-1.62 1.717z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 4.5h12m-3-3 3 3-3 3m4 4h-12m3-3-3 3 3 3"
+          />
+        </g>
       </Icon>
     );
   },

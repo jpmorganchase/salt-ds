@@ -14,11 +14,21 @@ export const UtensilsSolidIcon = forwardRef<
     <Icon
       data-testid="UtensilsSolidIcon"
       aria-label="utensils solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M5 0h1v6H4.508v6h-1V6H2V0h1v3h.5V0h1v3H5zm2.031 3a3 3 0 0 1 3-3v12h-1V8h-2z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M3 5.5Q3 7 5 7t2-1.5Zm10-3c-1.25 0-2.5 1.5-2.5 3.5v2.5H13Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M3 2v3.5Q3 7 5 7t2-1.5V2M5 2v12m8-11.5c-1.25 0-2.5 1.5-2.5 3.5v2.5H13Zm0 6V14"
+        />
+      </g>
     </Icon>
   );
 });

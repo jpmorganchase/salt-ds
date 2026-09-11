@@ -14,15 +14,18 @@ export const MaximizeSolidIcon = forwardRef<
     <Icon
       data-testid="MaximizeSolidIcon"
       aria-label="maximize solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M0 0h12v12H0zm11 1H1v2h10z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.5 2.5h11v11h-11Zm0 3h11"
+        />
+        <path fillRule="evenodd" d="M2.5 5.5h11v8h-11Z" />
+      </g>
     </Icon>
   );
 });

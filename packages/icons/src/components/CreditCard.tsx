@@ -12,16 +12,17 @@ export const CreditCardIcon = forwardRef<SVGSVGElement, CreditCardIconProps>(
       <Icon
         data-testid="CreditCardIcon"
         aria-label="credit card"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M5 7H2v1h3zm3 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0" />
-        <path
-          fillRule="evenodd"
-          d="M0 9V3a1 1 0 0 1 1-1h10c.552 0 1 .446 1 .998v6.003A1 1 0 0 1 11 10H1a1 1 0 0 1-1-1m1-5v-.5a.5.5 0 0 1 .5-.5h9c.276 0 .5.222.5.498V4zm0 1v3.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V5z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 3.5h13v9h-13Zm0 3h13M3.5 10h3"
+          />
+        </g>
       </Icon>
     );
   },

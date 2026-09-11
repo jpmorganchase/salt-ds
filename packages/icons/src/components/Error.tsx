@@ -12,16 +12,21 @@ export const ErrorIcon = forwardRef<SVGSVGElement, ErrorIconProps>(
       <Icon
         data-testid="ErrorIcon"
         aria-label="error"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M3 0h6l3 3v6l-3 3H3L0 9V3zM1 3.414 3.414 1h5.172L11 3.414v5.172L8.586 11H3.414L1 8.586z"
-          clipRule="evenodd"
-        />
-        <path d="M5 2h2v5H5zm2 7a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.5 1.833h5L14.167 5.5v5L10.5 14.167h-5L1.833 10.5v-5ZM8 4.5V9"
+          />
+          <path
+            fillRule="evenodd"
+            d="M7.333 11.5a.667.667 0 1 0 1.334 0 .667.667 0 1 0-1.334 0"
+          />
+        </g>
       </Icon>
     );
   },

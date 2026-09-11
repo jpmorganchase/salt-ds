@@ -12,17 +12,23 @@ export const TagClearIcon = forwardRef<SVGSVGElement, TagClearIconProps>(
       <Icon
         data-testid="TagClearIcon"
         aria-label="tag clear"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="m1.414 7 6-6H11v3.586l-.357.357.707.707L12 5V0H7L0 7l5 5 .685-.685z" />
-        <path
-          fillRule="evenodd"
-          d="M8 3.5a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0M8.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"
-          clipRule="evenodd"
-        />
-        <path d="M10.286 11 8.5 9.214 6.714 11 6 10.286 7.786 8.5 6 6.714 6.714 6 8.5 7.786 10.286 6l.714.714L9.214 8.5 11 10.286z" />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M11.634 9.866 14.5 7V1.5H9L1.5 9 7 14.5l2.866-2.866" />
+            <path
+              strokeWidth=".469"
+              d="M10.5 4.5a1 1 0 1 0 2 0 1 1 0 1 0-2 0Z"
+            />
+            <path d="m10 10 4.667 4.667m0-4.667L10 14.667" />
+          </g>
+        </g>
       </Icon>
     );
   },

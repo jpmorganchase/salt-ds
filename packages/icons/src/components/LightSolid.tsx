@@ -12,11 +12,21 @@ export const LightSolidIcon = forwardRef<SVGSVGElement, LightSolidIconProps>(
       <Icon
         data-testid="LightSolidIcon"
         aria-label="light solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M9 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9-.5h2v1H0zm2.11-4.096 1.415 1.414-.707.707-1.414-1.414zM1.404 9.89l1.414-1.415.707.707-1.414 1.414zM5.5 12v-2h1v2zM10 5.5h2v1h-2zm-.818 2.975 1.414 1.414-.707.707-1.414-1.414zm-.707-5.657 1.414-1.414.707.707-1.414 1.414zM5.5 2V0h1v2z" />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M2.667 8a5.333 5.333 0 1 0 10.666 0A5.333 5.333 0 1 0 2.667 8"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8 1.333V3m0 10v1.667M1.333 8H3m10 0h1.667M2.333 2.333l2.134 2.134m7.066 7.066 2.134 2.134m-11.334 0 2.134-2.134m7.066-7.066 2.134-2.134"
+          />
+        </g>
       </Icon>
     );
   },

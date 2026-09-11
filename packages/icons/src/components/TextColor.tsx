@@ -12,16 +12,23 @@ export const TextColorIcon = forwardRef<SVGSVGElement, TextColorIconProps>(
       <Icon
         data-testid="TextColorIcon"
         aria-label="text color"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M12 12H0v-2h12z" />
-        <path
-          fillRule="evenodd"
-          d="M9.964 9h-1.08L7.782 6.155H4.188L3.091 9H2.037l3.506-9h.938zM5.856 1.588q-.068.245-.134.46-.068.208-.118.355L4.538 5.23h2.93L6.42 2.403l-.122-.361-.166-.521-.14-.436q-.063.252-.136.503"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="m11.057 11.5-1.17-3.015H6.08L4.917 11.5H3.799l3.717-9.539h.994L12.2 11.5Zm-1.5-3.996L8.444 4.508l-.127-.383q-.088-.266-.178-.552-.091-.286-.15-.462-.065.267-.14.53-.074.263-.146.487-.071.224-.123.38L6.45 7.504Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth=".272757"
+            d="m11.057 11.5-1.17-3.015H6.08L4.917 11.5H3.799l3.717-9.539h.994L12.2 11.5Zm-1.5-3.996L8.444 4.508l-.127-.383q-.088-.266-.178-.552-.091-.286-.15-.462-.065.267-.14.53-.074.263-.146.487-.071.224-.123.38L6.45 7.504Z"
+          />
+          <path fillRule="evenodd" d="M2 13.5h12v1H2Z" />
+        </g>
       </Icon>
     );
   },

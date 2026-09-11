@@ -12,11 +12,13 @@ export const PauseSolidIcon = forwardRef<SVGSVGElement, PauseSolidIconProps>(
       <Icon
         data-testid="PauseSolidIcon"
         aria-label="pause solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M2 0h3v12H2zm5 0h3v12H7z" />
+        <g strokeWidth=".67">
+          <path fillRule="evenodd" d="M3 2h4v12H3Zm6 0h4v12H9Z" />
+        </g>
       </Icon>
     );
   },

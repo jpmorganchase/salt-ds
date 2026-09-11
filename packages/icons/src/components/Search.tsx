@@ -12,15 +12,17 @@ export const SearchIcon = forwardRef<SVGSVGElement, SearchIconProps>(
       <Icon
         data-testid="SearchIcon"
         aria-label="search"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M8 9a5 5 0 1 1 1-1l3 3-1 1zm1-4a4 4 0 1 1-8 0 4 4 0 0 1 8 0"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 7a4.5 4.5 0 1 0 9 0 4.5 4.5 0 1 0-9 0Zm7.7 3.2 4.3 4.3"
+          />
+        </g>
       </Icon>
     );
   },

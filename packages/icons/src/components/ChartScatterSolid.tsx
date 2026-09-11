@@ -14,16 +14,21 @@ export const ChartScatterSolidIcon = forwardRef<
     <Icon
       data-testid="ChartScatterSolidIcon"
       aria-label="chart scatter solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M1.143 10.857H12V12H0V0h1.143z" />
-      <path
-        fillRule="evenodd"
-        d="M4.571 6.286a1.714 1.714 0 1 1 0 3.428 1.714 1.714 0 0 1 0-3.428m5.715-1.143a1.714 1.714 0 1 1 0 3.428 1.714 1.714 0 0 1 0-3.428M5.714.571a1.714 1.714 0 1 1 0 3.429 1.714 1.714 0 0 1 0-3.429"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.5 1.5v13h13"
+        />
+        <path
+          fillRule="evenodd"
+          d="M3.583 11a1.167 1.167 0 1 0 2.334 0 1.167 1.167 0 1 0-2.334 0m1.75-4a1.167 1.167 0 1 0 2.334 0 1.167 1.167 0 1 0-2.334 0m3.5 2.5a1.167 1.167 0 1 0 2.334 0 1.167 1.167 0 1 0-2.334 0m3-6a1.167 1.167 0 1 0 2.334 0 1.167 1.167 0 1 0-2.334 0"
+        />
+      </g>
     </Icon>
   );
 });

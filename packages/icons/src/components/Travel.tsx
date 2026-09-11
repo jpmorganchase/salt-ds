@@ -12,15 +12,17 @@ export const TravelIcon = forwardRef<SVGSVGElement, TravelIconProps>(
       <Icon
         data-testid="TravelIcon"
         aria-label="travel"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M4.75 1.999H6v3h.505V3h3.5v1.999h1.994v6H11l-.01.1a.5.5 0 0 1-.49.4H10a.5.5 0 0 1-.49-.4L9.5 11H7l-.01.1a.5.5 0 0 1-.49.4H6a.5.5 0 0 1-.49-.4L5.5 11h-.988v-1H2v.666c0 .184-.224.334-.5.334s-.5-.15-.5-.334V10H0V2h1.25V.001h3.5zm.762 8h5.487v-4H5.512zM1 8.999h3.512v-4H5v-2H1zm6.505-4h1.5V4h-1.5zm-5.255-3h1.5v-.997h-1.5z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.167 4.5h5.166Q8 4.5 8 5.167v6.666q0 .667-.667.667H2.167q-.667 0-.667-.667V5.167q0-.667.667-.667Zm8.5 3h3.666q.667 0 .667.667v4.666q0 .667-.667.667h-3.666q-.667 0-.667-.667V8.167q0-.667.667-.667Zm-7.417-3v-2h3v2m5 3v-2h2.5v2m-11.25 5V14M7 12.5V14m4-.5V15m3-1.5V15"
+          />
+        </g>
       </Icon>
     );
   },

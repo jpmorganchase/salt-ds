@@ -12,16 +12,17 @@ export const GuideClosedIcon = forwardRef<SVGSVGElement, GuideClosedIconProps>(
       <Icon
         data-testid="GuideClosedIcon"
         aria-label="guide closed"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M9 4H6v1h3zm0 2H6v1h3z" />
-        <path
-          fillRule="evenodd"
-          d="M11 12V1H2v2H1v1h1v1H1v1h1v1H1v1h1v1H1v1h1v2zM3 2h1v9H3zm2 9V2h5v9z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.5 2.5h9v11h-9Zm2 0v11M2.5 5h2m-2 3h2m-2 3h2m4-5.5h3m-3 3h3"
+          />
+        </g>
       </Icon>
     );
   },

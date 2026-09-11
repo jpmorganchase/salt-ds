@@ -17,15 +17,16 @@ export const SemanticVeryDissatisfiedSolidIcon = forwardRef<
     <Icon
       data-testid="SemanticVeryDissatisfiedSolidIcon"
       aria-label="semantic very dissatisfied solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12M3 3l2.415.647-.259.966-.267-.072a1 1 0 1 1-1.43-.383l-.718-.192zm5 3a1 1 0 0 0 .54-1.842l.719-.192L9 3l-2.415.647.259.966.267-.072A1 1 0 0 0 8 6M4.063 9.5a2 2 0 0 1 3.874 0c.309-.17.593-.382.845-.626a3.001 3.001 0 0 0-5.564 0q.38.368.845.626"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0m3.1 3.7Q6.25 9.5 8 9.5t3.4 2.2l-.8.6Q9.25 10.5 8 10.5t-2.6 1.8Zm4.676-5.647 2-1 .448.894-2 1Zm-4.552-1 2 1-.448.894-2-1Z"
+        />
+      </g>
     </Icon>
   );
 });

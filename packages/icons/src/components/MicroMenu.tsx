@@ -12,11 +12,16 @@ export const MicroMenuIcon = forwardRef<SVGSVGElement, MicroMenuIconProps>(
       <Icon
         data-testid="MicroMenuIcon"
         aria-label="micro menu"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M5 11V9h2v2zm0-4V5h2v2zm0-6v2h2V1z" />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M7.25 2.75h1.5v1.5h-1.5Zm0 4.5h1.5v1.5h-1.5Zm0 4.5h1.5v1.5h-1.5Z"
+          />
+        </g>
       </Icon>
     );
   },

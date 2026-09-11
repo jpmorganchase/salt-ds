@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salt Icons"
+  short_description: "Create Salt icons with search and package integration"
+  default_prompt: "Use $salt-icons to create or update a Salt icon, complete its catalogue metadata, validate it, and clean up temporary build files."

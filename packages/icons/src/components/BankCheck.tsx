@@ -12,16 +12,19 @@ export const BankCheckIcon = forwardRef<SVGSVGElement, BankCheckIconProps>(
       <Icon
         data-testid="BankCheckIcon"
         aria-label="bank check"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M12 2H0v8h12zm-1 2H1v5h10z"
-          clipRule="evenodd"
-        />
-        <path d="M2 7h7v1H2zm0-2h4v1H2zm6 0h2v1H8z" />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M1.5 3.5h13v9h-13Z" />
+            <path d="M1.5 5q0 .5.5.5h12q.5 0 .5-.5m-13 1q0-.5.5-.5h12q.5 0 .5.5M3.25 8H8m2.25 0h2.5m-9.5 2.25H11" />
+          </g>
+        </g>
       </Icon>
     );
   },

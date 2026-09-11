@@ -12,11 +12,18 @@ export const VolumeDownIcon = forwardRef<SVGSVGElement, VolumeDownIconProps>(
       <Icon
         data-testid="VolumeDownIcon"
         aria-label="volume down"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M3 4H0v4h3l3 3V1zm4 4.83a3.001 3.001 0 0 0 0-5.66z" />
+        <g strokeWidth=".67">
+          <path fillRule="evenodd" d="M1.5 6h3l4-3.5v11l-4-3.5h-3Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11 5.5q2.5 2.5 0 5"
+          />
+        </g>
       </Icon>
     );
   },

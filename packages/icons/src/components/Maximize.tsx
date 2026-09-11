@@ -12,15 +12,17 @@ export const MaximizeIcon = forwardRef<SVGSVGElement, MaximizeIconProps>(
       <Icon
         data-testid="MaximizeIcon"
         aria-label="maximize"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M0 0h12v12H0zm11 3H1v8h10z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 2.5h11v11h-11Zm0 3h11"
+          />
+        </g>
       </Icon>
     );
   },

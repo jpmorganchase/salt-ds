@@ -17,15 +17,28 @@ export const PanelCloseBottomSolidIcon = forwardRef<
     <Icon
       data-testid="PanelCloseBottomSolidIcon"
       aria-label="panel close bottom solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M0 12V0h12v12zm1-4v3h10V8zm7.121-4.535L6.5 5.085V2h-1v3.086L3.879 3.465l-.707.707L6 7l2.828-2.828z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path fillRule="evenodd" d="M1.667 14.333V11h12.666v3.333Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.667 14.333V1.667h12.666v12.666Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.667 13.833V2.167q0-.5.5-.5h11.666q.5 0 .5.5v11.666q0 .5-.5.5H2.167q-.5 0-.5-.5Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.667 11h12.666m-12.666.5q0-.5.5-.5m-.5-.5q0 .5.5.5m12.166.5q0-.5-.5-.5m.5-.5q0 .5-.5.5M8 3.667v4.666M5.667 6 8 8.333 10.333 6"
+        />
+      </g>
     </Icon>
   );
 });

@@ -14,11 +14,17 @@ export const AddIcon = forwardRef<SVGSVGElement, AddIconProps>(function AddIcon(
     <Icon
       data-testid="AddIcon"
       aria-label="add"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M6.5 5.5H11v1H6.5V11h-1V6.5H1v-1h4.5V1h1z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.5 8h11M8 2.5v11"
+        />
+      </g>
     </Icon>
   );
 });

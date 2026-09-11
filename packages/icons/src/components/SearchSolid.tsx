@@ -12,15 +12,21 @@ export const SearchSolidIcon = forwardRef<SVGSVGElement, SearchSolidIconProps>(
       <Icon
         data-testid="SearchSolidIcon"
         aria-label="search solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M5 10a4.98 4.98 0 0 0 3-1l3 3 1-1-3-3a5 5 0 1 0-4 2m0-8a3 3 0 0 1 3 3h1a4 4 0 0 0-4-4z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M2 7a5 5 0 1 0 10 0A5 5 0 1 0 2 7m5-3a3 3 0 0 1 3 3h1a4 4 0 0 0-4-4Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m10.2 10.2 4.3 4.3"
+          />
+        </g>
       </Icon>
     );
   },

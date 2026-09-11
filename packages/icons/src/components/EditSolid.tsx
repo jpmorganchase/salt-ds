@@ -12,11 +12,16 @@ export const EditSolidIcon = forwardRef<SVGSVGElement, EditSolidIconProps>(
       <Icon
         data-testid="EditSolidIcon"
         aria-label="edit solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M8.159.294a1.003 1.003 0 0 1 1.419 0l2.128 2.128a1.003 1.003 0 0 1 0 1.42L10.287 5.26 6.74 1.713zM1.774 6.679l4.221-4.222.239.239L9.578 5.97 5.32 10.226 0 12z" />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M3.354 10.147 9.5 4 12 6.5l-6.146 6.147Zm-.455.96L4.894 13.1l-2.394.4ZM10.2 3.3l.8-.8L13.5 5l-.8.8Z"
+          />
+        </g>
       </Icon>
     );
   },

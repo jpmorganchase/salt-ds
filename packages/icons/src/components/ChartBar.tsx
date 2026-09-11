@@ -12,11 +12,21 @@ export const ChartBarIcon = forwardRef<SVGSVGElement, ChartBarIconProps>(
       <Icon
         data-testid="ChartBarIcon"
         aria-label="chart bar"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M11 6.5v1H2v1h3v1H2v1h6v1H1V.5h5v1H2v1h2v1H2v1h5v1H2v1z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 1.5v13"
+          />
+          <path
+            fillRule="evenodd"
+            d="M3.5 2.5h11v2h-11Zm0 4.5h7v2h-7Zm0 4.5h9v2h-9Z"
+          />
+        </g>
       </Icon>
     );
   },

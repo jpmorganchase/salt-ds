@@ -13,15 +13,17 @@ export const SuccessTickIcon = forwardRef<SVGSVGElement, SuccessTickIconProps>(
       <Icon
         data-testid="SuccessTickIcon"
         aria-label="success tick"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="m3.871 8.033 6.187-6.187 1.061 1.06-7.248 7.248-2.99-2.99 1.06-1.061z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 8 6 11.5l7.5-8"
+          />
+        </g>
       </Icon>
     );
   },

@@ -14,15 +14,16 @@ export const WarningSolidIcon = forwardRef<
     <Icon
       data-testid="WarningSolidIcon"
       aria-label="warning solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="m6 0 6 12H0zM5 5h2v3H5zm2 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="m8 2 6.5 12h-13Zm-.5 3.5h1v4h-1Zm-.167 6a.667.667 0 1 0 1.334 0 .667.667 0 1 0-1.334 0"
+        />
+      </g>
     </Icon>
   );
 });

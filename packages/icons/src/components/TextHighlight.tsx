@@ -14,16 +14,21 @@ export const TextHighlightIcon = forwardRef<
     <Icon
       data-testid="TextHighlightIcon"
       aria-label="text highlight"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M12 12H0v-2h12z" />
-      <path
-        fillRule="evenodd"
-        d="M8.472 1.028a1 1 0 0 1 1.414 0L11.3 2.442a1 1 0 0 1 0 1.414L5.657 9.499l.006.006L0 9.5zm-4.936 6.35L4.95 8.791l5.643-5.643-1.414-1.414z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M4.5 9 11 2.5 13.5 5 7 11.5Z"
+        />
+        <path
+          fillRule="evenodd"
+          d="M4.5 9 7 11.5 5.5 13h-3v-1Zm-3 5h13v1h-13Z"
+        />
+      </g>
     </Icon>
   );
 });

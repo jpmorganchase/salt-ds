@@ -14,12 +14,21 @@ export const ChartStackedBarIcon = forwardRef<
     <Icon
       data-testid="ChartStackedBarIcon"
       aria-label="chart stacked bar"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M5.5 1.5H2v1h1.5v1H2v1h5v1H2v1h3v1H2v1h1v1H2v1h6v1H1V.5h4.5zm5.5 10H9v-1h2z" />
-      <path d="M6.5 9.5H4v-1h2.5zm2.5-2H6v-1h3zm1-2H8v-1h2zm-2-2H5v-1h3zm1-2H7v-1h2z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.5 1.5v13"
+        />
+        <path
+          fillRule="evenodd"
+          d="M3.5 2.5h5v2h-5Zm6 0h5v2h-5ZM3.5 7h2v2h-2Zm3 0h4v2h-4Zm-3 4.5h4v2h-4Zm5 0h4v2h-4Z"
+        />
+      </g>
     </Icon>
   );
 });

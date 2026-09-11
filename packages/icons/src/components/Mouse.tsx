@@ -12,15 +12,22 @@ export const MouseIcon = forwardRef<SVGSVGElement, MouseIconProps>(
       <Icon
         data-testid="MouseIcon"
         aria-label="mouse"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M2 4a4 4 0 1 1 8 0v4a4 4 0 0 1-8 0zm7 4a3 3 0 0 1-6 0V4a3 3 0 0 1 2.5-2.959V2h-1v4h1v1h1V6h1V2h-1v-.959A3 3 0 0 1 9 4zM5.5 3v2h1V3z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M8 1.5A4.5 4.5 0 0 1 12.5 6v4a4.5 4.5 0 0 1-9 0V6A4.5 4.5 0 0 1 8 1.5ZM3.5 8h9" />
+            <path
+              strokeWidth=".5025"
+              d="M7.5 3.667h1q.5 0 .5.5V5.5q0 .5-.5.5h-1Q7 6 7 5.5V4.167q0-.5.5-.5Z"
+            />
+          </g>
+        </g>
       </Icon>
     );
   },

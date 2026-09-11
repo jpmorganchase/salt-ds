@@ -12,16 +12,19 @@ export const HospitalIcon = forwardRef<SVGSVGElement, HospitalIconProps>(
       <Icon
         data-testid="HospitalIcon"
         aria-label="hospital"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M6.5 2v1h1v1h-1v1h-1V4h-1V3h1V2zM5 7V6H4v1zm0 1v1H4V8zm3-1V6H7v1zm0 1v1H7V8z" />
-        <path
-          fillRule="evenodd"
-          d="M10 11h2v1H0v-1h2V0h8zM3 1h6v10H7v-1H5v1H3z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M4.5 1.833h7v12.334h-7ZM6 5.5h4m-2-2v4" />
+            <path d="M2 14.167h12M6 9.5h1m2 0h1M7 14v-2h2v2" />
+          </g>
+        </g>
       </Icon>
     );
   },

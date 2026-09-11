@@ -14,15 +14,16 @@ export const BatterySolidIcon = forwardRef<
     <Icon
       data-testid="BatterySolidIcon"
       aria-label="battery solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M8 0H4v1H3v11h6V1H8zM4 2v1h4V2z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M4.5 3H6V1.5h4V3h1.5v11.5h-7Zm1.25 1h4.5q.25 0 .25.25v.5q0 .25-.25.25h-4.5q-.25 0-.25-.25v-.5q0-.25.25-.25"
+        />
+      </g>
     </Icon>
   );
 });

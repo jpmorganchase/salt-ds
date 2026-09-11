@@ -14,11 +14,17 @@ export const PiIcon = forwardRef<SVGSVGElement, PiIconProps>(function PiIcon(
     <Icon
       data-testid="PiIcon"
       aria-label="pi"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M11 1.5a.5.5 0 0 1-.5.5H9v7.52a.5.5 0 0 0 .145.335.503.503 0 0 0 .857-.355H11a1.5 1.5 0 0 1-2.886.574 1.5 1.5 0 0 1-.111-.508H8V2H4v7.586h-.004a1.5 1.5 0 0 1-.435.974 1.5 1.5 0 0 1-.998.437V11H2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .49-.402L3 9.5V2h-.5l-.098.01A.5.5 0 0 0 2 2.5H1a1.5 1.5 0 0 1 1.46-1.499L11 1z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2 3.5h12m-8.5 0V11q0 2.5-2.5 2.5m7.5-10V12q0 1.5 1.5 1.5h2"
+        />
+      </g>
     </Icon>
   );
 });

@@ -12,12 +12,17 @@ export const FilterClearIcon = forwardRef<SVGSVGElement, FilterClearIconProps>(
       <Icon
         data-testid="FilterClearIcon"
         aria-label="filter clear"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M6.714 6 8.5 4.214 7.786 3.5 6 5.286 4.214 3.5l-.714.714L5.286 6 3.5 7.786l.714.714L6 6.714 7.786 8.5l.714-.714zM6.5 8.628l1 1V12h-3V9.629l1-1V11h1z" />
-        <path d="m3.872 6-.01.009-.03-.05zm-.683-2.889-.724.724L0 0h12L9.535 3.835 8.81 3.11 10.168 1H1.832zm4.948 2.898.032-.05-.04.041z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.03 5.206 2 2.5h12l-2.03 2.706M9 11.828V14H7v-2.172M5.5 5.5l5 5m0-5-5 5"
+          />
+        </g>
       </Icon>
     );
   },

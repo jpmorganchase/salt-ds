@@ -12,11 +12,17 @@ export const StopIcon = forwardRef<SVGSVGElement, StopIconProps>(
       <Icon
         data-testid="StopIcon"
         aria-label="stop"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M11 1v10H1V1zm-9 9h8V2H2z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3 3h10v10H3Z"
+          />
+        </g>
       </Icon>
     );
   },

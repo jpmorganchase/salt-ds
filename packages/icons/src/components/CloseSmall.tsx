@@ -12,11 +12,17 @@ export const CloseSmallIcon = forwardRef<SVGSVGElement, CloseSmallIconProps>(
       <Icon
         data-testid="CloseSmallIcon"
         aria-label="close small"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="m9.253 9.96.707-.707-3.182-3.182L9.96 2.889l-.707-.707-3.182 3.182L2.89 2.182l-.707.707 3.182 3.182-3.182 3.182.707.707 3.182-3.182z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m5 5 6 6m0-6-6 6"
+          />
+        </g>
       </Icon>
     );
   },

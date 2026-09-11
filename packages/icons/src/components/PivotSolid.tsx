@@ -12,15 +12,16 @@ export const PivotSolidIcon = forwardRef<SVGSVGElement, PivotSolidIconProps>(
       <Icon
         data-testid="PivotSolidIcon"
         aria-label="pivot solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M12 0H0v12h12zM1 8.5 4 11V9h5V4h2L8.5 1 6 4h2v4H4V6z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M1.5 1.5h13v13h-13Zm5.98 4.813L9.833 3.96l2.354 2.353-.707.707-1.147-1.146v4.793H5.707l1.147 1.146-.708.707-2.353-2.353 2.353-2.354.708.707-1.147 1.147h3.626V5.874L8.187 7.02Z"
+          />
+        </g>
       </Icon>
     );
   },

@@ -12,12 +12,17 @@ export const TearOutIcon = forwardRef<SVGSVGElement, TearOutIconProps>(
       <Icon
         data-testid="TearOutIcon"
         aria-label="tear out"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M0 12h12V6h-1v5H1V1h5V0H0z" />
-        <path d="M11.996 4V0h-4v1h2.293L5.996 5.293 6.703 6l4.293-4.293V4z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.5 2.5h-4v11h11v-4m-5-8h6v6M7 9l7.5-7.5"
+          />
+        </g>
       </Icon>
     );
   },

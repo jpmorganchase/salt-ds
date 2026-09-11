@@ -14,12 +14,21 @@ export const CloudSyncSolidIcon = forwardRef<
     <Icon
       data-testid="CloudSyncSolidIcon"
       aria-label="cloud sync solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M3 10a3 3 0 0 1-.487-5.96 4.002 4.002 0 0 1 7.369.99 2.5 2.5 0 0 1 1.343 4.28L7.537 5.62h-1.38L4.12 3.586.586 7.12 3.464 10z" />
-      <path d="m4.121 9.243.707-.707-.914-.915H7v-1H3.914l.914-.914L4.121 5 2 7.121zm3.758-1.866-.707.707.914.915H5v1h3.086l-.914.914.707.707L10 9.499z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M4.7 11.085q-1.506 0-2.57-1.065T1.065 7.45q0-3.009 2.887-3.56Q5.312 1.616 8 1.616q3.59 0 4.538 3.374 2.397.475 2.397 3.011 0 3.085-3.085 3.085h-.247l-.335-.335h.482v-2.5H9.018l.396-.396-1.768-1.768L5.482 8.25H5.25v.232L4.232 9.5l1.018 1.018v.232h.232l.335.335Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M11 9.5H6m2-2-2 2 2 2m-1 1.75h5m-2-2 2 2-2 2"
+        />
+      </g>
     </Icon>
   );
 });

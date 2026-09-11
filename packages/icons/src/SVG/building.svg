@@ -1,14 +1,5 @@
-<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-<path d="M0 11H12V12H0V11Z"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M9 1H2V11H9V1ZM1 0V11H10V0H1Z"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M6 9H5V11H6V9ZM4 8V11H7V8H4Z"/>
-<path d="M3 4H4V5H3V4Z"/>
-<path d="M3 2H4V3H3V2Z"/>
-<path d="M3 6H4V7H3V6Z"/>
-<path d="M5 4H6V5H5V4Z"/>
-<path d="M5 2H6V3H5V2Z"/>
-<path d="M5 6H6V7H5V6Z"/>
-<path d="M7 4H8V5H7V4Z"/>
-<path d="M7 2H8V3H7V2Z"/>
-<path d="M7 6H8V7H7V6Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" stroke-width="0.67">
+  <path fill="none" stroke="currentColor" d="M2.5 1.5h11v13h-11Z"/>
+  <path fill="currentColor" fill-rule="evenodd" d="M5.0833 3.5h.8334q.3333 0 .3333.3333v1.3334q0 .3333-.3333.3333h-.8334q-.3333 0-.3333-.3333V3.8333q0-.3333.3333-.3333m0 4h.8334q.3333 0 .3333.3333v1.3334q0 .3333-.3333.3333h-.8334q-.3333 0-.3333-.3333V7.8333q0-.3333.3333-.3333m5-4h.8334q.3333 0 .3333.3333v1.3334q0 .3333-.3333.3333h-.8334q-.3333 0-.3333-.3333V3.8333q0-.3333.3333-.3333m0 4h.8334q.3333 0 .3333.3333v1.3334q0 .3333-.3333.3333h-.8334q-.3333 0-.3333-.3333V7.8333q0-.3333.3333-.3333"/>
+  <path fill="none" stroke="currentColor" d="M6.5 14.5V12q0-.5.5-.5h2q.5 0 .5.5v2.5"/>
 </svg>

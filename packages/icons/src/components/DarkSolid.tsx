@@ -12,12 +12,16 @@ export const DarkSolidIcon = forwardRef<SVGSVGElement, DarkSolidIconProps>(
       <Icon
         data-testid="DarkSolidIcon"
         aria-label="dark solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M11.186 9.02q-.481.079-.986.08A6 6 0 0 1 5.014.08 6.002 6.002 0 0 0 6 12a6 6 0 0 0 5.186-2.98" />
-        <path d="M6.387 2.899H7.45V3.91H6.387zM9.58.876h1.065v1.011H9.58zm0 4.046h1.065v1.011H9.58z" />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M9.5 1.5a6.5 6.5 0 1 0 5 9 6 6 0 0 1-5-9"
+          />
+        </g>
       </Icon>
     );
   },

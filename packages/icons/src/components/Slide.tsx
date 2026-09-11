@@ -12,15 +12,17 @@ export const SlideIcon = forwardRef<SVGSVGElement, SlideIconProps>(
       <Icon
         data-testid="SlideIcon"
         aria-label="slide"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M4 7a2 2 0 0 1 1.935 1.5H12v1H5.935a1.999 1.999 0 0 1-3.87 0H0v-1h2.065A2 2 0 0 1 4 7m0 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m4-7a2 2 0 0 1 1.935 1.5H12v1H9.935a1.999 1.999 0 0 1-3.87 0H0v-1h6.065A2 2 0 0 1 8 1m0 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 4.5h6m4 0h3m-13 7h2m4 0h7m-7-7a2 2 0 1 0 4 0 2 2 0 1 0-4 0Zm-4 7a2 2 0 1 0 4 0 2 2 0 1 0-4 0Z"
+          />
+        </g>
       </Icon>
     );
   },

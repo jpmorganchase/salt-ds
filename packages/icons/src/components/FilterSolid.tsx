@@ -12,15 +12,13 @@ export const FilterSolidIcon = forwardRef<SVGSVGElement, FilterSolidIconProps>(
       <Icon
         data-testid="FilterSolidIcon"
         aria-label="filter solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M7.5 7 12 0H0l4.5 7v5h3z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path fillRule="evenodd" d="M2.5 3h11l-4 4.5v5l-3 1.5V7.5Z" />
+        </g>
       </Icon>
     );
   },

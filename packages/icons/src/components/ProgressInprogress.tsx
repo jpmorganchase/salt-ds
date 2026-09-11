@@ -14,15 +14,18 @@ export const ProgressInprogressIcon = forwardRef<
     <Icon
       data-testid="ProgressInprogressIcon"
       aria-label="progress inprogress"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M12 6A6 6 0 1 1 0 6a6 6 0 0 1 12 0M1 6a5 5 0 0 1 5-5v10a5 5 0 0 1-5-5"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2 8a6 6 0 1 0 12 0A6 6 0 1 0 2 8Z"
+        />
+        <path fillRule="evenodd" d="M8 2a6 6 0 0 1 0 12Z" />
+      </g>
     </Icon>
   );
 });

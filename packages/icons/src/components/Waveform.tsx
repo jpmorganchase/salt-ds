@@ -12,11 +12,17 @@ export const WaveformIcon = forwardRef<SVGSVGElement, WaveformIconProps>(
       <Icon
         data-testid="WaveformIcon"
         aria-label="waveform"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M5 1H4v10h1zM3 3H2v6h1zm5 0h1v6H8zM1 4H0v4h1zm5 0h1v4H6zm5 1h-1v2h1z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2 6v4m3-6.5v9M8 1v14m3-10.5v7m3-5v3"
+          />
+        </g>
       </Icon>
     );
   },

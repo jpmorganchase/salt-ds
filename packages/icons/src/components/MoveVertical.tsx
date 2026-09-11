@@ -14,11 +14,17 @@ export const MoveVerticalIcon = forwardRef<
     <Icon
       data-testid="MoveVerticalIcon"
       aria-label="move vertical"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M5.505 4.993V1.905L3.707 3.699 3 2.993 5.997.001l3.004 2.998-.708.706-1.814-1.81v3.098zm.99 2.016v3.088l1.798-1.795.708.707L6.003 12 3 9.003l.708-.707 1.814 1.811V7.01z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8 1.5v13m3-10-3-3-3 3m6 7-3 3-3-3"
+        />
+      </g>
     </Icon>
   );
 });

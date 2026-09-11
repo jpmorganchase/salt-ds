@@ -12,20 +12,20 @@ export const GroupIcon = forwardRef<SVGSVGElement, GroupIconProps>(
       <Icon
         data-testid="GroupIcon"
         aria-label="group"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M8 4V2H2v6h2v2h6V4zM7 3H3v4h1V4h3zM5 5v4h4V5z"
-          clipRule="evenodd"
-        />
-        <path
-          fillRule="evenodd"
-          d="M0 0v12h12V0zm11 1H1v10h10z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M1.833 1.833h12.334v12.334H1.833Z" />
+            <path d="M8.5 7V4.5h-4v4H7" />
+            <path d="M7 7h4.5v4.5H7Z" />
+          </g>
+        </g>
       </Icon>
     );
   },

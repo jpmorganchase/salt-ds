@@ -14,11 +14,13 @@ export const TriangleRightDownIcon = forwardRef<
     <Icon
       data-testid="TriangleRightDownIcon"
       aria-label="triangle right down"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M9.5 9.5v-7l-7 7z" />
+      <g strokeWidth=".67">
+        <path fillRule="evenodd" d="M4 12h8V4Z" />
+      </g>
     </Icon>
   );
 });

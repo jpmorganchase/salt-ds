@@ -14,15 +14,21 @@ export const HospitalSolidIcon = forwardRef<
     <Icon
       data-testid="HospitalSolidIcon"
       aria-label="hospital solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M2 0h8v11h2v1H0v-1h2zm3 11h2v-1H5zm1.5-9v1h1v1h-1v1h-1V4h-1V3h1V2zM5 6H4v1h1zM4 8h1v1H4zm4-1V6H7v1zm0 1v1H7V8z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M4 1.833h8v12.334H4ZM7.5 3.5h1V5H10v1H8.5v1.5h-1V6H6V5h1.5ZM6 9h1v1H6Zm3 0h1v1H9Zm-2 3h2v2.167H7Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2 14.167h12"
+        />
+      </g>
     </Icon>
   );
 });

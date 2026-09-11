@@ -14,11 +14,17 @@ export const MoveHorizontalIcon = forwardRef<
     <Icon
       data-testid="MoveHorizontalIcon"
       aria-label="move horizontal"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M4.992 6.496H1.904l1.795 1.798-.707.708L0 6.004 2.998 3l.706.708-1.81 1.814h3.098zm2.016-.99h3.088L8.301 3.708 9.008 3 12 5.998 9.002 9.002l-.706-.708 1.81-1.814H7.008z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.5 8h13m-10-3-3 3 3 3m7-6 3 3-3 3"
+        />
+      </g>
     </Icon>
   );
 });

@@ -12,15 +12,17 @@ export const SignpostIcon = forwardRef<SVGSVGElement, SignpostIconProps>(
       <Icon
         data-testid="SignpostIcon"
         aria-label="signpost"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M5 0h1v1h4.067L12 3l-1.933 2H6v7H5V7H1.933L0 5l1.933-2H5zm1 4h3.666l.967-1-.967-1H6zM5 4H2.334l-.967 1 .967 1H5z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.5 3.5H12l2.5 2-2.5 2H7.5Zm0 4H4l-2.5 2 2.5 2h3.5Zm0-6v13"
+          />
+        </g>
       </Icon>
     );
   },

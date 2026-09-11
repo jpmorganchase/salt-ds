@@ -14,12 +14,18 @@ export const UrgencyCriticalIcon = forwardRef<
     <Icon
       data-testid="UrgencyCriticalIcon"
       aria-label="urgency critical"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="m6 1 5.3 3.684v3.729L6 4.715.7 8.404v-3.72z" />
-      <path d="M11.3 9.684 6 6 .7 9.684l.575.816L6 7.215l4.725 3.285z" />
+      <g strokeWidth=".67">
+        <path fillRule="evenodd" d="M2 5.5 8 2l6 3.5v3L8 5 2 8.5Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="m2 13 6-3.5 6 3.5"
+        />
+      </g>
     </Icon>
   );
 });

@@ -14,15 +14,16 @@ export const LocationSolidIcon = forwardRef<
     <Icon
       data-testid="LocationSolidIcon"
       aria-label="location solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M7.56.316A3.9 3.9 0 0 0 6 0q-.832 0-1.56.316-.727.316-1.279.868-.54.538-.856 1.265A4 4 0 0 0 2 4.008q0 .61.176 1.172.175.562.493 1.03L6 12l3.402-5.883q.28-.457.434-.996.164-.54.164-1.113 0-.832-.305-1.559a4 4 0 0 0-.868-1.265A4 4 0 0 0 7.56.316M6 6.004a2.001 2.001 0 1 0 .002-4.002A2.001 2.001 0 0 0 6 6.004"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M8 14.167C6.833 12.667 3.5 8.8 3.5 6.5a4.5 4.5 0 0 1 9 0c0 2.3-3.333 6.167-4.5 7.667M6.167 6.5a1.833 1.833 0 1 0 3.666 0 1.833 1.833 0 1 0-3.666 0"
+        />
+      </g>
     </Icon>
   );
 });

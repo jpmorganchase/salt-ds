@@ -14,15 +14,16 @@ export const FolderClosedSolidIcon = forwardRef<
     <Icon
       data-testid="FolderClosedSolidIcon"
       aria-label="folder closed solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M12 2v10H0V1h4l2 1zm-1 3V4H1v1z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M2.5 13.5V3h4l2 2h5v8.5Zm1.767-7h7.466q.267 0 .267.267v.466q0 .267-.267.267H4.267Q4 7.5 4 7.233v-.466q0-.267.267-.267"
+        />
+      </g>
     </Icon>
   );
 });

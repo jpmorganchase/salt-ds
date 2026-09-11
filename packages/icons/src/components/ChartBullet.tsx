@@ -12,12 +12,21 @@ export const ChartBulletIcon = forwardRef<SVGSVGElement, ChartBulletIconProps>(
       <Icon
         data-testid="ChartBulletIcon"
         aria-label="chart bullet"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M2 5v2h3v1H2v2h6v1H1V1h6v1H2v2h7v1z" />
-        <path d="M6 8.5v-2h1v2zm2-6v-2h1v2zm1 9v-2h1v2zm1-6v-2h1v2z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 1.5v13M12.5 2v2m2 1v2m-5 1v2m4 1v2"
+          />
+          <path
+            fillRule="evenodd"
+            d="M3.5 2.5h7v1h-7Zm0 3h9v1h-9Zm0 3h4v1h-4Zm0 3h8v1h-8Z"
+          />
+        </g>
       </Icon>
     );
   },

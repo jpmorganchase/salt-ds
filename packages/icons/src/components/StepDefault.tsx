@@ -12,15 +12,17 @@ export const StepDefaultIcon = forwardRef<SVGSVGElement, StepDefaultIconProps>(
       <Icon
         data-testid="StepDefaultIcon"
         aria-label="step default"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M6 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8m6-4A6 6 0 1 1 0 6a6 6 0 0 1 12 0"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2 8a6 6 0 1 0 12 0A6 6 0 1 0 2 8Z"
+          />
+        </g>
       </Icon>
     );
   },

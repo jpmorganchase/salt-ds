@@ -14,11 +14,17 @@ export const ExponentiationIcon = forwardRef<
     <Icon
       data-testid="ExponentiationIcon"
       aria-label="exponentiation"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M9.001 5.512 8.124 6 6.002 2.097 3.875 6 3 5.512 6.005 0z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="m4.5 7.5 3.5-5 3.5 5"
+        />
+      </g>
     </Icon>
   );
 });

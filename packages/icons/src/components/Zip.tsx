@@ -14,21 +14,44 @@ export const ZipIcon = forwardRef<SVGSVGElement, ZipIconProps>(function ZipIcon(
     <Icon
       data-testid="ZipIcon"
       aria-label="zip"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M1 0v6h1V1h5v3h3v2h1V2L9 0zm9 3v-.586L8.586 1H8v2z"
-        clipRule="evenodd"
-      />
-      <path d="M4.842 11.997H1.25v-.564l2.543-3.736H1.329V7h3.445v.56L2.23 11.3h2.611zM5.75 7v4.997h.82V7z" />
-      <path
-        fillRule="evenodd"
-        d="M10.364 7.396Q9.92 7 8.953 7H7.5v4.997h.82v-1.873h.534q.546 0 .919-.13.375-.13.605-.352.23-.225.328-.516.102-.294.103-.619 0-.714-.445-1.11M8.32 7.68h.578q.554 0 .813.212.264.212.264.646 0 .325-.14.523a.8.8 0 0 1-.41.29q-.27.09-.657.09H8.32z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.5 8V1.5h7l4 4V8m-4-6.5v4h4"
+        />
+        <path
+          fillRule="evenodd"
+          d="M6.144 14.6H2.951v-.403l2.476-3.719H3.036V10h3.042v.403l-2.48 3.719h2.546Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth=".132057"
+          d="M6.144 14.6H2.951v-.403l2.476-3.719H3.036V10h3.042v.403l-2.48 3.719h2.546Z"
+        />
+        <path fillRule="evenodd" d="M7.679 14.6V10h.535v4.6Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth=".132057"
+          d="M7.679 14.6V10h.535v4.6Z"
+        />
+        <path
+          fillRule="evenodd"
+          d="M11.338 10q.89 0 1.3.348t.411.995q0 .293-.095.556t-.31.462-.562.315-.851.115h-.56V14.6h-.535V10Zm-.05.456h-.617v1.876h.5q.44 0 .735-.095.294-.094.442-.307.148-.212.148-.564 0-.46-.293-.685t-.916-.225"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth=".132057"
+          d="M11.338 10q.89 0 1.3.348t.411.995q0 .293-.095.556t-.31.462-.562.315-.851.115h-.56V14.6h-.535V10Zm-.05.456h-.617v1.876h.5q.44 0 .735-.095.294-.094.442-.307.148-.212.148-.564 0-.46-.293-.685t-.916-.225Z"
+        />
+      </g>
     </Icon>
   );
 });

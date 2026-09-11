@@ -12,11 +12,17 @@ export const MinimizeIcon = forwardRef<SVGSVGElement, MinimizeIconProps>(
       <Icon
         data-testid="MinimizeIcon"
         aria-label="minimize"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M0 8h12v2H0z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 12.5h11"
+          />
+        </g>
       </Icon>
     );
   },

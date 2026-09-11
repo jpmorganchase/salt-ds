@@ -12,11 +12,18 @@ export const FlagSolidIcon = forwardRef<SVGSVGElement, FlagSolidIconProps>(
       <Icon
         data-testid="FlagSolidIcon"
         aria-label="flag solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M5.148.129A7.5 7.5 0 0 0 3.754 0Q2.324 0 1.75.21q-.562.213-.61.247L1 .551V12h1V7.184c.117-.055.293-.114.512-.176q.327-.106 1.254-.106.656 0 1.289.2.645.187 1.3.328.669.14 1.372.27.702.116 1.453.116.445 0 .843-.046.399-.048.727-.082.188-.024.645-.094.466-.07.605-.094V.504a19 19 0 0 1-.605.082q-.457.047-.645.07-.34.036-.75.094a8 8 0 0 1-.867.047 6.5 6.5 0 0 1-1.36-.14Q7.13.514 6.484.386 5.83.246 5.148.129" />
+        <g strokeWidth=".67">
+          <path fillRule="evenodd" d="M3.5 3h4l2 2h4l-2 3 2 3h-5l-2-2h-3Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.5 1.5v13"
+          />
+        </g>
       </Icon>
     );
   },

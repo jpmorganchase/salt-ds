@@ -1,0 +1,121 @@
+---
+title: Icon design
+layout: DetailTechnical
+sidebar:
+  priority: 2
+---
+
+Salt icons use simple shapes, open space and restrained detail to communicate a single action, object or concept. Consistent proportions and construction make related icons recognizable as a family.
+
+Use this guidance to understand the style of Salt icons and judge their visual consistency. Browse [Icons](/salt/foundations/assets/index) to find a symbol and learn how to use it in an interface. For artwork creation and maintenance instructions, see [Creating icons](/salt/foundations/assets/creating-icons).
+
+## Meaning and family
+
+Start with the meaning an icon needs to communicate and the context in which it appears. Compare the actual drawings in the catalogue, including closely related objects, actions and states. An existing icon may already express the intended meaning.
+
+Keep the features that distinguish the subject. A generic laptop has a plain screen; adding a chart would suggest a more specific use. Similarly, a sun and a brightness control can share a visual language without every detail being interchangeable. Check an icon's established meaning before using its name as a design brief: `bank-check` represents a cheque, `scales` a weighing scale, and `school` a graduation cap.
+
+<IconDesignExamples example="family" />
+
+Related icons should share visible landmarks: the contour of a cloud, the proportions of a page, the geometry of a person's head and shoulders, or the positions of a panel's rails. Reuse those relationships when adding a state or action. Leave deliberate space for an action mark and preserve its direction without distorting the base object.
+
+Simplify detail until each remaining feature helps identify the subject or distinguish it from its neighbors. Check meaning in the intended interface as well as in isolation.
+
+## Canvas and optical size
+
+Salt icons use a **16 × 16 canvas**. The entire visible shape must fit inside that frame, including the outer tips of joins and line endings.
+
+The canvas does not prescribe one inner box or margin for every icon. Compare apparent size, empty space and visual weight beside related icons. A narrow arrow, a broad calendar, a compact letter and a filled silhouette need different envelopes to look balanced. Do not stretch every drawing to touch the same bounds or force all coordinates onto whole pixels.
+
+<IconDesignExamples example="scale" />
+
+Judge icons at their intended interface size. Salt's default icon size follows the interface density and has a **12px minimum**. See [Scaling icons](/salt/foundations/assets/index#scaling-icons) for the density scale.
+
+Use enlarged views to inspect geometry, then return to native **12px and 16px** views to judge recognition, balance and useful detail.
+
+## Brand logos
+
+Brand logos are an exception to Salt's icon drawing style. Use the brand owner's current official artwork, preserving its supplied contours and aspect ratio. Do not restyle a logo to match Salt geometry or stroke weight, add an outline, or invent variants. Follow the owner's usage guidance.
+
+For GitHub, use the current Invertocat from the [GitHub logo guidance](https://brand.github.com/foundations/logo). Use black or white by default, with sufficient contrast; grey and green are limited uses governed by GitHub's guidance. Keep clear space of at least **25% of the logo's width** around the mark. Provide that space in the surrounding layout; it is not mandatory padding inside the SVG viewBox.
+
+## Stroke weight
+
+The primary stroke is authored at a fixed **0.67 units** on the 16-unit canvas. Stroke and geometry scale together, keeping their proportions as an icon grows or shrinks.
+
+Keep essential details distinct and the overall weight balanced with neighboring icons. Judge the existing line weight at interface size, where small spaces and secondary details must remain readable.
+
+<IconDesignExamples example="stroke" />
+
+Secondary details can use a lighter line to avoid competing with the main shape. The hands in Schedule time, for example, have less weight than the surrounding clock. Compare similar details across the family and preserve their relative emphasis.
+
+## Geometry
+
+Build recognizable forms from straight runs, deliberate angles, broad curves and open shapes. Keep crisp exterior corners where they define the silhouette. Introduce small curved junctions where the object or the connection between features calls for them.
+
+Salt's standard line endings are **flat** and stop at their endpoints. Keep sharp joins where they define the shape. Inspect acute corners and arrowheads closely, since their tips can crowd nearby details or extend beyond the canvas.
+
+<IconDesignExamples example="geometry" />
+
+Use curved junctions deliberately. Bank columns meet the roof and plinth with eased attachments, the calendar has locally eased junctions, and the globe's curves meet as parts of one sphere. Keep these transitions consistent with the object's shape and the rhythm of its repeated features.
+
+There is no universal corner radius for the family. A softly curved housing and a sharp structural corner can belong to the same icon. Follow the object and the nearest related construction, then check the result at native size.
+
+## Outline and solid variants
+
+Outline and solid variants express the same meaning through different use of filled surfaces. Preserve their outer proportions, centers, dividers, action positions and directional relationships.
+
+<IconDesignExamples example="variants" />
+
+Choose a surface that can fill while keeping the icon's defining features clear. The solid calendar fills its date field and retains an open header. In `panel-open-left`, the rail fills while the frame and arrow remain shared line features. A file-format icon can fill its folded corner while keeping the page and label open.
+
+Keep shared line features equally weighted in both variants. Open frames, handles and action marks should remain consistent across the pair while filled surfaces provide the difference in emphasis.
+
+Use transparent counters where a filled surface needs an opening. Small filled details can also appear in an outline variant; the distinction is the treatment of meaningful surfaces. Add a solid companion when it offers a coherent treatment, and compare the pair at the same size and weight.
+
+## Lettering and numerals
+
+Salt's letters and numerals use the family's Open Sans letter shapes. Preserve their natural proportions and spacing. Avoid stretching letters to equal widths or simplifying them so far that their characteristic shapes and counters disappear.
+
+<IconDesignExamples example="lettering" />
+
+Keep regular lettering restrained in weight. The bold control uses a heavier filled letter, and the italic control uses the family's barred I. Preserve these recognizable differences while balancing them with neighboring controls.
+
+Center the visible contours, not the number of characters. Rounded digits can extend slightly beyond a flat alignment line to appear the same height; retain that optical adjustment when centering numerals. Forward and replay timers share their circle geometry and center the actual numeral shapes. File-format labels share a page shape and an external baseline.
+
+Keep letter proportions consistent throughout the family. Check counters, letter spacing and short numeric sequences at 12px and 16px.
+
+## Transparency and cutouts
+
+An action mark or overlapping object must remain distinguishable from the shape behind it. The open space around it should follow the foreground's actual contour. Openings must work on light and dark backgrounds and reveal the surface behind the icon.
+
+<IconDesignExamples example="cutouts" />
+
+Use true transparency for openings. A patch colored to match one background will become visible when the background changes.
+
+Judge the gap between **visible edges**. Keep the separation visually even around straight sides, curves, line endings and corners. An enlarged outline around an object's bounding box can still leave uneven space around the shape itself.
+
+The devices cutout follows the phone's curved corner. The tag-clear cutout buffers the full painted X while preserving its flat terminals. In cloud-sync, overlapping cutouts remove unusable slivers without changing the action's meaning.
+
+Keep intentional attachments and intrinsic openings intact. A connected handle, a letter counter and a tag eyelet each have their own purpose; a small opening is not automatically a separation defect.
+
+## Design review
+
+Compare the icons beside their closest family members in the [catalogue](/salt/foundations/assets/index#all-icons) and in their intended interface. Check both recognition and consistency with the surrounding controls.
+
+Inspect each variant at actual **12px and 16px**, using its authored stroke widths, on **light and dark** backgrounds. Include an enlarged view for contours, joins, overlaps and cutouts, then return to actual size to judge readability.
+
+Before accepting a design, check that:
+
+- Its meaning, direction and state are clear in context.
+- Its apparent size, visual weight and feature positions fit related icons.
+- Outline and solid variants share the intended landmarks and line weights.
+- Lettering has readable counters and spacing.
+- Cutouts follow the foreground and reveal the background.
+- The paint stays inside the 16-unit frame.
+- There are no unintended mergers, fragments, clipped tips or collapsed openings.
+- Details remain useful at native size, and enlarged inspection reveals no malformed geometry.
+
+Judge a narrow detail by whether it remains useful in context. A larger, cleaner-looking shape is only an improvement if it preserves the icon's meaning and balance with its family.
+
+:fragment{src="../fragments/feedback.mdx"}

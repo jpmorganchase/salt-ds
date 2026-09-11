@@ -12,16 +12,17 @@ export const ReceiptIcon = forwardRef<SVGSVGElement, ReceiptIconProps>(
       <Icon
         data-testid="ReceiptIcon"
         aria-label="receipt"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M8 3H4v1h4zM4 5h4v1H4zm4 2H4v1h4z" />
-        <path
-          fillRule="evenodd"
-          d="M1 0v12l3-1.5L6 12l2-1.5 3 1.5V0zm5 10.5L4 9l-2 1V1h8v9L8 9z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m3.5 1.5 1.5 1 1.5-1 1.5 1 1.5-1 1.5 1 1.5-1v13l-1.5-1-1.5 1-1.5-1-1.5 1-1.5-1-1.5 1Zm2 4h5M5.5 8h5m-5 2.5h3"
+          />
+        </g>
       </Icon>
     );
   },

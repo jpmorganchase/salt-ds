@@ -14,21 +14,19 @@ export const DocumentSearchIcon = forwardRef<
     <Icon
       data-testid="DocumentSearchIcon"
       aria-label="document search"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M11 2v3.5h-1V4H7V1H2v10h5v1H1V0h8zM8 3h2v-.586L8.586 1H8z"
-        clipRule="evenodd"
-      />
-      <path
-        fillRule="evenodd"
-        d="M8 5.5a2.5 2.5 0 0 1 2.085 3.878l1.768 1.768-.707.707-1.768-1.768A2.5 2.5 0 1 1 8 5.5m0 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"
-        clipRule="evenodd"
-      />
-      <path d="M5 9H3V8h2zm0-2H3V6h2zm1-2H3V4h3z" />
+      <g strokeWidth=".67">
+        <g
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+        >
+          <path d="M7.761 14.5H2.5v-13h8l3 3v2.394m-3-5.394V4q0 .5.5.5h2.5M5 6.5h2m-2 3h1" />
+          <path d="M7.5 10.5a3 3 0 1 0 6 0 3 3 0 1 0-6 0Zm5.12 2.12L15 15" />
+        </g>
+      </g>
     </Icon>
   );
 });

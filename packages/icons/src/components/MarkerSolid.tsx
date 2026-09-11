@@ -12,11 +12,18 @@ export const MarkerSolidIcon = forwardRef<SVGSVGElement, MarkerSolidIconProps>(
       <Icon
         data-testid="MarkerSolidIcon"
         aria-label="marker solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M6 0H5v2H1v4h4v6h1V6h3.067L11 4 9.067 2H6z" />
+        <g strokeWidth=".67">
+          <path fillRule="evenodd" d="M3.5 3.5H11L13.5 6 11 8.5H3.5Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.5 1.5v2m0 5v6"
+          />
+        </g>
       </Icon>
     );
   },

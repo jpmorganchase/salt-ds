@@ -14,15 +14,21 @@ export const GuideClosedSolidIcon = forwardRef<
     <Icon
       data-testid="GuideClosedSolidIcon"
       aria-label="guide closed solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M11 1v11H2v-2H1V9h1V8H1V7h1V6H1V5h1V4H1V3h1V1zM5 2H4v9h1zm1 3V4h3v1zm0 1v1h3V6z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M4.5 2.5h9v11h-9Zm1.5 1h1v9H6ZM8.5 5h3v1h-3Zm0 3h3v1h-3Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.5 5h2m-2 3h2m-2 3h2"
+        />
+      </g>
     </Icon>
   );
 });

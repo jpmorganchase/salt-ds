@@ -14,11 +14,17 @@ export const CloudDisabledIcon = forwardRef<
     <Icon
       data-testid="CloudDisabledIcon"
       aria-label="cloud disabled"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M2.033 4.16A3.001 3.001 0 0 0 3 10h4.889L6.886 9H3a2 2 0 0 1-.326-3.974l.196-.032zm8.597 4.325a1.5 1.5 0 0 0-.9-2.468l-.658-.1-.161-.646a3 3 0 0 0-3.677-2.172l-.787-.786a4.002 4.002 0 0 1 5.435 2.716 2.5 2.5 0 0 1 1.458 4.164zM10.307 11 1 1.716 1.716 1 11 10.267z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M4.7 12.25a3.3 3.3 0 0 1-1.512-6.234M6.53 3.702A4.4 4.4 0 0 1 8 3.45a4.4 4.4 0 0 1 4.27 3.332A2.75 2.75 0 0 1 14.6 9.5a2.74 2.74 0 0 1-.581 1.69m-4.597 1.06H4.7M2 2l12 12"
+        />
+      </g>
     </Icon>
   );
 });

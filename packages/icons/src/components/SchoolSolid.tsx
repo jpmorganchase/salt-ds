@@ -12,12 +12,21 @@ export const SchoolSolidIcon = forwardRef<SVGSVGElement, SchoolSolidIconProps>(
       <Icon
         data-testid="SchoolSolidIcon"
         aria-label="school solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M2.656 6.934 6.003 8.84l4.117-2.31v2.134l-.25.145-.346.199a212 212 0 0 1-1.254.723 99 99 0 0 1-2.026 1.134L5.993 11l-.248-.143-.004-.003-.017-.009-.063-.036-.236-.136-.83-.478c-.68-.39-1.57-.903-2.406-1.385l-.252-.145V6.519z" />
-        <path d="m6.053 1.013 5.899 3.399c.04.023.054.067.045.107v2.485h-1.016v-1.85C9.673 5.926 7.5 7.2 6.051 7.981a.1.1 0 0 1-.095 0C5.448 7.69.926 5.09.048 4.581a.098.098 0 0 1 .003-.17c2.22-1.277 5.46-3.144 5.9-3.398a.1.1 0 0 1 .102 0" />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="m8 2.167 6.167 3.666L8 9.5 1.833 5.833Zm-4.5 5.89L8 10.734l4.5-2.675v2.775l-4.5 2.5-4.5-2.5Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M14.167 5.833v4"
+          />
+        </g>
       </Icon>
     );
   },

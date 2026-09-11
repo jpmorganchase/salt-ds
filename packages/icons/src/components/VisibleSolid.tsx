@@ -14,16 +14,16 @@ export const VisibleSolidIcon = forwardRef<
     <Icon
       data-testid="VisibleSolidIcon"
       aria-label="visible solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M7.75 6a1.75 1.75 0 1 1-3.5 0 1.75 1.75 0 0 1 3.5 0" />
-      <path
-        fillRule="evenodd"
-        d="M6 10c3 0 5.25-2.75 6-4.125C11.125 4.583 9 2 6 2S.875 4.583 0 5.875C.75 7.25 3 10 6 10m2.75-4a2.75 2.75 0 1 1-5.5 0 2.75 2.75 0 0 1 5.5 0"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <g fillRule="evenodd">
+          <path d="M1.5 8Q8-2.5 14.5 8 8 18.5 1.5 8m4 0a2.5 2.5 0 1 0 5 0 2.5 2.5 0 1 0-5 0" />
+          <path d="M6.5 8a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0" />
+        </g>
+      </g>
     </Icon>
   );
 });

@@ -14,11 +14,18 @@ export const DisplaySolidIcon = forwardRef<
     <Icon
       data-testid="DisplaySolidIcon"
       aria-label="display solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M0 9h5v2H3v1h6v-1H7V9h5V0H0z" />
+      <g strokeWidth=".67">
+        <path fillRule="evenodd" d="M1.333 2h13.334v10H1.333Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.667 14h10.666M2.667 14h4Q7 14 7 13.667V12q0-.333-.333-.333m2.666 0Q9 11.667 9 12v1.667Q9 14 9.333 14h4"
+        />
+      </g>
     </Icon>
   );
 });

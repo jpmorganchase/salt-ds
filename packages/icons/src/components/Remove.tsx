@@ -12,11 +12,17 @@ export const RemoveIcon = forwardRef<SVGSVGElement, RemoveIconProps>(
       <Icon
         data-testid="RemoveIcon"
         aria-label="remove"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M1 5.5h10v1H1z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 8h11"
+          />
+        </g>
       </Icon>
     );
   },

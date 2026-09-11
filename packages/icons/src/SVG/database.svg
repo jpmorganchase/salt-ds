@@ -1,8 +1,5 @@
-<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-<path d="M2 2.25H3V3.25H2V2.25Z"/>
-<path d="M3 8.75H2V9.75H3V8.75Z"/>
-<path d="M5 8.75H4V9.75H5V8.75Z"/>
-<path d="M5 2.25H4V3.25H5V2.25Z"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M0 5.5V0H12V5.5H0ZM1 1H11V4.5H1V1Z"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M0 12V6.5H12V12H0ZM1 7.5H11V11H1V7.5Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" stroke-width="0.67">
+  <path fill="none" stroke="currentColor" d="M1.5 1.5h13V7h-13Z"/>
+  <path fill="none" stroke="currentColor" d="M1.5 9h13v5.5h-13Z"/>
+  <path fill="currentColor" fill-rule="evenodd" d="M3.75 3.5h1q.25 0 .25.25v1Q5 5 4.75 5h-1q-.25 0-.25-.25v-1q0-.25.25-.25m2.5 0h1q.25 0 .25.25v1q0 .25-.25.25h-1Q6 5 6 4.75v-1q0-.25.25-.25M3.75 11h1q.25 0 .25.25v1q0 .25-.25.25h-1q-.25 0-.25-.25v-1q0-.25.25-.25m2.5 0h1q.25 0 .25.25v1q0 .25-.25.25h-1q-.25 0-.25-.25v-1q0-.25.25-.25"/>
 </svg>

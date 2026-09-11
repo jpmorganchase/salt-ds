@@ -12,15 +12,21 @@ export const BooleanIcon = forwardRef<SVGSVGElement, BooleanIconProps>(
       <Icon
         data-testid="BooleanIcon"
         aria-label="boolean"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M0 2.75A2.75 2.75 0 0 1 2.75 0h6.5a2.75 2.75 0 1 1 0 5.5h-6.5A2.75 2.75 0 0 1 0 2.75m1 0a1.75 1.75 0 1 1 3.5 0 1.75 1.75 0 0 1-3.5 0m4.5 0c0 .665-.236 1.275-.629 1.75H9.25a1.75 1.75 0 1 0 0-3.5H4.871c.393.475.629 1.085.629 1.75M0 9.25A2.75 2.75 0 0 1 2.75 6.5h6.5a2.75 2.75 0 1 1 0 5.5h-6.5A2.75 2.75 0 0 1 0 9.25M9.25 7.5a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5M7.129 11A2.74 2.74 0 0 1 6.5 9.25c0-.665.236-1.275.629-1.75H2.75a1.75 1.75 0 1 0 0 3.5z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.25 1.5h7.5a2.75 2.75 0 0 1 0 5.5h-7.5a2.75 2.75 0 0 1 0-5.5Zm0 7.5h7.5a2.75 2.75 0 0 1 0 5.5h-7.5a2.75 2.75 0 0 1 0-5.5Z"
+          />
+          <path
+            fillRule="evenodd"
+            d="M3 4.25a1.25 1.25 0 1 0 2.5 0 1.25 1.25 0 1 0-2.5 0m7.5 7.5a1.25 1.25 0 1 0 2.5 0 1.25 1.25 0 1 0-2.5 0"
+          />
+        </g>
       </Icon>
     );
   },

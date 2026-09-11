@@ -12,15 +12,18 @@ export const MapSolidIcon = forwardRef<SVGSVGElement, MapSolidIconProps>(
       <Icon
         data-testid="MapSolidIcon"
         aria-label="map solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="m3 10-3 2V2l3-2 3 2 3-2 3 2v10l-3-2-3 2zm3.5-7.131v7.596l2-1.334V1.535zm-4 6.262V1.535l-1.5 1v7.597z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m2 3.5 4-1.667L10 3.5l4-1.667V12.5l-4 1.667L6 12.5l-4 1.667Zm4-1.667V12.5m4-9v10.667"
+          />
+          <path fillRule="evenodd" d="M6 1.833 10 3.5v10.667L6 12.5Z" />
+        </g>
       </Icon>
     );
   },

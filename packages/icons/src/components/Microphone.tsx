@@ -12,16 +12,19 @@ export const MicrophoneIcon = forwardRef<SVGSVGElement, MicrophoneIconProps>(
       <Icon
         data-testid="MicrophoneIcon"
         aria-label="microphone"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M6 0a2.5 2.5 0 0 0-2.5 2.5v3a2.5 2.5 0 0 0 5 0v-3A2.5 2.5 0 0 0 6 0m1.5 5.5v-3a1.5 1.5 0 1 0-3 0v3a1.5 1.5 0 1 0 3 0"
-          clipRule="evenodd"
-        />
-        <path d="M2.5 5.5a3.5 3.5 0 1 0 7 0h1a4.5 4.5 0 0 1-4 4.473V11H9v1H3v-1h2.5V9.973a4.5 4.5 0 0 1-4-4.473z" />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M8 1.5q2.5 0 2.5 2.5v4q0 2.5-2.5 2.5T5.5 8V4q0-2.5 2.5-2.5Z" />
+            <path d="M3.5 7v1a4.5 4.5 0 0 0 9 0V7M8 12.5v2m-2.5 0h5" />
+          </g>
+        </g>
       </Icon>
     );
   },

@@ -14,16 +14,17 @@ export const AnnouncementIcon = forwardRef<
     <Icon
       data-testid="AnnouncementIcon"
       aria-label="announcement"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M9.576 9.228 4.878 8.55l.143 1.53a1.25 1.25 0 0 1-.92 1.326l-.061.015a1.25 1.25 0 0 1-1.553-.98l-.338-1.83-.79.103-.435.056L0 5.32l.403-.168 2.285-.951 3.98-3.134L7.265.6zm-6.433-.744.328 1.777a.25.25 0 0 0 .31.196l.06-.016a.25.25 0 0 0 .185-.266L3.87 8.521a.15.15 0 0 0-.086-.12zm.368-3.658.702 2.62 4.005.576L6.69 2.324zM1.192 5.909l.472 1.76 1.52-.198-.577-2.152z"
-        clipRule="evenodd"
-      />
-      <path d="m11.616 6.057-.274.962-1.89-.541.137-.482.137-.48zm.359-1.578-2.28.611-.26-.966 2.28-.61zm-1.359-2.152L9.25 3.74l-.358-.348-.36-.348 1.366-1.413z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2 6h3.5L13 3v9L5.5 9H2Zm3.5 0v3m-2 0v4.5H6L5.5 9M15 5.5v4"
+        />
+      </g>
     </Icon>
   );
 });

@@ -12,15 +12,17 @@ export const CheckmarkIcon = forwardRef<SVGSVGElement, CheckmarkIconProps>(
       <Icon
         data-testid="CheckmarkIcon"
         aria-label="checkmark"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M4.952 9.294 10 3.73 8.9 2.706 4.875 7.163 3.027 5.446 2 6.546z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 8 6 11.5l7.5-8"
+          />
+        </g>
       </Icon>
     );
   },

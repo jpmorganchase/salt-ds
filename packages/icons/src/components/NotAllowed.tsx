@@ -12,15 +12,17 @@ export const NotAllowedIcon = forwardRef<SVGSVGElement, NotAllowedIconProps>(
       <Icon
         data-testid="NotAllowedIcon"
         aria-label="not allowed"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M6 0a6 6 0 1 1 0 12A6 6 0 0 1 6 0M2.128 2.835A5 5 0 0 0 9.164 9.87zM6 1a4.98 4.98 0 0 0-3.165 1.128l7.036 7.035A5 5 0 0 0 6 1"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2 8a6 6 0 1 0 12 0A6 6 0 1 0 2 8Zm1.767-4.233 8.466 8.466"
+          />
+        </g>
       </Icon>
     );
   },

@@ -12,15 +12,19 @@ export const MusicIcon = forwardRef<SVGSVGElement, MusicIconProps>(
       <Icon
         data-testid="MusicIcon"
         aria-label="music"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M5 9.5V1.883l6-.75V6.5a2.5 2.5 0 1 0 1 2V0L4 1v6.5a2.5 2.5 0 1 0 1 2m-1 0a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0m7-1a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M6.5 11V3.5l7-2V10m-7-3.5 7-2" />
+            <path d="M6.5 11c0 1.1-1.133 2-2.5 2s-2-.7-2-1.5 1.133-2 2.5-2 2 .7 2 1.5Zm7-1c0 1.1-1.133 2-2.5 2s-2-.7-2-1.5 1.133-2 2.5-2 2 .7 2 1.5Z" />
+          </g>
+        </g>
       </Icon>
     );
   },

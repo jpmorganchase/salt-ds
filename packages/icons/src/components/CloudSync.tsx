@@ -12,12 +12,19 @@ export const CloudSyncIcon = forwardRef<SVGSVGElement, CloudSyncIconProps>(
       <Icon
         data-testid="CloudSyncIcon"
         aria-label="cloud sync"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="m3.148 4.949-.474.077a2 2 0 0 0-.26 3.887L3.501 10H3a3 3 0 0 1-.487-5.96 4.002 4.002 0 0 1 7.369.99 2.5 2.5 0 0 1 1.343 4.28l-.707-.708a1.5 1.5 0 0 0-.788-2.585l-.658-.1-.161-.646a3.002 3.002 0 0 0-5.527-.74z" />
-        <path d="m4.828 8.536-.707.707L2 7.12 4.121 5l.707.707-.914.914H7v1H3.914zm2.344-.452.707-.707L10 9.5l-2.121 2.12-.707-.707.914-.914H5v-1h3.086z" />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M4.43 10.74a3.3 3.3 0 0 1-.266-6.547 4.402 4.402 0 0 1 8.106 1.088 2.75 2.75 0 0 1 .379 5.351" />
+            <path d="M11 9.5H6m2-2-2 2 2 2m-1 1.75h5m-2-2 2 2-2 2" />
+          </g>
+        </g>
       </Icon>
     );
   },

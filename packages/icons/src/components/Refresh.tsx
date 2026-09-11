@@ -12,11 +12,17 @@ export const RefreshIcon = forwardRef<SVGSVGElement, RefreshIconProps>(
       <Icon
         data-testid="RefreshIcon"
         aria-label="refresh"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M4.707 10.831a5 5 0 1 1 5.625-7.33h-2.33v1h4v-4h-1v2.184A6 6 0 0 0 9.745 1.31a6 6 0 1 0 2.052 6.244l-.966-.26a5 5 0 0 1-6.124 3.536" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.667 5.333c-1-2.266-3-3.666-5.667-3.666a6.333 6.333 0 1 0 6.1 8M9.667 5.333h4V1.667"
+          />
+        </g>
       </Icon>
     );
   },

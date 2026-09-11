@@ -12,15 +12,16 @@ export const ErrorSolidIcon = forwardRef<SVGSVGElement, ErrorSolidIconProps>(
       <Icon
         data-testid="ErrorSolidIcon"
         aria-label="error solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M9 0H3L0 3v6l3 3h6l3-3V3zM7 2H5v5h2zm-1 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M5.5 1.833h5L14.167 5.5v5L10.5 14.167h-5L1.833 10.5v-5Zm1.933 2.334h1.134v5H7.433Zm-.2 7.333a.767.767 0 1 0 1.534 0 .767.767 0 1 0-1.534 0"
+          />
+        </g>
       </Icon>
     );
   },

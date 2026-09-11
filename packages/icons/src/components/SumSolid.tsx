@@ -12,11 +12,16 @@ export const SumSolidIcon = forwardRef<SVGSVGElement, SumSolidIconProps>(
       <Icon
         data-testid="SumSolidIcon"
         aria-label="sum solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="m6 9 2-3-2-3h3v1.625h3V0H0l4.125 6L0 12h12V7.5H9V9z" />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M2.5 2h11v3H12V3.5H5L9 8l-4 4.5h7V11h1.5v3h-11v-1.5l4-4.5-4-4.5Z"
+          />
+        </g>
       </Icon>
     );
   },

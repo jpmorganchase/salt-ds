@@ -14,11 +14,17 @@ export const MessageForwardIcon = forwardRef<
     <Icon
       data-testid="MessageForwardIcon"
       aria-label="message forward"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M2 11H1V9a5 5 0 0 1 5-5h3.086L7.465 2.379l.707-.707L11 4.5 8.172 7.328l-.707-.707L9.085 5H6a4 4 0 0 0-1.53.305l-.18.079a4 4 0 0 0-1.118.788l-.136.142c-.308.34-.555.731-.731 1.156l-.072.182A4 4 0 0 0 2 9z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.5 13.5V10A4.5 4.5 0 0 1 7 5.5h5.5m-3-3 3 3-3 3"
+        />
+      </g>
     </Icon>
   );
 });

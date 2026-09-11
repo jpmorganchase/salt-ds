@@ -12,15 +12,17 @@ export const SendIcon = forwardRef<SVGSVGElement, SendIconProps>(
       <Icon
         data-testid="SendIcon"
         aria-label="send"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="m0 5 2 2 2 1 1 2 2 2 5-12zm4.981 2.726.84 1.682.83.829 2.987-7.168zm3.95-5.364L1.763 5.35l.83.83 1.681.84z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 2.5 13.833 8 1.5 13.5l2-5.5Zm2 5.5h10.333"
+          />
+        </g>
       </Icon>
     );
   },

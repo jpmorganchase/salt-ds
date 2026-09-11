@@ -15,15 +15,17 @@ export const SuccessSmallIcon = forwardRef<
     <Icon
       data-testid="SuccessSmallIcon"
       aria-label="success small"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="m3.879 8.121 5.656-5.656.707.707L3.88 9.535 1.757 7.414l.707-.707z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.5 8 6 11.5l7.5-8"
+        />
+      </g>
     </Icon>
   );
 });

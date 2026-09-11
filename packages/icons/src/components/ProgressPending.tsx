@@ -14,15 +14,16 @@ export const ProgressPendingIcon = forwardRef<
     <Icon
       data-testid="ProgressPendingIcon"
       aria-label="progress pending"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M12 6A6 6 0 1 1 0 6a6 6 0 0 1 12 0M6 3v3H3v1h4V3z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0m7-3.5v3.232l2.11 1.408-.554.831L7.5 8.269V4.5Z"
+        />
+      </g>
     </Icon>
   );
 });

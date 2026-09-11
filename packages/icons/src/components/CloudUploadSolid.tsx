@@ -14,12 +14,21 @@ export const CloudUploadSolidIcon = forwardRef<
     <Icon
       data-testid="CloudUploadSolidIcon"
       aria-label="cloud upload solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M6 2a4 4 0 0 1 3.881 3.029A2.5 2.5 0 0 1 9.5 10h-.496l1.212-1.21-4.212-4.203L1.784 8.8 2.988 10a3 3 0 0 1-.475-5.96A4 4 0 0 1 6 2" />
-      <path d="M6.495 7.902V12h-.998V7.917l-1.59 1.587L3.2 8.8 6.004 6 8.8 8.791l-.707.705z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M4.7 12.585q-1.506 0-2.57-1.065T1.065 8.95q0-3.009 2.887-3.56Q5.312 3.116 8 3.116q3.59 0 4.538 3.374 2.397.475 2.397 3.011 0 3.085-3.085 3.085h-2.6v-2.317l.646.646 1.768-1.768L9.25 6.732V6.5h-.232L8 5.482 6.982 6.5H6.75v.232L4.336 9.146l1.768 1.768.646-.646v2.317Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8 14.25v-7M5.75 9.5 8 7.25l2.25 2.25"
+        />
+      </g>
     </Icon>
   );
 });

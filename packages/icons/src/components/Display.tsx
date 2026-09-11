@@ -12,15 +12,19 @@ export const DisplayIcon = forwardRef<SVGSVGElement, DisplayIconProps>(
       <Icon
         data-testid="DisplayIcon"
         aria-label="display"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M0 9h5v2H3v1h6v-1H7V9h5V0H0zm11-8H1v7h10z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M1.667 2.333h12.666v9.334H1.667Z" />
+            <path d="M2.5 2.333h11q.833 0 .833.834v7.666q0 .834-.833.834h-11q-.833 0-.833-.834V3.167q0-.834.833-.834ZM2.667 14h10.666M2.667 14h4Q7 14 7 13.667V12q0-.333-.333-.333m2.666 0Q9 11.667 9 12v1.667Q9 14 9.333 14h4" />
+          </g>
+        </g>
       </Icon>
     );
   },

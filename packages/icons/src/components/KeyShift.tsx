@@ -12,15 +12,17 @@ export const KeyShiftIcon = forwardRef<SVGSVGElement, KeyShiftIconProps>(
       <Icon
         data-testid="KeyShiftIcon"
         aria-label="key shift"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M11 7H9v4H3V7H1l5-7zM9.057 6 6 1.72 2.943 6H4v4h4V6z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m2.5 7.5 5.5-5 5.5 5h-3v6h-5v-6Z"
+          />
+        </g>
       </Icon>
     );
   },

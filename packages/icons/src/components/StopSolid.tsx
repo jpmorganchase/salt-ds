@@ -12,11 +12,13 @@ export const StopSolidIcon = forwardRef<SVGSVGElement, StopSolidIconProps>(
       <Icon
         data-testid="StopSolidIcon"
         aria-label="stop solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M1 1h10v10H1z" />
+        <g strokeWidth=".67">
+          <path fillRule="evenodd" d="M3 3h10v10H3Z" />
+        </g>
       </Icon>
     );
   },

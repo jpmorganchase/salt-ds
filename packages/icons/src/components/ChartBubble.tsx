@@ -12,16 +12,19 @@ export const ChartBubbleIcon = forwardRef<SVGSVGElement, ChartBubbleIconProps>(
       <Icon
         data-testid="ChartBubbleIcon"
         aria-label="chart bubble"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M1.75 10.25h9.5v1H.75V.75h1z" />
-        <path
-          fillRule="evenodd"
-          d="M8.75 5.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4m0 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-5.137-.156a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3m0 1a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1m1.771-6.299a2.5 2.5 0 1 1-.001 5.001 2.5 2.5 0 0 1 0-5.001m0 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M1.5 1.5v13h13" />
+            <path d="M3.5 10.5a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0ZM8 5a3 3 0 1 0 6 0 3 3 0 1 0-6 0Zm3.5 6.5a1 1 0 1 0 2 0 1 1 0 1 0-2 0Z" />
+          </g>
+        </g>
       </Icon>
     );
   },

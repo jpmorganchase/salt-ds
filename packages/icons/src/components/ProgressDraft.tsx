@@ -14,15 +14,17 @@ export const ProgressDraftIcon = forwardRef<
     <Icon
       data-testid="ProgressDraftIcon"
       aria-label="progress draft"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M6 11A5 5 0 1 0 6 1a5 5 0 0 0 0 10m0 1A6 6 0 1 0 6 0a6 6 0 0 0 0 12"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2 8a6 6 0 1 0 12 0A6 6 0 1 0 2 8Z"
+        />
+      </g>
     </Icon>
   );
 });

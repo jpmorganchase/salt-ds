@@ -14,15 +14,16 @@ export const MessageSolidIcon = forwardRef<
     <Icon
       data-testid="MessageSolidIcon"
       aria-label="message solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M12 1H0v10h12zM2.1 3.354l-.612.792L6 7.632l4.512-3.486-.612-.792L6 6.368z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M2.5 3.5h11v9h-11Zm1.294 1.323L8 7.882l4.206-3.06.588.81L8 9.118 3.206 5.632Zm6.56 3.823 2.5 2.5-.708.708-2.5-2.5Zm-7.208 2.5 2.5-2.5.708.708-2.5 2.5Z"
+        />
+      </g>
     </Icon>
   );
 });

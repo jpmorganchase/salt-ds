@@ -12,20 +12,21 @@ export const TravelSolidIcon = forwardRef<SVGSVGElement, TravelSolidIconProps>(
       <Icon
         data-testid="TravelSolidIcon"
         aria-label="travel solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M10.005 4.999h1.994v6H11l-.01.1a.5.5 0 0 1-.49.4H10a.5.5 0 0 1-.49-.4L9.5 11H7l-.01.1a.5.5 0 0 1-.49.4H6a.5.5 0 0 1-.49-.4L5.5 11h-.988V5h1.993V3h3.5zm-2.5 0h1.5V4h-1.5z"
-          clipRule="evenodd"
-        />
-        <path
-          fillRule="evenodd"
-          d="M4.75 1.999H6v2H3.519v6H2v.666c0 .184-.224.334-.5.334s-.5-.15-.5-.334v-.666H0v-8h1.25V.001h3.5zm-2.5 0h1.5v-.997h-1.5z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M2.167 4.5h5.166Q8 4.5 8 5.167v6.666q0 .667-.667.667H2.167q-.667 0-.667-.667V5.167q0-.667.667-.667m8.5 3h3.666q.667 0 .667.667v4.666q0 .667-.667.667h-3.666q-.667 0-.667-.667V8.167q0-.667.667-.667"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.25 4.5v-2h3v2m5 3v-2h2.5v2m-11.25 5V14M7 12.5V14m4-.5V15m3-1.5V15"
+          />
+        </g>
       </Icon>
     );
   },

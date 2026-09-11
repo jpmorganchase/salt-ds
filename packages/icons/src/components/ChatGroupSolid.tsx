@@ -14,12 +14,18 @@ export const ChatGroupSolidIcon = forwardRef<
     <Icon
       data-testid="ChatGroupSolidIcon"
       aria-label="chat group solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="m.113 9.946.32-2.542a4.48 4.48 0 0 1 3.949-6.402A4.47 4.47 0 0 1 7.356 2.04a4.55 4.55 0 0 0-3.453 4.315A4.54 4.54 0 0 0 5.43 9.859a4.5 4.5 0 0 1-3.127-.465z" />
-      <path d="m11.91 9.99-.253-2.012a3.544 3.544 0 0 0-3.124-5.065 3.544 3.544 0 1 0 1.645 6.64z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5 2h9.5v8L12 8h-1"
+        />
+        <path fillRule="evenodd" d="M1.5 4H11v7.5H5.5l-3 2.5v-2.5h-1Z" />
+      </g>
     </Icon>
   );
 });

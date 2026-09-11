@@ -14,16 +14,16 @@ export const MedicalKitSolidIcon = forwardRef<
     <Icon
       data-testid="MedicalKitSolidIcon"
       aria-label="medical kit solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M9 1H3v10h6zM5 8V7H4V5h1V4h2v1h1v2H7v1z"
-        clipRule="evenodd"
-      />
-      <path d="M10 1v10h2V1zM0 1h2v10H0z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M1.833 3h12.334v10H1.833Zm1.5 1h1v8h-1Zm8.334 0h1v8h-1ZM7.5 6h1v1.5H10v1H8.5V10h-1V8.5H6v-1h1.5Z"
+        />
+      </g>
     </Icon>
   );
 });

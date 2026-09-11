@@ -14,16 +14,16 @@ export const CompassSolidIcon = forwardRef<
     <Icon
       data-testid="CompassSolidIcon"
       aria-label="compass solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="m5.376 5.376 1.871-.623-.623 1.87-1.871.624z" />
-      <path
-        fillRule="evenodd"
-        d="M12 6A6 6 0 1 1 0 6a6 6 0 0 1 12 0M4.586 4.586l4.242-1.414-1.414 4.242-4.242 1.414z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0m9-2.5-1 4-4 1 1-4ZM9.25 6.75 8.6 8.6l-1.85.65.65-1.85Z"
+        />
+      </g>
     </Icon>
   );
 });

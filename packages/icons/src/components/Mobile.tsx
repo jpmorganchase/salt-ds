@@ -12,15 +12,26 @@ export const MobileIcon = forwardRef<SVGSVGElement, MobileIconProps>(
       <Icon
         data-testid="MobileIcon"
         aria-label="mobile"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M2 2v8a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2m6-1H4a1 1 0 0 0-1 1h6a1 1 0 0 0-1-1m1 8V3H3v6zm-6 1a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.667 1.667h6.666q.667 0 .667.666v11.334q0 .666-.667.666H4.667q-.667 0-.667-.666V2.333q0-.666.667-.666Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4 3.167q0 .5.5.5h7q.5 0 .5-.5m-8 1q0-.5.5-.5h7q.5 0 .5.5"
+          />
+          <path
+            fillRule="evenodd"
+            d="M7.5 12.5a.5.5 0 1 0 1 0 .5.5 0 1 0-1 0"
+          />
+        </g>
       </Icon>
     );
   },

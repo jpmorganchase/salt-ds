@@ -14,15 +14,17 @@ export const FolderClosedIcon = forwardRef<
     <Icon
       data-testid="FolderClosedIcon"
       aria-label="folder closed"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M12 12V2H6L4 1H0v11zM3.764 2l2 1H11v1H1V2zM1 5v6h10V5z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.5 13.5V3h4l2 2h5v8.5Zm0-6.5h11"
+        />
+      </g>
     </Icon>
   );
 });

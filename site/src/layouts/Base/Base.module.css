@@ -13,6 +13,7 @@
 
 .middle {
   grid-area: middle;
+  min-width: 0;
   display: flex;
   flex-direction: column;
 }

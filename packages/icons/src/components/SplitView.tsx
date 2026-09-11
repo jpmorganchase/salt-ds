@@ -12,16 +12,23 @@ export const SplitViewIcon = forwardRef<SVGSVGElement, SplitViewIconProps>(
       <Icon
         data-testid="SplitViewIcon"
         aria-label="split view"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M4 7H2V6h2zm1-2H2V4h3zm0-2H2V2h3z" />
-        <path
-          fillRule="evenodd"
-          d="M12 12H0V0h12zm-6-1V1H1v10z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 2.5h13v11h-13Z"
+          />
+          <path fillRule="evenodd" d="M8 2.5h6.5v11H8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.5 5.5H6m-2.5 2H6m-2.5 2H5"
+          />
+        </g>
       </Icon>
     );
   },

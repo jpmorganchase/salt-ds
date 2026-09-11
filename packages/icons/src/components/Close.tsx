@@ -12,11 +12,17 @@ export const CloseIcon = forwardRef<SVGSVGElement, CloseIconProps>(
       <Icon
         data-testid="CloseIcon"
         aria-label="close"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="m5.999 5.292 3.89-3.888.707.707L6.707 6l3.889 3.889-.707.708-3.89-3.89-3.889 3.89-.707-.708L5.292 6 1.403 2.111l.707-.708z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m3 3 10 10m0-10L3 13"
+          />
+        </g>
       </Icon>
     );
   },

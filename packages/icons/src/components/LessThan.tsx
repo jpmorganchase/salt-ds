@@ -12,11 +12,17 @@ export const LessThanIcon = forwardRef<SVGSVGElement, LessThanIconProps>(
       <Icon
         data-testid="LessThanIcon"
         aria-label="less than"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="m2 6 7.576-4 .425.894L4.118 6l5.883 3.106-.425.894z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.5 3.5 4.5 8l7 4.5"
+          />
+        </g>
       </Icon>
     );
   },

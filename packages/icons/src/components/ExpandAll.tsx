@@ -12,11 +12,17 @@ export const ExpandAllIcon = forwardRef<SVGSVGElement, ExpandAllIconProps>(
       <Icon
         data-testid="ExpandAllIcon"
         aria-label="expand all"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M6 0 2 4l1 1 3-3 3 3 1-1zm0 12L2 8l1-1 3 3 3-3 1 1z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m4 6 4-4 4 4m-8 4 4 4 4-4"
+          />
+        </g>
       </Icon>
     );
   },

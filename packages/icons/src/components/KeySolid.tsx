@@ -12,15 +12,16 @@ export const KeySolidIcon = forwardRef<SVGSVGElement, KeySolidIconProps>(
       <Icon
         data-testid="KeySolidIcon"
         aria-label="key solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M10 6H7.5l-.735.735a3.5 3.5 0 1 1-2.378-2.122L9 0h3v4h-2zM3.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M6.933 9.067a3.5 3.5 0 1 1 2.134-2.134L14 11.867V14h-2.133v-2h-2v-2Zm-2.166-3.3a1 1 0 1 0 2 0 1 1 0 1 0-2 0"
+          />
+        </g>
       </Icon>
     );
   },

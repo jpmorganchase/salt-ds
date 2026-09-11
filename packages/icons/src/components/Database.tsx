@@ -12,16 +12,21 @@ export const DatabaseIcon = forwardRef<SVGSVGElement, DatabaseIconProps>(
       <Icon
         data-testid="DatabaseIcon"
         aria-label="database"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M2 2.25h1v1H2zm1 6.5H2v1h1zm2 0H4v1h1zm0-6.5H4v1h1z" />
-        <path
-          fillRule="evenodd"
-          d="M0 5.5V0h12v5.5zM1 1h10v3.5H1zM0 12V6.5h12V12zm1-4.5h10V11H1z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 1.5h13V7h-13Zm0 7.5h13v5.5h-13Z"
+          />
+          <path
+            fillRule="evenodd"
+            d="M3.75 3.5h1q.25 0 .25.25v1Q5 5 4.75 5h-1q-.25 0-.25-.25v-1q0-.25.25-.25m2.5 0h1q.25 0 .25.25v1q0 .25-.25.25h-1Q6 5 6 4.75v-1q0-.25.25-.25M3.75 11h1q.25 0 .25.25v1q0 .25-.25.25h-1q-.25 0-.25-.25v-1q0-.25.25-.25m2.5 0h1q.25 0 .25.25v1q0 .25-.25.25h-1q-.25 0-.25-.25v-1q0-.25.25-.25"
+          />
+        </g>
       </Icon>
     );
   },

@@ -12,16 +12,21 @@ export const WarningIcon = forwardRef<SVGSVGElement, WarningIconProps>(
       <Icon
         data-testid="WarningIcon"
         aria-label="warning"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M5 8V5h2v3zm2 1.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-        <path
-          fillRule="evenodd"
-          d="m6 0 6 12H0zM1.618 11 6 2.236 10.382 11z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m8 2 6.5 12h-13Zm0 3.5v4"
+          />
+          <path
+            fillRule="evenodd"
+            d="M7.333 11.5a.667.667 0 1 0 1.334 0 .667.667 0 1 0-1.334 0"
+          />
+        </g>
       </Icon>
     );
   },

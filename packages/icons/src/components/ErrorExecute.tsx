@@ -15,15 +15,17 @@ export const ErrorExecuteIcon = forwardRef<
     <Icon
       data-testid="ErrorExecuteIcon"
       aria-label="error execute"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M12 6A6 6 0 1 1 0 6a6 6 0 0 1 12 0M8.607 9.668a4.5 4.5 0 0 1-6.275-6.275zm1.061-1.06L3.393 2.331a4.5 4.5 0 0 1 6.275 6.275"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2 8a6 6 0 1 0 12 0A6 6 0 1 0 2 8Zm1.767-4.233 8.466 8.466"
+        />
+      </g>
     </Icon>
   );
 });

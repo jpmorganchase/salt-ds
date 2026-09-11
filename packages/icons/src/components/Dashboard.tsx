@@ -12,16 +12,19 @@ export const DashboardIcon = forwardRef<SVGSVGElement, DashboardIconProps>(
       <Icon
         data-testid="DashboardIcon"
         aria-label="dashboard"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M6 8a1.5 1.5 0 0 0 1.404-2.03l1.59-1.59-.708-.707-1.53 1.53A1.5 1.5 0 1 0 6 8m.75-1.5a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0"
-          clipRule="evenodd"
-        />
-        <path d="M11.197 10A6 6 0 1 0 .802 10zM11 7c0 .711-.149 1.387-.416 2H1.416A5 5 0 0 1 1 7h1.5q.001-.523.145-1H1.1a5 5 0 0 1 1.262-2.43l1.061 1.06c.228-.246.49-.46.78-.634L3.119 2.913c.686-.485 1.5-.8 2.38-.888v1.51a3.6 3.6 0 0 1 1 0v-1.51A5 5 0 0 1 10.9 6H9.354q.144.477.146 1z" />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M1.938 12.5a7 7 0 1 1 12.124 0ZM2.5 8H4m-.5-3.5L5 6m3-3.5V4m5.5 4H12m-3-.167L11.5 5" />
+            <path d="M6.5 9a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0Z" />
+          </g>
+        </g>
       </Icon>
     );
   },

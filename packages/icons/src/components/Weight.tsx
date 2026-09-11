@@ -12,15 +12,19 @@ export const WeightIcon = forwardRef<SVGSVGElement, WeightIconProps>(
       <Icon
         data-testid="WeightIcon"
         aria-label="weight"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M8 4a2.5 2.5 0 1 0-4 0H2l-2 8h12l-2-8zm-.5-1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0M2.78 5l-1.5 6h9.44l-1.5-6z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M5.5 4a2.5 2.5 0 1 0 5 0 2.5 2.5 0 1 0-5 0Z" />
+            <path d="M3.5 6.5h9l2 8h-13Z" />
+          </g>
+        </g>
       </Icon>
     );
   },

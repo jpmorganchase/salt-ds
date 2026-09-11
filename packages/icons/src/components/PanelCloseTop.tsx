@@ -14,16 +14,20 @@ export const PanelCloseTopIcon = forwardRef<
     <Icon
       data-testid="PanelCloseTopIcon"
       aria-label="panel close top"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M8.121 8.535 6.5 6.915V10h-1V6.914L3.879 8.535l-.707-.707L6 5l2.828 2.828z" />
-      <path
-        fillRule="evenodd"
-        d="M0 12V0h12v12zM1 1v2h10V1zm0 3v7h10V4z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <g
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+        >
+          <path d="M14.333 1.667v12.666H1.667V1.667Z" />
+          <path d="M14.333 2.167v11.666q0 .5-.5.5H2.167q-.5 0-.5-.5V2.167q0-.5.5-.5h11.666q.5 0 .5.5Z" />
+          <path d="M14.333 5H1.667m12.666-.5q0 .5-.5.5m.5.5q0-.5-.5-.5M1.667 4.5q0 .5.5.5m-.5.5q0-.5.5-.5M8 12.333V7.667M10.333 10 8 7.667 5.667 10" />
+        </g>
+      </g>
     </Icon>
   );
 });

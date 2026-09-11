@@ -14,16 +14,26 @@ export const BrowserSolidIcon = forwardRef<
     <Icon
       data-testid="BrowserSolidIcon"
       aria-label="browser solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M12 0H0v3h12zM2 1h1v1H2zm3 0H4v1h1zm1 0h1v1H6z"
-        clipRule="evenodd"
-      />
-      <path d="M12 4H0v8h12z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M1.667 2.333h12.666V5.5H1.667ZM3 3.917a.333.333 0 1 0 .667 0 .333.333 0 1 0-.667 0m1.667 0a.333.333 0 1 0 .666 0 .333.333 0 1 0-.666 0"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.667 2.333h12.666v11.334H1.667Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.5 5.5h11q.833 0 .833.833v6.5q0 .834-.833.834h-11q-.833 0-.833-.834v-6.5q0-.833.833-.833Z"
+        />
+      </g>
     </Icon>
   );
 });

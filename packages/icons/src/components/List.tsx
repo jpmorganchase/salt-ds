@@ -12,11 +12,21 @@ export const ListIcon = forwardRef<SVGSVGElement, ListIconProps>(
       <Icon
         data-testid="ListIcon"
         aria-label="list"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M4 2.5h7v1H4zm0 3h7v1H4zm0 3h7v1H4zM3 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0m0-3a1 1 0 1 1-2 0 1 1 0 0 1 2 0m0-3a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.5 3.5H14M5.5 8H14m-8.5 4.5H14"
+          />
+          <path
+            fillRule="evenodd"
+            d="M1.833 3.5a.667.667 0 1 0 1.334 0 .667.667 0 1 0-1.334 0m0 4.5a.667.667 0 1 0 1.334 0 .667.667 0 1 0-1.334 0m0 4.5a.667.667 0 1 0 1.334 0 .667.667 0 1 0-1.334 0"
+          />
+        </g>
       </Icon>
     );
   },

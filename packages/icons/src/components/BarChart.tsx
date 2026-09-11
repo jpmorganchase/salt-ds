@@ -13,11 +13,21 @@ export const BarChartIcon = forwardRef<SVGSVGElement, BarChartIconProps>(
       <Icon
         data-testid="BarChartIcon"
         aria-label="bar chart"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M6 1h1v9h1V7h1v3h1V4h1v7H0V6h1v4h1V8h1v2h1V5h1v5h1z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 1.5v13"
+          />
+          <path
+            fillRule="evenodd"
+            d="M3.5 2.5h11v2h-11Zm0 4.5h7v2h-7Zm0 4.5h9v2h-9Z"
+          />
+        </g>
       </Icon>
     );
   },

@@ -14,11 +14,17 @@ export const ExpandAllHorizontalIcon = forwardRef<
     <Icon
       data-testid="ExpandAllHorizontalIcon"
       aria-label="expand all horizontal"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="m0 6 4 4 1-1-3-3 3-3-1-1zm12 0-4 4-1-1 3-3-3-3 1-1z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6 4 2 8l4 4m4-8 4 4-4 4"
+        />
+      </g>
     </Icon>
   );
 });

@@ -13,15 +13,16 @@ export const StepSuccessIcon = forwardRef<SVGSVGElement, StepSuccessIconProps>(
       <Icon
         data-testid="StepSuccessIcon"
         aria-label="step success"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12m3.75-7.984L4.952 9.332 2 6.582l1.027-1.098L4.875 7.2l3.772-4.208z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M2 8a6 6 0 1 0 12 0A6 6 0 1 0 2 8m1.8 0 .7-.7 2.333 2.333 4-4 .7.7-4.7 4.7Z"
+          />
+        </g>
       </Icon>
     );
   },

@@ -14,17 +14,17 @@ export const VideoDisabledIcon = forwardRef<
     <Icon
       data-testid="VideoDisabledIcon"
       aria-label="video disabled"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M0 3.129V10h6.889L5.886 9H1V4.126z" />
-      <path
-        fillRule="evenodd"
-        d="M8 6.858V3H4.135L3.133 2H9v1.942L12 3v6l-2.69-.834zm3 .785-2-.62V4.99l2-.628z"
-        clipRule="evenodd"
-      />
-      <path d="M9.307 11 0 1.716.716 1 10 10.267z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.328 3.5H10q.5 0 .5.5v3.672M9.672 12.5H2q-.5 0-.5-.5V4.328M10.5 6l4-1.5v7l-.274-.103M10.5 7.672V6M2 2l12 12"
+        />
+      </g>
     </Icon>
   );
 });

@@ -12,11 +12,21 @@ export const ChartColumnIcon = forwardRef<SVGSVGElement, ChartColumnIconProps>(
       <Icon
         data-testid="ChartColumnIcon"
         aria-label="chart column"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M6.5 1h1v9h1V7h1v3h1V4h1v7H.5V6h1v4h1V8h1v2h1V5h1v5h1z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 14.5h13"
+          />
+          <path
+            fillRule="evenodd"
+            d="M3 9h2v3.5H3Zm4.5-3.5h2v7h-2Zm4.5-4h2v11h-2Z"
+          />
+        </g>
       </Icon>
     );
   },

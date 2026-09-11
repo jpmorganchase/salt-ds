@@ -14,16 +14,19 @@ export const MusicDisabledIcon = forwardRef<
     <Icon
       data-testid="MusicDisabledIcon"
       aria-label="music disabled"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M5 9.5V8.125l-1-.996v.37a2.5 2.5 0 1 0 1 2m-1 0a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"
-        clipRule="evenodd"
-      />
-      <path d="M9.5 6c-.655 0-1.25.252-1.697.664l.71.707a1.5 1.5 0 0 1 2.12 2.114l.708.707C11.75 9.747 12 9.152 12 8.5V0L4 1v1.87l1 .997V1.883l6-.75V6.5A2.5 2.5 0 0 0 9.5 6M0 1.752 10.272 12l.728-.77L.752 1z" />
+      <g strokeWidth=".67">
+        <g
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+        >
+          <path d="M6.5 11v-.672m0-5.656V3.5l7-2V10M7.922 6.094 13.5 4.5" />
+          <path d="M6.5 11c0 1.1-1.133 2-2.5 2s-2-.7-2-1.5 1.133-2 2.5-2 2 .7 2 1.5m7-1c0 .441-.182.85-.49 1.182m-2.48-2.48a2.5 2.5 0 0 1 .97-.202c1.367 0 2 .7 2 1.5m-12-7.5L14 15" />
+        </g>
+      </g>
     </Icon>
   );
 });

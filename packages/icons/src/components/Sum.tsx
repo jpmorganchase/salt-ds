@@ -14,15 +14,17 @@ export const SumIcon = forwardRef<SVGSVGElement, SumIconProps>(function SumIcon(
     <Icon
       data-testid="SumIcon"
       aria-label="sum"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M8 6 6 3h3v1.625h3V0H0l4.125 6L0 12h12V7.5H9V9H6zm2 2.5V10H4.131l2.667-4-2.667-4H10v1.625h1V1H1.901l3.438 5L1.9 11H11V8.5z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.5 5V2.5H3L7.5 8 3 13.5h10.5V11"
+        />
+      </g>
     </Icon>
   );
 });

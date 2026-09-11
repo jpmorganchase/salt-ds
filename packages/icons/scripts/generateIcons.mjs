@@ -5,6 +5,7 @@ import { Biome } from "@biomejs/js-api/nodejs";
 import { glob } from "glob";
 import Mustache from "mustache";
 import { optimize } from "svgo";
+import { brandIconNames } from "./artwork/brands.mjs";
 import { svgAttributeMap } from "./svgAttributeMap.mjs";
 
 const biome = new Biome();
@@ -198,6 +199,22 @@ function getIconMetadataFromFileName(fileName) {
   };
 }
 
+// Replace complete files so a failed write cannot truncate a usable component.
+async function writeComponent(filePath, content) {
+  try {
+    if ((await fs.promises.readFile(filePath, "utf8")) === content) return;
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
+  const temporaryPath = `${filePath}.${process.pid}.tmp`;
+  try {
+    await fs.promises.writeFile(temporaryPath, content, "utf8");
+    await fs.promises.rename(temporaryPath, filePath);
+  } finally {
+    await fs.promises.rm(temporaryPath, { force: true });
+  }
+}
+
 /**
  * Generate all the icon React components from SVGs
  */
@@ -225,6 +242,9 @@ const generateIconComponents = async ({
 
       const { componentName, iconTitle } =
         getIconMetadataFromFileName(fileName);
+      const preserveBrandContours = brandIconNames.has(
+        path.basename(fileName, ".svg").replace(/_solid$/, ""),
+      );
       let viewBox;
       const newFilePath = path.join(componentsPath, `${componentName}.tsx`);
 
@@ -236,11 +256,19 @@ const generateIconComponents = async ({
         plugins: [
           {
             name: "preset-default",
+            params: {
+              overrides: {
+                // Keep the fixed secondary widths, such as 0.5025, intact.
+                cleanupNumericValues: { floatPrecision: 8 },
+                // Brand curves are already uniformly scaled from official art.
+                ...(preserveBrandContours && { convertPathData: false }),
+              },
+            },
           },
           {
             name: "removeAttrs",
             params: {
-              attrs: "(fill|width|height)",
+              attrs: "(width|height)",
             },
           },
         ],
@@ -254,6 +282,15 @@ const generateIconComponents = async ({
               return {
                 element: {
                   enter: (node) => {
+                    // Outline paths need fill="none"; filled paths inherit the
+                    // Icon theme. Stroke paint follows that same theme token.
+                    if (node.attributes.fill !== "none") {
+                      delete node.attributes.fill;
+                    }
+                    if (node.attributes.stroke === "currentColor") {
+                      node.attributes.stroke =
+                        "var(--saltIcon-color, var(--icon-color, currentColor))";
+                    }
                     const newAttributes = {};
                     // preserve an order of attributes
                     for (const [name, value] of Object.entries(
@@ -290,7 +327,16 @@ const generateIconComponents = async ({
                   exit: (node, parentNode) => {
                     if (node.name === "svg") {
                       const index = parentNode.children.indexOf(node);
-                      parentNode.children.splice(index, 1, ...node.children);
+                      const {
+                        viewBox: _viewBox,
+                        xmlns: _xmlns,
+                        ...attributes
+                      } = node.attributes;
+                      // Keep inherited SVG paint when removing the outer SVG.
+                      const children = Object.keys(attributes).length
+                        ? [{ ...node, name: "g", attributes }]
+                        : node.children;
+                      parentNode.children.splice(index, 1, ...children);
                     }
                   },
                 },
@@ -317,9 +363,7 @@ const generateIconComponents = async ({
         newFilePath,
       );
 
-      await fs.promises.writeFile(newFilePath, result, {
-        encoding: "utf8",
-      });
+      await writeComponent(newFilePath, result);
 
       return componentName;
     }),

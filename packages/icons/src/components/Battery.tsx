@@ -12,15 +12,17 @@ export const BatteryIcon = forwardRef<SVGSVGElement, BatteryIconProps>(
       <Icon
         data-testid="BatteryIcon"
         aria-label="battery"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M8 0H4v1H3v11h6V1H8zM4 2v9h4V2z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.5 3H6V1.5h4V3h1.5v11.5h-7Z"
+          />
+        </g>
       </Icon>
     );
   },

@@ -14,20 +14,20 @@ export const ScheduleTimeIcon = forwardRef<
     <Icon
       data-testid="ScheduleTimeIcon"
       aria-label="schedule time"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M6 10a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5m-.25-2.5V6h.5v2h-1.5v-.5z"
-        clipRule="evenodd"
-      />
-      <path
-        fillRule="evenodd"
-        d="M1 0v12h10V2L9 0zm6 4h3v7H2V1h5zm3-1v-.586L8.586 1H8v2z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <g
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+        >
+          <path d="M2.5 1.5h8l3 3v10h-11Z" />
+          <path d="M10.5 1.5V4q0 .5.5.5h2.5M5 9.333a3 3 0 1 0 6 0 3 3 0 1 0-6 0Z" />
+          <path strokeWidth=".4824" d="M8 7.7v1.633l1.089.726" />
+        </g>
+      </g>
     </Icon>
   );
 });

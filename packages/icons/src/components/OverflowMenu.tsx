@@ -14,11 +14,16 @@ export const OverflowMenuIcon = forwardRef<
     <Icon
       data-testid="OverflowMenuIcon"
       aria-label="overflow menu"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M1 5h2v2H1zm4 0h2v2H5zm6 0H9v2h2z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M2.75 7.25h1.5v1.5h-1.5Zm4.5 0h1.5v1.5h-1.5Zm4.5 0h1.5v1.5h-1.5Z"
+        />
+      </g>
     </Icon>
   );
 });

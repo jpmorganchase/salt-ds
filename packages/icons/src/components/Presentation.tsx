@@ -14,16 +14,17 @@ export const PresentationIcon = forwardRef<
     <Icon
       data-testid="PresentationIcon"
       aria-label="presentation"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M9 5H3v1h6zM3 7h6v1H3z" />
-      <path
-        fillRule="evenodd"
-        d="M0 0v10h4.493L3.25 11.243l.707.707 1.893-1.893 1.893 1.893.707-.707L7.207 10H12V0zm11 1H1v2h10zM1 9V4h10v5z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2 2.333h12V12H2ZM2 5h12M4.667 7.333h6.666M4.667 9.667h6.666m-6.333 5L8 12l3 2.667"
+        />
+      </g>
     </Icon>
   );
 });

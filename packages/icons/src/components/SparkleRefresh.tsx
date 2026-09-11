@@ -14,12 +14,23 @@ export const SparkleRefreshIcon = forwardRef<
     <Icon
       data-testid="SparkleRefreshIcon"
       aria-label="sparkle refresh"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M4.707 10.831a5 5 0 1 1 5.625-7.33h-2.33v1h4v-4h-1v2.184A6 6 0 0 0 9.745 1.31a6 6 0 1 0 2.052 6.244l-.966-.26a5 5 0 0 1-6.124 3.536" />
-      <path d="m7.092 4.91 2.91 1.091-2.91 1.091-1.09 2.91-1.091-2.91L2 6.002l2.91-1.091L6 2zm-1.245.351-.16.426-.426.16-.412.154.412.155.426.16.16.425.154.41.315-.835L7.152 6l-.41-.153-.426-.16-.16-.426L6 4.85z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M12.243 3.757A6 6 0 1 0 14 8M9.743 3.757h2.5v-2.5"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth=".4154"
+          d="M8 4.693c.579 2.398.91 2.728 3.307 3.307-2.398.579-2.728.91-3.307 3.307C7.421 8.909 7.09 8.579 4.693 8 7.091 7.421 7.421 7.09 8 4.693Z"
+        />
+      </g>
     </Icon>
   );
 });

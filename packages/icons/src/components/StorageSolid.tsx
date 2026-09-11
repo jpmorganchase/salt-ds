@@ -14,16 +14,16 @@ export const StorageSolidIcon = forwardRef<
     <Icon
       data-testid="StorageSolidIcon"
       aria-label="storage solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M0 1v3h12V1z" />
-      <path
-        fillRule="evenodd"
-        d="M11 5H1v7h10zM4 6h4v1H4z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M1.5 2.5h13v3h-13Zm1 4h11v7h-11Zm3 1.5h5v1h-5Z"
+        />
+      </g>
     </Icon>
   );
 });

@@ -14,16 +14,16 @@ export const BankCheckSolidIcon = forwardRef<
     <Icon
       data-testid="BankCheckSolidIcon"
       aria-label="bank check solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M0 2h12v2H0z" />
-      <path
-        fillRule="evenodd"
-        d="M0 5h12v5H0zm2 3h7v1H2zm4-2H2v1h4zm4 0H8v1h2z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M1.167 3.167h13.666v9.666H1.167Zm0 2h13.666v.666H1.167ZM3.25 7.5H8v1H3.25Zm7 0h2.5v1h-2.5Zm-7 2.25H11v1H3.25Z"
+        />
+      </g>
     </Icon>
   );
 });

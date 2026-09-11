@@ -14,16 +14,17 @@ export const KeyBackspaceIcon = forwardRef<
     <Icon
       data-testid="KeyBackspaceIcon"
       aria-label="key backspace"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="m0 6 4-4h7v8H4zm4.414 3H10V3H4.414l-3 3z"
-        clipRule="evenodd"
-      />
-      <path d="M6.536 6.707 7.95 8.121l.707-.707L7.243 6l1.414-1.414-.707-.707-1.414 1.414L5.12 3.879l-.707.707L5.828 6 4.414 7.414l.707.707z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6 3.5h8v9H6L1.5 8ZM8 6l4 4m0-4-4 4"
+        />
+      </g>
     </Icon>
   );
 });

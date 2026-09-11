@@ -14,15 +14,28 @@ export const PanelOpenTopSolidIcon = forwardRef<
     <Icon
       data-testid="PanelOpenTopSolidIcon"
       aria-label="panel open top solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M0 12V0h12v12zM1 1v3.004h10V1zm7.121 5.469L6.5 8.089V5.005h-1V8.09L3.879 6.469l-.707.707L6 10.004l2.828-2.828z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path fillRule="evenodd" d="M14.333 1.667V5H1.667V1.667Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M14.333 1.667v12.666H1.667V1.667Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M14.333 2.167v11.666q0 .5-.5.5H2.167q-.5 0-.5-.5V2.167q0-.5.5-.5h11.666q.5 0 .5.5Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M14.333 5H1.667m12.666-.5q0 .5-.5.5m.5.5q0-.5-.5-.5M1.667 4.5q0 .5.5.5m-.5.5q0-.5.5-.5M8 7v4.667m2.333-2L8 12 5.667 9.667"
+        />
+      </g>
     </Icon>
   );
 });

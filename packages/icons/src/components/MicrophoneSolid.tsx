@@ -14,16 +14,21 @@ export const MicrophoneSolidIcon = forwardRef<
     <Icon
       data-testid="MicrophoneSolidIcon"
       aria-label="microphone solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M6 0a2.5 2.5 0 0 0-2.5 2.5v3a2.5 2.5 0 0 0 5 0v-3A2.5 2.5 0 0 0 6 0"
-        clipRule="evenodd"
-      />
-      <path d="M2.5 5.5a3.5 3.5 0 1 0 7 0h1a4.5 4.5 0 0 1-4 4.473V11H9v1H3v-1h2.5V9.973a4.5 4.5 0 0 1-4-4.473z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M8 1.5q2.5 0 2.5 2.5v4q0 2.5-2.5 2.5T5.5 8V4q0-2.5 2.5-2.5"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M3.5 7v1a4.5 4.5 0 0 0 9 0V7M8 12.5v2m-2.5 0h5"
+        />
+      </g>
     </Icon>
   );
 });

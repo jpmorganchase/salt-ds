@@ -12,15 +12,17 @@ export const CollapseIcon = forwardRef<SVGSVGElement, CollapseIconProps>(
       <Icon
         data-testid="CollapseIcon"
         aria-label="collapse"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M7 .996v4h4v-1H8.707l2.89-2.889L10.888.4l-2.89 2.89V.995zM4.996 11V7h-4v1H3.29L.4 10.89l.708.706 2.89-2.889V11zm0-6.004h-4v-1H3.29L.399 1.107 1.108.4l2.89 2.89V.995h1zM11 7H7v4h1V8.707l2.889 2.89.707-.708L8.707 8H11z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m2 2 4 4M2 6h4V2m8 0-4 4m0-4v4h4M2 14l4-4m-4 0h4v4m8 0-4-4m0 4v-4h4"
+          />
+        </g>
       </Icon>
     );
   },

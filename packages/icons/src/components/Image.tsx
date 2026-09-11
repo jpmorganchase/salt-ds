@@ -12,16 +12,21 @@ export const ImageIcon = forwardRef<SVGSVGElement, ImageIconProps>(
       <Icon
         data-testid="ImageIcon"
         aria-label="image"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1 1 1v2H3l2-2 1 1z" />
-        <path
-          fillRule="evenodd"
-          d="M1 0v12h10V2L9 0zm9 4v7H2V1h5v3zm0-1v-.586L8.586 1H8v2z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 1.5h8l3 3v10h-11Zm8 0V4q0 .5.5.5h2.5"
+          />
+          <path
+            fillRule="evenodd"
+            d="M4.5 7.5a1 1 0 1 0 2 0 1 1 0 1 0-2 0m0 5L6.75 10l1.75 1.5 2-2.5 1.5 1.75v1.75Z"
+          />
+        </g>
       </Icon>
     );
   },

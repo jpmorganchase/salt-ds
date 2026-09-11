@@ -12,11 +12,17 @@ export const SyncIcon = forwardRef<SVGSVGElement, SyncIconProps>(
       <Icon
         data-testid="SyncIcon"
         aria-label="sync"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M7.296 1.172A5 5 0 0 0 1 6.002H0a6 6 0 0 1 11.002-3.317V.502h1v4h-4v-1h2.33a5 5 0 0 0-1.211-1.41 5 5 0 0 0-1.825-.92m-2.59 9.659A5 5 0 0 0 11 6.001h1A6 6 0 0 1 1 9.319v2.183H0v-4h4v1H1.67a5 5 0 0 0 1.21 1.41 5 5 0 0 0 1.826.92" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2 8a6 6 0 0 1 10.243-4.243m-2.5 0h2.5v-2.5M14 8a6 6 0 0 1-10.243 4.243m2.5 0h-2.5v2.5"
+          />
+        </g>
       </Icon>
     );
   },

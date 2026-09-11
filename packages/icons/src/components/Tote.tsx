@@ -12,15 +12,19 @@ export const ToteIcon = forwardRef<SVGSVGElement, ToteIconProps>(
       <Icon
         data-testid="ToteIcon"
         aria-label="tote"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M4 4V3a2 2 0 1 1 4 0v1h4v8H0V4zm3-1v1H5V3a1 1 0 0 1 2 0m1 4V5h3v6H1V5h3v2h1V5h2v2z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M2.5 5.5h11v8h-11Z" />
+            <path d="M5.5 7.5V4a2.5 2.5 0 0 1 5 0v3.5" />
+          </g>
+        </g>
       </Icon>
     );
   },

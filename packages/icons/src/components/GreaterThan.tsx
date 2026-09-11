@@ -12,11 +12,17 @@ export const GreaterThanIcon = forwardRef<SVGSVGElement, GreaterThanIconProps>(
       <Icon
         data-testid="GreaterThanIcon"
         aria-label="greater than"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="m10 6-7.575 4L2 9.106 7.883 6 2 2.894 2.425 2z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m4.5 3.5 7 4.5-7 4.5"
+          />
+        </g>
       </Icon>
     );
   },

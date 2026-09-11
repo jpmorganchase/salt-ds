@@ -12,11 +12,16 @@ export const VideoSolidIcon = forwardRef<SVGSVGElement, VideoSolidIconProps>(
       <Icon
         data-testid="VideoSolidIcon"
         aria-label="video solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M9 2H0v8h9V8.07L12 9V3l-3 .942z" />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M2 3.5h8q.5 0 .5.5v8q0 .5-.5.5H2q-.5 0-.5-.5V4q0-.5.5-.5M11.5 6l3-1.5v7l-3-1.5Z"
+          />
+        </g>
       </Icon>
     );
   },

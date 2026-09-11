@@ -14,15 +14,16 @@ export const BooleanSolidIcon = forwardRef<
     <Icon
       data-testid="BooleanSolidIcon"
       aria-label="boolean solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M0 2.75A2.75 2.75 0 0 1 2.75 0h6.5a2.75 2.75 0 1 1 0 5.5h-6.5A2.75 2.75 0 0 1 0 2.75m4.5 0a1.75 1.75 0 1 1-3.5 0 1.75 1.75 0 0 1 3.5 0m7.5 6.5A2.75 2.75 0 0 1 9.25 12h-6.5a2.75 2.75 0 1 1 0-5.5h6.5A2.75 2.75 0 0 1 12 9.25m-4.5 0a1.75 1.75 0 1 1 3.5 0 1.75 1.75 0 0 1-3.5 0"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M4.25 1.167h7.5a3.083 3.083 0 0 1 0 6.166h-7.5a3.083 3.083 0 0 1 0-6.166m0 7.5h7.5a3.083 3.083 0 0 1 0 6.166h-7.5a3.083 3.083 0 0 1 0-6.166M3 4.25a1.25 1.25 0 1 0 2.5 0 1.25 1.25 0 1 0-2.5 0m7.5 7.5a1.25 1.25 0 1 0 2.5 0 1.25 1.25 0 1 0-2.5 0"
+        />
+      </g>
     </Icon>
   );
 });

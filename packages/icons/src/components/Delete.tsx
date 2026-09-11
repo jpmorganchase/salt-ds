@@ -12,16 +12,17 @@ export const DeleteIcon = forwardRef<SVGSVGElement, DeleteIconProps>(
       <Icon
         data-testid="DeleteIcon"
         aria-label="delete"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M5 4v6H4V4zm2 0v6H6V4z" />
-        <path
-          fillRule="evenodd"
-          d="M4 0a1 1 0 0 0-1 1v1H0v1h1v7a2 2 0 0 0 2 2h5.25A1.75 1.75 0 0 0 10 10.25V3h1V2H8V1a1 1 0 0 0-1-1zm5 3H2v7a1 1 0 0 0 1 1h5.25a.75.75 0 0 0 .75-.75zM7 2H4v-.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2 4h12M6 4V1.5h4V4M3.5 4 4 14.5h8L12.5 4Zm3 2.5V12m3-5.5V12"
+          />
+        </g>
       </Icon>
     );
   },

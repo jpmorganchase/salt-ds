@@ -14,15 +14,16 @@ export const ReceiptSolidIcon = forwardRef<
     <Icon
       data-testid="ReceiptSolidIcon"
       aria-label="receipt solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M4 10.5 1 12V0h10v12l-3-1.5L6 12zM8 3H4v1h4zM4 5h4v1H4zm4 2H4v1h4z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="m3.5 1.5 1.5 1 1.5-1 1.5 1 1.5-1 1.5 1 1.5-1v13l-1.5-1-1.5 1-1.5-1-1.5 1-1.5-1-1.5 1Zm2 3.5h5v1h-5Zm0 2.5h5v1h-5Zm0 2.5h3v1h-3Z"
+        />
+      </g>
     </Icon>
   );
 });

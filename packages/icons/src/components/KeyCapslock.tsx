@@ -12,15 +12,17 @@ export const KeyCapslockIcon = forwardRef<SVGSVGElement, KeyCapslockIconProps>(
       <Icon
         data-testid="KeyCapslockIcon"
         aria-label="key capslock"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M9 8H3v3h6zM8 9H4v1h4zm3-3H9v1H3V6H1l5-6zM8.865 5 6 1.562 3.135 5H4v1h4V5z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m2.5 7.5 5.5-5 5.5 5h-3v3h-5v-3Zm3 6h5"
+          />
+        </g>
       </Icon>
     );
   },

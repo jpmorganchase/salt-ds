@@ -14,11 +14,17 @@ export const TextAlignLeftIcon = forwardRef<
     <Icon
       data-testid="TextAlignLeftIcon"
       aria-label="text align left"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M7 9.563H1v-1h6zM11 6.5H1v-1h10zM9 3.437H1v-1h8z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2 3.5h12M2 8h9m-9 4.5h10.5"
+        />
+      </g>
     </Icon>
   );
 });

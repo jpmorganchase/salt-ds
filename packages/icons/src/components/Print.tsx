@@ -12,16 +12,26 @@ export const PrintIcon = forwardRef<SVGSVGElement, PrintIconProps>(
       <Icon
         data-testid="PrintIcon"
         aria-label="print"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M8 9v1H4V9zm0-1V7H4v1z" />
-        <path
-          fillRule="evenodd"
-          d="M2 0v2H0v6h2v4h8V8h2V2h-2V0zm9 3H1v4h1V5h8v2h1zM9 2V1H3v1zM3 6v5h6V6z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.5 11.5h-2v-6h11v6h-2m-7-6v-4h7v4"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.5 9.5h7v5h-7Zm1 2h5"
+          />
+          <path
+            fillRule="evenodd"
+            d="M11.1 7.5a.4.4 0 1 0 .8 0 .4.4 0 1 0-.8 0"
+          />
+        </g>
       </Icon>
     );
   },

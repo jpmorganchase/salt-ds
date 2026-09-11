@@ -14,11 +14,17 @@ export const LessThanEqualToIcon = forwardRef<
     <Icon
       data-testid="LessThanEqualToIcon"
       aria-label="less than equal to"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M2 11v-1h8v1zm7.576-2L2.001 5l7.575-4 .425.895L4.118 5l5.883 3.105z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="m11.5 2.5-7 4 7 4m-7 3h7"
+        />
+      </g>
     </Icon>
   );
 });

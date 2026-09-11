@@ -12,15 +12,17 @@ export const KeyOptionIcon = forwardRef<SVGSVGElement, KeyOptionIconProps>(
       <Icon
         data-testid="KeyOptionIcon"
         aria-label="key option"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M4.14 2H1V1h3.86l3 9H11v1H7.14zM11 2H7V1h4z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2 4.5h3.5l5 8H14m-4.5-8H14"
+          />
+        </g>
       </Icon>
     );
   },

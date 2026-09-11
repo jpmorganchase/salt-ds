@@ -12,11 +12,17 @@ export const IndentIcon = forwardRef<SVGSVGElement, IndentIconProps>(
       <Icon
         data-testid="IndentIcon"
         aria-label="indent"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M3 2.5h9v1H3zm4 3h5v1H7zm0 3h5v1H7zM5.982 7.475l-2.829 2.829-.707-.707L4.042 8H0V7h4.093L2.446 5.353l.707-.707z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2 2.5h12m-12 11h12m-6.5-7H14m-6.5 3H14m-11.5-4L5 8l-2.5 2.5"
+          />
+        </g>
       </Icon>
     );
   },

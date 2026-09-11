@@ -12,15 +12,16 @@ export const ExportSolidIcon = forwardRef<SVGSVGElement, ExportSolidIconProps>(
       <Icon
         data-testid="ExportSolidIcon"
         aria-label="export solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M0 0h12v5.993L8.12 2.112l-.708.707L10.094 5.5H4v1h6.094L7.412 9.183l.707.707L12 6.009V12H0zm1 1h4v1H2v8h3v1H1z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M1.5 1.5h13v13h-13ZM6 3V2H2v12h4v-1H3V3ZM5 7.5v1h7.6l-2.1 2.1.7.7L14.5 8l-3.3-3.3-.7.7 2.1 2.1Z"
+          />
+        </g>
       </Icon>
     );
   },

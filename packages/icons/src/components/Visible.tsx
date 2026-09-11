@@ -12,20 +12,19 @@ export const VisibleIcon = forwardRef<SVGSVGElement, VisibleIconProps>(
       <Icon
         data-testid="VisibleIcon"
         aria-label="visible"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M8.25 6a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0m-1 0a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0"
-          clipRule="evenodd"
-        />
-        <path
-          fillRule="evenodd"
-          d="M6 10c3 0 5.25-2.75 6-4.125C11.125 4.583 9 2 6 2S.875 4.583 0 5.875C.75 7.25 3 10 6 10M2.796 7.685A8.8 8.8 0 0 1 1.2 5.919a9.6 9.6 0 0 1 1.625-1.683C3.731 3.516 4.8 3 6 3s2.269.516 3.175 1.236A9.7 9.7 0 0 1 10.8 5.919a8.8 8.8 0 0 1-1.596 1.766C8.279 8.455 7.186 9 6 9s-2.28-.545-3.204-1.315"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M1.5 8Q8-2.5 14.5 8 8 18.5 1.5 8Z" />
+            <path d="M6 8a2 2 0 1 0 4 0 2 2 0 1 0-4 0Z" />
+          </g>
+        </g>
       </Icon>
     );
   },

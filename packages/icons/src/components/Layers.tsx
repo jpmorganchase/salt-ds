@@ -12,15 +12,19 @@ export const LayersIcon = forwardRef<SVGSVGElement, LayersIconProps>(
       <Icon
         data-testid="LayersIcon"
         aria-label="layers"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="m0 4 1.5 1L0 6l1.5 1L0 8l6 4 6-4-1.5-1L12 6l-1.5-1L12 4 6 0zm9.599 3.6L6 10 2.401 7.6l-.598.4L6 10.798 10.197 8zM1.803 6l.598-.4L6 8l3.599-2.4.598.4L6 8.798zm0-2L6 6.798 10.197 4 6 1.202z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M8 1.833 14.167 5 8 8.167 1.833 5Z" />
+            <path d="M1.833 8 8 11.167 14.167 8M1.833 11 8 14.167 14.167 11" />
+          </g>
+        </g>
       </Icon>
     );
   },

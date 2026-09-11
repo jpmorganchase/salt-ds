@@ -12,11 +12,17 @@ export const MoveAllIcon = forwardRef<SVGSVGElement, MoveAllIconProps>(
       <Icon
         data-testid="MoveAllIcon"
         aria-label="move all"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M5.505 1.905v3.088h.974V1.895L7.94 3.353l.707-.707L5.997 0 3.35 2.643l.707.707zM3.353 4.06l-.707-.707L0 6.003l2.642 2.648.707-.707-1.445-1.448h3.088v-.974H1.894zm-.001 5.295.707-.707 1.462 1.46v-3.1h.974v3.088L7.944 8.65l.707.707L6.003 12zm6.003-.707L12 5.998 9.357 3.35l-.707.707 1.446 1.449H7.008v.974h3.098L8.648 7.94z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 8h13M8 1.5v13M3.5 6l-2 2 2 2m9-4 2 2-2 2M6 3.5l2-2 2 2m-4 9 2 2 2-2"
+          />
+        </g>
       </Icon>
     );
   },

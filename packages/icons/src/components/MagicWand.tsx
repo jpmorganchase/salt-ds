@@ -12,16 +12,21 @@ export const MagicWandIcon = forwardRef<SVGSVGElement, MagicWandIconProps>(
       <Icon
         data-testid="MagicWandIcon"
         aria-label="magic wand"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M12 9.879 9.879 12 2.808 4.929l2.12-2.121zm-7.778-4.95 2.12 2.12.708-.706-2.121-2.121z"
-          clipRule="evenodd"
-        />
-        <path d="M1.91 6.59 3 7l-1.09.41L1.5 8.5l-.41-1.09L0 7l1.09-.41.41-1.09zm8.272-4.772L12 2.5l-1.818.682L9.5 5l-.682-1.818L7 2.5l1.818-.682L9.5 0zm-7.636-.364L4 2l-1.454.546L2 4l-.546-1.454L0 2l1.454-.546L2 0z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m2.5 12 7-7L11 6.5l-7 7ZM8 6.5 9.5 8"
+          />
+          <path
+            fillRule="evenodd"
+            d="m4 2.5.42 1.08L5.5 4l-1.08.42L4 5.5l-.42-1.08L2.5 4l1.08-.42Zm8-1 .42 1.08L13.5 3l-1.08.42L12 4.5l-.42-1.08L10.5 3l1.08-.42Zm1 8.333.327.84.84.327-.84.327-.327.84-.327-.84-.84-.327.84-.327Z"
+          />
+        </g>
       </Icon>
     );
   },

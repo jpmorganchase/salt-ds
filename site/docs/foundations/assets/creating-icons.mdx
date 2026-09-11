@@ -1,0 +1,260 @@
+---
+title: Creating icons
+layout: DetailTechnical
+sidebar:
+  label: Creating icons
+  priority: 1
+---
+
+Use this contribution workflow to create, change and maintain icons in the Salt repository. The [icon design guidelines](/salt/foundations/assets/icon-design) define the visual language; the [Icons catalogue](/salt/foundations/assets/index) is the starting point for finding related meanings and existing variants.
+
+## Preserve official brand artwork
+
+For brand logos, follow the [brand-logo exception](/salt/foundations/assets/icon-design#brand-logos). Start from the owner's current official artwork and preserve its contours and aspect ratio. Use uniform scaling to fit the export canvas; do not apply Salt restyling or strokes, substitute Salt lettering, or create variants the owner has not supplied.
+
+Keep the downloaded source SVG unchanged. When it includes a larger blank presentation artboard, the export recipe may fit the visible mark within its painted bounds before scaling uniformly into the target canvas. This adjusts framing while preserving the supplied geometry. Record the source viewBox and selected bounds in the recipe, and provide the owner's required clear space in the surrounding layout.
+
+Record the official source beside the owning recipe so future updates can be checked against it. For GitHub, use the [official logo files and guidance](https://brand.github.com/foundations/logo), with black or white as the default and grey or green only in the owner's specified cases. Provide the required clear space—25% of the logo's width on each side—in the interface layout, rather than treating it as mandatory padding inside every SVG viewBox.
+
+The GitHub implementation keeps the [official source SVG](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/brands/github.svg) unchanged. [brands.mjs](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/brands.mjs) fits it uniformly, and both generation stages preserve its contours. Running `yarn workspace @salt-ds/icons generate:icons` also synchronizes [the site's GitHub asset](https://github.com/jpmorganchase/salt-ds/blob/main/site/public/img/github_logo.svg), using the same 16-unit path at a 14px display size.
+
+Figma's [official brand assets](https://www.figma.com/using-the-figma-brand/) supply both full-color and monoline icons. The package's `figma` and `icon-figma` exports use the supplied monoline filled path, including its transparent counters; the site's `figma_logo.svg` uses the supplied full-color artwork and palette. Both source SVGs have a `0 0 1024 1280` presentation artboard, so fit the visible mark without changing its contours. Follow the [Figma Brand Book](https://static.figma.com/uploads/6645755656177435f83e10b48d9947645b55a033) when selecting a variant for its background.
+
+Symphony's [official monochrome logo](https://symphony.com/wp-content/uploads/2019/06/Symphony_logo-horisontal.svg) contains a wordmark and a separate company S path. The `symphony` export uses that S path unchanged, fitted uniformly within the icon canvas. Preserve the company identity: the [2025 refresh](https://symphony.com/insights/blog/symphony-brand-refresh/) introduced a distinct Symphony Messaging product mark.
+
+LinkedIn's source is the inline `inbug-blue-14` symbol on its [official downloads page](https://brand.linkedin.com/downloads#inbug-blue-14), rather than a file from the PNG-only logo ZIP. `LinkedinIcon` and `LinkedinSolidIcon` intentionally use the same supplied rounded-square [in] mark. Preserve both exports as a compatibility pair; do not create a bare-letter variant to make the pair differ.
+
+Stack Overflow's [official symbol illustration](https://stackoverflow.design/docs/public/brand/logo/symbol.svg) contains the mark path on an orange presentation rectangle. The recipe uses that path unchanged, omits the presentation background, and fits the mark uniformly within the icon canvas.
+
+The site's `storybook_logo.svg` uses the exact default SVG from [Storybook's official brand repository](https://github.com/storybookjs/brand), preserving the supplied colors, white details, and masking. Keep it as a site asset. The [brand source notes](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/brands/README.md) record the downloaded files, source links, and retained license.
+
+## Construct the artwork
+
+Salt icons use a 16×16 viewBox and a fixed authored primary stroke of 0.67 units. The recipes in the icons package use a 24-unit construction canvas. The exporter scales coordinates and numeric widths by 16/24, then multiplies the normalized widths by 0.67 and writes fixed numeric values.
+
+A primary construction stroke of 1.5 therefore exports as `1.5 × (16 / 24) × 0.67 = 0.67`. Use the normal stroke helper for primary lines; setting its construction width to 0.67 would make the exported stroke too thin. An unscaled secondary width of 1.08 exports as approximately 0.4824 units, retaining a 0.72 proportion of the primary stroke. Local construction scaling also affects these widths.
+
+At a rendered size of `P` pixels, the authored primary stroke occupies `0.67 × P / 16` pixels: approximately 0.5025px at 12px. The `schedule-time` hands illustrate the lighter 0.72 proportion. Resizing scales the artwork and its strokes together.
+
+Construction groups may translate, rotate or scale reusable geometry. Bake every transform into the exported coordinates and widths. When adapting geometry already drawn on a 16-unit canvas, lift it consistently to the construction canvas before export; avoid applying normalization twice.
+
+Use shared primitives and the Open Sans vector letterforms for repeated geometry, labels and numerals. The glyph data uses a seven-unit capital-height metric, natural advances and explicit tracking. Let the helper calculate visible bounds instead of centering by character count. Preserve the font attribution and license. Labels load no font at runtime. If a needed character is absent, extend the shared glyph data consistently instead of silently substituting a different character.
+
+Regular vector lettering combines a filled core with a small proportional stroke. The bold control uses a filled bold glyph, and the italic control uses the family’s barred I.
+
+Share the same stroked paths and authored widths for open contours, frames, handles, stems and action lines in outline and solid variants. Add the filled surface separately so the pair retains matching line features. Intrinsic filled silhouettes and inverse details remain filled geometry.
+
+The following example shows how an outline and solid can share line geometry on the 24-unit construction canvas. Its dimensions illustrate composition; use the related family to determine a new icon's proportions.
+
+```js
+import { box, F, S } from "./primitives.mjs";
+
+const frame = S(box(3, 3, 18, 18));
+const divider = S("M3 9h18");
+const detail = S("M8 15h8");
+const outline = frame + divider + detail;
+const solid = F(box(3, 3, 18, 6)) + frame + divider + detail;
+const pair = [outline, solid];
+```
+
+## Construct transparent cutouts
+
+Follow the visual separation described in [Icon design](/salt/foundations/assets/icon-design#transparency-and-cutouts). Calculate clearances from the foreground's authored stroke widths, then inspect the resulting geometry at native size.
+
+### Calculate local painted gaps
+
+The following equations use **16-unit coordinates** and describe local parallel edges. Let **W = 0.67** be the fixed authored primary width, `r` a proportional stroke factor and `g` the remaining painted gap.
+
+| Construction                                                                | Painted gap                      |
+| --------------------------------------------------------------------------- | -------------------------------- |
+| A fixed filled boundary at distance `E` from a foreground stroke centerline | `g = E − rW / 2`                 |
+| Two stroked paths with centerline separation `D` and factors `r1` and `r2`  | `g = D − (r1 + r2)W / 2`         |
+| Two fixed filled contours                                                   | Their geometric edge separation. |
+
+Use the authored width **W = 0.67** in these calculations. If both neighboring edges carry strokes, include both half-widths.
+
+Choose a useful local gap by comparing the related family and its native rendering. For a chosen gap `g_min` between parallel strokes, use `D ≥ g_min + (r1 + r2) × 0.67 / 2`. The devices phone header has a centerline separation of 2 units; its two primary strokes leave a painted gap of `2 − 0.67 = 1.33` units.
+
+| Calibrated construction                                                              | Painted gap at W = 0.67 |
+| ------------------------------------------------------------------------------------ | ----------------------- |
+| Devices: fixed cutout boundary 1.25 units from the phone's primary stroke centerline | 0.915                   |
+| Boolean: track radius 2.75 and filled thumb radius 1.25                              | 1.165                   |
+
+These are measurements of particular constructions, not universal minimums or spacing tokens. At 12px, multiply a coordinate-space gap by `12 / 16`. Mathematical separation alone does not guarantee a useful visible opening.
+
+### Follow curved contours
+
+For a smooth foreground curve `p(t)`, a constant normal offset follows `p(t) + E·n(t)`, where `n(t)` is the unit normal on the cutout side.
+
+A circle can use an offset radius. A general Bézier curve usually needs a fitted or sampled offset construction. Scaling the whole curve, expanding its bounding box or moving each control point horizontally by the same amount will usually produce uneven separation. The devices cutout follows the actual phone curve with an offset approximated by cubic segments.
+
+Inspect curved apexes, shoulders and the transitions between straight and curved segments. Keep the foreground shape unchanged when correcting only its background clearance.
+
+### Check diagonals, terminals and corners
+
+Measure diagonal gaps perpendicular to the edge. For parallel lines `y = mx + b`, a vertical displacement `Δb` produces normal separation `d = |Δb| / √(1 + m²)`. Use that normal distance in the painted-gap calculation. This distinction matters at the sloping edges of the graduation cap in `school`.
+
+At a terminal or sharp corner, include the complete painted footprint at the authored stroke width. Butt caps stop along the line direction, but their outer corners still affect nearby diagonal clearance. A rectangular notch can leave plenty of space at the sides of a mark and too little at its cap corner.
+
+For equal-distance clearance, offset the painted foreground by the intended gap and join the cutout boundary appropriately. The empty buffer can curve around the outer cap corners while the foreground mark itself remains square-ended. Check both sides of a mark and inspect the whole boundary, including acute joins and adjoining cutouts.
+
+## Export and consumer contract
+
+Use the current family's compact output vocabulary: `svg`, `g`, and `path`.
+Export `width="16"`, `height="16"` and `viewBox="0 0 16 16"`. Keep path geometry explicit; use `fill="none"` for open lines, `currentColor` for paint, and `evenodd` for compound fills where needed. Primary lines use `stroke-linecap="butt"` and `stroke-linejoin="miter"`; construct selective curved junctions in the path. Do not use a non-scaling stroke.
+The exporter writes fixed numeric stroke widths and normalizes construction transforms.
+Validation rejects `<text>`, `<mask>`, `<clipPath>`, `<image>`, `<script>`, and invalid values such as `NaN` or `undefined`.
+
+There is no comprehensive SVG allowlist schema.
+[svgAttributeMap.mjs](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/svgAttributeMap.mjs) maps SVG names to React attribute names; it is not a list of approved drawing features.
+Stay within the established geometry profile when adding artwork.
+
+[Component generation](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/generateIcons.mjs) preserves `fill="none"`, makes filled shapes inherit the icon theme, and maps currentColor strokes to the same theme token.
+React components, inline SVGs and the data-URL masks in `saltIcons.css` use the same authored stroke widths.
+The [size CSS](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/src/icon/Icon.css) uses Salt's density-based icon size with a 12px minimum and a size multiplier.
+
+## Find the effective recipe before editing
+
+Base artwork recipes live alphabetically in [a.mjs](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/a.mjs), [b.mjs](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/b.mjs), [c.mjs](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/c.mjs), and [d.mjs](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/d.mjs).
+The exporter combines the alphabetical batches with these shared constructions in [generate.mjs](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/generate.mjs):
+
+| Effective owner                                                                                                                    | Current responsibility                                                  |
+| ---------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| [architecture.mjs](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/architecture.mjs)             | Bank architecture.                                                      |
+| [reference-symbols.mjs](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/reference-symbols.mjs)   | Globe, heart/like, currency, exchange, light, laptop, display, browser. |
+| [reference-frames.mjs](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/reference-frames.mjs)     | Calendar, mobile, schedule, schedule-time, all panel orientations.      |
+| [reference-controls.mjs](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/reference-controls.mjs) | Bank-check, boolean, devices.                                           |
+| [cloud-actions.mjs](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/cloud-actions.mjs)           | Cloud and its action/disabled states.                                   |
+| [file-formats.mjs](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/file-formats.mjs)             | CSV, PDF, XLS, ZIP.                                                     |
+
+Edit the effective owner and reuse its shared geometry when extending an existing family.
+Each meaning has one owning recipe. The generator rejects duplicate registrations, including names reserved for aliases.
+[Primitives](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/primitives.mjs), [letterforms](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/letterforms.mjs), and [numbered timers](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/numbered-timer.mjs) also serve multiple icons; review affected siblings when changing them.
+
+Aliases are assigned after shared constructions: `bar-chart→chart-bar`, `pie-chart→chart-pie`, `line-chart→chart-line`, `error-execute→not-allowed`, `help→help-circle`, `icon-figma→figma`, and `success`, `success-tick`, `success_small→checkmark`.
+Preserve their existing filenames and exports.
+The deprecated `step-success` keeps its historic filled badge and is not an artwork alias to its replacement.
+
+## Add and integrate a new icon
+
+1. Define its meaning, nearest siblings, useful states, and whether it needs a solid variant.
+2. Add a uniquely named recipe to the appropriate batch, or extend the appropriate shared construction. A new shared module must be imported and applied by the exporter.
+3. Add `new-name.svg` and, when supplied, `new-name_solid.svg` to [inventory.json](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/inventory.json). Keep the file list in JavaScript `.sort()` order.
+4. Add or update the website's synonym metadata and category as described below. One metadata row covers both variants.
+5. Generate SVGs and package artifacts, then run validation and the targeted integration checker.
+6. Inspect the new icon beside its siblings in the existing site catalogue and Storybook at the required sizes. Verify its website search results and both variant filters. Add meaningful targeted clearance or alignment checks for new sensitive constructions.
+7. Update the current file/pair counts in the [package README](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/README.md) when names or variants change. Add a changeset for consumer-visible changes, including shipped artwork, following [CONTRIBUTING.md](https://github.com/jpmorganchase/salt-ds/blob/main/CONTRIBUTING.md).
+8. Review the generated diff and deliver the source recipe, metadata, registration changes, relevant changeset, and generated integration artifacts together.
+
+The inventory guard detects unintended name changes; intentionally extending the inventory is the correct way to add new icons.
+The generator rejects unregistered names, missing requested variants, and identical pair bodies, except for the documented LinkedIn compatibility pair.
+The website metadata assigns each meaning one category shared by its variants.
+Regular `build:icons` can consume a new source SVG directly, but the maintained recipe workflow also needs its recipe and registration.
+
+For `new-name.svg`, generation creates `NewNameIcon`, `NewNameIconProps`, the default label `new name`, and `.saltIcons-NewName`.
+The optional `_solid` suffix becomes `Solid` in the component and class names.
+The [component template](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/templateIcon.mustache) lets callers override default accessibility props.
+For use in products, supply the appropriate accessible name or `aria-hidden` according to the icon's role.
+
+Generated artifacts include `src/SVG/*.svg`, `src/components/*.tsx`, `src/components/index.ts`, `saltIcons.css`, `stories/icon.all.ts`, and the site's `allIconsList.ts`.
+Use the generator for these artifacts; make durable artwork changes in the effective recipes.
+Use the full package `build:icons` command: passing one SVG to the lower-level generator would rebuild its aggregate lists and CSS from only that subset.
+
+### Website synonyms and categories
+
+Maintain [salt-icon-synonym.json](https://github.com/jpmorganchase/salt-ds/blob/main/site/src/components/icon-preview/salt-icon-synonym.json) alongside new names and semantic changes.
+It is a JSON array with the exact keys `iconName`, singular `synonym`, and `category`:
+
+```json
+{
+  "iconName": "bank-check",
+  "synonym": ["finance", "payment", "cheque", "check"],
+  "category": "finance"
+}
+```
+
+This existing entry illustrates the schema; choose terms that explain the new icon's actual meaning.
+Use a lowercase hyphenated basename for `iconName`, without `.svg`, `_solid`, or the React `Icon` suffix.
+One metadata row covers both outline and solid components.
+The [website consumer](https://github.com/jpmorganchase/salt-ds/blob/main/site/src/components/icon-preview/IconPreview.tsx) removes hyphens and matches the PascalCase name case-insensitively, with an optional `Solid` suffix.
+For an existing underscore filename, verify its generated name and use the matching hyphenated metadata form, as `favorite_strong.svg` and `favorite-strong` do.
+Avoid duplicate or colliding normalized names: the consumer takes the first matching row.
+
+The website's `category` field is the maintained category source for the catalogue.
+Choose an appropriate existing value, such as `finance` or `actions`, by comparing nearby entries.
+A missing website row produces a console warning, no synonyms, and a fallback `deprecated` category—even for a new icon.
+Neither `generate:icons` nor `build:icons` updates this JSON.
+
+The current search lowercases the query and removes its whitespace, but compares synonym strings literally.
+Use lowercase single-word terms and add a compact equivalent for important phrases, such as `screenreader` alongside `screen reader`.
+Verify intended queries in the website's [Icons catalogue](/salt/foundations/assets/index), including outline-only and solid-only filtering. Storybook's icon search matches component names and does not test website synonyms.
+The [Excel importer](https://github.com/jpmorganchase/salt-ds/blob/main/scripts/makeSynonym.mjs) replaces the whole JSON from `scripts/Icons Synonym List.xlsx`; that workbook is not in this checkout, so do not use it for a targeted metadata edit.
+
+For an artwork-only correction that preserves the meaning and names, retain existing inventory, category, and synonym entries unless the correction requires a specific metadata change.
+For a compatible rename, preserve the old exports and update the [recipe aliases](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/generate.mjs), [component deprecation metadata](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/generateIcons.mjs), and website metadata deliberately.
+Changesets are authored separately; generation does not create release notes or update README counts.
+
+## Commands and acceptance
+
+Run these from the **repository root** using the project's Yarn setup:
+
+```sh
+yarn workspace @salt-ds/icons generate:icons
+yarn workspace @salt-ds/icons validate:icons
+
+# Check metadata and generated integration for the changed basename(s):
+yarn node packages/icons/skills/salt-icons/scripts/check-integration.mjs --repo . new-name
+
+# Rebuild components and CSS from existing src/SVG files only:
+yarn workspace @salt-ds/icons build:icons
+
+# Verify generated React behavior and TypeScript integration:
+yarn test:components packages/icons/src/__tests__/__e2e__/icon.browser.test.tsx
+yarn typecheck
+
+# Record consumer-visible changes when applicable:
+yarn changeset
+```
+
+### Use the existing review surfaces
+
+Launch the site or Storybook from the repository root. A fresh checkout first needs the normal `yarn build` setup described in [CONTRIBUTING.md](https://github.com/jpmorganchase/salt-ds/blob/main/CONTRIBUTING.md).
+Follow the [site README](https://github.com/jpmorganchase/salt-ds/blob/main/site/README.md) for its environment and snapshot setup.
+
+```sh
+# Site catalogue, after its environment setup:
+yarn workspace @salt-ds/site gen:snapshot
+yarn workspace @salt-ds/site serve
+
+# Storybook:
+yarn storybook
+```
+
+Use the site's [Icons catalogue](/salt/foundations/assets/index) for family comparisons, synonym search, category placement, and outline/solid filtering.
+Use Storybook's [Icons/Icon](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/stories/icon.stories.tsx) stories, including All Icons and All Icons With Search, for the generated React components.
+The [Icons/Icon/Icon QA](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/stories/icon.qa.stories.tsx) stories include component sizes and CSS-mask rendering.
+
+Inspect each changed variant and its closest siblings at native **12px and 16px**, using the fixed authored widths, on **light and dark** backgrounds, plus an enlarged view.
+Use existing size controls where available. For an exact native size, set `--saltIcon-size` to `12px` or `16px` and confirm its computed dimensions; the `size` prop is a density-based multiplier.
+Review both components and CSS-mask rendering. Verify what was actually rendered and report the sizes, backgrounds and variants inspected.
+
+### Automated checks and acceptance
+
+The validator uses installed Chrome and checks fixed stroke output, rendering, painted bounds, and known clearance/alignment regressions.
+Its pass does not establish semantic accuracy or consistency with the icon family; complete the visual review.
+The integration checker is scoped to the supplied basenames and their registered variants; it does not require unrelated legacy metadata cleanup.
+Also verify real website search behavior: a metadata/schema check alone cannot establish useful search terms.
+
+- [ ] Meaning, direction, and state are clear beside their companion icons.
+- [ ] Apparent size, spacing, terminals, and curved junctions fit the related family.
+- [ ] Outline and solid share intended landmarks and matching authored line widths.
+- [ ] Lettering uses the shared contours and has readable spacing/counters.
+- [ ] Cutouts follow the actual foreground, including curves, endpoints, and corners.
+- [ ] At the authored stroke widths, paint stays inside the viewBox and intended gaps remain useful.
+- [ ] Native 12px and 16px renders work on light and dark backgrounds; enlarged views reveal no malformed geometry.
+- [ ] Effective recipes, sorted inventory, website category metadata, public exports, and aliases are consistent.
+- [ ] Website synonym entries match the generated names; intended queries and variant filters find the icons in the appropriate website category.
+- [ ] README counts reflect inventory changes, and consumer-visible changes have a changeset.
+- [ ] Relevant generation, validation, and integration checks pass; the final generated diff matches the intended scope.
+
+:fragment{src="./../fragments/feedback.mdx"}

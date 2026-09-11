@@ -12,16 +12,16 @@ export const TagSolidIcon = forwardRef<SVGSVGElement, TagSolidIconProps>(
       <Icon
         data-testid="TagSolidIcon"
         aria-label="tag solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M8.5 4a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1" />
-        <path
-          fillRule="evenodd"
-          d="M7 0h5v5l-7 7-5-5zm0 3.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M1.5 9 9 1.5h5.5V7L7 14.5Zm9-4.5a1 1 0 1 0 2 0 1 1 0 1 0-2 0"
+          />
+        </g>
       </Icon>
     );
   },

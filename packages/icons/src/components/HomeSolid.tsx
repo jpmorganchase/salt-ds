@@ -12,11 +12,16 @@ export const HomeSolidIcon = forwardRef<SVGSVGElement, HomeSolidIconProps>(
       <Icon
         data-testid="HomeSolidIcon"
         aria-label="home solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M0 4.875 6 0l6 4.875L11 6l-1-.825V12H7V9H5v3H2V5.095L.875 6z" />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M2 7.5 8 2l6 5.5h-1.5V14h-9V7.5ZM6.5 9h3v5h-3Z"
+          />
+        </g>
       </Icon>
     );
   },

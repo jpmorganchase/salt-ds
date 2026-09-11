@@ -17,11 +17,17 @@ export const CollapseAllHorizontalIcon = forwardRef<
     <Icon
       data-testid="CollapseAllHorizontalIcon"
       aria-label="collapse all horizontal"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="m6.5 6 4 4 1-1-3-3 3-3-1-1zm-1 0-4 4-1-1 3-3-3-3 1-1z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2 3.5 6.5 8 2 12.5m12-9L9.5 8l4.5 4.5"
+        />
+      </g>
     </Icon>
   );
 });

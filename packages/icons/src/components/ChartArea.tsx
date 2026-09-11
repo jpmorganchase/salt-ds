@@ -12,15 +12,20 @@ export const ChartAreaIcon = forwardRef<SVGSVGElement, ChartAreaIconProps>(
       <Icon
         data-testid="ChartAreaIcon"
         aria-label="chart area"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M11.5 3.51v7.99H.5V2.837l3.797 1.085L7 .5zM6 9.35 1.5 8.32v2.18h9V8.55L8 6.85zM4.702 5.078 1.5 4.162V5.94l3.667.91L7.5 3.922 10.5 6V4.034L7.24 1.883z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M1.5 1.5v13h13" />
+            <path d="m3.5 8.5 3-3 3 2 4-5v10h-10Z" />
+            <path d="m3.5 10.5 3-1.5 3 1.25 4-3.25" />
+          </g>
+        </g>
       </Icon>
     );
   },
