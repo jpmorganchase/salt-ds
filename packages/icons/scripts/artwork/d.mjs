@@ -85,7 +85,7 @@ put(
   "storefront",
   S(awning) +
     S("M3.75 12.75v7.5h16.5v-7.5M1.5 20.25h21") +
-    R(6.75, 14.25, 4.5, 3) +
+    S(box(6.75, 14.25, 4.5, 3), 0.9) +
     S("M14.25 20.25v-6h3v6"),
   F(awning) +
     // This wall opening is a .75px normal offset of the scalloped awning.

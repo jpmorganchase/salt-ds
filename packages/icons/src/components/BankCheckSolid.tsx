@@ -21,7 +21,7 @@ export const BankCheckSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M.262 2.527h15.476v10.946H.262Zm0 2.265h15.476v.754H.262ZM2.62 7.434H8v1.132H2.621Zm7.927 0h2.831v1.132h-2.831ZM2.62 9.982h8.776v1.132H2.621Z"
+          d="M.262 2.527h15.476v10.946H.262ZM2.62 5.735H8v1.133H2.621Zm7.927 0h2.831v1.133h-2.831ZM2.62 9.132h8.776v1.133H2.621Z"
         />
       </g>
     </Icon>

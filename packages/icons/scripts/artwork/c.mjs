@@ -246,22 +246,15 @@ put(
     "M6.75 2.25v19.5M17.25 2.25v19.5M6.75 6.75h10.5M6.75 12h10.5M6.75 17.25h10.5",
   ),
 );
+// The broad housing and two open sheets carry the printer at small sizes.
 const printTop = S("M6.75 8.25v-6h10.5v6");
+const printOutput = R(6.75, 14.25, 10.5, 7.5);
 put(
   "print",
-  S("M6.75 17.25h-3v-9h16.5v9h-3") +
+  S("M6.75 17.25H3v-9h18v9h-3.75") + printTop + printOutput,
+  F(box(2.25, 7.5, 19.5, 10.5) + box(6.75, 14.25, 10.5, 3.75)) +
     printTop +
-    R(6.75, 14.25, 10.5, 7.5) +
-    L(8.25, 17.25, 15.75, 17.25) +
-    dot(17.25, 11.25, 0.6),
-  F(
-    box(3, 7.5, 18, 10.5) +
-      box(6.75, 14.25, 10.5, 3.75) +
-      circ(17.25, 11.25, 0.75),
-  ) +
-    printTop +
-    R(6.75, 14.25, 10.5, 7.5) +
-    L(8.25, 17.25, 15.75, 17.25),
+    printOutput,
 );
 
 const progressDisk = (holes) => F(circ(12, 12, 9.75) + holes);
@@ -462,19 +455,28 @@ put(
 const gearClean =
   "M9.75 2.25H14.25V5.25L16.5 6.75L19.5 5.25L21.75 9.75L18.75 11.25V12.75L21.75 14.25L19.5 18.75L16.5 17.25L14.25 18.75V21.75H9.75V18.75L7.5 17.25L4.5 18.75L2.25 14.25L5.25 12.75V11.25L2.25 9.75L4.5 5.25L7.5 6.75L9.75 5.25Z";
 put("settings", S(gearClean) + C(12, 12, 3), F(gearClean + circ(12, 12, 3.75)));
-const shareLines = S("M7.5 10.5l9-5.25M7.5 13.5l9 5.25");
+const shareRadius = 3.25;
+const shareNodes = [
+  [5.25, 12],
+  [18.75, 4.5],
+  [18.75, 19.5],
+];
+// Radial attachments meet the enlarged nodes without entering their counters.
+const shareLines = shareNodes
+  .slice(1)
+  .map(([x, y]) => {
+    const [originX, originY] = shareNodes[0];
+    const distance = Math.hypot(x - originX, y - originY);
+    const offsetX = ((x - originX) * shareRadius) / distance;
+    const offsetY = ((y - originY) * shareRadius) / distance;
+    return L(originX + offsetX, originY + offsetY, x - offsetX, y - offsetY);
+  })
+  .join("");
 put(
   "share",
+  shareLines + shareNodes.map(([x, y]) => C(x, y, shareRadius)).join(""),
   shareLines +
-    C(5.25, 12, 2.625) +
-    C(18.75, 4.5, 2.625) +
-    C(18.75, 19.5, 2.625),
-  shareLines +
-    F(
-      circ(5.25, 12, 3.375) +
-        circ(18.75, 4.5, 3.375) +
-        circ(18.75, 19.5, 3.375),
-    ),
+    F(shareNodes.map(([x, y]) => circ(x, y, shareRadius + 0.75)).join("")),
 );
 put(
   "signal",

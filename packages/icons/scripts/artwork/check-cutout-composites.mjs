@@ -1,7 +1,7 @@
 import { optimize } from "svgo";
 
 // Inspect actual painted pixels: dense normal rays for curved/filled margins,
-// and Euclidean foreground distance at the interrupted outline terminals.
+// and Euclidean foreground distance at separated marks and outline terminals.
 export async function checkCutoutComposites(page, records) {
   const names = [
     "dataset-manager.svg",
@@ -201,7 +201,20 @@ export async function checkCutoutComposites(page, records) {
             URL.revokeObjectURL(url);
           }
         }
-        for (const weight of [0.67]) {
+        const referenceWidths = [
+          ...source.querySelectorAll("[stroke-width]"),
+        ].map((element) => [
+          element,
+          Number(element.getAttribute("stroke-width")),
+        ]);
+        for (const weight of name.startsWith("filter-clear")
+          ? [0.67, 1, 1.5]
+          : [0.67]) {
+          for (const [element, referenceWidth] of referenceWidths)
+            element.setAttribute(
+              "stroke-width",
+              String((referenceWidth * weight) / 0.67),
+            );
           const normalProbes = [];
           if (name === "storefront_solid.svg") {
             const segments = [
@@ -276,43 +289,6 @@ export async function checkCutoutComposites(page, records) {
                 seed: 0.2,
               });
             }
-          } else if (name === "filter-clear_solid.svg") {
-            for (const p of [8.8, 9.1, 9.4, 9.7]) {
-              normalProbes.push({
-                feature: "upper left X edge",
-                position: p,
-                point: native([p, p]),
-                normal: unit([1, -1]),
-                expected: 1.25 - weight / 2,
-                seed: 0,
-              });
-              normalProbes.push({
-                feature: "upper right X edge",
-                position: p,
-                point: native([24 - p, p]),
-                normal: unit([-1, -1]),
-                expected: 1.25 - weight / 2,
-                seed: 0,
-              });
-            }
-            for (const p of [9.8, 10, 10.2]) {
-              normalProbes.push({
-                feature: "lower left X edge",
-                position: p,
-                point: native([p, 24 - p]),
-                normal: unit([1, 1]),
-                expected: 1.25 - weight / 2,
-                seed: 0,
-              });
-              normalProbes.push({
-                feature: "lower right X edge",
-                position: p,
-                point: native([24 - p, 24 - p]),
-                normal: unit([-1, 1]),
-                expected: 1.25 - weight / 2,
-                seed: 0,
-              });
-            }
           }
           if (normalProbes.length) {
             const pixels = await render(null);
@@ -351,31 +327,23 @@ export async function checkCutoutComposites(page, records) {
                 maximum: 1.85,
               },
             ];
-          } else if (name === "filter-clear.svg") {
+          } else if (name.startsWith("filter-clear")) {
+            // The intact funnel and separate X must keep their painted gap.
+            // Include flat-cap corners, and inspect the entire rear silhouette.
             foreground = paths
-              .filter(
-                ({ bounds: b }) =>
-                  b.x >= 5.4 &&
-                  b.y >= 5.4 &&
-                  b.x + b.width <= 10.6 &&
-                  b.y + b.height <= 10.6,
-              )
+              .filter(({ bounds: b }) => b.x >= 10.9 && b.y >= 9.4)
               .map((p) => p.index);
             rear = paths
               .filter((p) => !foreground.includes(p.index))
               .map((p) => p.index);
             probes = [
               {
-                feature: "left funnel stop at X",
-                rect: [3.2, 4.9, 4.9, 6.0],
-                minimum: 0.49,
-                maximum: 1.8,
-              },
-              {
-                feature: "right funnel stop at X",
-                rect: [11.1, 4.9, 12.8, 6.0],
-                minimum: 0.49,
-                maximum: 1.8,
+                feature: "complete funnel to separate clear mark",
+                rect: [0, 0, 15.99, 15.99],
+                expected:
+                  2.5 -
+                  (name.endsWith("_solid.svg") ? 0 : weight / 2) -
+                  weight / (2 * Math.sqrt(2)),
               },
             ];
           } else if (name === "document-search.svg") {

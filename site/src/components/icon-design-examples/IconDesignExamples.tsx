@@ -96,7 +96,7 @@ const figures: Record<IconDesignExample, Figure> = {
         label: "Primary strokes",
         samples: [{ Icon: BankIcon, label: "Bank" }],
         description:
-          "The main outline defaults to a configurable 1-unit stroke.",
+          "The main outline uses 1.5 units in high/medium density and 1 unit in low/touch/mobile density.",
       },
       {
         label: "Secondary details",
@@ -112,7 +112,7 @@ const figures: Record<IconDesignExample, Figure> = {
       },
     ],
     caption:
-      "These React icons default to 1-unit primary strokes on the 16-unit canvas, with proportional secondary details. The 64px views use the configured weight; filled contours retain their geometry.",
+      "These React icons inherit the density's primary stroke: 1.5 units in high/medium, and 1 unit in low/touch/mobile. Secondary details keep their proportions. The 64px views use the configured weight; filled contours retain their geometry.",
   },
   geometry: {
     groups: [

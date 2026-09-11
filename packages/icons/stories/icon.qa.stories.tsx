@@ -112,6 +112,7 @@ CssBackground.parameters = {
 
 interface ComponentLegibilityArgs {
   strokeWidth: number;
+  useDensityStroke: boolean;
 }
 
 const specimenSizes = [12, 16] as const;
@@ -125,13 +126,14 @@ const statuses = ["info", "success", "warning", "error"] as const;
 
 const ComponentLegibilityExample = ({
   strokeWidth,
+  useDensityStroke,
 }: ComponentLegibilityArgs) => {
   const [selected, setSelected] = useState(true);
   const density = useDensity();
   const { mode } = useTheme();
-  const strokeStyle = {
-    "--salt-size-icon-strokeWidth": strokeWidth,
-  } as CSSProperties;
+  const strokeStyle = useDensityStroke
+    ? undefined
+    : ({ "--salt-size-icon-strokeWidth": strokeWidth } as CSSProperties);
 
   return (
     <section
@@ -205,8 +207,9 @@ const ComponentLegibilityExample = ({
         ))}
       </div>
       <p className="iconLegibility-note">
-        Components use their native icon sizes. Outlined squares show the full
-        view box at 12px and 16px.
+        Components use their native icon sizes and each density's stroke width
+        unless overridden. Outlined squares show the full view box at 12px and
+        16px.
       </p>
     </section>
   );
@@ -220,14 +223,22 @@ export const ComponentLegibility: StoryFn<ComponentLegibilityArgs> = (args) => (
 
 ComponentLegibility.args = {
   strokeWidth: 1,
+  useDensityStroke: true,
 };
 
 ComponentLegibility.argTypes = {
+  useDensityStroke: {
+    name: "Use density stroke",
+    description:
+      "Use each density's configured stroke width. Turn off to compare a custom width.",
+    control: { type: "boolean" },
+  },
   strokeWidth: {
     name: "--salt-size-icon-strokeWidth",
     description:
       "Inherited stroke width in the 16-unit SVG view box. A value of 1 renders at 0.75px for a 12px icon.",
     control: { type: "range", min: 0.5, max: 1.5, step: 0.05 },
+    if: { arg: "useDensityStroke", truthy: false },
   },
 };
 
@@ -236,10 +247,12 @@ ComponentLegibility.parameters = {
 };
 
 interface AllIconViewBoxesArgs {
-  iconSize: 12 | 16 | 32 | 64;
+  density: "high" | "medium" | "low" | "touch";
+  iconSize: "density" | 12 | 16 | 32 | 64;
   mode: "light" | "dark";
   search: string;
   strokeWidth: number;
+  useDensityStroke: boolean;
 }
 
 const iconsByFamily = new Map<
@@ -264,10 +277,12 @@ const iconFamilies = Array.from(iconsByFamily, ([name, variants]) => ({
 })).sort((first, second) => first.name.localeCompare(second.name));
 
 export const AllIconViewBoxes: StoryFn<AllIconViewBoxesArgs> = ({
+  density,
   iconSize,
   mode,
   search,
   strokeWidth,
+  useDensityStroke,
 }) => {
   const { themeNext } = useTheme();
   const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
@@ -281,26 +296,30 @@ export const AllIconViewBoxes: StoryFn<AllIconViewBoxesArgs> = ({
   );
 
   return (
-    <ChosenSaltProvider mode={mode} density="medium">
+    <ChosenSaltProvider mode={mode} density={density}>
       <section
         className="iconViewBoxes"
         aria-label="Icon view box comparison"
         style={
           {
-            "--saltIcon-size": `${iconSize}px`,
-            "--salt-size-icon-strokeWidth": strokeWidth,
+            "--saltIcon-size":
+              iconSize === "density" ? undefined : `${iconSize}px`,
+            "--salt-size-icon-strokeWidth": useDensityStroke
+              ? undefined
+              : strokeWidth,
           } as CSSProperties
         }
       >
         <header className="iconViewBoxes-header">
           <h2>Icon view boxes</h2>
           <p>
-            {visibleIconCount} icons · {iconSize}px · {mode} mode
+            {visibleIconCount} icons · {density} density
+            {iconSize === "density" ? "" : ` · ${iconSize}px`} · {mode} mode
           </p>
           <p>
             Each outlined square shows the complete 16 × 16 view box. Related
             outline and solid variants stay together. Use the controls to change
-            size, stroke width, mode, or filter by name.
+            density, size, stroke width, mode, or filter by name.
           </p>
         </header>
         <ul className="iconViewBoxes-grid">
@@ -329,17 +348,23 @@ export const AllIconViewBoxes: StoryFn<AllIconViewBoxesArgs> = ({
 };
 
 AllIconViewBoxes.args = {
-  iconSize: 16,
+  density: "medium",
+  iconSize: "density",
   mode: "light",
   search: "",
   strokeWidth: 1,
+  useDensityStroke: true,
 };
 
 AllIconViewBoxes.argTypes = {
-  iconSize: {
-    name: "Icon size (px)",
-    options: [12, 16, 32, 64],
+  density: {
+    options: ["high", "medium", "low", "touch"],
     control: { type: "inline-radio" },
+  },
+  iconSize: {
+    name: "Icon size",
+    options: ["density", 12, 16, 32, 64],
+    control: { type: "inline-radio", labels: { density: "Density default" } },
   },
   mode: {
     options: ["light", "dark"],
@@ -349,10 +374,17 @@ AllIconViewBoxes.argTypes = {
     name: "Filter by name",
     control: { type: "text" },
   },
+  useDensityStroke: {
+    name: "Use density stroke",
+    description:
+      "Use the selected density's configured stroke width. Turn off to compare a custom width.",
+    control: { type: "boolean" },
+  },
   strokeWidth: {
     name: "--salt-size-icon-strokeWidth",
     description: "Inherited stroke width in the 16-unit SVG view box.",
     control: { type: "range", min: 0.5, max: 1.5, step: 0.05 },
+    if: { arg: "useDensityStroke", truthy: false },
   },
 };
 

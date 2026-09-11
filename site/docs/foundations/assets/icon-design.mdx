@@ -43,7 +43,7 @@ For GitHub, use the current Invertocat from the [GitHub logo guidance](https://b
 
 ## Stroke weight
 
-Generated React icons default to a primary stroke of **1 unit** on the 16-unit canvas. The [size foundation token](/salt/foundations/size#stroke-width) `--salt-size-icon-strokeWidth` adjusts the weight across an application or subtree; `--saltIcon-strokeWidth` overrides it for an individual icon. Stroke and geometry scale together: the default primary stroke renders at 0.75px in a 12px icon.
+Generated React icons use the theme's primary width of **1.5 units in high and medium densities**, and **1 unit in low, touch and mobile densities** on the 16-unit canvas. The [size foundation token](/salt/foundations/size#stroke-width) `--salt-size-icon-strokeWidth` adjusts the weight across an application or subtree; `--saltIcon-strokeWidth` overrides it for an individual icon. If neither variable is defined, the component falls back to 1. Stroke and geometry scale together: `W × P / 16` gives the rendered primary width in pixels. High and medium density icons use 1.5 units at 12px, producing a **1.125px** primary stroke.
 
 Numeric SVG masters retain a **0.67-unit reference width**, which renders at 0.5025px at 12px. Standalone SVG images and CSS masks use the baked widths and do not inherit the host's stroke variables. Filled contours and official brand logos keep their supplied shapes.
 
@@ -105,7 +105,7 @@ Keep intentional attachments and intrinsic openings intact. A connected handle, 
 
 Compare the icons beside their closest family members in the [catalogue](/salt/foundations/assets/index#all-icons) and in their intended interface. Check both recognition and consistency with the surrounding controls.
 
-Inspect each variant at actual **12px and 16px** on **light and dark** backgrounds. Use the generated component's default width of **1**, and compare the **0.67** reference when reviewing its SVG master. The Storybook **Icons/Icon/Icon QA → Component Legibility** story shows icons in controls and supports tuning widths up to **1.5**. **All Icon View Boxes** (`AllIconViewBoxes`) shows every export inside its frame, with 12px, 16px, 32px and 64px sizes, light/dark backgrounds, stroke controls and name filtering. Check gaps and clipping at every chosen width; the framing target reserves space through width 1.5.
+Inspect each variant at actual **12px and 16px** on **light and dark** backgrounds. Start with the density's themed width: **1.5 for high/medium** and **1 for low/touch/mobile**. Compare the **0.67** reference when reviewing its SVG master. The Storybook **Icons/Icon/Icon QA → Component Legibility** and **All Icon View Boxes** (`AllIconViewBoxes`) stories use the selected density's theme stroke by default, with an optional explicit override up to **1.5**. All Icon View Boxes shows every export inside its frame at the actual density-based icon size or a fixed 12px, 16px, 32px or 64px, with density selection, light/dark backgrounds and name filtering. Check final gaps and clipping at every chosen width; the framing target reserves space through width 1.5.
 
 Include an enlarged view for contours, joins, overlaps and cutouts, then return to actual size to judge readability.
 

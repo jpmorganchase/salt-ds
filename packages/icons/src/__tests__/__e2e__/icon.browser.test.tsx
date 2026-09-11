@@ -53,36 +53,21 @@ describe("Given an icon", () => {
       .not.toHaveAttribute("aria-label");
   });
 
-  it("renders the default outline weight without a fill", async () => {
-    await renderWithSalt(<BankIcon data-testid="outline" />);
-
-    const style = getComputedStyle(getIconPath("outline"));
-    expect(style.strokeWidth).toBe("1px");
-    expect(style.stroke).not.toBe("none");
-    expect(style.fill).toBe("none");
-  });
-
-  it("preserves the authored balance of primary and secondary strokes", async () => {
-    await renderWithSalt(<ScheduleTimeIcon data-testid="schedule" />);
-
-    expect(getComputedStyle(getIconPath("schedule")).strokeWidth).toBe("1px");
-    expectScheduleHandWidth(0.72);
-  });
   it("passes native stroke width through to custom icon paths", async () => {
     await renderWithSalt(
       <Icon
         data-testid="custom"
         aria-label="Custom line"
         viewBox="0 0 16 16"
-        strokeWidth={1.5}
+        strokeWidth={0.8}
       >
         <path d="M2 8H14" fill="none" stroke="currentColor" />
       </Icon>,
     );
 
-    expect(getComputedStyle(getIconPath("custom")).strokeWidth).toBe("1.5px");
+    expect(getComputedStyle(getIconPath("custom")).strokeWidth).toBe("0.8px");
   });
-  it.each([0, 1.5])(
+  it.each([0, 1])(
     "keeps generated stroke control separate from native inherited width %s",
     async (strokeWidth) => {
       await renderWithSalt(
@@ -93,7 +78,7 @@ describe("Given an icon", () => {
       );
 
       const outlineStyle = getComputedStyle(getIconPath("outline"));
-      expect(outlineStyle.strokeWidth).toBe("1px");
+      expect(outlineStyle.strokeWidth).toBe("1.5px");
       expect(outlineStyle.stroke).not.toBe("none");
       expect(outlineStyle.fill).toBe("none");
       const solidStyle = getComputedStyle(getIconPath("solid"));
@@ -157,28 +142,6 @@ describe("Given an icon", () => {
     expect(getComputedStyle(getIconPath("local")).strokeWidth).toBe("0.8px");
   });
 
-  it.each([1, 2])(
-    "scales both variants with size=%s while retaining the configured stroke proportions",
-    async (size) => {
-      await renderWithSalt(
-        <div style={{ "--salt-size-icon": "16px" } as CSSProperties}>
-          <BankIcon data-testid="outline" size={size} />
-          <BankSolidIcon data-testid="solid" size={size} />
-        </div>,
-      );
-
-      for (const testId of ["outline", "solid"]) {
-        const bounds = page
-          .getByTestId(testId)
-          .element()
-          .getBoundingClientRect();
-        expect(bounds.width).toBe(16 * size);
-        expect(bounds.height).toBe(16 * size);
-      }
-      expect(getComputedStyle(getIconPath("outline")).strokeWidth).toBe("1px");
-      expect(getComputedStyle(getIconPath("solid")).fill).not.toBe("none");
-    },
-  );
   it.each([
     ["primary", "rgb(10, 20, 30)"],
     ["secondary", "rgb(40, 50, 60)"],

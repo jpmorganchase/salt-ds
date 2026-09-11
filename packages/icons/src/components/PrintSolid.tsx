@@ -19,12 +19,12 @@ export const PrintSolidIcon = forwardRef<SVGSVGElement, PrintSolidIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M1.538 4.77h12.924v7.538H1.538Zm2.693 4.845h7.538v2.693H4.231Zm7-2.153a.538.538 0 1 0 1.077 0 .538.538 0 1 0-1.077 0"
+            d="M1 4.77h14v7.538H1Zm3.23 4.845h7.54v2.693H4.23Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.23 5.308V1h7.54v4.308M4.23 9.615h7.54V15H4.23Zm1.078 2.155h5.384"
+            d="M4.23 5.308V1h7.54v4.308M4.23 9.615h7.54V15H4.23Z"
           />
         </g>
       </Icon>
