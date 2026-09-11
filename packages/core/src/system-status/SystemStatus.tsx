@@ -1,13 +1,10 @@
-import {
-  makePrefixer,
-  StatusIndicator,
-  type ValidationStatus,
-} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { forwardRef, type HTMLAttributes } from "react";
 
+import { StatusIndicator, type ValidationStatus } from "../status-indicator";
+import { makePrefixer } from "../utils";
 import systemStatusCss from "./SystemStatus.css";
 
 export interface SystemStatusProps extends HTMLAttributes<HTMLDivElement> {

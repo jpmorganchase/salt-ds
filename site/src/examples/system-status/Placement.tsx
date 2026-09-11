@@ -4,10 +4,11 @@ import {
   BannerContent,
   Button,
   StackLayout,
+  SystemStatus,
+  SystemStatusContent,
   Text,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
 
 import type { ReactElement } from "react";
 
