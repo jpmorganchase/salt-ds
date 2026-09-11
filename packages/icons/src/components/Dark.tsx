@@ -12,16 +12,17 @@ export const DarkIcon = forwardRef<SVGSVGElement, DarkIconProps>(
       <Icon
         data-testid="DarkIcon"
         aria-label="dark"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M9.003 9.998a5 5 0 1 1-5.678-8.224Q3.202 2.42 3.2 3.1a7 7 0 0 0 5.803 6.898m.925-.904A6 6 0 0 1 5.014.08 6.002 6.002 0 0 0 6 12a6 6 0 0 0 4.383-1.903q.46-.494.803-1.079a6 6 0 0 1-1.258.075"
-          clipRule="evenodd"
-        />
-        <path d="M6.387 2.899H7.45V3.91H6.387zM9.58.876h1.065v1.011H9.58zm0 4.046h1.065v1.011H9.58z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.5 1.5a6.5 6.5 0 1 0 5 9 6 6 0 0 1-5-9Z"
+          />
+        </g>
       </Icon>
     );
   },

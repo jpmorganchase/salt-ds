@@ -12,11 +12,13 @@ export const PlaySolidIcon = forwardRef<SVGSVGElement, PlaySolidIconProps>(
       <Icon
         data-testid="PlaySolidIcon"
         aria-label="play solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path fillRule="evenodd" d="m1 0 11 6-11 6z" clipRule="evenodd" />
+        <g strokeWidth=".67">
+          <path fillRule="evenodd" d="m4.5 2.5 9 5.5-9 5.5Z" />
+        </g>
       </Icon>
     );
   },

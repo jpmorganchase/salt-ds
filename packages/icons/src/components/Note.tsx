@@ -12,15 +12,19 @@ export const NoteIcon = forwardRef<SVGSVGElement, NoteIconProps>(
       <Icon
         data-testid="NoteIcon"
         aria-label="note"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M1 11V1h10v8.207L9.207 11zm6-1H2V2h8v5H7zm3-2v.793L8.793 10H8V8z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M2.5 2.5h11v7l-4 4h-7Z" />
+            <path d="M9.5 13.5v-4h4m-9-4h7m-7 2h4" />
+          </g>
+        </g>
       </Icon>
     );
   },

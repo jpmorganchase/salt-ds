@@ -12,15 +12,17 @@ export const VideoIcon = forwardRef<SVGSVGElement, VideoIconProps>(
       <Icon
         data-testid="VideoIcon"
         aria-label="video"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M9 8.07V10H0V2h9v1.942L12 3v6zM1 3h7v6H1zm8 4.022 2 .62v-3.28L9 4.99z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2 3.5h8q.5 0 .5.5v8q0 .5-.5.5H2q-.5 0-.5-.5V4q0-.5.5-.5ZM10.5 6l4-1.5v7l-4-1.5Z"
+          />
+        </g>
       </Icon>
     );
   },

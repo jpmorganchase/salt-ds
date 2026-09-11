@@ -14,17 +14,21 @@ export const LightbulbSolidIcon = forwardRef<
     <Icon
       data-testid="LightbulbSolidIcon"
       aria-label="lightbulb solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M7.309 11.455H4.693v-1H7.31z" />
-      <path
-        fillRule="evenodd"
-        d="M6.257 2.216a3.126 3.126 0 0 1 2.719 4.068l-.09.242c-.217.526-.542 1.059-.776 1.502-.249.472-.429.898-.473 1.335l-.015.143-.045.45H4.423l-.045-.45-.015-.143C4.32 8.926 4.14 8.5 3.89 8.028c-.176-.332-.403-.715-.597-1.108l-.18-.394A3.126 3.126 0 0 1 6 2.206zM6 3.706a1.75 1.75 0 0 0-1.75 1.75.5.5 0 0 0 1 0 .75.75 0 0 1 .75-.75.5.5 0 0 0 0-1"
-        clipRule="evenodd"
-      />
-      <path d="M2.3 5.75H.8v-1h1.5zm8.9 0H9.7v-1h1.5zm-7.493-3.5L3 2.957l-1.06-1.06.706-.708zm6.353-.354L9 2.957l-.707-.707 1.06-1.06zM6.5 1.55h-1V.05h1z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M5.5 11v-.833c0-1.667-2-2.334-2-4.334a4.5 4.5 0 0 1 9 0c0 2-2 2.667-2 4.334V11Zm.667-5.833L8 7l1.833-1.833.7.7L8.5 7.9V11h-1V7.9L5.467 5.867Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5.5 13h5M7 15.083h2"
+        />
+      </g>
     </Icon>
   );
 });

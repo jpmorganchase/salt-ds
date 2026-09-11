@@ -12,15 +12,26 @@ export const MobileSolidIcon = forwardRef<SVGSVGElement, MobileSolidIconProps>(
       <Icon
         data-testid="MobileSolidIcon"
         aria-label="mobile solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M2 2v8a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2m7 8V2H3v8z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M4 3.667h8v10q0 .666-.667.666H4.667q-.667 0-.667-.666ZM7.5 12.5a.5.5 0 1 0 1 0 .5.5 0 1 0-1 0"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.667 1.667h6.666q.667 0 .667.666v11.334q0 .666-.667.666H4.667q-.667 0-.667-.666V2.333q0-.666.667-.666Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4 3.167q0 .5.5.5h7q.5 0 .5-.5m-8 1q0-.5.5-.5h7q.5 0 .5.5"
+          />
+        </g>
       </Icon>
     );
   },

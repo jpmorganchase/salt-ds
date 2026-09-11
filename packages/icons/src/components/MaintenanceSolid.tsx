@@ -14,11 +14,16 @@ export const MaintenanceSolidIcon = forwardRef<
     <Icon
       data-testid="MaintenanceSolidIcon"
       aria-label="maintenance solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M6.645 1.695a3.49 3.49 0 0 1 .818 3.646l3.425 3.425a1.5 1.5 0 0 1-2.122 2.122L5.341 7.463A3.493 3.493 0 0 1 .87 3.014l.263-.751 2.124 2.124 1.131-1.131-2.124-2.124.751-.262a3.5 3.5 0 0 1 3.631.825" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M5.4 1.867A3.833 3.833 0 0 1 8.5 7.1l5.167 5.167q.7.7 0 1.4t-1.4 0L7.1 8.5a3.833 3.833 0 0 1-5.233-3.1L4.5 7 7 4.5Z"
+        />
+      </g>
     </Icon>
   );
 });

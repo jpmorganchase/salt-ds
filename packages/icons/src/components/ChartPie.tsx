@@ -12,12 +12,17 @@ export const ChartPieIcon = forwardRef<SVGSVGElement, ChartPieIconProps>(
       <Icon
         data-testid="ChartPieIcon"
         aria-label="chart pie"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M4.5 2.626a4.002 4.002 0 0 0 1 7.874v1a5 5 0 0 1 0-10v5h5a5 5 0 0 1-5 5v-1a4 4 0 0 0 3.874-3H4.5z" />
-        <path d="M6.5.5a5 5 0 0 1 5 5h-5zm1 4h2.874A4.01 4.01 0 0 0 7.5 1.626z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7 2a6 6 0 1 0 7 7H7Zm2-.5V7h5.5A6.5 6.5 0 0 0 9 1.5Z"
+          />
+        </g>
       </Icon>
     );
   },

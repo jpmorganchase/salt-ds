@@ -12,11 +12,17 @@ export const ArrowLeftIcon = forwardRef<SVGSVGElement, ArrowLeftIconProps>(
       <Icon
         data-testid="ArrowLeftIcon"
         aria-label="arrow left"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M12 6.5v-1H1.915l3.147-3.146-.708-.707L0 6l4.353 4.354.707-.707L1.914 6.5z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.5 8h-11m4 4-4-4 4-4"
+          />
+        </g>
       </Icon>
     );
   },

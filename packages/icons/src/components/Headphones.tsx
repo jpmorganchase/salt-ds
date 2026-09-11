@@ -12,15 +12,19 @@ export const HeadphonesIcon = forwardRef<SVGSVGElement, HeadphonesIconProps>(
       <Icon
         data-testid="HeadphonesIcon"
         aria-label="headphones"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M11 6A5 5 0 0 0 1 6h1a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H0V6a6 6 0 1 1 12 0v6h-2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zm0 5V7h-1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1zM2 7H1v4h1a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M2.5 10.5V7a5.5 5.5 0 0 1 11 0v3.5" />
+            <path d="M2.9 8.5h2.2q.4 0 .4.4v4.2q0 .4-.4.4H2.9q-.4 0-.4-.4V8.9q0-.4.4-.4Zm8 0h2.2q.4 0 .4.4v4.2q0 .4-.4.4h-2.2q-.4 0-.4-.4V8.9q0-.4.4-.4Z" />
+          </g>
+        </g>
       </Icon>
     );
   },

@@ -12,11 +12,17 @@ export const FavoriteIcon = forwardRef<SVGSVGElement, FavoriteIconProps>(
       <Icon
         data-testid="FavoriteIcon"
         aria-label="favorite"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M6.448.302a.501.501 0 0 0-.902 0l-1.55 3.214-3.57.684a.5.5 0 0 0-.276.827L2.596 7.71l-.592 3.69a.5.5 0 0 0 .716.526l3.277-1.618 3.35 1.647a.5.5 0 0 0 .647-.555l-.591-3.69 2.446-2.683a.5.5 0 0 0-.276-.827l-3.57-.684zm.872 4.1 3.189.61-2.17 2.382.515 3.208-2.857-1.408L3.145 10.6l.515-3.207-2.17-2.382 3.189-.61 1.32-2.734z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8 1.833 9.9 5.8l4.367.6L11.1 9.467l.767 4.366L8 11.8l-3.867 2.033.767-4.366L1.733 6.4 6.1 5.8Z"
+          />
+        </g>
       </Icon>
     );
   },

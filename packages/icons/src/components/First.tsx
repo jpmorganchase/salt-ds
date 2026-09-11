@@ -12,11 +12,17 @@ export const FirstIcon = forwardRef<SVGSVGElement, FirstIconProps>(
       <Icon
         data-testid="FirstIcon"
         aria-label="first"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="m5 6 4.326 4L10 9.231 6.505 6 10 2.769 9.326 2zM3 2H2v8h1z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3 3v10m9-10L6 8l6 5"
+          />
+        </g>
       </Icon>
     );
   },

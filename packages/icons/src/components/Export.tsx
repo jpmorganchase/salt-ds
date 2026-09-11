@@ -12,12 +12,17 @@ export const ExportIcon = forwardRef<SVGSVGElement, ExportIconProps>(
       <Icon
         data-testid="ExportIcon"
         aria-label="export"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M5 1H1v10h4v-1H2V2h3z" />
-        <path d="M4 6.5v-1h6.094L7.412 2.82l.707-.707L12.01 6 8.118 9.89l-.707-.707L10.094 6.5z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6 2.5H2.5v11H6M5 8h9.5M11 4.5 14.5 8 11 11.5"
+          />
+        </g>
       </Icon>
     );
   },

@@ -12,15 +12,19 @@ export const PivotIcon = forwardRef<SVGSVGElement, PivotIconProps>(
       <Icon
         data-testid="PivotIcon"
         aria-label="pivot"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M12 0H0v12h12zM1 11V8.5L4 11zm3-2v2h7V1H1v7.5L4 6v2h4V4H6l2.5-3L11 4H9v5z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M1.5 1.5h13v13h-13Z" />
+            <path d="M4.5 10.167h5.333v-5.5m-2 2 2-2 2 2M6.5 8.167l-2 2 2 2" />
+          </g>
+        </g>
       </Icon>
     );
   },

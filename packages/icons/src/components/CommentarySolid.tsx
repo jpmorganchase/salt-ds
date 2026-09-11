@@ -14,15 +14,16 @@ export const CommentarySolidIcon = forwardRef<
     <Icon
       data-testid="CommentarySolidIcon"
       aria-label="commentary solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M2 0a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2v3l3.443-3H10a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm1 2h6v1H3zm0 2h6v1H3zm0 2h4v1H3z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M2 2.5h12v9H6L3 14v-2.5H2Zm2.5 2h7v1h-7Zm0 2h7v1h-7Zm0 2H9v1H4.5Z"
+        />
+      </g>
     </Icon>
   );
 });

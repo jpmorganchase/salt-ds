@@ -14,16 +14,16 @@ export const ProgressClosedIcon = forwardRef<
     <Icon
       data-testid="ProgressClosedIcon"
       aria-label="progress closed"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M4 4h4v4H4z" />
-      <path
-        fillRule="evenodd"
-        d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12M3 9V3h6v6z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <g fillRule="evenodd">
+          <path d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0M5 5h6v6H5Z" />
+          <path d="M6 6h4v4H6Z" />
+        </g>
+      </g>
     </Icon>
   );
 });

@@ -12,21 +12,17 @@ export const MedicalKitIcon = forwardRef<SVGSVGElement, MedicalKitIconProps>(
       <Icon
         data-testid="MedicalKitIcon"
         aria-label="medical kit"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M11 2H1v8h10zM0 1v10h12V1z"
-          clipRule="evenodd"
-        />
-        <path d="M5 7v1h2V7h1V5H7V4H5v1H4v2z" />
-        <path
-          fillRule="evenodd"
-          d="M2 10V2h1v8zm7 0V2h1v8z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.833 3h12.334v10H1.833Zm2 0v10m8.334-10v10M6 8h4M8 6v4"
+          />
+        </g>
       </Icon>
     );
   },

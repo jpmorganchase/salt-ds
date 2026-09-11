@@ -12,15 +12,16 @@ export const JigsawSolidIcon = forwardRef<SVGSVGElement, JigsawSolidIconProps>(
       <Icon
         data-testid="JigsawSolidIcon"
         aria-label="jigsaw solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M1 6h1.5a.5.5 0 0 1 0 1H1v4h4V9.5a.5.5 0 0 1 1 0V11h4V8h.5a1.5 1.5 0 0 0 0-3H10V2H7v-.5a1.5 1.5 0 1 0-3 0V2H1z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M3 3h3.5c-.333-1.5 3.333-1.5 3 0H13v3.5c1.5-.333 1.5 3.333 0 3V13H9.5c.333-1.5-3.333-1.5-3 0H3V9.5c1.5.333 1.5-3.333 0-3Z"
+          />
+        </g>
       </Icon>
     );
   },

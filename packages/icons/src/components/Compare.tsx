@@ -12,20 +12,19 @@ export const CompareIcon = forwardRef<SVGSVGElement, CompareIconProps>(
       <Icon
         data-testid="CompareIcon"
         aria-label="compare"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="m7.8 1.564-.936.936H10v5.065a1.999 1.999 0 0 1-.5 3.935A2 2 0 0 1 9 7.565V3.5H6.907l.893.893-.707.707-2.121-2.121L7.092.857zM9.5 8.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
-          clipRule="evenodd"
-        />
-        <path
-          fillRule="evenodd"
-          d="M2.5.5A1.998 1.998 0 0 1 3 4.434V8.5h2.093L4.2 7.607l.707-.707 2.121 2.121-2.12 2.122-.708-.708.936-.935H2V4.434A1.998 1.998 0 0 1 2.5.5m0 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M2 3.5a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0Zm9 9a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0Z" />
+            <path d="M3.5 5v7H8M5.5 9.5 8 12l-2.5 2.5m7-3.5V4H8m2.5-2.5L8 4l2.5 2.5" />
+          </g>
+        </g>
       </Icon>
     );
   },

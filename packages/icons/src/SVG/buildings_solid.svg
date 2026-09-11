@@ -1,3 +1,5 @@
-<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M0 1H7V11H8V4H12V12H0V1ZM4 9V11H3V9H4ZM3 3H2V4H3V3ZM2 5H3V6H2V5ZM3 7H2V8H3V7ZM5 3H4V4H5V3ZM4 5H5V6H4V5ZM5 7H4V8H5V7Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" stroke-width="0.67">
+  <path fill="currentColor" fill-rule="evenodd" d="M1.5 1.5H9v13H1.5Zm1.75 2h1q.25 0 .25.25v1q0 .25-.25.25h-1Q3 5 3 4.75v-1q0-.25.25-.25m0 3h1q.25 0 .25.25v1q0 .25-.25.25h-1Q3 8 3 7.75v-1q0-.25.25-.25m0 3h1q.25 0 .25.25v1q0 .25-.25.25h-1Q3 11 3 10.75v-1q0-.25.25-.25m3-6h1q.25 0 .25.25v1q0 .25-.25.25h-1Q6 5 6 4.75v-1q0-.25.25-.25m0 3h1q.25 0 .25.25v1q0 .25-.25.25h-1Q6 8 6 7.75v-1q0-.25.25-.25m0 3h1q.25 0 .25.25v1q0 .25-.25.25h-1Q6 11 6 10.75v-1q0-.25.25-.25m-1.75 3H6v2H4.5Z"/>
+  <path fill="currentColor" fill-rule="evenodd" d="M11 5.5h3.5v9H11Z"/>
+  <path fill="none" stroke="currentColor" d="M1.5 14.5h13"/>
 </svg>

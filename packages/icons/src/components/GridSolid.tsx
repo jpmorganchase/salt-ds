@@ -12,11 +12,16 @@ export const GridSolidIcon = forwardRef<SVGSVGElement, GridSolidIconProps>(
       <Icon
         data-testid="GridSolidIcon"
         aria-label="grid solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M0 0h5v5H0zm7 5V0h5v5zm0 2v5h5V7zM0 7h5v5H0z" />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M2 2h5v5H2Zm7 0h5v5H9ZM2 9h5v5H2Zm7 0h5v5H9Z"
+          />
+        </g>
       </Icon>
     );
   },

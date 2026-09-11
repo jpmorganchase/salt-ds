@@ -14,16 +14,21 @@ export const UniversalAccessIcon = forwardRef<
     <Icon
       data-testid="UniversalAccessIcon"
       aria-label="universal access"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M6 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-.764 5.927c.17-.43.415-1.152.577-1.943l.373-.008c.162.794.407 1.52.578 1.951a4 4 0 0 0 .952-.313c-.21-.515-.586-1.64-.677-2.688-.046-.516-.044-.775-.041-1.327v-.161a12 12 0 0 0 2.16-.464l-.316-.948C8.372 4.182 7.128 4.5 6 4.5s-2.371-.318-2.842-.474l-.316.948c.391.13 1.233.355 2.16.464v.176c.004.537.005.788-.04 1.313-.092 1.047-.468 2.171-.678 2.687.299.142.618.249.952.313" />
-      <path
-        fillRule="evenodd"
-        d="M12 6A6 6 0 1 1 0 6a6 6 0 0 1 12 0m-1 0A5 5 0 1 1 1 6a5 5 0 0 1 10 0"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0Z"
+        />
+        <path
+          fillRule="evenodd"
+          d="M7.1 4.5a.9.9 0 1 0 1.8 0 .9.9 0 1 0-1.8 0M7 7l-3-.5-.2.9L7 8l-1 4h1l1-2.5L9 12h1L9 8l3.2-.6-.2-.9L9 7Z"
+        />
+      </g>
     </Icon>
   );
 });

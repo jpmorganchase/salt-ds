@@ -14,15 +14,16 @@ export const DocumentSolidIcon = forwardRef<
     <Icon
       data-testid="DocumentSolidIcon"
       aria-label="document solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M1 0v12h10V2L9 0zm7 1H7v3h3V3H8z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M2.5 1.5h8l3 3v10h-11Zm8 1V4q0 .5.5.5h1.5ZM5.333 7h5.334Q11 7 11 7.333v.334Q11 8 10.667 8H5.333Q5 8 5 7.667v-.334Q5 7 5.333 7m0 3h3.834q.333 0 .333.333v.334q0 .333-.333.333H5.333Q5 11 5 10.667v-.334Q5 10 5.333 10"
+        />
+      </g>
     </Icon>
   );
 });

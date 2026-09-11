@@ -14,16 +14,26 @@ export const SemanticSatisfiedIcon = forwardRef<
     <Icon
       data-testid="SemanticSatisfiedIcon"
       aria-label="semantic satisfied"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M5.874 9c.982 0 1.853-.471 2.4-1.2q.406.305.723.7A4 4 0 0 1 5.874 10a4 4 0 0 1-3.123-1.5c.21-.262.454-.498.723-.7a3 3 0 0 0 2.4 1.2M5 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
-      <path
-        fillRule="evenodd"
-        d="M12 6A6 6 0 1 1 0 6a6 6 0 0 1 12 0m-1 0A5 5 0 1 1 1 6a5 5 0 0 1 10 0"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5 9.5q3 3 6 0"
+        />
+        <path
+          fillRule="evenodd"
+          d="M5 6a.5.5 0 1 0 1 0 .5.5 0 1 0-1 0m5 0a.5.5 0 1 0 1 0 .5.5 0 1 0-1 0"
+        />
+      </g>
     </Icon>
   );
 });

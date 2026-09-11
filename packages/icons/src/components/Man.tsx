@@ -14,15 +14,17 @@ export const ManIcon = forwardRef<SVGSVGElement, ManIconProps>(function ManIcon(
     <Icon
       data-testid="ManIcon"
       aria-label="man"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M6 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m0-1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1M5 3.5a1 1 0 0 0-1 1V8h.75v4h1V8h.5v4h1V8H8V4.5a1 1 0 0 0-1-1zm0 1V7h2V4.5z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.5 3a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0Zm-1 3.5h5v4H10v4H6v-4h-.5Zm2.5 4v4"
+        />
+      </g>
     </Icon>
   );
 });

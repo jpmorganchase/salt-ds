@@ -14,11 +14,17 @@ export const DoesNotEqualIcon = forwardRef<
     <Icon
       data-testid="DoesNotEqualIcon"
       aria-label="does not equal"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="m7.518 2.26-.465 1.737H10v1.001H6.785L6.25 7.002H10v1.001H5.981L5.447 10l-.966-.26.465-1.737H2V7.002h3.214l.536-2.004H2V3.997h4.018L6.552 2z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.5 5.5h11m-11 5h11M11 2 5 14"
+        />
+      </g>
     </Icon>
   );
 });

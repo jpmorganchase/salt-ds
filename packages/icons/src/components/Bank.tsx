@@ -12,16 +12,30 @@ export const BankIcon = forwardRef<SVGSVGElement, BankIconProps>(
       <Icon
         data-testid="BankIcon"
         aria-label="bank"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M5.5 4V3h1v1z" />
-        <path
-          fillRule="evenodd"
-          d="m6 0 6 6h-2v5h2v1H0v-1h2V6H0zM3 6v5h1V6zm2 0v5h2V6zm3 0v5h1V6zM6 1.414 9.586 5H2.414z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.667 5.333V4.117L8 1.697l6.333 2.42v1.216Zm0 7.334h12.666v1.666H1.667Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth=".5025"
+            d="M2.667 6.167v5.666m-.834-6.5q.834 0 .834.834m.833-.834q-.833 0-.833.834m0 5.666q0 .834-.834.834m.834-.834q0 .834.833.834m.833-6.5v5.666m-.833-6.5q.833 0 .833.834m.834-.834q-.834 0-.834.834m0 5.666q0 .834-.833.834m.833-.834q0 .834.834.834M6 6.167v5.666m-.833-6.5q.833 0 .833.834m.833-.834Q6 5.333 6 6.167m0 5.666q0 .834-.833.834M6 11.833q0 .834.833.834M10 6.167v5.666m-.833-6.5q.833 0 .833.834m.833-.834q-.833 0-.833.834m0 5.666q0 .834-.833.834m.833-.834q0 .834.833.834m.834-6.5v5.666m-.834-6.5q.834 0 .834.834m.833-.834q-.833 0-.833.834m0 5.666q0 .834-.834.834m.834-.834q0 .834.833.834m.833-6.5v5.666m-.833-6.5q.833 0 .833.834m.834-.834q-.834 0-.834.834m0 5.666q0 .834-.833.834m.833-.834q0 .834.834.834"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth=".5025"
+            d="M6 11.833v-4.5a2 2 0 0 1 4 0v4.5m-4 0q0 .834.833.834M10 11.833q0 .834-.833.834"
+          />
+          <path fillRule="evenodd" d="M6 5.333h4v2a2 2 0 0 0-4 0Z" />
+        </g>
       </Icon>
     );
   },

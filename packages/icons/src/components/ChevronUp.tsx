@@ -12,11 +12,17 @@ export const ChevronUpIcon = forwardRef<SVGSVGElement, ChevronUpIconProps>(
       <Icon
         data-testid="ChevronUpIcon"
         aria-label="chevron up"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M5.618 3.407 6 3l.382.407L11 8.339 10.236 9 6 4.476 1.764 9 1 8.34z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.5 10.5 8 6l4.5 4.5"
+          />
+        </g>
       </Icon>
     );
   },

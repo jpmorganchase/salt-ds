@@ -1,5 +1,7 @@
-<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-<path d="M5 11V9H7V11H5Z"/>
-<path d="M5 7L5 5H7L7 7H5Z"/>
-<path d="M5 1V3H7V1L5 1Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" stroke-width="0.67">
+  <g fill="currentColor" fill-rule="evenodd">
+    <path d="M7.25 2.75h1.5v1.5h-1.5Z"/>
+    <path d="M7.25 7.25h1.5v1.5h-1.5Z"/>
+    <path d="M7.25 11.75h1.5v1.5h-1.5Z"/>
+  </g>
 </svg>

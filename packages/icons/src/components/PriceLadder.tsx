@@ -12,15 +12,17 @@ export const PriceLadderIcon = forwardRef<SVGSVGElement, PriceLadderIconProps>(
       <Icon
         data-testid="PriceLadderIcon"
         aria-label="price ladder"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M3 2V0H2v12h1V9h6v3h1V0H9v2zm6 3V3H3v2zM3 6v2h6V6z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.5 1.5v13m7-13v13m-7-10h7M4.5 8h7m-7 3.5h7"
+          />
+        </g>
       </Icon>
     );
   },

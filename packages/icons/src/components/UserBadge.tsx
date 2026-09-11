@@ -12,15 +12,16 @@ export const UserBadgeIcon = forwardRef<SVGSVGElement, UserBadgeIconProps>(
       <Icon
         data-testid="UserBadgeIcon"
         aria-label="user badge"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M12 6A6 6 0 1 1 0 6a6 6 0 0 1 12 0M9.45 9.44A4.86 4.86 0 0 1 5.874 11 4.86 4.86 0 0 1 2.34 9.483q.168-.059.396-.122l.272-.077.028-.008.3-.088c.916-.282 1.342-.597 1.408-1.185C4 7.179 3.5 5.731 3.5 4.5 3.5 2.66 4.62 2 6 2s2.5.66 2.5 2.5c0 1.269-.532 2.768-1.315 3.577.093.54.52.841 1.397 1.111.088.028.18.054.3.088l.028.008.272.077q.147.04.266.08"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0M6 5.5a2 2 0 1 0 4 0 2 2 0 1 0-4 0m-2.5 7Q3.5 9 8 9t4.5 3.5q-4.5 3.5-9 0"
+          />
+        </g>
       </Icon>
     );
   },

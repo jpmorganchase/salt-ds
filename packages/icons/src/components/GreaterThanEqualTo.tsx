@@ -14,11 +14,17 @@ export const GreaterThanEqualToIcon = forwardRef<
     <Icon
       data-testid="GreaterThanEqualToIcon"
       aria-label="greater than equal to"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M2.425 9 2 8.105 7.883 5 2 1.895 2.425 1 10 5zM2 11v-1h8v1z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="m4.5 2.5 7 4-7 4m0 3h7"
+        />
+      </g>
     </Icon>
   );
 });

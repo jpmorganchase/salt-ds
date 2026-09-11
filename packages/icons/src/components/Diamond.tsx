@@ -12,15 +12,17 @@ export const DiamondIcon = forwardRef<SVGSVGElement, DiamondIconProps>(
       <Icon
         data-testid="DiamondIcon"
         aria-label="diamond"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M0 4.031 2 0h8l2 4.031L6 11 0 4.062l.03-.03zm6 4.435L8 4.03H4zM4.944 8.34 1.286 4.03H3zM9 4.03 7.171 8.086l3.503-4.055zm1.382-1.008H8.9l-.4-2.015h.882zM7.5 1.008l.4 2.015H4.1l.4-2.015zM1.618 3.023H3.1l.4-2.015h-.882z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2 5.5 4.5 2h7L14 5.5 8 14Zm0 0h12m-8.5 0L8 14m2.5-8.5L8 14M5.5 5.5 7 2m3.5 3.5L9 2"
+          />
+        </g>
       </Icon>
     );
   },

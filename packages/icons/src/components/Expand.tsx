@@ -12,11 +12,17 @@ export const ExpandIcon = forwardRef<SVGSVGElement, ExpandIconProps>(
       <Icon
         data-testid="ExpandIcon"
         aria-label="expand"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M0 0h4v1H1.707l2.89 2.89-.708.706L1 1.707V4H0zm12 12H8v-1h2.293l-2.89-2.89.708-.706L11 10.293V8h1zm0-12v4h-1V1.707l-2.89 2.89-.706-.708L10.293 1H8V0zM0 12V8h1v2.293l2.89-2.89.706.708L1.707 11H4v1z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 6V2.5H6m-3.5 0 4 4m3.5-4h3.5V6m0-3.5-4 4m4 3.5v3.5H10m3.5 0-4-4m-3.5 4H2.5V10m0 3.5 4-4"
+          />
+        </g>
       </Icon>
     );
   },

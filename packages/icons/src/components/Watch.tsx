@@ -12,16 +12,19 @@ export const WatchIcon = forwardRef<SVGSVGElement, WatchIconProps>(
       <Icon
         data-testid="WatchIcon"
         aria-label="watch"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M5 4h1v2h2v1H5z" />
-        <path
-          fillRule="evenodd"
-          d="M3 0h6v2h1v8H9v2H3v-2H2V2h1zm6 3H3v6h6z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M5.5 4.5v-3h5v3m-5 7v3h5v-3m-6-7h7q1 0 1 1v5q0 1-1 1h-7q-1 0-1-1v-5q0-1 1-1Z" />
+            <path d="M8 6v2l1.333.889" />
+          </g>
+        </g>
       </Icon>
     );
   },

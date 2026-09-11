@@ -14,11 +14,21 @@ export const NotificationSolidIcon = forwardRef<
     <Icon
       data-testid="NotificationSolidIcon"
       aria-label="notification solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M.996 8.004q.351-.141.598-.645.258-.504.41-1.359V3q0-.62.234-1.16.235-.55.633-.95.41-.41.961-.656A3 3 0 0 1 5.004 0h1.992q.621 0 1.172.234.55.246.95.657.409.398.644.949.234.54.234 1.16v3.012l.047.21q.152.761.387 1.208.246.433.574.574H12V9H0v-.996zM6 12a1.52 1.52 0 0 1-1.066-.41 1.27 1.27 0 0 1-.434-.973v-.609h3v.609q0 .574-.445.973Q6.62 12 6 12" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M4.5 6a3.5 3.5 0 0 1 7 0v2.5l2 3h-11l2-3Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.5 13.5h3M8 2.5v-1"
+        />
+      </g>
     </Icon>
   );
 });

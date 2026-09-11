@@ -12,12 +12,17 @@ export const CloneIcon = forwardRef<SVGSVGElement, CloneIconProps>(
       <Icon
         data-testid="CloneIcon"
         aria-label="clone"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M0 3h1V1h3V0H0zm3 2h1V4h7v7H4v-1H3v2h9V3H3zm3-4V0h4v2H9V1z" />
-        <path d="M0 5h1v2h5V5l3 2.5L6 10V8H0z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 5V1.5H5m2.5 0H11V3M1.5 7.5v2h9M8 7l2.5 2.5L8 12M5 8.25V4.5h9.5v10H5v-3.75"
+          />
+        </g>
       </Icon>
     );
   },

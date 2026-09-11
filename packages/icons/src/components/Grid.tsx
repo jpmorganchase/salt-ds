@@ -12,15 +12,17 @@ export const GridIcon = forwardRef<SVGSVGElement, GridIconProps>(
       <Icon
         data-testid="GridIcon"
         aria-label="grid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M0 5V0h5v5zm1-4h3v3H1zm6 4V0h5v5zm1-4h3v3H8zM7 7v5h5V7zm4 1H8v3h3zM0 12V7h5v5zm1-4h3v3H1z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 2.5h4v4h-4Zm7 0h4v4h-4Zm-7 7h4v4h-4Zm7 0h4v4h-4Z"
+          />
+        </g>
       </Icon>
     );
   },

@@ -12,15 +12,19 @@ export const StethoscopeIcon = forwardRef<SVGSVGElement, StethoscopeIconProps>(
       <Icon
         data-testid="StethoscopeIcon"
         aria-label="stethoscope"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M3.484.5h-1V1H1v3.5a3.5 3.5 0 0 0 3 3.465v1.05A2.99 2.99 0 0 0 7.004 12 2.983 2.983 0 0 0 10 9.016V7.415a1.5 1.5 0 1 0-1 0v1.6A1.983 1.983 0 0 1 7.004 11 1.99 1.99 0 0 1 5 9.016V7.965A3.5 3.5 0 0 0 8 4.5V1H6.5V.5h-1v2h1V2H7v2.5a2.5 2.5 0 0 1-5 0V2h.484v.5h1zm6.016 5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M2.5 2v3.5a3 3 0 0 0 6 0V2m-6 1.5H4m4.5 0H7m-1.5 5v2a3.25 3 0 0 0 6.5 0V9" />
+            <path d="M10 7a2 2 0 1 0 4 0 2 2 0 1 0-4 0Z" />
+          </g>
+        </g>
       </Icon>
     );
   },

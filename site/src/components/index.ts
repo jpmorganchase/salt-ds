@@ -37,6 +37,7 @@ export * from "./footer";
 export * from "./getting-started";
 export * from "./guidance-callout";
 export * from "./hero";
+export * from "./icon-design-examples";
 export * from "./icon-preview";
 export * from "./image-switcher";
 export * from "./impact";

@@ -14,12 +14,21 @@ export const AccessibleSolidIcon = forwardRef<
     <Icon
       data-testid="AccessibleSolidIcon"
       aria-label="accessible solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M5 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M4 4h2v2h2l2.828 2.828-1.414 1.415L7.172 8H4z" />
-      <path d="M3 4.126A4.002 4.002 0 0 0 4 12a4 4 0 0 0 3.595-2.245l-.763-.763A3.001 3.001 0 1 1 3 5.171z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M5.5 3a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7 5.5V9h4l2 4h2M7 6.5h4M5 7a3.5 3.5 0 1 0 4.5 5"
+        />
+      </g>
     </Icon>
   );
 });

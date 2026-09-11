@@ -12,11 +12,17 @@ export const GrowthIcon = forwardRef<SVGSVGElement, GrowthIconProps>(
       <Icon
         data-testid="GrowthIcon"
         aria-label="growth"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M12 6.5h-1V3.707l-4 4-2-2L.854 9.854l-.708-.708L5 4.293l2 2L10.293 3H7.5V2H12z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m2 12.5 4-4L8.5 11 14 4.5m-4.5 0H14V9"
+          />
+        </g>
       </Icon>
     );
   },

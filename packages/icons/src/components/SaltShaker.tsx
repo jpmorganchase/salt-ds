@@ -12,17 +12,26 @@ export const SaltShakerIcon = forwardRef<SVGSVGElement, SaltShakerIconProps>(
       <Icon
         data-testid="SaltShakerIcon"
         aria-label="salt shaker"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M5.346 5.248 6.957 6.86 9.26 5.25z" />
-        <path
-          fillRule="evenodd"
-          d="M2.512 5.243 5.966.386A1 1 0 0 1 7.462.293L11.71 4.54a1 1 0 0 1-.093 1.496L6.761 9.49a3 3 0 0 1-4.243 0 3.01 3.01 0 0 1-.006-4.247m1.332-.083 3 3 3.67-2.57a.5.5 0 0 0 .068-.763L7.177 1.42a.5.5 0 0 0-.764.067zm-.634.78a2.023 2.023 0 0 0 2.859 2.859z"
-          clipRule="evenodd"
-        />
-        <path d="M1 8H0v1h1zm-1 2h1v1H0zm3 1H2v1h1z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m10.121 2.579 3.3 3.3q.354.353 0 .707l-4.478 4.478-1.297.354-3.064-3.064.354-1.297L9.414 2.58q.354-.354.707 0Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m4.582 8.354 3.064 3.064-.589.589q-.353.354-.707 0L3.993 9.65q-.354-.353 0-.707Z"
+          />
+          <path
+            fillRule="evenodd"
+            d="M7.67 7.01h3.3L9.32 8.66ZM2.833 12h.8v.8h-.8Zm-1.166 1.867h.8v.8h-.8Zm2.5.133h.8v.8h-.8Z"
+          />
+        </g>
       </Icon>
     );
   },

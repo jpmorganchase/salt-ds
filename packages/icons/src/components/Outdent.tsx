@@ -12,11 +12,17 @@ export const OutdentIcon = forwardRef<SVGSVGElement, OutdentIconProps>(
       <Icon
         data-testid="OutdentIcon"
         aria-label="outdent"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M3 2.5h9v1H3zm4 3h5v1H7zm0 3h5v1H7zM0 7.475l2.83 2.829.706-.707L1.94 8h4.042V7H1.89l1.646-1.647-.707-.707z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2 2.5h12m-12 11h12m-6.5-7H14m-6.5 3H14m-9.5-4L2 8l2.5 2.5"
+          />
+        </g>
       </Icon>
     );
   },

@@ -12,15 +12,17 @@ export const ProtectionIcon = forwardRef<SVGSVGElement, ProtectionIconProps>(
       <Icon
         data-testid="ProtectionIcon"
         aria-label="protection"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M6 12C1.188 9.818.5 4.636.5 1.91l.418-.068C2.413 1.603 3.861 1.372 6 0c2.139 1.373 3.587 1.603 5.082 1.842l.418.067C11.5 4.636 10.813 9.82 6 12m-.5-1.398V1.455c-1.578.845-2.82 1.11-3.977 1.302.136 2.48.93 5.95 3.977 7.845m4.977-7.845c-.136 2.48-.93 5.95-3.977 7.845V1.455c1.578.845 2.82 1.11 3.977 1.302"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8 1.5c-2.167 1.333-3.8 1.7-5.5 2 0 4.833 1.167 8.967 5.5 11 4.333-2.033 5.5-6.167 5.5-11-1.7-.3-3.333-.667-5.5-2Zm0 0v13"
+          />
+        </g>
       </Icon>
     );
   },

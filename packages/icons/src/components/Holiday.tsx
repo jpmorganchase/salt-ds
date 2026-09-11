@@ -12,22 +12,17 @@ export const HolidayIcon = forwardRef<SVGSVGElement, HolidayIconProps>(
       <Icon
         data-testid="HolidayIcon"
         aria-label="holiday"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M4.898 7.028c.51-1.694 2.462-2.7 4.36-2.246 1.9.454 3.027 2.196 2.518 3.89l-2.881-.689L8.14 11H12v1H0v-1h7.11l.81-3.249zm4.128-1.273c-.998-.239-1.95.057-2.562.619l4.377 1.047c-.163-.68-.697-1.304-1.554-1.592z"
-          clipRule="evenodd"
-        />
-        <path d="M4.25 7.25h-1v-1.5h1zM2.69 5.518l-1.061 1.06-.707-.707 1.06-1.06z" />
-        <path
-          fillRule="evenodd"
-          d="M3.75 2.25a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3m0 1a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1"
-          clipRule="evenodd"
-        />
-        <path d="M1.75 4.25H.25v-1h1.5zm5.5 0h-1.5v-1h1.5zM2.69 1.982l-.708.707-1.06-1.06.707-.708zm3.888-.353-1.06 1.06-.707-.707L5.87.922zM4.25 1.75h-1V.25h1z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 4a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0ZM4 1.333V2.75m0 2.5v1.417M1.333 4H2.75m2.5 0h1.417M2.083 2.083l1.033 1.033m1.768 1.768 1.033 1.033m-3.834 0 1.033-1.033m1.768-1.768 1.033-1.033m.75 5.417Q9 3.833 12 5.833q2.5 1.5 2 3.667Zm3.833 1L9 14m-7.5 0h13"
+          />
+        </g>
       </Icon>
     );
   },

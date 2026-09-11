@@ -12,15 +12,21 @@ export const ToteSolidIcon = forwardRef<SVGSVGElement, ToteSolidIconProps>(
       <Icon
         data-testid="ToteSolidIcon"
         aria-label="tote solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M4 4V3a2 2 0 1 1 4 0v1h4v8H0V4zm3-1v1H5V3a1 1 0 0 1 2 0m1 3H7v1h1zM4 6h1v1H4z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M2.5 5.5h11v8h-11Zm2.5 1h1v1H5Zm5 0h1v1h-1Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.5 5.5V4a2.5 2.5 0 0 1 5 0v1.5"
+          />
+        </g>
       </Icon>
     );
   },

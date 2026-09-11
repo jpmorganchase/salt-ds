@@ -14,11 +14,21 @@ export const SignpostSolidIcon = forwardRef<
     <Icon
       data-testid="SignpostSolidIcon"
       aria-label="signpost solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M5 0h1v1h4.067L12 3l-1.933 2H6v7H5V7H1.933L0 5l1.933-2H5z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M7.5 3.5H12l2.5 2-2.5 2H7.5Zm0 4H4l-2.5 2 2.5 2h3.5Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.5 1.5v13"
+        />
+      </g>
     </Icon>
   );
 });

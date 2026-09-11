@@ -12,11 +12,17 @@ export const RedoIcon = forwardRef<SVGSVGElement, RedoIconProps>(
       <Icon
         data-testid="RedoIcon"
         aria-label="redo"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M4.707 10.831a5 5 0 1 1 5.625-7.33h-2.33v1h4v-4h-1v2.184A6 6 0 0 0 9.745 1.31a6 6 0 1 0-5.296 10.486z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.5 2.5v4h-4m4 0a5.5 5.5 0 1 0-5 7.5"
+          />
+        </g>
       </Icon>
     );
   },

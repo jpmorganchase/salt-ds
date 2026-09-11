@@ -12,15 +12,16 @@ export const WatchSolidIcon = forwardRef<SVGSVGElement, WatchSolidIconProps>(
       <Icon
         data-testid="WatchSolidIcon"
         aria-label="watch solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M3 0h6v2h1v8H9v2H3v-2H2V2h1zm3 4H5v3h3V6H6z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M5.5 1.5h5v3h-5Zm0 10h5v3h-5Zm-1-7h7q1 0 1 1v5q0 1-1 1h-7q-1 0-1-1v-5q0-1 1-1m4 1.5v1.732l1.11.74-.554.833L7.5 8.268V6Z"
+          />
+        </g>
       </Icon>
     );
   },

@@ -14,15 +14,16 @@ export const ProgressCompleteIcon = forwardRef<
     <Icon
       data-testid="ProgressCompleteIcon"
       aria-label="progress complete"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12M3.207 5.621l-.707.707 2.475 2.475L9.57 4.207 8.864 3.5l-3.89 3.89z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0m3 0L7 10.5 12 5l.733.667L7 12 3.767 8.7Z"
+        />
+      </g>
     </Icon>
   );
 });

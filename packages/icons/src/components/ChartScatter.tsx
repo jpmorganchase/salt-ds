@@ -14,16 +14,19 @@ export const ChartScatterIcon = forwardRef<
     <Icon
       data-testid="ChartScatterIcon"
       aria-label="chart scatter"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M1.143 10.857H12V12H0V0h1.143z" />
-      <path
-        fillRule="evenodd"
-        d="M4.571 6.286a1.714 1.714 0 1 1 0 3.428 1.714 1.714 0 0 1 0-3.428m0 1.143a.571.571 0 1 0 0 1.142.571.571 0 0 0 0-1.142m5.715-2.286a1.714 1.714 0 1 1 0 3.428 1.714 1.714 0 0 1 0-3.428m0 1.143a.571.571 0 1 0 0 1.143.571.571 0 0 0 0-1.143M5.714.571a1.714 1.714 0 1 1 0 3.429 1.714 1.714 0 0 1 0-3.429m0 1.143a.571.571 0 1 0 0 1.143.571.571 0 0 0 0-1.143"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <g
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+        >
+          <path d="M1.5 1.5v13h13" />
+          <path d="M3.583 11a1.167 1.167 0 1 0 2.334 0 1.167 1.167 0 1 0-2.334 0Zm1.75-4a1.167 1.167 0 1 0 2.334 0 1.167 1.167 0 1 0-2.334 0Zm3.5 2.5a1.167 1.167 0 1 0 2.334 0 1.167 1.167 0 1 0-2.334 0Zm3-6a1.167 1.167 0 1 0 2.334 0 1.167 1.167 0 1 0-2.334 0Z" />
+        </g>
+      </g>
     </Icon>
   );
 });

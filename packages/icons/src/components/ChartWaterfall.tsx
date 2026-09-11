@@ -14,11 +14,21 @@ export const ChartWaterfallIcon = forwardRef<
     <Icon
       data-testid="ChartWaterfallIcon"
       aria-label="chart waterfall"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M2 11H1V7.5h1zm9 0h-1V1h1zM5 7.5H4v-3h1zm3-3H7V1h1z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.5 14.5H15"
+        />
+        <path
+          fillRule="evenodd"
+          d="M2 9.5h2v3H2Zm3.5-3h2v3h-2Zm3.5-4h2v4H9Zm4 0h2v10h-2Z"
+        />
+      </g>
     </Icon>
   );
 });

@@ -12,13 +12,17 @@ export const UrgencyHighIcon = forwardRef<SVGSVGElement, UrgencyHighIconProps>(
       <Icon
         data-testid="UrgencyHighIcon"
         aria-label="urgency high"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="m6 1 5.3 3.684-.575.816L6 2.215 1.275 5.5.7 4.684z" />
-        <path d="m6 3.5 5.3 3.684-.575.816L6 4.715 1.275 8 .7 7.184z" />
-        <path d="m6 6 5.3 3.684-.575.816L6 7.215 1.275 10.5.7 9.684z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m2 7 6-3.5L14 7M2 10.5 8 7l6 3.5M2 14l6-3.5 6 3.5"
+          />
+        </g>
       </Icon>
     );
   },

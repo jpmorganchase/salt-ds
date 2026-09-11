@@ -12,15 +12,16 @@ export const ClockSolidIcon = forwardRef<SVGSVGElement, ClockSolidIconProps>(
       <Icon
         data-testid="ClockSolidIcon"
         aria-label="clock solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M12 6A6 6 0 1 1 0 6a6 6 0 0 1 12 0M6 3v3H3v1h4V3z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0m6-4.5h1v4.233L11.4 9.6l-.6.8-3.3-2.133Z"
+          />
+        </g>
       </Icon>
     );
   },

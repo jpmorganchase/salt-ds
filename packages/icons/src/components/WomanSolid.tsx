@@ -12,11 +12,16 @@ export const WomanSolidIcon = forwardRef<SVGSVGElement, WomanSolidIconProps>(
       <Icon
         data-testid="WomanSolidIcon"
         aria-label="woman solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M7.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0M7.25 9v3h-2.5V9H3l1.658-4.56a1.428 1.428 0 0 1 2.684 0L9 9z" />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M6.5 3a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M7 6.5h2l1.667 5H5.333Zm-1 5h4v3H8.5v-3h-1v3H6Z"
+          />
+        </g>
       </Icon>
     );
   },

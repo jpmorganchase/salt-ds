@@ -17,16 +17,19 @@ export const SemanticVeryDissatisfiedIcon = forwardRef<
     <Icon
       data-testid="SemanticVeryDissatisfiedIcon"
       aria-label="semantic very dissatisfied"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M5 5a1 1 0 1 1-1.54-.842l-.719-.192L3 3l2.415.647-.259.966-.267-.072A1 1 0 0 1 5 5m3 1a1 1 0 0 0 .54-1.842l.719-.192L9 3l-2.415.647.259.966.267-.072A1 1 0 0 0 8 6M6 8a2 2 0 0 0-1.937 1.5 4 4 0 0 1-.845-.626 3.001 3.001 0 0 1 5.564 0 4 4 0 0 1-.845.626A2 2 0 0 0 6 8" />
-      <path
-        fillRule="evenodd"
-        d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12m0-1a4.98 4.98 0 0 0 3.667-1.6 5 5 0 1 0-6.706.571L3 10c.835.628 1.874 1 3 1"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <g
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+        >
+          <path d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0Z" />
+          <path d="M5 12q3-4 6 0M4.5 5.5l2 1m3 0 2-1" />
+        </g>
+      </g>
     </Icon>
   );
 });

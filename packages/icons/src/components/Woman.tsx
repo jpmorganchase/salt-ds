@@ -12,15 +12,17 @@ export const WomanIcon = forwardRef<SVGSVGElement, WomanIconProps>(
       <Icon
         data-testid="WomanIcon"
         aria-label="woman"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M6 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m0-1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m-.25 10V9h.5v3h1V9H9L7.342 4.44a1.428 1.428 0 0 0-2.684 0L3 9h1.75v3zm.652-7.218L7.572 8H4.428l1.17-3.218a.428.428 0 0 1 .804 0"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.5 3a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0ZM7 6.5h2l1.667 5H5.333Zm-1 5v3h4v-3m-2 0v3"
+          />
+        </g>
       </Icon>
     );
   },

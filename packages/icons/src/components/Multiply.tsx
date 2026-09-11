@@ -12,11 +12,17 @@ export const MultiplyIcon = forwardRef<SVGSVGElement, MultiplyIconProps>(
       <Icon
         data-testid="MultiplyIcon"
         aria-label="multiply"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M6 5.293 9.182 2.11l.707.707L6.707 6l3.182 3.182-.707.707L6 6.707 2.818 9.89l-.707-.707L5.293 6 2.11 2.818l.707-.707z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m3.5 3.5 9 9m0-9-9 9"
+          />
+        </g>
       </Icon>
     );
   },

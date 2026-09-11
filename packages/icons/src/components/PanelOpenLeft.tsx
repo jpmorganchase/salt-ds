@@ -14,16 +14,20 @@ export const PanelOpenLeftIcon = forwardRef<
     <Icon
       data-testid="PanelOpenLeftIcon"
       aria-label="panel open left"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M10.004 6 7.176 8.828l-.707-.707L8.089 6.5H5.005v-1H8.09L6.469 3.879l.707-.707z" />
-      <path
-        fillRule="evenodd"
-        d="M12 12H0V0h12zM1 11h2V1H1zm3 0h7V1H4z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <g
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+        >
+          <path d="M1.667 1.667h12.666v12.666H1.667Z" />
+          <path d="M2.167 1.667h11.666q.5 0 .5.5v11.666q0 .5-.5.5H2.167q-.5 0-.5-.5V2.167q0-.5.5-.5Z" />
+          <path d="M5 1.667v12.666M4.5 1.667q.5 0 .5.5m.5-.5q-.5 0-.5.5m-.5 12.166q.5 0 .5-.5m.5.5q-.5 0-.5-.5M7 8h4.667m-2-2.333L12 8l-2.333 2.333" />
+        </g>
+      </g>
     </Icon>
   );
 });

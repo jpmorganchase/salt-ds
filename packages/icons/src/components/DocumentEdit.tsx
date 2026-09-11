@@ -14,16 +14,19 @@ export const DocumentEditIcon = forwardRef<
     <Icon
       data-testid="DocumentEditIcon"
       aria-label="document edit"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M8.156 1H2v10h5V8h3V5h1v5l-2 2H1V0h7.156zM8 11h.586L10 9.586V9H8z"
-        clipRule="evenodd"
-      />
-      <path d="m10.94 2.475-3.89 3.89-2.121.706.707-2.122 3.888-3.888zM10.232.354a.5.5 0 0 1 .708 0l.707.707a.5.5 0 0 1 0 .707l-.354.353L9.879.707z" />
+      <g strokeWidth=".67">
+        <g
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+        >
+          <path d="M9.454 1.5H2.5v13h8l3-3V6.546m-3 7.954V12q0-.5.5-.5h2.5" />
+          <path d="m8 5.5 4-4 2 2-4 4-2.5.5Zm3-3 2 2" />
+        </g>
+      </g>
     </Icon>
   );
 });

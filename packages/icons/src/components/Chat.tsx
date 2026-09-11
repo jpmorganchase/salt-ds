@@ -12,15 +12,17 @@ export const ChatIcon = forwardRef<SVGSVGElement, ChatIconProps>(
       <Icon
         data-testid="ChatIcon"
         aria-label="chat"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M8.567 10.67a5.625 5.625 0 1 1 2.06-2.22L12 12zM.978 5.876a4.647 4.647 0 1 1 8.556 2.513l.41 1.091.28.745-.724-.272-1.041-.394a4.647 4.647 0 0 1-7.48-3.683"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2 2.5h12v9H6L3 14v-2.5H2Z"
+          />
+        </g>
       </Icon>
     );
   },

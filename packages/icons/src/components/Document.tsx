@@ -12,15 +12,17 @@ export const DocumentIcon = forwardRef<SVGSVGElement, DocumentIconProps>(
       <Icon
         data-testid="DocumentIcon"
         aria-label="document"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M1 12V0h8l2 2v10zm9-1V4H7V1H2v10zm0-8.586V3H8V1h.586z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 1.5h8l3 3v10h-11Zm8 0V4q0 .5.5.5h2.5M5 7.5h6m-6 3h4.5"
+          />
+        </g>
       </Icon>
     );
   },

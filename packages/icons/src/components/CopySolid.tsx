@@ -12,16 +12,18 @@ export const CopySolidIcon = forwardRef<SVGSVGElement, CopySolidIconProps>(
       <Icon
         data-testid="CopySolidIcon"
         aria-label="copy solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M8.707 0H4v9h7V2.293zM7 1h1v2h2v1H7z"
-          clipRule="evenodd"
-        />
-        <path d="M8 10H3V3H1v9h7z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.5 1.5h8v10"
+          />
+          <path fillRule="evenodd" d="M2.5 4.5h8v10h-8Z" />
+        </g>
       </Icon>
     );
   },

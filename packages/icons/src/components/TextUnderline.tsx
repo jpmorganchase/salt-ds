@@ -14,11 +14,27 @@ export const TextUnderlineIcon = forwardRef<
     <Icon
       data-testid="TextUnderlineIcon"
       aria-label="text underline"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M10 12H2v-1h8zM3.634 6.751q0 1.13.595 1.743.601.613 1.792.613.813 0 1.33-.292.522-.297.771-.825.255-.535.255-1.233V1h1.026v5.745q0 .941-.382 1.676-.378.735-1.142 1.16-.765.42-1.919.419-1.646 0-2.508-.893-.855-.892-.856-2.386V1h1.038z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M11.642 2v6.147q0 1.007-.406 1.794-.406.786-1.225 1.237t-2.053.452q-1.761 0-2.68-.955t-.92-2.554V2h1.111v6.154q0 1.208.64 1.864t1.914.657q.87 0 1.426-.315t.825-.884q.27-.569.27-1.316V2Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth=".272757"
+          d="M11.642 2v6.147q0 1.007-.406 1.794-.406.786-1.225 1.237t-2.053.452q-1.761 0-2.68-.955t-.92-2.554V2h1.111v6.154q0 1.208.64 1.864t1.914.657q.87 0 1.426-.315t.825-.884q.27-.569.27-1.316V2Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.5 14h11"
+        />
+      </g>
     </Icon>
   );
 });

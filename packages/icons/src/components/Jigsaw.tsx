@@ -12,15 +12,17 @@ export const JigsawIcon = forwardRef<SVGSVGElement, JigsawIconProps>(
       <Icon
         data-testid="JigsawIcon"
         aria-label="jigsaw"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M1 6h1.5a.5.5 0 0 1 0 1H1v4h4V9.5a.5.5 0 0 1 1 0V11h4V8h.5a1.5 1.5 0 0 0 0-3H10V2H7v-.5a1.5 1.5 0 1 0-3 0V2H1zm5-4.5a.5.5 0 0 0-1 0V3H2v2h.5a1.5 1.5 0 1 1 0 3H2v2h2v-.5a1.5 1.5 0 1 1 3 0v.5h2V7h1.5a.5.5 0 0 0 0-1H9V3H6z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3 3h3.5c-.333-1.5 3.333-1.5 3 0H13v3.5c1.5-.333 1.5 3.333 0 3V13H9.5c.333-1.5-3.333-1.5-3 0H3V9.5c1.5.333 1.5-3.333 0-3Z"
+          />
+        </g>
       </Icon>
     );
   },

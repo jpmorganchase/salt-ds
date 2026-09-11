@@ -14,11 +14,26 @@ export const MusicDisabledSolidIcon = forwardRef<
     <Icon
       data-testid="MusicDisabledSolidIcon"
       aria-label="music disabled solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M5 9.5V8.125l-1-.996v.37a2.5 2.5 0 1 0 1 2M9.5 6c-.655 0-1.25.252-1.697.664l3.538 3.528C11.75 9.747 12 9.152 12 8.5V0L4 1v1.87l1 .997V1.883l6-.75V6.5A2.5 2.5 0 0 0 9.5 6M0 1.752 10.272 12l.728-.77L.752 1z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.5 11v-.672m0-5.656V3.5l7-2V10M7.922 6.094 13.5 4.5"
+        />
+        <path
+          fillRule="evenodd"
+          d="m6.5 3.5 7-2v3L7.097 6.33 6.5 5.731Zm0 7.5c0 1.1-1.133 2-2.5 2s-2-.7-2-1.5 1.133-2 2.5-2 2 .7 2 1.5m7-1c0 .68-.433 1.284-1.087 1.645l-2.55-2.55c.44-.346 1.015-.595 1.637-.595 1.367 0 2 .7 2 1.5"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.5 2.5 14 15"
+        />
+      </g>
     </Icon>
   );
 });

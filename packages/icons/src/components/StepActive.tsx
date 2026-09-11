@@ -12,15 +12,13 @@ export const StepActiveIcon = forwardRef<SVGSVGElement, StepActiveIconProps>(
       <Icon
         data-testid="StepActiveIcon"
         aria-label="step active"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path fillRule="evenodd" d="M2 8a6 6 0 1 0 12 0A6 6 0 1 0 2 8" />
+        </g>
       </Icon>
     );
   },

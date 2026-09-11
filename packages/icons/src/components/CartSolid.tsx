@@ -12,11 +12,21 @@ export const CartSolidIcon = forwardRef<SVGSVGElement, CartSolidIconProps>(
       <Icon
         data-testid="CartSolidIcon"
         aria-label="cart solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M4 1H1v1h1l.715 5h-.008l.29 2H10l.145-1h-6.29l-.144-1h6.574L11 2H4zm1 10a1 1 0 1 1-2 0 1 1 0 0 1 2 0m5 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 2.5h2l2 8h7"
+          />
+          <path
+            fillRule="evenodd"
+            d="M4 4.5h10l-1.5 6h-7Zm1 9a1 1 0 1 0 2 0 1 1 0 1 0-2 0m6 0a1 1 0 1 0 2 0 1 1 0 1 0-2 0"
+          />
+        </g>
       </Icon>
     );
   },

@@ -14,15 +14,16 @@ export const SemanticNeutralSolidIcon = forwardRef<
     <Icon
       data-testid="SemanticNeutralSolidIcon"
       aria-label="semantic neutral solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12M4 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2m5-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0m0 3v1H3V8z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0M5 10h6v1H5Zm0-4a.5.5 0 1 0 1 0 .5.5 0 1 0-1 0m5 0a.5.5 0 1 0 1 0 .5.5 0 1 0-1 0"
+        />
+      </g>
     </Icon>
   );
 });

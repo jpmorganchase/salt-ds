@@ -14,15 +14,16 @@ export const ProgressCancelledIcon = forwardRef<
     <Icon
       data-testid="ProgressCancelledIcon"
       aria-label="progress cancelled"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12M3.828 3.121 5.95 5.243 8.07 3.12l.707.707-2.12 2.123 2.121 2.12-.707.707-2.121-2.12-2.122 2.121-.707-.707L5.243 5.95 3.12 3.828z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0m4.033-3.167L8 7.3l2.467-2.467.7.7L8.7 8l2.467 2.467-.7.7L8 8.7l-2.467 2.467-.7-.7L7.3 8 4.833 5.533Z"
+        />
+      </g>
     </Icon>
   );
 });

@@ -12,15 +12,21 @@ export const MusicSolidIcon = forwardRef<SVGSVGElement, MusicSolidIconProps>(
       <Icon
         data-testid="MusicSolidIcon"
         aria-label="music solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M5 9.5V1.883l6-.75V6.5a2.5 2.5 0 1 0 1 2V0L4 1v6.5a2.5 2.5 0 1 0 1 2"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.5 11V3.5l7-2V10m-7-3.5 7-2"
+          />
+          <path
+            fillRule="evenodd"
+            d="m6.5 3.5 7-2v3l-7 2Zm0 7.5c0 1.1-1.133 2-2.5 2s-2-.7-2-1.5 1.133-2 2.5-2 2 .7 2 1.5m7-1c0 1.1-1.133 2-2.5 2s-2-.7-2-1.5 1.133-2 2.5-2 2 .7 2 1.5"
+          />
+        </g>
       </Icon>
     );
   },

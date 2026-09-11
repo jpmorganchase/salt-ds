@@ -14,11 +14,22 @@ export const PotFoodSolidIcon = forwardRef<
     <Icon
       data-testid="PotFoodSolidIcon"
       aria-label="pot food solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M9 1c0 .62-.297 1.212-.53 1.676l-.023.048C8.183 3.253 8 3.64 8 4H7c0-.62.297-1.212.53-1.676l.023-.048C7.817 1.747 8 1.36 8 1zm2 0c0 .62-.297 1.212-.53 1.676l-.023.048C10.183 3.253 10 3.64 10 4H9c0-.62.297-1.212.53-1.676l.023-.048C9.817 1.747 10 1.36 10 1zM2.5 5H1v1H0v1h1a4 4 0 0 0 3 3.874V12h4v-1.126c1.725-.444 3-2.01 3-3.874h1V6h-1V5H6.5a2.5 2.5 0 0 0-2-1c-.818 0-1.544.393-2 1" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M3 7h10v1.5c0 2.76-2.24 4.5-5 4.5s-5-1.74-5-4.5Zm1.5 0C5 5.5 7.5 5.5 8 7Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.5 8H3m10 0h1.5M11 1.5c0 1.333-1 2.167-1 3.5m3.5-3.5c0 1.333-1 2.167-1 3.5"
+        />
+        <path fillRule="evenodd" d="M5.5 13h5v1.5h-5Z" />
+      </g>
     </Icon>
   );
 });

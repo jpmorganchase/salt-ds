@@ -14,11 +14,21 @@ export const HierarchySolidIcon = forwardRef<
     <Icon
       data-testid="HierarchySolidIcon"
       aria-label="hierarchy solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M4.5 4.5H3v1h2.5v-1h6v3h-6v-1H3v3h2.5v-1h6v3h-6v-1H2v-6H.5v-4h4z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M2 2h4v4H2Zm6.5 4.5H14v3H8.5Zm0 5H14v3H8.5Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M4 6v7h4.5M4 8h4.5"
+        />
+      </g>
     </Icon>
   );
 });

@@ -12,16 +12,17 @@ export const UngroupIcon = forwardRef<SVGSVGElement, UngroupIconProps>(
       <Icon
         data-testid="UngroupIcon"
         aria-label="ungroup"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M0 6V0h6v6zm1-5h4v4H1zm5 5h6v6H6zm1 1h4v4H7z"
-          clipRule="evenodd"
-        />
-        <path d="M1 7h1v3h3v1H1zm9-2h1V1H7v1h3z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 1.5H7V7H1.5ZM9 9h5.5v5.5H9Zm1-6.5h3.5V6m-11 4v3.5H6"
+          />
+        </g>
       </Icon>
     );
   },

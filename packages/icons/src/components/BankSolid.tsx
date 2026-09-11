@@ -12,15 +12,16 @@ export const BankSolidIcon = forwardRef<SVGSVGElement, BankSolidIconProps>(
       <Icon
         data-testid="BankSolidIcon"
         aria-label="bank solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M12 6 6 0 0 6h2v5H0v1h12v-1h-2V6zM9 6H8v5h1zM6.5 6h-1v5h1zM4 6H3v5h1zm2.5-3v1h-1V3z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M1.333 3.867 8 1.333l6.667 2.534v1.8h-.834q-.166 0-.166.833v5q0 .833.833.833h.167v2.334H1.333v-2.334H1.5q.833 0 .833-.833v-5q0-.833-.833-.833h-.167Zm2.167 1.8q.5 0 .5.5v5.666q0 .5-.5.5t-.5-.5V6.167q0-.5.5-.5m1.667 0q.5 0 .5.5v5.666q0 .5-.5.5t-.5-.5V6.167q0-.5.5-.5m5.666 0q.5 0 .5.5v5.666q0 .5-.5.5t-.5-.5V6.167q0-.5.5-.5m1.667 0q.5 0 .5.5v5.666q0 .5-.5.5t-.5-.5V6.167q0-.5.5-.5m-4.5 0a1.667 1.667 0 0 1 1.667 1.666v4.5q0 .5-.5.5H6.833q-.5 0-.5-.5v-4.5A1.667 1.667 0 0 1 8 5.667"
+          />
+        </g>
       </Icon>
     );
   },

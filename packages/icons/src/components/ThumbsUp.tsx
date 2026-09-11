@@ -12,16 +12,17 @@ export const ThumbsUpIcon = forwardRef<SVGSVGElement, ThumbsUpIconProps>(
       <Icon
         data-testid="ThumbsUpIcon"
         aria-label="thumbs up"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M2 12V5H0v7z" />
-        <path
-          fillRule="evenodd"
-          d="m5 3.236-1 2V11h5.382L11 7.764V5.5a.5.5 0 0 0-.5-.5H6V1.5a.5.5 0 0 0-.5-.5H5zM4 0h1.5A1.5 1.5 0 0 1 7 1.5V4h3.5A1.5 1.5 0 0 1 12 5.5V8l-2 4H3V5l1-2z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 6.5h2v7h-2Zm4 7v-7L8 2h1.5v4H13q1.5 0 1.5 1.5l-1.5 6Z"
+          />
+        </g>
       </Icon>
     );
   },

@@ -14,15 +14,21 @@ export const BuildReportSolidIcon = forwardRef<
     <Icon
       data-testid="BuildReportSolidIcon"
       aria-label="build report solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M3 1h6v2h3v9H0V3h3zm1 2h4V2H4zm4 2H4v1H1v1h3v1h4V7h3V6H8z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M2 5h12v9H2Zm.75 2.5H5.5v-1h5v1h2.75v1H10.5v1h-5v-1H2.75Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5.5 5V2.5h5V5"
+        />
+      </g>
     </Icon>
   );
 });

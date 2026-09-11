@@ -12,12 +12,19 @@ export const ImportIcon = forwardRef<SVGSVGElement, ImportIconProps>(
       <Icon
         data-testid="ImportIcon"
         aria-label="import"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M11 1H7v1h3v8H7v1h4z" />
-        <path d="M0 6.5v-1h6.094L3.412 2.82l.707-.707L8.01 6 4.118 9.89l-.707-.707L6.094 6.5z" />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M6.5 2.5h7v11h-7" />
+            <path d="M2 8h8M7 5l3 3-3 3" />
+          </g>
+        </g>
       </Icon>
     );
   },

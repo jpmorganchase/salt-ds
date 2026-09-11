@@ -12,15 +12,17 @@ export const ShareIcon = forwardRef<SVGSVGElement, ShareIconProps>(
       <Icon
         data-testid="ShareIcon"
         aria-label="share"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M10 4a2 2 0 1 0-1.956-1.581L3.508 4.687a2 2 0 1 0 0 2.626l4.536 2.268a2 2 0 1 0 .448-.894L3.956 6.419a2 2 0 0 0 0-.838l4.536-2.268C8.858 3.734 9.398 4 10 4m1 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0M3 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0m8-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m5 7 6-3.5M5 9l6 3.5M1.75 8a1.75 1.75 0 1 0 3.5 0 1.75 1.75 0 1 0-3.5 0Zm9-5a1.75 1.75 0 1 0 3.5 0 1.75 1.75 0 1 0-3.5 0Zm0 10a1.75 1.75 0 1 0 3.5 0 1.75 1.75 0 1 0-3.5 0Z"
+          />
+        </g>
       </Icon>
     );
   },

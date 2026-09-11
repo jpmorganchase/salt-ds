@@ -12,15 +12,17 @@ export const BookmarkIcon = forwardRef<SVGSVGElement, BookmarkIconProps>(
       <Icon
         data-testid="BookmarkIcon"
         aria-label="bookmark"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="m6 10 4 2V0H2v12zm-3 .234 3-1.4 3 1.4V1H3z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4 1.5h8v13l-4-3-4 3Z"
+          />
+        </g>
       </Icon>
     );
   },

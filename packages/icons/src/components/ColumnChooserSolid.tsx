@@ -14,15 +14,18 @@ export const ColumnChooserSolidIcon = forwardRef<
     <Icon
       data-testid="ColumnChooserSolidIcon"
       aria-label="column chooser solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M0 12V0h12v12zM1 2h10v1H6v1h3v1H6v1h3v1H6v1h3v1H6v2H5V3H1zm0 2h3v1H1zm3 2H1v1h3zm0 2H1v1h3z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path fillRule="evenodd" d="M1.5 2h13v3h-13Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.5 2h13v12h-13Zm0 3h13M8 5v9M3.5 7H6M3.5 9.5H6M3.5 12H6m4-5h2.5M10 9.5h2.5M10 12h2.5"
+        />
+      </g>
     </Icon>
   );
 });

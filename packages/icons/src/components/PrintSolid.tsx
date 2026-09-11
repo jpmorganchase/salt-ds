@@ -12,15 +12,21 @@ export const PrintSolidIcon = forwardRef<SVGSVGElement, PrintSolidIconProps>(
       <Icon
         data-testid="PrintSolidIcon"
         aria-label="print solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M2 0v2H0v6h2v4h8V8h2V2h-2V0zm7 2V1H3v1zm1 3H2v2h1V6h6v1h1zm-2 5V9H4v1zm0-3v1H4V7z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M2 5h12v7H2Zm2.5 4.5h7V12h-7Zm6.5-2a.5.5 0 1 0 1 0 .5.5 0 1 0-1 0"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.5 5.5v-4h7v4m-7 4h7v5h-7Zm1 2h5"
+          />
+        </g>
       </Icon>
     );
   },

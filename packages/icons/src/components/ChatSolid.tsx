@@ -12,11 +12,13 @@ export const ChatSolidIcon = forwardRef<SVGSVGElement, ChatSolidIconProps>(
       <Icon
         data-testid="ChatSolidIcon"
         aria-label="chat solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M5.625.25a5.625 5.625 0 1 0 2.942 10.42L12 12l-1.373-3.55A5.625 5.625 0 0 0 5.625.25" />
+        <g strokeWidth=".67">
+          <path fillRule="evenodd" d="M2 2.5h12v9H6L3 14v-2.5H2Z" />
+        </g>
       </Icon>
     );
   },

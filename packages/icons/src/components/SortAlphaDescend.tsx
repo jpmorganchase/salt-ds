@@ -14,16 +14,37 @@ export const SortAlphaDescendIcon = forwardRef<
     <Icon
       data-testid="SortAlphaDescendIcon"
       aria-label="sort alpha descend"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M9 1v8.105l1.6-1.597.708.706-2.8 2.795L5.7 8.206l.708-.706L8 9.089V1zM4.092 4.997H.5v-.564L3.043.697H.579V0h3.445v.56L1.48 4.3h2.611z" />
-      <path
-        fillRule="evenodd"
-        d="m3.753 12-.489-1.373h-1.91L.864 12H0l1.86-5.003h.909L4.625 12zm-.7-2.077-.476-1.367-.078-.25-.188-.618a7 7 0 0 1-.086.314l-.164.554-.478 1.367z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M12 2.5v11m2.5-2.5L12 13.5 9.5 11"
+        />
+        <path
+          fillRule="evenodd"
+          d="M5.17 6.333H2.164v-.379l2.332-3.503H2.243V2h2.866v.38L2.773 5.882h2.398Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth=".124419"
+          d="M5.17 6.333H2.164v-.379l2.332-3.503H2.243V2h2.866v.38L2.773 5.882h2.398Z"
+        />
+        <path
+          fillRule="evenodd"
+          d="m5.061 14-.533-1.375H2.79L2.26 14h-.51l1.695-4.351h.453L5.583 14Zm-.684-1.823-.507-1.366-.058-.175-.082-.252-.068-.21q-.03.121-.064.241t-.066.222l-.056.174-.516 1.366Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth=".124419"
+          d="m5.061 14-.533-1.375H2.79L2.26 14h-.51l1.695-4.351h.453L5.583 14Zm-.684-1.823-.507-1.366-.058-.175-.082-.252-.068-.21q-.03.121-.064.241t-.066.222l-.056.174-.516 1.366Z"
+        />
+      </g>
     </Icon>
   );
 });

@@ -12,20 +12,19 @@ export const CompassIcon = forwardRef<SVGSVGElement, CompassIconProps>(
       <Icon
         data-testid="CompassIcon"
         aria-label="compass"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="m4.586 4.586 4.242-1.414-1.414 4.242-4.242 1.414zm.79.79 1.871-.623-.623 1.87-1.871.624z"
-          clipRule="evenodd"
-        />
-        <path
-          fillRule="evenodd"
-          d="M12 6A6 6 0 1 1 0 6a6 6 0 0 1 12 0m-1 0A5 5 0 1 1 1 6a5 5 0 0 1 10 0"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0Z" />
+            <path d="m10.5 5.5-1 4-4 1 1-4Z" />
+          </g>
+        </g>
       </Icon>
     );
   },

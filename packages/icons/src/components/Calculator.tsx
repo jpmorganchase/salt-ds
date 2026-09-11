@@ -12,17 +12,26 @@ export const CalculatorIcon = forwardRef<SVGSVGElement, CalculatorIconProps>(
       <Icon
         data-testid="CalculatorIcon"
         aria-label="calculator"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M11 1H1v10h10zM0 0v12h12V0z"
-          clipRule="evenodd"
-        />
-        <path d="M8 2h1v4H8z" />
-        <path d="M9 2H8v1.5H6.5v1H8V6h1V4.5h1.5v-1H9zM2.207 6.5l-.707.707 1.06 1.06L1.5 9.329l.707.708 1.06-1.061 1.061 1.06.708-.707-1.061-1.06 1.06-1.06-.707-.708-1.06 1.06zm-.707-3h4v1h-4zm5 5.5h4v1h-4zm0-2h4v1h-4z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3 1.5h10v13H3Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5 3.5h6v2H5Z"
+          />
+          <path
+            fillRule="evenodd"
+            d="M4.5 8h1v1h-1Zm0 3h1v1h-1Zm3-3h1v1h-1Zm0 3h1v1h-1Zm3-3h1v1h-1Zm0 3h1v1h-1Z"
+          />
+        </g>
       </Icon>
     );
   },

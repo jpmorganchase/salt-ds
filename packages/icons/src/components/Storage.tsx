@@ -12,16 +12,17 @@ export const StorageIcon = forwardRef<SVGSVGElement, StorageIconProps>(
       <Icon
         data-testid="StorageIcon"
         aria-label="storage"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M8 6H4v1h4z" />
-        <path
-          fillRule="evenodd"
-          d="M0 1v3h1v8h10V4h1V1zm11 1H1v1h10zm-1 3H2v6h8z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 2.5h13v3h-13Zm1 3h11v8h-11Zm3 3h5"
+          />
+        </g>
       </Icon>
     );
   },

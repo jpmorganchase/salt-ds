@@ -15,15 +15,16 @@ export const SuccessSmallSolidIcon = forwardRef<
     <Icon
       data-testid="SuccessSmallSolidIcon"
       aria-label="success small solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M12 0H0v12h12zM9.535 2.465 3.88 8.12 2.465 6.707l-.707.707 2.12 2.121 6.365-6.363z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M0 0h16v16H0Zm3.5 7.5 3 3 5.5-6 .75.75L6.5 12 2.75 8.25Z"
+        />
+      </g>
     </Icon>
   );
 });

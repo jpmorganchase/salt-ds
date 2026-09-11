@@ -12,12 +12,17 @@ export const HistoryIcon = forwardRef<SVGSVGElement, HistoryIconProps>(
       <Icon
         data-testid="HistoryIcon"
         aria-label="history"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M7.294 10.831a5 5 0 1 0-5.624-7.33H4v1H0v-4h1v2.184A6 6 0 0 1 2.256 1.31a6 6 0 1 1 5.296 10.486z" />
-        <path d="M6.001 3.001v3h-3v1h4v-4z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 5.5A6 6 0 1 1 8 14M2.5 1.833V5.5h3.667M8 4v4l2.667 1.778"
+          />
+        </g>
       </Icon>
     );
   },

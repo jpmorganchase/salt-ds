@@ -14,15 +14,21 @@ export const SemanticNeutralIcon = forwardRef<
     <Icon
       data-testid="SemanticNeutralIcon"
       aria-label="semantic neutral"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M11 6A5 5 0 1 1 1 6a5 5 0 0 1 10 0m1 0A6 6 0 1 1 0 6a6 6 0 0 1 12 0M4 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2m5-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0m0 4V8H3v1z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0ZM5 10.5h6"
+        />
+        <path
+          fillRule="evenodd"
+          d="M5 6a.5.5 0 1 0 1 0 .5.5 0 1 0-1 0m5 0a.5.5 0 1 0 1 0 .5.5 0 1 0-1 0"
+        />
+      </g>
     </Icon>
   );
 });

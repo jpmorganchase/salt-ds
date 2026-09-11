@@ -14,11 +14,18 @@ export const FavoriteStrongIcon = forwardRef<
     <Icon
       data-testid="FavoriteStrongIcon"
       aria-label="favorite strong"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M5.547.303a.5.5 0 0 1 .901 0l1.554 3.213 3.57.684a.5.5 0 0 1 .278.827L9.403 7.71l.591 3.69a.5.5 0 0 1-.582.571l-.064-.016-3.351-1.648-3.276 1.619-.07.028a.5.5 0 0 1-.647-.556l.593-3.688L.15 5.027A.5.5 0 0 1 .426 4.2l3.57-.684zm-.528 4.544-2.557.49 1.73 1.897-.4 2.49 1.54-.76.663-.329 2.21 1.087-.397-2.488 1.728-1.897-2.557-.49-.327-.678-.654-1.352z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth="1.005"
+          d="m8 2.82 1.596 3.332 3.668.504-2.66 2.576.644 3.668L8 11.192 4.752 12.9l.644-3.668-2.66-2.576 3.668-.504Z"
+        />
+      </g>
     </Icon>
   );
 });

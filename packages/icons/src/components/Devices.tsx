@@ -12,16 +12,28 @@ export const DevicesIcon = forwardRef<SVGSVGElement, DevicesIconProps>(
       <Icon
         data-testid="DevicesIcon"
         aria-label="devices"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M0 9h5v2H3v1h4V8H1V1h10v4h1V0H0z" />
-        <path
-          fillRule="evenodd"
-          d="M8 12V6h4v6zm1-5h2v4H9z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.25 10.667H1.5V2.333h11v2.084M7 10.667v3m-2.25 0h4.5"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.167 5.667h2.666q.667 0 .667.666v7.334q0 .666-.667.666h-2.666q-.667 0-.667-.666V6.333q0-.666.667-.666Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.5 7.167q0 .5.5.5h3q.5 0 .5-.5m-4 1q0-.5.5-.5h3q.5 0 .5.5"
+          />
+          <path fillRule="evenodd" d="M12 12.5a.5.5 0 1 0 1 0 .5.5 0 1 0-1 0" />
+        </g>
       </Icon>
     );
   },

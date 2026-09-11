@@ -12,16 +12,26 @@ export const InfoIcon = forwardRef<SVGSVGElement, InfoIconProps>(
       <Icon
         data-testid="InfoIcon"
         aria-label="info"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M6 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2m1 3v5H5V5z" />
-        <path
-          fillRule="evenodd"
-          d="M0 0v12h12V0zm11 1H1v10h10z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 1.5h13v13h-13Z"
+          />
+          <path
+            fillRule="evenodd"
+            d="M7.167 4.5a.833.833 0 1 0 1.666 0 .833.833 0 1 0-1.666 0"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7 7.5h1v4m-1.5 0h3"
+          />
+        </g>
       </Icon>
     );
   },

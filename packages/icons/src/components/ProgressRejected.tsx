@@ -14,15 +14,16 @@ export const ProgressRejectedIcon = forwardRef<
     <Icon
       data-testid="ProgressRejectedIcon"
       aria-label="progress rejected"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12M3 6.5h6v-1H3z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0m3-.5h7v1h-7Z"
+        />
+      </g>
     </Icon>
   );
 });

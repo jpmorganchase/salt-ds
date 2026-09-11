@@ -17,15 +17,18 @@ export const ChartCandlestickSolidIcon = forwardRef<
     <Icon
       data-testid="ChartCandlestickSolidIcon"
       aria-label="chart candlestick solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M3 3.5h2v5H3V12H2V8.5H0v-5h2V0h1zm7 2h2v3h-2V12H9V8.5H7v-3h2V0h1z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M4.5 1.5v3m0 6v4m7-13v5m0 5v3"
+        />
+        <path fillRule="evenodd" d="M2.5 4.5h4v6h-4Zm7 2h4v5h-4Z" />
+      </g>
     </Icon>
   );
 });

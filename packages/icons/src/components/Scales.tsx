@@ -12,20 +12,19 @@ export const ScalesIcon = forwardRef<SVGSVGElement, ScalesIconProps>(
       <Icon
         data-testid="ScalesIcon"
         aria-label="scales"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M6 10a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5m0-1a1.5 1.5 0 0 0 .5-2.915V7.5h-1V6.085A1.5 1.5 0 0 0 6 9"
-          clipRule="evenodd"
-        />
-        <path
-          fillRule="evenodd"
-          d="M2 2h3.5v1H1l-1 9h12l-1-9H6.5V2H10V1H2zm-.105 2h8.21l.778 7H1.117z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M4.333 4.667h7.334q.333 0 .4.4l1.6 8.933H2.333l1.6-8.933q.067-.4.4-.4Zm-.666-2.334h8.666M8 2.333v2.334" />
+            <path d="M5.5 9.5a2.5 2.5 0 1 0 5 0 2.5 2.5 0 1 0-5 0ZM8 7v2.5" />
+          </g>
+        </g>
       </Icon>
     );
   },

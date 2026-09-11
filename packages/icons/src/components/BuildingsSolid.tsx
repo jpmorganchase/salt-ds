@@ -14,15 +14,21 @@ export const BuildingsSolidIcon = forwardRef<
     <Icon
       data-testid="BuildingsSolidIcon"
       aria-label="buildings solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M0 1h7v10h1V4h4v8H0zm4 8v2H3V9zM3 3H2v1h1zM2 5h1v1H2zm1 2H2v1h1zm2-4H4v1h1zM4 5h1v1H4zm1 2H4v1h1z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M1.5 1.5H9v13H1.5Zm1.75 2h1q.25 0 .25.25v1q0 .25-.25.25h-1Q3 5 3 4.75v-1q0-.25.25-.25m0 3h1q.25 0 .25.25v1q0 .25-.25.25h-1Q3 8 3 7.75v-1q0-.25.25-.25m0 3h1q.25 0 .25.25v1q0 .25-.25.25h-1Q3 11 3 10.75v-1q0-.25.25-.25m3-6h1q.25 0 .25.25v1q0 .25-.25.25h-1Q6 5 6 4.75v-1q0-.25.25-.25m0 3h1q.25 0 .25.25v1q0 .25-.25.25h-1Q6 8 6 7.75v-1q0-.25.25-.25m0 3h1q.25 0 .25.25v1q0 .25-.25.25h-1Q6 11 6 10.75v-1q0-.25.25-.25m-1.75 3H6v2H4.5Zm6.5-7h3.5v9H11Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.5 14.5h13"
+        />
+      </g>
     </Icon>
   );
 });

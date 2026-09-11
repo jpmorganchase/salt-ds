@@ -12,15 +12,26 @@ export const ChartLineIcon = forwardRef<SVGSVGElement, ChartLineIconProps>(
       <Icon
         data-testid="ChartLineIcon"
         aria-label="chart line"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M10.5 3.5a1.5 1.5 0 1 0-1.018-.399L7.599 7.503a1.5 1.5 0 0 0-.55.066L5.747 5.836a1.5 1.5 0 1 0-2.4.122L1.801 8.53h-.006a1.5 1.5 0 1 0 .857.512l1.54-2.573a1.5 1.5 0 0 0 .75-.036l1.311 1.732a1.5 1.5 0 1 0 2.264-.267L10.4 3.497zM5.25 5a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0m-3 5a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0m6-1a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0m3-7a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 1.5v13h13"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m4 11.5 3-4 3 2 3.5-5"
+          />
+          <path
+            fillRule="evenodd"
+            d="M3 11.5a1 1 0 1 0 2 0 1 1 0 1 0-2 0m3-4a1 1 0 1 0 2 0 1 1 0 1 0-2 0m3 2a1 1 0 1 0 2 0 1 1 0 1 0-2 0m3.5-5a1 1 0 1 0 2 0 1 1 0 1 0-2 0"
+          />
+        </g>
       </Icon>
     );
   },

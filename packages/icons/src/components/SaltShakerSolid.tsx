@@ -14,17 +14,16 @@ export const SaltShakerSolidIcon = forwardRef<
     <Icon
       data-testid="SaltShakerSolidIcon"
       aria-label="salt shaker solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="m2.518 5.248.01-.013L6.774 9.48l-.013.01a3 3 0 0 1-4.243 0 3 3 0 0 1 0-4.243" />
-      <path
-        fillRule="evenodd"
-        d="M7.6 8.893 3.115 4.407 5.966.387A1 1 0 0 1 7.462.292L11.71 4.54a1 1 0 0 1-.093 1.496zm2.915-3.303-2.84 1.987-2.329-2.329h5.377a.5.5 0 0 1-.208.342"
-        clipRule="evenodd"
-      />
-      <path d="M1 8H0v1h1zm0 2H0v1h1zm2 1H2v1h1z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="m10.121 2.579 3.3 3.3q.354.353 0 .707l-4.478 4.478-1.297.354-3.064-3.064.354-1.297L9.414 2.58q.354-.354.707 0M7.67 7.01h3.3L9.32 8.66ZM4.229 8.707l3.064 3.064-.236.236q-.353.354-.707 0L3.993 9.65q-.354-.353 0-.707ZM2.833 12h.8v.8h-.8Zm-1.166 1.867h.8v.8h-.8Zm2.5.133h.8v.8h-.8Z"
+        />
+      </g>
     </Icon>
   );
 });

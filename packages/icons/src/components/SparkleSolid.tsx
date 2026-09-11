@@ -14,12 +14,16 @@ export const SparkleSolidIcon = forwardRef<
     <Icon
       data-testid="SparkleSolidIcon"
       aria-label="sparkle solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M8.818 1.818 9.5 0l.682 1.818L12 2.5l-1.818.682L9.5 5l-.682-1.818L7 2.5z" />
-      <path d="M5.5 1 4 5 0 6.5 4 8l1.5 4L7 8l4-1.5L7 5z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M7.333 2c.934 3.867 1.467 4.4 5.334 5.333-3.867.934-4.4 1.467-5.334 5.334C6.4 8.8 5.867 8.267 2 7.333 5.867 6.4 6.4 5.867 7.333 2m6-1 .534 1.467L15.333 3l-1.466.533L13.333 5 12.8 3.533 11.333 3l1.467-.533Z"
+        />
+      </g>
     </Icon>
   );
 });

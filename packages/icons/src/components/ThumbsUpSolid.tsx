@@ -14,16 +14,16 @@ export const ThumbsUpSolidIcon = forwardRef<
     <Icon
       data-testid="ThumbsUpSolidIcon"
       aria-label="thumbs up solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M2 12V5H0v7z" />
-      <path
-        fillRule="evenodd"
-        d="M4 0h1.5A1.5 1.5 0 0 1 7 1.5V4h3.5A1.5 1.5 0 0 1 12 5.5V8l-2 4H3V5l1-2z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M1.5 6.5h2v7h-2Zm4 7v-7L8 2h1.5v4H13q1.5 0 1.5 1.5l-1.5 6Z"
+        />
+      </g>
     </Icon>
   );
 });

@@ -12,11 +12,17 @@ export const AppSwitcherIcon = forwardRef<SVGSVGElement, AppSwitcherIconProps>(
       <Icon
         data-testid="AppSwitcherIcon"
         aria-label="app switcher"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M3 0H0v3h3zm4.5 0h-3v3h3zM9 3V0h3v3zm0 1.5v3h3v-3zM9 12V9h3v3zM4.5 9v3h3V9zM0 9h3v3H0zm3-4.5H0v3h3zm1.5 0h3v3h-3z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 2.5h2v2h-2Zm0 4.5h2v2h-2Zm0 4.5h2v2h-2Zm4.5-9h2v2H7ZM7 7h2v2H7Zm0 4.5h2v2H7Zm4.5-9h2v2h-2Zm0 4.5h2v2h-2Zm0 4.5h2v2h-2Z"
+          />
+        </g>
       </Icon>
     );
   },

@@ -12,11 +12,21 @@ export const DivideIcon = forwardRef<SVGSVGElement, DivideIconProps>(
       <Icon
         data-testid="DivideIcon"
         aria-label="divide"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M7 11H5V9h2zm4-4.5H1v-1h10zM7 3H5V1h2z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 8h11"
+          />
+          <path
+            fillRule="evenodd"
+            d="M7 3.5a1 1 0 1 0 2 0 1 1 0 1 0-2 0m0 9a1 1 0 1 0 2 0 1 1 0 1 0-2 0"
+          />
+        </g>
       </Icon>
     );
   },

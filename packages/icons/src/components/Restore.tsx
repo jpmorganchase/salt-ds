@@ -12,12 +12,17 @@ export const RestoreIcon = forwardRef<SVGSVGElement, RestoreIconProps>(
       <Icon
         data-testid="RestoreIcon"
         aria-label="restore"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M12 0H0v6h1V3h10v8H6v1h6z" />
-        <path d="M0 12V8h1v2.293L5.293 6 6 6.707 1.707 11H4v1z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 7.5v-5h11v11h-5m-6-9h11M8 8l-5.5 5.5m0-4v4h4"
+          />
+        </g>
       </Icon>
     );
   },

@@ -12,11 +12,17 @@ export const LastIcon = forwardRef<SVGSVGElement, LastIconProps>(
       <Icon
         data-testid="LastIcon"
         aria-label="last"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="m7 6-4.326 4L2 9.231 5.495 6 2 2.769 2.674 2zm2-4h1v8H9z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13 3v10M4 3l6 5-6 5"
+          />
+        </g>
       </Icon>
     );
   },

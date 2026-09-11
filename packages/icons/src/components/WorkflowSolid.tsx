@@ -14,15 +14,21 @@ export const WorkflowSolidIcon = forwardRef<
     <Icon
       data-testid="WorkflowSolidIcon"
       aria-label="workflow solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M2 0a2 2 0 0 1 1.935 1.5H9a2.5 2.5 0 0 1 0 5H7.935a1.999 1.999 0 0 1-3.87 0h-1.19a1.375 1.375 0 0 0 0 2.75h6.668l-.897-.896.708-.708 2.12 2.122-2.12 2.12-.708-.706.932-.932H2.875a2.375 2.375 0 0 1-.243-4.737l.243-.013h1.19a1.999 1.999 0 0 1 3.87 0H9a1.5 1.5 0 1 0 0-3H3.935A1.999 1.999 0 0 1 0 2a2 2 0 0 1 2-2"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5 3h7a3 3 0 0 1 0 6h-2M6 9H5a2.167 2.167 0 0 0 0 4.333h9m-2-2 2 2-2 2"
+        />
+        <path
+          fillRule="evenodd"
+          d="M1 3a2 2 0 1 0 4 0 2 2 0 1 0-4 0m5 6a2 2 0 1 0 4 0 2 2 0 1 0-4 0"
+        />
+      </g>
     </Icon>
   );
 });

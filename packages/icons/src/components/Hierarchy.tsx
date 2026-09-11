@@ -12,15 +12,17 @@ export const HierarchyIcon = forwardRef<SVGSVGElement, HierarchyIconProps>(
       <Icon
         data-testid="HierarchyIcon"
         aria-label="hierarchy"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M4.5 4.5H3v1h2.5v-1h6v3h-6v-1H3v3h2.5v-1h6v3h-6v-1H2v-6H.5v-4h4zm2 6h4v-1h-4zm0-4h4v-1h-4zm-5-3h2v-2h-2z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2 2h4v4H2Zm6.5 4.5H14v3H8.5Zm0 5H14v3H8.5ZM4 6v7h4.5M4 8h4.5"
+          />
+        </g>
       </Icon>
     );
   },

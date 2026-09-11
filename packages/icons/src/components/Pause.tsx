@@ -12,11 +12,17 @@ export const PauseIcon = forwardRef<SVGSVGElement, PauseIconProps>(
       <Icon
         data-testid="PauseIcon"
         aria-label="pause"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M2 0h3v12H2zm1 1v10h1V1zm4-1h3v12H7zm1 1v10h1V1z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.5 2.5h3v11h-3Zm6 0h3v11h-3Z"
+          />
+        </g>
       </Icon>
     );
   },

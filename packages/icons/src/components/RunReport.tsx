@@ -12,16 +12,18 @@ export const RunReportIcon = forwardRef<SVGSVGElement, RunReportIconProps>(
       <Icon
         data-testid="RunReportIcon"
         aria-label="run report"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="m4 5 4 2.5L4 10z" />
-        <path
-          fillRule="evenodd"
-          d="M1 0v12h10V2L9 0zm6 4h3v7H2V1h5zm3-1v-.586L8.586 1H8v2z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 1.5h8l3 3v10h-11Zm8 0V4q0 .5.5.5h2.5"
+          />
+          <path fillRule="evenodd" d="m6 7 4.5 2.75L6 12.5Z" />
+        </g>
       </Icon>
     );
   },

@@ -12,11 +12,17 @@ export const UndoIcon = forwardRef<SVGSVGElement, UndoIconProps>(
       <Icon
         data-testid="UndoIcon"
         aria-label="undo"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M7.294 10.831a5 5 0 1 0-5.624-7.33H4v1H0v-4h1v2.184A6 6 0 0 1 2.256 1.31a6 6 0 1 1 5.296 10.486z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 2.5v4h4m-4 0a5.5 5.5 0 1 1 5 7.5"
+          />
+        </g>
       </Icon>
     );
   },

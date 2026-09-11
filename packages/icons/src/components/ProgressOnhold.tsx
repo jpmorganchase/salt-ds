@@ -14,15 +14,16 @@ export const ProgressOnholdIcon = forwardRef<
     <Icon
       data-testid="ProgressOnholdIcon"
       aria-label="progress onhold"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12m-.5-9H4v6h1.5zM8 3H6.5v6H8z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0m4-3H7v6H5.5ZM9 5h1.5v6H9Z"
+        />
+      </g>
     </Icon>
   );
 });

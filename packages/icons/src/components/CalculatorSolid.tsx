@@ -14,15 +14,16 @@ export const CalculatorSolidIcon = forwardRef<
     <Icon
       data-testid="CalculatorSolidIcon"
       aria-label="calculator solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M0 0h12v12H0zm6.5 3.5H8V2h1v1.5h1.5v1H9V6H8V4.5H6.5zm-4.293 3-.707.707 1.06 1.06L1.5 9.329l.707.708 1.06-1.061 1.061 1.06.708-.707-1.061-1.06 1.06-1.06-.707-.708-1.06 1.06zm3.293-3h-4v1h4zm1 5.5h4v1h-4zm4-2h-4v1h4z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M3 1.5h10v13H3Zm2.333 2h5.334q.333 0 .333.333v1.334q0 .333-.333.333H5.333Q5 5.5 5 5.167V3.833q0-.333.333-.333M4.5 8h1v1h-1Zm0 3h1v1h-1Zm3-3h1v1h-1Zm0 3h1v1h-1Zm3-3h1v1h-1Zm0 3h1v1h-1Z"
+        />
+      </g>
     </Icon>
   );
 });

@@ -14,11 +14,16 @@ export const ManWomanSolidIcon = forwardRef<
     <Icon
       data-testid="ManWomanSolidIcon"
       aria-label="man woman solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M3 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M1 4.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1V8h-.75v4h-2.5V8H1zm9.5-3a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0M10.25 9v3h-2.5V9H6l1.658-4.56a1.428 1.428 0 0 1 2.684 0L12 9z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M2.833 3a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0m-1 3.5h5v4h-.5v4h-4v-4h-.5Zm2 4h1v4h-1ZM10.167 3a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0m.5 3.5h2l1.666 5h-.666v3h-4v-3H9Zm.5 5h1v3h-1Z"
+        />
+      </g>
     </Icon>
   );
 });

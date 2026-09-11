@@ -14,16 +14,17 @@ export const RemoveDocumentIcon = forwardRef<
     <Icon
       data-testid="RemoveDocumentIcon"
       aria-label="remove document"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M8 7H3v1h5z" />
-      <path
-        fillRule="evenodd"
-        d="M1 0v12h10V2L9 0zm9 4v7H2V1h5v3zm0-1v-.5L8.5 1H8v2z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.5 1.5h8l3 3v10h-11Zm8 0V4q0 .5.5.5h2.5m-8 5h5"
+        />
+      </g>
     </Icon>
   );
 });

@@ -14,11 +14,13 @@ export const BookmarkSolidIcon = forwardRef<
     <Icon
       data-testid="BookmarkSolidIcon"
       aria-label="bookmark solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path fillRule="evenodd" d="m6 10 4 2V0H2v12z" clipRule="evenodd" />
+      <g strokeWidth=".67">
+        <path fillRule="evenodd" d="M4 1.5h8v13l-4-3-4 3Z" />
+      </g>
     </Icon>
   );
 });

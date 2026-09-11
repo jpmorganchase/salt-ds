@@ -14,15 +14,28 @@ export const PanelCloseRightSolidIcon = forwardRef<
     <Icon
       data-testid="PanelCloseRightSolidIcon"
       aria-label="panel close right solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M12 12H0V0h12zm-4-1h3V1H8zM3.465 3.879 5.085 5.5H2v1h3.086L3.465 8.121l.707.707L7 6 4.172 3.172z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path fillRule="evenodd" d="M14.333 14.333H11V1.667h3.333Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M14.333 14.333H1.667V1.667h12.666Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.833 14.333H2.167q-.5 0-.5-.5V2.167q0-.5.5-.5h11.666q.5 0 .5.5v11.666q0 .5-.5.5Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M11 14.333V1.667m.5 12.666q-.5 0-.5-.5m-.5.5q.5 0 .5-.5m.5-12.166q-.5 0-.5.5m-.5-.5q.5 0 .5.5M3.667 8h4.666M6 10.333 8.333 8 6 5.667"
+        />
+      </g>
     </Icon>
   );
 });

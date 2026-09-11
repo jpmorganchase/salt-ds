@@ -12,12 +12,16 @@ export const MouseSolidIcon = forwardRef<SVGSVGElement, MouseSolidIconProps>(
       <Icon
         data-testid="MouseSolidIcon"
         aria-label="mouse solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M5.5.031A4 4 0 0 0 2 4.001v4a4 4 0 1 0 8 0V4A4 4 0 0 0 6.5.03V2h1v4h-1v1h-1V6h-1V2h1z" />
-        <path d="M5.5 3h1v2h-1z" />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M8 1.5A4.5 4.5 0 0 1 12.5 6v4a4.5 4.5 0 0 1-9 0V6A4.5 4.5 0 0 1 8 1.5m-.5 2.167h1q.5 0 .5.5V5.5q0 .5-.5.5h-1Q7 6 7 5.5V4.167q0-.5.5-.5M4.5 7.5h7v1h-7Z"
+          />
+        </g>
       </Icon>
     );
   },

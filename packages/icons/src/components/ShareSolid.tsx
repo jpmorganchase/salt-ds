@@ -12,11 +12,21 @@ export const ShareSolidIcon = forwardRef<SVGSVGElement, ShareSolidIconProps>(
       <Icon
         data-testid="ShareSolidIcon"
         aria-label="share solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M12 2a2 2 0 0 1-3.508 1.313L3.956 5.581a2 2 0 0 1 0 .838l4.536 2.268a2 2 0 1 1-.448.894L3.508 7.313a2 2 0 1 1 0-2.626l4.536-2.268A2 2 0 1 1 12 2" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m5 7 6-3.5M5 9l6 3.5"
+          />
+          <path
+            fillRule="evenodd"
+            d="M1.25 8a2.25 2.25 0 1 0 4.5 0 2.25 2.25 0 1 0-4.5 0m9-5a2.25 2.25 0 1 0 4.5 0 2.25 2.25 0 1 0-4.5 0m0 10a2.25 2.25 0 1 0 4.5 0 2.25 2.25 0 1 0-4.5 0"
+          />
+        </g>
       </Icon>
     );
   },

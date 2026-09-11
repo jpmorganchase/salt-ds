@@ -12,15 +12,19 @@ export const HomeIcon = forwardRef<SVGSVGElement, HomeIconProps>(
       <Icon
         data-testid="HomeIcon"
         aria-label="home"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M0 4.875 6 0l6 4.875L11 6l-1-.825V12H7V9H5v3H2V5.095L.875 6zm3-.585V11h1V8h4v3h1V4.35L6 1.875z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M1.833 7.5 8 2l6.167 5.5" />
+            <path d="M3.5 6.014V13.5h3V9h3v4.5h3V6.014" />
+          </g>
+        </g>
       </Icon>
     );
   },

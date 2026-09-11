@@ -12,11 +12,17 @@ export const MaintenanceIcon = forwardRef<SVGSVGElement, MaintenanceIconProps>(
       <Icon
         data-testid="MaintenanceIcon"
         aria-label="maintenance"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M5.938 2.402a2.48 2.48 0 0 0-1.72-.729l1.583 1.583-2.545 2.545L1.673 4.22a2.497 2.497 0 0 0 3.572 2.205l.32-.152 3.909 3.909a.5.5 0 0 0 .707-.707l-3.91-3.91.152-.319a2.5 2.5 0 0 0-.485-2.843m.707-.707a3.49 3.49 0 0 1 .818 3.646l3.425 3.425a1.5 1.5 0 0 1-2.122 2.122L5.341 7.463A3.493 3.493 0 0 1 .87 3.014l.263-.751 2.124 2.124 1.131-1.131-2.124-2.124.751-.262a3.5 3.5 0 0 1 3.631.825" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.4 1.867A3.833 3.833 0 0 1 8.5 7.1l5.167 5.167q.7.7 0 1.4t-1.4 0L7.1 8.5a3.833 3.833 0 0 1-5.233-3.1L4.5 7 7 4.5Z"
+          />
+        </g>
       </Icon>
     );
   },

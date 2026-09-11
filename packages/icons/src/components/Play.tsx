@@ -12,15 +12,17 @@ export const PlayIcon = forwardRef<SVGSVGElement, PlayIconProps>(
       <Icon
         data-testid="PlayIcon"
         aria-label="play"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="m1 12 11-6L1 0zM2 1.685v8.63L9.912 6z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m4.5 2.5 9 5.5-9 5.5Z"
+          />
+        </g>
       </Icon>
     );
   },

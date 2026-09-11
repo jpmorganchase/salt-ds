@@ -14,15 +14,21 @@ export const UnlockedSolidIcon = forwardRef<
     <Icon
       data-testid="UnlockedSolidIcon"
       aria-label="unlocked solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M4 1a1 1 0 0 0-1 1v2h9v8H0V4h2V2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2H9a1 1 0 0 0-1-1zm2.5 7.915a1.5 1.5 0 1 0-1 0V10h1z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M4.5 7V5a3.5 3.5 0 0 1 6.733-1.333"
+        />
+        <path
+          fillRule="evenodd"
+          d="M2.9 7h10.2q.4 0 .4.4v6.2q0 .4-.4.4H2.9q-.4 0-.4-.4V7.4q0-.4.4-.4m4.6 3.7a1 1 0 1 1 1 0v1.8h-1Z"
+        />
+      </g>
     </Icon>
   );
 });

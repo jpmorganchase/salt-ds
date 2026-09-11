@@ -1,4 +1,7 @@
-<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-<path d="M0 9H5V11H3V12H7V5H12V0H0V9Z"/>
-<path d="M12 12H8V6H12V12Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" stroke-width="0.67">
+  <path fill="currentColor" fill-rule="evenodd" d="M1.1667 2h11.6666v2.4167h-1.6666c-.2153 0-.4455.0253-.687.1058-.2414.0805-.494.224-.697.427-.2028.2028-.3464.4554-.4269.6969s-.1058.4717-.1058.687V11H1.1667Z"/>
+  <path fill="none" stroke="currentColor" d="M7 11v2.6667m-2.25 0h4.5"/>
+  <path fill="currentColor" fill-rule="evenodd" d="M10.5 7.6667h4v6q0 .6666-.6667.6666h-2.6666q-.6667 0-.6667-.6666ZM12 12.5a.5.5 0 1 0 1 0 .5.5 0 1 0-1 0"/>
+  <path fill="none" stroke="currentColor" d="M11.1667 5.6667h2.6666q.6667 0 .6667.6666v7.3334q0 .6666-.6667.6666h-2.6666q-.6667 0-.6667-.6666V6.3333q0-.6666.6667-.6666Z"/>
+  <path fill="none" stroke="currentColor" d="M10.5 7.1667q0 .5.5.5h3q.5 0 .5-.5m-4 1q0-.5.5-.5h3q.5 0 .5.5"/>
 </svg>

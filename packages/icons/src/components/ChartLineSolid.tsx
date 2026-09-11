@@ -14,11 +14,26 @@ export const ChartLineSolidIcon = forwardRef<
     <Icon
       data-testid="ChartLineSolidIcon"
       aria-label="chart line solid"
-      viewBox="0 0 12 13"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M10.5 4a1.5 1.5 0 1 0-1.017-.397l-1.885 4.4a1.5 1.5 0 0 0-.547.065L5.75 6.331a1.5 1.5 0 1 0-2.405.124L1.799 9.03a1.5 1.5 0 1 0 .857.515L4.201 6.97a1.5 1.5 0 0 0 .748-.038L6.25 8.668a1.5 1.5 0 1 0 2.265-.271l1.886-4.4Q10.452 4 10.5 4" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.5 1.5v13h13"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="m4 11.5 3-4 3 2 3.5-5"
+        />
+        <path
+          fillRule="evenodd"
+          d="M2.833 11.5a1.167 1.167 0 1 0 2.334 0 1.167 1.167 0 1 0-2.334 0m3-4a1.167 1.167 0 1 0 2.334 0 1.167 1.167 0 1 0-2.334 0m3 2a1.167 1.167 0 1 0 2.334 0 1.167 1.167 0 1 0-2.334 0m3.5-5a1.167 1.167 0 1 0 2.334 0 1.167 1.167 0 1 0-2.334 0"
+        />
+      </g>
     </Icon>
   );
 });

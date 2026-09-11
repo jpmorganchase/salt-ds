@@ -14,15 +14,17 @@ export const PinIcon = forwardRef<SVGSVGElement, PinIconProps>(function PinIcon(
     <Icon
       data-testid="PinIcon"
       aria-label="pin"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M2.714 4.297a2.017 2.017 0 0 1 2.857 0L7 2.864l-.714-.717L8.429 0 12 3.58 9.857 5.73l-.714-.717-1.429 1.432a2.03 2.03 0 0 1 0 2.865L7 10.026l-2.026-2.03-2.994 3.001L0 12l.99-1.995 2.994-3.002L2 5.013zM7.7 2.148l.729-.73 2.157 2.163-.729.73-.714-.716L6.3 6.445l.707.71a1.023 1.023 0 0 1 0 1.446L7 8.608 3.414 5.013l.007-.007c.399-.4 1.045-.4 1.443 0l.707.709 2.843-2.85z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5.5 2.5h5v2l-1 1v3l2 2v1h-7v-1l2-2v-3l-1-1Zm2.5 9v3"
+        />
+      </g>
     </Icon>
   );
 });

@@ -12,12 +12,19 @@ export const CloudUploadIcon = forwardRef<SVGSVGElement, CloudUploadIconProps>(
       <Icon
         data-testid="CloudUploadIcon"
         aria-label="cloud upload"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="m2.674 5.026.474-.077.236-.419a3.002 3.002 0 0 1 5.527.74l.161.647.658.1A1.5 1.5 0 0 1 9.5 9h-2v1h2a2.5 2.5 0 0 0 .381-4.971 4.002 4.002 0 0 0-7.368-.99A3 3 0 0 0 3 10h1.5V9H3a2 2 0 0 1-.326-3.974" />
-        <path d="M6.495 6.902V12h-.998V6.917l-1.59 1.587L3.2 7.8 6.004 5 8.8 7.79l-.707.706z" />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M4.7 12.25a3.3 3.3 0 0 1-.536-6.557 4.402 4.402 0 0 1 8.106 1.089 2.75 2.75 0 0 1-.42 5.468H10m-4 0H4.7" />
+            <path d="M8 14.25v-7M5.75 9.5 8 7.25l2.25 2.25" />
+          </g>
+        </g>
       </Icon>
     );
   },

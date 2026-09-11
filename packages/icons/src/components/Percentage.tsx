@@ -12,21 +12,17 @@ export const PercentageIcon = forwardRef<SVGSVGElement, PercentageIconProps>(
       <Icon
         data-testid="PercentageIcon"
         aria-label="percentage"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M9 7a2 2 0 1 1 0 4 2 2 0 0 1 0-4m0 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
-          clipRule="evenodd"
-        />
-        <path d="M10.597 2.111 2.11 10.597l-.707-.708L9.89 1.404z" />
-        <path
-          fillRule="evenodd"
-          d="M3 1a2 2 0 1 1 0 4 2 2 0 0 1 0-4m0 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 4.5a2 2 0 1 0 4 0 2 2 0 1 0-4 0Zm7 7a2 2 0 1 0 4 0 2 2 0 1 0-4 0Zm-6 2 9-11"
+          />
+        </g>
       </Icon>
     );
   },

@@ -12,15 +12,17 @@ export const TreeIcon = forwardRef<SVGSVGElement, TreeIconProps>(
       <Icon
         data-testid="TreeIcon"
         aria-label="tree"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M4 5h1.5v1H1v2H0v4h4V8H2V7h8v1H8v4h4V8h-1V6H6.5V5H8V1H4zm3-3H5v2h2zm2 7v2h2V9zM1 9v2h2V9z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8 5.5v3m-4.5 2v-2h9v2M6 1.5h4v4H6Zm-4.5 9h4v4h-4Zm9 0h4v4h-4Z"
+          />
+        </g>
       </Icon>
     );
   },

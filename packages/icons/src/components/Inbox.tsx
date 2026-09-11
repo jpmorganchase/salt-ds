@@ -12,16 +12,17 @@ export const InboxIcon = forwardRef<SVGSVGElement, InboxIconProps>(
       <Icon
         data-testid="InboxIcon"
         aria-label="inbox"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M6.495 0v5.088l1.798-1.795.708.707-2.998 2.992-3.004-2.998.708-.707 1.814 1.811V0z" />
-        <path
-          fillRule="evenodd"
-          d="M12 12V3h-1v4H8a2 2 0 1 1-4 0H1V3H0v9zM8.83 8H11v3H1V8h2.17a3.001 3.001 0 0 0 5.66 0"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 6.5v7h11v-7M2.5 9h3l1 2h3l1-2h3M8 1.5v7m-3-3 3 3 3-3"
+          />
+        </g>
       </Icon>
     );
   },

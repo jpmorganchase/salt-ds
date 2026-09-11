@@ -12,15 +12,17 @@ export const MarkerIcon = forwardRef<SVGSVGElement, MarkerIconProps>(
       <Icon
         data-testid="MarkerIcon"
         aria-label="marker"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M5 0h1v2h3.067L11 4 9.067 6H6v6H5V6H1V2h4zm3.666 5 .967-1-.967-1H2v2z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.5 3.5H11L13.5 6 11 8.5H3.5Zm3-2v2m0 5v6"
+          />
+        </g>
       </Icon>
     );
   },

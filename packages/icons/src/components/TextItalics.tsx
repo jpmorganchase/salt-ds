@@ -12,11 +12,22 @@ export const TextItalicsIcon = forwardRef<SVGSVGElement, TextItalicsIconProps>(
       <Icon
         data-testid="TextItalicsIcon"
         aria-label="text italics"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="m2.829 11 .142-.6.629-.029c.5-.014.929-.314 1.043-.785l1.614-7a1.6 1.6 0 0 0 .043-.343c0-.414-.271-.586-.843-.614L4.871 1.6 5 1h4.171l-.142.6-.629.029c-.586.028-.929.314-1.029.785L5.7 9.571c-.014.086-.029.172-.029.243 0 .372.272.543.686.557l.786.029L7 11z" />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M5.76 2.5h7.23l-.283 1.129H9.732L7.547 12.37h2.974l-.281 1.13H3.011l.282-1.129h2.975L8.453 3.63H5.48Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth=".315838"
+            d="M5.76 2.5h7.23l-.283 1.129H9.732L7.547 12.37h2.974l-.281 1.13H3.011l.282-1.129h2.975L8.453 3.63H5.48Z"
+          />
+        </g>
       </Icon>
     );
   },

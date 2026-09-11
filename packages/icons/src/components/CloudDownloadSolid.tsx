@@ -14,12 +14,21 @@ export const CloudDownloadSolidIcon = forwardRef<
     <Icon
       data-testid="CloudDownloadSolidIcon"
       aria-label="cloud download solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M6 2a4 4 0 0 1 3.881 3.029A2.5 2.5 0 0 1 9.5 10h-.077l.793-.79-2.123-2.12-.598.597V5H4.497v2.672l-.59-.59-2.123 2.12.767.765a3 3 0 0 1-.038-5.928A4 4 0 0 1 6 2" />
-      <path d="M6.495 10.098V6h-.998v4.083l-1.59-1.587L3.2 9.2 6.004 12 8.8 9.209l-.707-.705z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M4.7 11.085q-1.506 0-2.57-1.065T1.065 7.45q0-3.009 2.887-3.56Q5.312 1.616 8 1.616q3.59 0 4.538 3.374 2.397.475 2.397 3.011 0 3.085-3.085 3.085h-2.6V6.25h-2.5v4.835Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8 7v7.75m-2-2 2 2 2-2"
+        />
+      </g>
     </Icon>
   );
 });

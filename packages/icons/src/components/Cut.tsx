@@ -14,16 +14,17 @@ export const CutIcon = forwardRef<SVGSVGElement, CutIconProps>(function CutIcon(
     <Icon
       data-testid="CutIcon"
       aria-label="cut"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="m1.967 0 3.727 4.77-1.116 1.427A290 290 0 0 1 2.012 2.86C1.415 2.04.929.81 1.967 0" />
-      <path
-        fillRule="evenodd"
-        d="M8.349 11.049c-.271-.349-1.07-1.373-2.013-2.587l1.118-1.44 1.572 2.013a1.584 1.584 0 1 1-.677 2.014m2.275-.65a.823.823 0 1 1-1.646.035.823.823 0 0 1 1.646-.035m-.605-7.539c-.576.792-6.044 7.813-6.417 8.29a1.583 1.583 0 1 1-.607-2.103L10.063 0c1.038.811.552 2.04-.044 2.86m-7.803 8.38a.823.823 0 1 0-.034-1.647.823.823 0 0 0 .034 1.647m3.802-3.93a.634.634 0 1 0 0-1.267.634.634 0 0 0 0 1.267"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2 4a2 2 0 1 0 4 0 2 2 0 1 0-4 0Zm0 8a2 2 0 1 0 4 0 2 2 0 1 0-4 0Zm3.414-6.586L8 8m-2.586 2.586L13.5 2.5m-4 7 4 4"
+        />
+      </g>
     </Icon>
   );
 });

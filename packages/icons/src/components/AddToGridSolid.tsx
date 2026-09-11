@@ -14,13 +14,21 @@ export const AddToGridSolidIcon = forwardRef<
     <Icon
       data-testid="AddToGridSolidIcon"
       aria-label="add to grid solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path fillRule="evenodd" d="M5 12H0V7h5z" clipRule="evenodd" />
-      <path d="M10 7v2h2v1h-2v2H9v-2H7V9h2V7z" />
-      <path fillRule="evenodd" d="M5 5H0V0h5zm7 0H7V0h5z" clipRule="evenodd" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M2 2h4.5v4.5H2Zm7.5 0H14v4.5H9.5ZM2 9.5h4.5V14H2Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M9.5 11.75H14M11.75 9.5V14"
+        />
+      </g>
     </Icon>
   );
 });

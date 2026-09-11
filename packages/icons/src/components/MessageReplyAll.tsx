@@ -14,12 +14,17 @@ export const MessageReplyAllIcon = forwardRef<
     <Icon
       data-testid="MessageReplyAllIcon"
       aria-label="message reply all"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M11 11h-1V9a4 4 0 0 0-.233-1.348l-.072-.182a4 4 0 0 0-.731-1.156l-.136-.142a4 4 0 0 0-1.117-.788l-.18-.08A4 4 0 0 0 6 5h-.664l1.621 1.621-.707.707L3.422 4.5 6.25 1.672l.707.707L5.336 4H6a5 5 0 0 1 5 5z" />
-      <path d="M4.535 2.379 2.415 4.5l2.12 2.121-.707.707L1 4.5l2.828-2.828z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.5 13.5V10A4.5 4.5 0 0 0 9 5.5H5.5m3-3-3 3 3 3m-4-6-3 3 3 3"
+        />
+      </g>
     </Icon>
   );
 });

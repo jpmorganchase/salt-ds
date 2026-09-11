@@ -12,11 +12,17 @@ export const MenuIcon = forwardRef<SVGSVGElement, MenuIconProps>(
       <Icon
         data-testid="MenuIcon"
         aria-label="menu"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M0 1h12v2H0zm0 4h12v2H0zm12 4H0v2h12z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2 3.5h12M2 8h12M2 12.5h12"
+          />
+        </g>
       </Icon>
     );
   },

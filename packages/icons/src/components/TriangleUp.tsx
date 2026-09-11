@@ -12,11 +12,13 @@ export const TriangleUpIcon = forwardRef<SVGSVGElement, TriangleUpIconProps>(
       <Icon
         data-testid="TriangleUpIcon"
         aria-label="triangle up"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="m6 3.5-5 5h10z" />
+        <g strokeWidth=".67">
+          <path fillRule="evenodd" d="M13 11H3l5-6Z" />
+        </g>
       </Icon>
     );
   },

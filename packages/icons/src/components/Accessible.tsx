@@ -12,17 +12,17 @@ export const AccessibleIcon = forwardRef<SVGSVGElement, AccessibleIconProps>(
       <Icon
         data-testid="AccessibleIcon"
         aria-label="accessible"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M5 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m0-1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"
-          clipRule="evenodd"
-        />
-        <path d="M3 4.126A4.002 4.002 0 0 0 4 12a4 4 0 0 0 3.595-2.245l-.763-.763A3.001 3.001 0 1 1 3 5.171z" />
-        <path d="M6 6V4H4v4h3.172l2.242 2.243 1.414-1.415L8 6z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.5 3a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0ZM7 5.5V9h4l2 4h2M7 6.5h4M5 7a3.5 3.5 0 1 0 4.5 5"
+          />
+        </g>
       </Icon>
     );
   },

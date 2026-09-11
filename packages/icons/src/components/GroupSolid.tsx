@@ -12,17 +12,23 @@ export const GroupSolidIcon = forwardRef<SVGSVGElement, GroupSolidIconProps>(
       <Icon
         data-testid="GroupSolidIcon"
         aria-label="group solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M3 3v5H2V2h6v1z" />
-        <path d="M4 10V4h6v6z" />
-        <path
-          fillRule="evenodd"
-          d="M0 0v12h12V0zm11 1H1v10h10z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.833 1.833h12.334v12.334H1.833Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8.5 7V4.5h-4v4H7"
+          />
+          <path fillRule="evenodd" d="M7 7h4.5v4.5H7Z" />
+        </g>
       </Icon>
     );
   },

@@ -17,12 +17,21 @@ export const ClosedcaptionDisabledSolidIcon = forwardRef<
     <Icon
       data-testid="ClosedcaptionDisabledSolidIcon"
       aria-label="closedcaption disabled solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M0 11V2.131l2.743 2.736-.003.004q-.24.445-.24 1.15 0 .675.22 1.115.218.44.625.651.405.213.96.213.372 0 .626-.063.255-.059.477-.184v-.227L8.891 11z" />
-      <path d="M3.355 6.014q0-.275.043-.493l1.675 1.67a2 2 0 0 1-.722.125 1 1 0 0 1-.547-.145.9.9 0 0 1-.336-.44 2 2 0 0 1-.113-.717M12 1v8.852L9.408 7.265v-.223a3 3 0 0 1-.15.074L7.453 5.313l.013-.034a.9.9 0 0 1 .339-.446q.23-.15.572-.15.21 0 .435.06.226.058.442.145l.247-.655a2.3 2.3 0 0 0-.484-.163Q8.732 4 8.383 4q-.55 0-.978.213a1.5 1.5 0 0 0-.563.491L3.132 1zm-1.693 10L1 1.716 1.716 1 11 10.267z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M12.5 5.5h-2Q9 5.5 9 7v.232L5.268 3.5H14.5v9h-.232l-2-2h.232v-1h-1.232L10 8.232V7q0-.5.5-.5h2Zm-11-2h.232L4 5.768Q3.5 6.134 3.5 7v2q0 1.5 1.5 1.5h2v-1H5q-.5 0-.5-.5V7q0-.366.268-.464l5.964 5.964H1.5Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="m2 2 12 12"
+        />
+      </g>
     </Icon>
   );
 });

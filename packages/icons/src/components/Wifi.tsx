@@ -12,13 +12,21 @@ export const WifiIcon = forwardRef<SVGSVGElement, WifiIconProps>(
       <Icon
         data-testid="WifiIcon"
         aria-label="wifi"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M6 2c2.262 0 4.304.939 5.76 2.447l-.655.764A6.98 6.98 0 0 0 6 3 6.98 6.98 0 0 0 .895 5.21L.24 4.448A7.98 7.98 0 0 1 6 2" />
-        <path d="M6 4c1.765 0 3.352.762 4.45 1.975l-.657.767A4.99 4.99 0 0 0 6 5a4.99 4.99 0 0 0-3.793 1.742l-.657-.767A6 6 0 0 1 6 4" />
-        <path d="M6 6c1.269 0 2.4.59 3.132 1.512l-.667.778A3 3 0 0 0 6 7c-1.021 0-1.924.51-2.465 1.29l-.667-.778A4 4 0 0 1 6 6m1 4a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 5q6.5-6 13 0m-11 2.5q4.5-4.5 9 0m-7 2.5q2.5-2.5 5 0"
+          />
+          <path
+            fillRule="evenodd"
+            d="M7.1 13a.9.9 0 1 0 1.8 0 .9.9 0 1 0-1.8 0"
+          />
+        </g>
       </Icon>
     );
   },

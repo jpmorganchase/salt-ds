@@ -12,15 +12,19 @@ export const FolderOpenIcon = forwardRef<SVGSVGElement, FolderOpenIconProps>(
       <Icon
         data-testid="FolderOpenIcon"
         aria-label="folder open"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M0 1h4.118l2 1H12v10H0zm5.882 2H11v1H4L1 9.53V2h2.882zm-4.544 8H11V5H4.58z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M2.5 13.5V3h4l2 2h4v2" />
+            <path d="M2.5 13.5h10L14 7H4Z" />
+          </g>
+        </g>
       </Icon>
     );
   },

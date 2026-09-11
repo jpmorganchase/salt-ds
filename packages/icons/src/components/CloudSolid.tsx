@@ -12,11 +12,16 @@ export const CloudSolidIcon = forwardRef<SVGSVGElement, CloudSolidIconProps>(
       <Icon
         data-testid="CloudSolidIcon"
         aria-label="cloud solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M3 10a3 3 0 0 1-.487-5.96 4.002 4.002 0 0 1 7.369.99A2.5 2.5 0 0 1 9.5 10z" />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M4.7 12.585q-1.506 0-2.57-1.065T1.065 8.95q0-3.009 2.887-3.56Q5.312 3.116 8 3.116q3.59 0 4.538 3.374 2.397.475 2.397 3.011 0 3.085-3.085 3.085Z"
+          />
+        </g>
       </Icon>
     );
   },

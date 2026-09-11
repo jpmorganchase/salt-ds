@@ -14,16 +14,18 @@ export const KeyIcon = forwardRef<SVGSVGElement, KeyIconProps>(function KeyIcon(
     <Icon
       data-testid="KeyIcon"
       aria-label="key"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M4.5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-      <path
-        fillRule="evenodd"
-        d="M7.5 6H10V4h2V0H9L4.387 4.613a3.5 3.5 0 1 0 2.378 2.122zm1.9-5L4.646 5.777a2.5 2.5 0 1 0 .87.743S6.641 5.372 7 5h2V3h2V1z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.933 9.067a3.5 3.5 0 1 1 2.134-2.134L14 11.867V14h-2.133v-2h-2v-2Z"
+        />
+        <path fillRule="evenodd" d="M4.767 5.767a1 1 0 1 0 2 0 1 1 0 1 0-2 0" />
+      </g>
     </Icon>
   );
 });

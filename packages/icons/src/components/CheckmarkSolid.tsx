@@ -14,15 +14,16 @@ export const CheckmarkSolidIcon = forwardRef<
     <Icon
       data-testid="CheckmarkSolidIcon"
       aria-label="checkmark solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M0 0h12v12H0zm10 3.729L4.952 9.294 2 6.545l1.027-1.1 1.848 1.718L8.9 2.706z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M0 0h16v16H0Zm3.5 7.5 3 3 5.5-6 .75.75L6.5 12 2.75 8.25Z"
+        />
+      </g>
     </Icon>
   );
 });

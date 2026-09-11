@@ -14,11 +14,21 @@ export const HeadphonesSolidIcon = forwardRef<
     <Icon
       data-testid="HeadphonesSolidIcon"
       aria-label="headphones solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M11 6A5 5 0 0 0 1 6h1a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H0V6a6 6 0 1 1 12 0v6h-2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.5 10.5V7a5.5 5.5 0 0 1 11 0v3.5"
+        />
+        <path
+          fillRule="evenodd"
+          d="M2.9 8.5h2.2q.4 0 .4.4v4.2q0 .4-.4.4H2.9q-.4 0-.4-.4V8.9q0-.4.4-.4m8 0h2.2q.4 0 .4.4v4.2q0 .4-.4.4h-2.2q-.4 0-.4-.4V8.9q0-.4.4-.4"
+        />
+      </g>
     </Icon>
   );
 });

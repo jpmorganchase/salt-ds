@@ -12,16 +12,19 @@ export const ClockIcon = forwardRef<SVGSVGElement, ClockIconProps>(
       <Icon
         data-testid="ClockIcon"
         aria-label="clock"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M6 3v3H3v1h4V3z" />
-        <path
-          fillRule="evenodd"
-          d="M12 6A6 6 0 1 1 0 6a6 6 0 0 1 12 0m-1 0A5 5 0 1 1 1 6a5 5 0 0 1 10 0"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0Z" />
+            <path d="M8 3.5V8l3 2" />
+          </g>
+        </g>
       </Icon>
     );
   },

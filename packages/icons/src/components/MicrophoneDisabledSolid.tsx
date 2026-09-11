@@ -17,12 +17,21 @@ export const MicrophoneDisabledSolidIcon = forwardRef<
     <Icon
       data-testid="MicrophoneDisabledSolidIcon"
       aria-label="microphone disabled solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M3.503 5.625a2.5 2.5 0 0 0 2.378 2.372z" />
-      <path d="M6.795 8.91A3.5 3.5 0 0 1 2.5 5.5h-1a4.5 4.5 0 0 0 4 4.473V11H3v1h6v-.891L8.891 11H6.5V9.973q.575-.066 1.096-.264zm3.102-1.158-.74-.738c.22-.458.343-.972.343-1.514h1c0 .82-.22 1.59-.603 2.252m-1.51-1.506L3.686 1.553A2.5 2.5 0 0 1 8.5 2.5v3q-.002.391-.113.746M10.307 11 1 1.716 1.716 1 11 10.267z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M8 1.5q2.5 0 2.5 2.5v4q0 .366-.054.679l-4.939-4.94Q5.634 1.5 8 1.5M5.5 7.268l3.179 3.178Q8.366 10.5 8 10.5q-2.5 0-2.5-2.5z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M3.5 7v1A4.5 4.5 0 0 0 8 12.5a4.5 4.5 0 0 0 1.437-.234m2.829-2.829A4.5 4.5 0 0 0 12.5 8V7M8 12.5v2m-2.5 0h5M2 2l12 12"
+        />
+      </g>
     </Icon>
   );
 });

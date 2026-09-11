@@ -12,15 +12,16 @@ export const NoteSolidIcon = forwardRef<SVGSVGElement, NoteSolidIconProps>(
       <Icon
         data-testid="NoteSolidIcon"
         aria-label="note solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M9.207 11H1V1h10v8.207zM7 10h1V8h2V7H7z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M2.5 2.5h11v7l-4 4h-7ZM4 5h8v1H4Zm0 2h5v1H4Zm5.5 5.5 3-3h-3Z"
+          />
+        </g>
       </Icon>
     );
   },

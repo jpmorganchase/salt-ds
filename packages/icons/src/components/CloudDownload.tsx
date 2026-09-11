@@ -14,12 +14,17 @@ export const CloudDownloadIcon = forwardRef<
     <Icon
       data-testid="CloudDownloadIcon"
       aria-label="cloud download"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="m2.674 5.026.474-.077.236-.419a3.002 3.002 0 0 1 5.527.74l.161.647.658.1A1.5 1.5 0 0 1 9.5 9h-.08l-1.002 1H9.5a2.5 2.5 0 0 0 .381-4.971 4.002 4.002 0 0 0-7.368-.99A3 3 0 0 0 3 10h.59L2.531 8.945a2 2 0 0 1 .142-3.919" />
-      <path d="M6.495 9.098V4h-.998v5.083l-1.59-1.587L3.2 8.2 6.004 11 8.8 8.209l-.707-.705z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M4.7 10.75a3.3 3.3 0 0 1-.536-6.557 4.402 4.402 0 0 1 8.106 1.088 2.75 2.75 0 0 1-.42 5.469H10m-4 0H4.7M8 7v7.75m-2-2 2 2 2-2"
+        />
+      </g>
     </Icon>
   );
 });

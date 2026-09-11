@@ -12,15 +12,17 @@ export const WoodlandIcon = forwardRef<SVGSVGElement, WoodlandIconProps>(
       <Icon
         data-testid="WoodlandIcon"
         aria-label="woodland"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M5.5 9.373A3.5 3.5 0 1 1 2.06 3.31a4.001 4.001 0 0 1 7.88 0A3.5 3.5 0 1 1 6.5 9.372V12h-1zM8.955 3.48l.091.521.483.218a2.5 2.5 0 1 1-2.815 4.03L6.5 8.03V5.828l1.621-1.62-.707-.708-.914.914V3h-1v3.454L4.497 5.45l-.707.707 1.71 1.71v.164l-.214.219a2.5 2.5 0 1 1-2.814-4.03l.482-.218.09-.521a3.001 3.001 0 0 1 5.911 0"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.5 12.5a3.5 3.5 0 0 1-1-6.833 4.5 4.5 0 0 1 9 0 3.5 3.5 0 0 1-1 6.833Zm3.5-8V15m0-6.5 3-2M8 11 6 9"
+          />
+        </g>
       </Icon>
     );
   },

@@ -14,15 +14,18 @@ export const FolderOpenSolidIcon = forwardRef<
     <Icon
       data-testid="FolderOpenSolidIcon"
       aria-label="folder open solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M4.118 1H0v11h12V2H6.118zM11 3H5.882l-2-1H1v8l3-6h7z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.5 13.5V3h4l2 2h4v2"
+        />
+        <path fillRule="evenodd" d="M2.5 13.5h10L14 7H4Z" />
+      </g>
     </Icon>
   );
 });

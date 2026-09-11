@@ -12,11 +12,17 @@ export const UnlinkedIcon = forwardRef<SVGSVGElement, UnlinkedIconProps>(
       <Icon
         data-testid="UnlinkedIcon"
         aria-label="unlinked"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M4 0v2.5H3V0zm4.443 1.371a1 1 0 0 1 1.414 0l.707.707a1 1 0 0 1 0 1.415L7.028 7.028l.707.707L11.271 4.2a2 2 0 0 0 0-2.829l-.707-.707a2 2 0 0 0-2.828 0L5.968 2.432l.707.707zm-4.951 9.193a1 1 0 0 1-1.414 0l-.707-.707a1 1 0 0 1 0-1.415l3.536-3.535L4.2 4.2.664 7.735a2 2 0 0 0 0 2.829l.707.707a2 2 0 0 0 2.828 0l1.769-1.768-.708-.707zM9.5 8H12v1H9.5zm-7-5H0v1h2.5zM9 12V9.5H8V12z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6 3.5 7.5 2a3 3 0 0 1 4.24 4.24l-1.5 1.5M10 12.5 8.5 14a3 3 0 0 1-4.24-4.24l1.5-1.5M1.5 5.5h2m0-4v2m9 9v2m0-4h2"
+          />
+        </g>
       </Icon>
     );
   },

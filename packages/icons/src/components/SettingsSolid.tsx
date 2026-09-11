@@ -14,15 +14,16 @@ export const SettingsSolidIcon = forwardRef<
     <Icon
       data-testid="SettingsSolidIcon"
       aria-label="settings solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M6.997.082a1 1 0 0 1-1.994 0 6 6 0 0 0-2.482 1.03A1 1 0 0 1 1.11 2.52 6 6 0 0 0 .082 5.003a1 1 0 0 1 0 1.994 6 6 0 0 0 1.03 2.482 1 1 0 0 1 1.409 1.41 6 6 0 0 0 2.482 1.029 1 1 0 0 1 1.994 0 6 6 0 0 0 2.482-1.03 1 1 0 0 1 1.41-1.409 6 6 0 0 0 1.029-2.482 1 1 0 0 1 0-1.994 6 6 0 0 0-1.03-2.482A1 1 0 0 1 9.48 1.11 6 6 0 0 0 6.997.082M6 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M6.5 1.5h3v2l1.5 1 2-1 1.5 3-2 1v1l2 1-1.5 3-2-1-1.5 1v2h-3v-2l-1.5-1-2 1-1.5-3 2-1v-1l-2-1 1.5-3 2 1 1.5-1ZM5.5 8a2.5 2.5 0 1 0 5 0 2.5 2.5 0 1 0-5 0"
+        />
+      </g>
     </Icon>
   );
 });

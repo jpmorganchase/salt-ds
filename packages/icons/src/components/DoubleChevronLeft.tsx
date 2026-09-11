@@ -14,12 +14,17 @@ export const DoubleChevronLeftIcon = forwardRef<
     <Icon
       data-testid="DoubleChevronLeftIcon"
       aria-label="double chevron left"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M11.5 10.401 7.192 6 11.5 1.599 10.508.5 5 6l5.508 5.5z" />
-      <path d="M7 10.401 2.692 6 7 1.599 6.008.5.5 6l5.508 5.5z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="m12.5 4-4 4 4 4m-5-8-4 4 4 4"
+        />
+      </g>
     </Icon>
   );
 });

@@ -12,15 +12,19 @@ export const ChatGroupIcon = forwardRef<SVGSVGElement, ChatGroupIconProps>(
       <Icon
         data-testid="ChatGroupIcon"
         aria-label="chat group"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M6.557 9.452a4.5 4.5 0 0 1-1.974.506 4.47 4.47 0 0 1-2.28-.564l-2.19.552.32-2.542a4.48 4.48 0 0 1 3.948-6.402 4.48 4.48 0 0 1 3.783 1.921 4 4 0 0 0 .368-.01 3.544 3.544 0 0 1 3.124 5.065l.254 2.011-1.734-.436c-.533.297-1.15.46-1.803.446a3.53 3.53 0 0 1-1.816-.547M2.443 8.328l-1.156.29.175-1.38-.127-.265a3.48 3.48 0 0 1 3.068-4.972 3.48 3.48 0 0 1 2.692 1.18A3.546 3.546 0 0 0 5.73 8.729a3.5 3.5 0 0 1-1.17.229 3.47 3.47 0 0 1-1.77-.437zm7.592.159-.346.193a2.545 2.545 0 1 1-1.18-4.767 2.545 2.545 0 0 1 2.243 3.635l-.126.265.107.85z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M5 2h9.5v8L12 8h-1" />
+            <path d="M1.5 4H11v7.5H5.5l-3 2.5v-2.5h-1Z" />
+          </g>
+        </g>
       </Icon>
     );
   },

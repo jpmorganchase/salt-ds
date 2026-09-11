@@ -12,20 +12,19 @@ export const SaveIcon = forwardRef<SVGSVGElement, SaveIconProps>(
       <Icon
         data-testid="SaveIcon"
         aria-label="save"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M10 6H2v4h8zM9 7H3v2h6z"
-          clipRule="evenodd"
-        />
-        <path
-          fillRule="evenodd"
-          d="M0 0v12h12V3.293L8.707 0zm3 1H1v10h10V3.707L8.293 1H8v3H3zm4 0H4v2h3z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M2.5 2.5h9l2 2v9h-11Z" />
+            <path d="M5.5 2.5v4h5v-4m-6 11v-4h7v4" />
+          </g>
+        </g>
       </Icon>
     );
   },

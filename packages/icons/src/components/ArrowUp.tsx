@@ -12,11 +12,17 @@ export const ArrowUpIcon = forwardRef<SVGSVGElement, ArrowUpIconProps>(
       <Icon
         data-testid="ArrowUpIcon"
         aria-label="arrow up"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M5.5 12h1V1.915l3.146 3.147.707-.708L6 0 1.646 4.353l.708.707L5.5 1.914z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8 13.5v-11m-4 4 4-4 4 4"
+          />
+        </g>
       </Icon>
     );
   },

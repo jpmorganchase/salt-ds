@@ -12,15 +12,17 @@ export const KeyEnterIcon = forwardRef<SVGSVGElement, KeyEnterIconProps>(
       <Icon
         data-testid="KeyEnterIcon"
         aria-label="key enter"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M10 3H7V2h4v6H2.914l2.147 2.146-.707.708L1 7.5l3.354-3.354.707.708L2.914 7H10z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.5 3.5v6h-11M6 6 2.5 9.5 6 13"
+          />
+        </g>
       </Icon>
     );
   },

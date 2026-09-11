@@ -12,16 +12,18 @@ export const VolumeUpIcon = forwardRef<SVGSVGElement, VolumeUpIconProps>(
       <Icon
         data-testid="VolumeUpIcon"
         aria-label="volume up"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M3 4H0v4h3l3 3V1zm4 4.83a3.001 3.001 0 0 0 0-5.66z" />
-        <path
-          fillRule="evenodd"
-          d="M7 10.389a4.502 4.502 0 0 0 0-8.777V.083a6.002 6.002 0 0 1 0 11.834z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path fillRule="evenodd" d="M1.5 6h3l4-3.5v11l-4-3.5h-3Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11 5.5q2.5 2.5 0 5m2-7q4.5 4.5 0 9"
+          />
+        </g>
       </Icon>
     );
   },

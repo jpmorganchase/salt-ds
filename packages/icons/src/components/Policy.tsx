@@ -12,21 +12,21 @@ export const PolicyIcon = forwardRef<SVGSVGElement, PolicyIconProps>(
       <Icon
         data-testid="PolicyIcon"
         aria-label="policy"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M11 2v2H7V1H2v10h5v1H1V0h8zM8 3h2v-.586L8.586 1H8z"
-          clipRule="evenodd"
-        />
-        <path
-          fillRule="evenodd"
-          d="M9.5 4.5A2.5 2.5 0 0 1 12 7c0 .817-.394 1.54-1 1.996V12l-1.5-.5L8 12V8.996A2.5 2.5 0 0 1 7 7a2.5 2.5 0 0 1 2.5-2.5M9 10.612l.184-.06.316-.106.316.106.184.06V9.5H9zM9.5 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"
-          clipRule="evenodd"
-        />
-        <path d="M6 9H3V8h3zm0-2H3V6h3zm0-2H3V4h3z" />
+        <g strokeWidth=".67">
+          <g
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          >
+            <path d="M7.5 14.5h-4v-13H10L12.5 4" />
+            <path d="M10 1.5V4h2.5m-7 1.5h2m-2 3h2" />
+            <path strokeWidth=".4824" d="M10 11.5v3l2-.6 2 .6v-3" />
+            <path d="M9 9a3 3 0 1 0 6 0 3 3 0 1 0-6 0Z" />
+          </g>
+        </g>
       </Icon>
     );
   },

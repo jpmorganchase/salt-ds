@@ -14,11 +14,17 @@ export const UrgencyOntimeIcon = forwardRef<
     <Icon
       data-testid="UrgencyOntimeIcon"
       aria-label="urgency ontime"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M11.5 6 6 10 .5 6 6 2zM2.2 6 6 8.764 9.8 6 6 3.235z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.5 8 8 3.5 14.5 8 8 12.5Z"
+        />
+      </g>
     </Icon>
   );
 });

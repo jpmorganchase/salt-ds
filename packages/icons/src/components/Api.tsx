@@ -14,11 +14,17 @@ export const ApiIcon = forwardRef<SVGSVGElement, ApiIconProps>(function ApiIcon(
     <Icon
       data-testid="ApiIcon"
       aria-label="api"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M0 5.99 3 3l.707.705-2.293 2.284 2.293 2.296L3 8.99zm12 .022L9 9l-.708-.704 2.294-2.284-2.294-2.296.707-.704zM6.95 3.011 4.002 8.544l.895.446 2.948-5.533z" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5 3.5 1.5 8 5 12.5m6-9L14.5 8 11 12.5m-1.5-10-3 11"
+        />
+      </g>
     </Icon>
   );
 });

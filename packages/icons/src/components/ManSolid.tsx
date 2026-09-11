@@ -12,11 +12,16 @@ export const ManSolidIcon = forwardRef<SVGSVGElement, ManSolidIconProps>(
       <Icon
         data-testid="ManSolidIcon"
         aria-label="man solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M6 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M4 4.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1V8h-.75v4h-2.5V8H4z" />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M6.5 3a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0m-1 3.5h5v4H10v4H6v-4h-.5Zm2 4h1v4h-1Z"
+          />
+        </g>
       </Icon>
     );
   },

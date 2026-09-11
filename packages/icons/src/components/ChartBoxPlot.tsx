@@ -14,15 +14,17 @@ export const ChartBoxPlotIcon = forwardRef<
     <Icon
       data-testid="ChartBoxPlotIcon"
       aria-label="chart box plot"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M11 12H8v-1h1v-1H7V4h2V1H8V0h3v1h-1v3h2v6h-2v1h1zM8 9h3V8H8zm0-2h3V5H8zM4 1H3v1h2v6H3v3h1v1H1v-1h1V8H0V2h2V1H1V0h3zM1 7h3V5H1zm0-3h3V3H1z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M4.5 1.5v3m0 7v3m-2-13h4m-4 13h4M2.5 8h4m5-5.5v3m0 7v2m-2-12h4m-4 12h4M9.5 9h4m-11-4.5h4v7h-4Zm7 1h4v7h-4Z"
+        />
+      </g>
     </Icon>
   );
 });

@@ -14,12 +14,16 @@ export const ChartPieSolidIcon = forwardRef<
     <Icon
       data-testid="ChartPieSolidIcon"
       aria-label="chart pie solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M5.5 11.5a5 5 0 0 0 5-5h-5v-5a5 5 0 0 0 0 10" />
-      <path d="M11.5 5.5a5 5 0 0 0-5-5v5z" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M7 2a6 6 0 1 0 7 7H7Zm2-.5V7h5.5A6.5 6.5 0 0 0 9 1.5"
+        />
+      </g>
     </Icon>
   );
 });

@@ -12,11 +12,17 @@ export const UploadIcon = forwardRef<SVGSVGElement, UploadIconProps>(
       <Icon
         data-testid="UploadIcon"
         aria-label="upload"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M6.5 9.028h-1V1.914L2.818 4.596l-.707-.707L6 0l3.889 3.89-.707.706L6.5 1.914zM12 11v1H0v-1z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8 11.5v-10m-4 4 4-4 4 4m-9.5 7v2h11v-2"
+          />
+        </g>
       </Icon>
     );
   },

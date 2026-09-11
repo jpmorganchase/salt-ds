@@ -14,15 +14,21 @@ export const PresentationSolidIcon = forwardRef<
     <Icon
       data-testid="PresentationSolidIcon"
       aria-label="presentation solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M0 4v6h4.493L3.25 11.243l.707.707 1.893-1.893 1.893 1.893.707-.707L7.207 10H12V4zm3 1h6v1H3zm0 2h6v1H3zM0 0v3h12V0z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M2 2.333h12V12H2ZM2 4.5h12v1H2Zm2.533 2.333h6.934q.2 0 .2.2v.6q0 .2-.2.2H4.533q-.2 0-.2-.2v-.6q0-.2.2-.2m0 2.334h6.934q.2 0 .2.2v.6q0 .2-.2.2H4.533q-.2 0-.2-.2v-.6q0-.2.2-.2"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5 14.667 8 12l3 2.667"
+        />
+      </g>
     </Icon>
   );
 });

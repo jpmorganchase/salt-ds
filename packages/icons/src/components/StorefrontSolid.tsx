@@ -14,16 +14,25 @@ export const StorefrontSolidIcon = forwardRef<
     <Icon
       data-testid="StorefrontSolidIcon"
       aria-label="storefront solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M10 1H2L0 5c.418.314.937.5 1.5.5S2.582 5.314 3 5c.418.314.937.5 1.5.5S5.582 5.314 6 5c.418.314.937.5 1.5.5S8.582 5.314 9 5c.418.314.937.5 1.5.5s1.082-.186 1.5-.5zM3 8h3v1H3z" />
-      <path
-        fillRule="evenodd"
-        d="M1 6v5H0v1h12v-1h-1V6zm6 1H2v3h5zm3 0H8v4h2z"
-        clipRule="evenodd"
-      />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M3.5 2.5h9l2 4q-2 2-4 0-2.5 2-5 0-2 2-4 0Z"
+        />
+        <path
+          fillRule="evenodd"
+          d="M2.5 8.068q.493.182 1 .182 1.054 0 2.049-.788Q6.755 8.25 8 8.25t2.451-.788q.995.788 2.049.788.507 0 1-.182V13.5h-1.75v-4h-2.5v4H2.5ZM4.25 9.5v2h3.5v-2Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1 13.5h14"
+        />
+      </g>
     </Icon>
   );
 });

@@ -12,22 +12,26 @@ export const BuildingIcon = forwardRef<SVGSVGElement, BuildingIconProps>(
       <Icon
         data-testid="BuildingIcon"
         aria-label="building"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M0 11h12v1H0z" />
-        <path
-          fillRule="evenodd"
-          d="M9 1H2v10h7zM1 0v11h9V0z"
-          clipRule="evenodd"
-        />
-        <path
-          fillRule="evenodd"
-          d="M6 9H5v2h1zM4 8v3h3V8z"
-          clipRule="evenodd"
-        />
-        <path d="M3 4h1v1H3zm0-2h1v1H3zm0 4h1v1H3zm2-2h1v1H5zm0-2h1v1H5zm0 4h1v1H5zm2-2h1v1H7zm0-2h1v1H7zm0 4h1v1H7z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.5 1.5h11v13h-11Z"
+          />
+          <path
+            fillRule="evenodd"
+            d="M5.083 3.5h.834q.333 0 .333.333v1.334q0 .333-.333.333h-.834q-.333 0-.333-.333V3.833q0-.333.333-.333m0 4h.834q.333 0 .333.333v1.334q0 .333-.333.333h-.834q-.333 0-.333-.333V7.833q0-.333.333-.333m5-4h.834q.333 0 .333.333v1.334q0 .333-.333.333h-.834q-.333 0-.333-.333V3.833q0-.333.333-.333m0 4h.834q.333 0 .333.333v1.334q0 .333-.333.333h-.834q-.333 0-.333-.333V7.833q0-.333.333-.333"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.5 14.5V12q0-.5.5-.5h2q.5 0 .5.5v2.5"
+          />
+        </g>
       </Icon>
     );
   },

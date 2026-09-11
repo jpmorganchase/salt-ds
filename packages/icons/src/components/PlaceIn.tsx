@@ -12,12 +12,17 @@ export const PlaceInIcon = forwardRef<SVGSVGElement, PlaceInIconProps>(
       <Icon
         data-testid="PlaceInIcon"
         aria-label="place in"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M0 12h12V6h-1v5H1V1h5V0H0z" />
-        <path d="M6 6V2h1v2.293L11.293 0 12 .707 7.707 5H10v1z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8 2.5H2.5v11h11V8m.5-6L7 9m0-4v4h4"
+          />
+        </g>
       </Icon>
     );
   },

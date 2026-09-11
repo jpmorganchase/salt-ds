@@ -14,11 +14,26 @@ export const WifiDisabledIcon = forwardRef<
     <Icon
       data-testid="WifiDisabledIcon"
       aria-label="wifi disabled"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M1 1.716 10.307 11l.693-.733L1.716 1zM.24 4.447a8 8 0 0 1 1.117-.962l.72.717q-.648.44-1.182 1.009zm1.31 1.528A6 6 0 0 1 2.8 4.924l.73.728a5 5 0 0 0-1.323 1.09zm4.588-1.973 1.175 1.172c.979.266 1.838.82 2.48 1.568l.657-.767a5.98 5.98 0 0 0-4.312-1.973M5.039 7.157l-.768-.765a4 4 0 0 0-1.403 1.12l.667.778a3 3 0 0 1 1.504-1.133m-.727-4.979.87.87Q5.585 3 6 3a6.98 6.98 0 0 1 5.105 2.21l.654-.763A7.98 7.98 0 0 0 6 2c-.58 0-1.144.062-1.688.178M7 10a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+      <g strokeWidth=".67">
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.5 5q.209-.192.417-.372m3.331-2.09Q9.874.73 14.5 5m-11 2.5q.335-.335.67-.62m3.79-1.63q2.27-.02 4.54 2.25m-7 2.5q.497-.497.993-.796"
+        />
+        <path
+          fillRule="evenodd"
+          d="M7.1 13a.9.9 0 1 0 1.8 0 .9.9 0 1 0-1.8 0"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="m2 2 12 12"
+        />
+      </g>
     </Icon>
   );
 });

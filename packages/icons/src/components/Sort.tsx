@@ -12,11 +12,17 @@ export const SortIcon = forwardRef<SVGSVGElement, SortIconProps>(
       <Icon
         data-testid="SortIcon"
         aria-label="sort"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M4.035 11H2.977V2.412L1.248 4.043.5 3.337 3.506.5 6.5 3.326l-.748.706-1.717-1.62zm3.93-10h1.058v8.588l1.729-1.631.748.706L8.494 11.5 5.5 8.674l.748-.706 1.717 1.62z" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.5 14V2M2 4.5 4.5 2 7 4.5M11.5 2v12M9 11.5l2.5 2.5 2.5-2.5"
+          />
+        </g>
       </Icon>
     );
   },

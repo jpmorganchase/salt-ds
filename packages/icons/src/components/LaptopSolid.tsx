@@ -12,15 +12,21 @@ export const LaptopSolidIcon = forwardRef<SVGSVGElement, LaptopSolidIconProps>(
       <Icon
         data-testid="LaptopSolidIcon"
         aria-label="laptop solid"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path
-          fillRule="evenodd"
-          d="M1 1v8h10V1zm11 10H0v-1h12z"
-          clipRule="evenodd"
-        />
+        <g strokeWidth=".67">
+          <path
+            fillRule="evenodd"
+            d="M2.333 3.333h11.334v7q0 .667-.667.667H3q-.667 0-.667-.667Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.667 11h12.666v1q0 .667-.666.667H2.333q-.666 0-.666-.667Z"
+          />
+        </g>
       </Icon>
     );
   },

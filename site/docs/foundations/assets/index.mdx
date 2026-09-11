@@ -7,23 +7,17 @@ sidebar:
   groupPriority: 11
 ---
 
-Icons are simplified visual representations of a specific action, object or concept.
+Salt icons communicate actions, objects and concepts through open geometry, crisp terminals and selective curves. Use a familiar icon consistently, and pair it with a visible label when its meaning needs explanation.
+
+Browse the catalogue below to choose an icon. The [icon design guidelines](/salt/foundations/assets/icon-design) describe the family’s visual language, and [Creating icons](/salt/foundations/assets/creating-icons) explains how to contribute artwork and integrate it into Salt.
 
 ## Icon variants
 
-Icons come in two variant types: **Outline** and **Solid**. Please note that all icons within the icon set have an outline variant, but not all icons have a solid variant.
+Icons are available as **outline** and **solid** variants. Each icon has an outline version; selected icons also have a solid version. Both variants preserve the same meaning and shared landmarks.
 
-**Solid icons** may be faster to recognize than outline icons due to less visual noise, especially depending on the complexity of the icon. Solid icons better represent how we view objects, whereas outline icons are silhouettes and therefore can take longer to perceive.
+Outline icons use open space to keep their visual weight light. Solid variants introduce filled surfaces to provide greater emphasis, while retaining the open lines needed to describe the shape or action. Choose the variant that fits the surrounding interface and use it consistently.
 
-**Outline icons** place less emphasis on non-imperative items and are more recognizable when they have wider inner spacing. They’re also better to use when you need to make subtle design cues more noticeable.
-
-<Diagram
-  src="/img/foundations/iconography-icon-variants.png"
-  srcDark="/img/foundations/iconography-icon-variants.png"
-  alt="Example of solid and outline icons"
-  border
-  background="secondary"
-/>
+<IconDesignExamples example="variants" />
 
 ## All icons
 
@@ -35,13 +29,7 @@ Icon size will vary based on use case and system requirements. Standard sizing e
 
 We recommend using a size multiplier for icons when its purpose needs to be emphasized; typically standalone and not paired with text.
 
-<Diagram
-  src="/img/foundations/iconography-icon-size.png"
-  srcDark="/img/foundations/iconography-icon-size-dark.png"
-  alt="Example of an icon in three scaled sizes"
-  border
-  background="secondary"
-/>
+<IconDesignExamples example="scale" />
 
 | Size token         | Multiplier | High Density (HD) | Medium Density (MD) | Low Density (LD) | Touch Density (TD) |
 | ------------------ | ---------- | ----------------- | ------------------- | ---------------- | ------------------ |
@@ -69,6 +57,18 @@ This approach ensures the icon and text remain visually balanced and that the ic
   caption="The diagram shown is based on medium density values. Always use design tokens
 for icon sizing and spacing."
 />
+
+## Stroke weight
+
+The primary stroke is authored at a fixed **0.67 units** in the icon’s 16×16 viewBox. Secondary details retain their lighter proportions. These widths are part of the artwork and scale with its geometry when an icon is resized.
+
+<IconDesignExamples example="stroke" />
+
+React icons, inline SVGs and the CSS mask classes in `saltIcons.css` use the same authored stroke widths.
+
+## Accessible use
+
+Give an icon an accessible name when it communicates information on its own. If adjacent text already conveys the meaning, hide the icon from assistive technology with `aria-hidden`. For an icon-only button, give the button an accessible name and treat its icon as decorative. See the [Icon component](/salt/components/icon) for implementation examples.
 
 ## Spacing between icon and text
 

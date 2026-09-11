@@ -12,12 +12,18 @@ export const SignalIcon = forwardRef<SVGSVGElement, SignalIconProps>(
       <Icon
         data-testid="SignalIcon"
         aria-label="signal"
-        viewBox="0 0 12 12"
+        viewBox="0 0 16 16"
         ref={ref}
         {...props}
       >
-        <path d="M8.774 10.16A5 5 0 0 0 11 6a5 5 0 0 0-2.226-4.16l.555-.833A6 6 0 0 1 12 6a6 6 0 0 1-2.671 4.993zm-5.548 0A5 5 0 0 1 1 6c0-1.735.884-3.264 2.226-4.16l-.555-.833A6 6 0 0 0 0 6a6 6 0 0 0 2.671 4.993z" />
-        <path d="M3.781 9.329A4 4 0 0 1 2 6c0-1.388.707-2.611 1.781-3.329l.555.833A3 3 0 0 0 3 6c0 1.041.53 1.958 1.336 2.496zm4.438 0A4 4 0 0 0 10 6a4 4 0 0 0-1.781-3.329l-.555.833A3 3 0 0 1 9 6c0 1.041-.53 1.958-1.336 2.496zM7 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+        <g strokeWidth=".67">
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4 3a6.5 6.5 0 0 0 0 10m8-10a6.5 6.5 0 0 1 0 10M5.5 5a4 4 0 0 0 0 6m5-6a4 4 0 0 1 0 6"
+          />
+          <path fillRule="evenodd" d="M7 8a1 1 0 1 0 2 0 1 1 0 1 0-2 0" />
+        </g>
       </Icon>
     );
   },

@@ -14,11 +14,18 @@ export const UngroupSolidIcon = forwardRef<
     <Icon
       data-testid="UngroupSolidIcon"
       aria-label="ungroup solid"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M0 0h6v6H0zm6 6h6v6H6zM1 7h1v3h3v1H1zm9-2h1V1H7v1h3z" />
+      <g strokeWidth=".67">
+        <path fillRule="evenodd" d="M1.5 1.5H7V7H1.5ZM9 9h5.5v5.5H9Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10 2.5h3.5V6m-11 4v3.5H6"
+        />
+      </g>
     </Icon>
   );
 });

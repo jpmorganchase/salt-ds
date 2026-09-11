@@ -14,11 +14,39 @@ export const TextUnorderedListIcon = forwardRef<
     <Icon
       data-testid="TextUnorderedListIcon"
       aria-label="text unordered list"
-      viewBox="0 0 12 12"
+      viewBox="0 0 16 16"
       ref={ref}
       {...props}
     >
-      <path d="M4 2.5h7v1H4zm0 3h7v1H4zm0 3h7v1H4zM3 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0m0-3a1 1 0 1 1-2 0 1 1 0 0 1 2 0m0-3a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+      <g strokeWidth=".67">
+        <path
+          fillRule="evenodd"
+          d="M1.767 3.5a.733.733 0 1 0 1.466 0 .733.733 0 1 0-1.466 0"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5.5 3.5h9"
+        />
+        <path
+          fillRule="evenodd"
+          d="M1.767 8a.733.733 0 1 0 1.466 0 .733.733 0 1 0-1.466 0"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5.5 8h9"
+        />
+        <path
+          fillRule="evenodd"
+          d="M1.767 12.5a.733.733 0 1 0 1.466 0 .733.733 0 1 0-1.466 0"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5.5 12.5h9"
+        />
+      </g>
     </Icon>
   );
 });
