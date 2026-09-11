@@ -455,6 +455,46 @@ The focused repair and bounded evaluation are recorded; native creation remains
 unproved. Any future attempt first needs an unscored host-capability check and a
 fresh case. Unit 033/02a, its checkpoint and human gates are unchanged.
 
+### User-directed native execution capability check
+
+The 2026-09-11 request for help authorizes the proposed next step from
+`25e075126`: an unscored check of the actual creator entry point and, only if
+both capabilities work, one fresh frozen Luna/Sol modification task. Preserve
+the completed four-case qualification and incomplete launch-scope attempt.
+Continue within Unit 033/02a with the same checkpoint and exact local cohort.
+
+Use a new temporary copy of the verified test app. One native Salt creator on
+Luna/medium must attempt an actual native Sol/medium reviewer delegation and run
+the unchanged guarded project/browser verification through a narrowly approved
+subprocess command. The delegated capability check reads a local marker and
+returns INCOMPLETE for UI review because no UI change is being assessed; it must
+not claim a visual or implementation pass. Inspect the actual invocation and
+returned marker. Allow up to eight minutes for the creator and three minutes for
+this read-only reviewer capability check. The two capability outcomes are
+independent; missing delegation must not hide a completed execution check.
+
+Keep the current host sandbox policy and offline guard. Do not disable protections,
+change user-wide configuration, install dependencies, or use another model API.
+Existing OpenAI Codex account/model-payload approval continues to cover the named
+capability and conditional creator/reviewer runs. Keep raw outputs, copied app
+sources and evidence outside Git. No implementation edits belong in the smoke.
+If either capability remains unavailable, stop before another scored task and
+record the observed limitation. If both pass, freeze one new small task and its
+independent acceptance before creator output, with independent Sol review, at
+most two source repairs, and no lead application source edits or Salt choices.
+Record actual results, run plan/contracts/changed quality, and commit the authored
+closeout unsigned. Human design/accessibility and maintainer gates stay pending.
+
+The unscored check completed on 2026-09-11. The creator's specifically approved
+guarded command passed with exit 0, a bound typecheck and twelve browser images;
+source and frozen inputs remained unchanged. The creator reported no callable
+native delegation tool: no reviewer was spawned and no marker was returned.
+Creator image inspection also remained incomplete, although the lead later
+inspected one actual image through base64 forwarding. The missing delegation
+triggers the STOP before a fresh task. No fresh trial or source repairs ran;
+Unit 033/02a, its checkpoint and human gates remain unchanged. See the
+[host capability results](../evals/salt-ai/ui-agent/HOST_CAPABILITY_RESULTS.md).
+
 ## Conditional Unit 033/03 — Expand workflows from observed need
 
 Scope: adopt only a genuinely additional workflow or modification case justified by observed need, extending canonical examples/docs and the same schema/assembler/harness. Navigation, the operational worklist and record editing now belong to the single service-worklist journey in Unit 033/02a; do not reimplement them as separate workflow families merely to complete this backlog. Reuse that workflow's preview and fixture setup. Create a separate integration fixture only when it proves a distinct supported environment, as the existing Next App Router fixture does. Reuse selected public material from the operations dashboard without importing repository-only source into consumer output.

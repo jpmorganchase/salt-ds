@@ -31,6 +31,12 @@ was produced. Its source and failed evidence are preserved in the
 No successful creation or promotion is inferred; the unit's human gates remain
 unchanged.
 
+The subsequent unscored host check passed the specifically approved guarded
+build/browser command, but the selected creator reported no native delegation
+tool and produced no reviewer. Its own image inspection was incomplete. The
+conditional fresh task did not run; see the
+[host capability results](../evals/salt-ai/ui-agent/HOST_CAPABILITY_RESULTS.md).
+
 ## Execution order and status
 
 | Plan                                                               | Title                                                                                                           | Priority | Effort         | Depends on                  | Status                                                        |
@@ -161,6 +167,10 @@ publication authority as deferred to Plan 003.
   and the same conditional native task; earlier evidence remains preserved.
   Consumer contact, other product model trials, actual consumer installation,
   publication, versioning, dist-tags and deployment remain outside this dispatch.
+  The 2026-09-11 help request additionally authorizes the unscored native
+  execution/delegation capability check and, only if both pass, one fresh frozen
+  task under the same Luna/Sol and two-repair limits. Earlier outcomes remain
+  unchanged; see [host capability results](../evals/salt-ai/ui-agent/HOST_CAPABILITY_RESULTS.md).
 - **Successor eligibility:** each next unit requires a reviewed control
   transition with actual completion evidence; Plan 003 remains deferred.
 
