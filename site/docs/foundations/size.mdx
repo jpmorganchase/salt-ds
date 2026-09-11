@@ -91,7 +91,17 @@ You can find out more in the [iconography foundation](./assets).
 
 ### Stroke width
 
-`--salt-size-icon-strokeWidth` controls the primary stroke width of generated inline icon components. It defaults to `1` in every density. Use a unitless value in the icon's 16-unit coordinate space: `1` renders as a 1px stroke at 16px and a 0.75px stroke at 12px. The stroke scales with the icon, and secondary strokes retain their proportional weight.
+`--salt-size-icon-strokeWidth` controls the primary stroke width of generated inline icon components. The theme uses a heavier width in high and medium densities to keep their 12px icons legible.
+
+| Density | Themed primary width `W` | Default icon size `P` | Rendered primary stroke |
+| ------- | ------------------------ | --------------------- | ----------------------- |
+| High    | 1.5                      | 12px                  | 1.125px                 |
+| Medium  | 1.5                      | 12px                  | 1.125px                 |
+| Low     | 1                        | 14px                  | 0.875px                 |
+| Touch   | 1                        | 16px                  | 1px                     |
+| Mobile  | 1                        | 16px                  | 1px                     |
+
+Use a unitless value in the icon's 16-unit coordinate space. At a rendered size of `P` pixels, the primary stroke is `W × P / 16` pixels wide. For example, selecting `W = 1` for a 12px icon produces a 0.75px stroke. Secondary strokes retain their proportional weight. The component falls back to `1` when neither the foundation token nor the per-icon override is defined; that fallback is separate from the theme's density defaults.
 
 Set the foundation token on an application container or subtree to adjust the icons within it. Use `--saltIcon-strokeWidth` to override the foundation for an individual icon.
 
@@ -100,12 +110,12 @@ Set the foundation token on an application container or subtree to adjust the ic
   --salt-size-icon-strokeWidth: 1.2;
 }
 
-.emphasizedIcon {
+.customIcon {
   --saltIcon-strokeWidth: 1.25;
 }
 ```
 
-Filled contours and official brand logos retain their supplied shapes. CSS background mask assets use the stroke widths baked into their SVGs and do not inherit CSS variables from the host element.
+The viewBox fit reserves space through primary width 1.5. Check the actual fitted clearances at the width used in the interface. Changing stroke width preserves filled contours and official brand shapes. Numeric SVG masters and CSS background mask assets retain their baked 0.67-unit primary reference strokes and do not inherit stroke variables from the host element.
 
 ## Adornment
 

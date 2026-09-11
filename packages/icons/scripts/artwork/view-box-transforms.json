@@ -1357,17 +1357,17 @@
     "groupKey": "filter-clear.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.041667,
-    "translateX": -0.333333,
-    "translateY": -0.59375
+    "scale": 0.988426,
+    "translateX": 0.423973,
+    "translateY": -0.635995
   },
   "filter-clear_solid.svg": {
     "groupKey": "filter-clear_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.291667,
-    "translateX": -2.333333,
-    "translateY": -2.65625
+    "scale": 1.110855,
+    "translateX": -1.416282,
+    "translateY": -1.454424
   },
   "filter.svg": {
     "groupKey": "filter.svg",
@@ -3281,17 +3281,17 @@
     "groupKey": "share.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.037037,
-    "translateX": -0.296296,
-    "translateY": -0.296296
+    "scale": 0.978166,
+    "translateX": 0.174672,
+    "translateY": 0.174672
   },
   "share_solid.svg": {
     "groupKey": "share_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.068966,
-    "translateX": -0.551724,
-    "translateY": -0.551724
+    "scale": 1.012245,
+    "translateX": -0.097959,
+    "translateY": -0.097959
   },
   "signal.svg": {
     "groupKey": "signal.svg",

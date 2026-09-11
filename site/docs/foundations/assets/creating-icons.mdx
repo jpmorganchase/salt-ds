@@ -34,7 +34,7 @@ Salt icons use a 16×16 viewBox. Numeric SVG masters retain a fixed primary refe
 
 A primary construction stroke of 1.5 therefore exports as `1.5 × (16 / 24) × 0.67 = 0.67`. Use the normal stroke helper for primary lines; setting its construction width to 0.67 would make the exported stroke too thin. An unscaled secondary width of 1.08 exports as approximately 0.4824 units, retaining a 0.72 proportion of the primary stroke. Local construction scaling also affects these widths.
 
-Generated React icons map these reference widths to the configured primary width **W**, defaulting to **1**, while retaining each stroke's ratio to 0.67. At a rendered size of `P` pixels, the primary stroke occupies `W × P / 16` pixels: 0.75px at 12px with the default width, compared with 0.5025px for the 0.67 reference. The `schedule-time` hands retain their lighter 0.72 proportion. Resizing scales the artwork and its strokes together.
+Generated React icons map these reference widths to the configured primary width **W** while retaining each stroke's ratio to 0.67. The theme defaults to **W = 1.5 in high and medium densities** and **W = 1 in low, touch and mobile densities**; the component's fallback is **1** when no stroke variable is defined. At a rendered size of `P` pixels, the primary stroke occupies `W × P / 16` pixels. A default 12px high/medium density icon therefore has a **1.125px** primary stroke; an explicit `W = 1` at 12px gives 0.75px, and the 0.67 reference gives 0.5025px. The `schedule-time` hands retain their lighter 0.72 proportion. Resizing scales the artwork and its strokes together.
 
 Construction groups may translate, rotate or scale reusable geometry. Bake every transform into the exported coordinates and widths. When adapting geometry already drawn on a 16-unit canvas, lift it consistently to the construction canvas before export; avoid applying normalization twice.
 
@@ -65,7 +65,7 @@ Fit each outline and solid export independently so filled variants also occupy t
 
 The seven official brand exports—`figma.svg`, `github.svg`, `icon-figma.svg`, `linkedin.svg`, `linkedin_solid.svg`, `stackoverflow.svg` and `symphony.svg`—retain their existing 16-unit framing. The full control surfaces in `checkmark_solid.svg`, `success_solid.svg` and `success_small_solid.svg` also remain edge-to-edge. Their outline counterparts receive the ordinary fit.
 
-The framing transform moves and scales paths, counters and cutouts together while preserving the **0.67-unit primary reference stroke** and every secondary ratio. Generated React components still default to primary width **1**. Thinner strokes occupy slightly less of the frame than the 1.5-width fitting target; inspect acute joins at the actual interface width.
+The framing transform moves and scales paths, counters and cutouts together while preserving the **0.67-unit primary reference stroke** and every secondary ratio. Generated React components use the density's themed primary width: **1.5 for high/medium** and **1 for low/touch/mobile**, with a fallback of **1** when neither stroke variable is defined. Thinner strokes occupy slightly less of the frame than the 1.5-width fitting target; inspect acute joins at the actual interface width.
 
 Generation writes [view-box-transforms.json](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/view-box-transforms.json) beside the artwork scripts. Keep this generated manifest with the exported SVGs. The validator uses it to reverse only the framing transform for existing recipe-geometry regression checks, and separately checks the actual fitted exports for painted occupancy, centering and clipping. Make framing changes in the generator; do not hand-pad individual recipes or edit the manifest.
 
@@ -83,16 +83,16 @@ The following equations describe local parallel edges in the **16-unit reference
 | Two stroked paths with centerline separation `D` and factors `r1` and `r2`  | `g = D − (r1 + r2)W / 2`         |
 | Two fixed filled contours                                                   | Their geometric edge separation. |
 
-Use **W = 1** for the default React component, the selected value for an override, and **W = 0.67** for the numeric SVG reference. If both neighboring edges carry strokes, include both half-widths.
+Use **W = 1.5** for the high/medium density theme default, **W = 1** for the low/touch/mobile default or an explicit 1-unit comparison, and the selected value for any override. Use **W = 0.67** for the numeric SVG reference. If both neighboring edges carry strokes, include both half-widths.
 
-Choose a useful local gap by comparing the related family and its native rendering. Before fitting, a chosen gap `g_min` between parallel strokes requires `D ≥ g_min + (r1 + r2) × W / 2`. The devices phone header has a reference centerline separation of 2 units; its two primary strokes leave a reference-space gap of `2 − W`: 1 unit at the default width or 1.33 units at the reference width.
+Choose a useful local gap by comparing the related family and its native rendering. Before fitting, a chosen gap `g_min` between parallel strokes requires `D ≥ g_min + (r1 + r2) × W / 2`. The devices phone header has a reference centerline separation of 2 units; its two primary strokes leave a reference-space gap of `2 − W`: **0.5 units at the high/medium default W = 1.5**, 1 unit at W = 1, or 1.33 units at the 0.67 reference width. These values precede export fitting; calculate the final gap from the fitted distance.
 
 | Reference construction                                                               | Painted gap at reference W = 0.67 |
 | ------------------------------------------------------------------------------------ | --------------------------------- |
 | Devices: fixed cutout boundary 1.25 units from the phone's primary stroke centerline | 0.915                             |
 | Boolean: track radius 2.75 and filled thumb radius 1.25                              | 1.165                             |
 
-These reference measurements describe particular constructions, not universal minimums or spacing tokens. For an export fit scale `s`, geometric distances become `sE` and `sD` while stroke widths stay unchanged. The fitted gaps are therefore `sE − rW / 2` and `sD − (r1 + r2)W / 2`; a gap between two filled contours scales by `s`. Use the actual export's fit and the configured **W**, including the default **1** and review width **1.5**.
+These reference measurements describe particular constructions, not universal minimums or spacing tokens. For an export fit scale `s`, geometric distances become `sE` and `sD` while stroke widths stay unchanged. The fitted gaps are therefore `sE − rW / 2` and `sD − (r1 + r2)W / 2`; a gap between two filled contours scales by `s`. Use the actual export's fit and the configured **W**, including the high/medium default **1.5**, the low/touch/mobile default **1**, and any selected override.
 
 At 12px, multiply the resulting fitted-coordinate gap by `12 / 16`. Inspect the final export in Component Legibility and All Icon View Boxes: a reference-space regression check or mathematical separation alone does not establish useful native-size openings. Filled boundaries stay fixed when a consumer changes stroke width, so verify the selected width does not collapse a gap.
 
@@ -124,7 +124,7 @@ There is no comprehensive SVG allowlist schema.
 Stay within the established geometry profile when adding artwork.
 
 [Component generation](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/generateIcons.mjs) preserves `fill="none"`, makes filled shapes inherit the icon theme, and maps currentColor strokes to the same theme token.
-Generated React strokes use `--saltIcon-strokeWidth`, falling back to the [size foundation](/salt/foundations/size#stroke-width) `--salt-size-icon-strokeWidth` and then `1`. A reference width `w` retains its proportion `w / 0.67` of that configured width. This changes stroke paint, preserving filled contours and official brand shapes.
+Generated React strokes use `--saltIcon-strokeWidth`, falling back to the [size foundation](/salt/foundations/size#stroke-width) `--salt-size-icon-strokeWidth` and then `1`. The foundation supplies **1.5** in high/medium density and **1** in low/touch/mobile density; the final `1` is the unthemed fallback. A reference width `w` retains its proportion `w / 0.67` of that configured width. This changes stroke paint, preserving filled contours and official brand shapes.
 Numeric SVG masters, standalone SVG images and the data-URL masks in `saltIcons.css` retain their baked widths. Host CSS variables do not cross into an image or mask document.
 The [size CSS](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/src/icon/Icon.css) uses Salt's density-based icon size with a 12px minimum and a size multiplier.
 
@@ -247,15 +247,17 @@ yarn storybook
 
 Use the site's [Icons catalogue](/salt/foundations/assets/index) for family comparisons, synonym search, category placement, and outline/solid filtering.
 Use Storybook's [Icons/Icon](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/stories/icon.stories.tsx) stories, including All Icons and All Icons With Search, for the generated React components.
-The [Icons/Icon/Icon QA](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/stories/icon.qa.stories.tsx) stories include component sizes, CSS-mask rendering and **Component Legibility**, which compares icons in native controls across densities and backgrounds with an adjustable stroke width. **All Icon View Boxes** (`AllIconViewBoxes`) shows each export's frame, with controls for **12px, 16px, 32px and 64px**, **light/dark** backgrounds, **stroke width** and **name filtering**. Use it to review coverage across the entire catalogue and compare related exports.
+The [Icons/Icon/Icon QA](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/stories/icon.qa.stories.tsx) stories include component sizes, CSS-mask rendering and **Component Legibility**, which compares icons in native controls across densities and backgrounds. **All Icon View Boxes** (`AllIconViewBoxes`) shows each export's frame at its **actual density-based icon size** or a fixed **12px, 16px, 32px or 64px**, with **density selection**, **light/dark** backgrounds and **name filtering**. Both stories inherit the selected density's theme stroke by default. Disable `useDensityStroke` to compare an explicit stroke width. Use All Icon View Boxes to review coverage across the entire catalogue and compare related exports.
 
-Inspect each changed variant and its closest siblings at native **12px and 16px** on **light and dark** backgrounds, plus an enlarged view. Check generated components at the default width **1**, compare the numeric SVG reference at **0.67**, and inspect the configured weights used by the interface. The Component Legibility control supports tuning up to **1.5**; verify gaps and bounds at each chosen width.
+Inspect each changed variant and its closest siblings at native **12px and 16px** on **light and dark** backgrounds, plus an enlarged view. Check generated components at the themed defaults **1.5 in high/medium** and **1 in low/touch/mobile**, compare the numeric SVG reference at **0.67**, and inspect the configured weights used by the interface. The story controls support explicit widths up to **1.5**; verify final fitted gaps and bounds at each chosen width.
 Use existing size controls where available. For an exact native size, set `--saltIcon-size` to `12px` or `16px` and confirm its computed dimensions; the `size` prop is a density-based multiplier.
 Review both components and CSS-mask rendering. Verify what was actually rendered and report the sizes, stroke widths, backgrounds and variants inspected.
 
+When correcting legibility in a component, compare before and after in an existing documentation example that uses the icon, or an equivalent native control if no such example exists. Use the relevant density, background and control state. Keep the component's normal icon size, color and spacing during the comparison. Compare related icons in the same context, and confirm that lighter secondary details also remain visible in the baked SVG and CSS-mask assets.
+
 ### Automated checks and acceptance
 
-The artwork validator uses installed Chrome and checks numeric reference strokes, actual fitted occupancy, centering, clipping and exact alias fits. It reads `scripts/artwork/view-box-transforms.json` to invert the export fit for the existing reference-geometry clearance and alignment regressions. Those reference checks complement the raw fitted-output checks; they do not replace inspection of final gaps at the configured stroke width. Component tests and rendered review cover the configurable React stroke behavior.
+The artwork validator uses installed Chrome and checks numeric reference strokes, actual fitted occupancy, centering, clipping and exact alias fits. It reads `scripts/artwork/view-box-transforms.json` to invert the export fit for the existing reference-geometry clearance and alignment regressions. Those reference checks complement the raw fitted-output checks; they do not replace inspection of final gaps at the configured stroke width. Component tests cover configurable React stroke behavior that is not already covered by QA stories, such as native prop handling, inherited CSS values and local override precedence. Use the existing QA stories for visual size, density and appearance coverage; avoid duplicating those cases in component tests.
 Its pass does not establish semantic accuracy or consistency with the icon family; complete the visual review.
 The integration checker is scoped to the supplied basenames and their registered variants; it does not require unrelated legacy metadata cleanup.
 Also verify real website search behavior: a metadata/schema check alone cannot establish useful search terms.
@@ -266,7 +268,7 @@ Also verify real website search behavior: a metadata/schema check alone cannot e
 - [ ] Lettering uses the shared contours and has readable spacing/counters.
 - [ ] Cutouts follow the actual foreground, including curves, endpoints, and corners.
 - [ ] Each ordinary export is centered and reaches the 15.5-unit longest painted dimension at width 1.5; the documented brand and full-canvas surface exceptions retain their 16-unit frames.
-- [ ] At the reference, default and selected override widths, fitted paint stays inside the viewBox and final gaps remain useful.
+- [ ] At the reference, density defaults and selected override widths, fitted paint stays inside the viewBox and final gaps remain useful.
 - [ ] Native 12px and 16px renders work on light and dark backgrounds; enlarged views reveal no malformed geometry.
 - [ ] Effective recipes, sorted inventory, the generated fit manifest, website category metadata, public exports and exact aliases are consistent.
 - [ ] Website synonym entries match the generated names; intended queries and variant filters find the icons in the appropriate website category.

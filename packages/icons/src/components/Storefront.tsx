@@ -23,7 +23,11 @@ export const StorefrontIcon = forwardRef<SVGSVGElement, StorefrontIconProps>(
           >
             <path d="M3.26 2.208h9.48l2.105 4.212q-2.106 2.107-4.212 0Q8 8.527 5.367 6.42q-2.106 2.107-4.212 0Z" />
             <path d="M2.208 8.527v5.265h11.584V8.527M.628 13.792h14.744" />
-            <path d="M4.314 9.58h3.16v2.106h-3.16Zm5.266 4.212V9.58h2.106v4.212" />
+            <path
+              strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.6)"
+              d="M4.314 9.58h3.16v2.106h-3.16Z"
+            />
+            <path d="M9.58 13.792V9.58h2.106v4.212" />
           </g>
         </g>
       </Icon>

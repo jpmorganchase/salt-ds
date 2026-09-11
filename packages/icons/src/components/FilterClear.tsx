@@ -20,7 +20,7 @@ export const FilterClearIcon = forwardRef<SVGSVGElement, FilterClearIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M3.864 4.83 1.75 2.01h12.5l-2.114 2.82m-3.094 6.898v2.262H6.958v-2.262M5.396 5.135l5.208 5.209m0-5.209-5.208 5.209"
+            d="M1.907 2.33h10.872L8.826 6.776v4.942L5.86 13.202V6.777Zm9.39 6.424 3.953 3.954m0-3.954-3.953 3.954"
           />
         </g>
       </Icon>

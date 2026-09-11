@@ -62,11 +62,11 @@ for icon sizing and spacing."
 
 ## Stroke weight
 
-Generated React icons use a primary stroke of **1 unit** in the 16×16 viewBox by default. Adjust `--salt-size-icon-strokeWidth` for an application or subtree, or use `--saltIcon-strokeWidth` for an individual icon. Secondary details retain their lighter proportions, and all strokes scale with the icon. See [Icon stroke width](/salt/foundations/size#stroke-width) for examples.
+Generated React icons follow the theme's primary stroke width: **1.5 units in high and medium densities**, and **1 unit in low, touch and mobile densities**. Adjust `--salt-size-icon-strokeWidth` for an application or subtree, or use `--saltIcon-strokeWidth` for an individual icon. When neither variable is defined, the component falls back to 1. Secondary details retain their lighter proportions, and all strokes scale with the icon. See [Icon stroke width](/salt/foundations/size#stroke-width) for the density defaults and examples.
 
 <IconDesignExamples example="stroke" />
 
-At 12px, the default 1-unit primary stroke renders at 0.75px. The viewBox fit reserves space for widths up to 1.5; thinner strokes occupy slightly less of the frame, especially at sharp joins. Numeric SVG masters retain a 0.67-unit reference stroke, which renders at 0.5025px at 12px. Standalone SVG images and the CSS mask classes in `saltIcons.css` use those baked widths and do not inherit stroke variables from their host element. Filled contours and official brand logos retain their supplied shapes.
+At the default 12px icon size in high and medium densities, the 1.5-unit primary stroke renders at **1.125px**. An explicit 1-unit width at the same size renders at 0.75px. The viewBox fit reserves space for widths up to 1.5; thinner strokes occupy slightly less of the frame, especially at sharp joins. Numeric SVG masters retain a 0.67-unit reference stroke, which renders at 0.5025px at 12px. Standalone SVG images and the CSS mask classes in `saltIcons.css` use those baked widths and do not inherit stroke variables from their host element. Filled contours and official brand logos retain their supplied shapes.
 
 ## Accessible use
 

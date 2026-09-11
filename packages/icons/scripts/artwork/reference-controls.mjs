@@ -5,21 +5,15 @@ import { box, circ, F, S } from "./primitives.mjs";
 // Primary strokes use 1.5 construction units and export at a fixed .67px.
 // Keep that construction width consistent when reusing these controls.
 
-// A bank check is a cheque: header, payee, amount and signature fields.
-// The outline has a 1.33px straight header cavity and 1.58px field-row gaps.
+// A bank check is a cheque: payee, amount and signature fields.
+// Two evenly spaced field rows avoid a cramped header band at native sizes.
 const chequeFrame = S(box(2.25, 5.25, 19.5, 13.5));
-const chequeDivider = S(
-  "M2.25 7.5q0 .75 .75 .75H21q.75 0 .75-.75" +
-    "M2.25 9q0-.75 .75-.75H21q.75 0 .75 .75",
-);
-const chequeFields = S("M4.875 12H12M15.375 12H19.125M4.875 15.375H16.5");
+const chequeFields = S("M4.875 9.75H12M15.375 9.75H19.125M4.875 14.25H16.5");
 const chequeSolid = F(
   box(1.75, 4.75, 20.5, 14.5) +
-    // The reference's solid cheque separates its header from the field area.
-    box(1.75, 7.75, 20.5, 1) +
-    box(4.875, 11.25, 7.125, 1.5) +
-    box(15.375, 11.25, 3.75, 1.5) +
-    box(4.875, 14.625, 11.625, 1.5),
+    box(4.875, 9, 7.125, 1.5) +
+    box(15.375, 9, 3.75, 1.5) +
+    box(4.875, 13.5, 11.625, 1.5),
 );
 
 // Filled thumb discs keep one clean boundary inside each track.
@@ -108,7 +102,7 @@ const devicesSolid =
   phoneHeader;
 
 export default {
-  "bank-check": [chequeFrame + chequeDivider + chequeFields, chequeSolid],
+  "bank-check": [chequeFrame + chequeFields, chequeSolid],
   boolean: [togglesOutline, togglesSolid],
   devices: [devicesOutline, devicesSolid],
 };

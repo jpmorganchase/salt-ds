@@ -42,7 +42,7 @@ Generate the SVGs, `scripts/artwork/view-box-transforms.json`, React components,
 
 ## Verify the result
 
-For artwork or inventory changes, run the contribution page's generation and validation commands, then review the icons in the existing site and Storybook with the repository's Yarn setup. Metadata-only edits need the relevant integration/search checks. Use targeted component tests or type checking when integration code changes.
+For artwork or inventory changes, run the contribution page's generation and validation commands, then review the icons in the existing site and Storybook with the repository's Yarn setup. Metadata-only edits need the relevant integration/search checks. Use targeted component tests or type checking when integration code changes. Follow the contribution page's test scope: add behavioral coverage that QA stories do not already provide.
 
 Run the bundled read-only integration checker for the affected base names, using this skill's actual directory:
 
@@ -52,9 +52,9 @@ node <skill-directory>/scripts/check-integration.mjs --repo <salt-repo-root> <ba
 
 It checks the requested names' registration, website synonyms and category metadata, and generated surfaces. It does not judge synonym relevance, artwork quality or recipe geometry. Diagnose failures in scope; an intentionally deprecated legacy alias may need explanation rather than new metadata. The repository's artwork validator remains responsible for geometry and known regressions.
 
-Use the site's Icons catalogue for synonym searches and variant filters, and the existing Storybook Icons/Icon and Icon QA stories, including Component Legibility and All Icon View Boxes (`AllIconViewBoxes`), for rendered review. The latter supports 12px/16px/32px/64px, light/dark backgrounds, stroke controls and name filtering. Storybook name search does not test website synonyms. Set the required display size through the existing controls or the size CSS variable, and confirm the rendered dimensions.
+Use the site's Icons catalogue for synonym searches and variant filters, and the existing Storybook Icons/Icon and Icon QA stories, including Component Legibility and All Icon View Boxes (`AllIconViewBoxes`), for rendered review. The latter supports actual density-based sizing or fixed 12px/16px/32px/64px, density selection, light/dark backgrounds, stroke controls and name filtering. Storybook name search does not test website synonyms. Set the required display size through the existing controls or the size CSS variable, and confirm the rendered dimensions.
 
-Inspect native 16px and 12px renders on light and dark backgrounds, plus an enlarged view. Compare generated components at their default and selected override widths with the numeric SVG reference, following the canonical contribution page's stroke and clearance guidance. Review both requested variants and affected siblings in components and CSS masks, which retain baked widths. Check meaningful features, transparent counters, final fitted gaps, proportional line weights, centered viewBox occupancy and painted bounds. The validator separately checks raw fitted output and reverses the fit for reference-geometry regressions; passing those checks alone does not establish visual quality.
+Inspect native 16px and 12px renders on light and dark backgrounds, plus an enlarged view. Compare generated components at their default and selected override widths with the numeric SVG reference, following the canonical contribution page's stroke and clearance guidance. Review both requested variants and affected siblings in components and CSS masks, which retain baked widths. Check meaningful features, transparent counters, final fitted gaps, proportional line weights, centered viewBox occupancy and painted bounds. The validator separately checks raw fitted output and reverses the fit for reference-geometry regressions; passing those checks alone does not establish visual quality. For component legibility corrections, follow the contribution page's before/after review in a real component context.
 
 ## Finish with cleanup
 
