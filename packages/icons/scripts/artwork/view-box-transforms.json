@@ -708,17 +708,17 @@
     "groupKey": "cloud-sync.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.061611,
-    "translateX": -0.492891,
-    "translateY": -1.029473
+    "scale": 1.013393,
+    "translateX": -0.107143,
+    "translateY": -0.235073
   },
   "cloud-sync_solid.svg": {
     "groupKey": "cloud-sync_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.098851,
-    "translateX": -0.790805,
-    "translateY": -1.535632
+    "scale": 1.041394,
+    "translateX": -0.331155,
+    "translateY": -0.66122
   },
   "cloud-upload.svg": {
     "groupKey": "cloud-upload.svg",
@@ -940,9 +940,9 @@
     "groupKey": "currency-exchange.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.103448,
-    "translateX": -0.827586,
-    "translateY": -0.844828
+    "scale": 1.055046,
+    "translateX": -0.440367,
+    "translateY": -0.0916
   },
   "currency.svg": {
     "groupKey": "currency.svg",
@@ -1315,10 +1315,15 @@
   "favorite_solid.svg": {
     "groupKey": "favorite_solid.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.24,
-    "translateX": -1.92,
-    "translateY": -1.72625
+    "targetSpan": 15,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Reduce the filled star's apparent size beside its outline.",
+    "scale": 1.2,
+    "translateX": -1.6,
+    "translateY": -1.403125
   },
   "favorite_strong.svg": {
     "groupKey": "favorite_strong.svg",
@@ -1380,10 +1385,15 @@
   "filter_solid.svg": {
     "groupKey": "filter_solid.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.409091,
-    "translateX": -3.272727,
-    "translateY": -3.977273
+    "targetSpan": 15,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Balance the filled funnel's broad top against the outline.",
+    "scale": 1.363636,
+    "translateX": -2.909091,
+    "translateY": -3.590909
   },
   "first.svg": {
     "groupKey": "first.svg",
@@ -2473,16 +2483,16 @@
     "groupKey": "notification-read.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.159119,
-    "translateX": -1.272953,
-    "translateY": -1.068393
+    "scale": 1.155367,
+    "translateX": -1.232168,
+    "translateY": -1.040254
   },
   "notification-read_solid.svg": {
     "groupKey": "notification-read_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
     "scale": 1.229167,
-    "translateX": -2.421875,
+    "translateX": -2.394206,
     "translateY": -1.59375
   },
   "notification.svg": {
@@ -2777,17 +2787,27 @@
     "groupKey": "play.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.170455,
-    "translateX": -2.862216,
-    "translateY": -1.363636
+    "opticalCenter": [
+      8.35,
+      8
+    ],
+    "opticalReason": "Compensate for the triangle's visual weight toward its flat side.",
+    "scale": 1.167139,
+    "translateX": -2.491493,
+    "translateY": -1.33711
   },
   "play_solid.svg": {
     "groupKey": "play_solid.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.409091,
-    "translateX": -4.659801,
-    "translateY": -3.272727
+    "targetSpan": 15,
+    "opticalCenter": [
+      8.35,
+      8
+    ],
+    "opticalReason": "Keep the play pair optically aligned and temper the filled mass.",
+    "scale": 1.363636,
+    "translateX": -3.912074,
+    "translateY": -2.909091
   },
   "policy.svg": {
     "groupKey": "policy.svg",
@@ -2873,9 +2893,9 @@
     "groupKey": "progress-complete.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.291667,
+    "translateX": -2.333333,
+    "translateY": -2.333333
   },
   "progress-draft.svg": {
     "groupKey": "progress-draft.svg",

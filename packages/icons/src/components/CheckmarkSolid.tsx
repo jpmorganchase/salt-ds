@@ -21,7 +21,7 @@ export const CheckmarkSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M0 0h16v16H0Zm3.5 7.5 3 3 5.5-6 .75.75L6.5 12 2.75 8.25Z"
+          d="M0 0h16v16H0Zm3.003 8.377 3.33 3.33 6.676-7.122-.778-.73-5.923 6.318-2.55-2.55Z"
         />
       </g>
     </Icon>

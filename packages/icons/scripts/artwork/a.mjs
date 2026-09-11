@@ -1,4 +1,5 @@
 import { box, C, circ, dot, F, group, plus, R, S } from "./primitives.mjs";
+import { tickPaths } from "./tick.mjs";
 
 // Authored on the shared 24-unit grid; the build normalizes these to 16 units.
 const icons = {};
@@ -301,14 +302,26 @@ put(
   S(speech) + dot(7.5, 10.5) + dot(12, 10.5) + dot(16.5, 10.5),
   F(speech + circ(7.5, 10.5, 1) + circ(12, 10.5, 1) + circ(16.5, 10.5, 1)),
 );
+const checkmarkPoints = [
+  [3.75, 12],
+  [9, 17.25],
+  [20.25, 5.25],
+];
+const checkmark = tickPaths(checkmarkPoints);
+// Keep the counter inset while preserving the positive tick's arm proportions.
+const checkmarkCounter = tickPaths(
+  checkmarkPoints.map((point) =>
+    point.map((value) => 12 + (value - 12) * 0.84),
+  ),
+  1.6,
+).counter;
 put(
   "checkmark",
-  S("M3.75 12L9 17.25 20.25 5.25"),
+  S(checkmark.line),
   F(
     // Checkbox, Pill and Switch use this fill as their control surface.
     // Keep it edge-to-edge; consumers supply the border and clipping.
-    box(0, 0, 24, 24) +
-      "M5.25 11.25L9.75 15.75L18 6.75L19.125 7.875L9.75 18L4.125 12.375Z",
+    box(0, 0, 24, 24) + checkmarkCounter,
   ),
 );
 put("chevron-down", chevron(90));

@@ -13,6 +13,7 @@ import {
   slash,
   textLabel,
 } from "./primitives.mjs";
+import { successTick } from "./tick.mjs";
 
 const icons = {};
 const put = (n, o, s) => {
@@ -62,10 +63,12 @@ put("square-root", S("M2.25 12.75l4.5 6L14.25 3.75h7.5"));
 put("stackoverflow", stackoverflow);
 put("step-active", F(circ(12, 12, 9)));
 put("step-default", C(12, 12, 9));
-const tick = "M6.75 12l3.5 3.5 7-7";
-const tickHole = "M5.7 12l1.05-1.05 3.5 3.5 6-6 1.05 1.05-7.05 7.05Z";
-put("success-circle", C(12, 12, 9) + S(tick), F(circ(12, 12, 9) + tickHole));
-put("step-success", F(circ(12, 12, 9) + tickHole));
+put(
+  "success-circle",
+  C(12, 12, 9) + S(successTick.line),
+  F(circ(12, 12, 9) + successTick.counter),
+);
+put("step-success", F(circ(12, 12, 9) + successTick.counter));
 const scope = S(
   "M3.75 3v5.25a4.5 4.5 0 0 0 9 0V3M3.75 5.25H6M12.75 5.25h-2.25M8.25 12.75v3a4.875 4.5 0 0 0 9.75 0v-2.25",
 );

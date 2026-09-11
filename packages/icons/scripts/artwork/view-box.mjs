@@ -1,6 +1,7 @@
 import { chromium } from "playwright";
 import { optimize } from "svgo";
 import { brandIconNames } from "./brands.mjs";
+import { getOpticalFit, validateOpticalFits } from "./optical-fits.mjs";
 
 // Aliases retain exactly the same fitted artwork as their supported export.
 export const iconAliases = {
@@ -123,10 +124,7 @@ export function restoreReferenceGeometry(
 
 async function measure(page, records) {
   return page.evaluate(async (records) => {
-    const pixelsPerUnit = 32;
-    const canvasSize = 640;
     const canvas = document.createElement("canvas");
-    canvas.width = canvas.height = canvasSize;
     const context = canvas.getContext("2d", { willReadFrequently: true });
     const results = [];
     for (const {
@@ -135,7 +133,10 @@ async function measure(page, records) {
       scale = 1,
       translateX = 0,
       translateY = 0,
+      pixelsPerUnit = 32,
     } of records) {
+      const canvasSize = 20 * pixelsPerUnit;
+      canvas.width = canvas.height = canvasSize;
       const document = new DOMParser().parseFromString(svg, "image/svg+xml");
       const root = document.documentElement;
       root.setAttribute("viewBox", "-2 -2 20 20");
@@ -205,6 +206,7 @@ async function measure(page, records) {
 }
 
 export async function fitViewBoxes(records) {
+  validateOpticalFits();
   const profiles = new Map();
   for (const record of records) {
     const groupKey = getViewBoxGroupKey(record.name);
@@ -218,12 +220,19 @@ export async function fitViewBoxes(records) {
       : groupKey === "checkmark_solid.svg"
         ? "full-canvas-badge"
         : undefined;
+    const optical = getOpticalFit(groupKey);
+    if (optical && reason)
+      throw new Error(`Exempt artwork cannot have an optical fit: ${groupKey}`);
     profiles.set(groupKey, {
       svg: record.svg,
       transform: {
         groupKey,
         fitted: !reason,
-        targetSpan: reason ? 16 : targetSpan,
+        targetSpan: reason ? 16 : (optical?.targetSpan ?? targetSpan),
+        ...(optical && {
+          opticalCenter: optical.center,
+          opticalReason: optical.reason,
+        }),
         ...(reason && { reason }),
         scale: 1,
         translateX: 0,
@@ -239,12 +248,18 @@ export async function fitViewBoxes(records) {
     const page = await browser.newPage();
     const baselines = await measure(
       page,
-      fittedProfiles.flatMap(({ svg }) =>
-        [1, fitWidth].map((width) => ({ svg, width })),
+      fittedProfiles.flatMap(({ svg, transform }) =>
+        [1, fitWidth].map((width) => ({
+          svg,
+          width,
+          pixelsPerUnit: transform.opticalCenter ? 64 : 32,
+        })),
       ),
     );
     for (let i = 0; i < fittedProfiles.length; i++) {
       const profile = fittedProfiles[i];
+      const spanTarget = profile.transform.targetSpan;
+      const centerTarget = profile.transform.opticalCenter ?? [8, 8];
       const at1 = baselines[i * 2];
       const atFit = baselines[i * 2 + 1];
       // Painted extents combine scaled coordinates with fixed stroke reach.
@@ -263,7 +278,7 @@ export async function fitViewBoxes(records) {
       const scale = Math.min(
         ...geometrySpan.map((span, axis) =>
           span > 0.01
-            ? (targetSpan - profile.strokeSpan[axis]) / span
+            ? (spanTarget - profile.strokeSpan[axis]) / span
             : Number.POSITIVE_INFINITY,
         ),
       );
@@ -271,10 +286,14 @@ export async function fitViewBoxes(records) {
         throw new Error(`Invalid icon fit: ${profile.transform.groupKey}`);
       profile.transform.scale = round(scale);
       profile.transform.translateX = round(
-        8 - scale * profile.geometryCenter[0] - (stroke[0] + stroke[2]) / 2,
+        centerTarget[0] -
+          scale * profile.geometryCenter[0] -
+          (stroke[0] + stroke[2]) / 2,
       );
       profile.transform.translateY = round(
-        8 - scale * profile.geometryCenter[1] - (stroke[1] + stroke[3]) / 2,
+        centerTarget[1] -
+          scale * profile.geometryCenter[1] -
+          (stroke[1] + stroke[3]) / 2,
       );
     }
     for (let iteration = 0; iteration < 4; iteration++) {
@@ -283,12 +302,17 @@ export async function fitViewBoxes(records) {
         fittedProfiles.map(({ svg, transform }) => ({
           svg,
           width: fitWidth,
+          // Subpixel optical offsets need a finer grid to avoid oscillating
+          // across the raster threshold at the tips of filled triangles.
+          pixelsPerUnit: transform.opticalCenter ? 64 : 32,
           ...transform,
         })),
       );
       let adjustments = 0;
       for (let i = 0; i < fittedProfiles.length; i++) {
         const profile = fittedProfiles[i];
+        const spanTarget = profile.transform.targetSpan;
+        const centerTarget = profile.transform.opticalCenter ?? [8, 8];
         const bounds = measured[i];
         const span = [bounds[2] - bounds[0], bounds[3] - bounds[1]];
         const center = [
@@ -296,19 +320,21 @@ export async function fitViewBoxes(records) {
           (bounds[1] + bounds[3]) / 2,
         ];
         if (
-          Math.abs(Math.max(...span) - targetSpan) <= 0.04 &&
-          center.every((value) => Math.abs(value - 8) <= 0.03)
+          Math.abs(Math.max(...span) - spanTarget) <= 0.04 &&
+          center.every(
+            (value, axis) => Math.abs(value - centerTarget[axis]) <= 0.03,
+          )
         )
           continue;
         if (iteration === 3)
           throw new Error(
-            `Icon fit did not converge: ${profile.transform.groupKey}`,
+            `Icon fit did not converge: ${profile.transform.groupKey} (${JSON.stringify({ bounds, spanTarget, centerTarget, transform: profile.transform })})`,
           );
         const previousScale = profile.transform.scale;
         const factor = Math.min(
           ...span.map((value, axis) =>
             value - profile.strokeSpan[axis] > 0.01
-              ? (targetSpan - profile.strokeSpan[axis]) /
+              ? (spanTarget - profile.strokeSpan[axis]) /
                 (value - profile.strokeSpan[axis])
               : Number.POSITIVE_INFINITY,
           ),
@@ -316,13 +342,13 @@ export async function fitViewBoxes(records) {
         const nextScale = round(previousScale * factor);
         profile.transform.translateX = round(
           profile.transform.translateX +
-            8 -
+            centerTarget[0] -
             center[0] +
             (previousScale - nextScale) * profile.geometryCenter[0],
         );
         profile.transform.translateY = round(
           profile.transform.translateY +
-            8 -
+            centerTarget[1] -
             center[1] +
             (previousScale - nextScale) * profile.geometryCenter[1],
         );

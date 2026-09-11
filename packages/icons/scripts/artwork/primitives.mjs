@@ -20,8 +20,9 @@ export const dot = (x, y, r = 0.8) => F(circ(x, y, r));
 export const L = (x1, y1, x2, y2) => S(`M${x1} ${y1}L${x2} ${y2}`);
 export const group = (body, transform) =>
   `<g transform="${transform}">${body}</g>`;
-// Adjust an entire family's optical size without changing its line weights.
-// Keep paired surfaces and counters together; the exporter bakes this transform.
+// Scale shared construction geometry without changing its line weights.
+// Final viewBox fitting determines the exported size; use optical-fits.mjs
+// for reviewed whole-icon framing adjustments that must survive that fit.
 export const opticalScale = (body, scale) =>
   group(
     body.replace(

@@ -19,7 +19,7 @@ export const FilterSolidIcon = forwardRef<SVGSVGElement, FilterSolidIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M.25.25h15.5l-5.636 6.34v7.046L5.886 15.75V6.59Z"
+            d="M.5.5h15l-5.455 6.136v6.819L5.955 15.5V6.636Z"
           />
         </g>
       </Icon>
