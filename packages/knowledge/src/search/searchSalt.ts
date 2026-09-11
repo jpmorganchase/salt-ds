@@ -255,6 +255,18 @@ function includesPhrase(field: string, queryWords: readonly string[]): boolean {
   );
 }
 
+function hasSharedWordPair(
+  field: string,
+  queryWordPairs: ReadonlySet<string>,
+): boolean {
+  const fieldWords = allWords(field);
+  return fieldWords.some(
+    (word, index) =>
+      fieldWords[index + 1] !== undefined &&
+      queryWordPairs.has(`${word}\u0000${fieldWords[index + 1]}`),
+  );
+}
+
 interface RankedDocument {
   score: number;
   matchedFields: KnowledgeSearchMatchedField[];
@@ -297,6 +309,7 @@ function rankDocument(
   relatedTerms: readonly string[],
   normalizedQuery: string,
   queryWords: readonly string[],
+  queryWordPairs: ReadonlySet<string>,
 ): RankedDocument | null {
   if (normalizedQuery.length === 0 || queryWords.length === 0) return null;
   const canonicalName =
@@ -344,6 +357,12 @@ function rankDocument(
     { name: "summary", values: [document.summary], weight: 35 },
     { name: "kind", values: kinds, weight: 80 },
   ];
+  const hasIdentityPhrase =
+    queryWords.length >= 5 &&
+    fields
+      .slice(0, 5)
+      .flatMap((field) => field.values)
+      .some((value) => hasSharedWordPair(value, queryWordPairs));
   const exactId =
     normalizeKnowledgeQuery(document.target.id) === normalizedQuery;
   const exactExport =
@@ -387,6 +406,16 @@ function rankDocument(
       components[`phrase_${field.name}`] = 1_500;
     }
   }
+  if (queryWords.length >= 5 && hasIdentityPhrase) {
+    components.identity_phrase = 500;
+  }
+  // In a longer task query, rank evidence that covers more than one query term
+  // above a record that repeats one incidental word across identity fields.
+  const matchedTermCount = matchedTerms.size;
+  if (queryWords.length >= 5 && matchedTermCount > 1) {
+    components.query_term_coverage = (matchedTermCount - 1) * 500;
+  }
+
   const queryIntent = new Set(queryWords);
   if (queryIntent.has(document.target.family.replace("_", ""))) {
     components.kind_intent = 300;
@@ -425,6 +454,11 @@ export function searchSaltRecords(
   const query = input.query.trim();
   const normalizedQuery = normalizeKnowledgeQuery(query);
   const queryWords = meaningfulWords(query);
+  const queryWordPairs = new Set(
+    queryWords
+      .slice(1)
+      .map((word, index) => `${queryWords[index]}\u0000${word}`),
+  );
   const families = selectedFamilies(input.families);
   const statuses =
     input.statuses && input.statuses.length > 0
@@ -491,6 +525,7 @@ export function searchSaltRecords(
       relatedSearchTerms(store, document, record),
       normalizedQuery,
       queryWords,
+      queryWordPairs,
     );
     return ranking ? [{ document, record, ranking }] : [];
   });

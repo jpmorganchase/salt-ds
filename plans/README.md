@@ -23,6 +23,14 @@ the current tracker parser would misclassify as Plan 001.
 The historical Unit 00a checkpoint rule is retained only as Plan 001 evidence;
 it does not dispatch or block the active successor.
 
+The focused repair and all four frozen Sol reviewer cases met their required
+outcomes; source review is clean. The user-approved fresh native Luna exercise
+returned INCOMPLETE after subprocess execution failed and no native reviewer
+was produced. Its source and failed evidence are preserved in the
+[requalification report](../evals/salt-ai/ui-agent/REQUALIFICATION_RESULTS.md).
+No successful creation or promotion is inferred; the unit's human gates remain
+unchanged.
+
 ## Execution order and status
 
 | Plan                                                               | Title                                                                                                           | Priority | Effort         | Depends on                  | Status                                                        |
@@ -148,6 +156,9 @@ publication authority as deferred to Plan 003.
   Its [qualification outcome](../evals/salt-ai/ui-agent/REVIEWER_RESULTS.md)
   established no qualified reviewer: the expected-pass fixture contained an
   additional coverage gap, and the conditional fresh task did not run.
+  The subsequent user-directed repair authorizes a new reference copy, the
+  focused navigation-ranking correction, four fresh Sol qualification cases,
+  and the same conditional native task; earlier evidence remains preserved.
   Consumer contact, other product model trials, actual consumer installation,
   publication, versioning, dist-tags and deployment remain outside this dispatch.
 - **Successor eligibility:** each next unit requires a reviewed control

@@ -73,6 +73,62 @@ describe("Salt Knowledge deterministic retrieval", () => {
     ).toEqual([]);
   });
 
+  it("prioritizes navigation patterns for multi-term application navigation tasks", () => {
+    for (const query of [
+      "application primary navigation current destination overview team settings browser history",
+      "sidebar navigation for an application that shows the current destination",
+      "primary application navigation with overview team and settings destinations",
+    ]) {
+      expect(
+        searchSaltRecords(store, {
+          query,
+          installed_versions: testedVector,
+          limit: 5,
+        }).matches,
+      ).toContainEqual(
+        expect.objectContaining({
+          reference: { family: "pattern", id: "pattern.navigation" },
+        }),
+      );
+    }
+  });
+
+  it("keeps navigation evidence for concise mixed task language", () => {
+    const references = searchSaltRecords(store, {
+      query: "primary navigation browser history",
+      installed_versions: testedVector,
+      limit: 5,
+    }).matches.map((match) => match.reference);
+    expect(references).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          family: "component",
+          id: "component.navigation-item",
+        }),
+      ]),
+    );
+  });
+
+  it("keeps explicit icon searches ahead of navigation guidance", () => {
+    for (const [query, id] of [
+      ["browser icon", "icon.browser-icon"],
+      ["history icon", "icon.history-icon"],
+      ["settings icon", "icon.settings-icon"],
+      ["browser icon for the primary navigation toolbar", "icon.browser-icon"],
+      [
+        "history icon for the application navigation header",
+        "icon.history-icon",
+      ],
+    ] as const) {
+      expect(
+        searchSaltRecords(store, {
+          query,
+          installed_versions: testedVector,
+          limit: 1,
+        }).matches[0]?.reference,
+      ).toEqual({ family: "icon", id });
+    }
+  });
   it("returns choices for ambiguous exact names instead of guessing", () => {
     const result = resolveKnowledgeDocument(store, {
       identifier: "Vertical navigation",

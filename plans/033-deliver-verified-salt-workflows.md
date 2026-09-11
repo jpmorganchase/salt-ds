@@ -389,6 +389,72 @@ the unchanged packets and the host switch are distinguished in the
 results leave the unit's human gates unchanged and require a corrected positive
 reference before any future qualification.
 
+### User-directed reference and retrieval repair
+
+The subsequent 2026-09-09 request authorizes one focused correction pass from
+`e7b46121c`: repair the reference disclosure, address icon-dominated navigation
+retrieval, then repeat a bounded Sol qualification. Continue within Unit
+033/02a and preserve the earlier protocol, packets, outputs and outcomes.
+
+Use a new temporary reference copy. Select the installed controlled Collapsible
+composition, preserve the saved snapshot and existing application seams, and
+independently verify full Salt coverage and the desktop/320-pixel journey. Keep
+the earlier acceptance and screenshots intact; any stronger readability checks
+must be new, named checks with a demonstrated failing clipping variant.
+
+The search correction belongs in `packages/knowledge/src/search/` and focused
+tests, with callers changed only when necessary for the same behavior. Diagnose
+the observed navigation query and natural paraphrases, preserve exact record and
+explicit icon lookup, and fix the general ranking cause. No query-specific
+answer table, model reranker, new corpus, scanner or workflow family is allowed.
+Verify search and Knowledge/CLI tests, tooling types/build, current contracts,
+pack validation, installed offline task retrieval, and changed-file quality.
+
+Preparation may copy the existing exact local fixture dependencies and install
+the rebuilt local candidate tarballs into these temporary fixtures without
+registry fallback. Application execution and Salt retrieval remain local. The
+existing Codex host may run independent preparation/review and the bounded model
+qualification using its existing account; no external model API, subscription
+change, consumer installation or consumer contact is authorized.
+
+After independent reference verification, freeze anonymous packets, their source
+and dependency identities, settings and scoring before fresh Sol output. Use
+one positive case, separate navigation and clipping defect cases, and one case
+with missing mandatory evidence. Allow one fresh native Sol reviewer per case,
+medium effort and five minutes each, without inherited conversation or coaching.
+Any genuine newly discovered positive-case defect invalidates its expected pass.
+If all four cases satisfy the frozen criteria, freeze one new modification task
+and independent acceptance, then run native creation with independent Sol review
+and at most two repairs, without lead source edits or supplied Salt choices.
+Otherwise stop before creation and retain lead approval; do not expand the model
+comparison. Report and review the bounded correction, run affected checks and
+current plan/contracts/quality, and commit unsigned. Human gates, publication,
+deployment and promotion remain unchanged.
+
+Local repair preparation passed on 2026-09-09: 758 Knowledge/CLI tests, types,
+build/pack, installed navigation retrieval and the new app evidence checks.
+The verified test app and navigation-only variant pass added focus/readability
+checks; ancestor and direct-element clipping negatives are rejected. All four
+frozen Sol cases met their required outcomes, with unchanged packet identities.
+Source review accepted bounded checker-proof corrections and closed cleanly.
+The user explicitly restated model-payload/destination approval on 2026-09-11;
+the previously blocked final source-confirmation command then passed.
+
+The conditional native Luna exercise ran once on 2026-09-11 and returned
+INCOMPLETE. It proposed the launch-scope change, but default-sandbox subprocess
+execution failed before browser acceptance. The creator also reported no callable
+native subagent capability, so no independent reviewer was spawned. Initial source,
+failed receipts and missing-evidence status are preserved; no source repair,
+second initial run or lead review substitution converted the attempt into a pass.
+The supervisor's operational PowerShell-writing fallback supplied no Salt choices
+or application code. Frozen files, source/snapshot, baseline and dependency
+identities were checked afterward. The unchanged baseline compiled output is not
+proof of the proposed feature. See the
+[requalification report](../evals/salt-ai/ui-agent/REQUALIFICATION_RESULTS.md).
+The focused repair and bounded evaluation are recorded; native creation remains
+unproved. Any future attempt first needs an unscored host-capability check and a
+fresh case. Unit 033/02a, its checkpoint and human gates are unchanged.
+
 ## Conditional Unit 033/03 — Expand workflows from observed need
 
 Scope: adopt only a genuinely additional workflow or modification case justified by observed need, extending canonical examples/docs and the same schema/assembler/harness. Navigation, the operational worklist and record editing now belong to the single service-worklist journey in Unit 033/02a; do not reimplement them as separate workflow families merely to complete this backlog. Reuse that workflow's preview and fixture setup. Create a separate integration fixture only when it proves a distinct supported environment, as the existing Next App Router fixture does. Reuse selected public material from the operations dashboard without importing repository-only source into consumer output.
