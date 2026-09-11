@@ -21,13 +21,13 @@ export const SemanticVerySatisfiedIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <g
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
         >
-          <path d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0Z" />
-          <path d="M4.5 9h7a3.5 3.5 0 0 1-7 0Zm0-2.5q1-2 2 0m3 0q1-2 2 0" />
+          <path d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Z" />
+          <path d="M4.23 9.077h7.54a3.77 3.77 0 0 1-7.54 0Zm0-2.692q1.078-2.154 2.155 0m3.23 0q1.077-2.154 2.154 0" />
         </g>
       </g>
     </Icon>

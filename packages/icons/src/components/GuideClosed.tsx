@@ -16,11 +16,11 @@ export const GuideClosedIcon = forwardRef<SVGSVGElement, GuideClosedIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.5 2.5h9v11h-9Zm2 0v11M2.5 5h2m-2 3h2m-2 3h2m4-5.5h3m-3 3h3"
+            d="M3.17 1h11.455v14H3.17Zm2.546 0v14M.625 4.182H3.17M.625 8H3.17M.625 11.818H3.17m5.091-7h3.819M8.26 8.636h3.819"
           />
         </g>
       </Icon>

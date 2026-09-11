@@ -16,11 +16,11 @@ export const KeyTabIcon = forwardRef<SVGSVGElement, KeyTabIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2 8h9.5m-4-4 4 4-4 4M14 3v10"
+            d="M.25 8h11.677M7.01 3.083 11.927 8 7.01 12.917M15 1.854v12.292"
           />
         </g>
       </Icon>

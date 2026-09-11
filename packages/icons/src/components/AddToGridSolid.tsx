@@ -18,15 +18,15 @@ export const AddToGridSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M2 2h4.5v4.5H2Zm7.5 0H14v4.5H9.5ZM2 9.5h4.5V14H2Z"
+          d="M.25.25h5.813v5.813H.25Zm9.688 0h5.812v5.813H9.938ZM.25 9.938h5.813v5.812H.25Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M9.5 11.75H14M11.75 9.5V14"
+          d="M9.938 12.844h5.812m-2.906-2.906v5.812"
         />
       </g>
     </Icon>

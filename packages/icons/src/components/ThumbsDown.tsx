@@ -16,11 +16,11 @@ export const ThumbsDownIcon = forwardRef<SVGSVGElement, ThumbsDownIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M14.5 9.5h-2v-7h2Zm-4-7v7L8 14H6.5v-4H3q-1.5 0-1.5-1.5l1.5-6Z"
+            d="M15 9.346h-2.154V1.808H15Zm-4.308-7.538v7.538L8 14.192H6.385V9.885h-3.77Q1 9.885 1 8.269l1.615-6.461Z"
           />
         </g>
       </Icon>

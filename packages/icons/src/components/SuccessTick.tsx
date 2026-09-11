@@ -17,11 +17,11 @@ export const SuccessTickIcon = forwardRef<SVGSVGElement, SuccessTickIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.5 8 6 11.5l7.5-8"
+            d="m.76 8.376 4.604 4.604 9.865-10.523"
           />
         </g>
       </Icon>

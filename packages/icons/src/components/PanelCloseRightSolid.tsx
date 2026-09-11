@@ -18,22 +18,22 @@ export const PanelCloseRightSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
-        <path fillRule="evenodd" d="M14.333 14.333H11V1.667h3.333Z" />
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
+        <path fillRule="evenodd" d="M14.988 14.988H11.31V1.012h3.678Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M14.333 14.333H1.667V1.667h12.666Z"
+          d="M14.988 14.988H1.012V1.012h13.976Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M13.833 14.333H2.167q-.5 0-.5-.5V2.167q0-.5.5-.5h11.666q.5 0 .5.5v11.666q0 .5-.5.5Z"
+          d="M14.437 14.988H1.563q-.551 0-.551-.551V1.563q0-.551.551-.551h12.874q.551 0 .551.551v12.874q0 .551-.551.551Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M11 14.333V1.667m.5 12.666q-.5 0-.5-.5m-.5.5q.5 0 .5-.5m.5-12.166q-.5 0-.5.5m-.5-.5q.5 0 .5.5M3.667 8h4.666M6 10.333 8.333 8 6 5.667"
+          d="M11.31 14.988V1.012m.552 13.976q-.552 0-.552-.551m-.551.551q.551 0 .551-.551m.552-13.425q-.552 0-.552.551m-.551-.551q.551 0 .551.551M3.218 8h5.15m-2.575 2.575L8.368 8 5.793 5.425"
         />
       </g>
     </Icon>

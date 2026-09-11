@@ -16,11 +16,11 @@ export const SignpostIcon = forwardRef<SVGSVGElement, SignpostIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M7.5 3.5H12l2.5 2-2.5 2H7.5Zm0 4H4l-2.5 2 2.5 2h3.5Zm0-6v13"
+            d="M7.495 3.457h4.544l2.524 2.019-2.524 2.02H7.495Zm0 4.038H3.961l-2.524 2.02 2.524 2.019h3.534Zm0-6.058v13.126"
           />
         </g>
       </Icon>

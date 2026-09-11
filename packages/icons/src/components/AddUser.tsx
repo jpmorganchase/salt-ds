@@ -16,11 +16,11 @@ export const AddUserIcon = forwardRef<SVGSVGElement, AddUserIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.833 4.667a2.167 2.167 0 1 0 4.334 0 2.167 2.167 0 1 0-4.334 0ZM2.5 14v-2c0-2.167 2-3 4.5-3 1.833 0 3.333.5 4 1.5m-.5-3h4m-2-2v4"
+            d="M3.868 3.97a2.663 2.663 0 1 0 5.326 0 2.663 2.663 0 1 0-5.326 0ZM1 15.443v-2.459c0-2.663 2.458-3.687 5.531-3.687 2.254 0 4.097.614 4.917 1.844m-.615-3.688h4.917m-2.458-2.458V9.91"
           />
         </g>
       </Icon>

@@ -18,11 +18,11 @@ export const TextAlignRightIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2 3.5h12M5 8h9M3.5 12.5H14"
+          d="M.25 2.188h15.5M4.125 8H15.75M2.188 13.813H15.75"
         />
       </g>
     </Icon>

@@ -18,15 +18,15 @@ export const AccessibleSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M5.5 3a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0"
+          d="M4.11 2.07a1.82 1.82 0 1 0 3.64 0 1.82 1.82 0 1 0-3.64 0"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M7 5.5V9h4l2 4h2M7 6.5h4M5 7a3.5 3.5 0 1 0 4.5 5"
+          d="M5.93 5.103V9.35h4.853l2.427 4.854h2.426M5.93 6.317h4.854m-7.281.607a4.247 4.247 0 1 0 5.46 6.066"
         />
       </g>
     </Icon>

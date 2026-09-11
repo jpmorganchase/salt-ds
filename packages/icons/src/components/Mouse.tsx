@@ -16,15 +16,15 @@ export const MouseIcon = forwardRef<SVGSVGElement, MouseIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M8 1.5A4.5 4.5 0 0 1 12.5 6v4a4.5 4.5 0 0 1-9 0V6A4.5 4.5 0 0 1 8 1.5ZM3.5 8h9" />
+            <path d="M8 1a4.846 4.846 0 0 1 4.846 4.846v4.308a4.846 4.846 0 0 1-9.692 0V5.846A4.846 4.846 0 0 1 8 1ZM3.154 8h9.692" />
             <path
-              strokeWidth=".5025"
-              d="M7.5 3.667h1q.5 0 .5.5V5.5q0 .5-.5.5h-1Q7 6 7 5.5V4.167q0-.5.5-.5Z"
+              strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.75)"
+              d="M7.462 3.333h1.076q.539 0 .539.539v1.436q0 .538-.539.538H7.462q-.539 0-.539-.538V3.872q0-.539.539-.539Z"
             />
           </g>
         </g>

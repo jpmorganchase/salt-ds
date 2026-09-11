@@ -18,15 +18,15 @@ export const BuildReportSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M2 5h12v9H2Zm.75 2.5H5.5v-1h5v1h2.75v1H10.5v1h-5v-1H2.75Z"
+          d="M.304 4.207h15.392V15.75H.304Zm.962 3.206h3.527V6.13h6.414v1.283h3.527v1.283h-3.527v1.282H4.793V8.696H1.266Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M5.5 5V2.5h5V5"
+          d="M4.793 4.207V1h6.414v3.207"
         />
       </g>
     </Icon>

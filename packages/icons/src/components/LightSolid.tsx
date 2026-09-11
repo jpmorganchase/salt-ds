@@ -16,15 +16,15 @@ export const LightSolidIcon = forwardRef<SVGSVGElement, LightSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M2.667 8a5.333 5.333 0 1 0 10.666 0A5.333 5.333 0 1 0 2.667 8"
+            d="M1.815 8a6.185 6.185 0 1 0 12.37 0 6.185 6.185 0 1 0-12.37 0"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8 1.333V3m0 10v1.667M1.333 8H3m10 0h1.667M2.333 2.333l2.134 2.134m7.066 7.066 2.134 2.134m-11.334 0 2.134-2.134m7.066-7.066 2.134-2.134"
+            d="M8 .269v1.933m0 11.596v1.933M.269 8h1.933m11.596 0h1.933M1.429 1.429l2.474 2.474m8.194 8.194 2.474 2.474m-13.142 0 2.474-2.474m8.194-8.194 2.474-2.474"
           />
         </g>
       </Icon>

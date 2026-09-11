@@ -5,13 +5,15 @@ const icons = {};
 const put = (name, outline, solid) => {
   icons[name] = [outline, solid];
 };
+// Navigation controls need broad painted envelopes at 12px. Enlarge their
+// coordinates while retaining the shared stroke, with room for heavier use.
 const arrow = (direction) =>
   group(
-    S("M3.75 12H20.25M14.25 6L20.25 12 14.25 18"),
+    S("M1.5 12H21.375M13.875 4.5L21.375 12 13.875 19.5"),
     `rotate(${direction} 12 12)`,
   );
 const chevron = (direction) =>
-  group(S("M8.25 5.25L15 12 8.25 18.75"), `rotate(${direction} 12 12)`);
+  group(S("M7.125 2.625L16.5 12 7.125 21.375"), `rotate(${direction} 12 12)`);
 // A broad page counter and a small, softly joined fold leave room for content.
 const sheet = "M3.75 2.25H15.75L20.25 6.75V21.75H3.75Z";
 const fold = "M15.75 2.25V6Q15.75 6.75 16.5 6.75H20.25";
@@ -61,7 +63,7 @@ put(
   ) + plus(17.625, 17.625, 3.375),
 );
 put("add-user", personHead + personBody + plus(18.75, 11.25, 3));
-put("add", plus(12, 12, 8.25));
+put("add", plus(12, 12, 9.75));
 put(
   "announcement",
   S(
@@ -327,8 +329,12 @@ put(
     "M2.25 7.5V2.25H7.5M11.25 2.25H16.5V4.5M2.25 11.25V14.25H15.75M12 10.5L15.75 14.25L12 18M7.5 12.375V6.75H21.75V21.75H7.5V16.125",
   ),
 );
-put("close", S("M4.5 4.5L19.5 19.5M19.5 4.5L4.5 19.5"));
-put("close_small", S("M7.5 7.5L16.5 16.5M16.5 7.5L7.5 16.5"));
+// Keep the compact dismissal smaller without losing its native-size presence.
+put("close", S("M3.375 3.375L20.625 20.625M20.625 3.375L3.375 20.625"));
+put(
+  "close_small",
+  S("M5.0625 5.0625L18.9375 18.9375M18.9375 5.0625L5.0625 18.9375"),
+);
 put(
   "closedcaption",
   R(2.25, 5.25, 19.5, 13.5) + F(captionHole),
@@ -546,6 +552,6 @@ put(
   sheetOutline() + S("M7.5 11.25H16.5M7.5 15.75H14.25"),
   sheetSolid(box(7.5, 10.5, 9, 1.5, 0.5) + box(7.5, 15, 6.75, 1.5, 0.5)),
 );
-put("does-not-equal", S("M3.75 8.25H20.25M3.75 15.75H20.25M16.5 3L7.5 21"));
+put("does-not-equal", S("M2.25 8.25H21.75M2.25 15.75H21.75M16.5 3L7.5 21"));
 
 export default icons;

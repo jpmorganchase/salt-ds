@@ -18,20 +18,20 @@ export const WifiDisabledIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1.5 5q.209-.192.417-.372m3.331-2.09Q9.874.73 14.5 5m-11 2.5q.335-.335.67-.62m3.79-1.63q2.27-.02 4.54 2.25m-7 2.5q.497-.497.993-.796"
+          d="M.754 4.767q.232-.215.464-.416m3.714-2.33Q10.09.007 15.246 4.768M2.983 7.554q.374-.373.747-.691m4.226-1.817q2.53-.022 5.06 2.508M5.214 10.34q.554-.554 1.107-.888"
         />
         <path
           fillRule="evenodd"
-          d="M7.1 13a.9.9 0 1 0 1.8 0 .9.9 0 1 0-1.8 0"
+          d="M6.997 13.685a1.003 1.003 0 1 0 2.006 0 1.003 1.003 0 1 0-2.006 0"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="m2 2 12 12"
+          d="M1.311 1.422 14.689 14.8"
         />
       </g>
     </Icon>

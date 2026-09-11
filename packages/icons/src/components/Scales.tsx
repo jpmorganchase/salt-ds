@@ -16,13 +16,13 @@ export const ScalesIcon = forwardRef<SVGSVGElement, ScalesIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M4.333 4.667h7.334q.333 0 .4.4l1.6 8.933H2.333l1.6-8.933q.067-.4.4-.4Zm-.666-2.334h8.666M8 2.333v2.334" />
-            <path d="M5.5 9.5a2.5 2.5 0 1 0 5 0 2.5 2.5 0 1 0-5 0ZM8 7v2.5" />
+            <path d="M3.596 3.79h8.808q.4 0 .48.48L14.806 15H1.194L3.116 4.27q.08-.48.48-.48ZM2.795.987h10.41M8 .987V3.79" />
+            <path d="M4.997 9.595a3.003 3.003 0 1 0 6.006 0 3.003 3.003 0 1 0-6.006 0ZM8 6.592v3.003" />
           </g>
         </g>
       </Icon>

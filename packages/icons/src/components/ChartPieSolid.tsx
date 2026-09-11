@@ -18,10 +18,10 @@ export const ChartPieSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M7 2a6 6 0 1 0 7 7H7Zm2-.5V7h5.5A6.5 6.5 0 0 0 9 1.5"
+          d="M6.38.875a7.496 7.496 0 1 0 8.745 8.745H6.38ZM8.878.25v6.872h6.872A8.12 8.12 0 0 0 8.878.25"
         />
       </g>
     </Icon>

@@ -18,15 +18,15 @@ export const FeedbackSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="m4.5 10.5-2.5 2V2h12.5v8.5h-.84m-6.32 0H4.5m-.5-6h4m-4 2h2.5M4 8.5h1.5"
+          d="M3.8 11.183 1 13.423V1.662h14v9.52h-.942m-7.076 0H3.8m-.56-6.719h4.48m-4.48 2.24h2.8m-2.8 2.24h1.68"
         />
         <path
           fillRule="evenodd"
-          d="M8.9 7.5a1.6 1.6 0 1 0 3.2 0 1.6 1.6 0 1 0-3.2 0M7 14v-1.167c0-1.066 1.333-1.666 3.5-1.666s3.5.6 3.5 1.666V14Z"
+          d="M8.728 7.823a1.792 1.792 0 1 0 3.584 0 1.792 1.792 0 1 0-3.584 0M6.6 15.103v-1.307c0-1.195 1.493-1.867 3.92-1.867s3.92.672 3.92 1.867v1.306Z"
         />
       </g>
     </Icon>

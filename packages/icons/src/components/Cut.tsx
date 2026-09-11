@@ -18,11 +18,11 @@ export const CutIcon = forwardRef<SVGSVGElement, CutIconProps>(function CutIcon(
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2 4a2 2 0 1 0 4 0 2 2 0 1 0-4 0Zm0 8a2 2 0 1 0 4 0 2 2 0 1 0-4 0Zm3.414-6.586L8 8m-2.586 2.586L13.5 2.5m-4 7 4 4"
+          d="M1.414 3.333a2.333 2.333 0 1 0 4.667 0 2.333 2.333 0 1 0-4.667 0Zm0 9.334a2.333 2.333 0 1 0 4.667 0 2.333 2.333 0 1 0-4.667 0Zm3.983-7.684L8.414 8m-3.017 3.017 9.434-9.434M10.164 9.75l4.667 4.667"
         />
       </g>
     </Icon>

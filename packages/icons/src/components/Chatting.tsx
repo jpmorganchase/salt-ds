@@ -16,15 +16,15 @@ export const ChattingIcon = forwardRef<SVGSVGElement, ChattingIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2 2.5h12v9H6L3 14v-2.5H2Z"
+            d="M1.136 1h13.728v10.296H5.712l-3.432 2.86v-2.86H1.136Z"
           />
           <path
             fillRule="evenodd"
-            d="M4.467 7a.533.533 0 1 0 1.066 0 .533.533 0 1 0-1.066 0m3 0a.533.533 0 1 0 1.066 0 .533.533 0 1 0-1.066 0m3 0a.533.533 0 1 0 1.066 0 .533.533 0 1 0-1.066 0"
+            d="M3.958 6.148a.61.61 0 1 0 1.22 0 .61.61 0 1 0-1.22 0m3.432 0a.61.61 0 1 0 1.22 0 .61.61 0 1 0-1.22 0m3.432 0a.61.61 0 1 0 1.22 0 .61.61 0 1 0-1.22 0"
           />
         </g>
       </Icon>

@@ -16,13 +16,13 @@ export const LocationIcon = forwardRef<SVGSVGElement, LocationIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M8 14.167C6.833 12.667 3.5 8.8 3.5 6.5a4.5 4.5 0 0 1 9 0c0 2.3-3.333 6.167-4.5 7.667Z" />
-            <path d="M6.167 6.5a1.833 1.833 0 1 0 3.666 0 1.833 1.833 0 1 0-3.666 0Z" />
+            <path d="M8 14.543c-1.299-1.67-5.009-5.974-5.009-8.534a5.009 5.009 0 0 1 10.018 0c0 2.56-3.71 6.864-5.009 8.534Z" />
+            <path d="M5.96 6.009a2.04 2.04 0 1 0 4.08 0 2.04 2.04 0 1 0-4.08 0Z" />
           </g>
         </g>
       </Icon>

@@ -18,11 +18,11 @@ export const PiIcon = forwardRef<SVGSVGElement, PiIconProps>(function PiIcon(
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2 3.5h12m-8.5 0V11q0 2.5-2.5 2.5m7.5-10V12q0 1.5 1.5 1.5h2"
+          d="M.25 1.542h15.5m-10.98 0v9.687q0 3.23-3.228 3.23m9.687-12.917V12.52q0 1.937 1.938 1.937h2.583"
         />
       </g>
     </Icon>

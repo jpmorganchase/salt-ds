@@ -18,15 +18,15 @@ export const HeadphonesSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2.5 10.5V7a5.5 5.5 0 0 1 11 0v3.5"
+          d="M1.24 12.063V7.76a6.76 6.76 0 0 1 13.52 0v4.303"
         />
         <path
           fillRule="evenodd"
-          d="M2.9 8.5h2.2q.4 0 .4.4v4.2q0 .4-.4.4H2.9q-.4 0-.4-.4V8.9q0-.4.4-.4m8 0h2.2q.4 0 .4.4v4.2q0 .4-.4.4h-2.2q-.4 0-.4-.4V8.9q0-.4.4-.4"
+          d="M1.731 9.604h2.704q.492 0 .492.492v5.162q0 .492-.492.492H1.731q-.491 0-.491-.492v-5.162q0-.492.491-.492m9.834 0h2.704q.491 0 .491.492v5.162q0 .492-.491.492h-2.704q-.492 0-.492-.492v-5.162q0-.492.492-.492"
         />
       </g>
     </Icon>

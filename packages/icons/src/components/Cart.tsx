@@ -16,11 +16,11 @@ export const CartIcon = forwardRef<SVGSVGElement, CartIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 2.5h2l2 8h7l1.5-6H4m1 9a1 1 0 1 0 2 0 1 1 0 1 0-2 0Zm6 0a1 1 0 1 0 2 0 1 1 0 1 0-2 0Z"
+            d="M.25 1.02h2.327l2.326 9.307h8.143l1.745-6.98H3.158m1.164 10.47a1.163 1.163 0 1 0 2.326 0 1.163 1.163 0 1 0-2.326 0Zm6.98 0a1.163 1.163 0 1 0 2.326 0 1.163 1.163 0 1 0-2.326 0Z"
           />
         </g>
       </Icon>

@@ -18,13 +18,13 @@ export const FolderOpenSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2.5 13.5V3h4l2 2h4v2"
+          d="M1 15.109V1.64h5.13l2.566 2.566h5.13v2.565"
         />
-        <path fillRule="evenodd" d="M2.5 13.5h10L14 7H4Z" />
+        <path fillRule="evenodd" d="M1 15.109h12.826l1.924-8.337H2.924Z" />
       </g>
     </Icon>
   );

@@ -16,11 +16,11 @@ export const CallIcon = forwardRef<SVGSVGElement, CallIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m3.5 1.5 3 3.5-2 2q1.333 3.167 4.5 4.5l2-2 3.5 3L13 14q-.5.5-1.5.333Q4.167 13.167 1.667 4.5 1.5 3.5 2 3Z"
+            d="m2.989 1.342 3.183 3.713L4.05 7.176q1.414 3.36 4.774 4.774l2.121-2.122 3.713 3.183-1.591 1.591q-.53.53-1.591.354-7.78-1.238-10.432-10.432-.177-1.06.354-1.59Z"
           />
         </g>
       </Icon>

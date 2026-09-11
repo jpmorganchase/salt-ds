@@ -16,13 +16,13 @@ export const HeadphonesIcon = forwardRef<SVGSVGElement, HeadphonesIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M2.5 10.5V7a5.5 5.5 0 0 1 11 0v3.5" />
-            <path d="M2.9 8.5h2.2q.4 0 .4.4v4.2q0 .4-.4.4H2.9q-.4 0-.4-.4V8.9q0-.4.4-.4Zm8 0h2.2q.4 0 .4.4v4.2q0 .4-.4.4h-2.2q-.4 0-.4-.4V8.9q0-.4.4-.4Z" />
+            <path d="M1.583 11.5V7.417a6.417 6.417 0 0 1 12.834 0V11.5" />
+            <path d="M2.05 9.167h2.567q.466 0 .466.466v4.9q0 .467-.466.467H2.05q-.467 0-.467-.467v-4.9q0-.466.467-.466Zm9.333 0h2.567q.467 0 .467.466v4.9q0 .467-.467.467h-2.567q-.466 0-.466-.467v-4.9q0-.466.466-.466Z" />
           </g>
         </g>
       </Icon>

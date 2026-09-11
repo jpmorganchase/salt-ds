@@ -16,13 +16,13 @@ export const WeightSolidIcon = forwardRef<SVGSVGElement, WeightSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M5.5 4a2.5 2.5 0 1 0 5 0 2.5 2.5 0 1 0-5 0Z"
+            d="M5.163 3.837a2.837 2.837 0 1 0 5.674 0 2.837 2.837 0 1 0-5.674 0Z"
           />
-          <path fillRule="evenodd" d="M3.5 6.5h9l2 8h-13Z" />
+          <path fillRule="evenodd" d="M2.894 6.673h10.212l2.269 9.077H.625Z" />
         </g>
       </Icon>
     );

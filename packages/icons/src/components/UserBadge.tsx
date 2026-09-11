@@ -16,10 +16,10 @@ export const UserBadgeIcon = forwardRef<SVGSVGElement, UserBadgeIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0M6 5.5a2 2 0 1 0 4 0 2 2 0 1 0-4 0m-2.5 7Q3.5 9 8 9t4.5 3.5q-4.5 3.5-9 0"
+            d="M.25 8a7.75 7.75 0 1 0 15.5 0A7.75 7.75 0 1 0 .25 8m5.365-2.98a2.385 2.385 0 1 0 4.77 0 2.385 2.385 0 1 0-4.77 0m-2.98 8.345q0-4.173 5.365-4.173t5.365 4.173q-5.365 4.173-10.73 0"
           />
         </g>
       </Icon>

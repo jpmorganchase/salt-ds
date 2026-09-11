@@ -18,13 +18,13 @@ export const HeadphonesDisabledIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <g
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
         >
-          <path d="M2.5 10.5V7q.002-.716.174-1.38m2.533-3.36A5.5 5.5 0 0 1 13.5 7v3.5" />
-          <path d="M2.9 8.5h2.2q.4 0 .4.4v4.2q0 .4-.4.4H2.9q-.4 0-.4-.4V8.9q0-.4.4-.4Zm8.546 0H13.1q.4 0 .4.4v1.654M2 2l12 12" />
+          <path d="M1.742 11.24V7.259a6.3 6.3 0 0 1 .198-1.57m2.882-3.822a6.258 6.258 0 0 1 9.436 5.392v3.983" />
+          <path d="M2.197 8.965H4.7q.455 0 .455.455v4.78q0 .455-.455.455H2.197q-.455 0-.455-.455V9.42q0-.455.455-.455Zm9.724 0h1.882q.455 0 .455.455v1.882M1.173 1.569l13.654 13.654" />
         </g>
       </g>
     </Icon>

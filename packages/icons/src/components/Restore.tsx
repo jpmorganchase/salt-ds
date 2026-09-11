@@ -16,11 +16,11 @@ export const RestoreIcon = forwardRef<SVGSVGElement, RestoreIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.5 7.5v-5h11v11h-5m-6-9h11M8 8l-5.5 5.5m0-4v4h4"
+            d="M1 7.364V1h14v14H8.636M1 3.545h14M8 8l-7 7m0-5.09V15h5.09"
           />
         </g>
       </Icon>

@@ -16,17 +16,17 @@ export const TagClearIcon = forwardRef<SVGSVGElement, TagClearIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M11.634 9.866 14.5 7V1.5H9L1.5 9 7 14.5l2.866-2.866" />
+            <path d="m11.968 9.81 3.018-3.018V1H9.194L1.295 8.899l5.792 5.792 3.019-3.019" />
             <path
-              strokeWidth=".469"
-              d="M10.5 4.5a1 1 0 1 0 2 0 1 1 0 1 0-2 0Z"
+              strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.7)"
+              d="M10.773 4.16a1.053 1.053 0 1 0 2.107 0 1.053 1.053 0 1 0-2.107 0Z"
             />
-            <path d="m10 10 4.667 4.667m0-4.667L10 14.667" />
+            <path d="m10.247 9.952 4.915 4.914m0-4.914-4.915 4.914" />
           </g>
         </g>
       </Icon>

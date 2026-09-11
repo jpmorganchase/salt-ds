@@ -16,11 +16,11 @@ export const MenuIcon = forwardRef<SVGSVGElement, MenuIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2 3.5h12M2 8h12M2 12.5h12"
+            d="M.25 2.188h15.5M.25 8h15.5M.25 13.813h15.5"
           />
         </g>
       </Icon>

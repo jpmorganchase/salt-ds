@@ -18,15 +18,15 @@ export const LightbulbSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M5.5 11v-.833c0-1.667-2-2.334-2-4.334a4.5 4.5 0 0 1 9 0c0 2-2 2.667-2 4.334V11Zm.667-5.833L8 7l1.833-1.833.7.7L8.5 7.9V11h-1V7.9L5.467 5.867Z"
+          d="M5.318 10.609v-.894c0-1.788-2.145-2.503-2.145-4.649a4.827 4.827 0 0 1 9.654 0c0 2.146-2.145 2.86-2.145 4.649v.894Zm.715-6.258L8 6.318 9.967 4.35l.75.75-2.18 2.182v3.326H7.463V7.283L5.282 5.102Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M5.5 13h5M7 15.083h2"
+          d="M5.318 12.754h5.364m-3.755 2.235h2.146"
         />
       </g>
     </Icon>

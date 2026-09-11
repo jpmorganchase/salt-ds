@@ -21,20 +21,20 @@ export const ClosedcaptionDisabledIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M6.5 3.5h8v8m-5 1h-8v-8"
+          d="M6.385 3.154H15v8.615m-5.385 1.077H1V4.231"
         />
         <path
           fillRule="evenodd"
-          d="m4 5.768.768.768Q4.5 6.634 4.5 7v2q0 .5.5.5h2v1H5q-1.5 0-1.5-1.5V7q0-.866.5-1.232m8.5-.268v1h-2q-.5 0-.5.5v1.232l-1-1V7q0-1.5 1.5-1.5Zm-.232 5-1-1H12.5v1z"
+          d="m3.692 5.596.827.827q-.288.106-.288.5v2.154q0 .538.538.538h2.154v1.077H4.77q-1.615 0-1.615-1.615V6.923q0-.933.538-1.327m9.154-.288v1.077h-2.154q-.538 0-.538.538V8.25L9.077 7.173v-.25q0-1.615 1.615-1.615Zm-.25 5.384L11.52 9.615h1.327v1.077z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="m2 2 12 12"
+          d="m1.538 1.538 12.924 12.924"
         />
       </g>
     </Icon>

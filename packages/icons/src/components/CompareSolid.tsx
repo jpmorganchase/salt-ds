@@ -18,15 +18,15 @@ export const CompareSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M1.667 3.5a1.833 1.833 0 1 0 3.666 0 1.833 1.833 0 1 0-3.666 0m9 9a1.833 1.833 0 1 0 3.666 0 1.833 1.833 0 1 0-3.666 0"
+          d="M.963 3a2.037 2.037 0 1 0 4.074 0A2.037 2.037 0 1 0 .963 3m10 10a2.037 2.037 0 1 0 4.074 0 2.037 2.037 0 1 0-4.074 0"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M3.5 5.5V12H8M5.5 9.5 8 12l-2.5 2.5m7-4V4H8m2.5-2.5L8 4l2.5 2.5"
+          d="M3 5.222v7.222h5M5.222 9.667 8 12.444l-2.778 2.778M13 10.778V3.556H8M10.778.778 8 3.556l2.778 2.777"
         />
       </g>
     </Icon>

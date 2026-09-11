@@ -16,11 +16,11 @@ export const ManWomanIcon = forwardRef<SVGSVGElement, ManWomanIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.833 3a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0Zm-1 3.5h5v4h-.5v4h-4v-4h-.5Zm2.5 4v4M10.167 3a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0Zm.5 3.5h2l1.666 5h-.666v3h-4v-3H9Zm1 5v3"
+            d="M2.194 2.615a1.615 1.615 0 1 0 3.231 0 1.615 1.615 0 1 0-3.23 0Zm-1.077 3.77h5.385v4.307h-.538V15H1.656v-4.308h-.539Zm2.693 4.307V15m6.282-12.385a1.615 1.615 0 1 0 3.23 0 1.615 1.615 0 1 0-3.23 0Zm.538 3.77h2.154l1.795 5.384h-.718V15H9.553v-3.23h-.718Zm1.077 5.385V15"
           />
         </g>
       </Icon>

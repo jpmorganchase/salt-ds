@@ -18,14 +18,17 @@ export const ScheduleTimeIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <g
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
         >
-          <path d="M2.5 1.5h8l3 3v10h-11Z" />
-          <path d="M10.5 1.5V4q0 .5.5.5h2.5M5 9.333a3 3 0 1 0 6 0 3 3 0 1 0-6 0Z" />
-          <path strokeWidth=".4824" d="M8 7.7v1.633l1.089.726" />
+          <path d="M2.077 1h8.615l3.231 3.23V15H2.077Z" />
+          <path d="M10.692 1v2.692q0 .539.539.539h2.692M4.77 9.436a3.23 3.23 0 1 0 6.46 0 3.23 3.23 0 1 0-6.46 0Z" />
+          <path
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.72)"
+            d="M8 7.677v1.759l1.173.782"
+          />
         </g>
       </g>
     </Icon>

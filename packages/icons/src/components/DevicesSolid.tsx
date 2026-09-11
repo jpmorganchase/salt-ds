@@ -18,29 +18,29 @@ export const DevicesSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M1.167 2h11.666v2.417h-1.666c-.216 0-.446.025-.687.106a1.8 1.8 0 0 0-.697.427c-.203.202-.347.455-.427.696s-.106.472-.106.687V11H1.167Z"
+          d="M.262.803h12.896v2.671h-1.843c-.238 0-.492.028-.759.117a2 2 0 0 0-.77.472c-.225.224-.383.503-.472.77s-.117.522-.117.76v5.158H.262Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M7 11v2.667m-2.25 0h4.5"
+          d="M6.71 10.751V13.7m-2.488 0h4.975"
         />
         <path
           fillRule="evenodd"
-          d="M10.5 7.667h4v6q0 .666-.667.666h-2.666q-.667 0-.667-.666ZM12 12.5a.5.5 0 1 0 1 0 .5.5 0 1 0-1 0"
+          d="M10.578 7.067H15v6.632q0 .737-.737.737h-2.948q-.737 0-.737-.737Zm1.659 5.342a.553.553 0 1 0 1.105 0 .553.553 0 1 0-1.105 0"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M11.167 5.667h2.666q.667 0 .667.666v7.334q0 .666-.667.666h-2.666q-.667 0-.667-.666V6.333q0-.666.667-.666Z"
+          d="M11.315 4.856h2.948q.737 0 .737.737v8.106q0 .737-.737.737h-2.948q-.737 0-.737-.737V5.593q0-.737.737-.737Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M10.5 7.167q0 .5.5.5h3q.5 0 .5-.5m-4 1q0-.5.5-.5h3q.5 0 .5.5"
+          d="M10.578 6.514q0 .553.553.553h3.316q.553 0 .553-.553m-4.422 1.105q0-.552.553-.552h3.316q.553 0 .553.552"
         />
       </g>
     </Icon>

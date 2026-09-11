@@ -16,11 +16,11 @@ export const IndentIcon = forwardRef<SVGSVGElement, IndentIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2 2.5h12m-12 11h12m-6.5-7H14m-6.5 3H14m-11.5-4L5 8l-2.5 2.5"
+            d="M.364 1h15.272M.364 15h15.272M7.364 6.09h8.272M7.364 9.91h8.272M1 4.817 4.182 8 1 11.182"
           />
         </g>
       </Icon>

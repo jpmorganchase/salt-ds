@@ -18,13 +18,13 @@ export const DocumentSearchIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <g
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
         >
-          <path d="M7.761 14.5H2.5v-13h8l3 3v2.394m-3-5.394V4q0 .5.5.5h2.5M5 6.5h2m-2 3h1" />
-          <path d="M7.5 10.5a3 3 0 1 0 6 0 3 3 0 1 0-6 0Zm5.12 2.12L15 15" />
+          <path d="M7.069 14.694H1.527V1h8.427l3.16 3.16v2.522M9.954 1v2.633q0 .527.526.527h2.634M4.16 6.267h2.107M4.16 9.427h1.053" />
+          <path d="M6.794 10.48a3.16 3.16 0 1 0 6.32 0 3.16 3.16 0 1 0-6.32 0Zm5.393 2.233 2.507 2.507" />
         </g>
       </g>
     </Icon>

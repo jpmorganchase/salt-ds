@@ -18,10 +18,10 @@ export const CreditCardSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M1.5 3.5h13v9h-13Zm0 2h13v2h-13Zm2 4h3v1h-3Z"
+          d="M.25 2.635h15.5v10.73H.25Zm0 2.384h15.5v2.385H.25Zm2.385 4.77h3.577v1.192H2.635Z"
         />
       </g>
     </Icon>

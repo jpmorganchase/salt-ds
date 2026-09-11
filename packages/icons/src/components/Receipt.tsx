@@ -16,11 +16,11 @@ export const ReceiptIcon = forwardRef<SVGSVGElement, ReceiptIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m3.5 1.5 1.5 1 1.5-1 1.5 1 1.5-1 1.5 1 1.5-1v13l-1.5-1-1.5 1-1.5-1-1.5 1-1.5-1-1.5 1Zm2 4h5M5.5 8h5m-5 2.5h3"
+            d="m3.586 1.624 1.471.98 1.472-.98L8 2.604l1.471-.98 1.472.98 1.471-.98v12.752l-1.471-.98-1.472.98L8 13.396l-1.471.98-1.472-.98-1.471.98Zm1.962 3.924h4.904M5.548 8h4.904m-4.904 2.452H8.49"
           />
         </g>
       </Icon>

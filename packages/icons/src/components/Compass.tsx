@@ -16,13 +16,13 @@ export const CompassIcon = forwardRef<SVGSVGElement, CompassIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0Z" />
-            <path d="m10.5 5.5-1 4-4 1 1-4Z" />
+            <path d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Z" />
+            <path d="M10.692 5.308 9.615 9.615l-4.307 1.077 1.077-4.307Z" />
           </g>
         </g>
       </Icon>

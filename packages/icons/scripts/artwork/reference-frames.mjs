@@ -1,4 +1,4 @@
-import { box, circ, F, group, S } from "./primitives.mjs";
+import { box, circ, F, group, opticalScale, S } from "./primitives.mjs";
 
 // Frames retain the initial design proportions. Main strokes use the 1.5-unit
 // construction width; the fixed .67px export supplies the reference mass.
@@ -31,7 +31,9 @@ const calendarPinJoins = [8, 16]
 const dateCentersX = [5, 8.5, 12, 15.5, 19];
 const dateCentersY = [12, 14.5, 17];
 const dateCounters = dateCentersY
-  .flatMap((y) => dateCentersX.map((x) => box(x - 0.5, y - 0.5, 1, 1)))
+  .flatMap((y) =>
+    dateCentersX.map((x) => box(x - 0.625, y - 0.625, 1.25, 1.25)),
+  )
   .join("");
 const calendarDates = F(dateCounters);
 // Fill only the date field. The open header and perimeter use the same
@@ -73,7 +75,7 @@ const proposals = {
 // leaves a separate, legible addition mark at interface size.
 const scheduleFrame = squareStroke("M21.5 15.625V5.5H2.5V19.5H16.125");
 const scheduleDates = [12, 15.5]
-  .flatMap((y) => [5, 8.5].map((x) => F(box(x - 0.5, y - 0.5, 1, 1))))
+  .flatMap((y) => [5, 8.5].map((x) => F(box(x - 0.625, y - 0.625, 1.25, 1.25))))
   .join("");
 proposals.schedule = [
   scheduleFrame +
@@ -131,6 +133,12 @@ for (const operation of ["open", "close"]) {
       group(panelSolid + arrow, `rotate(${angle} 12 12)`),
     ];
   }
+}
+
+// Keep the shared calendar frame, bindings and date field aligned in both
+// variants and the scheduling action while improving their native-size footprint.
+for (const name of ["calendar", "schedule"]) {
+  proposals[name] = proposals[name].map((body) => opticalScale(body, 1.1));
 }
 
 export default proposals;

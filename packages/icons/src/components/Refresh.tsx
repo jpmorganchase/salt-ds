@@ -16,11 +16,11 @@ export const RefreshIcon = forwardRef<SVGSVGElement, RefreshIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M13.667 5.333c-1-2.266-3-3.666-5.667-3.666a6.333 6.333 0 1 0 6.1 8M9.667 5.333h4V1.667"
+            d="M14.408 5.057c-1.103-2.5-3.31-4.045-6.253-4.045a6.988 6.988 0 1 0 6.731 8.827M9.994 5.057h4.414V1.012"
           />
         </g>
       </Icon>

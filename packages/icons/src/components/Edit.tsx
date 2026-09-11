@@ -16,11 +16,11 @@ export const EditIcon = forwardRef<SVGSVGElement, EditIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m3 10.5 8-8L13.5 5l-8 8-3 .5ZM9.5 4 12 6.5m-9 4L5.5 13"
+            d="m1.766 11.15 9.869-9.869 3.084 3.084-9.87 9.87-3.7.616Zm8.018-8.018 3.084 3.084M1.766 11.15l3.084 3.084"
           />
         </g>
       </Icon>

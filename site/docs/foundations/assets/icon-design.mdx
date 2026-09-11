@@ -25,7 +25,9 @@ Simplify detail until each remaining feature helps identify the subject or disti
 
 Salt icons use a **16 × 16 canvas**. The entire visible shape must fit inside that frame, including the outer tips of joins and line endings.
 
-The canvas does not prescribe one inner box or margin for every icon. Compare apparent size, empty space and visual weight beside related icons. A narrow arrow, a broad calendar, a compact letter and a filled silhouette need different envelopes to look balanced. Do not stretch every drawing to touch the same bounds or force all coordinates onto whole pixels.
+The generator uniformly scales and centers each icon export so its longest painted dimension targets **15.5 units at a primary stroke width of 1.5**, leaving **0.25 units** at each end of that axis. It preserves the drawing's aspect ratio: a narrow arrow or a broad calendar retains space along its shorter axis. This shared framing applies to both outline and solid exports, which are fitted separately.
+
+Author recognizable geometry and useful internal spacing in the owning recipe; the generator supplies the final framing. Do not add recipe-specific padding or stretch a drawing to fill both axes. Thinner strokes occupy slightly less of the frame, especially at acute joins. Official brand marks retain their existing 16-unit framing. The full-canvas solid checkmark and its solid aliases also retain their 16-unit control surface.
 
 <IconDesignExamples example="scale" />
 
@@ -41,13 +43,13 @@ For GitHub, use the current Invertocat from the [GitHub logo guidance](https://b
 
 ## Stroke weight
 
-The primary stroke is authored at a fixed **0.67 units** on the 16-unit canvas. Stroke and geometry scale together, keeping their proportions as an icon grows or shrinks.
+Generated React icons default to a primary stroke of **1 unit** on the 16-unit canvas. The [size foundation token](/salt/foundations/size#stroke-width) `--salt-size-icon-strokeWidth` adjusts the weight across an application or subtree; `--saltIcon-strokeWidth` overrides it for an individual icon. Stroke and geometry scale together: the default primary stroke renders at 0.75px in a 12px icon.
 
-Keep essential details distinct and the overall weight balanced with neighboring icons. Judge the existing line weight at interface size, where small spaces and secondary details must remain readable.
+Numeric SVG masters retain a **0.67-unit reference width**, which renders at 0.5025px at 12px. Standalone SVG images and CSS masks use the baked widths and do not inherit the host's stroke variables. Filled contours and official brand logos keep their supplied shapes.
 
 <IconDesignExamples example="stroke" />
 
-Secondary details can use a lighter line to avoid competing with the main shape. The hands in Schedule time, for example, have less weight than the surrounding clock. Compare similar details across the family and preserve their relative emphasis.
+Secondary details can use a lighter line to avoid competing with the main shape. The hands in Schedule time, for example, have less weight than the surrounding clock. Preserve those ratios when the primary width changes, and judge the resulting balance at interface size.
 
 ## Geometry
 
@@ -63,13 +65,13 @@ There is no universal corner radius for the family. A softly curved housing and 
 
 ## Outline and solid variants
 
-Outline and solid variants express the same meaning through different use of filled surfaces. Preserve their outer proportions, centers, dividers, action positions and directional relationships.
+Outline and solid variants express the same meaning through different use of filled surfaces. Preserve their proportions, dividers, action positions and directional relationships in the shared recipe. The generator fits each variant to its own painted bounds, so exported scale and placement can differ while the underlying features remain consistent.
 
 <IconDesignExamples example="variants" />
 
 Choose a surface that can fill while keeping the icon's defining features clear. The solid calendar fills its date field and retains an open header. In `panel-open-left`, the rail fills while the frame and arrow remain shared line features. A file-format icon can fill its folded corner while keeping the page and label open.
 
-Keep shared line features equally weighted in both variants. Open frames, handles and action marks should remain consistent across the pair while filled surfaces provide the difference in emphasis.
+Keep shared line features equally weighted in both variants. Export fitting preserves the authored stroke widths and their lighter secondary ratios, even when an outline and its solid variant need different geometry scales. Filled surfaces provide the difference in emphasis.
 
 Use transparent counters where a filled surface needs an opening. Small filled details can also appear in an outline variant; the distinction is the treatment of meaningful surfaces. Add a solid companion when it offers a coherent treatment, and compare the pair at the same size and weight.
 
@@ -93,7 +95,7 @@ An action mark or overlapping object must remain distinguishable from the shape 
 
 Use true transparency for openings. A patch colored to match one background will become visible when the background changes.
 
-Judge the gap between **visible edges**. Keep the separation visually even around straight sides, curves, line endings and corners. An enlarged outline around an object's bounding box can still leave uneven space around the shape itself.
+Judge the gap between **visible edges** at the configured stroke width. Wider strokes occupy more space while filled cutout contours remain fixed. Keep the separation visually even around straight sides, curves, line endings and corners. An enlarged outline around an object's bounding box can still leave uneven space around the shape itself.
 
 The devices cutout follows the phone's curved corner. The tag-clear cutout buffers the full painted X while preserving its flat terminals. In cloud-sync, overlapping cutouts remove unusable slivers without changing the action's meaning.
 
@@ -103,16 +105,18 @@ Keep intentional attachments and intrinsic openings intact. A connected handle, 
 
 Compare the icons beside their closest family members in the [catalogue](/salt/foundations/assets/index#all-icons) and in their intended interface. Check both recognition and consistency with the surrounding controls.
 
-Inspect each variant at actual **12px and 16px**, using its authored stroke widths, on **light and dark** backgrounds. Include an enlarged view for contours, joins, overlaps and cutouts, then return to actual size to judge readability.
+Inspect each variant at actual **12px and 16px** on **light and dark** backgrounds. Use the generated component's default width of **1**, and compare the **0.67** reference when reviewing its SVG master. The Storybook **Icons/Icon/Icon QA → Component Legibility** story shows icons in controls and supports tuning widths up to **1.5**. **All Icon View Boxes** (`AllIconViewBoxes`) shows every export inside its frame, with 12px, 16px, 32px and 64px sizes, light/dark backgrounds, stroke controls and name filtering. Check gaps and clipping at every chosen width; the framing target reserves space through width 1.5.
+
+Include an enlarged view for contours, joins, overlaps and cutouts, then return to actual size to judge readability.
 
 Before accepting a design, check that:
 
 - Its meaning, direction and state are clear in context.
 - Its apparent size, visual weight and feature positions fit related icons.
-- Outline and solid variants share the intended landmarks and line weights.
+- Outline and solid variants retain their recipe features and line weights, with each export fitted to its own painted bounds.
 - Lettering has readable counters and spacing.
 - Cutouts follow the foreground and reveal the background.
-- The paint stays inside the 16-unit frame.
+- Each ordinary export reaches the shared painted-extent target at width 1.5, stays centered and preserves its aspect ratio inside the 16-unit frame.
 - There are no unintended mergers, fragments, clipped tips or collapsed openings.
 - Details remain useful at native size, and enlarged inspection reveals no malformed geometry.
 

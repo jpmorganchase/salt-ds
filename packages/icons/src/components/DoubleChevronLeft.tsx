@@ -18,11 +18,11 @@ export const DoubleChevronLeftIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="m12.5 4-4 4 4 4m-5-8-4 4 4 4"
+          d="M15.198.776 7.974 8l7.224 7.224M8.552.776 1.33 8l7.223 7.224"
         />
       </g>
     </Icon>

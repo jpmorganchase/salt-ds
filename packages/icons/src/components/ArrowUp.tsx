@@ -16,11 +16,11 @@ export const ArrowUpIcon = forwardRef<SVGSVGElement, ArrowUpIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8 13.5v-11m-4 4 4-4 4 4"
+            d="M8 15.75V1.281m-5.46 5.46L8 1.281l5.46 5.46"
           />
         </g>
       </Icon>

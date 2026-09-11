@@ -18,11 +18,11 @@ export const ManIcon = forwardRef<SVGSVGElement, ManIconProps>(function ManIcon(
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M6.5 3a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0Zm-1 3.5h5v4H10v4H6v-4h-.5Zm2.5 4v4"
+          d="M6.385 2.615a1.615 1.615 0 1 0 3.23 0 1.615 1.615 0 1 0-3.23 0Zm-1.077 3.77h5.384v4.307h-.538V15H5.846v-4.308h-.538ZM8 10.692V15"
         />
       </g>
     </Icon>

@@ -16,15 +16,15 @@ export const DeleteSolidIcon = forwardRef<SVGSVGElement, DeleteSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2 4h12M6 4V1.5h4V4"
+            d="M1.192 3.837h13.616m-9.077 0V1h4.538v2.837"
           />
           <path
             fillRule="evenodd"
-            d="M3.5 4 4 14.5h8L12.5 4ZM6 6.5h1V12H6Zm3 0h1V12H9Z"
+            d="m2.894 3.837.568 11.913h9.076l.568-11.913Zm2.837 2.836h1.134v6.24H5.731Zm3.404 0h1.134v6.24H9.135Z"
           />
         </g>
       </Icon>

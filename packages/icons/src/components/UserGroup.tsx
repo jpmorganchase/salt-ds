@@ -16,11 +16,11 @@ export const UserGroupIcon = forwardRef<SVGSVGElement, UserGroupIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M3.3 4.8a2.2 2.2 0 1 0 4.4 0 2.2 2.2 0 1 0-4.4 0ZM1 14v-2q0-3 4.5-3t4.5 3v2Zm9.167-8.667a1.833 1.833 0 1 0 3.666 0 1.833 1.833 0 1 0-3.666 0Zm1.198 4.198Q11.664 9.5 12 9.5q3 0 3 2.5v2h-3"
+            d="M3.3 4.503a2.2 2.2 0 1 0 4.4 0 2.2 2.2 0 1 0-4.4 0Zm-2.3 9.2v-2q0-3 4.5-3t4.5 3v2Zm9.167-8.667a1.833 1.833 0 1 0 3.666 0 1.833 1.833 0 1 0-3.666 0Zm1.198 4.199q.299-.032.635-.032 3 0 3 2.5v2h-3"
           />
         </g>
       </Icon>

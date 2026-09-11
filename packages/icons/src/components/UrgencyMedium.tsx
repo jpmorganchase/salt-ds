@@ -18,11 +18,11 @@ export const UrgencyMediumIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="m2 9 6-3.5L14 9M2 12.5 8 9l6 3.5"
+          d="M.625 8.104 8 3.802l7.375 4.302M.625 12.407 8 8.104l7.375 4.303"
         />
       </g>
     </Icon>

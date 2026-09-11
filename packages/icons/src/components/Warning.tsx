@@ -16,15 +16,15 @@ export const WarningIcon = forwardRef<SVGSVGElement, WarningIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m8 2 6.5 12h-13Zm0 3.5v4"
+            d="m8 2.406 6.5 12h-13Zm0 3.5v4"
           />
           <path
             fillRule="evenodd"
-            d="M7.333 11.5a.667.667 0 1 0 1.334 0 .667.667 0 1 0-1.334 0"
+            d="M7.333 11.906a.667.667 0 1 0 1.334 0 .667.667 0 1 0-1.334 0"
           />
         </g>
       </Icon>

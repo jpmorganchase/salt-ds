@@ -16,19 +16,22 @@ export const PotFoodIcon = forwardRef<SVGSVGElement, PotFoodIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M3 7h10v1.5c0 2.76-2.24 4.5-5 4.5s-5-1.74-5-4.5Z"
+            d="M2.038 6.808h11.924v1.788c0 3.29-2.671 5.366-5.962 5.366s-5.962-2.075-5.962-5.366Z"
           />
-          <path fillRule="evenodd" d="M4.5 7C5 5.5 7.5 5.5 8 7Z" />
+          <path
+            fillRule="evenodd"
+            d="M3.827 6.808c.596-1.789 3.577-1.789 4.173 0Z"
+          />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 8H3m10 0h1.5M11 1.5c0 1.333-1 2.167-1 3.5m3.5-3.5c0 1.333-1 2.167-1 3.5"
+            d="M.25 8h1.788m11.924 0h1.788M11.577.25c0 1.59-1.192 2.583-1.192 4.173M14.558.25c0 1.59-1.193 2.583-1.193 4.173"
           />
-          <path fillRule="evenodd" d="M5.5 13h5v1.5h-5Z" />
+          <path fillRule="evenodd" d="M5.02 13.962h5.96v1.788H5.02Z" />
         </g>
       </Icon>
     );

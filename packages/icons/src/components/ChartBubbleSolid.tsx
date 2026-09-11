@@ -18,15 +18,15 @@ export const ChartBubbleSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1.5 1.5v13h13"
+          d="M1 .25V15h14.75"
         />
         <path
           fillRule="evenodd"
-          d="M3.5 10.5a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M8 5a3 3 0 1 0 6 0 3 3 0 1 0-6 0m3.5 6.5a1 1 0 1 0 2 0 1 1 0 1 0-2 0"
+          d="M3.27 10.462a1.702 1.702 0 1 0 3.403 0 1.702 1.702 0 1 0-3.404 0m5.106-6.241a3.404 3.404 0 1 0 6.808 0 3.404 3.404 0 1 0-6.808 0m3.971 7.375a1.135 1.135 0 1 0 2.27 0 1.135 1.135 0 1 0-2.27 0"
         />
       </g>
     </Icon>

@@ -16,10 +16,10 @@ export const GridSolidIcon = forwardRef<SVGSVGElement, GridSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M2 2h5v5H2Zm7 0h5v5H9ZM2 9h5v5H2Zm7 0h5v5H9Z"
+            d="M.25.25h6.458v6.458H.25Zm9.042 0h6.458v6.458H9.292ZM.25 9.292h6.458v6.458H.25Zm9.042 0h6.458v6.458H9.292Z"
           />
         </g>
       </Icon>

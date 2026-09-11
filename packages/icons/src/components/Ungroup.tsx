@@ -16,11 +16,11 @@ export const UngroupIcon = forwardRef<SVGSVGElement, UngroupIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 1.5H7V7H1.5ZM9 9h5.5v5.5H9Zm1-6.5h3.5V6m-11 4v3.5H6"
+            d="M1 1h5.923v5.923H1Zm8.077 8.077H15V15H9.077Zm1.077-7h3.77v3.77M2.076 10.153v3.77h3.77"
           />
         </g>
       </Icon>

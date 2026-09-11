@@ -16,11 +16,11 @@ export const PauseIcon = forwardRef<SVGSVGElement, PauseIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M3.5 2.5h3v11h-3Zm6 0h3v11h-3Z"
+            d="M2.273 1H6.09v14H2.273ZM9.91 1h3.817v14H9.91Z"
           />
         </g>
       </Icon>

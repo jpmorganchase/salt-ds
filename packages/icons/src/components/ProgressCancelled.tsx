@@ -18,10 +18,10 @@ export const ProgressCancelledIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0m4.033-3.167L8 7.3l2.467-2.467.7.7L8.7 8l2.467 2.467-.7.7L8 8.7l-2.467 2.467-.7-.7L7.3 8 4.833 5.533Z"
+          d="M.25 8a7.75 7.75 0 1 0 15.5 0A7.75 7.75 0 1 0 .25 8m4.809-3.776L8 7.165l2.941-2.94.835.834L8.835 8l2.94 2.941-.834.835L8 8.835l-2.941 2.94-.835-.834L7.165 8l-2.94-2.941Z"
         />
       </g>
     </Icon>

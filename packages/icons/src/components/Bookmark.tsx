@@ -16,11 +16,11 @@ export const BookmarkIcon = forwardRef<SVGSVGElement, BookmarkIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4 1.5h8v13l-4-3-4 3Z"
+            d="M3.923 1h8.154v13.25L8 11.192 3.923 14.25Z"
           />
         </g>
       </Icon>

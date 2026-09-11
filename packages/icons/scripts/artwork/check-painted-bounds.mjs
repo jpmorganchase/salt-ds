@@ -1,5 +1,6 @@
 // Render on a padded canvas so clipped joins and pointed stroke ends remain
-// observable. Geometric path boxes alone do not include these painted extents.
+// observable. Check the reference master, runtime default, and heavier tuning
+// limit; geometric path boxes alone do not include these painted extents.
 export async function checkPaintedBounds(page, records) {
   return page.evaluate(async (records) => {
     const canvas = document.createElement("canvas");
@@ -7,8 +8,12 @@ export async function checkPaintedBounds(page, records) {
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     const failures = [];
     for (const { name, svg } of records)
-      for (const weight of [0.67]) {
+      for (const weight of [0.67, 1, 1.5]) {
         const source = svg
+          .replace(
+            /stroke-width="([\d.]+)"/g,
+            (_, width) => `stroke-width="${(Number(width) / 0.67) * weight}"`,
+          )
           .replace('viewBox="0 0 16 16"', 'viewBox="-2 -2 20 20"')
           .replace(/width="16"|height="16"/g, "")
           .replace(
@@ -56,6 +61,6 @@ export async function checkPaintedBounds(page, records) {
           URL.revokeObjectURL(url);
         }
       }
-    return { samples: records.length, failures };
+    return { samples: records.length * 3, failures };
   }, records);
 }

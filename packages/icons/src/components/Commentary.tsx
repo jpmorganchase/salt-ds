@@ -16,11 +16,11 @@ export const CommentaryIcon = forwardRef<SVGSVGElement, CommentaryIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2 2.5h12v9H6L3 14v-2.5H2ZM4.5 5h7m-7 2h7m-7 2H9"
+            d="M1.136 1h13.728v10.296H5.712l-3.432 2.86v-2.86H1.136Zm2.86 2.86h8.008M3.996 6.148h8.008M3.996 8.436h5.148"
           />
         </g>
       </Icon>

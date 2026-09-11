@@ -18,10 +18,10 @@ export const StorageSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M1.5 2.5h13v3h-13Zm1 4h11v7h-11Zm3 1.5h5v1h-5Z"
+          d="M.25 1.442h15.5V5.02H.25Zm1.192 4.77h13.116v8.346H1.442ZM5.02 8h5.962v1.192H5.019Z"
         />
       </g>
     </Icon>

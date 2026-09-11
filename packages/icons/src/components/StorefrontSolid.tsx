@@ -18,19 +18,19 @@ export const StorefrontSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M3.5 2.5h9l2 4q-2 2-4 0-2.5 2-5 0-2 2-4 0Z"
+          d="M3.018 1.536h9.964l2.214 4.428q-2.214 2.215-4.428 0Q8 8.18 5.232 5.964q-2.214 2.215-4.428 0Z"
         />
         <path
           fillRule="evenodd"
-          d="M2.5 8.068q.493.182 1 .182 1.054 0 2.049-.788Q6.755 8.25 8 8.25t2.451-.788q.995.788 2.049.788.507 0 1-.182V13.5h-1.75v-4h-2.5v4H2.5ZM4.25 9.5v2h3.5v-2Z"
+          d="M1.91 7.7q.547.202 1.108.202 1.167 0 2.268-.873 1.335.873 2.714.873t2.714-.873q1.101.873 2.268.873.561 0 1.107-.202v6.014h-1.937V9.286H9.384v4.428H1.91Zm1.938 1.586V11.5h3.875V9.286Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1 13.5h14"
+          d="M.25 13.714h15.5"
         />
       </g>
     </Icon>

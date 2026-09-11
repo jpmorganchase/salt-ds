@@ -16,12 +16,15 @@ export const VolumeOffIcon = forwardRef<SVGSVGElement, VolumeOffIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
-          <path fillRule="evenodd" d="M1.5 6h3l4-3.5v11l-4-3.5h-3Z" />
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
+          <path
+            fillRule="evenodd"
+            d="M.25 5.787h3.32l4.425-3.873v12.172L3.57 10.213H.25Z"
+          />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m11 5.5 4 5m0-5-4 5"
+            d="m10.762 5.234 4.425 5.532m0-5.532-4.425 5.532"
           />
         </g>
       </Icon>

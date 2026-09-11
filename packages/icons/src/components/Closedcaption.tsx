@@ -18,15 +18,15 @@ export const ClosedcaptionIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1.5 3.5h13v9h-13Z"
+          d="M1 3.154h14v9.692H1Z"
         />
         <path
           fillRule="evenodd"
-          d="M7 5.5H5Q3.5 5.5 3.5 7v2q0 1.5 1.5 1.5h2v-1H5q-.5 0-.5-.5V7q0-.5.5-.5h2Zm5.5 0h-2Q9 5.5 9 7v2q0 1.5 1.5 1.5h2v-1h-2q-.5 0-.5-.5V7q0-.5.5-.5h2Z"
+          d="M6.923 5.308H4.77q-1.615 0-1.615 1.615v2.154q0 1.615 1.615 1.615h2.154V9.615H4.77q-.538 0-.538-.538V6.923q0-.538.538-.538h2.154Zm5.923 0h-2.154q-1.615 0-1.615 1.615v2.154q0 1.615 1.615 1.615h2.154V9.615h-2.154q-.538 0-.538-.538V6.923q0-.538.538-.538h2.154Z"
         />
       </g>
     </Icon>

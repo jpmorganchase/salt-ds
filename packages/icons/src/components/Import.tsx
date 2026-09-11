@@ -16,13 +16,13 @@ export const ImportIcon = forwardRef<SVGSVGElement, ImportIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M6.5 2.5h7v11h-7" />
-            <path d="M2 8h8M7 5l3 3-3 3" />
+            <path d="M6.034 1h8.91v14h-8.91" />
+            <path d="M.307 8h10.182M6.67 4.182 10.49 8l-3.82 3.818" />
           </g>
         </g>
       </Icon>

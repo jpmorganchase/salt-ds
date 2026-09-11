@@ -18,10 +18,10 @@ export const ProgressPendingIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0m7-3.5v3.232l2.11 1.408-.554.831L7.5 8.269V4.5Z"
+          d="M.25 8a7.75 7.75 0 1 0 15.5 0A7.75 7.75 0 1 0 .25 8m8.346-4.173V7.68l2.517 1.678-.662.992-3.047-2.032V3.827Z"
         />
       </g>
     </Icon>

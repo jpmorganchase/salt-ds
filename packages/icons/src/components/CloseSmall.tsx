@@ -16,11 +16,11 @@ export const CloseSmallIcon = forwardRef<SVGSVGElement, CloseSmallIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m5 5 6 6m0-6-6 6"
+            d="m.768.768 14.464 14.464m0-14.464L.768 15.232"
           />
         </g>
       </Icon>

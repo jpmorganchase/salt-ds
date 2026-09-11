@@ -16,11 +16,11 @@ export const BatteryIcon = forwardRef<SVGSVGElement, BatteryIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.5 3H6V1.5h4V3h1.5v11.5h-7Z"
+            d="M4.23 2.615h1.616V1h4.308v1.615h1.615V15H4.231Z"
           />
         </g>
       </Icon>

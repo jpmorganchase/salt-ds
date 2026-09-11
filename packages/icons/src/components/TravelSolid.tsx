@@ -16,15 +16,15 @@ export const TravelSolidIcon = forwardRef<SVGSVGElement, TravelSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M2.167 4.5h5.166Q8 4.5 8 5.167v6.666q0 .667-.667.667H2.167q-.667 0-.667-.667V5.167q0-.667.667-.667m8.5 3h3.666q.667 0 .667.667v4.666q0 .667-.667.667h-3.666q-.667 0-.667-.667V8.167q0-.667.667-.667"
+            d="M1.015 3.495h5.932q.766 0 .766.766v7.654q0 .766-.766.766H1.015q-.765 0-.765-.766V4.261q0-.766.765-.766m9.76 3.445h4.21q.765 0 .765.765v5.358q0 .766-.765.766h-4.21q-.766 0-.766-.766V7.705q0-.765.766-.765"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M3.25 4.5v-2h3v2m5 3v-2h2.5v2m-11.25 5V14M7 12.5V14m4-.5V15m3-1.5V15"
+            d="M2.26 3.495V1.2h3.444v2.296m5.74 3.445V4.644h2.87V6.94M1.399 12.68v1.723m5.167-1.722v1.722m4.592-.574v1.722m3.445-1.722v1.722"
           />
         </g>
       </Icon>

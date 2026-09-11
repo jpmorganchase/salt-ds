@@ -16,13 +16,16 @@ export const SignalIcon = forwardRef<SVGSVGElement, SignalIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4 3a6.5 6.5 0 0 0 0 10m8-10a6.5 6.5 0 0 1 0 10M5.5 5a4 4 0 0 0 0 6m5-6a4 4 0 0 1 0 6"
+            d="M3.586 2.483a7.172 7.172 0 0 0 0 11.034m8.828-11.034a7.172 7.172 0 0 1 0 11.034M5.24 4.69a4.414 4.414 0 0 0 0 6.62m5.518-6.62a4.414 4.414 0 0 1 0 6.62"
           />
-          <path fillRule="evenodd" d="M7 8a1 1 0 1 0 2 0 1 1 0 1 0-2 0" />
+          <path
+            fillRule="evenodd"
+            d="M6.897 8a1.103 1.103 0 1 0 2.206 0 1.103 1.103 0 1 0-2.206 0"
+          />
         </g>
       </Icon>
     );

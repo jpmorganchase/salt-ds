@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" stroke-width="0.67">
-  <path fill="currentColor" fill-rule="evenodd" d="M1.7667 3.5a.7333.7333 0 1 0 1.4666 0 .7333.7333 0 1 0-1.4666 0"/>
-  <path fill="none" stroke="currentColor" d="M5.5 3.5h9"/>
-  <path fill="currentColor" fill-rule="evenodd" d="M1.7667 8a.7333.7333 0 1 0 1.4666 0 .7333.7333 0 1 0-1.4666 0"/>
-  <path fill="none" stroke="currentColor" d="M5.5 8h9"/>
-  <path fill="currentColor" fill-rule="evenodd" d="M1.7667 12.5a.7333.7333 0 1 0 1.4666 0 .7333.7333 0 1 0-1.4666 0"/>
-  <path fill="none" stroke="currentColor" d="M5.5 12.5h9"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" stroke-width="0.67" viewBox="0 0 16 16">
+  <path fill="currentColor" fill-rule="evenodd" d="M.232268 2.51597a.893653.893653 0 1 0 1.787305 0 .893653.893653 0 1 0-1.787305 0"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M4.78194 2.51597h10.968057"/>
+  <path fill="currentColor" fill-rule="evenodd" d="M.232268 7.999998a.893653.893653 0 1 0 1.787305 0 .893653.893653 0 1 0-1.787305 0"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M4.78194 7.999998h10.968057"/>
+  <path fill="currentColor" fill-rule="evenodd" d="M.232268 13.484026a.893653.893653 0 1 0 1.787305 0 .893653.893653 0 1 0-1.787305 0"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M4.78194 13.484026h10.968057"/>
 </svg>

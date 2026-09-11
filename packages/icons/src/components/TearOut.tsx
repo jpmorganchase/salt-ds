@@ -16,11 +16,11 @@ export const TearOutIcon = forwardRef<SVGSVGElement, TearOutIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M6.5 2.5h-4v11h11v-4m-5-8h6v6M7 9l7.5-7.5"
+            d="M5.667 2.167H1V15h12.833v-4.667M8 1h7v7M6.25 9.75 15 1"
           />
         </g>
       </Icon>

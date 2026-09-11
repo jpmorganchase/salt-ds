@@ -16,10 +16,10 @@ export const MicroMenuIcon = forwardRef<SVGSVGElement, MicroMenuIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M7.25 2.75h1.5v1.5h-1.5Zm0 4.5h1.5v1.5h-1.5Zm0 4.5h1.5v1.5h-1.5Z"
+            d="M6.893.25h2.214v2.214H6.893Zm0 6.643h2.214v2.214H6.893Zm0 6.643h2.214v2.214H6.893Z"
           />
         </g>
       </Icon>

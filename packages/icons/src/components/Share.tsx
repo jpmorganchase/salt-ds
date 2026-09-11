@@ -16,11 +16,11 @@ export const ShareIcon = forwardRef<SVGSVGElement, ShareIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m5 7 6-3.5M5 9l6 3.5M1.75 8a1.75 1.75 0 1 0 3.5 0 1.75 1.75 0 1 0-3.5 0Zm9-5a1.75 1.75 0 1 0 3.5 0 1.75 1.75 0 1 0-3.5 0Zm0 10a1.75 1.75 0 1 0 3.5 0 1.75 1.75 0 1 0-3.5 0Z"
+            d="m4.889 6.963 6.222-3.63M4.89 9.037l6.222 3.63M1.519 8a1.815 1.815 0 1 0 3.63 0 1.815 1.815 0 1 0-3.63 0Zm9.333-5.185a1.815 1.815 0 1 0 3.63 0 1.815 1.815 0 1 0-3.63 0Zm0 10.37a1.815 1.815 0 1 0 3.63 0 1.815 1.815 0 1 0-3.63 0Z"
           />
         </g>
       </Icon>

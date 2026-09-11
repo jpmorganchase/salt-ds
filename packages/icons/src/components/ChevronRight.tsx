@@ -18,11 +18,11 @@ export const ChevronRightIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M5.5 3.5 10 8l-4.5 4.5"
+          d="M4.125.776 11.349 8l-7.224 7.224"
         />
       </g>
     </Icon>

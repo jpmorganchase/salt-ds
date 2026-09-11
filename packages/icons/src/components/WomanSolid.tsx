@@ -16,10 +16,10 @@ export const WomanSolidIcon = forwardRef<SVGSVGElement, WomanSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M6.5 3a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M7 6.5h2l1.667 5H5.333Zm-1 5h4v3H8.5v-3h-1v3H6Z"
+            d="M6.212 2.038a1.788 1.788 0 1 0 3.576 0 1.788 1.788 0 1 0-3.576 0m.596 4.174h2.384l1.988 5.961H4.82Zm-1.193 5.961h4.77v3.577H8.596v-3.577H7.404v3.577H5.615Z"
           />
         </g>
       </Icon>

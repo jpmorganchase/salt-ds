@@ -16,13 +16,13 @@ export const LightbulbIcon = forwardRef<SVGSVGElement, LightbulbIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M5.5 11v-.833c0-1.667-2-2.334-2-4.334a4.5 4.5 0 0 1 9 0c0 2-2 2.667-2 4.334V11Z" />
-            <path d="M5.5 13h5M7 15.083h2M8 11V7L6.5 5.5M8 7l1.5-1.5" />
+            <path d="M5.455 10.832v-.849c0-1.697-2.037-2.375-2.037-4.412a4.582 4.582 0 0 1 9.164 0c0 2.037-2.037 2.715-2.037 4.412v.849Z" />
+            <path d="M5.455 12.868h5.09M6.982 14.99h2.036M8 10.832V6.759L6.473 5.232M8 6.759l1.527-1.527" />
           </g>
         </g>
       </Icon>

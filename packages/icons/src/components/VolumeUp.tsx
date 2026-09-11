@@ -16,12 +16,15 @@ export const VolumeUpIcon = forwardRef<SVGSVGElement, VolumeUpIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
-          <path fillRule="evenodd" d="M1.5 6h3l4-3.5v11l-4-3.5h-3Z" />
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
+          <path
+            fillRule="evenodd"
+            d="M.25 5.855h3.218L7.76 2.1v11.8l-4.29-3.755H.25Z"
+          />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M11 5.5q2.5 2.5 0 5m2-7q4.5 4.5 0 9"
+            d="M10.44 5.318q2.683 2.682 0 5.364m2.146-7.51q4.828 4.828 0 9.655"
           />
         </g>
       </Icon>

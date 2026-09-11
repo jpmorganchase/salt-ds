@@ -18,10 +18,10 @@ export const CommentarySolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M2 2.5h12v9H6L3 14v-2.5H2Zm2.5 2h7v1h-7Zm0 2h7v1h-7Zm0 2H9v1H4.5Z"
+          d="M.25.573h15.5v11.625H5.417l-3.875 3.23v-3.23H.25Zm3.23 2.583h9.04v1.292H3.48Zm0 2.584h9.04v1.29H3.48Zm0 2.583h5.812v1.292H3.479Z"
         />
       </g>
     </Icon>

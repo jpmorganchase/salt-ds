@@ -18,31 +18,31 @@ export const SortAlphaDescendIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M12 2.5v11m2.5-2.5L12 13.5 9.5 11"
+          d="M12.342 1.452v12.775m2.903-2.903-2.903 2.903-2.904-2.903"
         />
         <path
           fillRule="evenodd"
-          d="M5.17 6.333H2.164v-.379l2.332-3.503H2.243V2h2.866v.38L2.773 5.882h2.398Z"
+          d="M4.41 5.904H.917v-.44l2.708-4.07H1.01V.873h3.33v.44L1.625 5.381H4.41Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          strokeWidth=".124419"
-          d="M5.17 6.333H2.164v-.379l2.332-3.503H2.243V2h2.866v.38L2.773 5.882h2.398Z"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.1857)"
+          d="M4.41 5.904H.917v-.44l2.708-4.07H1.01V.873h3.33v.44L1.625 5.381H4.41Z"
         />
         <path
           fillRule="evenodd"
-          d="m5.061 14-.533-1.375H2.79L2.26 14h-.51l1.695-4.351h.453L5.583 14Zm-.684-1.823-.507-1.366-.058-.175-.082-.252-.068-.21q-.03.121-.064.241t-.066.222l-.056.174-.516 1.366Z"
+          d="m4.283 14.808-.62-1.597H1.646l-.616 1.597H.438l1.97-5.053h.526l1.955 5.053Zm-.795-2.117-.589-1.587-.067-.203q-.047-.141-.095-.293t-.079-.244q-.034.141-.074.28t-.077.259l-.066.201-.598 1.587Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          strokeWidth=".124419"
-          d="m5.061 14-.533-1.375H2.79L2.26 14h-.51l1.695-4.351h.453L5.583 14Zm-.684-1.823-.507-1.366-.058-.175-.082-.252-.068-.21q-.03.121-.064.241t-.066.222l-.056.174-.516 1.366Z"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.1857)"
+          d="m4.283 14.808-.62-1.597H1.646l-.616 1.597H.438l1.97-5.053h.526l1.955 5.053Zm-.795-2.117-.589-1.587-.067-.203q-.047-.141-.095-.293t-.079-.244q-.034.141-.074.28t-.077.259l-.066.201-.598 1.587Z"
         />
       </g>
     </Icon>

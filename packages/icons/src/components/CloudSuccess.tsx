@@ -18,13 +18,13 @@ export const CloudSuccessIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <g
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
         >
-          <path d="M4.7 12.25a3.3 3.3 0 0 1-.536-6.557 4.4 4.4 0 0 1 5.929-1.714m2.714 2.942a2.751 2.751 0 0 1-.957 5.329H4.7" />
-          <path d="m5 7.9 2 2 5.85-5.85" />
+          <path d="M4.497 12.661a3.503 3.503 0 0 1-.57-6.96 4.67 4.67 0 0 1 6.295-1.82m2.881 3.123a2.92 2.92 0 0 1-1.016 5.657h-7.59" />
+          <path d="m4.815 8.043 2.123 2.123 6.21-6.21" />
         </g>
       </g>
     </Icon>

@@ -16,20 +16,20 @@ export const InfoIcon = forwardRef<SVGSVGElement, InfoIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 1.5h13v13h-13Z"
+            d="M1 1h14v14H1Z"
           />
           <path
             fillRule="evenodd"
-            d="M7.167 4.5a.833.833 0 1 0 1.666 0 .833.833 0 1 0-1.666 0"
+            d="M7.103 4.23a.897.897 0 1 0 1.794 0 .897.897 0 1 0-1.794 0"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M7 7.5h1v4m-1.5 0h3"
+            d="M6.923 7.462H8v4.307m-1.615 0h3.23"
           />
         </g>
       </Icon>

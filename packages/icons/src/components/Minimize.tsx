@@ -16,11 +16,11 @@ export const MinimizeIcon = forwardRef<SVGSVGElement, MinimizeIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.5 12.5h11"
+            d="M.25 8h15.5"
           />
         </g>
       </Icon>

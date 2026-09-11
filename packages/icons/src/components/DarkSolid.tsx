@@ -16,10 +16,10 @@ export const DarkSolidIcon = forwardRef<SVGSVGElement, DarkSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M9.5 1.5a6.5 6.5 0 1 0 5 9 6 6 0 0 1-5-9"
+            d="M9.472.325a7.75 7.75 0 1 0 5.961 10.73A7.154 7.154 0 0 1 9.472.325"
           />
         </g>
       </Icon>

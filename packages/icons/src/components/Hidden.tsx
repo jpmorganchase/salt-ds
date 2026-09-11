@@ -16,20 +16,20 @@ export const HiddenIcon = forwardRef<SVGSVGElement, HiddenIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 8q.73-1.18 1.46-2.094m3.17-2.722Q10.316 1.24 14.5 8q-.73 1.18-1.46 2.094m-3.17 2.722Q5.684 14.76 1.5 8"
+            d="M.873 8q.786-1.27 1.572-2.255m3.414-2.931Q10.366.72 14.873 8q-.787 1.27-1.573 2.255m-3.414 2.931Q5.379 15.28.873 8"
           />
           <path
             fillRule="evenodd"
-            d="M10.439 8.553 7.447 5.561A2.5 2.5 0 0 1 8 5.5a2.5 2.5 0 0 1 2.439 3.053M5.5 8q0-.285.061-.553l2.992 2.992A2.5 2.5 0 0 1 8 10.5 2.5 2.5 0 0 1 5.5 8"
+            d="M10.499 8.596 7.277 5.374a2.7 2.7 0 0 1 .596-.066 2.692 2.692 0 0 1 2.626 3.288M5.18 8a2.7 2.7 0 0 1 .066-.596l3.222 3.222a2.7 2.7 0 0 1-.595.066A2.69 2.69 0 0 1 5.18 8"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m2 2 12 12"
+            d="m1.411 1.538 12.923 12.924"
           />
         </g>
       </Icon>

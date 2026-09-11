@@ -16,12 +16,15 @@ export const FlagSolidIcon = forwardRef<SVGSVGElement, FlagSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
-          <path fillRule="evenodd" d="M3.5 3h4l2 2h4l-2 3 2 3h-5l-2-2h-3Z" />
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
+          <path
+            fillRule="evenodd"
+            d="M2.413 2.038h4.77l2.384 2.385h4.77L11.952 8l2.385 3.577H8.375L5.99 9.192H2.413Z"
+          />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M3.5 1.5v13"
+            d="M2.413.25v15.5"
           />
         </g>
       </Icon>

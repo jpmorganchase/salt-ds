@@ -16,15 +16,15 @@ export const PrintSolidIcon = forwardRef<SVGSVGElement, PrintSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M2 5h12v7H2Zm2.5 4.5h7V12h-7Zm6.5-2a.5.5 0 1 0 1 0 .5.5 0 1 0-1 0"
+            d="M1.538 4.77h12.924v7.538H1.538Zm2.693 4.845h7.538v2.693H4.231Zm7-2.153a.538.538 0 1 0 1.077 0 .538.538 0 1 0-1.077 0"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.5 5.5v-4h7v4m-7 4h7v5h-7Zm1 2h5"
+            d="M4.23 5.308V1h7.54v4.308M4.23 9.615h7.54V15H4.23Zm1.078 2.155h5.384"
           />
         </g>
       </Icon>

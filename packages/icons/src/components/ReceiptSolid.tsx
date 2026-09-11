@@ -18,10 +18,10 @@ export const ReceiptSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="m3.5 1.5 1.5 1 1.5-1 1.5 1 1.5-1 1.5 1 1.5-1v13l-1.5-1-1.5 1-1.5-1-1.5 1-1.5-1-1.5 1Zm2 3.5h5v1h-5Zm0 2.5h5v1h-5Zm0 2.5h3v1h-3Z"
+          d="m2.635.25 1.788 1.192L6.212.25 8 1.442 9.788.25l1.789 1.192L13.365.25v15.5l-1.788-1.192-1.789 1.192L8 14.558 6.212 15.75l-1.789-1.192-1.788 1.192Zm2.384 4.173h5.962v1.192H5.019Zm0 2.98h5.962v1.193H5.019Zm0 2.982h3.577v1.192H5.02Z"
         />
       </g>
     </Icon>

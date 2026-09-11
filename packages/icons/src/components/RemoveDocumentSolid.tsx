@@ -18,10 +18,10 @@ export const RemoveDocumentSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M2.5 1.5h8l3 3v10h-11Zm8 1V4q0 .5.5.5h1.5ZM5.5 9h5v1h-5Z"
+          d="M1.442.25h9.539l3.577 3.577V15.75H1.442Zm9.539 1.192v1.789q0 .596.596.596h1.788Zm-5.962 7.75h5.962v1.193H5.019Z"
         />
       </g>
     </Icon>

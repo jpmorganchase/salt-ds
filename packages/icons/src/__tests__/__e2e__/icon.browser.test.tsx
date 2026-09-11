@@ -1,6 +1,7 @@
 import {
   BankIcon,
   BankSolidIcon,
+  GithubIcon,
   Icon,
   ScheduleTimeIcon,
 } from "@salt-ds/icons";
@@ -21,6 +22,25 @@ const getIconPath = (testId: string) => {
   return path;
 };
 
+// Test actual paint: browsers may serialize a secondary CSS width as calc(...).
+const expectScheduleHandWidth = (width: number) => {
+  const hand = page
+    .getByTestId("schedule")
+    .element()
+    .querySelector("path[stroke-width]") as SVGPathElement;
+  expect(hand).not.toBeNull();
+  if (width === 0) {
+    expect(Number.parseFloat(getComputedStyle(hand).strokeWidth)).toBe(0);
+    return;
+  }
+  expect(hand.isPointInStroke(new DOMPoint(8 + width / 2 + 0.005, 8))).toBe(
+    false,
+  );
+  expect(hand.isPointInStroke(new DOMPoint(8 + width / 2 - 0.005, 8))).toBe(
+    true,
+  );
+};
+
 describe("Given an icon", () => {
   checkAccessibility(composedStories);
 
@@ -33,11 +53,11 @@ describe("Given an icon", () => {
       .not.toHaveAttribute("aria-label");
   });
 
-  it("renders the reference-weight outline without a fill", async () => {
+  it("renders the default outline weight without a fill", async () => {
     await renderWithSalt(<BankIcon data-testid="outline" />);
 
     const style = getComputedStyle(getIconPath("outline"));
-    expect(style.strokeWidth).toBe("0.67px");
+    expect(style.strokeWidth).toBe("1px");
     expect(style.stroke).not.toBe("none");
     expect(style.fill).toBe("none");
   });
@@ -45,16 +65,8 @@ describe("Given an icon", () => {
   it("preserves the authored balance of primary and secondary strokes", async () => {
     await renderWithSalt(<ScheduleTimeIcon data-testid="schedule" />);
 
-    const paths = page
-      .getByTestId("schedule")
-      .element()
-      .querySelectorAll("path");
-    const widths = Array.from(paths, (path) =>
-      Number.parseFloat(getComputedStyle(path).strokeWidth),
-    );
-
-    expect(Math.max(...widths)).toBeCloseTo(0.67, 4);
-    expect(Math.min(...widths)).toBeCloseTo(0.4824, 4);
+    expect(getComputedStyle(getIconPath("schedule")).strokeWidth).toBe("1px");
+    expectScheduleHandWidth(0.72);
   });
   it("passes native stroke width through to custom icon paths", async () => {
     await renderWithSalt(
@@ -71,7 +83,7 @@ describe("Given an icon", () => {
     expect(getComputedStyle(getIconPath("custom")).strokeWidth).toBe("1.5px");
   });
   it.each([0, 1.5])(
-    "keeps generated artwork fixed when inherited stroke width is %s",
+    "keeps generated stroke control separate from native inherited width %s",
     async (strokeWidth) => {
       await renderWithSalt(
         <>
@@ -81,7 +93,7 @@ describe("Given an icon", () => {
       );
 
       const outlineStyle = getComputedStyle(getIconPath("outline"));
-      expect(outlineStyle.strokeWidth).toBe("0.67px");
+      expect(outlineStyle.strokeWidth).toBe("1px");
       expect(outlineStyle.stroke).not.toBe("none");
       expect(outlineStyle.fill).toBe("none");
       const solidStyle = getComputedStyle(getIconPath("solid"));
@@ -90,37 +102,63 @@ describe("Given an icon", () => {
     },
   );
 
-  it.each([0, 1.5])(
-    "ignores the former stroke width variable set to %s",
+  it.each([0, 0.67, 1.25])(
+    "scales primary and secondary strokes with an inherited width of %s",
     async (strokeWidth) => {
       await renderWithSalt(
-        <div
-          style={{ "--saltIcon-stroke-width": strokeWidth } as CSSProperties}
-        >
+        <div style={{ "--saltIcon-strokeWidth": strokeWidth } as CSSProperties}>
           <BankIcon data-testid="outline" />
           <BankSolidIcon data-testid="solid" />
           <ScheduleTimeIcon data-testid="schedule" />
+          <GithubIcon data-testid="brand" />
         </div>,
       );
 
-      expect(getComputedStyle(getIconPath("outline")).strokeWidth).toBe(
-        "0.67px",
-      );
+      expect(
+        Number.parseFloat(getComputedStyle(getIconPath("outline")).strokeWidth),
+      ).toBeCloseTo(strokeWidth, 4);
       expect(getComputedStyle(getIconPath("solid")).fill).not.toBe("none");
-      const paths = page
-        .getByTestId("schedule")
-        .element()
-        .querySelectorAll("path");
-      const widths = Array.from(paths, (path) =>
-        Number.parseFloat(getComputedStyle(path).strokeWidth),
-      );
-      expect(Math.max(...widths)).toBeCloseTo(0.67, 4);
-      expect(Math.min(...widths)).toBeCloseTo(0.4824, 4);
+      expect(getComputedStyle(getIconPath("solid")).stroke).toBe("none");
+      expect(getComputedStyle(getIconPath("brand")).stroke).toBe("none");
+      expect(
+        Number.parseFloat(
+          getComputedStyle(getIconPath("schedule")).strokeWidth,
+        ),
+      ).toBeCloseTo(strokeWidth, 4);
+      expectScheduleHandWidth(strokeWidth * 0.72);
     },
   );
 
+  it("uses the size foundation and lets a local icon override it", async () => {
+    await renderWithSalt(
+      <div
+        data-testid="scope"
+        style={{ "--salt-size-icon-strokeWidth": 1.25 } as CSSProperties}
+      >
+        <BankIcon data-testid="inherited" />
+        <BankIcon
+          data-testid="local"
+          style={{ "--saltIcon-strokeWidth": 0.8 } as CSSProperties}
+        />
+      </div>,
+    );
+
+    expect(getComputedStyle(getIconPath("inherited")).strokeWidth).toBe(
+      "1.25px",
+    );
+    expect(getComputedStyle(getIconPath("local")).strokeWidth).toBe("0.8px");
+    (page.getByTestId("scope").element() as HTMLElement).style.setProperty(
+      "--salt-size-icon-strokeWidth",
+      "1.5",
+    );
+    expect(getComputedStyle(getIconPath("inherited")).strokeWidth).toBe(
+      "1.5px",
+    );
+    expect(getComputedStyle(getIconPath("local")).strokeWidth).toBe("0.8px");
+  });
+
   it.each([1, 2])(
-    "scales both variants with size=%s while retaining authored strokes",
+    "scales both variants with size=%s while retaining the configured stroke proportions",
     async (size) => {
       await renderWithSalt(
         <div style={{ "--salt-size-icon": "16px" } as CSSProperties}>
@@ -137,9 +175,7 @@ describe("Given an icon", () => {
         expect(bounds.width).toBe(16 * size);
         expect(bounds.height).toBe(16 * size);
       }
-      expect(getComputedStyle(getIconPath("outline")).strokeWidth).toBe(
-        "0.67px",
-      );
+      expect(getComputedStyle(getIconPath("outline")).strokeWidth).toBe("1px");
       expect(getComputedStyle(getIconPath("solid")).fill).not.toBe("none");
     },
   );

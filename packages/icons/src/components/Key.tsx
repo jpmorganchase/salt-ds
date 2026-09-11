@@ -18,13 +18,16 @@ export const KeyIcon = forwardRef<SVGSVGElement, KeyIconProps>(function KeyIcon(
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M6.933 9.067a3.5 3.5 0 1 1 2.134-2.134L14 11.867V14h-2.133v-2h-2v-2Z"
+          d="M6.558 9.106a4.181 4.181 0 1 1 2.548-2.548L15 12.45V15h-2.549v-2.39h-2.389v-2.389Z"
         />
-        <path fillRule="evenodd" d="M4.767 5.767a1 1 0 1 0 2 0 1 1 0 1 0-2 0" />
+        <path
+          fillRule="evenodd"
+          d="M3.97 5.164a1.195 1.195 0 1 0 2.389 0 1.195 1.195 0 1 0-2.39 0"
+        />
       </g>
     </Icon>
   );

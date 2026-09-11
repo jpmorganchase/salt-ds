@@ -18,15 +18,15 @@ export const CloudDisabledSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M4.7 12.585q-1.506 0-2.57-1.065T1.065 8.95q0-2.864 2.616-3.5l7.136 7.135Zm9.145-.508L5.523 3.755q1.052-.64 2.477-.64 3.59 0 4.538 3.374 2.397.475 2.397 3.011 0 1.834-1.09 2.577"
+          d="M4.314 13.122q-1.683 0-2.872-1.19t-1.19-2.87q0-3.2 2.924-3.912l7.971 7.972Zm10.216-.567L5.233 3.258Q6.408 2.543 8 2.543q4.01 0 5.07 3.769 2.677.53 2.677 3.364 0 2.048-1.217 2.879"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="m2 2 12 12"
+          d="m1.297 1.297 13.406 13.406"
         />
       </g>
     </Icon>

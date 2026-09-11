@@ -16,11 +16,11 @@ export const OutdentIcon = forwardRef<SVGSVGElement, OutdentIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2 2.5h12m-12 11h12m-6.5-7H14m-6.5 3H14m-9.5-4L2 8l2.5 2.5"
+            d="M1.281 1.368H15.75M1.281 14.632H15.75m-7.837-8.44h7.837M7.913 9.808h7.837M4.296 4.986 1.28 8l3.015 3.014"
           />
         </g>
       </Icon>

@@ -120,14 +120,22 @@ export async function checkCutoutActions(page, records) {
               ["frame below arrow shaft", [5, 9.5], [0, 1], straightGap],
             ];
           } else {
+            // Calendar framing scales coordinates while preserving line widths.
+            const frameGap = 1.25 * 1.1 - weight / 2;
+            const fit = (point) => point.map((value) => 8 + (value - 8) * 1.1);
             probes = [
               [
                 "right frame above plus arm",
-                [14.25, 35 / 3],
+                fit([14.25, 35 / 3]),
                 [0, -1],
-                straightGap,
+                frameGap,
               ],
-              ["bottom frame beside plus arm", [12, 13], [-1, 0], straightGap],
+              [
+                "bottom frame beside plus arm",
+                fit([12, 13]),
+                [-1, 0],
+                frameGap,
+              ],
             ];
           }
           for (const [feature, origin, direction, expected] of probes) {

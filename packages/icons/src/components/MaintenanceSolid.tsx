@@ -18,10 +18,10 @@ export const MaintenanceSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M5.4 1.867A3.833 3.833 0 0 1 8.5 7.1l5.167 5.167q.7.7 0 1.4t-1.4 0L7.1 8.5a3.833 3.833 0 0 1-5.233-3.1L4.5 7 7 4.5Z"
+          d="M4.756.24A4.9 4.9 0 0 1 8.72 6.93l6.605 6.604q.895.895 0 1.79t-1.79 0L6.93 8.719A4.9 4.9 0 0 1 .24 4.756l3.367 2.046 3.196-3.196Z"
         />
       </g>
     </Icon>

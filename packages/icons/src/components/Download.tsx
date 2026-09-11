@@ -16,11 +16,11 @@ export const DownloadIcon = forwardRef<SVGSVGElement, DownloadIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8 1.5v10m-4-4 4 4 4-4m-9.5 5v2h11v-2"
+            d="M8 .25v11.346M3.462 7.058 8 11.596l4.538-4.538M1.76 12.73V15h12.48v-2.27"
           />
         </g>
       </Icon>

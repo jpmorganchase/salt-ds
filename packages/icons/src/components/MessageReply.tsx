@@ -18,11 +18,11 @@ export const MessageReplyIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M13.5 13.5V10A4.5 4.5 0 0 0 9 5.5H3.5m3-3-3 3 3 3"
+          d="M14.95 15.75v-4.766a6.13 6.13 0 0 0-6.128-6.129h-7.49M5.417.77 1.332 4.855l4.085 4.086"
         />
       </g>
     </Icon>

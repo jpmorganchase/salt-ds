@@ -16,10 +16,10 @@ export const WatchSolidIcon = forwardRef<SVGSVGElement, WatchSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M5.5 1.5h5v3h-5Zm0 10h5v3h-5Zm-1-7h7q1 0 1 1v5q0 1-1 1h-7q-1 0-1-1v-5q0-1 1-1m4 1.5v1.732l1.11.74-.554.833L7.5 8.268V6Z"
+            d="M5.02.25h5.96v3.577H5.02Zm0 11.923h5.96v3.577H5.02ZM3.827 3.827h8.346q1.192 0 1.192 1.192v5.962q0 1.192-1.192 1.192H3.827q-1.192 0-1.192-1.192V5.019q0-1.192 1.192-1.192m4.77 1.788v2.066l1.323.883-.66.992-1.856-1.237V5.615Z"
           />
         </g>
       </Icon>

@@ -18,11 +18,11 @@ export const ExpandAllHorizontalIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M6 4 2 8l4 4m4-8 4 4-4 4"
+          d="M5.76 3.52 1.281 8l4.48 4.48m4.479-8.96L14.719 8l-4.48 4.48"
         />
       </g>
     </Icon>

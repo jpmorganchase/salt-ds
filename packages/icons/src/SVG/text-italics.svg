@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" stroke-width="0.67">
-  <path fill="currentColor" fill-rule="evenodd" d="M5.7607 2.5h7.2286l-.282 1.1286H9.7324l-2.1857 8.7428h2.9747L10.2393 13.5H3.0107l.2822-1.1286h2.9748l2.1857-8.7428H5.4786Z"/>
-  <path fill="none" stroke="currentColor" stroke-width="0.315838" d="M5.7607 2.5h7.2286l-.282 1.1286H9.7324l-2.1857 8.7428h2.9747L10.2393 13.5H3.0107l.2822-1.1286h2.9748l2.1857-8.7428H5.4786Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" stroke-width="0.67" viewBox="0 0 16 16">
+  <path fill="currentColor" fill-rule="evenodd" d="M4.993302.61517h9.70582l-.378641 1.515367h-3.99439L7.391358 13.86947h3.994121l-.378775 1.515368h-9.70582l.37891-1.515368h3.994255L8.608782 2.130537H4.614527Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.315838" d="M4.993302.61517h9.70582l-.378641 1.515367h-3.99439L7.391358 13.86947h3.994121l-.378775 1.515368h-9.70582l.37891-1.515368h3.994255L8.608782 2.130537H4.614527Z"/>
 </svg>

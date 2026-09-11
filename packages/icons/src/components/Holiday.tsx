@@ -16,11 +16,11 @@ export const HolidayIcon = forwardRef<SVGSVGElement, HolidayIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.5 4a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0ZM4 1.333V2.75m0 2.5v1.417M1.333 4H2.75m2.5 0h1.417M2.083 2.083l1.033 1.033m1.768 1.768 1.033 1.033m-3.834 0 1.033-1.033m1.768-1.768 1.033-1.033m.75 5.417Q9 3.833 12 5.833q2.5 1.5 2 3.667Zm3.833 1L9 14m-7.5 0h13"
+            d="M1.588 3.377a1.735 1.735 0 1 0 3.47 0 1.735 1.735 0 1 0-3.47 0ZM3.323.292v1.64m0 2.891v1.64M.238 3.376h1.639m2.892 0h1.639M1.106 1.16 2.3 2.355M4.346 4.4 5.54 5.595m-4.434 0L2.3 4.4m2.046-2.046L5.54 1.16m.868 6.266q2.7-4.242 6.17-1.928 2.892 1.735 2.314 4.242Zm4.435 1.157-1.736 6.363m-8.676 0H15.47"
           />
         </g>
       </Icon>

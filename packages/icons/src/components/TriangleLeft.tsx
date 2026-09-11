@@ -18,8 +18,8 @@ export const TriangleLeftIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
-        <path fillRule="evenodd" d="M11 3v10L5 8Z" />
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
+        <path fillRule="evenodd" d="M12.626.25v15.5L3.326 8Z" />
       </g>
     </Icon>
   );

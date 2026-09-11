@@ -16,13 +16,13 @@ export const MicrophoneIcon = forwardRef<SVGSVGElement, MicrophoneIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M8 1.5q2.5 0 2.5 2.5v4q0 2.5-2.5 2.5T5.5 8V4q0-2.5 2.5-2.5Z" />
-            <path d="M3.5 7v1a4.5 4.5 0 0 0 9 0V7M8 12.5v2m-2.5 0h5" />
+            <path d="M8 1q2.692 0 2.692 2.692V8q0 2.692-2.692 2.692T5.308 8V3.692Q5.308 1 8 1Z" />
+            <path d="M3.154 6.923V8a4.846 4.846 0 0 0 9.692 0V6.923M8 12.846V15m-2.692 0h5.384" />
           </g>
         </g>
       </Icon>

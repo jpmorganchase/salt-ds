@@ -18,15 +18,15 @@ export const CloudDownloadSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M4.7 11.085q-1.506 0-2.57-1.065T1.065 7.45q0-3.009 2.887-3.56Q5.312 1.616 8 1.616q3.59 0 4.538 3.374 2.397.475 2.397 3.011 0 3.085-3.085 3.085h-2.6V6.25h-2.5v4.835Z"
+          d="M4.368 10.66q-1.657 0-2.828-1.171T.368 6.66q0-3.31 3.178-3.917Q5.042.24 8 .24q3.95 0 4.994 3.713 2.638.523 2.638 3.314 0 3.395-3.395 3.395H9.376V5.34H6.624v5.32Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M8 7v7.75m-2-2 2 2 2-2"
+          d="M8 6.165v8.529m-2.201-2.201L8 14.693l2.201-2.2"
         />
       </g>
     </Icon>

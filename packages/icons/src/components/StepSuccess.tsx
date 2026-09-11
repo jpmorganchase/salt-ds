@@ -17,10 +17,10 @@ export const StepSuccessIcon = forwardRef<SVGSVGElement, StepSuccessIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M2 8a6 6 0 1 0 12 0A6 6 0 1 0 2 8m1.8 0 .7-.7 2.333 2.333 4-4 .7.7-4.7 4.7Z"
+            d="M.25 8a7.75 7.75 0 1 0 15.5 0A7.75 7.75 0 1 0 .25 8m2.325 0 .904-.904 3.014 3.014 5.167-5.167.904.904-6.071 6.071Z"
           />
         </g>
       </Icon>

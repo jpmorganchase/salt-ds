@@ -16,11 +16,11 @@ export const StorageIcon = forwardRef<SVGSVGElement, StorageIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 2.5h13v3h-13Zm1 3h11v8h-11Zm3 3h5"
+            d="M1 2.077h14v3.23H1Zm1.077 3.231h11.846v8.615H2.077Zm3.231 3.23h5.384"
           />
         </g>
       </Icon>

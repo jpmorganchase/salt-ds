@@ -16,15 +16,15 @@ export const ChartBulletIcon = forwardRef<SVGSVGElement, ChartBulletIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 1.5v13M12.5 2v2m2 1v2m-5 1v2m4 1v2"
+            d="M1 1v14M12.846 1.538v2.154M15 4.77v2.154M9.615 8v2.154m4.308 1.077v2.154"
           />
           <path
             fillRule="evenodd"
-            d="M3.5 2.5h7v1h-7Zm0 3h9v1h-9Zm0 3h4v1h-4Zm0 3h8v1h-8Z"
+            d="M3.154 2.077h7.538v1.077H3.154Zm0 3.23h9.692v1.078H3.154Zm0 3.231h4.308v1.077H3.154Zm0 3.231h8.615v1.077H3.154Z"
           />
         </g>
       </Icon>

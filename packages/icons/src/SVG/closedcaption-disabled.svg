@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" stroke-width="0.67">
-  <path fill="none" stroke="currentColor" d="M6.5 3.5h8v8m-5 1h-8v-8"/>
-  <path fill="currentColor" fill-rule="evenodd" d="m4.0001 5.7679.768.768Q4.5 6.6338 4.5 7v2q0 .5.5.5h2v1H5q-1.5 0-1.5-1.5V7q0-.8661.5001-1.2321M12.5 5.5v1h-2q-.5 0-.5.5v1.2322l-1-1V7q0-1.5 1.5-1.5Zm-.2322 5-1-1H12.5v1z"/>
-  <path fill="none" stroke="currentColor" d="m2 2 12 12"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" stroke-width="0.67" viewBox="0 0 16 16">
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M6.384615 3.153846h8.615384v8.615384m-5.384616 1.076923H1V4.230769"/>
+  <path fill="currentColor" fill-rule="evenodd" d="m3.692415 5.5962.827077.827076q-.288723.10543-.288723.4998v2.153846q0 .538462.538461.538462h2.153846v1.076923H4.76923q-1.615385 0-1.615385-1.615385V6.923076q0-.932723.53857-1.326877m9.153738-.288507v1.076923h-2.153846q-.538462 0-.538462.538461v1.326985L9.076922 7.173138v-.250062q0-1.615384 1.615385-1.615384Zm-.250062 5.384615-1.076923-1.076923h1.326985v1.076922z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="m1.538461 1.538461 12.923076 12.923076"/>
 </svg>

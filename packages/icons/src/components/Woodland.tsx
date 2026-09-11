@@ -16,11 +16,11 @@ export const WoodlandIcon = forwardRef<SVGSVGElement, WoodlandIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.5 12.5a3.5 3.5 0 0 1-1-6.833 4.5 4.5 0 0 1 9 0 3.5 3.5 0 0 1-1 6.833Zm3.5-8V15m0-6.5 3-2M8 11 6 9"
+            d="M4.468 12.837A3.532 3.532 0 0 1 3.46 5.942a4.54 4.54 0 0 1 9.082 0 3.532 3.532 0 0 1-1.01 6.895ZM8 4.765v10.594m0-6.558 3.027-2.018M8 11.323 5.982 9.305"
           />
         </g>
       </Icon>

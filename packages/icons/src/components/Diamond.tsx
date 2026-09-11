@@ -16,11 +16,11 @@ export const DiamondIcon = forwardRef<SVGSVGElement, DiamondIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2 5.5 4.5 2h7L14 5.5 8 14Zm0 0h12m-8.5 0L8 14m2.5-8.5L8 14M5.5 5.5 7 2m3.5 3.5L9 2"
+            d="M1.264 4.93 4.07 1h7.86l2.806 3.93L8 14.473Zm0 0h13.472m-9.543 0L8 14.473m2.807-9.543L8 14.473M5.193 4.93 6.877 1m3.93 3.93L9.123 1"
           />
         </g>
       </Icon>

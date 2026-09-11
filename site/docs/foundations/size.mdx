@@ -15,7 +15,7 @@ Consistent use of size tokens ensures uniformity in component dimensions, enhanc
 | ------------------------ | ---------------- | ----------------- | ------------------- | ---------------- | ------------------ | ------------------- |
 | `--salt-size-base`       | Height only      | 20                | 28                  | 36               | 44                 | 44                  |
 | `--salt-size-selectable` | Height and width | 12                | 14                  | 16               | 18                 | 18                  |
-| `--salt-size-icon`       | Height and width | 12                | 12                  | 14               | 16                 | 16                  |
+| `--salt-size-icon`       | Height and width | 10                | 12                  | 14               | 16                 | 16                  |
 | `--salt-size-adornment`  | Height and width | 6                 | 8                   | 10               | 12                 | 12                  |
 | `--salt-size-bar`        | Height or width  | 2                 | 4                   | 6                | 8                  | 8                   |
 | `--salt-size-bar-strong` | Height or width  | 4                 | 8                   | 12               | 16                 | 16                  |
@@ -73,7 +73,7 @@ The following example shows how components can use `--salt-size-base` and `--sal
 
 ## Icon
 
-`--salt-size-icon` controls the size of all icons throughout the design system. Icons are designed to be displayed no smaller than 12px x 12px; therefore this is set as a minimum size within the token's values.
+`--salt-size-icon` controls the size of icons throughout the design system. Icon components apply a minimum base size of 12px × 12px, including in high density where the token is 10px.
 
 You can find out more in the [iconography foundation](./assets).
 
@@ -88,6 +88,24 @@ You can find out more in the [iconography foundation](./assets).
   ]}
   label="Show sizes"
 />
+
+### Stroke width
+
+`--salt-size-icon-strokeWidth` controls the primary stroke width of generated inline icon components. It defaults to `1` in every density. Use a unitless value in the icon's 16-unit coordinate space: `1` renders as a 1px stroke at 16px and a 0.75px stroke at 12px. The stroke scales with the icon, and secondary strokes retain their proportional weight.
+
+Set the foundation token on an application container or subtree to adjust the icons within it. Use `--saltIcon-strokeWidth` to override the foundation for an individual icon.
+
+```css
+.applicationIcons {
+  --salt-size-icon-strokeWidth: 1.2;
+}
+
+.emphasizedIcon {
+  --saltIcon-strokeWidth: 1.25;
+}
+```
+
+Filled contours and official brand logos retain their supplied shapes. CSS background mask assets use the stroke widths baked into their SVGs and do not inherit CSS variables from the host element.
 
 ## Adornment
 

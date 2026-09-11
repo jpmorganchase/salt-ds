@@ -18,15 +18,15 @@ export const WoodlandSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M4.5 12.5a3.5 3.5 0 0 1-1-6.833 4.5 4.5 0 0 1 9 0 3.5 3.5 0 0 1-1 6.833Zm3-8h1v3.033l2.167-1.466.566.8L8.5 8.733V13.5h-1v-2.3L5.2 9.067l.7-.734L7.5 9.8Z"
+          d="M4.09 12.94a3.91 3.91 0 0 1-1.117-7.634 5.027 5.027 0 0 1 10.054 0 3.91 3.91 0 0 1-1.117 7.634Zm3.351-8.937H8.56V7.39l2.42-1.638.633.894L8.56 8.731v5.325H7.44v-2.57L4.872 9.104l.782-.819 1.787 1.639Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M8 12.5V15"
+          d="M8 12.94v2.793"
         />
       </g>
     </Icon>

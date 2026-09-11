@@ -18,10 +18,10 @@ export const CalculatorSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M3 1.5h10v13H3Zm2.333 2h5.334q.333 0 .333.333v1.334q0 .333-.333.333H5.333Q5 5.5 5 5.167V3.833q0-.333.333-.333M4.5 8h1v1h-1Zm0 3h1v1h-1Zm3-3h1v1h-1Zm0 3h1v1h-1Zm3-3h1v1h-1Zm0 3h1v1h-1Z"
+          d="M2.038.25h11.924v15.5H2.038ZM4.82 2.635h6.36q.397 0 .397.397v1.59q0 .397-.397.397H4.82q-.397 0-.397-.397v-1.59q0-.397.397-.397M3.827 8h1.192v1.192H3.827Zm0 3.577h1.192v1.192H3.827ZM7.404 8h1.192v1.192H7.404Zm0 3.577h1.192v1.192H7.404ZM10.98 8h1.192v1.192H10.98Zm0 3.577h1.192v1.192H10.98Z"
         />
       </g>
     </Icon>

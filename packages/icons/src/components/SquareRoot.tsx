@@ -16,11 +16,11 @@ export const SquareRootIcon = forwardRef<SVGSVGElement, SquareRootIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m1.5 8.5 3 4 5-10h5"
+            d="m.848 8.818 3.44 4.585 5.73-11.463h5.732"
           />
         </g>
       </Icon>

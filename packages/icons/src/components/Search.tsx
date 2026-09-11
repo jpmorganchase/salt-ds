@@ -16,11 +16,11 @@ export const SearchIcon = forwardRef<SVGSVGElement, SearchIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.5 7a4.5 4.5 0 1 0 9 0 4.5 4.5 0 1 0-9 0Zm7.7 3.2 4.3 4.3"
+            d="M1 6.333a5.333 5.333 0 1 0 10.665 0A5.333 5.333 0 1 0 1 6.333Zm9.125 3.792 5.095 5.095"
           />
         </g>
       </Icon>

@@ -16,15 +16,15 @@ export const PasteSolidIcon = forwardRef<SVGSVGElement, PasteSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M2 2.5h12v12H2Zm3 0h6v2H5ZM4.5 7h7v1h-7Zm0 3h7v1h-7Z"
+            d="M1.192 2.135h13.616V15.75H1.192Zm3.404 0h6.808v2.269H4.596ZM4.03 7.24h7.942v1.135H4.03Zm0 3.404h7.942v1.135H4.03Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M5 1.5h6v3H5Z"
+            d="M4.596 1h6.808v3.404H4.596Z"
           />
         </g>
       </Icon>

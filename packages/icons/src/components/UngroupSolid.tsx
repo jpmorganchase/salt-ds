@@ -18,12 +18,15 @@ export const UngroupSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
-        <path fillRule="evenodd" d="M1.5 1.5H7V7H1.5ZM9 9h5.5v5.5H9Z" />
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
+        <path
+          fillRule="evenodd"
+          d="M.25.25h6.558v6.558H.25Zm8.942 8.942h6.558v6.558H9.192Z"
+        />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M10 2.5h3.5V6m-11 4v3.5H6"
+          d="M10.385 1.442h4.173v4.173m-13.116 4.77v4.173h4.173"
         />
       </g>
     </Icon>

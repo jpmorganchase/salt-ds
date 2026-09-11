@@ -16,11 +16,11 @@ export const WaveformIcon = forwardRef<SVGSVGElement, WaveformIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2 6v4m3-6.5v9M8 1v14m3-10.5v7m3-5v3"
+            d="M1.357 5.786v4.428M4.68 3.018v9.964M8 .25v15.5m3.321-11.625v7.75m3.322-5.536v3.322"
           />
         </g>
       </Icon>

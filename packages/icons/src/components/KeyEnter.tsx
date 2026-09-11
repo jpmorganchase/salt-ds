@@ -16,11 +16,11 @@ export const KeyEnterIcon = forwardRef<SVGSVGElement, KeyEnterIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M13.5 3.5v6h-11M6 6 2.5 9.5 6 13"
+            d="M15 1.814v7.483H1.281m4.365-4.365L1.281 9.297l4.365 4.365"
           />
         </g>
       </Icon>

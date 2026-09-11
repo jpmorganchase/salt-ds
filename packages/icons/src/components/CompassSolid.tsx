@@ -18,10 +18,10 @@ export const CompassSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0m9-2.5-1 4-4 1 1-4ZM9.25 6.75 8.6 8.6l-1.85.65.65-1.85Z"
+          d="M.25 8a7.75 7.75 0 1 0 15.5 0A7.75 7.75 0 1 0 .25 8m10.73-2.98L9.789 9.787 5.02 10.981l1.193-4.77ZM9.49 6.51l-.775 2.205-2.205.775.775-2.205Z"
         />
       </g>
     </Icon>

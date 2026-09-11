@@ -16,11 +16,11 @@ export const VideoIcon = forwardRef<SVGSVGElement, VideoIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2 3.5h8q.5 0 .5.5v8q0 .5-.5.5H2q-.5 0-.5-.5V4q0-.5.5-.5ZM10.5 6l4-1.5v7l-4-1.5Z"
+            d="M1.538 3.154h8.616q.538 0 .538.538v8.616q0 .538-.538.538H1.538q-.538 0-.538-.538V3.692q0-.538.538-.538Zm9.154 2.692L15 4.231v7.538l-4.308-1.615Z"
           />
         </g>
       </Icon>

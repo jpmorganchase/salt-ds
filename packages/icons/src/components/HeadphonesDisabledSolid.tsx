@@ -21,20 +21,20 @@ export const HeadphonesDisabledSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2.5 10.5V7q.002-.716.174-1.38m2.533-3.36A5.5 5.5 0 0 1 13.5 7v3.5"
+          d="M1.742 11.24V7.259a6.3 6.3 0 0 1 .198-1.57m2.882-3.822a6.258 6.258 0 0 1 9.436 5.392v3.983"
         />
         <path
           fillRule="evenodd"
-          d="M2.9 8.5h2.2q.4 0 .4.4v4.2q0 .4-.4.4H2.9q-.4 0-.4-.4V8.9q0-.4.4-.4m8 0h2.2q.4 0 .4.4v2.714l-2.949-2.949q.092-.165.349-.165"
+          d="M2.197 8.965H4.7q.455 0 .455.455v4.78q0 .455-.455.455H2.197q-.455 0-.455-.455V9.42q0-.455.455-.455m9.103 0h2.503q.455 0 .455.455v3.089l-3.355-3.356q.104-.188.397-.188"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="m2 2 12 12"
+          d="m1.173 1.569 13.654 13.654"
         />
       </g>
     </Icon>

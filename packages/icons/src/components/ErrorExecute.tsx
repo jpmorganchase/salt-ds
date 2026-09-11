@@ -19,11 +19,11 @@ export const ErrorExecuteIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2 8a6 6 0 1 0 12 0A6 6 0 1 0 2 8Zm1.767-4.233 8.466 8.466"
+          d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Zm2.061-4.939 9.878 9.878"
         />
       </g>
     </Icon>

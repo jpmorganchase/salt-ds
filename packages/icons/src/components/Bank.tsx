@@ -16,25 +16,46 @@ export const BankIcon = forwardRef<SVGSVGElement, BankIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.667 5.333V4.117L8 1.697l6.333 2.42v1.216Zm0 7.334h12.666v1.666H1.667Z"
+            d="M1.012 5.057V3.715L8 1.045l6.988 2.67v1.342Zm0 8.092h13.976v1.84H1.012Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            strokeWidth=".5025"
-            d="M2.667 6.167v5.666m-.834-6.5q.834 0 .834.834m.833-.834q-.833 0-.833.834m0 5.666q0 .834-.834.834m.834-.834q0 .834.833.834m.833-6.5v5.666m-.833-6.5q.833 0 .833.834m.834-.834q-.834 0-.834.834m0 5.666q0 .834-.833.834m.833-.834q0 .834.834.834M6 6.167v5.666m-.833-6.5q.833 0 .833.834m.833-.834Q6 5.333 6 6.167m0 5.666q0 .834-.833.834M6 11.833q0 .834.833.834M10 6.167v5.666m-.833-6.5q.833 0 .833.834m.833-.834q-.833 0-.833.834m0 5.666q0 .834-.833.834m.833-.834q0 .834.833.834m.834-6.5v5.666m-.834-6.5q.834 0 .834.834m.833-.834q-.833 0-.833.834m0 5.666q0 .834-.834.834m.834-.834q0 .834.833.834m.833-6.5v5.666m-.833-6.5q.833 0 .833.834m.834-.834q-.834 0-.834.834m0 5.666q0 .834-.833.834m.833-.834q0 .834.834.834"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.75)"
+            d="M2.115 5.977v6.253m-.92-7.173q.92 0 .92.92m.92-.92q-.92 0-.92.92m0 6.253q0 .92-.92.92m.92-.92q0 .92.92.92"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            strokeWidth=".5025"
-            d="M6 11.833v-4.5a2 2 0 0 1 4 0v4.5m-4 0q0 .834.833.834M10 11.833q0 .834-.833.834"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.75)"
+            d="M3.954 5.977v6.253m-.92-7.173q.92 0 .92.92m.92-.92q-.92 0-.92.92m0 6.253q0 .92-.92.92m.92-.92q0 .92.92.92"
           />
-          <path fillRule="evenodd" d="M6 5.333h4v2a2 2 0 0 0-4 0Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.75)"
+            d="M5.793 5.977v6.253m-.92-7.173q.92 0 .92.92m.92-.92q-.92 0-.92.92m0 6.253q0 .92-.92.92m.92-.92q0 .92.92.92m3.494-7.173v6.253m-.92-7.173q.92 0 .92.92m.92-.92q-.92 0-.92.92m0 6.253q0 .92-.92.92m.92-.92q0 .92.92.92"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.75)"
+            d="M12.046 5.977v6.253m-.92-7.173q.92 0 .92.92m.92-.92q-.92 0-.92.92m0 6.253q0 .92-.92.92m.92-.92q0 .92.92.92"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.75)"
+            d="M13.885 5.977v6.253m-.92-7.173q.92 0 .92.92m.92-.92q-.92 0-.92.92m0 6.253q0 .92-.92.92m.92-.92q0 .92.92.92m-9.012-.92V7.264a2.207 2.207 0 0 1 4.414 0v4.966m-4.414 0q0 .92.92.92m3.494-.92q0 .92-.92.92"
+          />
+          <path
+            fillRule="evenodd"
+            d="M5.793 5.057h4.414v2.207a2.207 2.207 0 0 0-4.414 0Z"
+          />
         </g>
       </Icon>
     );

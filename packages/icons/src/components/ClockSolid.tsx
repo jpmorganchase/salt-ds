@@ -16,10 +16,10 @@ export const ClockSolidIcon = forwardRef<SVGSVGElement, ClockSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 1 0-13 0m6-4.5h1v4.233L11.4 9.6l-.6.8-3.3-2.133Z"
+            d="M.25 8a7.75 7.75 0 1 0 15.5 0A7.75 7.75 0 1 0 .25 8m7.154-5.365h1.192v5.047l3.458 2.226-.716.954-3.934-2.544Z"
           />
         </g>
       </Icon>

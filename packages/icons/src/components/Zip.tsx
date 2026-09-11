@@ -18,38 +18,38 @@ export const ZipIcon = forwardRef<SVGSVGElement, ZipIconProps>(function ZipIcon(
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2.5 8V1.5h7l4 4V8m-4-6.5v4h4"
+          d="M1.868 8.246V1h7.804l4.46 4.46v2.786M9.672 1v4.46h4.46"
         />
         <path
           fillRule="evenodd"
-          d="M6.144 14.6H2.951v-.403l2.476-3.719H3.036V10h3.042v.403l-2.48 3.719h2.546Z"
+          d="M5.93 15.604H2.37v-.449l2.761-4.146H2.465v-.533h3.392v.45L3.093 15.07h2.838Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          strokeWidth=".132057"
-          d="M6.144 14.6H2.951v-.403l2.476-3.719H3.036V10h3.042v.403l-2.48 3.719h2.546Z"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.1971)"
+          d="M5.93 15.604H2.37v-.449l2.761-4.146H2.465v-.533h3.392v.45L3.093 15.07h2.838Z"
         />
-        <path fillRule="evenodd" d="M7.679 14.6V10h.535v4.6Z" />
+        <path fillRule="evenodd" d="M7.642 15.604v-5.128h.597v5.128Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          strokeWidth=".132057"
-          d="M7.679 14.6V10h.535v4.6Z"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.1971)"
+          d="M7.642 15.604v-5.128h.597v5.128Z"
         />
         <path
           fillRule="evenodd"
-          d="M11.338 10q.89 0 1.3.348t.411.995q0 .293-.095.556t-.31.462-.562.315-.851.115h-.56V14.6h-.535V10Zm-.05.456h-.617v1.876h.5q.44 0 .735-.095.294-.094.442-.307.148-.212.148-.564 0-.46-.293-.685t-.916-.225"
+          d="M11.721 10.476q.993 0 1.45.388t.458 1.11q0 .326-.107.619t-.345.516-.626.35-.95.128h-.624v2.017h-.596v-5.128Zm-.056.509h-.687v2.09h.557q.491 0 .82-.105.327-.105.492-.342t.165-.63q0-.512-.326-.762t-1.021-.251"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          strokeWidth=".132057"
-          d="M11.338 10q.89 0 1.3.348t.411.995q0 .293-.095.556t-.31.462-.562.315-.851.115h-.56V14.6h-.535V10Zm-.05.456h-.617v1.876h.5q.44 0 .735-.095.294-.094.442-.307.148-.212.148-.564 0-.46-.293-.685t-.916-.225Z"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.1971)"
+          d="M11.721 10.476q.993 0 1.45.388t.458 1.11q0 .326-.107.619t-.345.516-.626.35-.95.128h-.624v2.017h-.596v-5.128Zm-.056.509h-.687v2.09h.557q.491 0 .82-.105.327-.105.492-.342t.165-.63q0-.512-.326-.762t-1.021-.251Z"
         />
       </g>
     </Icon>

@@ -18,15 +18,15 @@ export const HospitalSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M4 1.833h8v12.334H4ZM7.5 3.5h1V5H10v1H8.5v1.5h-1V6H6V5h1.5ZM6 9h1v1H6Zm3 0h1v1H9Zm-2 3h2v2.167H7Z"
+          d="M3.228.269h9.544V14.98H3.228Zm4.176 1.988h1.192v1.79h1.79v1.192h-1.79v1.79H7.404v-1.79h-1.79V4.046h1.79Zm-1.79 6.56h1.193v1.194H5.614Zm3.579 0h1.193v1.194H9.193Zm-2.386 3.58h2.386v2.584H6.807Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2 14.167h12"
+          d="M.843 14.981h14.314"
         />
       </g>
     </Icon>

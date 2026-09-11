@@ -16,13 +16,13 @@ export const StethoscopeIcon = forwardRef<SVGSVGElement, StethoscopeIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M2.5 2v3.5a3 3 0 0 0 6 0V2m-6 1.5H4m4.5 0H7m-1.5 5v2a3.25 3 0 0 0 6.5 0V9" />
-            <path d="M10 7a2 2 0 1 0 4 0 2 2 0 1 0-4 0Z" />
+            <path d="M1 .625v4.26a3.652 3.652 0 0 0 7.304 0V.626M1 2.451h1.826m5.478 0H6.478M4.652 8.538v2.435a3.957 3.652 0 0 0 7.913 0V9.147" />
+            <path d="M10.13 6.712a2.435 2.435 0 1 0 4.87 0 2.435 2.435 0 1 0-4.87 0Z" />
           </g>
         </g>
       </Icon>

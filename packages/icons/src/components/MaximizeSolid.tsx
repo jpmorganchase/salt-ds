@@ -18,13 +18,13 @@ export const MaximizeSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2.5 2.5h11v11h-11Zm0 3h11"
+          d="M1 1h14v14H1Zm0 3.818h14"
         />
-        <path fillRule="evenodd" d="M2.5 5.5h11v8h-11Z" />
+        <path fillRule="evenodd" d="M1 4.818h14V15H1Z" />
       </g>
     </Icon>
   );

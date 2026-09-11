@@ -16,10 +16,10 @@ export const VideoSolidIcon = forwardRef<SVGSVGElement, VideoSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M2 3.5h8q.5 0 .5.5v8q0 .5-.5.5H2q-.5 0-.5-.5V4q0-.5.5-.5M11.5 6l3-1.5v7l-3-1.5Z"
+            d="M.846 2.635h9.539q.596 0 .596.596v9.538q0 .596-.596.596H.846q-.596 0-.596-.596V3.231q0-.596.596-.596m11.327 2.98 3.577-1.788v8.346l-3.577-1.788Z"
           />
         </g>
       </Icon>

@@ -18,12 +18,12 @@ export const FavoriteStrongIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          strokeWidth="1.005"
-          d="m8 2.82 1.596 3.332 3.668.504-2.66 2.576.644 3.668L8 11.192 4.752 12.9l.644-3.668-2.66-2.576 3.668-.504Z"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 1.5)"
+          d="m8 3.166 1.615 3.372 3.712.51-2.692 2.606.652 3.712L8 11.638l-3.287 1.728.652-3.712-2.692-2.606 3.712-.51Z"
         />
       </g>
     </Icon>

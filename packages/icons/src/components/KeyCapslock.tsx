@@ -16,11 +16,11 @@ export const KeyCapslockIcon = forwardRef<SVGSVGElement, KeyCapslockIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m2.5 7.5 5.5-5 5.5 5h-3v3h-5v-3Zm3 6h5"
+            d="M2.186 7.596 8 2.31l5.814 5.286h-3.171v3.171H5.357V7.596Zm3.171 6.342h5.286"
           />
         </g>
       </Icon>

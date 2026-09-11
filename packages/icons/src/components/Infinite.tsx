@@ -16,11 +16,11 @@ export const InfiniteIcon = forwardRef<SVGSVGElement, InfiniteIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8 8C6.333 5.5 5.333 5 4.333 5 1 5 1 11 4.333 11c1 0 2-.5 3.667-3s2.667-3 3.667-3c3.333 0 3.333 6 0 6-1 0-2-.5-3.667-3Z"
+            d="M8 8C6.105 5.157 4.968 4.589 3.83 4.589c-3.79 0-3.79 6.822 0 6.822 1.138 0 2.275-.568 4.17-3.411s3.032-3.411 4.17-3.411c3.79 0 3.79 6.822 0 6.822-1.138 0-2.275-.568-4.17-3.411Z"
           />
         </g>
       </Icon>

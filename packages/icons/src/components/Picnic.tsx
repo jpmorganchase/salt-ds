@@ -16,11 +16,11 @@ export const PicnicIcon = forwardRef<SVGSVGElement, PicnicIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m11.5 2.5 3 7h-6Zm-10 12h13m-3-7v7m-10-5h6m-4 0v5m-2-2h4"
+            d="m11.195 2.118 3.22 7.515h-6.44ZM.46 15h13.955m-3.22-7.514V15M.46 9.633H6.9m-4.293 0V15M.46 12.853h4.294"
           />
         </g>
       </Icon>

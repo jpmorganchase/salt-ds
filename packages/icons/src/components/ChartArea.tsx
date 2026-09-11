@@ -16,14 +16,14 @@ export const ChartAreaIcon = forwardRef<SVGSVGElement, ChartAreaIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M1.5 1.5v13h13" />
-            <path d="m3.5 8.5 3-3 3 2 4-5v10h-10Z" />
-            <path d="m3.5 10.5 3-1.5 3 1.25 4-3.25" />
+            <path d="M1.536 1.321V15h13.678" />
+            <path d="M3.64 8.687 6.797 5.53l3.156 2.104 4.21-5.26v10.522H3.64Z" />
+            <path d="m3.64 10.791 3.157-1.578 3.156 1.315 4.21-3.42" />
           </g>
         </g>
       </Icon>

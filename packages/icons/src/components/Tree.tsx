@@ -16,11 +16,11 @@ export const TreeIcon = forwardRef<SVGSVGElement, TreeIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8 5.5v3m-4.5 2v-2h9v2M6 1.5h4v4H6Zm-4.5 9h4v4h-4Zm9 0h4v4h-4Z"
+            d="M8 5.308v3.23m-4.846 2.154V8.538h9.692v2.154M5.846 1h4.308v4.308H5.846ZM1 10.692h4.308V15H1Zm9.692 0H15V15h-4.308Z"
           />
         </g>
       </Icon>

@@ -16,11 +16,11 @@ export const SyncIcon = forwardRef<SVGSVGElement, SyncIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2 8a6 6 0 0 1 10.243-4.243m-2.5 0h2.5v-2.5M14 8a6 6 0 0 1-10.243 4.243m2.5 0h-2.5v2.5"
+            d="M1.111 8a6.889 6.889 0 0 1 11.76-4.871m-2.87 0h2.87V.259M14.89 8a6.889 6.889 0 0 1-11.76 4.871m2.87 0H3.13v2.87"
           />
         </g>
       </Icon>

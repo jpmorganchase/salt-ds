@@ -16,11 +16,11 @@ export const UploadIcon = forwardRef<SVGSVGElement, UploadIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8 11.5v-10m-4 4 4-4 4 4m-9.5 7v2h11v-2"
+            d="M8 11.834V1.281M3.779 5.502 8 1.282l4.221 4.22M2.196 12.89V15h11.608v-2.11"
           />
         </g>
       </Icon>

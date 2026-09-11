@@ -18,11 +18,11 @@ export const MoveHorizontalIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1.5 8h13m-10-3-3 3 3 3m7-6 3 3-3 3"
+          d="M1.281 8H14.72M4.382 4.899 1.282 8l3.1 3.101m7.236-6.202L14.718 8l-3.1 3.101"
         />
       </g>
     </Icon>

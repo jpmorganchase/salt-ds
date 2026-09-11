@@ -16,13 +16,13 @@ export const SettingsIcon = forwardRef<SVGSVGElement, SettingsIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M6.5 1.5h3v2l1.5 1 2-1 1.5 3-2 1v1l2 1-1.5 3-2-1-1.5 1v2h-3v-2l-1.5-1-2 1-1.5-3 2-1v-1l-2-1 1.5-3 2 1 1.5-1Z" />
-            <path d="M6 8a2 2 0 1 0 4 0 2 2 0 1 0-4 0Z" />
+            <path d="M6.442 1.249h3.116v2.077l1.558 1.039 2.077-1.039 1.558 3.116-2.077 1.039v1.038l2.077 1.039-1.558 3.116-2.077-1.039-1.558 1.039v2.077H6.442v-2.077l-1.558-1.039-2.077 1.039-1.558-3.116 2.077-1.039V7.481L1.25 6.442l1.558-3.116 2.077 1.039 1.558-1.039Z" />
+            <path d="M5.923 8a2.077 2.077 0 1 0 4.154 0 2.077 2.077 0 1 0-4.154 0Z" />
           </g>
         </g>
       </Icon>

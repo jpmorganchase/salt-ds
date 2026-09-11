@@ -16,17 +16,17 @@ export const BuildReportIcon = forwardRef<SVGSVGElement, BuildReportIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2 5h12v9H2Zm0 3h3.5m5 0H14"
+            d="M1 4.208h14v10.5H1Zm0 3.5h4.083m5.834 0H15"
           />
-          <path fillRule="evenodd" d="M5.5 6.5h5v3h-5Z" />
+          <path fillRule="evenodd" d="M5.083 5.958h5.834v3.5H5.083Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M5.5 5V2.5h5V5"
+            d="M5.083 4.208V1.292h5.834v2.916"
           />
         </g>
       </Icon>

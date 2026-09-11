@@ -18,11 +18,11 @@ export const TextAlignCenterIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M4 3.5h8M2 8h12M4 12.5h8"
+          d="M2.833 2.188h10.334M.25 8h15.5M2.833 13.813h10.334"
         />
       </g>
     </Icon>

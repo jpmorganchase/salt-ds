@@ -16,19 +16,19 @@ export const TailsIcon = forwardRef<SVGSVGElement, TailsIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M2 2.5 6 4h4l4-1.5L12 7l2 5-6 3-6-3 2-5Z" />
+            <path d="m1.656 1.626 4.23 1.586h4.229l4.229-1.586-2.115 4.758 2.115 5.287L8 14.842l-6.344-3.171 2.115-5.287Z" />
             <path
-              strokeWidth=".402"
-              d="M5.367 7.667a.8.8 0 1 0 1.6 0 .8.8 0 1 0-1.6 0Zm3.666 0a.8.8 0 1 0 1.6 0 .8.8 0 1 0-1.6 0Z"
+              strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.6)"
+              d="M5.216 7.089a.846.846 0 1 0 1.692 0 .846.846 0 1 0-1.692 0Zm3.877 0a.846.846 0 1 0 1.691 0 .846.846 0 1 0-1.691 0Z"
             />
             <path
-              strokeWidth=".469"
-              d="M3 11q3-.5 5 3.5 2-4 5-3.5m-6-1 1 1 1-1"
+              strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.7)"
+              d="M2.714 10.613q3.171-.528 5.286 3.7 2.115-4.228 5.286-3.7M6.943 9.556 8 10.613l1.057-1.057"
             />
           </g>
         </g>

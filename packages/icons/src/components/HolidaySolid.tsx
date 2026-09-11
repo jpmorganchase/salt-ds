@@ -18,24 +18,24 @@ export const HolidaySolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M2.5 4a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0"
+          d="M1.681 3.346a1.748 1.748 0 1 0 3.496 0 1.748 1.748 0 1 0-3.496 0"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M4 1.333V2.75m0 2.5v1.417M1.333 4H2.75m2.5 0h1.417M2.083 2.083l1.033 1.033m1.768 1.768 1.033 1.033m-3.834 0 1.033-1.033m1.768-1.768 1.033-1.033"
+          d="M3.43.238v1.65m0 2.914v1.652M.32 3.346h1.652m2.913 0h1.651m-5.34-2.234 1.203 1.204m2.06 2.06L5.664 5.58m-4.467 0L2.4 4.376m2.06-2.06 1.204-1.204"
         />
         <path
           fillRule="evenodd"
-          d="M6.667 7.5Q9 3.833 12 5.833q2.5 1.5 2 3.667Z"
+          d="M6.537 7.425q2.72-4.274 6.216-1.943 2.913 1.748 2.33 4.274Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M10.5 8.5 9 14m-7.5 0h13"
+          d="M11.005 8.59 9.256 15m-8.74 0h15.15"
         />
       </g>
     </Icon>

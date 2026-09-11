@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" stroke-width="0.67">
-  <g fill="none" stroke="currentColor">
-    <path d="M2.5 4.5a2 2 0 1 0 4 0 2 2 0 1 0-4 0Z"/>
-    <path d="M9.5 11.5a2 2 0 1 0 4 0 2 2 0 1 0-4 0Z"/>
-    <path d="m3.5 13.5 9-11"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" stroke-width="0.67" viewBox="0 0 16 16">
+  <g fill="none" stroke="currentColor" stroke-width="0.67">
+    <path d="M1 3.545454a2.545454 2.545454 0 1 0 5.090908 0 2.545454 2.545454 0 1 0-5.090908 0Z"/>
+    <path d="M9.909089 12.454542a2.545454 2.545454 0 1 0 5.090907 0 2.545454 2.545454 0 1 0-5.090908 0Z"/>
+    <path d="M2.272727 14.999996 13.727269 1"/>
   </g>
 </svg>

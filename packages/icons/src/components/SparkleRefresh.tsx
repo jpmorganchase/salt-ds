@@ -18,18 +18,17 @@ export const SparkleRefreshIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
-        <path
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
+        <g
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M12.243 3.757A6 6 0 1 0 14 8M9.743 3.757h2.5v-2.5"
-        />
-        <path
-          fill="none"
-          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          strokeWidth=".4154"
-          d="M8 4.693c.579 2.398.91 2.728 3.307 3.307-2.398.579-2.728.91-3.307 3.307C7.421 8.909 7.09 8.579 4.693 8 7.091 7.421 7.421 7.09 8 4.693Z"
-        />
+        >
+          <path d="M12.908 3.15a6.941 6.941 0 1 0 2.033 4.909M10.016 3.15h2.892V.259" />
+          <path
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.62)"
+            d="M8 4.233c.67 2.774 1.052 3.156 3.825 3.826C9.052 8.729 8.67 9.11 8 11.884 7.33 9.111 6.948 8.728 4.175 8.06 6.948 7.389 7.33 7.007 8 4.233Z"
+          />
+        </g>
       </g>
     </Icon>
   );

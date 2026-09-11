@@ -16,20 +16,15 @@ export const SaltShakerIcon = forwardRef<SVGSVGElement, SaltShakerIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m10.121 2.579 3.3 3.3q.354.353 0 .707l-4.478 4.478-1.297.354-3.064-3.064.354-1.297L9.414 2.58q.354-.354.707 0Z"
-          />
-          <path
-            fill="none"
-            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m4.582 8.354 3.064 3.064-.589.589q-.353.354-.707 0L3.993 9.65q-.354-.353 0-.707Z"
+            d="m10.593 1.205 3.923 3.923q.42.42 0 .841l-5.324 5.324-1.542.42-3.642-3.642.42-1.541 5.324-5.325q.42-.42.84 0ZM4.007 8.07l3.643 3.644-.7.7q-.42.42-.84 0L3.306 9.612q-.42-.42 0-.84Z"
           />
           <path
             fillRule="evenodd"
-            d="M7.67 7.01h3.3L9.32 8.66ZM2.833 12h.8v.8h-.8Zm-1.166 1.867h.8v.8h-.8Zm2.5.133h.8v.8h-.8Z"
+            d="M7.679 6.473h3.923L9.64 8.435Zm-5.751 5.933h.951v.951h-.95Zm-1.387 2.22h.951v.95h-.95Zm2.972.158h.952v.951h-.952Z"
           />
         </g>
       </Icon>

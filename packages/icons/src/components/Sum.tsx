@@ -18,11 +18,11 @@ export const SumIcon = forwardRef<SVGSVGElement, SumIconProps>(function SumIcon(
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M13.5 5V2.5H3L7.5 8 3 13.5h10.5V11"
+          d="M15 4.23V1.088H1.804L7.46 8l-5.656 6.912H15V11.77"
         />
       </g>
     </Icon>

@@ -16,23 +16,26 @@ export const DevicesIcon = forwardRef<SVGSVGElement, DevicesIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M9.25 10.667H1.5V2.333h11v2.084M7 10.667v3m-2.25 0h4.5"
+            d="M9.346 10.502H1V1.527h11.846v2.244m-5.923 6.731v3.23m-2.423 0h4.846"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M11.167 5.667h2.666q.667 0 .667.666v7.334q0 .666-.667.666h-2.666q-.667 0-.667-.666V6.333q0-.666.667-.666Z"
+            d="M11.41 5.117h2.872q.718 0 .718.718v7.897q0 .718-.718.718H11.41q-.718 0-.718-.718V5.835q0-.718.718-.718Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M10.5 7.167q0 .5.5.5h3q.5 0 .5-.5m-4 1q0-.5.5-.5h3q.5 0 .5.5"
+            d="M10.692 6.732q0 .539.539.539h3.23q.539 0 .539-.539M10.692 7.81q0-.538.539-.538h3.23q.539 0 .539.538"
           />
-          <path fillRule="evenodd" d="M12 12.5a.5.5 0 1 0 1 0 .5.5 0 1 0-1 0" />
+          <path
+            fillRule="evenodd"
+            d="M12.308 12.476a.538.538 0 1 0 1.077 0 .538.538 0 1 0-1.077 0"
+          />
         </g>
       </Icon>
     );

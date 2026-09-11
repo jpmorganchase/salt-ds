@@ -16,13 +16,13 @@ export const ChatGroupIcon = forwardRef<SVGSVGElement, ChatGroupIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M5 2h9.5v8L12 8h-1" />
-            <path d="M1.5 4H11v7.5H5.5l-3 2.5v-2.5h-1Z" />
+            <path d="M4.77 1.117H15v8.615l-2.692-2.154H11.23" />
+            <path d="M1 3.27h10.23v8.077H5.309L2.077 14.04v-2.693H1Z" />
           </g>
         </g>
       </Icon>

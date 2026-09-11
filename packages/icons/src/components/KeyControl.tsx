@@ -16,11 +16,11 @@ export const KeyControlIcon = forwardRef<SVGSVGElement, KeyControlIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M3.5 9.5 8 5l4.5 4.5"
+            d="M.769 11.875 8 4.644l7.231 7.231"
           />
         </g>
       </Icon>

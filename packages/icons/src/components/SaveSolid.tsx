@@ -16,10 +16,10 @@ export const SaveSolidIcon = forwardRef<SVGSVGElement, SaveSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M2.5 2.5h9l2 2v9h-11ZM6 3h4v3H6Zm-1 7h6v3H5Z"
+            d="M.25.25h12.682l2.818 2.818V15.75H.25Zm4.932.705h5.636v4.227H5.182Zm-1.41 9.863h8.455v4.227H3.773Z"
           />
         </g>
       </Icon>

@@ -16,11 +16,11 @@ export const CreditCardIcon = forwardRef<SVGSVGElement, CreditCardIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 3.5h13v9h-13Zm0 3h13M3.5 10h3"
+            d="M1 3.154h14v9.692H1Zm0 3.231h14M3.154 10.154h3.23"
           />
         </g>
       </Icon>

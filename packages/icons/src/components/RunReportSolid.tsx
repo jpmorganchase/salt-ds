@@ -18,10 +18,10 @@ export const RunReportSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g strokeWidth=".67">
+      <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M2.5 1.5h8l3 3v10h-11Zm8 1V4q0 .5.5.5h1.5ZM6 7v5.5l4.5-2.75Z"
+          d="M1.442.25h9.539l3.577 3.577V15.75H1.442Zm9.539 1.192v1.789q0 .596.596.596h1.788ZM5.615 6.808v6.557l5.366-3.278Z"
         />
       </g>
     </Icon>

@@ -16,20 +16,20 @@ export const PrintIcon = forwardRef<SVGSVGElement, PrintIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.5 11.5h-2v-6h11v6h-2m-7-6v-4h7v4"
+            d="M4.23 11.77H2.078V5.307h11.846v6.461H11.77"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.5 9.5h7v5h-7Zm1 2h5"
+            d="M4.23 5.308V1h7.54v4.308M4.23 9.615h7.54V15H4.23Zm1.078 2.155h5.384"
           />
           <path
             fillRule="evenodd"
-            d="M11.1 7.5a.4.4 0 1 0 .8 0 .4.4 0 1 0-.8 0"
+            d="M11.338 7.462a.43.43 0 1 0 .862 0 .43.43 0 1 0-.862 0"
           />
         </g>
       </Icon>

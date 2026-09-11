@@ -17,15 +17,15 @@ export const BarChartIcon = forwardRef<SVGSVGElement, BarChartIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.5 1.5v13"
+            d="M1 .625v14.75"
           />
           <path
             fillRule="evenodd"
-            d="M3.5 2.5h11v2h-11Zm0 4.5h7v2h-7Zm0 4.5h9v2h-9Z"
+            d="M3.27 1.76h12.48v2.269H3.27Zm0 5.105h7.942v2.27H3.269Zm0 5.106h10.21v2.27H3.27Z"
           />
         </g>
       </Icon>

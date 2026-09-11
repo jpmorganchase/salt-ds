@@ -16,20 +16,20 @@ export const CalculatorIcon = forwardRef<SVGSVGElement, CalculatorIconProps>(
         ref={ref}
         {...props}
       >
-        <g strokeWidth=".67">
+        <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M3 1.5h10v13H3Z"
+            d="M2.615 1h10.77v14H2.615Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M5 3.5h6v2H5Z"
+            d="M4.77 3.154h6.46v2.154H4.77Z"
           />
           <path
             fillRule="evenodd"
-            d="M4.5 8h1v1h-1Zm0 3h1v1h-1Zm3-3h1v1h-1Zm0 3h1v1h-1Zm3-3h1v1h-1Zm0 3h1v1h-1Z"
+            d="M4.23 8h1.078v1.077H4.23Zm0 3.23h1.078v1.078H4.23ZM7.463 8h1.076v1.077H7.462Zm0 3.23h1.076v1.078H7.462ZM10.692 8h1.077v1.077h-1.077Zm0 3.23h1.077v1.078h-1.077Z"
           />
         </g>
       </Icon>
