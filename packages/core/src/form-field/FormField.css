@@ -19,6 +19,11 @@
     "controls";
 }
 
+.saltFormField-labelTop.saltFormField-hasControls {
+  align-content: start;
+  grid-template-rows: min-content minmax(var(--salt-size-base), auto);
+}
+
 .saltFormField-labelTop .saltFormFieldHelperText {
   grid-area: 3 / 1;
 }
@@ -28,9 +33,17 @@
   grid-template-areas: "label controls";
 }
 
+.saltFormField-labelLeft.saltFormField-hasControls {
+  grid-template-rows: minmax(var(--salt-size-base), auto);
+}
+
 .saltFormField-labelRight {
   grid-template-columns: var(--saltFormField-label-width, var(--formField-label-width, 40%)) 1fr;
   grid-template-areas: "label controls";
+}
+
+.saltFormField-labelRight.saltFormField-hasControls {
+  grid-template-rows: minmax(var(--salt-size-base), auto);
 }
 
 .saltFormField-labelLeft .saltFormFieldHelperText,
@@ -47,20 +60,16 @@
   text-align: right;
 }
 
-.saltFormField-controls {
-  align-items: center;
-  display: grid;
-  grid-auto-columns: minmax(0, 1fr);
-  grid-auto-flow: column;
-  grid-column-gap: var(--salt-spacing-100);
-}
-
 .saltFormFieldLabel {
   grid-area: label;
 }
 
 .saltFormFieldHelperText {
   grid-area: helperText;
+}
+
+.saltFormField-labelTop > :not(.saltFormFieldLabel):not(.saltFormFieldHelperText) {
+  align-self: center;
 }
 
 .saltFormField-disabled {
@@ -72,5 +81,9 @@
 @supports selector(:has(*)) {
   .saltFormField:not(:has(.saltFormFieldLabel)) {
     grid-template-areas: "controls";
+  }
+
+  .saltFormField-hasControls:not(:has(.saltFormFieldLabel)) {
+    grid-template-rows: minmax(var(--salt-size-base), auto);
   }
 }
