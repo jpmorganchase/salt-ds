@@ -1,5 +1,33 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.104
+
+### Minor Changes
+
+- 5da6723: Removed `LinkButton` from lab and promoted it to core. Import it from `@salt-ds/core` instead.
+- be5eb93: Added `AvatarGroup` to the lab package.
+
+  `AvatarGroup` displays a collection of avatars in a compact, overlapping stack. Compose the avatars you want to display and, when members are hidden, add an `AvatarGroupCount` as the last child to indicate the remaining members.
+
+  ```tsx
+  import { Avatar } from "@salt-ds/core";
+  import { AvatarGroup, AvatarGroupCount } from "@salt-ds/lab";
+
+  <AvatarGroup aria-label="Team members">
+    <Avatar name="Alex Brailescu" />
+    <Avatar name="Peter Piper" />
+    <Avatar name="John Doe" />
+    <AvatarGroupCount count={1} />
+  </AvatarGroup>;
+  ```
+
+### Patch Changes
+
+- Updated dependencies [5da6723]
+- Updated dependencies [1417fa9]
+- Updated dependencies [dd17c26]
+  - @salt-ds/core@1.71.0
+
 ## 1.0.0-alpha.103
 
 ### Minor Changes
