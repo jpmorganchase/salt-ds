@@ -245,6 +245,11 @@
     "category": "actions"
   },
   {
+    "iconName": "close-small",
+    "synonym": ["close", "dismiss", "cancel", "compact", "small", "x"],
+    "category": "actions"
+  },
+  {
     "iconName": "closedcaption",
     "synonym": [
       "accessibility",

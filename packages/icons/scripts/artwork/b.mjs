@@ -1,4 +1,11 @@
 import { figma, github, linkedin } from "./brands.mjs";
+import {
+  enclosedExclamation,
+  enclosedInfo,
+  enclosedQuestion,
+} from "./enclosed-marks.mjs";
+import { withSharedMark } from "./mark-composition.mjs";
+import { medicalCross } from "./medical-marks.mjs";
 import { numberedTimer } from "./numbered-timer.mjs";
 import { box, C, circ, dot, F, group, plus, R, S } from "./primitives.mjs";
 
@@ -41,8 +48,8 @@ const octagon =
   "M8.25 2.75H15.75L21.25 8.25V15.75L15.75 21.25H8.25L2.75 15.75V8.25Z";
 add(
   "error",
-  S(octagon) + S("M12 6.75V13.5") + dot(12, 17.25, 1),
-  F(octagon + box(11.15, 6.25, 1.7, 7.5) + circ(12, 17.25, 1.15)),
+  withSharedMark(S(octagon), enclosedExclamation(4.625)),
+  withSharedMark(F(octagon), enclosedExclamation(4.625), true),
 );
 add("expand-all-horizontal", S("M9 6L3 12L9 18M15 6L21 12L15 18"));
 add("expand-all", S("M6 9L12 3L18 9M6 15L12 21L18 15"));
@@ -109,7 +116,7 @@ const folder = "M3.75 20.25V4.5H9.75L12.75 7.5H20.25V20.25Z";
 add(
   "folder-closed",
   S(folder) + S("M3.75 10.5H20.25"),
-  F(folder + box(6, 9.75, 12, 1.5, 0.4)),
+  F(folder + box(6, 9.75, 12, 1.5)),
 );
 const openFolder = "M3.75 20.25H18.75L21 10.5H6Z";
 add(
@@ -180,18 +187,21 @@ add(
       box(14.5, 12, 4.5, 1.5, 0.4),
   ),
 );
-// Keep the wrists, thumb and three folded fingers; a broad palm contour avoids
-// tiny repeated fingertip bumps. The filled grip retains open finger counters.
+// Opposing cuffs and a continuous thumb crossover establish the clasp.
+// Open finger creases avoid small enclosed loops; the solid fills the cuffs
+// inside the shared cuff boundary so the clasp keeps the same fitted geometry.
 const handshakeContour =
-  "M2.25 9.25 8.75 2.75 11 5 13.25 2.75 21.75 11.25 18.95 14.05 19.2 14.3Q20.4 15.5 19.2 16.7L16.2 19.7Q15 20.9 13.8 19.7L13.3313 19.2313C13.265 19.3272 13.1892 19.4185 13.1039 19.5039L11.8539 20.7539C11.0923 21.5154 9.8577 21.5154 9.0961 20.7539C8.3346 19.9923 8.3346 18.7577 9.0961 17.9961L10.3461 16.7461C10.4416 16.6507 10.5445 16.5672 10.653 16.4956L10.5072 16.3426C10.4351 16.4527 10.3506 16.5571 10.2539 16.6539L9.0039 17.9039C8.2423 18.6654 7.0077 18.6654 6.2461 17.9039C5.4846 17.1423 5.4846 15.9077 6.2461 15.1461L7.4961 13.8961C7.6163 13.776 7.7482 13.6748 7.8882 13.5926L7.7107 13.4062C7.6279 13.5483 7.5256 13.6821 7.4039 13.8039L6.1539 15.0539C5.3923 15.8154 4.1577 15.8154 3.3961 15.0539C2.6346 14.2923 2.6346 13.0577 3.3961 12.2961L4.3461 11.3461Z";
+  "M4 7L7 5.5H10.5L12 7L13.5 5.5H17L20 7V14L18.8 15.8Q19.8 16.8 18.8 17.8Q17.8 18.8 16.8 17.8L16.1 17.2Q17.1 18.2 16.1 19.2Q15.1 20.2 14.1 19.2L13.4 18.6Q14.4 19.6 13.4 20.6Q12.4 21.6 11.4 20.6L4 14Z";
 const handshakeThumb =
-  "M11 5L9.5 6.5Q8.4 7.6 9.5 8.7Q10.6 9.8 11.7 8.7L12.65 7.75L18.95 14.05";
-const handshakeCounters =
-  "M10.15 7.2Q9.55 7.8 10.15 8.4Q10.75 9 11.35 8.4L12.25 7.5Q12.65 7.1 13.05 7.5L18.6 13.05L19.65 12L13.25 5.2ZM5.51746 14.41746L6.76746 13.16746A1.05 1.05 0 0 0 5.28254 11.68254L4.03254 12.93254A1.05 1.05 0 0 0 5.51746 14.41746ZM8.36746 17.26746L9.61746 16.01746A1.05 1.05 0 0 0 8.13254 14.53254L6.88254 15.78254A1.05 1.05 0 0 0 8.36746 17.26746ZM11.21746 20.11746L12.46746 18.86746A1.05 1.05 0 0 0 10.98254 17.38254L9.73254 18.63254A1.05 1.05 0 0 0 11.21746 20.11746Z";
+  "M12 7L9 10Q7.7 11.3 9 12.6Q10.3 13.9 11.6 12.6L13 11.2L18.8 15.8";
+const handshakeCreases = "M16.1 17.2L13.5 14.9M13.4 18.6L10.8 16.3";
+const handshakeCuffs = box(1, 6, 3, 8) + box(20, 6, 3, 8);
+const handshakeHands =
+  S(handshakeContour) + S(handshakeThumb) + S(handshakeCreases, 1.15);
 add(
   "handshake",
-  S(handshakeContour) + S(handshakeThumb),
-  F(handshakeContour + handshakeCounters),
+  handshakeHands + S(handshakeCuffs),
+  handshakeHands + S(handshakeCuffs) + F(handshakeCuffs),
 );
 const headband = "M3.75 15.75V10.5A8.25 8.25 0 0 1 20.25 10.5V15.75";
 const cups = box(3.75, 12.75, 4.5, 7.5, 0.6) + box(15.75, 12.75, 4.5, 7.5, 0.6);
@@ -214,17 +224,10 @@ add(
     ) +
     S("M3 3L21 21"),
 );
-const question =
-  S(
-    "M8.75 8.625Q8.75 6.125 12 6.125Q15.25 6.125 15.25 8.625Q15.25 10.125 13.5 11.125Q12 11.875 12 13.5",
-  ) + dot(12, 17.25, 1);
-const questionHole =
-  "M8 8.625Q8 5.375 12 5.375Q16 5.375 16 8.625Q16 10.625 14 11.75Q12.75 12.45 12.75 13.75H11.25Q11.25 11.65 13 10.625Q14.5 9.775 14.5 8.625Q14.5 6.875 12 6.875Q9.5 6.875 9.5 8.625Z" +
-  circ(12, 17.25, 1.15);
 add(
   "help-circle",
-  C(12, 12, 9.25) + question,
-  F(circ(12, 12, 9.5) + questionHole),
+  withSharedMark(C(12, 12, 9.25), enclosedQuestion),
+  withSharedMark(F(circ(12, 12, 9.5)), enclosedQuestion, true),
 );
 // This is the visible eye's contour with a real slash corridor. Pupil
 // fragments are filled geometry, avoiding a microscopic stroked ring.
@@ -337,14 +340,8 @@ add(
 );
 add(
   "info",
-  R(2.25, 2.25, 19.5, 19.5) +
-    dot(12, 6.75, 1.25) +
-    S("M10.5 11.25H12V17.25M9.75 17.25H14.25"),
-  F(
-    box(2.25, 2.25, 19.5, 19.5) +
-      circ(12, 6.75, 1.25) +
-      "M10.5 10.5H12.75V16.5H14.25V18H9.75V16.5H11.25V12H10.5Z",
-  ),
+  withSharedMark(R(2.25, 2.25, 19.5, 19.5), enclosedInfo),
+  withSharedMark(F(box(2.25, 2.25, 19.5, 19.5)), enclosedInfo, true),
 );
 const puzzle =
   "M4.5 4.5H9.75C9.25 2.25 14.75 2.25 14.25 4.5H19.5V9.75C21.75 9.25 21.75 14.75 19.5 14.25V19.5H14.25C14.75 17.25 9.25 17.25 9.75 19.5H4.5V14.25C6.75 14.75 6.75 9.25 4.5 9.75Z";
@@ -376,7 +373,12 @@ const topLayer = "M12 2.75L21.25 7.5L12 12.25L2.75 7.5Z";
 const otherLayers = S(
   "M2.75 12L12 16.75L21.25 12M2.75 16.5L12 21.25L21.25 16.5",
 );
-add("layers", S(topLayer) + otherLayers, F(topLayer) + otherLayers);
+// Keep the top layer's outer perimeter so the lower layers retain the same fit.
+add(
+  "layers",
+  S(topLayer) + otherLayers,
+  F(topLayer) + S(topLayer) + otherLayers,
+);
 add("less-than", S("M17.25 5.25L6.75 12L17.25 18.75"));
 add(
   "less-than-equal-to",
@@ -484,14 +486,25 @@ add(
     F(box(3.75, 8.25, 16.5, 12)),
 );
 const kit = box(2.75, 4.5, 18.5, 15);
-const kitBands = S("M5.75 4.5V19.5M18.25 4.5V19.5");
-const kitPlus =
-  "M11.25 9H12.75V11.25H15V12.75H12.75V15H11.25V12.75H9V11.25H11.25Z";
+// Fill to the outline's painted edge so the straps retain their fitted anchors.
+const kitEdge = (0.75 * 18.5) / 14;
+const kitSurface = box(
+  2.75 - kitEdge,
+  4.5 - kitEdge,
+  18.5 + 2 * kitEdge,
+  15 + 2 * kitEdge,
+);
+// Keep the straps secondary to the medical cross at small sizes.
+const kitBands = S("M5.75 4.5V19.5M18.25 4.5V19.5", 1.05);
 add(
   "medical-kit",
-  S(kit) + kitBands + plus(12, 12, 3),
+  withSharedMark(S(kit) + kitBands, medicalCross),
   // Enclosed strap counters preserve the same continuous case as the outline.
-  F(kit + box(5, 6, 1.5, 12) + box(17.5, 6, 1.5, 12) + kitPlus),
+  withSharedMark(
+    F(kitSurface + box(5.15, 6, 1.2, 12) + box(17.65, 6, 1.2, 12)),
+    medicalCross,
+    true,
+  ),
 );
 add("menu", S("M3 5.25H21M3 12H21M3 18.75H21"));
 

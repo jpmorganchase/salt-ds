@@ -22,13 +22,15 @@ export const SemanticVeryDissatisfiedIcon = forwardRef<
       {...props}
     >
       <g strokeWidth="var(--icon-strokeWidth, 1)">
-        <g
+        <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-        >
-          <path d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Z" />
-          <path d="M4.77 12.308Q8 8 11.23 12.308m-7-7 2.155 1.077m3.23 0 2.154-1.077" />
-        </g>
+          d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Z"
+        />
+        <path
+          fillRule="evenodd"
+          d="M4.25 6.75a1 1 0 1 0 2 0 1 1 0 1 0-2 0m5.5 0a1 1 0 1 0 2 0 1 1 0 1 0-2 0M4.046 4.41l2.25.9.408-1.02-2.25-.9Zm5.658.9 2.25-.9-.408-1.02-2.25.9ZM4.32 11.376a4.25 4.25 0 0 1 7.362 0l-1.3.75a2.75 2.75 0 0 0-4.763 0Z"
+        />
       </g>
     </Icon>
   );

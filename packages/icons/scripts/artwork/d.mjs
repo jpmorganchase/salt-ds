@@ -1,4 +1,6 @@
 import { stackoverflow, symphony } from "./brands.mjs";
+import { enclosedExclamation, enclosedTick } from "./enclosed-marks.mjs";
+import { withSharedMark } from "./mark-composition.mjs";
 import {
   box,
   C,
@@ -13,7 +15,6 @@ import {
   slash,
   textLabel,
 } from "./primitives.mjs";
-import { successTick } from "./tick.mjs";
 
 const icons = {};
 const put = (n, o, s) => {
@@ -65,10 +66,10 @@ put("step-active", F(circ(12, 12, 9)));
 put("step-default", C(12, 12, 9));
 put(
   "success-circle",
-  C(12, 12, 9) + S(successTick.line),
-  F(circ(12, 12, 9) + successTick.counter),
+  withSharedMark(C(12, 12, 9), enclosedTick),
+  withSharedMark(F(circ(12, 12, 9)), enclosedTick, true),
 );
-put("step-success", F(circ(12, 12, 9) + successTick.counter));
+put("step-success", withSharedMark(F(circ(12, 12, 9)), enclosedTick, true));
 const scope = S(
   "M3.75 3v5.25a4.5 4.5 0 0 0 9 0V3M3.75 5.25H6M12.75 5.25h-2.25M8.25 12.75v3a4.875 4.5 0 0 0 9.75 0v-2.25",
 );
@@ -150,20 +151,21 @@ put(
       circ(17.25, 6.75, 1.5),
   ) + S("M15 15l7 7M22 15l-7 7"),
 );
-const owl = "M3 3.75L9 6h6l6-2.25-3 6.75 3 7.5-9 4.5-9-4.5 3-7.5Z";
-// Counters follow the outline beak and cheek curves with a 1.05-unit stroke.
-const owlFeatureCounters =
-  "M10.8712 14.6288 12 15.7575 13.1288 14.6288 13.8712 15.3712 12.3712 16.8712Q12.3347 16.9078 12.2917 16.9365Q12.2487 16.9652 12.2009 16.985Q12.1531 17.0048 12.1024 17.0149Q12.0517 17.025 12 17.025Q11.9483 17.025 11.8976 17.0149Q11.8469 17.0048 11.7991 16.985Q11.7513 16.9652 11.7083 16.9365Q11.6653 16.9078 11.6288 16.8712L10.1288 15.3712ZM4.4137 15.9821Q8.9419 15.2274 12 20.6318Q15.0581 15.2274 19.5863 15.9821L19.4137 17.0179Q15.2962 16.3316 12.4696 21.9848Q12.3913 22.1413 12.2348 22.2196Q12.1885 22.2427 12.1387 22.2564Q12.0888 22.27 12.0372 22.2737Q11.9856 22.2773 11.9343 22.2709Q11.883 22.2644 11.834 22.2481Q11.7849 22.2317 11.74 22.2061Q11.6951 22.1805 11.656 22.1466Q11.617 22.1127 11.5853 22.0719Q11.5536 22.031 11.5304 21.9848Q8.7038 16.3316 4.5863 17.0179Z";
+// Tails represents the catalogue's fox. Retain the earlier curved forehead,
+// hollow ears and pointed muzzle, with small eyes instead of an owl's eye rings.
+const fox =
+  "M3 3.75Q7 3.9 10.5 6H13.5Q17 3.9 21 3.75L18.75 9L21 16.5L12 22.5L3 16.5L5.25 9Z";
+const foxEars = "M5.75 6L8.5 7.5H6.5ZM18.25 6L15.5 7.5H17.5Z";
+const foxEyes = circ(8, 11.25, 1) + circ(16, 11.25, 1);
+const foxCheeks = "M3.75 14.25Q8.5 13.75 12 18Q15.5 13.75 20.25 14.25";
+const foxMuzzle = `${foxCheeks}L12 22.5Z`;
+const foxNose = "M10.5 18H13.5L12 20.25Z";
+// Shared outer and cheek strokes preserve the pair's fit and feature anchors.
+const foxLinework = S(fox) + S(foxCheeks, 1.05);
 put(
   "tails",
-  S(owl) +
-    S(circ(9.25, 11.5, 1.2), 0.9) +
-    S(circ(14.75, 11.5, 1.2), 0.9) +
-    S(
-      "M4.5 16.5Q9 15.75 12 21.75Q15 15.75 19.5 16.5M10.5 15l1.5 1.5 1.5-1.5",
-      1.05,
-    ),
-  F(owl + circ(9.25, 11.5, 1.2) + circ(14.75, 11.5, 1.2) + owlFeatureCounters),
+  foxLinework + F(foxEars + foxEyes + foxNose),
+  F(fox + foxEars + foxEyes + foxMuzzle) + foxLinework + F(foxNose),
 );
 put("target", C(12, 12, 7.5) + S("M12 1.5v6M12 16.5v6M1.5 12h6M16.5 12h6"));
 put(
@@ -307,7 +309,7 @@ const typeLines =
 put(
   "type",
   typeLines + handles.map((p) => S(p)).join(""),
-  typeLines + F(handles.join("")),
+  typeLines + handles.map((p) => S(p)).join("") + F(handles.join("")),
 );
 put("undo", S("M3.75 3.75v6h6M3.75 9.75a8.25 8.25 0 1 1 7.5 11.25"));
 const ungroupLines = S("M15 3.75h5.25V9M3.75 15v5.25H9");
@@ -437,6 +439,8 @@ put(
   S(eye) + C(12, 12, 3),
   F(eye + circ(12, 12, 3.75)) + dot(12, 12, 2.25),
 );
+// Keep this speaker and the inner wave shared. The quieter/muted states use
+// optical targets matching VolumeUp's final speaker size and left anchor.
 const speaker = F("M2.25 9h4.5L12.75 3.75v16.5L6.75 15h-4.5Z");
 put("volume-down", speaker + S("M16.5 8.25q3.75 3.75 0 7.5"));
 put(
@@ -447,8 +451,8 @@ put("volume-off", speaker + S("M16.5 8.25 22.5 15.75M22.5 8.25 16.5 15.75"));
 const warning = "M12 3L21.75 21H2.25Z";
 put(
   "warning",
-  S(warning) + S("M12 8.25v6") + dot(12, 17.25, 1),
-  F(warning + box(11.25, 8.25, 1.5, 6) + circ(12, 17.25, 1)),
+  withSharedMark(S(warning), enclosedExclamation()),
+  withSharedMark(F(warning), enclosedExclamation(), true),
 );
 const straps = S("M8.25 6.75v-4.5h7.5v4.5M8.25 17.25v4.5h7.5v-4.5");
 put(

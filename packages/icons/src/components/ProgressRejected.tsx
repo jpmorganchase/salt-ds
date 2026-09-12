@@ -21,7 +21,7 @@ export const ProgressRejectedIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M.25 8a7.75 7.75 0 1 0 15.5 0A7.75 7.75 0 1 0 .25 8m3.577-.596h8.346v1.192H3.827Z"
+          d="M.25 8a7.75 7.75 0 1 0 15.5 0A7.75 7.75 0 1 0 .25 8m3.575-1h8.35v2h-8.35Z"
         />
       </g>
     </Icon>

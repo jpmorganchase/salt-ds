@@ -24,12 +24,7 @@ export const InfoIcon = forwardRef<SVGSVGElement, InfoIconProps>(
           />
           <path
             fillRule="evenodd"
-            d="M7.103 4.23a.897.897 0 1 0 1.794 0 .897.897 0 1 0-1.794 0"
-          />
-          <path
-            fill="none"
-            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M6.923 7.462H8v4.307m-1.615 0h3.23"
+            d="M7 3.75a1 1 0 1 0 2 0 1 1 0 1 0-2 0m-.5 3H9v5h1.25V13h-4.5v-1.25H7V8h-.5Z"
           />
         </g>
       </Icon>

@@ -17,20 +17,21 @@ export const TailsIcon = forwardRef<SVGSVGElement, TailsIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
-          <g
+          <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          >
-            <path d="m1.656 1.626 4.23 1.586h4.229l4.229-1.586-2.115 4.758 2.115 5.287L8 14.842l-6.344-3.171 2.115-5.287Z" />
-            <path
-              strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.6)"
-              d="M5.216 7.089a.846.846 0 1 0 1.692 0 .846.846 0 1 0-1.692 0Zm3.877 0a.846.846 0 1 0 1.691 0 .846.846 0 1 0-1.691 0Z"
-            />
-            <path
-              strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.7)"
-              d="M2.714 10.613q3.171-.528 5.286 3.7 2.115-4.228 5.286-3.7M6.943 9.556 8 10.613l1.057-1.057"
-            />
-          </g>
+            d="M1.4 1.078q2.933.11 5.5 1.65h2.2q2.567-1.54 5.5-1.65l-1.65 3.85 1.65 5.5-6.6 4.4-6.6-4.4 1.65-5.5Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.7)"
+            d="M1.95 8.778q3.483-.367 6.05 2.75 2.567-3.117 6.05-2.75"
+          />
+          <path
+            fillRule="evenodd"
+            d="m3.417 2.728 2.016 1.1H3.967Zm9.166 0-2.016 1.1h1.466Zm-8.25 3.85a.733.733 0 1 0 1.467 0 .733.733 0 1 0-1.467 0m5.867 0a.733.733 0 1 0 1.467 0 .733.733 0 1 0-1.467 0m-3.3 4.95h2.2L8 13.178Z"
+          />
         </g>
       </Icon>
     );

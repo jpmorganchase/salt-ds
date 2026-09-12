@@ -24,7 +24,7 @@ export const GlobeIcon = forwardRef<SVGSVGElement, GlobeIconProps>(
             <path d="M1.012 8a6.988 6.988 0 1 0 13.976 0A6.988 6.988 0 1 0 1.012 8Z" />
             <path
               strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.72)"
-              d="M8 1.012a3.678 6.988 0 1 0 0 13.976A3.678 6.988 0 1 0 8 1.012ZM1.503 5.425h12.994m-12.994 5.15h12.994"
+              d="M8 1.012v13.976M8 1.012a3.678 6.988 0 1 0 0 13.976A3.678 6.988 0 1 0 8 1.012ZM1.503 5.425h12.994m-12.994 5.15h12.994"
             />
           </g>
         </g>

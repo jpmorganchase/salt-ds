@@ -22,11 +22,11 @@ export const SemanticNeutralIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Zm3.77 2.692h6.46"
+          d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Z"
         />
         <path
           fillRule="evenodd"
-          d="M4.77 5.846a.538.538 0 1 0 1.076 0 .538.538 0 1 0-1.077 0m5.385 0a.538.538 0 1 0 1.077 0 .538.538 0 1 0-1.077 0"
+          d="M4.25 6.25a1 1 0 1 0 2 0 1 1 0 1 0-2 0m5.5 0a1 1 0 1 0 2 0 1 1 0 1 0-2 0M4 10.5h8V12H4Z"
         />
       </g>
     </Icon>

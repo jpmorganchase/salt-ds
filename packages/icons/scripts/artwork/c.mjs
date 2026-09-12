@@ -1,3 +1,7 @@
+import { notificationRead } from "./action-marks.mjs";
+import { enclosedDot, enclosedTick } from "./enclosed-marks.mjs";
+import { faceMarks } from "./face-marks.mjs";
+import { standaloneMark, withSharedMark } from "./mark-composition.mjs";
 import { numberedTimer } from "./numbered-timer.mjs";
 import {
   box,
@@ -12,7 +16,6 @@ import {
   S,
   textLabel,
 } from "./primitives.mjs";
-import { successTick } from "./tick.mjs";
 
 // Each drawing is composed on the shared 24-unit construction grid, then
 // published at 16px. Filled versions retain real transparent counters.
@@ -47,13 +50,15 @@ const messageAction = (kind) => {
 };
 for (const k of ["forward", "reply", "reply-all"])
   put(`message-${k}`, messageAction(k));
+// Menu ellipses share Chatting's final two-unit round dots. Wider spacing
+// lets the standalone controls occupy the normal icon frame without scaling dots.
 put(
   "micro-menu",
-  [5.25, 12, 18.75].map((y) => F(box(10.875, y - 1.125, 2.25, 2.25))).join(""),
+  standaloneMark([1.25, 8, 14.75].map((y) => enclosedDot(8, y)).join("")),
 );
 put(
   "overflow-menu",
-  [5.25, 12, 18.75].map((x) => F(box(x - 1.125, 10.875, 2.25, 2.25))).join(""),
+  standaloneMark([1.25, 8, 14.75].map((x) => enclosedDot(x, 8)).join("")),
 );
 
 const mic = box(8.25, 2.25, 7.5, 13.5, 3.75);
@@ -141,22 +146,7 @@ put(
 const bell = "M6.75 9a5.25 5.25 0 0 1 10.5 0v3.75l3 4.5H3.75l3-4.5Z";
 const bellTip = S("M9.75 20.25h4.5M12 3.75v-1.5");
 put("notification", S(bell) + bellTip, F(bell) + bellTip);
-// A compact check leaves the bell's shoulder legible. Both cutouts follow the
-// foreground's sides, flat ends and elbow while retaining the shared bell.
-const notificationReadCheck = S("M13.75 9L16.25 11.5L21 6.75");
-put(
-  "notification-read",
-  S(
-    "M6.75 9C6.75 6.10051 9.10051 3.75 12 3.75C14.21198 3.75 16.10445 5.11798 16.87755 7.05407M17.87735 13.69103L20.25 17.25L3.75 17.25L6.75 12.75L6.75 9",
-  ) +
-    bellTip +
-    notificationReadCheck,
-  F(
-    "M6.75 9C6.75 6.10051 9.10051 3.75 12 3.75C14.54089 3.75 16.6602 5.55506 17.14555 7.9528L16.25 8.84835L14.28033 6.87868L11.62868 9.53033L14.92417 12.82583L16.25 14.15165L17.41066 12.99099L20.25 17.25L3.75 17.25L6.75 12.75L6.75 9Z",
-  ) +
-    bellTip +
-    notificationReadCheck,
-);
+put("notification-read", ...notificationRead);
 put(
   "outdent",
   S(
@@ -193,11 +183,22 @@ const picnicTree = "M17.25 3.75l4.5 10.5h-9Z";
 const picnicBase = S(
   "M2.25 21.75h19.5M17.25 11.25v10.5M2.25 14.25h9M5.25 14.25v7.5M2.25 18.75h6",
 );
-put("picnic", S(picnicTree) + picnicBase, F(picnicTree) + picnicBase);
-const pin =
-  "M8.25 3.75h7.5v3l-1.5 1.5v4.5l3 3v1.5H6.75v-1.5l3-3v-4.5l-1.5-1.5Z";
-const pinPoint = S("M12 17.25v4.5");
-put("pin", S(pin) + pinPoint, F(pin) + pinPoint);
+// Retain the tree perimeter in both styles so filling the canopy does not
+// rescale or move the shared bench, trunk and ground after export fitting.
+put(
+  "picnic",
+  S(picnicTree) + picnicBase,
+  S(picnicTree) + F(picnicTree) + picnicBase,
+);
+// A flat head, straight neck and wider flange distinguish the tack from an
+// hourglass. The diagonal presentation separates its head from the long needle.
+const pin = "M8.25 3h7.5v3H14.25v6.75l3 3V17.25H6.75v-1.5l3-3V6H8.25Z";
+const pinPoint = S("M12 17.25v5.25");
+put(
+  "pin",
+  group(S(pin) + pinPoint, "rotate(45 12 12)"),
+  group(F(pin) + S(pin) + pinPoint, "rotate(45 12 12)"),
+);
 const pivotArrow = S(
   "M6.75 15.25H14.75V7M11.75 10L14.75 7L17.75 10M9.75 12.25L6.75 15.25L9.75 18.25",
 );
@@ -261,14 +262,21 @@ put(
 );
 
 const progressDisk = (holes) => F(circ(12, 12, 9.75) + holes);
+// Peer status glyphs are optically balanced on the final canvas. Four-arm and
+// closed-ring shapes need less thickness than the single minus or shared tick.
+const progressMark = (mark) =>
+  withSharedMark(F(circ(12, 12, 9.75)), mark, true);
+const crossHalf = 1.75 / Math.SQRT2;
+const progressCross = `M${5 - crossHalf} 5L5 ${5 - crossHalf}L8 ${8 - crossHalf}L11 ${5 - crossHalf}L${11 + crossHalf} 5L${8 + crossHalf} 8L${11 + crossHalf} 11L11 ${11 + crossHalf}L8 ${8 + crossHalf}L5 ${11 + crossHalf}L${5 - crossHalf} 11L${8 - crossHalf} 8Z`;
+put("progress-cancelled", progressMark(progressCross));
 put(
-  "progress-cancelled",
-  progressDisk(
-    "M8.3 7.25L12 10.95l3.7-3.7 1.05 1.05-3.7 3.7 3.7 3.7-1.05 1.05-3.7-3.7-3.7 3.7-1.05-1.05 3.7-3.7-3.7-3.7Z",
-  ),
+  "progress-closed",
+  progressMark(box(4.425, 4.425, 7.15, 7.15) + box(6.025, 6.025, 3.95, 3.95)),
 );
-put("progress-closed", progressDisk(box(7.5, 7.5, 9, 9)) + F(box(9, 9, 6, 6)));
-put("progress-complete", F(circ(12, 12, 9) + successTick.counter));
+put(
+  "progress-complete",
+  withSharedMark(F(circ(12, 12, 9)), enclosedTick, true),
+);
 put("progress-draft", C(12, 12, 9));
 put("progress-inprogress", C(12, 12, 9) + F("M12 3a9 9 0 0 1 0 18Z"));
 put(
@@ -281,7 +289,7 @@ put(
     "M12.75 6.75V11.59861L15.91603 13.70929L15.08397 14.95737L11.25 12.40139V6.75Z",
   ),
 );
-put("progress-rejected", progressDisk(box(6.75, 11.25, 10.5, 1.5)));
+put("progress-rejected", progressMark(box(3.825, 7, 8.35, 2)));
 put(
   "progress-todo",
   [0, 45, 90, 135, 180, 225, 270, 315]
@@ -348,22 +356,24 @@ put(
     "M3.75 2.25H15.75L20.25 6.75V21.75H3.75ZM15.75 3.75V6Q15.75 6.75 16.5 6.75H18.75ZM9 10.5v8.25l6.75-4.125Z",
   ),
 );
-// The dispensing cap faces the falling grains: a pouring salt shaker.
+// Bottle shoulders and a perforated cap distinguish the pouring shaker from a block.
 const shaker =
-  "M8.5 4H15.5Q16.25 4 16.25 4.75V14.25L15.25 16H8.75L7.75 14.25V4.75Q7.75 4 8.5 4Z";
+  "M8 3.75H16Q17 3.75 17 4.75V10.5Q17 11.25 16.25 12L14.25 14V14.75H9.75V14L7.75 12Q7 11.25 7 10.5V4.75Q7 3.75 8 3.75Z";
 const shakerCap =
-  "M8.75 16H15.25V17.25Q15.25 18 14.5 18H9.5Q8.75 18 8.75 17.25Z";
+  "M8.5 15.5H15.5V17.75Q15.5 18.5 14.75 18.5H9.25Q8.5 18.5 8.5 17.75Z";
+const shakerHoles = circ(10.5, 17, 0.65) + circ(13.5, 17, 0.65);
 const shakerPowder = "M10.6 11.3L14.1 7.8V11.3Z";
 const fallingSalt = F(
   box(4.25, 18, 1.2, 1.2) + box(2.5, 20.8, 1.2, 1.2) + box(6.25, 21, 1.2, 1.2),
 );
 put(
   "salt-shaker",
-  group(S(shaker) + S(shakerCap) + F(shakerPowder), "rotate(45 12 12)") +
-    fallingSalt,
   group(
-    F(shaker + shakerPowder) +
-      F("M8.75 16.75H15.25V17.25Q15.25 18 14.5 18H9.5Q8.75 18 8.75 17.25Z"),
+    S(shaker) + F(shakerCap + shakerHoles) + F(shakerPowder),
+    "rotate(45 12 12)",
+  ) + fallingSalt,
+  group(
+    F(shaker + shakerPowder) + F(shakerCap + shakerHoles),
     "rotate(45 12 12)",
   ) + fallingSalt,
 );
@@ -410,39 +420,14 @@ put(
     1.125,
   ),
 );
-// The solid face uses fixed transparent counters around its facial features.
-// Closed mouth areas and pupil centers keep the same expression geometry.
-const faces = {
-  dissatisfied: [
-    "M7.5 16.5q4.5-4.5 9 0",
-    "M6.96967 15.96967Q9.48483 13.4545 12 13.4545Q14.51517 13.4545 17.03033 15.96967L15.96967 17.03033Q12 13.06066 8.03033 17.03033Z",
-  ],
-  neutral: ["M7.5 15.75h9", box(7.5, 15, 9, 1.5)],
-  satisfied: [
-    "M7.5 14.25q4.5 4.5 9 0",
-    "M8.03033 13.71967Q12 17.68934 15.96967 13.71967L17.03033 14.78033Q14.56066 17.25 12 17.25Q9.43934 17.25 6.96967 14.78033Z",
-  ],
-  "very-dissatisfied": [
-    "M7.5 18q4.5-6 9 0M6.75 8.25l3 1.5M14.25 9.75l3-1.5",
-    "M6.9 17.55Q9.375 14.25 12 14.25Q14.625 14.25 17.1 17.55L15.9 18.45Q13.875 15.75 12 15.75Q10.125 15.75 8.1 18.45ZM13.91459 9.07918 16.91459 7.57918 17.58541 8.92082 14.58541 10.42082ZM7.08541 7.57918 10.08541 9.07918 9.41459 10.42082 6.41459 8.92082Z",
-  ],
-  "very-satisfied": [
-    "M6.75 13.5h10.5a5.25 5.25 0 0 1-10.5 0ZM6.75 9.75q1.5-3 3 0M14.25 9.75q1.5-3 3 0",
-    "M6.75 13.5h10.5a5.25 5.25 0 0 1-10.5 0ZM13.57918 9.41459Q14.53648 7.5 15.75 7.5Q16.96353 7.5 17.92082 9.41459L16.57918 10.08541Q16.03647 9 15.75 9Q15.46353 9 14.92082 10.08541ZM6.07918 9.41459Q7.03647 7.5 8.25 7.5Q9.46353 7.5 10.42082 9.41459L9.07918 10.08541Q8.53648 9 8.25 9Q7.96353 9 7.42082 10.08541Z",
-  ],
-};
-for (const [expression, [mouth, counter]] of Object.entries(faces)) {
-  const plainEyes = !expression.startsWith("very");
+// Reuse final facial contours after each circle has been fitted.
+for (const [expression, [features, inverseFeatures]] of Object.entries(
+  faceMarks,
+)) {
   put(
     `semantic-${expression}`,
-    C(12, 12, 9.75) +
-      S(mouth) +
-      (plainEyes ? dot(8.25, 9, 0.75) + dot(15.75, 9, 0.75) : ""),
-    F(
-      circ(12, 12, 9.75) +
-        counter +
-        (plainEyes ? circ(8.25, 9, 0.75) + circ(15.75, 9, 0.75) : ""),
-    ),
+    withSharedMark(C(12, 12, 9.75), features),
+    withSharedMark(F(circ(12, 12, 9.75)), inverseFeatures, true),
   );
 }
 const send = "M2.25 3.75L20.75 12L2.25 20.25L5.25 12Z";

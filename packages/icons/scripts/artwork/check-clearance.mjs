@@ -27,7 +27,7 @@ export async function checkClearance(page, records) {
     ["schedule-time.svg", 3], // page, clock ring and hands
     ["add-user.svg", 3],
     ["remove-user.svg", 3],
-    ["tails.svg", 4], // outer contour, two eye rings and the beak
+    ["tails.svg", 5], // connected fox head/cheeks/nose, two eyes and two ear details
     ["mouse.svg", 2], // wheel and the divided housing
     ["pivot.svg", 2], // frame and the bent arrow
     ["pivot_solid.svg", 1], // filled plate; its inverse arrow is checked below
@@ -62,6 +62,8 @@ export async function checkClearance(page, records) {
     ["cloud-sync_solid.svg", 3],
     ["cloud-success.svg", 2], // continuous cloud contour and checkmark
     ["cloud-success_solid.svg", 2],
+    ["notification-read.svg", 3], // bell, clapper and foreground tick
+    ["notification-read_solid.svg", 3],
     ["cloud-disabled.svg", 3], // two cloud sections and a slash
     ["cloud-disabled_solid.svg", 3],
   ]);

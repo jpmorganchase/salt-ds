@@ -25,13 +25,8 @@ export const SemanticSatisfiedIcon = forwardRef<
           d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Z"
         />
         <path
-          fill="none"
-          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M4.77 9.615q3.23 3.231 6.46 0"
-        />
-        <path
           fillRule="evenodd"
-          d="M4.77 5.846a.538.538 0 1 0 1.076 0 .538.538 0 1 0-1.077 0m5.385 0a.538.538 0 1 0 1.077 0 .538.538 0 1 0-1.077 0"
+          d="M4.25 6.25a1 1 0 1 0 2 0 1 1 0 1 0-2 0m5.5 0a1 1 0 1 0 2 0 1 1 0 1 0-2 0m1.962 4.962a5.25 5.25 0 0 1-7.424 0l1.06-1.06a3.75 3.75 0 0 0 5.304 0Z"
         />
       </g>
     </Icon>

@@ -20,21 +20,26 @@ export const TypeSolidIcon = forwardRef<SVGSVGElement, TypeSolidIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.635 1.442h10.73M1.442 2.635v10.73m13.116-10.73v10.73M2.635 14.558h10.73"
+            d="M3.154 2.077h9.692M2.076 3.154v9.692m11.847-9.692v9.692m-10.77 1.077h9.693"
           />
           <path
             fillRule="evenodd"
-            d="M8.494 12.173h-.976v-7.49H4.892v-.856h6.216v.856H8.494Z"
+            d="M8.446 11.77h-.882V5.003H5.192V4.23h5.616v.773H8.446Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.3)"
-            d="M8.494 12.173h-.976v-7.49H4.892v-.856h6.216v.856H8.494Z"
+            d="M8.446 11.77h-.882V5.003H5.192V4.23h5.616v.773H8.446Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1 1h2.154v2.154H1Zm11.846 0H15v2.154h-2.154ZM1 12.846h2.154V15H1Zm11.846 0H15V15h-2.154Z"
           />
           <path
             fillRule="evenodd"
-            d="M.25.25h2.385v2.385H.25Zm13.115 0h2.385v2.385h-2.385ZM.25 13.365h2.385v2.385H.25Zm13.115 0h2.385v2.385h-2.385Z"
+            d="M1 1h2.154v2.154H1Zm11.846 0H15v2.154h-2.154ZM1 12.846h2.154V15H1Zm11.846 0H15V15h-2.154Z"
           />
         </g>
       </Icon>

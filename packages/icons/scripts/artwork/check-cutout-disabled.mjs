@@ -14,7 +14,8 @@ export function checkCutoutDisabled(page, records) {
         {
           feature: "positive caption letters parallel to slash",
           region: [3, 5, 13, 11],
-          expected: 0.915,
+          // Preserve the C bowls with the reviewed compact slash clearance.
+          expected: (1.4 * 2) / 3 - 0.67 / 2,
         },
       ],
     },

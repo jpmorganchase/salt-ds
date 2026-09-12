@@ -20,11 +20,11 @@ export const ErrorIcon = forwardRef<SVGSVGElement, ErrorIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M5.17 1.02h5.66l4.15 4.15v5.66l-4.15 4.15H5.17l-4.15-4.15V5.17ZM8 4.038v5.094"
+            d="M5.17 1.02h5.66l4.15 4.15v5.66l-4.15 4.15H5.17l-4.15-4.15V5.17Z"
           />
           <path
             fillRule="evenodd"
-            d="M7.245 11.962a.755.755 0 1 0 1.51 0 .755.755 0 1 0-1.51 0"
+            d="M7 4.625h2v3.75H7Zm0 5.75a1 1 0 1 0 2 0 1 1 0 1 0-2 0"
           />
         </g>
       </Icon>

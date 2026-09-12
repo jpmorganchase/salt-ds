@@ -25,7 +25,7 @@ export const ChartCandlestickSolidIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M3.827.25v3.577m0 7.154v4.769M12.173.25v5.962m0 5.961v3.577"
+          d="M3.827.25v3.577m0 7.154v4.769M12.173.25v5.962m0 5.961v3.577M1.442 3.827h4.77v7.154h-4.77Zm8.346 2.385h4.77v5.961h-4.77Z"
         />
         <path
           fillRule="evenodd"

@@ -18,9 +18,8 @@ export const ChartDonutIcon = forwardRef<SVGSVGElement, ChartDonutIconProps>(
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
-            fill="none"
-            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M9.216 1.039a7 7 0 0 1 5.362 9.288m-1.216 2.105a7 7 0 0 1-10.724 0m-1.216-2.105a7 7 0 0 1 5.362-9.288"
+            fillRule="evenodd"
+            d="M9.079.325a7.75 7.75 0 0 1 0 15.35l-.47-3.346a4.372 4.372 0 0 0 0-8.658ZM6.92 15.675a7.75 7.75 0 0 1-6.553-9.02l3.327.586a4.37 4.37 0 0 0 3.697 5.088ZM1.034 4.603A7.75 7.75 0 0 1 6.921.325l.47 3.346a4.37 4.37 0 0 0-3.32 2.412Z"
           />
         </g>
       </Icon>

@@ -31,10 +31,3 @@ export const tickPaths = (points, counterWidth = 1.5) => {
       .join("L");
   return { line: path(points), counter: `${path(contour)}Z` };
 };
-
-// Lift the elbow slightly; the inverse mark keeps the same arm proportions.
-export const successTick = tickPaths([
-  [6.75, 11.625],
-  [10.25, 15.125],
-  [17.25, 8.125],
-]);

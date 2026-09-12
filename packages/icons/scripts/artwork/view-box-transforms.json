@@ -396,7 +396,7 @@
     "fitted": true,
     "targetSpan": 15.5,
     "scale": 1.192308,
-    "translateX": -1.163462,
+    "translateX": -1.538462,
     "translateY": -1.538462
   },
   "chart-candlestick_solid.svg": {
@@ -419,9 +419,9 @@
     "groupKey": "chart-donut.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.076923,
-    "translateX": -0.615385,
-    "translateY": -0.682692
+    "scale": 1.192308,
+    "translateX": -1.538462,
+    "translateY": -1.538462
   },
   "chart-line.svg": {
     "groupKey": "chart-line.svg",
@@ -435,9 +435,9 @@
     "groupKey": "chart-line_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.12114,
-    "translateX": -0.68171,
-    "translateY": -1.344121
+    "scale": 1.105386,
+    "translateX": -0.65808,
+    "translateY": -1.218091
   },
   "chart-pie.svg": {
     "groupKey": "chart-pie.svg",
@@ -467,9 +467,9 @@
     "groupKey": "chart-scatter_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.134615,
-    "translateX": -0.701923,
-    "translateY": -1.451923
+    "scale": 1.106173,
+    "translateX": -0.659259,
+    "translateY": -1.224383
   },
   "chart-stacked-bar.svg": {
     "groupKey": "chart-stacked-bar.svg",
@@ -538,10 +538,15 @@
   "checkmark.svg": {
     "groupKey": "checkmark.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.315341,
-    "translateX": -2.528498,
-    "translateY": -2.146307
+    "targetSpan": 10.414213562373096,
+    "opticalCenter": [
+      8,
+      8.103553390593273
+    ],
+    "opticalReason": "Keep the standalone tick identical to its enclosed and inverse companions.",
+    "scale": 1.000765,
+    "translateX": -0.006122,
+    "translateY": -0.004209
   },
   "checkmark_solid.svg": {
     "groupKey": "checkmark_solid.svg",
@@ -619,10 +624,15 @@
   "close_small.svg": {
     "groupKey": "close_small.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.563758,
-    "translateX": -4.510067,
-    "translateY": -4.510067
+    "targetSpan": 12.5,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Preserve the compact dismissal size beside Close without reducing its primary stroke.",
+    "scale": 1.238095,
+    "translateX": -1.904762,
+    "translateY": -1.904762
   },
   "closedcaption-disabled.svg": {
     "groupKey": "closedcaption-disabled.svg",
@@ -636,9 +646,9 @@
     "groupKey": "closedcaption-disabled_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.194194,
-    "translateX": -1.553555,
-    "translateY": -1.553555
+    "scale": 1.078261,
+    "translateX": -0.626087,
+    "translateY": -0.626087
   },
   "closedcaption.svg": {
     "groupKey": "closedcaption.svg",
@@ -652,9 +662,9 @@
     "groupKey": "closedcaption_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.078261,
+    "translateX": -0.626087,
+    "translateY": -0.626087
   },
   "cloud-disabled.svg": {
     "groupKey": "cloud-disabled.svg",
@@ -700,9 +710,9 @@
     "groupKey": "cloud-success_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.117117,
-    "translateX": -0.936937,
-    "translateY": -0.779842
+    "scale": 1.061611,
+    "translateX": -0.492891,
+    "translateY": -0.343602
   },
   "cloud-sync.svg": {
     "groupKey": "cloud-sync.svg",
@@ -940,9 +950,9 @@
     "groupKey": "currency-exchange.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.055046,
-    "translateX": -0.440367,
-    "translateY": -0.0916
+    "scale": 1.161593,
+    "translateX": -1.27459,
+    "translateY": -1.29274
   },
   "currency.svg": {
     "groupKey": "currency.svg",
@@ -1600,17 +1610,17 @@
     "groupKey": "handshake.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.031401,
-    "translateX": -0.236564,
-    "translateY": -0.126698
+    "scale": 0.953191,
+    "translateX": 0.374468,
+    "translateY": -0.444681
   },
   "handshake_solid.svg": {
     "groupKey": "handshake_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.575721
+    "scale": 0.953191,
+    "translateX": 0.374468,
+    "translateY": -0.444681
   },
   "headphones-disabled.svg": {
     "groupKey": "headphones-disabled.svg",
@@ -1985,9 +1995,9 @@
     "groupKey": "layers_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.190355,
-    "translateX": -1.522843,
-    "translateY": -1.944718
+    "scale": 0.994872,
+    "translateX": 0.041026,
+    "translateY": 0.041026
   },
   "less-than-equal-to.svg": {
     "groupKey": "less-than-equal-to.svg",
@@ -2065,9 +2075,9 @@
     "groupKey": "chart-line_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.12114,
-    "translateX": -0.68171,
-    "translateY": -1.344121
+    "scale": 1.105386,
+    "translateX": -0.65808,
+    "translateY": -1.218091
   },
   "linked.svg": {
     "groupKey": "linked.svg",
@@ -2259,9 +2269,9 @@
     "groupKey": "medical-kit_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.258883,
-    "translateX": -2.071066,
-    "translateY": -2.071066
+    "scale": 1.133046,
+    "translateX": -1.064365,
+    "translateY": -1.064365
   },
   "menu.svg": {
     "groupKey": "menu.svg",
@@ -2315,9 +2325,9 @@
     "groupKey": "micro-menu.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.47619,
-    "translateX": -3.809524,
-    "translateY": -3.809524
+    "scale": 1,
+    "translateX": 0,
+    "translateY": 0
   },
   "microphone-disabled.svg": {
     "groupKey": "microphone-disabled.svg",
@@ -2491,9 +2501,9 @@
     "groupKey": "notification-read_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.229167,
-    "translateX": -2.394206,
-    "translateY": -1.59375
+    "scale": 1.155367,
+    "translateX": -1.232168,
+    "translateY": -1.040254
   },
   "notification.svg": {
     "groupKey": "notification.svg",
@@ -2523,9 +2533,9 @@
     "groupKey": "overflow-menu.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.47619,
-    "translateX": -3.809524,
-    "translateY": -3.809524
+    "scale": 1,
+    "translateX": 0,
+    "translateY": 0
   },
   "panel-close-bottom.svg": {
     "groupKey": "panel-close-bottom.svg",
@@ -2731,9 +2741,9 @@
     "groupKey": "picnic_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -2.528245
+    "scale": 1.073491,
+    "translateX": -1.150427,
+    "translateY": -0.565617
   },
   "pie-chart.svg": {
     "groupKey": "chart-pie.svg",
@@ -2747,17 +2757,17 @@
     "groupKey": "pin.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.229167,
-    "translateX": -1.833333,
-    "translateY": -2.072917
+    "scale": 1.221591,
+    "translateX": -2.421697,
+    "translateY": -1.123757
   },
   "pin_solid.svg": {
     "groupKey": "pin_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.291667,
-    "translateX": -2.333333,
-    "translateY": -2.979167
+    "scale": 1.221591,
+    "translateX": -2.421697,
+    "translateY": -1.123757
   },
   "pivot.svg": {
     "groupKey": "pivot.svg",
@@ -3085,17 +3095,17 @@
     "groupKey": "salt-shaker.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.188917,
-    "translateX": -1.440491,
-    "translateY": -1.860831
+    "scale": 1.15122,
+    "translateX": -1.38689,
+    "translateY": -1.302439
   },
   "salt-shaker_solid.svg": {
     "groupKey": "salt-shaker_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.24937,
-    "translateX": -1.526448,
-    "translateY": -2.756297
+    "scale": 1.209756,
+    "translateX": -1.470122,
+    "translateY": -2.169512
   },
   "save.svg": {
     "groupKey": "save.svg",
@@ -3613,26 +3623,41 @@
   "success-tick.svg": {
     "groupKey": "checkmark.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.315341,
-    "translateX": -2.528498,
-    "translateY": -2.146307
+    "targetSpan": 10.414213562373096,
+    "opticalCenter": [
+      8,
+      8.103553390593273
+    ],
+    "opticalReason": "Keep the standalone tick identical to its enclosed and inverse companions.",
+    "scale": 1.000765,
+    "translateX": -0.006122,
+    "translateY": -0.004209
   },
   "success.svg": {
     "groupKey": "checkmark.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.315341,
-    "translateX": -2.528498,
-    "translateY": -2.146307
+    "targetSpan": 10.414213562373096,
+    "opticalCenter": [
+      8,
+      8.103553390593273
+    ],
+    "opticalReason": "Keep the standalone tick identical to its enclosed and inverse companions.",
+    "scale": 1.000765,
+    "translateX": -0.006122,
+    "translateY": -0.004209
   },
   "success_small.svg": {
     "groupKey": "checkmark.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.315341,
-    "translateX": -2.528498,
-    "translateY": -2.146307
+    "targetSpan": 10.414213562373096,
+    "opticalCenter": [
+      8,
+      8.103553390593273
+    ],
+    "opticalReason": "Keep the standalone tick identical to its enclosed and inverse companions.",
+    "scale": 1.000765,
+    "translateX": -0.006122,
+    "translateY": -0.004209
   },
   "success_small_solid.svg": {
     "groupKey": "checkmark_solid.svg",
@@ -3737,17 +3762,17 @@
     "groupKey": "tails.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.057292,
-    "translateX": -0.458333,
-    "translateY": -1.016927
+    "scale": 1.1,
+    "translateX": -0.8,
+    "translateY": -1.671875
   },
   "tails_solid.svg": {
     "groupKey": "tails_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.24,
-    "translateX": -1.92,
-    "translateY": -2.85
+    "scale": 1.1,
+    "translateX": -0.8,
+    "translateY": -1.671875
   },
   "target.svg": {
     "groupKey": "target.svg",
@@ -3993,9 +4018,9 @@
     "groupKey": "type_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "undo.svg": {
     "groupKey": "undo.svg",
@@ -4240,18 +4265,28 @@
   "volume-down.svg": {
     "groupKey": "volume-down.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.372093,
-    "translateX": -1.80814,
-    "translateY": -2.976744
+    "targetSpan": 12.281818,
+    "opticalCenter": [
+      6.390909,
+      8
+    ],
+    "opticalReason": "Keep the speaker and inner wave at VolumeUp's size and anchor when the outer wave is absent.",
+    "scale": 1.072727,
+    "translateX": -1.359091,
+    "translateY": -0.581818
   },
   "volume-off.svg": {
     "groupKey": "volume-off.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.106481,
-    "translateX": -1.409722,
-    "translateY": -0.851852
+    "targetSpan": 15.06747,
+    "opticalCenter": [
+      7.783735,
+      8
+    ],
+    "opticalReason": "Keep the speaker at VolumeUp's size and anchor while allowing the mute cross its own width.",
+    "scale": 1.0732,
+    "translateX": -1.3598,
+    "translateY": -0.585601
   },
   "volume-up.svg": {
     "groupKey": "volume-up.svg",

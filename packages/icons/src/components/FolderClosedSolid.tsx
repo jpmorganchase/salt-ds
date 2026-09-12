@@ -21,7 +21,7 @@ export const FolderClosedSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M.25 15.398V.602h5.636L8.705 3.42h7.045v11.978Zm2.49-9.864h10.52q.376 0 .376.376v.657q0 .376-.375.376H2.739q-.375 0-.375-.376V5.91q0-.376.375-.376"
+          d="M.25 15.398V.602h5.636L8.705 3.42h7.045v11.978Zm2.114-9.864h11.272v1.41H2.364Z"
         />
       </g>
     </Icon>
