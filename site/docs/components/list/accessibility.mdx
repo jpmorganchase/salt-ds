@@ -1,0 +1,52 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+- Give icon-only secondary controls an accessible name that includes the row context, such as “Download quarterly report”.
+- When several trailing controls form a named set, wrap them in an element with `role="group"` and `aria-label` or `aria-labelledby`.
+- Keep `ListItemTrigger` and each trailing control, or its semantic group, as siblings within `ListItem`. Never nest a control inside `ListItemTrigger`.
+- Use a labelled `nav` landmark around lists whose primary purpose is navigation.
+- When an action removes its focused row, move focus to the next logical row, previous row, or a stable surrounding control.
+
+`List` uses native list, button, and link behavior. It does not add roving focus, arrow-key navigation, typeahead, selection, or composite widget roles.
+
+## Keyboard interactions
+
+<KeyboardControls>
+  <KeyboardControl keyOrCombos="Tab / Shift + Tab">
+
+    - Moves through each button and link once in document order.
+    - Static rows do not add a tab stop.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Enter / Space">
+
+    - Activates a focused button using native browser behavior.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Enter">
+
+    - Activates a focused link using native browser behavior.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Arrow keys">
+
+    - Have no list-specific behavior and do not move focus between rows.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Escape">
+
+    - Has no list-specific behavior. A containing Dialog or Overlay owns dismissal and focus return.
+
+  </KeyboardControl>
+</KeyboardControls>
+
+Dialog and Overlay also own initial focus and focus containment. `List` does not override or duplicate those behaviors and never dismisses a containing surface automatically.

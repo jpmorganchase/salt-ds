@@ -1,0 +1,101 @@
+.saltListItemTrigger {
+  appearance: none;
+  -webkit-appearance: none;
+  align-self: stretch;
+  background: transparent;
+  border: 0;
+  border-radius: var(--salt-palette-corner-weak, 0);
+  box-sizing: border-box;
+  color: var(--salt-content-primary-foreground);
+  cursor: var(--salt-cursor-hover);
+  display: flex;
+  align-items: flex-start;
+  font: inherit;
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+  padding: 0;
+  position: static;
+  text-align: start;
+  text-decoration: none;
+  width: 100%;
+}
+
+.saltListItemTrigger::before {
+  background: var(--salt-selectable-background);
+  border-radius: inherit;
+  bottom: 0;
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 0;
+}
+
+.saltListItemTrigger > :not(.saltLink-externalLinkADA) {
+  position: relative;
+  z-index: 1;
+}
+
+.saltListItemTrigger.saltLink {
+  --link-color: var(--salt-content-primary-foreground);
+  --link-color-active: var(--salt-content-primary-foreground);
+  --link-color-focus: var(--salt-content-primary-foreground);
+  --link-color-hover: var(--salt-content-primary-foreground);
+  --link-color-visited: var(--salt-content-primary-foreground);
+  --link-textDecoration: none;
+  --link-textDecoration-active: none;
+  --link-textDecoration-focus: none;
+  --link-textDecoration-hover: none;
+  --link-textDecoration-visited: none;
+
+  padding-inline-end: var(--salt-spacing-100);
+}
+
+.saltListItemTrigger.saltLink > .saltListItemContent {
+  flex-grow: 0;
+  padding-inline-end: 0;
+  width: auto;
+}
+
+.saltListItemTrigger:hover:not(:disabled)::before {
+  background: var(--salt-overlayable-background-hover);
+}
+
+.saltListItemTrigger:focus-visible {
+  outline: none;
+}
+
+.saltListItemTrigger.saltLink:focus {
+  outline: none;
+}
+
+.saltListItemTrigger:focus-visible::before {
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(var(--salt-size-fixed-100) * -2);
+  background: var(--salt-navigable-background-hover);
+}
+
+.saltListItemTrigger:active:not(:disabled)::before {
+  background: var(--salt-navigable-accent-background-active);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-navigable-accent-borderColor-active);
+  box-sizing: border-box;
+}
+
+.saltListItemTrigger > .saltLink-icon {
+  flex-shrink: 0;
+  margin-left: 0;
+  margin-bottom: 0;
+  margin-inline-start: var(--salt-spacing-75);
+  margin-top: calc(var(--salt-spacing-50) + ((var(--salt-size-base) - var(--icon-size, max(var(--salt-size-icon), 12px))) / 2));
+}
+
+button.saltListItemTrigger:disabled {
+  color: var(--salt-content-primary-foreground-disabled);
+  cursor: var(--salt-cursor-disabled);
+}
+
+button.saltListItemTrigger:disabled::before {
+  background: var(--salt-selectable-background-disabled);
+}
