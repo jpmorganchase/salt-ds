@@ -9,10 +9,13 @@
   --salt-container-tertiary-background-disabled: var(--salt-palette-neutral-tertiary-background-disabled);
 
   --salt-container-ghost-background: var(--salt-palette-alpha-medium);
-  --salt-container-ghost-borderColor: var(--salt-palette-alpha-contrast-medium);
 
   --salt-container-bold-borderColor: var(--salt-palette-neutral-border);
   --salt-container-bold-borderColor-disabled: var(--salt-palette-neutral-border-disabled);
   --salt-container-borderColor: var(--salt-palette-neutral-border);
   --salt-container-subtle-borderColor: var(--salt-palette-neutral-border);
+
+  --salt-container-ghost-bold-borderColor: var(--salt-palette-alpha-contrast-medium);
+  --salt-container-ghost-borderColor: var(--salt-palette-alpha-contrast-mediumLow);
+  --salt-container-ghost-subtle-borderColor: var(--salt-palette-alpha-contrast-lower);
 }

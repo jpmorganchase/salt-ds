@@ -1,4 +1,4 @@
-import { GridLayout, Panel } from "@salt-ds/core";
+import { GridLayout, Label, Panel, StackLayout } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
@@ -41,3 +41,19 @@ export const PanelInGridLayout: StoryFn<typeof Panel> = () => (
     </Panel>
   </GridLayout>
 );
+
+export const Elevation: StoryFn<typeof Panel> = (args) => {
+  const elevations = ["flat", "raised"] as const;
+  return (
+    <StackLayout direction="row">
+      {elevations.map((elevation) => (
+        <StackLayout align="end" key={elevation} style={{ width: "260px" }}>
+          <Panel {...args} elevation={elevation}>
+            This is a Panel
+          </Panel>
+          <Label>Elevation: {elevation}</Label>
+        </StackLayout>
+      ))}
+    </StackLayout>
+  );
+};

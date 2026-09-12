@@ -8,18 +8,12 @@ data:
   $ref: ./#/data
 ---
 
-To meet accessibility standards, the boundaries of a user interface component are only subject to the 3:1 contrast minimum if they serve to identify the components purpose.
+## Best practices
 
-Salt card components incorporate subtle borders as part of their design. To ensure these cards meet accessibility criteria, check that any content (i.e., text or icon) used within them maintain a minimum contrast ratio of 4:5:1 against the card background. This can be achieved by using the `--salt-content-*` tokens.
-
-For optimal accessibility when using multiple cards together, you should:
-
-- Use cards of uniform size.
-- Use a repetitive arrangement pattern.
-- Maintain consistent spacing between the cards.
-- Use `InteractableCardGroup` to ensure users can navigate between interactable cards using keyboard controls, similar to interacting with checkboxes and radio buttons.
-
-Salt provides layout components that can help achieve this.
+- Give each `LinkCard` and `InteractableCard` a concise accessible name through its visible content. If the visible content doesn't provide a suitable name, use `aria-label` or `aria-labelledby`.
+- Give each `InteractableCardGroup` an accessible name with `aria-label` or `aria-labelledby`. Use `aria-describedby` to provide additional selection instructions.
+- Use `InteractableCardGroup` when users select one or more cards from a related set. It applies the appropriate radio or checkbox semantics and keyboard interactions.
+- Keep the arrangement and spacing of related cards consistent.
 
 ## Keyboard interactions
 
@@ -27,36 +21,41 @@ Salt provides layout components that can help achieve this.
 
 <KeyboardControl keyOrCombos="Tab">
 
-- Tab moves focus to a link card or an interactable card.
-- In a single-select group, moves focus to the next focusable element on the page. This is consistent with radio button.
-- In a multi-select group, moves focus to the next card within the group. This is consistent with checkbox.
+- Tab moves focus forward to the next `LinkCard`, standalone `InteractableCard`, or enabled card in a multi-select group.
+- A single-select group has one tab stop: the selected card, or the first enabled card when no card is selected.
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-- Tab moves focus to a link card or an interactable card.
-- In a single-select group, moves focus to the previous focusable element on the page.
-- In a multi-select group, moves focus to the previous card within the group.
+- Shift + Tab moves focus backward to the previous `LinkCard`, standalone `InteractableCard`, or enabled card in a multi-select group.
+- A single-select group has one tab stop: the selected card, or the first enabled card when no card is selected.
 
 </KeyboardControl>
+
 <KeyboardControl keyOrCombos="Space">
 
-- In a single-select group, selects an unselected interactable card.
-- In a multi-select group, selects or deselects an interactable card.
+- Space activates a standalone `InteractableCard`.
+- In a single-select group, Space selects the focused card.
+- In a multi-select group, Space selects or deselects the focused card.
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Enter">
 
-- In a link card, Enter navigates the user.
-- In an interactable card outside of a group, if the card has focus Enter activates it.
+- Enter activates a focused `LinkCard` or standalone `InteractableCard`.
 
 </KeyboardControl>
 
-<KeyboardControl keyOrCombos="Up arrow / Down arrow / Left arrow / Right arrow">
+<KeyboardControl keyOrCombos="Right arrow / Down arrow">
 
-- In a single-select group, moves focus between the available card options, and simultaneously selects an option.
+- In a single-select group, Right arrow or Down arrow moves focus to and selects the next enabled card. From the last card, focus and selection wrap to the first enabled card.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Left arrow / Up arrow">
+
+- In a single-select group, Left arrow or Up arrow moves focus to and selects the previous enabled card. From the first card, focus and selection wrap to the last enabled card.
 
 </KeyboardControl>
 </KeyboardControls>

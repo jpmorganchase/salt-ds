@@ -1,17 +1,9 @@
 .category1 {
-  --saltCard-accent-color: rgb(70, 118, 191);
-}
-
-.category1:hover {
-  --saltCard-accent-color: rgb(35, 77, 140);
+  --saltCard-accent-color: var(--salt-category-1-borderColor);
 }
 
 .category2 {
-  --saltCard-accent-color: rgb(171, 101, 40);
-}
-
-.category2:hover {
-  --saltCard-accent-color: rgb(133, 72, 20);
+  --saltCard-accent-color: var(--salt-category-2-borderColor);
 }
 
 .variantContainer {
@@ -20,7 +12,7 @@
 }
 
 .variantCard {
-  height: 144px;
+  min-height: 144px;
   width: 260px;
   display: flex;
   justify-content: center;

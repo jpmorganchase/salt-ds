@@ -5,8 +5,10 @@ export const DisabledInteractableCard = (): ReactElement => {
   return (
     <InteractableCard
       accent="top"
-      style={{ width: "260px", height: "144px" }}
+      style={{ width: "260px", minHeight: "144px" }}
       disabled
-    />
+    >
+      View sustainable investing products
+    </InteractableCard>
   );
 };

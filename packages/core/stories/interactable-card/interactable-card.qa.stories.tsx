@@ -98,3 +98,37 @@ AllExamples.parameters = {
     disableSnapshot: false,
   },
 };
+
+export const VisualStyles: StoryFn<QAContainerProps> = (props) => (
+  <QAContainer itemPadding={4} cols={4} itemWidthAuto {...props}>
+    <InteractableCard borderColor="strong">
+      <H1>Strong border</H1>
+      <Text>Content</Text>
+    </InteractableCard>
+    <InteractableCard borderColor="default">
+      <H1>Default border</H1>
+      <Text>Content</Text>
+    </InteractableCard>
+    <InteractableCard borderColor="subtle">
+      <H1>Subtle border</H1>
+      <Text>Content</Text>
+    </InteractableCard>
+    <InteractableCard borderColor="none">
+      <H1>No border</H1>
+      <Text>Content</Text>
+    </InteractableCard>
+    <InteractableCard elevation="flat">
+      <H1>Flat elevation</H1>
+      <Text>Content</Text>
+    </InteractableCard>
+    <InteractableCard elevation="raised">
+      <H1>Raised elevation</H1>
+      <Text>Content</Text>
+    </InteractableCard>
+  </QAContainer>
+);
+VisualStyles.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+  },
+};

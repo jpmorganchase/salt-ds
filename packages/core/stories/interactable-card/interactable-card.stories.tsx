@@ -123,6 +123,52 @@ export const Variant: StoryFn<typeof InteractableCard> = (args) => {
   );
 };
 
+export const Elevation: StoryFn<typeof InteractableCard> = (args) => {
+  const elevations = ["flat", "raised"] as const;
+  return (
+    <StackLayout direction="row">
+      {elevations.map((elevation) => (
+        <StackLayout align="end" key={elevation} style={{ width: "256px" }}>
+          <InteractableCard {...args} elevation={elevation}>
+            <StackLayout gap={1}>
+              <H3>Sustainable investing products</H3>
+              <Text>
+                We have a commitment to provide a wide range of investment
+                solutions to enable you to align your financial goals to your
+                values.
+              </Text>
+            </StackLayout>
+          </InteractableCard>
+          <Label>Elevation: {elevation}</Label>
+        </StackLayout>
+      ))}
+    </StackLayout>
+  );
+};
+
+export const BorderColor: StoryFn<typeof InteractableCard> = (args) => {
+  const borderColors = ["strong", "default", "subtle", "none"] as const;
+  return (
+    <StackLayout direction="row">
+      {borderColors.map((borderColor) => (
+        <StackLayout align="end" key={borderColor} style={{ width: "256px" }}>
+          <InteractableCard {...args} borderColor={borderColor}>
+            <StackLayout gap={1}>
+              <H3>Sustainable investing products</H3>
+              <Text>
+                We have a commitment to provide a wide range of investment
+                solutions to enable you to align your financial goals to your
+                values.
+              </Text>
+            </StackLayout>
+          </InteractableCard>
+          <Label>Border color: {borderColor}</Label>
+        </StackLayout>
+      ))}
+    </StackLayout>
+  );
+};
+
 export const InteractableCardGroupSingleSelect: StoryFn<
   typeof InteractableCard
 > = (args) => (
