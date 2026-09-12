@@ -106,8 +106,10 @@ export const CollapsibleNavigation = () => {
           </StackLayout>
         </BorderItem>
         <BorderItem position="center">
+          <H3 styleAs="h1" style={{ marginBottom: "var(--salt-spacing-300)" }}>
+            Collapsible navigation
+          </H3>
           <StackLayout direction="column" gap={1}>
-            <H3 styleAs="h1">Collapsible navigation</H3>
             <Text>
               Collapse the navigation to give the main content more room. While
               collapsed, each item is identified by its icon and a tooltip.

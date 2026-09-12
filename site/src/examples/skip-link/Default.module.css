@@ -27,6 +27,6 @@
 .header {
   margin-bottom: var(--salt-spacing-300);
 }
-.section h2 {
-  margin-top: calc(var(--salt-spacing-300) + var(--salt-spacing-200));
+.sectionHeading {
+  margin-block: var(--salt-spacing-200);
 }

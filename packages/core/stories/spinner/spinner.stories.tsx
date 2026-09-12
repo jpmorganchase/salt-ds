@@ -1,4 +1,11 @@
-import { Button, Card, GridItem, GridLayout, Spinner } from "@salt-ds/core";
+import {
+  Button,
+  Card,
+  GridItem,
+  GridLayout,
+  Spinner,
+  StackLayout,
+} from "@salt-ds/core";
 import { CoffeeIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useEffect, useState } from "react";
@@ -53,7 +60,7 @@ export const Loading: StoryFn = () => {
   };
 
   return (
-    <div style={{ textAlign: "center" }}>
+    <StackLayout align="center">
       <p>Please wait for action to complete.</p>
       {loadingStatus === "loading" ? (
         <Spinner
@@ -67,7 +74,7 @@ export const Loading: StoryFn = () => {
           <Button onClick={handleClick}>Reload</Button>
         </>
       )}
-    </div>
+    </StackLayout>
   );
 };
 
@@ -127,18 +134,15 @@ export const WithButton: StoryFn = () => {
   const [exampleTwoIsLoading, setExampleTwoIsLoading] = useState(false);
 
   return (
-    <>
-      <div>
+    <StackLayout>
+      <StackLayout gap={1} align="start">
         <p>Default</p>
         {exampleOneIsLoading && <Spinner style={{ margin: "auto" }} />}
-        <Button
-          onClick={() => setExampleOneIsLoading(!exampleOneIsLoading)}
-          style={{ marginTop: 15 }}
-        >
+        <Button onClick={() => setExampleOneIsLoading(!exampleOneIsLoading)}>
           {exampleOneIsLoading ? "Stop" : "Start"}
         </Button>
-      </div>
-      <div>
+      </StackLayout>
+      <StackLayout gap={1} align="start">
         <p>
           Custom interval (2s), custom announcer timeout (60s), custom aria
           label and custom finishing message
@@ -152,13 +156,10 @@ export const WithButton: StoryFn = () => {
             style={{ margin: "auto" }}
           />
         )}
-        <Button
-          onClick={() => setExampleTwoIsLoading(!exampleTwoIsLoading)}
-          style={{ marginTop: 15 }}
-        >
+        <Button onClick={() => setExampleTwoIsLoading(!exampleTwoIsLoading)}>
           {exampleTwoIsLoading ? "Stop" : "Start"}
         </Button>
-      </div>
-    </>
+      </StackLayout>
+    </StackLayout>
   );
 };

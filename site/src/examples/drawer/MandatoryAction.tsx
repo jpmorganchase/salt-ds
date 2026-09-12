@@ -62,8 +62,10 @@ export const MandatoryAction = (): ReactElement => {
         disableDismiss
         aria-labelledby={id}
       >
+        <H2 id={id} style={{ marginBottom: "var(--salt-spacing-200)" }}>
+          Add your delivery details
+        </H2>
         <StackLayout>
-          <H2 id={id}>Add your delivery details</H2>
           <FormField>
             <FormFieldLabel>House no.</FormFieldLabel>
             <Input />

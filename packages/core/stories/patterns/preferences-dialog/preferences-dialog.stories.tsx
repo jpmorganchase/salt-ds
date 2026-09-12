@@ -202,8 +202,11 @@ function PreferencesContent({ currentSection }: { currentSection: string }) {
   }
 
   return (
-    <StackLayout>
-      <H2 styleAs="h3" style={{ margin: 0 }}>
+    <StackLayout gap={0}>
+      <H2
+        styleAs="h3"
+        style={{ margin: 0, marginBottom: "var(--salt-spacing-100)" }}
+      >
         {currentSection}
       </H2>
       <div>{content}</div>
