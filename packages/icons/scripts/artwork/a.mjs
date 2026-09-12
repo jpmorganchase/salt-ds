@@ -1,5 +1,6 @@
+import { enclosedEllipsis, enclosedTick } from "./enclosed-marks.mjs";
+import { standaloneMark, withSharedMark } from "./mark-composition.mjs";
 import { box, C, circ, dot, F, group, plus, R, S } from "./primitives.mjs";
-import { tickPaths } from "./tick.mjs";
 
 // Authored on the shared 24-unit grid; the build normalizes these to 16 units.
 const icons = {};
@@ -30,9 +31,11 @@ const personBody = S(
 );
 const briefcase = box(3, 7.5, 18, 13.5);
 const briefcaseHandle = S("M8.25 7.5V3.75H15.75V7.5");
+// Shared Open Sans C contours, expanded by 0.275 construction units on each
+// side for native-size lettering. The rounded bowls remain recognizable where
+// the disabled slash occludes them; active and disabled states share the glyph.
 const captionHole =
-  "M10.5 8.25H7.5Q5.25 8.25 5.25 10.5V13.5Q5.25 15.75 7.5 15.75H10.5V14.25H7.5Q6.75 14.25 6.75 13.5V10.5Q6.75 9.75 7.5 9.75H10.5Z" +
-  "M18.75 8.25H15.75Q13.5 8.25 13.5 10.5V13.5Q13.5 15.75 15.75 15.75H18.75V14.25H15.75Q15 14.25 15 13.5V10.5Q15 9.75 15.75 9.75H18.75Z";
+  "M7.99885 9.32054q-.53725 0-.95878.1813-.41523.17854-.70493.51559-.2953.34344-.45496.83559-.1633.5034-.1633 1.14206 0 .8471.26034 1.46063.24929.58718.74031.90453.49379.31922 1.25672.31922.45494 0 .85397-.0761.41002-.0782.79829-.19659l.3552-.1083v1.28827l-.17848.0669q-.41791.15665-.87633.23216-.454.0749-1.07042.0749-1.1726 0-1.97278-.49512-.80623-.49886-1.20626-1.40634-.38898-.88232-.38898-2.06908 0-.8599.24266-1.57752.24631-.72821.72307-1.26093.48072-.53715 1.17858-.82856.69139-.28866 1.57582-.28866.57382 0 1.10774.114.53901.1151.97713.33151l.24225.11966-.5651 1.19668-.24702-.11294q-.32412-.14818-.71342-.25773-.3733-.10513-.81132-.10513m9.55 0q-.53725 0-.95878.1813-.41523.17854-.70493.51559-.2953.34344-.45496.83559-.1633.5034-.1633 1.14206 0 .8471.26034 1.46063.24929.58718.74031.90453.49379.31922 1.25672.31922.45494 0 .85397-.0761.41002-.0782.79829-.19659l.3552-.1083v1.28827l-.17848.0669q-.41791.15665-.87634.23216-.454.0749-1.07041.0749-1.1726 0-1.97278-.49512-.80623-.49886-1.20626-1.40634-.38898-.88232-.38898-2.06908 0-.8599.24266-1.57752.24631-.72821.72307-1.26093.48072-.53715 1.17859-.82856.69138-.28866 1.57581-.28866.57382 0 1.10774.114.53901.1151.97713.33151l.24226.11966-.5651 1.19668-.24703-.11294q-.32412-.14818-.71342-.25773-.3733-.10513-.81132-.10513";
 
 // Access, adding and primary navigation.
 // Both treatments use the same head, wheel and seated-body landmarks.
@@ -199,22 +202,26 @@ put(
     dot(16.5, 7.5, 4.5) +
     dot(18.75, 17.25, 1.5),
 );
+// Three separated measures and their target marks stay readable at 12px.
 put(
   "chart-bullet",
-  S("M2.25 2.25V21.75M18.75 3V6M21.75 7.5V10.5M14.25 12V15M20.25 16.5V19.5") +
+  S("M2.25 2.25V21.75M19.5 3V7.5M16.5 9.75V14.25M21.75 16.5V21") +
     F(
-      box(5.25, 3.75, 10.5, 1.5) +
-        box(5.25, 8.25, 13.5, 1.5) +
-        box(5.25, 12.75, 6, 1.5) +
-        box(5.25, 17.25, 12, 1.5),
+      box(5.25, 4.125, 10.5, 2.25) +
+        box(5.25, 10.875, 7.5, 2.25) +
+        box(5.25, 17.625, 12.75, 2.25),
     ),
 );
+const candleWicks = S(
+  "M6.75 2.25V6.75M6.75 15.75V21.75M17.25 2.25V9.75M17.25 17.25V21.75",
+);
+// Retained body edges give hollow and filled candles the same painted width.
+const candleBodies = R(3.75, 6.75, 6, 9) + R(14.25, 9.75, 6, 7.5);
 put(
   "chart-candlestick",
-  S("M6.75 2.25V6.75M6.75 15.75V21.75M17.25 2.25V9.75M17.25 17.25V21.75") +
-    R(3.75, 6.75, 6, 9) +
-    F(box(14.25, 9.75, 6, 7.5)),
-  S("M6.75 2.25V6.75M6.75 15.75V21.75M17.25 2.25V9.75M17.25 17.25V21.75") +
+  candleWicks + candleBodies + F(box(14.25, 9.75, 6, 7.5)),
+  candleWicks +
+    candleBodies +
     F(box(3.75, 6.75, 6, 9) + box(14.25, 9.75, 6, 7.5)),
 );
 put(
@@ -226,13 +233,16 @@ put(
         box(18, 2.25, 3, 16.5),
     ),
 );
+// Unequal filled sectors show chart proportions instead of a loading ring.
+// The broad annular band and 16-degree gaps remain distinct at 12px.
 put(
   "chart-donut",
-  S(
-    "M13.6931 2.3981A9.75 9.75 0 0 1 21.162 15.3347M19.4689 18.2672A9.75 9.75 0 0 1 4.5311 18.2672M2.838 15.3347A9.75 9.75 0 0 1 10.3069 2.3981",
+  F(
+    "M13.35694 2.34489A9.75 9.75 0 0 1 13.35694 21.65511L12.76545 17.44647A5.5 5.5 0 0 0 12.76545 6.55353ZM10.64306 21.65511A9.75 9.75 0 0 1 2.39812 10.30693L6.58356 11.04494A5.5 5.5 0 0 0 11.23455 17.44647ZM3.23676 7.72588A9.75 9.75 0 0 1 10.64306 2.34489L11.23455 6.55353A5.5 5.5 0 0 0 7.05663 9.58896Z",
   ),
 );
 // Both variants mark every vertex; the first point stays clear of the axis.
+// Filled nodes give the solid variant more emphasis without adding tiny counters.
 const lineChart = S("M6 17.25L10.5 11.25L15 14.25L20.25 6.75");
 const lineChartPoints = [
   [6, 17.25],
@@ -247,7 +257,7 @@ put(
     lineChartPoints.map(([x, y]) => dot(x, y, 1.5)).join(""),
   chartAxes +
     lineChart +
-    lineChartPoints.map(([x, y]) => dot(x, y, 1.75)).join(""),
+    lineChartPoints.map(([x, y]) => dot(x, y, 2)).join(""),
 );
 put(
   "chart-pie",
@@ -267,7 +277,8 @@ const scatterPoints = [
 put(
   "chart-scatter",
   chartAxes + scatterPoints.map(([x, y]) => C(x, y, 1.75)).join(""),
-  chartAxes + scatterPoints.map(([x, y]) => dot(x, y, 1.75)).join(""),
+  chartAxes +
+    scatterPoints.map(([x, y]) => dot(x, y, 1.75) + C(x, y, 1.75)).join(""),
 );
 put(
   "chart-stacked-bar",
@@ -299,30 +310,14 @@ put("chat-group", backChat + S(frontChat), backChat + F(frontChat));
 put("chat", S(speech), F(speech));
 put(
   "chatting",
-  S(speech) + dot(7.5, 10.5) + dot(12, 10.5) + dot(16.5, 10.5),
-  F(speech + circ(7.5, 10.5, 1) + circ(12, 10.5, 1) + circ(16.5, 10.5, 1)),
+  withSharedMark(S(speech), enclosedEllipsis),
+  withSharedMark(F(speech), enclosedEllipsis, true),
 );
-const checkmarkPoints = [
-  [3.75, 12],
-  [9, 17.25],
-  [20.25, 5.25],
-];
-const checkmark = tickPaths(checkmarkPoints);
-// Keep the counter inset while preserving the positive tick's arm proportions.
-const checkmarkCounter = tickPaths(
-  checkmarkPoints.map((point) =>
-    point.map((value) => 12 + (value - 12) * 0.84),
-  ),
-  1.6,
-).counter;
 put(
   "checkmark",
-  S(checkmark.line),
-  F(
-    // Checkbox, Pill and Switch use this fill as their control surface.
-    // Keep it edge-to-edge; consumers supply the border and clipping.
-    box(0, 0, 24, 24) + checkmarkCounter,
-  ),
+  standaloneMark(enclosedTick),
+  // Checkbox, Pill and Switch supply the border and clipping.
+  withSharedMark(F(box(0, 0, 24, 24)), enclosedTick, true),
 );
 put("chevron-down", chevron(90));
 put("chevron-left", chevron(180));
@@ -348,21 +343,40 @@ put(
   "close_small",
   S("M5.0625 5.0625L18.9375 18.9375M18.9375 5.0625L5.0625 18.9375"),
 );
+// Both surfaces retain the same frame and letter anchors after fitting.
+const captionEdge = (0.75 * 19.5) / 14;
 put(
   "closedcaption",
   R(2.25, 5.25, 19.5, 13.5) + F(captionHole),
-  F(box(2.25, 5.25, 19.5, 13.5) + captionHole),
+  F(
+    box(
+      2.25 - captionEdge,
+      5.25 - captionEdge,
+      19.5 + 2 * captionEdge,
+      13.5 + 2 * captionEdge,
+    ) + captionHole,
+  ),
 );
+// Clip the shared C contours to a local 1.4-unit perpendicular slash buffer.
+// This preserves the curved bowls with a smaller clearance than the frame
+// breaks; the final gap remains open through a primary width of 1.5.
+const disabledCaptionHole =
+  "M6.3701 8.35q-.65693.28885-1.11591.80171-.47676.53272-.72307 1.26093-.24266.71761-.24266 1.57752 0 1.18676.38898 2.06908.40003.90748 1.20626 1.40634.80019.49512 1.97278.49512.61642 0 1.07042-.0749.45842-.07551.87633-.23216l.17848-.0669v-1.28827l-.3552.1083q-.38827.11838-.7983.19659-.39902.0761-.85396.0761-.76293 0-1.25672-.31922-.49102-.31735-.7403-.90453-.26034-.61354-.26034-1.46063 0-.63865.16329-1.14206.15966-.49215.45496-.8356.2897-.33704.70493-.51559.1723-.0741.36394-.11792zm11.5555 7.5957q.30044-.01852.5513-.0599.45842-.07551.87633-.23216l.17848-.0669v-1.28827l-.3552.1083q-.38827.11838-.7983.19659-.39902.0761-.85396.0761-.63848 0-1.08846-.22357zm-2.31622-2.31622q-.04392-.08371-.08216-.17377-.26033-.61354-.26033-1.46063 0-.63865.16329-1.14206.15966-.49215.45496-.8356.2897-.33704.70493-.51559.42153-.18129.95878-.18129.43803 0 .81132.10513.3893.10955.71342.25773l.24702.11294.5651-1.19668-.24225-.11966q-.43812-.21641-.97713-.33152-.53392-.114-1.10774-.114-.88443 0-1.57581.28867-.69787.2914-1.1786.82856-.47675.53272-.72306 1.26093-.22417.66295-.24125 1.44733z";
+// The filled frame follows the outline's painted edge at the fitting width.
+const captionLeft = 2.25 - captionEdge;
+const captionRight = 21.75 + captionEdge;
+const captionTop = 5.25 - captionEdge;
+const captionBottom = 18.75 + captionEdge;
+const captionBuffer = 1.4 * Math.SQRT2;
+const disabledCaptionSurface =
+  `M${captionTop + captionBuffer} ${captionTop}H${captionRight}V${captionBottom}H${captionBottom + captionBuffer}Z` +
+  `M${captionLeft} ${captionTop}H${captionTop - captionBuffer}L${captionBottom - captionBuffer} ${captionBottom}H${captionLeft}Z`;
 put(
   "closedcaption-disabled",
   S("M9.75 5.25H21.75V17.25M14.25 18.75H2.25V6.75") +
-    F(
-      "M6.000158 8.651808 7.152124 9.803774Q6.75 9.950825 6.75 10.5V13.5Q6.75 14.25 7.5 14.25H10.5V15.75H7.5Q5.25 15.75 5.25 13.5V10.5Q5.25 9.200825 6.000158 8.651808ZM18.75 8.25V9.75H15.75Q15 9.75 15 10.5V12.348351L13.5 10.848351V10.5Q13.5 8.25 15.75 8.25ZM18.401649 15.75 16.901649 14.25H18.75V15.75H18.401649Z",
-    ) +
+    F(disabledCaptionHole) +
     S("M3 3L21 21"),
-  F(
-    "M18.75 8.25H15.75Q13.5 8.25 13.5 10.5V10.8483L7.9017 5.25H21.75V18.75H21.4017L18.4017 15.75H18.75V14.25H16.9017L15 12.3483V10.5Q15 9.75 15.75 9.75H18.75ZM2.25 5.25H2.5983L6.0002 8.6518Q5.25 9.2008 5.25 10.5V13.5Q5.25 15.75 7.5 15.75H10.5V14.25H7.5Q6.75 14.25 6.75 13.5V10.5Q6.75 9.9508 7.1521 9.8038L16.0983 18.75H2.25Z",
-  ) + S("M3 3L21 21"),
+  F(disabledCaptionSurface + disabledCaptionHole) + S("M3 3L21 21"),
 );
 put(
   "coffee",
@@ -563,7 +577,7 @@ put(
 put(
   "document",
   sheetOutline() + S("M7.5 11.25H16.5M7.5 15.75H14.25"),
-  sheetSolid(box(7.5, 10.5, 9, 1.5, 0.5) + box(7.5, 15, 6.75, 1.5, 0.5)),
+  sheetSolid(box(7.5, 10.5, 9, 1.5) + box(7.5, 15, 6.75, 1.5)),
 );
 put("does-not-equal", S("M2.25 8.25H21.75M2.25 15.75H21.75M16.5 3L7.5 21"));
 

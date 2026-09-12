@@ -22,11 +22,43 @@ export const ChartScatterSolidIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1 .25V15h14.75"
+          d="M1 .435v14.38h14.38"
         />
         <path
           fillRule="evenodd"
-          d="M3.364 11.029a1.324 1.324 0 1 0 2.647 0 1.324 1.324 0 1 0-2.647 0M5.35 6.49a1.324 1.324 0 1 0 2.647 0 1.324 1.324 0 1 0-2.648 0M9.32 9.327a1.324 1.324 0 1 0 2.648 0 1.324 1.324 0 1 0-2.648 0m3.404-6.807a1.324 1.324 0 1 0 2.648 0 1.324 1.324 0 1 0-2.648 0"
+          d="M3.304 10.944a1.29 1.29 0 1 0 2.582 0 1.29 1.29 0 1 0-2.582 0"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M3.304 10.944a1.29 1.29 0 1 0 2.582 0 1.29 1.29 0 1 0-2.582 0Z"
+        />
+        <path
+          fillRule="evenodd"
+          d="M5.24 6.519a1.29 1.29 0 1 0 2.581 0 1.29 1.29 0 1 0-2.58 0"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5.24 6.519a1.29 1.29 0 1 0 2.581 0 1.29 1.29 0 1 0-2.58 0Z"
+        />
+        <path
+          fillRule="evenodd"
+          d="M9.112 9.284a1.29 1.29 0 1 0 2.581 0 1.29 1.29 0 1 0-2.581 0"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M9.112 9.284a1.29 1.29 0 1 0 2.581 0 1.29 1.29 0 1 0-2.581 0Z"
+        />
+        <path
+          fillRule="evenodd"
+          d="M12.43 2.647a1.29 1.29 0 1 0 2.582 0 1.29 1.29 0 1 0-2.582 0"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M12.43 2.647a1.29 1.29 0 1 0 2.582 0 1.29 1.29 0 1 0-2.582 0Z"
         />
       </g>
     </Icon>

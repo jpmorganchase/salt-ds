@@ -23,13 +23,8 @@ export const HelpCircleIcon = forwardRef<SVGSVGElement, HelpCircleIconProps>(
             d="M.988 8a7.012 7.012 0 1 0 14.024 0A7.012 7.012 0 1 0 .988 8Z"
           />
           <path
-            fill="none"
-            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M5.536 5.442q0-1.896 2.464-1.896t2.464 1.896q0 1.137-1.327 1.895Q8 7.905 8 9.137"
-          />
-          <path
             fillRule="evenodd"
-            d="M7.242 11.98a.758.758 0 1 0 1.516 0 .758.758 0 1 0-1.516 0"
+            d="M4.742 5.251q0-2.647 3.258-2.647t3.258 2.647q0 1.63-1.63 2.545-1.017.57-1.017 1.63H7.389q0-1.711 1.425-2.546 1.222-.692 1.222-1.629 0-1.425-2.036-1.425T5.964 5.25ZM7 12a1 1 0 1 0 2 0 1 1 0 1 0-2 0"
           />
         </g>
       </Icon>

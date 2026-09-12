@@ -21,7 +21,7 @@ export const MedicalKitSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M.237 1.706h15.526v12.588H.237Zm1.888 1.258h1.26v10.072h-1.26Zm10.49 0h1.26v10.072h-1.26ZM7.372 5.482H8.63v1.889h1.889v1.258h-1.89v1.889H7.371V8.629H5.482V7.371h1.889Z"
+          d="M.264 1.586h15.472v12.828H.264Zm2.562 1.882h.906v9.064h-.906Zm9.442 0h.906v9.064h-.906ZM6.75 5h2.5v1.75H11v2.5H9.25V11h-2.5V9.25H5v-2.5h1.75Z"
         />
       </g>
     </Icon>

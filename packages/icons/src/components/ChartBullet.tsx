@@ -20,11 +20,11 @@ export const ChartBulletIcon = forwardRef<SVGSVGElement, ChartBulletIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1 1v14M12.846 1.538v2.154M15 4.77v2.154M9.615 8v2.154m4.308 1.077v2.154"
+            d="M1 1v14M13.385 1.538V4.77M11.23 6.385v3.23M15 11.231v3.23"
           />
           <path
             fillRule="evenodd"
-            d="M3.154 2.077h7.538v1.077H3.154Zm0 3.23h9.692v1.078H3.154Zm0 3.231h4.308v1.077H3.154Zm0 3.231h8.615v1.077H3.154Z"
+            d="M3.154 2.346h7.538v1.616H3.154Zm0 4.846h5.384v1.616H3.154Zm0 4.846h9.154v1.616H3.154Z"
           />
         </g>
       </Icon>

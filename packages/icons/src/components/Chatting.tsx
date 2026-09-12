@@ -24,7 +24,7 @@ export const ChattingIcon = forwardRef<SVGSVGElement, ChattingIconProps>(
           />
           <path
             fillRule="evenodd"
-            d="M3.958 6.148a.61.61 0 1 0 1.22 0 .61.61 0 1 0-1.22 0m3.432 0a.61.61 0 1 0 1.22 0 .61.61 0 1 0-1.22 0m3.432 0a.61.61 0 1 0 1.22 0 .61.61 0 1 0-1.22 0"
+            d="M3 6.5a1 1 0 1 0 2 0 1 1 0 1 0-2 0m4 0a1 1 0 1 0 2 0 1 1 0 1 0-2 0m4 0a1 1 0 1 0 2 0 1 1 0 1 0-2 0"
           />
         </g>
       </Icon>

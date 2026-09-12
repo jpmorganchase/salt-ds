@@ -21,7 +21,7 @@ export const SemanticNeutralSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M.25 8a7.75 7.75 0 1 0 15.5 0A7.75 7.75 0 1 0 .25 8m4.173 2.385h7.154v1.192H4.423Zm0-4.77a.596.596 0 1 0 1.192 0 .596.596 0 1 0-1.192 0m5.962 0a.596.596 0 1 0 1.192 0 .596.596 0 1 0-1.192 0"
+          d="M.25 8a7.75 7.75 0 1 0 15.5 0A7.75 7.75 0 1 0 .25 8m4-1.75a1 1 0 1 0 2 0 1 1 0 1 0-2 0m5.5 0a1 1 0 1 0 2 0 1 1 0 1 0-2 0M4 10.5h8V12H4Z"
         />
       </g>
     </Icon>

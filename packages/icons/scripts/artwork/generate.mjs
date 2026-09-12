@@ -10,6 +10,7 @@ import c from "./c.mjs";
 import cloudActions from "./cloud-actions.mjs";
 import d from "./d.mjs";
 import fileFormats from "./file-formats.mjs";
+import { composeSharedMark } from "./mark-composition.mjs";
 import referenceControls from "./reference-controls.mjs";
 import referenceFrames from "./reference-frames.mjs";
 import referenceSymbols from "./reference-symbols.mjs";
@@ -51,14 +52,29 @@ const expected = new Set(
 for (const name of Object.keys(drawings))
   if (!expected.has(name)) throw new Error(`Unexpected drawing: ${name}`);
 const referenceRecords = [];
+const sharedMarks = new Map();
 for (const file of inventory) {
   const solid = file.endsWith("_solid.svg");
   const name = file.replace(/_solid\.svg$|\.svg$/g, "");
-  const body = drawings[name]?.[solid ? 1 : 0];
-  if (!body) throw new Error(`Missing ${file}`);
-  if (solid && body === drawings[name][0] && !brandVariantAliases.has(file))
+  const drawing = drawings[name]?.[solid ? 1 : 0];
+  if (!drawing) throw new Error(`Missing ${file}`);
+  if (
+    solid &&
+    JSON.stringify(drawing) === JSON.stringify(drawings[name][0]) &&
+    !brandVariantAliases.has(file)
+  )
     throw new Error(`Identical variants: ${name}`);
+  const body = typeof drawing === "string" ? drawing : drawing.body;
+  if (typeof body !== "string" || !body.trim())
+    throw new Error(`Invalid drawing body: ${file}`);
   const preserveBrandContours = brandIconNames.has(name);
+  if (typeof drawing !== "string") {
+    if (!drawing.mark || preserveBrandContours)
+      throw new Error(`Invalid shared mark recipe: ${file}`);
+    // Aliases resolve to their canonical descriptor above, retaining the same
+    // final mark even when their container is fitted independently.
+    sharedMarks.set(file, drawing.mark);
+  }
   // Bake construction transforms into coordinates and widths, then apply the
   // fixed family weight while preserving lighter secondary details.
   const normalized = optimize(
@@ -126,11 +142,17 @@ for (const file of inventory) {
   referenceRecords.push({ name: file, svg: result });
 }
 const { records, transforms } = await fitViewBoxes(referenceRecords);
+// Validate and compose every descriptor before writing any output. Containers
+// alone determine the fit; shared marks retain their final 16-unit geometry.
+const composedRecords = records.map(({ name, svg }) => ({
+  name,
+  svg: composeSharedMark(svg, sharedMarks.get(name)),
+}));
 await fs.writeFile(
   path.join(dir, "view-box-transforms.json"),
   `${JSON.stringify(transforms, null, 2)}\n`,
 );
-for (const { name: file, svg: result } of records) {
+for (const { name: file, svg: result } of composedRecords) {
   await fs.writeFile(path.join(target, file), result);
   if (file === "github.svg") {
     // Keep the site's standalone image synchronized with the package mark.

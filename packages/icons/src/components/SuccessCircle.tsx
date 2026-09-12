@@ -19,13 +19,15 @@ export const SuccessCircleIcon = forwardRef<
       {...props}
     >
       <g strokeWidth="var(--icon-strokeWidth, 1)">
-        <g
+        <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-        >
-          <path d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Z" />
-          <path d="m3.917 7.708 2.722 2.723 5.444-5.445" />
-        </g>
+          d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Z"
+        />
+        <path
+          fillRule="evenodd"
+          d="M2.793 8.457 6.5 12.164l6.707-6.707-1.414-1.414L6.5 9.336 4.207 7.043Z"
+        />
       </g>
     </Icon>
   );

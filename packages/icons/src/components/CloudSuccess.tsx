@@ -24,7 +24,7 @@ export const CloudSuccessIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
         >
           <path d="M4.497 12.661a3.503 3.503 0 0 1-.57-6.96 4.67 4.67 0 0 1 6.295-1.82m2.881 3.123a2.92 2.92 0 0 1-1.016 5.657h-7.59" />
-          <path d="m4.815 8.043 2.123 2.123 6.21-6.21" />
+          <path d="m4.815 6.734 2.778 2.778 5.556-5.556" />
         </g>
       </g>
     </Icon>

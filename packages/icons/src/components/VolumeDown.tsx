@@ -19,12 +19,12 @@ export const VolumeDownIcon = forwardRef<SVGSVGElement, VolumeDownIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M.25 5.256h4.116L9.855.453v15.094l-5.489-4.803H.25Z"
+            d="M.25 5.855h3.218L7.76 2.1v11.8l-4.29-3.755H.25Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M13.285 4.57q3.43 3.43 0 6.86"
+            d="M10.44 5.318q2.683 2.682 0 5.364"
           />
         </g>
       </Icon>

@@ -19,12 +19,12 @@ export const PinSolidIcon = forwardRef<SVGSVGElement, PinSolidIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M4.77.25h6.46v2.583L9.937 4.125V8l2.583 2.583v1.292H3.479v-1.292L6.063 8V4.125L4.77 2.833Z"
+            d="m10.374 1.307 4.32 4.319-1.728 1.727-.864-.863-3.887 3.887v3.455l-.864.863L1.305 8.65l.863-.864h3.455l3.888-3.887-.864-.864Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8 11.875v3.875"
+            d="m10.374 1.307 4.32 4.319-1.728 1.727-.864-.863-3.887 3.887v3.455l-.864.863L1.305 8.65l.863-.864h3.455l3.888-3.887-.864-.864ZM4.328 11.672l-3.023 3.023"
           />
         </g>
       </Icon>

@@ -4,17 +4,22 @@ import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 import { brandIconNames } from "./brands.mjs";
 import { checkClearance } from "./check-clearance.mjs";
+import { checkCompactActions } from "./check-compact-actions.mjs";
 import { checkCutoutActions } from "./check-cutout-actions.mjs";
 import { checkCutoutClearance } from "./check-cutout-clearance.mjs";
 import { checkCutoutComposites } from "./check-cutout-composites.mjs";
 import { checkCutoutDisabled } from "./check-cutout-disabled.mjs";
 import { checkCutoutPeople } from "./check-cutout-people.mjs";
+import { checkFamilyFeatures } from "./check-family-features.mjs";
 import { checkFeatureAlignment } from "./check-feature-alignment.mjs";
 import { checkNumberCentering } from "./check-number-centering.mjs";
 import { checkPaintedBounds } from "./check-painted-bounds.mjs";
 import { checkPairFeatures } from "./check-pair-features.mjs";
 import { checkPairStrokes } from "./check-pair-strokes.mjs";
+import { checkPolishFeatures } from "./check-polish-features.mjs";
 import { checkSchoolCutout } from "./check-school-cutout.mjs";
+import { checkSharedMarks } from "./check-shared-marks.mjs";
+import { checkSpecificDrawings } from "./check-specific-drawings.mjs";
 import {
   checkViewBoxFit,
   validateViewBoxTransforms,
@@ -132,9 +137,24 @@ try {
   const centering = await checkNumberCentering(page, referenceRecords);
   result.numberCenteringFailures = centering.failures;
   result.numberCenteringSamples = centering.results.length;
-  const pairFeatures = await checkPairFeatures(page, referenceRecords);
+  const pairFeatures = await checkPairFeatures(page, referenceRecords, records);
   result.pairFeatureFailures = pairFeatures.failures;
   result.pairFeatureSamples = pairFeatures.results.length;
+  const sharedMarks = await checkSharedMarks(page, records);
+  result.sharedMarkFailures = sharedMarks.failures;
+  result.sharedMarkSamples = sharedMarks.results.length;
+  const specificDrawings = await checkSpecificDrawings(page, records);
+  result.specificDrawingFailures = specificDrawings.failures;
+  result.specificDrawingSamples = specificDrawings.results.length;
+  const compactActions = await checkCompactActions(page, records);
+  result.compactActionFailures = compactActions.failures;
+  result.compactActionSamples = compactActions.results.length;
+  const familyFeatures = await checkFamilyFeatures(page, records);
+  result.familyFeatureFailures = familyFeatures.failures;
+  result.familyFeatureSamples = familyFeatures.results.length;
+  const polish = await checkPolishFeatures(page, records);
+  result.polishFeatureFailures = polish.failures;
+  result.polishFeatureSamples = polish.results.length;
   const pairStrokes = await checkPairStrokes(page, referenceRecords);
   result.pairStrokeFailures = pairStrokes.failures;
   result.pairStrokeSamples = pairStrokes.results.length;
@@ -184,6 +204,11 @@ try {
     result.viewBoxFitFailures.length ||
     result.numberCenteringFailures.length ||
     result.pairFeatureFailures.length ||
+    result.sharedMarkFailures.length ||
+    result.specificDrawingFailures.length ||
+    result.compactActionFailures.length ||
+    result.familyFeatureFailures.length ||
+    result.polishFeatureFailures.length ||
     result.pairStrokeFailures.length ||
     result.featureAlignmentFailures.length ||
     result.clearanceFailures.length ||

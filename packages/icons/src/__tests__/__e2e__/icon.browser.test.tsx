@@ -78,7 +78,10 @@ describe("Given an icon", () => {
       );
 
       const outlineStyle = getComputedStyle(getIconPath("outline"));
-      expect(outlineStyle.strokeWidth).toBe("1.5px");
+      expect(Number.parseFloat(outlineStyle.strokeWidth)).toBeCloseTo(
+        1.333333,
+        4,
+      );
       expect(outlineStyle.stroke).not.toBe("none");
       expect(outlineStyle.fill).toBe("none");
       const solidStyle = getComputedStyle(getIconPath("solid"));
