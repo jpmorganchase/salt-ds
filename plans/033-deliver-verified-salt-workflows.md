@@ -495,6 +495,54 @@ triggers the STOP before a fresh task. No fresh trial or source repairs ran;
 Unit 033/02a, its checkpoint and human gates remain unchanged. See the
 [host capability results](../evals/salt-ai/ui-agent/HOST_CAPABILITY_RESULTS.md).
 
+### User-directed parent-coordinated creator and reviewer
+
+The 2026-09-12 request explicitly authorizes the proposed orchestration change
+from `163e635c2`. The main task may launch the native creator and independent
+reviewer separately; nested creator delegation is no longer a prerequisite for
+this new route. Preserve earlier failed and incomplete attempts unchanged.
+Continue Unit 033/02a at its existing checkpoint, without promotion.
+
+Update only the thin Codex creator profile and local setup/protocol wording needed
+for an explicitly appointed coordinator to own native review dispatch. Preserve
+source freeze before handoff, actual independent review, at most two source
+repairs, fresh evidence/review after a repair, and explicit incomplete outcomes.
+Do not change user-wide configuration, sandbox protections or reviewer access.
+
+First run one unscored image-capability check per selected role: native Luna
+creator and native Sol reviewer, medium effort, no inherited conversation and
+three minutes each. Both must inspect an actual supplied screenshot, describe
+visible details without hints and return their supplied local marker. File hashes
+and inventories alone do not prove image inspection. The main task invokes both
+through native delegation. This check makes no UI-quality judgment; preserve the
+previously verified guarded execution result and exact local dependency cohort.
+If either cannot inspect the image or the required native role cannot run, stop
+before another UI trial and record the actual limitation.
+
+If both pass, freeze one fresh small modification task, independent acceptance,
+baseline identity, models and time limits before creator output. The main task
+may route the creator's frozen handoff to a fresh Sol reviewer and return its
+actual findings for at most two Luna source repairs. It supplies no Salt choices
+or application source. Preserve every initial/repair stage and review separately.
+Use the existing account/model-payload approval and narrowly approved offline
+build/browser commands; no install, other model API, consumer contact, publication
+or deployment is authorized. Commit only authored role/protocol/task/check and
+aggregate result changes, keeping raw outputs and trial apps outside Git. Run
+focused checks for introduced code, plan/contracts/changed quality and source
+review, then commit the closeout unsigned. Human gates remain pending.
+
+Observed closeout on 2026-09-12: both image-capability checks passed. The fresh
+restore-saved-details task failed confirmation focus initially and after its
+first repair. The second/final repair passed the composed guarded acceptance and
+typecheck at 1280/320 pixels, with thirty bound screenshots; a fresh Sol reviewer
+returned REVIEW PASS after independent local retrieval and actual image review.
+Before/after-review integrity audits passed for all stages. Source review of the
+authored checker/protocol changes was clean. See the preserved initial, repair
+and final outcomes in
+[coordinated workflow results](../evals/salt-ai/ui-agent/COORDINATED_RESULTS.md).
+This one task demonstrates the parent-coordinated route within its two-repair
+limit, without changing earlier failures, human gates or the active checkpoint.
+
 ## Conditional Unit 033/03 — Expand workflows from observed need
 
 Scope: adopt only a genuinely additional workflow or modification case justified by observed need, extending canonical examples/docs and the same schema/assembler/harness. Navigation, the operational worklist and record editing now belong to the single service-worklist journey in Unit 033/02a; do not reimplement them as separate workflow families merely to complete this backlog. Reuse that workflow's preview and fixture setup. Create a separate integration fixture only when it proves a distinct supported environment, as the existing Next App Router fixture does. Reuse selected public material from the operations dashboard without importing repository-only source into consumer output.

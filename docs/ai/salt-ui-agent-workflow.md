@@ -81,14 +81,36 @@ a supervised local delivery result: it does not establish unattended success,
 model availability for another account, cost or a quality advantage. The apps
 use in-memory fixture state, so refreshing clears their records.
 
-Codex native profile activation and VS Code extension activation remain
-unverified. If a host cannot discover the profiles, create the named reviewer,
-or retain the reviewer's read-only role, stop and report that limit. Supplying
-the instructions to an ordinary agent can test role behavior, but does not prove
-native profile activation or an independent review-and-repair result.
+Later Codex runs exercised the native Salt profiles, but the selected creator
+reported no callable nested reviewer delegation. That limitation and its
+incomplete image inspection are preserved in the
+[host capability report](../../evals/salt-ai/ui-agent/HOST_CAPABILITY_RESULTS.md).
+VS Code extension activation remains unverified. Profile discovery or a role
+prompt alone does not establish independent review or a successful UI workflow.
 
 The profiles follow the official [GitHub Copilot custom-agent
 configuration](https://docs.github.com/en/copilot/reference/custom-agents-configuration).
 `skills/salt-ui/SKILL.md` remains the sole authored behavioral source. The
 existing `skills/salt-design-system/SKILL.md`, Knowledge inputs, and published
 agent-support contract remain unchanged.
+
+## Codex with an explicit parent coordinator
+
+For the separately authorized Codex route, appoint the main task as coordinator
+and use the repository's native `salt-ui-creator` and `salt-ui-reviewer` profiles
+with the shared Skill. The main task launches the two roles separately. This
+uses the host's [native subagent coordination](https://learn.chatgpt.com/docs/agent-configuration/subagents);
+it does not require the creator to launch a child reviewer itself.
+
+Before a new UI exercise, verify that each selected role can inspect an actual
+supplied screenshot. The parent viewing it does not establish child capability.
+Preserve the creator's initial source and evidence, stop source edits, and supply
+the complete handoff to a fresh read-only reviewer without inherited creator
+history. Relay the reviewer's actual findings without adding Salt choices or
+application code. After a source repair, refresh the affected checks and images
+and obtain fresh independent review. At most two repairs are allowed; missing
+review, unreadable images or unresolved findings leave the result incomplete.
+
+Use the [coordinated workflow record](../../evals/salt-ai/ui-agent/COORDINATED_RESULTS.md)
+for the frozen settings and actual observed outcome. The preceding Copilot
+procedure and earlier Codex results remain separate evidence.

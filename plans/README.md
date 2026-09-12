@@ -37,6 +37,13 @@ tool and produced no reviewer. Its own image inspection was incomplete. The
 conditional fresh task did not run; see the
 [host capability results](../evals/salt-ai/ui-agent/HOST_CAPABILITY_RESULTS.md).
 
+The parent-coordinated route subsequently passed both image-capability checks
+and one frozen restore-saved-details task after two repairs. Final guarded
+acceptance, typechecking, independent Sol review and source/screenshot integrity
+checks passed; see the
+[coordinated workflow results](../evals/salt-ai/ui-agent/COORDINATED_RESULTS.md).
+The unit remains in progress with its human gates pending.
+
 ## Execution order and status
 
 | Plan                                                               | Title                                                                                                           | Priority | Effort         | Depends on                  | Status                                                        |
@@ -171,6 +178,10 @@ publication authority as deferred to Plan 003.
   execution/delegation capability check and, only if both pass, one fresh frozen
   task under the same Luna/Sol and two-repair limits. Earlier outcomes remain
   unchanged; see [host capability results](../evals/salt-ai/ui-agent/HOST_CAPABILITY_RESULTS.md).
+  The 2026-09-12 request authorizes parent-coordinated native creator/reviewer
+  dispatch, with separate image-capability checks before one conditional fresh
+  task. It preserves the earlier results and pending human gates; see
+  [coordinated workflow results](../evals/salt-ai/ui-agent/COORDINATED_RESULTS.md).
 - **Successor eligibility:** each next unit requires a reviewed control
   transition with actual completion evidence; Plan 003 remains deferred.
 
