@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Existing @salt-ds/<library>@<version> tag to publish"
+        required: true
+        type: string
   issue_comment:
     types:
       - created
@@ -168,6 +174,142 @@ jobs:
         run: yarn build-storybook
         env:
           NODE_OPTIONS: "--max_old_space_size=6144"
+
+  prepare-version-publish:
+    name: Prepare Version Publish
+    if: |
+      github.event_name == 'workflow_dispatch' &&
+      github.repository == 'jpmorganchase/salt-ds' &&
+      github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    outputs:
+      commit: ${{ steps.release.outputs.commit }}
+    steps:
+      - name: Checkout recovery tooling
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          path: recovery-tooling
+          persist-credentials: false
+      - name: Validate release tag
+        id: release
+        working-directory: recovery-tooling
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          if [[ ! "$RELEASE_TAG" =~ ^@salt-ds/[a-z0-9-]+@[0-9][0-9A-Za-z.+-]*$ ]]; then
+            echo "::error::Release tag must match @salt-ds/<library>@<version>."
+            exit 1
+          fi
+
+          if ! git show-ref --verify --quiet "refs/tags/$RELEASE_TAG"; then
+            echo "::error::Release tag '$RELEASE_TAG' does not exist."
+            exit 1
+          fi
+
+          commit=$(git rev-list -n 1 "refs/tags/$RELEASE_TAG")
+          if ! git merge-base --is-ancestor "$commit" origin/main; then
+            echo "::error::Release tag '$RELEASE_TAG' is not part of main."
+            exit 1
+          fi
+
+          node_version=$(
+            git show "$commit:.github/workflows/release.yml" |
+              sed -nE 's/^[[:space:]]*node-version:[[:space:]]*"?([0-9]+)"?.*/\1/p' |
+              head -1
+          )
+          if [[ ! "$node_version" =~ ^[0-9]+$ ]]; then
+            echo "::error::Could not determine the Node.js version used by '$RELEASE_TAG'."
+            exit 1
+          fi
+
+          echo "commit=$commit" >> "$GITHUB_OUTPUT"
+          echo "node_version=$node_version" >> "$GITHUB_OUTPUT"
+          echo "Preparing $RELEASE_TAG from $commit with Node.js $node_version."
+      - name: Checkout historical release
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ steps.release.outputs.commit }}
+          path: release-source
+          persist-credentials: false
+      - name: Use Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: ${{ steps.release.outputs.node_version }}
+          package-manager-cache: false
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Install historical dependencies
+        working-directory: release-source
+        run: yarn install --immutable
+      - name: Build historical release
+        working-directory: release-source
+        run: yarn build
+        env:
+          NODE_OPTIONS: "--max_old_space_size=6144"
+      - name: Pack tagged version
+        env:
+          RELEASE_COMMIT: ${{ steps.release.outputs.commit }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          node recovery-tooling/scripts/prepareVersionPublish.mjs \
+            --source release-source \
+            --output publish-artifact \
+            --release-tag "$RELEASE_TAG" \
+            --commit "$RELEASE_COMMIT"
+      - name: Upload version
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: version-publish-${{ github.run_id }}
+          path: publish-artifact
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
+
+  publish-version:
+    name: Publish Version
+    if: |
+      github.event_name == 'workflow_dispatch' &&
+      github.repository == 'jpmorganchase/salt-ds' &&
+      github.ref == 'refs/heads/main'
+    needs: prepare-version-publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      id-token: write # Needed for npm trusted publishing provenance.
+    steps:
+      - name: Checkout recovery tooling
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Use Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: "24"
+          package-manager-cache: false
+          registry-url: "https://registry.npmjs.org"
+      - name: Install npm with trusted publishing support
+        run: npm install --global npm@11.11.0 --ignore-scripts
+      - name: Download version
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: version-publish-${{ github.run_id }}
+          path: publish-artifact
+      - name: Publish tagged library
+        env:
+          NPM_CONFIG_PROVENANCE: "true"
+          RELEASE_COMMIT: ${{ needs.prepare-version-publish.outputs.commit }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          node scripts/publishVersion.mjs \
+            --artifact publish-artifact \
+            --release-tag "$RELEASE_TAG" \
+            --commit "$RELEASE_COMMIT" \
+            --npm-tag latest
 
   snapshot:
     name: Snapshot Release
