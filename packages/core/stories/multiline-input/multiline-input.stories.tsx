@@ -7,6 +7,7 @@ import {
   Label,
   MultilineInput,
   Text,
+  useAriaAnnouncer,
 } from "@salt-ds/core";
 import {
   BookmarkSolidIcon,
@@ -18,7 +19,7 @@ import {
   SendIcon,
 } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { type ChangeEvent, useState } from "react";
+import { type ChangeEvent, useId, useRef, useState } from "react";
 
 export default {
   title: "Core/Multiline Input",
@@ -155,27 +156,49 @@ export const Disabled: StoryFn<typeof MultilineInput> = (args) => {
 };
 
 export const CharacterCount: StoryFn<typeof MultilineInput> = (args) => {
+  const { announce } = useAriaAnnouncer({ debounce: 500 });
   const [value, setValue] = useState<string>("Value");
   const [isError, setIsError] = useState<boolean>(false);
   const MAX_CHARS = 10;
+  const counterId = useId();
+  const prevAtLimitRef = useRef(false);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const newVal = event.target.value;
     setValue(newVal);
-    setIsError(newVal.length > MAX_CHARS);
+    if (newVal.length > MAX_CHARS) {
+      setIsError(true);
+      if (!prevAtLimitRef.current) {
+        prevAtLimitRef.current = true;
+        announce(
+          `Character limit reached. ${newVal.length} of ${MAX_CHARS} characters used.`,
+          { ariaLive: "assertive" },
+        );
+      }
+    } else {
+      prevAtLimitRef.current = false;
+      setIsError(false);
+      if (newVal.length > 0) {
+        announce(`${newVal.length} of ${MAX_CHARS} characters used.`);
+      }
+    }
   };
 
   return (
     <MultilineInput
       {...args}
       endAdornment={
-        <Label variant={!isError ? "secondary" : "primary"}>
+        <Label id={counterId} variant={!isError ? "secondary" : "primary"}>
           {!isError && `${value.length}/${MAX_CHARS}`}
           {isError && <strong>{`${value.length}/${MAX_CHARS}`}</strong>}
         </Label>
       }
       style={{ width: "266px" }}
-      onChange={handleChange}
+      textAreaProps={{
+        "aria-describedby": counterId,
+        "aria-invalid": isError,
+        onChange: handleChange,
+      }}
       value={value}
       validationStatus={isError ? "error" : undefined}
     />
