@@ -11,10 +11,8 @@ import {
   type Ref,
   useRef,
 } from "react";
-import {
-  ListControlContext,
-  type OptionValue,
-} from "../list-control/ListControlContext";
+import type { OptionValue } from "../list-control/ListControlContext";
+import { ListControlProvider } from "../list-control/ListControlProvider";
 import {
   defaultValueToString,
   type ListControlProps,
@@ -113,11 +111,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
       typeaheadString.current = "";
     }, 500);
 
-    let newOption = getOptionFromSearch(typeaheadString.current, activeState);
-
-    if (!newOption) {
-      newOption = getOptionFromSearch(typeaheadString.current);
-    }
+    const newOption = getOptionFromSearch(typeaheadString.current, activeState);
 
     if (newOption) {
       setActive(newOption);
@@ -249,7 +243,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
   const handleRef = useForkRef(setListRef, ref);
 
   return (
-    <ListControlContext.Provider value={listControl}>
+    <ListControlProvider value={listControl}>
       <div
         className={clsx(
           withBaseName(),
@@ -271,7 +265,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
       >
         {children}
       </div>
-    </ListControlContext.Provider>
+    </ListControlProvider>
   );
 }) as <Item = string>(
   props: ListBoxProps<Item> & { ref?: Ref<HTMLDivElement> },

@@ -5,17 +5,27 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type MouseEvent,
+  memo,
   type ReactNode,
-  useEffect,
   useMemo,
   useRef,
 } from "react";
+import { useSyncExternalStore } from "use-sync-external-store/shim";
 import { CheckboxIcon } from "../checkbox";
+import type { OptionValue } from "../list-control/ListControlContext";
+import { useListControlOptionContext } from "../list-control/ListControlOptionContext";
 import {
-  type OptionValue,
-  useListControlContext,
-} from "../list-control/ListControlContext";
-import { makePrefixer, useForkRef, useId } from "../utils";
+  hasOptionState,
+  OPTION_STATE_ACTIVE,
+  OPTION_STATE_FOCUS_VISIBLE,
+  OPTION_STATE_SELECTED,
+} from "../list-control/ListControlOptionStore";
+import {
+  makePrefixer,
+  useForkRef,
+  useId,
+  useIsomorphicLayoutEffect,
+} from "../utils";
 import optionCss from "./Option.css";
 
 export interface OptionProps extends ComponentPropsWithoutRef<"div"> {
@@ -35,7 +45,7 @@ export interface OptionProps extends ComponentPropsWithoutRef<"div"> {
 
 const withBaseName = makePrefixer("saltOption");
 
-export const Option = forwardRef<HTMLDivElement, OptionProps>(
+const OptionComponent = forwardRef<HTMLDivElement, OptionProps>(
   function Option(props, ref) {
     const {
       className,
@@ -59,29 +69,42 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
 
     const {
       setActive,
-      activeState,
       multiselect,
       select,
       register,
-      selectedState,
-      focusVisibleState,
+      optionStateStore,
       valueToString,
       disabled: listDisabled,
       listRef,
-    } = useListControlContext();
+    } = useListControlOptionContext();
 
     const disabled = disabledProp || listDisabled;
 
-    const selected = selectedState.includes(value);
-    const active = activeState?.value === value;
-
-    const optionValue: OptionValue<unknown> = useMemo(
-      () => ({
-        id: String(id),
+    const optionId = String(id);
+    const { getSnapshot, optionValue, subscribe } = useMemo(() => {
+      const nextOptionValue: OptionValue<unknown> = {
+        id: optionId,
         disabled: Boolean(disabled),
         value,
-      }),
-      [id, disabled, value],
+      };
+      return {
+        getSnapshot: () =>
+          optionStateStore.getSnapshot(optionId, nextOptionValue),
+        optionValue: nextOptionValue,
+        subscribe: (listener: () => void) =>
+          optionStateStore.subscribe(optionId, listener),
+      };
+    }, [optionId, disabled, value, optionStateStore]);
+    const optionState = useSyncExternalStore(
+      subscribe,
+      getSnapshot,
+      getSnapshot,
+    );
+    const selected = hasOptionState(optionState, OPTION_STATE_SELECTED);
+    const active = hasOptionState(optionState, OPTION_STATE_ACTIVE);
+    const focusVisible = hasOptionState(
+      optionState,
+      OPTION_STATE_FOCUS_VISIBLE,
     );
 
     const handleClick = (event: MouseEvent<HTMLDivElement>) => {
@@ -103,7 +126,7 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
       setActive(optionValue);
     };
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       if (id && optionRef.current) {
         return register(optionValue, optionRef.current);
       }
@@ -112,6 +135,7 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
     const handleRef = useForkRef(optionRef, ref);
 
     return (
+      // biome-ignore lint/a11y/useKeyWithClickEvents: The click event is handled by the parent list control, which manages keyboard interactions.
       <div
         aria-disabled={disabled ? "true" : undefined}
         aria-selected={selected}
@@ -119,7 +143,7 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
           withBaseName(),
           {
             [withBaseName("active")]: active,
-            [withBaseName("focusVisible")]: focusVisibleState && active,
+            [withBaseName("focusVisible")]: focusVisible,
           },
           className,
         )}
@@ -137,3 +161,6 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
     );
   },
 );
+
+// Context isolation makes this bailout effective for unchanged option props.
+export const Option = memo(OptionComponent) as typeof OptionComponent;

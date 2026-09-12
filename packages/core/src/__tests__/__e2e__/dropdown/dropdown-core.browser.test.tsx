@@ -20,6 +20,8 @@ const {
   WithDefaultSelected,
   ObjectValue,
   LongList,
+  PerformanceTest,
+  PerformanceTestOneThousand,
 } = composeStories(dropdownStories);
 
 const CORE_TYPEAHEAD_RESET_MS = 500;
@@ -46,6 +48,14 @@ afterEach(() => vi.restoreAllMocks());
 
 const combobox = () => page.getByRole("combobox");
 const listbox = () => page.getByRole("listbox");
+
+function collapsedList() {
+  const element = document.querySelector<HTMLElement>(
+    ".saltOptionList-collapsed",
+  );
+  if (!element) throw new Error("Collapsed option list missing");
+  return page.elementLocator(element);
+}
 
 async function expectActive(nameOrIndex: string | number) {
   await expect
@@ -522,5 +532,49 @@ describe("Given a core Dropdown", () => {
     );
     await expect.element(combobox()).toHaveClass("saltDropdown-error");
     await expect.element(combobox()).not.toHaveClass("saltDropdown-warning");
+  });
+
+  it("opens a 10000-item list", async () => {
+    await renderWithSalt(<PerformanceTest />);
+    await combobox().click();
+    await expect.element(listbox()).toBeVisible();
+    expect(document.querySelectorAll(".saltOption")).toHaveLength(10_000);
+  });
+
+  it("supports 1000 non-virtualized options through focus, mouse/keyboard open, navigation, and close", async () => {
+    await renderWithSalt(<PerformanceTestOneThousand />);
+    combobox().element().focus();
+    await expect.element(combobox()).toHaveFocus();
+    await expect.element(combobox()).toHaveAttribute("aria-expanded", "false");
+    await expect.element(collapsedList()).not.toBeVisible();
+    expect(document.querySelectorAll(".saltOption")).toHaveLength(1_000);
+
+    await combobox().click();
+    await expect
+      .poll(() => document.querySelectorAll(".saltOption").length, {
+        timeout: 30_000,
+      })
+      .toBe(1_000);
+    await page
+      .elementLocator(document.body)
+      .click({ position: { x: 0, y: 0 } });
+    await expect.element(listbox()).not.toBeInTheDocument();
+
+    combobox().element().focus();
+    await userEvent.keyboard("{ArrowDown}");
+    await expect
+      .poll(() => document.querySelectorAll(".saltOption").length, {
+        timeout: 30_000,
+      })
+      .toBe(1_000);
+    await expectActive(0);
+    await userEvent.keyboard("{ArrowDown}");
+    await expectActive(1);
+
+    await page
+      .elementLocator(document.body)
+      .click({ position: { x: 0, y: 0 } });
+    await expect.element(combobox()).toHaveAttribute("aria-expanded", "false");
+    await expect.element(listbox()).not.toBeInTheDocument();
   });
 });

@@ -25,6 +25,7 @@ const {
   SelectOnTab,
   LongList,
   PerformanceTest,
+  PerformanceTestOneThousand,
   Virtualized,
 } = composeStories(comboBoxStories);
 
@@ -32,6 +33,14 @@ afterEach(() => vi.restoreAllMocks());
 
 const input = () => page.getByRole("combobox");
 const listbox = () => page.getByRole("listbox");
+
+function collapsedList() {
+  const element = document.querySelector<HTMLElement>(
+    ".saltOptionList-collapsed",
+  );
+  if (!element) throw new Error("Collapsed option list missing");
+  return page.elementLocator(element);
+}
 
 function comboBoxRoot() {
   const element = document.querySelector<HTMLElement>(".saltComboBox");
@@ -573,6 +582,50 @@ describe("Given a ComboBox", () => {
     await renderWithSalt(<PerformanceTest />);
     await input().click();
     await expect.element(listbox()).toBeVisible();
+    expect(document.querySelectorAll(".saltOption")).toHaveLength(10_000);
+  });
+
+  it("supports 1000 non-virtualized options through focus, open, navigation, filter, and close", async () => {
+    await renderWithSalt(<PerformanceTestOneThousand />);
+    input().element().focus();
+    await expect.element(input()).toHaveFocus();
+    await expect.element(input()).toHaveAttribute("aria-expanded", "false");
+    await expect.element(collapsedList()).not.toBeVisible();
+    expect(document.querySelectorAll(".saltOption")).toHaveLength(1_000);
+
+    await input().click();
+    await expect
+      .poll(() => document.querySelectorAll(".saltOption").length, {
+        timeout: 30_000,
+      })
+      .toBe(1_000);
+    await page
+      .elementLocator(document.body)
+      .click({ position: { x: 0, y: 0 } });
+    await expect.element(listbox()).not.toBeInTheDocument();
+
+    input().element().focus();
+    await userEvent.keyboard("{ArrowDown}");
+    await expect
+      .poll(() => document.querySelectorAll(".saltOption").length, {
+        timeout: 30_000,
+      })
+      .toBe(1_000);
+    await expectActive(0);
+    await userEvent.keyboard("{ArrowDown}");
+    await expectActive(1);
+
+    await userEvent.keyboard("999");
+    await expect
+      .poll(() => document.querySelectorAll(".saltOption").length, {
+        timeout: 30_000,
+      })
+      .toBe(1);
+    await page
+      .elementLocator(document.body)
+      .click({ position: { x: 0, y: 0 } });
+    await expect.element(input()).toHaveAttribute("aria-expanded", "false");
+    await expect.element(listbox()).not.toBeInTheDocument();
   });
 
   it("removes active descendant whenever the popup closes", async () => {
