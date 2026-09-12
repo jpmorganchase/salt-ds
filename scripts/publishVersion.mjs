@@ -205,6 +205,8 @@ if (latestVersion !== null && compareSemver(pkg.version, latestVersion) <= 0) {
 const { stdout: npmVersion } = await execFile("npm", ["--version"]);
 assertNpmVersion(npmVersion.trim());
 
+// Inherit the workflow's GITHUB_REF and GITHUB_SHA: npm verifies provenance
+// against the signing certificate's source identity, which overrides cannot change.
 await execFile(
   "npm",
   [
@@ -221,11 +223,6 @@ await execFile(
   ],
   {
     maxBuffer: 20 * 1024 * 1024,
-    env: {
-      ...process.env,
-      GITHUB_REF: `refs/tags/${args["release-tag"]}`,
-      GITHUB_SHA: args.commit,
-    },
   },
 );
 
