@@ -253,6 +253,38 @@ export const DialogHeaders: StoryFn<QAContainerProps> = () => (
       }}
     />
     <DialogHeader
+      status="info"
+      header="Terms and conditions"
+      description="Effective date: August 29, 2024"
+      style={{
+        width: 600,
+      }}
+    />
+    <DialogHeader
+      status="warning"
+      header="Session expiring"
+      description="Your session will expire in 5 minutes."
+      style={{
+        width: 600,
+      }}
+    />
+    <DialogHeader
+      status="error"
+      header="Connection failed"
+      description="Unable to connect to the server."
+      style={{
+        width: 600,
+      }}
+    />
+    <DialogHeader
+      status="success"
+      header="Transaction complete"
+      description="Your payment has been processed successfully."
+      style={{
+        width: 600,
+      }}
+    />
+    <DialogHeader
       actions={
         <Button aria-label="Close dialog" appearance="transparent">
           <CloseIcon aria-hidden />
