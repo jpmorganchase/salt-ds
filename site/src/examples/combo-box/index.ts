@@ -3,6 +3,7 @@ export * from "./ClearSelection";
 export * from "./ComplexOptions";
 export * from "./CustomFiltering";
 export * from "./Default";
+export * from "./Delimiter";
 export * from "./Disabled";
 export * from "./DisabledOption";
 export * from "./EmptyMessage";
