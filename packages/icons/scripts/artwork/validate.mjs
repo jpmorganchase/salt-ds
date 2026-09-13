@@ -8,18 +8,36 @@ import { checkCompactActions } from "./check-compact-actions.mjs";
 import { checkCutoutActions } from "./check-cutout-actions.mjs";
 import { checkCutoutClearance } from "./check-cutout-clearance.mjs";
 import { checkCutoutComposites } from "./check-cutout-composites.mjs";
+import { checkCutoutContours } from "./check-cutout-contours.mjs";
 import { checkCutoutDisabled } from "./check-cutout-disabled.mjs";
 import { checkCutoutPeople } from "./check-cutout-people.mjs";
+import { checkCutoutSpacingAbc } from "./check-cutout-spacing-abc.mjs";
+import { checkCutoutSpacingActions } from "./check-cutout-spacing-actions.mjs";
+import { checkCutoutSpacingCloud } from "./check-cutout-spacing-cloud.mjs";
+import { checkCutoutSpacingD } from "./check-cutout-spacing-d.mjs";
 import { checkFamilyFeatures } from "./check-family-features.mjs";
 import { checkFeatureAlignment } from "./check-feature-alignment.mjs";
+import { checkFilterGuidePairs } from "./check-filter-guide-pairs.mjs";
 import { checkNumberCentering } from "./check-number-centering.mjs";
+import { checkOpticalDetails } from "./check-optical-details.mjs";
 import { checkPaintedBounds } from "./check-painted-bounds.mjs";
 import { checkPairFeatures } from "./check-pair-features.mjs";
 import { checkPairStrokes } from "./check-pair-strokes.mjs";
+import { checkPairedSurfaceExteriors } from "./check-paired-surface-exteriors.mjs";
 import { checkPolishFeatures } from "./check-polish-features.mjs";
+import { checkScalingActions } from "./check-scaling-actions.mjs";
+import { checkScalingControls } from "./check-scaling-controls.mjs";
+import { checkScalingMedia } from "./check-scaling-media.mjs";
+import { checkScalingOther } from "./check-scaling-other.mjs";
 import { checkSchoolCutout } from "./check-school-cutout.mjs";
+import { checkSendSurface } from "./check-send-surface.mjs";
 import { checkSharedMarks } from "./check-shared-marks.mjs";
 import { checkSpecificDrawings } from "./check-specific-drawings.mjs";
+import { checkStabilizationA } from "./check-stabilization-a.mjs";
+import { checkStabilizationB } from "./check-stabilization-b.mjs";
+import { checkStabilizationCd } from "./check-stabilization-cd.mjs";
+import { checkSumWeight } from "./check-sum-weight.mjs";
+import { checkTransferWeight } from "./check-transfer-weight.mjs";
 import {
   checkViewBoxFit,
   validateViewBoxTransforms,
@@ -149,12 +167,63 @@ try {
   const compactActions = await checkCompactActions(page, records);
   result.compactActionFailures = compactActions.failures;
   result.compactActionSamples = compactActions.results.length;
+  const cutoutContours = await checkCutoutContours(page, records);
+  result.cutoutContourFailures = cutoutContours.failures;
+  result.cutoutContourSamples = cutoutContours.results.length;
+  const cutoutSpacingMeasurements = [];
+  result.cutoutSpacingFailures = [];
+  result.cutoutSpacingSamples = 0;
+  for (const check of [
+    checkCutoutSpacingActions,
+    checkCutoutSpacingAbc,
+    checkCutoutSpacingCloud,
+    checkCutoutSpacingD,
+  ]) {
+    const spacing = await check(page, records);
+    cutoutSpacingMeasurements.push(...spacing.results);
+    result.cutoutSpacingFailures.push(...spacing.failures);
+    result.cutoutSpacingSamples += spacing.results.length;
+  }
+  const scalingMeasurements = [];
+  result.scalingFailures = [];
+  for (const check of [
+    checkScalingControls,
+    checkScalingMedia,
+    checkScalingActions,
+    checkScalingOther,
+  ]) {
+    const scaling = await check(page, records);
+    scalingMeasurements.push(...scaling.results);
+    result.scalingFailures.push(...scaling.failures);
+  }
+  result.scalingSamples = scalingMeasurements.length;
   const familyFeatures = await checkFamilyFeatures(page, records);
   result.familyFeatureFailures = familyFeatures.failures;
   result.familyFeatureSamples = familyFeatures.results.length;
+  const opticalDetails = await checkOpticalDetails(page, records);
+  result.opticalDetailFailures = opticalDetails.failures;
+  result.opticalDetailSamples = opticalDetails.results.length;
   const polish = await checkPolishFeatures(page, records);
   result.polishFeatureFailures = polish.failures;
   result.polishFeatureSamples = polish.results.length;
+  // Check retained landmarks and open contours on the actual shipped frame.
+  const stabilizationMeasurements = [];
+  result.stabilizationFailures = [];
+  for (const check of [
+    checkStabilizationA,
+    checkStabilizationB,
+    checkStabilizationCd,
+    checkSumWeight,
+    checkTransferWeight,
+    checkFilterGuidePairs,
+    checkPairedSurfaceExteriors,
+    checkSendSurface,
+  ]) {
+    const checked = await check(page, records);
+    stabilizationMeasurements.push(...checked.results);
+    result.stabilizationFailures.push(...checked.failures);
+  }
+  result.stabilizationSamples = stabilizationMeasurements.length;
   const pairStrokes = await checkPairStrokes(page, referenceRecords);
   result.pairStrokeFailures = pairStrokes.failures;
   result.pairStrokeSamples = pairStrokes.results.length;
@@ -183,6 +252,14 @@ try {
   result.paintedBoundsSamples = painted.samples;
   const out = path.join(root, "dist/icon-validation");
   await fs.mkdir(out, { recursive: true });
+  await fs.writeFile(
+    path.join(out, "scaling.json"),
+    `${JSON.stringify(scalingMeasurements, null, 2)}\n`,
+  );
+  await fs.writeFile(
+    path.join(out, "cutout-spacing.json"),
+    `${JSON.stringify(cutoutSpacingMeasurements, null, 2)}\n`,
+  );
   await page
     .locator(".grid")
     .screenshot({ path: path.join(out, "all-icons-32.png") });
@@ -193,6 +270,10 @@ try {
   await fs.writeFile(
     path.join(out, "validation.json"),
     `${JSON.stringify({ icons: files.length, errors, ...result }, null, 2)}\n`,
+  );
+  await fs.writeFile(
+    path.join(out, "stabilization.json"),
+    `${JSON.stringify(stabilizationMeasurements, null, 2)}\n`,
   );
   console.log(
     JSON.stringify({ icons: files.length, errors, ...result }, null, 2),
@@ -207,8 +288,13 @@ try {
     result.sharedMarkFailures.length ||
     result.specificDrawingFailures.length ||
     result.compactActionFailures.length ||
+    result.cutoutContourFailures.length ||
+    result.cutoutSpacingFailures.length ||
+    result.scalingFailures.length ||
+    result.stabilizationFailures.length ||
     result.familyFeatureFailures.length ||
     result.polishFeatureFailures.length ||
+    result.opticalDetailFailures.length ||
     result.pairStrokeFailures.length ||
     result.featureAlignmentFailures.length ||
     result.clearanceFailures.length ||

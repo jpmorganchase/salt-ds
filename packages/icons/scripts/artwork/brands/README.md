@@ -25,7 +25,7 @@ The first path is the wordmark; `brands.mjs` uses the second path, the company S
 
 `linkedin.svg` preserves the inline SVG and `inbug-blue-14` symbol extracted from [LinkedIn's official downloads page](https://brand.linkedin.com/downloads#inbug-blue-14), retrieved on 11 September 2026. Its source viewBox is `0 0 14 14`. This source comes from the page markup; the downloadable logo ZIP contains PNG files only.
 
-The recipe uses the supplied rounded-square [in] path unchanged. `LinkedinIcon` and `LinkedinSolidIcon` intentionally share this artwork to preserve both public exports without inventing a bare-letter variant. This documented compatibility pair is the exception to the requirement for distinct outline/solid artwork. Follow the [LinkedIn logo guidance](https://brand.linkedin.com/in-logo) for its presentation.
+`LinkedinSolidIcon` uses the supplied rounded-square [in] path unchanged. `LinkedinIcon` is a custom Salt presentation that extracts the original “in” letter contours and omits the square. It preserves the letters' size and position within the same 16-unit frame, so they stay aligned across the pair. Keep the source SVG unchanged; the bare-letter variant is a deliberate Salt exception, not owner-supplied artwork. Follow the [LinkedIn logo guidance](https://brand.linkedin.com/in-logo) when using the official mark.
 
 ## Stack Overflow
 

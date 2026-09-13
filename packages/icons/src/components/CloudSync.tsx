@@ -21,7 +21,7 @@ export const CloudSyncIcon = forwardRef<SVGSVGElement, CloudSyncIconProps>(
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           >
-            <path d="M3.58 9.722a3.346 3.346 0 0 1 .533-6.468 4.46 4.46 0 0 1 8.214 1.103 2.788 2.788 0 0 1-.425 5.542h-.304" />
+            <path d="M3.466 9.681a3.346 3.346 0 0 1 .647-6.427 4.46 4.46 0 0 1 8.214 1.103 2.788 2.788 0 0 1-.425 5.542h-.368" />
             <path d="M10.533 8.885H5.467M7.24 7.112 5.467 8.885 7.24 10.66m-1.773 2.787h5.066M8.76 11.672l1.773 1.774-1.773 1.773" />
           </g>
         </g>

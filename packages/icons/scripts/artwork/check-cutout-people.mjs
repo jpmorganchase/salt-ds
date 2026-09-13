@@ -76,23 +76,39 @@ export function checkCutoutPeople(page, records) {
     [9, 9.5],
     [12, 9.5],
   ];
+  // At the retained unit scale, match the complete rear cap to the lower
+  // opening at the midpoint of the two final theme widths.
+  const groupCalibrationWidth = 7 / 6;
+  const rearNormalAt = (parameter) => {
+    const tangent = [6 * parameter, -5 * (1 - parameter)];
+    const length = Math.hypot(...tangent);
+    return [-tangent[1] / length, tangent[0] / length];
+  };
   const rearParameter = bisect(
-    (parameter) =>
-      distanceToBezier(
-        bezier(rearGroupShoulder, parameter),
-        frontGroupShoulder,
-      ),
-    2,
+    (parameter) => {
+      const point = bezier(rearGroupShoulder, parameter);
+      const normal = rearNormalAt(parameter);
+      return (
+        Math.min(
+          ...[-1, 1].map((sign) =>
+            distanceToBezier(
+              point.map(
+                (value, index) =>
+                  value + (sign * groupCalibrationWidth * normal[index]) / 2,
+              ),
+              frontGroupShoulder,
+            ),
+          ),
+        ) -
+        groupCalibrationWidth / 2
+      );
+    },
+    2 - groupCalibrationWidth / 2,
     0.7,
     1,
   );
   const rearStop = bezier(rearGroupShoulder, rearParameter);
-  const rearTangent = [6 * rearParameter, -5 * (1 - rearParameter)];
-  const rearLength = Math.hypot(...rearTangent);
-  const rearNormal = [
-    -rearTangent[1] / rearLength,
-    rearTangent[0] / rearLength,
-  ];
+  const rearNormal = rearNormalAt(rearParameter);
   const groupOutlineExpected = Object.fromEntries(
     weights.map((weight) => {
       const corners = [-1, 1].map((sign) =>
@@ -115,19 +131,53 @@ export function checkCutoutPeople(page, records) {
   const center = [11.5, 10.5];
   const searchShoulder = [
     [6, 9],
-    [10.5, 9],
-    [10.5, 12],
+    [11.5, 9],
+    [11.5, 12],
   ];
-  const radiusToSearch = (t) =>
-    Math.hypot(
-      ...bezier(searchShoulder, t).map((value, i) => value - center[i]),
-    );
-  const t = bisect(radiusToSearch, 4.5, 0, 1);
+  // Solve the retained shoulder curve and horizontal base against the lens,
+  // using final 1.25 clearance at W=7/6 in the unchanged 1.029279 frame.
+  const searchCalibrationWidth = 7 / 6 / 1.029279;
+  const searchCalibrationGap = 1.25 / 1.029279;
+  const searchNormalAt = (t) => {
+    const tangent = [11 * (1 - t), 6 * t];
+    const length = Math.hypot(...tangent);
+    return [-tangent[1] / length, tangent[0] / length];
+  };
+  const t = bisect(
+    (parameter) => {
+      const point = bezier(searchShoulder, parameter);
+      const normal = searchNormalAt(parameter);
+      return (
+        Math.min(
+          ...[-1, 1].map((sign) =>
+            Math.hypot(
+              ...point.map(
+                (value, i) =>
+                  value +
+                  (sign * searchCalibrationWidth * normal[i]) / 2 -
+                  center[i],
+              ),
+            ),
+          ),
+        ) -
+        2.5 -
+        searchCalibrationWidth / 2
+      );
+    },
+    searchCalibrationGap,
+    0,
+    0.5,
+  );
   const shoulderStop = bezier(searchShoulder, t);
-  const tangent = [9 * (1 - t), 6 * t];
-  const length = Math.hypot(...tangent);
-  const shoulderNormal = [-tangent[1] / length, tangent[0] / length];
-  const lowerStop = [center[0] - Math.sqrt(4.5 ** 2 - 3.5 ** 2), 14];
+  const shoulderNormal = searchNormalAt(t);
+  const lowerStop = [
+    center[0] -
+      Math.sqrt(
+        (2.5 + searchCalibrationGap + searchCalibrationWidth / 2) ** 2 -
+          (3.5 - searchCalibrationWidth / 2) ** 2,
+      ),
+    14,
+  ];
   const searchExpected = (point, normal) =>
     Object.fromEntries(
       weights.map((weight) => {
@@ -161,12 +211,38 @@ export function checkCutoutPeople(page, records) {
       distanceToBezier(point, rightShoulder),
       Math.hypot(point[0] - 10.5, point[1] - 7.5) - 1.6,
     );
+  // Balance the complete butt-cap corners between the two default themes.
+  // This checker uses reference geometry, before Feedback's 1.12 final fit.
+  const feedbackCalibrationWidth = 7 / 6 / 1.12;
+  const feedbackCalibrationGap = 1.31 / 1.12;
+  const feedbackOutlineGap = (point, normal) =>
+    Math.min(
+      ...[-1, 1].map((sign) =>
+        feedbackDistance(
+          point.map(
+            (value, i) =>
+              value + (sign * feedbackCalibrationWidth * normal[i]) / 2,
+          ),
+        ),
+      ),
+    ) -
+    feedbackCalibrationWidth / 2;
   const rightOutline = [
     14.5,
-    bisect((y) => feedbackDistance([14.5, y]), 2, 9, 11),
+    bisect(
+      (y) => feedbackOutlineGap([14.5, y], [1, 0]),
+      feedbackCalibrationGap,
+      9,
+      11,
+    ),
   ];
   const leftOutline = [
-    bisect((x) => feedbackDistance([x, 10.5]), 2, 5, 8),
+    bisect(
+      (x) => feedbackOutlineGap([x, 10.5], [0, 1]),
+      feedbackCalibrationGap,
+      5,
+      8,
+    ),
     10.5,
   ];
   const leftSolid = [

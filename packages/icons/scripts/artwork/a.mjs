@@ -41,11 +41,13 @@ const captionHole =
 // Both treatments use the same head, wheel and seated-body landmarks.
 const accessiblePose = "M10.5 8.25V13.5H16.5L19.5 19.5H22.5M10.5 9.75H16.5";
 const accessibleWheel = S("M7.5 10.5A5.25 5.25 0 1 0 14.25 18");
-// The filled head is the variant cue; body and wheel retain a shared line weight.
+const accessibleOutline =
+  C(10.5, 4.5, 2.25) + S(accessiblePose) + accessibleWheel;
+// Filling the head retains its rim and the whole seated pose's final frame.
 put(
   "accessible",
-  C(10.5, 4.5, 2.25) + S(accessiblePose) + accessibleWheel,
-  F(circ(10.5, 4.5, 2.25)) + S(accessiblePose) + accessibleWheel,
+  accessibleOutline,
+  F(circ(10.5, 4.5, 2.25)) + accessibleOutline,
 );
 put(
   "add-document",
@@ -54,17 +56,19 @@ put(
     "M11.25 10.5H12.75V13.5H15.75V15H12.75V18H11.25V15H8.25V13.5H11.25Z",
   ),
 );
+const addToGridOutline =
+  R(3, 3, 6.75, 6.75) +
+  R(14.25, 3, 6.75, 6.75) +
+  R(3, 14.25, 6.75, 6.75) +
+  plus(17.625, 17.625, 3.375);
 put(
   "add-to-grid",
-  R(3, 3, 6.75, 6.75) +
-    R(14.25, 3, 6.75, 6.75) +
-    R(3, 14.25, 6.75, 6.75) +
-    plus(17.625, 17.625, 3.375),
+  addToGridOutline,
   F(
     box(3, 3, 6.75, 6.75) +
       box(14.25, 3, 6.75, 6.75) +
       box(3, 14.25, 6.75, 6.75),
-  ) + plus(17.625, 17.625, 3.375),
+  ) + addToGridOutline,
 );
 put("add-user", personHead + personBody + plus(18.75, 11.25, 3));
 put("add", plus(12, 12, 9.75));
@@ -119,7 +123,9 @@ put(
     briefcaseHandle,
   F(
     `${briefcase}M4.125 11.25H8.25V9.75H15.75V11.25H19.875V12.75H15.75V14.25H8.25V12.75H4.125Z`,
-  ) + briefcaseHandle,
+  ) +
+    S(briefcase) +
+    briefcaseHandle,
 );
 const windowHoles = (x, y) =>
   [0, 7.5]
@@ -159,15 +165,17 @@ put(
 const handset =
   "M5.25 2.25L9.75 7.5 6.75 10.5Q8.75 15.25 13.5 17.25L16.5 14.25 21.75 18.75L19.5 21Q18.75 21.75 17.25 21.5Q6.25 19.75 2.5 6.75Q2.25 5.25 3 4.5Z";
 put("call", S(handset), F(handset));
+const cartOutline =
+  S("M2.25 3.75H5.25L8.25 15.75H18.75L21 6.75H6") +
+  C(9, 20.25, 1.5) +
+  C(18, 20.25, 1.5);
 put(
   "cart",
-  S("M2.25 3.75H5.25L8.25 15.75H18.75L21 6.75H6") +
-    C(9, 20.25, 1.5) +
-    C(18, 20.25, 1.5),
-  S("M2.25 3.75H5.25L8.25 15.75H18.75") +
-    F("M6 6.75H21L18.75 15.75H8.25Z") +
+  cartOutline,
+  F("M6 6.75H21L18.75 15.75H8.25Z") +
     dot(9, 20.25, 1.5) +
-    dot(18, 20.25, 1.5),
+    dot(18, 20.25, 1.5) +
+    cartOutline,
 );
 
 // Statistical vocabulary shares an open set of axes and spacious marks.
@@ -306,7 +314,11 @@ put(
 // Conversation containers use square exteriors with open, angular tails.
 const backChat = S("M7.5 3H21.75V15L18 12H16.5");
 const frontChat = "M2.25 6H16.5V17.25H8.25L3.75 21V17.25H2.25Z";
-put("chat-group", backChat + S(frontChat), backChat + F(frontChat));
+put(
+  "chat-group",
+  backChat + S(frontChat),
+  backChat + F(frontChat) + S(frontChat),
+);
 put("chat", S(speech), F(speech));
 put(
   "chatting",
@@ -458,16 +470,20 @@ put(
 put(
   "copy",
   S("M8.25 2.25H20.25V17.25M3.75 6.75H15.75V21.75H3.75Z"),
-  S("M8.25 2.25H20.25V17.25") + F(box(3.75, 6.75, 12, 15)),
+  S("M8.25 2.25H20.25V17.25") +
+    F(box(3.75, 6.75, 12, 15)) +
+    S(box(3.75, 6.75, 12, 15)),
 );
+const creditCardFrame = R(2.25, 5.25, 19.5, 13.5);
 put(
   "credit-card",
-  R(2.25, 5.25, 19.5, 13.5) + S("M2.25 9.75H21.75M5.25 15H9.75"),
+  creditCardFrame + S("M2.25 9.75H21.75M5.25 15H9.75"),
+  // Inset the stripe so both side rails survive; retain the shared outer rim.
   F(
     box(2.25, 5.25, 19.5, 13.5) +
-      box(2.25, 8.25, 19.5, 3) +
+      box(3.75, 8.25, 16.5, 3) +
       box(5.25, 14.25, 4.5, 1.5),
-  ),
+  ) + creditCardFrame,
 );
 const cropsLeaves =
   "M12 11.25C7.5 11.25 5.25 9 5.25 5.25C9.75 5.25 12 7.5 12 11.25ZM12 17.25C7.5 17.25 5.25 15 5.25 11.25C9.75 11.25 12 13.5 12 17.25ZM12 8.25C12 3.75 14.25 2.25 16.5 2.25C16.5 6 15 8.25 12 8.25ZM12 14.25C12 9.75 14.25 8.25 18 8.25C18 12 15.75 14.25 12 14.25ZM12 20.25C12 15.75 14.25 14.25 18 14.25C18 18 15.75 20.25 12 20.25Z";
@@ -523,11 +539,12 @@ put(
       box(9, 16.5, 2.25, 2.25, 0.375),
   ),
 );
-// Rear contours follow the actual head and shoulder shapes.
+// Balance all four complete rear caps against the unchanged head/shoulder
+// paint at W=7/6, midway between the two fitted theme defaults.
 put(
   "dataset-manager",
   S(
-    "M2.25 5.25C2.25 1.25 18.75 1.25 18.75 5.25C18.75 5.48518 18.69296 5.70653 18.5856 5.91405M10.33996 8.2495C6.26899 8.22397 2.25 7.22413 2.25 5.25M2.25 5.25L2.25 16.5Q2.25 19.8541 6.75 20.2082M2.25 11.25Q2.25 14.25 7.5 14.25L9.9393 14.25",
+    "M2.25 5.25C2.25 1.25 18.75 1.25 18.75 5.25C18.75 5.529117 18.669659 5.788758 18.520189 6.028922M10.089143 8.246691C6.105545 8.182471 2.25 7.183575 2.25 5.25M2.25 5.25V16.5Q2.25 19.910402 6.902342 20.219243M2.25 11.25Q2.25 14.25 7.5 14.25H9.795913",
   ) +
     C(15.75, 11.625, 3.375) +
     S("M9.75 22.5V20.25Q9.75 18 15.75 18Q21.75 18 21.75 20.25V22.5Z"),

@@ -412,7 +412,7 @@
   },
   {
     "iconName": "database",
-    "synonym": ["stack", "backend"],
+    "synonym": ["stack", "backend", "server", "rack", "serverrack"],
     "category": "computing"
   },
   {
@@ -1232,7 +1232,7 @@
   },
   {
     "iconName": "scales",
-    "synonym": ["balance", "weight", "measure", "legal"],
+    "synonym": ["balance", "weight", "measure"],
     "category": "objects"
   },
   {
@@ -1825,7 +1825,7 @@
   },
   {
     "iconName": "dataset",
-    "synonym": ["stack", "data"],
+    "synonym": ["stack", "data", "database", "storage", "cylinder"],
     "category": "computing"
   },
   {

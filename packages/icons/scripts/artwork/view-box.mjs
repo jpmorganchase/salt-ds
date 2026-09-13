@@ -1,6 +1,6 @@
 import { chromium } from "playwright";
 import { optimize } from "svgo";
-import { brandIconNames } from "./brands.mjs";
+import { getBrandFrame } from "./brands.mjs";
 import { getOpticalFit, validateOpticalFits } from "./optical-fits.mjs";
 
 // Aliases retain exactly the same fitted artwork as their supported export.
@@ -214,12 +214,10 @@ export async function fitViewBoxes(records) {
     if (existing && existing.svg !== record.svg)
       throw new Error(`Alias artwork differs: ${record.name}`);
     if (existing) continue;
-    const base = record.name.replace(/_solid\.svg$|\.svg$/g, "");
-    const reason = brandIconNames.has(base)
-      ? "official-brand"
-      : groupKey === "checkmark_solid.svg"
-        ? "full-canvas-badge"
-        : undefined;
+    const brand = getBrandFrame(record.name);
+    const reason =
+      brand?.reason ??
+      (groupKey === "checkmark_solid.svg" ? "full-canvas-badge" : undefined);
     const optical = getOpticalFit(groupKey);
     if (optical && reason)
       throw new Error(`Exempt artwork cannot have an optical fit: ${groupKey}`);
@@ -228,10 +226,14 @@ export async function fitViewBoxes(records) {
       transform: {
         groupKey,
         fitted: !reason,
-        targetSpan: reason ? 16 : (optical?.targetSpan ?? targetSpan),
+        targetSpan:
+          brand?.targetSpan ??
+          (reason ? 16 : (optical?.targetSpan ?? targetSpan)),
+        ...(brand?.center && { preservedCenter: brand.center }),
         ...(optical && {
           opticalCenter: optical.center,
           opticalReason: optical.reason,
+          ...(optical.frameSource && { frameSource: optical.frameSource }),
         }),
         ...(reason && { reason }),
         scale: 1,
@@ -240,8 +242,22 @@ export async function fitViewBoxes(records) {
       },
     });
   }
+  for (const { transform } of profiles.values()) {
+    if (!transform.frameSource) continue;
+    const source = profiles.get(transform.frameSource)?.transform;
+    if (!source)
+      throw new Error(
+        `Missing optical frame source: ${transform.groupKey} -> ${transform.frameSource}`,
+      );
+    if (!source.fitted || source.frameSource)
+      throw new Error(
+        `Optical frame source must be independently fitted: ${transform.frameSource}`,
+      );
+    // A shared transform preserves retained features. Its dependent export
+    // still declares and validates its own painted span and center.
+  }
   const fittedProfiles = [...profiles.values()].filter(
-    ({ transform }) => transform.fitted,
+    ({ transform }) => transform.fitted && !transform.frameSource,
   );
   const browser = await chromium.launch({ headless: true, channel: "chrome" });
   try {
@@ -359,6 +375,16 @@ export async function fitViewBoxes(records) {
     }
   } finally {
     await browser.close();
+  }
+  // A reviewed pair may retain identical landmarks even when its painted
+  // surfaces differ. Copy geometry only; each export keeps its own identity,
+  // target and optical reason for independent validation of its final paint.
+  for (const { transform } of profiles.values()) {
+    if (!transform.frameSource) continue;
+    const source = profiles.get(transform.frameSource).transform;
+    transform.scale = source.scale;
+    transform.translateX = source.translateX;
+    transform.translateY = source.translateY;
   }
   const transforms = {};
   const fitted = records.map(({ name, svg }) => {

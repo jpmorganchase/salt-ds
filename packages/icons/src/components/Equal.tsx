@@ -20,7 +20,7 @@ export const EqualIcon = forwardRef<SVGSVGElement, EqualIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M.25 5.02h15.5M.25 10.98h15.5"
+            d="M1.75 5.596h12.5m-12.5 4.808h12.5"
           />
         </g>
       </Icon>

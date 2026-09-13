@@ -55,7 +55,7 @@ const laptopScreen =
   "M3.5 5H20.5V15.5Q20.5 16.5 19.5 16.5H4.5Q3.5 16.5 3.5 15.5Z";
 const laptopBase = "M2.5 16.5H21.5V18Q21.5 19 20.5 19H3.5Q2.5 19 2.5 18Z";
 const laptopOutline = squareStroke(laptopScreen) + squareStroke(laptopBase);
-const laptopSolid = F(laptopScreen) + squareStroke(laptopBase);
+const laptopSolid = F(laptopScreen) + laptopOutline;
 // Related housings use the same broad proportions. The display pedestal
 // retains an open stem and filleted foot.
 const displayFrame = "M2.5 3.5H21.5V17.5H2.5Z";

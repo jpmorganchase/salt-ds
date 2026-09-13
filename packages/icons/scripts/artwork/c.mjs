@@ -39,12 +39,14 @@ put(
 );
 const messageAction = (kind) => {
   const reply = kind !== "forward";
+  // Leave a clear horizontal shaft before the quarter-circle bend.
+  // The former broad bend crowded Reply All's rear chevron at its tip.
   const arrow = reply
-    ? "M20.25 20.25v-5.25a6.75 6.75 0 0 0-6.75-6.75H5.25M9.75 3.75l-4.5 4.5 4.5 4.5"
-    : "M3.75 20.25V15a6.75 6.75 0 0 1 6.75-6.75h8.25M14.25 3.75l4.5 4.5-4.5 4.5";
+    ? "M20.25 20.25V12.75a4.5 4.5 0 0 0-4.5-4.5H5.25M9.75 3.75l-4.5 4.5 4.5 4.5"
+    : "M3.75 20.25V12.75a4.5 4.5 0 0 1 4.5-4.5h10.5M14.25 3.75l4.5 4.5-4.5 4.5";
   return kind === "reply-all"
     ? S(
-        "M20.25 20.25V15a6.75 6.75 0 0 0-6.75-6.75H8.25M12.75 3.75l-4.5 4.5 4.5 4.5M6.75 3.75l-4.5 4.5 4.5 4.5",
+        "M20.25 20.25V12.75a4.5 4.5 0 0 0-4.5-4.5H11.25M15.75 3.75l-4.5 4.5 4.5 4.5M9.75 3.75l-4.5 4.5 4.5 4.5",
       )
     : S(arrow);
 };
@@ -65,24 +67,24 @@ const mic = box(8.25, 2.25, 7.5, 13.5, 3.75);
 const micBase = S(
   "M5.25 10.5v1.5a6.75 6.75 0 0 0 13.5 0v-1.5M12 18.75v3M8.25 21.75h7.5",
 );
-put("microphone", S(mic) + micBase, F(mic) + micBase);
-// Shared base geometry is cut only beneath the foreground mark.
+put("microphone", S(mic) + micBase, F(mic) + S(mic) + micBase);
+// Both variants retain the same capsule, support and slash paint. The filled
+// interior stops at the outline's 1.22-unit final clearance at W = 7/6;
+// its cut edges have no stroke and do not grow into the slash corridor.
+const micDisabledCapsule = S(
+  "M12 2.25Q15.75 2.25 15.75 6V11.385298M11.255138 15.708808Q8.601835 15.398165 8.291192 12.744862M8.472431 4.39583Q9.163301 2.25 12 2.25",
+);
+const micDisabledSupport = S(
+  "M5.25 10.5V12C5.25 15.72792 8.27208 18.75 12 18.75C12.810389 18.75 13.587424 18.607189 14.307309 18.345362M18.345362 14.307309C18.607189 13.587424 18.75 12.810389 18.75 12V10.5M12 18.75V21.75M8.25 21.75H15.75",
+);
+const micDisabledOutline =
+  micDisabledCapsule + micDisabledSupport + S("M3 3L21 21");
 put(
   "microphone-disabled",
-  S(
-    "M12 2.25L12 2.25Q15.75 2.25 15.75 6L15.75 11.50736M11.48862 15.73127Q8.49632 15.50368 8.26873 12.51138M8.51471 4.27207Q9.24632 2.25 12 2.25",
-  ) +
-    S(
-      "M5.25 10.5L5.25 12C5.25 15.72792 8.27208 18.75 12 18.75C12.75384 18.75 13.47882 18.62642 14.15579 18.39843M18.39843 14.15579C18.62642 13.47882 18.75 12.75384 18.75 12L18.75 10.5M12 18.75L12 21.75M8.25 21.75L15.75 21.75",
-    ) +
-    S("M3 3L21 21"),
+  micDisabledOutline,
   F(
-    "M12.0 2.25Q15.75 2.25 15.75 6.0V12.0Q15.75 12.549172401428223 15.669574737548828 13.017925262451172L8.260754585266113 5.609104633331299Q8.450824737548828 2.25 12.0 2.25ZM8.25 10.901650428771973 13.017925262451172 15.669574737548828Q12.549172401428223 15.75 12.0 15.75Q8.25 15.75 8.25 12.0V10.901650428771973Z",
-  ) +
-    S(
-      "M5.25 10.5L5.25 12C5.25 15.72792 8.27208 18.75 12 18.75C12.75384 18.75 13.47882 18.62642 14.15579 18.39843M18.39843 14.15579C18.62642 13.47882 18.75 12.75384 18.75 12L18.75 10.5M12 18.75L12 21.75M8.25 21.75L15.75 21.75",
-    ) +
-    S("M3 3L21 21"),
+    "M12 2.25Q15.75 2.25 15.75 6V12Q15.75 12.098899 15.747392 12.19519L8.363049 4.810847Q8.901101 2.25 12 2.25ZM8.25 11.802202V12Q8.25 15.75 12 15.75Q12.098899 15.75 12.19519 15.747392Z",
+  ) + micDisabledOutline,
 );
 put("minimize", S("M3.75 18.75h16.5"));
 const mouse =
@@ -109,27 +111,34 @@ const musicStems = S("M9.75 16.5V5.25l10.5-3v12.75M9.75 9.75l10.5-3");
 const musicNotes =
   "M9.75 16.5c0 1.65-1.7 3-3.75 3s-3-1.05-3-2.25 1.7-3 3.75-3 3 1.05 3 2.25ZM20.25 15c0 1.65-1.7 3-3.75 3s-3-1.05-3-2.25 1.7-3 3.75-3 3 1.05 3 2.25Z";
 const musicOutline = musicStems + S(musicNotes);
-// Open stems share the primary stroke; only the closed beam and notes fill.
+// Keep the note perimeters when filling them so each stem enters the rounded
+// shoulder cleanly instead of protruding past an unstroked note head.
 const musicSolid =
-  musicStems + F(`M9.75 5.25L20.25 2.25V6.75L9.75 9.75Z${musicNotes}`);
+  musicOutline + F(`M9.75 5.25L20.25 2.25V6.75L9.75 9.75Z${musicNotes}`);
 put("music", musicOutline, musicSolid);
-// Shared centerlines are interrupted for the foreground slash; filled surfaces
-// use a true 2.5px transparent corridor at the 16px master size.
+// Open beam/stem and note ends balance their complete painted cap corners
+// at W=7/6. Filled surfaces retain their independently reviewed corridor.
 const musicDisabledStems = S(
-  "M9.75 16.5L9.75 15.49264M9.75 7.00736L9.75 5.25L20.25 2.25L20.25 15M11.88316 9.14052L20.25 6.75",
+  "M9.75 16.5V15.751008M9.75 6.748992V5.25L20.25 2.25V15M11.878154 9.141956L20.25 6.75",
 );
+// Clip the same beam and note contours, retaining one complete stroked-and-
+// filled perimeter. The diagonal centerline balances the existing visible
+// clearance at W=7/6; it does not expand either note or freeze a W=1.5 beam.
+// The isolated lower-left note has no residual stem fragment.
+const musicDisabledSolidSurface =
+  "M9.75 5.25L20.25 2.25V6.75L11.575736 9.228361L9.75 7.402625Z" +
+  "M20.25 15C20.25 15.752323 19.896581 16.442277 19.31771 16.970335L15.524403 13.177028C16.04278 12.91443 16.630404 12.75 17.25 12.75C19.3 12.75 20.25 13.8 20.25 15Z" +
+  "M9.75 16.5c0 1.65-1.7 3-3.75 3s-3-1.05-3-2.25 1.7-3 3.75-3 3 1.05 3 2.25Z";
 put(
   "music-disabled",
   musicDisabledStems +
     S(
-      "M9.75 16.5C9.75 18.15 8.05 19.5 6 19.5C3.95 19.5 3 18.45 3 17.25C3 16.05 4.7 14.25 6.75 14.25C8.8 14.25 9.75 15.3 9.75 16.5M20.25 15C20.25 15.66206 19.9763 16.27583 19.5161 16.77346M15.79458 13.05194C16.24349 12.86328 16.73573 12.75 17.25 12.75C19.3 12.75 20.25 13.8 20.25 15",
+      "M9.75 16.5C9.75 18.15 8.05 19.5 6 19.5C3.95 19.5 3 18.45 3 17.25C3 16.05 4.7 14.25 6.75 14.25C8.8 14.25 9.75 15.3 9.75 16.5M20.25 15C20.25 15.777168 19.872853 16.48778 19.259627 17.022118M15.676531 13.103736C16.156606 12.884197 16.690256 12.75 17.25 12.75C19.3 12.75 20.25 13.8 20.25 15",
     ) +
     S("M2.25 3.75L21 22.5"),
-  musicDisabledStems +
-    F(
-      "M9.75 5.25 20.25 2.25V6.75L10.64573 9.49408L9.75 8.59835ZM9.75 16.5C9.75 18.15 8.05 19.5 6 19.5C3.95 19.5 3 18.45 3 17.25C3 16.05 4.7 14.25 6.75 14.25C8.8 14.25 9.75 15.3 9.75 16.5ZM20.25 15C20.25 16.02007 19.60026 16.92547 18.61977 17.46812L14.79474 13.64309C15.45561 13.12323 16.31652 12.75 17.25 12.75C19.3 12.75 20.25 13.8 20.25 15Z",
-    ) +
-    S("M2.25 3.75L21 22.5"),
+  S(musicDisabledSolidSurface) +
+    F(musicDisabledSolidSurface) +
+    S("M20.25 6.75V15M2.25 3.75L21 22.5"),
 );
 put("not-allowed", C(12, 12, 9) + S("M5.65 5.65l12.7 12.7"));
 const note = "M3.75 3.75h16.5v10.5l-6 6H3.75Z";
@@ -145,7 +154,8 @@ put(
 );
 const bell = "M6.75 9a5.25 5.25 0 0 1 10.5 0v3.75l3 4.5H3.75l3-4.5Z";
 const bellTip = S("M9.75 20.25h4.5M12 3.75v-1.5");
-put("notification", S(bell) + bellTip, F(bell) + bellTip);
+// Fill inside the retained bell perimeter so its crown and clapper stay fixed.
+put("notification", S(bell) + bellTip, F(bell) + S(bell) + bellTip);
 put("notification-read", ...notificationRead);
 put(
   "outdent",
@@ -205,10 +215,11 @@ const pivotArrow = S(
 put(
   "pivot",
   R(2.25, 2.25, 19.5, 19.5) + pivotArrow,
-  // The original solid is a filled panel with the same arrow as a 1px inverse detail.
+  // Keep the outlined arrow's centerlines and endpoints. A 1.8-unit inverse
+  // width gives its arrowheads enough emphasis at 12px inside the filled panel.
   F(
     box(2.25, 2.25, 19.5, 19.5) +
-      "M11.21967 9.46967 14.75 5.93934 18.28033 9.46967 17.21967 10.53033 15.5 8.81066V16H8.56066L10.28033 17.71967L9.21967 18.78033L5.68934 15.25L9.21967 11.71967L10.28033 12.78033L8.56066 14.5H14V8.81066L12.28033 10.53033Z",
+      "M11.113604 9.363604 14.75 5.727208 18.386396 9.363604 17.113604 10.636396 15.65 9.172792V16.15H8.922792L10.386396 17.613604L9.113604 18.886396L5.477208 15.25L9.113604 11.613604L10.386396 12.886396L8.922792 14.35H13.85V9.172792L12.386396 10.636396Z",
   ),
 );
 put("place-in", S("M12 3.75H3.75v16.5h16.5V12M21 3L10.5 13.5m0-6v6h6"));
@@ -239,10 +250,12 @@ put(
   S(presentationBoard) + S("M3 7.5H21M7 11H17M7 14.5H17") + presentationLegs,
   F(
     presentationBoard +
-      box(3, 6.75, 18, 1.5) +
+      box(4.5, 6.75, 15, 1.5) +
       box(6.5, 10.25, 11, 1.5, 0.3) +
       box(6.5, 13.75, 11, 1.5, 0.3),
-  ) + presentationLegs,
+  ) +
+    S(presentationBoard) +
+    presentationLegs,
 );
 put(
   "price-ladder",
@@ -314,7 +327,7 @@ put(
       box(8.25, 7.5, 7.5, 1.5) +
       box(8.25, 11.25, 7.5, 1.5) +
       box(8.25, 15, 4.5, 1.5),
-  ),
+  ) + S(receipt),
 );
 // Redo mirrors the circular undo arrow; refresh retains one circular arrow.
 put("redo", S("M20.25 3.75v6h-6M20.25 9.75a8.25 8.25 0 1 0-7.5 11.25"));
@@ -397,7 +410,9 @@ put(
 // The existing education pictogram is a mortarboard, including its tassel.
 const mortarboard = "M12 3.25L21.25 8.75L12 14.25L2.75 8.75Z";
 // The lower cap opening follows a parallel offset of the mortarboard edges.
-const lowerCapTop = 16.1;
+// Preserve the cap opening after restoring the mortarboard rim, calibrated
+// at W = 7/6 in the shared school frame.
+const lowerCapTop = 17.097879;
 const lowerCapSide = lowerCapTop - (6.75 * 5.5) / 9.25;
 const tassel = S("M21.25 8.75V14.75");
 put(
@@ -405,7 +420,10 @@ put(
   S(mortarboard) + S("M5.25 10.2365V16.25L12 20L18.75 16.25V10.2365") + tassel,
   F(
     `${mortarboard}M5.25 ${lowerCapSide}L12 ${lowerCapTop}L18.75 ${lowerCapSide}V16.25L12 20L5.25 16.25Z`,
-  ) + tassel,
+  ) +
+    S(mortarboard) +
+    S(`M5.25 ${lowerCapSide}V16.25L12 20L18.75 16.25V${lowerCapSide}`) +
+    tassel,
 );
 const searchHandle = S("M15.3 15.3l6.45 6.45");
 put(
@@ -434,7 +452,12 @@ const send = "M2.25 3.75L20.75 12L2.25 20.25L5.25 12Z";
 put(
   "send",
   S(send) + S("M5.25 12h15.5"),
-  F(`${send}M5.25 11.25L17.25 12L5.25 12.75Z`),
+  // Complete exterior paint from the shared outline at W = 7/6, followed by
+  // the established final tapered seam. One contour keeps the rear mouth
+  // clean at every weight; no independently clipped rim cap crosses it.
+  F(
+    "M0.730617 2.119201L22.887559 12L0.730617 21.880799L3.98048 12.943676L19.079288 12L3.98048 11.056324Z",
+  ),
 );
 // Six symmetric teeth retain the clear gear silhouette around a centered bore.
 const gearClean =
@@ -484,7 +507,7 @@ const post =
 put(
   "signpost",
   S(post) + S("M11.25 2.25v19.5"),
-  F(post) + S("M11.25 2.25v19.5"),
+  F(post) + S(post) + S("M11.25 2.25v19.5"),
 );
 const sliderLines = S(
   "M2.25 6.75h9M17.25 6.75h4.5M2.25 17.25h3M11.25 17.25h10.5",

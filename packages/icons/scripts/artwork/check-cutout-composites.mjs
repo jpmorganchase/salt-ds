@@ -20,18 +20,17 @@ export async function checkCutoutComposites(page, records) {
     // combined them with the rear funnel in one path. This preserves painting.
     return {
       name,
-      svg:
-        name === "filter-clear.svg"
-          ? optimize(record.svg, {
-              floatPrecision: 8,
-              plugins: [
-                {
-                  name: "convertPathData",
-                  params: { forceAbsolutePath: true },
-                },
-              ],
-            }).data
-          : record.svg,
+      svg: name.startsWith("filter-clear")
+        ? optimize(record.svg, {
+            floatPrecision: 8,
+            plugins: [
+              {
+                name: "convertPathData",
+                params: { forceAbsolutePath: true },
+              },
+            ],
+          }).data
+        : record.svg,
     };
   });
   return page.evaluate(async (artwork) => {
@@ -157,7 +156,7 @@ export async function checkCutoutComposites(page, records) {
       document.body.appendChild(holder);
       try {
         const source = holder.querySelector("svg");
-        if (name === "filter-clear.svg")
+        if (name.startsWith("filter-clear"))
           for (const path of [...source.querySelectorAll("path")]) {
             const pieces = path.getAttribute("d").match(/M[^M]*/g);
             if (pieces?.length > 1) {
@@ -170,7 +169,12 @@ export async function checkCutoutComposites(page, records) {
             }
           }
         const paths = [...source.querySelectorAll("path")].map(
-          (element, index) => ({ index, bounds: element.getBBox() }),
+          (element, index) => ({
+            index,
+            bounds: element.getBBox(),
+            closed: /z/i.test(element.getAttribute("d")),
+            stroke: getComputedStyle(element).stroke,
+          }),
         );
         async function render(indices) {
           const isolated = source.cloneNode(true);
@@ -331,7 +335,13 @@ export async function checkCutoutComposites(page, records) {
             // The intact funnel and separate X must keep their painted gap.
             // Include flat-cap corners, and inspect the entire rear silhouette.
             foreground = paths
-              .filter(({ bounds: b }) => b.x >= 10.9 && b.y >= 9.4)
+              .filter(
+                ({ bounds: b, closed, stroke }) =>
+                  !closed &&
+                  stroke !== "none" &&
+                  b.width > 0.5 &&
+                  Math.abs(b.width - b.height) < 0.015,
+              )
               .map((p) => p.index);
             rear = paths
               .filter((p) => !foreground.includes(p.index))
@@ -340,10 +350,7 @@ export async function checkCutoutComposites(page, records) {
               {
                 feature: "complete funnel to separate clear mark",
                 rect: [0, 0, 15.99, 15.99],
-                expected:
-                  2.5 -
-                  (name.endsWith("_solid.svg") ? 0 : weight / 2) -
-                  weight / (2 * Math.sqrt(2)),
+                expected: 2.5 - weight / 2 - weight / (2 * Math.sqrt(2)),
               },
             ];
           } else if (name === "document-search.svg") {

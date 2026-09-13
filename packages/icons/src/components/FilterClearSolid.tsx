@@ -21,12 +21,12 @@ export const FilterClearSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M.25 1.878h12.22L8.025 6.877v5.554l-3.333 1.667V6.877Z"
+          d="M1.907 2.33h10.872L8.826 6.776v4.942L5.86 13.202V6.777Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="m10.803 9.099 4.444 4.443m0-4.443-4.444 4.443"
+          d="M1.907 2.33h10.872L8.826 6.776v4.942L5.86 13.202V6.777Zm9.39 6.424 3.953 3.954m0-3.954-3.953 3.954"
         />
       </g>
     </Icon>

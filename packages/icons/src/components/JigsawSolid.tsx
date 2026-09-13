@@ -19,7 +19,7 @@ export const JigsawSolidIcon = forwardRef<SVGSVGElement, JigsawSolidIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M.25 1.817h4.876c-.464-2.09 4.645-2.09 4.18 0h4.877v4.877c2.09-.465 2.09 4.644 0 4.18v4.876H9.306c.465-2.09-4.644-2.09-4.18 0H.25v-4.876c2.09.464 2.09-4.645 0-4.18Z"
+            d="M.25 3.711h4.816V2.91a1.605 1.605 0 1 1 2.407 0v.802h4.816v4.816h.802a1.605 1.605 0 1 1 0 2.407h-.802v4.816H7.473v-.803a1.605 1.605 0 1 0-2.407 0v.803H.25v-4.816h.803a1.605 1.605 0 1 0 0-2.407H.25Z"
           />
         </g>
       </Icon>

@@ -12,10 +12,19 @@ export async function checkSchoolCutout(page, records) {
     const results = [];
     const failures = [];
     const slope = 5.5 / 9.25;
-    const expected = ((16.1 - 14.25) * 2) / (3 * Math.hypot(1, slope));
+    // Reference geometry retains the same parallel lower-cap boundary.
+    // Measure from the outer paint of the restored mortarboard rim.
+    const centerlineGap =
+      ((17.097879 - 14.25) * 2) / (3 * Math.hypot(1, slope));
     const tolerance = 0.025;
-    for (const weight of [0.67]) {
-      const source = svg.replace("<svg ", '<svg style="color:black" ');
+    for (const weight of [0.67, 1, 4 / 3, 1.5]) {
+      const expected = centerlineGap - weight / 2;
+      const source = svg
+        .replace("<svg ", '<svg style="color:black" ')
+        .replace(
+          /stroke-width="([\d.]+)"/g,
+          (_, width) => `stroke-width="${(Number(width) * weight) / 0.67}"`,
+        );
       const url = URL.createObjectURL(
         new Blob([source], { type: "image/svg+xml" }),
       );
@@ -29,12 +38,12 @@ export async function checkSchoolCutout(page, records) {
         context.clearRect(0, 0, side, side);
         context.drawImage(image, 0, 0, side, side);
         const pixels = context.getImageData(0, 0, side, side).data;
-        for (const x of [4, 6, 10, 12]) {
+        for (const x of [5, 6.5, 9.5, 11]) {
           const pixelX = Math.floor(x * scale);
           const actualX = (pixelX + 0.5) / scale;
           const foregroundY = 9.5 - slope * Math.abs(actualX - 8);
           const start = Math.floor((foregroundY - 0.3) * scale);
-          const end = Math.ceil((foregroundY + 2) * scale);
+          const end = Math.ceil((foregroundY + 3) * scale);
           let upper = null;
           let lower = null;
           let previous = pixels[(start * side + pixelX) * 4 + 3] / 255;

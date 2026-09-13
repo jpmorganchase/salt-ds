@@ -22,7 +22,7 @@ export const MessageForwardIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1.05 15.75v-4.766a6.13 6.13 0 0 1 6.128-6.129h7.49M10.583.77l4.085 4.085-4.085 4.086"
+          d="M1.05 15.75V8.94a4.085 4.085 0 0 1 4.086-4.085h9.532M10.583.77l4.085 4.085-4.085 4.086"
         />
       </g>
     </Icon>

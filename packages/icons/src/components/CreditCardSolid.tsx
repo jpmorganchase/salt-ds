@@ -21,7 +21,12 @@ export const CreditCardSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M.25 2.635h15.5v10.73H.25Zm0 2.384h15.5v2.385H.25Zm2.385 4.77h3.577v1.192H2.635Z"
+          d="M1 3.154h14v9.692H1Zm1.077 2.154h11.846v2.154H2.077Zm1.077 4.307h3.23v1.077h-3.23Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1 3.154h14v9.692H1Z"
         />
       </g>
     </Icon>

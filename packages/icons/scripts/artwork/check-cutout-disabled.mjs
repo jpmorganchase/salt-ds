@@ -42,7 +42,16 @@ export function checkCutoutDisabled(page, records) {
         {
           feature: "lens lower diagonal stop",
           region: [13.5, 10.8, 15.2, 12.5],
-          expected: expected(8.25 / Math.hypot(6, 2.25) / Math.SQRT2),
+          // The cap corner is calibrated against the unchanged axial cuts at
+          // final W=7/6, then evaluated here before the retained 1.076923 fit.
+          expected: Object.fromEntries(
+            [0.67].map((weight) => {
+              const projection = 8.25 / Math.hypot(6, 2.25) / Math.SQRT2;
+              const centerDistance =
+                2 + ((7 / 6) * (projection - Math.SQRT1_2)) / (2 * 1.076923);
+              return [weight, centerDistance - (weight * (1 + projection)) / 2];
+            }),
+          ),
         },
       ],
     },

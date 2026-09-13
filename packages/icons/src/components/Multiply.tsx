@@ -20,7 +20,7 @@ export const MultiplyIcon = forwardRef<SVGSVGElement, MultiplyIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m.769.769 14.462 14.462m0-14.462L.769 15.231"
+            d="m2.273 2.273 11.454 11.454m0-11.454L2.273 13.727"
           />
         </g>
       </Icon>

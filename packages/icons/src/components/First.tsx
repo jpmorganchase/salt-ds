@@ -20,7 +20,7 @@ export const FirstIcon = forwardRef<SVGSVGElement, FirstIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.672.813v14.375M14.609.813 5.984 8l8.625 7.188"
+            d="M2.332.767v14.466M13.904.767 6.671 8l7.233 7.233"
           />
         </g>
       </Icon>

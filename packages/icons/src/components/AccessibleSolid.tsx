@@ -21,12 +21,12 @@ export const AccessibleSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M4.11 2.07a1.82 1.82 0 1 0 3.64 0 1.82 1.82 0 1 0-3.64 0"
+          d="M4.326 2.728a1.728 1.728 0 1 0 3.455 0 1.728 1.728 0 1 0-3.455 0"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M5.93 5.103V9.35h4.853l2.427 4.854h2.426M5.93 6.317h4.854m-7.281.607a4.247 4.247 0 1 0 5.46 6.066"
+          d="M4.326 2.728a1.728 1.728 0 1 0 3.455 0 1.728 1.728 0 1 0-3.455 0Zm1.728 2.879v4.03h4.606l2.304 4.607h2.303M6.054 6.758h4.606m-6.91.576a4.03 4.03 0 1 0 5.183 5.759"
         />
       </g>
     </Icon>

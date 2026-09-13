@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" stroke-width="0.67" viewBox="0 0 16 16">
-  <path fill="currentColor" fill-rule="evenodd" d="M1.74709 2.475537h12.505817v7.724136q0 .735669-.735669.735669H2.482758q-.735669 0-.735669-.735669Z"/>
-  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M1.01153 10.935342h13.976935v1.103448q0 .735669-.735558.735669H1.747089q-.735558 0-.735558-.735669Z"/>
+  <path fill="currentColor" fill-rule="evenodd" d="M1.74709 2.850537h12.505817v7.724136q0 .735669-.735669.735669H2.482758q-.735669 0-.735669-.735669Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M1.74709 2.850537h12.505817v7.724136q0 .735669-.735669.735669H2.482758q-.735669 0-.735669-.735669Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M1.01153 11.310342h13.976935v1.103448q0 .735669-.735558.735669H1.747089q-.735558 0-.735558-.735669Z"/>
 </svg>

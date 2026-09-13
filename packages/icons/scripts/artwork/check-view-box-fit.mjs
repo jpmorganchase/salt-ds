@@ -1,9 +1,9 @@
-import { brandIconNames } from "./brands.mjs";
+import { brandIconNames, getBrandFrame } from "./brands.mjs";
 import { getOpticalFit, validateOpticalFits } from "./optical-fits.mjs";
 import { getViewBoxGroupKey } from "./view-box.mjs";
 
 // Validate the generated fit metadata independently of its measurements. Every
-// export has its own target; only exact compatibility aliases share a fit.
+// export has its own target; aliases and reviewed frame sources share a fit.
 export function validateViewBoxTransforms(records, transforms) {
   if (
     !transforms ||
@@ -32,23 +32,42 @@ export function validateViewBoxTransforms(records, transforms) {
       fit.groupKey !== getViewBoxGroupKey(name)
     )
       throw new Error(`Invalid viewBox fit metadata: ${name}`);
-    const base = name.replace(/_solid\.svg$|\.svg$/g, "");
-    const exemption = brandIconNames.has(base)
-      ? "official-brand"
-      : fit.groupKey === "checkmark_solid.svg"
+    const brand = getBrandFrame(name);
+    const exemption =
+      brand?.reason ??
+      (fit.groupKey === "checkmark_solid.svg"
         ? "full-canvas-badge"
-        : undefined;
+        : undefined);
     const optical = getOpticalFit(fit.groupKey);
     if (optical && exemption)
       throw new Error(`Exempt artwork cannot have an optical fit: ${name}`);
     if (
       fit.fitted !== !exemption ||
-      fit.targetSpan !== (exemption ? 16 : (optical?.targetSpan ?? 15.5)) ||
+      fit.targetSpan !==
+        (brand?.targetSpan ??
+          (exemption ? 16 : (optical?.targetSpan ?? 15.5))) ||
+      JSON.stringify(fit.preservedCenter) !== JSON.stringify(brand?.center) ||
       fit.reason !== exemption ||
       fit.opticalReason !== optical?.reason ||
-      JSON.stringify(fit.opticalCenter) !== JSON.stringify(optical?.center)
+      JSON.stringify(fit.opticalCenter) !== JSON.stringify(optical?.center) ||
+      fit.frameSource !== optical?.frameSource
     )
       throw new Error(`Invalid viewBox fit target or exemption: ${name}`);
+
+    if (fit.frameSource) {
+      const source = transforms[fit.frameSource];
+      if (
+        !source?.fitted ||
+        source.frameSource ||
+        source.groupKey !== fit.frameSource ||
+        ["scale", "translateX", "translateY"].some(
+          (key) => fit[key] !== source[key],
+        )
+      )
+        throw new Error(
+          `Shared viewBox frame differs: ${name} and ${fit.frameSource}`,
+        );
+    }
 
     const previous = groups.get(fit.groupKey);
     if (previous) {
@@ -156,7 +175,7 @@ export async function checkViewBoxFit(page, records, transforms) {
         const span = bounds
           ? Math.max(bounds[2] - bounds[0], bounds[3] - bounds[1])
           : 0;
-        const targetCenter = fit.opticalCenter ?? [8, 8];
+        const targetCenter = fit.preservedCenter ?? fit.opticalCenter ?? [8, 8];
         const result = {
           name,
           weight,

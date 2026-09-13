@@ -10,8 +10,19 @@ export const brandIconNames = new Set([
   "symphony",
 ]);
 
-// Both historical exports use the owner's one official monochrome in-bug.
-export const brandVariantAliases = new Set(["linkedin_solid.svg"]);
+// Preserved brand frames bypass fitting. Bare LinkedIn letters occupy the
+// original source bounds [1.9, 1.9, 12, 11.9] within its 14-unit square.
+export function getBrandFrame(filename) {
+  if (!brandIconNames.has(filename.replace(/_solid\.svg$|\.svg$/g, "")))
+    return undefined;
+  if (filename === "linkedin.svg")
+    return {
+      reason: "brand-letterforms",
+      targetSpan: (10.1 * 16) / 14,
+      center: [(6.95 * 16) / 14, (6.9 * 16) / 14],
+    };
+  return { reason: "official-brand", targetSpan: 16 };
+}
 
 function officialPath(file, viewBox, bounds, pathIndex = 0, pathCount = 1) {
   const source = readFileSync(
@@ -44,11 +55,31 @@ export const figma = officialPath(
   "0 0 1024 1280",
   [304, 340, 416.156, 600],
 );
-export const linkedin = officialPath(
+export const linkedinSolid = officialPath(
   "linkedin.svg",
   "0 0 14 14",
   [0, 0, 14, 14],
 );
+// Salt's outline presentation keeps the original in-bug letter contours and
+// placement, omitting only the square. The supplied source and solid stay intact.
+export const linkedin = linkedinSolid.replace(/\bd="([^"]+)"/, (_, data) => {
+  const contours = data.match(/[^z]+z/g);
+  if (
+    contours?.length !== 4 ||
+    !contours[0].startsWith("m13 0") ||
+    !contours[1].startsWith("m-8.8 11.9")
+  )
+    throw new Error(
+      "Review the LinkedIn contours before extracting its letters",
+    );
+  // The first retained move was relative to the square's closed start (13, 0).
+  const letters = contours
+    .slice(1)
+    .join("")
+    .replace(/^m-8.8 11.9/, "M4.2 11.9");
+  return `d="${letters}"`;
+});
+
 // The guide SVG also includes an orange presentation background; select its mark.
 export const stackoverflow = officialPath(
   "stackoverflow.svg",

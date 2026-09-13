@@ -5,11 +5,12 @@ import { optimize } from "svgo";
 import a from "./a.mjs";
 import architecture from "./architecture.mjs";
 import b from "./b.mjs";
-import { brandIconNames, brandVariantAliases } from "./brands.mjs";
+import { brandIconNames } from "./brands.mjs";
 import c from "./c.mjs";
 import cloudActions from "./cloud-actions.mjs";
 import d from "./d.mjs";
 import fileFormats from "./file-formats.mjs";
+import { lineOnlySolidVariants } from "./line-only-variants.mjs";
 import { composeSharedMark } from "./mark-composition.mjs";
 import referenceControls from "./reference-controls.mjs";
 import referenceFrames from "./reference-frames.mjs";
@@ -51,6 +52,10 @@ const expected = new Set(
 );
 for (const name of Object.keys(drawings))
   if (!expected.has(name)) throw new Error(`Unexpected drawing: ${name}`);
+for (const name of lineOnlySolidVariants) {
+  if (!expected.has(name) || !drawings[name]?.[1])
+    throw new Error(`Unknown line-only Solid alias: ${name}`);
+}
 const referenceRecords = [];
 const sharedMarks = new Map();
 for (const file of inventory) {
@@ -58,12 +63,12 @@ for (const file of inventory) {
   const name = file.replace(/_solid\.svg$|\.svg$/g, "");
   const drawing = drawings[name]?.[solid ? 1 : 0];
   if (!drawing) throw new Error(`Missing ${file}`);
-  if (
-    solid &&
-    JSON.stringify(drawing) === JSON.stringify(drawings[name][0]) &&
-    !brandVariantAliases.has(file)
-  )
-    throw new Error(`Identical variants: ${name}`);
+  if (solid) {
+    const identical =
+      JSON.stringify(drawing) === JSON.stringify(drawings[name][0]);
+    if (identical !== lineOnlySolidVariants.has(name))
+      throw new Error(`Unexpected identical-variant contract: ${name}`);
+  }
   const body = typeof drawing === "string" ? drawing : drawing.body;
   if (typeof body !== "string" || !body.trim())
     throw new Error(`Invalid drawing body: ${file}`);
