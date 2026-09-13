@@ -21,12 +21,17 @@ export const MicrophoneSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M8 .25q2.837 0 2.837 2.837v4.538q0 2.837-2.837 2.837T5.163 7.625V3.087Q5.163.25 8 .25"
+          d="M8 1q2.692 0 2.692 2.692V8q0 2.692-2.692 2.692T5.308 8V3.692Q5.308 1 8 1"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2.894 6.49v1.135a5.106 5.106 0 0 0 10.212 0V6.49M8 12.73V15m-2.837 0h5.674"
+          d="M8 1q2.692 0 2.692 2.692V8q0 2.692-2.692 2.692T5.308 8V3.692Q5.308 1 8 1Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M3.154 6.923V8a4.846 4.846 0 0 0 9.692 0V6.923M8 12.846V15m-2.692 0h5.384"
         />
       </g>
     </Icon>

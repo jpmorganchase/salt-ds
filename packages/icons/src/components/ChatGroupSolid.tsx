@@ -22,11 +22,16 @@ export const ChatGroupSolidIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M4.221 1.567H15v9.077l-2.837-2.269H11.03"
+          d="M4.77 1.117H15v8.615l-2.692-2.154H11.23"
         />
         <path
           fillRule="evenodd"
-          d="M.25 3.837h10.779v8.51h-6.24l-3.404 2.836v-2.837H.25Z"
+          d="M1 3.27h10.23v8.077H5.309L2.077 14.04v-2.693H1Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1 3.27h10.23v8.077H5.309L2.077 14.04v-2.693H1Z"
         />
       </g>
     </Icon>

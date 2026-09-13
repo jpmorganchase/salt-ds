@@ -92,13 +92,20 @@ export async function checkCutoutActions(page, records) {
               ],
             ];
             if (name.endsWith("_solid.svg")) {
-              // The butt terminal has a fixed buffer along the line direction.
-              probes.push(["X terminal buffer", [10.25, 10.25], [-1, -1], 0.5]);
-              // The existing .5-radius buffers are centered at these fixed
-              // corners. Probe their apexes from the authored X edge.
-              const corner = 0.75 / Math.SQRT2;
+              // The revised reference pocket balances final W=1 and W=4/3.
+              // Its cap radius and corner anchors follow the complete butt cap.
+              const capRadius = 0.737448;
+              const capHalfWidth = 0.512552;
+              probes.push([
+                "X terminal buffer",
+                [10.25, 10.25],
+                [-1, -1],
+                capRadius,
+              ]);
+              const corner = capHalfWidth / Math.SQRT2;
               const foregroundEdge = 10 + corner - weight / Math.SQRT2;
-              const cornerGap = 0.5 + (1.5 - weight) / Math.SQRT2;
+              const cornerGap =
+                capRadius + (2 * capHalfWidth - weight) / Math.SQRT2;
               probes.push(
                 [
                   "upper rounded terminal corner",

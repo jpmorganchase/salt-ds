@@ -22,7 +22,7 @@ export const ExponentiationIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M.845 13.548 8 3.327l7.155 10.221"
+          d="M4.61 7.11 8 2.266l3.39 4.844"
         />
       </g>
     </Icon>

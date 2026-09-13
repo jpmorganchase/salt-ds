@@ -22,7 +22,7 @@ export const LessThanEqualToIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="m13.038.893-8.977 5.13 8.977 5.13M4.061 15h8.977"
+          d="M12.416 1.889 4.709 6.293l7.707 4.404M4.709 14h7.707"
         />
       </g>
     </Icon>

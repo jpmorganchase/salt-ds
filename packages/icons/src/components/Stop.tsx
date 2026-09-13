@@ -20,7 +20,7 @@ export const StopIcon = forwardRef<SVGSVGElement, StopIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1 1h14v14H1Z"
+            d="M1.5 1.5h13v13h-13Z"
           />
         </g>
       </Icon>

@@ -1,5 +1,6 @@
 import { stackoverflow, symphony } from "./brands.mjs";
 import { enclosedExclamation, enclosedTick } from "./enclosed-marks.mjs";
+import { lockKeyhole } from "./lock-marks.mjs";
 import { withSharedMark } from "./mark-composition.mjs";
 import {
   box,
@@ -74,7 +75,11 @@ const scope = S(
   "M3.75 3v5.25a4.5 4.5 0 0 0 9 0V3M3.75 5.25H6M12.75 5.25h-2.25M8.25 12.75v3a4.875 4.5 0 0 0 9.75 0v-2.25",
 );
 put("stethoscope", scope + C(18, 10.5, 3), scope + F(circ(18, 10.5, 3)));
-put("stop", R(4.5, 4.5, 15, 15), F(box(4.5, 4.5, 15, 15)));
+put(
+  "stop",
+  R(4.5, 4.5, 15, 15),
+  F(box(4.5, 4.5, 15, 15)) + R(4.5, 4.5, 15, 15),
+);
 const storage =
   R(2.25, 3.75, 19.5, 4.5) + R(3.75, 8.25, 16.5, 12) + S("M8.25 12.75h7.5");
 put(
@@ -108,8 +113,10 @@ put(
   S("M2.25 3.75h19.5M2.25 20.25h19.5") +
     textLabel("abc", 12, 8.25, 7.35, { align: "center" }),
 );
-const sigma =
-  "M3.75 3H20.25v4.5H18V5.25H7.5L13.5 12 7.5 18.75H18V16.5h2.25V21H3.75v-2.25L9.75 12 3.75 5.25Z";
+// Offset the retained 6-by-6.75 diagonals by the bars' 2.25-unit thickness.
+// A horizontal 3.75-unit offset made their perpendicular weight 25% heavier.
+const sigmaOffsetX = (2.25 * Math.hypot(6, 6.75)) / 6.75;
+const sigma = `M3.75 3H20.25v4.5H18V5.25H${3.75 + sigmaOffsetX}L${9.75 + sigmaOffsetX} 12 ${3.75 + sigmaOffsetX} 18.75H18V16.5h2.25V21H3.75v-2.25L9.75 12 3.75 5.25Z`;
 put("sum", S("M20.25 7.5V3.75H4.5L11.25 12 4.5 20.25H20.25v-3.75"), F(sigma));
 put(
   "summarize",
@@ -137,8 +144,9 @@ put(
   F(tag + circ(17.25, 6.75, 1.5)),
 );
 // The fixed cutout extends 1.875 construction units from the X centerlines.
-// Straight offsets are 1.875 / sqrt(2); .75-radius arcs shape the buffers
-// around its square terminals. The circular eyelet stays exact.
+// The cap pocket offsets its complete painted corners at final W = 7/6,
+// balancing the 1 and 4/3 theme widths in the retained export frame.
+// Its straight envelope and circular eyelet stay exact.
 put(
   "tag-clear",
   S(
@@ -147,7 +155,7 @@ put(
     S(circ(17.25, 6.75, 1.5), 1.05) +
     S("M15 15l7 7M22 15l-7 7"),
   F(
-    "M2.25 13.5L13.5 2.25H21.75V10.5L17.450825 14.799175L16.325825 13.674175A.75 .75 0 0 0 15.265165 13.674175L13.674175 15.265165A.75 .75 0 0 0 13.674175 16.325825L14.799175 17.450825L10.5 21.75Z" +
+    "M2.25 13.5L13.5 2.25H21.75V10.5L17.450825 14.799175L16.325825 13.674175A1.106171 1.106171 0 0 0 14.761463 13.674175L13.674175 14.761463A1.106171 1.106171 0 0 0 13.674175 16.325825L14.799175 17.450825L10.5 21.75Z" +
       circ(17.25, 6.75, 1.5),
   ) + S("M15 15l7 7M22 15l-7 7"),
 );
@@ -280,14 +288,21 @@ const caseDetails = S(
 put(
   "travel",
   R(2.25, 6.75, 9.75, 12, 1) + R(15, 11.25, 7.5, 9, 1) + caseDetails,
-  F(box(2.25, 6.75, 9.75, 12, 1)) + F(box(15, 11.25, 7.5, 9, 1)) + caseDetails,
+  F(box(2.25, 6.75, 9.75, 12, 1)) +
+    F(box(15, 11.25, 7.5, 9, 1)) +
+    R(2.25, 6.75, 9.75, 12, 1) +
+    R(15, 11.25, 7.5, 9, 1) +
+    caseDetails,
 );
 const branch = S("M12 8.25v4.5M5.25 15.75v-3h13.5v3");
 put(
   "tree",
   branch + R(9, 2.25, 6, 6) + R(2.25, 15.75, 6, 6) + R(15.75, 15.75, 6, 6),
   branch +
-    F(box(9, 2.25, 6, 6) + box(2.25, 15.75, 6, 6) + box(15.75, 15.75, 6, 6)),
+    F(box(9, 2.25, 6, 6) + box(2.25, 15.75, 6, 6) + box(15.75, 15.75, 6, 6)) +
+    R(9, 2.25, 6, 6) +
+    R(2.25, 15.75, 6, 6) +
+    R(15.75, 15.75, 6, 6),
 );
 for (const [n, rot] of [
   ["triangle-down", 0],
@@ -332,11 +347,14 @@ put(
   ),
 );
 const shackle = S("M6.75 10.5v-3a5.25 5.25 0 0 1 10.1-2");
-const keyhole = "M11.25 16.049A1.5 1.5 0 1 1 12.75 16.049V18.75H11.25Z";
 put(
   "unlocked",
-  shackle + R(3.75, 10.5, 16.5, 10.5, 0.6) + F(keyhole),
-  shackle + F(box(3.75, 10.5, 16.5, 10.5, 0.6) + keyhole),
+  withSharedMark(shackle + R(3.75, 10.5, 16.5, 10.5, 0.6), lockKeyhole),
+  withSharedMark(
+    shackle + F(box(3.75, 10.5, 16.5, 10.5, 0.6)),
+    lockKeyhole,
+    true,
+  ),
 );
 put("upload", S("M12 17.25V2.25m-6 6 6-6 6 6M3.75 18.75v3h16.5v-3"));
 for (const [n, count, start] of [
@@ -380,8 +398,10 @@ put(
 // The rear person's cutout follows the foreground shoulder's true normal offset.
 const userGroupFront = "M1.5 21V18Q1.5 13.5 8.25 13.5Q15 13.5 15 18V21Z";
 const userGroupRearHead = circ(18, 8, 2.75);
+// Trim the rear shoulder along its original curve at final W = 7/6 so its
+// complete cap corner matches the lower opening beside the foreground person.
 const userGroupRearOutline =
-  "M17.048008 14.297086Q17.495752 14.25 18 14.25Q22.5 14.25 22.5 18L22.5 21L18 21";
+  "M17.413352 14.267065Q17.696437 14.25 18 14.25Q22.5 14.25 22.5 18L22.5 21L18 21";
 const userGroupRearSolid =
   "M18 21V18C18 17.4375 17.947311 16.873798 17.827938 16.316725C17.708567 15.759651 17.52129 15.209373 17.261408 14.689609C17.194866 14.556525 17.123562 14.425562 17.047775 14.297111Q17.495619 14.25 18 14.25Q22.5 14.25 22.5 18V21H18Z";
 put(
@@ -395,11 +415,13 @@ put(
     F(userGroupRearHead) +
     F(userGroupRearSolid),
 );
+// Calibrate both body caps to the retained lens at final W = 7/6. Keep the
+// lower-left perimeter continuous so two perpendicular butt caps cannot split.
 put(
   "user-search",
   S(circ(9, 7.2, 3.3)) +
     S(
-      "M2.25 21L2.25 18Q2.25 13.5 9 13.5Q10.000071 13.5 10.851973 13.598779M13.007359 21L2.25 21",
+      "M11.036614 13.578604Q10.090361 13.5 9 13.5Q2.25 13.5 2.25 18V21H12.572379",
     ) +
     C(17.25, 15.75, 3.75) +
     L(20, 18.5, 23, 21.5),
@@ -420,16 +442,18 @@ put(
 const videoO =
   R(2.25, 5.25, 13.5, 13.5, 0.75) + S("M15.75 9 21.75 6.75v10.5L15.75 15Z");
 const videoF = F(
-  `${box(2.25, 5.25, 13.5, 13.5, 0.75)}M17.25 9l4.5-2.25v10.5L17.25 15Z`,
+  `${box(2.25, 5.25, 13.5, 13.5, 0.75)}M17.25 8.4375L21.75 6.75v10.5L17.25 15.5625Z`,
 );
 put("video", videoO, videoF);
+// The angled wedge cap needs a different centerline cut from the axial caps;
+// match their complete painted clearance at final W = 7/6.
 put(
   "video-disabled",
   S(
     "M9.492641 5.25L15 5.25Q15.75 5.25 15.75 6L15.75 11.507359M14.507359 18.75L3 18.75Q2.25 18.75 2.25 18L2.25 6.492641",
   ) +
     S(
-      "M15.75 9L21.75 6.75L21.75 17.25L21.338225 17.095584M15.75 11.507359L15.75 9",
+      "M15.75 9L21.75 6.75L21.75 17.25L21.711914 17.235718M15.75 11.507359L15.75 9",
     ) +
     slash(),
 );
@@ -471,12 +495,12 @@ const wifi =
     "M2.25 7.5Q12-1.5 21.75 7.5M5.25 11.25Q12 4.5 18.75 11.25M8.25 15Q12 11.25 15.75 15",
   ) + dot(12, 19.5, 1.35);
 put("wifi", wifi);
-// The normal Wi-Fi curves are cut parallel to the slash, leaving a visible
-// corridor at the authored width without shifting the three signal arcs.
+// Trim the original Wi-Fi curves using their complete flat cap corners.
+// Final W = 7/6 balances the 1 and 4/3 theme widths without moving the slash.
 put(
   "wifi-disabled",
   S(
-    "M2.25 7.5Q2.56269 7.21136 2.87538 6.94124M7.87237 3.8065Q14.81118 1.09494 21.75 7.5M5.25 11.25Q5.75222 10.74778 6.25443 10.3203M11.94112 7.87526Q15.34556 7.84556 18.75 11.25M8.25 15Q8.99505 14.25495 9.74009 13.80596",
+    "M2.25 7.5Q2.642573 7.137625 3.035146 6.804431M7.917014 3.789149Q14.833507 1.115545 21.75 7.5M5.25 11.25Q5.829225 10.670775 6.40845 10.190958M12.394656 7.886537Q15.572328 8.072328 18.75 11.25M8.25 15Q9.028264 14.221736 9.806528 13.766509",
   ) +
     dot(12, 19.5, 1.35) +
     slash(),
@@ -496,7 +520,9 @@ put(
   F(
     treeCrown +
       "M11.25 6.75h1.5V11.3l3.25-2.2.85 1.2-4.1 2.8v7.15h-1.5V16.8l-3.45-3.2 1.05-1.1 2.4 2.2Z",
-  ) + L(12, 18.75, 12, 22.5),
+  ) +
+    S(treeCrown) +
+    L(12, 18.75, 12, 22.5),
 );
 const flow = S(
   "M7.5 4.5h10.5a4.5 4.5 0 0 1 0 9h-3M9 13.5H7.5a3.25 3.25 0 0 0 0 6.5H21m-3-3L21 20l-3 3",

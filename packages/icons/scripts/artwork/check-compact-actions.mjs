@@ -167,6 +167,44 @@ export async function checkCompactActions(page, records) {
       for (const weight of [0.67, 1, 1.333333, 1.5]) {
         const alpha = await render(svg, weight);
         const { labels, components } = regions(alpha);
+        if (name === "cloud-success_solid.svg") {
+          // Inspect visible gaps in the fitted paint, including the short cap.
+          // A fill-only check misses a retained border intruding into the cut.
+          const [start, elbow, end] = spec.points;
+          const along = (a, b, fraction) =>
+            a.map((value, axis) => value + fraction * (b[axis] - value));
+          const diagonal = Math.SQRT1_2;
+          const short = along(start, elbow, 0.4);
+          const long = along(elbow, end, 0.45);
+          const probes = [
+            { origin: start, direction: [-diagonal, -diagonal], cap: true },
+            { origin: short, direction: [-diagonal, diagonal] },
+            { origin: short, direction: [diagonal, -diagonal] },
+            { origin: long, direction: [diagonal, diagonal] },
+            { origin: long, direction: [-diagonal, -diagonal] },
+          ];
+          const gaps = probes.map(({ origin, direction, cap = false }) => {
+            const edge = cap ? 0 : weight / 2;
+            let gap = 2;
+            for (let distance = 0.1; distance < 2; distance += 1 / 256) {
+              const x = origin[0] + direction[0] * (edge + distance);
+              const y = origin[1] + direction[1] * (edge + distance);
+              if (at(alpha, x, y) >= 0.5) {
+                gap = distance;
+                break;
+              }
+            }
+            // Flat caps stay at their endpoints as stroke width changes.
+            const expected = cap ? 0.683333 : 0.6 + (1.333333 - weight) / 2;
+            return { cap, measured: gap, expected };
+          });
+          record(
+            { name, weight, check: "cloud-cutout-visible-clearance", gaps },
+            gaps.every(
+              ({ measured, expected }) => Math.abs(measured - expected) < 0.035,
+            ),
+          );
+        }
         record(
           {
             name,

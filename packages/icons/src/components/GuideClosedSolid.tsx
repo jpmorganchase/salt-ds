@@ -21,12 +21,12 @@ export const GuideClosedSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M3.068.25H15.75v15.5H3.068Zm2.114 1.41H6.59v12.68H5.18Zm3.523 2.113h4.227v1.409H8.705Zm0 4.227h4.227v1.41H8.705Z"
+          d="M3.17 1h11.455v14H3.17Zm1.91 1.273h1.272v11.454H5.08Zm3.18 1.909h3.819v1.273H8.26ZM8.26 8h3.819v1.273H8.26Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M.25 3.773h2.818M.25 8h2.818M.25 12.227h2.818"
+          d="M3.17 1h11.455v14H3.17ZM.625 4.182H3.17M.625 8H3.17M.625 11.818H3.17"
         />
       </g>
     </Icon>

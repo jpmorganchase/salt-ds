@@ -1,9 +1,10 @@
-import { figma, github, linkedin } from "./brands.mjs";
+import { figma, github, linkedin, linkedinSolid } from "./brands.mjs";
 import {
   enclosedExclamation,
   enclosedInfo,
   enclosedQuestion,
 } from "./enclosed-marks.mjs";
+import { lockKeyhole } from "./lock-marks.mjs";
 import { withSharedMark } from "./mark-composition.mjs";
 import { medicalCross } from "./medical-marks.mjs";
 import { numberedTimer } from "./numbered-timer.mjs";
@@ -60,13 +61,15 @@ add(
   ),
 );
 add("exponentiation", S("M6.75 11.25L12 3.75L17.25 11.25"));
-const exportArrow = S("M7.5 12H21.75M16.5 6.75L21.75 12L16.5 17.25");
+const exportShaft = "M7.5 12H21.75";
+const exportHead = "M16.5 6.75L21.75 12L16.5 17.25";
+const exportArrow = S(exportShaft + exportHead);
+const exportBracket = S("M9 3.75H3.75V20.25H9");
 add(
   "export",
-  S("M9 3.75H3.75V20.25H9") + exportArrow,
-  F(
-    "M2.25 2.25H21.75V21.75H2.25ZM9 4.5V3H3V21H9V19.5H4.5V4.5ZM7.5 11.25V12.75H18.9L15.75 15.9L16.8 16.95L21.75 12L16.8 7.05L15.75 8.1L18.9 11.25Z",
-  ),
+  exportBracket + exportArrow,
+  // The legacy Solid export retains this open-line drawing.
+  exportBracket + exportArrow,
 );
 const star =
   "M12 2.75L14.85 8.7L21.4 9.6L16.65 14.2L17.8 20.75L12 17.7L6.2 20.75L7.35 14.2L2.6 9.6L9.15 8.7Z";
@@ -83,8 +86,9 @@ add(
     2.25,
   ),
 );
+// Balance the horizontal and vertical panel caps at the W=7/6 midpoint.
 const feedbackPanel =
-  "M6.75 15.75L3 18.75L3 3L21.75 3L21.75 15.181145M9.034786 15.75L6.75 15.75";
+  "M6.75 15.75L3 18.75V3H21.75V15.253408M8.938451 15.75H6.75";
 const feedbackSolidPanel =
   "M6.75 15.75L3 18.75L3 3L21.75 3L21.75 15.75L20.489004 15.75M11.010996 15.75L6.75 15.75";
 const feedbackText = S("M6 6.75H12M6 9.75H9.75M6 12.75H8.25");
@@ -98,20 +102,25 @@ add(
     F(circ(15.75, 11.25, 2.4) + feedbackUser),
 );
 add("figma", figma);
-const funnel = "M3.75 4.5H20.25L14.25 11.25V18.75L9.75 21V11.25Z";
-add("filter", S(funnel), F(funnel));
+// Reserve the modifier space in every state so the base funnel stays fixed.
+const funnel = "M2.25 4.5H18.75L12.75 11.25V18.75L8.25 21V11.25Z";
+add("filter", S(funnel), F(funnel) + S(funnel));
 // Keep the full funnel recognizable, with a separate clear mark beside its stem.
-const clearFunnel = "M2.25 4.5H18.75L12.75 11.25V18.75L8.25 21V11.25Z";
+const clearFunnel = funnel;
 const filterClearMark = S("M16.5 14.25L22.5 20.25M22.5 14.25L16.5 20.25");
 add(
   "filter-clear",
   S(clearFunnel) + filterClearMark,
-  F(clearFunnel) + filterClearMark,
+  F(clearFunnel) + S(clearFunnel) + filterClearMark,
 );
-add("first", S("M4.5 4.5V19.5M18 4.5L9 12L18 19.5"));
+add("first", S("M4.5 4.5V19.5M16.5 4.5L9 12L16.5 19.5"));
 const flag =
   "M5.25 4.5H11.25L14.25 7.5H20.25L17.25 12L20.25 16.5H12.75L9.75 13.5H5.25Z";
-add("flag", S(flag) + S("M5.25 2.25V21.75"), F(flag) + S("M5.25 2.25V21.75"));
+add(
+  "flag",
+  S(flag) + S("M5.25 2.25V21.75"),
+  F(flag) + S(flag) + S("M5.25 2.25V21.75"),
+);
 const folder = "M3.75 20.25V4.5H9.75L12.75 7.5H20.25V20.25Z";
 add(
   "folder-closed",
@@ -122,7 +131,9 @@ const openFolder = "M3.75 20.25H18.75L21 10.5H6Z";
 add(
   "folder-open",
   S("M3.75 20.25V4.5H9.75L12.75 7.5H18.75V10.5") + S(openFolder),
-  S("M3.75 20.25V4.5H9.75L12.75 7.5H18.75V10.5") + F(openFolder),
+  S("M3.75 20.25V4.5H9.75L12.75 7.5H18.75V10.5") +
+    F(openFolder) +
+    S(openFolder),
 );
 
 for (const seconds of ["10", "15", "30", "5"])
@@ -130,11 +141,19 @@ for (const seconds of ["10", "15", "30", "5"])
 
 // Brand artwork keeps the supplied contours instead of the family styling.
 add("github", github);
-add("greater-than", S("M6.75 5.25L17.25 12L6.75 18.75"));
-add(
-  "greater-than-equal-to",
-  S("M6.75 3.75L17.25 9.75L6.75 15.75M6.75 20.25H17.25"),
-);
+// Comparison states share the same arm lengths; the equality bar only moves
+// the gesture upward. Reviewed optical targets preserve its final scale.
+const comparison = (left, equality = false) => {
+  const start = left ? 17.25 : 6.75;
+  const apex = left ? 6.75 : 17.25;
+  const y = equality ? 9.75 : 12;
+  return S(
+    `M${start} ${y - 6}L${apex} ${y}L${start} ${y + 6}` +
+      (equality ? "M6.75 20.25H17.25" : ""),
+  );
+};
+add("greater-than", comparison(false));
+add("greater-than-equal-to", comparison(false, true));
 const tiles = [
   [3.75, 3.75],
   [14.25, 3.75],
@@ -168,7 +187,9 @@ add(
       box(9, 5.25, 1.5, 13.5) +
       box(12.75, 7.5, 4.5, 1.5) +
       box(12.75, 12, 4.5, 1.5),
-  ) + S("M3.75 7.5H6.75M3.75 12H6.75M3.75 16.5H6.75"),
+  ) +
+    S(bookClosed) +
+    S("M3.75 7.5H6.75M3.75 12H6.75M3.75 16.5H6.75"),
 );
 const bookOpen =
   "M12 6Q10.5 3.75 7.5 3.75H2.75V18.75H7.5Q10.5 18.75 12 21Q13.5 18.75 16.5 18.75H21.25V3.75H16.5Q13.5 3.75 12 6Z";
@@ -205,40 +226,43 @@ add(
 );
 const headband = "M3.75 15.75V10.5A8.25 8.25 0 0 1 20.25 10.5V15.75";
 const cups = box(3.75, 12.75, 4.5, 7.5, 0.6) + box(15.75, 12.75, 4.5, 7.5, 0.6);
-add("headphones", S(headband) + S(cups), S(headband) + F(cups));
-// Contours are clipped around the same slash before stroking. Filled cups
-// use a true difference, with the subpixel lower-cup remnant removed.
+// Retain the cup perimeter when filling it: the headband and cup then share
+// one outer edge at every configured width instead of stepping inward where
+// the headband ends halfway down the cup.
+add("headphones", S(headband) + S(cups), S(headband) + S(cups) + F(cups));
+// Calibrate complete cut caps at W=7/6 in the fitted frame, balancing both
+// theme defaults. The right band ends inside both cup surfaces.
 const disabledHeadband = S(
-  "M3.75 15.75L3.75 10.5C3.75 9.78548 3.84083 9.09218 4.01159 8.431M7.8107 3.39129C9.03859 2.66611 10.4707 2.25 12 2.25C16.55635 2.25 20.25 5.94365 20.25 10.5L20.25 15.75",
+  "M3.75 15.75V10.5A8.25 8.25 0 0 1 4.052956 8.284825M7.505351 3.581862A8.25 8.25 0 0 1 20.25 10.5V15.464882",
 );
+const disabledCups =
+  "M4.35 12.75H7.65Q8.25 12.75 8.25 13.35V19.65Q8.25 20.25 7.65 20.25H4.35Q3.75 20.25 3.75 19.65V13.35Q3.75 12.75 4.35 12.75ZM17.216588 12.75H19.65Q20.25 12.75 20.25 13.35V15.783412";
+const disabledCupFace =
+  "M4.35 12.75H7.65Q8.25 12.75 8.25 13.35V19.65Q8.25 20.25 7.65 20.25H4.35Q3.75 20.25 3.75 19.65V13.35Q3.75 12.75 4.35 12.75ZM17.535118 12.75H19.65Q20.25 12.75 20.25 13.35V15.464882Z";
 add(
   "headphones-disabled",
-  disabledHeadband +
-    S(
-      "M4.35 12.75L7.65 12.75Q8.25 12.75 8.25 13.35L8.25 19.65Q8.25 20.25 7.65 20.25L4.35 20.25Q3.75 20.25 3.75 19.65L3.75 13.35Q3.75 12.75 4.35 12.75ZM17.16942 12.75L19.65 12.75Q20.25 12.75 20.25 13.35L20.25 15.83058",
-    ) +
-    S("M3 3L21 21"),
-  disabledHeadband +
-    F(
-      "M4.349999904632568 12.75H7.650000095367432Q8.25 12.75 8.25 13.350000381469727V19.649999618530273Q8.25 20.25 7.650000095367432 20.25H4.349999904632568Q3.75 20.25 3.75 19.649999618530273V13.350000381469727Q3.75 12.75 4.349999904632568 12.75ZM16.350000381469727 12.75H19.649999618530273Q20.25 12.75 20.25 13.350000381469727V17.421573638916016L15.826478958129883 12.998052597045898Q15.964213371276855 12.75 16.350000381469727 12.75Z",
-    ) +
-    S("M3 3L21 21"),
+  disabledHeadband + S(disabledCups) + S("M3 3L21 21"),
+  disabledHeadband + S(disabledCupFace) + F(disabledCupFace) + S("M3 3L21 21"),
 );
 add(
   "help-circle",
   withSharedMark(C(12, 12, 9.25), enclosedQuestion),
   withSharedMark(F(circ(12, 12, 9.5)), enclosedQuestion, true),
 );
-// This is the visible eye's contour with a real slash corridor. Pupil
-// fragments are filled geometry, avoiding a microscopic stroked ring.
+// The eye ends match the filled pupil corridor at the W=7/6 midpoint.
+// The continuous left-tip bevel closes its former butt-cap seam without
+// expanding the tip to a full miter. Pupil fragments remain filled geometry.
 const hiddenPupil = F(
   "M15.657940864562988 12.829514503479004 11.170485496520996 8.342059135437012C11.437325477600098 8.281805038452148 11.714948654174805 8.25 12.0 8.25C14.071067810058594 8.25 15.75 9.928932189941406 15.75 12.0C15.75 12.285051345825195 15.718194961547852 12.562674522399902 15.657940864562988 12.829514503479004ZM8.25 12.0C8.25 11.714948654174805 8.281805038452148 11.437325477600098 8.342059135437012 11.170485496520996L12.829514503479004 15.657940864562988C12.562674522399902 15.718194961547852 12.285051345825195 15.75 12.0 15.75C9.928932189941406 15.75 8.25 14.071067810058594 8.25 12.0Z",
 );
 add(
   "hidden",
   S(
-    "M2.25 12Q3.34504 10.23108 4.44009 8.85951M9.19582 4.77641Q15.47291 1.86009 21.75 12Q20.65496 13.76892 19.55991 15.14049M14.80418 19.22359Q8.52709 22.13991 2.25 12",
-  ) +
+    "M5.131095 8.033556Q3.690547 9.672962 2.25 12Q8.956162 22.833031 15.662324 18.763896",
+  ).replace('stroke-linejoin="miter"', 'stroke-linejoin="bevel"') +
+    S(
+      "M8.337676 5.236104Q15.043838 1.166969 21.75 12Q20.309453 14.327038 18.868905 15.966444",
+    ) +
     hiddenPupil +
     S("M3 3L21 21"),
   F(
@@ -252,7 +276,11 @@ const hierarchyLinks = S("M6 9V19.5H12.75M6 12H12.75");
 add(
   "hierarchy",
   R(3, 3, 6, 6) + S(childNodes) + hierarchyLinks,
-  F(box(3, 3, 6, 6) + childNodes) + hierarchyLinks,
+  // Fill the nodes within their retained borders so the connectors do not move.
+  F(box(3, 3, 6, 6) + childNodes) +
+    R(3, 3, 6, 6) +
+    S(childNodes) +
+    hierarchyLinks,
 );
 add(
   "history",
@@ -307,24 +335,26 @@ add(
   S(imagePage + imageFold) + F(imageMarks),
   F(imagePage + imageFoldCounter + imageMarks),
 );
-const importArrow = S("M3 12H15M10.5 7.5L15 12L10.5 16.5");
+const importShaft = "M3 12H15";
+const importHead = "M10.5 7.5L15 12L10.5 16.5";
+const importArrow = S(importShaft + importHead);
+const importBracket = S("M9.75 3.75H20.25V20.25H9.75");
 add(
   "import",
-  S("M9.75 3.75H20.25V20.25H9.75") + importArrow,
-  F(
-    "M2.25 2.25H21.75V21.75H2.25V12.75H13.2L10.05 15.9L11.1 16.95L16.05 12L11.1 7.05L10.05 8.1L13.2 11.25H2.25ZM9.75 3V4.5H19.5V19.5H9.75V21H21V3Z",
-  ),
+  importBracket + importArrow,
+  // The legacy Solid export retains this open-line drawing.
+  importBracket + importArrow,
 );
 const inbox = "M3.75 9.75V20.25H20.25V9.75";
+const inboxNotch = "M3.75 13.5H8.25L9.75 16.5H14.25L15.75 13.5H20.25";
+const inboxArrow = S("M12 2.25V12.75M7.5 8.25L12 12.75L16.5 8.25");
+const inboxTray = S(inbox + inboxNotch);
 add(
   "inbox",
-  S(
-    inbox +
-      "M3.75 13.5H8.25L9.75 16.5H14.25L15.75 13.5H20.25M12 2.25V12.75M7.5 8.25L12 12.75L16.5 8.25",
-  ),
-  F("M3.75 13.5H8.25L9.75 16.5H14.25L15.75 13.5H20.25V20.25H3.75Z") +
-    S("M3.75 9.75V13.5M20.25 9.75V13.5") +
-    S("M12 2.25V12.75M7.5 8.25L12 12.75L16.5 8.25"),
+  inboxTray + inboxArrow,
+  // Keep the complete sidewalls and notch around the filled lower tray.
+  // No clearance cutout crosses this border, so it must remain continuous.
+  F(`${inboxNotch}V20.25H3.75Z`) + inboxTray + inboxArrow,
 );
 add(
   "indent",
@@ -343,8 +373,10 @@ add(
   withSharedMark(R(2.25, 2.25, 19.5, 19.5), enclosedInfo),
   withSharedMark(F(box(2.25, 2.25, 19.5, 19.5)), enclosedInfo, true),
 );
+// Short necks and circular lobes distinguish the puzzle tabs and sockets
+// from a scalloped square. Both variants share this complete silhouette.
 const puzzle =
-  "M4.5 4.5H9.75C9.25 2.25 14.75 2.25 14.25 4.5H19.5V9.75C21.75 9.25 21.75 14.75 19.5 14.25V19.5H14.25C14.75 17.25 9.25 17.25 9.75 19.5H4.5V14.25C6.75 14.75 6.75 9.25 4.5 9.75Z";
+  "M4.5 4.5H10.5V3.5A2 2 0 1 1 13.5 3.5V4.5H19.5V10.5H20.5A2 2 0 1 1 20.5 13.5H19.5V19.5H13.5V18.5A2 2 0 1 0 10.5 18.5V19.5H4.5V13.5H5.5A2 2 0 1 0 5.5 10.5H4.5Z";
 add("jigsaw", S(puzzle), F(puzzle));
 add("key-backspace", S("M9 5.25H21V18.75H9L2.25 12Z M12 9L18 15M18 9L12 15"));
 add(
@@ -368,7 +400,7 @@ const key = "M10.4 13.6A5.25 5.25 0 1 1 13.6 10.4L21 17.8V21H17.8V18H14.8V15Z";
 // The bow's arc center is approximately (8.65,8.65). A simple dot/hole
 // uses that same center and avoids a second, microscopic stroked counter.
 add("key", S(key) + F(circ(8.65, 8.65, 1.5)), F(key + circ(8.65, 8.65, 1.5)));
-add("last", S("M19.5 4.5V19.5M6 4.5L15 12L6 19.5"));
+add("last", S("M19.5 4.5V19.5M7.5 4.5L15 12L7.5 19.5"));
 const topLayer = "M12 2.75L21.25 7.5L12 12.25L2.75 7.5Z";
 const otherLayers = S(
   "M2.75 12L12 16.75L21.25 12M2.75 16.5L12 21.25L21.25 16.5",
@@ -379,11 +411,8 @@ add(
   S(topLayer) + otherLayers,
   F(topLayer) + S(topLayer) + otherLayers,
 );
-add("less-than", S("M17.25 5.25L6.75 12L17.25 18.75"));
-add(
-  "less-than-equal-to",
-  S("M17.25 3.75L6.75 9.75L17.25 15.75M6.75 20.25H17.25"),
-);
+add("less-than", comparison(true));
+add("less-than-equal-to", comparison(true, true));
 const bulb =
   "M8.25 16.5V15.25C8.25 12.75 5.25 11.75 5.25 8.75A6.75 6.75 0 0 1 18.75 8.75C18.75 11.75 15.75 12.75 15.75 15.25V16.5Z";
 add(
@@ -403,8 +432,8 @@ add(
     "M9 7.5L11.75 4.75A5.25 5.25 0 0 1 19.25 12.25L16.5 15M15 16.5L12.25 19.25A5.25 5.25 0 0 1 4.75 11.75L7.5 9M8.25 15.75L15.75 8.25",
   ),
 );
-// Both public variants retain the official square mark for compatibility.
-add("linkedin", linkedin, linkedin);
+// Keep the original letters aligned across the bare and square variants.
+add("linkedin", linkedin, linkedinSolid);
 add(
   "list",
   S("M8.25 5.25H21M8.25 12H21M8.25 18.75H21") +
@@ -417,11 +446,14 @@ const pin =
   "M12 21.25C10.25 19 5.25 13.2 5.25 9.75A6.75 6.75 0 0 1 18.75 9.75C18.75 13.2 13.75 19 12 21.25Z";
 add("location", S(pin) + C(12, 9.75, 2.75), F(pin + circ(12, 9.75, 2.75)));
 const lockShackle = S("M6.75 10.5V7.5A5.25 5.25 0 0 1 17.25 7.5V10.5");
-const lockKeyhole = "M11.25 16.049A1.5 1.5 0 1 1 12.75 16.049V18.75H11.25Z";
 add(
   "locked",
-  lockShackle + R(3.75, 10.5, 16.5, 10.5, 0.6) + F(lockKeyhole),
-  lockShackle + F(box(3.75, 10.5, 16.5, 10.5, 0.6) + lockKeyhole),
+  withSharedMark(lockShackle + R(3.75, 10.5, 16.5, 10.5, 0.6), lockKeyhole),
+  withSharedMark(
+    lockShackle + F(box(3.75, 10.5, 16.5, 10.5, 0.6)),
+    lockKeyhole,
+    true,
+  ),
 );
 const spark = (x, y, r = 2.25) =>
   F(
@@ -476,7 +508,7 @@ const sign = "M5.25 5.25H16.5L20.25 9L16.5 12.75H5.25Z";
 add(
   "marker",
   S(sign) + S("M9.75 2.25V5.25M9.75 12.75V21.75"),
-  F(sign) + S("M9.75 2.25V5.25M9.75 12.75V21.75"),
+  F(sign) + S(sign) + S("M9.75 2.25V5.25M9.75 12.75V21.75"),
 );
 add(
   "maximize",

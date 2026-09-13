@@ -1,3 +1,5 @@
+// Import/Export positive bracket and arrow relationships are covered by
+// checkStabilizationB on the final exports; they no longer use inverse panels.
 // Measure painted landmarks in the exported artwork. These checks compare
 // related features rather than SVG path syntax or whole-icon mass centers.
 export async function checkFeatureAlignment(page, records) {
@@ -11,10 +13,6 @@ export async function checkFeatureAlignment(page, records) {
     "presentation_solid.svg",
     "document-draft.svg",
     "document-search.svg",
-    "export.svg",
-    "export_solid.svg",
-    "import.svg",
-    "import_solid.svg",
     "history.svg",
     "watch.svg",
     "watch_solid.svg",
@@ -132,40 +130,6 @@ export async function checkFeatureAlignment(page, records) {
                     feature: `${feature} center`,
                     outline,
                     solidCounter: m,
-                  },
-                  m.center !== null &&
-                    outline.center !== null &&
-                    Math.abs(m.center - outline.center) <= tolerance,
-                );
-              }
-            }
-          } else if (name.startsWith("export") || name.startsWith("import")) {
-            const solid = name.endsWith("_solid.svg");
-            const base = name.split("_")[0].replace(".svg", "");
-            const probes =
-              base === "export"
-                ? [
-                    ["upright", "x", 8, 1.625, 4.25],
-                    ["top", "y", 4.5, 1.625, 3.5],
-                    ["bottom", "y", 4.5, 12.5, 14.375],
-                  ]
-                : [
-                    ["upright", "x", 8, 12.25, 14.375],
-                    ["top", "y", 9.5, 1.625, 3.5],
-                    ["bottom", "y", 9.5, 12.5, 14.375],
-                  ];
-            for (const [feature, axis, at, from, to] of probes) {
-              const m = measure(pixels, axis, at, from, to, solid);
-              samples[`${name}:${weight}:${feature}`] = m;
-              if (solid) {
-                const outline = samples[`${base}.svg:${weight}:${feature}`];
-                check(
-                  {
-                    name,
-                    weight,
-                    feature: `${feature} bracket alignment`,
-                    outline,
-                    inverseCounter: m,
                   },
                   m.center !== null &&
                     outline.center !== null &&

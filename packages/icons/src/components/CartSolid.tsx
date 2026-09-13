@@ -18,13 +18,13 @@ export const CartSolidIcon = forwardRef<SVGSVGElement, CartSolidIconProps>(
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
-            fill="none"
-            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M.318 1h2.458l2.458 9.833h8.605"
+            fillRule="evenodd"
+            d="M3.158 3.347h11.633l-1.745 6.98H4.903Zm1.164 10.47a1.163 1.163 0 1 0 2.326 0 1.163 1.163 0 1 0-2.326 0m6.98 0a1.163 1.163 0 1 0 2.326 0 1.163 1.163 0 1 0-2.326 0"
           />
           <path
-            fillRule="evenodd"
-            d="M3.39 3.458h12.292l-1.843 7.375H5.234ZM4.62 14.52a1.23 1.23 0 1 0 2.458 0 1.23 1.23 0 1 0-2.458 0m7.375 0a1.23 1.23 0 1 0 2.458 0 1.23 1.23 0 1 0-2.458 0"
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M.25 1.02h2.327l2.326 9.307h8.143l1.745-6.98H3.158m1.164 10.47a1.163 1.163 0 1 0 2.326 0 1.163 1.163 0 1 0-2.326 0Zm6.98 0a1.163 1.163 0 1 0 2.326 0 1.163 1.163 0 1 0-2.326 0Z"
           />
         </g>
       </Icon>

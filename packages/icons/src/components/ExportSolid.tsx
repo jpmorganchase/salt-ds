@@ -18,8 +18,9 @@ export const ExportSolidIcon = forwardRef<SVGSVGElement, ExportSolidIconProps>(
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
-            fillRule="evenodd"
-            d="M.25.25h15.5v15.5H.25Zm5.365 1.788V.846H.846v14.308h4.77v-1.192H2.037V2.038ZM4.423 7.404v1.192h9.062L10.98 11.1l.834.835L15.75 8l-3.935-3.935-.834.835 2.504 2.504Z"
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.001 1.712H1v12.576h4.001M3.858 8h10.86m-4-4.001 4 4.001-4 4.001"
           />
         </g>
       </Icon>

@@ -17,19 +17,16 @@ export const LockedIcon = forwardRef<SVGSVGElement, LockedIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
-          <path
+          <g
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.08 7.16V4.92a3.92 3.92 0 0 1 7.84 0v2.24"
-          />
-          <path
-            fill="none"
-            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.288 7.16h11.424q.448 0 .448.448v6.944q0 .448-.448.448H2.288q-.448 0-.448-.448V7.608q0-.448.448-.448Z"
-          />
+          >
+            <path d="M4.08 7.16V4.92a3.92 3.92 0 0 1 7.84 0v2.24" />
+            <path d="M2.288 7.16h11.424q.448 0 .448.448v6.944q0 .448-.448.448H2.288q-.448 0-.448-.448V7.608q0-.448.448-.448Z" />
+          </g>
           <path
             fillRule="evenodd"
-            d="M7.44 11.303a1.12 1.12 0 1 1 1.12 0v2.017H7.44Z"
+            d="M7.3 11.877a1.5 1.5 0 1 1 1.4 0V13.6H7.3Z"
           />
         </g>
       </Icon>

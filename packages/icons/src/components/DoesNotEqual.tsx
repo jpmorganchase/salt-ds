@@ -22,7 +22,7 @@ export const DoesNotEqualIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M.25 5.02h15.5M.25 10.98h15.5M11.577.847 4.423 15.154"
+          d="M1.75 5.596h12.5m-12.5 4.808h12.5M10.885 2.23l-5.77 11.538"
         />
       </g>
     </Icon>

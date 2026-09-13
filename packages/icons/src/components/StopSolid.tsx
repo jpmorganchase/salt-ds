@@ -17,7 +17,12 @@ export const StopSolidIcon = forwardRef<SVGSVGElement, StopSolidIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
-          <path fillRule="evenodd" d="M.25.25h15.5v15.5H.25Z" />
+          <path fillRule="evenodd" d="M1.5 1.5h13v13h-13Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 1.5h13v13h-13Z"
+          />
         </g>
       </Icon>
     );

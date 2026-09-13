@@ -20,7 +20,7 @@ export const JigsawIcon = forwardRef<SVGSVGElement, JigsawIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1 2.416h4.404C4.985.528 9.6.528 9.18 2.416h4.404V6.82c1.888-.42 1.888 4.195 0 3.776V15H9.18c.42-1.888-4.195-1.888-3.776 0H1v-4.404c1.888.419 1.888-4.195 0-3.776Z"
+            d="M1 4.126h4.35v-.725a1.45 1.45 0 1 1 2.174 0v.725h4.35v4.35h.725a1.45 1.45 0 1 1 0 2.174h-.725V15h-4.35v-.725a1.45 1.45 0 1 0-2.174 0V15H1v-4.35h.725a1.45 1.45 0 1 0 0-2.174H1Z"
           />
         </g>
       </Icon>

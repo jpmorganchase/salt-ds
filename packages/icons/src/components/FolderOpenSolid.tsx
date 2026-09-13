@@ -22,9 +22,14 @@ export const FolderOpenSolidIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1 15.109V1.64h5.13l2.566 2.566h5.13v2.565"
+          d="M1.188 14.22V1.78h4.739l2.37 2.37h4.738v2.369"
         />
-        <path fillRule="evenodd" d="M1 15.109h12.826l1.924-8.337H2.924Z" />
+        <path fillRule="evenodd" d="M1.188 14.22h11.847l1.778-7.701H2.965Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.188 14.22h11.847l1.778-7.701H2.965Z"
+        />
       </g>
     </Icon>
   );

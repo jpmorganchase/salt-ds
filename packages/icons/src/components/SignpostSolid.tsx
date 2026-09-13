@@ -21,12 +21,12 @@ export const SignpostSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M7.404 2.635h5.365l2.981 2.384-2.98 2.385H7.403Zm0 4.769H3.23L.25 9.788l2.98 2.385h4.174Z"
+          d="M7.495 3.457h4.544l2.524 2.019-2.524 2.02H7.495Zm0 4.038H3.961l-2.524 2.02 2.524 2.019h3.534Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M7.404.25v15.5"
+          d="M7.495 3.457h4.544l2.524 2.019-2.524 2.02H7.495Zm0 4.038H3.961l-2.524 2.02 2.524 2.019h3.534Zm0-6.058v13.126"
         />
       </g>
     </Icon>

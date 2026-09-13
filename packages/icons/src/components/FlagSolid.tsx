@@ -19,12 +19,12 @@ export const FlagSolidIcon = forwardRef<SVGSVGElement, FlagSolidIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M2.413 2.038h4.77l2.384 2.385h4.77L11.952 8l2.385 3.577H8.375L5.99 9.192H2.413Z"
+            d="M1.71 2.038h4.77l2.384 2.385h4.77L11.248 8l2.384 3.577h-5.96L5.287 9.192H1.71Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.413.25v15.5"
+            d="M1.71 2.038h4.77l2.384 2.385h4.77L11.248 8l2.384 3.577h-5.96L5.287 9.192H1.71Zm0-1.788v15.5"
           />
         </g>
       </Icon>

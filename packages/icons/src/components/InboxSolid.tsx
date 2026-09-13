@@ -19,12 +19,17 @@ export const InboxSolidIcon = forwardRef<SVGSVGElement, InboxSolidIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M1 9.91h3.818l1.273 2.545h3.818l1.273-2.546H15v5.727H1Z"
+            d="M1.24 9.469h3.687l1.23 2.458h3.687l1.229-2.458h3.687V15H1.24Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1 6.727V9.91m14-3.182V9.91M8 .364v8.909M4.182 5.455 8 9.273l3.818-3.818"
+            d="M1.24 6.396V15h13.52V6.396M1.24 9.469h3.687l1.23 2.458h3.687l1.229-2.458h3.687"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8 .25v8.604M4.313 5.167 8 8.854l3.688-3.687"
           />
         </g>
       </Icon>

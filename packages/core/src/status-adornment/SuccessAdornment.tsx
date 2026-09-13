@@ -18,10 +18,11 @@ export const SuccessAdornmentIcon = forwardRef<
       viewBox="0 0 10 8"
       ref={ref}
     >
+      {/* Match the shared status tick gesture at the compact adornment weight. */}
       <path
         fillRule="evenodd"
         clipRule="evenodd"
-        d="M2.92089 5.95735L8.96399 0L10 1.02133L2.92088 8L0 5.1205L1.03602 4.09918L2.92089 5.95735Z"
+        d="M0 4.25718L3.50478 7.76196L10 1.26674L8.9713 0.23804L3.50478 5.70456L1.0287 3.22847Z"
       />
     </svg>
   );
