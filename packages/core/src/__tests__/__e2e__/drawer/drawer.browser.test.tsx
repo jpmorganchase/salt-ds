@@ -57,11 +57,11 @@ describe("GIVEN a Drawer", () => {
     await expect.element(page.getByTestId("scrim")).toBeInTheDocument();
     await expect.element(page.getByRole("dialog")).toBeVisible();
     await expect
-      .element(page.getByRole("button", { name: "Close Drawer" }))
+      .element(page.getByRole("button", { name: "Close drawer" }))
       .toHaveFocus();
     const callCount = consoleSpy.mock.calls.length;
 
-    await page.getByRole("button", { name: "Close Drawer" }).click();
+    await page.getByRole("button", { name: "Close drawer" }).click();
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
     expect(consoleSpy).toHaveBeenCalledTimes(callCount + 1);
 
@@ -92,7 +92,7 @@ describe("GIVEN a Drawer", () => {
 
   it("traps focus when a close action is present", async () => {
     await renderWithSalt(<Default />);
-    const closeButton = page.getByRole("button", { name: "Close Drawer" });
+    const closeButton = page.getByRole("button", { name: "Close drawer" });
     await page.getByRole("button", { name: "Open Primary Drawer" }).click();
     await expect.element(closeButton).toHaveFocus();
     await userEvent.tab();
@@ -161,7 +161,7 @@ describe("GIVEN a Drawer", () => {
     await openButton.click();
     await expect.element(page.getByRole("dialog")).toBeVisible();
 
-    await page.getByRole("button", { name: "Close Drawer" }).click();
+    await page.getByRole("button", { name: "Close drawer" }).click();
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
     await expect.element(openButton).toHaveFocus();
   });
@@ -206,7 +206,7 @@ describe("GIVEN a Drawer", () => {
     const content = page.getByRole("region", { name: headingName });
     await expect.element(content).toBeVisible();
     await expect
-      .element(page.getByRole("button", { name: "Close Drawer" }))
+      .element(page.getByRole("button", { name: "Close drawer" }))
       .toHaveFocus();
     await userEvent.tab();
     await expect.element(content).toHaveFocus();
@@ -356,7 +356,7 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
       .element(page.getByRole("heading", { level: 2 }))
       .not.toBeInTheDocument();
     await expect
-      .element(page.getByRole("button", { name: "Close Drawer" }))
+      .element(page.getByRole("button", { name: "Close drawer" }))
       .toBeVisible();
   });
 });

@@ -27,7 +27,7 @@ export const DrawerCloseButton = forwardRef<HTMLButtonElement, ButtonProps>(
       <div className={withBaseName("container")}>
         <Button
           ref={ref}
-          aria-label="Close Drawer"
+          aria-label="Close drawer"
           appearance="transparent"
           className={clsx(withBaseName(), className)}
           {...rest}
