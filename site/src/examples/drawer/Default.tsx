@@ -1,13 +1,13 @@
 import {
   Button,
   Drawer,
-  DrawerCloseButton,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
   StackLayout,
   Text,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
 
 export const Default = (): ReactElement => {
@@ -25,7 +25,15 @@ export const Default = (): ReactElement => {
       >
         <DrawerHeader
           header="Primary drawer"
-          actions={<DrawerCloseButton onClick={() => setOpenPrimary(false)} />}
+          actions={
+            <Button
+              aria-label="Close drawer"
+              appearance="transparent"
+              onClick={() => setOpenPrimary(false)}
+            >
+              <CloseIcon aria-hidden />
+            </Button>
+          }
         />
         <DrawerContent>
           <Text>Primary drawers sit on the container primary background.</Text>
@@ -48,7 +56,13 @@ export const Default = (): ReactElement => {
         <DrawerHeader
           header="Secondary drawer"
           actions={
-            <DrawerCloseButton onClick={() => setOpenSecondary(false)} />
+            <Button
+              aria-label="Close drawer"
+              appearance="transparent"
+              onClick={() => setOpenSecondary(false)}
+            >
+              <CloseIcon aria-hidden />
+            </Button>
           }
         />
         <DrawerContent>
@@ -73,7 +87,15 @@ export const Default = (): ReactElement => {
       >
         <DrawerHeader
           header="Tertiary drawer"
-          actions={<DrawerCloseButton onClick={() => setOpenTertiary(false)} />}
+          actions={
+            <Button
+              aria-label="Close drawer"
+              appearance="transparent"
+              onClick={() => setOpenTertiary(false)}
+            >
+              <CloseIcon aria-hidden />
+            </Button>
+          }
         />
         <DrawerContent>
           <Text>

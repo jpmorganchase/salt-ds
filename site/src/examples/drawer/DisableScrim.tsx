@@ -1,12 +1,12 @@
 import {
   Button,
   Drawer,
-  DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
   StackLayout,
   Text,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
 
 export const DisableScrim = (): ReactElement => {
@@ -23,7 +23,15 @@ export const DisableScrim = (): ReactElement => {
       >
         <DrawerHeader
           header="Drawer without scrim"
-          actions={<DrawerCloseButton onClick={() => setOpen(false)} />}
+          actions={
+            <Button
+              aria-label="Close drawer"
+              appearance="transparent"
+              onClick={() => setOpen(false)}
+            >
+              <CloseIcon aria-hidden />
+            </Button>
+          }
         />
         <DrawerContent>
           <Text>The content behind this drawer isn't obscured.</Text>

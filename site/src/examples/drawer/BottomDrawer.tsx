@@ -3,7 +3,6 @@ import {
   Display2,
   Display3,
   Drawer,
-  DrawerCloseButton,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
@@ -12,6 +11,7 @@ import {
   StackLayout,
   Text,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { AgGridReact } from "ag-grid-react";
 import { type ReactElement, useState } from "react";
 import { useAgGridHelpers } from "../ag-grid-theme/useAgGridHelpers";
@@ -138,7 +138,15 @@ export const BottomDrawer = (): ReactElement => {
       >
         <DrawerHeader
           header="Marginal Tiering"
-          actions={<DrawerCloseButton onClick={handleClose} />}
+          actions={
+            <Button
+              aria-label="Close drawer"
+              appearance="transparent"
+              onClick={handleClose}
+            >
+              <CloseIcon aria-hidden />
+            </Button>
+          }
         />
         <DrawerContent>
           <StackLayout gap={3}>

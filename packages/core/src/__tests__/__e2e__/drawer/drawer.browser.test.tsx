@@ -1,12 +1,12 @@
 import {
   Button,
   Drawer,
-  DrawerCloseButton,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
   Text,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { composeStories } from "@storybook/react-vite";
 import { useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -24,6 +24,12 @@ const {
 
 const headingName = "Payments Check deposit #1278";
 const longText = "Pending transaction review. ".repeat(200);
+
+const CloseButton = () => (
+  <Button aria-label="Close drawer" appearance="transparent">
+    <CloseIcon aria-hidden />
+  </Button>
+);
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -52,11 +58,11 @@ describe("GIVEN a Drawer", () => {
     await expect.element(page.getByTestId("scrim")).toBeInTheDocument();
     await expect.element(page.getByRole("dialog")).toBeVisible();
     await expect
-      .element(page.getByRole("button", { name: "Close Drawer" }))
+      .element(page.getByRole("button", { name: "Close drawer" }))
       .toHaveFocus();
     const callCount = consoleSpy.mock.calls.length;
 
-    await page.getByRole("button", { name: "Close Drawer" }).click();
+    await page.getByRole("button", { name: "Close drawer" }).click();
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
     expect(consoleSpy).toHaveBeenCalledTimes(callCount + 1);
 
@@ -87,7 +93,7 @@ describe("GIVEN a Drawer", () => {
 
   it("traps focus when a close action is present", async () => {
     await renderWithSalt(<Default />);
-    const closeButton = page.getByRole("button", { name: "Close Drawer" });
+    const closeButton = page.getByRole("button", { name: "Close drawer" });
     await page.getByRole("button", { name: "Open Primary Drawer" }).click();
     await expect.element(closeButton).toHaveFocus();
     await userEvent.tab();
@@ -156,7 +162,7 @@ describe("GIVEN a Drawer", () => {
     await openButton.click();
     await expect.element(page.getByRole("dialog")).toBeVisible();
 
-    await page.getByRole("button", { name: "Close Drawer" }).click();
+    await page.getByRole("button", { name: "Close drawer" }).click();
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
     await expect.element(openButton).toHaveFocus();
   });
@@ -201,7 +207,7 @@ describe("GIVEN a Drawer", () => {
     const content = page.getByRole("region", { name: headingName });
     await expect.element(content).toBeVisible();
     await expect
-      .element(page.getByRole("button", { name: "Close Drawer" }))
+      .element(page.getByRole("button", { name: "Close drawer" }))
       .toHaveFocus();
     await userEvent.tab();
     await expect.element(content).toHaveFocus();
@@ -233,7 +239,7 @@ describe("GIVEN a Drawer", () => {
       <Drawer open position="right" style={{ width: 400 }}>
         <DrawerHeader
           header="Add your delivery details"
-          actions={<DrawerCloseButton />}
+          actions={<CloseButton />}
         />
         <DrawerContent>
           <Text>Pending transaction review</Text>
@@ -260,7 +266,7 @@ describe("GIVEN a Drawer", () => {
         style={{ width: 400 }}
         aria-label="Notifications"
       >
-        <DrawerHeader actions={<DrawerCloseButton />} />
+        <DrawerHeader actions={<CloseButton />} />
         <DrawerContent>
           <Text>{longText}</Text>
         </DrawerContent>
@@ -282,12 +288,10 @@ describe("GIVEN a Drawer with sections nested in a fragment", () => {
         style={{ width: 400 }}
         aria-label="Notifications"
       >
-        <>
-          <DrawerHeader actions={<DrawerCloseButton />} />
-          <DrawerContent>
-            <Text>Pending transaction review</Text>
-          </DrawerContent>
-        </>
+        <DrawerHeader actions={<CloseButton />} />
+        <DrawerContent>
+          <Text>Pending transaction review</Text>
+        </DrawerContent>
       </Drawer>,
     );
 
@@ -316,7 +320,7 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
     await renderWithSalt(<HeaderAndFooter />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
 
-    const closeButton = page.getByRole("button", { name: "Close Drawer" });
+    const closeButton = page.getByRole("button", { name: "Close drawer" });
     await expect.element(closeButton).toHaveFocus();
     await closeButton.click();
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
@@ -325,17 +329,14 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
   it("leaves content that fits out of the tab order", async () => {
     await renderWithSalt(
       <Drawer open position="right" style={{ width: 400 }}>
-        <DrawerHeader
-          header="Check deposit #1278"
-          actions={<DrawerCloseButton />}
-        />
+        <DrawerHeader header="Check deposit #1278" actions={<CloseButton />} />
         <DrawerContent>
           <Text>Pending transaction review</Text>
         </DrawerContent>
       </Drawer>,
     );
 
-    const closeButton = page.getByRole("button", { name: "Close Drawer" });
+    const closeButton = page.getByRole("button", { name: "Close drawer" });
     await expect.element(closeButton).toHaveFocus();
     await expect.element(page.getByRole("region")).not.toBeInTheDocument();
     await userEvent.tab();
@@ -387,7 +388,7 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
         style={{ width: 400 }}
         aria-label="Notifications"
       >
-        <DrawerHeader actions={<DrawerCloseButton />} />
+        <DrawerHeader actions={<CloseButton />} />
         <DrawerContent>
           <Text>Pending transaction review</Text>
         </DrawerContent>
@@ -401,7 +402,7 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
       .element(page.getByRole("heading", { level: 2 }))
       .not.toBeInTheDocument();
     await expect
-      .element(page.getByRole("button", { name: "Close Drawer" }))
+      .element(page.getByRole("button", { name: "Close drawer" }))
       .toBeVisible();
   });
 });
@@ -412,7 +413,7 @@ describe("GIVEN a Drawer with DrawerFooter", () => {
       <Drawer open position="right" style={{ width: 400 }}>
         <DrawerHeader
           header="Add your delivery details"
-          actions={<DrawerCloseButton />}
+          actions={<CloseButton />}
         />
         <DrawerContent>
           <Button>Content action</Button>
@@ -424,7 +425,7 @@ describe("GIVEN a Drawer with DrawerFooter", () => {
       </Drawer>,
     );
 
-    const closeButton = page.getByRole("button", { name: "Close Drawer" });
+    const closeButton = page.getByRole("button", { name: "Close drawer" });
     await expect.element(closeButton).toHaveFocus();
 
     await userEvent.tab();

@@ -1,7 +1,6 @@
 import {
   Button,
   Drawer,
-  DrawerCloseButton,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
@@ -12,6 +11,7 @@ import {
   StackLayout,
   Text,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
 
 const placeholderText =
@@ -43,7 +43,15 @@ export const RightDrawer = (): ReactElement => {
       >
         <DrawerHeader
           header="Section title"
-          actions={<DrawerCloseButton onClick={handleClose} />}
+          actions={
+            <Button
+              aria-label="Close drawer"
+              appearance="transparent"
+              onClick={handleClose}
+            >
+              <CloseIcon aria-hidden />
+            </Button>
+          }
         />
         <DrawerContent>
           <StackLayout>

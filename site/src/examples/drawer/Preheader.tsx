@@ -1,12 +1,12 @@
 import {
   Button,
   Drawer,
-  DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
   StackLayout,
   Text,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
 
 const placeholderText =
@@ -32,7 +32,15 @@ export const Preheader = (): ReactElement => {
           preheader="Payments"
           header="Check deposit #1278"
           description="Pending transaction review"
-          actions={<DrawerCloseButton onClick={handleClose} />}
+          actions={
+            <Button
+              aria-label="Close drawer"
+              appearance="transparent"
+              onClick={handleClose}
+            >
+              <CloseIcon aria-hidden />
+            </Button>
+          }
         />
         <DrawerContent>
           <StackLayout>

@@ -12,7 +12,7 @@ data:
 
 Drawers are always modal. This means that the content behind them is inert and can't be interacted with. A [`Scrim`](../scrim) is used to visually obscure the content behind the drawer.
 
-Compose a drawer from `DrawerHeader` and `DrawerContent`. `DrawerHeader` stays pinned to the edge the drawer is anchored to, while `DrawerContent` scrolls when its content overflows. Pass `DrawerCloseButton` to the `actions` prop of `DrawerHeader`.
+Compose a drawer from `DrawerHeader`, `DrawerContent` and `DrawerFooter`. `DrawerHeader` stays pinned to the edge the drawer is anchored to, `DrawerContent` scrolls when its content overflows, and `DrawerFooter` stays pinned to the bottom of the drawer. Pass a close `Button` to the `actions` prop of `DrawerHeader`.
 
 `DrawerHeader` names the drawer using its `header` and `preheader`, and describes it using its `description`, so you don't need to set `aria-labelledby` or `aria-describedby` manually.
 
@@ -37,8 +37,8 @@ To import `Drawer` and related components from the core Salt package, use:
 ```js
 import {
   Drawer,
-  DrawerCloseButton,
   DrawerContent,
+  DrawerFooter,
   DrawerHeader,
 } from "@salt-ds/core";
 ```
@@ -57,9 +57,9 @@ import {
 
 <PropsTable packageName="core" componentName="DrawerContent" />
 
-### `DrawerCloseButton`
+### `DrawerFooter`
 
-<PropsTable packageName="core" componentName="DrawerCloseButton" />
+<PropsTable packageName="core" componentName="DrawerFooter" />
 
 ## References
 

@@ -4,7 +4,6 @@ import {
   Checkbox,
   ComboBox,
   Drawer,
-  DrawerCloseButton,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
@@ -21,9 +20,11 @@ import {
   StackLayout,
   Text,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   type ChangeEvent,
+  type MouseEventHandler,
   type SyntheticEvent,
   useEffect,
   useRef,
@@ -47,6 +48,16 @@ const UnmountLogger = () => {
   return null;
 };
 
+const CloseButton = ({
+  onClick,
+}: {
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+}) => (
+  <Button aria-label="Close drawer" appearance="transparent" onClick={onClick}>
+    <CloseIcon aria-hidden />
+  </Button>
+);
+
 export const Default: StoryFn<DrawerProps> = (args) => {
   const [openPrimary, setOpenPrimary] = useState(false);
   const [openSecondary, setOpenSecondary] = useState(false);
@@ -63,7 +74,7 @@ export const Default: StoryFn<DrawerProps> = (args) => {
       >
         <DrawerHeader
           header="Primary drawer"
-          actions={<DrawerCloseButton onClick={() => setOpenPrimary(false)} />}
+          actions={<CloseButton onClick={() => setOpenPrimary(false)} />}
         />
         <DrawerContent>
           <Text>Primary drawers sit on the container primary background.</Text>
@@ -82,9 +93,7 @@ export const Default: StoryFn<DrawerProps> = (args) => {
       >
         <DrawerHeader
           header="Secondary drawer"
-          actions={
-            <DrawerCloseButton onClick={() => setOpenSecondary(false)} />
-          }
+          actions={<CloseButton onClick={() => setOpenSecondary(false)} />}
         />
         <DrawerContent>
           <Text>
@@ -104,7 +113,7 @@ export const Default: StoryFn<DrawerProps> = (args) => {
       >
         <DrawerHeader
           header="Tertiary drawer"
-          actions={<DrawerCloseButton onClick={() => setOpenTertiary(false)} />}
+          actions={<CloseButton onClick={() => setOpenTertiary(false)} />}
         />
         <DrawerContent>
           <Text>
@@ -133,7 +142,7 @@ export const Position: StoryFn<DrawerProps> = (args) => {
       >
         <DrawerHeader
           header="Left drawer"
-          actions={<DrawerCloseButton onClick={() => setOpenLeft(false)} />}
+          actions={<CloseButton onClick={() => setOpenLeft(false)} />}
         />
         <DrawerContent>
           <Text>Left drawers slide in from the leading edge.</Text>
@@ -149,7 +158,7 @@ export const Position: StoryFn<DrawerProps> = (args) => {
       >
         <DrawerHeader
           header="Right drawer"
-          actions={<DrawerCloseButton onClick={() => setOpenRight(false)} />}
+          actions={<CloseButton onClick={() => setOpenRight(false)} />}
         />
         <DrawerContent>
           <Text>Right drawers slide in from the trailing edge.</Text>
@@ -165,7 +174,7 @@ export const Position: StoryFn<DrawerProps> = (args) => {
       >
         <DrawerHeader
           header="Top drawer"
-          actions={<DrawerCloseButton onClick={() => setOpenTop(false)} />}
+          actions={<CloseButton onClick={() => setOpenTop(false)} />}
         />
         <DrawerContent>
           <Text>Top drawers slide down from the top of the screen.</Text>
@@ -181,7 +190,7 @@ export const Position: StoryFn<DrawerProps> = (args) => {
       >
         <DrawerHeader
           header="Bottom drawer"
-          actions={<DrawerCloseButton onClick={() => setOpenBottom(false)} />}
+          actions={<CloseButton onClick={() => setOpenBottom(false)} />}
         />
         <DrawerContent>
           <Text>Bottom drawers slide up from the bottom of the screen.</Text>
@@ -220,7 +229,7 @@ export const TopDrawerUsageExample = () => {
       <Drawer open={open} onOpenChange={onOpenChange} position="top">
         <DrawerHeader
           header="Section title"
-          actions={<DrawerCloseButton onClick={handleClose} />}
+          actions={<CloseButton onClick={handleClose} />}
         />
         <DrawerContent>
           <StackLayout>
@@ -264,7 +273,7 @@ export const RightDrawerUsageExample = () => {
       >
         <DrawerHeader
           header="Section title"
-          actions={<DrawerCloseButton onClick={handleClose} />}
+          actions={<CloseButton onClick={handleClose} />}
         />
         <DrawerContent>
           <StackLayout>
@@ -327,7 +336,7 @@ export const BottomDrawerUsageExample = () => {
       >
         <DrawerHeader
           header="Bottom drawer use case"
-          actions={<DrawerCloseButton onClick={handleClose} />}
+          actions={<CloseButton onClick={handleClose} />}
         />
         <DrawerContent>
           <FlowLayout>
@@ -511,7 +520,7 @@ export const HeaderAndFooter: StoryFn<DrawerProps> = (args) => {
           preheader="Payments"
           header="Check deposit #1278"
           description="Pending transaction review"
-          actions={<DrawerCloseButton onClick={handleClose} />}
+          actions={<CloseButton onClick={handleClose} />}
         />
         <DrawerContent>
           <StackLayout>

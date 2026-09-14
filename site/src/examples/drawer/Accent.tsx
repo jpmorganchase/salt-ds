@@ -1,12 +1,12 @@
 import {
   Button,
   Drawer,
-  DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
   StackLayout,
   Text,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
 
 export const Accent = (): ReactElement => {
@@ -27,7 +27,13 @@ export const Accent = (): ReactElement => {
         <DrawerHeader
           header="Drawer with accent"
           actions={
-            <DrawerCloseButton onClick={() => setOpenWithAccent(false)} />
+            <Button
+              aria-label="Close drawer"
+              appearance="transparent"
+              onClick={() => setOpenWithAccent(false)}
+            >
+              <CloseIcon aria-hidden />
+            </Button>
           }
         />
         <DrawerContent>
@@ -47,7 +53,13 @@ export const Accent = (): ReactElement => {
           disableAccent
           header="Drawer without accent"
           actions={
-            <DrawerCloseButton onClick={() => setOpenWithoutAccent(false)} />
+            <Button
+              aria-label="Close drawer"
+              appearance="transparent"
+              onClick={() => setOpenWithoutAccent(false)}
+            >
+              <CloseIcon aria-hidden />
+            </Button>
           }
         />
         <DrawerContent>
