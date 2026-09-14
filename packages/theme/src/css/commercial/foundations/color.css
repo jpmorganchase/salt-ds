@@ -175,17 +175,7 @@
   --salt-color-emerald-450-rgb: 65, 155, 110;
   --salt-color-emerald-500-rgb: 46, 133, 90;
   --salt-color-emerald-550-rgb: 25, 126, 76;
-  --salt-color-emerald-600-rgb: 15, 97, 56;  --salt-color-brown-100-rgb: 247, 239, 233;
-  --salt-color-brown-200-rgb: 236, 217, 203;
-  --salt-color-brown-300-rgb: 210, 183, 163;
-  --salt-color-brown-400-rgb: 191, 154, 125;
-  --salt-color-brown-450-rgb: 187, 125, 92;
-  --salt-color-brown-500-rgb: 151, 108, 74;
-  --salt-color-brown-550-rgb: 148, 97, 71;
-  --salt-color-brown-600-rgb: 110, 78, 54;
-  --salt-color-brown-700-rgb: 86, 58, 37;
-  --salt-color-brown-800-rgb: 55, 36, 21;
-  --salt-color-brown-900-rgb: 42, 24, 9;
+  --salt-color-emerald-600-rgb: 15, 97, 56;
   --salt-color-emerald-700-rgb: 11, 74, 43;
   --salt-color-emerald-800-rgb: 7, 56, 31;
   --salt-color-emerald-900-rgb: 0, 33, 17;
@@ -425,26 +415,6 @@
   --salt-color-forest-700-rgb: 15, 90, 61;
   --salt-color-forest-800-rgb: 6, 70, 46;
   --salt-color-forest-900-rgb: 0, 51, 31;
-
-  --salt-color-accent-100-rgb: 222, 247, 252;
-  --salt-color-accent-200-rgb: 184, 232, 242;
-  --salt-color-accent-300-rgb: 125, 202, 219;
-  --salt-color-accent-400-rgb: 74, 176, 199;
-  --salt-color-accent-500-rgb: 27, 128, 150;
-  --salt-color-accent-600-rgb: 21, 92, 107;
-  --salt-color-accent-700-rgb: 15, 72, 84;
-  --salt-color-accent-800-rgb: 13, 44, 51;
-  --salt-color-accent-900-rgb: 3, 31, 38;
-
-  --salt-color-brand-100-rgb: 247, 239, 233;
-  --salt-color-brand-200-rgb: 236, 217, 203;
-  --salt-color-brand-300-rgb: 210, 183, 163;
-  --salt-color-brand-400-rgb: 191, 154, 125;
-  --salt-color-brand-500-rgb: 151, 108, 74;
-  --salt-color-brand-600-rgb: 110, 78, 54;
-  --salt-color-brand-700-rgb: 86, 58, 37;
-  --salt-color-brand-800-rgb: 55, 36, 21;
-  --salt-color-brand-900-rgb: 42, 24, 9;
 
   --salt-color-dove-gray-100-rgb: 240, 233, 232;
   --salt-color-dove-gray-200-rgb: 224, 218, 217;
@@ -885,25 +855,6 @@
   --salt-color-forest-900: rgb(var(--salt-color-forest-900-rgb));
 
   /* Commercial color palettes */
-  --salt-color-accent-100: rgb(var(--salt-color-accent-100-rgb));
-  --salt-color-accent-200: rgb(var(--salt-color-accent-200-rgb));
-  --salt-color-accent-300: rgb(var(--salt-color-accent-300-rgb));
-  --salt-color-accent-400: rgb(var(--salt-color-accent-400-rgb));
-  --salt-color-accent-500: rgb(var(--salt-color-accent-500-rgb));
-  --salt-color-accent-600: rgb(var(--salt-color-accent-600-rgb));
-  --salt-color-accent-700: rgb(var(--salt-color-accent-700-rgb));
-  --salt-color-accent-800: rgb(var(--salt-color-accent-800-rgb));
-  --salt-color-accent-900: rgb(var(--salt-color-accent-900-rgb));
-
-  --salt-color-brand-100: rgb(var(--salt-color-brand-100-rgb));
-  --salt-color-brand-200: rgb(var(--salt-color-brand-200-rgb));
-  --salt-color-brand-300: rgb(var(--salt-color-brand-300-rgb));
-  --salt-color-brand-400: rgb(var(--salt-color-brand-400-rgb));
-  --salt-color-brand-500: rgb(var(--salt-color-brand-500-rgb));
-  --salt-color-brand-600: rgb(var(--salt-color-brand-600-rgb));
-  --salt-color-brand-700: rgb(var(--salt-color-brand-700-rgb));
-  --salt-color-brand-800: rgb(var(--salt-color-brand-800-rgb));
-  --salt-color-brand-900: rgb(var(--salt-color-brand-900-rgb));
 
   --salt-color-dove-gray-100: rgb(var(--salt-color-dove-gray-100-rgb));
   --salt-color-dove-gray-200: rgb(var(--salt-color-dove-gray-200-rgb));

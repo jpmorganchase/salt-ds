@@ -75,10 +75,10 @@
   --salt-color-white-65a: rgba(var(--salt-color-white-rgb), 0.65);
   --salt-color-white-80a: rgba(var(--salt-color-white-rgb), 0.8);
 
-  --salt-color-accent-200-40a: rgba(var(--salt-color-accent-200-rgb), 0.4);
-  --salt-color-accent-500-0a: rgba(var(--salt-color-accent-500-rgb), 0);
-  --salt-color-accent-500-40a: rgba(var(--salt-color-accent-500-rgb), 0.4);
-  --salt-color-accent-800-40a: rgba(var(--salt-color-accent-800-rgb), 0.4);
+  --salt-color-topaz-200-40a: rgba(var(--salt-color-topaz-200-rgb), 0.4);
+  --salt-color-topaz-500-0a: rgba(var(--salt-color-topaz-500-rgb), 0);
+  --salt-color-topaz-500-40a: rgba(var(--salt-color-topaz-500-rgb), 0.4);
+  --salt-color-topaz-800-40a: rgba(var(--salt-color-topaz-800-rgb), 0.4);
 
   --salt-color-dove-gray-500-10a: rgba(var(--salt-color-dove-gray-500-rgb), 0.1);
   --salt-color-dove-gray-500-40a: rgba(var(--salt-color-dove-gray-500-rgb), 0.4);
