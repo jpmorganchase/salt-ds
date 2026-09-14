@@ -1,6 +1,7 @@
 export * from "./Accent";
 export * from "./BottomDrawer";
 export * from "./Default";
+export * from "./DeprecatedCloseButton";
 export * from "./DisableScrim";
 export * from "./Footer";
 export * from "./Header";

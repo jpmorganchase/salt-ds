@@ -69,3 +69,11 @@ This example uses the `disableDismiss` prop to prevent the drawer closing on cli
 Use the `disableScrim` prop to prevent the scrim from rendering.
 
 <LivePreview componentName="drawer" exampleName="DisableScrim" />
+
+## Deprecated Close button
+
+`DrawerCloseButton` can be added as a child of the `Drawer` component to render a close button in the top right corner of the drawer. You can pass the `onClick` prop like with any `Button` component to handle the close button click.
+
+**Note:** `DrawerCloseButton` is deprecated. Use the prop `actions` within `DrawerHeader` instead.
+
+<LivePreview componentName="drawer" exampleName="DeprecatedCloseButton" />
