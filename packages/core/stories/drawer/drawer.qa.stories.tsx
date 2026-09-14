@@ -1,12 +1,13 @@
 import {
+  Button,
   Drawer,
-  DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
   type DrawerProps,
   StackLayout,
   Text,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import { type ReactNode, useLayoutEffect, useRef } from "react";
@@ -15,6 +16,12 @@ export default {
   title: "Core/Drawer/Drawer QA",
   component: Drawer,
 } as Meta<typeof Drawer>;
+
+const CloseButton = () => (
+  <Button aria-label="Close drawer" appearance="transparent">
+    <CloseIcon aria-hidden />
+  </Button>
+);
 
 function FakeDrawer({ children, ...rest }: DrawerProps) {
   return (
@@ -47,7 +54,7 @@ const DrawerTemplate: StoryFn<typeof Drawer> = () => {
             preheader="Payments"
             header="Check deposit #1278"
             description="Pending transaction review"
-            actions={<DrawerCloseButton />}
+            actions={<CloseButton />}
           />
           <DrawerContent>
             <Text>{loremText}</Text>
@@ -55,7 +62,7 @@ const DrawerTemplate: StoryFn<typeof Drawer> = () => {
           </DrawerContent>
         </FakeDrawer>
         <FakeDrawer>
-          <DrawerHeader header="Title" actions={<DrawerCloseButton />} />
+          <DrawerHeader header="Title" actions={<CloseButton />} />
           <DrawerContent>
             <Text>{loremText}</Text>
           </DrawerContent>
@@ -74,7 +81,7 @@ const DrawerTemplate: StoryFn<typeof Drawer> = () => {
           </DrawerContent>
         </FakeDrawer>
         <FakeDrawer>
-          <DrawerHeader actions={<DrawerCloseButton />} />
+          <DrawerHeader actions={<CloseButton />} />
           <DrawerContent>
             <Text>{loremText}</Text>
           </DrawerContent>
@@ -130,20 +137,14 @@ const DrawerOverflowTemplate: StoryFn<typeof Drawer> = () => {
   return (
     <StackLayout direction="row" gap={3}>
       <FakeDrawer>
-        <DrawerHeader
-          header="Scrolled to middle"
-          actions={<DrawerCloseButton />}
-        />
+        <DrawerHeader header="Scrolled to middle" actions={<CloseButton />} />
         <ScrolledDrawerContent scrollTo="middle">
           <Text>{loremText}</Text>
           <Text>{loremText}</Text>
         </ScrolledDrawerContent>
       </FakeDrawer>
       <FakeDrawer>
-        <DrawerHeader
-          header="Scrolled to bottom"
-          actions={<DrawerCloseButton />}
-        />
+        <DrawerHeader header="Scrolled to bottom" actions={<CloseButton />} />
         <ScrolledDrawerContent scrollTo="bottom">
           <Text>{loremText}</Text>
           <Text>{loremText}</Text>

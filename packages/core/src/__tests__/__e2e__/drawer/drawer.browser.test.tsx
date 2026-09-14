@@ -1,11 +1,11 @@
 import {
   Button,
   Drawer,
-  DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
   Text,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { composeStories } from "@storybook/react-vite";
 import { useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -23,6 +23,12 @@ const {
 
 const headingName = "Payments Check deposit #1278";
 const longText = "Pending transaction review. ".repeat(200);
+
+const CloseButton = () => (
+  <Button aria-label="Close drawer" appearance="transparent">
+    <CloseIcon aria-hidden />
+  </Button>
+);
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -214,7 +220,7 @@ describe("GIVEN a Drawer", () => {
         style={{ width: 400 }}
         aria-label="Notifications"
       >
-        <DrawerHeader actions={<DrawerCloseButton />} />
+        <DrawerHeader actions={<CloseButton />} />
         <DrawerContent>
           <Text>{longText}</Text>
         </DrawerContent>
@@ -236,12 +242,10 @@ describe("GIVEN a Drawer with sections nested in a fragment", () => {
         style={{ width: 400 }}
         aria-label="Notifications"
       >
-        <>
-          <DrawerHeader actions={<DrawerCloseButton />} />
-          <DrawerContent>
-            <Text>Pending transaction review</Text>
-          </DrawerContent>
-        </>
+        <DrawerHeader actions={<CloseButton />} />
+        <DrawerContent>
+          <Text>Pending transaction review</Text>
+        </DrawerContent>
       </Drawer>,
     );
 
@@ -270,7 +274,7 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
     await renderWithSalt(<Header />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
 
-    const closeButton = page.getByRole("button", { name: "Close Drawer" });
+    const closeButton = page.getByRole("button", { name: "Close drawer" });
     await expect.element(closeButton).toHaveFocus();
     await closeButton.click();
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
@@ -279,17 +283,14 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
   it("leaves content that fits out of the tab order", async () => {
     await renderWithSalt(
       <Drawer open position="right" style={{ width: 400 }}>
-        <DrawerHeader
-          header="Check deposit #1278"
-          actions={<DrawerCloseButton />}
-        />
+        <DrawerHeader header="Check deposit #1278" actions={<CloseButton />} />
         <DrawerContent>
           <Text>Pending transaction review</Text>
         </DrawerContent>
       </Drawer>,
     );
 
-    const closeButton = page.getByRole("button", { name: "Close Drawer" });
+    const closeButton = page.getByRole("button", { name: "Close drawer" });
     await expect.element(closeButton).toHaveFocus();
     await expect.element(page.getByRole("region")).not.toBeInTheDocument();
     await userEvent.tab();
@@ -341,7 +342,7 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
         style={{ width: 400 }}
         aria-label="Notifications"
       >
-        <DrawerHeader actions={<DrawerCloseButton />} />
+        <DrawerHeader actions={<CloseButton />} />
         <DrawerContent>
           <Text>Pending transaction review</Text>
         </DrawerContent>
