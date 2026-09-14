@@ -6,6 +6,7 @@ import {
   InteractableCard,
   InteractableCardGroup,
   Panel,
+  StackLayout,
   Text,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
@@ -16,69 +17,91 @@ export default {
   component: InteractableCard,
 } as Meta<typeof InteractableCard>;
 
-const headingStyle = { marginBottom: "var(--salt-spacing-300)" };
-
 export const AllExamples: StoryFn<QAContainerProps & { className?: string }> = (
   props,
 ) => {
   return (
     <QAContainer itemPadding={4} cols={4} itemWidthAuto {...props}>
       <InteractableCard>
-        <H1 style={headingStyle}>Primary card</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Primary card</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </InteractableCard>
       <InteractableCard variant="secondary">
-        <H1 style={headingStyle}>Secondary card</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Secondary card</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </InteractableCard>
       <InteractableCard variant="tertiary">
-        <H1 style={headingStyle}>Tertiary card</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Tertiary card</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </InteractableCard>
       <InteractableCardGroup
         defaultValue={["top", "right", "bottom", "left"]}
         multiSelect
       >
         <InteractableCard accent="top" value="top">
-          <H1 style={headingStyle}>Accent top</H1>
-          <Text>Content</Text>
+          <StackLayout gap={1}>
+            <H1>Accent top</H1>
+            <Text>Content</Text>
+          </StackLayout>
         </InteractableCard>
         <InteractableCard accent="right" value="right">
-          <H1 style={headingStyle}>Accent right</H1>
-          <Text>Content</Text>
+          <StackLayout gap={1}>
+            <H1>Accent right</H1>
+            <Text>Content</Text>
+          </StackLayout>
         </InteractableCard>
         <InteractableCard accent="bottom" value="bottom">
-          <H1 style={headingStyle}>Accent bottom</H1>
-          <Text>Content</Text>
+          <StackLayout gap={1}>
+            <H1>Accent bottom</H1>
+            <Text>Content</Text>
+          </StackLayout>
         </InteractableCard>
         <InteractableCard accent="left" value="left">
-          <H1 style={headingStyle}>Accent left</H1>
-          <Text>Content</Text>
+          <StackLayout gap={1}>
+            <H1>Accent left</H1>
+            <Text>Content</Text>
+          </StackLayout>
         </InteractableCard>
       </InteractableCardGroup>
       <InteractableCard disabled>
-        <H1 style={headingStyle}>Disabled primary</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Disabled primary</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </InteractableCard>
       <InteractableCard disabled variant="secondary">
-        <H1 style={headingStyle}>Disabled secondary</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Disabled secondary</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </InteractableCard>
       <InteractableCard disabled variant="tertiary">
-        <H1 style={headingStyle}>Disabled tertiary</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Disabled tertiary</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </InteractableCard>
       <InteractableCard>
         <CardContent>
-          <H1 style={headingStyle}>With CardContent</H1>
-          <Text>Content</Text>
+          <StackLayout gap={1}>
+            <H1>With CardContent</H1>
+            <Text>Content</Text>
+          </StackLayout>
         </CardContent>
       </InteractableCard>
       <InteractableCard>
         <Panel variant="secondary" style={{ height: 20 }} />
         <CardContent>
-          <H1 style={headingStyle}>Panel + CardContent</H1>
-          <Text>Content</Text>
+          <StackLayout gap={1}>
+            <H1>Panel + CardContent</H1>
+            <Text>Content</Text>
+          </StackLayout>
         </CardContent>
       </InteractableCard>
       <InteractableCard>

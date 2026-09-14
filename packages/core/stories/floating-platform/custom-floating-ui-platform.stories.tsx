@@ -166,55 +166,42 @@ const NewWindowTest = (props: NewWindowTestProps) => {
     <NewWindow ref={setIframe} style={{ height: 300 }}>
       <div style={{ padding: 10 }}>
         <StackLayout gap={3}>
-          <div>
-            <H3 style={{ marginBottom: "var(--salt-spacing-100)" }}>
-              This is an iframe with a button
-            </H3>
+          <StackLayout gap={1}>
+            <H3>This is an iframe with a button</H3>
             <Text>It represents a portalled window within an application</Text>
-          </div>
-          <div>
-            {showExtraContent && (
-              <H3 style={{ marginBottom: "var(--salt-spacing-100)" }}>
-                Some Extra Content!
-              </H3>
-            )}
-            <StackLayout>
-              <FloatingPlatformProvider
-                platform={customPlatform}
-                animationFrame
-              >
-                <FloatingComponentProvider Component={FloatingUIComponent}>
-                  <Tooltip {...props} open>
-                    <Button
-                      onClick={() => {
-                        setShowExtraContent((old) => !old);
-                      }}
-                    >
-                      Click to show extra content
-                    </Button>
-                  </Tooltip>
-                  <ComboBox disabled={false} onChange={handleChange}>
-                    {source
-                      .filter((item) =>
-                        item.toLowerCase().includes(value.trim().toLowerCase()),
-                      )
-                      .map((item) => (
-                        <Option key={item} value={item}>
-                          {item}
-                        </Option>
-                      ))}
-                  </ComboBox>
-                  <Dropdown>
-                    {source.map((item) => (
-                      <Option key={item} value={item}>
-                        {item}
-                      </Option>
-                    ))}
-                  </Dropdown>
-                </FloatingComponentProvider>
-              </FloatingPlatformProvider>
-            </StackLayout>
-          </div>
+          </StackLayout>
+          {showExtraContent && <H3>Some Extra Content!</H3>}
+          <FloatingPlatformProvider platform={customPlatform} animationFrame>
+            <FloatingComponentProvider Component={FloatingUIComponent}>
+              <Tooltip {...props} open>
+                <Button
+                  onClick={() => {
+                    setShowExtraContent((old) => !old);
+                  }}
+                >
+                  Click to show extra content
+                </Button>
+              </Tooltip>
+              <ComboBox disabled={false} onChange={handleChange}>
+                {source
+                  .filter((item) =>
+                    item.toLowerCase().includes(value.trim().toLowerCase()),
+                  )
+                  .map((item) => (
+                    <Option key={item} value={item}>
+                      {item}
+                    </Option>
+                  ))}
+              </ComboBox>
+              <Dropdown>
+                {source.map((item) => (
+                  <Option key={item} value={item}>
+                    {item}
+                  </Option>
+                ))}
+              </Dropdown>
+            </FloatingComponentProvider>
+          </FloatingPlatformProvider>
         </StackLayout>
       </div>
     </NewWindow>
@@ -224,15 +211,13 @@ const NewWindowTest = (props: NewWindowTestProps) => {
 export const CustomFloatingUiPlatform: StoryFn<typeof Tooltip> = (args) => {
   return (
     <NewWindow style={{ width: "600px", height: "550px", border: "none" }}>
-      <StackLayout>
-        <div>
-          <H3 style={{ marginBottom: "var(--salt-spacing-100)" }}>
-            This is the root of the application
-          </H3>
+      <StackLayout gap={2}>
+        <StackLayout gap={1}>
+          <H3>This is the root of the application</H3>
           <Text>
             It represents a global coordinate space (e.g. a users screen)
           </Text>
-        </div>
+        </StackLayout>
         <StackLayout gap={10} direction="row">
           <NewWindowTest {...args} />
         </StackLayout>

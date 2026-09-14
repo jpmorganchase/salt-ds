@@ -24,8 +24,8 @@ const DrawerTemplate: StoryFn<typeof Drawer> = () => {
   return (
     <StackLayout>
       <FakeDrawer>
-        <StackLayout gap={0}>
-          <H2 style={{ marginBottom: "var(--salt-spacing-200)" }}>Title</H2>
+        <StackLayout gap={1}>
+          <H2>Title</H2>
           <Text>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
