@@ -4,6 +4,7 @@ import {
   Display3,
   Drawer,
   DrawerContent,
+  DrawerFooter,
   DrawerHeader,
   FlowLayout,
   H3,
@@ -205,16 +206,16 @@ export const BottomDrawer = (): ReactElement => {
                 <Display2>0.968</Display2>
               </StackLayout>
             </FlowLayout>
-            <FlowLayout justify="end">
-              <Button appearance="transparent" onClick={handleClose}>
-                Cancel
-              </Button>
-              <Button sentiment="accented" onClick={handleClose}>
-                Update Tier
-              </Button>
-            </FlowLayout>
           </StackLayout>
         </DrawerContent>
+        <DrawerFooter>
+          <Button appearance="transparent" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button sentiment="accented" onClick={handleClose}>
+            Update Tier
+          </Button>
+        </DrawerFooter>
       </Drawer>
     </>
   );

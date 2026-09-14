@@ -239,7 +239,7 @@ describe("GIVEN a Drawer", () => {
       <Drawer open position="right" style={{ width: 400 }}>
         <DrawerHeader
           header="Add your delivery details"
-          actions={<DrawerCloseButton />}
+          actions={<CloseButton />}
         />
         <DrawerContent>
           <Text>Pending transaction review</Text>
@@ -413,7 +413,7 @@ describe("GIVEN a Drawer with DrawerFooter", () => {
       <Drawer open position="right" style={{ width: 400 }}>
         <DrawerHeader
           header="Add your delivery details"
-          actions={<DrawerCloseButton />}
+          actions={<CloseButton />}
         />
         <DrawerContent>
           <Button>Content action</Button>
@@ -425,7 +425,7 @@ describe("GIVEN a Drawer with DrawerFooter", () => {
       </Drawer>,
     );
 
-    const closeButton = page.getByRole("button", { name: "Close Drawer" });
+    const closeButton = page.getByRole("button", { name: "Close drawer" });
     await expect.element(closeButton).toHaveFocus();
 
     await userEvent.tab();
