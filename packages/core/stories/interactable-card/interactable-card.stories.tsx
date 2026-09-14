@@ -37,7 +37,7 @@ export const Default: StoryFn<typeof InteractableCard> = (args) => (
 );
 
 export const Disabled: StoryFn<typeof InteractableCard> = (args) => (
-  <InteractableCard accent="top" {...args} style={{ width: "256px" }} disabled >
+  <InteractableCard accent="top" {...args} style={{ width: "256px" }} disabled>
     <StackLayout gap={1}>
       <H3>Sustainable investing products</H3>
       <Text>
@@ -321,7 +321,11 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
           </StackLayout>
         </StackLayout>
       </InteractableCard>
-      <InteractableCard {...args} value="tom-roberts" style={{ width: "180px" }}>
+      <InteractableCard
+        {...args}
+        value="tom-roberts"
+        style={{ width: "180px" }}
+      >
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
             <Avatar aria-hidden size={1} />
