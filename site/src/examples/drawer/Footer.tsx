@@ -4,7 +4,6 @@ import {
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
-  Link,
   StackLayout,
   Text,
 } from "@salt-ds/core";
@@ -46,10 +45,6 @@ export const Footer = (): ReactElement => {
         <DrawerContent>
           <StackLayout>
             <Text>{placeholderText.repeat(4)}</Text>
-            <Text>
-              Read the <Link href="#">transaction policy</Link> before
-              approving.
-            </Text>
             <Text>{placeholderText.repeat(4)}</Text>
           </StackLayout>
         </DrawerContent>
