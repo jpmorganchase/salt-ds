@@ -21,17 +21,17 @@
   --salt-color-blue-800-rgb: 0, 49, 92;
   --salt-color-blue-900-rgb: 0, 29, 54;
 
-  --salt-color-brown-100-rgb: 250, 237, 230;
-  --salt-color-brown-200-rgb: 240, 218, 206;
-  --salt-color-brown-300-rgb: 222, 181, 160;
-  --salt-color-brown-400-rgb: 204, 151, 122;
+  --salt-color-brown-100-rgb: 247, 239, 233;
+  --salt-color-brown-200-rgb: 236, 217, 203;
+  --salt-color-brown-300-rgb: 210, 183, 163;
+  --salt-color-brown-400-rgb: 191, 154, 125;
   --salt-color-brown-450-rgb: 187, 125, 92;
-  --salt-color-brown-500-rgb: 164, 103, 70;
+  --salt-color-brown-500-rgb: 151, 108, 74;
   --salt-color-brown-550-rgb: 148, 97, 71;
-  --salt-color-brown-600-rgb: 115, 74, 53;
-  --salt-color-brown-700-rgb: 94, 56, 37;
-  --salt-color-brown-800-rgb: 59, 34, 23;
-  --salt-color-brown-900-rgb: 43, 22, 13;
+  --salt-color-brown-600-rgb: 110, 78, 54;
+  --salt-color-brown-700-rgb: 86, 58, 37;
+  --salt-color-brown-800-rgb: 55, 36, 21;
+  --salt-color-brown-900-rgb: 42, 24, 9;
 
   --salt-color-green-100-rgb: 225, 245, 230;
   --salt-color-green-200-rgb: 167, 235, 182;
@@ -175,7 +175,17 @@
   --salt-color-emerald-450-rgb: 65, 155, 110;
   --salt-color-emerald-500-rgb: 46, 133, 90;
   --salt-color-emerald-550-rgb: 25, 126, 76;
-  --salt-color-emerald-600-rgb: 15, 97, 56;
+  --salt-color-emerald-600-rgb: 15, 97, 56;  --salt-color-brown-100-rgb: 247, 239, 233;
+  --salt-color-brown-200-rgb: 236, 217, 203;
+  --salt-color-brown-300-rgb: 210, 183, 163;
+  --salt-color-brown-400-rgb: 191, 154, 125;
+  --salt-color-brown-450-rgb: 187, 125, 92;
+  --salt-color-brown-500-rgb: 151, 108, 74;
+  --salt-color-brown-550-rgb: 148, 97, 71;
+  --salt-color-brown-600-rgb: 110, 78, 54;
+  --salt-color-brown-700-rgb: 86, 58, 37;
+  --salt-color-brown-800-rgb: 55, 36, 21;
+  --salt-color-brown-900-rgb: 42, 24, 9;
   --salt-color-emerald-700-rgb: 11, 74, 43;
   --salt-color-emerald-800-rgb: 7, 56, 31;
   --salt-color-emerald-900-rgb: 0, 33, 17;
@@ -426,15 +436,15 @@
   --salt-color-accent-800-rgb: 13, 44, 51;
   --salt-color-accent-900-rgb: 3, 31, 38;
 
-  --salt-color-brand-100-rgb: 250, 237, 230;
-  --salt-color-brand-200-rgb: 240, 218, 206;
-  --salt-color-brand-300-rgb: 222, 181, 160;
-  --salt-color-brand-400-rgb: 204, 151, 122;
-  --salt-color-brand-500-rgb: 164, 103, 70;
-  --salt-color-brand-600-rgb: 115, 74, 53;
-  --salt-color-brand-700-rgb: 94, 56, 37;
-  --salt-color-brand-800-rgb: 59, 34, 23;
-  --salt-color-brand-900-rgb: 43, 22, 13;
+  --salt-color-brand-100-rgb: 247, 239, 233;
+  --salt-color-brand-200-rgb: 236, 217, 203;
+  --salt-color-brand-300-rgb: 210, 183, 163;
+  --salt-color-brand-400-rgb: 191, 154, 125;
+  --salt-color-brand-500-rgb: 151, 108, 74;
+  --salt-color-brand-600-rgb: 110, 78, 54;
+  --salt-color-brand-700-rgb: 86, 58, 37;
+  --salt-color-brand-800-rgb: 55, 36, 21;
+  --salt-color-brand-900-rgb: 42, 24, 9;
 
   --salt-color-dove-gray-100-rgb: 240, 233, 232;
   --salt-color-dove-gray-200-rgb: 224, 218, 217;
