@@ -59,7 +59,7 @@
     },
     {
       "files": [
-        "**/theme/src/css/commercial.css",
+        "**/theme/src/css/salt-interim.css",
         "**/theme/src/css/theme.css",
         "**/theme/src/css/theme-next.css"
       ],

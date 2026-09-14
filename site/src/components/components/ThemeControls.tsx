@@ -55,10 +55,11 @@ export function ThemeControls() {
           aria-label="Select themes"
           onChange={(event) => setTheme(event.currentTarget.value as any)}
           value={theme}
+          orientation="vertical"
         >
           <ToggleButton value="legacy">Legacy</ToggleButton>
           <ToggleButton value="brand">J.P. Morgan</ToggleButton>
-          <ToggleButton value="commercial">Commercial</ToggleButton>
+          <ToggleButton value="salt-interim">Salt (Interim)</ToggleButton>
         </ToggleButtonGroup>
       </StackLayout>
     </StackLayout>

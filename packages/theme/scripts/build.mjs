@@ -25,7 +25,7 @@ const context = await esbuild.context({
   entryPoints: [
     "index.css",
     "css/baseline.css",
-    "css/commercial.css",
+    "css/salt-interim.css",
     "css/theme.css",
     "css/global.css",
     "css/theme-next.css",

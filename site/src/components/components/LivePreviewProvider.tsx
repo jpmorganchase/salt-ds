@@ -1,7 +1,7 @@
 import type { Density, Mode } from "@salt-ds/core";
 import { createContext, type ReactNode, useContext, useState } from "react";
 
-type Theme = "legacy" | "brand" | "commercial";
+type Theme = "legacy" | "brand" | "salt-interim";
 
 export type LivePreviewContextType = {
   density?: Density;

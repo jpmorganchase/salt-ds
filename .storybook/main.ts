@@ -49,9 +49,9 @@ const config: StorybookConfig = {
             getAbsolutePath("@salt-ds/react-resizable-panels-theme"),
             "src/index.css",
           ),
-          "@salt-ds/theme/css/commercial.css": join(
+          "@salt-ds/theme/css/salt-interim.css": join(
             getAbsolutePath("@salt-ds/theme"),
-            "src/css/commercial.css",
+            "src/css/salt-interim.css",
           ),
           "@salt-ds/theme/css/theme-next.css": join(
             getAbsolutePath("@salt-ds/theme"),
