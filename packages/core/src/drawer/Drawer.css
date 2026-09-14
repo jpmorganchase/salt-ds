@@ -6,6 +6,7 @@
   max-height: 100%;
   max-width: 100%;
   overflow: auto;
+  /* Legacy padding for unsectioned drawers only. */
   padding: var(--salt-spacing-300);
   box-shadow: var(--salt-overlayable-shadow-modal);
   z-index: var(--salt-zIndex-drawer);
@@ -15,12 +16,12 @@
 }
 
 .saltDrawer.saltDrawer-sectioned {
-  padding: var(--salt-spacing-300) 0;
+  padding: 0;
 }
 
 @supports selector(:has(*)) {
   .saltDrawer:has(> .saltDrawerHeader, > .saltDrawerContent, > .saltDrawerFooter) {
-    padding: var(--salt-spacing-300) 0;
+    padding: 0;
   }
 }
 
