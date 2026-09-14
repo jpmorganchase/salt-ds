@@ -15,11 +15,9 @@ import {
   Tooltip,
   useId,
 } from "@salt-ds/core";
+import { CloseIcon, MicroMenuIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type ChangeEvent, useState } from "react";
-
-import "./overlay.stories.css";
-import { CloseIcon, MicroMenuIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Overlay",
@@ -36,10 +34,12 @@ export const Default: StoryFn<OverlayProps> = ({ ...args }) => {
 
       <OverlayPanel aria-labelledby={id}>
         <OverlayPanelContent>
-          <h3 id={id} className="content-heading">
-            Title
-          </h3>
-          <div>Content of Overlay</div>
+          <StackLayout gap={0.5}>
+            <H3 id={id}>
+              <strong>Title</strong>
+            </H3>
+            <Text>Content of Overlay</Text>
+          </StackLayout>
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
@@ -281,7 +281,9 @@ const WithActionsContent = ({
 
   return (
     <StackLayout gap={1}>
-      <H3 id={id}>Export</H3>
+      <H3 id={id}>
+        <strong>Export</strong>
+      </H3>
       <Checkbox
         indeterminate={indeterminate}
         checked={!indeterminate}
@@ -353,10 +355,12 @@ export const WithTooltip: StoryFn<OverlayProps> = ({ ...args }) => {
 
       <OverlayPanel aria-labelledby={id}>
         <OverlayPanelContent>
-          <h3 id={id} className="content-heading">
-            Title
-          </h3>
-          <div>Content of Overlay</div>
+          <StackLayout gap={0.5}>
+            <H3 id={id}>
+              <strong>Title</strong>
+            </H3>
+            <Text>Content of Overlay</Text>
+          </StackLayout>
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>

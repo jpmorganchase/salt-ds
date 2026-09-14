@@ -1,4 +1,4 @@
-import { Panel } from "@salt-ds/core";
+import { Panel, Text } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
@@ -10,13 +10,13 @@ export default {
 export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => (
   <QAContainer cols={3} itemPadding={4} height={600} width={1000} {...props}>
     <Panel>
-      <p>This is a panel around some text</p>
+      <Text as="p">This is a panel around some text</Text>
     </Panel>
     <Panel variant="secondary">
-      <p>This is a secondary panel around some text</p>
+      <Text as="p">This is a secondary panel around some text</Text>
     </Panel>
     <Panel variant="tertiary">
-      <p>This is a tertiary panel around some text</p>
+      <Text as="p">This is a tertiary panel around some text</Text>
     </Panel>
   </QAContainer>
 );

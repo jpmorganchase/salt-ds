@@ -1,17 +1,18 @@
 import {
   Button,
+  H3,
   Overlay,
   OverlayHeader,
   OverlayPanel,
   OverlayPanelCloseButton,
   OverlayPanelContent,
   OverlayTrigger,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
-
-import "./overlay.stories.css";
-import { CloseIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Overlay/Overlay QA",
@@ -34,8 +35,12 @@ export const Default: StoryFn<QAContainerProps> = (props) => {
         </OverlayTrigger>
         <OverlayPanel>
           <OverlayPanelContent>
-            <h3 className="content-heading">Title</h3>
-            <div>Content of Overlay</div>
+            <StackLayout gap={0.5}>
+              <H3>
+                <strong>Title</strong>
+              </H3>
+              <Text>Content of Overlay</Text>
+            </StackLayout>
           </OverlayPanelContent>
         </OverlayPanel>
       </Overlay>
@@ -135,8 +140,12 @@ const HideArrowTemplate: StoryFn<typeof Overlay> = (args) => (
     </OverlayTrigger>
     <OverlayPanel>
       <OverlayPanelContent>
-        <h3 className="content-heading">Title</h3>
-        <div>Content of Overlay</div>
+        <StackLayout gap={0.5}>
+          <H3>
+            <strong>Title</strong>
+          </H3>
+          <Text>Content of Overlay</Text>
+        </StackLayout>
       </OverlayPanelContent>
     </OverlayPanel>
   </Overlay>
