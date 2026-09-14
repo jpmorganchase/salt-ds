@@ -9,7 +9,13 @@ Added `DrawerHeader`, `DrawerContent` and `DrawerFooter`, implementing header an
 `DrawerHeader` names `Drawer` with its `header` and `preheader`, and describes it with its `description`, so `aria-labelledby` and `aria-describedby` no longer need to be set manually.
 
 ```tsx
-import { Button, Drawer, DrawerContent, DrawerFooter, DrawerHeader } from "@salt-ds/core";
+import {
+  Button,
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+} from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 
 <Drawer open={open} onOpenChange={setOpen}>
