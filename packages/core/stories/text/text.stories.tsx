@@ -114,7 +114,7 @@ export const Display = FigureTextComponent.bind({});
 //********** Headings H1, H2, H3 and H4 ***********/
 
 const HeadingsComponent: StoryFn<typeof Text> = () => (
-  <StackLayout>
+  <StackLayout gap={6}>
     <StackLayout gap={3}>
       <H1>
         This is header 1 <strong>emphasis high</strong>
