@@ -4,6 +4,7 @@ import {
   Dropdown,
   Input,
   Option,
+  StackLayout,
   Text,
   Toolbar,
   ToolbarContent,
@@ -118,10 +119,6 @@ const clippingValidationToolbarDockStyle = {
   padding: "var(--salt-spacing-100)",
 };
 
-const clippingValidationNoteStyle = {
-  marginTop: "var(--salt-spacing-200)",
-};
-
 const subpixelItemWidth = 20.2;
 const subpixelItemLabels = [
   "1",
@@ -142,9 +139,6 @@ const subpixelSliderFitWidth = Math.floor(subpixelToolbarWidth);
 const subpixelSliderOverflowWidth = subpixelSliderFitWidth - 1;
 
 const subpixelRoundingShellStyle = {
-  display: "flex" as const,
-  flexDirection: "column" as const,
-  gap: "var(--salt-spacing-150)",
   maxWidth: 560,
 };
 
@@ -289,7 +283,7 @@ DynamicElements.globals = {
  *   `241px` to verify narrower widths still intentionally collapse items.
  */
 export const SubpixelWidthRounding: StoryFn<typeof Toolbar> = () => (
-  <div style={subpixelRoundingShellStyle}>
+  <StackLayout gap={1.5} style={subpixelRoundingShellStyle}>
     <Text>
       <strong>Expected:</strong> all {subpixelItemLabels.length} labelled items
       fit when the integer Storybook width slider is set to{" "}
@@ -315,7 +309,7 @@ export const SubpixelWidthRounding: StoryFn<typeof Toolbar> = () => (
         </ToolbarContent>
       </Toolbar>
     </div>
-  </div>
+  </StackLayout>
 );
 SubpixelWidthRounding.globals = {
   responsive: "wrap",
@@ -335,7 +329,7 @@ SubpixelWidthRounding.globals = {
 export const SubpixelWidthRoundingWithGapsAndDividers: StoryFn<
   typeof Toolbar
 > = () => (
-  <div style={subpixelRoundingShellStyle}>
+  <StackLayout gap={1.5} style={subpixelRoundingShellStyle}>
     <Text>
       <strong>Expected:</strong> this version keeps the default toolbar spacing
       and includes vertical dividers. The debug log should show a non-zero
@@ -369,7 +363,7 @@ export const SubpixelWidthRoundingWithGapsAndDividers: StoryFn<
         </ToolbarContent>
       </Toolbar>
     </div>
-  </div>
+  </StackLayout>
 );
 SubpixelWidthRoundingWithGapsAndDividers.globals = {
   responsive: "wrap",
@@ -462,14 +456,14 @@ HiddenOverflowRemeasurement.globals = {
  *   Floating UI rather than being rendered inside the clipped toolbar context.
  */
 export const OverflowMenuInClippingContainer: StoryFn<typeof Toolbar> = () => (
-  <div style={clippingValidationShellStyle}>
+  <StackLayout gap={2} style={clippingValidationShellStyle}>
     <div style={clippingValidationCardStyle}>
-      <div style={clippingValidationHeaderStyle}>
+      <StackLayout gap={0.5} style={clippingValidationHeaderStyle}>
         <Text>
           <strong>Trade exception review</strong>
         </Text>
         <Text>Resolve exceptions before the desk closes the batch.</Text>
-      </div>
+      </StackLayout>
       <div style={clippingValidationBodyStyle}>
         {exceptionRows.map(([id, client, exception]) => (
           <div style={clippingValidationRowStyle} key={id}>
@@ -545,11 +539,11 @@ export const OverflowMenuInClippingContainer: StoryFn<typeof Toolbar> = () => (
         </Toolbar>
       </div>
     </div>
-    <Text style={clippingValidationNoteStyle}>
+    <Text>
       Open the Actions menu from the toolbar footer. The panel should render
       over this note instead of disappearing behind the clipped card edge.
     </Text>
-  </div>
+  </StackLayout>
 );
 OverflowMenuInClippingContainer.globals = {
   responsive: "wrap",
