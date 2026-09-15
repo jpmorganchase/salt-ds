@@ -60,7 +60,11 @@ export const TopDrawer = (): ReactElement => {
           </StackLayout>
         </DrawerContent>
         <DrawerFooter>
-          <Button appearance="transparent" onClick={handleClose}>
+          <Button
+            sentiment="accented"
+            appearance="bordered"
+            onClick={handleClose}
+          >
             Cancel
           </Button>
           <Button sentiment="accented" onClick={handleClose}>
