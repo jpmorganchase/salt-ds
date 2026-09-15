@@ -29,6 +29,7 @@
 
 .saltDrawerHeader-actionsContainer {
   align-self: flex-start;
+  display: flex;
 }
 
 .saltDrawerHeader-withAccent {
