@@ -1,5 +1,32 @@
 # @salt-ds/theme
 
+## 1.46.0
+
+### Minor Changes
+
+- 2e1da8e: Added `@salt-ds/theme/css/baseline.css`, a new opt-in CSS reset for apps using Salt. It removes browser-defined margins from the document body, headings and paragraphs so semantic elements can use Salt typography without also retaining browser spacing. Salt components remain self-contained and do not depend on the reset.
+
+  Import it once at the root of your app, before the theme CSS:
+
+  ```ts
+  import "@salt-ds/theme/css/baseline.css";
+  import "@salt-ds/theme/css/global.css";
+  import "@salt-ds/theme/css/theme-next.css";
+  ```
+
+  See the "Developing with Salt" getting-started guide for details.
+
+- be5eb93: Added:
+
+  - `--salt-sentiment-neutral-background`.
+  - `--salt-palette-neutral-background` to the legacy theme.
+
+  Updated `--salt-color-gray-100` token value in the legacy theme to increase contrast ratio.
+
+### Patch Changes
+
+- be5eb93: Updated `--salt-curve-0` from `0` to `0px`, so all curve tokens resolve to a length. This fixes `calc()` expressions such as `calc(var(--salt-palette-corner-weak) + 1px)`, which were invalid in themes where the corner token resolved to the previously unitless `--salt-curve-0`, as `calc()` cannot add a number to a length.
+
 ## 1.45.0
 
 ### Minor Changes
