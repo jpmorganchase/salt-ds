@@ -110,7 +110,7 @@ const footerLinks: Record<string, string[]> = {
 };
 
 const footerColumns = Object.keys(footerLinks).map((header) => (
-  <StackLayout key={header} className="footer-column" gap={1}>
+  <StackLayout key={header} gap={1}>
     <H3 color="secondary">
       <strong>{header}</strong>
     </H3>
@@ -129,7 +129,6 @@ const FooterTemplate: StoryFn<typeof GridLayout> = (args) => {
         colSpan={2}
         horizontalAlignment="center"
         verticalAlignment="center"
-        className="footer-column"
       >
         <StackLayout gap={1}>
           <H3 color="secondary">
