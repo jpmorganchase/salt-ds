@@ -75,7 +75,6 @@ export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
    * Render prop to enable customization of the avatar root element.
    */
   render?: RenderPropsType["render"];
-  test? : string;
 }
 
 const withBaseName = makePrefixer("saltAvatar");
