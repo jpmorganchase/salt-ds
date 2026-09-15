@@ -123,24 +123,16 @@ export const BottomDrawer = (): ReactElement => {
   const [open, setOpen] = useState(false);
   const { containerProps, agGridProps } = useAgGridHelpers();
 
-  const handleRequestOpen = () => {
-    setOpen(true);
-  };
-
-  const onOpenChange = (newOpen: boolean) => {
-    setOpen(newOpen);
-  };
-
   const handleClose = () => {
     setOpen(false);
   };
 
   return (
     <>
-      <Button onClick={handleRequestOpen}>Open Bottom Drawer</Button>
+      <Button onClick={() => setOpen(true)}>Open Bottom Drawer</Button>
       <Drawer
         open={open}
-        onOpenChange={onOpenChange}
+        onOpenChange={setOpen}
         position="bottom"
         style={{ height: "max-content" }}
       >
@@ -209,7 +201,11 @@ export const BottomDrawer = (): ReactElement => {
           </StackLayout>
         </DrawerContent>
         <DrawerFooter>
-          <Button appearance="transparent" onClick={handleClose}>
+          <Button
+            sentiment="accented"
+            appearance="bordered"
+            onClick={handleClose}
+          >
             Cancel
           </Button>
           <Button sentiment="accented" onClick={handleClose}>
