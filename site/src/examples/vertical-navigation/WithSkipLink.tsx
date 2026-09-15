@@ -37,7 +37,9 @@ export const WithSkipLink = () => {
 
   return (
     <MockHistory>
-      <p>Click here and press the Tab key to see the Skip Link.</p>
+      <p style={{ marginBottom: "var(--salt-spacing-300)" }}>
+        Click here and press the Tab key to see the Skip Link.
+      </p>
       <BorderLayout columnGap={2} rowGap={2} style={{ position: "relative" }}>
         <BorderItem position="north">
           <div
@@ -64,11 +66,15 @@ export const WithSkipLink = () => {
           </VerticalNavigation>
         </BorderItem>
         <BorderItem position="center">
+          {/* The heading levels in this example are demonstrational only */}
+          <H3
+            styleAs="h1"
+            id={headerId}
+            style={{ marginBottom: "var(--salt-spacing-300)" }}
+          >
+            With skip link
+          </H3>
           <StackLayout direction="column" gap={1}>
-            {/* The heading levels in this example are demonstrational only */}
-            <H3 styleAs="h1" id={headerId}>
-              With skip link
-            </H3>
             <Text>
               This example demonstrates a vertical navigation with a skip link
               for accessibility. The skip link allows users to bypass the

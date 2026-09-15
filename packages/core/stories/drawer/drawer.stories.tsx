@@ -174,13 +174,15 @@ export const TopDrawerUsageExample = () => {
       >
         <StackLayout>
           <DrawerCloseButton onClick={handleClose} />
-          <H2 id={headerId}>Section title</H2>
-          <Text>
-            Incididunt adipisicing deserunt nostrud ullamco consequat
-            consectetur magna id do irure labore fugiat. Eiusmod pariatur
-            officia elit ad. Ullamco adipisicing Lorem amet velit in do
-            reprehenderit nostrud eu aute voluptate quis quis.
-          </Text>
+          <StackLayout gap={1}>
+            <H2 id={headerId}>Section title</H2>
+            <Text>
+              Incididunt adipisicing deserunt nostrud ullamco consequat
+              consectetur magna id do irure labore fugiat. Eiusmod pariatur
+              officia elit ad. Ullamco adipisicing Lorem amet velit in do
+              reprehenderit nostrud eu aute voluptate quis quis.
+            </Text>
+          </StackLayout>
           <FlexLayout>
             <FormFieldExample />
             <FormFieldExample />
@@ -222,13 +224,15 @@ export const RightDrawerUsageExample = () => {
       >
         <StackLayout>
           <DrawerCloseButton onClick={handleClose} />
-          <H2 id={headerId}>Section Title</H2>
-          <Text>
-            Incididunt adipisicing deserunt nostrud ullamco consequat
-            consectetur magna id do irure labore fugiat. Eiusmod pariatur
-            officia elit ad. Ullamco adipisicing Lorem amet velit in do
-            reprehenderit nostrud eu aute voluptate quis quis.
-          </Text>
+          <StackLayout gap={1}>
+            <H2 id={headerId}>Section Title</H2>
+            <Text>
+              Incididunt adipisicing deserunt nostrud ullamco consequat
+              consectetur magna id do irure labore fugiat. Eiusmod pariatur
+              officia elit ad. Ullamco adipisicing Lorem amet velit in do
+              reprehenderit nostrud eu aute voluptate quis quis.
+            </Text>
+          </StackLayout>
           <FormFieldExample />
           <FormFieldExample />
           <FormFieldExample />
@@ -292,16 +296,22 @@ export const BottomDrawerUsageExample = () => {
           <H2 id={headerId}>Bottom drawer use case</H2>
           <FlowLayout>
             <Card style={{ width: "256px" }}>
-              <H2>{exampleData[0].title}</H2>
-              <Text>{exampleData[0].content}</Text>
+              <StackLayout gap={1}>
+                <H2>{exampleData[0].title}</H2>
+                <Text>{exampleData[0].content}</Text>
+              </StackLayout>
             </Card>
             <Card style={{ width: "256px" }}>
-              <H2>{exampleData[1].title}</H2>
-              <Text>{exampleData[1].content}</Text>
+              <StackLayout gap={1}>
+                <H2>{exampleData[1].title}</H2>
+                <Text>{exampleData[1].content}</Text>
+              </StackLayout>
             </Card>
             <Card style={{ width: "256px" }}>
-              <H2>{exampleData[2].title}</H2>
-              <Text>{exampleData[2].content}</Text>
+              <StackLayout gap={1}>
+                <H2>{exampleData[2].title}</H2>
+                <Text>{exampleData[2].content}</Text>
+              </StackLayout>
             </Card>
           </FlowLayout>
         </StackLayout>

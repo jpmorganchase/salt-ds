@@ -22,44 +22,62 @@ export const AllExamplesUsingText: StoryFn<
   return (
     <QAContainer itemPadding={10} itemWidthAuto {...props}>
       <Card>
-        <H1>Primary card</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Primary card</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card variant="secondary">
-        <H1>Secondary card</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Secondary card</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card variant="tertiary">
-        <H1>Tertiary card</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Tertiary card</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card accent="top">
-        <H1>Accent top</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Accent top</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card accent="right">
-        <H1>Accent right</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Accent right</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card accent="bottom">
-        <H1>Accent bottom</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Accent bottom</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card accent="left">
-        <H1>Accent left</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Accent left</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card>
         <CardContent>
-          <H1>With CardContent</H1>
-          <Text>Content</Text>
+          <StackLayout gap={1}>
+            <H1>With CardContent</H1>
+            <Text>Content</Text>
+          </StackLayout>
         </CardContent>
       </Card>
       <Card accent="top">
         <Panel variant="secondary" style={{ height: 20 }} />
         <CardContent>
-          <H1>Panel + CardContent</H1>
-          <Text>Content</Text>
+          <StackLayout gap={1}>
+            <H1>Panel + CardContent</H1>
+            <Text>Content</Text>
+          </StackLayout>
         </CardContent>
       </Card>
       <Card>
@@ -101,8 +119,10 @@ export const AllExamplesUsingText: StoryFn<
       </StackLayout>
       <Panel variant="tertiary">
         <Card variant="ghost">
-          <H1>Ghost card</H1>
-          <Text>Content</Text>
+          <StackLayout gap={1}>
+            <H1>Ghost card</H1>
+            <Text>Content</Text>
+          </StackLayout>
         </Card>
       </Panel>
     </QAContainer>

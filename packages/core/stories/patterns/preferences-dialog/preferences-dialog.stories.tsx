@@ -203,9 +203,7 @@ function PreferencesContent({ currentSection }: { currentSection: string }) {
 
   return (
     <StackLayout>
-      <H2 styleAs="h3" style={{ margin: 0 }}>
-        {currentSection}
-      </H2>
+      <H2 styleAs="h3">{currentSection}</H2>
       <div>{content}</div>
     </StackLayout>
   );

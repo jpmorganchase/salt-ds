@@ -3,8 +3,12 @@ import {
   Card,
   Checkbox,
   type Density,
+  GridLayout,
+  H1,
   type Mode,
   SaltProvider,
+  StackLayout,
+  Text,
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/core";
@@ -21,10 +25,10 @@ export const Default = () => {
   return (
     <SaltProvider density="high" mode="light">
       <Card>
-        <div>
-          <h1>This is Card</h1>
-          <span>Using Nested DOM Elements</span>
-        </div>
+        <StackLayout>
+          <H1>This is Card</H1>
+          <Text>Using Nested DOM Elements</Text>
+        </StackLayout>
       </Card>
     </SaltProvider>
   );
@@ -40,8 +44,8 @@ export const ToggleTheme = () => {
   return (
     <SaltProvider mode={mode}>
       <Card>
-        <div>
-          <h1>This Card is wrapped with a SaltProvider</h1>
+        <StackLayout>
+          <H1>This Card is wrapped with a SaltProvider</H1>
           <ToggleButtonGroup onChange={handleChangeTheme} value={mode}>
             <ToggleButton aria-label="light theme" value="light">
               Light
@@ -50,26 +54,18 @@ export const ToggleTheme = () => {
               Dark
             </ToggleButton>
           </ToggleButtonGroup>
-          <p>{`This Card is wrapped with a SaltProvider, mode is ${mode}`}</p>
-
-          <Checkbox label="Example Choice 1" />
-          <Checkbox defaultChecked label="Example Choice 2" />
-          <Checkbox defaultChecked indeterminate label="Example Choice 3" />
-          <br />
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "auto auto auto",
-              gridTemplateRows: "auto",
-              gridGap: 10,
-            }}
-          >
+          <Text>{`This Card is wrapped with a SaltProvider, mode is ${mode}`}</Text>
+          <StackLayout gap={1}>
+            <Checkbox label="Example Choice 1" />
+            <Checkbox defaultChecked label="Example Choice 2" />
+            <Checkbox defaultChecked indeterminate label="Example Choice 3" />
+          </StackLayout>
+          <GridLayout columns={3} gap={1}>
             <Button sentiment="accented">Continue</Button>
             <Button>Previous</Button>
             <Button appearance="transparent">Upload File</Button>
-          </div>
-        </div>
-        <br />
+          </GridLayout>
+        </StackLayout>
       </Card>
     </SaltProvider>
   );
@@ -106,71 +102,72 @@ export const NestedProviders = () => {
       mode={outerMode === "unset" ? undefined : outerMode}
     >
       <Card>
-        <div>
-          <h1>This Card is wrapped with a SaltProvider</h1>
-          <ToggleButtonGroup
-            aria-label="Outer theme selection"
-            onChange={handleChangeOuterTheme}
-            value={outerMode}
-          >
-            <ToggleButton value="light">Light</ToggleButton>
-            <ToggleButton value="dark">Dark</ToggleButton>
-            <ToggleButton value="unset">Not set</ToggleButton>
-          </ToggleButtonGroup>
-          <ToggleButtonGroup
-            aria-label="Outer density selection"
-            onChange={handleChangeOuterDensity}
-            value={outerDensity}
-          >
-            <ToggleButton value="high">High</ToggleButton>
-            <ToggleButton value="medium">Medium</ToggleButton>
-            <ToggleButton value="low">Low</ToggleButton>
-            <ToggleButton value="touch">Touch</ToggleButton>
-            <ToggleButton value="unset">Not set</ToggleButton>
-          </ToggleButtonGroup>
-          <p>
+        <StackLayout>
+          <H1>This Card is wrapped with a SaltProvider</H1>
+          <StackLayout gap={1}>
+            <ToggleButtonGroup
+              aria-label="Outer theme selection"
+              onChange={handleChangeOuterTheme}
+              value={outerMode}
+            >
+              <ToggleButton value="light">Light</ToggleButton>
+              <ToggleButton value="dark">Dark</ToggleButton>
+              <ToggleButton value="unset">Not set</ToggleButton>
+            </ToggleButtonGroup>
+            <ToggleButtonGroup
+              aria-label="Outer density selection"
+              onChange={handleChangeOuterDensity}
+              value={outerDensity}
+            >
+              <ToggleButton value="high">High</ToggleButton>
+              <ToggleButton value="medium">Medium</ToggleButton>
+              <ToggleButton value="low">Low</ToggleButton>
+              <ToggleButton value="touch">Touch</ToggleButton>
+              <ToggleButton value="unset">Not set</ToggleButton>
+            </ToggleButtonGroup>
+          </StackLayout>
+          <Text>
             This Card is wrapped with a SaltProvider, theme is light, density is
             high.
-          </p>
-        </div>
-        <br />
-        <SaltProvider
-          mode={innerMode === "unset" ? undefined : innerMode}
-          density={innerDensity === "unset" ? undefined : innerDensity}
-        >
-          <Card>
-            <div>
-              <h1>Nested Card</h1>
-              <ToggleButtonGroup
-                aria-label="Inner theme selection"
-                onChange={handleChangeInnerTheme}
-                value={innerMode}
-              >
-                <ToggleButton value="light">Light</ToggleButton>
-                <ToggleButton value="dark">Dark</ToggleButton>
-                <ToggleButton value="unset">Not set</ToggleButton>
-              </ToggleButtonGroup>
-
-              <ToggleButtonGroup
-                aria-label="Inner density selection"
-                onChange={handleChangeInnerDensity}
-                value={innerDensity}
-              >
-                <ToggleButton value="high">High</ToggleButton>
-                <ToggleButton value="medium">Medium</ToggleButton>
-                <ToggleButton value="low">Low</ToggleButton>
-                <ToggleButton value="touch">Touch</ToggleButton>
-                <ToggleButton value="unset">Not set</ToggleButton>
-              </ToggleButtonGroup>
-
-              <p>
-                This nested Card is also wrapped with a SaltProvider, theme is
-                dark. Density is not specified, so inherits high value from
-                outer SaltProvider
-              </p>
-            </div>
-          </Card>
-        </SaltProvider>
+          </Text>
+          <SaltProvider
+            mode={innerMode === "unset" ? undefined : innerMode}
+            density={innerDensity === "unset" ? undefined : innerDensity}
+          >
+            <Card>
+              <StackLayout>
+                <H1>Nested Card</H1>
+                <StackLayout gap={1}>
+                  <ToggleButtonGroup
+                    aria-label="Inner theme selection"
+                    onChange={handleChangeInnerTheme}
+                    value={innerMode}
+                  >
+                    <ToggleButton value="light">Light</ToggleButton>
+                    <ToggleButton value="dark">Dark</ToggleButton>
+                    <ToggleButton value="unset">Not set</ToggleButton>
+                  </ToggleButtonGroup>
+                  <ToggleButtonGroup
+                    aria-label="Inner density selection"
+                    onChange={handleChangeInnerDensity}
+                    value={innerDensity}
+                  >
+                    <ToggleButton value="high">High</ToggleButton>
+                    <ToggleButton value="medium">Medium</ToggleButton>
+                    <ToggleButton value="low">Low</ToggleButton>
+                    <ToggleButton value="touch">Touch</ToggleButton>
+                    <ToggleButton value="unset">Not set</ToggleButton>
+                  </ToggleButtonGroup>
+                </StackLayout>
+                <Text>
+                  This nested Card is also wrapped with a SaltProvider, theme is
+                  dark. Density is not specified, so inherits high value from
+                  outer SaltProvider
+                </Text>
+              </StackLayout>
+            </Card>
+          </SaltProvider>
+        </StackLayout>
       </Card>
     </SaltProvider>
   );
