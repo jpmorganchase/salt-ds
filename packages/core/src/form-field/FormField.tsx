@@ -1,7 +1,15 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef, type HTMLAttributes, useRef } from "react";
+import {
+  Children,
+  Fragment,
+  forwardRef,
+  type HTMLAttributes,
+  isValidElement,
+  type ReactNode,
+  useRef,
+} from "react";
 import {
   type A11yValueProps,
   FormFieldContext,
@@ -10,6 +18,8 @@ import {
 import { capitalize, makePrefixer, useForkRef, useId } from "../utils";
 
 import formFieldCss from "./FormField.css";
+import { FormFieldHelperText } from "./FormFieldHelperText";
+import { FormFieldLabel } from "./FormFieldLabel";
 
 export type FormFieldLabelPlacement = "top" | "left" | "right";
 
@@ -49,6 +59,20 @@ export interface FormFieldProps
 
 const withBaseName = makePrefixer("saltFormField");
 
+function hasFormFieldControls(children: ReactNode): boolean {
+  return Children.toArray(children).some((child) => {
+    if (!isValidElement<{ children?: ReactNode }>(child)) {
+      return true;
+    }
+
+    if (child.type === Fragment) {
+      return hasFormFieldControls(child.props.children);
+    }
+
+    return child.type !== FormFieldLabel && child.type !== FormFieldHelperText;
+  });
+}
+
 export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
   (
     {
@@ -75,6 +99,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     const handleRef = useForkRef(ref, formFieldRef);
 
     const formId = useId(idProp);
+    const hasControls = hasFormFieldControls(children);
 
     const labelId = formId ? `label-${formId}` : undefined;
     const helperTextId = formId ? `helperText-${formId}` : undefined;
@@ -86,6 +111,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
+            [withBaseName("hasControls")]: hasControls,
             [withBaseName(`label${capitalize(labelPlacement)}`)]:
               labelPlacement,
           },

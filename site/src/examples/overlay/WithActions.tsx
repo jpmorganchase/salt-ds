@@ -72,7 +72,7 @@ const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
 
   return (
     <>
-      <h3 id={id} style={{ marginTop: 0, paddingBottom: 10 }}>
+      <h3 id={id} style={{ marginBottom: "var(--salt-spacing-100)" }}>
         Export
       </h3>
       <StackLayout gap={1}>

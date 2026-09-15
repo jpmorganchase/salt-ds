@@ -341,16 +341,22 @@ export const BottomDrawerUsageExample = () => {
         <DrawerContent>
           <FlowLayout>
             <Card style={{ width: "256px" }}>
-              <H2>{exampleData[0].title}</H2>
-              <Text>{exampleData[0].content}</Text>
+              <StackLayout gap={1}>
+                <H2>{exampleData[0].title}</H2>
+                <Text>{exampleData[0].content}</Text>
+              </StackLayout>
             </Card>
             <Card style={{ width: "256px" }}>
-              <H2>{exampleData[1].title}</H2>
-              <Text>{exampleData[1].content}</Text>
+              <StackLayout gap={1}>
+                <H2>{exampleData[1].title}</H2>
+                <Text>{exampleData[1].content}</Text>
+              </StackLayout>
             </Card>
             <Card style={{ width: "256px" }}>
-              <H2>{exampleData[2].title}</H2>
-              <Text>{exampleData[2].content}</Text>
+              <StackLayout gap={1}>
+                <H2>{exampleData[2].title}</H2>
+                <Text>{exampleData[2].content}</Text>
+              </StackLayout>
             </Card>
           </FlowLayout>
         </DrawerContent>
