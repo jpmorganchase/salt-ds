@@ -31,7 +31,13 @@ export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
 const withBaseName = makePrefixer("saltPanel");
 
 export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
-  { elevation, className, children, variant = "primary", ...restProps },
+  {
+    elevation = "flat",
+    className,
+    children,
+    variant = "primary",
+    ...restProps
+  },
   ref,
 ) {
   const targetWindow = useWindow();

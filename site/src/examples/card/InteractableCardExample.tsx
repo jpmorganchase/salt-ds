@@ -1,4 +1,4 @@
-import { InteractableCard } from "@salt-ds/core";
+import { InteractableCard, Text } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const InteractableCardExample = (): ReactElement => {
@@ -7,7 +7,7 @@ export const InteractableCardExample = (): ReactElement => {
       accent="top"
       style={{ width: "260px", minHeight: "144px" }}
     >
-      View sustainable investing products
+      <Text as="p">View sustainable investing products</Text>
     </InteractableCard>
   );
 };

@@ -8,6 +8,7 @@ import {
   RadioButton,
   RadioButtonGroup,
   StackLayout,
+  Text,
 } from "@salt-ds/core";
 import {
   type ChangeEventHandler,
@@ -51,10 +52,10 @@ export const BorderColor = (): ReactElement => {
           style={cardStyle}
           variant={variant}
         >
-          Strong
+          <Text as="p">Strong</Text>
         </Card>
         <Card elevation="flat" style={cardStyle} variant={variant}>
-          Default
+          <Text as="p">Default</Text>
         </Card>
         <Card
           borderColor="subtle"
@@ -62,7 +63,7 @@ export const BorderColor = (): ReactElement => {
           style={cardStyle}
           variant={variant}
         >
-          Subtle
+          <Text as="p">Subtle</Text>
         </Card>
         <Card
           borderColor="none"
@@ -70,7 +71,7 @@ export const BorderColor = (): ReactElement => {
           style={cardStyle}
           variant={variant}
         >
-          None
+          <Text as="p">None</Text>
         </Card>
       </GridLayout>
       <FormField style={{ width: "auto" }}>

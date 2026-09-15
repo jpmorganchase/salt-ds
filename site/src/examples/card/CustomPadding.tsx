@@ -32,7 +32,7 @@ export const CustomPadding = (): ReactElement => {
           <CardContent>
             <StackLayout gap={1} direction="row" align="center">
               <MessageIcon size={1} aria-hidden />
-              <Text>Contact us</Text>
+              <Text as="p">Contact us</Text>
             </StackLayout>
           </CardContent>
         </LinkCard>
@@ -48,8 +48,8 @@ export const CustomPadding = (): ReactElement => {
         >
           <CardContent>
             <StackLayout gap={1}>
-              <H3 style={{ margin: 0 }}>Sustainable investing products</H3>
-              <Text>
+              <H3>Sustainable investing products</H3>
+              <Text as="p">
                 We have a commitment to provide a wide range of investment
                 solutions to enable you to align your financial goals to your
                 values.
@@ -71,20 +71,22 @@ export const CustomPadding = (): ReactElement => {
           <CardContent>
             <StackLayout>
               <StackLayout direction="row" align="end" gap={1}>
-                <H3 style={{ margin: 0 }}>Threshold Summary</H3>
-                <Text variant="secondary">(Projected Revenue)</Text>
+                <H3>Threshold Summary</H3>
+                <Text as="p" variant="secondary">
+                  (Projected Revenue)
+                </Text>
               </StackLayout>
               <FlowLayout gap={3}>
                 <StackLayout gap={0}>
-                  <Text>Below Threshold 1</Text>
+                  <Text as="p">Below Threshold 1</Text>
                   <Display3>$1,000,000</Display3>
                 </StackLayout>
                 <StackLayout gap={0}>
-                  <Text>Below Threshold 1 & 2</Text>
+                  <Text as="p">Below Threshold 1 & 2</Text>
                   <Display3>$450,000</Display3>
                 </StackLayout>
                 <StackLayout gap={0}>
-                  <Text>Below Threshold 2 & 3</Text>
+                  <Text as="p">Below Threshold 2 & 3</Text>
                   <Display3>$0</Display3>
                 </StackLayout>
               </FlowLayout>

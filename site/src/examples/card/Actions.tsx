@@ -17,8 +17,8 @@ export const Actions = (): ReactElement => {
       <Card style={{ width: "260px" }} accent="top">
         <CardContent>
           <StackLayout gap={1}>
-            <H3 style={{ margin: 0 }}>Sustainable investing products</H3>
-            <Text>
+            <H3>Sustainable investing products</H3>
+            <Text as="p">
               We have a commitment to provide a wide range of investment
               solutions to enable you to align your financial goals to your
               values.
@@ -32,8 +32,8 @@ export const Actions = (): ReactElement => {
       <Card style={{ width: "260px" }} accent="top">
         <CardContent>
           <StackLayout gap={1}>
-            <H3 style={{ margin: 0 }}>Climate change</H3>
-            <Text>
+            <H3>Climate change</H3>
+            <Text as="p">
               Climate factors represent the biggest source of risk and
               opportunity for investors in the decades to come.
             </Text>

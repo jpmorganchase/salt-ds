@@ -1,4 +1,4 @@
-import { Card, GridLayout } from "@salt-ds/core";
+import { Card, GridLayout, Text } from "@salt-ds/core";
 import type { CSSProperties, ReactElement } from "react";
 
 const cardStyle = {
@@ -14,10 +14,10 @@ export const Elevation = (): ReactElement => (
     style={{ width: "100%" }}
   >
     <Card elevation="flat" style={cardStyle}>
-      Flat
+      <Text as="p">Flat</Text>
     </Card>
     <Card elevation="raised" style={cardStyle}>
-      Raised
+      <Text as="p">Raised</Text>
     </Card>
   </GridLayout>
 );

@@ -16,10 +16,8 @@ export const DisabledSelectionGroup = (): ReactElement => {
   return (
     <StackLayout>
       <StackLayout gap={1}>
-        <H3 id={labelId} style={{ margin: 0 }}>
-          Payment method
-        </H3>
-        <Text id={descriptionId}>
+        <H3 id={labelId}>Payment method</H3>
+        <Text as="p" id={descriptionId}>
           Choose your payment method from the options below.
         </Text>
       </StackLayout>
@@ -34,9 +32,9 @@ export const DisabledSelectionGroup = (): ReactElement => {
             <StackLayout gap={1}>
               <StackLayout gap={1} direction="row" align="center">
                 <CreditCardIcon size={2} aria-hidden />
-                <H3 style={{ margin: 0 }}>Credit Card</H3>
+                <H3>Credit Card</H3>
               </StackLayout>
-              <Text>Link credit card to your payments account.</Text>
+              <Text as="p">Link credit card to your payments account.</Text>
             </StackLayout>
           </CardContent>
         </InteractableCard>
@@ -45,9 +43,9 @@ export const DisabledSelectionGroup = (): ReactElement => {
             <StackLayout gap={1}>
               <StackLayout gap={1} direction="row" align="center">
                 <BankIcon size={2} aria-hidden />
-                <H3 style={{ margin: 0 }}>Bank wire</H3>
+                <H3>Bank wire</H3>
               </StackLayout>
-              <Text>Link your bank to your payments account.</Text>
+              <Text as="p">Link your bank to your payments account.</Text>
             </StackLayout>
           </CardContent>
         </InteractableCard>
@@ -56,9 +54,9 @@ export const DisabledSelectionGroup = (): ReactElement => {
             <StackLayout gap={1}>
               <StackLayout gap={1} direction="row" align="center">
                 <DiamondIcon size={2} aria-hidden />
-                <H3 style={{ margin: 0 }}>Cryptocurrency</H3>
+                <H3>Cryptocurrency</H3>
               </StackLayout>
-              <Text>Link your crypto to your payments account.</Text>
+              <Text as="p">Link your crypto to your payments account.</Text>
             </StackLayout>
           </CardContent>
         </InteractableCard>

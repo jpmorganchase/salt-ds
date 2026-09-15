@@ -6,7 +6,7 @@ export const Ghost = (): ReactElement => {
   return (
     <Panel className={styles.exampleGradient}>
       <Card variant="ghost" className={styles.variantCard}>
-        <Text>Ghost Card</Text>
+        <Text as="p">Ghost Card</Text>
       </Card>
     </Panel>
   );

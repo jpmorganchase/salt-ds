@@ -26,8 +26,8 @@ export const CustomAccent = (): ReactElement => {
       >
         <CardContent>
           <StackLayout gap={1}>
-            <H3 style={{ margin: 0 }}>Investment Compliance</H3>
-            <Text>
+            <H3>Investment Compliance</H3>
+            <Text as="p">
               Exception-based reporting that highlights potential warnings or
               violations of investment guidelines and regulations.
             </Text>
@@ -48,8 +48,8 @@ export const CustomAccent = (): ReactElement => {
       >
         <CardContent>
           <StackLayout gap={1}>
-            <H3 style={{ margin: 0 }}>S&P Global Market Intelligence</H3>
-            <Text>
+            <H3>S&P Global Market Intelligence</H3>
+            <Text as="p">
               Automate transmission of bank loan settlement instructions.
             </Text>
           </StackLayout>

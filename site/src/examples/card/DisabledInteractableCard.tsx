@@ -1,4 +1,4 @@
-import { InteractableCard } from "@salt-ds/core";
+import { InteractableCard, Text } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const DisabledInteractableCard = (): ReactElement => {
@@ -8,7 +8,7 @@ export const DisabledInteractableCard = (): ReactElement => {
       style={{ width: "260px", minHeight: "144px" }}
       disabled
     >
-      View sustainable investing products
+      <Text as="p">View sustainable investing products</Text>
     </InteractableCard>
   );
 };

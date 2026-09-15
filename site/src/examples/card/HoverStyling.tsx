@@ -1,4 +1,4 @@
-import { Card } from "@salt-ds/core";
+import { Card, Text } from "@salt-ds/core";
 import type { CSSProperties, ReactElement } from "react";
 
 const cardStyle = {
@@ -11,6 +11,6 @@ const cardStyle = {
 
 export const HoverStyling = (): ReactElement => (
   <Card elevation="flat" hoverable style={cardStyle}>
-    Static card with hover styling
+    <Text as="p">Static card with hover styling</Text>
   </Card>
 );

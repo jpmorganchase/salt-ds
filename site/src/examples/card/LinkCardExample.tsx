@@ -12,12 +12,12 @@ export const LinkCardExample = (): ReactElement => {
     >
       <CardContent>
         <StackLayout gap={1}>
-          <H3 style={{ margin: 0 }}>Salt Design System</H3>
-          <Text>
+          <H3>Salt Design System</H3>
+          <Text as="p">
             Explore components, patterns, and guidance for building consistent
             digital experiences.
           </Text>
-          <Text color="secondary">
+          <Text as="p" color="secondary">
             Visit the Salt website (opens in a new tab)
           </Text>
         </StackLayout>
