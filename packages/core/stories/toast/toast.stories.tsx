@@ -2,6 +2,7 @@ import {
   Button,
   FlowLayout,
   Link,
+  StackLayout,
   Text,
   Toast,
   ToastContent,
@@ -45,12 +46,12 @@ export const Info = Template.bind({});
 Info.args = {
   status: "info",
   children: (
-    <div>
+    <StackLayout gap={0}>
       <Text>
         <strong>File update</strong>
       </Text>
-      <div>A new version of this file is available with 37 updates. </div>
-    </div>
+      <Text>A new version of this file is available with 37 updates. </Text>
+    </StackLayout>
   ),
 };
 
@@ -58,12 +59,12 @@ export const Error: StoryFn<typeof Toast> = () => (
   <div style={{ width: 260 }}>
     <Toast status="error">
       <ToastContent>
-        <div>
+        <StackLayout gap={0}>
           <Text>
             <strong>System error</strong>
           </Text>
-          <div>Connection timed out. Failed to retrieve data. </div>
-        </div>
+          <Text>Connection timed out. Failed to retrieve data. </Text>
+        </StackLayout>
       </ToastContent>
       <Button appearance="transparent" aria-label="Dismiss">
         <CloseIcon aria-hidden />
@@ -71,20 +72,18 @@ export const Error: StoryFn<typeof Toast> = () => (
     </Toast>
     <Toast status="error">
       <ToastContent>
-        <div>
-          <Text>
-            <strong>System error</strong>
-          </Text>
-          <div>Connection timed out. Failed to retrieve data. </div>
-        </div>
-        <FlowLayout
-          gap={1}
-          justify="end"
-          style={{ marginTop: "var(--salt-spacing-100)" }}
-        >
-          <Button>Dismiss</Button>
-          <Button sentiment="accented">Try again</Button>
-        </FlowLayout>
+        <StackLayout gap={1}>
+          <StackLayout gap={0}>
+            <Text>
+              <strong>System error</strong>
+            </Text>
+            <Text>Connection timed out. Failed to retrieve data. </Text>
+          </StackLayout>
+          <FlowLayout gap={1} justify="end">
+            <Button>Dismiss</Button>
+            <Button sentiment="accented">Try again</Button>
+          </FlowLayout>
+        </StackLayout>
       </ToastContent>
     </Toast>
   </div>
@@ -94,12 +93,12 @@ export const Warning: StoryFn<typeof Toast> = () => (
   <div style={{ width: 260 }}>
     <Toast status="warning">
       <ToastContent>
-        <div>
+        <StackLayout gap={0}>
           <Text>
             <strong>File access</strong>
           </Text>
-          <div>Viewers of this file can see comments and suggestions. </div>
-        </div>
+          <Text>Viewers of this file can see comments and suggestions. </Text>
+        </StackLayout>
       </ToastContent>
       <Button appearance="transparent" aria-label="Dismiss">
         <CloseIcon aria-hidden />
@@ -107,18 +106,20 @@ export const Warning: StoryFn<typeof Toast> = () => (
     </Toast>
     <Toast status="warning">
       <ToastContent>
-        <div>
-          <Text>
-            <strong>File access</strong>
-          </Text>
-          <div>Viewers of this file can see comments and suggestions. </div>
-        </div>
-        <FlowLayout gap={1} style={{ marginTop: "var(--salt-spacing-100)" }}>
-          <Button sentiment="accented" style={{ width: "100%" }}>
-            Edit permissions
-          </Button>
-          <Button style={{ width: "100%" }}>Dismiss</Button>
-        </FlowLayout>
+        <StackLayout gap={1}>
+          <StackLayout gap={0}>
+            <Text>
+              <strong>File access</strong>
+            </Text>
+            <Text>Viewers of this file can see comments and suggestions. </Text>
+          </StackLayout>
+          <FlowLayout gap={1}>
+            <Button sentiment="accented" style={{ width: "100%" }}>
+              Edit permissions
+            </Button>
+            <Button style={{ width: "100%" }}>Dismiss</Button>
+          </FlowLayout>
+        </StackLayout>
       </ToastContent>
     </Toast>
   </div>
@@ -128,12 +129,12 @@ export const Success = Template.bind({});
 Success.args = {
   status: "success",
   children: (
-    <div>
+    <StackLayout gap={0}>
       <Text>
         <strong>Project file upload</strong>
       </Text>
-      <div>Project file has successfully uploaded to the shared drive. </div>
-    </div>
+      <Text>Project file has successfully uploaded to the shared drive. </Text>
+    </StackLayout>
   ),
 };
 
@@ -141,7 +142,7 @@ export const SingleLine = (args: ToastProps) => (
   <div style={{ width: 260 }}>
     <Toast {...args}>
       <ToastContent>
-        <div>This is a toast message.</div>
+        <Text>This is a toast message.</Text>
       </ToastContent>
       <Button appearance="transparent" aria-label="Dismiss">
         <CloseIcon aria-hidden />
@@ -149,7 +150,7 @@ export const SingleLine = (args: ToastProps) => (
     </Toast>
     <Toast {...args}>
       <ToastContent>
-        <div>This is a toast message.</div>
+        <Text>This is a toast message.</Text>
       </ToastContent>
     </Toast>
   </div>
@@ -160,11 +161,11 @@ CustomIcon.args = {
   status: "success",
   icon: <GlobeIcon aria-label="success" />,
   children: (
-    <div>
+    <StackLayout gap={0}>
       <Text>
         <strong>Connection established</strong>
       </Text>
-      <div>A connection has successfully been established.</div>
-    </div>
+      <Text>A connection has successfully been established.</Text>
+    </StackLayout>
   ),
 };

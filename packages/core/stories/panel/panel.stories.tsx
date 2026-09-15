@@ -1,4 +1,4 @@
-import { GridLayout, Panel } from "@salt-ds/core";
+import { GridLayout, Panel, Text } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
@@ -27,17 +27,17 @@ Tertiary.args = {
 
 export const FixedHeightAndWidth: StoryFn<typeof Panel> = () => (
   <Panel style={{ height: "500px", width: "800px" }} variant="secondary">
-    <p>This is a Panel</p>
+    <Text as="p">This is a Panel</Text>
   </Panel>
 );
 
 export const PanelInGridLayout: StoryFn<typeof Panel> = () => (
   <GridLayout columns={2}>
     <Panel style={{ width: "100vh" }}>
-      <p>This is a Panel</p>
+      <Text as="p">This is a Panel</Text>
     </Panel>
     <Panel variant="secondary" style={{ width: "100vh" }}>
-      <p>This is a Panel</p>
+      <Text as="p">This is a Panel</Text>
     </Panel>
   </GridLayout>
 );
