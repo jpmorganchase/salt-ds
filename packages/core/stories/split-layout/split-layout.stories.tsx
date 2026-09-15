@@ -4,6 +4,7 @@ import {
   FlowLayout,
   SplitLayout,
   StackLayout,
+  Text,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import "../layout/layout.stories.css";
@@ -47,7 +48,7 @@ const startItem = (
   <FlowLayout className="layout-container" align="baseline">
     {Array.from({ length: 3 }, (_, index) => (
       <div key={index}>
-        <p>Item {index + 1}</p>
+        <Text>Item {index + 1}</Text>
       </div>
     ))}
   </FlowLayout>
@@ -55,10 +56,10 @@ const startItem = (
 const endItem = (
   <FlowLayout align="baseline">
     <div className="layout-content-right">
-      <p>Item 4</p>
+      <Text>Item 4</Text>
     </div>
     <div className="layout-content-right">
-      <p>Item 5</p>
+      <Text>Item 5</Text>
     </div>
   </FlowLayout>
 );

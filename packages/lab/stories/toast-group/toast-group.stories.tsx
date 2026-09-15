@@ -46,20 +46,18 @@ const ErrorToast = () => {
   return open ? (
     <Toast status="error">
       <ToastContent>
-        <div>
-          <Text>
-            <strong>System error</strong>
-          </Text>
-          <div>Connection timed out. Failed to retrieve data. </div>
-        </div>
-        <FlowLayout
-          gap={1}
-          justify="end"
-          style={{ marginTop: "var(--salt-spacing-100)" }}
-        >
-          <Button onClick={closeToast}>Dismiss</Button>
-          <Button variant="cta">Try again</Button>
-        </FlowLayout>
+        <StackLayout gap={1}>
+          <div>
+            <Text>
+              <strong>System error</strong>
+            </Text>
+            <div>Connection timed out. Failed to retrieve data. </div>
+          </div>
+          <FlowLayout gap={1} justify="end">
+            <Button onClick={closeToast}>Dismiss</Button>
+            <Button variant="cta">Try again</Button>
+          </FlowLayout>
+        </StackLayout>
       </ToastContent>
     </Toast>
   ) : null;
@@ -73,20 +71,22 @@ const WarningToast = () => {
   return open ? (
     <Toast status="warning">
       <ToastContent>
-        <div>
-          <Text>
-            <strong>File access</strong>
-          </Text>
-          <div>Viewers of this file can see comments and suggestions. </div>
-        </div>
-        <FlowLayout gap={1} style={{ marginTop: "var(--salt-spacing-100)" }}>
-          <Button variant="cta" style={{ width: "100%" }}>
-            Edit permissions
-          </Button>
-          <Button onClick={closeToast} style={{ width: "100%" }}>
-            Dismiss
-          </Button>
-        </FlowLayout>
+        <StackLayout gap={1}>
+          <div>
+            <Text>
+              <strong>File access</strong>
+            </Text>
+            <div>Viewers of this file can see comments and suggestions. </div>
+          </div>
+          <FlowLayout gap={1}>
+            <Button variant="cta" style={{ width: "100%" }}>
+              Edit permissions
+            </Button>
+            <Button onClick={closeToast} style={{ width: "100%" }}>
+              Dismiss
+            </Button>
+          </FlowLayout>
+        </StackLayout>
       </ToastContent>
     </Toast>
   ) : null;

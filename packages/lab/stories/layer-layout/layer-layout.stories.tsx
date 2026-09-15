@@ -3,6 +3,8 @@ import {
   FlexItem,
   FlexLayout,
   FlowLayout,
+  H2,
+  H3,
   StackLayout,
   StatusIndicator,
   Text,
@@ -35,22 +37,24 @@ type LayerContentExampleProps = {
 const LayerContentExample = ({ onClick }: LayerContentExampleProps) => (
   <StackLayout className="layer-example">
     <FlexItem grow={1}>
-      <h2 id="layer_label">Lorem ipsum</h2>
-      <p id="layer_description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nunc lacus,
-        scelerisque ut elit nec, commodo blandit est. Duis mollis dui at nisl
-        faucibus, id maximus urna pellentesque. Praesent consequat vulputate
-        dolor, a mattis metus suscipit vitae. Donec ullamcorper, neque sit amet
-        laoreet ornare, diam eros posuere metus, id consectetur tellus nisl id
-        ipsum. Fusce sit amet cursus mauris, vel scelerisque enim. Quisque eu
-        dolor tortor. Nulla facilisi. Vestibulum at neque sit amet neque
-        facilisis porttitor a ac risus.Mauris consequat sollicitudin commodo.
-        Vestibulum ac diam vulputate, condimentum purus non, eleifend erat. Nunc
-        auctor iaculis mi eu hendrerit. Suspendisse potenti. Cras tristique
-        vehicula iaculis. Morbi faucibus volutpat tellus, sit amet fringilla dui
-        rhoncus a. Suspendisse nunc nulla, mattis sed commodo ac, cursus ut
-        augue.
-      </p>
+      <StackLayout gap={1}>
+        <H2 id="layer_label">Lorem ipsum</H2>
+        <Text as="p" id="layer_description">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nunc
+          lacus, scelerisque ut elit nec, commodo blandit est. Duis mollis dui
+          at nisl faucibus, id maximus urna pellentesque. Praesent consequat
+          vulputate dolor, a mattis metus suscipit vitae. Donec ullamcorper,
+          neque sit amet laoreet ornare, diam eros posuere metus, id consectetur
+          tellus nisl id ipsum. Fusce sit amet cursus mauris, vel scelerisque
+          enim. Quisque eu dolor tortor. Nulla facilisi. Vestibulum at neque sit
+          amet neque facilisis porttitor a ac risus.Mauris consequat
+          sollicitudin commodo. Vestibulum ac diam vulputate, condimentum purus
+          non, eleifend erat. Nunc auctor iaculis mi eu hendrerit. Suspendisse
+          potenti. Cras tristique vehicula iaculis. Morbi faucibus volutpat
+          tellus, sit amet fringilla dui rhoncus a. Suspendisse nunc nulla,
+          mattis sed commodo ac, cursus ut augue.
+        </Text>
+      </StackLayout>
     </FlexItem>
     <FlowLayout justify="end">
       <Button onClick={onClick}>Close layer</Button>
@@ -188,25 +192,27 @@ const CustomFullScreenAnimationTemplate: StoryFn<typeof LayerLayout> = (
       <LayerLayout isOpen={open} className="custom-animation" {...args}>
         <StackLayout className="layer-example">
           <FlexItem grow={1}>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nunc
-              lacus, scelerisque ut elit nec, commodo blandit est. Duis mollis
-              dui at nisl faucibus, id maximus urna pellentesque. Praesent
-              consequat vulputate dolor, a mattis metus suscipit vitae. Donec
-              ullamcorper, neque sit amet laoreet ornare, diam eros posuere
-              metus, id consectetur tellus nisl id ipsum. Fusce sit amet cursus
-              mauris, vel scelerisque enim. Quisque eu dolor tortor. Nulla
-              facilisi. Vestibulum at neque sit amet neque facilisis porttitor a
-              ac risus.
-            </p>
-            <p>
-              Mauris consequat sollicitudin commodo. Vestibulum ac diam
-              vulputate, condimentum purus non, eleifend erat. Nunc auctor
-              iaculis mi eu hendrerit. Suspendisse potenti. Cras tristique
-              vehicula iaculis. Morbi faucibus volutpat tellus, sit amet
-              fringilla dui rhoncus a. Suspendisse nunc nulla, mattis sed
-              commodo ac, cursus ut augue.
-            </p>
+            <StackLayout gap={1}>
+              <Text as="p">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nunc
+                lacus, scelerisque ut elit nec, commodo blandit est. Duis mollis
+                dui at nisl faucibus, id maximus urna pellentesque. Praesent
+                consequat vulputate dolor, a mattis metus suscipit vitae. Donec
+                ullamcorper, neque sit amet laoreet ornare, diam eros posuere
+                metus, id consectetur tellus nisl id ipsum. Fusce sit amet
+                cursus mauris, vel scelerisque enim. Quisque eu dolor tortor.
+                Nulla facilisi. Vestibulum at neque sit amet neque facilisis
+                porttitor a ac risus.
+              </Text>
+              <Text as="p">
+                Mauris consequat sollicitudin commodo. Vestibulum ac diam
+                vulputate, condimentum purus non, eleifend erat. Nunc auctor
+                iaculis mi eu hendrerit. Suspendisse potenti. Cras tristique
+                vehicula iaculis. Morbi faucibus volutpat tellus, sit amet
+                fringilla dui rhoncus a. Suspendisse nunc nulla, mattis sed
+                commodo ac, cursus ut augue.
+              </Text>
+            </StackLayout>
           </FlexItem>
           <FlowLayout justify="end">
             <Button onClick={hide}>Close layer</Button>
@@ -239,19 +245,19 @@ const ReducedMotionTemplate: StoryFn<typeof LayerLayout> = (args) => {
   const hide = () => setOpen(false);
 
   return (
-    <>
-      <p>In order to test this on MacOS, follow these steps: </p>
-      <p>
+    <StackLayout gap={1}>
+      <Text as="p">In order to test this on MacOS, follow these steps: </Text>
+      <Text as="p">
         Go to System Preferences, select the Accessibility category, select the
         Display tab, and enable the Reduce Motion option.
-      </p>
+      </Text>
       <div className="layer-container reduced-motion">
         <Button onClick={show}>Open Layer</Button>
         <LayerLayout isOpen={open} {...args}>
           <LayerContentExample onClick={hide} />
         </LayerLayout>
       </div>
-    </>
+    </StackLayout>
   );
 };
 
@@ -274,18 +280,15 @@ const LayerLayoutCenterExample: StoryFn<typeof LayerLayout> = (args) => {
         {...args}
       >
         <FlowLayout justify="center">
-          <StackLayout gap={1} align="center">
-            <StatusIndicator status="error" size={2} />
-            <Text>
-              <strong>There's been a system error</strong>
-            </Text>
-            <Text>It should be temporary, so please try again.</Text>
-            <Button
-              style={{ marginTop: "var(--salt-spacing-100)" }}
-              onClick={hide}
-            >
-              Close Layer
-            </Button>
+          <StackLayout gap={2} align="center">
+            <StackLayout gap={1} align="center">
+              <StatusIndicator status="error" size={2} />
+              <Text>
+                <strong>There's been a system error</strong>
+              </Text>
+              <Text>It should be temporary, so please try again.</Text>
+            </StackLayout>
+            <Button onClick={hide}>Close Layer</Button>
           </StackLayout>
         </FlowLayout>
       </LayerLayout>
@@ -321,13 +324,13 @@ const LayerLayoutLeftExample: StoryFn<typeof LayerLayout> = (args) => {
         {...args}
       >
         <StackLayout>
-          <h2 id="layer_label">Section title</h2>
-          <p id="layer_description">
+          <H2 id="layer_label">Section title</H2>
+          <Text as="p" id="layer_description">
             Incididunt adipisicing deserunt nostrud ullamco consequat
             consectetur magna id do irure labore fugiat. Eiusmod pariatur
             officia elit ad. Ullamco adipisicing Lorem amet velit in do
             reprehenderit nostrud eu aute voluptate quis quis.
-          </p>
+          </Text>
           {Array.from({ length: 7 }, (_, index) => (
             <FormFieldExample key={index} />
           ))}
@@ -357,13 +360,13 @@ const LayerLayoutTopExample: StoryFn<typeof LayerLayout> = (args) => {
       <Button onClick={show}>Open Layer</Button>
       <LayerLayout isOpen={open} {...args}>
         <StackLayout>
-          <h2>Section title</h2>
-          <p>
+          <H2>Section title</H2>
+          <Text as="p">
             Incididunt adipisicing deserunt nostrud ullamco consequat
             consectetur magna id do irure labore fugiat. Eiusmod pariatur
             officia elit ad. Ullamco adipisicing Lorem amet velit in do
             reprehenderit nostrud eu aute voluptate quis quis.
-          </p>
+          </Text>
           <FlexLayout>
             {Array.from({ length: 4 }, (_, index) => (
               <FormFieldExample key={index} />
@@ -400,13 +403,13 @@ const LayerLayoutRightExample: StoryFn<typeof LayerLayout> = (args) => {
         {...args}
       >
         <StackLayout>
-          <h2 id="layer_label">Section title</h2>
-          <p id="layer_description">
+          <H2 id="layer_label">Section title</H2>
+          <Text as="p" id="layer_description">
             Incididunt adipisicing deserunt nostrud ullamco consequat
             consectetur magna id do irure labore fugiat. Eiusmod pariatur
             officia elit ad. Ullamco adipisicing Lorem amet velit in do
             reprehenderit nostrud eu aute voluptate quis quis.
-          </p>
+          </Text>
           {Array.from({ length: 7 }, (_, index) => (
             <FormFieldExample key={index} />
           ))}
@@ -427,13 +430,13 @@ RightSimpleUsage.args = {
 const ArticleExample = () => (
   <StackLayout className="layer-article-container">
     <div className="layer-article-image" />
-    <h3>Laborum in sit officia consecte</h3>
-    <p>
+    <H3>Laborum in sit officia consecte</H3>
+    <Text as="p">
       Do excepteur id ipsum qui dolor irure dolore commodo labore. Minim sunt
       aliquip eiusmod excepteur qui sunt commodo ex cillum ullamco. Quis magna
       deserunt reprehenderit anim elit laboris laboris fugiat Lorem est culpa
       quis.
-    </p>
+    </Text>
   </StackLayout>
 );
 
@@ -449,9 +452,9 @@ const LayerLayoutBottomExample: StoryFn<typeof LayerLayout> = (args) => {
       <Button onClick={show}>Open Layer</Button>
       <LayerLayout isOpen={open} aria-labelledby="layer_label" {...args}>
         <StackLayout>
-          <h2 id="layer_label" tabIndex={-1}>
+          <H2 id="layer_label" tabIndex={-1}>
             Section title
-          </h2>
+          </H2>
           <FlowLayout>
             {Array.from({ length: 4 }, (_, index) => (
               <ArticleExample key={index} />

@@ -2,6 +2,7 @@ import {
   FLEX_ALIGNMENT_BASE,
   type FlexLayout,
   StackLayout,
+  Text,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import "../layout/layout.stories.css";
@@ -34,7 +35,7 @@ const DefaultStackLayoutStory: StoryFn<typeof StackLayout> = (args) => {
     <StackLayout {...args} className="layout-container">
       {Array.from({ length: 5 }, (_, index) => (
         <div key={index}>
-          <p>Item {index + 1}</p>
+          <Text>Item {index + 1}</Text>
         </div>
       ))}
     </StackLayout>
@@ -48,7 +49,7 @@ const SeparatorsStory: StoryFn<typeof FlexLayout> = (args) => {
     <StackLayout {...args} className="layout-container">
       {Array.from({ length: 3 }, (_, index) => (
         <div key={index}>
-          <p>Item {index + 1}</p>
+          <Text>Item {index + 1}</Text>
         </div>
       ))}
     </StackLayout>

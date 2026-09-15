@@ -3,7 +3,12 @@ import {
   FlowLayout,
   GridItem,
   GridLayout,
+  H1,
+  H2,
+  H3,
   SaltProvider,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
 import { ThumbsUpIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
@@ -32,7 +37,7 @@ const Template: StoryFn<typeof GridLayout> = (args) => {
     <GridLayout {...args} className="layout-container">
       {Array.from({ length: 12 }, (_, index) => (
         <div key={index}>
-          <p>{`Item ${index + 1}`}</p>
+          <Text>{`Item ${index + 1}`}</Text>
         </div>
       ))}
     </GridLayout>
@@ -52,7 +57,7 @@ const PaddingAndMargins: StoryFn<typeof GridLayout> = (args) => {
             key={`item-${index + 1}`}
             padding={1}
           >
-            <p>Item {index + 1}</p>
+            <Text>Item {index + 1}</Text>
           </GridItem>
         ))}
       </GridLayout>
@@ -71,7 +76,7 @@ const ResponsiveView: StoryFn<typeof GridLayout> = (args) => {
     <SaltProvider breakpoints={customBreakpoints}>
       <GridLayout {...args} className="layout-container custom-breaks">
         <GridItem colSpan={{ xs: 1, md: 6, lg: 9 }}>
-          <p>GridItem 1</p>
+          <Text>GridItem 1</Text>
         </GridItem>
 
         {Array.from({ length: 6 }, (_, index) => (
@@ -80,11 +85,11 @@ const ResponsiveView: StoryFn<typeof GridLayout> = (args) => {
             colSpan={{ xs: 1, md: 3 }}
             rowSpan={{ md: 2, lg: 1 }}
           >
-            <p>{`Item ${index + 2}`}</p>
+            <Text>{`Item ${index + 2}`}</Text>
           </GridItem>
         ))}
         <GridItem colSpan={{ xs: 1, md: 6, lg: 9 }}>
-          <p>GridItem 8</p>
+          <Text>GridItem 8</Text>
         </GridItem>
       </GridLayout>
     </SaltProvider>
@@ -105,12 +110,16 @@ const footerLinks: Record<string, string[]> = {
 };
 
 const footerColumns = Object.keys(footerLinks).map((header) => (
-  <div key={header} className="footer-column">
-    <p>{header}</p>
+  <StackLayout key={header} gap={1}>
+    <H3 color="secondary">
+      <strong>{header}</strong>
+    </H3>
     {footerLinks[header].map((link: string) => (
-      <p key={link}>{link}</p>
+      <Text color="secondary" key={link}>
+        {link}
+      </Text>
     ))}
-  </div>
+  </StackLayout>
 ));
 
 const FooterTemplate: StoryFn<typeof GridLayout> = (args) => {
@@ -120,14 +129,21 @@ const FooterTemplate: StoryFn<typeof GridLayout> = (args) => {
         colSpan={2}
         horizontalAlignment="center"
         verticalAlignment="center"
-        className="footer-column"
       >
-        <p>Logo | Salt</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <StackLayout gap={1}>
+          <H3 color="secondary">
+            <strong>Logo | Salt</strong>
+          </H3>
+          <Text as="p" color="secondary">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </Text>
+        </StackLayout>
       </GridItem>
       {footerColumns}
       <GridItem colSpan={{ xs: 2, md: 6 }} className="copy-right">
-        <p>© 2022 BrandName All rights reserved.</p>
+        <Text as="p" color="secondary">
+          © 2022 BrandName All rights reserved.
+        </Text>
       </GridItem>
     </GridLayout>
   );
@@ -152,82 +168,89 @@ const Blog: StoryFn<typeof GridLayout> = (args) => {
     <div className="grid-blog-container">
       <GridLayout {...args}>
         <GridItem as="section" colSpan={{ xs: 1, sm: 2, md: 2, lg: 4, xl: 4 }}>
-          <h1>
-            Featured blog post of the week: Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-            labore.
-          </h1>
-          <div className="grid-blog-featured" />
+          <StackLayout gap={2}>
+            <H1>
+              Featured blog post of the week: Lorem ipsum dolor sit amet,
+              consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+              labore.
+            </H1>
+            <div className="grid-blog-featured" />
+          </StackLayout>
         </GridItem>
 
         <GridItem as="article" colSpan={{ xs: 1, lg: 2 }}>
-          <h2>
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-          </h2>
-          <div className="grid-blog-medium-image grid-blog-image-one" />
-          <p>
-            Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
-            suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
-          </p>
-          {renderArticleButtons}
+          <StackLayout gap={2}>
+            <H2>
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+            </H2>
+            <div className="grid-blog-medium-image grid-blog-image-one" />
+            <Text as="p">
+              Ut enim ad minima veniam, quis nostrum exercitationem ullam
+              corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
+              consequatur?
+            </Text>
+            {renderArticleButtons}
+          </StackLayout>
         </GridItem>
 
         <GridItem as="article" colSpan={{ xs: 1, lg: 2 }}>
-          <h2>Nemo enim ipsam voluptatem quia voluptas sit aspernatur</h2>
-          <div className="grid-blog-medium-image grid-blog-image-two" />
-          <p>
-            At vero eos et accusamus et iusto odio dignissimos ducimus qui
-            blanditiis praesentium voluptatum deleniti atque corrupti quos
-            dolores et quas molestias excepturi sint occaecati cupiditate non
-            provident, similique sunt in culpa qui officia deserunt mollitia
-            animi.
-          </p>
-          {renderArticleButtons}
+          <StackLayout gap={2}>
+            <H2>Nemo enim ipsam voluptatem quia voluptas sit aspernatur</H2>
+            <div className="grid-blog-medium-image grid-blog-image-two" />
+            <Text as="p">
+              At vero eos et accusamus et iusto odio dignissimos ducimus qui
+              blanditiis praesentium voluptatum deleniti atque corrupti quos
+              dolores et quas molestias excepturi sint occaecati cupiditate non
+              provident, similique sunt in culpa qui officia deserunt mollitia
+              animi.
+            </Text>
+            {renderArticleButtons}
+          </StackLayout>
         </GridItem>
-        <article>
-          <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
+        <StackLayout as="article" gap={2}>
+          <H3>At vero eos et accusamus et iusto odio dignissimos ducimus</H3>
           <div className="grid-blog-small-image grid-blog-image-three" />
-          <p>
+          <Text as="p">
             Duis aute irure dolor in reprehenderit in voluptate velit esse
             cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
             cupidatat non proident, sunt in culpa qui officia deserunt mollit
             anim id est laborum.
-          </p>
+          </Text>
           {renderArticleButtons}
-        </article>
+        </StackLayout>
 
-        <article>
-          <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
+        <StackLayout as="article" gap={2}>
+          <H3>At vero eos et accusamus et iusto odio dignissimos ducimus</H3>
           <div className="grid-blog-small-image grid-blog-image-four" />
-          <p>
+          <Text as="p">
             Enim sit excepteur incididunt et excepteur. Est incididunt enim
             tempor labore ad. Sit reprehenderit nulla mollit ad sunt pariatur
             nostrud cupidatat eu sint officia nulla esse. Veniam enim est irure
             est est aliquip nisi enim veniam occaecat.
-          </p>
+          </Text>
           {renderArticleButtons}
-        </article>
-        <article>
-          <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
+        </StackLayout>
+        <StackLayout as="article" gap={2}>
+          <H3>At vero eos et accusamus et iusto odio dignissimos ducimus</H3>
           <div className="grid-blog-small-image grid-blog-image-five" />
-          <p>
+          <Text as="p">
             Nostrud labore non aliqua dolore esse ullamco excepteur eu et. Nisi
             labore nulla anim in non proident nisi labore sint enim exercitation
             fugiat pariatur enim. Cillum est labore in labore labore culpa id.
             Consectetur ut enim eiusmod aliqua eu eiusmod sit.
-          </p>
+          </Text>
           {renderArticleButtons}
-        </article>
-        <article>
-          <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
+        </StackLayout>
+        <StackLayout as="article" gap={2}>
+          <H3>At vero eos et accusamus et iusto odio dignissimos ducimus</H3>
           <div className="grid-blog-small-image grid-blog-image-six" />
-          <p>
+          <Text as="p">
             Voluptate elit sit id consectetur sit reprehenderit minim mollit do.
             Aliquip exercitation sunt esse voluptate laborum. Occaecat dolor
             minim dolore in excepteur sint.
-          </p>
+          </Text>
           {renderArticleButtons}
-        </article>
+        </StackLayout>
       </GridLayout>
     </div>
   );
