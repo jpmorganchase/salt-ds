@@ -14,12 +14,14 @@ export const Sections = (): ReactElement => (
   <Card style={{ width: "320px" }}>
     <CardHeader>
       <StackLayout gap={0.5}>
-        <H3 style={{ margin: 0 }}>Quarterly investment report</H3>
-        <Text color="secondary">Updated 16 July 2026</Text>
+        <H3>Quarterly investment report</H3>
+        <Text as="p" color="secondary">
+          Updated 16 July 2026
+        </Text>
       </StackLayout>
     </CardHeader>
     <CardContent>
-      <Text>
+      <Text as="p">
         Review portfolio performance and the market changes that affected this
         quarter.
       </Text>

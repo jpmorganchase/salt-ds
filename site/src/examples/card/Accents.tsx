@@ -15,11 +15,11 @@ export const Accents = () => {
 
   return (
     <StackLayout style={{ width: "266px" }} align="center">
-      <Card accent={placement} hoverable>
+      <Card accent={placement}>
         <CardContent>
           <StackLayout gap={1} align="start">
-            <H3 style={{ margin: 0 }}>Sustainable investing products</H3>
-            <Text>
+            <H3>Sustainable investing products</H3>
+            <Text as="p">
               We have a commitment to provide a wide range of investment
               solutions to enable you to align your financial goals to your
               values.
@@ -28,6 +28,7 @@ export const Accents = () => {
         </CardContent>
       </Card>
       <RadioButtonGroup
+        aria-label="Accent placement"
         value={placement}
         onChange={(event) =>
           setPlacement(event.target.value as CardProps["accent"])
