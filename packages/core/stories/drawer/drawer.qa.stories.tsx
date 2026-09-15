@@ -62,7 +62,9 @@ const DrawerTemplate: StoryFn<typeof Drawer> = () => {
             <Text>{loremText}</Text>
           </DrawerContent>
           <DrawerFooter>
-            <Button appearance="transparent">Cancel</Button>
+            <Button sentiment="accented" appearance="bordered">
+              Cancel
+            </Button>
             <Button sentiment="accented">Save</Button>
           </DrawerFooter>
         </FakeDrawer>
@@ -101,7 +103,9 @@ const DrawerTemplate: StoryFn<typeof Drawer> = () => {
             <Text>Pending transaction review</Text>
           </DrawerContent>
           <DrawerFooter>
-            <Button appearance="transparent">Discard changes</Button>
+            <Button sentiment="accented" appearance="bordered">
+              Discard changes
+            </Button>
             <Button sentiment="accented">Save and continue</Button>
           </DrawerFooter>
         </FakeDrawer>
