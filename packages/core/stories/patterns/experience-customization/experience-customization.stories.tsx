@@ -390,22 +390,15 @@ export const EndToEnd = () => {
   const header = (
     <FlexLayout justify="space-between" style={{ minHeight: "6rem" }}>
       <FlexItem style={{ flex: 1 }}>
-        <div>
-          <Text as="h1" styleAs="h2" style={{ margin: 0 }}>
+        <StackLayout gap="var(--salt-spacing-50)">
+          <Text as="h1" styleAs="h2">
             <Text color="primary">Customize your experience</Text>
             {wizardSteps[activeStepIndex].label}
           </Text>
           {wizardSteps[activeStepIndex].id === "foundation" && (
-            <Text
-              color="secondary"
-              style={{
-                marginTop: "var(--salt-spacing-50)",
-              }}
-            >
-              A selection is required to proceed
-            </Text>
+            <Text color="secondary">A selection is required to proceed</Text>
           )}
-        </div>
+        </StackLayout>
       </FlexItem>
       <FlexItem style={{ flex: 1 }}>
         <Stepper
@@ -1077,7 +1070,7 @@ function PreferencesContent({
 
   return (
     <StackLayout>
-      <H3 style={{ margin: 0 }}>{currentSection}</H3>
+      <H3>{currentSection}</H3>
       <div>{content}</div>
     </StackLayout>
   );
