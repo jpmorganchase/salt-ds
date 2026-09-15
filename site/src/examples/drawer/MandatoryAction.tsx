@@ -62,48 +62,48 @@ export const MandatoryAction = (): ReactElement => {
         disableDismiss
         aria-labelledby={id}
       >
-        <H2 id={id} style={{ marginBottom: "var(--salt-spacing-200)" }}>
-          Add your delivery details
-        </H2>
-        <StackLayout>
-          <FormField>
-            <FormFieldLabel>House no.</FormFieldLabel>
-            <Input />
-          </FormField>
-          <FormField>
-            <FormFieldLabel>Street name</FormFieldLabel>
-            <Input />
-          </FormField>
-          <FormField>
-            <FormFieldLabel>Postcode</FormFieldLabel>
-            <ComboBox
-              onChange={handleChange}
-              onSelectionChange={handleSelectionChange}
-              value={value}
-              placeholder="Postcode"
-            >
-              {postcodes.map((postcode) => (
-                <Option value={postcode} key={postcode}>
-                  {postcode}
-                </Option>
-              ))}
-            </ComboBox>
-            <FormFieldHelperText>Do not include space</FormFieldHelperText>
-          </FormField>
-          <FormField>
-            <FormFieldLabel>City/Town</FormFieldLabel>
-            <Input />
-          </FormField>
-          <FormField>
-            <FormFieldLabel>Country</FormFieldLabel>
-            <Input />
-          </FormField>
-          <FormField>
-            <Checkbox label="Dog(s) present at my property" />
-          </FormField>
-          <FlexItem align="end">
-            <Button onClick={handleClose}>Submit</Button>
-          </FlexItem>
+        <StackLayout gap={2}>
+          <H2 id={id}>Add your delivery details</H2>
+          <StackLayout>
+            <FormField>
+              <FormFieldLabel>House no.</FormFieldLabel>
+              <Input />
+            </FormField>
+            <FormField>
+              <FormFieldLabel>Street name</FormFieldLabel>
+              <Input />
+            </FormField>
+            <FormField>
+              <FormFieldLabel>Postcode</FormFieldLabel>
+              <ComboBox
+                onChange={handleChange}
+                onSelectionChange={handleSelectionChange}
+                value={value}
+                placeholder="Postcode"
+              >
+                {postcodes.map((postcode) => (
+                  <Option value={postcode} key={postcode}>
+                    {postcode}
+                  </Option>
+                ))}
+              </ComboBox>
+              <FormFieldHelperText>Do not include space</FormFieldHelperText>
+            </FormField>
+            <FormField>
+              <FormFieldLabel>City/Town</FormFieldLabel>
+              <Input />
+            </FormField>
+            <FormField>
+              <FormFieldLabel>Country</FormFieldLabel>
+              <Input />
+            </FormField>
+            <FormField>
+              <Checkbox label="Dog(s) present at my property" />
+            </FormField>
+            <FlexItem align="end">
+              <Button onClick={handleClose}>Submit</Button>
+            </FlexItem>
+          </StackLayout>
         </StackLayout>
       </Drawer>
     </>

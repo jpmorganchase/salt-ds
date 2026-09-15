@@ -5,6 +5,7 @@ import {
   RadioButton,
   RadioButtonGroup,
   StackLayout,
+  Text,
 } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { type ReactElement, useState } from "react";
@@ -41,7 +42,7 @@ export const Spacing = (): ReactElement => {
               key={`item-${index + 1}`}
               padding={2}
             >
-              <p>{index + 1}</p>
+              <Text>{index + 1}</Text>
             </FlexItem>
           ))}
         </StackLayout>

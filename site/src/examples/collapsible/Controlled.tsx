@@ -3,6 +3,7 @@ import {
   Collapsible,
   CollapsiblePanel,
   CollapsibleTrigger,
+  Text,
 } from "@salt-ds/core";
 import { type ReactElement, useState } from "react";
 
@@ -18,14 +19,17 @@ export const Controlled = (): ReactElement => {
         <Button>Click</Button>
       </CollapsibleTrigger>
       <CollapsiblePanel>
-        <p style={{ paddingTop: "var(--salt-spacing-100)", maxWidth: "80ch" }}>
+        <Text
+          as="p"
+          style={{ paddingTop: "var(--salt-spacing-100)", maxWidth: "80ch" }}
+        >
           This sample paragraph is intended to demonstrate how text will appear
           within the component. The content shown here is for illustrative
           purposes and does not contain specific information or advice. Using
           placeholder text like this helps review formatting, spacing, and
           overall presentation in the user interface. Adjust the wording as
           needed to suit your particular requirements or design preferences.
-        </p>
+        </Text>
       </CollapsiblePanel>
     </Collapsible>
   );

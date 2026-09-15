@@ -1,9 +1,6 @@
 .container {
   position: relative;
 }
-.help {
-  margin-bottom: var(--salt-spacing-400);
-}
 .navbar {
   padding-left: var(--salt-spacing-300);
   padding-right: var(--salt-spacing-300);
@@ -23,10 +20,4 @@
 }
 .section {
   padding-top: var(--salt-spacing-200);
-}
-.header {
-  margin-bottom: var(--salt-spacing-300);
-}
-.sectionHeading {
-  margin-block: var(--salt-spacing-200);
 }

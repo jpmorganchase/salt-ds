@@ -1,4 +1,4 @@
-import { GridItem, GridLayout } from "@salt-ds/core";
+import { GridItem, GridLayout, Text } from "@salt-ds/core";
 import { clsx } from "clsx";
 import type { ReactElement } from "react";
 import defaultStyles from "./Default.module.css";
@@ -11,7 +11,7 @@ export const Default = (): ReactElement => (
         key={index}
         className={clsx(styles.gridItem, defaultStyles.gridItem)}
       >
-        <p>{index + 1}</p>
+        <Text>{index + 1}</Text>
       </GridItem>
     ))}
   </GridLayout>

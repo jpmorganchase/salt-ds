@@ -6,6 +6,7 @@ import {
   GRID_ALIGNMENT_BASE as gridItemAlignment,
   RadioButton,
   RadioButtonGroup,
+  Text,
 } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { type ChangeEventHandler, type ReactElement, useState } from "react";
@@ -44,17 +45,17 @@ export const PositioningItems = (): ReactElement => {
           colSpan={2}
           rowSpan={2}
         >
-          <p>1</p>
+          <Text>1</Text>
         </GridItem>
 
         {Array.from({ length: 3 }, (_, index) => (
           <GridItem key={index} className={styles.gridItem}>
-            <p>{index + 2}</p>
+            <Text>{index + 2}</Text>
           </GridItem>
         ))}
 
         <GridItem className={styles.gridItem} colSpan={3}>
-          <p>5</p>
+          <Text>5</Text>
         </GridItem>
       </GridLayout>
       <div className={positioningItemsStyles.radioButtonGroups}>

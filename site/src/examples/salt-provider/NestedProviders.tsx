@@ -1,4 +1,11 @@
-import { Card, SaltProvider, useDensity, useTheme } from "@salt-ds/core";
+import {
+  Card,
+  SaltProvider,
+  StackLayout,
+  Text,
+  useDensity,
+  useTheme,
+} from "@salt-ds/core";
 import type { ReactElement } from "react";
 import styles from "./NestedProviders.module.css";
 
@@ -11,15 +18,22 @@ export const NestedProviders = (): ReactElement => {
   return (
     <SaltProvider>
       <Card className={styles.card}>
-        This Card is wrapped with a Salt Provider, the mode is {mode} and the
-        density is {density}.
-        <SaltProvider mode={invertMode(mode)}>
-          <Card className={styles.nestedCard}>
-            This Card is wrapped with a nested Salt Provider, the mode is&nbsp;
-            {invertMode(mode)} and the density is inherited from the parent
-            provider.
-          </Card>
-        </SaltProvider>
+        <StackLayout gap={1}>
+          <Text as="p">
+            This Card is wrapped with a Salt Provider, the mode is {mode} and
+            the density is {density}.
+          </Text>
+          <SaltProvider mode={invertMode(mode)}>
+            <Card>
+              <Text as="p">
+                This Card is wrapped with a nested Salt Provider, the mode
+                is&nbsp;
+                {invertMode(mode)} and the density is inherited from the parent
+                provider.
+              </Text>
+            </Card>
+          </SaltProvider>
+        </StackLayout>
       </Card>
     </SaltProvider>
   );

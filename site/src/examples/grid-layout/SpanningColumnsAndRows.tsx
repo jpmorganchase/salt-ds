@@ -1,4 +1,4 @@
-import { GridItem, GridLayout } from "@salt-ds/core";
+import { GridItem, GridLayout, Text } from "@salt-ds/core";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
@@ -24,7 +24,7 @@ export const SpanningColumnsAndRows = (): ReactElement => (
           rowSpan={rowSpan}
           className={styles.gridItem}
         >
-          <p>{index + 1}</p>
+          <Text>{index + 1}</Text>
         </GridItem>
       );
     })}

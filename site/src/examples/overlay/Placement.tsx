@@ -1,15 +1,17 @@
 import {
   Button,
+  H3,
   Overlay,
   OverlayPanel,
   OverlayPanelContent,
   type OverlayProps,
   OverlayTrigger,
+  StackLayout,
+  Text,
   Tooltip,
   useId,
 } from "@salt-ds/core";
 import type { ReactElement } from "react";
-import styles from "./index.module.css";
 
 export const OverlayTemplate = (props: OverlayProps): ReactElement => {
   const { placement, ...rest } = props;
@@ -22,17 +24,17 @@ export const OverlayTemplate = (props: OverlayProps): ReactElement => {
       </OverlayTrigger>
       <OverlayPanel aria-labelledby={id}>
         <OverlayPanelContent>
-          <h3 id={id} className={styles.contentHeading}>
-            Title
-          </h3>
-          <div>
-            Content of Overlay
-            <br />
-            <br />
-            <Tooltip content={"I'm a tooltip"}>
-              <Button>hover me</Button>
-            </Tooltip>
-          </div>
+          <StackLayout gap={0.5}>
+            <H3 id={id}>
+              <strong>Title</strong>
+            </H3>
+            <StackLayout gap={1} align="start">
+              <Text>Content of Overlay</Text>
+              <Tooltip content={"I'm a tooltip"}>
+                <Button>hover me</Button>
+              </Tooltip>
+            </StackLayout>
+          </StackLayout>
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
@@ -40,16 +42,14 @@ export const OverlayTemplate = (props: OverlayProps): ReactElement => {
 };
 
 export const Placement = (): ReactElement => (
-  <div>
-    <div style={{ marginBottom: 10 }}>
+  <StackLayout gap={5}>
+    <StackLayout gap={1} align="start">
       <OverlayTemplate placement="top" />
-    </div>
-    <div style={{ marginBottom: 40 }}>
       <OverlayTemplate placement="bottom" />
-    </div>
-    <div style={{ marginBottom: 10 }}>
+    </StackLayout>
+    <StackLayout gap={1} align="start">
       <OverlayTemplate placement="left" />
-    </div>
-    <OverlayTemplate placement="right" />
-  </div>
+      <OverlayTemplate placement="right" />
+    </StackLayout>
+  </StackLayout>
 );

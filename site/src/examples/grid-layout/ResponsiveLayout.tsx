@@ -5,6 +5,7 @@ import {
   GridLayout,
   RadioButton,
   RadioButtonGroup,
+  Text,
 } from "@salt-ds/core";
 import { type ChangeEventHandler, type ReactElement, useState } from "react";
 import styles from "./index.module.css";
@@ -68,7 +69,7 @@ export const ResponsiveLayout = (): ReactElement => {
 
           return (
             <GridItem key={index} colSpan={colSpan} className={styles.gridItem}>
-              <p>{index + 1}</p>
+              <Text>{index + 1}</Text>
             </GridItem>
           );
         })}

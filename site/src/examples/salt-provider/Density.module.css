@@ -4,7 +4,3 @@
   aspect-ratio: 1;
   width: 50px;
 }
-
-.squares {
-  margin-top: var(--salt-spacing-100);
-}

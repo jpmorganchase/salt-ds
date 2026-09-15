@@ -1,14 +1,15 @@
 import {
   Button,
+  H3,
   Overlay,
   OverlayPanel,
   OverlayPanelContent,
   OverlayTrigger,
+  StackLayout,
+  Text,
   useId,
 } from "@salt-ds/core";
 import type { ReactElement } from "react";
-
-import styles from "./index.module.css";
 
 export const HideArrow = (): ReactElement => {
   const id = useId();
@@ -19,10 +20,12 @@ export const HideArrow = (): ReactElement => {
       </OverlayTrigger>
       <OverlayPanel aria-labelledby={id}>
         <OverlayPanelContent>
-          <h3 className={styles.contentHeading} id={id}>
-            Title
-          </h3>
-          <div>Content of Overlay</div>
+          <StackLayout gap={0.5}>
+            <H3 id={id}>
+              <strong>Title</strong>
+            </H3>
+            <Text>Content of Overlay</Text>
+          </StackLayout>
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>

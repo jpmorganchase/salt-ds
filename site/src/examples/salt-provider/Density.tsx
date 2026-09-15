@@ -18,9 +18,9 @@ export const Density = (): ReactElement => {
 
   return (
     <SaltProvider density={density}>
-      <FlexLayout direction="column">
+      <FlexLayout direction="column" gap={4}>
         <Text>{capitalize(density)} Density</Text>
-        <StackLayout direction="row" className={styles.squares}>
+        <StackLayout direction="row">
           <Square />
           <Square />
           <Square />
