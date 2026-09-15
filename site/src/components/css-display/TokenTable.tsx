@@ -116,14 +116,14 @@ export function TokenTable({
 
   const previewMode = mode === "system" ? siteMode : mode;
   return (
-    <StackLayout gap={1}>
+    <StackLayout gap={2}>
       {title ? (
         <H2 id={getSectionHeadingId(tier)} data-mdx="heading2">
           {capitalize(title)}
         </H2>
       ) : null}
       {visibleGroups.map(([group, rows]) => (
-        <StackLayout key={group} gap={0.5}>
+        <StackLayout key={group} gap={1}>
           {showGroupHeadings ? (
             <>
               <H3 id={getGroupHeadingId(tier, group)} data-mdx="heading3">

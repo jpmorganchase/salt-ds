@@ -1,4 +1,13 @@
-import { Button, Card, GridItem, GridLayout, Spinner } from "@salt-ds/core";
+import {
+  Button,
+  Card,
+  FlexItem,
+  GridItem,
+  GridLayout,
+  Spinner,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import { CoffeeIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useEffect, useState } from "react";
@@ -53,21 +62,17 @@ export const Loading: StoryFn = () => {
   };
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <p>Please wait for action to complete.</p>
+    <StackLayout align="center">
+      <Text>Please wait for action to complete.</Text>
       {loadingStatus === "loading" ? (
-        <Spinner
-          style={{ margin: "auto" }}
-          aria-label="Panel is loading"
-          size="large"
-        />
+        <Spinner aria-label="Panel is loading" size="large" />
       ) : (
         <>
-          <p>Action complete.</p>
+          <Text>Action complete.</Text>
           <Button onClick={handleClick}>Reload</Button>
         </>
       )}
-    </div>
+    </StackLayout>
   );
 };
 
@@ -99,15 +104,15 @@ export const PartialLoading: StoryFn = () => {
       <Card style={{ width: "366px" }}>
         <GridLayout rows={1} columns={2}>
           <GridItem style={{ padding: "10px" }}>
-            <p>
+            <Text>
               Default spinners can be beneficial for partial loading
               experiences.
-            </p>
+            </Text>
           </GridItem>
           <GridItem verticalAlignment="center" style={{ margin: "auto" }}>
             {loadingStatus !== "idle" ? (
               loadingStatus === "loading" ? (
-                <Spinner style={{ margin: "auto" }} aria-label="submitting" />
+                <Spinner aria-label="submitting" />
               ) : (
                 <CoffeeIcon size={2} />
               )
@@ -127,38 +132,37 @@ export const WithButton: StoryFn = () => {
   const [exampleTwoIsLoading, setExampleTwoIsLoading] = useState(false);
 
   return (
-    <>
-      <div>
-        <p>Default</p>
-        {exampleOneIsLoading && <Spinner style={{ margin: "auto" }} />}
-        <Button
-          onClick={() => setExampleOneIsLoading(!exampleOneIsLoading)}
-          style={{ marginTop: 15 }}
-        >
+    <StackLayout>
+      <StackLayout gap={2} align="start">
+        <Text>Default</Text>
+        {exampleOneIsLoading && (
+          <FlexItem align="center">
+            <Spinner />
+          </FlexItem>
+        )}
+        <Button onClick={() => setExampleOneIsLoading(!exampleOneIsLoading)}>
           {exampleOneIsLoading ? "Stop" : "Start"}
         </Button>
-      </div>
-      <div>
-        <p>
+      </StackLayout>
+      <StackLayout gap={2} align="start">
+        <Text>
           Custom interval (2s), custom announcer timeout (60s), custom aria
           label and custom finishing message
-        </p>
+        </Text>
         {exampleTwoIsLoading && (
-          <Spinner
-            announcerInterval={2000}
-            announcerTimeout={60000}
-            aria-label="dashboard panel loading"
-            completionAnnouncement="dashboard panel loading successful"
-            style={{ margin: "auto" }}
-          />
+          <FlexItem align="center">
+            <Spinner
+              announcerInterval={2000}
+              announcerTimeout={60000}
+              aria-label="dashboard panel loading"
+              completionAnnouncement="dashboard panel loading successful"
+            />
+          </FlexItem>
         )}
-        <Button
-          onClick={() => setExampleTwoIsLoading(!exampleTwoIsLoading)}
-          style={{ marginTop: 15 }}
-        >
+        <Button onClick={() => setExampleTwoIsLoading(!exampleTwoIsLoading)}>
           {exampleTwoIsLoading ? "Stop" : "Start"}
         </Button>
-      </div>
-    </>
+      </StackLayout>
+    </StackLayout>
   );
 };

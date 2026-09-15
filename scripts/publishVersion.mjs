@@ -106,6 +106,39 @@ function assertNpmVersion(version) {
   }
 }
 
+async function publishPackage(tarballPath, npmTag) {
+  try {
+    await execFile(
+      "npm",
+      [
+        "publish",
+        tarballPath,
+        "--tag",
+        npmTag,
+        "--registry",
+        npmRegistry,
+        "--access",
+        "public",
+        "--provenance",
+        "--ignore-scripts",
+        "--json",
+      ],
+      {
+        maxBuffer: 20 * 1024 * 1024,
+      },
+    );
+  } catch (error) {
+    const output = [error.stdout, error.stderr]
+      .filter((value) => typeof value === "string" && value.trim() !== "")
+      .map((value) => value.trim())
+      .join("\n");
+
+    throw new Error(
+      `npm publish failed${output === "" ? `: ${error.message}` : `:\n${output}`}`,
+    );
+  }
+}
+
 const args = readArguments();
 const artifactDir = path.resolve(args.artifact);
 const manifest = JSON.parse(
@@ -207,39 +240,10 @@ assertNpmVersion(npmVersion.trim());
 
 // Inherit the workflow's GITHUB_REF and GITHUB_SHA: npm verifies provenance
 // against the signing certificate's source identity, which overrides cannot change.
-await execFile(
-  "npm",
-  [
-    "publish",
-    tarballPath,
-    "--tag",
-    args["npm-tag"],
-    "--registry",
-    npmRegistry,
-    "--access",
-    "public",
-    "--provenance",
-    "--ignore-scripts",
-  ],
-  {
-    maxBuffer: 20 * 1024 * 1024,
-  },
-);
+await publishPackage(tarballPath, args["npm-tag"]);
 
-if (!(await isPublished(pkg.name, pkg.version))) {
-  throw new Error(
-    `npm did not report ${pkg.name}@${pkg.version} after publishing`,
-  );
-}
-
-const publishedLatestVersion = await getLatestVersion(pkg.name);
-if (publishedLatestVersion !== pkg.version) {
-  throw new Error(
-    `npm latest is ${publishedLatestVersion}, expected ${pkg.version} after publishing`,
-  );
-}
-
-const result = `Published ${pkg.name}@${pkg.version} as npm latest.`;
+// npm can delay package availability while publish-time scanning completes.
+const result = `Submitted ${pkg.name}@${pkg.version} to npm as latest; availability is pending npm's publish-time scan.`;
 console.log(result);
 
 if (process.env.GITHUB_STEP_SUMMARY) {

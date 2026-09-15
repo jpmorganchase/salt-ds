@@ -166,8 +166,10 @@ const NewWindowTest = (props: NewWindowTestProps) => {
     <NewWindow ref={setIframe} style={{ height: 300 }}>
       <div style={{ padding: 10 }}>
         <StackLayout gap={3}>
-          <H3>This is an iframe with a button</H3>
-          <Text>It represents a portalled window within an application</Text>
+          <StackLayout gap={1}>
+            <H3>This is an iframe with a button</H3>
+            <Text>It represents a portalled window within an application</Text>
+          </StackLayout>
           {showExtraContent && <H3>Some Extra Content!</H3>}
           <FloatingPlatformProvider platform={customPlatform} animationFrame>
             <FloatingComponentProvider Component={FloatingUIComponent}>
@@ -210,10 +212,12 @@ export const CustomFloatingUiPlatform: StoryFn<typeof Tooltip> = (args) => {
   return (
     <NewWindow style={{ width: "600px", height: "550px", border: "none" }}>
       <StackLayout gap={2}>
-        <H3>This is the root of the application</H3>
-        <Text>
-          It represents a global coordinate space (e.g. a users screen)
-        </Text>
+        <StackLayout gap={1}>
+          <H3>This is the root of the application</H3>
+          <Text>
+            It represents a global coordinate space (e.g. a users screen)
+          </Text>
+        </StackLayout>
         <StackLayout gap={10} direction="row">
           <NewWindowTest {...args} />
         </StackLayout>

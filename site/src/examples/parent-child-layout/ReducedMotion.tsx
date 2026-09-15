@@ -24,7 +24,9 @@ export const ReducedMotion = (): ReactElement => {
   return (
     <StackLayout align="center">
       <div>
-        <p>In order to test this on MacOS, follow these steps: </p>
+        <p style={{ marginBottom: "var(--salt-spacing-100)" }}>
+          In order to test this on MacOS, follow these steps:
+        </p>
         <p>
           Go to System Preferences, select the Accessibility category, select
           the Display tab, and enable the Reduce Motion option.
