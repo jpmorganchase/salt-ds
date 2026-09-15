@@ -1,4 +1,4 @@
-import { FlexItem, FlexLayout } from "@salt-ds/core";
+import { FlexItem, FlexLayout, Text } from "@salt-ds/core";
 
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import "../layout/layout.stories.css";
@@ -47,7 +47,7 @@ const DefaultStory: StoryFn<typeof FlexLayout> = (args) => {
     <FlexLayout {...args}>
       {Array.from({ length: 5 }, (_, index) => (
         <div key={`item-${index + 1}`} className="layout-content">
-          <p>Item {index + 1}</p>
+          <Text>Item {index + 1}</Text>
         </div>
       ))}
     </FlexLayout>
@@ -68,7 +68,7 @@ const PaddingAndMargins: StoryFn<typeof FlexLayout> = (args) => {
             key={`item-${index + 1}`}
             padding={1}
           >
-            <p>Item {index + 1}</p>
+            <Text>Item {index + 1}</Text>
           </FlexItem>
         ))}
       </FlexLayout>
@@ -87,7 +87,7 @@ const SeparatedItemsStory: StoryFn<typeof FlexLayout> = (args) => {
     <FlexLayout {...args}>
       {Array.from({ length: 3 }, (_, index) => (
         <div key={`item-${index + 1}`} className="layout-content">
-          <p>Item {index + 1}</p>
+          <Text>Item {index + 1}</Text>
         </div>
       ))}
     </FlexLayout>
@@ -111,7 +111,7 @@ const Responsive: StoryFn<typeof FlexLayout> = (args) => {
             key={`item-${index + 1}`}
             style={{ width: "200px" }}
           >
-            <p>Item {index + 1}</p>
+            <Text>Item {index + 1}</Text>
           </div>
         ))}
       </FlexLayout>

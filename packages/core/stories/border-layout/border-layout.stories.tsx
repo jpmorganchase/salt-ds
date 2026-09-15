@@ -1,4 +1,4 @@
-import { BorderItem, BorderLayout } from "@salt-ds/core";
+import { BorderItem, BorderLayout, Text } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import "../layout/layout.stories.css";
 
@@ -26,12 +26,12 @@ const Template: StoryFn<typeof BorderLayout> = (args) => {
     <BorderLayout {...args}>
       <BorderItem position="north">
         <div className="border-item border-header">
-          <p>North</p>
+          <Text>North</Text>
         </div>
       </BorderItem>
       <BorderItem position="west">
         <div className="border-item border-left">
-          <p>West</p>
+          <Text>West</Text>
         </div>
       </BorderItem>
       <BorderItem position="center">
@@ -41,17 +41,17 @@ const Template: StoryFn<typeof BorderLayout> = (args) => {
             minWidth: 100,
           }}
         >
-          <p>Center</p>
+          <Text>Center</Text>
         </div>
       </BorderItem>
       <BorderItem position="east">
         <div className="border-item border-right">
-          <p>East</p>
+          <Text>East</Text>
         </div>
       </BorderItem>
       <BorderItem position="south">
         <div className="border-item border-bottom">
-          <p>South</p>
+          <Text>South</Text>
         </div>
       </BorderItem>
     </BorderLayout>
@@ -66,12 +66,12 @@ const NoRightPanelTemplate: StoryFn<typeof BorderLayout> = (args) => {
     <BorderLayout {...args}>
       <BorderItem position="north">
         <div className="border-item border-header">
-          <p>North</p>
+          <Text>North</Text>
         </div>
       </BorderItem>
       <BorderItem position="west">
         <div className="border-item border-left">
-          <p>West</p>
+          <Text>West</Text>
         </div>
       </BorderItem>
       <BorderItem position="center">
@@ -81,12 +81,12 @@ const NoRightPanelTemplate: StoryFn<typeof BorderLayout> = (args) => {
             minWidth: 100,
           }}
         >
-          <p>Center</p>
+          <Text>Center</Text>
         </div>
       </BorderItem>
       <BorderItem position="south">
         <div className="border-item border-bottom">
-          <p>South</p>
+          <Text>South</Text>
         </div>
       </BorderItem>
     </BorderLayout>
@@ -101,7 +101,7 @@ const NoLeftPanelTemplate: StoryFn<typeof BorderLayout> = (args) => {
     <BorderLayout {...args}>
       <BorderItem position="north">
         <div className="border-item border-header">
-          <p>North</p>
+          <Text>North</Text>
         </div>
       </BorderItem>
       <BorderItem position="center">
@@ -111,17 +111,17 @@ const NoLeftPanelTemplate: StoryFn<typeof BorderLayout> = (args) => {
             minWidth: 100,
           }}
         >
-          <p>Center</p>
+          <Text>Center</Text>
         </div>
       </BorderItem>
       <BorderItem position="east">
         <div className="border-item border-right">
-          <p>East</p>
+          <Text>East</Text>
         </div>
       </BorderItem>
       <BorderItem position="south">
         <div className="border-item border-bottom">
-          <p>South</p>
+          <Text>South</Text>
         </div>
       </BorderItem>
     </BorderLayout>
@@ -136,7 +136,7 @@ const NoHeaderTemplate: StoryFn<typeof BorderLayout> = (args) => {
     <BorderLayout {...args}>
       <BorderItem position="west">
         <div className="border-item border-left">
-          <p>West</p>
+          <Text>West</Text>
         </div>
       </BorderItem>
       <BorderItem position="center">
@@ -146,17 +146,17 @@ const NoHeaderTemplate: StoryFn<typeof BorderLayout> = (args) => {
             minWidth: 100,
           }}
         >
-          <p>Center</p>
+          <Text>Center</Text>
         </div>
       </BorderItem>
       <BorderItem position="east">
         <div className="border-item border-right">
-          <p>East</p>
+          <Text>East</Text>
         </div>
       </BorderItem>
       <BorderItem position="south">
         <div className="border-item border-bottom">
-          <p>South</p>
+          <Text>South</Text>
         </div>
       </BorderItem>
     </BorderLayout>
@@ -171,7 +171,7 @@ const NoHeaderOrFooterTemplate: StoryFn<typeof BorderLayout> = (args) => {
     <BorderLayout {...args}>
       <BorderItem position="west">
         <div className="border-item border-left">
-          <p>West</p>
+          <Text>West</Text>
         </div>
       </BorderItem>
       <BorderItem position="center">
@@ -181,12 +181,12 @@ const NoHeaderOrFooterTemplate: StoryFn<typeof BorderLayout> = (args) => {
             minWidth: 100,
           }}
         >
-          <p>Center</p>
+          <Text>Center</Text>
         </div>
       </BorderItem>
       <BorderItem position="east">
         <div className="border-item border-right">
-          <p>East</p>
+          <Text>East</Text>
         </div>
       </BorderItem>
     </BorderLayout>
@@ -201,7 +201,7 @@ const FixedPanelsTemplate: StoryFn<typeof BorderLayout> = (args) => {
     <BorderLayout {...args} style={{ width: "60vw" }}>
       <BorderItem position="north">
         <div className="border-item border-header" style={{ height: 50 }}>
-          <p>North</p>
+          <Text>North</Text>
         </div>
       </BorderItem>
       <BorderItem position="west">
@@ -209,7 +209,7 @@ const FixedPanelsTemplate: StoryFn<typeof BorderLayout> = (args) => {
           className="border-item border-left"
           style={{ width: 100, height: 200 }}
         >
-          <p>West</p>
+          <Text>West</Text>
         </div>
       </BorderItem>
       <BorderItem position="center">
@@ -220,7 +220,7 @@ const FixedPanelsTemplate: StoryFn<typeof BorderLayout> = (args) => {
             height: "100%",
           }}
         >
-          <p>Center</p>
+          <Text>Center</Text>
         </div>
       </BorderItem>
       <BorderItem position="east">
@@ -228,12 +228,12 @@ const FixedPanelsTemplate: StoryFn<typeof BorderLayout> = (args) => {
           className="border-item border-right"
           style={{ width: 100, height: 200 }}
         >
-          <p>East</p>
+          <Text>East</Text>
         </div>
       </BorderItem>
       <BorderItem position="south">
         <div className="border-item border-bottom" style={{ height: 50 }}>
-          <p>South</p>
+          <Text>South</Text>
         </div>
       </BorderItem>
     </BorderLayout>

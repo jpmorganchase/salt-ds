@@ -2,6 +2,7 @@ import {
   Button,
   type CircularProgress,
   FlowLayout,
+  H3,
   LinearProgress,
   StackLayout,
 } from "@salt-ds/core";
@@ -79,7 +80,7 @@ WithBuffer.args = {
 
 export const MaxValue: StoryFn<typeof LinearProgress> = () => (
   <StackLayout>
-    <h3 style={{ textAlign: "center" }}> max = 500, value = 250</h3>
+    <H3 style={{ textAlign: "center" }}> max = 500, value = 250</H3>
     <LinearProgress aria-label="Download" value={250} max={500} />
   </StackLayout>
 );

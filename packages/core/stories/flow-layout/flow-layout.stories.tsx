@@ -1,4 +1,4 @@
-import { FLEX_ALIGNMENT_BASE, FlowLayout } from "@salt-ds/core";
+import { FLEX_ALIGNMENT_BASE, FlowLayout, Text } from "@salt-ds/core";
 
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import "../layout/layout.stories.css";
@@ -23,7 +23,7 @@ const DefaultStory: StoryFn<typeof FlowLayout> = (args) => {
     <FlowLayout className="layout-container" {...args}>
       {Array.from({ length: 12 }, (_, index) => (
         <div key={index} style={{ minWidth: 80 }}>
-          <p>Item {index + 1}</p>
+          <Text>Item {index + 1}</Text>
         </div>
       ))}
     </FlowLayout>
