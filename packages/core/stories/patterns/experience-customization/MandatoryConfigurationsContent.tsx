@@ -89,20 +89,13 @@ export const MandatoryConfigurationsContent = () => {
   return (
     <StackLayout gap={0} style={{ maxWidth: 730 }}>
       <StackLayout padding={3}>
-        <div>
-          <Text as="h1" styleAs="h2" style={{ margin: 0 }} id={headingId}>
+        <StackLayout gap="var(--salt-spacing-50)">
+          <Text as="h1" styleAs="h2" id={headingId}>
             <Text color="primary">Customize your experience</Text>
             Choose data access level
           </Text>
-          <Text
-            color="secondary"
-            style={{
-              marginTop: "var(--salt-spacing-50)",
-            }}
-          >
-            A selection is required to proceed
-          </Text>
-        </div>
+          <Text color="secondary">A selection is required to proceed</Text>
+        </StackLayout>
       </StackLayout>
 
       <StackLayout>
@@ -133,9 +126,7 @@ export const MandatoryConfigurationsContent = () => {
                         <StackLayout gap={1}>
                           <StackLayout gap={1} direction="row" align="center">
                             <Icon aria-hidden size={2} />
-                            <Text styleAs="h3" style={{ margin: 0 }}>
-                              {title}
-                            </Text>
+                            <Text styleAs="h3">{title}</Text>
                           </StackLayout>
                           <StackLayout direction="row" gap={1}>
                             <RadioButtonIcon

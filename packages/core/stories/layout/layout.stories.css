@@ -83,12 +83,6 @@
   width: 378px;
 }
 
-.layer-simple-usage p,
-.layer-simple-usage h2,
-.layer-simple-usage h3 {
-  margin: 0;
-}
-
 .layer-simple-usage-center {
   align-items: center;
 }

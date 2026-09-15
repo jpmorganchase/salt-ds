@@ -2,6 +2,9 @@ import {
   AriaAnnouncerProvider,
   Button,
   Card,
+  FlexLayout,
+  StackLayout,
+  Text,
   useAriaAnnouncer,
 } from "@salt-ds/core";
 import { ContentStatus, type ContentStatusProps } from "@salt-ds/lab";
@@ -100,11 +103,13 @@ const RealContent = (props: { messages: string[] }) => {
   announce(messages.join(" "));
 
   return (
-    <>
+    <StackLayout gap={1}>
       {messages.map((m) => (
-        <p key={m}>{m}</p>
+        <Text as="p" key={m}>
+          {m}
+        </Text>
       ))}
-    </>
+    </StackLayout>
   );
 };
 
@@ -152,15 +157,15 @@ export const CardContent: StoryFn<typeof ContentStatus> = () => {
     <AriaAnnouncerProvider>
       <Card>
         {loadingCount % 4 === 2 ? (
-          <>
+          <StackLayout>
             {renderRealContent()}
-            <Button ref={buttonRef} style={{ marginRight: 16 }}>
-              Action 1
-            </Button>
-            <Button style={{ marginRight: 16 }}>Action 2</Button>
-            {/* We don't set the focus for the 'refresh' button like the one within ContentStatus because this is not the primary action a user want to take when real content is shown on screen. */}
-            <Button onClick={startLoading}>Refresh</Button>
-          </>
+            <FlexLayout gap={2}>
+              <Button ref={buttonRef}>Action 1</Button>
+              <Button>Action 2</Button>
+              {/* We don't set the focus for the 'refresh' button like the one within ContentStatus because this is not the primary action a user want to take when real content is shown on screen. */}
+              <Button onClick={startLoading}>Refresh</Button>
+            </FlexLayout>
+          </StackLayout>
         ) : (
           <ContentStatus {...contentStatusProps} buttonRef={buttonRef} />
         )}
