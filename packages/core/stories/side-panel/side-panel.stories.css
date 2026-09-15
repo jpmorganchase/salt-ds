@@ -20,6 +20,5 @@
 }
 
 [data-side-panel-resizable][data-animating] {
-  transition: flex-grow var(--salt-duration-perceptible)
-    var(--salt-animation-timing-function);
+  transition: flex-grow var(--salt-duration-perceptible) var(--salt-animation-timing-function);
 }
