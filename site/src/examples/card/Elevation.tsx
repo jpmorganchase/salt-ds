@@ -13,10 +13,10 @@ export const Elevation = (): ReactElement => (
     columns="repeat(auto-fit, minmax(220px, 1fr))"
     style={{ width: "100%" }}
   >
-    <Card borderColor="default" elevation="flat" style={cardStyle}>
+    <Card elevation="flat" style={cardStyle}>
       Flat
     </Card>
-    <Card borderColor="default" elevation="raised" style={cardStyle}>
+    <Card elevation="raised" style={cardStyle}>
       Raised
     </Card>
   </GridLayout>

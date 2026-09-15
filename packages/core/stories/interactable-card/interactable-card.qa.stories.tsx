@@ -130,7 +130,7 @@ export const VisualStyles: StoryFn<QAContainerProps> = (props) => (
       <H1>Strong border</H1>
       <Text>Content</Text>
     </InteractableCard>
-    <InteractableCard borderColor="default">
+    <InteractableCard>
       <H1>Default border</H1>
       <Text>Content</Text>
     </InteractableCard>

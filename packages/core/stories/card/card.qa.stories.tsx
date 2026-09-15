@@ -140,7 +140,7 @@ export const VisualStyles: StoryFn<QAContainerProps> = (props) => (
       <H1>Strong border</H1>
       <Text>Content</Text>
     </Card>
-    <Card borderColor="default">
+    <Card>
       <H1>Default border</H1>
       <Text>Content</Text>
     </Card>
@@ -167,7 +167,7 @@ export const VisualStyles: StoryFn<QAContainerProps> = (props) => (
       </Card>
     </Panel>
     <Panel variant="tertiary">
-      <Card borderColor="default" variant="ghost">
+      <Card variant="ghost">
         <H1>Ghost card with default border</H1>
         <Text>Ghost border is preserved</Text>
       </Card>

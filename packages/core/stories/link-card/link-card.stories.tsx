@@ -109,11 +109,15 @@ export const Elevation: StoryFn<typeof LinkCard> = (args) => {
 };
 
 export const BorderColor: StoryFn<typeof LinkCard> = (args) => {
-  const borderColors = ["strong", "default", "subtle", "none"] as const;
+  const borderColors = ["strong", undefined, "subtle", "none"] as const;
   return (
     <StackLayout direction="row">
       {borderColors.map((borderColor) => (
-        <StackLayout align="end" key={borderColor} style={{ width: "260px" }}>
+        <StackLayout
+          align="end"
+          key={borderColor ?? "default"}
+          style={{ width: "260px" }}
+        >
           <LinkCard {...args} borderColor={borderColor} href="#">
             <StackLayout gap={1}>
               <H3>Sustainable investing products</H3>
@@ -124,7 +128,7 @@ export const BorderColor: StoryFn<typeof LinkCard> = (args) => {
               </Text>
             </StackLayout>
           </LinkCard>
-          <Label>Border color: {borderColor}</Label>
+          <Label>Border color: {borderColor ?? "default"}</Label>
         </StackLayout>
       ))}
     </StackLayout>

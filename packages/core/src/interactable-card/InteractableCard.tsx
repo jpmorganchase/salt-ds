@@ -31,7 +31,7 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Border color strength.
    */
-  borderColor?: "strong" | "default" | "subtle" | "none";
+  borderColor?: "strong" | "subtle" | "none";
   /**
    * @deprecated since 1.23.0. Use the `accent` prop instead.
    */
@@ -66,7 +66,7 @@ export const InteractableCard = forwardRef<
     children,
     className,
     disabled: disabledProp,
-    elevation,
+    elevation = "raised",
     variant = "primary",
     value,
     onBlur,
@@ -165,9 +165,7 @@ export const InteractableCard = forwardRef<
       className={clsx(
         withBaseName(),
         withBaseName(variant),
-        borderColor &&
-          borderColor !== "default" &&
-          withBaseName(`borderColor${capitalize(borderColor)}`),
+        borderColor && withBaseName(`borderColor${capitalize(borderColor)}`),
         {
           [withBaseName("accent")]: accentValue,
           [withBaseName(`accent${capitalize(accentValue ?? "")}`)]: accentValue,

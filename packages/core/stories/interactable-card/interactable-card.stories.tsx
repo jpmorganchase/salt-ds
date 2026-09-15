@@ -147,11 +147,15 @@ export const Elevation: StoryFn<typeof InteractableCard> = (args) => {
 };
 
 export const BorderColor: StoryFn<typeof InteractableCard> = (args) => {
-  const borderColors = ["strong", "default", "subtle", "none"] as const;
+  const borderColors = ["strong", undefined, "subtle", "none"] as const;
   return (
     <StackLayout direction="row">
       {borderColors.map((borderColor) => (
-        <StackLayout align="end" key={borderColor} style={{ width: "256px" }}>
+        <StackLayout
+          align="end"
+          key={borderColor ?? "default"}
+          style={{ width: "256px" }}
+        >
           <InteractableCard {...args} borderColor={borderColor}>
             <StackLayout gap={1}>
               <H3>Sustainable investing products</H3>
@@ -162,7 +166,7 @@ export const BorderColor: StoryFn<typeof InteractableCard> = (args) => {
               </Text>
             </StackLayout>
           </InteractableCard>
-          <Label>Border color: {borderColor}</Label>
+          <Label>Border color: {borderColor ?? "default"}</Label>
         </StackLayout>
       ))}
     </StackLayout>

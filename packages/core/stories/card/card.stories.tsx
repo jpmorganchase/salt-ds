@@ -267,11 +267,15 @@ export const Elevation: StoryFn<typeof Card> = (args) => {
 };
 
 export const BorderColor: StoryFn<typeof Card> = (args) => {
-  const borderColors = ["strong", "default", "subtle", "none"] as const;
+  const borderColors = ["strong", undefined, "subtle", "none"] as const;
   return (
     <StackLayout direction="row">
       {borderColors.map((borderColor) => (
-        <StackLayout align="end" key={borderColor} style={{ width: "260px" }}>
+        <StackLayout
+          align="end"
+          key={borderColor ?? "default"}
+          style={{ width: "260px" }}
+        >
           <Card {...args} borderColor={borderColor}>
             <CardContent>
               <StackLayout gap={1}>
@@ -284,7 +288,7 @@ export const BorderColor: StoryFn<typeof Card> = (args) => {
               </StackLayout>
             </CardContent>
           </Card>
-          <Label>Border color: {borderColor}</Label>
+          <Label>Border color: {borderColor ?? "default"}</Label>
         </StackLayout>
       ))}
     </StackLayout>

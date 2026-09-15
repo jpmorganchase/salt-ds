@@ -22,7 +22,7 @@ export interface LinkCardProps extends ComponentPropsWithoutRef<"a"> {
   /**
    * Border color strength.
    */
-  borderColor?: "strong" | "default" | "subtle" | "none";
+  borderColor?: "strong" | "subtle" | "none";
   /**
    * Styling variant; defaults to "primary".
    */
@@ -36,7 +36,7 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
       borderColor,
       children,
       className,
-      elevation,
+      elevation = "raised",
       href,
       variant = "primary",
       ...rest
@@ -56,9 +56,7 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
         className={clsx(
           withBaseName(),
           withBaseName(variant),
-          borderColor &&
-            borderColor !== "default" &&
-            withBaseName(`borderColor${capitalize(borderColor)}`),
+          borderColor && withBaseName(`borderColor${capitalize(borderColor)}`),
           {
             [withBaseName("accent")]: accent,
             [withBaseName(`accent${capitalize(accent ?? "")}`)]: accent,

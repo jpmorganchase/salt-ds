@@ -4,7 +4,6 @@
   border-style: var(--saltLinkCard-borderStyle, var(--salt-borderStyle-solid));
   border-width: var(--saltLinkCard-borderWidth, var(--salt-size-fixed-100));
   border-color: var(--saltLinkCard-borderColor, var(--linkCard-borderColor));
-  box-shadow: var(--salt-overlayable-shadow);
   display: block;
   overflow: hidden;
   padding: var(--saltLinkCard-padding, var(--card-padding));

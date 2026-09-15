@@ -53,12 +53,7 @@ export const BorderColor = (): ReactElement => {
         >
           Strong
         </Card>
-        <Card
-          borderColor="default"
-          elevation="flat"
-          style={cardStyle}
-          variant={variant}
-        >
+        <Card elevation="flat" style={cardStyle} variant={variant}>
           Default
         </Card>
         <Card
