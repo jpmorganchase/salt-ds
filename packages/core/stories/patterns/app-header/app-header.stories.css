@@ -51,7 +51,7 @@
 }
 
 .appHeaderPattern-firstUtilityItem {
-  margin-top: var(--salt-spacing-300);
+  padding-top: var(--salt-spacing-300);
 }
 
 .appHeaderPattern-main {
