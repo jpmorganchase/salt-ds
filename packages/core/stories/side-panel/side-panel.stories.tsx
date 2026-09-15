@@ -47,6 +47,7 @@ import {
   type ChangeEventHandler,
   type CSSProperties,
   type ReactNode,
+  version as reactVersion,
   useCallback,
   useRef,
   useState,
@@ -855,6 +856,13 @@ export const Resizable: StoryFn = () => {
       </div>
     </SidePanelProvider>
   );
+};
+
+Resizable.parameters = {
+  axe: {
+    // react-resizable-panels v4 requires React 18 and uses React.useId.
+    skip: Number.parseInt(reactVersion, 10) < 18,
+  },
 };
 
 const Nav = () => (
