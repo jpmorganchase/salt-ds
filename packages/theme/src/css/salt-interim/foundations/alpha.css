@@ -80,18 +80,16 @@
   --salt-color-topaz-500-40a: rgba(var(--salt-color-topaz-500-rgb), 0.4);
   --salt-color-topaz-800-40a: rgba(var(--salt-color-topaz-800-rgb), 0.4);
 
-  --salt-color-dove-gray-500-10a: rgba(var(--salt-color-dove-gray-500-rgb), 0.1);
-  --salt-color-dove-gray-500-40a: rgba(var(--salt-color-dove-gray-500-rgb), 0.4);
-  --salt-color-dove-gray-700-40a: rgba(var(--salt-color-dove-gray-700-rgb), 0.4);
-  --salt-color-dove-gray-900-5a: rgba(var(--salt-color-dove-gray-900-rgb), 0.05);
-  --salt-color-dove-gray-900-10a: rgba(var(--salt-color-dove-gray-900-rgb), 0.1);
-  --salt-color-dove-gray-900-15a: rgba(var(--salt-color-dove-gray-900-rgb), 0.15);
-  --salt-color-dove-gray-900-20a: rgba(var(--salt-color-dove-gray-900-rgb), 0.2);
-  --salt-color-dove-gray-900-30a: rgba(var(--salt-color-dove-gray-900-rgb), 0.3);
-  --salt-color-dove-gray-900-40a: rgba(var(--salt-color-dove-gray-900-rgb), 0.4);
-  --salt-color-dove-gray-900-50a: rgba(var(--salt-color-dove-gray-900-rgb), 0.5);
-  --salt-color-dove-gray-900-65a: rgba(var(--salt-color-dove-gray-900-rgb), 0.65);
-  --salt-color-dove-gray-900-80a: rgba(var(--salt-color-dove-gray-900-rgb), 0.8);
-
-  --salt-color-pigeon-gray-300-40a: rgba(var(--salt-color-pigeon-gray-300-rgb), 0.4);
+  --salt-color-dove-500-10a: rgba(var(--salt-color-dove-500-rgb), 0.1);
+  --salt-color-dove-500-40a: rgba(var(--salt-color-dove-500-rgb), 0.4);
+  --salt-color-dove-700-40a: rgba(var(--salt-color-dove-700-rgb), 0.4);
+  --salt-color-dove-900-5a: rgba(var(--salt-color-dove-900-rgb), 0.05);
+  --salt-color-dove-900-10a: rgba(var(--salt-color-dove-900-rgb), 0.1);
+  --salt-color-dove-900-15a: rgba(var(--salt-color-dove-900-rgb), 0.15);
+  --salt-color-dove-900-20a: rgba(var(--salt-color-dove-900-rgb), 0.2);
+  --salt-color-dove-900-30a: rgba(var(--salt-color-dove-900-rgb), 0.3);
+  --salt-color-dove-900-40a: rgba(var(--salt-color-dove-900-rgb), 0.4);
+  --salt-color-dove-900-50a: rgba(var(--salt-color-dove-900-rgb), 0.5);
+  --salt-color-dove-900-65a: rgba(var(--salt-color-dove-900-rgb), 0.65);
+  --salt-color-dove-900-80a: rgba(var(--salt-color-dove-900-rgb), 0.8);
 }
