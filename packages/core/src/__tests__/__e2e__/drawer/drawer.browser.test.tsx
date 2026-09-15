@@ -1,11 +1,34 @@
+import {
+  Button,
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  Text,
+} from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { composeStories } from "@storybook/react-vite";
+import { useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as drawerStories from "~stories/drawer/drawer.stories";
 
-const { Default, OptionalCloseAction, InitialFocusIndex, InitialFocusRef } =
-  composeStories(drawerStories);
+const {
+  Default,
+  OptionalCloseAction,
+  InitialFocusIndex,
+  InitialFocusRef,
+  Header,
+} = composeStories(drawerStories);
+
+const headingName = "Payments Check deposit #1278";
+const longText = "Pending transaction review. ".repeat(200);
+
+const CloseButton = () => (
+  <Button aria-label="Close drawer" appearance="transparent">
+    <CloseIcon aria-hidden />
+  </Button>
+);
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -34,11 +57,11 @@ describe("GIVEN a Drawer", () => {
     await expect.element(page.getByTestId("scrim")).toBeInTheDocument();
     await expect.element(page.getByRole("dialog")).toBeVisible();
     await expect
-      .element(page.getByRole("button", { name: "Close Drawer" }))
+      .element(page.getByRole("button", { name: "Close drawer" }))
       .toHaveFocus();
     const callCount = consoleSpy.mock.calls.length;
 
-    await page.getByRole("button", { name: "Close Drawer" }).click();
+    await page.getByRole("button", { name: "Close drawer" }).click();
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
     expect(consoleSpy).toHaveBeenCalledTimes(callCount + 1);
 
@@ -57,9 +80,19 @@ describe("GIVEN a Drawer", () => {
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
   });
 
+  it("disableDismiss ignores the scrim but still permits Escape", async () => {
+    await renderWithSalt(<Default disableDismiss />);
+    await page.getByRole("button", { name: "Open Primary Drawer" }).click();
+    await expect.element(page.getByRole("dialog")).toBeVisible();
+    dismissViaScrim();
+    await expect.element(page.getByRole("dialog")).toBeInTheDocument();
+    await userEvent.keyboard("{Escape}");
+    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+  });
+
   it("traps focus when a close action is present", async () => {
     await renderWithSalt(<Default />);
-    const closeButton = page.getByRole("button", { name: "Close Drawer" });
+    const closeButton = page.getByRole("button", { name: "Close drawer" });
     await page.getByRole("button", { name: "Open Primary Drawer" }).click();
     await expect.element(closeButton).toHaveFocus();
     await userEvent.tab();
@@ -119,6 +152,34 @@ describe("GIVEN a Drawer", () => {
       .toHaveFocus();
   });
 
+  it("returns focus to the trigger when closed from the close button", async () => {
+    await renderWithSalt(<Default />);
+    const openButton = page.getByRole("button", {
+      name: "Open Primary Drawer",
+    });
+
+    await openButton.click();
+    await expect.element(page.getByRole("dialog")).toBeVisible();
+
+    await page.getByRole("button", { name: "Close drawer" }).click();
+    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+    await expect.element(openButton).toHaveFocus();
+  });
+
+  it("returns focus to the trigger when dismissed with Escape", async () => {
+    await renderWithSalt(<Default />);
+    const openButton = page.getByRole("button", {
+      name: "Open Primary Drawer",
+    });
+
+    await openButton.click();
+    await expect.element(page.getByRole("dialog")).toBeVisible();
+
+    await userEvent.keyboard("{Escape}");
+    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+    await expect.element(openButton).toHaveFocus();
+  });
+
   it("supports an action configured to close the drawer", async () => {
     await renderWithSalt(<OptionalCloseAction />);
     await page.getByRole("button", { name: "Open Drawer" }).click();
@@ -136,5 +197,166 @@ describe("GIVEN a Drawer", () => {
     await expect
       .element(page.getByRole("textbox", { name: "Third" }))
       .toHaveFocus();
+  });
+
+  it("exposes overflowing content as a region reachable by keyboard", async () => {
+    await renderWithSalt(<Header />);
+    await page.getByRole("button", { name: "Open Drawer" }).click();
+
+    const content = page.getByRole("region", { name: headingName });
+    await expect.element(content).toBeVisible();
+    await expect
+      .element(page.getByRole("button", { name: "Close drawer" }))
+      .toHaveFocus();
+    await userEvent.tab();
+    await expect.element(content).toHaveFocus();
+  });
+
+  it("falls back to the drawer's aria-label to name the content region", async () => {
+    await renderWithSalt(
+      <Drawer
+        open
+        position="right"
+        style={{ width: 400 }}
+        aria-label="Notifications"
+      >
+        <DrawerHeader actions={<CloseButton />} />
+        <DrawerContent>
+          <Text>{longText}</Text>
+        </DrawerContent>
+      </Drawer>,
+    );
+
+    const region = page.getByRole("region", { name: "Notifications" });
+    await expect.element(region).toBeVisible();
+    await expect.element(region).toHaveAttribute("tabindex", "0");
+  });
+});
+
+describe("GIVEN a Drawer with sections nested in a fragment", () => {
+  it("still applies the sectioned layout", async () => {
+    await renderWithSalt(
+      <Drawer
+        open
+        position="right"
+        style={{ width: 400 }}
+        aria-label="Notifications"
+      >
+        <DrawerHeader actions={<CloseButton />} />
+        <DrawerContent>
+          <Text>Pending transaction review</Text>
+        </DrawerContent>
+      </Drawer>,
+    );
+
+    await expect
+      .element(page.getByRole("dialog"))
+      .toHaveClass("saltDrawer-sectioned");
+  });
+});
+
+describe("GIVEN a Drawer with a DrawerHeader", () => {
+  it("names and describes the drawer from the header", async () => {
+    await renderWithSalt(<Header />);
+    await page.getByRole("button", { name: "Open Drawer" }).click();
+
+    const drawer = page.getByRole("dialog");
+    await expect.element(drawer).toHaveAccessibleName(headingName);
+    await expect
+      .element(drawer)
+      .toHaveAccessibleDescription("Pending transaction review");
+    await expect
+      .element(page.getByRole("heading", { level: 2, name: headingName }))
+      .toBeVisible();
+  });
+
+  it("closes from a close button placed in the header actions", async () => {
+    await renderWithSalt(<Header />);
+    await page.getByRole("button", { name: "Open Drawer" }).click();
+
+    const closeButton = page.getByRole("button", { name: "Close drawer" });
+    await expect.element(closeButton).toHaveFocus();
+    await closeButton.click();
+    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("leaves content that fits out of the tab order", async () => {
+    await renderWithSalt(
+      <Drawer open position="right" style={{ width: 400 }}>
+        <DrawerHeader header="Check deposit #1278" actions={<CloseButton />} />
+        <DrawerContent>
+          <Text>Pending transaction review</Text>
+        </DrawerContent>
+      </Drawer>,
+    );
+
+    const closeButton = page.getByRole("button", { name: "Close drawer" });
+    await expect.element(closeButton).toHaveFocus();
+    await expect.element(page.getByRole("region")).not.toBeInTheDocument();
+    await userEvent.tab();
+    await expect.element(closeButton).toHaveFocus();
+  });
+
+  it("restores the drawer's own labelling when the header is removed", async () => {
+    function TogglingHeader() {
+      const [showHeader, setShowHeader] = useState(true);
+
+      return (
+        <Drawer
+          open
+          position="right"
+          style={{ width: 400 }}
+          aria-label="Delivery details"
+        >
+          {showHeader && (
+            <DrawerHeader
+              header="Check deposit #1278"
+              description="Pending transaction review"
+            />
+          )}
+          <DrawerContent>
+            <Button onClick={() => setShowHeader(false)}>Remove header</Button>
+          </DrawerContent>
+        </Drawer>
+      );
+    }
+
+    await renderWithSalt(<TogglingHeader />);
+
+    const drawer = page.getByRole("dialog");
+    await expect.element(drawer).toHaveAccessibleName("Check deposit #1278");
+    await expect
+      .element(drawer)
+      .toHaveAccessibleDescription("Pending transaction review");
+
+    await page.getByRole("button", { name: "Remove header" }).click();
+    await expect.element(drawer).toHaveAccessibleName("Delivery details");
+    await expect.element(drawer).not.toHaveAccessibleDescription();
+  });
+
+  it("supports a header that only carries actions", async () => {
+    await renderWithSalt(
+      <Drawer
+        open
+        position="right"
+        style={{ width: 400 }}
+        aria-label="Notifications"
+      >
+        <DrawerHeader actions={<CloseButton />} />
+        <DrawerContent>
+          <Text>Pending transaction review</Text>
+        </DrawerContent>
+      </Drawer>,
+    );
+
+    const drawer = page.getByRole("dialog");
+    await expect.element(drawer).toHaveAccessibleName("Notifications");
+    await expect.element(drawer).not.toHaveAttribute("aria-labelledby");
+    await expect
+      .element(page.getByRole("heading", { level: 2 }))
+      .not.toBeInTheDocument();
+    await expect
+      .element(page.getByRole("button", { name: "Close drawer" }))
+      .toBeVisible();
   });
 });

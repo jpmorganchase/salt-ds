@@ -1,4 +1,12 @@
-import { Button, Drawer, DrawerCloseButton, StackLayout } from "@salt-ds/core";
+import {
+  Button,
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
 
 export const Default = (): ReactElement => {
@@ -10,36 +18,79 @@ export const Default = (): ReactElement => {
     <StackLayout>
       <Button onClick={() => setOpenPrimary(true)}>Open Primary Drawer</Button>
       <Drawer
-        aria-label="Primary drawer"
         open={openPrimary}
         onOpenChange={(newOpen) => setOpenPrimary(newOpen)}
-        style={{ width: 200 }}
+        style={{ width: 300 }}
       >
-        <DrawerCloseButton onClick={() => setOpenPrimary(false)} />
+        <DrawerHeader
+          header="Primary drawer"
+          actions={
+            <Button
+              aria-label="Close drawer"
+              appearance="transparent"
+              onClick={() => setOpenPrimary(false)}
+            >
+              <CloseIcon aria-hidden />
+            </Button>
+          }
+        />
+        <DrawerContent>
+          <Text>Primary drawers sit on the container primary background.</Text>
+        </DrawerContent>
       </Drawer>
       <Button onClick={() => setOpenSecondary(true)}>
         Open Secondary Drawer
       </Button>
       <Drawer
-        aria-label="Secondary drawer"
         open={openSecondary}
         onOpenChange={(newOpen) => setOpenSecondary(newOpen)}
         variant="secondary"
-        style={{ width: 200 }}
+        style={{ width: 300 }}
       >
-        <DrawerCloseButton onClick={() => setOpenSecondary(false)} />
+        <DrawerHeader
+          header="Secondary drawer"
+          actions={
+            <Button
+              aria-label="Close drawer"
+              appearance="transparent"
+              onClick={() => setOpenSecondary(false)}
+            >
+              <CloseIcon aria-hidden />
+            </Button>
+          }
+        />
+        <DrawerContent>
+          <Text>
+            Secondary drawers sit on the container secondary background.
+          </Text>
+        </DrawerContent>
       </Drawer>
       <Button onClick={() => setOpenTertiary(true)}>
         Open Tertiary Drawer
       </Button>
       <Drawer
-        aria-label="Tertiary drawer"
         open={openTertiary}
         onOpenChange={(newOpen) => setOpenTertiary(newOpen)}
         variant="tertiary"
-        style={{ width: 200 }}
+        style={{ width: 300 }}
       >
-        <DrawerCloseButton onClick={() => setOpenTertiary(false)} />
+        <DrawerHeader
+          header="Tertiary drawer"
+          actions={
+            <Button
+              aria-label="Close drawer"
+              appearance="transparent"
+              onClick={() => setOpenTertiary(false)}
+            >
+              <CloseIcon aria-hidden />
+            </Button>
+          }
+        />
+        <DrawerContent>
+          <Text>
+            Tertiary drawers sit on the container tertiary background.
+          </Text>
+        </DrawerContent>
       </Drawer>
     </StackLayout>
   );

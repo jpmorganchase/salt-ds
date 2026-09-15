@@ -12,6 +12,7 @@ import {
   forwardRef,
   type PropsWithChildren,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 import { Scrim } from "../scrim";
@@ -20,8 +21,11 @@ import {
   useFloatingComponent,
   useFloatingUI,
   useForkRef,
+  useId,
 } from "../utils";
 import drawerCss from "./Drawer.css";
+import { DrawerContext } from "./DrawerContext";
+import { hasDrawerSection } from "./hasDrawerSection";
 
 interface ConditionalScrimWrapperProps extends PropsWithChildren {
   condition: boolean;
@@ -52,7 +56,7 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    */
   variant?: "primary" | "secondary" | "tertiary";
   /**
-   * Prevent the dialog closing on click away
+   * Prevent the drawer closing on click away
    * */
   disableDismiss?: boolean;
   /**
@@ -82,6 +86,9 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       disableDismiss,
       disableScrim,
       initialFocus,
+      id,
+      "aria-labelledby": ariaLabelledBy,
+      "aria-describedby": ariaDescribedBy,
       ...rest
     } = props;
 
@@ -92,7 +99,15 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       window: targetWindow,
     });
 
+    const drawerId = useId(id);
+
+    const sectioned = hasDrawerSection(children);
+
     const [showComponent, setShowComponent] = useState(false);
+    const [headerId, setHeaderId] = useState<string | undefined>(undefined);
+    const [descriptionId, setDescriptionId] = useState<string | undefined>(
+      undefined,
+    );
     const { Component: FloatingComponent } = useFloatingComponent();
 
     const { context, floating, elements } = useFloatingUI({
@@ -102,7 +117,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     const { getFloatingProps } = useInteractions([
       useClick(context),
-      useDismiss(context, { enabled: !disableDismiss }),
+      useDismiss(context, { outsidePress: !disableDismiss }),
     ]);
 
     const handleRef = useForkRef<HTMLDivElement>(floating, ref);
@@ -120,36 +135,53 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [open, showComponent]);
 
+    const contextValue = useMemo(
+      () => ({
+        drawerId,
+        headerId,
+        setHeaderId,
+        descriptionId,
+        setDescriptionId,
+      }),
+      [drawerId, headerId, descriptionId],
+    );
+
     return (
-      <ConditionalScrimWrapper condition={showComponent && !disableScrim}>
-        <FloatingComponent
-          open={showComponent}
-          ref={handleRef}
-          role={"dialog"}
-          width={elements.floating?.offsetWidth}
-          height={elements.floating?.offsetHeight}
-          aria-modal="true"
-          focusManagerProps={{
-            context: context,
-            initialFocus,
-            outsideElementsInert: true,
-          }}
-          className={clsx(
-            withBaseName(),
-            withBaseName(position),
-            {
-              [withBaseName("enterAnimation")]: open,
-              [withBaseName("exitAnimation")]: !open,
-              [withBaseName(variant)]: variant,
-            },
-            className,
-          )}
-          {...getFloatingProps()}
-          {...rest}
-        >
-          {children}
-        </FloatingComponent>
-      </ConditionalScrimWrapper>
+      <DrawerContext.Provider value={contextValue}>
+        <ConditionalScrimWrapper condition={showComponent && !disableScrim}>
+          <FloatingComponent
+            id={drawerId}
+            open={showComponent}
+            ref={handleRef}
+            role={"dialog"}
+            width={elements.floating?.offsetWidth}
+            height={elements.floating?.offsetHeight}
+            aria-modal="true"
+            aria-labelledby={clsx(ariaLabelledBy, headerId) || undefined}
+            aria-describedby={clsx(ariaDescribedBy, descriptionId) || undefined}
+            focusManagerProps={{
+              context: context,
+              initialFocus,
+              outsideElementsInert: true,
+            }}
+            className={clsx(
+              withBaseName(),
+              withBaseName(position),
+              {
+                [withBaseName("enterAnimation")]: open,
+                [withBaseName("exitAnimation")]: !open,
+                [withBaseName(variant)]: variant,
+                [withBaseName("sectioned")]: sectioned,
+              },
+              className,
+            )}
+            {...getFloatingProps()}
+            {...rest}
+          >
+            {children}
+          </FloatingComponent>
+        </ConditionalScrimWrapper>
+      </DrawerContext.Provider>
     );
   },
 );
