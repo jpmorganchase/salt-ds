@@ -1,0 +1,39 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+### When to use
+
+- To represent a collection of users, entities or objects that belong to the same group in a compact space, including collections whose size varies and may contain a single member.
+- To summarize group membership when there isn’t enough room to show every member individually.
+
+### When not to use
+
+- When every member must remain individually visible and actionable at all times.
+- To represent one user, entity or object that isn’t part of a collection. Instead, use [`Avatar`](../avatar).
+
+## Import
+
+To import `AvatarGroup` and related components from the lab Salt package, use:
+
+```js
+import { AvatarGroup, AvatarGroupCount } from "@salt-ds/lab";
+```
+
+## Props
+
+### `AvatarGroup`
+
+<PropsTable packageName="lab" componentName="AvatarGroup" />
+
+### `AvatarGroupCount`
+
+<PropsTable packageName="lab" componentName="AvatarGroupCount" />

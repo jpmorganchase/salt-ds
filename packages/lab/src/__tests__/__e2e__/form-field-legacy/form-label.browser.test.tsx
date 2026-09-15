@@ -28,7 +28,7 @@ describe("GIVEN a FormLabel", () => {
           displayedNecessity={displayedNecessity}
         />,
       );
-      const assertion = expect.element(page.getByText(necessity));
+      const assertion = expect.element(page.getByText(`(${necessity})`));
       if (visible) await assertion.toBeInTheDocument();
       else await assertion.not.toBeInTheDocument();
     },

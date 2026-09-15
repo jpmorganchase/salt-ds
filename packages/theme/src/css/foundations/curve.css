@@ -1,5 +1,5 @@
 .salt-density-high {
-  --salt-curve-0: 0;
+  --salt-curve-0: 0px;
   --salt-curve-50: 1px;
   --salt-curve-100: 2px;
   --salt-curve-150: 3px;
@@ -10,7 +10,7 @@
 }
 
 .salt-density-medium {
-  --salt-curve-0: 0;
+  --salt-curve-0: 0px;
   --salt-curve-50: 2px;
   --salt-curve-100: 4px;
   --salt-curve-150: 6px;
@@ -21,7 +21,7 @@
 }
 
 .salt-density-low {
-  --salt-curve-0: 0;
+  --salt-curve-0: 0px;
   --salt-curve-50: 3px;
   --salt-curve-100: 6px;
   --salt-curve-150: 9px;
@@ -33,7 +33,7 @@
 
 .salt-density-mobile,
 .salt-density-touch {
-  --salt-curve-0: 0;
+  --salt-curve-0: 0px;
   --salt-curve-50: 4px;
   --salt-curve-100: 8px;
   --salt-curve-150: 12px;
