@@ -4,6 +4,7 @@ import {
   CheckboxGroup,
   Divider,
   Overlay,
+  OverlayFooter,
   OverlayHeader,
   OverlayPanel,
   OverlayPanelContent,
@@ -165,6 +166,51 @@ export const CloseButton = ({ onOpenChange }: OverlayProps) => {
   );
 };
 
+export const WithFooter = ({ onOpenChange }: OverlayProps) => {
+  const [open, setOpen] = useState(false);
+  const id = useId();
+
+  const onChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+    onOpenChange?.(newOpen);
+  };
+
+  const handleClose = () => setOpen(false);
+
+  return (
+    <Overlay open={open} onOpenChange={onChange}>
+      <OverlayTrigger>
+        <Button>Show Overlay</Button>
+      </OverlayTrigger>
+      <OverlayPanel style={{ width: 320 }} aria-labelledby={id}>
+        <OverlayHeader header="Review changes" id={id} />
+        <OverlayPanelContent style={{ height: 120 }}>
+          <StackLayout>
+            <Text>
+              Review the account updates before saving. The footer remains
+              available while this content scrolls.
+            </Text>
+            <Text>
+              Contact details, notification preferences, and security settings
+              will be updated when you save.
+            </Text>
+            <Text>
+              You can cancel to close the overlay without applying these
+              changes.
+            </Text>
+          </StackLayout>
+        </OverlayPanelContent>
+        <OverlayFooter>
+          <Button appearance="bordered" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button onClick={handleClose}>Save changes</Button>
+        </OverlayFooter>
+      </OverlayPanel>
+    </Overlay>
+  );
+};
+
 export const LongContent = () => {
   const [open, setOpen] = useState(false);
 
@@ -280,33 +326,34 @@ const WithActionsContent = ({
 
   return (
     <>
-      <h3 id={id} style={{ marginTop: 0 }}>
-        Export
-      </h3>
-      <StackLayout gap={1}>
-        <Checkbox
-          indeterminate={indeterminate}
-          checked={!indeterminate}
-          label={`${controlledValues.length} of 2 selected`}
-          onChange={handleChange}
-        />
-        <Divider variant="secondary" />
-        <CheckboxGroup
-          checkedValues={controlledValues}
-          onChange={handleGroupChange}
-        >
-          {checkboxesData.map((data) => (
-            <Checkbox key={data.value} {...data} />
-          ))}
-        </CheckboxGroup>
-        <Divider variant="secondary" />
-        <Button
-          style={{ float: "right", marginRight: 2 }}
-          onClick={handleExport}
-        >
+      <OverlayPanelContent>
+        <h3 id={id} style={{ marginTop: 0 }}>
+          Export
+        </h3>
+        <StackLayout gap={1}>
+          <Checkbox
+            indeterminate={indeterminate}
+            checked={!indeterminate}
+            label={`${controlledValues.length} of 2 selected`}
+            onChange={handleChange}
+          />
+          <Divider variant="secondary" />
+          <CheckboxGroup
+            checkedValues={controlledValues}
+            onChange={handleGroupChange}
+          >
+            {checkboxesData.map((data) => (
+              <Checkbox key={data.value} {...data} />
+            ))}
+          </CheckboxGroup>
+          <Divider variant="secondary" />
+        </StackLayout>
+      </OverlayPanelContent>
+      <OverlayFooter>
+        <Button onClick={handleExport} style={{ width: "100%" }}>
           Export
         </Button>
-      </StackLayout>
+      </OverlayFooter>
     </>
   );
 };
@@ -331,14 +378,12 @@ export const WithActions = ({ onOpenChange }: OverlayProps) => {
         }}
         aria-labelledby={id}
       >
-        <OverlayPanelContent>
-          <WithActionsContent
-            onClose={() => {
-              setOpen(false);
-            }}
-            id={id}
-          />
-        </OverlayPanelContent>
+        <WithActionsContent
+          onClose={() => {
+            setOpen(false);
+          }}
+          id={id}
+        />
       </OverlayPanel>
     </Overlay>
   );

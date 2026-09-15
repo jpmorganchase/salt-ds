@@ -1,15 +1,17 @@
 import {
   Button,
+  H3,
   Overlay,
   OverlayPanel,
   OverlayPanelContent,
   type OverlayProps,
   OverlayTrigger,
+  StackLayout,
+  Text,
   Tooltip,
   useId,
 } from "@salt-ds/core";
 import type { ReactElement } from "react";
-import styles from "./index.module.css";
 
 export const OverlayTemplate = (props: OverlayProps): ReactElement => {
   const { placement, ...rest } = props;
@@ -22,17 +24,18 @@ export const OverlayTemplate = (props: OverlayProps): ReactElement => {
       </OverlayTrigger>
       <OverlayPanel aria-labelledby={id}>
         <OverlayPanelContent>
-          <h3 id={id} className={styles.contentHeading}>
+          <H3
+            id={id}
+            style={{ margin: 0, marginBottom: "var(--salt-spacing-100)" }}
+          >
             Title
-          </h3>
-          <div>
-            Content of Overlay
-            <br />
-            <br />
-            <Tooltip content={"I'm a tooltip"}>
+          </H3>
+          <StackLayout gap={1}>
+            <Text>Content of Overlay</Text>
+            <Tooltip content="I'm a tooltip">
               <Button>hover me</Button>
             </Tooltip>
-          </div>
+          </StackLayout>
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
@@ -40,16 +43,10 @@ export const OverlayTemplate = (props: OverlayProps): ReactElement => {
 };
 
 export const Placement = (): ReactElement => (
-  <div>
-    <div style={{ marginBottom: 10 }}>
-      <OverlayTemplate placement="top" />
-    </div>
-    <div style={{ marginBottom: 40 }}>
-      <OverlayTemplate placement="bottom" />
-    </div>
-    <div style={{ marginBottom: 10 }}>
-      <OverlayTemplate placement="left" />
-    </div>
+  <StackLayout gap={1}>
+    <OverlayTemplate placement="top" />
+    <OverlayTemplate placement="bottom" />
+    <OverlayTemplate placement="left" />
     <OverlayTemplate placement="right" />
-  </div>
+  </StackLayout>
 );
