@@ -1,4 +1,4 @@
-import { Button, GridItem, GridLayout } from "@salt-ds/core";
+import { Button, GridItem, GridLayout, Text } from "@salt-ds/core";
 import { ExpandIcon, MinimizeIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { type ReactElement, useState } from "react";
@@ -42,7 +42,7 @@ export const ExpandingAndCollapsingItems = (): ReactElement => {
 
       {Array.from({ length: 7 }, (_, index) => (
         <GridItem key={index} className={styles.gridItem}>
-          <p>{index + 2}</p>
+          <Text>{index + 2}</Text>
         </GridItem>
       ))}
     </GridLayout>

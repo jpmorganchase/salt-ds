@@ -49,10 +49,8 @@ export const TopDrawer = (): ReactElement => {
       >
         <StackLayout>
           <DrawerCloseButton onClick={handleClose} />
-          <div>
-            <H2 id={id} style={{ marginBottom: "var(--salt-spacing-200)" }}>
-              Section title
-            </H2>
+          <StackLayout gap={2}>
+            <H2 id={id}>Section title</H2>
             <Text>
               This placeholder text is provided to illustrate how content will
               appear within the component. The sentences are intended for
@@ -61,7 +59,7 @@ export const TopDrawer = (): ReactElement => {
               design. Adjust the wording as needed to fit your use case or
               display requirements.
             </Text>
-          </div>
+          </StackLayout>
           <FlexLayout>
             {Array.from({ length: 4 }, (_, index) => (
               <FormFieldExample key={index} />

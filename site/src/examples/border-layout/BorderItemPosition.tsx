@@ -65,28 +65,24 @@ export const BorderItemPosition = (): ReactElement => {
           South
         </BorderItem>
       </BorderLayout>
-      <div className={borderItemPositionStyles.radioButtonGroup}>
-        <FormField>
-          <FormFieldLabel>Position</FormFieldLabel>
-          <RadioButtonGroup
-            direction={"horizontal"}
-            aria-label="Position Controls"
-            name="position"
-            onChange={handleChange}
-            value={position}
-          >
-            {borderPosition.map((position) => (
-              <RadioButton
-                key={position}
-                label={`${position.charAt(0).toUpperCase()}${position.slice(
-                  1,
-                )}`}
-                value={position}
-              />
-            ))}
-          </RadioButtonGroup>
-        </FormField>
-      </div>
+      <FormField>
+        <FormFieldLabel>Position</FormFieldLabel>
+        <RadioButtonGroup
+          direction={"horizontal"}
+          aria-label="Position Controls"
+          name="position"
+          onChange={handleChange}
+          value={position}
+        >
+          {borderPosition.map((position) => (
+            <RadioButton
+              key={position}
+              label={`${position.charAt(0).toUpperCase()}${position.slice(1)}`}
+              value={position}
+            />
+          ))}
+        </RadioButtonGroup>
+      </FormField>
     </div>
   );
 };

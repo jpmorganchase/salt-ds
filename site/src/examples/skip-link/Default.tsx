@@ -10,6 +10,7 @@ import {
   SkipLink,
   SplitLayout,
   StackLayout,
+  Text,
 } from "@salt-ds/core";
 import { ChevronRightIcon, GithubIcon } from "@salt-ds/icons";
 import { type ReactElement, useId, useState } from "react";
@@ -22,10 +23,8 @@ export const Default = (): ReactElement => {
   const headerId = useId();
 
   return (
-    <>
-      <p className={styles.help}>
-        Click here and press the Tab key to see the Skip Link.
-      </p>
+    <StackLayout gap={4}>
+      <Text as="p">Click here and press the Tab key to see the Skip Link.</Text>
       <BorderLayout className={styles.container}>
         <BorderItem position="north" as="header">
           <SkipLink targetId={headerId}>Skip to main content</SkipLink>
@@ -64,28 +63,26 @@ export const Default = (): ReactElement => {
         <BorderItem position="center" className={styles.center}>
           <StackLayout as="article" className={styles.section} gap={6}>
             {/* The heading levels in this example are demonstrational only */}
-            <section>
-              <H3 styleAs="h1" id={headerId} className={styles.header}>
+            <StackLayout as="section" gap={3}>
+              <H3 styleAs="h1" id={headerId}>
                 Glossary
               </H3>
-              <H4 styleAs="h2" className={styles.sectionHeading}>
-                Characteristics
-              </H4>
-              <p>
-                A Salt characteristic refers to a design token that aligns with
-                a holistic semantic used throughout the design language.
-              </p>
-              <H4 styleAs="h2" className={styles.sectionHeading}>
-                Components
-              </H4>
-              <p>
-                Salt components serve as foundational building blocks as well as
-                representing design primitives. Users of Salt can design and
-                implement their own patterns within their own scope. For a full
-                list of foundational components, refer to the component
-                documentation.
-              </p>
-            </section>
+              <StackLayout gap={2}>
+                <H4 styleAs="h2">Characteristics</H4>
+                <Text as="p">
+                  A Salt characteristic refers to a design token that aligns
+                  with a holistic semantic used throughout the design language.
+                </Text>
+                <H4 styleAs="h2">Components</H4>
+                <Text as="p">
+                  Salt components serve as foundational building blocks as well
+                  as representing design primitives. Users of Salt can design
+                  and implement their own patterns within their own scope. For a
+                  full list of foundational components, refer to the component
+                  documentation.
+                </Text>
+              </StackLayout>
+            </StackLayout>
             <SplitLayout
               endItem={
                 <Button appearance="transparent">
@@ -96,6 +93,6 @@ export const Default = (): ReactElement => {
           </StackLayout>
         </BorderItem>
       </BorderLayout>
-    </>
+    </StackLayout>
   );
 };

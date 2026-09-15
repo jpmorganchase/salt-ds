@@ -1,6 +1,7 @@
 import {
   Button,
   FlexLayout,
+  H2,
   Link,
   MegaMenu,
   MegaMenuActions,
@@ -26,7 +27,7 @@ import { MockHistory } from "./MockHistory";
 const exampleImage = "/img/examples/image-skeleton.png";
 
 const featuredResource = (
-  <>
+  <StackLayout gap={2}>
     <Image
       alt="Featured resource"
       src={exampleImage}
@@ -35,17 +36,8 @@ const featuredResource = (
       className={`${styles.customRegionImage} ${styles.customRegionSideImage}`}
     />
     <StackLayout gap={1}>
-      <StackLayout gap={0}>
-        <Text
-          styleAs="h2"
-          as="h2"
-          style={{
-            marginTop: "var(--salt-spacing-200)",
-            marginBottom: "var(--salt-spacing-200)",
-          }}
-        >
-          Featured Resource
-        </Text>
+      <StackLayout gap={2}>
+        <H2>Featured Resource</H2>
         <Text className={styles.customRegionRightDescription}>
           Explore our latest accessibility guidelines to ensure your components
           meet ADA standards and provide an inclusive user experience.
@@ -60,7 +52,7 @@ const featuredResource = (
         View guidelines
       </Link>
     </StackLayout>
-  </>
+  </StackLayout>
 );
 
 const actionLinks = (

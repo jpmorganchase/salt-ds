@@ -1,9 +1,3 @@
-.contentHeading {
-  margin: 0 0 calc(var(--salt-size-unit) / 2);
-  font-size: var(--salt-text-fontSize);
-  font-weight: var(--salt-text-fontWeight-strong);
-}
-
 .dividerContainer {
   display: flex;
   align-items: center;

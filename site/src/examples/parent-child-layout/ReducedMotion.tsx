@@ -2,6 +2,7 @@ import {
   Label,
   ParentChildLayout,
   StackLayout,
+  Text,
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/core";
@@ -23,15 +24,13 @@ export const ReducedMotion = (): ReactElement => {
   };
   return (
     <StackLayout align="center">
-      <div>
-        <p style={{ marginBottom: "var(--salt-spacing-100)" }}>
-          In order to test this on MacOS, follow these steps:
-        </p>
-        <p>
+      <StackLayout gap={1}>
+        <Text as="p">In order to test this on MacOS, follow these steps:</Text>
+        <Text as="p">
           Go to System Preferences, select the Accessibility category, select
           the Display tab, and enable the Reduce Motion option.
-        </p>
-      </div>
+        </Text>
+      </StackLayout>
       <ParentChildLayout
         visibleView={visibleView}
         collapseAtBreakpoint="xl"

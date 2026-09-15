@@ -106,22 +106,23 @@ export const CollapsibleNavigation = () => {
           </StackLayout>
         </BorderItem>
         <BorderItem position="center">
-          <H3 styleAs="h1" style={{ marginBottom: "var(--salt-spacing-300)" }}>
-            Collapsible navigation
-          </H3>
-          <StackLayout direction="column" gap={1}>
-            <Text>
-              Collapse the navigation to give the main content more room. While
-              collapsed, each item is identified by its icon and a tooltip.
-            </Text>
-            <Text>
-              This placeholder text is provided to illustrate how content will
-              appear within the component. The sentences are intended for
-              demonstration only and do not convey specific information. Generic
-              examples like this help review layout, spacing, and overall
-              design. Adjust the wording as needed to fit your use case or
-              display requirements.
-            </Text>
+          <StackLayout gap={3}>
+            <H3 styleAs="h1">Collapsible navigation</H3>
+            <StackLayout direction="column" gap={1}>
+              <Text as="p">
+                Collapse the navigation to give the main content more room.
+                While collapsed, each item is identified by its icon and a
+                tooltip.
+              </Text>
+              <Text as="p">
+                This placeholder text is provided to illustrate how content will
+                appear within the component. The sentences are intended for
+                demonstration only and do not convey specific information.
+                Generic examples like this help review layout, spacing, and
+                overall design. Adjust the wording as needed to fit your use
+                case or display requirements.
+              </Text>
+            </StackLayout>
           </StackLayout>
         </BorderItem>
       </BorderLayout>

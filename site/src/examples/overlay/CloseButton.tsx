@@ -1,15 +1,16 @@
 import {
   Button,
+  H3,
   Overlay,
   OverlayPanel,
   OverlayPanelCloseButton,
   OverlayPanelContent,
   OverlayTrigger,
+  StackLayout,
+  Text,
   useId,
 } from "@salt-ds/core";
 import { type ReactElement, useState } from "react";
-
-import styles from "./index.module.css";
 
 export const CloseButton = (): ReactElement => {
   const [open, setOpen] = useState(false);
@@ -27,10 +28,12 @@ export const CloseButton = (): ReactElement => {
       <OverlayPanel aria-labelledby={id}>
         <OverlayPanelCloseButton onClick={handleClose} />
         <OverlayPanelContent>
-          <h3 className={styles.contentHeading} id={id}>
-            Title
-          </h3>
-          <div>Content of Overlay</div>
+          <StackLayout gap={0.5}>
+            <H3 id={id}>
+              <strong>Title</strong>
+            </H3>
+            <Text>Content of Overlay</Text>
+          </StackLayout>
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>

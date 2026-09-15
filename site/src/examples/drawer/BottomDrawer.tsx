@@ -147,10 +147,8 @@ export const BottomDrawer = (): ReactElement => {
       >
         <DrawerCloseButton onClick={handleClose} />
         <StackLayout gap={3}>
-          <div>
-            <H2 id={id} style={{ marginBottom: "var(--salt-spacing-200)" }}>
-              Marginal Tiering
-            </H2>
+          <StackLayout gap={2}>
+            <H2 id={id}>Marginal Tiering</H2>
             <div
               {...containerProps}
               style={{ height: "calc(3 * var(--salt-size-base))" }}
@@ -161,9 +159,9 @@ export const BottomDrawer = (): ReactElement => {
                 {...agGridProps}
               />
             </div>
-          </div>
+          </StackLayout>
           <FlowLayout gap={1}>
-            <H3 style={{ margin: 0 }}>Threshold Summary</H3>
+            <H3>Threshold Summary</H3>
             <Text>(Projected Revenue)</Text>
           </FlowLayout>
           <FlowLayout justify="space-between">
