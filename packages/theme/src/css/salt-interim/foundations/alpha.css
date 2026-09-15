@@ -8,6 +8,15 @@
   --salt-color-gray-600-40a: rgba(var(--salt-color-gray-600-rgb), 0.4);
   --salt-color-gray-700-10a: rgba(var(--salt-color-gray-700-rgb), 0.1);
   --salt-color-gray-700-40a: rgba(var(--salt-color-gray-700-rgb), 0.4);
+  --salt-color-gray-900-5a: rgba(var(--salt-color-gray-900-rgb), 0.05);
+  --salt-color-gray-900-10a: rgba(var(--salt-color-gray-900-rgb), 0.1);
+  --salt-color-gray-900-15a: rgba(var(--salt-color-gray-900-rgb), 0.15);
+  --salt-color-gray-900-20a: rgba(var(--salt-color-gray-900-rgb), 0.2);
+  --salt-color-gray-900-30a: rgba(var(--salt-color-gray-900-rgb), 0.3);
+  --salt-color-gray-900-40a: rgba(var(--salt-color-gray-900-rgb), 0.4);
+  --salt-color-gray-900-50a: rgba(var(--salt-color-gray-900-rgb), 0.5);
+  --salt-color-gray-900-65a: rgba(var(--salt-color-gray-900-rgb), 0.65);
+  --salt-color-gray-900-80a: rgba(var(--salt-color-gray-900-rgb), 0.8);
 
   --salt-color-blue-200-40a: rgba(var(--salt-color-blue-200-rgb), 0.4);
   --salt-color-blue-300-40a: rgba(var(--salt-color-blue-300-rgb), 0.4);
