@@ -5,9 +5,9 @@ import {
   ComboBox,
   Drawer,
   DrawerContent,
+  DrawerFooter,
   DrawerHeader,
   type DrawerProps,
-  FlexItem,
   FlexLayout,
   FlowLayout,
   FormField,
@@ -442,11 +442,11 @@ export const OptionalCloseAction = () => {
             <FormField>
               <Checkbox label="Dog(s) present at my property" />
             </FormField>
-            <FlexItem align="end">
-              <Button onClick={handleClose}>Submit</Button>
-            </FlexItem>
           </StackLayout>
         </DrawerContent>
+        <DrawerFooter>
+          <Button onClick={handleClose}>Submit</Button>
+        </DrawerFooter>
       </Drawer>
     </>
   );
@@ -505,7 +505,7 @@ export const InitialFocusRef: StoryFn<DrawerProps> = (args) => {
   );
 };
 
-export const Header: StoryFn<DrawerProps> = (args) => {
+export const HeaderAndFooter: StoryFn<DrawerProps> = (args) => {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -541,6 +541,18 @@ export const Header: StoryFn<DrawerProps> = (args) => {
             </Text>
           </StackLayout>
         </DrawerContent>
+        <DrawerFooter>
+          <Button
+            sentiment="accented"
+            appearance="bordered"
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+          <Button sentiment="accented" onClick={handleClose}>
+            Save
+          </Button>
+        </DrawerFooter>
       </Drawer>
     </>
   );
