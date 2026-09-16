@@ -10,7 +10,13 @@ data:
 
 ## Using the component
 
-Drawers cover the entire height of the viewport and are always modal. This means that the content behind them is inert and can't be interacted with. A [`Scrim`](../scrim) is used to visually obscure the content behind the drawer.
+Drawers are always modal. This means that the content behind them is inert and can't be interacted with. A [`Scrim`](../scrim) is used to visually obscure the content behind the drawer.
+
+Compose a drawer from `DrawerHeader`, `DrawerContent` and `DrawerFooter`. `DrawerHeader` stays pinned to the edge the drawer is anchored to, `DrawerContent` scrolls when its content overflows, and `DrawerFooter` stays pinned to the bottom of the drawer. Pass a close `Button` to the `actions` prop of `DrawerHeader`.
+
+`DrawerHeader` names the drawer using its `header` and `preheader`, and describes it using its `description`, so you don't need to set `aria-labelledby` or `aria-describedby` manually.
+
+Left and right drawers cover the entire height of the viewport, and top and bottom drawers cover its entire width.
 
 Always set a logical width suitable for the content inside the drawer. Refer to Salt's [Forms](/salt/patterns/forms) pattern for information on logical forms width, and the [typography foundation](/salt/foundations/typography) for guidance on paragraph text width.
 
@@ -29,7 +35,12 @@ Always set a logical width suitable for the content inside the drawer. Refer to 
 To import `Drawer` and related components from the core Salt package, use:
 
 ```js
-import { Drawer, DrawerCloseButton } from "@salt-ds/core";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+} from "@salt-ds/core";
 ```
 
 ## Props
@@ -38,9 +49,17 @@ import { Drawer, DrawerCloseButton } from "@salt-ds/core";
 
 <PropsTable packageName="core" componentName="Drawer" />
 
-### `DrawerCloseButton`
+### `DrawerHeader`
 
-<PropsTable packageName="core" componentName="DrawerCloseButton" />
+<PropsTable packageName="core" componentName="DrawerHeader" />
+
+### `DrawerContent`
+
+<PropsTable packageName="core" componentName="DrawerContent" />
+
+### `DrawerFooter`
+
+<PropsTable packageName="core" componentName="DrawerFooter" />
 
 ## References
 
