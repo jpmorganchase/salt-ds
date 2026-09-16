@@ -37,7 +37,7 @@ export const Default: StoryFn<typeof InteractableCard> = (args) => (
 );
 
 export const Disabled: StoryFn<typeof InteractableCard> = (args) => (
-  <InteractableCard {...args} style={{ width: "256px" }} disabled accent="top">
+  <InteractableCard accent="top" {...args} style={{ width: "256px" }} disabled>
     <StackLayout gap={1}>
       <H3>Sustainable investing products</H3>
       <Text>
@@ -119,6 +119,56 @@ export const Variant: StoryFn<typeof InteractableCard> = (args) => {
           </StackLayout>
         );
       })}
+    </StackLayout>
+  );
+};
+
+export const Elevation: StoryFn<typeof InteractableCard> = (args) => {
+  const elevations = ["flat", "raised"] as const;
+  return (
+    <StackLayout direction="row">
+      {elevations.map((elevation) => (
+        <StackLayout align="end" key={elevation} style={{ width: "256px" }}>
+          <InteractableCard {...args} elevation={elevation}>
+            <StackLayout gap={1}>
+              <H3>Sustainable investing products</H3>
+              <Text>
+                We have a commitment to provide a wide range of investment
+                solutions to enable you to align your financial goals to your
+                values.
+              </Text>
+            </StackLayout>
+          </InteractableCard>
+          <Label>Elevation: {elevation}</Label>
+        </StackLayout>
+      ))}
+    </StackLayout>
+  );
+};
+
+export const BorderColor: StoryFn<typeof InteractableCard> = (args) => {
+  const borderColors = ["strong", undefined, "subtle", "none"] as const;
+  return (
+    <StackLayout direction="row">
+      {borderColors.map((borderColor) => (
+        <StackLayout
+          align="end"
+          key={borderColor ?? "default"}
+          style={{ width: "256px" }}
+        >
+          <InteractableCard {...args} borderColor={borderColor}>
+            <StackLayout gap={1}>
+              <H3>Sustainable investing products</H3>
+              <Text>
+                We have a commitment to provide a wide range of investment
+                solutions to enable you to align your financial goals to your
+                values.
+              </Text>
+            </StackLayout>
+          </InteractableCard>
+          <Label>Border color: {borderColor ?? "default"}</Label>
+        </StackLayout>
+      ))}
     </StackLayout>
   );
 };
@@ -219,7 +269,7 @@ export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
             </StackLayout>
           </StackLayout>
         </InteractableCard>
-        <InteractableCard value="wire" style={{ width: "180px" }}>
+        <InteractableCard {...args} value="wire" style={{ width: "180px" }}>
           <StackLayout gap={1}>
             <StackLayout gap={1} direction="row" align="center">
               <BankIcon aria-hidden size={2} />
@@ -231,7 +281,7 @@ export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
             </StackLayout>
           </StackLayout>
         </InteractableCard>
-        <InteractableCard value="crypto" style={{ width: "180px" }}>
+        <InteractableCard {...args} value="crypto" style={{ width: "180px" }}>
           <StackLayout gap={1}>
             <StackLayout gap={1} direction="row" align="center">
               <DiamondIcon aria-hidden size={2} />
@@ -275,7 +325,11 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
           </StackLayout>
         </StackLayout>
       </InteractableCard>
-      <InteractableCard value="tom-roberts" style={{ width: "180px" }}>
+      <InteractableCard
+        {...args}
+        value="tom-roberts"
+        style={{ width: "180px" }}
+      >
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
             <Avatar aria-hidden size={1} />
@@ -290,7 +344,7 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
           </StackLayout>
         </StackLayout>
       </InteractableCard>
-      <InteractableCard value="ray-smith" style={{ width: "180px" }}>
+      <InteractableCard {...args} value="ray-smith" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
             <Avatar aria-hidden size={1} />

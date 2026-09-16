@@ -15,12 +15,22 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
    */
   accent?: "bottom" | "top" | "left" | "right";
   /**
+   * Visual elevation.
+   */
+  elevation?: "flat" | "raised";
+  /**
+   * Border color strength.
+   */
+  borderColor?: "strong" | "subtle" | "none";
+  /**
    * **Deprecated:** Use the InteractableCard component instead
    *
    * If `true`, the card will be disabled.
    */
   disabled?: boolean;
   /**
+   * @deprecated since 1.71.0. Use `LinkCard` or `InteractableCard` when the entire card is interactive.
+   *
    * If `true` the card will have hover styling.
    */
   hoverable?: boolean;
@@ -41,9 +51,11 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
   function Card(props, ref) {
     const {
       accent,
+      borderColor,
       children,
       className,
       disabled,
+      elevation = "raised",
       interactable,
       hoverable,
       variant = "primary",
@@ -64,9 +76,11 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
         className={clsx(
           withBaseName(),
           withBaseName(variant),
+          borderColor && withBaseName(`borderColor${capitalize(borderColor)}`),
           {
             [withBaseName("accent")]: accent,
             [withBaseName(`accent${capitalize(accent || "")}`)]: accent,
+            [withBaseName(elevation || "")]: elevation,
             [withBaseName("hoverable")]: hoverable,
             /* **Deprecated:** InteractableCard should be used instead for these features */
             [withBaseName("disabled")]: disabled,
