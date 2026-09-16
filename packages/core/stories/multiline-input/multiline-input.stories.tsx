@@ -19,7 +19,7 @@ import {
   SendIcon,
 } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { type ChangeEvent, useId, useRef, useState } from "react";
+import { type ChangeEvent, useState } from "react";
 
 export default {
   title: "Core/Multiline Input",
@@ -160,23 +160,17 @@ export const CharacterCount: StoryFn<typeof MultilineInput> = (args) => {
   const [value, setValue] = useState<string>("Value");
   const [isError, setIsError] = useState<boolean>(false);
   const MAX_CHARS = 10;
-  const counterId = useId();
-  const prevAtLimitRef = useRef(false);
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const newVal = event.target.value;
     setValue(newVal);
     if (newVal.length > MAX_CHARS) {
       setIsError(true);
-      if (!prevAtLimitRef.current) {
-        prevAtLimitRef.current = true;
-        announce(
-          `Character limit reached. ${newVal.length} of ${MAX_CHARS} characters used.`,
-          { ariaLive: "assertive" },
-        );
-      }
+      announce(
+        `Character limit reached. ${newVal.length} of ${MAX_CHARS} characters used.`,
+        { ariaLive: "assertive" },
+      );
     } else {
-      prevAtLimitRef.current = false;
       setIsError(false);
       if (newVal.length > 0) {
         announce(`${newVal.length} of ${MAX_CHARS} characters used.`);
@@ -188,14 +182,14 @@ export const CharacterCount: StoryFn<typeof MultilineInput> = (args) => {
     <MultilineInput
       {...args}
       endAdornment={
-        <Label id={counterId} variant={!isError ? "secondary" : "primary"}>
+        <Label aria-hidden color={!isError ? "secondary" : "primary"}>
           {!isError && `${value.length}/${MAX_CHARS}`}
           {isError && <strong>{`${value.length}/${MAX_CHARS}`}</strong>}
         </Label>
       }
       style={{ width: "266px" }}
       textAreaProps={{
-        "aria-describedby": counterId,
+        "aria-description": `You can enter up to ${MAX_CHARS} characters.`,
         "aria-invalid": isError,
         onChange: handleChange,
       }}
