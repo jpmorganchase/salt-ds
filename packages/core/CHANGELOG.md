@@ -1,5 +1,67 @@
 # @salt-ds/core
 
+## 1.71.0
+
+### Minor Changes
+
+- 5da6723: Added `LinkButton`, a button-styled link for prominent navigation. Supports neutral and accented sentiments, icons, icon-only labels, and routing-library integration via the `render` prop.
+
+  ```tsx
+  import { LinkButton } from "@salt-ds/core";
+
+  <LinkButton href="/reports">View reports</LinkButton>;
+  ```
+
+- 0f92b84: Added `elevation` support to `Card`, `InteractableCard`, `LinkCard`, and `Panel`. Cards default to raised elevation to preserve their existing appearance, while `Panel` defaults to flat elevation. Added `borderColor` support to `Card`, `InteractableCard`, and `LinkCard`, including `borderColor="none"` for ghost cards.
+- d7e777c: Added `DrawerHeader`, `DrawerContent` and `DrawerFooter`, implementing header and footer blocks in core `Drawer`. Composing a `Drawer` from `DrawerHeader`, `DrawerContent` and `DrawerFooter` is the recommended approach.
+
+  `DrawerHeader` takes optional `header`, `preheader`, `description` and `actions`, and displays an accent bar unless `disableAccent` is set. A close action should be passed to `actions` as a `Button`. `DrawerHeader` stays pinned to the top, `DrawerContent` is scrollable.
+
+  `DrawerHeader` names `Drawer` with its `header` and `preheader`, and describes it with its `description`, so `aria-labelledby` and `aria-describedby` no longer need to be set manually.
+
+  ```tsx
+  import {
+    Button,
+    Drawer,
+    DrawerContent,
+    DrawerFooter,
+    DrawerHeader,
+  } from "@salt-ds/core";
+  import { CloseIcon } from "@salt-ds/icons";
+
+  <Drawer open={open} onOpenChange={setOpen}>
+    <DrawerHeader
+      header="Check deposit #1278"
+      actions={
+        <Button
+          aria-label="Close drawer"
+          appearance="transparent"
+          onClick={() => setOpen(false)}
+        >
+          <CloseIcon aria-hidden />
+        </Button>
+      }
+    />
+    <DrawerContent>{content}</DrawerContent>
+    <DrawerFooter>
+      <Button appearance="transparent">Cancel</Button>
+      <Button sentiment="accented">Save</Button>
+    </DrawerFooter>
+  </Drawer>;
+  ```
+
+  Deprecated `DrawerCloseButton`. Use a `Button` with a `CloseIcon` in `DrawerHeader`'s `actions` instead.
+
+### Patch Changes
+
+- 0f92b84: Prevented disabled `Card` and `InteractableCard` components from receiving hover styling.
+- 1417fa9: Fixed Tabs from announcing an ignored overflow selection when that value was later selected externally.
+- dd17c26: Fixed duplicate menu close notifications during keyboard activation and prevented announcements from being queued after `AriaAnnouncerProvider` unmounts.
+- d7e777c: Fixed `disableDismiss` on `Drawer` also preventing Escape from closing the drawer. It now only prevents dismissal on click away, matching its documentation and `Dialog`.
+- 86080e7: Changed flat `Panel` instances to use sharp corners.
+- f705932: Deprecated the `hoverable` prop on `Card`. Use `LinkCard` or `InteractableCard` when the entire card is interactive.
+- 5ab650a: Fixed vertical alignment of smaller controls with larger controls in FormField.
+
 ## 1.70.0
 
 ### Minor Changes
