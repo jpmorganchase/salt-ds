@@ -12,5 +12,9 @@
   overflow-y: auto;
 }
 .saltOverlayPanelContent-overflow.saltOverlayPanelContent-scroll-top {
-  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
+  border-top-color: var(--salt-separable-tertiary-borderColor);
+}
+
+.saltOverlayPanelContent-overflow.saltOverlayPanelContent-scroll-bottom {
+  border-bottom-color: var(--salt-separable-tertiary-borderColor);
 }
