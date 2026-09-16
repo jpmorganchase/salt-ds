@@ -1,4 +1,5 @@
 import {
+  FlexLayout,
   FlowLayout,
   StatusIndicator,
   Text,
@@ -44,13 +45,7 @@ export const WithText: StoryFn<typeof StatusIndicator> = (args) => {
   const { status = "error" } = args;
 
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: "var(--salt-spacing-75)",
-        maxWidth: 180,
-      }}
-    >
+    <FlexLayout gap={0.75}>
       <StatusIndicator
         {...args}
         aria-hidden
@@ -61,9 +56,9 @@ export const WithText: StoryFn<typeof StatusIndicator> = (args) => {
         }}
       />
       <Text color={status}>
-        Request could not be submitted. Please try again later.
+        <i>Request could not be submitted. Please try again later.</i>
       </Text>
-    </div>
+    </FlexLayout>
   );
 };
 WithText.args = { status: "error" };
