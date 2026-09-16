@@ -69,7 +69,9 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
         }}
         aria-labelledby={ariaLabelledby}
       >
-        <div {...rest}> {children} </div>
+        <div className={withBaseName("content")} {...rest}>
+          {children}
+        </div>
         {!hideArrow && (
           <FloatingArrow
             {...arrowProps}

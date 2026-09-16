@@ -15,6 +15,8 @@ const {
   CloseButton,
   HideArrow,
   LongContent,
+  LongHeader,
+  WithSections,
   WithTooltip,
 } = composedStories;
 const trigger = () => page.getByRole("button", { name: /Show Overlay/i });
@@ -149,6 +151,45 @@ describe("GIVEN an Overlay", () => {
         ),
       ).toBeInTheDocument();
     });
+
+    it("THEN it should show dividers at the available scroll boundaries", async () => {
+      await renderWithSalt(<WithSections />);
+      await trigger().click();
+
+      const content = document.querySelector<HTMLElement>(
+        ".saltOverlayPanelContent-container",
+      );
+      if (!content) {
+        throw new Error("Overlay panel content was not rendered");
+      }
+
+      await expect
+        .poll(() =>
+          content.classList.contains("saltOverlayPanelContent-scroll-bottom"),
+        )
+        .toBe(true);
+
+      content.scrollTop = content.scrollHeight;
+      content.dispatchEvent(new Event("scroll", { bubbles: true }));
+
+      await expect
+        .poll(() =>
+          content.classList.contains("saltOverlayPanelContent-scroll-top"),
+        )
+        .toBe(true);
+      await expect
+        .poll(() =>
+          content.classList.contains("saltOverlayPanelContent-scroll-bottom"),
+        )
+        .toBe(false);
+
+      content.style.height = "80px";
+      await expect
+        .poll(() =>
+          content.classList.contains("saltOverlayPanelContent-scroll-bottom"),
+        )
+        .toBe(true);
+    });
   });
 
   it("should support tooltip on overlay triggers", async () => {
@@ -171,5 +212,28 @@ describe("GIVEN an Overlay", () => {
     await expect.element(page.getByRole("tooltip")).toBeVisible();
     await tooltipTrigger.click();
     await expect.element(page.getByRole("dialog")).toBeInTheDocument();
+  });
+
+  it("keeps reflowed content within the viewport and scrollable", async () => {
+    await page.viewport(320, 200);
+    await renderWithSalt(<LongHeader />);
+    await trigger().click();
+
+    const panel = page.getByRole("dialog").element();
+    const content = panel.querySelector<HTMLElement>(
+      ".saltOverlayPanel-content",
+    );
+    if (!content) {
+      throw new Error("Overlay panel content was not rendered");
+    }
+
+    expect(panel.getBoundingClientRect().width).toBeLessThanOrEqual(
+      window.innerWidth,
+    );
+    expect(panel.getBoundingClientRect().height).toBeLessThanOrEqual(
+      window.innerHeight,
+    );
+    expect(getComputedStyle(content).overflowY).toBe("auto");
+    expect(content.scrollHeight).toBeGreaterThan(content.clientHeight);
   });
 });
