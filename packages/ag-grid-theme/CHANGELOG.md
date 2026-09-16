@@ -1,5 +1,21 @@
 # @salt-ds/ag-grid-theme
 
+## 2.10.0
+
+### Minor Changes
+
+- 487e75d: Upgraded support to AG-Grid v36.
+
+  Added Salt `SortAscend` and `SortDescend` glyphs for AG Grid Absolute Sorting (`aasc` / `adesc` icon names).
+
+### Patch Changes
+
+- Updated dependencies [2e1da8e]
+- Updated dependencies [be5eb93]
+- Updated dependencies [0f92b84]
+- Updated dependencies [be5eb93]
+  - @salt-ds/theme@1.46.0
+
 ## 2.9.0
 
 ### Minor Changes
