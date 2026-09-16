@@ -1,4 +1,4 @@
-import { Drawer, type DrawerProps, H2, StackLayout, Text } from "@salt-ds/core";
+import { Drawer, type DrawerProps } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
@@ -7,7 +7,7 @@ export default {
   component: Drawer,
 } as Meta<typeof Drawer>;
 
-function FakeDrawer({ children, ...rest }: DrawerProps) {
+function _FakeDrawer({ children, ...rest }: DrawerProps) {
   return (
     <div
       style={{
@@ -20,37 +20,10 @@ function FakeDrawer({ children, ...rest }: DrawerProps) {
   );
 }
 
-const DrawerTemplate: StoryFn<typeof Drawer> = () => {
-  return (
-    <StackLayout>
-      <FakeDrawer>
-        <StackLayout gap={1}>
-          <H2>Title</H2>
-          <Text>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum
-          </Text>
-        </StackLayout>
-      </FakeDrawer>
-    </StackLayout>
-  );
-};
-
 export const DrawerExamples: StoryFn<QAContainerProps> = (props) => {
   const { ...rest } = props;
 
-  return (
-    <QAContainer height={2000} itemPadding={20} width={1000} {...rest}>
-      <DrawerTemplate />
-    </QAContainer>
-  );
+  return <QAContainer height={2000} itemPadding={20} width={1000} {...rest} />;
 };
 DrawerExamples.parameters = {
   chromatic: { disableSnapshot: false },
