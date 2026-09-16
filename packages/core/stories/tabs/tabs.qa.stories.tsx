@@ -1,4 +1,4 @@
-import { Tab, TabBar, TabList, Tabs, TabTrigger } from "@salt-ds/core";
+import { TabList } from "@salt-ds/core";
 import type { StoryFn } from "@storybook/react-vite";
 import { QAContainer } from "docs/components";
 import { useState } from "react";
@@ -9,7 +9,7 @@ export default {
   component: TabList,
 };
 
-const tabs = [
+const _tabs = [
   "Home",
   "Transactions",
   "Loans",
@@ -30,47 +30,8 @@ const tabs = [
 ];
 
 export const LotsOfTabsTabstrip: StoryFn = () => {
-  const [value, setValue] = useState<string | undefined>("Home");
-  return (
-    <QAContainer itemPadding={10} cols={2}>
-      <div className="container">
-        <Tabs
-          value={value}
-          onChange={(_, value) => {
-            setValue(value);
-          }}
-        >
-          <TabBar inset divider>
-            <TabList>
-              {tabs.map((label) => (
-                <Tab key={label} value={label}>
-                  <TabTrigger>{label}</TabTrigger>
-                </Tab>
-              ))}
-            </TabList>
-          </TabBar>
-        </Tabs>
-      </div>
-      <div className="container">
-        <Tabs
-          value={value}
-          onChange={(_, value) => {
-            setValue(value);
-          }}
-        >
-          <TabBar>
-            <TabList appearance="transparent">
-              {tabs.map((label) => (
-                <Tab key={label} value={label}>
-                  <TabTrigger>{label}</TabTrigger>
-                </Tab>
-              ))}
-            </TabList>
-          </TabBar>
-        </Tabs>
-      </div>
-    </QAContainer>
-  );
+  const [_value, _setValue] = useState<string | undefined>("Home");
+  return <QAContainer itemPadding={10} cols={2} />;
 };
 
 LotsOfTabsTabstrip.parameters = {
