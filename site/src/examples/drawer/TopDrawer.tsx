@@ -2,6 +2,7 @@ import {
   Button,
   Drawer,
   DrawerContent,
+  DrawerFooter,
   DrawerHeader,
   FlexLayout,
   FormField,
@@ -14,6 +15,9 @@ import {
 import { CloseIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
 
+const placeholderText =
+  "This placeholder text is provided to illustrate how content will appear within the component. The sentences are intended for demonstration only and do not convey specific information. Generic examples like this help review layout, spacing, and overall design. Adjust the wording as needed to fit your use case or display requirements. ";
+
 const FormFieldExample = () => (
   <FormField>
     <FormFieldLabel>Label</FormFieldLabel>
@@ -25,22 +29,14 @@ const FormFieldExample = () => (
 export const TopDrawer = (): ReactElement => {
   const [open, setOpen] = useState(false);
 
-  const handleRequestOpen = () => {
-    setOpen(true);
-  };
-
-  const onOpenChange = (newOpen: boolean) => {
-    setOpen(newOpen);
-  };
-
   const handleClose = () => {
     setOpen(false);
   };
 
   return (
     <>
-      <Button onClick={handleRequestOpen}>Open Top Drawer</Button>
-      <Drawer open={open} onOpenChange={onOpenChange} position="top">
+      <Button onClick={() => setOpen(true)}>Open Top Drawer</Button>
+      <Drawer open={open} onOpenChange={setOpen} position="top">
         <DrawerHeader
           header="Section title"
           actions={
@@ -55,14 +51,7 @@ export const TopDrawer = (): ReactElement => {
         />
         <DrawerContent>
           <StackLayout>
-            <Text>
-              This placeholder text is provided to illustrate how content will
-              appear within the component. The sentences are intended for
-              demonstration only and do not convey specific information. Generic
-              examples like this help review layout, spacing, and overall
-              design. Adjust the wording as needed to fit your use case or
-              display requirements.
-            </Text>
+            <Text>{placeholderText}</Text>
             <FlexLayout>
               {Array.from({ length: 4 }, (_, index) => (
                 <FormFieldExample key={index} />
@@ -70,6 +59,18 @@ export const TopDrawer = (): ReactElement => {
             </FlexLayout>
           </StackLayout>
         </DrawerContent>
+        <DrawerFooter>
+          <Button
+            sentiment="accented"
+            appearance="bordered"
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+          <Button sentiment="accented" onClick={handleClose}>
+            Save
+          </Button>
+        </DrawerFooter>
       </Drawer>
     </>
   );

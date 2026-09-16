@@ -9,20 +9,21 @@ import {
 import { CloseIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
 
-export const DisableScrim = (): ReactElement => {
+export const DisableAccent = (): ReactElement => {
   const [open, setOpen] = useState(false);
 
   return (
     <StackLayout>
-      <Button onClick={() => setOpen(true)}>Open Primary Drawer</Button>
+      <Button onClick={() => setOpen(true)}>Open Drawer without accent</Button>
       <Drawer
         open={open}
         onOpenChange={setOpen}
-        style={{ width: 300 }}
-        disableScrim
+        position="right"
+        style={{ width: 400 }}
       >
         <DrawerHeader
-          header="Drawer without scrim"
+          disableAccent
+          header="Drawer without accent"
           actions={
             <Button
               aria-label="Close drawer"
@@ -34,7 +35,7 @@ export const DisableScrim = (): ReactElement => {
           }
         />
         <DrawerContent>
-          <Text>The content behind this drawer isn't obscured.</Text>
+          <Text>Use disableAccent to hide the accent bar.</Text>
         </DrawerContent>
       </Drawer>
     </StackLayout>

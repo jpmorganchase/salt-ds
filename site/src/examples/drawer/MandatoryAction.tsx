@@ -26,14 +26,6 @@ export const MandatoryAction = (): ReactElement => {
 
   const postcodes = ["05011", "01050", "03040", "11050"];
 
-  const handleRequestOpen = () => {
-    setOpen(true);
-  };
-
-  const onOpenChange = (newOpen: boolean) => {
-    setOpen(newOpen);
-  };
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -52,10 +44,12 @@ export const MandatoryAction = (): ReactElement => {
 
   return (
     <>
-      <Button onClick={handleRequestOpen}>Open Mandatory Action Drawer</Button>
+      <Button onClick={() => setOpen(true)}>
+        Open Mandatory Action Drawer
+      </Button>
       <Drawer
         open={open}
-        onOpenChange={onOpenChange}
+        onOpenChange={setOpen}
         position="right"
         style={{ width: 500 }}
         disableDismiss
@@ -101,7 +95,9 @@ export const MandatoryAction = (): ReactElement => {
           </StackLayout>
         </DrawerContent>
         <DrawerFooter>
-          <Button onClick={handleClose}>Submit</Button>
+          <Button sentiment="accented" onClick={handleClose}>
+            Submit
+          </Button>
         </DrawerFooter>
       </Drawer>
     </>

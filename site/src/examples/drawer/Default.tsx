@@ -2,6 +2,7 @@ import {
   Button,
   Drawer,
   DrawerContent,
+  DrawerFooter,
   DrawerHeader,
   StackLayout,
   Text,
@@ -19,7 +20,7 @@ export const Default = (): ReactElement => {
       <Button onClick={() => setOpenPrimary(true)}>Open Primary Drawer</Button>
       <Drawer
         open={openPrimary}
-        onOpenChange={(newOpen) => setOpenPrimary(newOpen)}
+        onOpenChange={setOpenPrimary}
         style={{ width: 300 }}
       >
         <DrawerHeader
@@ -37,13 +38,18 @@ export const Default = (): ReactElement => {
         <DrawerContent>
           <Text>Primary drawers sit on the container primary background.</Text>
         </DrawerContent>
+        <DrawerFooter>
+          <Button sentiment="accented" onClick={() => setOpenPrimary(false)}>
+            Done
+          </Button>
+        </DrawerFooter>
       </Drawer>
       <Button onClick={() => setOpenSecondary(true)}>
         Open Secondary Drawer
       </Button>
       <Drawer
         open={openSecondary}
-        onOpenChange={(newOpen) => setOpenSecondary(newOpen)}
+        onOpenChange={setOpenSecondary}
         variant="secondary"
         style={{ width: 300 }}
       >
@@ -64,13 +70,18 @@ export const Default = (): ReactElement => {
             Secondary drawers sit on the container secondary background.
           </Text>
         </DrawerContent>
+        <DrawerFooter>
+          <Button sentiment="accented" onClick={() => setOpenSecondary(false)}>
+            Done
+          </Button>
+        </DrawerFooter>
       </Drawer>
       <Button onClick={() => setOpenTertiary(true)}>
         Open Tertiary Drawer
       </Button>
       <Drawer
         open={openTertiary}
-        onOpenChange={(newOpen) => setOpenTertiary(newOpen)}
+        onOpenChange={setOpenTertiary}
         variant="tertiary"
         style={{ width: 300 }}
       >
@@ -91,6 +102,11 @@ export const Default = (): ReactElement => {
             Tertiary drawers sit on the container tertiary background.
           </Text>
         </DrawerContent>
+        <DrawerFooter>
+          <Button sentiment="accented" onClick={() => setOpenTertiary(false)}>
+            Done
+          </Button>
+        </DrawerFooter>
       </Drawer>
     </StackLayout>
   );
