@@ -34,7 +34,6 @@
 .saltMonthYearPanel-row {
   display: grid;
   grid-template-columns: repeat(var(--monthGrid-columns), 1fr);
-  gap: var(--calendar-gap);
 }
 
 .saltMonthYearPanel-cell {
