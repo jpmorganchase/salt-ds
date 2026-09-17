@@ -3,4 +3,5 @@
   --salt-typography-fontFamily-ptMono: var(--site-font-family-ptMono);
   --salt-typography-fontFamily-openSans: var(--site-font-family-openSans);
   --salt-typography-fontFamily-amplitude: var(--site-font-family-amplitude);
+  --salt-typography-fontFamily-roboto: var(--site-font-family-roboto);
 }
