@@ -2955,6 +2955,51 @@ export const RangeWithTimezone: StoryFn<DatePickerRangeProps> = ({
         setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
+
+      const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const ianaTimezone =
+        selectedTimezone !== "system" && selectedTimezone !== "default"
+          ? selectedTimezone
+          : undefined;
+
+      const formatDate = (date: DateFrameworkType) => {
+        const jsDate = dateAdapter.toJSDate(date);
+        const iso = jsDate.toISOString();
+        const locale = new Intl.DateTimeFormat(undefined, {
+          timeZone: systemTimeZone,
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+          hour12: true,
+        }).format(jsDate);
+        const formatted = new Intl.DateTimeFormat(undefined, {
+          timeZone: ianaTimezone,
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+          hour12: true,
+        }).format(jsDate);
+        return { iso, locale, formatted };
+      };
+
+      setCurrentTimezone(startDate ? dateAdapter.getTimezone(startDate) : "");
+
+      const formattedStartDate = startDate ? formatDate(startDate) : null;
+      setStartIso8601String(formattedStartDate?.iso ?? "");
+      setStartLocaleDateString(formattedStartDate?.locale ?? "");
+      setStartDateString(formattedStartDate?.formatted ?? "");
+
+      const formattedEndDate = endDate ? formatDate(endDate) : null;
+      setEndIso8601String(formattedEndDate?.iso ?? "");
+      setEndLocaleDateString(formattedEndDate?.locale ?? "");
+      setEndDateString(formattedEndDate?.formatted ?? "");
+
       args?.onSelectionChange?.(event, selection, details);
     },
     [args?.onSelectionChange, dateAdapter, selectedTimezone],

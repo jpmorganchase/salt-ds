@@ -23,7 +23,7 @@ import {
 } from "react";
 import calendarDayCss from "../calendar/internal/CalendarDay.css";
 import { useLocalization } from "../localization-provider";
-import { MonthGridHeader } from "./MonthGridHeader";
+import { MonthGridHeaderPanel } from "./MonthGridHeaderPanel";
 import { monthYearPanelMessages } from "./messages";
 import { buildMonthsForYear, COLUMNS, MONTHS_PER_YEAR, ROWS } from "./utils";
 
@@ -364,7 +364,7 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
         ref={setContainerRef}
         className={clsx(withBaseName(), className)}
       >
-        <MonthGridHeader
+        <MonthGridHeaderPanel
           year={year}
           onYearChange={onYearChange}
           minYear={minYear}

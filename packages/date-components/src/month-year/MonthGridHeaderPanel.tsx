@@ -8,12 +8,20 @@ import {
 } from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
-import { type SyntheticEvent, useCallback, useMemo, useRef } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  forwardRef,
+  type SyntheticEvent,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
 import { monthYearPanelMessages } from "./messages";
 
 const withBaseName = makePrefixer("saltMonthYearPanel");
 
-export interface MonthGridHeaderProps {
+export interface MonthGridHeaderPanelProps
+  extends ComponentPropsWithoutRef<"div"> {
   /** Currently-visible year, controlled by the parent grid. */
   year: number;
   /**
@@ -45,13 +53,18 @@ export interface MonthGridHeaderProps {
   YearDropdownProps?: Partial<DropdownProps<number>>;
 }
 
+export type MonthGridHeaderProps = MonthGridHeaderPanelProps;
+
 /**
  * Header strip rendered above each `MonthGrid`. Contains the previous-year
  * button, year dropdown and next-year button. Kept as a dedicated component
  * so `MonthGrid` can focus on the 12-button grid semantics and roving
  * tabindex, and so this piece can be replaced or reused independently.
  */
-export function MonthGridHeader(props: MonthGridHeaderProps) {
+export const MonthGridHeaderPanel = forwardRef<
+  HTMLDivElement,
+  MonthGridHeaderPanelProps
+>(function MonthGridHeaderPanel(props, ref) {
   const {
     year,
     onYearChange,
@@ -63,6 +76,8 @@ export function MonthGridHeader(props: MonthGridHeaderProps) {
     PreviousYearButtonProps,
     NextYearButtonProps,
     YearDropdownProps,
+    className,
+    ...rest
   } = props;
 
   const canGoPrev = minYear === undefined || year - 1 >= minYear;
@@ -101,7 +116,11 @@ export function MonthGridHeader(props: MonthGridHeaderProps) {
   );
 
   return (
-    <div className={withBaseName("header")}>
+    <div
+      {...rest}
+      ref={ref}
+      className={clsx(withBaseName("header"), className)}
+    >
       <Button
         appearance="transparent"
         aria-label={monthYearPanelMessages.previousYearLabel(year - 1)}
@@ -147,4 +166,6 @@ export function MonthGridHeader(props: MonthGridHeaderProps) {
       </Button>
     </div>
   );
-}
+});
+
+export const MonthGridHeader = MonthGridHeaderPanel;
