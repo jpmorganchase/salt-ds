@@ -2657,7 +2657,7 @@ export const SingleWithLocaleZhCN: StoryFn<DatePickerSingleProps> = ({
     <FormField validationStatus={validationStatus}>
       <FormLabel id={labelId}>Select a date</FormLabel>
       <DatePicker
-        selectionVariant={"single"}
+        selectionVariant="single"
         {...args}
         onSelectionChange={handleSelectionChange}
       >
@@ -2954,61 +2954,6 @@ export const RangeWithTimezone: StoryFn<DatePickerRangeProps> = ({
       } else {
         setValidationStatus(undefined);
         setHelperText(defaultHelperText);
-      }
-
-      const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const ianaTimezone =
-        selectedTimezone !== "system" && selectedTimezone !== "default"
-          ? selectedTimezone
-          : undefined;
-
-      const formatDate = (date: DateFrameworkType) => {
-        const jsDate = dateAdapter.toJSDate(date);
-        const iso = jsDate.toISOString();
-        const locale = new Intl.DateTimeFormat(undefined, {
-          timeZone: systemTimeZone,
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-          hour12: true,
-        }).format(jsDate);
-        const formatted = new Intl.DateTimeFormat(undefined, {
-          timeZone: ianaTimezone,
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-          hour12: true,
-        }).format(jsDate);
-        return { iso, locale, formatted };
-      };
-
-      setCurrentTimezone(startDate ? dateAdapter.getTimezone(startDate) : "");
-
-      if (startDate && !startDateErrors?.length) {
-        const start = formatDate(startDate);
-        setStartIso8601String(start.iso);
-        setStartLocaleDateString(start.locale);
-        setStartDateString(start.formatted);
-      } else {
-        setStartIso8601String("");
-        setStartLocaleDateString("");
-        setStartDateString("");
-      }
-      if (endDate && !endDateErrors?.length) {
-        const end = formatDate(endDate);
-        setEndIso8601String(end.iso);
-        setEndLocaleDateString(end.locale);
-        setEndDateString(end.formatted);
-      } else {
-        setEndIso8601String("");
-        setEndLocaleDateString("");
-        setEndDateString("");
       }
       args?.onSelectionChange?.(event, selection, details);
     },
