@@ -361,3 +361,7 @@ export const CollapsibleCard: StoryFn<typeof Card> = (args) => {
     </Collapsible>
   );
 };
+
+CollapsibleCard.parameters = {
+  layout: "padded",
+};
