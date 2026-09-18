@@ -4458,7 +4458,7 @@ __metadata:
     del: "npm:^8.0.0"
   peerDependencies:
     "@salt-ds/theme": "workspace:^"
-    react-resizable-panels: ">=3.0.0"
+    react-resizable-panels: ">=3.0.0 <5.0.0"
   languageName: unknown
   linkType: soft
 
@@ -4512,7 +4512,7 @@ __metadata:
     react-docgen-typescript: "npm:2.4.0"
     react-dom: "npm:^18.3.1"
     react-hotkeys-hook: "npm:^5.1.0"
-    react-resizable-panels: "npm:^3.0.0"
+    react-resizable-panels: "npm:^4.12.3"
     react-router: "npm:^7.10.1"
     rollup: "npm:^4.24.2"
     rollup-plugin-esbuild: "npm:^6.1.1"
@@ -13838,13 +13838,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-resizable-panels@npm:^3.0.0":
-  version: 3.0.1
-  resolution: "react-resizable-panels@npm:3.0.1"
+"react-resizable-panels@npm:^4.12.3":
+  version: 4.12.3
+  resolution: "react-resizable-panels@npm:4.12.3"
   peerDependencies:
-    react: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
-    react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
-  checksum: 10/e73ce91178cce9148684e1775ac045f8d2baebdd293a0155022afd7031a7e4e09b2c12cf83e3d190050876b6c124374925959ffe0779be5709c09803452b4537
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
+  checksum: 10/8731e30a4cba5ef2127ba297b55cea7ce5b6f1338bad60425e503ef49ebada62563815d90017b2f6b9fd5488890947b3a0dffd574aacc38473c5bd5ec0d0567e
   languageName: node
   linkType: hard
 
