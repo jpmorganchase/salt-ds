@@ -15,7 +15,7 @@ import {
 } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { renderWithSalt } from "~browser-test-utils/render";
+import { act, renderWithSalt } from "~browser-test-utils/render";
 
 const committedIndexes = (commits: number[]) =>
   commits.flatMap((count, index) => (count > 0 ? [index] : []));
@@ -292,6 +292,36 @@ describe("List control Option subscriptions", () => {
       .element(page.getByRole("button", { name: "Unrelated 1" }))
       .toBeInTheDocument();
     expect(committedIndexes(commits)).toEqual([]);
+  });
+
+  it("waits for a controlled parent to accept a selection change", async () => {
+    const onSelectionChange = vi.fn();
+    let acceptSelection = () => {};
+    function Fixture() {
+      const [selected, setSelected] = useState<string[]>([]);
+      acceptSelection = () => setSelected(["A"]);
+      return (
+        <ListBox
+          multiselect
+          selected={selected}
+          onSelectionChange={onSelectionChange}
+        >
+          <Option value="A" />
+          <Option value="B" />
+        </ListBox>
+      );
+    }
+    await renderWithSalt(<Fixture />);
+    listbox().element().focus();
+    await userEvent.keyboard("{Enter}");
+    expect(onSelectionChange).toHaveBeenCalledWith(expect.anything(), ["A"]);
+    await expect.element(option("A")).toHaveAttribute("aria-selected", "false");
+
+    await act(acceptSelection);
+    await expect.element(option("A")).toHaveAttribute("aria-selected", "true");
+    await userEvent.keyboard("{Enter}");
+    expect(onSelectionChange).toHaveBeenLastCalledWith(expect.anything(), []);
+    await expect.element(option("A")).toHaveAttribute("aria-selected", "true");
   });
 
   it("uses id-based active state and value-based selection for duplicates", async () => {
