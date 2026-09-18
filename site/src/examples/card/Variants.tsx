@@ -1,4 +1,4 @@
-import { Card, GridLayout, StackLayout } from "@salt-ds/core";
+import { Card, GridLayout, StackLayout, Text } from "@salt-ds/core";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
@@ -10,13 +10,13 @@ export const Variants = (): ReactElement => {
         className={styles.variantContainer}
       >
         <Card variant="primary" className={styles.variantCard}>
-          Primary
+          <Text as="p">Primary</Text>
         </Card>
         <Card variant="secondary" className={styles.variantCard}>
-          Secondary
+          <Text as="p">Secondary</Text>
         </Card>
         <Card variant="tertiary" className={styles.variantCard}>
-          Tertiary
+          <Text as="p">Tertiary</Text>
         </Card>
       </GridLayout>
     </StackLayout>

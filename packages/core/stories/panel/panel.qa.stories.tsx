@@ -18,6 +18,12 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => (
     <Panel variant="tertiary">
       <Text as="p">This is a tertiary panel around some text</Text>
     </Panel>
+    <Panel elevation="flat">
+      <p>This is a panel with flat elevation</p>
+    </Panel>
+    <Panel elevation="raised">
+      <p>This is a panel with raised elevation</p>
+    </Panel>
   </QAContainer>
 );
 

@@ -84,3 +84,53 @@ export const Variant: StoryFn<typeof LinkCard> = (args) => {
     </StackLayout>
   );
 };
+
+export const Elevation: StoryFn<typeof LinkCard> = (args) => {
+  const elevations = ["flat", "raised"] as const;
+  return (
+    <StackLayout direction="row">
+      {elevations.map((elevation) => (
+        <StackLayout align="end" key={elevation} style={{ width: "260px" }}>
+          <LinkCard {...args} elevation={elevation} href="#">
+            <StackLayout gap={1}>
+              <H3>Sustainable investing products</H3>
+              <Text>
+                We have a commitment to provide a wide range of investment
+                solutions to enable you to align your financial goals to your
+                values.
+              </Text>
+            </StackLayout>
+          </LinkCard>
+          <Label>Elevation: {elevation}</Label>
+        </StackLayout>
+      ))}
+    </StackLayout>
+  );
+};
+
+export const BorderColor: StoryFn<typeof LinkCard> = (args) => {
+  const borderColors = ["strong", undefined, "subtle", "none"] as const;
+  return (
+    <StackLayout direction="row">
+      {borderColors.map((borderColor) => (
+        <StackLayout
+          align="end"
+          key={borderColor ?? "default"}
+          style={{ width: "260px" }}
+        >
+          <LinkCard {...args} borderColor={borderColor} href="#">
+            <StackLayout gap={1}>
+              <H3>Sustainable investing products</H3>
+              <Text>
+                We have a commitment to provide a wide range of investment
+                solutions to enable you to align your financial goals to your
+                values.
+              </Text>
+            </StackLayout>
+          </LinkCard>
+          <Label>Border color: {borderColor ?? "default"}</Label>
+        </StackLayout>
+      ))}
+    </StackLayout>
+  );
+};
