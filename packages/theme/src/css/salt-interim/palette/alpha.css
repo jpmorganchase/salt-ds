@@ -1,5 +1,4 @@
-/* Generated from the commercial Figma token exports. */
-.salt-interim[data-mode="light"] {
+.salt-theme.salt-interim[data-mode="light"] {
   --salt-palette-alpha-highest: var(--salt-color-white-80a);
   --salt-palette-alpha-higher: var(--salt-color-white-65a);
   --salt-palette-alpha-high: var(--salt-color-white-50a);
@@ -10,25 +9,25 @@
   --salt-palette-alpha-lower: var(--salt-color-white-10a);
   --salt-palette-alpha-lowest: var(--salt-color-white-5a);
 
-  --salt-palette-alpha-contrast-highest: var(--salt-color-dove-900-80a);
-  --salt-palette-alpha-contrast-higher: var(--salt-color-dove-900-65a);
-  --salt-palette-alpha-contrast-high: var(--salt-color-dove-900-50a);
-  --salt-palette-alpha-contrast-mediumHigh: var(--salt-color-dove-900-40a);
-  --salt-palette-alpha-contrast-medium: var(--salt-color-dove-900-30a);
-  --salt-palette-alpha-contrast-mediumLow: var(--salt-color-dove-900-20a);
-  --salt-palette-alpha-contrast-low: var(--salt-color-dove-900-15a);
-  --salt-palette-alpha-contrast-lower: var(--salt-color-dove-900-10a);
-  --salt-palette-alpha-contrast-lowest: var(--salt-color-dove-900-5a);
+  --salt-palette-alpha-contrast-highest: var(--salt-color-black-80a);
+  --salt-palette-alpha-contrast-higher: var(--salt-color-black-65a);
+  --salt-palette-alpha-contrast-high: var(--salt-color-black-50a);
+  --salt-palette-alpha-contrast-mediumHigh: var(--salt-color-black-40a);
+  --salt-palette-alpha-contrast-medium: var(--salt-color-black-30a);
+  --salt-palette-alpha-contrast-mediumLow: var(--salt-color-black-20a);
+  --salt-palette-alpha-contrast-low: var(--salt-color-black-15a);
+  --salt-palette-alpha-contrast-lower: var(--salt-color-black-10a);
+  --salt-palette-alpha-contrast-lowest: var(--salt-color-black-5a);
 
-  --salt-palette-alpha-dark-highest: var(--salt-color-dove-900-80a);
-  --salt-palette-alpha-dark-higher: var(--salt-color-dove-900-65a);
-  --salt-palette-alpha-dark-high: var(--salt-color-dove-900-50a);
-  --salt-palette-alpha-dark-mediumHigh: var(--salt-color-dove-900-40a);
-  --salt-palette-alpha-dark-medium: var(--salt-color-dove-900-30a);
-  --salt-palette-alpha-dark-mediumLow: var(--salt-color-dove-900-20a);
-  --salt-palette-alpha-dark-low: var(--salt-color-dove-900-15a);
-  --salt-palette-alpha-dark-lower: var(--salt-color-dove-900-10a);
-  --salt-palette-alpha-dark-lowest: var(--salt-color-dove-900-5a);
+  --salt-palette-alpha-dark-highest: var(--salt-color-black-80a);
+  --salt-palette-alpha-dark-higher: var(--salt-color-black-65a);
+  --salt-palette-alpha-dark-high: var(--salt-color-black-50a);
+  --salt-palette-alpha-dark-mediumHigh: var(--salt-color-black-40a);
+  --salt-palette-alpha-dark-medium: var(--salt-color-black-30a);
+  --salt-palette-alpha-dark-mediumLow: var(--salt-color-black-20a);
+  --salt-palette-alpha-dark-low: var(--salt-color-black-15a);
+  --salt-palette-alpha-dark-lower: var(--salt-color-black-10a);
+  --salt-palette-alpha-dark-lowest: var(--salt-color-black-5a);
 
   --salt-palette-alpha-light-highest: var(--salt-color-white-80a);
   --salt-palette-alpha-light-higher: var(--salt-color-white-65a);
@@ -41,16 +40,16 @@
   --salt-palette-alpha-light-lowest: var(--salt-color-white-5a);
 }
 
-.salt-interim[data-mode="dark"] {
-  --salt-palette-alpha-highest: var(--salt-color-gray-900-80a);
-  --salt-palette-alpha-higher: var(--salt-color-gray-900-65a);
-  --salt-palette-alpha-high: var(--salt-color-gray-900-50a);
-  --salt-palette-alpha-mediumHigh: var(--salt-color-gray-900-40a);
-  --salt-palette-alpha-medium: var(--salt-color-gray-900-30a);
-  --salt-palette-alpha-mediumLow: var(--salt-color-gray-900-20a);
-  --salt-palette-alpha-low: var(--salt-color-gray-900-15a);
-  --salt-palette-alpha-lower: var(--salt-color-gray-900-10a);
-  --salt-palette-alpha-lowest: var(--salt-color-gray-900-5a);
+.salt-theme.salt-interim[data-mode="dark"] {
+  --salt-palette-alpha-highest: var(--salt-color-black-80a);
+  --salt-palette-alpha-higher: var(--salt-color-black-65a);
+  --salt-palette-alpha-high: var(--salt-color-black-50a);
+  --salt-palette-alpha-mediumHigh: var(--salt-color-black-40a);
+  --salt-palette-alpha-medium: var(--salt-color-black-30a);
+  --salt-palette-alpha-mediumLow: var(--salt-color-black-20a);
+  --salt-palette-alpha-low: var(--salt-color-black-15a);
+  --salt-palette-alpha-lower: var(--salt-color-black-10a);
+  --salt-palette-alpha-lowest: var(--salt-color-black-5a);
 
   --salt-palette-alpha-contrast-highest: var(--salt-color-white-80a);
   --salt-palette-alpha-contrast-higher: var(--salt-color-white-65a);
@@ -62,15 +61,15 @@
   --salt-palette-alpha-contrast-lower: var(--salt-color-white-10a);
   --salt-palette-alpha-contrast-lowest: var(--salt-color-white-5a);
 
-  --salt-palette-alpha-dark-highest: var(--salt-color-gray-900-80a);
-  --salt-palette-alpha-dark-higher: var(--salt-color-gray-900-65a);
-  --salt-palette-alpha-dark-high: var(--salt-color-gray-900-50a);
-  --salt-palette-alpha-dark-mediumHigh: var(--salt-color-gray-900-40a);
-  --salt-palette-alpha-dark-medium: var(--salt-color-gray-900-30a);
-  --salt-palette-alpha-dark-mediumLow: var(--salt-color-gray-900-20a);
-  --salt-palette-alpha-dark-low: var(--salt-color-gray-900-15a);
-  --salt-palette-alpha-dark-lower: var(--salt-color-gray-900-10a);
-  --salt-palette-alpha-dark-lowest: var(--salt-color-gray-900-5a);
+  --salt-palette-alpha-dark-highest: var(--salt-color-black-80a);
+  --salt-palette-alpha-dark-higher: var(--salt-color-black-65a);
+  --salt-palette-alpha-dark-high: var(--salt-color-black-50a);
+  --salt-palette-alpha-dark-mediumHigh: var(--salt-color-black-40a);
+  --salt-palette-alpha-dark-medium: var(--salt-color-black-30a);
+  --salt-palette-alpha-dark-mediumLow: var(--salt-color-black-20a);
+  --salt-palette-alpha-dark-low: var(--salt-color-black-15a);
+  --salt-palette-alpha-dark-lower: var(--salt-color-black-10a);
+  --salt-palette-alpha-dark-lowest: var(--salt-color-black-5a);
 
   --salt-palette-alpha-light-highest: var(--salt-color-white-80a);
   --salt-palette-alpha-light-higher: var(--salt-color-white-65a);
