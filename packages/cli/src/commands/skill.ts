@@ -1,8 +1,4 @@
-import {
-  digestToPathSegment,
-  loadKnowledgeRuntimeContext,
-  sha256Digest,
-} from "@salt-ds/knowledge";
+import { loadKnowledgeRuntimeContext, sha256Digest } from "@salt-ds/knowledge";
 
 export type SaltSkillKind = "skill" | "agents";
 
@@ -12,11 +8,15 @@ export interface RunSkillCommandInput {
   bundleDir?: string;
 }
 
-const IMMUTABLE_ORIGIN = "https://www.saltdesignsystem.com";
-
-function descriptors(manifest: Awaited<ReturnType<typeof loadKnowledgeRuntimeContext>>["store"]["manifest"]) {
+function descriptors(
+  manifest: Awaited<
+    ReturnType<typeof loadKnowledgeRuntimeContext>
+  >["store"]["manifest"],
+) {
   if (!manifest.agent_support) {
-    throw new Error("The selected Knowledge bundle has no agent-support artifacts.");
+    throw new Error(
+      "The selected Knowledge bundle has no agent-support artifacts.",
+    );
   }
   return {
     skill: manifest.agent_support.skill.artifact,
@@ -25,15 +25,18 @@ function descriptors(manifest: Awaited<ReturnType<typeof loadKnowledgeRuntimeCon
 }
 
 /** Inspect or print the verified Skill artifacts bundled with Knowledge. */
-export async function runSkillCommand(input: RunSkillCommandInput): Promise<string> {
+export async function runSkillCommand(
+  input: RunSkillCommandInput,
+): Promise<string> {
   const runtime = await loadKnowledgeRuntimeContext(
     input.bundleDir ? { bundleDir: input.bundleDir } : {},
   );
   const { store } = runtime;
   const manifest = store.manifest;
   const artifacts = descriptors(manifest);
-  const source = input.bundleDir ? "custom" : "official";
-  const segment = digestToPathSegment(manifest.bundle_digest);
+  const bundleSource = input.bundleDir
+    ? "custom_directory"
+    : "installed_package";
   const describe = (kind: SaltSkillKind) => {
     const artifact = artifacts[kind];
     const bytes = store.readArtifact(artifact);
@@ -44,8 +47,9 @@ export async function runSkillCommand(input: RunSkillCommandInput): Promise<stri
       bytes: bytes.byteLength,
       bundle_version: manifest.bundle_version,
       bundle_digest: manifest.bundle_digest,
-      provenance: source,
-      immutable_url: `${IMMUTABLE_ORIGIN}/ai/v1/${segment}/${artifact}`,
+      bundle_source: bundleSource,
+      integrity: "manifest_verified" as const,
+      origin_authentication: "not_established_by_bundle" as const,
     };
   };
 

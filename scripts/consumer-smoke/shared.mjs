@@ -199,7 +199,7 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
 
   const inspectionResult = await client.callTool({
     name: "inspect_salt_project",
-    arguments: { root_dir: projectRoot, include_policy_ir: true },
+    arguments: { root_dir: projectRoot },
   });
   const inspection = structuredToolPayload(
     inspectionResult,
@@ -214,8 +214,7 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
   ].sort((left, right) => left.name.localeCompare(right.name));
   const packageOmission = inspection.coverage?.result_budget?.omissions?.find(
     (entry) =>
-      entry.section ===
-      "installation.untrusted_project_data.resolved_packages",
+      entry.section === "installation.untrusted_project_data.resolved_packages",
   );
   const availableSaltPackages =
     packageOmission?.available ?? resolvedPackages.length;
@@ -237,7 +236,6 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
     { exact_knowledge_package_version: 0, current: 0, unknown: 0 },
   );
   const installation = inspection.data.installation;
-  const policy = inspection.data.policy;
   const scope = inspection.scope;
   const coverage = inspection.coverage;
   const resultBudget = coverage?.result_budget;
@@ -302,39 +300,6 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
               : {}),
           }
         : null,
-      policy: policy
-        ? {
-            mode: policy.mode,
-            team_config_path: null,
-            stack_config_path: null,
-            ir: policy.ir
-              ? {
-                  contract: policy.ir.contract,
-                  policy_mode: policy.ir.policy_mode,
-                  declared: policy.ir.declared,
-                  digest: policy.ir.digest,
-                  manifest_uri: null,
-                  counts: policy.ir.counts
-                    ? {
-                        layers: policy.ir.counts.layers,
-                        occurrences: policy.ir.counts.occurrences,
-                        diagnostics: policy.ir.counts.diagnostics,
-                      }
-                    : null,
-                  untrusted_ir: null,
-                }
-              : null,
-            import_targets: policy.import_targets
-              ? {
-                  status: policy.import_targets.status,
-                  declared_count: policy.import_targets.declared_count,
-                  resolved_count: policy.import_targets.resolved_count,
-                  issue_count: policy.import_targets.issue_count,
-                  untrusted_diagnostics: null,
-                }
-              : null,
-          }
-        : null,
     },
     scope: scope
       ? {
@@ -359,7 +324,6 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
           package_manifest: coverage.package_manifest,
           installation: coverage.installation,
           workspace: coverage.workspace,
-          policy: coverage.policy,
           result_budget: resultBudget
             ? {
                 max_utf8_bytes: resultBudget.max_utf8_bytes,
@@ -379,7 +343,6 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
     provenance: provenance
       ? {
           project_context_digest: provenance.project_context_digest,
-          project_policy_digest: provenance.project_policy_digest,
         }
       : null,
   };
@@ -391,7 +354,6 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
   );
   const structuredManifestName = inspection.data.package_manifest?.name;
   const structuredRoot = inspection.data.root_dir;
-  const structuredManifestUri = inspection.data.policy?.ir?.manifest_uri;
   assert(
     inspectionText &&
       typeof structuredManifestName === "string" &&
@@ -399,11 +361,8 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
       !inspectionText.includes(structuredManifestName) &&
       typeof structuredRoot === "string" &&
       structuredRoot.length > 0 &&
-      !inspectionText.includes(structuredRoot) &&
-      typeof structuredManifestUri === "string" &&
-      structuredManifestUri.length > 0 &&
-      !inspectionText.includes(structuredManifestUri),
-    "inspect_salt_project text fallback exposed a project name, root, or path-bearing resource identifier.",
+      !inspectionText.includes(structuredRoot),
+    "inspect_salt_project text fallback exposed a project name or root.",
   );
   assert(
     inspection.data.package_manifest?.name === "salt-consumer-smoke-existing" &&
@@ -421,16 +380,9 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
           entry.name === "@salt-ds/theme" &&
           entry.declared_version === "1.43.0",
       ) &&
-      inspection.data.policy?.mode === "team" &&
       inspection.scope?.kind === "configured_project_inspection" &&
       inspection.scope?.filesystem_access === "read_only" &&
-      inspection.coverage?.requested_root === "evaluated" &&
-      inspection.coverage?.policy === "policy_ir_evaluated" &&
-      inspectionResult.content.some(
-        (part) =>
-          part.type === "resource_link" &&
-          part.uri === inspection.data.policy?.ir?.manifest_uri,
-      ),
+      inspection.coverage?.requested_root === "evaluated",
     "inspect_salt_project omitted expected fixture facts or bounded coverage.",
   );
 
@@ -471,7 +423,7 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
       reference.locator ? [reference.locator] : [],
     )) {
       assert(
-        /^(?:salt:\/\/(?:catalog\/v2\/sha256-[0-9a-f]{64}|project-policy\/v2\/[A-Za-z0-9_-]+\/sha256-[0-9a-f]{64})\/|https:\/\/)/u.test(
+        /^(?:salt:\/\/catalog\/v2\/sha256-[0-9a-f]{64}\/|https:\/\/)/u.test(
           citation,
         ),
         `review_salt_code returned a non-public citation: ${citation}`,
@@ -503,7 +455,6 @@ export async function createMcpToolSemanticFingerprint(client, projectRoot) {
       package_manifest: inspection.data.package_manifest,
       resolved_packages: resolvedPackages,
       workspace_kind: inspection.data.workspace?.kind ?? null,
-      policy_mode: inspection.data.policy?.mode ?? null,
     },
     review: {
       scope: review.scope,

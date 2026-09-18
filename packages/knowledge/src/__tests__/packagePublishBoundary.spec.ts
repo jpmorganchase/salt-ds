@@ -147,9 +147,7 @@ describe("package publish boundaries", () => {
         inputs: {
           "src/index.ts": {
             bytes: 20,
-            imports: [
-              { path: "src/dependency.ts", kind: "import-statement" },
-            ],
+            imports: [{ path: "src/dependency.ts", kind: "import-statement" }],
           },
         },
       }),
@@ -587,7 +585,7 @@ describe("package publish boundaries", () => {
       'readCatalogInputFile(path.join(schemaRoot, schemaFile), "utf8")',
     );
     expect(knowledgeV1Builder).not.toContain(
-      'fs.readFile(path.join(schemaRoot, schemaFile)',
+      "fs.readFile(path.join(schemaRoot, schemaFile)",
     );
     expect(inputInventory).not.toContain("site/src/props");
     expect(inputInventory).toContain("semanticInputPatterns");
@@ -610,7 +608,10 @@ describe("package publish boundaries", () => {
     expect(manifest.name).toBe("@salt-ds/cli");
     expect(manifest.private).toBe(true);
     expect(manifest.engines?.node).toBe(">=22");
-    expect(manifest.files).toEqual(["bin", "schemas"]);
+    expect(manifest.files).toEqual([
+      "bin",
+      "schemas/salt-config-1.schema.json",
+    ]);
     expect(manifest.dependencies).toEqual({
       "@salt-ds/knowledge": "workspace:*",
     });
@@ -626,7 +627,6 @@ describe("package publish boundaries", () => {
       "README.md",
       "LICENSE",
       "schemas/salt-config-1.schema.json",
-      "schemas/scan-result-1.schema.json",
     ]);
     expect(manifest.typescriptInclude).toEqual(["src/index.ts"]);
     expect(manifest.publishBinEntrypoints).toEqual({
@@ -639,13 +639,10 @@ describe("package publish boundaries", () => {
           "SALT_PROJECT_ROOT_NOT_DIRECTORY",
           "SALT_PROJECT_ROOT_UNAVAILABLE",
           "SALT_CONFIG_INVALID",
-          "SALT_CLI_SCAN_FAILED",
         ],
       },
     });
-    expect(manifest.publishAdditionalEntryPaths).toEqual([
-      "src/scan/scannerWorker.ts",
-    ]);
+    expect(manifest.publishAdditionalEntryPaths).toBeUndefined();
     expect(manifest.publishExports).toEqual({
       ".": {
         types: "./dist-types/index.d.ts",
@@ -884,5 +881,4 @@ describe("package publish boundaries", () => {
       false,
     );
   });
-
 });

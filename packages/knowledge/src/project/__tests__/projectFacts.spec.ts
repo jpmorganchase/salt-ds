@@ -11,9 +11,7 @@ describe("protocol-neutral Salt project facts", () => {
         name: "fixture",
         packageManager: "yarn@4.17.0",
       },
-      declaredSaltPackages: [
-        { name: "@salt-ds/core", version: "^1.0.0" },
-      ],
+      declaredSaltPackages: [{ name: "@salt-ds/core", version: "^1.0.0" }],
       installation: {
         resolvedPackages: [
           {
@@ -53,13 +51,6 @@ describe("protocol-neutral Salt project facts", () => {
           workspaceIssues: [],
         },
       },
-      detectedPolicy: {
-        mode: "none",
-        teamConfigPath: null,
-        stackConfigPath: null,
-        markerIssues: [],
-      },
-      policyEvaluation: null,
     });
 
     expect(facts.installation.resolvedPackages[0]).toMatchObject({
@@ -67,6 +58,7 @@ describe("protocol-neutral Salt project facts", () => {
       resolvedVersion: "1.2.3",
       satisfiesDeclaredVersion: true,
     });
+    expect(facts).not.toHaveProperty("policy");
     expect(JSON.stringify(facts)).not.toMatch(
       /resource_uri|snapshot|handle|authorization|transport/iu,
     );

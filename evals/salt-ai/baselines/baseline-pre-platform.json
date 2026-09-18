@@ -21,13 +21,13 @@
   "cohort_id": "baseline-pre-platform",
   "corpus": {
     "activation_cases": 3,
-    "outcome_cases": 14,
+    "outcome_cases": 13,
     "retrieval_gold_queries": 40
   },
   "identities": {
-    "fixture_sha256": "sha256:e44a6d1f7005a12b69f21a6ec38442258c3895d4395f6d49a56290ce0efa4141",
-    "manifest_sha256": "sha256:231179b50b0c8969e48d95795c93aaf5489fee7defb35a644c095ba33ffcb1c9",
-    "protocol_sha256": "sha256:b544f3e610fcdf343081de0ae87333b13c21ebb79a2264ae2774a9de8f6696c7"
+    "fixture_sha256": "sha256:0c7e590cf66013510f92e305bdf7f0cf44413d027cf70ebd2f4a9a0f8ff2dfbb",
+    "manifest_sha256": "sha256:5a5911389113f04a2f903d5a6bbdd1d237bef3dbdde410622da25dc45a7a5cd5",
+    "protocol_sha256": "sha256:7e9f052a9c0dcd9846e8e76204f0df8b96f7b2c959650cf26833e477ac26306c"
   },
   "limitations": [
     "Catalog-v2 is internal characterization evidence and is not a Knowledge-v1 public compatibility contract.",
@@ -62,9 +62,9 @@
     {
       "metrics": {
         "deterministic_readiness": {
-          "denominator": 14,
-          "harness_identity": "sha256:9b8fcf59f778d8954d004be090fa969e45cbc6e90d588a9ceb1742d2d0d02d6d",
-          "numerator": 14,
+          "denominator": 13,
+          "harness_identity": "sha256:cc0a3279fc98f80f55cb2f6013e86a475561fa07a650f70cab680bd6dc2f30ca",
+          "numerator": 13,
           "passed": true
         }
       },

@@ -282,4 +282,33 @@ describe("bounded workspace discovery", () => {
     });
     expect(result.coverage).toEqual({ status: "complete", reasons: [] });
   });
+
+  it("treats policy-shaped JSON as ordinary non-source repository data", async () => {
+    const root = await fixtureRoot();
+    await json(root, "package.json", { name: "fixture", private: true });
+    await write(root, "src/index.ts", "export const value = 1;\n");
+    const before = await discoverSaltProject({ rootDir: root });
+
+    await json(root, ".salt/team.json", {
+      contract: "project_conventions_v1",
+      approved_wrappers: [{ name: "AppButton", wraps: "Button" }],
+    });
+    await json(root, ".salt/stack.json", {
+      contract: "project_conventions_stack_v1",
+      layers: [],
+    });
+    const after = await discoverSaltProject({ rootDir: root });
+
+    expect(after.workspace_units[0]).not.toHaveProperty(
+      "untrusted_project_context",
+    );
+    expect(after.files).toEqual(before.files);
+    expect(after.coverage).toEqual(before.coverage);
+    expect(after.workspace_units[0]?.package_vector).toEqual(
+      before.workspace_units[0]?.package_vector,
+    );
+    expect(after.workspace_units[0]?.limitations).toEqual(
+      before.workspace_units[0]?.limitations,
+    );
+  });
 });

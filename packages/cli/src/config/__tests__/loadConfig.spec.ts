@@ -116,6 +116,23 @@ describe("salt.config.json", () => {
     ).rejects.toBeInstanceOf(SaltConfigError);
   });
 
+  it("keeps hostile unknown keys on the stable concise-error identity", async () => {
+    const root = await fixtureRoot();
+    const hostileKey = [
+      "unknown",
+      String.fromCodePoint(0x1b, 0x85, 0x202e, 0x2066),
+      String.fromCodePoint(0x1f642).repeat(32),
+    ].join("-");
+    await writeConfig(root, { [hostileKey]: true });
+    await expect(loadSaltConfig({ authorityRoot: root })).rejects.toMatchObject(
+      {
+        code: "SALT_CONFIG_INVALID",
+        exitCode: 2,
+        reason: "SALT_CONFIG_UNKNOWN_KEY",
+      },
+    );
+  });
+
   it("rejects a multiply-linked configuration file", async () => {
     const root = await fixtureRoot();
     const configPath = path.join(root, "salt.config.json");

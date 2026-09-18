@@ -1,11 +1,11 @@
+import type { ArtifactTreeNodeReference } from "../manifest/artifactTree.js";
 import { canonicalJson } from "../manifest/canonicalJson.js";
 import {
   parseSha256Digest,
-  sha256Digest,
   type Sha256Digest,
+  sha256Digest,
 } from "../manifest/digestCodec.js";
 import { parseKnowledgeArtifactPath } from "../manifest/pathCodec.js";
-import type { ArtifactTreeNodeReference } from "../manifest/artifactTree.js";
 
 export const KNOWLEDGE_PACKAGE_FAMILIES = [
   "@salt-ds/ag-grid-theme",
@@ -28,7 +28,6 @@ export const KNOWLEDGE_OPERATIONS = [
   "docs",
   "context",
   "project_facts",
-  "scan",
   "review",
 ] as const;
 
@@ -110,11 +109,14 @@ function requireExactVersion(value: unknown, label: string): string {
 export function computeKnowledgeBundleDigest(
   manifest: Omit<KnowledgeManifestV1, "bundle_digest"> | KnowledgeManifestV1,
 ): Sha256Digest {
-  const { bundle_digest: _bundleDigest, ...identity } = manifest as KnowledgeManifestV1;
+  const { bundle_digest: _bundleDigest, ...identity } =
+    manifest as KnowledgeManifestV1;
   return sha256Digest(canonicalJson(identity));
 }
 
-export function validateKnowledgeManifestV1(value: unknown): KnowledgeManifestV1 {
+export function validateKnowledgeManifestV1(
+  value: unknown,
+): KnowledgeManifestV1 {
   const manifest = requireObject(value, "Knowledge manifest");
   if (
     manifest.$schema !==
@@ -153,9 +155,13 @@ export function validateKnowledgeManifestV1(value: unknown): KnowledgeManifestV1
   if (
     Object.keys(capabilities).sort().join("\0") !==
       [...KNOWLEDGE_OPERATIONS].sort().join("\0") ||
-    KNOWLEDGE_OPERATIONS.some((operation) => capabilities[operation] !== "supported")
+    KNOWLEDGE_OPERATIONS.some(
+      (operation) => capabilities[operation] !== "supported",
+    )
   ) {
-    throw new Error("Knowledge operation capabilities are not the closed v1 set.");
+    throw new Error(
+      "Knowledge operation capabilities are not the closed v1 set.",
+    );
   }
   const compatibility = requireObject(
     manifest.compatibility,
@@ -184,7 +190,9 @@ export function validateKnowledgeManifestV1(value: unknown): KnowledgeManifestV1
       (entry) => entry.name === "@salt-ds/core" && entry.required,
     )
   ) {
-    throw new Error("Knowledge compatibility does not cover the frozen families.");
+    throw new Error(
+      "Knowledge compatibility does not cover the frozen families.",
+    );
   }
   const tree = requireObject(manifest.artifact_tree, "Knowledge artifact tree");
   const root = requireObject(tree.root, "Knowledge artifact tree root");
@@ -212,7 +220,11 @@ export function validateKnowledgeManifestV1(value: unknown): KnowledgeManifestV1
   });
   if (
     supportKinds.join("\0") !==
-    ["semantic_source_inventory", "compiler_inventory", "generation_receipt"].join("\0")
+    [
+      "semantic_source_inventory",
+      "compiler_inventory",
+      "generation_receipt",
+    ].join("\0")
   ) {
     throw new Error("Knowledge support artifacts are incomplete or unordered.");
   }
@@ -220,7 +232,9 @@ export function validateKnowledgeManifestV1(value: unknown): KnowledgeManifestV1
     requireObject(manifest.limitations, "Knowledge limitations")
       .historical_completeness !== false
   ) {
-    throw new Error("Knowledge v1 must disclose incomplete historical coverage.");
+    throw new Error(
+      "Knowledge v1 must disclose incomplete historical coverage.",
+    );
   }
   if (manifest.agent_support !== undefined) {
     const agentSupport = requireObject(
@@ -233,8 +247,7 @@ export function validateKnowledgeManifestV1(value: unknown): KnowledgeManifestV1
       "Knowledge AGENTS pointer",
     );
     if (
-      Object.keys(agentSupport).sort().join("\0") !==
-        "agents_pointer\0skill" ||
+      Object.keys(agentSupport).sort().join("\0") !== "agents_pointer\0skill" ||
       Object.keys(skill).join("\0") !== "artifact" ||
       Object.keys(agentsPointer).join("\0") !== "artifact" ||
       parseKnowledgeArtifactPath(skill.artifact) !==
@@ -242,12 +255,16 @@ export function validateKnowledgeManifestV1(value: unknown): KnowledgeManifestV1
       parseKnowledgeArtifactPath(agentsPointer.artifact) !==
         "skills/salt-design-system/references/managed-agents-block.md"
     ) {
-      throw new Error("Knowledge agent-support descriptors are not the closed v1 set.");
+      throw new Error(
+        "Knowledge agent-support descriptors are not the closed v1 set.",
+      );
     }
   }
   const parsed = manifest as unknown as KnowledgeManifestV1;
   if (computeKnowledgeBundleDigest(parsed) !== parsed.bundle_digest) {
-    throw new Error("Knowledge bundle digest does not match canonical manifest bytes.");
+    throw new Error(
+      "Knowledge bundle digest does not match canonical manifest bytes.",
+    );
   }
   return parsed;
 }

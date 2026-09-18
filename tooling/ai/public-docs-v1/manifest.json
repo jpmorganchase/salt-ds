@@ -8,7 +8,7 @@
       "source": "guide.md",
       "route": "/ai/guide/",
       "title": "Build with Salt developer tooling",
-      "summary": "Install an exact local CLI, retrieve version-matched guidance, and scan a Salt project offline.",
+      "summary": "Install an exact local CLI and retrieve exact-current Salt guidance offline.",
       "visibility": "staged-public"
     }
   ],

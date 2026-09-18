@@ -2,7 +2,10 @@ import {
   buildKnowledgeContext,
   renderKnowledgeContext,
 } from "@salt-ds/knowledge";
-import { loadRetrievalRuntime } from "./retrievalRuntime.js";
+import {
+  loadRetrievalRuntime,
+  renderRejectedProjectSelection,
+} from "./retrievalRuntime.js";
 
 export interface RunContextCommandInput {
   rootDir: string;
@@ -13,6 +16,12 @@ export interface RunContextCommandInput {
 
 export async function runContextCommand(input: RunContextCommandInput) {
   const runtime = await loadRetrievalRuntime(input.rootDir);
+  if (runtime.selection.status !== "selected") {
+    return {
+      output: renderRejectedProjectSelection(runtime.selection, input.format),
+      exitCode: 3,
+    };
+  }
   const query = {
     query: input.query,
     limit: input.limit,

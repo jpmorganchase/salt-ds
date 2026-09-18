@@ -2,7 +2,7 @@
   "name": "@salt-ds/cli",
   "version": "0.0.0",
   "private": true,
-  "description": "Offline Salt Design System inspection, retrieval, scan, and Skill CLI.",
+  "description": "Offline Salt Design System inspection, retrieval, and Skill CLI.",
   "homepage": "https://www.saltdesignsystem.com/salt/getting-started/ai",
   "keywords": [
     "salt-design-system",
@@ -26,7 +26,7 @@
   "sideEffects": false,
   "files": [
     "bin",
-    "schemas"
+    "schemas/salt-config-1.schema.json"
   ],
   "publishBinEntrypoints": {
     "bin/salt-ds.js": {
@@ -37,8 +37,7 @@
         "SALT_CLI_USAGE",
         "SALT_PROJECT_ROOT_NOT_DIRECTORY",
         "SALT_PROJECT_ROOT_UNAVAILABLE",
-        "SALT_CONFIG_INVALID",
-        "SALT_CLI_SCAN_FAILED"
+        "SALT_CONFIG_INVALID"
       ]
     }
   },
@@ -50,9 +49,6 @@
     },
     "./package.json": "./package.json"
   },
-  "publishAdditionalEntryPaths": [
-    "src/scan/scannerWorker.ts"
-  ],
   "typescriptInclude": [
     "src/index.ts"
   ],
@@ -70,8 +66,7 @@
   "publishCanonicalTextPaths": [
     "README.md",
     "LICENSE",
-    "schemas/salt-config-1.schema.json",
-    "schemas/scan-result-1.schema.json"
+    "schemas/salt-config-1.schema.json"
   ],
   "bin": {
     "salt-ds": "bin/salt-ds.js"

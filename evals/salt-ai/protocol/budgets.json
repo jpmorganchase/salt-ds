@@ -21,16 +21,16 @@
       "estimated_cost_usd": 100
     },
     "full_required_modes": {
-      "scheduled_cells": 252,
-      "input_tokens": 16128000,
-      "output_tokens": 4032000,
+      "scheduled_cells": 234,
+      "input_tokens": 14976000,
+      "output_tokens": 3744000,
       "wall_time_seconds": 172800,
       "estimated_cost_usd": 1500
     },
     "full_with_mcp": {
-      "scheduled_cells": 324,
-      "input_tokens": 20736000,
-      "output_tokens": 5184000,
+      "scheduled_cells": 300,
+      "input_tokens": 19200000,
+      "output_tokens": 4800000,
       "wall_time_seconds": 172800,
       "estimated_cost_usd": 1800
     },

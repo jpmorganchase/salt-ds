@@ -5,14 +5,12 @@
     {
       "kind": "skill",
       "source": "skills/salt-design-system/SKILL.md",
-      "artifact": "skills/salt-design-system/SKILL.md",
-      "immutable_url_suffix": "skills/salt-design-system/SKILL.md"
+      "artifact": "skills/salt-design-system/SKILL.md"
     },
     {
       "kind": "agents_pointer",
       "source": "skills/salt-design-system/references/managed-agents-block.md",
-      "artifact": "skills/salt-design-system/references/managed-agents-block.md",
-      "immutable_url_suffix": "skills/salt-design-system/references/managed-agents-block.md"
+      "artifact": "skills/salt-design-system/references/managed-agents-block.md"
     }
   ],
   "forbidden_sources": [

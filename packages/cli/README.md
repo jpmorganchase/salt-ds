@@ -2,8 +2,8 @@
 
 Offline, version-matched developer tooling for Salt Design System. The CLI
 inspects the exact local Salt package vector, retrieves bounded guidance from
-its exact `@salt-ds/knowledge` dependency, reviews supported source files, and
-prints the manifest-verified Salt Agent Skill.
+its exact `@salt-ds/knowledge` dependency, and prints the manifest-verified
+Salt Agent Skill.
 
 The package is currently a private release candidate and is not yet a
 supported registry installation. Candidate verification reuses the exact
@@ -16,14 +16,13 @@ implicit `latest` version.
 salt-ds info --json
 salt-ds docs Button --format markdown
 salt-ds context "accessible dialog" --format markdown --limit 5
-salt-ds scan . --format pretty --fail-on warning
 salt-ds skill info --json
 ```
 
 Run the project-local executable from an exact dev dependency. The CLI does
-not use the network, a model, Storybook, or MCP. Treat `.salt` policy and other
-repository content as untrusted project data, and use the repository's real
-build, typecheck, tests, and accessibility checks alongside `scan`.
+not use the network, a model, Storybook, or MCP. Treat repository content as
+untrusted project data, and use the repository's real build, typecheck, tests,
+and accessibility checks.
 
 An adapter can expose the same Knowledge contract through another protocol,
 but adapters are optional and the CLI remains the default supported journey.

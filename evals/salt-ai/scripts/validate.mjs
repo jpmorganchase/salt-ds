@@ -8,7 +8,6 @@ import addFormats from "ajv-formats";
 
 import {
   assert,
-  digestPattern,
   readJson,
   repositoryRoot,
   sha256,
@@ -275,13 +274,14 @@ export async function validateEvaluation({
   const budgets = protocolValues.find(
     (value) => value.maximum_monthly_cost_usd,
   );
+  const requiredModeCells = manifest.counts.outcome_cases * 3 * 2 * 3;
   assert(
-    budgets?.tiers?.full_required_modes?.scheduled_cells === 14 * 3 * 2 * 3,
+    budgets?.tiers?.full_required_modes?.scheduled_cells === requiredModeCells,
     "Required full-cohort cell budget is inconsistent",
   );
   assert(
     budgets?.tiers?.full_with_mcp?.scheduled_cells ===
-      14 * 3 * 2 * 3 + mcpEligibleCases * 2 * 3,
+      requiredModeCells + mcpEligibleCases * 2 * 3,
     "MCP full-cohort cell budget is inconsistent",
   );
   const attempts = protocolValues.find((value) => value.cohort_seed);

@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "corpus_id": "salt-ai-outcome-v1",
   "fixture_file": "evals/salt-ai/fixtures/repositories.json",
-  "fixture_sha256": "sha256:e44a6d1f7005a12b69f21a6ec38442258c3895d4395f6d49a56290ce0efa4141",
+  "fixture_sha256": "sha256:0c7e590cf66013510f92e305bdf7f0cf44413d027cf70ebd2f4a9a0f8ff2dfbb",
   "case_files": [
     "evals/salt-ai/retrieval/api-migrations.json",
     "evals/salt-ai/retrieval/navigation-overlay.json",
@@ -15,7 +15,6 @@
     "evals/salt-ai/tasks/migrate-button-variant.json",
     "evals/salt-ai/tasks/non-salt-control.json",
     "evals/salt-ai/tasks/partial-package-mismatch.json",
-    "evals/salt-ai/tasks/project-wrapper-policy.json",
     "evals/salt-ai/tasks/repair-invalid-import.json",
     "evals/salt-ai/tasks/valid-noop.json"
   ],
@@ -33,7 +32,7 @@
     "evals/salt-ai/protocol/modes.json"
   ],
   "counts": {
-    "outcome_cases": 14,
+    "outcome_cases": 13,
     "activation_cases": 3,
     "retrieval_gold_queries": 40
   }

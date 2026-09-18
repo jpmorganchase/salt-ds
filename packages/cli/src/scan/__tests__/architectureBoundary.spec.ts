@@ -38,4 +38,15 @@ describe("scanner isolation boundary", () => {
       for (const marker of forbidden) expect(source).not.toContain(marker);
     }
   });
+
+  it("does not pass repository project policy into static review", () => {
+    const worker = fs.readFileSync(
+      path.join(scanRoot, "scannerWorker.ts"),
+      "utf8",
+    );
+    expect(worker).not.toMatch(/\bpolicy\b/iu);
+    expect(worker).not.toMatch(
+      /\n\s*null,\s*\n\s*null,\s*\n\s*"caller_package_versions"/u,
+    );
+  });
 });

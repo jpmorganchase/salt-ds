@@ -24,7 +24,6 @@
         "example",
         "token",
         "package",
-        "project_policy",
         "submitted_text",
         "runtime"
       ]
@@ -41,8 +40,7 @@
         "accessibility",
         "example",
         "composition",
-        "status",
-        "project_policy"
+        "status"
       ]
     },
     "registry": {
@@ -53,9 +51,6 @@
     },
     "package": {
       "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/packageRef" }]
-    },
-    "project_policy": {
-      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/projectPolicyRef" }]
     },
     "submitted_text": {
       "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/submittedTextRef" }]
@@ -122,18 +117,6 @@
         "required": ["package"],
         "properties": {
           "package": { "$ref": "#/$defs/packageRef" }
-        }
-      }
-    },
-    {
-      "if": {
-        "properties": { "source_kind": { "const": "project_policy" } },
-        "required": ["source_kind"]
-      },
-      "then": {
-        "required": ["project_policy"],
-        "properties": {
-          "project_policy": { "$ref": "#/$defs/projectPolicyRef" }
         }
       }
     },
@@ -301,24 +284,6 @@
           "pattern": ".*\\S.*"
         },
         "version": {
-          "type": ["string", "null"]
-        }
-      }
-    },
-    "projectPolicyRef": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["path"],
-      "properties": {
-        "path": {
-          "type": "string",
-          "minLength": 1,
-          "pattern": ".*\\S.*"
-        },
-        "layer": {
-          "type": ["string", "null"]
-        },
-        "field_path": {
           "type": ["string", "null"]
         }
       }

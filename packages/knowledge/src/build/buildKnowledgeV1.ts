@@ -2,37 +2,40 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { brotliCompressSync, constants as zlibConstants } from "node:zlib";
 import {
+  type ArtifactDescriptor,
   createArtifactDescriptor,
   materializeArtifactTree,
-  type ArtifactDescriptor,
 } from "../manifest/artifactTree.js";
-import { canonicalJson, canonicalJsonBytes } from "../manifest/canonicalJson.js";
+import {
+  canonicalJson,
+  canonicalJsonBytes,
+} from "../manifest/canonicalJson.js";
 import { sha256Digest } from "../manifest/digestCodec.js";
 import { parseKnowledgeArtifactPath } from "../manifest/pathCodec.js";
+import {
+  type CatalogRecord,
+  type CatalogRuntimeFamilyName,
+  getCatalogRuntimeFamilyNames,
+} from "../records/knowledgeRecordSchema.js";
+import { REVIEW_RULE_CHARACTERIZATION } from "../review/reviewRuleCharacterization.js";
 import {
   computeKnowledgeBundleDigest,
   KNOWLEDGE_OPERATIONS,
   KNOWLEDGE_PACKAGE_FAMILIES,
-  validateKnowledgeManifestV1,
   type KnowledgeManifestV1,
   type KnowledgePackageCompatibility,
+  validateKnowledgeManifestV1,
 } from "../schemas/knowledgeManifestV1.js";
-import {
-  getCatalogRuntimeFamilyNames,
-  type CatalogRecord,
-  type CatalogRuntimeFamilyName,
-} from "../records/knowledgeRecordSchema.js";
-import { REVIEW_RULE_CHARACTERIZATION } from "../review/reviewRuleCharacterization.js";
 import type { SaltRegistry } from "../types.js";
+import {
+  type CatalogInputInventory,
+  readCatalogInputFile,
+  withCatalogInputTracking,
+} from "./catalogInputInventory.js";
 import type {
   KnowledgeContentBlob,
   NormalizedKnowledgeRecords,
 } from "./normalizeKnowledgeRecords.js";
-import {
-  readCatalogInputFile,
-  type CatalogInputInventory,
-  withCatalogInputTracking,
-} from "./catalogInputInventory.js";
 
 const SCHEMA_FILES = [
   "artifact-tree-node-1.schema.json",
@@ -93,7 +96,6 @@ interface AgentSupportInventory {
     kind: "skill" | "agents_pointer";
     source: string;
     artifact: string;
-    immutable_url_suffix: string;
   }>;
   forbidden_sources: string[];
 }
@@ -186,13 +188,11 @@ function packageReferences(value: unknown, target: Set<string>): void {
   }
   if (!value || typeof value !== "object") return;
   const candidate = value as Record<string, unknown>;
-  if (
-    candidate.family === "package" &&
-    typeof candidate.id === "string"
-  ) {
+  if (candidate.family === "package" && typeof candidate.id === "string") {
     target.add(candidate.id);
   }
-  for (const entry of Object.values(candidate)) packageReferences(entry, target);
+  for (const entry of Object.values(candidate))
+    packageReferences(entry, target);
 }
 
 function referencedContentIds(value: unknown, target: Set<string>): void {
@@ -202,13 +202,11 @@ function referencedContentIds(value: unknown, target: Set<string>): void {
   }
   if (!value || typeof value !== "object") return;
   const candidate = value as Record<string, unknown>;
-  if (
-    candidate.family === "content" &&
-    typeof candidate.id === "string"
-  ) {
+  if (candidate.family === "content" && typeof candidate.id === "string") {
     target.add(candidate.id);
   }
-  for (const entry of Object.values(candidate)) referencedContentIds(entry, target);
+  for (const entry of Object.values(candidate))
+    referencedContentIds(entry, target);
 }
 
 async function writeArtifact(
@@ -250,17 +248,19 @@ async function buildKnowledgeV1Tracked(
   const packageRoot = path.resolve(options.packageRoot);
   const sourceRoot = path.resolve(options.sourceRoot);
   const relativeOutput = path.relative(packageRoot, outputDir);
-  if (
-    relativeOutput.startsWith("..") ||
-    path.isAbsolute(relativeOutput)
-  ) {
-    throw new Error("Knowledge-v1 output must be a distinct package-owned directory.");
+  if (relativeOutput.startsWith("..") || path.isAbsolute(relativeOutput)) {
+    throw new Error(
+      "Knowledge-v1 output must be a distinct package-owned directory.",
+    );
   }
   await fs.rm(outputDir, { recursive: true, force: true });
   await fs.mkdir(outputDir, { recursive: true });
 
   const descriptors: ArtifactDescriptor[] = [];
-  const recordsByFamily = new Map<CatalogRuntimeFamilyName, KnowledgeRecordV1[]>();
+  const recordsByFamily = new Map<
+    CatalogRuntimeFamilyName,
+    KnowledgeRecordV1[]
+  >();
   const recordByKey = new Map<string, KnowledgeRecordV1>();
   const contentOwners = new Map<string, Set<string>>();
 
@@ -277,7 +277,9 @@ async function buildKnowledgeV1Tracked(
     agentSupportInventory.artifacts.map((entry) => entry.kind).join("\0") !==
       "skill\0agents_pointer"
   ) {
-    throw new Error("Agent-support inventory does not match the closed v1 contract.");
+    throw new Error(
+      "Agent-support inventory does not match the closed v1 contract.",
+    );
   }
   const allowedAgentArtifacts = new Map(
     agentSupportInventory.artifacts.map((entry) => [entry.kind, entry]),
@@ -292,10 +294,11 @@ async function buildKnowledgeV1Tracked(
     if (
       !entry ||
       entry.source !== expectedPath ||
-      entry.artifact !== expectedPath ||
-      entry.immutable_url_suffix !== expectedPath
+      entry.artifact !== expectedPath
     ) {
-      throw new Error(`Agent-support allowlist has an invalid ${kind} artifact.`);
+      throw new Error(
+        `Agent-support allowlist has an invalid ${kind} artifact.`,
+      );
     }
   }
 
@@ -486,7 +489,9 @@ async function buildKnowledgeV1Tracked(
   );
   const migrationInventory = JSON.parse(
     await readCatalogInputFile(migrationInventoryPath, "utf8"),
-  ) as { records: Array<{ id: string; status: string; affected_families: string[] }> };
+  ) as {
+    records: Array<{ id: string; status: string; affected_families: string[] }>;
+  };
   await writeArtifact(
     outputDir,
     "markdown/migrations/index.md",
@@ -566,33 +571,33 @@ async function buildKnowledgeV1Tracked(
         RUNTIME_SELECTABLE_FAMILIES.has(record.family),
     )
     .map(([key, record]) => {
-    if (key.startsWith("projection:")) {
-      return {
-        key,
-        mode: "inherits",
-        source_items: [record.key],
-      };
-    }
-    const references = new Set<string>();
-    packageReferences(record.data, references);
-    if (record.family === "package") references.add(record.id);
-    const names = [...references]
-      .map((id) => packageById.get(id))
-      .filter((name): name is string => Boolean(name))
-      .sort();
-    return names.length > 0
-      ? names.length === 1
-        ? { key, profile: `package:${names[0]}` }
-        : {
-            key,
-            mode: "package-ranges",
-            packages: names.map((name) => ({
-              name,
-              range: packageRangeByName.get(name),
-              evidence: `record package reference in ${key}`,
-            })),
-          }
-      : { key, profile: "version-independent" };
+      if (key.startsWith("projection:")) {
+        return {
+          key,
+          mode: "inherits",
+          source_items: [record.key],
+        };
+      }
+      const references = new Set<string>();
+      packageReferences(record.data, references);
+      if (record.family === "package") references.add(record.id);
+      const names = [...references]
+        .map((id) => packageById.get(id))
+        .filter((name): name is string => Boolean(name))
+        .sort();
+      return names.length > 0
+        ? names.length === 1
+          ? { key, profile: `package:${names[0]}` }
+          : {
+              key,
+              mode: "package-ranges",
+              packages: names.map((name) => ({
+                name,
+                range: packageRangeByName.get(name),
+                evidence: `record package reference in ${key}`,
+              })),
+            }
+        : { key, profile: "version-independent" };
     });
   for (const entry of agentSupportInventory.artifacts) {
     applicabilityItems.push({
@@ -644,7 +649,9 @@ async function buildKnowledgeV1Tracked(
     descriptors,
   );
 
-  const rulesetDigest = sha256Digest(canonicalJson(REVIEW_RULE_CHARACTERIZATION));
+  const rulesetDigest = sha256Digest(
+    canonicalJson(REVIEW_RULE_CHARACTERIZATION),
+  );
   const projectionDigest = sha256Digest(
     canonicalJson(
       [...descriptors]
@@ -694,7 +701,8 @@ async function buildKnowledgeV1Tracked(
       .map((entry) => ({
         path: entry.path,
         bytes: entry.bytes,
-        rationale: "Canonical bulk record/index artifact retained to preserve semantic parity.",
+        rationale:
+          "Canonical bulk record/index artifact retained to preserve semantic parity.",
         owner: "saltdesignsystem",
         review_expires_at: "2027-08-27T00:00:00.000Z",
       })),
@@ -737,8 +745,10 @@ async function buildKnowledgeV1Tracked(
     record_schema_version: "1.0.0",
     bundle_version: options.packageVersion,
     semantic_digest: semanticDigest,
-    semantic_source_digest: options.semanticInputInventory.digest as `sha256:${string}`,
-    compiler_digest: options.compilerInputInventory.digest as `sha256:${string}`,
+    semantic_source_digest: options.semanticInputInventory
+      .digest as `sha256:${string}`,
+    compiler_digest: options.compilerInputInventory
+      .digest as `sha256:${string}`,
     reader_contract: "salt-knowledge-reader/1",
     analyzer_contract: "salt-artifact-analyzer/1",
     ruleset: {

@@ -157,7 +157,6 @@ messagePort.on("message", async (message: unknown) => {
         package_versions: request.payload.package_versions,
       },
       null,
-      null,
       "caller_package_versions",
       {
         max_artifact_utf8_bytes: request.payload.limits.source_bytes,

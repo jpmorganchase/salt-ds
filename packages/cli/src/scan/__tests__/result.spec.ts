@@ -72,11 +72,6 @@ function discovery(): SaltProjectDiscovery {
           status: "succeeded",
         },
         owned_files: ["src/Review.tsx"],
-        untrusted_project_context: {
-          salt_policy: "untrusted",
-          team_config: "absent",
-          stack_config: "absent",
-        },
         limitations: [],
       },
     ],
@@ -113,7 +108,6 @@ function finding(
     },
     remediation: "Use the Salt Link component.",
     official_decision: null,
-    policy_evaluation: null,
     evidence: {
       submitted_artifact_id: "src/Review.tsx",
       validation: "source_bound",
