@@ -1,0 +1,4 @@
+.saltButtonGroup {
+  display: flex;
+  gap: var(--salt-spacing-100);
+}
