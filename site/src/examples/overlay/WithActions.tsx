@@ -4,13 +4,15 @@ import {
   CheckboxGroup,
   Divider,
   Overlay,
+  OverlayFooter,
+  OverlayHeader,
   OverlayPanel,
   OverlayPanelContent,
   OverlayTrigger,
   StackLayout,
   useId,
 } from "@salt-ds/core";
-import { type ChangeEvent, useState } from "react";
+import { type ChangeEvent, type ReactElement, useState } from "react";
 
 const checkboxesData = [
   {
@@ -72,38 +74,37 @@ const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
 
   return (
     <>
-      <h3 id={id} style={{ marginBottom: "var(--salt-spacing-100)" }}>
-        Export
-      </h3>
-      <StackLayout gap={1}>
-        <Checkbox
-          indeterminate={indeterminate}
-          checked={!indeterminate}
-          label={`${controlledValues.length} of 2 selected`}
-          onChange={handleChange}
-        />
-        <Divider variant="secondary" />
-        <CheckboxGroup
-          checkedValues={controlledValues}
-          onChange={handleGroupChange}
-        >
-          {checkboxesData.map((data) => (
-            <Checkbox key={data.value} {...data} />
-          ))}
-        </CheckboxGroup>
-        <Divider variant="secondary" />
-        <Button
-          style={{ float: "right", marginRight: 2 }}
-          onClick={handleExport}
-        >
+      <OverlayHeader header="Export" id={id} />
+      <OverlayPanelContent>
+        <StackLayout gap={1}>
+          <Checkbox
+            indeterminate={indeterminate}
+            checked={!indeterminate}
+            label={`${controlledValues.length} of 2 selected`}
+            onChange={handleChange}
+          />
+          <Divider variant="secondary" />
+          <CheckboxGroup
+            checkedValues={controlledValues}
+            onChange={handleGroupChange}
+          >
+            {checkboxesData.map((data) => (
+              <Checkbox key={data.value} {...data} />
+            ))}
+          </CheckboxGroup>
+          <Divider variant="secondary" />
+        </StackLayout>
+      </OverlayPanelContent>
+      <OverlayFooter>
+        <Button onClick={handleExport} style={{ width: "100%" }}>
           Export
         </Button>
-      </StackLayout>
+      </OverlayFooter>
     </>
   );
 };
 
-export const WithActions = () => {
+export const WithActions = (): ReactElement => {
   const [open, setOpen] = useState(false);
   const id = useId();
 
@@ -112,13 +113,7 @@ export const WithActions = () => {
   return (
     <Overlay open={open} onOpenChange={onOpenChange} placement="bottom">
       <OverlayTrigger>
-        <Button
-          onClick={() => {
-            setOpen(true);
-          }}
-        >
-          Show Overlay
-        </Button>
+        <Button>Show Overlay</Button>
       </OverlayTrigger>
       <OverlayPanel
         style={{
@@ -126,14 +121,12 @@ export const WithActions = () => {
         }}
         aria-labelledby={id}
       >
-        <OverlayPanelContent>
-          <WithActionsContent
-            id={id}
-            onClose={() => {
-              setOpen(false);
-            }}
-          />
-        </OverlayPanelContent>
+        <WithActionsContent
+          id={id}
+          onClose={() => {
+            setOpen(false);
+          }}
+        />
       </OverlayPanel>
     </Overlay>
   );

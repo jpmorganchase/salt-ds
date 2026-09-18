@@ -1,0 +1,13 @@
+.saltOverlayFooter {
+  padding: var(--saltOverlay-footer-padding, var(--salt-spacing-100));
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--salt-spacing-100);
+  box-sizing: border-box;
+}
+
+.saltOverlayHeader ~ .saltOverlayFooter,
+.saltOverlayPanelContent ~ .saltOverlayFooter {
+  padding-top: 0;
+}

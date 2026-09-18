@@ -17,4 +17,14 @@
   color: var(--saltOverlay-text-color, var(--salt-content-primary-foreground));
   z-index: var(--saltOverlay-zIndex, var(--salt-zIndex-flyover));
   width: max-content;
+  max-width: 100vw;
+  max-height: 100vh;
+  box-sizing: border-box;
+}
+
+.saltOverlayPanel-content {
+  max-width: inherit;
+  max-height: inherit;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
