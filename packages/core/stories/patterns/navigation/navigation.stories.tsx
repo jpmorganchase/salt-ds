@@ -21,7 +21,6 @@ const Item = () => {
     <div
       style={{
         padding: "calc(var(--salt-spacing-400)*4)",
-        margin: "var(--salt-spacing-400)",
         backgroundColor: "var(--salt-container-secondary-background)",
       }}
     />
@@ -212,10 +211,15 @@ export const Navigation = () => {
           marginLeft: "250px",
         }}
       >
-        <Item />
-        <Item />
-        <Item />
-        <Item />
+        <StackLayout
+          gap="var(--salt-spacing-400)"
+          padding="var(--salt-spacing-400)"
+        >
+          <Item />
+          <Item />
+          <Item />
+          <Item />
+        </StackLayout>
       </BorderItem>
     </BorderLayout>
   );

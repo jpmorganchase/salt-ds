@@ -746,7 +746,7 @@ export const StaticContent: StoryFn = () => (
               </MegaMenuActions>
             </MegaMenuContent>
             <MegaMenuAside>
-              <p>Static promotional text with no links.</p>
+              <Text as="p">Static promotional text with no links.</Text>
             </MegaMenuAside>
           </MegaMenuPanel>
         </MegaMenu>
