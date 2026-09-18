@@ -55,7 +55,6 @@ export const AppHeader = () => {
                 href="https://github.com/jpmorganchase/salt-ds"
                 aria-label="GitHub repository"
                 sentiment="neutral"
-                appearance="transparent"
                 target="_blank"
               >
                 <GithubIcon aria-hidden />

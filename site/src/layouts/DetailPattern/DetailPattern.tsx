@@ -56,13 +56,18 @@ function PatternPageHeading({
       <div className={styles.headingActions}>
         {exampleLink && (
           <CTALink
-            appearance="bordered"
             sentiment="neutral"
             href={exampleLink.href}
             aria-label="View Example"
           >
-            <Image src="/img/storybook_logo.svg" alt={""} aria-hidden /> View
-            Example
+            <Image
+              className={styles.SBLogo}
+              noMargin
+              src="/img/storybook_logo.svg"
+              alt={""}
+              aria-hidden
+            />{" "}
+            View Example
           </CTALink>
         )}
         {showThemeControl && (

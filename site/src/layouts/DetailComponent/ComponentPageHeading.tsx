@@ -201,7 +201,6 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
             <FlexLayout gap={1}>
               {sourceCodeUrl && (
                 <CTALink
-                  appearance="bordered"
                   sentiment="neutral"
                   href={sourceCodeUrl}
                   target="_blank"
@@ -213,7 +212,6 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
               )}
               {figmaUrl && (
                 <CTALink
-                  appearance="bordered"
                   sentiment="neutral"
                   href={figmaUrl}
                   target="_blank"
