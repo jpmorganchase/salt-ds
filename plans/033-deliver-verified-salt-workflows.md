@@ -2,7 +2,7 @@
 
 ## Status and intent
 
-- Status: IN PROGRESS — Unit 033/01 at `d2c7000865da920655d6461eb46e95f7eb84db43`
+- Status: IN PROGRESS — Unit 033/02 at `dc7315a08f4356c3796d98196017e4e0f81fb877`
 - Priority: P0 product capability.
 - Effort: 6–10 engineering days for Units 033/01–02a, including design/accessibility review; re-estimate after the compiler slice and independent maintainer exercise. Conditional expansion is separate.
 - Risk: MED; new canonical content and deliberate unreleased output/API changes.
@@ -21,7 +21,7 @@ The platform is unreleased: there is no requirement to preserve previous AI reco
 
 ## Execution boundary and adoption
 
-The completed foundation is Plan 032 at `d2c7000865da920655d6461eb46e95f7eb84db43`. Its control records actual completion; its plan, checks and earlier evidence remain historical. The single current dispatch is Unit 033/01 in `plans/evidence/033/control.json` and the Active dispatch block in `plans/README.md`. Record actual unit checkpoints and completion commits, update the plan digest with reviewed scope revisions, and permit ordinary implementation commits. There are no lifecycle phases, custom amendment protocol or predicted commit hashes.
+The completed foundation is Plan 032 at `d2c7000865da920655d6461eb46e95f7eb84db43`. Its control records actual completion; its plan, checks and earlier evidence remain historical. Unit 033/01 completed its local implementation at `dc7315a08f4356c3796d98196017e4e0f81fb877`. The single current dispatch is Unit 033/02 in `plans/evidence/033/control.json` and the Active dispatch block in `plans/README.md`. Record actual unit checkpoints and completion commits, update the plan digest with reviewed scope revisions, and permit ordinary implementation commits. There are no lifecycle phases, custom amendment protocol or predicted commit hashes.
 
 This adoption updates this plan/control, Plan 032's completion record, the active README, contributor/ADR guidance, the current-plan command and its focused checks, and the normal CI caller. The small `yarn validate:salt-ai:plan-033` check verifies current plan/control/README agreement and real commit references; it does not replay historical plan execution. Run its focused tests, current contracts, tracker, release embargo and changed-file quality, then ordinary review before product implementation. Preserve the old Plan 006 CI supersession guard.
 
@@ -132,6 +132,8 @@ Finish the existing scan retirement in code. `packages/cli/src/__tests__/cli.spe
 Verify: existing `yarn check:salt-sample-apps -- --app operations-dashboard` using its existing app registration; expect packed public dependency resolution, typecheck/build, named browser acceptance, and supported offline core commands to pass independently of Doctor. Add focused harness tests for the existing app selection, updated receipt shape, explicit unavailable analysis, and failure propagation. Public imports and sample changes also run `yarn check:public-examples` where applicable. The checks must fail on each deliberate negative variant. Bundling with package imports marked external is not evidence of actual API or setup compatibility.
 
 ## Unit 033/02 — Share the form and Button guidance across outputs
+
+Unit 033/01 completed local source and automated acceptance at `dc7315a08f4356c3796d98196017e4e0f81fb877`. The packed operations dashboard passed type/build, existing application behavior, form validation and recovery, keyboard/focus, automated accessibility, 320 CSS-pixel layout, offline core commands and the independent validation-removed negative variant. The current receipt validated against V2, including app-to-check correlation and mandatory runtime evidence. Twelve focused harness tests, 683 tooling tests, tooling types/build, 24 public examples, current plan/contracts, release embargo, changed-file quality and source review passed. The form remains **runnable**: workflow owner, design and manual accessibility review, including actual browser zoom, remain pending before promotion to **workflow-verified**. These limits carry into the shared outputs.
 
 Scope: only the changes needed to serve the form and Button loading slice in Knowledge build/record/schema/Markdown/search modules and tests, including `pageTextExtractor.ts`, `buildRegistryComponents.ts`, `buildRegistryDocs.ts`, `normalizeKnowledgeRecords.ts` and `buildKnowledgeV1.ts`; `examples/apps/operations-dashboard/src/workflows/record-form/recipe.json`; `scripts/checkPublicExamples.mjs`, affected example-schema/checker consumers including the current-product checks in `checkSaltDocsAuthoring.mjs`; explicit source/compiler and package publication inventories. Preserve existing record behavior outside this slice. No all-component/page rewrite or independent prose copy under a host-specific Skill is required.
 

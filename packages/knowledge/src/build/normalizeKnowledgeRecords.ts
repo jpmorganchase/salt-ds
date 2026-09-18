@@ -1,10 +1,20 @@
 import { formatAccessibilityImplementationSignalStatement } from "../catalog/accessibilityImplementationSignal.js";
+import { isSafeAbsoluteHttpsUrl } from "../catalog/catalogHttpsUrl.js";
+import { isPortableRepositoryPath } from "../catalog/catalogPortablePath.js";
+import {
+  canonicalJson,
+  compareCatalogIds,
+  compareOrdinalStrings,
+  sha256Bytes,
+  shortStableId,
+  stableShaId,
+} from "../catalog/catalogSerialization.js";
+import type { SaltTokenPolicyEvidenceRef } from "../evidence.js";
 import {
   createApiSymbolId,
   createDeprecationId,
   isApiSymbolSpaceReplacementCompatible,
 } from "../records/apiSymbolIdentity.js";
-import { isSafeAbsoluteHttpsUrl } from "../catalog/catalogHttpsUrl.js";
 import {
   assertNoLegacyContentIds,
   type CatalogContentCodecName,
@@ -16,7 +26,6 @@ import {
   MAX_CATALOG_CONTENT_BYTES,
   parseCatalogContentPayload,
 } from "../records/contentCodecs.js";
-import { isPortableRepositoryPath } from "../catalog/catalogPortablePath.js";
 import {
   CATALOG_FAMILY_NAMES,
   CATALOG_SEARCH_TARGET_FAMILY_NAMES,
@@ -33,31 +42,12 @@ import {
   relationCodec,
   UNVALIDATED_SOURCE_ASSERTION_REASON,
 } from "../records/knowledgeRecordSchema.js";
-import {
-  canonicalJson,
-  compareCatalogIds,
-  compareOrdinalStrings,
-  sha256Bytes,
-  shortStableId,
-  stableShaId,
-} from "../catalog/catalogSerialization.js";
-import type { SaltTokenPolicyEvidenceRef } from "../evidence.js";
 import type { SaltTokenPolicyStructuralRoleRulePackBody } from "../tokenPolicyStructuralRoleRules.js";
 import type {
   AccessibilityImplementationSignal,
   ApiSymbolIdentity,
-  ComponentRecord,
-  CountrySymbolRecord,
-  DeprecationRecord,
   ExampleRecord,
-  GuideRecord,
-  IconRecord,
-  PackageRecord,
-  PageRecord,
-  PatternRecord,
   SaltRegistry,
-  TokenDeclarationProjection,
-  TokenRecord,
 } from "../types.js";
 import type {
   CatalogInputInventory,
@@ -2730,65 +2720,3 @@ export function normalizeKnowledgeRecords(input: {
     contentBlobs: content.blobs,
   };
 }
-
-export function rehydrateTokenDeclaration(
-  declaration: CatalogRecordForFamily<"token_declaration">,
-  context: CatalogRecordForFamily<"declaration_context">,
-  source: SourceRecord,
-  replacementName: string | null,
-): TokenDeclarationProjection {
-  if (
-    source.source_kind !== "repository_file" &&
-    source.source_kind !== "repository_directory"
-  ) {
-    throw new Error(
-      `Token declaration '${declaration.id}' requires a repository source.`,
-    );
-  }
-  const selectorVariants = context.selector_variants.map((variant) => ({
-    ...variant,
-    dimensions: variant.dimensions.map((dimension) => ({
-      ...dimension,
-      selector: variant.selector,
-    })),
-  }));
-  return {
-    id: declaration.id,
-    value: declaration.value,
-    raw_value: declaration.raw_value ?? null,
-    ...(declaration.important === true ? { important: true as const } : {}),
-    raw_selector: context.raw_selector,
-    source_context: [
-      ...context.at_rules.map((atRule) =>
-        `@${atRule.name} ${atRule.params}`.trim(),
-      ),
-      ...(context.raw_selector ? [context.raw_selector] : []),
-    ],
-    at_rules: context.at_rules,
-    selector_variants: selectorVariants,
-    source_contexts: source.entrypoint_contexts,
-    source_range: {
-      start_offset: declaration.source_range[0],
-      end_offset: declaration.source_range[1],
-      start_line: declaration.source_range[2],
-      start_column: declaration.source_range[3],
-      end_line: declaration.source_range[4],
-      end_column: declaration.source_range[5],
-    },
-    source_path: source.locator,
-    dimensions: selectorVariants.flatMap((variant) => variant.dimensions),
-    deprecated: declaration.deprecated,
-    replacement: replacementName,
-  };
-}
-
-export type LegacyCatalogRecord =
-  | PackageRecord
-  | ComponentRecord
-  | IconRecord
-  | CountrySymbolRecord
-  | PatternRecord
-  | GuideRecord
-  | PageRecord
-  | TokenRecord
-  | DeprecationRecord;

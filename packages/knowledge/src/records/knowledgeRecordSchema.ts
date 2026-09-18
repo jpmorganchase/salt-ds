@@ -4,7 +4,15 @@ import {
   SAFE_ABSOLUTE_HTTPS_URL_PATTERN,
 } from "../catalog/catalogHttpsUrl.js";
 import {
-  CATALOG_CONTENT_CODEC_NAMES,
+  isPortableRepositoryPath,
+  PORTABLE_REPOSITORY_PATH_PATTERN,
+} from "../catalog/catalogPortablePath.js";
+import { PUBLIC_PACKAGE_ENTRYPOINT_PATTERN } from "../catalog/catalogPublicEntrypoint.js";
+import {
+  CANONICAL_SITE_ROUTE_PATTERN,
+  isCanonicalSiteRoute,
+} from "../catalog/catalogSiteRoute.js";
+import {
   type CatalogContentReference,
   catalogContentCodecNameCodec,
   catalogContentCodecs,
@@ -13,19 +21,6 @@ import {
   MAX_CATALOG_CONTENT_BYTES,
   MAX_CATALOG_ID_CHARS,
 } from "./contentCodecs.js";
-import {
-  isPortableRepositoryPath,
-  PORTABLE_REPOSITORY_PATH_PATTERN,
-} from "../catalog/catalogPortablePath.js";
-import { PUBLIC_PACKAGE_ENTRYPOINT_PATTERN } from "../catalog/catalogPublicEntrypoint.js";
-import {
-  compareOrdinalStrings,
-  stableShaId,
-} from "../catalog/catalogSerialization.js";
-import {
-  CANONICAL_SITE_ROUTE_PATTERN,
-  isCanonicalSiteRoute,
-} from "../catalog/catalogSiteRoute.js";
 
 export const KNOWLEDGE_RECORD_SCHEMA_VERSION = "1.0.0" as const;
 
@@ -1207,46 +1202,6 @@ export const buildAuditCodec = z
   })
   .strict();
 
-interface CatalogTupleStorage {
-  kind: "tuple";
-  fields: readonly string[];
-  optionalFields?: readonly string[];
-  derivedFields?: Readonly<Record<string, string>>;
-  computedFields?: Readonly<
-    Record<
-      string,
-      | "content_media_type"
-      | "content_validation"
-      | "policy_summary"
-      | "token_declaration_id"
-    >
-  >;
-  referenceFields?: Readonly<
-    Record<
-      string,
-      {
-        family: string;
-        cardinality: "one" | "many";
-        codecField?: string;
-      }
-    >
-  >;
-}
-
-interface CatalogDerivedTargetGroupStorage {
-  kind: "derived_target_groups";
-  targetField: "target";
-}
-
-interface CatalogTaggedSourceAssertionStorage {
-  kind: "tagged_source_assertion";
-}
-
-type CatalogFamilyStorage =
-  | CatalogTupleStorage
-  | CatalogDerivedTargetGroupStorage
-  | CatalogTaggedSourceAssertionStorage;
-
 export interface CatalogFamilyDescriptor<Codec extends z.ZodType = z.ZodType> {
   familyKind:
     | "identity"
@@ -1273,7 +1228,6 @@ export interface CatalogFamilyDescriptor<Codec extends z.ZodType = z.ZodType> {
   resolveProvenance: (record: z.infer<Codec>) => readonly CatalogReference[];
   publicationState: "internal" | "resource-ready" | "derived" | "build-only";
   canonical: boolean;
-  storage?: CatalogFamilyStorage;
 }
 
 export interface CatalogSearchIndexInput {
@@ -1540,36 +1494,6 @@ const canonicalCatalogFamilies = {
     resolveProvenance: noReferences,
     publicationState: "resource-ready",
     canonical: true,
-    storage: {
-      kind: "tuple",
-      fields: [
-        "id",
-        "category",
-        "type",
-        "semantic_intent",
-        "aliases",
-        "policy_profile_ref",
-        "evidence_profile_ref",
-        "applies_to",
-        "status",
-        "replacement_token_refs",
-      ],
-      derivedFields: {
-        name: "id",
-      },
-      referenceFields: {
-        policy_profile_ref: {
-          family: "policy_profile",
-          cardinality: "one",
-        },
-        evidence_profile_ref: {
-          family: "policy_profile",
-          cardinality: "one",
-        },
-        applies_to: { family: "component", cardinality: "many" },
-        replacement_token_refs: { family: "token", cardinality: "many" },
-      },
-    },
   }),
   api_symbol: defineCatalogFamily({
     familyKind: "identity",
@@ -1580,9 +1504,10 @@ const canonicalCatalogFamilies = {
     loader: "by-primary-key",
     searchable: true,
     indexRecord: (record) => ({
-      title: [record.export_name, ...record.member_path.map((member) => member.name)].join(
-        ".",
-      ),
+      title: [
+        record.export_name,
+        ...record.member_path.map((member) => member.name),
+      ].join("."),
       summary: `${record.symbol_space} export from ${record.entrypoint}`,
       terms: [
         record.export_name,
@@ -1600,20 +1525,6 @@ const canonicalCatalogFamilies = {
     resolveProvenance: noReferences,
     publicationState: "resource-ready",
     canonical: true,
-    storage: {
-      kind: "tuple",
-      fields: [
-        "id",
-        "package_ref",
-        "entrypoint",
-        "export_name",
-        "symbol_space",
-        "member_path",
-      ],
-      referenceFields: {
-        package_ref: { family: "package", cardinality: "one" },
-      },
-    },
   }),
   deprecation: defineCatalogFamily({
     familyKind: "identity",
@@ -1643,28 +1554,6 @@ const canonicalCatalogFamilies = {
     resolveProvenance: (record) => record.source_refs,
     publicationState: "resource-ready",
     canonical: true,
-    storage: {
-      kind: "tuple",
-      fields: [
-        "id",
-        "subject_ref",
-        "package_ref",
-        "component_ref",
-        "kind",
-        "name",
-        "deprecated_in",
-        "removed_in",
-        "source_refs",
-        "source_occurrences",
-        "detail_content_ref",
-      ],
-      referenceFields: {
-        subject_ref: { family: "api_symbol", cardinality: "one" },
-        package_ref: { family: "package", cardinality: "one" },
-        component_ref: { family: "component", cardinality: "one" },
-        source_refs: { family: "source", cardinality: "many" },
-      },
-    },
   }),
   concept: defineCatalogFamily({
     familyKind: "identity",
@@ -1723,36 +1612,6 @@ const canonicalCatalogFamilies = {
     resolveProvenance: (record) => [record.source_ref],
     publicationState: "resource-ready",
     canonical: true,
-    storage: {
-      kind: "tuple",
-      fields: [
-        "token_ref",
-        "value",
-        "raw_value",
-        "important",
-        "context_ref",
-        "source_range",
-        "source_ref",
-        "deprecated",
-        "replacement_token_ref",
-      ],
-      optionalFields: ["raw_value", "important", "replacement_token_ref"],
-      computedFields: {
-        id: "token_declaration_id",
-      },
-      referenceFields: {
-        token_ref: { family: "token", cardinality: "one" },
-        context_ref: {
-          family: "declaration_context",
-          cardinality: "one",
-        },
-        source_ref: { family: "source", cardinality: "one" },
-        replacement_token_ref: {
-          family: "token",
-          cardinality: "one",
-        },
-      },
-    },
   }),
   relation: defineCatalogFamily({
     familyKind: "relation",
@@ -1775,27 +1634,6 @@ const canonicalCatalogFamilies = {
         : record.source_evidence_refs,
     publicationState: "resource-ready",
     canonical: true,
-    storage: {
-      kind: "tuple",
-      fields: [
-        "id",
-        "relation_kind",
-        "source",
-        "target",
-        "provenance",
-        "role",
-        "source_ordinal",
-        "normative",
-        "source_evidence_refs",
-      ],
-      optionalFields: ["source_ordinal"],
-      referenceFields: {
-        source_evidence_refs: {
-          family: "evidence",
-          cardinality: "many",
-        },
-      },
-    },
   }),
   policy_profile: defineCatalogFamily({
     familyKind: "policy",
@@ -1811,20 +1649,6 @@ const canonicalCatalogFamilies = {
     resolveProvenance: noReferences,
     publicationState: "resource-ready",
     canonical: true,
-    storage: {
-      kind: "tuple",
-      fields: ["id", "policy_kind", "body_content_ref"],
-      computedFields: {
-        summary: "policy_summary",
-      },
-      referenceFields: {
-        body_content_ref: {
-          family: "content",
-          cardinality: "one",
-          codecField: "policy_kind",
-        },
-      },
-    },
   }),
   content: defineCatalogFamily({
     familyKind: "content",
@@ -1840,22 +1664,6 @@ const canonicalCatalogFamilies = {
     resolveProvenance: noReferences,
     publicationState: "resource-ready",
     canonical: true,
-    storage: {
-      kind: "tuple",
-      fields: [
-        "id",
-        "codec",
-        "bytes",
-        "offset",
-        "length",
-        "encoding",
-        "extraction_method",
-      ],
-      computedFields: {
-        media_type: "content_media_type",
-        validation: "content_validation",
-      },
-    },
   }),
   evidence: defineCatalogFamily({
     familyKind: "evidence",
@@ -1916,9 +1724,6 @@ const canonicalCatalogFamilies = {
     },
     publicationState: "resource-ready",
     canonical: true,
-    storage: {
-      kind: "tagged_source_assertion",
-    },
   }),
   source: defineCatalogFamily({
     familyKind: "source",
@@ -1966,23 +1771,6 @@ const canonicalCatalogFamilies = {
       record.provenance.map((entry) => entry.reference),
     publicationState: "resource-ready",
     canonical: true,
-    storage: {
-      kind: "tuple",
-      fields: [
-        "id",
-        "owner",
-        "source_field",
-        "ordinal",
-        "statement_content_ref",
-        "provenance",
-        "classification",
-        "normativity",
-        "authority",
-        "severity",
-        "rule_kind",
-      ],
-      optionalFields: ["authority"],
-    },
   }),
 } as const satisfies Record<string, CatalogFamilyDescriptor>;
 
@@ -2053,10 +1841,6 @@ export const catalogFamilies = {
     resolveProvenance: noReferences,
     publicationState: "derived",
     canonical: false,
-    storage: {
-      kind: "derived_target_groups",
-      targetField: "target",
-    },
   }),
   build_audit: defineCatalogFamily({
     familyKind: "audit",
@@ -2118,14 +1902,6 @@ export type CatalogRecord = {
   [Family in CatalogFamilyName]: CatalogRecordForFamily<Family>;
 }[CatalogFamilyName];
 
-export interface CatalogArtifactEnvelope<
-  Family extends CatalogFamilyName = CatalogFamilyName,
-> {
-  schema_version: typeof KNOWLEDGE_RECORD_SCHEMA_VERSION;
-  family: Family;
-  records: CatalogRecordForFamily<Family>[];
-}
-
 export function getCatalogRuntimeFamilyNames(): CatalogRuntimeFamilyName[] {
   return [...CATALOG_RUNTIME_FAMILY_NAMES];
 }
@@ -2143,643 +1919,6 @@ export function parseCatalogRecord<Family extends CatalogFamilyName>(
   return catalogFamilies[family].codec.parse(
     value,
   ) as CatalogRecordForFamily<Family>;
-}
-
-function getCatalogFamilyStorage(
-  family: CatalogFamilyName,
-): CatalogFamilyStorage | undefined {
-  return (catalogFamilies[family] as CatalogFamilyDescriptor).storage;
-}
-
-function encodeCatalogTupleField(
-  storage: CatalogTupleStorage,
-  field: string,
-  value: unknown,
-  logical: Readonly<Record<string, unknown>>,
-): unknown {
-  const reference = storage.referenceFields?.[field];
-  if (!reference || value === null || value === undefined) return value;
-
-  const encodeReference = (candidate: unknown): string => {
-    if (
-      typeof candidate !== "object" ||
-      candidate === null ||
-      Array.isArray(candidate) ||
-      (candidate as { family?: unknown }).family !== reference.family ||
-      typeof (candidate as { id?: unknown }).id !== "string"
-    ) {
-      throw new Error(
-        `Catalog tuple field '${field}' requires a ${reference.family} reference.`,
-      );
-    }
-    if (
-      reference.codecField &&
-      (candidate as { codec?: unknown }).codec !== logical[reference.codecField]
-    ) {
-      throw new Error(
-        `Catalog tuple field '${field}' requires a content codec matching '${reference.codecField}'.`,
-      );
-    }
-    return (candidate as { id: string }).id;
-  };
-
-  if (reference.cardinality === "many") {
-    if (!Array.isArray(value)) {
-      throw new Error(
-        `Catalog tuple field '${field}' requires an array of ${reference.family} references.`,
-      );
-    }
-    return value.map(encodeReference);
-  }
-  return encodeReference(value);
-}
-
-function decodeCatalogTupleField(
-  storage: CatalogTupleStorage,
-  field: string,
-  value: unknown,
-  logical: Readonly<Record<string, unknown>>,
-): unknown {
-  const reference = storage.referenceFields?.[field];
-  if (!reference || value === null) return value;
-
-  const decodeReference = (candidate: unknown): CatalogReference => {
-    if (typeof candidate !== "string") {
-      throw new Error(
-        `Catalog tuple field '${field}' requires a stored ${reference.family} reference id.`,
-      );
-    }
-    return {
-      family: reference.family,
-      id: candidate,
-      ...(reference.codecField
-        ? { codec: z.string().parse(logical[reference.codecField]) }
-        : {}),
-    };
-  };
-
-  if (reference.cardinality === "many") {
-    if (!Array.isArray(value)) {
-      throw new Error(
-        `Catalog tuple field '${field}' requires an array of stored ${reference.family} reference ids.`,
-      );
-    }
-    return value.map(decodeReference);
-  }
-  return decodeReference(value);
-}
-
-export type CatalogStorageRecordResolver = (
-  reference: CatalogReference,
-) => CatalogRecord | null;
-
-function decodeDerivedSearchTarget(
-  stored: unknown,
-  resolveRecord: CatalogStorageRecordResolver | undefined,
-): CatalogRecordForFamily<"search_document"> {
-  if (
-    !Array.isArray(stored) ||
-    stored.length !== 2 ||
-    typeof stored[0] !== "string" ||
-    typeof stored[1] !== "string"
-  ) {
-    throw new Error(
-      `${catalogFamilies.search_document.artifact} contains an invalid search_document storage tuple.`,
-    );
-  }
-  if (!resolveRecord) {
-    throw new Error(
-      "Decoding a derived search target requires a catalog record resolver.",
-    );
-  }
-  const reference = {
-    family: searchTargetFamilyCodec.parse(stored[0]),
-    id: stored[1],
-  };
-  const target = resolveRecord(reference);
-  if (
-    !target ||
-    target.family !== reference.family ||
-    target.id !== reference.id
-  ) {
-    throw new Error(
-      `Search target '${reference.family}:${reference.id}' does not resolve exactly.`,
-    );
-  }
-  const searchDocument = createCatalogSearchDocument(target);
-  if (!searchDocument) {
-    throw new Error(
-      `Catalog target '${reference.family}:${reference.id}' is not searchable.`,
-    );
-  }
-  return searchDocument;
-}
-
-const sourceAssertionStorageMetadata = {
-  token_policy: {
-    claimKind: "token",
-    detailCodec: "token_policy_assertion",
-  },
-  accessibility_implementation_signal: {
-    claimKind: "accessibility",
-    detailCodec: "accessibility_implementation_signal",
-  },
-  structural_relation: {
-    claimKind: "structural_relation",
-    detailCodec: "structural_relation_assertion",
-  },
-  token_replacement: {
-    claimKind: "token",
-    detailCodec: "token_replacement_assertion",
-  },
-  api_replacement: {
-    claimKind: "deprecation",
-    detailCodec: "api_replacement_assertion",
-  },
-} as const;
-
-function encodeTaggedSourceAssertion(record: Record<string, unknown>): unknown {
-  if (record.evidence_kind !== "source_assertion") return record;
-  const owner = record.owner as CatalogReference | null;
-  const sourceRefs = record.source_refs as CatalogReferenceFor<"source">[];
-  const detailRef = record.detail_content_ref as CatalogContentReference;
-  return [
-    record.id,
-    record.assertion_kind,
-    owner ? [owner.family, owner.id] : null,
-    sourceRefs.map((reference) => reference.id),
-    detailRef.id,
-  ];
-}
-
-function decodeTaggedSourceAssertion(stored: unknown): Record<string, unknown> {
-  if (!Array.isArray(stored)) {
-    if (typeof stored !== "object" || stored === null) {
-      throw new Error(
-        `${catalogFamilies.evidence.artifact} contains an invalid evidence storage record.`,
-      );
-    }
-    return stored as Record<string, unknown>;
-  }
-  if (
-    stored.length !== 5 ||
-    typeof stored[0] !== "string" ||
-    typeof stored[1] !== "string" ||
-    !Array.isArray(stored[3]) ||
-    stored[3].length === 0 ||
-    stored[3].some((id) => typeof id !== "string") ||
-    typeof stored[4] !== "string"
-  ) {
-    throw new Error(
-      `${catalogFamilies.evidence.artifact} contains an invalid source assertion storage tuple.`,
-    );
-  }
-  const metadata =
-    sourceAssertionStorageMetadata[
-      stored[1] as keyof typeof sourceAssertionStorageMetadata
-    ];
-  if (!metadata) {
-    throw new Error(
-      `${catalogFamilies.evidence.artifact} contains an unknown source assertion kind.`,
-    );
-  }
-  const owner = stored[2];
-  if (
-    owner !== null &&
-    (!Array.isArray(owner) ||
-      owner.length !== 2 ||
-      typeof owner[0] !== "string" ||
-      typeof owner[1] !== "string")
-  ) {
-    throw new Error(
-      `${catalogFamilies.evidence.artifact} contains an invalid source assertion owner.`,
-    );
-  }
-  return {
-    family: "evidence",
-    id: stored[0],
-    evidence_kind: "source_assertion",
-    assertion_kind: stored[1],
-    owner: owner ? { family: owner[0], id: owner[1] } : null,
-    claim_kind: metadata.claimKind,
-    source_refs: stored[3].map((id) => ({ family: "source", id })),
-    detail_content_ref: {
-      family: "content",
-      codec: metadata.detailCodec,
-      id: stored[4],
-    },
-    extraction_method: "source_extraction",
-    validation: {
-      state: "unvalidated",
-      reason: UNVALIDATED_SOURCE_ASSERTION_REASON,
-      validated_at: null,
-    },
-  };
-}
-
-export function encodeCatalogRecordForStorage<Family extends CatalogFamilyName>(
-  family: Family,
-  record: CatalogRecordForFamily<Family>,
-): unknown {
-  const parsed = parseCatalogRecord(family, record) as Record<string, unknown>;
-  const storage = getCatalogFamilyStorage(family);
-  if (!storage) return parsed;
-  if (storage.kind === "tagged_source_assertion") {
-    return encodeTaggedSourceAssertion(parsed);
-  }
-  if (storage.kind === "derived_target_groups") {
-    const target = parsed[storage.targetField];
-    if (
-      typeof target !== "object" ||
-      target === null ||
-      Array.isArray(target) ||
-      typeof (target as { family?: unknown }).family !== "string" ||
-      typeof (target as { id?: unknown }).id !== "string"
-    ) {
-      throw new Error(
-        `${catalogFamilies[family].artifact} has an invalid derived search target.`,
-      );
-    }
-    return [
-      (target as { family: string }).family,
-      (target as { id: string }).id,
-    ];
-  }
-  return storage.fields.map((field) =>
-    encodeCatalogTupleField(storage, field, parsed[field] ?? null, parsed),
-  );
-}
-
-export function decodeCatalogRecordFromStorage<
-  Family extends CatalogFamilyName,
->(
-  family: Family,
-  stored: unknown,
-  resolveRecord?: CatalogStorageRecordResolver,
-): CatalogRecordForFamily<Family> {
-  const storage = getCatalogFamilyStorage(family);
-  if (!storage) {
-    return parseCatalogRecord(family, stored);
-  }
-  if (storage.kind === "tagged_source_assertion") {
-    return parseCatalogRecord(family, decodeTaggedSourceAssertion(stored));
-  }
-  if (storage.kind === "derived_target_groups") {
-    return decodeDerivedSearchTarget(
-      stored,
-      resolveRecord,
-    ) as CatalogRecordForFamily<Family>;
-  }
-  if (!Array.isArray(stored) || stored.length !== storage.fields.length) {
-    throw new Error(
-      `${catalogFamilies[family].artifact} contains an invalid ${family} storage tuple.`,
-    );
-  }
-  const optionalFields = new Set(storage.optionalFields ?? []);
-  const logical: Record<string, unknown> = { family };
-  storage.fields.forEach((field, index) => {
-    const value = stored[index];
-    if (value === null && optionalFields.has(field)) return;
-    logical[field] = decodeCatalogTupleField(storage, field, value, logical);
-  });
-  for (const [field, sourceField] of Object.entries(
-    storage.derivedFields ?? {},
-  )) {
-    if (
-      storage.fields.includes(field) ||
-      !storage.fields.includes(sourceField) ||
-      !(sourceField in logical)
-    ) {
-      throw new Error(
-        `${catalogFamilies[family].artifact} declares an invalid derived storage field '${field}'.`,
-      );
-    }
-    logical[field] = logical[sourceField];
-  }
-  for (const [field, computation] of Object.entries(
-    storage.computedFields ?? {},
-  )) {
-    if (field in logical) {
-      throw new Error(
-        `${catalogFamilies[family].artifact} declares an invalid computed storage field '${field}'.`,
-      );
-    }
-    if (computation === "content_media_type") {
-      const codec = catalogContentCodecNameCodec.parse(logical.codec);
-      logical[field] = catalogContentCodecs[codec].mediaType;
-    } else if (computation === "content_validation") {
-      const id = CONTENT_ID_CODEC.parse(logical.id);
-      logical[field] = {
-        state: "validated",
-        method: "schema",
-        basis_digest: id,
-        validated_at: null,
-      };
-    } else if (computation === "policy_summary") {
-      const policyKind = catalogContentCodecNameCodec.parse(
-        logical.policy_kind,
-      );
-      logical[field] = `${policyKind.replace(/_/gu, " ")} policy`;
-    } else {
-      if (!resolveRecord) {
-        throw new Error(
-          "Decoding a token declaration identity requires a catalog record resolver.",
-        );
-      }
-      const tokenRef = tokenReferenceCodec.parse(logical.token_ref);
-      const contextRef = declarationContextReferenceCodec.parse(
-        logical.context_ref,
-      );
-      const sourceRef = sourceReferenceCodec.parse(logical.source_ref);
-      const token = resolveRecord(tokenRef);
-      const context = resolveRecord(contextRef);
-      const source = resolveRecord(sourceRef);
-      if (!token || token.family !== "token") {
-        throw new Error(
-          `Token declaration identity has unresolved token:${tokenRef.id}.`,
-        );
-      }
-      if (!context || context.family !== "declaration_context") {
-        throw new Error(
-          `Token declaration identity has unresolved declaration_context:${contextRef.id}.`,
-        );
-      }
-      if (
-        !source ||
-        source.family !== "source" ||
-        source.source_kind !== "repository_file"
-      ) {
-        throw new Error(
-          `Token declaration identity has unresolved repository source:${sourceRef.id}.`,
-        );
-      }
-      const range = tokenDeclarationSourceRangeCodec.parse(
-        logical.source_range,
-      );
-      const replacementRef = logical.replacement_token_ref
-        ? tokenReferenceCodec.parse(logical.replacement_token_ref)
-        : null;
-      logical[field] = stableShaId("token-declaration", {
-        token: tokenRef.id,
-        source_path: source.locator,
-        source_range: {
-          start_offset: range[0],
-          end_offset: range[1],
-          start_line: range[2],
-          start_column: range[3],
-          end_line: range[4],
-          end_column: range[5],
-        },
-        value: z.string().parse(logical.value),
-        raw_value: logical.raw_value ?? null,
-        important: logical.important === true ? true : undefined,
-        raw_selector: context.raw_selector,
-        at_rules: context.at_rules,
-        selector_variants: context.selector_variants.map((variant) => ({
-          ...variant,
-          dimensions: variant.dimensions.map((dimension) => ({
-            ...dimension,
-            selector: variant.selector,
-          })),
-        })),
-        deprecated: z.boolean().parse(logical.deprecated),
-        replacement: replacementRef?.id ?? null,
-      });
-    }
-  }
-  return parseCatalogRecord(family, logical);
-}
-
-export function encodeCatalogArtifactRecordsForStorage<
-  Family extends CatalogFamilyName,
->(
-  family: Family,
-  records: readonly CatalogRecordForFamily<Family>[],
-): unknown[] {
-  const storage = getCatalogFamilyStorage(family);
-  if (storage?.kind !== "derived_target_groups") {
-    return records.map((record) =>
-      encodeCatalogRecordForStorage(family, record),
-    );
-  }
-
-  const idsByFamily = new Map<string, string[]>();
-  for (const record of records) {
-    const [targetFamily, targetId] = encodeCatalogRecordForStorage(
-      family,
-      record,
-    ) as [string, string];
-    const ids = idsByFamily.get(targetFamily) ?? [];
-    ids.push(targetId);
-    idsByFamily.set(targetFamily, ids);
-  }
-  return [...idsByFamily.entries()]
-    .sort(([left], [right]) => compareOrdinalStrings(left, right))
-    .map(([targetFamily, ids]) => [
-      targetFamily,
-      [...ids].sort(compareOrdinalStrings),
-    ]);
-}
-
-function decodeCatalogArtifactRecordsFromStorage<
-  Family extends CatalogFamilyName,
->(
-  family: Family,
-  storedRecords: readonly unknown[],
-  resolveRecord?: CatalogStorageRecordResolver,
-): CatalogRecordForFamily<Family>[] {
-  const storage = getCatalogFamilyStorage(family);
-  if (storage?.kind !== "derived_target_groups") {
-    return storedRecords.map((record) =>
-      decodeCatalogRecordFromStorage(family, record, resolveRecord),
-    );
-  }
-
-  const flattenedTargets: Array<[string, string]> = [];
-  let previousFamily: string | null = null;
-  for (const group of storedRecords) {
-    if (
-      !Array.isArray(group) ||
-      group.length !== 2 ||
-      typeof group[0] !== "string" ||
-      !Array.isArray(group[1]) ||
-      group[1].length === 0
-    ) {
-      throw new Error(
-        `${catalogFamilies[family].artifact} contains an invalid derived target group.`,
-      );
-    }
-    const targetFamily = group[0];
-    searchTargetFamilyCodec.parse(targetFamily);
-    if (
-      previousFamily !== null &&
-      compareOrdinalStrings(previousFamily, targetFamily) >= 0
-    ) {
-      throw new Error(
-        `${catalogFamilies[family].artifact} target groups must be unique and sorted.`,
-      );
-    }
-    previousFamily = targetFamily;
-    let previousId: string | null = null;
-    for (const targetId of group[1]) {
-      if (
-        typeof targetId !== "string" ||
-        (previousId !== null &&
-          compareOrdinalStrings(previousId, targetId) >= 0)
-      ) {
-        throw new Error(
-          `${catalogFamilies[family].artifact} target ids must be unique strings sorted within each family.`,
-        );
-      }
-      previousId = targetId;
-      flattenedTargets.push([targetFamily, targetId]);
-    }
-  }
-  return flattenedTargets.map(
-    (target) =>
-      decodeDerivedSearchTarget(
-        target,
-        resolveRecord,
-      ) as CatalogRecordForFamily<Family>,
-  );
-}
-
-export function parseCatalogArtifactEnvelope<Family extends CatalogFamilyName>(
-  family: Family,
-  value: unknown,
-  resolveRecord?: CatalogStorageRecordResolver,
-): CatalogArtifactEnvelope<Family> {
-  if (typeof value !== "object" || value === null || Array.isArray(value)) {
-    throw new Error(
-      `${catalogFamilies[family].artifact} must contain a catalog artifact object.`,
-    );
-  }
-  const candidate = value as Record<string, unknown>;
-  if (candidate.schema_version !== KNOWLEDGE_RECORD_SCHEMA_VERSION) {
-    throw new Error(
-      `${catalogFamilies[family].artifact} has an unsupported schema_version.`,
-    );
-  }
-  if (candidate.family !== family) {
-    throw new Error(
-      `${catalogFamilies[family].artifact} declares family '${String(
-        candidate.family,
-      )}', expected '${family}'.`,
-    );
-  }
-  if (!Array.isArray(candidate.records)) {
-    throw new Error(
-      `${catalogFamilies[family].artifact} field 'records' must be an array.`,
-    );
-  }
-
-  const records = decodeCatalogArtifactRecordsFromStorage(
-    family,
-    candidate.records,
-    resolveRecord,
-  );
-  const seen = new Set<string>();
-  for (const record of records) {
-    if (seen.has(record.id)) {
-      throw new Error(
-        `${catalogFamilies[family].artifact} contains duplicate id '${record.id}'.`,
-      );
-    }
-    seen.add(record.id);
-  }
-  return {
-    schema_version: KNOWLEDGE_RECORD_SCHEMA_VERSION,
-    family,
-    records,
-  };
-}
-
-export function createCatalogJsonSchema(): Record<string, unknown> {
-  const closeTupleSchemas = (value: unknown): unknown => {
-    if (Array.isArray(value)) return value.map(closeTupleSchemas);
-    if (!value || typeof value !== "object") return value;
-    const result: Record<string, unknown> = Object.fromEntries(
-      Object.entries(value).map(([key, nested]) => [
-        key,
-        closeTupleSchemas(nested),
-      ]),
-    );
-    if (Array.isArray(result.prefixItems)) {
-      result.minItems = result.prefixItems.length;
-      result.maxItems = result.prefixItems.length;
-      result.items = false;
-    }
-    return result;
-  };
-  const definitions = Object.fromEntries(
-    CATALOG_FAMILY_NAMES.map((family) => [
-      family,
-      closeTupleSchemas(
-        z.toJSONSchema(catalogFamilies[family].codec, {
-          target: "draft-2020-12",
-          unrepresentable: "any",
-        }),
-      ),
-    ]),
-  );
-  const contentDefinitions = Object.fromEntries(
-    CATALOG_CONTENT_CODEC_NAMES.map((codec) => [
-      codec,
-      closeTupleSchemas(
-        z.toJSONSchema(catalogContentCodecs[codec].codec, {
-          target: "draft-2020-12",
-          unrepresentable: "any",
-        }),
-      ),
-    ]),
-  );
-  const contentMediaTypes = Object.fromEntries(
-    CATALOG_CONTENT_CODEC_NAMES.map((codec) => [
-      codec,
-      catalogContentCodecs[codec].mediaType,
-    ]),
-  );
-
-  return {
-    $schema: "https://json-schema.org/draft/2020-12/schema",
-    $id: "https://www.saltdesignsystem.com/schemas/catalog/v2/catalog.json",
-    title: "Salt catalog schema v2",
-    schema_version: KNOWLEDGE_RECORD_SCHEMA_VERSION,
-    family_names: CATALOG_FAMILY_NAMES,
-    artifacts: Object.fromEntries(
-      CATALOG_FAMILY_NAMES.map((family) => [
-        family,
-        catalogFamilies[family].artifact,
-      ]),
-    ),
-    codecs: Object.fromEntries(
-      CATALOG_FAMILY_NAMES.map((family) => [
-        family,
-        catalogFamilies[family].codecName,
-      ]),
-    ),
-    canonical: Object.fromEntries(
-      CATALOG_FAMILY_NAMES.map((family) => [
-        family,
-        catalogFamilies[family].canonical,
-      ]),
-    ),
-    publication_states: Object.fromEntries(
-      CATALOG_FAMILY_NAMES.map((family) => [
-        family,
-        catalogFamilies[family].publicationState,
-      ]),
-    ),
-    storage: Object.fromEntries(
-      CATALOG_FAMILY_NAMES.map((family) => [
-        family,
-        getCatalogFamilyStorage(family) ?? { kind: "object" },
-      ]),
-    ),
-    definitions,
-    content_definitions: contentDefinitions,
-    content_media_types: contentMediaTypes,
-  };
 }
 
 export function resolveCatalogRecordEvidence(
@@ -2853,4 +1992,4 @@ export function isCanonicalCatalogFamily(family: CatalogFamilyName): boolean {
   return catalogFamilies[family].canonical;
 }
 
-export { CONTENT_ID_CODEC, SHA256_CODEC, catalogFamilyNameCodec };
+export { CONTENT_ID_CODEC, catalogFamilyNameCodec, SHA256_CODEC };
