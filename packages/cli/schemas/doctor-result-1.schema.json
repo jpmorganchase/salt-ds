@@ -1,0 +1,600 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/schemas/doctor-result-1.json",
+  "title": "Salt Doctor result v1",
+  "type": "object",
+  "required": [
+    "contract",
+    "schema_version",
+    "status",
+    "reason_code",
+    "tool",
+    "engine",
+    "knowledge",
+    "root",
+    "workspace_units",
+    "summary",
+    "findings",
+    "coverage",
+    "limitations"
+  ],
+  "properties": {
+    "contract": { "const": "salt-doctor-result/1" },
+    "schema_version": { "const": "1.0.0" },
+    "status": {
+      "enum": ["complete", "not_salt", "unsupported", "incomplete"]
+    },
+    "reason_code": { "$ref": "#/$defs/reasonCode" },
+    "tool": {
+      "type": "object",
+      "required": ["package", "version"],
+      "properties": {
+        "package": { "const": "@salt-ds/cli" },
+        "version": { "$ref": "#/$defs/boundedString" }
+      },
+      "additionalProperties": false
+    },
+    "engine": {
+      "type": "object",
+      "required": ["id", "version", "ruleset_version", "ruleset_digest"],
+      "properties": {
+        "id": { "const": "salt-static-scan" },
+        "version": { "const": "1.0.0" },
+        "ruleset_version": { "const": "1.0.0" },
+        "ruleset_digest": { "$ref": "#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "knowledge": {
+      "type": "object",
+      "required": ["package", "version", "bundle_digest", "semantic_digest"],
+      "properties": {
+        "package": { "const": "@salt-ds/knowledge" },
+        "version": { "$ref": "#/$defs/boundedString" },
+        "bundle_digest": { "$ref": "#/$defs/sha256" },
+        "semantic_digest": { "$ref": "#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "root": {
+      "type": "object",
+      "required": ["path", "discovery"],
+      "properties": {
+        "path": { "const": "." },
+        "discovery": { "$ref": "#/$defs/discoveryCounters" }
+      },
+      "additionalProperties": false
+    },
+    "workspace_units": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": { "$ref": "#/$defs/workspaceUnit" }
+    },
+    "summary": { "$ref": "#/$defs/summary" },
+    "findings": {
+      "type": "array",
+      "maxItems": 20000,
+      "items": { "$ref": "#/$defs/finding" }
+    },
+    "coverage": { "$ref": "#/$defs/rootCoverage" },
+    "limitations": { "$ref": "#/$defs/operationalReasonArray" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "status": { "const": "complete" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "reason_code": { "const": "SALT_PROJECT_SELECTED" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "status": { "const": "not_salt" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "reason_code": { "const": "SALT_PROJECT_NO_SALT_PACKAGES" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "status": { "const": "unsupported" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "reason_code": {
+            "enum": [
+              "CORE_REQUIRED",
+              "PACKAGE_FAMILY_UNKNOWN",
+              "EXACT_VERSION_REQUIRED"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "status": { "const": "incomplete" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "reason_code": {
+            "enum": [
+              "PACKAGE_EVIDENCE_AMBIGUOUS",
+              "INSPECTION_INCOMPLETE",
+              "SCAN_TRAVERSAL_DEPTH_LIMIT",
+              "SCAN_VISITED_DIRECTORY_LIMIT",
+              "SCAN_DIRECTORY_ENTRY_LIMIT",
+              "SCAN_QUEUED_PATH_LIMIT",
+              "SCAN_SELECTED_FILE_LIMIT",
+              "SCAN_SELECTED_BYTES_LIMIT",
+              "SCAN_SOURCE_BYTES_LIMIT",
+              "SCAN_DISCOVERY_TIMEOUT",
+              "SCAN_PATH_CONTAINMENT_FAILURE",
+              "SCAN_WORKSPACE_OWNERSHIP_CONFLICT",
+              "SCAN_WORKSPACE_PATTERN_INVALID",
+              "SCAN_WORKER_TIMEOUT",
+              "SCAN_WORKER_OOM",
+              "SCAN_WORKER_CRASH",
+              "SCAN_WORKER_PROTOCOL",
+              "SCAN_WORKER_RESTART_LIMIT",
+              "SCAN_WORKER_TIME_LIMIT",
+              "SCAN_WHOLE_TIMEOUT",
+              "SCAN_FINDING_LIMIT",
+              "SCAN_ANALYZER_FAILURE",
+              "SCAN_ISOLATION_UNAVAILABLE",
+              "SCAN_PARSER_FAILURE",
+              "SCAN_EVIDENCE_LIMIT",
+              "SCAN_CSS_NODE_LIMIT",
+              "SCAN_JS_AST_NODE_LIMIT",
+              "SCAN_UNSUPPORTED_CONSTRUCT",
+              "SCAN_RESULT_BYTES_LIMIT"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "boundedString": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32768
+    },
+    "nonNegativeInteger": { "type": "integer", "minimum": 0 },
+    "portablePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32768,
+      "pattern": "^(?:\\.|(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+)$"
+    },
+    "stringArray": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": { "$ref": "#/$defs/boundedString" },
+      "uniqueItems": true
+    },
+    "operationalReason": {
+      "enum": [
+        "SCAN_TRAVERSAL_DEPTH_LIMIT",
+        "SCAN_VISITED_DIRECTORY_LIMIT",
+        "SCAN_DIRECTORY_ENTRY_LIMIT",
+        "SCAN_QUEUED_PATH_LIMIT",
+        "SCAN_SELECTED_FILE_LIMIT",
+        "SCAN_SELECTED_BYTES_LIMIT",
+        "SCAN_SOURCE_BYTES_LIMIT",
+        "SCAN_DISCOVERY_TIMEOUT",
+        "SCAN_PATH_CONTAINMENT_FAILURE",
+        "SCAN_WORKSPACE_OWNERSHIP_CONFLICT",
+        "SCAN_WORKSPACE_PATTERN_INVALID",
+        "SCAN_WORKER_TIMEOUT",
+        "SCAN_WORKER_OOM",
+        "SCAN_WORKER_CRASH",
+        "SCAN_WORKER_PROTOCOL",
+        "SCAN_WORKER_RESTART_LIMIT",
+        "SCAN_WORKER_TIME_LIMIT",
+        "SCAN_WHOLE_TIMEOUT",
+        "SCAN_FINDING_LIMIT",
+        "SCAN_ANALYZER_FAILURE",
+        "SCAN_ISOLATION_UNAVAILABLE",
+        "SCAN_PARSER_FAILURE",
+        "SCAN_EVIDENCE_LIMIT",
+        "SCAN_CSS_NODE_LIMIT",
+        "SCAN_JS_AST_NODE_LIMIT",
+        "SCAN_UNSUPPORTED_CONSTRUCT",
+        "SCAN_RESULT_BYTES_LIMIT"
+      ]
+    },
+    "operationalReasonArray": {
+      "type": "array",
+      "maxItems": 27,
+      "items": { "$ref": "#/$defs/operationalReason" },
+      "uniqueItems": true
+    },
+    "reasonCode": {
+      "enum": [
+        "SALT_PROJECT_SELECTED",
+        "SALT_PROJECT_NO_SALT_PACKAGES",
+        "CORE_REQUIRED",
+        "PACKAGE_FAMILY_UNKNOWN",
+        "EXACT_VERSION_REQUIRED",
+        "PACKAGE_EVIDENCE_AMBIGUOUS",
+        "INSPECTION_INCOMPLETE",
+        "SCAN_TRAVERSAL_DEPTH_LIMIT",
+        "SCAN_VISITED_DIRECTORY_LIMIT",
+        "SCAN_DIRECTORY_ENTRY_LIMIT",
+        "SCAN_QUEUED_PATH_LIMIT",
+        "SCAN_SELECTED_FILE_LIMIT",
+        "SCAN_SELECTED_BYTES_LIMIT",
+        "SCAN_SOURCE_BYTES_LIMIT",
+        "SCAN_DISCOVERY_TIMEOUT",
+        "SCAN_PATH_CONTAINMENT_FAILURE",
+        "SCAN_WORKSPACE_OWNERSHIP_CONFLICT",
+        "SCAN_WORKSPACE_PATTERN_INVALID",
+        "SCAN_WORKER_TIMEOUT",
+        "SCAN_WORKER_OOM",
+        "SCAN_WORKER_CRASH",
+        "SCAN_WORKER_PROTOCOL",
+        "SCAN_WORKER_RESTART_LIMIT",
+        "SCAN_WORKER_TIME_LIMIT",
+        "SCAN_WHOLE_TIMEOUT",
+        "SCAN_FINDING_LIMIT",
+        "SCAN_ANALYZER_FAILURE",
+        "SCAN_ISOLATION_UNAVAILABLE",
+        "SCAN_PARSER_FAILURE",
+        "SCAN_EVIDENCE_LIMIT",
+        "SCAN_CSS_NODE_LIMIT",
+        "SCAN_JS_AST_NODE_LIMIT",
+        "SCAN_UNSUPPORTED_CONSTRUCT",
+        "SCAN_RESULT_BYTES_LIMIT"
+      ]
+    },
+    "discoveryCounters": {
+      "type": "object",
+      "required": [
+        "visited_directories",
+        "directory_entries",
+        "queued_paths",
+        "selected_candidate_files",
+        "selected_files",
+        "selected_bytes"
+      ],
+      "properties": {
+        "visited_directories": { "$ref": "#/$defs/nonNegativeInteger" },
+        "directory_entries": { "$ref": "#/$defs/nonNegativeInteger" },
+        "queued_paths": { "$ref": "#/$defs/nonNegativeInteger" },
+        "selected_candidate_files": { "$ref": "#/$defs/nonNegativeInteger" },
+        "selected_files": { "$ref": "#/$defs/nonNegativeInteger" },
+        "selected_bytes": { "$ref": "#/$defs/nonNegativeInteger" }
+      },
+      "additionalProperties": false
+    },
+    "packageVectorEntry": {
+      "type": "object",
+      "required": [
+        "name",
+        "declared_version",
+        "observed_version",
+        "observed_manifest_path",
+        "satisfies_declaration"
+      ],
+      "properties": {
+        "name": { "$ref": "#/$defs/boundedString" },
+        "declared_version": { "$ref": "#/$defs/boundedString" },
+        "observed_version": {
+          "oneOf": [{ "$ref": "#/$defs/boundedString" }, { "type": "null" }]
+        },
+        "observed_manifest_path": {
+          "oneOf": [{ "$ref": "#/$defs/portablePath" }, { "type": "null" }]
+        },
+        "satisfies_declaration": { "type": ["boolean", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "packageEvidence": {
+      "type": "object",
+      "required": ["manager", "manager_detection", "layout", "status"],
+      "properties": {
+        "manager": { "type": "string", "maxLength": 256 },
+        "manager_detection": { "type": "string", "maxLength": 256 },
+        "layout": { "type": "string", "maxLength": 256 },
+        "status": { "type": "string", "maxLength": 256 }
+      },
+      "additionalProperties": false
+    },
+    "installedPackage": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "$ref": "#/$defs/boundedString" },
+        "version": { "$ref": "#/$defs/boundedString" }
+      },
+      "additionalProperties": false
+    },
+    "projectDecision": {
+      "type": "object",
+      "required": [
+        "contract",
+        "schema_version",
+        "status",
+        "reason_code",
+        "installed_package_vector"
+      ],
+      "properties": {
+        "contract": { "const": "salt-project-decision/1" },
+        "schema_version": { "const": "1.0.0" },
+        "status": {
+          "enum": ["selected", "not_salt", "unverifiable", "unsupported"]
+        },
+        "reason_code": {
+          "enum": [
+            "SALT_PROJECT_SELECTED",
+            "SALT_PROJECT_NO_SALT_PACKAGES",
+            "SALT_PROJECT_INSPECTION_INCOMPLETE",
+            "SALT_PROJECT_PACKAGE_EVIDENCE_AMBIGUOUS",
+            "SALT_PROJECT_CORE_REQUIRED",
+            "SALT_PROJECT_PACKAGE_FAMILY_UNKNOWN",
+            "SALT_PROJECT_EXACT_VERSION_REQUIRED"
+          ]
+        },
+        "installed_package_vector": {
+          "type": "array",
+          "maxItems": 32,
+          "items": { "$ref": "#/$defs/installedPackage" }
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "status": { "const": "selected" },
+            "reason_code": { "const": "SALT_PROJECT_SELECTED" }
+          }
+        },
+        {
+          "properties": {
+            "status": { "const": "not_salt" },
+            "reason_code": { "const": "SALT_PROJECT_NO_SALT_PACKAGES" }
+          }
+        },
+        {
+          "properties": {
+            "status": { "const": "unverifiable" },
+            "reason_code": {
+              "enum": [
+                "SALT_PROJECT_INSPECTION_INCOMPLETE",
+                "SALT_PROJECT_PACKAGE_EVIDENCE_AMBIGUOUS"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "status": { "const": "unsupported" },
+            "reason_code": {
+              "enum": [
+                "SALT_PROJECT_CORE_REQUIRED",
+                "SALT_PROJECT_PACKAGE_FAMILY_UNKNOWN",
+                "SALT_PROJECT_EXACT_VERSION_REQUIRED"
+              ]
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "fileCounts": {
+      "type": "object",
+      "required": ["discovered", "selected", "evaluated", "failed"],
+      "properties": {
+        "discovered": { "$ref": "#/$defs/nonNegativeInteger" },
+        "selected": { "$ref": "#/$defs/nonNegativeInteger" },
+        "evaluated": { "$ref": "#/$defs/nonNegativeInteger" },
+        "failed": { "$ref": "#/$defs/nonNegativeInteger" }
+      },
+      "additionalProperties": false
+    },
+    "workspaceUnit": {
+      "type": "object",
+      "required": [
+        "workspace_unit_id",
+        "classification",
+        "classification_evidence",
+        "package_vector",
+        "package_evidence",
+        "project_decision",
+        "files",
+        "operational_reasons",
+        "limitations"
+      ],
+      "properties": {
+        "workspace_unit_id": { "$ref": "#/$defs/portablePath" },
+        "classification": {
+          "enum": ["salt-application", "library", "unknown"]
+        },
+        "classification_evidence": { "$ref": "#/$defs/stringArray" },
+        "package_vector": {
+          "type": "array",
+          "maxItems": 32,
+          "items": { "$ref": "#/$defs/packageVectorEntry" }
+        },
+        "package_evidence": { "$ref": "#/$defs/packageEvidence" },
+        "project_decision": { "$ref": "#/$defs/projectDecision" },
+        "files": { "$ref": "#/$defs/fileCounts" },
+        "operational_reasons": {
+          "$ref": "#/$defs/operationalReasonArray"
+        },
+        "limitations": { "$ref": "#/$defs/operationalReasonArray" }
+      },
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "object",
+      "required": ["errors", "warnings", "infos", "total"],
+      "properties": {
+        "errors": { "$ref": "#/$defs/nonNegativeInteger" },
+        "warnings": { "$ref": "#/$defs/nonNegativeInteger" },
+        "infos": { "$ref": "#/$defs/nonNegativeInteger" },
+        "total": { "$ref": "#/$defs/nonNegativeInteger" }
+      },
+      "additionalProperties": false
+    },
+    "location": {
+      "type": "object",
+      "required": [
+        "path",
+        "encoding",
+        "start_offset",
+        "end_offset",
+        "start_line",
+        "start_byte_column",
+        "end_line",
+        "end_byte_column"
+      ],
+      "properties": {
+        "path": { "$ref": "#/$defs/portablePath" },
+        "encoding": { "const": "utf8_bytes_end_exclusive" },
+        "start_offset": { "$ref": "#/$defs/nonNegativeInteger" },
+        "end_offset": { "$ref": "#/$defs/nonNegativeInteger" },
+        "start_line": { "type": "integer", "minimum": 1 },
+        "start_byte_column": { "type": "integer", "minimum": 1 },
+        "end_line": { "type": "integer", "minimum": 1 },
+        "end_byte_column": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "evidenceReference": {
+      "type": "object",
+      "required": ["locator", "field_path"],
+      "properties": {
+        "locator": { "$ref": "#/$defs/boundedString" },
+        "field_path": { "$ref": "#/$defs/boundedString" }
+      },
+      "additionalProperties": false
+    },
+    "findingEvidence": {
+      "type": "object",
+      "required": ["validation", "references"],
+      "properties": {
+        "validation": { "const": "source_bound" },
+        "references": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": { "$ref": "#/$defs/evidenceReference" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "finding": {
+      "type": "object",
+      "required": [
+        "id",
+        "workspace_unit_id",
+        "rule_id",
+        "rule_description",
+        "severity",
+        "confidence",
+        "applicability",
+        "location",
+        "message",
+        "evidence",
+        "remediation",
+        "acceptance_criterion"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/sha256" },
+        "workspace_unit_id": { "$ref": "#/$defs/portablePath" },
+        "rule_id": { "$ref": "#/$defs/boundedString" },
+        "rule_description": { "$ref": "#/$defs/boundedString" },
+        "severity": { "enum": ["info", "warning", "error"] },
+        "confidence": { "const": "high" },
+        "applicability": true,
+        "location": { "$ref": "#/$defs/location" },
+        "message": { "$ref": "#/$defs/boundedString" },
+        "evidence": { "$ref": "#/$defs/findingEvidence" },
+        "remediation": {
+          "oneOf": [{ "$ref": "#/$defs/boundedString" }, { "type": "null" }]
+        },
+        "acceptance_criterion": { "$ref": "#/$defs/boundedString" }
+      },
+      "additionalProperties": false
+    },
+    "parserCount": {
+      "type": "object",
+      "required": ["parser", "files"],
+      "properties": {
+        "parser": {
+          "enum": ["babel", "failed", "limited", "not_run", "postcss"]
+        },
+        "files": { "$ref": "#/$defs/nonNegativeInteger" }
+      },
+      "additionalProperties": false
+    },
+    "factCount": {
+      "type": "object",
+      "required": ["kind", "count"],
+      "properties": {
+        "kind": { "$ref": "#/$defs/boundedString" },
+        "count": { "$ref": "#/$defs/nonNegativeInteger" }
+      },
+      "additionalProperties": false
+    },
+    "rootCoverage": {
+      "type": "object",
+      "required": [
+        "status",
+        "selected_files",
+        "evaluated_files",
+        "failed_files",
+        "skipped_files",
+        "unsupported_files",
+        "parser_counts",
+        "fact_counts",
+        "evaluated_rule_ids",
+        "skipped_rule_ids",
+        "truncated",
+        "timeout",
+        "operational_reasons"
+      ],
+      "properties": {
+        "status": { "enum": ["complete", "incomplete"] },
+        "selected_files": { "$ref": "#/$defs/nonNegativeInteger" },
+        "evaluated_files": { "$ref": "#/$defs/nonNegativeInteger" },
+        "failed_files": { "$ref": "#/$defs/nonNegativeInteger" },
+        "skipped_files": { "$ref": "#/$defs/nonNegativeInteger" },
+        "unsupported_files": { "$ref": "#/$defs/nonNegativeInteger" },
+        "parser_counts": {
+          "type": "array",
+          "maxItems": 5,
+          "items": { "$ref": "#/$defs/parserCount" }
+        },
+        "fact_counts": {
+          "type": "array",
+          "maxItems": 256,
+          "items": { "$ref": "#/$defs/factCount" }
+        },
+        "evaluated_rule_ids": { "$ref": "#/$defs/stringArray" },
+        "skipped_rule_ids": { "$ref": "#/$defs/stringArray" },
+        "truncated": { "type": "boolean" },
+        "timeout": { "type": "boolean" },
+        "operational_reasons": {
+          "$ref": "#/$defs/operationalReasonArray"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

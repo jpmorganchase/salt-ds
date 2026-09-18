@@ -26,7 +26,8 @@
   "sideEffects": false,
   "files": [
     "bin",
-    "schemas/salt-config-1.schema.json"
+    "schemas/salt-config-1.schema.json",
+    "schemas/doctor-result-1.schema.json"
   ],
   "publishBinEntrypoints": {
     "bin/salt-ds.js": {
@@ -66,7 +67,11 @@
   "publishCanonicalTextPaths": [
     "README.md",
     "LICENSE",
-    "schemas/salt-config-1.schema.json"
+    "schemas/salt-config-1.schema.json",
+    "schemas/doctor-result-1.schema.json"
+  ],
+  "publishAdditionalEntryPaths": [
+    "src/scan/scannerWorker.ts"
   ],
   "bin": {
     "salt-ds": "bin/salt-ds.js"

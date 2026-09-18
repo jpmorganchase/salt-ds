@@ -49,11 +49,16 @@ function sha256Bytes(value) {
   return createHash("sha256").update(value).digest("hex");
 }
 
-async function createIsolatedPackageManagerEnvironment(rootDir) {
-  const cacheRoot = path.join(
-    path.dirname(rootDir),
-    `.${path.basename(rootDir)}-package-manager-state`,
-  );
+export async function createIsolatedPackageManagerEnvironment(
+  rootDir,
+  options = {},
+) {
+  const cacheRoot =
+    options.cacheRoot ??
+    path.join(
+      path.dirname(rootDir),
+      `.${path.basename(rootDir)}-package-manager-state`,
+    );
   const npmCache = path.join(cacheRoot, "npm");
   const yarnCache = path.join(cacheRoot, "yarn-cache");
   const yarnGlobal = path.join(cacheRoot, "yarn-global");
@@ -67,21 +72,25 @@ async function createIsolatedPackageManagerEnvironment(rootDir) {
       (directory) => fs.mkdir(directory, { recursive: true }),
     ),
   );
-  await Promise.all([
+  const configurationWrites = [
     fs.writeFile(npmUserConfig, "", "utf8"),
     fs.writeFile(npmGlobalConfig, "", "utf8"),
-    fs.writeFile(
-      path.join(rootDir, yarnConfigName),
-      [
-        "enableGlobalCache: false",
-        "enableTelemetry: false",
-        "nodeLinker: node-modules",
-        'npmRegistryServer: "https://registry.npmjs.org"',
-        "",
-      ].join("\n"),
-      "utf8",
-    ),
-  ]);
+  ];
+  if (options.writeYarnConfig !== false)
+    configurationWrites.push(
+      fs.writeFile(
+        path.join(rootDir, yarnConfigName),
+        [
+          "enableGlobalCache: false",
+          "enableTelemetry: false",
+          "nodeLinker: node-modules",
+          'npmRegistryServer: "https://registry.npmjs.org"',
+          "",
+        ].join("\n"),
+        "utf8",
+      ),
+    );
+  await Promise.all(configurationWrites);
   const environment = {
     ...Object.fromEntries(
       Object.entries(process.env).filter(
@@ -147,7 +156,7 @@ async function collectExactDirectoryFiles(rootDir, label = "Package tree") {
   return records;
 }
 
-async function hashExactDirectoryTree(rootDir) {
+export async function hashExactDirectoryTree(rootDir) {
   const records = await collectExactDirectoryFiles(rootDir);
   return sha256Bytes(Buffer.from(JSON.stringify(records), "utf8"));
 }
@@ -793,7 +802,11 @@ export async function installLocalPackages(rootDir, packReport) {
   };
 }
 
-export async function installLocalCliPackages(rootDir, packReport) {
+export async function installLocalCliPackages(
+  rootDir,
+  packReport,
+  options = {},
+) {
   await fs.mkdir(rootDir, { recursive: true });
   const packageManagerEnvironment =
     await createIsolatedPackageManagerEnvironment(rootDir);
@@ -807,7 +820,7 @@ export async function installLocalCliPackages(rootDir, packReport) {
     "utf8",
   );
 
-  console.log(
+  (options.log ?? console.log)(
     "Installing the exact reported Knowledge and CLI tarballs together...",
   );
   await runCommand(

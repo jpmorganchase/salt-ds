@@ -5,8 +5,10 @@ import type {
   KnowledgeRecordFamily,
   KnowledgeRecordStore,
 } from "../manifest/knowledgeStore.js";
+import { renderUntrustedMarkdownEvidence } from "../markdown/untrustedMarkdown.js";
 
-export const KNOWLEDGE_SEARCH_SCORING_VERSION = "salt-lexical-ranking/1" as const;
+export const KNOWLEDGE_SEARCH_SCORING_VERSION =
+  "salt-lexical-ranking/1" as const;
 export const KNOWLEDGE_SEARCH_STOP_WORD_VERSION = "salt-stop-words/1" as const;
 
 export const KNOWLEDGE_SEARCH_TARGET_FAMILY_NAMES = [
@@ -130,7 +132,9 @@ function allWords(value: string): string[] {
   const segmented = value
     .normalize("NFKC")
     .replace(/([\p{Ll}\p{N}])([\p{Lu}])/gu, "$1 $2");
-  return [...new Set(normalizeKnowledgeQuery(segmented).match(WORD_PATTERN) ?? [])];
+  return [
+    ...new Set(normalizeKnowledgeQuery(segmented).match(WORD_PATTERN) ?? []),
+  ];
 }
 
 function meaningfulWords(value: string): string[] {
@@ -317,7 +321,11 @@ function rankDocument(
     weight: number;
   }> = [
     { name: "record_id", values: [document.target.id], weight: 220 },
-    { name: "export_name", values: exportName ? [exportName] : [], weight: 210 },
+    {
+      name: "export_name",
+      values: exportName ? [exportName] : [],
+      weight: 210,
+    },
     { name: "canonical_name", values: [canonicalName], weight: 200 },
     { name: "title", values: [document.title], weight: 180 },
     { name: "aliases", values: aliases, weight: 170 },
@@ -329,15 +337,18 @@ function rankDocument(
     { name: "summary", values: [document.summary], weight: 35 },
     { name: "kind", values: kinds, weight: 80 },
   ];
-  const exactId = normalizeKnowledgeQuery(document.target.id) === normalizedQuery;
+  const exactId =
+    normalizeKnowledgeQuery(document.target.id) === normalizedQuery;
   const exactExport =
     exportName.length > 0 &&
     normalizeKnowledgeQuery(exportName) === normalizedQuery;
-  const exactCanonical = normalizeKnowledgeQuery(canonicalName) === normalizedQuery;
+  const exactCanonical =
+    normalizeKnowledgeQuery(canonicalName) === normalizedQuery;
   const exactAlias = aliases.some(
     (alias) => normalizeKnowledgeQuery(alias) === normalizedQuery,
   );
-  const exactTitle = normalizeKnowledgeQuery(document.title) === normalizedQuery;
+  const exactTitle =
+    normalizeKnowledgeQuery(document.title) === normalizedQuery;
   const components: Record<string, number> = {};
   if (exactId) components.exact_record_id = 12_000;
   if (exactExport) components.exact_export_name = 11_000;
@@ -377,7 +388,10 @@ function rankDocument(
   if (exactCanonical) matchedFields.add("canonical_name");
   if (exactAlias) matchedFields.add("aliases");
   if (exactTitle) matchedFields.add("title");
-  const score = Object.values(components).reduce((sum, value) => sum + value, 0);
+  const score = Object.values(components).reduce(
+    (sum, value) => sum + value,
+    0,
+  );
   return score === 0
     ? null
     : {
@@ -510,17 +524,15 @@ export function searchSaltRecords(
     indexed_documents: documents.length,
     evaluated_documents: evaluatedDocuments,
     excluded_documents: excludedDocuments,
-    excluded_package_families: [...excludedNames]
-      .sort()
-      .map((name) => {
-        const decision = compatibilityByName.get(name)!;
-        return {
-          name,
-          state: decision.state,
-          observed_version: decision.installed_version,
-          supported_range: decision.supported_range,
-        };
-      }),
+    excluded_package_families: [...excludedNames].sort().map((name) => {
+      const decision = compatibilityByName.get(name)!;
+      return {
+        name,
+        state: decision.state,
+        observed_version: decision.installed_version,
+        supported_range: decision.supported_range,
+      };
+    }),
     matched_documents: ranked.length,
     candidate_count: ranked.length,
     top_score_tie_count: topScoreTieCount,
@@ -534,14 +546,6 @@ export function readKnowledgeRecord(
   reference: { family: KnowledgeRecordFamily; id: string },
 ): unknown | null {
   return store.getRecord(reference.family, reference.id);
-}
-
-function truncateUtf8(value: string, maxBytes: number): string {
-  const bytes = Buffer.from(value, "utf8");
-  if (bytes.byteLength <= maxBytes) return value;
-  let boundary = maxBytes;
-  while (boundary > 0 && (bytes[boundary] & 0xc0) === 0x80) boundary -= 1;
-  return bytes.subarray(0, boundary).toString("utf8");
 }
 
 export interface KnowledgeContextResult {
@@ -606,13 +610,41 @@ export function renderKnowledgeContext(
     Math.max(256, input.max_utf8_bytes ?? 16 * 1024),
   );
   const result = buildKnowledgeContext(store, input);
-  const header = `# Salt knowledge: ${result.query}\n\nBundle: ${result.bundle_digest}\nContext: ${result.context_digest}\n`;
-  let output = truncateUtf8(header, maxBytes);
+  const headerPrefix = "# Salt knowledge\n\nQuery: ";
+  const headerSuffix = `\n\nBundle: ${renderUntrustedMarkdownEvidence(
+    result.bundle_digest,
+    { mode: "inline" },
+  )}\nContext: ${renderUntrustedMarkdownEvidence(result.context_digest, {
+    mode: "inline",
+  })}\n`;
+  const queryBudget =
+    maxBytes -
+    Buffer.byteLength(headerPrefix, "utf8") -
+    Buffer.byteLength(headerSuffix, "utf8");
+  const renderedQuery = renderUntrustedMarkdownEvidence(result.query, {
+    mode: "inline",
+    max_utf8_bytes: Math.max(16, queryBudget),
+  });
+  let output = `${headerPrefix}${renderedQuery}${headerSuffix}`;
   for (const match of result.matches) {
     const sources = match.citation.source_records.length
-      ? `; sources ${match.citation.source_records.join(", ")}`
+      ? `; sources ${match.citation.source_records
+          .map((source) =>
+            renderUntrustedMarkdownEvidence(source, { mode: "inline" }),
+          )
+          .join(", ")}`
       : "";
-    const next = `\n## ${match.title}\n\n${match.summary}\n\nCitation: ${match.citation.record_key}${sources}; bundle ${match.citation.bundle_digest}\n`;
+    const next = `\n## ${renderUntrustedMarkdownEvidence(match.title, {
+      mode: "inline",
+    })}\n\nEvidence:\n\n${renderUntrustedMarkdownEvidence(match.summary, {
+      mode: "block",
+    })}\n\nCitation: ${renderUntrustedMarkdownEvidence(
+      match.citation.record_key,
+      { mode: "inline" },
+    )}${sources}; bundle ${renderUntrustedMarkdownEvidence(
+      match.citation.bundle_digest,
+      { mode: "inline" },
+    )}\n`;
     if (
       Buffer.byteLength(output, "utf8") + Buffer.byteLength(next, "utf8") >
       maxBytes

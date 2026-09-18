@@ -1,0 +1,37 @@
+{
+  "contract": "salt-ai-plan-005-control/1",
+  "plan_id": "005",
+  "plan_sha256": "5e048a9db36abb4409279856ace70e1f5e1af3125886940bede04584dfbd646f",
+  "active_dispatch": null,
+  "units": [
+    {
+      "id": "005/00",
+      "status": "DONE",
+      "checkpoint_sha": "55879a3d826812270dde79353028ac2e56eb879d",
+      "completion_sha": "936660d73d0b3637fa864c61939bff71ff84a8cb",
+      "result": "PASS_RULES"
+    },
+    {
+      "id": "005/01",
+      "status": "DONE",
+      "checkpoint_sha": "936660d73d0b3637fa864c61939bff71ff84a8cb",
+      "completion_sha": "786540d940f114c20b2cf132aef1758ba23cdc8e",
+      "result": "PASS_DOCTOR"
+    },
+    {
+      "id": "005/02",
+      "status": "DONE",
+      "checkpoint_sha": "786540d940f114c20b2cf132aef1758ba23cdc8e",
+      "completion_sha": "c297b87318cb9a77e9e90f094891f289a1714ee2",
+      "result": "CUT_DOCTOR"
+    },
+    {
+      "id": "005/03",
+      "status": "TODO",
+      "checkpoint_sha": null,
+      "completion_sha": null,
+      "result": null
+    }
+  ],
+  "terminal_result": "CUT_DOCTOR"
+}

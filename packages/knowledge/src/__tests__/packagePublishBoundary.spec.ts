@@ -611,6 +611,7 @@ describe("package publish boundaries", () => {
     expect(manifest.files).toEqual([
       "bin",
       "schemas/salt-config-1.schema.json",
+      "schemas/doctor-result-1.schema.json",
     ]);
     expect(manifest.dependencies).toEqual({
       "@salt-ds/knowledge": "workspace:*",
@@ -627,6 +628,7 @@ describe("package publish boundaries", () => {
       "README.md",
       "LICENSE",
       "schemas/salt-config-1.schema.json",
+      "schemas/doctor-result-1.schema.json",
     ]);
     expect(manifest.typescriptInclude).toEqual(["src/index.ts"]);
     expect(manifest.publishBinEntrypoints).toEqual({
@@ -642,7 +644,9 @@ describe("package publish boundaries", () => {
         ],
       },
     });
-    expect(manifest.publishAdditionalEntryPaths).toBeUndefined();
+    expect(manifest.publishAdditionalEntryPaths).toEqual([
+      "src/scan/scannerWorker.ts",
+    ]);
     expect(manifest.publishExports).toEqual({
       ".": {
         types: "./dist-types/index.d.ts",

@@ -401,6 +401,7 @@ async function mapConcurrent<T, R>(
 export async function discoverSaltProject(input: {
   rootDir: string;
   now?: () => number;
+  includeEmptyWorkspaceUnits?: boolean;
 }): Promise<SaltProjectDiscovery> {
   const requestedRoot = path.resolve(input.rootDir);
   let rootDir: string;
@@ -762,7 +763,11 @@ export async function discoverSaltProject(input: {
     (boundary) =>
       !ambiguousBoundaries.has(boundary.workspace_unit_id) &&
       (boundary.workspace_unit_id === "." ||
+        input.includeEmptyWorkspaceUnits === true ||
         filesByUnit.has(boundary.workspace_unit_id)),
+  );
+  const activeBoundaryIds = new Set(
+    activeBoundaries.map((boundary) => boundary.workspace_unit_id),
   );
   if (timedOut()) failedReasons.add("SCAN_DISCOVERY_TIMEOUT");
   const workspaceUnits = await mapConcurrent(
@@ -813,8 +818,7 @@ export async function discoverSaltProject(input: {
     .filter(
       (boundary) =>
         boundary.workspace_unit_id !== "." &&
-        (ambiguousBoundaries.has(boundary.workspace_unit_id) ||
-          !filesByUnit.has(boundary.workspace_unit_id)),
+        !activeBoundaryIds.has(boundary.workspace_unit_id),
     )
     .map((boundary) => ({
       workspace_unit_id: boundary.workspace_unit_id,

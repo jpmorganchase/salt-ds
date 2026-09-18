@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   parseCliArgs,
+  runCli,
   runCliWithIo,
   SALT_CLI_HELP,
   SaltCliUsageError,
@@ -9,10 +10,12 @@ import {
 const runInfoCommand = vi.hoisted(() => vi.fn());
 const runDocsCommand = vi.hoisted(() => vi.fn());
 const runContextCommand = vi.hoisted(() => vi.fn());
+const runDoctorCommand = vi.hoisted(() => vi.fn());
 const runSkillCommand = vi.hoisted(() => vi.fn());
 
 vi.mock("../commands/context.js", () => ({ runContextCommand }));
 vi.mock("../commands/docs.js", () => ({ runDocsCommand }));
+vi.mock("../commands/doctor.js", () => ({ runDoctorCommand }));
 vi.mock("../commands/info.js", () => ({ runInfoCommand }));
 vi.mock("../commands/skill.js", () => ({ runSkillCommand }));
 
@@ -41,6 +44,11 @@ describe("Salt CLI shell", () => {
     runContextCommand.mockReset();
     runContextCommand.mockResolvedValue({
       output: '{"contract":"salt-knowledge-context/1"}\n',
+      exitCode: 0,
+    });
+    runDoctorCommand.mockReset();
+    runDoctorCommand.mockResolvedValue({
+      output: '{"contract":"salt-doctor-result/1"}\n',
       exitCode: 0,
     });
     runSkillCommand.mockReset();
@@ -188,6 +196,65 @@ describe("Salt CLI shell", () => {
     expect(capture.stdout()).toBe("skill-output\n");
   });
 
+  it("strictly parses and runs the public Doctor command", async () => {
+    expect(
+      parseCliArgs([
+        "doctor",
+        "D:/project",
+        "--format",
+        "prompt",
+        "--fail-on",
+        "warning",
+      ]),
+    ).toEqual({
+      command: "doctor",
+      rootDir: "D:/project",
+      format: "prompt",
+      failOn: "warning",
+    });
+    expect(
+      parseCliArgs(["doctor", "--fail-on", "never", "--format", "json"]),
+    ).toEqual({
+      command: "doctor",
+      rootDir: null,
+      format: "json",
+      failOn: "never",
+    });
+    for (const argv of [
+      ["doctor"],
+      ["doctor", "--format", "json"],
+      ["doctor", "--format", "pretty", "--fail-on", "never"],
+      ["doctor", "--format", "json", "--fail-on", "info"],
+      [
+        "doctor",
+        "--format",
+        "json",
+        "--format",
+        "prompt",
+        "--fail-on",
+        "never",
+      ],
+      ["doctor", "one", "two", "--format", "json", "--fail-on", "never"],
+    ]) {
+      expect(() => parseCliArgs(argv)).toThrow(SaltCliUsageError);
+    }
+
+    const capture = captureIo();
+    await expect(
+      runCliWithIo(
+        ["doctor", "--format", "json", "--fail-on", "never"],
+        capture.io,
+      ),
+    ).resolves.toBe(0);
+    expect(runDoctorCommand).toHaveBeenCalledWith({
+      rootDir: "D:/fixture",
+      cliVersion: "0.0.0",
+      format: "json",
+      failOn: "never",
+    });
+    expect(capture.stdout()).toBe('{"contract":"salt-doctor-result/1"}\n');
+  });
+
   it.each([
     ["docs"],
     ["docs", "Button"],
@@ -255,4 +322,29 @@ describe("Salt CLI shell", () => {
     release();
     await expect(run).resolves.toBe(0);
   });
+
+  it.each(["callback-then-event", "event-only"] as const)(
+    "settles once when stdout reports EPIPE via %s",
+    async (delivery) => {
+      const listenerCount = process.stdout.listenerCount("error");
+      const brokenPipe = Object.assign(new Error("broken pipe"), {
+        code: "EPIPE",
+      });
+      const write = vi.spyOn(process.stdout, "write").mockImplementation(((
+        _: string,
+        callback: (error?: Error | null) => void,
+      ) => {
+        if (delivery === "callback-then-event") callback(brokenPipe);
+        process.stdout.emit("error", brokenPipe);
+        return false;
+      }) as typeof process.stdout.write);
+
+      try {
+        await expect(runCli(["help"])).rejects.toBe(brokenPipe);
+        expect(process.stdout.listenerCount("error")).toBe(listenerCount);
+      } finally {
+        write.mockRestore();
+      }
+    },
+  );
 });

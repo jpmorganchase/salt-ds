@@ -9,6 +9,11 @@ on:
         description: "Reviewed full commit SHA used as the changed-file quality base"
         required: true
         type: string
+      plan_006_unit:
+        description: "Optional closed Plan 006 evidence unit (006/00 or 006/02)"
+        required: false
+        default: ""
+        type: string
   pull_request:
 
 permissions: {}
@@ -129,29 +134,213 @@ jobs:
         run: yarn workspace @salt-ds/knowledge build:knowledge
       - run: yarn run test
   consumer-smoke:
-    name: Consumer smoke (Node ${{ matrix.node }})
-    strategy:
-      fail-fast: false
-      matrix:
-        node: [22, 24]
+    name: Consumer smoke (Node 22 and 24)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           persist-credentials: false
-      - name: Use Node.js
+      - name: Verify clean checkout
+        run: |
+          test ! -e dist
+          test ! -e packages/knowledge/generated
+          git diff --exit-code
+          git diff --cached --exit-code
+      - name: Use Node.js 24 for build
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 24
           cache: "yarn"
       - name: Install dependencies
         run: yarn
-      - name: Consumer smoke test
+      - name: Build and pack once
         run: |
           yarn build:ai-tooling
           yarn check:ai-tooling:pack -- --report dist/salt-ai-pack/release-complete.json
-          yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/release-complete.json
+      - name: Use Node.js 22 for consumer smoke
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: 22
+          cache: "yarn"
+      - name: Consumer smoke on Node.js 22
+        run: yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/release-complete.json
+      - name: Use Node.js 24 for consumer smoke
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: 24
+          cache: "yarn"
+      - name: Consumer smoke on Node.js 24
+        run: yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/release-complete.json
+      - name: Verify tracked files remain unchanged
+        run: |
+          git diff --exit-code
+          git diff --cached --exit-code
+
+  plan-006-build:
+    name: Plan 006 build-once transport
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      (inputs.plan_006_unit == '006/00' || inputs.plan_006_unit == '006/02')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact evidence source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Validate Plan 006 dispatch identity
+        env:
+          CHANGED_QUALITY_BASE: ${{ inputs.changed_quality_base }}
+          PLAN_006_UNIT: ${{ inputs.plan_006_unit }}
+        run: |
+          test "$(git rev-parse --verify HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-parse --is-shallow-repository)" = "false"
+          test "$CHANGED_QUALITY_BASE" = "$(if test "$PLAN_006_UNIT" = "006/00"; then git rev-parse "$GITHUB_SHA^"; else printf '%s' "$GITHUB_SHA"; fi)"
+          git merge-base --is-ancestor "$CHANGED_QUALITY_BASE" "$GITHUB_SHA"
+          git diff --exit-code
+          git diff --cached --exit-code
+      - name: Use Node.js 24
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: "24"
+          cache: "yarn"
+      - name: Install repository dependencies
+        run: yarn
+      - name: Build AI tooling
+        run: yarn build:ai-tooling
+      - name: Prepare exact Plan 006 transport
+        env:
+          PLAN_006_UNIT: ${{ inputs.plan_006_unit }}
+        run: |
+          if test "$PLAN_006_UNIT" = "006/02"; then
+            BASELINE_RECEIPT="$(node -e "const c=require('./plans/evidence/006/control.json'); const e=c.units.find(x=>x.id==='006/00').evidence; if(!e)process.exit(2); process.stdout.write(e.pack_validation.path)")"
+            node ./evals/salt-ai/doctor/runtimeFitness.mjs --mode prepare --unit "$PLAN_006_UNIT" --source-sha "$GITHUB_SHA" --transport-root dist/salt-ai-plan-006/transport --pack-validation dist/salt-ai-plan-006/transport/pack-validation.json --baseline-pack-validation "$BASELINE_RECEIPT"
+          else
+            node ./evals/salt-ai/doctor/runtimeFitness.mjs --mode prepare --unit "$PLAN_006_UNIT" --source-sha "$GITHUB_SHA" --transport-root dist/salt-ai-plan-006/transport --pack-validation dist/salt-ai-plan-006/transport/pack-validation.json
+          fi
+      - name: Upload fixed Plan 006 transport
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: plan-006-transport-${{ github.run_id }}-${{ github.run_attempt }}
+          path: dist/salt-ai-plan-006/transport
+          if-no-files-found: error
+          retention-days: 1
+
+  plan-006-observe:
+    name: Plan 006 observe (${{ matrix.host }})
+    needs: plan-006-build
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      (inputs.plan_006_unit == '006/00' || inputs.plan_006_unit == '006/02')
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - host: linux-node-22
+            runner: ubuntu-latest
+            node: "22"
+          - host: linux-node-24
+            runner: ubuntu-latest
+            node: "24"
+          - host: windows-node-24
+            runner: windows-latest
+            node: "24"
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Checkout exact evidence source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: ${{ matrix.node }}
+          cache: "yarn"
+      - name: Install repository dependencies
+        run: yarn
+      - name: Download exact Plan 006 transport
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: plan-006-transport-${{ github.run_id }}-${{ github.run_attempt }}
+          path: dist/salt-ai-plan-006/transport
+      - name: Create sanitized receipt directory
+        run: node -e "require('node:fs').mkdirSync('dist/salt-ai-plan-006/receipts',{recursive:true})"
+      - name: Observe installed Doctor runtime
+        shell: bash
+        env:
+          PLAN_006_UNIT: ${{ inputs.plan_006_unit }}
+          PLAN_006_HOST: ${{ matrix.host }}
+        run: >-
+          node ./evals/salt-ai/doctor/runtimeFitness.mjs
+          --mode observe
+          --unit "$PLAN_006_UNIT"
+          --host "$PLAN_006_HOST"
+          --source-sha "$GITHUB_SHA"
+          --transport-root dist/salt-ai-plan-006/transport
+          --pack-validation dist/salt-ai-plan-006/transport/pack-validation.json
+          --output "dist/salt-ai-plan-006/receipts/$PLAN_006_HOST.json"
+      - name: Upload sanitized host observation
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: plan-006-observation-${{ matrix.host }}
+          path: dist/salt-ai-plan-006/receipts/${{ matrix.host }}.json
+          if-no-files-found: error
+          retention-days: 7
+
+  plan-006-decide:
+    name: Plan 006 derive decision
+    needs: plan-006-observe
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      (inputs.plan_006_unit == '006/00' || inputs.plan_006_unit == '006/02')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact evidence source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Use Node.js 24
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: "24"
+          cache: "yarn"
+      - name: Install repository dependencies
+        run: yarn
+      - name: Download exact Plan 006 transport
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: plan-006-transport-${{ github.run_id }}-${{ github.run_attempt }}
+          path: dist/salt-ai-plan-006/transport
+      - name: Download all sanitized observations
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          pattern: plan-006-observation-*
+          path: dist/salt-ai-plan-006/receipts
+          merge-multiple: true
+      - name: Derive the registered Plan 006 decision
+        env:
+          PLAN_006_UNIT: ${{ inputs.plan_006_unit }}
+        run: >-
+          node ./evals/salt-ai/doctor/runtimeFitness.mjs
+          --mode decide
+          --unit "$PLAN_006_UNIT"
+          --pack-validation dist/salt-ai-plan-006/transport/pack-validation.json
+          --observation dist/salt-ai-plan-006/receipts/linux-node-22.json
+          --observation dist/salt-ai-plan-006/receipts/linux-node-24.json
+          --observation dist/salt-ai-plan-006/receipts/windows-node-24.json
+          > dist/salt-ai-plan-006/receipts/decision.json
+      - name: Copy sanitized pack receipt
+        run: node -e "require('node:fs').copyFileSync('dist/salt-ai-plan-006/transport/pack-validation.json','dist/salt-ai-plan-006/receipts/pack-validation.json')"
+      - name: Upload reviewable sanitized decision receipts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: plan-006-decision-receipts-${{ inputs.plan_006_unit }}
+          path: dist/salt-ai-plan-006/receipts
+          if-no-files-found: error
+          retention-days: 14
   browser-tests:
     name: Browser Tests (React ${{ matrix.react }})
     strategy:

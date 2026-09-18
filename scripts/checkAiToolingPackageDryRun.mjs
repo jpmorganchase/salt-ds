@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import {
@@ -107,8 +105,6 @@ function parseOptions(argv) {
   };
 }
 
-const options = parseOptions(process.argv.slice(2));
-
 function loadMcpCandidateDispositionReceipt(receiptPath) {
   if (!receiptPath) return null;
   const stats = lstatSync(receiptPath);
@@ -165,9 +161,7 @@ function loadMcpCandidateDispositionReceipt(receiptPath) {
   };
 }
 
-const mcpCandidateDisposition = loadMcpCandidateDispositionReceipt(
-  options.mcpCandidateDispositionReceiptPath,
-);
+let mcpCandidateDisposition = null;
 
 const forbiddenPublishPathSegments = [
   "archive",
@@ -349,8 +343,11 @@ const cliPackage = {
     "package.json",
     "bin/salt-ds.js",
     "schemas/salt-config-1.schema.json",
+    "schemas/doctor-result-1.schema.json",
     "dist-cjs/index.js",
+    "dist-cjs/scannerWorker.js",
     "dist-es/index.js",
+    "dist-es/scannerWorker.js",
     "dist-types/index.d.ts",
     "README.md",
   ],
@@ -367,6 +364,7 @@ const cliPackage = {
   expectedFilesField: [
     "bin",
     "schemas/salt-config-1.schema.json",
+    "schemas/doctor-result-1.schema.json",
     "dist-cjs",
     "dist-es",
     "dist-types",
@@ -398,9 +396,9 @@ const cliPackage = {
   },
   expectedBundleFiles: {
     bin: ["salt-ds.js"],
-    schemas: ["salt-config-1.schema.json"],
-    "dist-cjs": ["index.js", "package.json"],
-    "dist-es": ["index.js", "package.json"],
+    schemas: ["doctor-result-1.schema.json", "salt-config-1.schema.json"],
+    "dist-cjs": ["index.js", "package.json", "scannerWorker.js"],
+    "dist-es": ["index.js", "package.json", "scannerWorker.js"],
   },
   allowedTopLevelPaths: [
     "LICENSE",
@@ -1317,531 +1315,619 @@ function collectExactFileInventory(rootDirectory) {
   return files;
 }
 
-const reportParent = path.dirname(options.reportPath);
-mkdirSync(reportParent, { recursive: true });
-const reportBaseName = path.basename(
-  options.reportPath,
-  path.extname(options.reportPath),
-);
-const finalArtifactDirectory = path.join(
-  reportParent,
-  `${reportBaseName}.artifacts`,
-);
-if (!isPathWithinRoot(options.reportRoot, finalArtifactDirectory)) {
-  throw new Error("The AI tooling pack artifact directory escaped its root.");
-}
-rmSync(options.reportPath, { force: true });
-rmSync(finalArtifactDirectory, { recursive: true, force: true });
-const stagingArtifactDirectory = mkdtempSync(
-  path.join(reportParent, `.${reportBaseName}-artifacts-`),
-);
-const packageReports = [];
-let knowledgeBundleReport = null;
-
-for (const packageConfig of packages) {
-  const packageDir = path.join(repoRoot, packageConfig.dir);
-  if (!existsSync(packageDir)) {
-    fail(
-      `${packageConfig.dir} does not exist. Run yarn build before this check.`,
-    );
-    continue;
-  }
-
-  const manifest = assertBuiltManifest(packageConfig, packageDir);
-  if (manifest) {
-    assertManifestTargetsExist(packageConfig, packageDir, manifest);
-    if (packageConfig.verifyCliVersion === true) {
-      assertCliVersion(packageConfig, packageDir, manifest);
-    }
-  }
-  assertModuleFormatMarkers(packageConfig, packageDir);
-  assertPackedCatalogBuildIdentity(packageConfig, packageDir);
-  assertPackedCatalogSemantics(packageConfig, packageDir);
-  if (packageConfig.workspaceGeneratedDir) {
-    assertCatalogDirectoriesEqual(
-      packageConfig,
-      path.join(repoRoot, packageConfig.workspaceGeneratedDir),
-      path.join(packageDir, "generated"),
-      "workspace-to-dist",
-    );
-  }
-
-  const packResult = runRealPack(packageConfig, packageDir);
-  if (!packResult) {
-    continue;
-  }
-  const {
-    cleanup,
-    extractedPackageDir,
-    metadata: packed,
-    tarballPath,
-  } = packResult;
-
+export function runAiToolingPackCheck(argv, output = console) {
+  const previousExitCode = process.exitCode;
+  const options = parseOptions(argv);
+  mcpCandidateDisposition = loadMcpCandidateDispositionReceipt(
+    options.mcpCandidateDispositionReceiptPath,
+  );
+  process.exitCode = undefined;
+  const thresholdMisses = [];
   try {
-    const extractedManifest = assertBuiltManifest(
-      packageConfig,
-      extractedPackageDir,
+    const reportParent = path.dirname(options.reportPath);
+    mkdirSync(reportParent, { recursive: true });
+    const reportBaseName = path.basename(
+      options.reportPath,
+      path.extname(options.reportPath),
     );
-    if (extractedManifest) {
-      assertManifestTargetsExist(
-        packageConfig,
-        extractedPackageDir,
-        extractedManifest,
-      );
-    }
-    assertModuleFormatMarkers(packageConfig, extractedPackageDir);
-    assertPackedCatalogBuildIdentity(packageConfig, extractedPackageDir);
-    assertPackedCatalogSemantics(packageConfig, extractedPackageDir);
-    if (packageConfig.expectedGeneratedManifest) {
-      assertCatalogDirectoriesEqual(
-        packageConfig,
-        path.join(packageDir, "generated"),
-        path.join(extractedPackageDir, "generated"),
-        "dist-to-extracted-tarball",
-      );
-    }
-
-    if (packed.name !== packageConfig.name) {
-      fail(`${packageConfig.dir} packed as ${packed.name}`);
-    }
-
-    const paths = (packed.files ?? []).flatMap((file) => {
-      try {
-        return [
-          resolvePackageRelativeArchivePath(extractedPackageDir, file.path)
-            .path,
-        ];
-      } catch {
-        fail(
-          `${packageConfig.name} npm pack metadata contains unsafe path: ${file.path}`,
-        );
-        return [];
-      }
-    });
-    if (paths.length === 0) {
-      fail(`${packageConfig.name} npm pack returned no packed files`);
-    }
-    if (packageConfig.knowledgeV1) {
-      try {
-        knowledgeBundleReport = assertPackedKnowledgeV1(
-          extractedPackageDir,
-          paths,
-          packed.version,
-        );
-      } catch (error) {
-        fail(
-          `${packageConfig.name} Knowledge-v1 contract failed: ${
-            error instanceof Error ? error.message : String(error)
-          }`,
-        );
-      }
-    }
-
-    for (const [directory, expectedFiles] of Object.entries(
-      packageConfig.expectedBundleFiles ?? {},
-    )) {
-      const prefix = `${directory}/`;
-      const actualFiles = paths
-        .filter((filePath) => filePath.startsWith(prefix))
-        .map((filePath) => filePath.slice(prefix.length))
-        .sort(compareOrdinalStrings);
-      const sortedExpectedFiles = [...expectedFiles].sort(
-        compareOrdinalStrings,
-      );
-      if (JSON.stringify(actualFiles) !== JSON.stringify(sortedExpectedFiles)) {
-        fail(
-          `${packageConfig.name} ${directory} bundle files changed: ${JSON.stringify(actualFiles)}`,
-        );
-      }
-    }
-
-    if (Array.isArray(packageConfig.expectedDeclarationFiles)) {
-      const declarationFiles = paths
-        .filter((filePath) => filePath.endsWith(".d.ts"))
-        .sort(compareOrdinalStrings);
-      const expectedDeclarationFiles = [
-        ...packageConfig.expectedDeclarationFiles,
-      ].sort(compareOrdinalStrings);
-      if (
-        JSON.stringify(declarationFiles) !==
-        JSON.stringify(expectedDeclarationFiles)
-      ) {
-        fail(
-          `${packageConfig.name} declaration files changed: ${JSON.stringify(declarationFiles)}`,
-        );
-      }
-    }
-
-    for (const declarationFile of paths.filter((filePath) =>
-      filePath.endsWith(".d.ts"),
-    )) {
-      const content = readFileSync(
-        path.join(extractedPackageDir, declarationFile),
-        "utf8",
-      );
-      for (const dependencyName of packageConfig.forbiddenDeclarationImports ??
-        []) {
-        if (content.includes(dependencyName)) {
-          fail(
-            `${packageConfig.name} declaration ${declarationFile} references bundled private dependency ${dependencyName}`,
-          );
-        }
-      }
-    }
-
-    if (
-      typeof packageConfig.maxPackageBytes === "number" &&
-      packed.size > packageConfig.maxPackageBytes
-    ) {
-      fail(
-        `${packageConfig.name} compressed size ${packed.size} exceeds budget ${packageConfig.maxPackageBytes}`,
-      );
-    }
-
-    if (
-      typeof packageConfig.maxUnpackedBytes === "number" &&
-      packed.unpackedSize > packageConfig.maxUnpackedBytes
-    ) {
-      fail(
-        `${packageConfig.name} unpacked size ${packed.unpackedSize} exceeds budget ${packageConfig.maxUnpackedBytes}`,
-      );
-    }
-
-    const generatedBytes = (packed.files ?? [])
-      .filter((file) => normalizePath(file.path).startsWith("generated/"))
-      .reduce((total, file) => total + (file.size ?? 0), 0);
-    if (typeof packageConfig.maxGeneratedBytes === "number") {
-      if (generatedBytes > packageConfig.maxGeneratedBytes) {
-        fail(
-          `${packageConfig.name} generated payload ${generatedBytes} exceeds budget ${packageConfig.maxGeneratedBytes}`,
-        );
-      }
-    }
-
-    if (
-      typeof packageConfig.maxEntryCount === "number" &&
-      packed.entryCount > packageConfig.maxEntryCount
-    ) {
-      fail(
-        `${packageConfig.name} file count ${packed.entryCount} exceeds budget ${packageConfig.maxEntryCount}`,
-      );
-    }
-
-    if (typeof packageConfig.maxSourceMapBytes === "number") {
-      const sourceMapBytes = (packed.files ?? [])
-        .filter((file) => normalizePath(file.path).endsWith(".map"))
-        .reduce((total, file) => total + (file.size ?? 0), 0);
-      if (sourceMapBytes > packageConfig.maxSourceMapBytes) {
-        fail(
-          `${packageConfig.name} source-map payload ${sourceMapBytes} exceeds budget ${packageConfig.maxSourceMapBytes}`,
-        );
-      }
-    }
-
-    const generatedInventory = readCatalogPackageInventory(
-      packageConfig,
-      extractedPackageDir,
+    const finalArtifactDirectory = path.join(
+      reportParent,
+      `${reportBaseName}.artifacts`,
     );
-    if (generatedInventory) {
-      const generatedFiles = (packed.files ?? [])
-        .map((file) => normalizePath(file.path))
-        .filter((filePath) => filePath.startsWith("generated/"))
-        .map((filePath) => filePath.slice("generated/".length))
-        .sort(compareOrdinalStrings);
-      const expectedGeneratedFiles = [...generatedInventory.files].sort(
-        compareOrdinalStrings,
+    if (!isPathWithinRoot(options.reportRoot, finalArtifactDirectory)) {
+      throw new Error(
+        "The AI tooling pack artifact directory escaped its root.",
       );
-      if (
-        JSON.stringify(generatedFiles) !==
-        JSON.stringify(expectedGeneratedFiles)
-      ) {
+    }
+    rmSync(options.reportPath, { force: true });
+    rmSync(finalArtifactDirectory, { recursive: true, force: true });
+    const stagingArtifactDirectory = mkdtempSync(
+      path.join(reportParent, `.${reportBaseName}-artifacts-`),
+    );
+    const packageReports = [];
+    let knowledgeBundleReport = null;
+
+    for (const packageConfig of packages) {
+      const packageDir = path.join(repoRoot, packageConfig.dir);
+      if (!existsSync(packageDir)) {
         fail(
-          `${packageConfig.name} generated catalog files changed: ${JSON.stringify(generatedFiles)}`,
+          `${packageConfig.dir} does not exist. Run yarn build before this check.`,
         );
-      }
-    }
-
-    for (const forbiddenFile of packageConfig.forbiddenGeneratedFiles ?? []) {
-      if (paths.includes(`generated/${forbiddenFile}`)) {
-        fail(
-          `${packageConfig.name} pack includes excluded generated artifact generated/${forbiddenFile}`,
-        );
-      }
-    }
-
-    for (const requiredPath of packageConfig.requiredPaths) {
-      if (!hasPath(paths, requiredPath)) {
-        fail(`${packageConfig.name} pack is missing ${requiredPath}`);
-      }
-    }
-
-    for (const [filePath, markers] of Object.entries(
-      packageConfig.requiredTextMarkers ?? {},
-    )) {
-      if (!hasPath(paths, filePath)) {
-        fail(`${packageConfig.name} pack is missing ${filePath}`);
         continue;
       }
-      const content = readFileSync(
-        path.join(extractedPackageDir, filePath),
-        "utf8",
-      );
-      for (const marker of markers) {
-        if (!content.includes(marker)) {
-          fail(
-            `${packageConfig.name} ${filePath} is missing required runtime marker ${JSON.stringify(marker)}`,
-          );
+
+      const manifest = assertBuiltManifest(packageConfig, packageDir);
+      if (manifest) {
+        assertManifestTargetsExist(packageConfig, packageDir, manifest);
+        if (packageConfig.verifyCliVersion === true) {
+          assertCliVersion(packageConfig, packageDir, manifest);
         }
       }
-    }
-
-    for (const filePath of paths) {
-      if (
-        !packageConfig.allowMarkdown &&
-        /\.(?:md|mdx|markdown)$/iu.test(filePath)
-      ) {
-        fail(`${packageConfig.name} pack includes Markdown: ${filePath}`);
-      }
-      const topLevelPath = filePath.split("/")[0];
-      if (
-        Array.isArray(packageConfig.allowedTopLevelPaths) &&
-        !packageConfig.allowedTopLevelPaths.includes(topLevelPath)
-      ) {
-        fail(
-          `${packageConfig.name} pack includes unexpected top-level payload: ${filePath}`,
+      assertModuleFormatMarkers(packageConfig, packageDir);
+      assertPackedCatalogBuildIdentity(packageConfig, packageDir);
+      assertPackedCatalogSemantics(packageConfig, packageDir);
+      if (packageConfig.workspaceGeneratedDir) {
+        assertCatalogDirectoriesEqual(
+          packageConfig,
+          path.join(repoRoot, packageConfig.workspaceGeneratedDir),
+          path.join(packageDir, "generated"),
+          "workspace-to-dist",
         );
       }
 
-      if (filePath.endsWith(".map")) {
-        fail(`${packageConfig.name} pack includes source map: ${filePath}`);
+      const packResult = runRealPack(packageConfig, packageDir);
+      if (!packResult) {
+        continue;
       }
+      const {
+        cleanup,
+        extractedPackageDir,
+        metadata: packed,
+        tarballPath,
+      } = packResult;
 
-      if (filePath.endsWith(".js")) {
-        const content = readFileSync(
-          path.join(extractedPackageDir, filePath),
-          "utf8",
+      try {
+        const extractedManifest = assertBuiltManifest(
+          packageConfig,
+          extractedPackageDir,
         );
-        if (content.includes("sourceMappingURL")) {
-          fail(
-            `${packageConfig.name} pack includes sourceMappingURL reference: ${filePath}`,
+        if (extractedManifest) {
+          assertManifestTargetsExist(
+            packageConfig,
+            extractedPackageDir,
+            extractedManifest,
           );
         }
-      }
+        assertModuleFormatMarkers(packageConfig, extractedPackageDir);
+        assertPackedCatalogBuildIdentity(packageConfig, extractedPackageDir);
+        assertPackedCatalogSemantics(packageConfig, extractedPackageDir);
+        if (packageConfig.expectedGeneratedManifest) {
+          assertCatalogDirectoriesEqual(
+            packageConfig,
+            path.join(packageDir, "generated"),
+            path.join(extractedPackageDir, "generated"),
+            "dist-to-extracted-tarball",
+          );
+        }
 
-      if (/\.(?:js|cjs|mjs|d\.ts|json)$/u.test(filePath)) {
-        const content = readFileSync(
-          path.join(extractedPackageDir, filePath),
-          "utf8",
-        );
-        for (const marker of packageConfig.forbiddenTextMarkers ?? []) {
-          if (content.includes(marker)) {
+        if (packed.name !== packageConfig.name) {
+          fail(`${packageConfig.dir} packed as ${packed.name}`);
+        }
+
+        const paths = (packed.files ?? []).flatMap((file) => {
+          try {
+            return [
+              resolvePackageRelativeArchivePath(extractedPackageDir, file.path)
+                .path,
+            ];
+          } catch {
             fail(
-              `${packageConfig.name} pack includes forbidden prototype marker ${JSON.stringify(marker)} in ${filePath}`,
+              `${packageConfig.name} npm pack metadata contains unsafe path: ${file.path}`,
+            );
+            return [];
+          }
+        });
+        if (paths.length === 0) {
+          fail(`${packageConfig.name} npm pack returned no packed files`);
+        }
+        if (packageConfig.knowledgeV1) {
+          try {
+            knowledgeBundleReport = assertPackedKnowledgeV1(
+              extractedPackageDir,
+              paths,
+              packed.version,
+            );
+          } catch (error) {
+            fail(
+              `${packageConfig.name} Knowledge-v1 contract failed: ${
+                error instanceof Error ? error.message : String(error)
+              }`,
             );
           }
         }
-      }
 
-      const segments = filePath.split("/");
-      const forbiddenSegment = forbiddenPublishPathSegments.find((segment) =>
-        segments.includes(segment),
+        for (const [directory, expectedFiles] of Object.entries(
+          packageConfig.expectedBundleFiles ?? {},
+        )) {
+          const prefix = `${directory}/`;
+          const actualFiles = paths
+            .filter((filePath) => filePath.startsWith(prefix))
+            .map((filePath) => filePath.slice(prefix.length))
+            .sort(compareOrdinalStrings);
+          const sortedExpectedFiles = [...expectedFiles].sort(
+            compareOrdinalStrings,
+          );
+          if (
+            JSON.stringify(actualFiles) !== JSON.stringify(sortedExpectedFiles)
+          ) {
+            fail(
+              `${packageConfig.name} ${directory} bundle files changed: ${JSON.stringify(actualFiles)}`,
+            );
+          }
+        }
+
+        if (Array.isArray(packageConfig.expectedDeclarationFiles)) {
+          const declarationFiles = paths
+            .filter((filePath) => filePath.endsWith(".d.ts"))
+            .sort(compareOrdinalStrings);
+          const expectedDeclarationFiles = [
+            ...packageConfig.expectedDeclarationFiles,
+          ].sort(compareOrdinalStrings);
+          if (
+            JSON.stringify(declarationFiles) !==
+            JSON.stringify(expectedDeclarationFiles)
+          ) {
+            fail(
+              `${packageConfig.name} declaration files changed: ${JSON.stringify(declarationFiles)}`,
+            );
+          }
+        }
+
+        for (const declarationFile of paths.filter((filePath) =>
+          filePath.endsWith(".d.ts"),
+        )) {
+          const content = readFileSync(
+            path.join(extractedPackageDir, declarationFile),
+            "utf8",
+          );
+          for (const dependencyName of packageConfig.forbiddenDeclarationImports ??
+            []) {
+            if (content.includes(dependencyName)) {
+              fail(
+                `${packageConfig.name} declaration ${declarationFile} references bundled private dependency ${dependencyName}`,
+              );
+            }
+          }
+        }
+
+        if (
+          typeof packageConfig.maxPackageBytes === "number" &&
+          packed.size > packageConfig.maxPackageBytes
+        ) {
+          thresholdMisses.push({
+            package: packageConfig.name,
+            metric: "compressed_bytes",
+            observed: packed.size,
+            limit: packageConfig.maxPackageBytes,
+          });
+        }
+
+        if (
+          typeof packageConfig.maxUnpackedBytes === "number" &&
+          packed.unpackedSize > packageConfig.maxUnpackedBytes
+        ) {
+          thresholdMisses.push({
+            package: packageConfig.name,
+            metric: "unpacked_bytes",
+            observed: packed.unpackedSize,
+            limit: packageConfig.maxUnpackedBytes,
+          });
+        }
+
+        const generatedBytes = (packed.files ?? [])
+          .filter((file) => normalizePath(file.path).startsWith("generated/"))
+          .reduce((total, file) => total + (file.size ?? 0), 0);
+        if (typeof packageConfig.maxGeneratedBytes === "number") {
+          if (generatedBytes > packageConfig.maxGeneratedBytes) {
+            thresholdMisses.push({
+              package: packageConfig.name,
+              metric: "generated_bytes",
+              observed: generatedBytes,
+              limit: packageConfig.maxGeneratedBytes,
+            });
+          }
+        }
+
+        if (
+          typeof packageConfig.maxEntryCount === "number" &&
+          packed.entryCount > packageConfig.maxEntryCount
+        ) {
+          thresholdMisses.push({
+            package: packageConfig.name,
+            metric: "entry_count",
+            observed: packed.entryCount,
+            limit: packageConfig.maxEntryCount,
+          });
+        }
+
+        if (typeof packageConfig.maxSourceMapBytes === "number") {
+          const sourceMapBytes = (packed.files ?? [])
+            .filter((file) => normalizePath(file.path).endsWith(".map"))
+            .reduce((total, file) => total + (file.size ?? 0), 0);
+          if (sourceMapBytes > packageConfig.maxSourceMapBytes) {
+            fail(
+              `${packageConfig.name} source-map payload ${sourceMapBytes} exceeds budget ${packageConfig.maxSourceMapBytes}`,
+            );
+          }
+        }
+
+        const generatedInventory = readCatalogPackageInventory(
+          packageConfig,
+          extractedPackageDir,
+        );
+        if (generatedInventory) {
+          const generatedFiles = (packed.files ?? [])
+            .map((file) => normalizePath(file.path))
+            .filter((filePath) => filePath.startsWith("generated/"))
+            .map((filePath) => filePath.slice("generated/".length))
+            .sort(compareOrdinalStrings);
+          const expectedGeneratedFiles = [...generatedInventory.files].sort(
+            compareOrdinalStrings,
+          );
+          if (
+            JSON.stringify(generatedFiles) !==
+            JSON.stringify(expectedGeneratedFiles)
+          ) {
+            fail(
+              `${packageConfig.name} generated catalog files changed: ${JSON.stringify(generatedFiles)}`,
+            );
+          }
+        }
+
+        for (const forbiddenFile of packageConfig.forbiddenGeneratedFiles ??
+          []) {
+          if (paths.includes(`generated/${forbiddenFile}`)) {
+            fail(
+              `${packageConfig.name} pack includes excluded generated artifact generated/${forbiddenFile}`,
+            );
+          }
+        }
+
+        for (const requiredPath of packageConfig.requiredPaths) {
+          if (!hasPath(paths, requiredPath)) {
+            fail(`${packageConfig.name} pack is missing ${requiredPath}`);
+          }
+        }
+
+        for (const [filePath, markers] of Object.entries(
+          packageConfig.requiredTextMarkers ?? {},
+        )) {
+          if (!hasPath(paths, filePath)) {
+            fail(`${packageConfig.name} pack is missing ${filePath}`);
+            continue;
+          }
+          const content = readFileSync(
+            path.join(extractedPackageDir, filePath),
+            "utf8",
+          );
+          for (const marker of markers) {
+            if (!content.includes(marker)) {
+              fail(
+                `${packageConfig.name} ${filePath} is missing required runtime marker ${JSON.stringify(marker)}`,
+              );
+            }
+          }
+        }
+
+        for (const filePath of paths) {
+          if (
+            !packageConfig.allowMarkdown &&
+            /\.(?:md|mdx|markdown)$/iu.test(filePath)
+          ) {
+            fail(`${packageConfig.name} pack includes Markdown: ${filePath}`);
+          }
+          const topLevelPath = filePath.split("/")[0];
+          if (
+            Array.isArray(packageConfig.allowedTopLevelPaths) &&
+            !packageConfig.allowedTopLevelPaths.includes(topLevelPath)
+          ) {
+            fail(
+              `${packageConfig.name} pack includes unexpected top-level payload: ${filePath}`,
+            );
+          }
+
+          if (filePath.endsWith(".map")) {
+            fail(`${packageConfig.name} pack includes source map: ${filePath}`);
+          }
+
+          if (filePath.endsWith(".js")) {
+            const content = readFileSync(
+              path.join(extractedPackageDir, filePath),
+              "utf8",
+            );
+            if (content.includes("sourceMappingURL")) {
+              fail(
+                `${packageConfig.name} pack includes sourceMappingURL reference: ${filePath}`,
+              );
+            }
+          }
+
+          if (/\.(?:js|cjs|mjs|d\.ts|json)$/u.test(filePath)) {
+            const content = readFileSync(
+              path.join(extractedPackageDir, filePath),
+              "utf8",
+            );
+            for (const marker of packageConfig.forbiddenTextMarkers ?? []) {
+              if (content.includes(marker)) {
+                fail(
+                  `${packageConfig.name} pack includes forbidden prototype marker ${JSON.stringify(marker)} in ${filePath}`,
+                );
+              }
+            }
+          }
+
+          const segments = filePath.split("/");
+          const forbiddenSegment = forbiddenPublishPathSegments.find(
+            (segment) => segments.includes(segment),
+          );
+          if (forbiddenSegment) {
+            fail(
+              `${packageConfig.name} pack includes forbidden ${forbiddenSegment} payload: ${filePath}`,
+            );
+          }
+        }
+
+        output.log(
+          `${packageConfig.name}: ${packed.entryCount} files, ${packed.size} compressed bytes, ${packed.unpackedSize} unpacked bytes, ${generatedBytes} generated bytes, tarball ${sha256(readFileSync(tarballPath))}`,
+        );
+
+        const persistentTarballPath = path.join(
+          stagingArtifactDirectory,
+          packed.filename,
+        );
+        copyFileSync(tarballPath, persistentTarballPath);
+        const tarballBytes = readFileSync(persistentTarballPath);
+        const manifestBytes = readFileSync(
+          path.join(extractedPackageDir, "package.json"),
+        );
+        const packedManifest = JSON.parse(manifestBytes.toString("utf8"));
+        const readmePath = path.join(extractedPackageDir, "README.md");
+        const readmeBytes = existsSync(readmePath)
+          ? readFileSync(readmePath)
+          : null;
+        packageReports.push({
+          name: packageConfig.name,
+          version: packedManifest.version,
+          manifest: {
+            path: `${packageConfig.name}/package.json`,
+            sha256: sha256(manifestBytes),
+            bytes: manifestBytes.byteLength,
+          },
+          readme: readmeBytes
+            ? {
+                path: `${packageConfig.name}/README.md`,
+                sha256: sha256(readmeBytes),
+                bytes: readmeBytes.byteLength,
+              }
+            : null,
+          tarball: {
+            fileName: packed.filename,
+            sha256: sha256(tarballBytes),
+            bytes: tarballBytes.byteLength,
+          },
+          inventory: paths,
+          metrics: {
+            compressed_bytes: packed.size,
+            unpacked_bytes: packed.unpackedSize,
+            generated_bytes: generatedBytes,
+            entry_count: packed.entryCount,
+            limits: {
+              compressed_bytes: packageConfig.maxPackageBytes,
+              unpacked_bytes: packageConfig.maxUnpackedBytes,
+              generated_bytes: packageConfig.maxGeneratedBytes,
+              entry_count: packageConfig.maxEntryCount,
+            },
+          },
+          dependencies: packedManifest.dependencies ?? {},
+        });
+      } finally {
+        cleanup();
+      }
+    }
+
+    if (process.exitCode) {
+      rmSync(stagingArtifactDirectory, { recursive: true, force: true });
+      process.exitCode = undefined;
+      throw new Error("AI tooling package integrity checks failed.");
+    }
+
+    const knowledgeReport = packageReports.find(
+      (entry) => entry.name === "@salt-ds/knowledge",
+    );
+    const cliReport = packageReports.find(
+      (entry) => entry.name === "@salt-ds/cli",
+    );
+    const adapterReports = packageReports.filter(
+      (entry) => entry.name !== "@salt-ds/knowledge",
+    );
+    if (
+      !knowledgeReport ||
+      !cliReport ||
+      packageReports.length !== packages.length
+    ) {
+      rmSync(stagingArtifactDirectory, { recursive: true, force: true });
+      throw new Error(
+        "AI tooling pack did not produce the required package reports.",
       );
-      if (forbiddenSegment) {
-        fail(
-          `${packageConfig.name} pack includes forbidden ${forbiddenSegment} payload: ${filePath}`,
+    }
+    for (const adapterReport of adapterReports) {
+      if (
+        adapterReport.dependencies["@salt-ds/knowledge"] !==
+        knowledgeReport.version
+      ) {
+        rmSync(stagingArtifactDirectory, { recursive: true, force: true });
+        throw new Error(
+          `${adapterReport.name} does not exact-pin the packed knowledge package version.`,
         );
       }
     }
 
-    console.log(
-      `${packageConfig.name}: ${packed.entryCount} files, ${packed.size} compressed bytes, ${packed.unpackedSize} unpacked bytes, ${generatedBytes} generated bytes, tarball ${sha256(readFileSync(tarballPath))}`,
-    );
+    let extractionParityBytes = null;
+    let extractionParity = null;
+    let comparisonRegistryFiles = null;
+    let comparisonManifest = null;
+    if (options.profile === "extraction-parity") {
+      const extractionParityPath = path.join(
+        repoRoot,
+        "packages",
+        "knowledge",
+        "generated",
+        "extraction-parity.json",
+      );
+      if (!existsSync(extractionParityPath)) {
+        rmSync(stagingArtifactDirectory, { recursive: true, force: true });
+        throw new Error(
+          "Missing packages/knowledge/generated/extraction-parity.json. Run yarn build:ai-tooling first.",
+        );
+      }
+      extractionParityBytes = readFileSync(extractionParityPath);
+      extractionParity = JSON.parse(extractionParityBytes.toString("utf8"));
+      assertJsonSchema(
+        extractionParity,
+        "saltExtractionParityV1.schema.json",
+        "Extraction parity receipt",
+      );
+      if (
+        extractionParity.contract !== "extraction-parity@1" ||
+        extractionParity.status !== "passed" ||
+        extractionParity.current?.semantic_digest !==
+          extractionParity.baseline?.semantic_digest
+      ) {
+        rmSync(stagingArtifactDirectory, { recursive: true, force: true });
+        throw new Error(
+          "The extraction parity receipt is not a passing Unit 02 receipt.",
+        );
+      }
+      comparisonRegistryFiles = collectExactFileInventory(
+        path.dirname(extractionParityPath),
+      );
+      comparisonManifest = comparisonRegistryFiles.find(
+        (entry) => entry.path === "catalog-manifest.json",
+      );
+      if (!comparisonManifest) {
+        rmSync(stagingArtifactDirectory, { recursive: true, force: true });
+        throw new Error(
+          "The comparison registry has no catalog-manifest.json.",
+        );
+      }
+    } else if (!knowledgeBundleReport) {
+      rmSync(stagingArtifactDirectory, { recursive: true, force: true });
+      throw new Error(
+        "The pre-agent pack has no verified Knowledge-v1 bundle.",
+      );
+    }
 
-    const persistentTarballPath = path.join(
-      stagingArtifactDirectory,
-      packed.filename,
+    renameSync(stagingArtifactDirectory, finalArtifactDirectory);
+    const artifactDirectoryName = path.basename(finalArtifactDirectory);
+    const policy = {
+      id: "release-complete@1",
+      publishable: false,
+      required_artifacts: [
+        "agent_support.skill",
+        "agent_support.agents_pointer",
+      ],
+      allowed_stages: ["CI_RELEASE_COMPLETE", "R2_BETA", "R3_GA"],
+    };
+    const report = {
+      schema_version: "1.0.0",
+      contract: "salt-ai-pack-report@1",
+      policy_profile: "release-complete",
+      policy_digest: sha256(Buffer.from(JSON.stringify(policy), "utf8")),
+      publishable: false,
+      packages: packageReports.map((entry) => ({
+        name: entry.name,
+        version: entry.version,
+        manifest: entry.manifest,
+        readme: entry.readme,
+        tarball: {
+          path: `${artifactDirectoryName}/${entry.tarball.fileName}`,
+          sha256: entry.tarball.sha256,
+          bytes: entry.tarball.bytes,
+        },
+        dependencies: entry.dependencies,
+        first_party_dependencies:
+          entry.name !== knowledgeReport.name
+            ? [
+                {
+                  name: "@salt-ds/knowledge",
+                  version: knowledgeReport.version,
+                  tarball_sha256: knowledgeReport.tarball.sha256,
+                },
+              ]
+            : [],
+        content_policy: {
+          generated_tree: entry.name === "@salt-ds/knowledge",
+          prototype_catalog: false,
+          workspace_link: false,
+        },
+      })),
+      knowledge_bundle: knowledgeBundleReport,
+      ...(mcpCandidateDisposition
+        ? { mcp_candidate_disposition: mcpCandidateDisposition.binding }
+        : {}),
+    };
+    try {
+      assertJsonSchema(
+        report,
+        "saltAiPackReportV1.schema.json",
+        "AI tooling pack report",
+      );
+    } catch (error) {
+      rmSync(finalArtifactDirectory, { recursive: true, force: true });
+      throw error;
+    }
+    const reportBytes = Buffer.from(
+      `${JSON.stringify(report, null, 2)}\n`,
+      "utf8",
     );
-    copyFileSync(tarballPath, persistentTarballPath);
-    const tarballBytes = readFileSync(persistentTarballPath);
-    const manifestBytes = readFileSync(
-      path.join(extractedPackageDir, "package.json"),
+    const temporaryReportPath = `${options.reportPath}.tmp-${process.pid}`;
+    writeFileSync(temporaryReportPath, reportBytes, { flag: "wx" });
+    renameSync(temporaryReportPath, options.reportPath);
+    output.log(
+      `Wrote ${path.relative(repoRoot, options.reportPath)} (${sha256(reportBytes)}).`,
     );
-    const packedManifest = JSON.parse(manifestBytes.toString("utf8"));
-    const readmePath = path.join(extractedPackageDir, "README.md");
-    const readmeBytes = existsSync(readmePath)
-      ? readFileSync(readmePath)
-      : null;
-    packageReports.push({
-      name: packageConfig.name,
-      version: packedManifest.version,
-      manifest: {
-        path: `${packageConfig.name}/package.json`,
-        sha256: sha256(manifestBytes),
-        bytes: manifestBytes.byteLength,
-      },
-      readme: readmeBytes
-        ? {
-            path: `${packageConfig.name}/README.md`,
-            sha256: sha256(readmeBytes),
-            bytes: readmeBytes.byteLength,
-          }
-        : null,
-      tarball: {
-        fileName: packed.filename,
-        sha256: sha256(tarballBytes),
-        bytes: tarballBytes.byteLength,
-      },
-      dependencies: packedManifest.dependencies ?? {},
-    });
+    return {
+      report,
+      report_path: options.reportPath,
+      report_sha256: sha256(reportBytes),
+      artifact_directory: finalArtifactDirectory,
+      package_metrics: packageReports.map((entry) => ({
+        name: entry.name,
+        inventory: entry.inventory,
+        ...entry.metrics,
+      })),
+      threshold_misses: thresholdMisses,
+    };
   } finally {
-    cleanup();
+    process.exitCode = previousExitCode;
   }
 }
 
-if (process.exitCode) {
-  rmSync(stagingArtifactDirectory, { recursive: true, force: true });
-  process.exit(process.exitCode);
-}
-
-const knowledgeReport = packageReports.find(
-  (entry) => entry.name === "@salt-ds/knowledge",
-);
-const cliReport = packageReports.find((entry) => entry.name === "@salt-ds/cli");
-const adapterReports = packageReports.filter(
-  (entry) => entry.name !== "@salt-ds/knowledge",
-);
 if (
-  !knowledgeReport ||
-  !cliReport ||
-  packageReports.length !== packages.length
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
-  rmSync(stagingArtifactDirectory, { recursive: true, force: true });
-  throw new Error(
-    "AI tooling pack did not produce the required package reports.",
-  );
-}
-for (const adapterReport of adapterReports) {
-  if (
-    adapterReport.dependencies["@salt-ds/knowledge"] !== knowledgeReport.version
-  ) {
-    rmSync(stagingArtifactDirectory, { recursive: true, force: true });
-    throw new Error(
-      `${adapterReport.name} does not exact-pin the packed knowledge package version.`,
+  try {
+    const result = runAiToolingPackCheck(process.argv.slice(2));
+    if (result.threshold_misses.length > 0) {
+      throw new Error(
+        `AI tooling package size thresholds failed: ${JSON.stringify(result.threshold_misses)}`,
+      );
+    }
+  } catch (error) {
+    console.error(
+      error instanceof Error ? (error.stack ?? error.message) : error,
     );
+    process.exitCode = 1;
   }
 }
-
-let extractionParityBytes = null;
-let extractionParity = null;
-let comparisonRegistryFiles = null;
-let comparisonManifest = null;
-if (options.profile === "extraction-parity") {
-  const extractionParityPath = path.join(
-    repoRoot,
-    "packages",
-    "knowledge",
-    "generated",
-    "extraction-parity.json",
-  );
-  if (!existsSync(extractionParityPath)) {
-    rmSync(stagingArtifactDirectory, { recursive: true, force: true });
-    throw new Error(
-      "Missing packages/knowledge/generated/extraction-parity.json. Run yarn build:ai-tooling first.",
-    );
-  }
-  extractionParityBytes = readFileSync(extractionParityPath);
-  extractionParity = JSON.parse(extractionParityBytes.toString("utf8"));
-  assertJsonSchema(
-    extractionParity,
-    "saltExtractionParityV1.schema.json",
-    "Extraction parity receipt",
-  );
-  if (
-    extractionParity.contract !== "extraction-parity@1" ||
-    extractionParity.status !== "passed" ||
-    extractionParity.current?.semantic_digest !==
-      extractionParity.baseline?.semantic_digest
-  ) {
-    rmSync(stagingArtifactDirectory, { recursive: true, force: true });
-    throw new Error(
-      "The extraction parity receipt is not a passing Unit 02 receipt.",
-    );
-  }
-  comparisonRegistryFiles = collectExactFileInventory(
-    path.dirname(extractionParityPath),
-  );
-  comparisonManifest = comparisonRegistryFiles.find(
-    (entry) => entry.path === "catalog-manifest.json",
-  );
-  if (!comparisonManifest) {
-    rmSync(stagingArtifactDirectory, { recursive: true, force: true });
-    throw new Error("The comparison registry has no catalog-manifest.json.");
-  }
-} else if (!knowledgeBundleReport) {
-  rmSync(stagingArtifactDirectory, { recursive: true, force: true });
-  throw new Error("The pre-agent pack has no verified Knowledge-v1 bundle.");
-}
-
-renameSync(stagingArtifactDirectory, finalArtifactDirectory);
-const artifactDirectoryName = path.basename(finalArtifactDirectory);
-const policy = {
-  id: "release-complete@1",
-  publishable: false,
-  required_artifacts: ["agent_support.skill", "agent_support.agents_pointer"],
-  allowed_stages: ["CI_RELEASE_COMPLETE", "R2_BETA", "R3_GA"],
-};
-const report = {
-  schema_version: "1.0.0",
-  contract: "salt-ai-pack-report@1",
-  policy_profile: "release-complete",
-  policy_digest: sha256(Buffer.from(JSON.stringify(policy), "utf8")),
-  publishable: false,
-  packages: packageReports.map((entry) => ({
-    name: entry.name,
-    version: entry.version,
-    manifest: entry.manifest,
-    readme: entry.readme,
-    tarball: {
-      path: `${artifactDirectoryName}/${entry.tarball.fileName}`,
-      sha256: entry.tarball.sha256,
-      bytes: entry.tarball.bytes,
-    },
-    dependencies: entry.dependencies,
-    first_party_dependencies:
-      entry.name !== knowledgeReport.name
-        ? [
-            {
-              name: "@salt-ds/knowledge",
-              version: knowledgeReport.version,
-              tarball_sha256: knowledgeReport.tarball.sha256,
-            },
-          ]
-        : [],
-    content_policy: {
-      generated_tree: entry.name === "@salt-ds/knowledge",
-      prototype_catalog: false,
-      workspace_link: false,
-    },
-  })),
-  knowledge_bundle: knowledgeBundleReport,
-  ...(mcpCandidateDisposition
-    ? { mcp_candidate_disposition: mcpCandidateDisposition.binding }
-    : {}),
-};
-try {
-  assertJsonSchema(
-    report,
-    "saltAiPackReportV1.schema.json",
-    "AI tooling pack report",
-  );
-} catch (error) {
-  rmSync(finalArtifactDirectory, { recursive: true, force: true });
-  throw error;
-}
-const reportBytes = Buffer.from(`${JSON.stringify(report, null, 2)}\n`, "utf8");
-const temporaryReportPath = `${options.reportPath}.tmp-${process.pid}`;
-writeFileSync(temporaryReportPath, reportBytes, { flag: "wx" });
-renameSync(temporaryReportPath, options.reportPath);
-console.log(
-  `Wrote ${path.relative(repoRoot, options.reportPath)} (${sha256(reportBytes)}).`,
-);

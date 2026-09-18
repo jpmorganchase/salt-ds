@@ -1,6 +1,11 @@
 import packageManifest from "../package.json";
 import { runContextCommand } from "./commands/context.js";
 import { runDocsCommand } from "./commands/docs.js";
+import {
+  type DoctorFailOn,
+  type DoctorFormat,
+  runDoctorCommand,
+} from "./commands/doctor.js";
 import { runInfoCommand } from "./commands/info.js";
 import { runSkillCommand, type SaltSkillKind } from "./commands/skill.js";
 
@@ -15,6 +20,7 @@ Usage:
   salt-ds info [root] --json
   salt-ds docs <record-id-or-name> --format markdown|json
   salt-ds context <query> --format markdown|json --limit <n>
+  salt-ds doctor [root] --format json|prompt --fail-on error|warning|never
   salt-ds skill info --json
   salt-ds skill print --kind skill|agents
 
@@ -24,6 +30,7 @@ Commands:
   info       Inspect the exact local Salt package vector and Knowledge identity.
   docs       Read one exact, compatible Knowledge record.
   context    Retrieve a bounded, cited Knowledge slice.
+  doctor     Analyze an exact-version Salt project with read-only evidence.
   skill      Inspect or print the verified bundled Skill artifacts.
 
 The CLI runs locally and does not use the network, Storybook, MCP, or a model.
@@ -59,6 +66,12 @@ type ParsedCliCommand =
       format: "markdown" | "json";
       limit: number;
     }
+  | {
+      command: "doctor";
+      rootDir: string | null;
+      format: DoctorFormat;
+      failOn: DoctorFailOn;
+    }
   | { command: "skill"; action: "info"; kind: null }
   | { command: "skill"; action: "print"; kind: SaltSkillKind };
 
@@ -89,6 +102,7 @@ export function parseCliArgs(argv: readonly string[]): ParsedCliCommand {
     command !== "info" &&
     command !== "docs" &&
     command !== "context" &&
+    command !== "doctor" &&
     command !== "skill"
   ) {
     throw new SaltCliUsageError(
@@ -98,6 +112,7 @@ export function parseCliArgs(argv: readonly string[]): ParsedCliCommand {
 
   if (command === "docs") return parseDocsArguments(arguments_);
   if (command === "context") return parseContextArguments(arguments_);
+  if (command === "doctor") return parseDoctorArguments(arguments_);
   if (command === "skill") return parseSkillArguments(arguments_);
 
   let rootDir: string | null = null;
@@ -122,6 +137,59 @@ export function parseCliArgs(argv: readonly string[]): ParsedCliCommand {
     throw new SaltCliUsageError("info requires exactly one --json option.");
   }
   return { command: "info", rootDir, format: "json" };
+}
+
+function parseDoctorArguments(arguments_: readonly string[]): ParsedCliCommand {
+  let rootDir: string | null = null;
+  let format: DoctorFormat | null = null;
+  let failOn: DoctorFailOn | null = null;
+  for (let index = 0; index < arguments_.length; index += 1) {
+    const argument = arguments_[index];
+    if (argument === "--format") {
+      if (format !== null) {
+        throw new SaltCliUsageError("doctor accepts --format once.");
+      }
+      const value = arguments_[index + 1];
+      if (value !== "json" && value !== "prompt") {
+        throw new SaltCliUsageError(
+          "doctor requires --format json or --format prompt.",
+        );
+      }
+      format = value;
+      index += 1;
+      continue;
+    }
+    if (argument === "--fail-on") {
+      if (failOn !== null) {
+        throw new SaltCliUsageError("doctor accepts --fail-on once.");
+      }
+      const value = arguments_[index + 1];
+      if (value !== "error" && value !== "warning" && value !== "never") {
+        throw new SaltCliUsageError(
+          "doctor requires --fail-on error, warning, or never.",
+        );
+      }
+      failOn = value;
+      index += 1;
+      continue;
+    }
+    if (argument.startsWith("-")) {
+      throw new SaltCliUsageError("Unknown doctor option: " + argument + ".");
+    }
+    if (rootDir !== null) {
+      throw new SaltCliUsageError("doctor accepts at most one project root.");
+    }
+    if (argument.includes("\0")) {
+      throw new SaltCliUsageError("The project root contains an invalid byte.");
+    }
+    rootDir = argument;
+  }
+  if (format === null || failOn === null) {
+    throw new SaltCliUsageError(
+      "doctor requires exactly one --format and exactly one --fail-on.",
+    );
+  }
+  return { command: "doctor", rootDir, format, failOn };
 }
 
 function parseSkillArguments(arguments_: readonly string[]): ParsedCliCommand {
@@ -294,6 +362,31 @@ export async function runCliWithIo(
     );
     return 0;
   }
+  if (parsed.command === "doctor") {
+    try {
+      const result = await runDoctorCommand({
+        rootDir: parsed.rootDir ?? io.cwd(),
+        cliVersion: packageManifest.version,
+        format: parsed.format,
+        failOn: parsed.failOn,
+      });
+      await io.stdout(result.output);
+      return result.exitCode;
+    } catch (error) {
+      if (
+        error &&
+        typeof error === "object" &&
+        "code" in error &&
+        (error.code === "SALT_PROJECT_ROOT_NOT_DIRECTORY" ||
+          error.code === "SALT_PROJECT_ROOT_UNAVAILABLE")
+      ) {
+        throw new SaltCliUsageError(
+          "The project root is invalid or unavailable.",
+        );
+      }
+      throw error;
+    }
+  }
   let result: Awaited<ReturnType<typeof runInfoCommand>>;
   try {
     result = await runInfoCommand({
@@ -320,14 +413,26 @@ export async function runCliWithIo(
 
 function writeStandardOutput(value: string): Promise<void> {
   return new Promise((resolve, reject) => {
+    let settled = false;
+    const settle = (error?: Error | null) => {
+      if (settled) return;
+      settled = true;
+      if (error) reject(error);
+      else resolve();
+    };
     const onError = (error: Error) => {
       process.stdout.off("error", onError);
-      reject(error);
+      settle(error);
     };
     process.stdout.once("error", onError);
-    process.stdout.write(value, () => {
+    process.stdout.write(value, (error) => {
+      if (error) {
+        settle(error);
+        setImmediate(() => process.stdout.off("error", onError));
+        return;
+      }
       process.stdout.off("error", onError);
-      resolve();
+      settle();
     });
   });
 }

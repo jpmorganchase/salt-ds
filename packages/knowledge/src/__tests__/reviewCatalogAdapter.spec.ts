@@ -34,6 +34,72 @@ describe("review catalog adapter", () => {
     ]);
   });
 
+  it("retains the exact source evidence required by the five characterized rules", () => {
+    const button = storeCatalog.components.find(
+      (component) =>
+        component.package.name === "@salt-ds/core" &&
+        component.source.export_name === "Button",
+    );
+    expect(button?.usage_content_ref).toBeTruthy();
+    expect(button?.when_not_to_use).toContain(
+      "When the interaction navigates the user to a different destination rather than triggering an on-page action. Instead, use Link for inline or lower-priority navigation, or LinkButton when navigation stands alone, should stand out from inline links, or sits alongside buttons and should share their visual weight and alignment.",
+    );
+
+    const linkButton = storeCatalog.components.find(
+      (component) =>
+        component.package.name === "@salt-ds/lab" &&
+        component.source.export_name === "LinkButton",
+    );
+    expect(linkButton?.status).toBe("lab");
+
+    const lineChartIcon = storeCatalog.deprecations.find(
+      (deprecation) =>
+        deprecation.package === "@salt-ds/icons" &&
+        deprecation.subject.export_name === "LineChartIcon" &&
+        deprecation.subject.member_path.length === 0,
+    );
+    expect(lineChartIcon).toMatchObject({
+      replacement: {
+        mode: "single",
+        target: { export_name: "ChartLineIcon", member_path: [] },
+      },
+      migration: { strategy: "replace" },
+    });
+
+    const text = storeCatalog.components.find(
+      (component) =>
+        component.package.name === "@salt-ds/core" &&
+        component.source.export_name === "Text",
+    );
+    const textVariant = storeCatalog.deprecations.find(
+      (deprecation) =>
+        deprecation.package === "@salt-ds/core" &&
+        deprecation.name === "variant" &&
+        deprecation.subject.member_path.at(-1)?.kind === "prop" &&
+        deprecation.subject.member_path.at(-1)?.name === "variant",
+    );
+    expect(text?.props).toContainEqual({ name: "variant" });
+    expect(text?.prop_subjects).toContainEqual(textVariant?.subject);
+    expect(textVariant).toMatchObject({
+      replacement: {
+        mode: "single",
+        target: { member_path: [{ kind: "prop", name: "color" }] },
+      },
+      migration: { strategy: "replace" },
+    });
+
+    const accentBackground = storeCatalog.tokens.find(
+      (token) => token.name === "--salt-accent-background",
+    );
+    expect(accentBackground?.deprecated).toBe(true);
+    expect(accentBackground?.declarations.length).toBeGreaterThan(0);
+    expect(
+      accentBackground?.declarations.every(
+        (declaration) => declaration.deprecated,
+      ),
+    ).toBe(true);
+  });
+
   it("produces deterministic review results from the Knowledge-v1 store", () => {
     const input = {
       artifacts: [
