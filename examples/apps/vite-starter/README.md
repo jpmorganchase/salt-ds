@@ -26,15 +26,14 @@ matching Salt release receipt, then keep the workflow project-local and
 offline:
 
 ```sh
-npx --no-install salt-ds info --json
-npx --no-install salt-ds docs button --json
-npx --no-install salt-ds context button --json
-npx --no-install salt-ds scan . --format pretty --fail-on warning
+npx --no-install salt-ds info --root . --project . --json
+npx --no-install salt-ds docs component.button --root . --project . --format markdown
+npx --no-install salt-ds context "Button appearance" --root . --project . --format markdown --limit 5
 ```
 
-The scanner covers its declared static-analysis surface; it does not replace
-the production build, interaction tests, authored keyboard checks, or axe. The
-starter intentionally requires neither Storybook nor MCP.
+These local retrieval commands complement the production build, interaction
+tests, authored keyboard checks, and axe. The starter intentionally requires
+neither Storybook nor MCP.
 
 To inspect the official agent guidance before manually registering it with a
 host, run `npx --no-install salt-ds skill print --kind skill`. The companion

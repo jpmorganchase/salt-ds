@@ -12,6 +12,24 @@ interface SearchDocument {
   title: string;
 }
 
+interface ContentReference {
+  family: "content";
+  id: string;
+  codec: string;
+}
+
+interface DocumentRecord {
+  family?: unknown;
+  detail_content_ref?: unknown;
+  body_content_ref?: unknown;
+  export_name?: unknown;
+  name?: unknown;
+  title?: unknown;
+  aliases?: unknown;
+  summary?: unknown;
+  semantic_intent?: unknown;
+}
+
 export interface KnowledgeDocumentChoice {
   reference: SaltKnowledgeRecordReference;
   title: string;
@@ -50,7 +68,7 @@ export interface KnowledgeDocumentResult {
     summary: string;
     record: unknown;
     content: null | {
-      reference: { family: "content"; id: string; codec: string };
+      reference: ContentReference;
       value: unknown;
     };
     citation: {
@@ -65,6 +83,14 @@ function strings(value: unknown): string[] {
   return Array.isArray(value)
     ? value.filter((entry): entry is string => typeof entry === "string")
     : [];
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+function documentRecord(value: unknown): DocumentRecord | null {
+  return isRecord(value) ? value : null;
 }
 
 function collectSourceReferences(value: unknown, ids: Set<string>): void {
@@ -82,18 +108,32 @@ function collectSourceReferences(value: unknown, ids: Set<string>): void {
   }
 }
 
-function contentReference(record: any) {
-  const candidate = record?.detail_content_ref ?? record?.body_content_ref;
-  return candidate?.family === "content" &&
-    typeof candidate.id === "string" &&
-    typeof candidate.codec === "string"
-    ? (candidate as { family: "content"; id: string; codec: string })
+function contentReference(value: unknown): ContentReference | null {
+  if (!isRecord(value)) return null;
+  return value.family === "content" &&
+    typeof value.id === "string" &&
+    value.id.length > 0 &&
+    typeof value.codec === "string" &&
+    value.codec.length > 0
+    ? { family: "content", id: value.id, codec: value.codec }
     : null;
+}
+
+function primaryContentReference(
+  record: DocumentRecord | null,
+  family: SaltKnowledgeRecordReference["family"],
+): ContentReference | null {
+  if (!record) return null;
+  return contentReference(
+    family === "page"
+      ? record.body_content_ref
+      : (record.detail_content_ref ?? record.body_content_ref),
+  );
 }
 
 function identityMatches(
   document: SearchDocument,
-  record: any,
+  record: DocumentRecord,
   identifier: string,
 ): KnowledgeDocumentChoice[] {
   const candidates: Array<{
@@ -126,6 +166,45 @@ function identityMatches(
     : [];
 }
 
+function isSearchTargetFamily(
+  value: string,
+): value is SaltKnowledgeRecordReference["family"] {
+  return (KNOWLEDGE_SEARCH_TARGET_FAMILY_NAMES as readonly string[]).includes(
+    value,
+  );
+}
+
+function parseCanonicalRecordKey(
+  identifier: string,
+): SaltKnowledgeRecordReference | null {
+  const match = /^record:([^:]+):(.+)$/u.exec(identifier);
+  if (!match || !isSearchTargetFamily(match[1]) || match[2].trim().length === 0)
+    return null;
+  return { family: match[1], id: match[2] };
+}
+
+function canonicalChoice(
+  store: KnowledgeRecordStore,
+  documents: readonly SearchDocument[],
+  reference: SaltKnowledgeRecordReference,
+): KnowledgeDocumentChoice[] {
+  const document = documents.find(
+    (candidate) =>
+      candidate.target.family === reference.family &&
+      candidate.target.id === reference.id,
+  );
+  return document &&
+    documentRecord(store.getRecord(reference.family, reference.id))
+    ? [
+        {
+          reference,
+          title: document.title,
+          matched_by: "record_id",
+        },
+      ]
+    : [];
+}
+
 export function resolveKnowledgeDocument(
   store: KnowledgeRecordStore,
   input: ResolveKnowledgeDocumentInput,
@@ -135,15 +214,24 @@ export function resolveKnowledgeDocument(
   const documents = store.getFamily(
     "search_document",
   ) as readonly SearchDocument[];
-  const rawChoices = documents.flatMap((document) => {
-    if (
-      !KNOWLEDGE_SEARCH_TARGET_FAMILY_NAMES.includes(document.target.family)
-    ) {
-      return [];
-    }
-    const record = store.getRecord(document.target.family, document.target.id);
-    return record ? identityMatches(document, record, normalized) : [];
-  });
+  const canonicalReference = parseCanonicalRecordKey(identifier);
+  const rawChoices = canonicalReference
+    ? canonicalChoice(store, documents, canonicalReference)
+    : identifier.startsWith("record:")
+      ? []
+      : documents.flatMap((document) => {
+          if (
+            !KNOWLEDGE_SEARCH_TARGET_FAMILY_NAMES.includes(
+              document.target.family,
+            )
+          ) {
+            return [];
+          }
+          const record = documentRecord(
+            store.getRecord(document.target.family, document.target.id),
+          );
+          return record ? identityMatches(document, record, normalized) : [];
+        });
   const exactIdChoices = rawChoices.filter(
     (choice) => choice.matched_by === "record_id",
   );
@@ -218,8 +306,10 @@ export function resolveKnowledgeDocument(
     };
   }
   const choice = applicable[0];
-  const record = store.getRecord(choice.reference.family, choice.reference.id);
-  const contentRef = contentReference(record);
+  const record = documentRecord(
+    store.getRecord(choice.reference.family, choice.reference.id),
+  );
+  const contentRef = primaryContentReference(record, choice.reference.family);
   const sources = new Set<string>();
   collectSourceReferences(record, sources);
   return {
@@ -246,8 +336,7 @@ export function resolveKnowledgeDocument(
           }
         : null,
       citation: {
-        record_key:
-          "record:" + choice.reference.family + ":" + choice.reference.id,
+        record_key: `record:${choice.reference.family}:${choice.reference.id}`,
         source_records: [...sources].sort(),
         bundle_digest: store.manifest.bundle_digest,
       },

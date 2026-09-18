@@ -1,0 +1,226 @@
+# Plan 033: Deliver Salt guidance and verified workflows from one source
+
+## Status and intent
+
+- Status: IN PROGRESS — Unit 033/01 at `d2c7000865da920655d6461eb46e95f7eb84db43`
+- Priority: P0 product capability.
+- Effort: 6–10 engineering days for Units 033/01–02a, including design/accessibility review; re-estimate after the compiler slice and independent maintainer exercise. Conditional expansion is separate.
+- Risk: MED; new canonical content and deliberate unreleased output/API changes.
+- Planned at: `e55fa54e215503b4a0e521e2f5ee054b9f0068ce`, 2026-09-06.
+- Depends on: foundation fixes and same-project package verification from the canonical [Plan 032 execution handoff](./032-fix-the-real-consumer-entry-path.md); adopted successor dispatch. Content discovery/design can proceed independently of Doctor qualification.
+
+Before execution, run `git diff --stat e55fa54e215503b4a0e521e2f5ee054b9f0068ce..HEAD -- packages/knowledge/src packages/cli/src site examples/apps scripts test/browser` and compare affected source against the evidence below. Revise stale unit details before implementation. Only the subsequently adopted unit is executable; use its active control checks and ordinary `codex/` branch convention. Whenever a unit changes generated content or its contract, rebuild that candidate before tests that consume generated Knowledge, then verify the packed output.
+
+Salt AI should help a developer and their existing agent produce an accepted interface. The first preview delivers one complete record-form workflow, its integration into an existing application, and faithful Button loading guidance through the same canonical content path. The worklist, application shell and broader retrieval study below are conditional backlog, selected from observed need after the first journey. One form plus existing-app integration is sufficient for the initial preview; it does not require three workflows or a three-family study.
+
+The implementation remains in Salt's canonical source, examples, documentation, Knowledge generator/runtime, and existing test infrastructure. Use a small generated static catalog for files and references; a registry service, model service, plugin framework, installer, or general application generator is not part of this work.
+
+Apply the adopted code disposition: reuse the source/API/token compiler, logical record codecs, verified store and deterministic scorer. Replace the selected material's existing projection path, and remove superseded code as its last caller migrates. Do not build a parallel compiler or preserve unsupported interfaces merely because they already have tests.
+
+The platform is unreleased: there is no requirement to preserve previous AI record shapes, output formats or APIs. Reuse recommendations and the bounded form/Button content scope do not prohibit a simpler rewrite. Change current schemas, callers, generated outputs and tests together, without shims or dual runtime readers. Keep canonical content accurate and acceptance meaningful; old implementation behavior is not the oracle for a deliberately changed contract.
+
+## Execution boundary and adoption
+
+The completed foundation is Plan 032 at `d2c7000865da920655d6461eb46e95f7eb84db43`. Its control records actual completion; its plan, checks and earlier evidence remain historical. The single current dispatch is Unit 033/01 in `plans/evidence/033/control.json` and the Active dispatch block in `plans/README.md`. Record actual unit checkpoints and completion commits, update the plan digest with reviewed scope revisions, and permit ordinary implementation commits. There are no lifecycle phases, custom amendment protocol or predicted commit hashes.
+
+This adoption updates this plan/control, Plan 032's completion record, the active README, contributor/ADR guidance, the current-plan command and its focused checks, and the normal CI caller. The small `yarn validate:salt-ai:plan-033` check verifies current plan/control/README agreement and real commit references; it does not replay historical plan execution. Run its focused tests, current contracts, tracker, release embargo and changed-file quality, then ordinary review before product implementation. Preserve the old Plan 006 CI supersession guard.
+
+Only the named unit executes. Unit 033/01 authorizes local source changes, builds, browser tests and scoped npm setup inside the existing `checkSaltSampleApps` temporary sample-app fixtures and their deliberate negative copies. Those fixtures may obtain declared dependencies and install the exact locally packed CLI/Knowledge cohort; no installation in actual consumer repositories is authorized. Browser/application/tool runtime stays offline, with application state simulations local and tooling read-only. Publication, version materialization, dist-tags, deployment, consumer contact and product host/model trials remain separate. The user-authorized implementation proceeds without those external actions; missing participant access does not block local correctness work.
+
+Before each review run current-plan validation, contracts, `yarn check:changed-quality -- --base <recorded-unit-start-sha>`, `git diff --check` and the unit's specific checks. Rebuild generated Knowledge before tests consuming it whenever its inputs change. Runtime correctness receipts cannot qualify Doctor, and automated accessibility checks cannot stand in for declared manual review. Readiness must disclose outstanding owner/design review and tested scope honestly.
+
+## Product and authoring pivot
+
+Treat documentation and examples as maintained, executable product material. A single source of design guidance, public implementation files and acceptance definitions feeds the existing website preview, portable example files, readable Markdown and local agent tools. Units 033/01–02a establish that path for the form and Button loading slice. They do not require a rewrite of every component/page record, a website overhaul, or a parallel content project, and they do not change tracked execution authority.
+
+Keep MDX for editorial prose and derive API facts from public source. Preserve Salt's existing design decisions, diagrams and examples; add small authored annotations only where relationships cannot be expressed reliably today. Do not ask writers to maintain a second AI prose corpus or encode whole pages into JSON.
+
+Serve three complementary example levels:
+
+| Level                   | Job                                                    | Acceptance boundary                                                                   |
+| ----------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| Small component example | Explain one prop, appearance or interaction            | Accurately illustrates the named feature; clearly identifies surrounding setup        |
+| Composition recipe      | Combine primitives for a reusable interaction          | Complete files/dependencies, adaptable application seams and relevant behavior checks |
+| Complete workflow       | Fulfil a realistic task including failure and recovery | Reconstructable package, independent workflow acceptance and owner review             |
+
+Readiness remains separate from level: a large application is not automatically verified, and a small example need not become an application. Begin with the record-form workflow and the existing Button loading section as a content-extraction regression. Preserve existing contextual output for unconverted content, with explicit limitations and no implied promotion. After 3–5 observed first-workflow uses and the maintainer exercise, decide whether to refine the first journey or select the next workflow from demonstrated demand.
+
+## Current state
+
+Relevant sources:
+
+- `packages/knowledge/src/build/buildKnowledgeV1.ts:438` — Markdown projection and example index.
+- `packages/knowledge/src/build/normalizeKnowledgeRecords.ts:2032` — extracted example code and unvalidated evidence.
+- `packages/knowledge/src/search/searchSalt.ts` — ranking and context output.
+- `packages/knowledge/src/markdown/resolveKnowledgeDocument.ts` — document selection/rendering.
+- `packages/knowledge/src/build/catalogSemanticInputPatterns.json` — explicit semantic source inventory, currently excluding `examples/apps`.
+- `examples/apps/operations-dashboard/` — functioning public-package application seed.
+- `site/src/examples/form-field/Validation.tsx`, `site/src/examples/dialog/`, `site/src/examples/table/`, `site/src/examples/vertical-navigation/` — component examples.
+- `site/docs/patterns/{forms,content-status,analytical-dashboard,navigation}.mdx` and `site/docs/getting-started/{choosing-the-right-primitive,composition-pitfalls}.mdx` — canonical design choices.
+- `scripts/checkSaltSampleApps.mjs:32` — three named sample apps and packed/browser verification.
+- `scripts/checkSaltSampleApps.mjs:332`, `:344`, `:952`, `:1138` and `scripts/schemas/saltSampleAppCohortReceiptV1.schema.json:193` — legacy required README/scan/Cypress checks and scan receipt fields that must be reconciled before using this harness for the new product.
+- `packages/knowledge/src/build/pageTextExtractor.ts:40` — extracts paragraph/list/table text while losing heading structure, code blocks, link targets and presentation-node meaning.
+- `packages/knowledge/src/build/buildRegistryComponents.ts:735` and `site/docs/components/button/examples.mdx:63` — every nested heading resets the inferred example context; Loading's example can acquire the title “Best practices” and lose its parent explanation.
+- `scripts/checkPublicExamples.mjs:25`, `:246` and `site/src/examples/patterns/manifest.json` — the existing public-pattern inventory generates a manifest and source loader map. Those generated files are outputs, not another place to author facts manually.
+- `site/src/components/components/fetchExample.ts:10`, `:59` and `LivePreview.tsx:65` — patterns show declared source files, component examples show a single TSX source, and previews supply surrounding providers that a consumer must know to reproduce the result.
+
+The baseline generator emits:
+
+```ts
+const markdown = `# ${safeMarkdown(record.title)}\n\n${safeMarkdown(record.summary)}\n`;
+// Every example currently receives:
+status: "contextual",
+entry_file: null,
+supporting_files: [],
+dependencies: [],
+css: [],
+providers: [],
+package_vector: [],
+```
+
+It lists 983 contextual examples. Do not convert those labels to verified in bulk. Promote only examples whose complete artifact and acceptance evidence exist.
+
+The existing operations dashboard test combines filtering, a dialog, theme/density, and axe. It is a useful starting point, not sufficient proof of all required states or accessibility. In particular, `site/docs/foundations/density.mdx:64` warns against high density as a default and documents its accessibility implications.
+
+## Target content contract
+
+The unit of value is a maintained workflow with these required fields:
+
+| Field group              | Required content                                                                                                          |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| Identity and support     | Stable ID, title, owner, readiness, exact tested package vector, source references                                        |
+| Intent and selection     | User job, prerequisites, when to use, alternatives and tradeoffs                                                          |
+| Implementation           | Complete entry/supporting files, public imports, dependencies, provider/theme/CSS setup                                   |
+| Application seams        | Data input, submission callbacks, routing, validation, cancellation; existing app conventions remain authoritative        |
+| States and transitions   | Applicable loading, empty, no-match, error, success, pending, disabled and recovery behavior                              |
+| Operating constraints    | Intended data size, long-content/layout assumptions, asynchronous state ownership and unsupported scale/integration cases |
+| Design and accessibility | Layout/token decisions, keyboard/focus/naming/status behavior, viewport/theme/density expectations                        |
+| Verification             | Build/type checks, named behavioral assertions, visual/manual review requirements, explicit limitations                   |
+| Handoff                  | Canonical docs links, bounded context sections, next resolvable reference when more detail is needed                      |
+
+Use three readiness labels with enforced meaning: **contextual** (illustration only), **runnable** (complete files/setup and build pass), **workflow-verified** (runnable plus the stated independent interaction/accessibility/design acceptance). The last label applies to the tested reference workflow and support matrix; it is not a certification of arbitrary consumer adaptations.
+
+Implement the smallest typed schema that represents these fields. Reuse existing manifest identity, source references, and validation conventions. A content record must never embed executable shell behavior that the runtime automatically executes.
+
+Author intent, design rationale, application seams, exceptional setup and acceptance requirements, plus an explicit bounded inventory of the recipe's public files/assets. Keep dependency declarations in the runnable setup's existing manifest and validate imports, assets and reconstruction against that inventory. Derive straightforward API facts, source identities and tested-version/readiness evidence from existing source/build checks; a general dependency-inference engine is outside the first delivery. Keep references to authored prose instead of manually duplicating it inside metadata. Evolve the current inventory/generation path and review the generated diff; do not hand-edit `patterns/manifest.json` or `patternSourceLoaders.ts` as primary sources.
+
+## Unit 033/01 — Complete one flagship workflow before expanding
+
+Scope: the existing `examples/apps/operations-dashboard/` verification application, adding reusable form files and `recipe.json` under `src/workflows/record-form/` and integrating them into its current incident dialog. Preserve its provider, theme, navigation, filtering and domain wrapper. Include its README, canonical form docs and an explicitly bounded source inventory. Update `scripts/checkSaltSampleApps.mjs`, focused harness tests, current sample-app receipt schema/consumers, and the three current sample-app READMEs that advertise the removed scan command. Also remove unused `packages/cli/src/commands/scan.ts`, `packages/cli/src/renderers/{json,pretty,prompt,sarif}.ts` and their dedicated renderer tests after the harness migration. No new application scaffold or duplicate Cypress test suite is required.
+
+Build a **validated record form** using current public Salt primitives and the consumer-facing provider/theme setup. Make its data/submission seams explicit. Require:
+
+- Initial data can be edited and invalid values produce associated messages.
+- Submitting invalid data keeps entered values and moves focus meaningfully.
+- Pending submission prevents accidental duplicate submission without hiding progress.
+- A failed submission preserves input and supports retry; success is announced.
+- Cancellation obeys the specified data-preservation/confirmation policy.
+- Keyboard, labels, focus, error announcements, narrow layout and zoom are checked.
+- Demo data and submission behavior are clearly local simulations; no fictitious backend or notification claim.
+- Long field labels, realistic error text and delayed/rejected submission fit the declared layout and state ownership. If the task permits overlapping requests, stale results must not overwrite newer intent. State which data-size and integration assumptions were tested.
+
+Start from the existing form examples and canonical forms pattern. Keep application-specific state/data libraries outside the recipe unless required and justified. Write the acceptance assertions before calling the workflow verified. Include at least one negative variant with removed validation or disabled submission and prove that the independent checks reject it.
+
+Define an explicit adaptation contract: inputs, submit/cancel callbacks, state ownership and the minimum provider/theme requirements. Supply local demo adapters separately from reusable UI. Use the operations dashboard as the prepared existing application: its provider, navigation, service data and incident wrapper supply real integration seams. Keep the reusable form controlled through draft/change, asynchronous submit and cancel callbacks, with its local delayed/fail-once simulation in a separate adapter. The host retains draft ownership; cancellation closes without discarding input, and reopening restores the draft. Integrate through those seams, preserve existing acceptance, and reject a variant that removes working behavior. The host agent follows the application's chosen libraries; the recipe must not prescribe replacing them with its demo stack.
+
+Reconcile the existing sample-app harness before extending it. It still requires README text advertising removed `salt-ds scan`, invokes `scan --allow-incomplete`, and requires a scan result in each receipt. Replace those current-product assumptions with the adopted CLI contract. Build/type/browser acceptance must run and remain meaningful whether Doctor is retained or retired. If eligible Doctor analysis is included, report its findings, coverage and limitations separately; skipped or unavailable analysis is not a clean result. Update the current receipt schema, app-name enums and consumers together through the adopted schema transition, preserving immutable predecessor receipts.
+
+Use the existing Playwright acceptance path for the new workflow and add its task-specific assertions there. The harness also currently requires a `cypress/app.cy.ts` file by text inspection; reconcile that requirement to the actual executed browser checks so the new workflow does not need duplicate test implementations. Preserve meaningful existing coverage. Installation/packing runs only in the activated fixture scope.
+
+Finish the existing scan retirement in code. `packages/cli/src/__tests__/cli.spec.ts:299` already rejects the command; its implementation and four renderers have no runtime caller. After current harness/docs callers are corrected, remove that closure and tests solely for the retired formats. Keep the rejected-command regression and all shared `scan/result`, discovery/config and worker behavior while Doctor still uses it; 035/03 owns their later retirement. Confirm remaining source/tests do not import removed modules.
+
+Verify: existing `yarn check:salt-sample-apps -- --app operations-dashboard` using its existing app registration; expect packed public dependency resolution, typecheck/build, named browser acceptance, and supported offline core commands to pass independently of Doctor. Add focused harness tests for the existing app selection, updated receipt shape, explicit unavailable analysis, and failure propagation. Public imports and sample changes also run `yarn check:public-examples` where applicable. The checks must fail on each deliberate negative variant. Bundling with package imports marked external is not evidence of actual API or setup compatibility.
+
+## Unit 033/02 — Share the form and Button guidance across outputs
+
+Scope: only the changes needed to serve the form and Button loading slice in Knowledge build/record/schema/Markdown/search modules and tests, including `pageTextExtractor.ts`, `buildRegistryComponents.ts`, `buildRegistryDocs.ts`, `normalizeKnowledgeRecords.ts` and `buildKnowledgeV1.ts`; `examples/apps/operations-dashboard/src/workflows/record-form/recipe.json`; `scripts/checkPublicExamples.mjs`, affected example-schema/checker consumers including the current-product checks in `checkSaltDocsAuthoring.mjs`; explicit source/compiler and package publication inventories. Preserve existing record behavior outside this slice. No all-component/page rewrite or independent prose copy under a host-specific Skill is required.
+
+Before adjacent schema changes, remove the unused catalog storage implementation in `packages/knowledge/src/records/knowledgeRecordSchema.ts`: `encodeCatalogRecordForStorage`, `decodeCatalogRecordFromStorage`, `encodeCatalogArtifactRecordsForStorage`, `parseCatalogArtifactEnvelope`, `createCatalogJsonSchema`, `CatalogStorageRecordResolver` and their exclusively used storage types/helpers/descriptor metadata. Recheck that they still have no callers; current writer and reader use logical object envelopes. Remove the uncalled `rehydrateTokenDeclaration` and `LegacyCatalogRecord` in the normalizer as well. Preserve logical Zod codecs, `parseCatalogRecord`, indexing, references and provenance. Make this a separate reviewable deletion and verify unchanged logical record/content results before intended content changes; compiler/bundle identity may change. Shared `scripts/build.mjs` and historical readers are not implicitly deleted by this cleanup.
+
+1. Introduce the small typed document representation needed by the selected form guidance and Button loading section, using the existing remark/MDX parse infrastructure. Preserve their heading hierarchy, prose/list structure, code/language, links and explicit example references; include tables when the selected material uses them. Resolve an example's enclosing section without letting a nested “Best practices” heading erase its purpose. Use stable references for selected sections; no per-query extraction rules or conversion of unrelated pages.
+2. Add projections only for authored presentation constructs required by this slice. Preserve a used callout's recommendation/rationale, a used diagram's meaningful description/asset reference, and the selected previews' actual example references. If a needed fragment is resolved, require a contained source path. Unknown constructs cannot silently erase mandatory pilot guidance: surface a diagnostic and withhold promotion until the author supplies a supported equivalent. Unconverted content keeps its existing contextual output with an explicit limitation; supporting its additional constructs is later demand-led work.
+3. Keep MDX expressions and imported runtime code inert in the Knowledge path. Parse supported literal metadata; do not evaluate arbitrary source to obtain prose. Render untrusted text through the existing Markdown boundary. The trusted site build may render its existing authoring components, but a content request must not execute repository MDX or follow network references.
+4. Establish the form's recipe artifact contract here, before generated-package consumers use it: stable recipe ID, source/content identity, exact tested support, manifest and individual public files/assets. Use an explicit bounded public-file inventory and the runnable setup's dependency declarations. Reuse existing import/asset/build checks to validate completeness and derive straightforward facts; independently reconstruct the export instead of building a general dependency-inference engine. Evolve the current example schema, generator and checker consumers together: `saltAuthoredExampleManifestV1.schema.json` and its checkers are fixed to 24 pattern entries and current pattern paths. Registering this form requires an explicit current-product contract transition while preserving immutable historical evidence and the existing patterns' behavior. Validate missing files, undeclared imports/assets/CSS, incompatible families, source containment, ambiguous readiness and absent acceptance evidence. Register only the selected sample-app files through an explicitly contained inventory extension; do not relax the existing public-example root check globally.
+5. Include required public implementation files and minimal runnable setup. Export useful acceptance instructions or separate test material deliberately; do not copy private fixtures, maintainer harness internals or repository-only aliases into application code. Keep readiness evidence distinct from the editable example.
+6. Replace the selected material's lossy delivery path with one reusable typed assembler. Button loading exposes its actual guidance and relevant public prop facts; the form exposes authored guidance, implementation/setup/state/adaptation/acceptance sections. Use those inputs for the selected page sections and local outputs, removing their superseded summary/snippet projection branch rather than retaining two implementations. Do not route complete workflows through the nested/global snippet reconciliation in `normalizeKnowledgeRecords.ts:1932`. Extending every component/page kind is not a first-preview requirement; preserve existing contextual output and its limitations elsewhere.
+7. Generate readable Markdown and structured outputs from that representation. Preserve code whitespace, meaningful section order, canonical URLs and citations. Every returned reference must round-trip through docs. Presentation can differ by surface; the required meaning, support and referenced files must agree.
+8. Make `context` select the smallest useful answer for the task: a prop fact, design choice, focused adaptation or complete workflow. Prioritize any necessary prerequisites, critical behavior and acceptance. A narrow question must not trigger a whole tutorial or repeat setup already established. Return explicit omissions and the next section/file reference when material cannot fit. Keep the default response within 16 KiB; never label a cut code fragment complete.
+
+For source closure, add only the selected app's named source/metadata paths to `catalogSemanticInputPatterns.json`; do not ingest all repository examples indiscriminately. Changes to docs, examples or API facts should change semantic identity. Host adapter-only changes should not.
+
+Verify in dependency order: run the pure fixture specs below and `yarn typecheck:ai-tooling`, then `yarn build:ai-tooling`, then `yarn vitest run packages/knowledge/src packages/cli/src/commands --maxWorkers=2` and `yarn validate:salt-ai:contracts`, and finally `yarn check:ai-tooling:pack -- --report dist/salt-ai-pack/plan-033.json`. The existing search/retrieval specs load `packages/knowledge/generated`, so rebuild the current candidate before relying on those integration results; a pass against stale predecessor output is insufficient. Tests must assert concrete form guidance and real files, cross-surface meaning, readiness downgrades, deterministic identity, source containment and bounded output. A human reviewer must be able to reconstruct the reference app from published material alone; automate that reconstruction in the existing packed fixture harness.
+
+Specific new regressions: nested heading context for Button Loading without an explicit `displayName`, retained `loadingAnnouncement` guidance, code whitespace, link targets, explicit preview-to-file references, unsupported pilot MDX diagnostics and expressions remaining inert. Test tables/callouts only where used by the slice, and fragment containment if fragment resolution is introduced. Add the selected page-structure cases to a proposed `packages/knowledge/src/__tests__/pageTextExtractor.spec.ts`; there is no existing focused extractor spec. Reuse `writeFixtureRepo` in `buildRegistryComponents.spec.ts` and `createTempRepo` in `buildRegistryDocs.spec.ts`. Test a narrow Button question, form creation and existing-form adaptation against the same assembler, plus an unsupported request. Check that each gets useful, applicable evidence and that unconverted contextual records keep their declared limitations. These focused retrieval regressions belong to the first preview; the later 20-query holdout does not. Test semantic requirements directly; a snapshot of a giant serialized document is insufficient.
+
+Focused existing command: `yarn vitest run packages/knowledge/src/__tests__/buildRegistryComponents.spec.ts packages/knowledge/src/__tests__/buildRegistryDocs.spec.ts packages/knowledge/src/__tests__/buildRegistryMarkdown.spec.ts packages/knowledge/src/__tests__/buildRegistryPatterns.spec.ts --maxWorkers=2`. After adding the new extractor spec, include its full path in this command. The current pattern fixture treats a `<Diagram>` tag as example code; if the shared change affects that path, correct its expectation so a diagram is not advertised as runnable React. This does not require a general diagram projection in the first slice. Existing tests reject legacy guide/export/enrichment frontmatter; define any new annotation narrowly and retain those rejections.
+
+## Unit 033/02a — Serve the same example and prove it is affordable to maintain
+
+Entry: the first form and canonical content assembly from Units 033/01–02. This unit completes the bounded form/Button consumer and author journey on the existing website before workflow expansion. Unrelated website or authoring improvements remain outside its completion criteria.
+
+The first authorized consumer observations may begin through the working packaged/host route while this unit is in progress. Do not postpone that learning until every website or authoring improvement is finished. Complete this unit before expanding the corpus or claiming that its shared serving and maintenance journey are supported.
+
+Scope: changes needed for the selected form page and Button loading section in `site/src/components/components/{LivePreview,fetchExample,patternSourceLoaders}.ts*`, their MDX, `scripts/{checkPublicExamples,checkPublicDocumentation,checkSaltDocsAuthoring,buildSaltAiWebArtifact,verifySaltAiWebArtifact}.mjs` and affected schemas, Knowledge publication inventories, sample-app export fixtures, and a proposed `test/browser/salt-workflow-preview.browser.test.tsx`. Extend the existing generated source-loader path for explicitly registered files; do not require runtime imports of arbitrary consumer paths. New generated artifacts remain under approved ignored build paths until an adopted release process selects publication destinations.
+
+1. Consume the recipe artifact contract established in Unit 033/02. Reuse its identity, tested support, manifest and files for the website source view/downloads and local-tool/Markdown references; keep Button loading's guidance and example-file references consistent through those outputs too. Use the existing static serving path and verify the selected outputs' identity, extending the web artifact path only where the adopted preview scope needs it. There is no second recipe schema, hosted registry API or automatic installer.
+2. Make the selected form page task-oriented while preserving access to its primitive reference and the existing Button preview. Show purpose, interactive states, design choices, prerequisites, a file list, setup and adaptation seams. Provide access to complete files and Markdown; a copyable context summary links to further detail instead of concatenating every source into one prompt. Change only the selected pages and shared rendering needed by them. Update the renderer and public-doc checker together if the preview-reference syntax changes; the checker currently requires the exact pattern `LivePreview` form. A person can inspect reference material without installing the CLI; project-bound tools separately verify the application's installed versions.
+3. Render the workflow through its declared public setup. The outer site chrome can retain its providers, but verify an isolated preview/application with only the exported setup. Make loading/error/retry/success states inspectable through local deterministic fixtures. Avoid screenshot-only demonstrations of behavior.
+4. Test that source view, exported files, Markdown and CLI resolve the same recipe and content identity. The downloadable files must reconstruct the independently tested app. Where the site uses a release bundle, it must not silently mix current-HEAD code into an older labelled preview. Maintain a clearly labelled current development preview separately.
+5. Give authors a short documented path using existing generation, preview and affected checks. Derive repetitive facts and issue diagnostics naming the source file/section and correction needed. Extend existing commands only where necessary; specify and test new filtering options before advertising them. A custom authoring application is out of scope.
+6. Have a maintainer who did not build the compiler make one realistic change to the pilot's behavior and explanatory guidance, regenerate, preview and validate it using only the author guide. Record elapsed active work, manually edited sources, repeated facts and friction in the ordinary review. The change must propagate to all four surfaces without manual edits to generated files or a second prose copy. The maintainer must be able to identify a deliberate missing-file or unsupported-content failure from the diagnostic. Fix duplication before expanding the corpus.
+
+Verification combines the affected Knowledge/CLI tests, types/contracts, `yarn check:public-examples`, `yarn check:public-docs`, the revised sample-app reconstruction gate and the existing site build/preview path. The public-example check externalizes package dependencies; the public-doc check requires built packages and uses `npm pack --dry-run`. Neither replaces real installed-package acceptance. `yarn workspace @salt-ds/site build` is the existing site-build command; its normal generated prerequisites and local dependencies must be available in the activated unit. Reuse `yarn build:salt-ai-web` and `yarn verify:salt-ai-web` for local generated route/file integrity where their adopted current-product scope applies; these commands do not deploy.
+
+A build alone does not prove a working preview. Place the proposed preview test under the existing `test/browser` include, then run `yarn vitest run --config vitest.browser.config.mts --browser.headless test/browser/salt-workflow-preview.browser.test.tsx` to verify named states, guidance and file references. The browser setup includes maintainer globals, so the separate packed sample-app reconstruction remains the proof of provider/setup completeness. Do not add a site-local test that the current config never discovers. The maintainer exercise separately verifies the actual site path and author instructions. Publication or deployment remains a separate release action.
+
+The existing `check:salt-docs-authoring` script contains historical stage assumptions, reads built Knowledge and defaults to stage 06d, which requires `--require-web-route-map dist/salt-ai-web/route-map.json`. It is not a lightweight authoring linter. Reconcile its current-product entry through the adopted control update if used; do not mutate historical records or require a fresh receipt framework merely to validate a normal author edit. Document generation (`yarn examples:manifest`) separately from check-only commands and never call it a passing check by itself.
+
+## Conditional Unit 033/03 — Expand workflows from observed need
+
+Scope: adopt only the next justified workflow or modification case from the backlog below, extending canonical examples/docs and the same schema/assembler/harness. Candidate reusable module directories are `examples/apps/operations-dashboard/src/workflows/operational-worklist/` and `examples/apps/operations-dashboard/src/workflows/application-shell/`. Neither is required for the first preview, and selecting one does not require implementing the other. Reuse the first workflow's preview and fixture setup. Create a separate integration fixture only when it proves a distinct supported environment, as the existing Next App Router fixture does. Reuse selected public material from the operations dashboard without importing repository-only source into consumer output.
+
+Entry: Units 033/01–02a have produced the same useful pilot material for humans and agents, including the maintainer update exercise. Review 3–5 authorized first-workflow uses under Plan 034/02a, including a successful existing-application integration, then have the product owner record whether the observed needs and maintenance cost justify the next selected workflow. No full website overhaul or broad study is needed for this decision. Fix material content/activation friction before adding breadth; if access is unavailable, continue independent correctness work and leave expansion pending. Existing-app integration already belongs to Unit 033/01; the later modification case below extends that coverage only when justified.
+
+| Workflow                     | Required behavior                                                                                                                                                | Explicit boundary                                                                                                                                       |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Operational worklist         | Filter records; distinguish no data from no matches; inspect details; perform an action with pending/error/retry/success; preserve selection/focus appropriately | Use a read-only table for this first recipe. Explain when interactive grid behavior requires a different integration; do not implement a grid framework |
+| Application shell            | Current-location navigation, meaningful headings/landmarks, narrow-screen navigation, dialog open/close/focus return, supported theme and appropriate density    | Explain navigation versus local tabs/actions. Supply routing seams without imposing a router                                                            |
+| Existing-screen modification | Add a state or action to a prepared working screen while preserving routing, data wiring, meaningful domain wrappers, and existing acceptance checks             | This is an acceptance task variant, not another application or a mandate to rewrite consumer code                                                       |
+
+Every workflow must have applicable state coverage, complete files/setup, independent checks, and design/accessibility review. Default to an appropriate accessible density. High density must not be used to claim automatic accessibility; disclose its implications and preserve information and functionality across choices. Do not infer accessibility certification from axe.
+
+Register realistic operating limits. For the worklist, exercise empty, one-record and representative-many states, long labels/content, and delayed/reordered results where the data seam is asynchronous. For navigation and forms, exercise relevant narrow layouts, long content and cancellation. Use a compact set of meaningful cases; a small demo is not evidence of unlimited scale, localization or advanced grid support. Disclose those boundaries without building new data-fetching, internationalization or virtualization frameworks.
+
+Verify each workflow and its separately reconstructed export through the extended `yarn check:salt-sample-apps -- --app operations-dashboard` command, plus Knowledge/CLI tests, types, contracts and pack checks. The harness must report the named workflow coverage, so one successful page cannot mask an unexecuted recipe. The modification fixture must retain existing checks and pass a negative case that deletes previously working behavior. Keep reference examples separate from the later held-out consumer tasks.
+
+## Conditional Unit 033/04 — Broaden retrieval when the supported tasks expand
+
+Entry: observed retrieval failures or an adopted workflow expansion justify broader ranking work. The focused form/Button retrieval checks in Unit 033/02 are sufficient for the initial preview. This backlog does not require three workflows to be built merely to populate an evaluation set.
+
+Scope: `packages/knowledge/src/search/`, typed search signals in the builder, `evals/salt-ai/retrieval/`, relevant validation/tests. No vector database or model reranker.
+
+1. Preserve existing exact-ID/name and recall@5 regressions.
+2. Add task-language development cases for the actually supported workflows and observed choice/configure/modify requests. Include absent capabilities and ambiguous requests. Identify required evidence targets as well as acceptable primary results.
+3. Improve general query coverage and typed signals from props, states and workflow intent for the newly observed misses. Preserve the first-preview Button/form fixes; do not add per-query hardcoded ranking rules.
+4. If all three candidate workflow families are later supported and a broader retrieval decision is needed, the proposed study is a separate 20-query holdout, with at least four queries per workflow and the remainder covering modification, ambiguity, unsupported versions and no useful answer. Register it before inspecting scored outputs; a reviewer who did not tune ranking owns the labels. If the supported scope is smaller, specify a proportionate evaluation for that scope instead of adding workflows to meet this template.
+5. For that later 20-query study, proposed targets are at least 16/20 useful first results and at least 90% necessary evidence coverage; report counts by category and reciprocal rank for diagnosis. These are conditional expansion targets, not initial-preview completion gates. An unsupported query is correct only when the response honestly identifies the limitation rather than producing a plausible unrelated result.
+
+Verify: extend `packages/knowledge/src/search/retrievalGold.spec.ts` or a sibling focused spec, run `yarn vitest run packages/knowledge/src/search --maxWorkers=2`, and run `yarn eval:salt-ai:validate`. Development tests are ordinary regression gates. A holdout failure prompts diagnosis and a future fresh holdout after material tuning; do not relabel misses to pass. Runtime and output budgets remain blocking.
+
+## Initial-preview completion, maintenance and limits
+
+- The record-form workflow is reconstructed from its packaged material and passes independent build, behavior, accessibility and design acceptance.
+- Its integration into a prepared existing application preserves prior behavior, routing/data seams, meaningful wrappers and tests.
+- The form and Button loading slice has consistent canonical guidance and file references across the existing website preview, portable files, Markdown and local tools; source identity and support boundaries agree.
+- The form's exported setup works independently of website providers, and its relevant states remain inspectable through the existing website preview.
+- An uninvolved maintainer can make and verify a canonical update without maintaining duplicate prose or generated facts by hand.
+- No contextual snippet is promoted through metadata alone; unconverted content retains its existing contextual output with explicit limitations.
+- Focused Button/form/adaptation retrieval checks return useful evidence, unsupported requests are disclosed honestly, and version, integrity and output bounds hold.
+- Source/package/contract checks and the actual installed consumer path pass.
+- The supported form has a real owner and a review trigger for changes to its dependencies, APIs, tokens, states or accessibility behavior.
+
+Units 033/03–04 are conditional backlog, not initial-preview done criteria. After 3–5 observed first-workflow uses and the maintainer exercise, select the next change from demonstrated consumer or authoring need. Any later promoted workflow must meet the same reconstruction, independent acceptance, ownership and cross-surface consistency bar; identify development versus held-out evidence if a broader retrieval study is adopted.
+
+Stop a workflow's promotion when canonical Salt behavior contradicts its requirements or cannot satisfy mandatory acceptance. Record a Salt component/docs issue with a minimal reproduction; fix that authoritative layer through a separately scoped change instead of inventing workaround instructions. Do not expand to more workflows merely to improve aggregate coverage. Do not publish or contact consumers through this plan alone.
+
+References for design review: [WCAG quick reference](https://www.w3.org/WAI/WCAG22/quickref/) and [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/). Use the relevant criteria and patterns to author checks; automated tools cover only part of the review.

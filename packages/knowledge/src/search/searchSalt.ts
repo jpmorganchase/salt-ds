@@ -560,72 +560,72 @@ export interface KnowledgeContextResult {
   utf8_bytes: number;
 }
 
-export function buildKnowledgeContext(
-  store: KnowledgeRecordStore,
-  input: SearchSaltInput & { max_utf8_bytes?: number },
-): KnowledgeContextResult {
-  const maxBytes = Math.min(
-    16 * 1024,
-    Math.max(256, input.max_utf8_bytes ?? 16 * 1024),
-  );
-  const search = searchSaltRecords(store, input);
-  const matches = [...search.matches];
-  const base = {
-    contract: "salt-knowledge-context/1" as const,
-    scoring_version: KNOWLEDGE_SEARCH_SCORING_VERSION,
-    query: search.query,
-    bundle_digest: search.bundle_digest,
-    excluded_package_families: search.excluded_package_families,
-  };
-  let result: Omit<KnowledgeContextResult, "utf8_bytes">;
-  do {
-    result = {
-      ...base,
-      context_digest: sha256Digest(
-        canonicalJson({
-          ...base,
-          citations: matches.map((match) => match.citation),
-        }),
-      ),
-      matches,
-      truncated: matches.length < search.matches.length,
-    };
-    if (Buffer.byteLength(JSON.stringify(result), "utf8") <= maxBytes - 64) {
-      break;
-    }
-    matches.pop();
-  } while (matches.length > 0);
-  return {
-    ...result,
-    utf8_bytes: Buffer.byteLength(JSON.stringify(result), "utf8"),
-  };
+export const MIN_KNOWLEDGE_CONTEXT_UTF8_BYTES = 512;
+export const MAX_KNOWLEDGE_CONTEXT_UTF8_BYTES = 16 * 1024;
+
+export class KnowledgeContextInputError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "KnowledgeContextInputError";
+  }
 }
 
-export function renderKnowledgeContext(
-  store: KnowledgeRecordStore,
-  input: SearchSaltInput & { max_utf8_bytes?: number },
-): string {
-  const maxBytes = Math.min(
-    16 * 1024,
-    Math.max(256, input.max_utf8_bytes ?? 16 * 1024),
-  );
-  const result = buildKnowledgeContext(store, input);
-  const headerPrefix = "# Salt knowledge\n\nQuery: ";
-  const headerSuffix = `\n\nBundle: ${renderUntrustedMarkdownEvidence(
-    result.bundle_digest,
-    { mode: "inline" },
-  )}\nContext: ${renderUntrustedMarkdownEvidence(result.context_digest, {
-    mode: "inline",
-  })}\n`;
-  const queryBudget =
-    maxBytes -
-    Buffer.byteLength(headerPrefix, "utf8") -
-    Buffer.byteLength(headerSuffix, "utf8");
-  const renderedQuery = renderUntrustedMarkdownEvidence(result.query, {
-    mode: "inline",
-    max_utf8_bytes: Math.max(16, queryBudget),
+type KnowledgeContextDigestInput = Omit<
+  KnowledgeContextResult,
+  "context_digest" | "utf8_bytes"
+>;
+
+const KNOWLEDGE_CONTEXT_INPUT_ERROR =
+  "Knowledge context input cannot fit the requested output budget.";
+
+function contextBudget(input: { max_utf8_bytes?: number }): number {
+  const requested = input.max_utf8_bytes ?? MAX_KNOWLEDGE_CONTEXT_UTF8_BYTES;
+  if (
+    !Number.isSafeInteger(requested) ||
+    requested < MIN_KNOWLEDGE_CONTEXT_UTF8_BYTES
+  ) {
+    throw new KnowledgeContextInputError(KNOWLEDGE_CONTEXT_INPUT_ERROR);
+  }
+  return Math.min(requested, MAX_KNOWLEDGE_CONTEXT_UTF8_BYTES);
+}
+
+function finalizeKnowledgeContext(
+  digestInput: KnowledgeContextDigestInput,
+): KnowledgeContextResult {
+  const contextDigest = sha256Digest(canonicalJson(digestInput));
+  const resultWithSize = (utf8Bytes: number): KnowledgeContextResult => ({
+    contract: digestInput.contract,
+    scoring_version: digestInput.scoring_version,
+    query: digestInput.query,
+    bundle_digest: digestInput.bundle_digest,
+    context_digest: contextDigest,
+    matches: digestInput.matches,
+    excluded_package_families: digestInput.excluded_package_families,
+    truncated: digestInput.truncated,
+    utf8_bytes: utf8Bytes,
   });
-  let output = `${headerPrefix}${renderedQuery}${headerSuffix}`;
+  let utf8Bytes = 0;
+  for (;;) {
+    const result = resultWithSize(utf8Bytes);
+    const measured = Buffer.byteLength(JSON.stringify(result), "utf8");
+    if (measured === utf8Bytes) return result;
+    utf8Bytes = measured;
+  }
+}
+
+function renderFinalKnowledgeContext(result: KnowledgeContextResult): string {
+  let output = `# Salt knowledge\n\nQuery: ${renderUntrustedMarkdownEvidence(
+    result.query,
+    { mode: "inline" },
+  )}\n\nBundle: ${renderUntrustedMarkdownEvidence(result.bundle_digest, {
+    mode: "inline",
+  })}\nContext: ${renderUntrustedMarkdownEvidence(result.context_digest, {
+    mode: "inline",
+  })}\nTruncated: ${
+    result.truncated
+      ? "yes; lower-ranked matches were removed to fit the output budget"
+      : "no"
+  }\n`;
   for (const match of result.matches) {
     const sources = match.citation.source_records.length
       ? `; sources ${match.citation.source_records
@@ -634,7 +634,7 @@ export function renderKnowledgeContext(
           )
           .join(", ")}`
       : "";
-    const next = `\n## ${renderUntrustedMarkdownEvidence(match.title, {
+    output += `\n## ${renderUntrustedMarkdownEvidence(match.title, {
       mode: "inline",
     })}\n\nEvidence:\n\n${renderUntrustedMarkdownEvidence(match.summary, {
       mode: "block",
@@ -645,13 +645,50 @@ export function renderKnowledgeContext(
       match.citation.bundle_digest,
       { mode: "inline" },
     )}\n`;
-    if (
-      Buffer.byteLength(output, "utf8") + Buffer.byteLength(next, "utf8") >
-      maxBytes
-    ) {
-      break;
-    }
-    output += next;
   }
   return output;
+}
+
+export function buildKnowledgeContext(
+  store: KnowledgeRecordStore,
+  input: SearchSaltInput & { max_utf8_bytes?: number },
+): KnowledgeContextResult {
+  const maxBytes = contextBudget(input);
+  if (Buffer.byteLength(input.query.trim(), "utf8") > maxBytes) {
+    throw new KnowledgeContextInputError(KNOWLEDGE_CONTEXT_INPUT_ERROR);
+  }
+  const search = searchSaltRecords(store, input);
+  const base = {
+    contract: "salt-knowledge-context/1" as const,
+    scoring_version: KNOWLEDGE_SEARCH_SCORING_VERSION,
+    query: search.query,
+    bundle_digest: search.bundle_digest,
+    excluded_package_families: search.excluded_package_families,
+  };
+  for (
+    let matchCount = search.matches.length;
+    matchCount >= 0;
+    matchCount -= 1
+  ) {
+    const result = finalizeKnowledgeContext({
+      ...base,
+      matches: search.matches.slice(0, matchCount),
+      truncated: matchCount < search.matches.length,
+    });
+    if (
+      result.utf8_bytes + 1 <= maxBytes &&
+      Buffer.byteLength(renderFinalKnowledgeContext(result), "utf8") <= maxBytes
+    ) {
+      return result;
+    }
+  }
+  throw new KnowledgeContextInputError(KNOWLEDGE_CONTEXT_INPUT_ERROR);
+}
+
+export function renderKnowledgeContext(
+  store: KnowledgeRecordStore,
+  input: SearchSaltInput & { max_utf8_bytes?: number },
+): string {
+  const result = buildKnowledgeContext(store, input);
+  return renderFinalKnowledgeContext(result);
 }

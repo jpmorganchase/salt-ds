@@ -5,6 +5,7 @@ import {
   createKnowledgeStore,
   decideSaltProject,
   inspectSaltProjectFacts,
+  SaltProjectInspectionError,
 } from "@salt-ds/knowledge";
 
 const requireFromCli = createRequire(
@@ -21,9 +22,55 @@ function loadSelectionStore() {
   return createKnowledgeStore({ bundleDir });
 }
 
-export async function loadRetrievalRuntime(rootDir: string) {
-  const [{ facts, limitations }, store] = await Promise.all([
-    inspectSaltProjectFacts({ rootDir }),
+export interface ProjectSelectionInput {
+  /** Repository filesystem authority. */
+  rootDir: string;
+  /** Explicit project path relative to the repository authority. */
+  project: string;
+}
+
+function projectPath(rootDir: string, project: string): string {
+  if (
+    typeof project !== "string" ||
+    project.length === 0 ||
+    project.includes("\0") ||
+    /^[A-Za-z]:/u.test(project) ||
+    path.isAbsolute(project) ||
+    path.win32.isAbsolute(project) ||
+    path.posix.isAbsolute(project) ||
+    project.split(/[\\/]/u).includes("..")
+  )
+    throw new SaltProjectInspectionError(
+      "SALT_PROJECT_ROOT_UNAVAILABLE",
+      "The project selection must be relative to the repository authority.",
+    );
+  const authorityRoot = path.resolve(rootDir);
+  const selectedRoot = path.resolve(authorityRoot, project);
+  const relative = path.relative(authorityRoot, selectedRoot);
+  if (
+    relative === ".." ||
+    relative.startsWith(`..${path.sep}`) ||
+    path.isAbsolute(relative)
+  )
+    throw new SaltProjectInspectionError(
+      "SALT_PROJECT_ROOT_UNAVAILABLE",
+      "The project selection must stay inside the repository authority.",
+    );
+  return selectedRoot;
+}
+
+function portableRelative(authorityRoot: string, rootDir: string): string {
+  const relative = path.relative(authorityRoot, rootDir);
+  return relative === "" ? "." : relative.replaceAll("\\", "/");
+}
+
+export async function loadRetrievalRuntime(input: ProjectSelectionInput) {
+  const selectedRoot = projectPath(input.rootDir, input.project);
+  const [{ facts, limitations, authorityRoot }, store] = await Promise.all([
+    inspectSaltProjectFacts({
+      rootDir: selectedRoot,
+      authorityRoot: input.rootDir,
+    }),
     Promise.resolve(loadSelectionStore()),
   ]);
   const selection = decideSaltProject(facts, store.manifest);
@@ -39,6 +86,8 @@ export async function loadRetrievalRuntime(rootDir: string) {
     selection,
     installedVersions,
     inspectionLimitations: limitations,
+    authorityRoot,
+    projectRelative: portableRelative(authorityRoot, facts.root_dir),
   };
 }
 

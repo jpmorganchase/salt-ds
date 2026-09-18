@@ -49,6 +49,7 @@ export const MAX_WORKSPACE_PATTERN_UTF8_BYTES = 1_024;
 const MAX_RESOLVED_SALT_PACKAGES = 128;
 const PACKAGE_RESOLUTION_CONCURRENCY = 8;
 const SALT_PACKAGE_NAME_PATTERN = /^@salt-ds\/[a-z0-9][a-z0-9._-]{0,204}$/;
+const SALT_TOOL_PACKAGE_NAMES = new Set(["@salt-ds/cli", "@salt-ds/knowledge"]);
 export const SALT_INSTALLATION_SCOPE_LIMITATION =
   "Salt inspected only declared packages through bounded manifest resolution; full dependency-graph and duplicate-install diagnosis is outside this inspection scope.";
 
@@ -198,6 +199,23 @@ function dependencyEntries(value: unknown): Array<[string, string]> {
       ? [[name, version.trim()]]
       : [],
   );
+}
+
+export type SaltPackageClassification = "ui" | "tool" | "not_salt";
+
+/**
+ * Separates packages used to operate Salt tooling from package evidence about
+ * the inspected application's Salt UI installation.
+ */
+export function classifySaltPackageName(
+  name: string,
+): SaltPackageClassification {
+  if (!SALT_PACKAGE_NAME_PATTERN.test(name)) return "not_salt";
+  return SALT_TOOL_PACKAGE_NAMES.has(name) ? "tool" : "ui";
+}
+
+export function isSaltUiPackageName(name: string): boolean {
+  return classifySaltPackageName(name) === "ui";
 }
 
 export async function inspectPackageJsonFile(
@@ -653,6 +671,7 @@ export function collectSaltPackages(
     packageJson?.peerDependencies,
   ]) {
     for (const [name, version] of dependencyEntries(section)) {
+      if (!isSaltUiPackageName(name)) continue;
       if (!collected.has(name)) {
         collected.set(name, version);
       }
@@ -670,7 +689,7 @@ function normalizeSaltPackageDescriptors(
   for (const value of values) {
     if (
       !value ||
-      !SALT_PACKAGE_NAME_PATTERN.test(value.name) ||
+      !isSaltUiPackageName(value.name) ||
       typeof value.version !== "string" ||
       value.version.trim().length === 0 ||
       packages.has(value.name)
@@ -695,6 +714,7 @@ function collectDuplicateDeclarations(
     packageJson?.peerDependencies,
   ]) {
     for (const [name, version] of dependencyEntries(section)) {
+      if (!isSaltUiPackageName(name)) continue;
       declarations.set(name, [...(declarations.get(name) ?? []), version]);
     }
   }

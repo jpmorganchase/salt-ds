@@ -325,6 +325,27 @@ describe("Doctor project outcome", () => {
     });
   });
 
+  it("keeps a selected child outcome when the workspace root has only tooling", () => {
+    expect(
+      deriveDoctorOutcome({
+        operationalReasons: [],
+        workspaceDecisions: [
+          {
+            workspace_unit_id: ".",
+            decision: decision("not_salt", "SALT_PROJECT_NO_SALT_PACKAGES"),
+          },
+          {
+            workspace_unit_id: "packages/app",
+            decision: decision("selected", "SALT_PROJECT_SELECTED"),
+          },
+        ],
+      }),
+    ).toEqual({
+      status: "complete",
+      reason_code: "SALT_PROJECT_SELECTED",
+    });
+  });
+
   it("enforces aggregate precedence and lets a selected child outrank a non-Salt root", () => {
     const root = {
       workspace_unit_id: ".",

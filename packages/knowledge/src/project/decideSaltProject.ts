@@ -1,5 +1,6 @@
 import type { KnowledgeManifestV1 } from "../schemas/knowledgeManifestV1.js";
 import type { SaltProjectFacts } from "./projectFacts.js";
+import { isSaltUiPackageName } from "./saltInstallation.js";
 
 export const SALT_PROJECT_DECISION_STATUSES = [
   "selected",
@@ -54,9 +55,9 @@ export function decideSaltProject(
   facts: SaltProjectFacts,
   manifest: KnowledgeManifestV1,
 ): SaltProjectDecision {
-  const declaredPackageNames = facts.declared_salt_packages.map(
-    (entry) => entry.name,
-  );
+  const declaredPackageNames = facts.declared_salt_packages
+    .map((entry) => entry.name)
+    .filter(isSaltUiPackageName);
   const declaredNames = new Set(declaredPackageNames);
   const installedPackageVector = facts.installation.resolvedPackages
     .filter(
@@ -64,7 +65,7 @@ export function decideSaltProject(
         entry,
       ): entry is typeof entry & {
         resolvedVersion: string;
-      } => entry.resolvedVersion !== null,
+      } => entry.resolvedVersion !== null && isSaltUiPackageName(entry.name),
     )
     .map((entry) => ({ name: entry.name, version: entry.resolvedVersion }))
     .sort((left, right) => left.name.localeCompare(right.name));
@@ -84,6 +85,12 @@ export function decideSaltProject(
 
   const inspection = facts.installation.inspection;
   const versionHealth = facts.installation.versionHealth;
+  const resolvedUiPackages = facts.installation.resolvedPackages.filter(
+    (entry) => isSaltUiPackageName(entry.name),
+  );
+  const unverifiableUiPackages = versionHealth.unverifiablePackages.filter(
+    (entry) => isSaltUiPackageName(entry.name),
+  );
   if (
     inspection.packageManagerDetectionStatus === "ambiguous" ||
     inspection.packageManagerDetectionStatus === "invalid" ||
@@ -100,8 +107,8 @@ export function decideSaltProject(
   }
   if (
     inspection.status === "limited" ||
-    versionHealth.unverifiablePackages.length > 0 ||
-    facts.installation.resolvedPackages.some(
+    unverifiableUiPackages.length > 0 ||
+    resolvedUiPackages.some(
       (entry) =>
         entry.declarationResolution === "unverifiable" ||
         entry.resolvedVersion === null ||
@@ -140,9 +147,7 @@ export function decideSaltProject(
       (entry) =>
         compatibilityByName.get(entry.name)?.tested_version !== entry.version,
     ) ||
-    facts.installation.resolvedPackages.some(
-      (entry) => entry.satisfiesDeclaredVersion !== true,
-    );
+    resolvedUiPackages.some((entry) => entry.satisfiesDeclaredVersion !== true);
   if (hasExactMismatch) {
     return decision(
       "unsupported",

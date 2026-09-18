@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "corpus_id": "salt-ai-outcome-v1",
   "fixture_file": "evals/salt-ai/fixtures/repositories.json",
-  "fixture_sha256": "sha256:0c7e590cf66013510f92e305bdf7f0cf44413d027cf70ebd2f4a9a0f8ff2dfbb",
+  "fixture_sha256": "sha256:58257b464e3c0422a322bb58558d35cb9f7c3e82a0b603826823c195e0d5e7d0",
   "case_files": [
     "evals/salt-ai/retrieval/api-migrations.json",
     "evals/salt-ai/retrieval/navigation-overlay.json",

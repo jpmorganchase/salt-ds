@@ -1,0 +1,15 @@
+.recordForm {
+  min-width: 0;
+}
+
+.recordFormFields {
+  min-width: 0;
+}
+
+.recordFormAlert {
+  overflow-wrap: anywhere;
+}
+
+.recordFormActions {
+  flex-wrap: wrap;
+}

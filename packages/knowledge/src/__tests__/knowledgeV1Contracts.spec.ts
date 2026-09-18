@@ -1,16 +1,27 @@
-import { brotliCompressSync } from "node:zlib";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import { brotliCompressSync } from "node:zlib";
 import { afterEach, describe, expect, it } from "vitest";
+import { resolveInstalledSaltPackages } from "../compatibility/installedPackageResolver.js";
 import {
+  type ItemApplicabilityDocument,
+  resolveItemApplicability,
+  validateItemApplicabilityDocument,
+} from "../compatibility/itemApplicability.js";
+import { resolveOperationCapability } from "../compatibility/operationCapabilityRegistry.js";
+import { resolveKnowledgeCompatibility } from "../compatibility/resolveCompatibility.js";
+import {
+  type ArtifactDescriptor,
+  type ArtifactTreeNodeReference,
   createArtifactDescriptor,
   materializeArtifactTree,
   verifyArtifactTree,
-  type ArtifactDescriptor,
-  type ArtifactTreeNodeReference,
 } from "../manifest/artifactTree.js";
-import { canonicalJson, canonicalJsonBytes } from "../manifest/canonicalJson.js";
+import {
+  canonicalJson,
+  canonicalJsonBytes,
+} from "../manifest/canonicalJson.js";
 import {
   digestToPathSegment,
   parseSha256Digest,
@@ -18,29 +29,22 @@ import {
   pathSegmentToDigest,
   sha256Digest,
 } from "../manifest/digestCodec.js";
-import { KnowledgeStore, KNOWLEDGE_RECORD_FAMILIES } from "../manifest/knowledgeStore.js";
+import {
+  KNOWLEDGE_RECORD_FAMILIES,
+  KnowledgeStore,
+} from "../manifest/knowledgeStore.js";
 import {
   assertPortableArtifactPathSet,
   parseKnowledgeArtifactPath,
 } from "../manifest/pathCodec.js";
+import { REVIEW_RULE_CHARACTERIZATION } from "../review/reviewRuleCharacterization.js";
 import {
   computeKnowledgeBundleDigest,
   KNOWLEDGE_OPERATIONS,
   KNOWLEDGE_PACKAGE_FAMILIES,
-  validateKnowledgeManifestV1,
   type KnowledgeManifestV1,
+  validateKnowledgeManifestV1,
 } from "../schemas/knowledgeManifestV1.js";
-import {
-  resolveInstalledSaltPackages,
-} from "../compatibility/installedPackageResolver.js";
-import {
-  resolveItemApplicability,
-  validateItemApplicabilityDocument,
-  type ItemApplicabilityDocument,
-} from "../compatibility/itemApplicability.js";
-import { resolveOperationCapability } from "../compatibility/operationCapabilityRegistry.js";
-import { resolveKnowledgeCompatibility } from "../compatibility/resolveCompatibility.js";
-import { REVIEW_RULE_CHARACTERIZATION } from "../review/reviewRuleCharacterization.js";
 import {
   readKnowledgeRecord,
   renderKnowledgeContext,
@@ -51,9 +55,9 @@ const temporaryDirectories: string[] = [];
 
 afterEach(async () => {
   await Promise.all(
-    temporaryDirectories.splice(0).map((directory) =>
-      fs.rm(directory, { recursive: true, force: true }),
-    ),
+    temporaryDirectories
+      .splice(0)
+      .map((directory) => fs.rm(directory, { recursive: true, force: true })),
   );
 });
 
@@ -94,7 +98,9 @@ function manifestFor(
   tree: ReturnType<typeof materializeArtifactTree>,
 ): KnowledgeManifestV1 {
   const digest = sha256Digest("fixture");
-  const rulesetDigest = sha256Digest(canonicalJson(REVIEW_RULE_CHARACTERIZATION));
+  const rulesetDigest = sha256Digest(
+    canonicalJson(REVIEW_RULE_CHARACTERIZATION),
+  );
   const withoutDigest: Omit<KnowledgeManifestV1, "bundle_digest"> = {
     $schema:
       "https://www.saltdesignsystem.com/ai/schemas/knowledge-manifest-1.json",
@@ -172,7 +178,9 @@ async function buildMinimalKnowledgeBundle(): Promise<{
   const add = async (relativePath: string, value: unknown | Buffer) => {
     const bytes = Buffer.isBuffer(value) ? value : canonicalJsonBytes(value);
     await writeFile(root, relativePath, bytes);
-    descriptors.push(createArtifactDescriptor(relativePath, "application/json", bytes));
+    descriptors.push(
+      createArtifactDescriptor(relativePath, "application/json", bytes),
+    );
   };
 
   const contentSource = canonicalJsonBytes({ hello: "world" });
@@ -288,7 +296,9 @@ describe("Knowledge-v1 canonical codecs", () => {
     "records/token.json.",
     "records//token.json",
   ])("rejects unsafe portable artifact path %s", (candidate) => {
-    expect(() => parseKnowledgeArtifactPath(candidate)).toThrow(/artifact path/u);
+    expect(() => parseKnowledgeArtifactPath(candidate)).toThrow(
+      /artifact path/u,
+    );
   });
 
   it("rejects case-colliding and unsorted artifact inventories", () => {
@@ -314,17 +324,24 @@ describe("Knowledge-v1 artifact tree", () => {
     const tree = materializeArtifactTree(descriptors);
     const root = JSON.parse(tree.nodes.get(tree.root.file)!.toString("utf8"));
     expect(tree.node_count).toBe(3);
-    expect(root.children.map((child: ArtifactTreeNodeReference) => child.prefix)).toEqual([
-      "records/0000.json",
-      "records/0256.json",
-    ]);
+    expect(
+      root.children.map((child: ArtifactTreeNodeReference) => child.prefix),
+    ).toEqual(["records/0000.json", "records/0256.json"]);
   });
 
   it("rejects correctly hashed but overlapping or unordered child ranges", async () => {
     const root = await temporaryDirectory("salt-tree-range-");
     const artifacts = [
-      createArtifactDescriptor("records/a.json", "application/json", Buffer.from("a")),
-      createArtifactDescriptor("records/b.json", "application/json", Buffer.from("b")),
+      createArtifactDescriptor(
+        "records/a.json",
+        "application/json",
+        Buffer.from("a"),
+      ),
+      createArtifactDescriptor(
+        "records/b.json",
+        "application/json",
+        Buffer.from("b"),
+      ),
     ];
     await writeFile(root, "records/a.json", Buffer.from("a"));
     await writeFile(root, "records/b.json", Buffer.from("b"));
@@ -367,7 +384,8 @@ describe("Knowledge-v1 artifact tree", () => {
         },
         node_count: 3,
         tree_bytes:
-          rootBytes.byteLength + references.reduce((sum, entry) => sum + entry.bytes, 0),
+          rootBytes.byteLength +
+          references.reduce((sum, entry) => sum + entry.bytes, 0),
         artifact_count: 2,
         artifact_bytes: 2,
       }),
@@ -378,11 +396,18 @@ describe("Knowledge-v1 artifact tree", () => {
 describe("Knowledge-v1 manifest and installed reader", () => {
   it("detects manifest tampering and unsupported capability tuples", async () => {
     const fixture = await buildMinimalKnowledgeBundle();
-    expect(validateKnowledgeManifestV1(fixture.manifest)).toEqual(fixture.manifest);
+    expect(validateKnowledgeManifestV1(fixture.manifest)).toEqual(
+      fixture.manifest,
+    );
     expect(() =>
-      validateKnowledgeManifestV1({ ...fixture.manifest, bundle_version: "0.0.1" }),
+      validateKnowledgeManifestV1({
+        ...fixture.manifest,
+        bundle_version: "0.0.1",
+      }),
     ).toThrow(/bundle digest/u);
-    expect(resolveOperationCapability(fixture.manifest, "search").supported).toBe(true);
+    expect(
+      resolveOperationCapability(fixture.manifest, "search").supported,
+    ).toBe(true);
     expect(
       resolveOperationCapability(
         { ...fixture.manifest, analyzer_contract: "unknown" as never },
@@ -395,7 +420,9 @@ describe("Knowledge-v1 manifest and installed reader", () => {
     const fixture = await buildMinimalKnowledgeBundle();
     const store = new KnowledgeStore({ bundleDir: fixture.root });
     expect(store.ensureKnowledgeVerified().records).toBe(3);
-    expect(store.getRecord("package", "package.core").name).toBe("@salt-ds/core");
+    expect(store.getRecord("package", "package.core").name).toBe(
+      "@salt-ds/core",
+    );
     expect(
       store.getContentJson({ id: fixture.contentId, codec: "json" }),
     ).toEqual({ hello: "world" });
@@ -420,11 +447,17 @@ describe("Knowledge-v1 manifest and installed reader", () => {
       readKnowledgeRecord(store, { family: "package", id: "missing" }),
     ).toBeNull();
 
+    expect(() =>
+      renderKnowledgeContext(store, {
+        query: `core ${"😀".repeat(500)}`,
+        max_utf8_bytes: 256,
+      }),
+    ).toThrow(/cannot fit the requested output budget/u);
     const context = renderKnowledgeContext(store, {
-      query: `core ${"😀".repeat(500)}`,
-      max_utf8_bytes: 256,
+      query: "core",
+      max_utf8_bytes: 512,
     });
-    expect(Buffer.byteLength(context, "utf8")).toBeLessThanOrEqual(256);
+    expect(Buffer.byteLength(context, "utf8")).toBeLessThanOrEqual(512);
     expect(context).not.toContain("�");
   });
 });
@@ -436,8 +469,9 @@ describe("Knowledge-v1 compatibility", () => {
       "@salt-ds/core": "1.0.0",
     });
     expect(optionalMissing.complete).toBe(true);
-    expect(optionalMissing.packages.find((entry) => entry.name === "@salt-ds/icons"))
-      .toMatchObject({ state: "missing_optional", usable: false });
+    expect(
+      optionalMissing.packages.find((entry) => entry.name === "@salt-ds/icons"),
+    ).toMatchObject({ state: "missing_optional", usable: false });
 
     const unsupported = resolveKnowledgeCompatibility(manifest, {
       "@salt-ds/core": "1.0.1",
@@ -452,8 +486,8 @@ describe("Knowledge-v1 compatibility", () => {
       (entry) => entry.name === "@salt-ds/core",
     )!.supported_range = "^1.0.0";
     const prerelease = resolveKnowledgeCompatibility(widened, {
-        "@salt-ds/core": "1.1.0-beta.1",
-      });
+      "@salt-ds/core": "1.1.0-beta.1",
+    });
     expect(
       prerelease.packages.find((entry) => entry.name === "@salt-ds/core")
         ?.state,
@@ -506,7 +540,8 @@ describe("Knowledge-v1 compatibility", () => {
 
     const unknownFamily = structuredClone(document);
     const profile = unknownFamily.profiles[0];
-    if (profile.mode === "package-ranges") profile.packages[0]!.name = "@salt-ds/nope";
+    if (profile.mode === "package-ranges")
+      profile.packages[0]!.name = "@salt-ds/nope";
     expect(() => validateItemApplicabilityDocument(unknownFamily)).toThrow(
       /unknown family/u,
     );
@@ -537,11 +572,15 @@ describe("Knowledge-v1 compatibility", () => {
     await writeInstalledCore(root);
     const resolution = resolveInstalledSaltPackages(root);
     expect(resolution).toMatchObject({ layout: "npm", exact: true });
-    expect(resolution.packages.find((entry) => entry.name === "@salt-ds/core"))
-      .toMatchObject({ version: "1.0.0", contained: true });
+    expect(
+      resolution.packages.find((entry) => entry.name === "@salt-ds/core"),
+    ).toMatchObject({ version: "1.0.0", contained: true });
 
     const pnpRoot = await temporaryDirectory("salt-pnp-layout-");
-    await fs.writeFile(path.join(pnpRoot, ".pnp.cjs"), "module.exports = {};\n");
+    await fs.writeFile(
+      path.join(pnpRoot, ".pnp.cjs"),
+      "module.exports = {};\n",
+    );
     expect(resolveInstalledSaltPackages(pnpRoot)).toMatchObject({
       layout: "yarn-pnp",
       exact: false,
@@ -607,7 +646,11 @@ describe("Knowledge-v1 compatibility", () => {
     );
     await writeInstalledCore(root);
     const nested = resolveInstalledSaltPackages(project);
-    expect(nested).toMatchObject({ authority_root: root, layout: "npm", exact: true });
+    expect(nested).toMatchObject({
+      authority_root: root,
+      layout: "npm",
+      exact: true,
+    });
 
     await writeInstalledCore(project);
     const ambiguous = resolveInstalledSaltPackages(project);
@@ -622,7 +665,10 @@ describe("Knowledge-v1 compatibility", () => {
   it("rejects conflicting markers, unsupported lock versions, Bun, and missing Core", async () => {
     const ambiguousRoot = await temporaryDirectory("salt-ambiguous-lock-");
     await fs.writeFile(path.join(ambiguousRoot, "package-lock.json"), "{}");
-    await fs.writeFile(path.join(ambiguousRoot, "pnpm-lock.yaml"), "lockfileVersion: '9.0'\n");
+    await fs.writeFile(
+      path.join(ambiguousRoot, "pnpm-lock.yaml"),
+      "lockfileVersion: '9.0'\n",
+    );
     expect(resolveInstalledSaltPackages(ambiguousRoot).limitations).toEqual(
       expect.arrayContaining(["SALT_LOCKFILE_AMBIGUOUS"]),
     );

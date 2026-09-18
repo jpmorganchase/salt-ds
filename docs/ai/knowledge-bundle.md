@@ -76,6 +76,28 @@ The supported root API is `loadKnowledgeBundle`, `getKnowledgeManifest`,
 transitive bundle shipped with their adapter, perform no network/cache access,
 and never import consumer-project JavaScript.
 
+## Project selection
+
+`info`, `docs`, and `context` share an explicit repository authority and selected
+application. `--root <repo>` defaults to the current working directory, and
+`--project <relative-path>` defaults to `.` within that root. A root containing
+only tooling does not automatically select a Salt child. Multiple applications
+must be selected by their individual relative paths.
+
+The inspector canonicalizes both paths and rejects a selected project outside
+the authority, including escaping symlinks. Contained symlinks are supported.
+It reads bounded package/workspace metadata and installed package evidence;
+hoisted dependencies must remain within the authority. Selection does not walk
+application source, invoke Doctor, execute repository configuration or PnP
+loaders, or run package-manager commands. Unsupported or incomplete metadata
+keeps its explicit selection outcome.
+
+`info.project.root`, package-manifest paths, workspace paths, and observed
+dependency paths are relative to the canonical repository authority. They may
+point outside the selected child but cannot expose absolute or out-of-authority
+paths. Selecting `apps/customer-portal`, for example, can yield a hoisted
+`node_modules/@salt-ds/core/package.json` evidence path.
+
 ## Retrieval contract
 
 The compact search index declares salt-lexical-ranking/1. Queries use Unicode
@@ -94,17 +116,33 @@ are excluded and disclosed. Version-independent records remain eligible.
 
 The packed CLI exposes the same contract offline:
 
-    salt-ds docs <record-id-or-name> --format markdown|json
-    salt-ds context <query> --format markdown|json --limit <n>
+    salt-ds docs <record-id-or-name> [--root <repo>] [--project <relative-path>] --format markdown|json
+    salt-ds context <query> [--root <repo>] [--project <relative-path>] --format markdown|json --limit <n>
 
-The docs command accepts only an exact record ID, export, canonical name, title,
-or alias. It returns choices for collisions and never guesses. Resolved JSON
-and Markdown include the verified record, its bundle digest, source-record
-citations, and the primary manifest-bound content object when one exists. The
-context command applies the deterministic ranking pipeline and returns
-record/source citations, the bundle digest, and a digest of the selected
-context. Both renderers are deterministic; context output is capped at 16 KiB
-by default.
+The docs command accepts a canonical `record:<family>:<id>` citation, an exact
+record ID, export, canonical name, title, or alias. Canonical citations identify
+one supported record family and its exact ID. Name collisions return choices;
+the resolver never guesses. Resolved JSON and Markdown include the verified
+record, its bundle digest, source-record citations, and primary manifest-bound
+content when present. Pages return their body content; component records return
+their detail content. Repository Markdown remains inert evidence.
+
+The context command applies deterministic ranking and returns record/source
+citations, the bundle digest, and a digest of the final selected context. The
+`context_digest` is SHA-256 of RFC 8785 canonical JSON for the complete result
+with only `context_digest` and `utf8_bytes` omitted. It covers the final matches,
+query, excluded package families, and truncation flag. Removing even the last
+match sets `truncated` and changes the digest accordingly.
+
+`utf8_bytes` counts the complete serialized JSON value, including its own field.
+It excludes the single line-feed byte appended by the CLI. The JSON value and
+that framing byte together must fit the 16 KiB default transport budget.
+Markdown output obeys the same transport ceiling and discloses omitted matches.
+Queries or required metadata that cannot fit are rejected with a concise usage
+error instead of returning an oversized or silently shortened envelope. Both
+renderers are deterministic. The library accepts integer budgets of at least
+512 bytes and caps larger requests at 16 KiB; even a valid budget can be too
+small for the required query and metadata.
 
 Plan 001 supports the exact current bundle only. Historical download, trust,
 pin, cache, compatibility index, and rule execution belong exclusively to Plan 002.

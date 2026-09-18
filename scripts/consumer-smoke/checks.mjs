@@ -282,7 +282,7 @@ async function runDoctorPerformance({
     const startedAt = process.hrtime.bigint();
     const info = await runInstalledCli(
       installedCliBinPath,
-      ["info", ".", "--json"],
+      ["info", "--root", fixtureRoot, "--json"],
       fixtureRoot,
     );
     infoTimingsMs.push(
@@ -318,6 +318,7 @@ export async function runPackedDoctorWorkflow(
   installRoot,
   packReport,
   harness,
+  options = {},
 ) {
   runOfflineScannerWorkerContainmentSelfTest();
   const fixtureManifest = harness.requireFixtureManifest();
@@ -441,21 +442,25 @@ export async function runPackedDoctorWorkflow(
     workerMutationResults[`${moduleKind}_missing_rejected`] = true;
   }
 
-  const performance = await runDoctorPerformance({
-    installRoot,
-    fixtureRoot: workspaceRoot,
-    validate,
-    expectedParity: expectedWorkspaceParity,
-    projectDoctorParity: harness.projectDoctorParity,
-    installedCliBinPath,
-  });
-  assert(
-    expectedWorkspaceParity.coverage.selected_files <=
-      DOCTOR_PERFORMANCE_LIMITS.max_source_files &&
-      sourceById.get(workspaceFixture.id).result.root.discovery
-        .selected_bytes <= DOCTOR_PERFORMANCE_LIMITS.max_source_bytes,
-    "Frozen Doctor performance fixture exceeds its source-size budget.",
-  );
+  const includePerformance = options.includePerformance !== false;
+  let performance;
+  if (includePerformance) {
+    performance = await runDoctorPerformance({
+      installRoot,
+      fixtureRoot: workspaceRoot,
+      validate,
+      expectedParity: expectedWorkspaceParity,
+      projectDoctorParity: harness.projectDoctorParity,
+      installedCliBinPath,
+    });
+    assert(
+      expectedWorkspaceParity.coverage.selected_files <=
+        DOCTOR_PERFORMANCE_LIMITS.max_source_files &&
+        sourceById.get(workspaceFixture.id).result.root.discovery
+          .selected_bytes <= DOCTOR_PERFORMANCE_LIMITS.max_source_bytes,
+      "Frozen Doctor performance fixture exceeds its source-size budget.",
+    );
+  }
 
   const executeInstalled = async (root, schemaValidate) => {
     const child = await runInstalledCli(
@@ -507,7 +512,9 @@ export async function runPackedDoctorWorkflow(
     fixtures.push(observation);
   }
   return {
-    contract: "salt-ai-packed-doctor-smoke/1",
+    contract: includePerformance
+      ? "salt-ai-packed-doctor-smoke/1"
+      : "salt-ai-packed-doctor-correctness/1",
     physical_fixture_count: fixtures.length,
     source_parity: true,
     offline: true,
@@ -519,7 +526,7 @@ export async function runPackedDoctorWorkflow(
     export_modes: exportModes,
     worker_mutations: workerMutationResults,
     fixtures,
-    performance,
+    ...(includePerformance ? { performance } : {}),
   };
 }
 
@@ -577,7 +584,13 @@ export async function runCliWorkflowCoverage(
     helpResults.every(
       (result) =>
         result.stderr === "" && result.stdout === helpResults[0].stdout,
-    ) && helpResults[0].stdout.includes("salt-ds info [root] --json"),
+    ) &&
+      helpResults[0].stdout.includes(
+        "salt-ds info [--root <repo>] [--project <relative-workspace>] --json",
+      ) &&
+      helpResults[0].stdout.includes(
+        "--project defaults to . within it. Child applications are never selected automatically.",
+      ),
     "Packed help aliases did not preserve exact stdout/stderr semantics.",
   );
 
@@ -633,7 +646,25 @@ export async function runCliWorkflowCoverage(
     ["info"],
     ["info", "--json", "--json"],
     ["info", "one", "two", "--json"],
-    ["info", "missing-root", "--json"],
+    ["info", ".", "--json"],
+    ["info", "--root", exactSaltRoot, "--root", exactSaltRoot, "--json"],
+    ["info", "--root", "--json"],
+    ["info", "--project", "..", "--json"],
+    ["info", "--project", "../child", "--json"],
+    ["info", "--project", "C:child", "--json"],
+    ["info", "--project", path.resolve(exactSaltRoot), "--json"],
+    [
+      "context",
+      "Button",
+      "--project",
+      "app",
+      "--project",
+      "child",
+      "--format",
+      "json",
+      "--limit",
+      "5",
+    ],
     ["docs"],
     ["docs", "component.button"],
     ["docs", "component.button", "--format", "yaml"],
@@ -665,7 +696,7 @@ export async function runCliWorkflowCoverage(
 
   const explicitInfo = await runInstalledCli(
     installedCliBinPath,
-    ["info", exactSaltRoot, "--json"],
+    ["info", "--root", exactSaltRoot, "--json"],
     nonSaltRoot,
   );
   const defaultInfo = await runInstalledCli(
@@ -688,6 +719,10 @@ export async function runCliWorkflowCoverage(
       entry.observed_version,
     ]),
   );
+  const expectedUiVersions = options.expectedUiVersions ?? {
+    "@salt-ds/core": "1.70.0",
+    "@salt-ds/theme": "1.45.0",
+  };
   assert(
     info.contract === "salt-cli-info/1" &&
       info.schema_version === "1.0.0" &&
@@ -700,8 +735,8 @@ export async function runCliWorkflowCoverage(
         packReport.report.knowledge_bundle.bundle_digest &&
       info.knowledge.semantic_digest ===
         packReport.report.knowledge_bundle.semantic_digest &&
-      observed.get("@salt-ds/core") === "1.70.0" &&
-      observed.get("@salt-ds/theme") === "1.45.0" &&
+      observed.get("@salt-ds/core") === expectedUiVersions["@salt-ds/core"] &&
+      observed.get("@salt-ds/theme") === expectedUiVersions["@salt-ds/theme"] &&
       info.coverage?.status === "complete" &&
       info.coverage.exact_project_package_vector === true &&
       info.compatibility?.compatible === true &&
@@ -754,6 +789,57 @@ export async function runCliWorkflowCoverage(
         expectedAgentSupport.agents_pointer.bytes,
     "Packed skill info/print did not preserve manifest-selected bytes and their trust boundary.",
   );
+  let identityTamperRejected;
+  if (options.verifyIdentityTamper === true) {
+    const skillArtifact = skillInfo.artifacts.find(
+      (entry) => entry.kind === "skill",
+    );
+    const installedKnowledgeRoot = path.join(
+      installRoot,
+      "node_modules",
+      "@salt-ds",
+      "knowledge",
+    );
+    const artifactPath = path.resolve(
+      installedKnowledgeRoot,
+      ...skillArtifact.package_relative_path.split("/"),
+    );
+    const relativeArtifactPath = path.relative(
+      installedKnowledgeRoot,
+      artifactPath,
+    );
+    assert(
+      relativeArtifactPath.length > 0 &&
+        !relativeArtifactPath.startsWith("..") &&
+        !path.isAbsolute(relativeArtifactPath),
+      "Packed skill identity selected an escaping artifact path.",
+    );
+    const originalArtifact = await fs.readFile(artifactPath);
+    let tampered;
+    try {
+      await fs.writeFile(
+        artifactPath,
+        Buffer.concat([originalArtifact, Buffer.from("\nTAMPERED\n", "utf8")]),
+      );
+      tampered = await runInstalledCli(
+        installedCliBinPath,
+        ["skill", "print", "--kind", "skill"],
+        exactSaltRoot,
+        [1],
+      );
+    } finally {
+      await fs.writeFile(artifactPath, originalArtifact);
+    }
+    identityTamperRejected =
+      tampered.stdout === "" &&
+      tampered.stderr ===
+        "salt-ds error: [SALT_CLI_INTERNAL] The command failed unexpectedly.\n" &&
+      tampered.exitCode === 1;
+    assert(
+      identityTamperRejected,
+      "Packed skill command did not reject a tampered installed artifact.",
+    );
+  }
 
   const largeOutputRoot = await fs.mkdtemp(
     path.join(path.dirname(exactSaltRoot), "salt-large-info-"),
@@ -778,7 +864,7 @@ export async function runCliWorkflowCoverage(
     );
     const largeOutput = await runInstalledCli(
       installedCliBinPath,
-      ["info", "--json"],
+      ["info", "--root", largeOutputRoot, "--json"],
       largeOutputRoot,
     );
     const parsedLargeOutput = JSON.parse(largeOutput.stdout);
@@ -838,7 +924,7 @@ export async function runCliWorkflowCoverage(
   ].join("");
   const invalidRoot = await runInstalledCli(
     installedCliBinPath,
-    ["info", hostileRoot, "--json"],
+    ["info", "--root", hostileRoot, "--json"],
     exactSaltRoot,
     [2],
   );
@@ -1025,7 +1111,7 @@ export async function runCliWorkflowCoverage(
   );
   const partialResult = await runInstalledCli(
     installedCliBinPath,
-    ["info", nonSaltRoot, "--json"],
+    ["info", "--root", nonSaltRoot, "--json"],
     exactSaltRoot,
   );
   const partial = JSON.parse(partialResult.stdout);
@@ -1046,8 +1132,8 @@ export async function runCliWorkflowCoverage(
     (
       await runInstalledCli(
         installedCliBinPath,
-        ["docs", "component.button", "--format", "json"],
-        nonSaltRoot,
+        ["docs", "component.button", "--root", nonSaltRoot, "--format", "json"],
+        exactSaltRoot,
         [3],
       )
     ).stdout,
@@ -1056,8 +1142,17 @@ export async function runCliWorkflowCoverage(
     (
       await runInstalledCli(
         installedCliBinPath,
-        ["context", "Button", "--format", "json", "--limit", "5"],
-        nonSaltRoot,
+        [
+          "context",
+          "Button",
+          "--root",
+          nonSaltRoot,
+          "--format",
+          "json",
+          "--limit",
+          "5",
+        ],
+        exactSaltRoot,
         [3],
       )
     ).stdout,
@@ -1089,23 +1184,26 @@ export async function runCliWorkflowCoverage(
     installRoot,
     packReport,
     doctorHarness,
+    { includePerformance: options.includeDoctorPerformance !== false },
   );
-  const performancePassed =
-    doctor.performance.max_wall_ms <= doctor.performance.limits.max_run_ms &&
-    doctor.performance.p90_wall_ms <= doctor.performance.limits.p90_wall_ms &&
-    doctor.performance.p90_peak_rss_bytes <=
-      doctor.performance.limits.p90_peak_rss_bytes;
-  if (options.captureThresholdMisses !== true) {
-    assert(
-      performancePassed,
-      `Packed Doctor exceeded its frozen performance budget: ${JSON.stringify(doctor.performance)}.`,
-    );
+  if (options.includeDoctorPerformance !== false) {
+    const performancePassed =
+      doctor.performance.max_wall_ms <= doctor.performance.limits.max_run_ms &&
+      doctor.performance.p90_wall_ms <= doctor.performance.limits.p90_wall_ms &&
+      doctor.performance.p90_peak_rss_bytes <=
+        doctor.performance.limits.p90_peak_rss_bytes;
+    if (options.captureThresholdMisses !== true) {
+      assert(
+        performancePassed,
+        `Packed Doctor exceeded its frozen performance budget: ${JSON.stringify(doctor.performance)}.`,
+      );
+    }
+    doctor.performance.threshold_passed = performancePassed;
   }
-  doctor.performance.threshold_passed = performancePassed;
 
   return {
     aliases: { help: 3, version: 2, broken_pipe: 1 },
-    invalid_argument_cases: 26,
+    invalid_argument_cases: 33,
     terminal_safety: {
       large_output_bytes: largeOutputBytes,
       invalid_root: "generic",
@@ -1133,6 +1231,9 @@ export async function runCliWorkflowCoverage(
       bundle_source: "installed_package",
       integrity: "manifest_verified",
       origin_authentication: "not_established_by_bundle",
+      ...(options.verifyIdentityTamper === true
+        ? { tamper_rejected: identityTamperRejected }
+        : {}),
     },
     rejected_retrieval: {
       docs: rejectedDocs.reason_code,
@@ -1142,4 +1243,329 @@ export async function runCliWorkflowCoverage(
     network: "offline",
     node: process.versions.node,
   };
+}
+
+export function assertJourneyDoctorSelection(
+  result,
+  { selectedWorkspace, uiCohort, packReport, toolingRoot = false },
+) {
+  const selected = result?.workspace_units?.find(
+    (unit) => unit.workspace_unit_id === selectedWorkspace,
+  );
+  const observed = new Map(
+    selected?.package_vector?.map((entry) => [
+      entry.name,
+      entry.observed_version,
+    ]) ?? [],
+  );
+  assert(
+    result?.contract === "salt-doctor-result/1" &&
+      result.status === "complete" &&
+      result.reason_code === "SALT_PROJECT_SELECTED" &&
+      result.tool?.package === "@salt-ds/cli" &&
+      result.tool.version === packReport.cli.version &&
+      result.knowledge?.package === "@salt-ds/knowledge" &&
+      result.knowledge.version === packReport.knowledge.version &&
+      result.knowledge.bundle_digest ===
+        packReport.report.knowledge_bundle.bundle_digest &&
+      result.knowledge.semantic_digest ===
+        packReport.report.knowledge_bundle.semantic_digest &&
+      selected?.project_decision?.status === "selected" &&
+      selected.project_decision.reason_code === "SALT_PROJECT_SELECTED" &&
+      Object.entries(uiCohort).every(
+        ([name, version]) => observed.get(name) === version,
+      ) &&
+      !observed.has("@salt-ds/cli") &&
+      !observed.has("@salt-ds/knowledge") &&
+      result.coverage?.status === "complete" &&
+      result.coverage.timeout === false,
+    `Packed Doctor did not select the real ${selectedWorkspace} UI cohort independently of tooling packages.`,
+  );
+  if (toolingRoot) {
+    const rootUnit = result.workspace_units.find(
+      (unit) => unit.workspace_unit_id === ".",
+    );
+    assert(
+      rootUnit?.package_vector?.length === 0 &&
+        rootUnit.project_decision?.status === "not_salt" &&
+        rootUnit.project_decision.reason_code ===
+          "SALT_PROJECT_NO_SALT_PACKAGES",
+      "Packed Doctor treated the tooling-only workspace root as Salt UI evidence.",
+    );
+  }
+}
+
+function isPortableRepositoryPath(value) {
+  return (
+    typeof value === "string" &&
+    value.length > 0 &&
+    !value.includes("\\") &&
+    !path.posix.isAbsolute(value) &&
+    !path.win32.isAbsolute(value) &&
+    !value.split("/").includes("..")
+  );
+}
+
+export function assertRepositoryAuthorityInfo(
+  info,
+  { project, expectedUiVersions, authorityRoot },
+) {
+  const observed = new Map(
+    info?.project?.packages?.map((entry) => [
+      entry.name,
+      entry.observed_version,
+    ]) ?? [],
+  );
+  const observedPaths = [
+    info?.project?.package_manifest?.path,
+    info?.project?.workspace?.packageRoot,
+    info?.project?.workspace?.workspaceRoot,
+    ...(info?.project?.packages?.map((entry) => entry.observed_manifest_path) ??
+      []),
+  ];
+  const serialized = JSON.stringify(info);
+  const encodedAuthority = JSON.stringify(authorityRoot).slice(1, -1);
+  assert(
+    info?.project?.root === project &&
+      info.selection?.status === "selected" &&
+      info.selection.reason_code === "SALT_PROJECT_SELECTED" &&
+      Object.entries(expectedUiVersions).every(
+        ([name, version]) => observed.get(name) === version,
+      ) &&
+      observed.size === Object.keys(expectedUiVersions).length &&
+      observedPaths.every(isPortableRepositoryPath) &&
+      !serialized.includes(encodedAuthority) &&
+      !serialized.includes(authorityRoot.replaceAll("\\", "/")),
+    "Packed repository-authority info leaked its authority or selected the wrong workspace.",
+  );
+}
+
+export async function runRepositoryAuthorityCoverage({
+  installRoot,
+  authorityRoot,
+  project,
+  invocationRoot,
+  packReport,
+  expectedUiVersions,
+}) {
+  const resolvedInvocationRoot = path.resolve(invocationRoot);
+  const resolvedAuthorityRoot = path.resolve(authorityRoot);
+  const invocationOutsideRepository =
+    resolvedInvocationRoot !== resolvedAuthorityRoot &&
+    !resolvedInvocationRoot.startsWith(`${resolvedAuthorityRoot}${path.sep}`);
+  assert(
+    invocationOutsideRepository,
+    "Repository-authority coverage must invoke the CLI outside the repository.",
+  );
+  const installedCliBinPath = getInstalledCliBin(installRoot);
+  const selection = ["--root", authorityRoot, "--project", project];
+  const infoResult = await runInstalledCli(
+    installedCliBinPath,
+    ["info", ...selection, "--json"],
+    invocationRoot,
+  );
+  const info = JSON.parse(infoResult.stdout);
+  assert(infoResult.stderr === "", "Repository-authority info wrote stderr.");
+  assertRepositoryAuthorityInfo(info, {
+    project,
+    expectedUiVersions,
+    authorityRoot,
+  });
+
+  const docsResult = await runInstalledCli(
+    installedCliBinPath,
+    ["docs", "component.button", ...selection, "--format", "json"],
+    invocationRoot,
+  );
+  const docs = JSON.parse(docsResult.stdout);
+  const contextResult = await runInstalledCli(
+    installedCliBinPath,
+    [
+      "context",
+      "Button appearance",
+      ...selection,
+      "--format",
+      "json",
+      "--limit",
+      "5",
+    ],
+    invocationRoot,
+  );
+  const context = JSON.parse(contextResult.stdout);
+  const encodedAuthority = JSON.stringify(authorityRoot).slice(1, -1);
+  assert(
+    docsResult.stderr === "" &&
+      docs.status === "resolved" &&
+      docs.document?.reference?.id === "component.button" &&
+      docs.bundle?.digest ===
+        packReport.report.knowledge_bundle.bundle_digest &&
+      contextResult.stderr === "" &&
+      context.matches?.some(
+        (match) => match.reference?.id === "component.button",
+      ) &&
+      context.bundle_digest ===
+        packReport.report.knowledge_bundle.bundle_digest &&
+      !docsResult.stdout.includes(encodedAuthority) &&
+      !docsResult.stdout.includes(authorityRoot.replaceAll("\\", "/")) &&
+      !contextResult.stdout.includes(encodedAuthority) &&
+      !contextResult.stdout.includes(authorityRoot.replaceAll("\\", "/")),
+    "Packed repository-authority retrieval did not use the selected child application safely.",
+  );
+  return {
+    project_root: project,
+    invocation_outside_repository: invocationOutsideRepository,
+    info_paths: "repository_relative",
+    docs: docs.status,
+    context: "resolved",
+  };
+}
+
+export async function runJourneyDoctorCoverage(
+  installRoot,
+  sameProjectRoot,
+  toolingWorkspaceRoot,
+  packReport,
+  uiCohort,
+) {
+  const execute = async (installedCliBinPath, root, label) => {
+    const result = await runInstalledCli(
+      installedCliBinPath,
+      ["doctor", ".", "--format", "json", "--fail-on", "never"],
+      root,
+    );
+    assert(
+      result.stderr === "" &&
+        result.stdout.endsWith("\n") &&
+        !result.stdout.trim().includes("\n"),
+      `${label} did not emit one JSON line on stdout only.`,
+    );
+    return JSON.parse(result.stdout);
+  };
+  const sameProject = await execute(
+    getInstalledCliBin(installRoot),
+    sameProjectRoot,
+    "Same-project packed Doctor",
+  );
+  assertJourneyDoctorSelection(sameProject, {
+    selectedWorkspace: ".",
+    uiCohort,
+    packReport,
+  });
+  const toolingWorkspace = await execute(
+    getInstalledCliBin(toolingWorkspaceRoot),
+    toolingWorkspaceRoot,
+    "Tooling-root packed Doctor",
+  );
+  assertJourneyDoctorSelection(toolingWorkspace, {
+    selectedWorkspace: "apps/child",
+    uiCohort,
+    packReport,
+    toolingRoot: true,
+  });
+  return {
+    contract: "salt-ai-consumer-journey-doctor/1",
+    same_project: {
+      selected_workspace: ".",
+      status: sameProject.status,
+      reason_code: sameProject.reason_code,
+    },
+    tooling_root: {
+      selected_workspace: "apps/child",
+      status: toolingWorkspace.status,
+      reason_code: toolingWorkspace.reason_code,
+    },
+    performance_qualification: "not_run",
+    offline: true,
+  };
+}
+
+export function assertConsumerJourneyReceipt(receipt) {
+  const cohort = receipt?.installation?.ui_cohort;
+  const sourceArtifactOverrides =
+    receipt?.installation?.source_artifact_overrides;
+  const expectedSourceOverrideNames = ["@salt-ds/icons", "@salt-ds/styles"];
+  const cli = receipt?.workflows?.cli;
+  const projectDoctor = receipt?.workflows?.project_doctor;
+  assert(
+    receipt?.contract === "salt-ai-consumer-journey/1" &&
+      receipt.schema_version === "1.0.0" &&
+      receipt.purpose === "packed_consumer_correctness" &&
+      receipt.doctor_performance_qualification === "not_run" &&
+      cohort &&
+      receipt.installation.cli_dependency_section === "devDependencies" &&
+      receipt.installation.installed_tool_versions?.["@salt-ds/cli"] ===
+        cli?.exact_info?.cli_version &&
+      receipt.installation.installed_tool_versions?.["@salt-ds/knowledge"] ===
+        cli?.exact_info?.knowledge_version &&
+      receipt.installation.framework_dependencies?.react === "18.3.1" &&
+      receipt.installation.framework_dependencies?.["react-dom"] === "18.3.1" &&
+      Object.entries(cohort).every(
+        ([name, version]) =>
+          receipt.installation.installed_ui_versions?.[name] === version &&
+          receipt.installation.tooling_workspace_ui_versions?.[name] ===
+            version &&
+          typeof receipt.installation.resolved_ui_declarations?.[name] ===
+            "string" &&
+          receipt.installation.resolved_ui_declarations[name].length > 0,
+      ) &&
+      JSON.stringify(Object.keys(sourceArtifactOverrides ?? {}).sort()) ===
+        JSON.stringify(expectedSourceOverrideNames) &&
+      expectedSourceOverrideNames.every((name) => {
+        const artifact = sourceArtifactOverrides[name];
+        return (
+          artifact?.disposition === "local_built_source_artifact" &&
+          typeof artifact.version === "string" &&
+          artifact.version.length > 0 &&
+          /^sha256:[0-9a-f]{64}$/u.test(artifact.tarball_sha256) &&
+          receipt.installation.installed_source_override_versions?.[name] ===
+            artifact.version &&
+          receipt.installation
+            .tooling_workspace_installed_source_override_versions?.[name] ===
+            artifact.version
+        );
+      }) &&
+      /^sha256:[0-9a-f]{64}$/u.test(
+        receipt.installation.installed_cli_tree_sha256,
+      ) &&
+      /^sha256:[0-9a-f]{64}$/u.test(
+        receipt.installation.installed_knowledge_tree_sha256,
+      ) &&
+      receipt.installation.tooling_workspace_installed_cli_tree_sha256 ===
+        receipt.installation.installed_cli_tree_sha256 &&
+      receipt.installation.tooling_workspace_installed_knowledge_tree_sha256 ===
+        receipt.installation.installed_knowledge_tree_sha256 &&
+      /^sha256:[0-9a-f]{64}$/u.test(receipt.installation.lockfile_sha256) &&
+      /^sha256:[0-9a-f]{64}$/u.test(
+        receipt.installation.tooling_workspace_lockfile_sha256,
+      ) &&
+      cli?.aliases?.help === 3 &&
+      cli.aliases.version === 2 &&
+      cli.aliases.broken_pipe === 1 &&
+      cli.invalid_argument_cases === 33 &&
+      cli.terminal_safety?.control_characters === "sanitized" &&
+      cli.repository_authority?.project_root === "apps/child" &&
+      cli.repository_authority.invocation_outside_repository === true &&
+      cli.repository_authority.info_paths === "repository_relative" &&
+      cli.repository_authority.docs === "resolved" &&
+      cli.repository_authority.context === "resolved" &&
+      cli.exact_info?.cli_version &&
+      cli.exact_info.knowledge_version &&
+      cli.agent_support?.integrity === "manifest_verified" &&
+      cli.agent_support.tamper_rejected === true &&
+      cli.rejected_retrieval?.docs === "SALT_PROJECT_NO_SALT_PACKAGES" &&
+      cli.rejected_retrieval.context === "SALT_PROJECT_NO_SALT_PACKAGES" &&
+      cli.doctor?.contract === "salt-ai-packed-doctor-correctness/1" &&
+      !Object.hasOwn(cli.doctor, "performance") &&
+      cli.doctor.offline === true &&
+      cli.doctor.read_only === true &&
+      projectDoctor?.same_project?.selected_workspace === "." &&
+      projectDoctor.same_project.status === "complete" &&
+      projectDoctor.tooling_root?.selected_workspace === "apps/child" &&
+      projectDoctor.tooling_root.status === "complete" &&
+      projectDoctor.performance_qualification === "not_run" &&
+      receipt.runtime?.offline === true &&
+      receipt.runtime.read_only === true &&
+      receipt.result === "pass",
+    "Consumer journey receipt omitted a required installation, safety, identity, or selection proof.",
+  );
 }

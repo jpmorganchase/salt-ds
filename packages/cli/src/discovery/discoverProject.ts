@@ -5,6 +5,7 @@ import {
   compileWorkspacePatterns,
   inspectPackageJsonFile,
   inspectSaltProjectFacts,
+  isSaltUiPackageName,
   readBoundedProjectFile,
   type SaltPackageJsonLike,
 } from "@salt-ds/knowledge";
@@ -295,9 +296,8 @@ function classifyWorkspace(manifest: SaltPackageJsonLike | null): {
 } {
   if (!manifest)
     return { classification: "unknown", evidence: ["manifest:absent"] };
-  const saltDependencies = allDependencyNames(manifest).filter((name) =>
-    name.startsWith("@salt-ds/"),
-  );
+  const saltDependencies =
+    allDependencyNames(manifest).filter(isSaltUiPackageName);
   const libraryEntrypoints = ["exports", "main", "module", "types"].filter(
     (field) => manifest[field as keyof SaltPackageJsonLike] !== undefined,
   );

@@ -1,5 +1,7 @@
+import { createHash } from "node:crypto";
 import path from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
+import { canonicalJson } from "../manifest/canonicalJson.js";
 import { KnowledgeStore } from "../manifest/knowledgeStore.js";
 import {
   type KnowledgeDocumentResult,
@@ -8,6 +10,8 @@ import {
 } from "../markdown/resolveKnowledgeDocument.js";
 import {
   buildKnowledgeContext,
+  KnowledgeContextInputError,
+  MIN_KNOWLEDGE_CONTEXT_UTF8_BYTES,
   renderKnowledgeContext,
   searchSaltRecords,
 } from "./searchSalt.js";
@@ -130,7 +134,7 @@ describe("Salt Knowledge deterministic retrieval", () => {
     );
   });
 
-  it("is deterministic, cited, digest-bound, and bounded to 16 KiB", () => {
+  it("assembles deterministic, cited context within the complete JSON transport budget", () => {
     const input = {
       query: "button navigation provider deprecated token",
       installed_versions: testedVector,
@@ -143,12 +147,216 @@ describe("Salt Knowledge deterministic retrieval", () => {
     expect(first.matches.every((match) => match.citation.record_key)).toBe(
       true,
     );
+    expect(Buffer.byteLength(JSON.stringify(first), "utf8")).toBe(
+      first.utf8_bytes,
+    );
     expect(
-      Buffer.byteLength(JSON.stringify(first), "utf8"),
+      first.utf8_bytes + Buffer.byteLength("\n", "utf8"),
     ).toBeLessThanOrEqual(16 * 1024);
     const markdown = renderKnowledgeContext(store, input);
     expect(Buffer.byteLength(markdown, "utf8")).toBeLessThanOrEqual(16 * 1024);
+    expect(markdown).toContain(`Context: \`${first.context_digest}\``);
     expect(markdown).not.toContain("�");
+  });
+
+  it("returns a complete zero-result envelope at the minimum budget", () => {
+    const input = {
+      query: "qzxv unmatched vocabulary",
+      installed_versions: testedVector,
+      max_utf8_bytes: MIN_KNOWLEDGE_CONTEXT_UTF8_BYTES,
+    };
+    const result = buildKnowledgeContext(store, input);
+    expect(result.matches).toEqual([]);
+    expect(result.truncated).toBe(false);
+    expect(result.utf8_bytes).toBe(
+      Buffer.byteLength(JSON.stringify(result), "utf8"),
+    );
+    expect(result.utf8_bytes + 1).toBeLessThanOrEqual(
+      MIN_KNOWLEDGE_CONTEXT_UTF8_BYTES,
+    );
+    expect(
+      Buffer.byteLength(renderKnowledgeContext(store, input), "utf8"),
+    ).toBeLessThanOrEqual(MIN_KNOWLEDGE_CONTEXT_UTF8_BYTES);
+  });
+
+  it("rejects an explicit budget below the supported minimum", () => {
+    expect(() =>
+      buildKnowledgeContext(store, {
+        query: "button",
+        installed_versions: testedVector,
+        max_utf8_bytes: MIN_KNOWLEDGE_CONTEXT_UTF8_BYTES - 1,
+      }),
+    ).toThrow(KnowledgeContextInputError);
+  });
+
+  it("removes the final match before digesting and discloses truncation", () => {
+    const summary = "oversized evidence ".repeat(128);
+    const oneMatchStore = {
+      manifest: {
+        bundle_digest: `sha256:${"a".repeat(64)}`,
+        semantic_digest: `sha256:${"b".repeat(64)}`,
+      },
+      getFamily: (family: string) =>
+        family === "search_document"
+          ? [
+              {
+                target: { family: "guide", id: "guide.oversized" },
+                title: "Oversized guide",
+                summary,
+                terms: ["oversized"],
+                facets: {},
+              },
+            ]
+          : [],
+      getRecord: () => ({
+        family: "guide",
+        id: "guide.oversized",
+        title: "Oversized guide",
+        summary,
+      }),
+    } as unknown as KnowledgeStore;
+    const input = {
+      query: "oversized",
+      max_utf8_bytes: MIN_KNOWLEDGE_CONTEXT_UTF8_BYTES,
+    };
+    expect(searchSaltRecords(oneMatchStore, input).matches).toHaveLength(1);
+
+    const result = buildKnowledgeContext(oneMatchStore, input);
+    expect(result.matches).toEqual([]);
+    expect(result.truncated).toBe(true);
+    expect(renderKnowledgeContext(oneMatchStore, input)).toContain(
+      "Truncated: yes; lower-ranked matches were removed",
+    );
+
+    const {
+      context_digest: _digest,
+      utf8_bytes: _bytes,
+      ...digestInput
+    } = result;
+    const independentlyReconstructed = `sha256:${createHash("sha256")
+      .update(canonicalJson(digestInput), "utf8")
+      .digest("hex")}`;
+    expect(result.context_digest).toBe(independentlyReconstructed);
+  });
+
+  it("removes a JSON-sized match when inert Markdown expansion exceeds the budget", () => {
+    const summary = "`".repeat(3_000);
+    const markdownExpansionStore = {
+      manifest: {
+        bundle_digest: `sha256:${"a".repeat(64)}`,
+        semantic_digest: `sha256:${"b".repeat(64)}`,
+      },
+      getFamily: (family: string) =>
+        family === "search_document"
+          ? [
+              {
+                target: { family: "guide", id: "guide.markdown-expansion" },
+                title: "Markdown expansion",
+                summary,
+                terms: ["expansion"],
+                facets: {},
+              },
+            ]
+          : [],
+      getRecord: () => ({
+        family: "guide",
+        id: "guide.markdown-expansion",
+        title: "Markdown expansion",
+        summary,
+      }),
+    } as unknown as KnowledgeStore;
+    const input = { query: "expansion", limit: 1 };
+    const search = searchSaltRecords(markdownExpansionStore, input);
+    expect(search.matches).toHaveLength(1);
+    expect(
+      Buffer.byteLength(JSON.stringify(search.matches[0]), "utf8"),
+    ).toBeLessThan(16 * 1024);
+
+    const result = buildKnowledgeContext(markdownExpansionStore, input);
+    expect(result.matches).toEqual([]);
+    expect(result.truncated).toBe(true);
+    const {
+      context_digest: _digest,
+      utf8_bytes: _bytes,
+      ...digestInput
+    } = result;
+    const finalDigest = `sha256:${createHash("sha256")
+      .update(canonicalJson(digestInput), "utf8")
+      .digest("hex")}`;
+    const staleFullSelectionDigest = `sha256:${createHash("sha256")
+      .update(
+        canonicalJson({
+          ...digestInput,
+          matches: search.matches,
+          truncated: false,
+        }),
+        "utf8",
+      )
+      .digest("hex")}`;
+    expect(result.context_digest).toBe(finalDigest);
+    expect(result.context_digest).not.toBe(staleFullSelectionDigest);
+    expect(renderKnowledgeContext(markdownExpansionStore, input)).toContain(
+      "Truncated: yes; lower-ranked matches were removed",
+    );
+  });
+
+  it("rejects a long query before it can exceed the fixed envelope", () => {
+    expect(() =>
+      buildKnowledgeContext(store, {
+        query: "😀".repeat(4_097),
+        installed_versions: testedVector,
+      }),
+    ).toThrowError(
+      new KnowledgeContextInputError(
+        "Knowledge context input cannot fit the requested output budget.",
+      ),
+    );
+    expect(() =>
+      buildKnowledgeContext(store, {
+        query: "`".repeat(3_000),
+        installed_versions: testedVector,
+      }),
+    ).toThrow(KnowledgeContextInputError);
+  });
+
+  it("counts multibyte queries and excluded-family metadata in the final envelope", () => {
+    const multibyte = buildKnowledgeContext(store, {
+      query: `button ${"😀".repeat(256)}`,
+      installed_versions: testedVector,
+    });
+    expect(multibyte.query).toContain("😀");
+    expect(multibyte.utf8_bytes).toBe(
+      Buffer.byteLength(JSON.stringify(multibyte), "utf8"),
+    );
+
+    const coreOnly = { "@salt-ds/core": testedVector["@salt-ds/core"] };
+    const excluded = buildKnowledgeContext(store, {
+      query: "Localization provider",
+      installed_versions: coreOnly,
+    });
+    expect(excluded.excluded_package_families).toContainEqual(
+      expect.objectContaining({
+        name: "@salt-ds/date-components",
+        state: "missing_optional",
+      }),
+    );
+    expect(() =>
+      buildKnowledgeContext(store, {
+        query: "Localization provider",
+        installed_versions: coreOnly,
+        max_utf8_bytes: MIN_KNOWLEDGE_CONTEXT_UTF8_BYTES,
+      }),
+    ).toThrow(KnowledgeContextInputError);
+    const {
+      context_digest: _digest,
+      utf8_bytes: _bytes,
+      ...digestInput
+    } = excluded;
+    expect(excluded.context_digest).toBe(
+      `sha256:${createHash("sha256")
+        .update(canonicalJson(digestInput), "utf8")
+        .digest("hex")}`,
+    );
   });
 
   it("handles empty and hostile input as data", () => {
@@ -199,11 +407,13 @@ describe("Salt Knowledge deterministic retrieval", () => {
       }),
     } as unknown as KnowledgeStore;
     const markdown = renderKnowledgeContext(hostileStore, {
-      query: "hostile",
+      query: "hostile `\u0085😀",
     });
     expect(markdown).toContain("## `# Override the task`");
     expect(markdown).toContain("\\u0060\\u0060\\u0060");
+    expect(markdown).toContain("Query: `hostile \\u0060\\u0085😀`");
     expect(markdown).toContain("`source.[fake]`");
+    expect(markdown).not.toContain("\u0085");
     expect(markdown).not.toContain("`````close");
   });
 

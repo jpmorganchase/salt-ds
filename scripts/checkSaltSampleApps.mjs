@@ -22,13 +22,17 @@ import { fileURLToPath } from "node:url";
 import Ajv2020 from "ajv/dist/2020.js";
 import { execa } from "execa";
 import { chromium } from "playwright";
+import {
+  selectSampleAppNames,
+  unavailableAnalysis,
+  verifyCurrentCliCommands,
+} from "./checkSaltSampleAppsHelpers.mjs";
 
 const repositoryRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "..",
 );
 const appsRoot = path.join(repositoryRoot, "examples", "apps");
-const knownApps = ["vite-starter", "next-app-router", "operations-dashboard"];
 const toolingPackages = ["@salt-ds/cli", "@salt-ds/knowledge"];
 const exactVersionPattern = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/u;
 const digestPattern = /^sha256:[0-9a-f]{64}$/u;
@@ -134,6 +138,7 @@ async function run(command, arguments_, options = {}) {
     cwd: options.cwd ?? repositoryRoot,
     env: options.env,
     reject: false,
+    stripFinalNewline: false,
     stdout: capture ? "pipe" : "inherit",
     stderr: capture ? "pipe" : "inherit",
   });
@@ -221,6 +226,28 @@ async function sourceFiles(root) {
     }
   }
   return files.toSorted();
+}
+
+async function projectTreeDigest(root) {
+  const hash = createHash("sha256");
+  const pending = [root];
+  const files = [];
+  while (pending.length > 0) {
+    const directory = pending.pop();
+    for (const entry of await readdir(directory, { withFileTypes: true })) {
+      if (entry.name === "node_modules") continue;
+      const absolute = path.join(directory, entry.name);
+      if (entry.isDirectory()) pending.push(absolute);
+      else if (entry.isFile()) files.push(absolute);
+    }
+  }
+  for (const file of files.toSorted()) {
+    hash.update(portable(path.relative(root, file)));
+    hash.update("\0");
+    hash.update(await readFile(file));
+    hash.update("\0");
+  }
+  return `sha256:${hash.digest("hex")}`;
 }
 
 async function verifyPublicApp(appName, registry, compatibility) {
@@ -333,7 +360,6 @@ async function verifyPublicApp(appName, registry, compatibility) {
     "salt-ds info",
     "salt-ds docs",
     "salt-ds context",
-    "salt-ds scan",
     "skill print",
     "AGENTS.md",
     "Storybook",
@@ -341,15 +367,10 @@ async function verifyPublicApp(appName, registry, compatibility) {
   ]) {
     assert(readme.includes(required), `${appName} README omits ${required}`);
   }
-  const browserTest = await readFile(
-    path.join(appRoot, "cypress", "app.cy.ts"),
-    "utf8",
-  );
-  assert.match(browserTest, /checkA11y/u, `${appName} omits axe coverage`);
-  assert.match(
-    browserTest,
-    /have\.focus/u,
-    `${appName} omits authored keyboard focus coverage`,
+  assert.doesNotMatch(
+    readme,
+    /salt-ds scan/u,
+    `${appName} README advertises the removed scan command`,
   );
 
   return { appRoot, manifest, manifestBytes, directSalt };
@@ -673,7 +694,309 @@ async function waitForServer(url, server) {
   throw new Error(`Timed out waiting for ${url}`);
 }
 
-async function browserChecks(appName, appRoot, environment) {
+async function assertNoAxeViolations(page, label) {
+  // Measure the settled UI, not an intermediate frame of a modal fade.
+  await page.evaluate(async () => {
+    await Promise.all(
+      document
+        .getAnimations()
+        .filter(
+          (animation) =>
+            animation.effect?.getTiming().iterations !==
+            Number.POSITIVE_INFINITY,
+        )
+        .map((animation) => animation.finished.catch(() => undefined)),
+    );
+  });
+  const accessibility = await page.evaluate(() => globalThis.axe.run());
+  assert.deepEqual(accessibility.violations, [], `${label} has axe violations`);
+}
+
+async function assertRecordFormWorkflow(page, screenshotRoot) {
+  const createIncident = page
+    .getByRole("button", { name: "Create incident" })
+    .first();
+  await createIncident.focus();
+  assert(
+    await createIncident.evaluate(
+      (element) => element === document.activeElement,
+    ),
+  );
+  await createIncident.click();
+  let dialog = page.getByRole("dialog");
+  await dialog.waitFor();
+  await page.getByRole("heading", { name: "Create incident" }).waitFor();
+  assert.match(
+    await dialog.innerText(),
+    /No data leaves this demo/u,
+    "Record form omitted its local-demo disclosure",
+  );
+
+  const title = page.getByLabel("Incident title");
+  const service = page.getByLabel("Affected service or operational process");
+  const cancel = dialog.getByRole("button", { name: "Cancel" });
+  const submit = dialog.getByRole("button", { name: "Create incident" });
+  for (const input of [title, service]) {
+    const labelledBy = await input.getAttribute("aria-labelledby");
+    assert(labelledBy, "Record form field has no label association");
+    const label = page.locator(`label[id=${JSON.stringify(labelledBy)}]`);
+    assert.equal(
+      await label.count(),
+      1,
+      "Record form field is not associated with one visible label",
+    );
+    assert(await label.isVisible());
+    await label.click();
+    assert(
+      await input.evaluate((element) => element === document.activeElement),
+      "Clicking the field label did not focus its control",
+    );
+  }
+
+  await title.focus();
+  await page.keyboard.press("Tab");
+  assert(
+    await service.evaluate((element) => element === document.activeElement),
+    "Tab did not move from incident title to affected service",
+  );
+  await page.keyboard.press("Tab");
+  assert(
+    await cancel.evaluate((element) => element === document.activeElement),
+    "Tab did not move from affected service to Cancel",
+  );
+  await page.keyboard.press("Tab");
+  assert(
+    await submit.evaluate((element) => element === document.activeElement),
+    "Tab did not move from Cancel to Create incident",
+  );
+  await page.keyboard.press("Shift+Tab");
+  assert(
+    await cancel.evaluate((element) => element === document.activeElement),
+    "Shift+Tab did not return from Create incident to Cancel",
+  );
+
+  await page.keyboard.press("Escape");
+  await dialog.waitFor({ state: "detached" });
+  assert(
+    await createIncident.evaluate(
+      (element) => element === document.activeElement,
+    ),
+    "Record form did not return focus after Escape",
+  );
+  await createIncident.click();
+  dialog = page.getByRole("dialog");
+  await dialog.waitFor();
+
+  await title.fill("Draft retained on cancel");
+  await service.fill("Order gateway");
+  await cancel.focus();
+  await page.keyboard.press("Enter");
+  await dialog.waitFor({ state: "detached" });
+  await createIncident.click();
+  dialog = page.getByRole("dialog");
+  await dialog.waitFor();
+  assert.equal(await title.inputValue(), "Draft retained on cancel");
+  assert.equal(await service.inputValue(), "Order gateway");
+
+  await title.fill("");
+  await service.fill("");
+  await dialog.getByRole("button", { name: "Create incident" }).click();
+  const invalidSummary = page
+    .getByRole("alert")
+    .filter({ hasText: "Review the incident details before saving." });
+  try {
+    await invalidSummary.waitFor({ timeout: 1_500 });
+  } catch (error) {
+    if ((await invalidSummary.count()) === 0) {
+      throw new Error("Record form accepted an empty invalid draft", {
+        cause: error,
+      });
+    }
+    throw error;
+  }
+  assert.equal(await invalidSummary.count(), 1);
+  assert(
+    await title.evaluate((element) => element === document.activeElement),
+    "Invalid record form did not focus its first invalid field",
+  );
+  for (const [input, message] of [
+    [
+      title,
+      "Enter at least 5 characters so the incident can be understood in the operations record.",
+    ],
+    [
+      service,
+      "Enter the affected service or operational process before saving this incident record.",
+    ],
+  ]) {
+    assert.equal(
+      await input.getAttribute("aria-invalid"),
+      "true",
+      "Invalid record form field did not expose aria-invalid",
+    );
+    const describedBy = await input.getAttribute("aria-describedby");
+    assert(describedBy, "Invalid record form field has no described-by helper");
+    const describedText = (
+      await Promise.all(
+        describedBy
+          .split(/\s+/u)
+          .map((id) => page.locator(`[id=${JSON.stringify(id)}]`).innerText()),
+      )
+    ).join(" ");
+    assert(
+      describedText.includes(message),
+      "Record form validation message is not associated with its field",
+    );
+  }
+  await assertNoAxeViolations(page, "operations-dashboard invalid record form");
+  if (screenshotRoot) {
+    await mkdir(screenshotRoot, { recursive: true });
+    await page.screenshot({
+      path: path.join(screenshotRoot, "invalid.png"),
+      fullPage: true,
+    });
+  }
+
+  await service.fill("Risk calculator");
+  await title.fill("Down");
+  await page.keyboard.press("Enter");
+  await invalidSummary.waitFor();
+  assert.equal(await title.inputValue(), "Down");
+  assert.equal(await dialog.count(), 1, "Record form accepted a short title");
+  assert(
+    await title.evaluate((element) => element === document.activeElement),
+    "Short-title submission did not focus the invalid title",
+  );
+  assert.equal(await title.getAttribute("aria-invalid"), "true");
+  assert.match(
+    await dialog.innerText(),
+    /Enter at least 5 characters/u,
+    "Record form accepted a short invalid title",
+  );
+  await title.fill("Latency regression affecting order flow");
+  await submit.click();
+  await page.getByText("Saving incident.", { exact: true }).waitFor();
+  assert((await title.getAttribute("readonly")) !== null);
+  assert((await service.getAttribute("readonly")) !== null);
+  assert(await dialog.getByRole("button", { name: "Cancel" }).isDisabled());
+  await page.keyboard.press("Escape");
+  assert.equal(await dialog.count(), 1, "Pending record form closed on Escape");
+  await dialog
+    .locator('form[aria-label="Create incident record"]')
+    .evaluate((form) => form.requestSubmit());
+  if (screenshotRoot) {
+    await page.screenshot({
+      path: path.join(screenshotRoot, "pending.png"),
+      fullPage: true,
+    });
+  }
+
+  const failure = page.getByRole("alert").filter({
+    hasText:
+      "The local demo rejected this first save. Your details are still available; retry when ready.",
+  });
+  await failure.waitFor({ timeout: 5_000 });
+  assert.equal(
+    await dialog.count(),
+    1,
+    "First local failure closed the dialog",
+  );
+  assert.equal(
+    await title.inputValue(),
+    "Latency regression affecting order flow",
+  );
+  assert.equal(await service.inputValue(), "Risk calculator");
+  if (screenshotRoot) {
+    await page.screenshot({
+      path: path.join(screenshotRoot, "failure.png"),
+      fullPage: true,
+    });
+  }
+
+  await dialog.getByRole("button", { name: "Retry save" }).click();
+  const success = page.getByRole("status").filter({
+    hasText:
+      "Local demo recorded Latency regression affecting order flow for Risk calculator. No notification was sent.",
+  });
+  await success.waitFor({ timeout: 5_000 });
+  assert.equal(
+    await success.count(),
+    1,
+    "Record form announced success more than once",
+  );
+  assert.equal(
+    (await success.innerText()).trim(),
+    "Local demo recorded Latency regression affecting order flow for Risk calculator. No notification was sent.",
+  );
+  await dialog.waitFor({ state: "detached" });
+  assert(
+    await createIncident.evaluate(
+      (element) => element === document.activeElement,
+    ),
+    "Record form did not return focus to its trigger after success",
+  );
+
+  await page.setViewportSize({ width: 320, height: 800 });
+  await createIncident.click();
+  dialog = page.getByRole("dialog");
+  await dialog.waitFor();
+  await assertNoAxeViolations(page, "operations-dashboard narrow record form");
+  if (screenshotRoot) {
+    await page.screenshot({
+      path: path.join(screenshotRoot, "narrow-320-css-px.png"),
+      fullPage: true,
+    });
+  }
+  const narrowLayout = await dialog.evaluate((element) => {
+    const controls = [...element.querySelectorAll("input, button")];
+    return {
+      documentFits:
+        document.documentElement.scrollWidth <=
+        document.documentElement.clientWidth,
+      dialogFits: element.scrollWidth <= element.clientWidth,
+      controlsVisible: controls.every((control) => {
+        const bounds = control.getBoundingClientRect();
+        const style = getComputedStyle(control);
+        return (
+          style.display !== "none" &&
+          style.visibility !== "hidden" &&
+          bounds.width > 0 &&
+          bounds.height > 0 &&
+          bounds.left >= 0 &&
+          bounds.right <= innerWidth &&
+          bounds.top >= 0 &&
+          bounds.bottom <= innerHeight
+        );
+      }),
+    };
+  });
+  assert(
+    narrowLayout.documentFits &&
+      narrowLayout.dialogFits &&
+      narrowLayout.controlsVisible,
+    `Record form or its controls overflowed the 320 CSS-pixel viewport: ${JSON.stringify(narrowLayout)}`,
+  );
+  await dialog.getByRole("button", { name: "Cancel" }).click();
+  await dialog.waitFor({ state: "detached" });
+  return {
+    contract: "salt-sample-app-record-form-workflow/1",
+    status: "pass",
+    validation: "pass",
+    cancellation_retains_draft: true,
+    pending_duplicate_rejected: true,
+    failure_preserves_draft: true,
+    retry_succeeds: true,
+    focus: "pass",
+    labels_and_errors: "associated",
+    viewport_css_px: 320,
+    zoom_claim: "not_tested",
+    screenshots: screenshotRoot
+      ? ["invalid.png", "pending.png", "failure.png", "narrow-320-css-px.png"]
+      : [],
+  };
+}
+
+async function browserChecks(appName, appRoot, environment, options = {}) {
   const port = await availablePort();
   const next = appName === "next-app-router";
   const cli = next
@@ -731,6 +1054,12 @@ async function browserChecks(appName, appRoot, environment) {
         await route.abort("blockedbyclient");
       });
       await page.goto(url, { waitUntil: "networkidle" });
+      const axeEntry = nodeRequire.resolve("axe-core");
+      const axeSource = await readFile(
+        path.join(path.dirname(axeEntry), "axe.min.js"),
+        "utf8",
+      );
+      await page.addScriptTag({ content: axeSource });
 
       if (appName === "vite-starter") {
         await page.getByRole("heading", { name: "Create a project" }).waitFor();
@@ -870,52 +1199,38 @@ async function browserChecks(appName, appRoot, environment) {
           0,
         );
 
-        const createIncident = page
-          .getByRole("button", { name: "Create incident" })
-          .first();
-        await createIncident.focus();
-        assert(
-          await createIncident.evaluate(
-            (element) => element === document.activeElement,
-          ),
+        await mode.click();
+        assert.equal(
+          await page.locator(".dashboardShell").getAttribute("data-mode"),
+          "light",
         );
-        await createIncident.click();
-        const dialog = page.getByRole("dialog");
-        await dialog.waitFor();
-        await page.keyboard.press("Escape");
-        await dialog.waitFor({ state: "detached" });
-
-        await createIncident.click();
-        await page.getByLabel("Incident title").fill("Latency regression");
-        await page.getByLabel("Affected service").fill("Risk calculator");
-        await dialog
-          .getByRole("button", { name: "Create incident" })
-          .click();
-        await page.getByRole("status").waitFor();
-        assert.match(
-          await page.getByRole("status").innerText(),
-          /responders notified/u,
+        await density.click();
+        assert.equal(
+          await page.locator(".dashboardShell").getAttribute("data-density"),
+          "low",
         );
-        await dialog.waitFor({ state: "detached" });
 
+        options.workflow = await assertRecordFormWorkflow(
+          page,
+          options.screenshotRoot,
+        );
         await page.setViewportSize({ width: 600, height: 800 });
         await page
           .getByRole("navigation", { name: "Primary navigation" })
           .waitFor();
+        const tableScroller = page.getByRole("region", {
+          name: "Service health table",
+        });
+        await tableScroller.focus();
+        await tableScroller.press("ArrowRight");
+        await page.waitForFunction(
+          () => document.querySelector(".tableScroller")?.scrollLeft > 0,
+          undefined,
+          { timeout: 2_000 },
+        );
       }
 
-      const axeEntry = nodeRequire.resolve("axe-core");
-      const axeSource = await readFile(
-        path.join(path.dirname(axeEntry), "axe.min.js"),
-        "utf8",
-      );
-      await page.addScriptTag({ content: axeSource });
-      const accessibility = await page.evaluate(() => globalThis.axe.run());
-      assert.deepEqual(
-        accessibility.violations,
-        [],
-        `${appName} has axe violations`,
-      );
+      await assertNoAxeViolations(page, appName);
       assert.deepEqual(
         externalRequests,
         [],
@@ -926,6 +1241,7 @@ async function browserChecks(appName, appRoot, environment) {
         ...(next ? { server_render: "pass", hydration: "pass" } : {}),
         runtime_errors: runtimeErrors.length,
         external_requests: externalRequests.length,
+        ...(options.workflow ? { workflow: options.workflow } : {}),
       };
     } finally {
       await browser.close();
@@ -936,7 +1252,7 @@ async function browserChecks(appName, appRoot, environment) {
   }
 }
 
-async function scanApp(appRoot, environment) {
+async function currentCliChecks(appRoot, environment, knowledgeManifest) {
   const cli = path.join(
     appRoot,
     "node_modules",
@@ -945,48 +1261,24 @@ async function scanApp(appRoot, environment) {
     "bin",
     "salt-ds.js",
   );
-  const result = await run(
-    process.execPath,
-    [
-      cli,
-      "scan",
-      ".",
-      "--format",
-      "json",
-      "--fail-on",
-      "warning",
-      "--allow-incomplete",
-    ],
-    {
-      cwd: appRoot,
-      env: environment,
-      capture: true,
-      label: "packed salt-ds scan",
-    },
+  const before = await projectTreeDigest(appRoot);
+  const commands = await verifyCurrentCliCommands({
+    appRoot,
+    knowledgeManifest,
+    invoke: (arguments_) =>
+      run(process.execPath, [cli, ...arguments_], {
+        cwd: appRoot,
+        env: environment,
+        capture: true,
+        label: `packed salt-ds ${arguments_[0]}`,
+      }),
+  });
+  assert.equal(
+    await projectTreeDigest(appRoot),
+    before,
+    "Current Salt CLI commands changed the isolated sample app",
   );
-  const scan = JSON.parse(result.stdout);
-  assert.equal(scan.contract, "salt-scan-result/1");
-  assert.notEqual(scan.coverage.status, "failed", "Sample app scan failed");
-  assert(
-    scan.coverage.reasons.every(
-      (reason) => reason === "SCAN_UNSUPPORTED_CONSTRUCT",
-    ),
-    `Sample app scan has an unexpected limitation: ${scan.coverage.reasons.join(
-      ", ",
-    )}`,
-  );
-  assert.equal(scan.summary.errors, 0, "Sample app scan found errors");
-  assert.equal(scan.summary.warnings, 0, "Sample app scan found warnings");
-  assert.equal(scan.summary.total, 0, "Sample app scan is not clean");
-  return {
-    result: "pass",
-    coverage: scan.coverage.status,
-    allow_incomplete: true,
-    reasons: scan.coverage.reasons,
-    errors: scan.summary.errors,
-    warnings: scan.summary.warnings,
-    findings: scan.summary.total,
-  };
+  return commands;
 }
 
 async function validateReceipt(receipt) {
@@ -995,7 +1287,7 @@ async function validateReceipt(receipt) {
       repositoryRoot,
       "scripts",
       "schemas",
-      "saltSampleAppCohortReceiptV1.schema.json",
+      "saltSampleAppCohortReceiptV2.schema.json",
     ),
   );
   const ajv = new Ajv2020({ allErrors: true, strict: true });
@@ -1010,11 +1302,7 @@ async function validateReceipt(receipt) {
 
 const args = parseArgs(process.argv.slice(2));
 const selectedApp = args.get("--app");
-assert(
-  selectedApp === undefined || knownApps.includes(selectedApp),
-  `Unknown sample app: ${selectedApp}`,
-);
-const selectedNames = selectedApp ? [selectedApp] : knownApps;
+const selectedNames = selectSampleAppNames(selectedApp);
 const receiptKey = selectedApp ?? "all";
 const outputRoot = path.join(repositoryRoot, "dist", "salt-sample-apps");
 const artifactRoot = path.join(outputRoot, `${receiptKey}.artifacts`);
@@ -1135,8 +1423,66 @@ try {
       env: environment,
       label: `${app.name} production build`,
     });
-    const scan = await scanApp(isolatedRoot, environment);
-    const browser = await browserChecks(app.name, isolatedRoot, environment);
+    const commands = await currentCliChecks(
+      isolatedRoot,
+      environment,
+      knowledgeManifest,
+    );
+    const screenshotRoot =
+      app.name === "operations-dashboard"
+        ? path.join(outputRoot, "operations-dashboard.artifacts", "screenshots")
+        : null;
+    if (screenshotRoot) {
+      inside(outputRoot, screenshotRoot, "Operations screenshot directory");
+      await rm(screenshotRoot, { recursive: true, force: true });
+    }
+    const browser = await browserChecks(app.name, isolatedRoot, environment, {
+      screenshotRoot,
+    });
+    if (app.name === "operations-dashboard") {
+      const mutationRoot = path.join(
+        tempRoot,
+        "operations-dashboard-validation-removed",
+      );
+      await cp(isolatedRoot, mutationRoot, { recursive: true });
+      const recordFormPath = path.join(
+        mutationRoot,
+        "src",
+        "workflows",
+        "record-form",
+        "RecordForm.tsx",
+      );
+      const marker = "const nextErrors = validateRecordDraft(draft);";
+      const source = await readFile(recordFormPath, "utf8");
+      assert.equal(
+        source.split(marker).length,
+        2,
+        "Validation-removal fixture did not find exactly one submit gate",
+      );
+      await writeFile(
+        recordFormPath,
+        source.replace(marker, "const nextErrors = {};"),
+        "utf8",
+      );
+      await run(executable("npm"), ["run", "build"], {
+        cwd: mutationRoot,
+        env: environment,
+        label: "validation-removed operations dashboard build",
+      });
+      let rejectedAtValidation = false;
+      try {
+        await browserChecks("operations-dashboard", mutationRoot, environment);
+      } catch (error) {
+        rejectedAtValidation =
+          error instanceof Error &&
+          /accepted an empty invalid draft/u.test(error.message);
+      }
+      assert(
+        rejectedAtValidation,
+        "Validation-removed operations dashboard was not rejected by the shared workflow assertions",
+      );
+      browser.workflow.validation_removed_variant = "rejected";
+    }
 
     appReceipts.push({
       name: app.name,
@@ -1157,7 +1503,8 @@ try {
       a11y: "pass",
       keyboard: "pass",
       ...browser,
-      scan,
+      commands,
+      analysis: unavailableAnalysis(),
     });
   }
 
@@ -1177,9 +1524,9 @@ try {
 
   const receipt = {
     $schema:
-      "https://www.saltdesignsystem.com/ai/schemas/salt-sample-app-cohort-receipt-1.json",
-    schema_version: "1.0.0",
-    contract: "salt-sample-app-cohort-receipt/1",
+      "https://www.saltdesignsystem.com/ai/schemas/salt-sample-app-cohort-receipt-2.json",
+    schema_version: "2.0.0",
+    contract: "salt-sample-app-cohort-receipt/2",
     source_commit: await repositoryCommit(),
     apps: appReceipts.toSorted((left, right) =>
       left.name.localeCompare(right.name),

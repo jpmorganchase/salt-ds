@@ -57,6 +57,44 @@ async function fixtureRoot(): Promise<string> {
   return root;
 }
 
+async function writeJson(file: string, value: unknown): Promise<void> {
+  await fs.mkdir(path.dirname(file), { recursive: true });
+  await fs.writeFile(file, `${JSON.stringify(value)}\n`, "utf8");
+}
+
+async function writeInstalledPackage(
+  authorityRoot: string,
+  name: string,
+  version: string,
+): Promise<void> {
+  await writeJson(
+    path.join(authorityRoot, "node_modules", "@salt-ds", name, "package.json"),
+    { name: `@salt-ds/${name}`, version },
+  );
+}
+
+async function writeWorkspaceRoot(authorityRoot: string): Promise<void> {
+  await writeJson(path.join(authorityRoot, "package.json"), {
+    name: "salt-info-authority",
+    private: true,
+    packageManager: "npm@11.0.0",
+    workspaces: ["apps/*"],
+    dependencies: {
+      "@salt-ds/cli": "^0.0.0",
+      "@salt-ds/knowledge": "^0.0.0",
+    },
+  });
+}
+
+async function linkDirectory(target: string, link: string): Promise<void> {
+  await fs.mkdir(path.dirname(link), { recursive: true });
+  await fs.symlink(
+    target,
+    link,
+    process.platform === "win32" ? "junction" : "dir",
+  );
+}
+
 afterEach(async () => {
   await Promise.all(
     temporaryRoots
@@ -66,6 +104,133 @@ afterEach(async () => {
 });
 
 describe("info command path projection", () => {
+  it("reports the selected hoisted workspace app relative to its authority", async () => {
+    const authorityRoot = await fixtureRoot();
+    await writeWorkspaceRoot(authorityRoot);
+    await writeJson(
+      path.join(authorityRoot, "apps", "consumer", "package.json"),
+      { name: "consumer", dependencies: { "@salt-ds/core": "1.70.0" } },
+    );
+    await writeInstalledPackage(authorityRoot, "core", "1.70.0");
+
+    const result = await runInfoCommand({
+      rootDir: authorityRoot,
+      project: "apps/consumer",
+      cliVersion: "0.0.0",
+    });
+
+    expect(result.selection.status).toBe("selected");
+    expect(result.project.root).toBe("apps/consumer");
+    expect(result.project.package_manifest.path).toBe(
+      "apps/consumer/package.json",
+    );
+    expect(result.project.workspace).toMatchObject({
+      packageRoot: "apps/consumer",
+      workspaceRoot: ".",
+    });
+    expect(result.project.packages).toEqual([
+      expect.objectContaining({
+        name: "@salt-ds/core",
+        observed_manifest_path: "node_modules/@salt-ds/core/package.json",
+      }),
+    ]);
+    expect(JSON.stringify(result)).not.toContain(authorityRoot);
+  });
+
+  it("does not treat a tooling-only authority root as a Salt project", async () => {
+    const root = await fixtureRoot();
+    await writeWorkspaceRoot(root);
+
+    const result = await runInfoCommand({
+      rootDir: root,
+      project: ".",
+      cliVersion: "0.0.0",
+    });
+
+    expect(result.project.root).toBe(".");
+    expect(result.selection).toMatchObject({ status: "not_salt" });
+  });
+
+  it("requires an explicit selection when an authority contains two apps", async () => {
+    const authorityRoot = await fixtureRoot();
+    await writeWorkspaceRoot(authorityRoot);
+    for (const [app, packageName, version] of [
+      ["one", "core", "1.70.0"],
+      ["two", "theme", "1.45.0"],
+    ] as const) {
+      await writeJson(path.join(authorityRoot, "apps", app, "package.json"), {
+        name: app,
+        dependencies: { [`@salt-ds/${packageName}`]: version },
+      });
+      await writeInstalledPackage(authorityRoot, packageName, version);
+    }
+
+    const rootResult = await runInfoCommand({
+      rootDir: authorityRoot,
+      project: ".",
+      cliVersion: "0.0.0",
+    });
+    const [first, second] = await Promise.all(
+      ["apps/one", "apps/two"].map((project) =>
+        runInfoCommand({
+          rootDir: authorityRoot,
+          project,
+          cliVersion: "0.0.0",
+        }),
+      ),
+    );
+
+    expect(rootResult).toMatchObject({
+      project: { root: ".", packages: [] },
+      selection: { status: "not_salt", installed_package_vector: [] },
+    });
+    expect(first.project).toMatchObject({
+      root: "apps/one",
+      packages: [expect.objectContaining({ name: "@salt-ds/core" })],
+    });
+    expect(second.project).toMatchObject({
+      root: "apps/two",
+      packages: [expect.objectContaining({ name: "@salt-ds/theme" })],
+    });
+  });
+
+  it("accepts contained project links and rejects escaping project links", async () => {
+    const authorityRoot = await fixtureRoot();
+    const outsideRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-info-outside-link-"),
+    );
+    temporaryRoots.push(outsideRoot);
+    await writeWorkspaceRoot(authorityRoot);
+    await writeJson(
+      path.join(authorityRoot, "apps", "consumer", "package.json"),
+      { name: "consumer", dependencies: { "@salt-ds/core": "1.70.0" } },
+    );
+    await writeInstalledPackage(authorityRoot, "core", "1.70.0");
+    await linkDirectory(
+      path.join(authorityRoot, "apps", "consumer"),
+      path.join(authorityRoot, "links", "contained"),
+    );
+    await linkDirectory(
+      outsideRoot,
+      path.join(authorityRoot, "links", "escaping"),
+    );
+
+    await expect(
+      runInfoCommand({
+        rootDir: authorityRoot,
+        project: "links/contained",
+        cliVersion: "0.0.0",
+      }),
+    ).resolves.toMatchObject({ project: { root: "apps/consumer" } });
+    await expect(
+      runInfoCommand({
+        rootDir: authorityRoot,
+        project: "links/escaping",
+        cliVersion: "0.0.0",
+      }),
+    ).rejects.toMatchObject({ code: "SALT_PROJECT_ROOT_UNAVAILABLE" });
+  });
+
   it("selects independently versioned exact installed package families", async () => {
     const root = await fixtureRoot();
     await fs.writeFile(
@@ -94,7 +259,11 @@ describe("info command path projection", () => {
       );
     }
 
-    const result = await runInfoCommand({ rootDir: root, cliVersion: "0.0.0" });
+    const result = await runInfoCommand({
+      rootDir: root,
+      project: ".",
+      cliVersion: "0.0.0",
+    });
     expect(result.selection).toMatchObject({
       status: "selected",
       reason_code: "SALT_PROJECT_SELECTED",
@@ -108,7 +277,11 @@ describe("info command path projection", () => {
 
   it("uses portable project-relative paths without leaking its temp authority", async () => {
     const root = await fixtureRoot();
-    const result = await runInfoCommand({ rootDir: root, cliVersion: "0.0.0" });
+    const result = await runInfoCommand({
+      rootDir: root,
+      project: ".",
+      cliVersion: "0.0.0",
+    });
     const serialized = JSON.stringify(result);
 
     expect(result.project.root).toBe(".");
@@ -129,7 +302,11 @@ describe("info command path projection", () => {
       "utf8",
     );
 
-    const result = await runInfoCommand({ rootDir: root, cliVersion: "0.0.0" });
+    const result = await runInfoCommand({
+      rootDir: root,
+      project: ".",
+      cliVersion: "0.0.0",
+    });
     expect(result.project.root).toBe(".");
     expect(result.project.package_manifest.path).toBe("package.json");
     expect(result.project.workspace.packageRoot).toBe(".");
@@ -150,6 +327,7 @@ describe("info command path projection", () => {
       workspaceRoot: path.dirname(outsidePath),
     };
     knowledgeHarness.inspectSaltProjectFacts.mockResolvedValue({
+      authorityRoot: root,
       limitations: inspected.limitations,
       facts: {
         ...inspected.facts,
@@ -177,7 +355,11 @@ describe("info command path projection", () => {
       },
     });
 
-    const result = await runInfoCommand({ rootDir: root, cliVersion: "0.0.0" });
+    const result = await runInfoCommand({
+      rootDir: root,
+      project: ".",
+      cliVersion: "0.0.0",
+    });
     expect(result.project.package_manifest.path).toBeNull();
     expect(result.project.workspace.workspaceRoot).toBeNull();
     expect(result.project.packages[0]?.observed_manifest_path).toBeNull();

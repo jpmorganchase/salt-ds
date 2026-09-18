@@ -65,6 +65,98 @@ describe("inspectSaltProjectFacts", () => {
     expect(result.facts.installation.inspection.status).toBe("succeeded");
   });
 
+  it("reads only package metadata, never source files or executable configuration", async () => {
+    const root = await fixtureRoot();
+    const source = path.join(root, "src", "app.ts");
+    const config = path.join(root, "vite.config.js");
+    await fs.mkdir(path.dirname(source), { recursive: true });
+    await fs.writeFile(
+      source,
+      "throw new Error('must not read source');\n",
+      "utf8",
+    );
+    await fs.writeFile(
+      config,
+      "throw new Error('must not execute config');\n",
+      "utf8",
+    );
+    const open = vi.spyOn(fs, "open");
+
+    const result = await inspectSaltProjectFacts({ rootDir: root });
+
+    expect(result.facts.declared_salt_packages).toEqual([
+      { name: "@salt-ds/core", version: "1.69.0" },
+    ]);
+    const openedPaths = open.mock.calls.map(([filePath]) => String(filePath));
+    expect(openedPaths).toContain(path.join(root, "package.json"));
+    expect(openedPaths).not.toHaveLength(0);
+    expect(
+      openedPaths.every(
+        (openedPath) =>
+          openedPath.startsWith(`${root}${path.sep}`) &&
+          openedPath.endsWith(`${path.sep}package.json`),
+      ),
+    ).toBe(true);
+    expect(openedPaths).not.toContain(source);
+    expect(openedPaths).not.toContain(config);
+    open.mockRestore();
+  });
+
+  it("collects only UI packages before resolution and version-health checks", async () => {
+    const root = await fixtureRoot();
+    await fs.writeFile(
+      path.join(root, "package.json"),
+      JSON.stringify({
+        name: "fixture",
+        packageManager: "npm@11.0.0",
+        dependencies: {
+          "@salt-ds/core": "1.69.0",
+          "@salt-ds/cli": "file:../cli",
+          "@salt-ds/knowledge": "^0.0.0",
+        },
+        devDependencies: { "@salt-ds/cli": "^999.0.0" },
+      }),
+      "utf8",
+    );
+
+    const result = await inspectSaltProjectFacts({ rootDir: root });
+
+    expect(result.facts.declared_salt_packages).toEqual([
+      { name: "@salt-ds/core", version: "1.69.0" },
+    ]);
+    expect(result.facts.installation.resolvedPackages).toEqual([
+      expect.objectContaining({ name: "@salt-ds/core" }),
+    ]);
+    expect(result.facts.installation.versionHealth).toMatchObject({
+      multipleDeclaredVersions: false,
+      mismatchedPackages: [],
+      unverifiablePackages: [],
+    });
+  });
+
+  it("treats a tooling-only manifest as having no Salt UI evidence", async () => {
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "salt-info-tools-"));
+    tempDirectories.push(root);
+    await fs.writeFile(
+      path.join(root, "package.json"),
+      JSON.stringify({
+        dependencies: {
+          "@salt-ds/cli": "file:../cli",
+          "@salt-ds/knowledge": "^0.0.0",
+        },
+      }),
+      "utf8",
+    );
+
+    const result = await inspectSaltProjectFacts({ rootDir: root });
+
+    expect(result.facts.declared_salt_packages).toEqual([]);
+    expect(result.facts.installation.resolvedPackages).toEqual([]);
+    expect(
+      result.facts.installation.versionHealth.unverifiablePackages,
+    ).toEqual([]);
+  });
+
   it("does not inspect repository project-policy marker files", async () => {
     const root = await fixtureRoot();
     await fs.mkdir(path.join(root, ".salt"), { recursive: true });
@@ -126,6 +218,10 @@ describe("inspectSaltProjectFacts", () => {
         private: true,
         packageManager: "npm@11.0.0",
         workspaces: ["packages/*"],
+        dependencies: {
+          "@salt-ds/cli": "^0.0.0",
+          "@salt-ds/knowledge": "^0.0.0",
+        },
       }),
       "utf8",
     );
@@ -147,10 +243,14 @@ describe("inspectSaltProjectFacts", () => {
       rootDir: packageRoot,
       authorityRoot: root,
     });
+    expect(result.authorityRoot).toBe(await fs.realpath(root));
     expect(result.facts.workspace).toMatchObject({
       kind: "workspace-package",
       workspaceRoot: root.replaceAll("\\", "/"),
     });
+    expect(result.facts.declared_salt_packages).toEqual([
+      { name: "@salt-ds/core", version: "1.69.0" },
+    ]);
     expect(result.facts.installation.resolvedPackages[0]).toMatchObject({
       name: "@salt-ds/core",
       resolvedVersion: "1.69.0",

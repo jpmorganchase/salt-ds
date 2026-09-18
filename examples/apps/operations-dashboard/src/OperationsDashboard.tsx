@@ -2,37 +2,63 @@ import {
   Banner,
   BannerContent,
   Button,
+  type Density,
   Dialog,
-  DialogActions,
-  DialogContent,
   DialogHeader,
   FlexLayout,
-  FormField,
-  FormFieldLabel,
   H1,
   Input,
+  type Mode,
   SaltProviderNext,
   StackLayout,
   StatusIndicator,
   Table,
   TBody,
   TD,
+  Text,
   TH,
   THead,
   TR,
-  Text,
-  type Density,
-  type Mode,
 } from "@salt-ds/core";
 import { AddIcon, DarkIcon, LightIcon, SearchIcon } from "@salt-ds/icons";
 import { Metric, MetricContent, MetricHeader } from "@salt-ds/lab";
-import { type FormEvent, useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { createLocalDemoAdapter } from "./workflows/record-form/localDemoAdapter";
+import { RecordForm } from "./workflows/record-form/RecordForm";
+import {
+  type RecordDraft,
+  type RecordFormSubmission,
+} from "./workflows/record-form/types";
 
 const services = [
-  { name: "Order gateway", owner: "Trading platform", region: "London", status: "Operational", latency: "42 ms" },
-  { name: "Risk calculator", owner: "Risk engineering", region: "New York", status: "Degraded", latency: "187 ms" },
-  { name: "Reference data", owner: "Data services", region: "Singapore", status: "Operational", latency: "65 ms" },
-  { name: "Client reporting", owner: "Digital channels", region: "London", status: "Maintenance", latency: "—" },
+  {
+    name: "Order gateway",
+    owner: "Trading platform",
+    region: "London",
+    status: "Operational",
+    latency: "42 ms",
+  },
+  {
+    name: "Risk calculator",
+    owner: "Risk engineering",
+    region: "New York",
+    status: "Degraded",
+    latency: "187 ms",
+  },
+  {
+    name: "Reference data",
+    owner: "Data services",
+    region: "Singapore",
+    status: "Operational",
+    latency: "65 ms",
+  },
+  {
+    name: "Client reporting",
+    owner: "Digital channels",
+    region: "London",
+    status: "Maintenance",
+    latency: "—",
+  },
 ];
 
 export function OperationsDashboard() {
@@ -40,28 +66,75 @@ export function OperationsDashboard() {
   const [density, setDensity] = useState<Density>("low");
   const [query, setQuery] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [created, setCreated] = useState(false);
+  const [lastCreatedRecord, setLastCreatedRecord] =
+    useState<RecordDraft | null>(null);
+  const [draft, setDraft] = useState<RecordDraft>({
+    title: "",
+    service: services[1].name,
+  });
+  const [submission, setSubmission] = useState<RecordFormSubmission>({
+    status: "idle",
+  });
+  const [localDemoAdapter] = useState(createLocalDemoAdapter);
+  const submitting = useRef(false);
 
   const visibleServices = useMemo(() => {
     const normalized = query.trim().toLowerCase();
     return normalized
-      ? services.filter((service) => Object.values(service).some((value) => value.toLowerCase().includes(normalized)))
+      ? services.filter((service) =>
+          Object.values(service).some((value) =>
+            value.toLowerCase().includes(normalized),
+          ),
+        )
       : services;
   }, [query]);
 
-  const createIncident = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const closeRecordForm = () => {
+    if (submitting.current || submission.status === "pending") return;
+    setSubmission({ status: "idle" });
     setDialogOpen(false);
-    setCreated(true);
+  };
+
+  const createIncident = (nextDraft: RecordDraft) => {
+    if (submitting.current) return;
+    submitting.current = true;
+    setLastCreatedRecord(null);
+    setSubmission({ status: "pending" });
+    void localDemoAdapter
+      .submit(nextDraft)
+      .then((record) => {
+        setLastCreatedRecord(record);
+        setSubmission({ status: "idle" });
+        setDialogOpen(false);
+      })
+      .catch((error: unknown) => {
+        const message =
+          error instanceof Error
+            ? error.message
+            : "The local demo could not save this record. Your details are still available; retry when ready.";
+        setSubmission({ status: "failed", message });
+      })
+      .finally(() => {
+        submitting.current = false;
+      });
   };
 
   return (
-    <SaltProviderNext mode={mode} density={density} accent="teal" corner="rounded">
+    <SaltProviderNext
+      mode={mode}
+      density={density}
+      accent="teal"
+      corner="rounded"
+    >
       <div className="dashboardShell" data-mode={mode} data-density={density}>
         <header className="topBar">
-          <a className="brand" href="#main">Northstar operations</a>
+          <a className="brand" href="#main">
+            Northstar operations
+          </a>
           <nav aria-label="Primary navigation">
-            <a aria-current="page" href="#services">Services</a>
+            <a aria-current="page" href="#services">
+              Services
+            </a>
             <a href="#incidents">Incidents</a>
             <a href="#changes">Changes</a>
           </nav>
@@ -72,7 +145,11 @@ export function OperationsDashboard() {
               aria-label={`Use ${mode === "light" ? "dark" : "light"} mode`}
               onClick={() => setMode(mode === "light" ? "dark" : "light")}
             >
-              {mode === "light" ? <DarkIcon aria-hidden /> : <LightIcon aria-hidden />}
+              {mode === "light" ? (
+                <DarkIcon aria-hidden />
+              ) : (
+                <LightIcon aria-hidden />
+              )}
             </Button>
             <Button
               appearance="bordered"
@@ -96,9 +173,12 @@ export function OperationsDashboard() {
             </Button>
           </section>
 
-          {created && (
+          {lastCreatedRecord && (
             <Banner status="success">
-              <BannerContent role="status">Incident created and responders notified.</BannerContent>
+              <BannerContent role="status">
+                Local demo recorded {lastCreatedRecord.title} for{" "}
+                {lastCreatedRecord.service}. No notification was sent.
+              </BannerContent>
             </Banner>
           )}
 
@@ -123,9 +203,18 @@ export function OperationsDashboard() {
             </article>
           </section>
 
-          <section id="services" className="servicePanel" aria-labelledby="services-title">
+          <section
+            id="services"
+            className="servicePanel"
+            aria-labelledby="services-title"
+          >
             <div className="panelHeader">
-              <div><h2 id="services-title">Service health</h2><Text color="secondary">Production services across all regions</Text></div>
+              <div>
+                <h2 id="services-title">Service health</h2>
+                <Text color="secondary">
+                  Production services across all regions
+                </Text>
+              </div>
               <Input
                 placeholder="Filter services"
                 startAdornment={<SearchIcon aria-hidden />}
@@ -136,9 +225,22 @@ export function OperationsDashboard() {
                 }}
               />
             </div>
-            <div className="tableScroller">
+            <div
+              className="tableScroller"
+              role="region"
+              aria-label="Service health table"
+              tabIndex={0}
+            >
               <Table>
-                <THead><TR><TH>Service</TH><TH>Owner</TH><TH>Region</TH><TH>Status</TH><TH>Latency</TH></TR></THead>
+                <THead>
+                  <TR>
+                    <TH>Service</TH>
+                    <TH>Owner</TH>
+                    <TH>Region</TH>
+                    <TH>Status</TH>
+                    <TH>Latency</TH>
+                  </TR>
+                </THead>
                 <TBody>
                   {visibleServices.map((service) => (
                     <TR key={service.name}>
@@ -168,26 +270,26 @@ export function OperationsDashboard() {
           </section>
         </main>
 
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen} size="small" status="warning">
-          <form onSubmit={createIncident} aria-label="Create incident">
-            <DialogHeader header="Create incident" description="Record the impact before notifying responders." />
-            <DialogContent>
-              <StackLayout gap={2}>
-                <FormField>
-                  <FormFieldLabel>Incident title</FormFieldLabel>
-                  <Input name="title" inputProps={{ required: true }} placeholder="Risk calculator latency" />
-                </FormField>
-                <FormField>
-                  <FormFieldLabel>Affected service</FormFieldLabel>
-                  <Input name="service" inputProps={{ required: true }} placeholder="Risk calculator" />
-                </FormField>
-              </StackLayout>
-            </DialogContent>
-            <DialogActions>
-              <Button appearance="transparent" onClick={() => setDialogOpen(false)}>Cancel</Button>
-              <Button type="submit" sentiment="accented">Create incident</Button>
-            </DialogActions>
-          </form>
+        <Dialog
+          open={dialogOpen}
+          onOpenChange={(open) => {
+            if (!open) closeRecordForm();
+            else setDialogOpen(true);
+          }}
+          size="medium"
+          status="warning"
+        >
+          <DialogHeader
+            header="Create incident"
+            description="Save a local incident record for the selected service. No data leaves this demo."
+          />
+          <RecordForm
+            draft={draft}
+            onCancel={closeRecordForm}
+            onChange={setDraft}
+            onSubmit={createIncident}
+            submission={submission}
+          />
         </Dialog>
       </div>
     </SaltProviderNext>

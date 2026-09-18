@@ -122,6 +122,50 @@ describe("bounded workspace discovery", () => {
     ]);
   });
 
+  it("does not let a tooling-only root override a hoisted Salt UI child", async () => {
+    const root = await fixtureRoot();
+    await json(root, "package.json", {
+      name: "workspace",
+      private: true,
+      packageManager: "npm@11.0.0",
+      workspaces: ["packages/*"],
+      devDependencies: { "@salt-ds/cli": "file:../cli" },
+    });
+    await json(root, "packages/app/package.json", {
+      name: "app",
+      private: true,
+      dependencies: { "@salt-ds/core": "1.70.0" },
+    });
+    await write(root, "packages/app/src/index.ts", "export {};\n");
+    await json(root, "node_modules/@salt-ds/core/package.json", {
+      name: "@salt-ds/core",
+      version: "1.70.0",
+    });
+
+    const result = await discoverSaltProject({ rootDir: root });
+
+    expect(result.workspace_units).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          workspace_unit_id: ".",
+          classification: "unknown",
+          classification_evidence: ["manifest_private:true"],
+          package_vector: [],
+        }),
+        expect.objectContaining({
+          workspace_unit_id: "packages/app",
+          classification: "salt-application",
+          package_vector: [
+            expect.objectContaining({
+              name: "@salt-ds/core",
+              observed_version: "1.70.0",
+            }),
+          ],
+        }),
+      ]),
+    );
+  });
+
   it("can retain a workspace package with no selected source for project decisions", async () => {
     const root = await fixtureRoot();
     await json(root, "package.json", {

@@ -123,6 +123,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
+          fetch-depth: 0
       - name: Use Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
@@ -130,9 +131,15 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn
-      - name: Build MCP registry test inputs
+      - name: Build Knowledge test inputs
         run: yarn workspace @salt-ds/knowledge build:knowledge
-      - run: yarn run test
+      - name: Run repository and AI product tests
+        run: yarn run test --run
+      - name: Validate current AI contracts and execution plan
+        run: |
+          yarn validate:salt-ai:contracts
+          yarn validate:salt-ai:plan-033
+          yarn verify:salt-ai-release-embargo
   consumer-smoke:
     name: Consumer smoke (Node 22 and 24)
     runs-on: ubuntu-latest
@@ -156,6 +163,8 @@ jobs:
         run: yarn
       - name: Build and pack once
         run: |
+          yarn workspace @salt-ds/styles build
+          yarn workspace @salt-ds/icons exec node ../../scripts/build.mjs
           yarn build:ai-tooling
           yarn check:ai-tooling:pack -- --report dist/salt-ai-pack/release-complete.json
       - name: Use Node.js 22 for consumer smoke
@@ -164,14 +173,14 @@ jobs:
           node-version: 22
           cache: "yarn"
       - name: Consumer smoke on Node.js 22
-        run: yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/release-complete.json
+        run: yarn smoke:consumer --journey --skip-build --pack-report dist/salt-ai-pack/release-complete.json
       - name: Use Node.js 24 for consumer smoke
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: 24
           cache: "yarn"
       - name: Consumer smoke on Node.js 24
-        run: yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/release-complete.json
+        run: yarn smoke:consumer --journey --skip-build --pack-report dist/salt-ai-pack/release-complete.json
       - name: Verify tracked files remain unchanged
         run: |
           git diff --exit-code
@@ -194,6 +203,10 @@ jobs:
           CHANGED_QUALITY_BASE: ${{ inputs.changed_quality_base }}
           PLAN_006_UNIT: ${{ inputs.plan_006_unit }}
         run: |
+          if test -e plans/evidence/032/control.json; then
+            echo "Plan 006 is superseded; use the current product dispatch." >&2
+            exit 1
+          fi
           test "$(git rev-parse --verify HEAD)" = "$GITHUB_SHA"
           test "$(git rev-parse --is-shallow-repository)" = "false"
           test "$CHANGED_QUALITY_BASE" = "$(if test "$PLAN_006_UNIT" = "006/00"; then git rev-parse "$GITHUB_SHA^"; else printf '%s' "$GITHUB_SHA"; fi)"

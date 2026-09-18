@@ -67,13 +67,13 @@
     {
       "id": "repo-retrieval-navigation",
       "files": {
-        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\",\"@salt-ds/lab\":\"1.0.0-alpha.102\"}}"
+        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.70.0\",\"@salt-ds/lab\":\"1.0.0-alpha.103\"}}"
       }
     },
     {
       "id": "repo-retrieval-api",
       "files": {
-        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.69.0\",\"@salt-ds/theme\":\"1.44.0\",\"@salt-ds/date-adapters\":\"1.0.2\"}}"
+        "package.json": "{\"private\":true,\"dependencies\":{\"@salt-ds/core\":\"1.70.0\",\"@salt-ds/theme\":\"1.45.0\",\"@salt-ds/date-adapters\":\"1.0.2\"}}"
       }
     },
     {

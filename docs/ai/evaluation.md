@@ -1,65 +1,80 @@
-# Salt AI evaluation protocol
+# Salt AI evaluation and metadata validation
 
-The checked-in evaluation suite is deterministic governance plus a sanitized
-receipt format. It never commits prompts, model output, traces, credentials,
-proprietary repositories, or absolute paths. Those live only in ignored,
-access-controlled `.salt-eval-cache` for the ratified retention period.
+Plan 032 is the active consumer-entry plan. Its current checks validate product
+behavior and the consistency of evaluation definitions separately. A metadata
+validation pass does not establish retrieval quality, model performance,
+consumer outcomes, or Doctor qualification.
 
-## Modes and corpus
+## Current definitions and checks
 
-Four cumulative mode IDs are frozen in `evals/salt-ai/protocol/modes.json`:
-base tools; selected Markdown; Markdown plus CLI and the selected bootstrap;
-and conditional same-bundle MCP. Modes 1-3 are mandatory at GA. Final MCP omit
-closes mode 4 as `not_selected`.
-
-The 14 outcome cases cover choose, configure, create, repair, migrate, project
-wrappers, invalid imports, deprecated props/tokens, partial mismatch, Lab
-prerelease, non-Salt control, and valid no-op behavior. Activation cases are
-disjoint. The activation experiment chooses AGENTS-only, Skill-only, or combined
-by discovery/setup success with no correctness regression, then fewer
-artifacts/tokens.
-
-## Controls
-
-Every full cell uses a fresh checkout/session/cache, identical repository and
-package vector, two declared host/model aliases, three repetitions, fixed
-settings/budgets, a committed seed, and counterbalanced order. One retry is
-allowed only for transient provider transport/rate-limit/5xx failure before any
-output or tool action. Missing, timed-out, tool-failed, empty, invalid, partial,
-or grader-failed scheduled trials remain failures in the denominator.
-
-Deterministic compile/type/interaction/scan checks run before blind human
-judgment. Two mode-blind reviewers adjudicate Salt-specific claims. Raw attempts
-are content-hashed and their retention state is recorded in the sanitized
-receipt.
-
-## Gates
-
-- mode 3 improves task success >=10 percentage points over mode 2 with no exact
-  version-correctness regression;
-- mode 4 adds >=5 points on the MCP-eligible subset or two successful paired
-  cells per host/model, without correctness/claim-rate regression;
-- retrieval recall@5 >=95% micro and category-macro on >=40 gold queries;
-- scan precision >=95% and recall >=90% per rule and macro, with >=20 positive
-  and >=20 negative fixtures per gateable rule;
-- unsupported claims <2% per gated supplied-context mode with >=200 assessable
-  claims and two-reviewer adjudication;
-- public/copy-ready example, deterministic build, provenance, privacy,
-  isolation, and exact-version gates in the metric registry.
-
-`evals/salt-ai/protocol/metric-definitions.json` controls waiver eligibility.
-Integrity, deterministic identity, provenance, privacy/security/path isolation,
-version correctness, failed coverage, complete required modes/cells, mode-3
-uplift, and unsupported-claim rate are never waivable.
-
-## Commands
+The current manifest contains 13 outcome-case definitions, 3 separate activation
+definitions, and 40 retrieval gold queries. Each outcome case declares the exact
+Salt package vector materialized by its fixture's `package.json`. Ordinary cases
+must agree with that manifest; metadata disagreement is an error. The intentional
+mixed-version case still has matching case and fixture metadata, and explicitly
+expects partial compatibility. It is not an exception to metadata equality.
 
 ```shell
 yarn eval:salt-ai:validate
+yarn validate:salt-ai:contracts
+yarn test:ai-tooling
+```
+
+`eval:salt-ai:validate` checks metadata: schemas, contained paths, fixture and
+protocol identities, case/vector agreement, counts, and preserved baseline
+identities. `validate:salt-ai:contracts` combines that validation with current
+package, content, and source contracts. Neither command runs model attempts or
+scores the declared gold queries. The legacy deterministic-validation helper
+likewise counts declared checks; it does not execute those checks.
+
+`test:ai-tooling` executes Knowledge and CLI regressions, including retrieval,
+compatibility, bounded output, and the exposed Doctor implementation. Packed
+consumer journeys provide separate installed-package correctness proof. Doctor
+performance qualification remains separate and has not passed. Current CI runs
+the repository/product tests, current contracts, the active-plan consistency
+check, and the release embargo without automatically replaying historical
+evidence acquisition.
+
+## Preserved baseline reports
+
+The checked-in `evals/salt-ai/baselines/baseline-pre-platform.json` is the
+13-case report preserved by Plan 004/01 at
+`da1d249225c7044dad1c3aa08c960eb08f84dddb`. Its source snapshot and affected paths
+are recorded in `plans/evidence/004/index.json`. Validation checks its unchanged
+report bytes and recomputes the recorded identities from that snapshot's
+manifest, fixtures, and protocol files. Correcting current fixtures does not
+rewrite this report or exempt it from identity checks. CI checks out the history
+needed to read those frozen inputs.
+
+The original 14-case Plan 001/00b report is a separate content-addressed artifact
+referenced by `plans/evidence/001/00b.json`. Its denominator and identities remain
+historical. These two reports must not be substituted for one another. Both
+characterize the retired Catalog-v2 prototype, without a model-quality claim;
+unavailable modes have no scores.
+
+## Historical protocol and audit commands
+
+The four frozen mode IDs, two host aliases, three repetitions, retry policy,
+adjudication, budgets, and metric/waiver definitions remain historical protocol
+data. Their old mode-3/mode-4 uplift targets, retrieval and scan thresholds, and
+outcome denominators do not dispatch a current product study. MCP was omitted;
+the generic `eval:salt-ai:run` and `eval:salt-ai:gate` aliases are retired. There
+is no replacement model-outcome runner in this unit. Future consumer or model
+trials require their separately activated scope.
+
+Use these explicit commands when auditing historical contracts or changing
+their readers:
+
+```shell
+yarn validate:salt-ai:contracts:historical
+yarn test:salt-ai-governance
 yarn eval:salt-ai:report -- --cohort baseline-pre-platform
 ```
 
-The immutable Unit 00b baseline characterizes the retired deterministic
-Catalog-v2 prototype. It is retained as historical evaluation evidence and is
-not regenerated after the Unit 07 MCP omission. It does not claim model
-quality. Modes 2-4 are explicitly `not_available` and have no score.
+The report command renders the preserved report. It does not rerun the original
+experiment or regenerate baseline evidence. Historical contract checks retain
+their rejection cases and frozen inputs independently of current metadata.
+
+Do not commit raw prompts, model output, traces, credentials, proprietary
+repositories, or absolute paths. The retained protocol's private cache and
+retention rules do not authorize collecting new trial data.
