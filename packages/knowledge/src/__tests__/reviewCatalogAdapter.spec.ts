@@ -45,12 +45,19 @@ describe("review catalog adapter", () => {
       "When the interaction navigates the user to a different destination rather than triggering an on-page action. Instead, use Link for inline or lower-priority navigation, or LinkButton when navigation stands alone, should stand out from inline links, or sits alongside buttons and should share their visual weight and alignment.",
     );
 
-    const linkButton = storeCatalog.components.find(
+    const avatarGroup = storeCatalog.components.find(
       (component) =>
         component.package.name === "@salt-ds/lab" &&
+        component.source.export_name === "AvatarGroup",
+    );
+    expect(avatarGroup?.status).toBe("lab");
+
+    const linkButton = storeCatalog.components.find(
+      (component) =>
+        component.package.name === "@salt-ds/core" &&
         component.source.export_name === "LinkButton",
     );
-    expect(linkButton?.status).toBe("lab");
+    expect(linkButton?.status).toBe("stable");
 
     const lineChartIcon = storeCatalog.deprecations.find(
       (deprecation) =>

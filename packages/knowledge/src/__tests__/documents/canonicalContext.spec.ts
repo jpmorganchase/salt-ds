@@ -121,7 +121,7 @@ function workflowFile(path: string, role: "reusable" | "setup" | "demo-only") {
 }
 
 function fixtureStore(
-  options: { longFormGuidance?: boolean } = {},
+  options: { longFormGuidance?: boolean; sourceExample?: boolean } = {},
 ): KnowledgeRecordStore {
   const recipe = workflowRecipe();
   const artifacts = new Map<string, Buffer>([
@@ -310,8 +310,27 @@ function fixtureStore(
       compatibility: { packages: [] },
     },
     readArtifact: (path: string) => artifacts.get(path)!,
-    getFamily: (family: string) =>
-      family === "search_document"
+    getFamily: (family: string) => {
+      if (family === "evidence" && options.sourceExample) {
+        return [
+          {
+            family: "evidence",
+            id: "example:component:component.button:button.loading",
+            evidence_kind: "executable_example",
+            local_id: "button.loading",
+            owner: { family: "component", id: "component.button" },
+            owner_ordinal: 0,
+            title: "Loading Button",
+            description: "Show a pending action.",
+            intent: ["pending", "action"],
+            source_ref: { family: "source", id: "source.button.loading" },
+            supporting_files: [
+              { source_path: "site/src/examples/button/Loading.css" },
+            ],
+          },
+        ];
+      }
+      return family === "search_document"
         ? [
             {
               target: { family: "component", id: "component.button" },
@@ -335,7 +354,8 @@ function fixtureStore(
               facets: {},
             },
           ]
-        : [],
+        : [];
+    },
     getRecord: (family: string, id: string) =>
       records.get(`${family}:${id}`) ?? null,
     getContentValue: (reference: { id: string }) => contents.get(reference.id),
@@ -350,6 +370,17 @@ function fixtureStore(
 }
 
 describe("canonical knowledge context", () => {
+  it("keeps complete fitting guidance for a multi-word query without source examples", () => {
+    const result = buildKnowledgeContext(fixtureStore(), {
+      query: "Button loading announcement",
+      limit: 8,
+    });
+    expect(result.contextual_examples).toBeUndefined();
+    expect(result.truncated).toBe(false);
+    expect(result.canonical_documents?.[0]?.sections.length).toBeGreaterThan(1);
+    expect(result.canonical_documents?.[0]?.files).toHaveLength(1);
+  });
+
   it("deduplicates an attached Button guide and uses narrow coverage for loading props, evidence, and its preview file reference", () => {
     const store = fixtureStore();
     const result = buildKnowledgeContext(store, {
@@ -381,6 +412,30 @@ describe("canonical knowledge context", () => {
       result.utf8_bytes,
     );
     expect(Buffer.byteLength(markdown, "utf8")).toBeLessThanOrEqual(16 * 1024);
+  });
+
+  it("retains an explicitly matched contextual source-example reference without treating it as canonical guidance", () => {
+    const result = buildKnowledgeContext(
+      fixtureStore({ sourceExample: true }),
+      {
+        query: "Button Loading",
+        limit: 8,
+      },
+    );
+    expect(result.contextual_examples).toEqual([
+      expect.objectContaining({
+        reference: "record:component:component.button#example/button.loading",
+        source_records: ["source.button.loading"],
+        supporting_files: ["site/src/examples/button/Loading.css"],
+      }),
+    ]);
+    expect(result.answer_status).toBe("contextual");
+    expect(
+      renderKnowledgeContext(fixtureStore({ sourceExample: true }), {
+        query: "Button Loading",
+        limit: 8,
+      }),
+    ).toContain("record:component:component.button#example/button.loading");
   });
 
   it("keeps a neutral component query contextual when the focused pilot guidance does not cover it", () => {

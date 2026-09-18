@@ -39,6 +39,12 @@ describe("ratified Knowledge-v1 retrieval gold", () => {
     const store = new KnowledgeStore({
       bundleDir: path.resolve(import.meta.dirname, "../../generated"),
     });
+    const testedVersions = new Map<string, string>(
+      store.manifest.compatibility.packages.map((entry) => [
+        entry.name,
+        entry.tested_version,
+      ]),
+    );
     const fixtures = [
       readFixture("api-migrations.json"),
       readFixture("navigation-overlay.json"),
@@ -46,7 +52,17 @@ describe("ratified Knowledge-v1 retrieval gold", () => {
     const outcomes: Array<{ query: GoldQuery; hit: boolean }> = [];
     for (const fixture of fixtures) {
       const installed_versions = Object.fromEntries(
-        fixture.package_vector.map((entry) => [entry.name, entry.version]),
+        // Preserve each gold fixture's package scope while executing its unchanged
+        // queries against this bundle's tested versions, not historical versions.
+        fixture.package_vector.map(({ name }) => {
+          const version = testedVersions.get(name);
+          if (!version) {
+            throw new Error(
+              `Gold fixture ${fixture.id} package ${name} is absent from bundle compatibility.`,
+            );
+          }
+          return [name, version];
+        }),
       );
       for (const query of fixture.gold_queries) {
         const matches = searchSaltRecords(store, {

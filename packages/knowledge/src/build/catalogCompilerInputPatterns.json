@@ -1,6 +1,7 @@
 [
   "package.json",
   "tsconfig.json",
+  "tsconfig.base.json",
   ".yarnrc.yml",
   "yarn.lock",
   "scripts/catalogBuildIdentity.mjs",

@@ -8,7 +8,7 @@ import { describe, expect, it } from "vitest";
 const REPO_ROOT = path.resolve(
   fileURLToPath(new URL("../../../../", import.meta.url)),
 );
-const METADATA_PATH = "packages/theme/css/deprecated/token-replacements.json";
+const METADATA_PATH = "packages/theme/src/css/deprecated/token-replacements.json";
 const SCHEMA_PATH =
   "scripts/schemas/saltThemeDeprecatedTokenReplacementsV1.schema.json";
 const POLICY_REPLACEMENT_KINDS = new Set(["direct", "alternative", "scale"]);
@@ -49,7 +49,7 @@ function collectSaltTokens(source: string): string[] {
 async function collectSourceBackedTokens(): Promise<Set<string>> {
   const sourcePaths = await fg(
     [
-      "packages/theme/css/**/*.css",
+      "packages/theme/src/css/**/*.css",
       "packages/theme/CHANGELOG.md",
       "site/docs/**/*.mdx",
     ],

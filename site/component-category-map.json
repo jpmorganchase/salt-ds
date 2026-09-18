@@ -2,7 +2,7 @@
   "meta": {
     "source": "site/public/search-data.json",
     "generatedOn": "2026-03-20",
-    "componentCount": 78,
+    "componentCount": 79,
     "categoryCount": 12
   },
   "categoryOrder": [
@@ -33,6 +33,11 @@
     "avatar": {
       "title": "Avatar",
       "route": "/salt/components/avatar",
+      "category": "Content and identity"
+    },
+    "avatar-group": {
+      "title": "Avatar Group",
+      "route": "/salt/components/avatar-group",
       "category": "Content and identity"
     },
     "badge": {

@@ -773,6 +773,18 @@ const executableExampleCodec = z
     code_content_ref: catalogContentReferenceCodecFor(
       "executable_example_code",
     ),
+    supporting_files: z.array(
+      z
+        .object({
+          source_path: portableRepositoryPathCodec,
+          source_ref: sourceReferenceCodec,
+          code_content_ref: catalogContentReferenceCodecFor(
+            "executable_example_code",
+          ),
+        })
+        .strict(),
+    ),
+    unresolved_local_imports: z.array(z.string()),
     source_ref: sourceReferenceCodec,
     package_ref: packageReferenceCodec.nullable(),
     extraction_method: z.literal("source_extraction"),
@@ -1722,6 +1734,7 @@ const canonicalCatalogFamilies = {
           return [
             record.owner,
             record.source_ref,
+            ...record.supporting_files.map((file) => file.source_ref),
             ...(record.package_ref ? [record.package_ref] : []),
           ];
         case "external_demo":
@@ -1742,7 +1755,10 @@ const canonicalCatalogFamilies = {
     resolveContentReferences: (record) => {
       switch (record.evidence_kind) {
         case "executable_example":
-          return [record.code_content_ref];
+          return [
+            record.code_content_ref,
+            ...record.supporting_files.map((file) => file.code_content_ref),
+          ];
         case "source_assertion":
           return [record.detail_content_ref];
         case "external_demo":
@@ -1754,7 +1770,10 @@ const canonicalCatalogFamilies = {
     resolveProvenance: (record) => {
       switch (record.evidence_kind) {
         case "executable_example":
-          return [record.source_ref];
+          return [
+            record.source_ref,
+            ...record.supporting_files.map((file) => file.source_ref),
+          ];
         case "documentation_link":
           return record.page_ref ? [record.page_ref] : [];
         case "source_assertion":

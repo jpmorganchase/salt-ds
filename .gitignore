@@ -17,6 +17,7 @@ node_modules
 
 # testing
 /.vitest
+/.vitest-attachments
 /test/browser/screenshots
 /coverage
 .nyc_output

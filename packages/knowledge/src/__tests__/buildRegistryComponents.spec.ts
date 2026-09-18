@@ -37,6 +37,7 @@ async function writeFixtureRepo(
     exampleName?: string;
     examplesMdxContent?: string;
     exampleSourceContent?: string;
+    exampleSupportFiles?: Record<string, string>;
     sourceContent?: string;
     sourceCodeUrl?: string;
   } = {},
@@ -169,6 +170,13 @@ Fixture source-backed example.
 `,
     "utf8",
   );
+  for (const [relativePath, content] of Object.entries(
+    options.exampleSupportFiles ?? {},
+  )) {
+    const supportPath = path.join(exampleDir, relativePath);
+    await fs.mkdir(path.dirname(supportPath), { recursive: true });
+    await fs.writeFile(supportPath, content, "utf8");
+  }
 }
 
 function buildCoreFixturePackage(): PackageRecord {
@@ -715,6 +723,58 @@ A button with \`loading={true}\` displays a spinner while the action is in progr
       );
       expect(example.description).toContain("loadingAnnouncement");
       expect(example.description).not.toContain("Best practices");
+    } finally {
+      await fs.rm(repoRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("captures direct public local support modules without claiming their transitive closure", async () => {
+    const repoRoot = await fs.mkdtemp(
+      path.join(os.tmpdir(), "salt-component-example-support-fixture-"),
+    );
+
+    try {
+      await writeFixtureRepo(repoRoot, {
+        exampleSourceContent: `import { label } from "./data";
+import "./styles.css";
+
+export function BasicFixtureAction() {
+  const modulePath = "./optional";
+  void import(modulePath);
+  return <div>{label}</div>;
+}
+`,
+        exampleSupportFiles: {
+          "data.ts":
+            'import { suffix } from "./nested";\nexport const label = suffix;\n',
+          "nested.ts": 'export const suffix = "support";\n',
+          "styles.css": ".fixture { color: red; }\n",
+        },
+      });
+      const [component] = await extractComponents(
+        repoRoot,
+        new Map([[buildFixturePackage().name, buildFixturePackage()]]),
+        { byPackage: new Map() },
+      );
+
+      expect(component.examples[0]?.supporting_files).toEqual([
+        expect.objectContaining({
+          source_path: "site/src/examples/fixture-action/data.ts",
+          code: expect.stringContaining('import { suffix } from "./nested"'),
+        }),
+        expect.objectContaining({
+          source_path: "site/src/examples/fixture-action/styles.css",
+          code: ".fixture { color: red; }\n",
+        }),
+      ]);
+      expect(
+        component.examples[0]?.supporting_files?.map(
+          (file) => file.source_path,
+        ),
+      ).not.toContain("site/src/examples/fixture-action/nested.ts");
+      expect(component.examples[0]?.unresolved_local_imports).toEqual([
+        "<non-literal dynamic import>",
+      ]);
     } finally {
       await fs.rm(repoRoot, { recursive: true, force: true });
     }

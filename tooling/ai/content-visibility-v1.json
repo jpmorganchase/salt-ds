@@ -41,7 +41,7 @@
       "reason": "Canonical authored migration records."
     },
     {
-      "path": "packages/ag-grid-theme/css",
+      "path": "packages/ag-grid-theme/src/css",
       "visibility": "public",
       "content_kinds": ["api", "implementation"],
       "reason": "Published theme CSS."
@@ -101,7 +101,7 @@
       "reason": "Published prerelease package API source."
     },
     {
-      "path": "packages/react-resizable-panels-theme/index.css",
+      "path": "packages/react-resizable-panels-theme/src/index.css",
       "visibility": "public",
       "content_kinds": ["api", "implementation", "metadata"],
       "reason": "Published package CSS entry."
@@ -113,7 +113,7 @@
       "reason": "Published package API source."
     },
     {
-      "path": "packages/theme/css",
+      "path": "packages/theme/src/css",
       "visibility": "public",
       "content_kinds": ["api", "implementation"],
       "reason": "Published theme CSS."

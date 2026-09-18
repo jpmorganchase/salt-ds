@@ -1,0 +1,21 @@
+:root {
+  font-family: var(--salt-text-fontFamily);
+  background: var(--salt-container-primary-background);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.appShell {
+  display: grid;
+  gap: var(--salt-spacing-200);
+  width: min(100% - var(--salt-spacing-400), 960px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: var(--salt-spacing-400) 0;
+}

@@ -251,15 +251,13 @@ describe("buildSelectedGuidance", () => {
   it("reports an unsupported selected source with its own provenance", async () => {
     const sourceRoot = await copiedFixture();
     const fixtureFormsPath = path.join(sourceRoot, formsPath);
-    const original = await readFile(fixtureFormsPath, "utf8");
-    await writeFile(
-      fixtureFormsPath,
-      original.replace(
-        "---\n\n<LivePreview",
-        '---\n\n{(() => { throw new Error("must stay inert"); })()}\n\n<LivePreview',
-      ),
-      "utf8",
+    const original = canonicalText(await readFile(fixtureFormsPath, "utf8"));
+    const unsupportedSource = original.replace(
+      /^(---\n[\s\S]*?\n---\n)/u,
+      '$1\n{(() => { throw new Error("must stay inert"); })()}\n',
     );
+    expect(unsupportedSource).not.toBe(original);
+    await writeFile(fixtureFormsPath, unsupportedSource, "utf8");
 
     await expect(
       buildSelectedGuidance({ ...input(), sourceRoot }),

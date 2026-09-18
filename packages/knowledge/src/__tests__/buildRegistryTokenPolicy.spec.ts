@@ -49,12 +49,12 @@ async function writeFixtureThemeEntrypoints(repoRoot: string): Promise<void> {
 `;
   await Promise.all([
     fs.writeFile(
-      path.join(repoRoot, "packages/theme/css/theme.css"),
+      path.join(repoRoot, "packages/theme/src/css/theme.css"),
       css,
       "utf8",
     ),
     fs.writeFile(
-      path.join(repoRoot, "packages/theme/css/theme-next.css"),
+      path.join(repoRoot, "packages/theme/src/css/theme-next.css"),
       css,
       "utf8",
     ),
@@ -79,13 +79,13 @@ async function writeFixtureTokenReplacementMetadata(
   repoRoot: string,
   entries: unknown[],
 ): Promise<void> {
-  await fs.mkdir(path.join(repoRoot, "packages/theme/css/deprecated"), {
+  await fs.mkdir(path.join(repoRoot, "packages/theme/src/css/deprecated"), {
     recursive: true,
   });
   await fs.writeFile(
     path.join(
       repoRoot,
-      "packages/theme/css/deprecated/token-replacements.json",
+      "packages/theme/src/css/deprecated/token-replacements.json",
     ),
     `${JSON.stringify(
       {
@@ -157,7 +157,7 @@ describe("token policy source registry", () => {
         recursive: true,
       });
       await fs.mkdir(
-        path.join(repoRoot, "packages/theme/css/next/characteristics"),
+        path.join(repoRoot, "packages/theme/src/css/next/characteristics"),
         { recursive: true },
       );
       await fs.writeFile(
@@ -222,7 +222,7 @@ Text fixture tokens define fixture typography roles.
           fs.writeFile(
             path.join(
               repoRoot,
-              `packages/theme/css/next/characteristics/${category}.css`,
+              `packages/theme/src/css/next/characteristics/${category}.css`,
             ),
             ".salt-theme {}\n",
             "utf8",
@@ -322,7 +322,7 @@ Text fixture tokens define fixture typography roles.
         {
           name: "--salt-legacyfixture-icon",
           category: "legacyfixture",
-          source_paths: ["packages/theme/css/deprecated/fixture.css"],
+          source_paths: ["packages/theme/src/css/deprecated/fixture.css"],
           deprecated_replacements: ["--salt-fixture-gap"],
         },
         sources,
@@ -353,7 +353,7 @@ Text fixture tokens define fixture typography roles.
               source_kind: "token",
               claim_kind: "token",
               source: {
-                repo_path: "packages/theme/css/deprecated/fixture.css",
+                repo_path: "packages/theme/src/css/deprecated/fixture.css",
               },
             }),
           ]),
@@ -371,14 +371,14 @@ Text fixture tokens define fixture typography roles.
 
     try {
       await writeFixturePolicyRepo(repoRoot);
-      await fs.mkdir(path.join(repoRoot, "packages/theme/css/foundations"), {
+      await fs.mkdir(path.join(repoRoot, "packages/theme/src/css/foundations"), {
         recursive: true,
       });
-      await fs.mkdir(path.join(repoRoot, "packages/theme/css/deprecated"), {
+      await fs.mkdir(path.join(repoRoot, "packages/theme/src/css/deprecated"), {
         recursive: true,
       });
       await fs.writeFile(
-        path.join(repoRoot, "packages/theme/css/foundations/fixture.css"),
+        path.join(repoRoot, "packages/theme/src/css/foundations/fixture.css"),
         `.salt-theme {
   --salt-fixture-gap: 8px;
 }
@@ -386,7 +386,7 @@ Text fixture tokens define fixture typography roles.
         "utf8",
       );
       await fs.writeFile(
-        path.join(repoRoot, "packages/theme/css/deprecated/foundations.css"),
+        path.join(repoRoot, "packages/theme/src/css/deprecated/foundations.css"),
         `.salt-theme {
   --salt-legacyfixture-icon: 10px; /* Use --salt-fixture-gap */
 }
@@ -413,7 +413,7 @@ Text fixture tokens define fixture typography roles.
               expect.objectContaining({
                 source_kind: "token",
                 source: {
-                  repo_path: "packages/theme/css/deprecated/foundations.css",
+                  repo_path: "packages/theme/src/css/deprecated/foundations.css",
                 },
               }),
             ]),
@@ -432,14 +432,14 @@ Text fixture tokens define fixture typography roles.
 
     try {
       await writeFixturePolicyRepo(repoRoot);
-      await fs.mkdir(path.join(repoRoot, "packages/theme/css/foundations"), {
+      await fs.mkdir(path.join(repoRoot, "packages/theme/src/css/foundations"), {
         recursive: true,
       });
-      await fs.mkdir(path.join(repoRoot, "packages/theme/css/deprecated"), {
+      await fs.mkdir(path.join(repoRoot, "packages/theme/src/css/deprecated"), {
         recursive: true,
       });
       await fs.writeFile(
-        path.join(repoRoot, "packages/theme/css/foundations/fixture.css"),
+        path.join(repoRoot, "packages/theme/src/css/foundations/fixture.css"),
         `.salt-theme {
   --salt-fixture-gap: 8px;
 }
@@ -447,7 +447,7 @@ Text fixture tokens define fixture typography roles.
         "utf8",
       );
       await fs.writeFile(
-        path.join(repoRoot, "packages/theme/css/deprecated/foundations.css"),
+        path.join(repoRoot, "packages/theme/src/css/deprecated/foundations.css"),
         `.salt-theme {
   --salt-legacyfixture-gap: var(--salt-fixture-gap);
 }
@@ -474,7 +474,7 @@ Text fixture tokens define fixture typography roles.
               expect.objectContaining({
                 source_kind: "token",
                 source: expect.objectContaining({
-                  repo_path: "packages/theme/css/deprecated/foundations.css",
+                  repo_path: "packages/theme/src/css/deprecated/foundations.css",
                   section: expect.stringContaining(
                     "--salt-legacyfixture-gap: var(--salt-fixture-gap)",
                   ),
@@ -504,14 +504,14 @@ Text fixture tokens define fixture typography roles.
 
     try {
       await writeFixturePolicyRepo(repoRoot);
-      await fs.mkdir(path.join(repoRoot, "packages/theme/css/foundations"), {
+      await fs.mkdir(path.join(repoRoot, "packages/theme/src/css/foundations"), {
         recursive: true,
       });
-      await fs.mkdir(path.join(repoRoot, "packages/theme/css/deprecated"), {
+      await fs.mkdir(path.join(repoRoot, "packages/theme/src/css/deprecated"), {
         recursive: true,
       });
       await fs.writeFile(
-        path.join(repoRoot, "packages/theme/css/foundations/fixture.css"),
+        path.join(repoRoot, "packages/theme/src/css/foundations/fixture.css"),
         `.salt-theme {
   --salt-fixture-gap: 8px;
 }
@@ -519,7 +519,7 @@ Text fixture tokens define fixture typography roles.
         "utf8",
       );
       await fs.writeFile(
-        path.join(repoRoot, "packages/theme/css/deprecated/foundations.css"),
+        path.join(repoRoot, "packages/theme/src/css/deprecated/foundations.css"),
         `.salt-theme {
   --salt-legacyfixture-gap: var(--salt-fixture-gap); /* Use --salt-undocumented-gap */
 }
@@ -564,14 +564,14 @@ Text fixture tokens define fixture typography roles.
           },
         },
       ]);
-      await fs.mkdir(path.join(repoRoot, "packages/theme/css/foundations"), {
+      await fs.mkdir(path.join(repoRoot, "packages/theme/src/css/foundations"), {
         recursive: true,
       });
-      await fs.mkdir(path.join(repoRoot, "packages/theme/css/deprecated"), {
+      await fs.mkdir(path.join(repoRoot, "packages/theme/src/css/deprecated"), {
         recursive: true,
       });
       await fs.writeFile(
-        path.join(repoRoot, "packages/theme/css/foundations/fixture.css"),
+        path.join(repoRoot, "packages/theme/src/css/foundations/fixture.css"),
         `.salt-theme {
   --salt-fixture-gap: 8px;
 }
@@ -579,7 +579,7 @@ Text fixture tokens define fixture typography roles.
         "utf8",
       );
       await fs.writeFile(
-        path.join(repoRoot, "packages/theme/css/deprecated/foundations.css"),
+        path.join(repoRoot, "packages/theme/src/css/deprecated/foundations.css"),
         `.salt-theme {
   --salt-legacyfixture-gap: var(--salt-undocumented-gap);
 }
@@ -602,7 +602,7 @@ Text fixture tokens define fixture typography roles.
               expect.objectContaining({
                 source: expect.objectContaining({
                   repo_path:
-                    "packages/theme/css/deprecated/token-replacements.json",
+                    "packages/theme/src/css/deprecated/token-replacements.json",
                 }),
               }),
             ]),
@@ -626,14 +626,14 @@ Text fixture tokens define fixture typography roles.
 
     try {
       await writeFixturePolicyRepo(repoRoot);
-      await fs.mkdir(path.join(repoRoot, "packages/theme/css/foundations"), {
+      await fs.mkdir(path.join(repoRoot, "packages/theme/src/css/foundations"), {
         recursive: true,
       });
-      await fs.mkdir(path.join(repoRoot, "packages/theme/css/deprecated"), {
+      await fs.mkdir(path.join(repoRoot, "packages/theme/src/css/deprecated"), {
         recursive: true,
       });
       await fs.writeFile(
-        path.join(repoRoot, "packages/theme/css/foundations/fixture.css"),
+        path.join(repoRoot, "packages/theme/src/css/foundations/fixture.css"),
         `.salt-theme {
   --salt-fixture-gap: 8px;
 }
@@ -641,7 +641,7 @@ Text fixture tokens define fixture typography roles.
         "utf8",
       );
       await fs.writeFile(
-        path.join(repoRoot, "packages/theme/css/deprecated/foundations.css"),
+        path.join(repoRoot, "packages/theme/src/css/deprecated/foundations.css"),
         `/*
 * **Deprecated:** Use fixture instead
 */
@@ -678,7 +678,7 @@ Text fixture tokens define fixture typography roles.
               expect.objectContaining({
                 source_kind: "token",
                 source: {
-                  repo_path: "packages/theme/css/deprecated/foundations.css",
+                  repo_path: "packages/theme/src/css/deprecated/foundations.css",
                 },
               }),
             ]),
@@ -781,7 +781,7 @@ Text fixture tokens define fixture typography roles.
               claim_kind: "token",
               source: expect.objectContaining({
                 repo_path:
-                  "packages/theme/css/deprecated/token-replacements.json",
+                  "packages/theme/src/css/deprecated/token-replacements.json",
                 section: expect.stringContaining(
                   "--salt-legacyfixture-gap -> --salt-fixture-gap",
                 ),
@@ -804,11 +804,11 @@ Text fixture tokens define fixture typography roles.
 
     try {
       await writeFixturePolicyRepo(repoRoot);
-      await fs.mkdir(path.join(repoRoot, "packages/theme/css/foundations"), {
+      await fs.mkdir(path.join(repoRoot, "packages/theme/src/css/foundations"), {
         recursive: true,
       });
       await fs.writeFile(
-        path.join(repoRoot, "packages/theme/css/foundations/fixture.css"),
+        path.join(repoRoot, "packages/theme/src/css/foundations/fixture.css"),
         `.salt-theme {
   --salt-fixture-source-backed-gap: 12px;
 }
@@ -847,7 +847,7 @@ Text fixture tokens define fixture typography roles.
             expect.objectContaining({
               source_kind: "token",
               source: expect.objectContaining({
-                repo_path: "packages/theme/css/foundations/fixture.css",
+                repo_path: "packages/theme/src/css/foundations/fixture.css",
                 section: expect.stringContaining(
                   "--salt-fixture-source-backed-gap",
                 ),
@@ -877,11 +877,11 @@ Text fixture tokens define fixture typography roles.
 
     try {
       await writeFixturePolicyRepo(repoRoot);
-      await fs.mkdir(path.join(repoRoot, "packages/theme/css/deprecated"), {
+      await fs.mkdir(path.join(repoRoot, "packages/theme/src/css/deprecated"), {
         recursive: true,
       });
       await fs.writeFile(
-        path.join(repoRoot, "packages/theme/css/deprecated/foundations.css"),
+        path.join(repoRoot, "packages/theme/src/css/deprecated/foundations.css"),
         `.salt-theme {
   --salt-fixture-deprecated-gap: 12px;
 }
@@ -1009,7 +1009,7 @@ Text fixture tokens define fixture typography roles.
               claim_kind: "token",
               source: expect.objectContaining({
                 repo_path:
-                  "packages/theme/css/deprecated/token-replacements.json",
+                  "packages/theme/src/css/deprecated/token-replacements.json",
                 section: expect.stringContaining(
                   "Fixture manual replacement metadata must not emit policy.",
                 ),
@@ -1086,14 +1086,14 @@ Text fixture tokens define fixture typography roles.
               id: expect.stringContaining("deprecated-replacement"),
               source: expect.objectContaining({
                 repo_path:
-                  "packages/theme/css/deprecated/token-replacements.json",
+                  "packages/theme/src/css/deprecated/token-replacements.json",
               }),
             }),
             expect.objectContaining({
               id: expect.stringContaining("unsupported"),
               source: expect.objectContaining({
                 repo_path:
-                  "packages/theme/css/deprecated/token-replacements.json",
+                  "packages/theme/src/css/deprecated/token-replacements.json",
               }),
             }),
           ]),
@@ -1117,7 +1117,7 @@ Text fixture tokens define fixture typography roles.
           replacements: ["--salt-legacyfixture-opacity-15"],
           replacement_kind: "scale",
           basis: {
-            source_path: "packages/theme/css/deprecated/foundations.css",
+            source_path: "packages/theme/src/css/deprecated/foundations.css",
             line_start: 5,
             line_end: 5,
           },
@@ -1128,7 +1128,7 @@ Text fixture tokens define fixture typography roles.
           unsupported_reason:
             "No source-backed policy docs resolve this fixture opacity token for generated policy.",
           basis: {
-            source_path: "packages/theme/css/deprecated/foundations.css",
+            source_path: "packages/theme/src/css/deprecated/foundations.css",
             line_start: 6,
             line_end: 6,
           },
@@ -1157,7 +1157,7 @@ Text fixture tokens define fixture typography roles.
               id: expect.stringContaining("deprecated-replacement"),
               source: expect.objectContaining({
                 repo_path:
-                  "packages/theme/css/deprecated/token-replacements.json",
+                  "packages/theme/src/css/deprecated/token-replacements.json",
                 section: expect.stringContaining("kind: scale"),
               }),
             }),
@@ -1165,7 +1165,7 @@ Text fixture tokens define fixture typography roles.
               id: expect.stringContaining("unsupported"),
               source: expect.objectContaining({
                 repo_path:
-                  "packages/theme/css/deprecated/token-replacements.json",
+                  "packages/theme/src/css/deprecated/token-replacements.json",
                 section: expect.stringContaining(
                   "No source-backed policy docs resolve this fixture opacity token for generated policy.",
                 ),
@@ -1231,11 +1231,11 @@ Text fixture tokens define fixture typography roles.
 | \`--salt-intermediatefixture-gap\`    | \`--salt-fixture-gap\` |
 `,
       );
-      await fs.mkdir(path.join(repoRoot, "packages/theme/css/deprecated"), {
+      await fs.mkdir(path.join(repoRoot, "packages/theme/src/css/deprecated"), {
         recursive: true,
       });
       await fs.writeFile(
-        path.join(repoRoot, "packages/theme/css/deprecated/fixture.css"),
+        path.join(repoRoot, "packages/theme/src/css/deprecated/fixture.css"),
         `.salt-theme {
   --salt-legacyfixture-gap: 10px; /* Use --salt-intermediatefixture-gap */
 }
@@ -1267,7 +1267,7 @@ Text fixture tokens define fixture typography roles.
             expect.objectContaining({
               source_kind: "token",
               source: expect.objectContaining({
-                repo_path: "packages/theme/css/deprecated/fixture.css",
+                repo_path: "packages/theme/src/css/deprecated/fixture.css",
               }),
             }),
             expect.objectContaining({

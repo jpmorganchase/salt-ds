@@ -51,11 +51,11 @@ export interface TokenDeclarationExtraction {
 
 const TOKEN_ENTRYPOINTS = [
   {
-    path: "packages/theme/css/theme.css",
+    path: "packages/theme/src/css/theme.css",
     theme: "salt",
   },
   {
-    path: "packages/theme/css/theme-next.css",
+    path: "packages/theme/src/css/theme-next.css",
     theme: "next",
   },
 ] as const;
@@ -592,7 +592,7 @@ export async function extractTokenDeclarations(
   repoRoot: string,
 ): Promise<TokenDeclarationExtraction> {
   const absolutePaths = (
-    await globCatalogInputs("packages/theme/css/**/*.css", {
+    await globCatalogInputs("packages/theme/src/css/**/*.css", {
       cwd: repoRoot,
       absolute: true,
       onlyFiles: true,

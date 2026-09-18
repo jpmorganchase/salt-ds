@@ -203,6 +203,346 @@ Local verification of the service-worklist iteration on 2026-09-08 passed all 73
 
 This local candidate is bundle `sha256:481a857e8a9125d24ef900aa93efedf8e9439ed17010e447a13f8bfb9fd0717b`; the sample-app receipt is `sha256:cabbd97b883a08e5fe6c783015cb0b5e4b5cb1d9814ed9e9d4b9c5cf3427471f`. Knowledge contains 624 packed files, 3,799,560 compressed bytes and 25,699,352 unpacked bytes; CLI remains 13 files, 52,343 compressed bytes and 230,914 unpacked bytes. These results establish local runnable coverage only. Owner/design/manual accessibility review, the independent maintainer exercise and actual consumer observations remain pending, and Unit 033/02a remains in progress. Nothing was published or deployed.
 
+### User-directed Salt UI agent prototype and local comparison
+
+On 2026-09-08 the user authorized a holistic Salt UI creator, a separate reviewer,
+and a small comparison against an ordinary agent using the current guidance,
+including delegation to less expensive models. This is bounded work within
+Unit 033/02a. Add thin Copilot and Codex profiles with one shared workflow that
+uses the existing installed Knowledge and public Salt APIs. The profiles do
+not create another API corpus or depend on the unqualified Doctor product.
+Keep the existing published support artifacts and candidate unchanged.
+
+The exception to the model-trial boundary authorizes four local attempts: two
+prepared Vite fixtures, each run once with ordinary current guidance and once
+with the creator workflow. One task creates a saved-reports screen; the other
+adds team invitations while preserving the starter's existing actions. Freeze
+task briefs and acceptance before inspecting outputs. Use the same source,
+installed cohort, model, reasoning effort, tools and time budget in each pair.
+Fixture setup may obtain declared dependencies and install exact local Salt
+tarballs in temporary evaluation directories. Only the host model connection
+is online during attempts; application execution and Salt retrieval stay local.
+Do not install in actual consumer projects or contact consumers.
+
+Allow a small host-profile smoke check and one independent reviewer pass after
+the four attempts. Record initial acceptance separately from any subsequent
+repair. Compare public Salt reuse, working behavior, browser appearance,
+corrections, elapsed time and available usage counts. Keep raw prompts,
+transcripts and model-produced trial applications outside Git. Commit only
+authored profiles, task fixtures/checks and an aggregate report with limitations.
+Two task pairs cannot establish general model superiority, human design
+acceptance or consumer value. An unavailable host is untested, not passed.
+
+This prototype does not dispatch another unit, change workflow readiness or
+authorize publication, versioning, deployment or consumer installation. Manual
+promotion reviews and the independent maintainer exercise remain outstanding.
+
+The local comparison completed four Terra attempts using the same candidate
+bundle. Both conditions passed the two named automated checklists, but neither
+reused Salt Card for the report summary. Independent review and later diagnostic
+probes found additional layout and state-retention gaps; the prototype did not
+demonstrate a creator-quality advantage. The [comparison report](../evals/salt-ai/ui-agent/RESULTS.md)
+records the scope, timing, host limitations and unchanged initial outputs.
+The shared `salt-ui` Skill and thin profiles remain experimental and outside the
+published agent-support artifacts. Unit 033/02a remains in progress.
+
+### User-directed usable local agent preview
+
+After reviewing the prototype comparison, the user explicitly authorized
+continuing to a usable native Salt AI preview: a substantial application creation
+and an existing-application modification must complete creation, independent
+review, repair and browser verification through the supported host entrypoint.
+This continues Unit 033/02a from `bd9f302da9887278b7e149cf3408332f6a64fc5a`.
+Preserve the original four attempts, their acceptance script and reported results.
+
+Finish the existing shared Skill, thin host profiles and local setup guide. Use
+native Copilot agent discovery and delegation where available; establish actual
+host behavior before claiming support. This scope permits installing an official
+host client in a task-owned local directory, using existing host authentication,
+and running bounded local creation/review/repair sessions against prepared public
+fixtures. It permits the declared fixture dependencies and exact local Salt
+candidate packages. Model connections belong to the host; Salt retrieval and
+application execution remain local. Do not change account subscriptions or use
+actual consumer repositories. Report any host or account blocker specifically
+and continue independent implementation work.
+
+Reuse the existing task fixtures, application seams and browser checks. Add
+clearly separate follow-up acceptance for repeated additive actions, retained
+drafts across navigation, appropriate covered Salt reuse, and inspectable desktop
+and narrow states. Extend creation into a coherent usable reports workspace;
+preserve the existing project application while adding invitations. Exercise the
+native creator/reviewer repair cycle, then independently check the resulting
+applications. Do not promote a repaired result as an original comparison success.
+Keep generated applications and raw host evidence outside Git, with repeatable
+local setup, usable previews and a concise aggregate outcome in authored docs.
+
+No new personas, orchestration service, installer product, broad content corpus,
+or evaluation framework is needed. Fix observed delivery friction at its existing
+owner. Run affected checks, current-plan/contracts/quality and source review, and
+commit unsigned. Local preview completion does not waive human promotion reviews,
+qualify Doctor, or authorize publication, deployment, consumer contact or release.
+
+The local native preview completed on 8 September 2026. Copilot CLI 1.0.83 ran
+the named creator/reviewer profiles on the reports and project-team fixtures.
+Observed Salt reuse, validation and review-evidence defects were repaired; fresh
+native reviews retrieved local records and viewed screenshots after source
+edits stopped. Both saved preview copies passed independent types, production
+builds and the unchanged initial plus separate follow-up browser checks. The
+authored outcome and limits are in
+`evals/salt-ai/ui-agent/FOLLOW_UP_RESULTS.md`. This is a supervised local delivery
+result, not an unattended-quality or cost result; Unit 033/02a remains in progress
+with its human promotion gates unchanged.
+
+### User-directed example retrieval correction
+
+The 2026-09-08 user request to address evidence delivery continues Unit 033/02a
+from `38703d080e5db7d43cf49aae6d9fdabb53593ca9`. Improve the existing Knowledge
+example extraction, normalization, docs resolution and task retrieval so an
+agent can discover complete component examples and their contained supporting
+source through the installed CLI. Reuse existing evidence records and document
+references. Public component examples remain contextual and unvalidated unless
+separate execution evidence establishes readiness; do not label them portable
+verified recipes. Keep unresolved dependencies and budget omissions explicit.
+Reconcile the canonical primitive chooser with navigation usage guidance.
+No new scanner, universal composition rules, second guidance corpus, or broader
+workflow family is authorized by this correction.
+
+Verify focused extraction/resolution/ranking fixtures, the rebuilt Knowledge/CLI
+suite, tooling types, current plan/contracts, public examples/docs, packed
+consumer retrieval and changed-file quality. Follow actual returned references
+from differently worded task queries to complete source, preserving the current
+16 KiB context budget and unrelated retrieval regressions. Run a closeout review.
+
+The request also permits one fresh feature exercise through the existing native
+Copilot creator/reviewer path, using the prepared project fixture with its exact
+local candidate packages. Freeze a bounded unfamiliar task and its behavior
+acceptance before seeing agent output. Keep fixture setup, host-only model
+connections, local application execution, retained raw evidence, and reporting
+boundaries from the usable preview above. Record initial results separately from
+repairs and any lead-supplied Salt decisions; a local result does not establish
+general reliability. Human promotion gates, the unit checkpoint and release
+embargo remain unchanged.
+
+This correction completed local implementation and packaged retrieval checks on
+2026-09-08: 755 tests, tooling types/build, current contracts, public examples/docs,
+exact package validation and packed dashboard acceptance with both negatives
+passed. Four installed task probes exposed eight complete example references;
+all resolved through JSON and Markdown within the context budget. The native
+Luna exercise completed three reviewer passes and two repairs but retained Salt
+selection and narrow-layout defects despite a reviewer pass. After a disclosed
+asynchronous close/focus correction to the acceptance harness, a separate
+supervised repair produced the passing, visually inspected preview. The initial
+native result, harness correction and supervised result remain distinct in
+[`RETRIEVAL_RESULTS.md`](../evals/salt-ai/ui-agent/RETRIEVAL_RESULTS.md).
+This completes the bounded correction, not Unit 033/02a's pending human gates or
+an unattended-reliability claim.
+
+### User-directed reviewer qualification
+
+On 2026-09-09 the user authorized committing the completed retrieval correction,
+testing the native reviewer blindly against the preserved flawed and corrected
+applications, comparing a stronger reviewer only if the cheaper reviewer fails,
+and then running one fresh end-to-end task if a reviewer qualifies. This
+continues Unit 033/02a from retrieval commit
+`4dff7713b1df25608c1ec3821de82d655217bd28` without changing its pending human gates.
+
+The bounded [reviewer protocol](../evals/salt-ai/ui-agent/REVIEWER_PROTOCOL.md)
+adds one incomplete-evidence packet to distinguish missing verification from a
+valid pass. Freeze neutral packet identities, scoring and settings before
+reviewer output. Use three fresh native Luna reviewer sessions; only after a
+required discrimination fails may three equivalent Sol sessions run through the
+same existing account and host. After Copilot could not pin Luna and its three
+review requests routed elsewhere, those attempts were stopped ungraded. Before
+scored output, the qualification moved to the already installed Codex native Salt
+roles with explicit model selection, unchanged packets and unchanged scoring.
+Codex results cannot establish Copilot reviewer reliability. The setup may copy the already verified local
+packages into temporary fixtures and use existing host authentication.
+One unscored setup probe may check authentication, profile loading, local
+retrieval permissions and image reading without assessing a candidate. Model
+connections belong to the host; retrieval and application checks remain local.
+No subscription changes, consumer contact or actual consumer installation are
+authorized. Record native role/path restrictions honestly, without claiming an
+operating-system sandbox that the host does not provide.
+
+If one reviewer qualifies on all three cases, freeze one fresh modification task
+and independent acceptance, then exercise native creation, qualified independent
+review and at most two native repair cycles. Do not supply Salt choices or make
+supervised source repairs during that scored exercise. If no reviewer qualifies,
+stop before the new creation task and report the observed limitation. Keep all
+initial outputs and raw evidence outside Git; commit only authored protocol,
+bounded fixtures/checks, any directly justified existing-owner correction and an
+aggregate outcome. Run affected checks, current plan/contracts/changed-quality
+and closeout source review for introduced code, and commit unsigned. This
+authorizes no new workflow family, orchestration service, generic scanner,
+publication, deployment or promotion.
+
+The six scored Codex reviews completed on 2026-09-09. Luna approved the known
+flawed application; Sol caught the clipped email but did not establish the
+navigation coverage defect. Both rejected missing verification. Sol also found
+a genuine remaining disclosure-coverage issue in the expected-pass fixture;
+independent diagnosis confirmed matching installed Collapsible coverage. That
+invalidated the expected approval, so no three-case accuracy score or reviewer
+qualification is claimed. The fresh creation exercise was not started. A replay
+of Sol's navigation query also exposed icon-dominated retrieval. Initial outputs,
+the unchanged packets and the host switch are distinguished in the
+[qualification outcome](../evals/salt-ai/ui-agent/REVIEWER_RESULTS.md). These
+results leave the unit's human gates unchanged and require a corrected positive
+reference before any future qualification.
+
+### User-directed reference and retrieval repair
+
+The subsequent 2026-09-09 request authorizes one focused correction pass from
+`e7b46121c`: repair the reference disclosure, address icon-dominated navigation
+retrieval, then repeat a bounded Sol qualification. Continue within Unit
+033/02a and preserve the earlier protocol, packets, outputs and outcomes.
+
+Use a new temporary reference copy. Select the installed controlled Collapsible
+composition, preserve the saved snapshot and existing application seams, and
+independently verify full Salt coverage and the desktop/320-pixel journey. Keep
+the earlier acceptance and screenshots intact; any stronger readability checks
+must be new, named checks with a demonstrated failing clipping variant.
+
+The search correction belongs in `packages/knowledge/src/search/` and focused
+tests, with callers changed only when necessary for the same behavior. Diagnose
+the observed navigation query and natural paraphrases, preserve exact record and
+explicit icon lookup, and fix the general ranking cause. No query-specific
+answer table, model reranker, new corpus, scanner or workflow family is allowed.
+Verify search and Knowledge/CLI tests, tooling types/build, current contracts,
+pack validation, installed offline task retrieval, and changed-file quality.
+
+Preparation may copy the existing exact local fixture dependencies and install
+the rebuilt local candidate tarballs into these temporary fixtures without
+registry fallback. Application execution and Salt retrieval remain local. The
+existing Codex host may run independent preparation/review and the bounded model
+qualification using its existing account; no external model API, subscription
+change, consumer installation or consumer contact is authorized.
+
+After independent reference verification, freeze anonymous packets, their source
+and dependency identities, settings and scoring before fresh Sol output. Use
+one positive case, separate navigation and clipping defect cases, and one case
+with missing mandatory evidence. Allow one fresh native Sol reviewer per case,
+medium effort and five minutes each, without inherited conversation or coaching.
+Any genuine newly discovered positive-case defect invalidates its expected pass.
+If all four cases satisfy the frozen criteria, freeze one new modification task
+and independent acceptance, then run native creation with independent Sol review
+and at most two repairs, without lead source edits or supplied Salt choices.
+Otherwise stop before creation and retain lead approval; do not expand the model
+comparison. Report and review the bounded correction, run affected checks and
+current plan/contracts/quality, and commit unsigned. Human gates, publication,
+deployment and promotion remain unchanged.
+
+Local repair preparation passed on 2026-09-09: 758 Knowledge/CLI tests, types,
+build/pack, installed navigation retrieval and the new app evidence checks.
+The verified test app and navigation-only variant pass added focus/readability
+checks; ancestor and direct-element clipping negatives are rejected. All four
+frozen Sol cases met their required outcomes, with unchanged packet identities.
+Source review accepted bounded checker-proof corrections and closed cleanly.
+The user explicitly restated model-payload/destination approval on 2026-09-11;
+the previously blocked final source-confirmation command then passed.
+
+The conditional native Luna exercise ran once on 2026-09-11 and returned
+INCOMPLETE. It proposed the launch-scope change, but default-sandbox subprocess
+execution failed before browser acceptance. The creator also reported no callable
+native subagent capability, so no independent reviewer was spawned. Initial source,
+failed receipts and missing-evidence status are preserved; no source repair,
+second initial run or lead review substitution converted the attempt into a pass.
+The supervisor's operational PowerShell-writing fallback supplied no Salt choices
+or application code. Frozen files, source/snapshot, baseline and dependency
+identities were checked afterward. The unchanged baseline compiled output is not
+proof of the proposed feature. See the
+[requalification report](../evals/salt-ai/ui-agent/REQUALIFICATION_RESULTS.md).
+The focused repair and bounded evaluation are recorded; native creation remains
+unproved. Any future attempt first needs an unscored host-capability check and a
+fresh case. Unit 033/02a, its checkpoint and human gates are unchanged.
+
+### User-directed native execution capability check
+
+The 2026-09-11 request for help authorizes the proposed next step from
+`25e075126`: an unscored check of the actual creator entry point and, only if
+both capabilities work, one fresh frozen Luna/Sol modification task. Preserve
+the completed four-case qualification and incomplete launch-scope attempt.
+Continue within Unit 033/02a with the same checkpoint and exact local cohort.
+
+Use a new temporary copy of the verified test app. One native Salt creator on
+Luna/medium must attempt an actual native Sol/medium reviewer delegation and run
+the unchanged guarded project/browser verification through a narrowly approved
+subprocess command. The delegated capability check reads a local marker and
+returns INCOMPLETE for UI review because no UI change is being assessed; it must
+not claim a visual or implementation pass. Inspect the actual invocation and
+returned marker. Allow up to eight minutes for the creator and three minutes for
+this read-only reviewer capability check. The two capability outcomes are
+independent; missing delegation must not hide a completed execution check.
+
+Keep the current host sandbox policy and offline guard. Do not disable protections,
+change user-wide configuration, install dependencies, or use another model API.
+Existing OpenAI Codex account/model-payload approval continues to cover the named
+capability and conditional creator/reviewer runs. Keep raw outputs, copied app
+sources and evidence outside Git. No implementation edits belong in the smoke.
+If either capability remains unavailable, stop before another scored task and
+record the observed limitation. If both pass, freeze one new small task and its
+independent acceptance before creator output, with independent Sol review, at
+most two source repairs, and no lead application source edits or Salt choices.
+Record actual results, run plan/contracts/changed quality, and commit the authored
+closeout unsigned. Human design/accessibility and maintainer gates stay pending.
+
+The unscored check completed on 2026-09-11. The creator's specifically approved
+guarded command passed with exit 0, a bound typecheck and twelve browser images;
+source and frozen inputs remained unchanged. The creator reported no callable
+native delegation tool: no reviewer was spawned and no marker was returned.
+Creator image inspection also remained incomplete, although the lead later
+inspected one actual image through base64 forwarding. The missing delegation
+triggers the STOP before a fresh task. No fresh trial or source repairs ran;
+Unit 033/02a, its checkpoint and human gates remain unchanged. See the
+[host capability results](../evals/salt-ai/ui-agent/HOST_CAPABILITY_RESULTS.md).
+
+### User-directed parent-coordinated creator and reviewer
+
+The 2026-09-12 request explicitly authorizes the proposed orchestration change
+from `163e635c2`. The main task may launch the native creator and independent
+reviewer separately; nested creator delegation is no longer a prerequisite for
+this new route. Preserve earlier failed and incomplete attempts unchanged.
+Continue Unit 033/02a at its existing checkpoint, without promotion.
+
+Update only the thin Codex creator profile and local setup/protocol wording needed
+for an explicitly appointed coordinator to own native review dispatch. Preserve
+source freeze before handoff, actual independent review, at most two source
+repairs, fresh evidence/review after a repair, and explicit incomplete outcomes.
+Do not change user-wide configuration, sandbox protections or reviewer access.
+
+First run one unscored image-capability check per selected role: native Luna
+creator and native Sol reviewer, medium effort, no inherited conversation and
+three minutes each. Both must inspect an actual supplied screenshot, describe
+visible details without hints and return their supplied local marker. File hashes
+and inventories alone do not prove image inspection. The main task invokes both
+through native delegation. This check makes no UI-quality judgment; preserve the
+previously verified guarded execution result and exact local dependency cohort.
+If either cannot inspect the image or the required native role cannot run, stop
+before another UI trial and record the actual limitation.
+
+If both pass, freeze one fresh small modification task, independent acceptance,
+baseline identity, models and time limits before creator output. The main task
+may route the creator's frozen handoff to a fresh Sol reviewer and return its
+actual findings for at most two Luna source repairs. It supplies no Salt choices
+or application source. Preserve every initial/repair stage and review separately.
+Use the existing account/model-payload approval and narrowly approved offline
+build/browser commands; no install, other model API, consumer contact, publication
+or deployment is authorized. Commit only authored role/protocol/task/check and
+aggregate result changes, keeping raw outputs and trial apps outside Git. Run
+focused checks for introduced code, plan/contracts/changed quality and source
+review, then commit the closeout unsigned. Human gates remain pending.
+
+Observed closeout on 2026-09-12: both image-capability checks passed. The fresh
+restore-saved-details task failed confirmation focus initially and after its
+first repair. The second/final repair passed the composed guarded acceptance and
+typecheck at 1280/320 pixels, with thirty bound screenshots; a fresh Sol reviewer
+returned REVIEW PASS after independent local retrieval and actual image review.
+Before/after-review integrity audits passed for all stages. Source review of the
+authored checker/protocol changes was clean. See the preserved initial, repair
+and final outcomes in
+[coordinated workflow results](../evals/salt-ai/ui-agent/COORDINATED_RESULTS.md).
+This one task demonstrates the parent-coordinated route within its two-repair
+limit, without changing earlier failures, human gates or the active checkpoint.
+
 ## Conditional Unit 033/03 — Expand workflows from observed need
 
 Scope: adopt only a genuinely additional workflow or modification case justified by observed need, extending canonical examples/docs and the same schema/assembler/harness. Navigation, the operational worklist and record editing now belong to the single service-worklist journey in Unit 033/02a; do not reimplement them as separate workflow families merely to complete this backlog. Reuse that workflow's preview and fixture setup. Create a separate integration fixture only when it proves a distinct supported environment, as the existing Next App Router fixture does. Reuse selected public material from the operations dashboard without importing repository-only source into consumer output.

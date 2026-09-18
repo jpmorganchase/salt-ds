@@ -453,7 +453,7 @@ async function collectCharacteristicCategories(
   repoRoot: string,
 ): Promise<Set<string>> {
   const cssPaths = await globCatalogInputs(
-    "packages/theme/css/**/characteristics/*.css",
+    "packages/theme/src/css/**/characteristics/*.css",
     {
       cwd: repoRoot,
       onlyFiles: true,
@@ -563,7 +563,7 @@ async function collectFoundationCategories(
   repoRoot: string,
 ): Promise<Set<string>> {
   const cssPaths = await globCatalogInputs(
-    "packages/theme/css/**/foundations/*.css",
+    "packages/theme/src/css/**/foundations/*.css",
     {
       cwd: repoRoot,
       onlyFiles: true,
@@ -582,7 +582,7 @@ async function collectTokenDeclarationSources(
 ): Promise<Map<string, TokenDeclarationSource[]>> {
   const declarationsByToken = new Map<string, TokenDeclarationSource[]>();
   const cssPaths = (
-    await globCatalogInputs("packages/theme/css/**/*.css", {
+    await globCatalogInputs("packages/theme/src/css/**/*.css", {
       cwd: repoRoot,
       absolute: true,
       onlyFiles: true,
@@ -1212,7 +1212,7 @@ async function collectDeprecatedTokenReplacements(
     string,
     DeprecatedTokenReplacementSource[]
   >();
-  const metadataPath = "packages/theme/css/deprecated/token-replacements.json";
+  const metadataPath = "packages/theme/src/css/deprecated/token-replacements.json";
   const metadata = await readFileOrNull(path.join(repoRoot, metadataPath));
   if (metadata) {
     collectMetadataDeprecatedReplacements(replacementsByToken, {
@@ -1235,7 +1235,7 @@ async function collectDeprecatedTokenReplacements(
   }
 
   const cssPaths = (
-    await globCatalogInputs("packages/theme/css/**/*.css", {
+    await globCatalogInputs("packages/theme/src/css/**/*.css", {
       cwd: repoRoot,
       absolute: true,
       onlyFiles: true,
@@ -1269,7 +1269,7 @@ async function collectDeprecatedUnsupportedPolicies(
     string,
     DeprecatedTokenUnsupportedPolicySource[]
   >();
-  const metadataPath = "packages/theme/css/deprecated/token-replacements.json";
+  const metadataPath = "packages/theme/src/css/deprecated/token-replacements.json";
   const metadata = await readFileOrNull(path.join(repoRoot, metadataPath));
   if (metadata) {
     collectMetadataDeprecatedUnsupportedPolicies(unsupportedByToken, {

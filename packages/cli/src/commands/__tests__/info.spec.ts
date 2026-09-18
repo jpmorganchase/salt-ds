@@ -105,13 +105,19 @@ afterEach(async () => {
 
 describe("info command path projection", () => {
   it("reports the selected hoisted workspace app relative to its authority", async () => {
+    const { version: coreVersion } = JSON.parse(
+      await fs.readFile(
+        path.join(process.cwd(), "packages/core/package.json"),
+        "utf8",
+      ),
+    ) as { version: string };
     const authorityRoot = await fixtureRoot();
     await writeWorkspaceRoot(authorityRoot);
     await writeJson(
       path.join(authorityRoot, "apps", "consumer", "package.json"),
-      { name: "consumer", dependencies: { "@salt-ds/core": "1.70.0" } },
+      { name: "consumer", dependencies: { "@salt-ds/core": coreVersion } },
     );
-    await writeInstalledPackage(authorityRoot, "core", "1.70.0");
+    await writeInstalledPackage(authorityRoot, "core", coreVersion);
 
     const result = await runInfoCommand({
       rootDir: authorityRoot,
@@ -232,6 +238,18 @@ describe("info command path projection", () => {
   });
 
   it("selects independently versioned exact installed package families", async () => {
+    const [coreVersion, themeVersion] = await Promise.all(
+      ["core", "theme"].map(async (name) => {
+        const manifest = JSON.parse(
+          await fs.readFile(
+            path.join(process.cwd(), "packages", name, "package.json"),
+            "utf8",
+          ),
+        ) as { version: string };
+        return manifest.version;
+      }),
+    );
+    expect(coreVersion).not.toBe(themeVersion);
     const root = await fixtureRoot();
     await fs.writeFile(
       path.join(root, "package.json"),
@@ -240,15 +258,15 @@ describe("info command path projection", () => {
         private: true,
         packageManager: "npm@11.0.0",
         dependencies: {
-          "@salt-ds/core": "1.70.0",
-          "@salt-ds/theme": "1.45.0",
+          "@salt-ds/core": coreVersion,
+          "@salt-ds/theme": themeVersion,
         },
       })}\n`,
       "utf8",
     );
     for (const [name, version] of [
-      ["core", "1.70.0"],
-      ["theme", "1.45.0"],
+      ["core", coreVersion],
+      ["theme", themeVersion],
     ] as const) {
       const packageRoot = path.join(root, "node_modules", "@salt-ds", name);
       await fs.mkdir(packageRoot, { recursive: true });
@@ -268,8 +286,8 @@ describe("info command path projection", () => {
       status: "selected",
       reason_code: "SALT_PROJECT_SELECTED",
       installed_package_vector: [
-        { name: "@salt-ds/core", version: "1.70.0" },
-        { name: "@salt-ds/theme", version: "1.45.0" },
+        { name: "@salt-ds/core", version: coreVersion },
+        { name: "@salt-ds/theme", version: themeVersion },
       ],
     });
     expect(result.coverage.exact_project_package_vector).toBe(true);

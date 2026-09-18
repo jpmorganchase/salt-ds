@@ -1,4 +1,6 @@
+import fs from "node:fs/promises";
 import path from "node:path";
+import { parse } from "@babel/parser";
 import { isPortableRepositoryPath } from "../catalog/catalogPortablePath.js";
 import { compareOrdinalStrings } from "../catalog/catalogSerialization.js";
 import { assertCanonicalSiteRoute } from "../catalog/catalogSiteRoute.js";
@@ -9,6 +11,7 @@ import type {
   ComponentImplementationRequirements,
   ComponentRecord,
   ExampleRecord,
+  ExampleSupportFile,
   PackageRecord,
   RegistrySourceLocator,
   SaltStatus,
@@ -938,6 +941,197 @@ function inferExampleComplexity(code: string): ExampleRecord["complexity"] {
   return "basic";
 }
 
+function exampleSourceSpecifiers(source: string, filePath: string): string[] {
+  const extension = path.extname(filePath).toLowerCase();
+  const ast = parse(source, {
+    sourceType: "unambiguous",
+    plugins: [
+      ...(extension === ".ts" || extension === ".tsx"
+        ? (["typescript"] as const)
+        : []),
+      ...(extension === ".tsx" || extension === ".jsx"
+        ? (["jsx"] as const)
+        : []),
+    ],
+  });
+  const specifiers = new Set<string>();
+  const literal = (value: unknown): string | null =>
+    value &&
+    typeof value === "object" &&
+    (value as { type?: unknown }).type === "StringLiteral" &&
+    typeof (value as { value?: unknown }).value === "string"
+      ? (value as { value: string }).value
+      : null;
+  const visit = (value: unknown): void => {
+    if (Array.isArray(value)) {
+      value.forEach(visit);
+      return;
+    }
+    if (!value || typeof value !== "object") return;
+    const node = value as Record<string, unknown>;
+    if (
+      node.type === "ImportDeclaration" ||
+      node.type === "ExportNamedDeclaration" ||
+      node.type === "ExportAllDeclaration"
+    ) {
+      const specifier = literal(node.source);
+      if (specifier) specifiers.add(specifier);
+    } else if (node.type === "ImportExpression") {
+      const specifier = literal(node.source);
+      if (!specifier) {
+        specifiers.add("<non-literal dynamic import>");
+      } else {
+        specifiers.add(specifier);
+      }
+    } else if (
+      node.type === "CallExpression" &&
+      typeof node.callee === "object" &&
+      node.callee !== null &&
+      (node.callee as { type?: unknown }).type === "Import"
+    ) {
+      const args = Array.isArray(node.arguments) ? node.arguments : [];
+      const specifier = args.length === 1 ? literal(args[0]) : null;
+      if (!specifier) {
+        specifiers.add("<non-literal dynamic import>");
+      } else {
+        specifiers.add(specifier);
+      }
+    }
+    for (const [key, entry] of Object.entries(node)) {
+      if (
+        !["loc", "start", "end", "extra", "comments", "tokens"].includes(key)
+      ) {
+        visit(entry);
+      }
+    }
+  };
+  visit(ast.program);
+  return [...specifiers].sort(compareOrdinalStrings);
+}
+
+const EXAMPLE_SUPPORT_EXTENSIONS = [
+  ".ts",
+  ".tsx",
+  ".js",
+  ".jsx",
+  ".css",
+  ".scss",
+  ".json",
+] as const;
+
+async function resolveExampleSupportFile(
+  publicExamplesRoot: string,
+  importer: string,
+  specifier: string,
+): Promise<{ absolutePath: string; code: string } | null> {
+  if (!specifier.startsWith(".")) return null;
+  const base = path.resolve(path.dirname(importer), specifier);
+  const candidates = path.extname(base)
+    ? [base]
+    : [
+        base,
+        ...EXAMPLE_SUPPORT_EXTENSIONS.map((extension) => `${base}${extension}`),
+        ...EXAMPLE_SUPPORT_EXTENSIONS.map((extension) =>
+          path.join(base, `index${extension}`),
+        ),
+      ];
+  const matches: Array<{ absolutePath: string; code: string }> = [];
+  for (const candidate of candidates) {
+    let realPath: string;
+    try {
+      realPath = await fs.realpath(candidate);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === "ENOENT") continue;
+      throw error;
+    }
+    let stats: Awaited<ReturnType<typeof fs.stat>>;
+    try {
+      stats = await fs.stat(realPath);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === "ENOENT") continue;
+      throw error;
+    }
+    const relative = path.relative(publicExamplesRoot, realPath);
+    if (
+      relative === "" ||
+      relative === ".." ||
+      relative.startsWith(`..${path.sep}`) ||
+      path.isAbsolute(relative) ||
+      !EXAMPLE_SUPPORT_EXTENSIONS.includes(
+        path
+          .extname(realPath)
+          .toLowerCase() as (typeof EXAMPLE_SUPPORT_EXTENSIONS)[number],
+      ) ||
+      !stats.isFile()
+    ) {
+      continue;
+    }
+    const code = await readFileOrNull(realPath);
+    if (code !== null) matches.push({ absolutePath: candidate, code });
+  }
+  return matches.length === 1 ? matches[0] : null;
+}
+
+async function collectExampleSupportFiles(
+  repoRoot: string,
+  examplePath: string,
+  sourceCode: string,
+): Promise<{
+  files: ExampleSupportFile[];
+  unresolvedImports: string[];
+}> {
+  const files = new Map<string, string>();
+  const unresolvedImports = new Set<string>();
+  const publicExamplesRoot = await fs.realpath(
+    path.join(repoRoot, "site/src/examples"),
+  );
+  const entryRealPath = await fs.realpath(examplePath);
+  const entryRelativePath = path.relative(publicExamplesRoot, entryRealPath);
+  if (
+    entryRelativePath === "" ||
+    entryRelativePath === ".." ||
+    entryRelativePath.startsWith(`..${path.sep}`) ||
+    path.isAbsolute(entryRelativePath)
+  ) {
+    throw new Error(
+      `Component example must remain under site/src/examples: ${toPosixPath(examplePath)}.`,
+    );
+  }
+  const entryPath = toPosixPath(path.relative(repoRoot, examplePath));
+  for (const specifier of exampleSourceSpecifiers(sourceCode, entryPath)) {
+    if (specifier === "<non-literal dynamic import>") {
+      unresolvedImports.add(specifier);
+      continue;
+    }
+    const support = await resolveExampleSupportFile(
+      publicExamplesRoot,
+      entryRealPath,
+      specifier,
+    );
+    if (!specifier.startsWith(".")) continue;
+    if (!support) {
+      unresolvedImports.add(specifier);
+      continue;
+    }
+    const supportPath = toPosixPath(
+      path.relative(repoRoot, support.absolutePath),
+    );
+    if (supportPath.startsWith("../") || supportPath === "..") {
+      unresolvedImports.add(specifier);
+      continue;
+    }
+    files.set(supportPath, support.code);
+  }
+  return {
+    files: [...files.entries()]
+      .map(([source_path, code]) => ({ source_path, code }))
+      .sort((left, right) =>
+        compareOrdinalStrings(left.source_path, right.source_path),
+      ),
+    unresolvedImports: [...unresolvedImports].sort(compareOrdinalStrings),
+  };
+}
+
 async function extractComponentExamples(
   repoRoot: string,
   examplesMdx: string | null,
@@ -967,6 +1161,11 @@ async function extractComponentExamples(
         )}.`,
       );
     }
+    const support = await collectExampleSupportFiles(
+      repoRoot,
+      examplePath,
+      sourceCode,
+    );
     examples.push({
       id: `${preview.componentName}.${toKebabCase(preview.exampleName)}`,
       title: preview.title,
@@ -974,6 +1173,10 @@ async function extractComponentExamples(
       intent: deriveExampleIntent(preview.title, preview.description),
       complexity: inferExampleComplexity(sourceCode),
       code: sourceCode,
+      ...(support.files.length > 0 ? { supporting_files: support.files } : {}),
+      ...(support.unresolvedImports.length > 0
+        ? { unresolved_local_imports: support.unresolvedImports }
+        : {}),
       source_url: null,
       source_path: toPosixPath(path.relative(repoRoot, examplePath)),
       package: packageName,

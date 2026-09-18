@@ -18,7 +18,6 @@ const DEFAULT_TYPING_TOOLCHAIN = Object.freeze({
   getTypescriptConfig,
 });
 
-
 function normalizeTypingSources(sourceConfig) {
   if (typeof sourceConfig === "string") {
     return {

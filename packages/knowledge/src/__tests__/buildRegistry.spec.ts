@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { copyFile, mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -70,13 +71,21 @@ const publicationPaths = [
   "examples/apps/operations-dashboard/tsconfig.json",
   "examples/apps/operations-dashboard/vite.config.ts",
 ];
+function currentWorkspaceVersion(directory: string): string {
+  const manifest = JSON.parse(
+    readFileSync(
+      path.join(repositoryRoot, "packages", directory, "package.json"),
+      "utf8",
+    ),
+  ) as { version: string };
+  return manifest.version;
+}
+
 const compatibility = {
-  packages: [
-    { name: "@salt-ds/core", tested_version: "1.70.0" },
-    { name: "@salt-ds/icons", tested_version: "1.18.2" },
-    { name: "@salt-ds/lab", tested_version: "1.0.0-alpha.103" },
-    { name: "@salt-ds/theme", tested_version: "1.45.0" },
-  ],
+  packages: ["core", "icons", "lab", "theme"].map((directory) => ({
+    name: `@salt-ds/${directory}`,
+    tested_version: currentWorkspaceVersion(directory),
+  })),
 } as const;
 const temporaryDirectories: string[] = [];
 

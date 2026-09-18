@@ -1363,6 +1363,64 @@ export interface ButtonProps {
     expect(citedCompositeSource).not.toContain("@saltValueMap");
   });
 
+  it("keeps structural Card and Drawer migrations manual", async () => {
+    const repoRoot = await createPackageFixture({
+      "src/Fixture.ts": [
+        "export interface CardProps {",
+        "  /** @deprecated since 1.71.0. Use `LinkCard` or `InteractableCard` when the entire card is interactive. */",
+        "  hoverable?: boolean;",
+        "}",
+        "/** @deprecated since 1.71.0. Use `Button` in `DrawerHeader`'s `actions` instead. */",
+        "export const DrawerCloseButton = () => null;",
+      ].join("\n"),
+      "src/index.ts":
+        'export { type CardProps, DrawerCloseButton } from "./Fixture";\n',
+    });
+
+    const deprecations = await extractDeprecations(
+      repoRoot,
+      [fixturePackage()],
+      new Set(),
+    );
+
+    expect(deprecations).toHaveLength(2);
+    expect(deprecations).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          subject: {
+            package: "@salt-ds/core",
+            entrypoint: ".",
+            export_name: "CardProps",
+            symbol_space: "type",
+            member_path: [{ kind: "prop", name: "hoverable" }],
+          },
+          deprecated_in: "1.71.0",
+          replacement: expect.objectContaining({
+            mode: "none",
+            target: null,
+            targets: [],
+          }),
+          migration: { strategy: "manual", value_map: null, details: [] },
+        }),
+        expect.objectContaining({
+          subject: {
+            package: "@salt-ds/core",
+            entrypoint: ".",
+            export_name: "DrawerCloseButton",
+            symbol_space: "value",
+            member_path: [],
+          },
+          deprecated_in: "1.71.0",
+          replacement: expect.objectContaining({
+            mode: "none",
+            target: null,
+            targets: [],
+          }),
+          migration: { strategy: "manual", value_map: null, details: [] },
+        }),
+      ]),
+    );
+  });
   it("recognizes numeric public property deprecations before requiring an override", async () => {
     const repoRoot = await createPackageFixture({
       "src/Fixture.ts": `export interface FixtureProps {
@@ -1980,7 +2038,115 @@ export const LegacyThing = external;
     ).rejects.toThrow(/dependency path escapes.*node_modules root/u);
   });
 
-  it("rejects inherited TypeScript config until its inputs can be inventoried", async () => {
+  it("merges the tracked TypeScript base config with root option precedence", async () => {
+    const repoRoot = await createPackageFixture({
+      "src/Fixture.ts": `function helper(value) { return value; }
+const nullable: string = null;
+export const ModernThing = 1;
+/** @deprecated Use {@link ModernThing} instead. */
+export const LegacyThing = 2;
+`,
+      "src/index.ts": 'export { LegacyThing, ModernThing } from "./Fixture";\n',
+    });
+    await fs.writeFile(
+      path.join(repoRoot, "tsconfig.base.json"),
+      JSON.stringify({
+        compilerOptions: { noImplicitAny: false, strictNullChecks: true },
+      }),
+      "utf8",
+    );
+    await fs.writeFile(
+      path.join(repoRoot, "tsconfig.json"),
+      JSON.stringify({
+        extends: "./tsconfig.base.json",
+        compilerOptions: { strictNullChecks: false },
+      }),
+      "utf8",
+    );
+    const inventory = await createCatalogInputInventory(repoRoot);
+
+    await expect(
+      withCatalogInputTracking(repoRoot, inventory, () =>
+        extractDeprecations(repoRoot, [fixturePackage()], new Set()),
+      ),
+    ).resolves.toEqual([expect.objectContaining({ name: "LegacyThing" })]);
+  });
+
+  it.each([
+    "./other.json",
+    "../tsconfig.base.json",
+    "@tsconfig/node22/tsconfig.json",
+    ["./tsconfig.base.json"],
+  ])(
+    "rejects unsupported TypeScript config inheritance %j",
+    async (extendsValue) => {
+      const repoRoot = await createPackageFixture({
+        "src/index.ts": `export const ModernThing = 1;
+/** @deprecated Use {@link ModernThing} instead. */
+export const LegacyThing = 2;
+`,
+      });
+      await fs.writeFile(
+        path.join(repoRoot, "tsconfig.json"),
+        JSON.stringify({ extends: extendsValue }),
+        "utf8",
+      );
+
+      await expect(
+        extractDeprecations(repoRoot, [fixturePackage()], new Set()),
+      ).rejects.toThrow(/config inheritance only supports/u);
+    },
+  );
+
+  it("rejects further inheritance from the TypeScript base config", async () => {
+    const repoRoot = await createPackageFixture({
+      "src/index.ts": `export const ModernThing = 1;
+/** @deprecated Use {@link ModernThing} instead. */
+export const LegacyThing = 2;
+`,
+    });
+    await fs.writeFile(
+      path.join(repoRoot, "tsconfig.json"),
+      JSON.stringify({ extends: "./tsconfig.base.json" }),
+      "utf8",
+    );
+    await fs.writeFile(
+      path.join(repoRoot, "tsconfig.base.json"),
+      JSON.stringify({ extends: "./other.json" }),
+      "utf8",
+    );
+
+    await expect(
+      extractDeprecations(repoRoot, [fixturePackage()], new Set()),
+    ).rejects.toThrow(/config inheritance only supports/u);
+  });
+
+  it("rejects a TypeScript base config absent from the captured inventory", async () => {
+    const repoRoot = await createPackageFixture({
+      "src/index.ts": `export const ModernThing = 1;
+/** @deprecated Use {@link ModernThing} instead. */
+export const LegacyThing = 2;
+`,
+    });
+    await fs.writeFile(
+      path.join(repoRoot, "tsconfig.json"),
+      JSON.stringify({ extends: "./tsconfig.base.json" }),
+      "utf8",
+    );
+    const inventory = await createCatalogInputInventory(repoRoot);
+    await fs.writeFile(
+      path.join(repoRoot, "tsconfig.base.json"),
+      JSON.stringify({ compilerOptions: {} }),
+      "utf8",
+    );
+
+    await expect(
+      withCatalogInputTracking(repoRoot, inventory, () =>
+        extractDeprecations(repoRoot, [fixturePackage()], new Set()),
+      ),
+    ).rejects.toThrow(/undeclared input read: tsconfig.base.json/u);
+  });
+  it("rejects a missing inherited TypeScript base config", async () => {
     const repoRoot = await createPackageFixture({
       "src/Fixture.ts": `export const ModernThing = 1;
 /** @deprecated Use {@link ModernThing} instead. */
@@ -1996,7 +2162,7 @@ export const LegacyThing = 2;
 
     await expect(
       extractDeprecations(repoRoot, [fixturePackage()], new Set()),
-    ).rejects.toThrow(/config inheritance is not supported/u);
+    ).rejects.toThrow(/Missing inherited deprecation TypeScript config/u);
   });
 
   it("propagates a tracked compiler read failure even when TypeScript swallows and the source is restored", async () => {

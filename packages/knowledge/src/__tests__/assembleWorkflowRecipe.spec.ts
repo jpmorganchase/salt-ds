@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import {
   copyFile,
   mkdir,
@@ -98,13 +99,21 @@ async function assembleFixture(root: string) {
   );
 }
 
+function currentWorkspaceVersion(directory: string): string {
+  const manifest = JSON.parse(
+    readFileSync(
+      path.join(repositoryRoot, "packages", directory, "package.json"),
+      "utf8",
+    ),
+  ) as { version: string };
+  return manifest.version;
+}
+
 const compatibility = {
-  packages: [
-    { name: "@salt-ds/core", tested_version: "1.70.0" },
-    { name: "@salt-ds/icons", tested_version: "1.18.2" },
-    { name: "@salt-ds/lab", tested_version: "1.0.0-alpha.103" },
-    { name: "@salt-ds/theme", tested_version: "1.45.0" },
-  ],
+  packages: ["core", "icons", "lab", "theme"].map((directory) => ({
+    name: `@salt-ds/${directory}`,
+    tested_version: currentWorkspaceVersion(directory),
+  })),
 } as const;
 
 describe("assembleWorkflowRecipe", () => {
@@ -150,9 +159,21 @@ describe("assembleWorkflowRecipe", () => {
       result.recipeArtifact.files.filter((file) => file.role === "demo-only"),
     ).toHaveLength(9);
     expect(result.recipeArtifact.support.reusable_packages).toEqual([
-      { name: "@salt-ds/core", version: "1.70.0", role: "reusable" },
-      { name: "@salt-ds/icons", version: "1.18.2", role: "reusable" },
-      { name: "@salt-ds/theme", version: "1.45.0", role: "reusable" },
+      {
+        name: "@salt-ds/core",
+        version: currentWorkspaceVersion("core"),
+        role: "reusable",
+      },
+      {
+        name: "@salt-ds/icons",
+        version: currentWorkspaceVersion("icons"),
+        role: "reusable",
+      },
+      {
+        name: "@salt-ds/theme",
+        version: currentWorkspaceVersion("theme"),
+        role: "reusable",
+      },
     ]);
     expect(result.recipeArtifact.support.external_dependencies).toEqual([
       { name: "react", version: "18.3.1", role: "reusable" },

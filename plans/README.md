@@ -23,6 +23,27 @@ the current tracker parser would misclassify as Plan 001.
 The historical Unit 00a checkpoint rule is retained only as Plan 001 evidence;
 it does not dispatch or block the active successor.
 
+The focused repair and all four frozen Sol reviewer cases met their required
+outcomes; source review is clean. The user-approved fresh native Luna exercise
+returned INCOMPLETE after subprocess execution failed and no native reviewer
+was produced. Its source and failed evidence are preserved in the
+[requalification report](../evals/salt-ai/ui-agent/REQUALIFICATION_RESULTS.md).
+No successful creation or promotion is inferred; the unit's human gates remain
+unchanged.
+
+The subsequent unscored host check passed the specifically approved guarded
+build/browser command, but the selected creator reported no native delegation
+tool and produced no reviewer. Its own image inspection was incomplete. The
+conditional fresh task did not run; see the
+[host capability results](../evals/salt-ai/ui-agent/HOST_CAPABILITY_RESULTS.md).
+
+The parent-coordinated route subsequently passed both image-capability checks
+and one frozen restore-saved-details task after two repairs. Final guarded
+acceptance, typechecking, independent Sol review and source/screenshot integrity
+checks passed; see the
+[coordinated workflow results](../evals/salt-ai/ui-agent/COORDINATED_RESULTS.md).
+The unit remains in progress with its human gates pending.
+
 ## Execution order and status
 
 | Plan                                                               | Title                                                                                                           | Priority | Effort         | Depends on                  | Status                                                        |
@@ -131,10 +152,36 @@ publication authority as deferred to Plan 003.
 - **Foundation completion:** Plan 032 is DONE at
   `d2c7000865da920655d6461eb46e95f7eb84db43`; its terminal control is
   `plans/evidence/032/control.json`.
-- **External authority:** only the active unit's named temporary fixture setup
-  is authorized. Product runtime remains offline/read-only. Consumer contact,
-  product model trials, actual consumer installation, publication, versioning,
-  dist-tags and deployment remain outside this dispatch.
+- **External authority:** the active unit's named temporary fixture setup and
+  the 2026-09-08 user-authorized Salt UI agent prototype comparison are permitted.
+  The completed comparison covered four paired local model attempts, a profile
+  smoke check and one reviewer pass. The subsequent user-authorized usable local
+  preview permits task-owned official host setup and native creation/review/repair
+  sessions for the two prepared application journeys and the bounded example
+  retrieval follow-up feature exercise in Unit 033/02a; application execution and
+  Salt retrieval remain local.
+  The [retrieval correction outcome](../evals/salt-ai/ui-agent/RETRIEVAL_RESULTS.md)
+  separates passed packaged source delivery from the native trial's remaining
+  defects and its subsequent supervised preview repair.
+  The 2026-09-09 continuation permits the bounded blind reviewer qualification
+  and conditional fresh native task in Unit 033/02a, beginning at retrieval
+  checkpoint `4dff7713b1df25608c1ec3821de82d655217bd28`.
+  Its [qualification outcome](../evals/salt-ai/ui-agent/REVIEWER_RESULTS.md)
+  established no qualified reviewer: the expected-pass fixture contained an
+  additional coverage gap, and the conditional fresh task did not run.
+  The subsequent user-directed repair authorizes a new reference copy, the
+  focused navigation-ranking correction, four fresh Sol qualification cases,
+  and the same conditional native task; earlier evidence remains preserved.
+  Consumer contact, other product model trials, actual consumer installation,
+  publication, versioning, dist-tags and deployment remain outside this dispatch.
+  The 2026-09-11 help request additionally authorizes the unscored native
+  execution/delegation capability check and, only if both pass, one fresh frozen
+  task under the same Luna/Sol and two-repair limits. Earlier outcomes remain
+  unchanged; see [host capability results](../evals/salt-ai/ui-agent/HOST_CAPABILITY_RESULTS.md).
+  The 2026-09-12 request authorizes parent-coordinated native creator/reviewer
+  dispatch, with separate image-capability checks before one conditional fresh
+  task. It preserves the earlier results and pending human gates; see
+  [coordinated workflow results](../evals/salt-ai/ui-agent/COORDINATED_RESULTS.md).
 - **Successor eligibility:** each next unit requires a reviewed control
   transition with actual completion evidence; Plan 003 remains deferred.
 

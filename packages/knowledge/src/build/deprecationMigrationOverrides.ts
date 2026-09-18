@@ -23,11 +23,31 @@ const migrationOverrides = [
     subject: {
       package: "@salt-ds/core",
       entrypoint: ".",
+      export_name: "CardProps",
+      symbol_space: "type",
+      member_path: [{ kind: "prop", name: "hoverable" }],
+    },
+    strategy: "manual",
+  },
+  {
+    subject: {
+      package: "@salt-ds/core",
+      entrypoint: ".",
       export_name: "DialogProps",
       symbol_space: "type",
       member_path: [{ kind: "prop", name: "idProp" }],
     },
     strategy: "remove",
+  },
+  {
+    subject: {
+      package: "@salt-ds/core",
+      entrypoint: ".",
+      export_name: "DrawerCloseButton",
+      symbol_space: "value",
+      member_path: [],
+    },
+    strategy: "manual",
   },
   {
     subject: {
@@ -66,7 +86,9 @@ for (const override of migrationOverrides) {
 export function deprecationMigrationStrategyOverride(
   subject: ApiSymbolIdentity,
 ): NoTargetMigrationStrategy | null {
-  return migrationStrategyByDeprecationId.get(createDeprecationId(subject)) ?? null;
+  return (
+    migrationStrategyByDeprecationId.get(createDeprecationId(subject)) ?? null
+  );
 }
 
 export function assertDeprecationMigrationOverridesResolved(

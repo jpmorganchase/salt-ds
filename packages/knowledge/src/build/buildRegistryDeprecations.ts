@@ -2522,8 +2522,11 @@ async function deprecationCompilerOptions(
 ): Promise<ts.CompilerOptions> {
   const configPath = path.join(repoRoot, "tsconfig.json");
   const configSource = await readFileOrNull(configPath);
-  let configuredOptions: ts.CompilerOptions = {};
-  if (configSource !== null) {
+  async function convertConfig(
+    configPath: string,
+    configSource: string,
+    allowRepositoryBase: boolean,
+  ): Promise<ts.CompilerOptions> {
     const parsedConfig = ts.parseConfigFileTextToJson(configPath, configSource);
     if (parsedConfig.error) {
       throw new Error(
@@ -2534,10 +2537,21 @@ async function deprecationCompilerOptions(
       compilerOptions?: unknown;
       extends?: unknown;
     };
+    let inheritedOptions: ts.CompilerOptions = {};
     if (config.extends !== undefined) {
-      throw new Error(
-        "Deprecation TypeScript config inheritance is not supported until every inherited config is included in the tracked catalog inventory.",
-      );
+      if (!allowRepositoryBase || config.extends !== "./tsconfig.base.json") {
+        throw new Error(
+          "Deprecation TypeScript config inheritance only supports the inventoried root ./tsconfig.base.json without further inheritance.",
+        );
+      }
+      const basePath = path.join(repoRoot, "tsconfig.base.json");
+      const baseSource = await readFileOrNull(basePath);
+      if (baseSource === null) {
+        throw new Error(
+          "Missing inherited deprecation TypeScript config: tsconfig.base.json.",
+        );
+      }
+      inheritedOptions = await convertConfig(basePath, baseSource, false);
     }
     const converted = ts.convertCompilerOptionsFromJson(
       config.compilerOptions ?? {},
@@ -2551,8 +2565,12 @@ async function deprecationCompilerOptions(
           .join("; ")}.`,
       );
     }
-    configuredOptions = converted.options;
+    return { ...inheritedOptions, ...converted.options };
   }
+  const configuredOptions =
+    configSource === null
+      ? {}
+      : await convertConfig(configPath, configSource, true);
 
   const workspacePaths: Record<string, string[]> = {};
   for (const pkg of [...packages].sort((left, right) =>

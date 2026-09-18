@@ -121,6 +121,90 @@ describe("generated canonical retrieval", () => {
     ).toBe(true);
   });
 
+  it("does not let an unrelated source example compact a multiword canonical guide", () => {
+    const storeWithUnrelatedExample = {
+      manifest: store.manifest,
+      readArtifact: store.readArtifact.bind(store),
+      getFamily: (family: any) =>
+        family === "evidence"
+          ? [
+              {
+                family: "evidence",
+                id: "example:component:component.spinner:unrelated",
+                evidence_kind: "executable_example",
+                local_id: "unrelated",
+                owner: { family: "component", id: "component.spinner" },
+                owner_ordinal: 0,
+                title: "Unrelated illustration",
+                description: "An unrelated illustration with a separate topic.",
+                intent: ["unrelated"],
+                source_ref: { family: "source", id: "source.unrelated" },
+                supporting_files: [],
+              },
+            ]
+          : store.getFamily(family),
+      getRecord: store.getRecord.bind(store),
+      getContentValue: store.getContentValue.bind(store),
+      getContentSourceText: store.getContentSourceText.bind(store),
+    } as unknown as KnowledgeStore;
+    const context = buildKnowledgeContext(storeWithUnrelatedExample, {
+      query: "accessible loading with an announcement",
+      limit: 8,
+    });
+    const workflow = context.canonical_documents?.find(
+      (document) => document.reference === `record:guide:${BUTTON_GUIDE_ID}`,
+    );
+    expect(workflow).toBeDefined();
+    expect(workflow?.files).toBeDefined();
+    expect(context.matches).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          reference: { family: "component", id: "component.spinner" },
+        }),
+      ]),
+    );
+    expect(context.contextual_examples).toBeUndefined();
+  });
+
+  it("keeps a fitting complete guide with a matching source example before compact variants", () => {
+    const storeWithMatchingExample = {
+      manifest: store.manifest,
+      readArtifact: store.readArtifact.bind(store),
+      getFamily: (family: any) =>
+        family === "evidence"
+          ? [
+              {
+                family: "evidence",
+                id: "example:component:component.button:pending",
+                evidence_kind: "executable_example",
+                local_id: "pending",
+                owner: { family: "component", id: "component.button" },
+                owner_ordinal: 0,
+                title: "Pending Button",
+                description: "Show a pending action while loading.",
+                intent: ["pending", "loading"],
+                source_ref: { family: "source", id: "source.button.pending" },
+                supporting_files: [],
+              },
+            ]
+          : store.getFamily(family),
+      getRecord: store.getRecord.bind(store),
+      getContentValue: store.getContentValue.bind(store),
+      getContentSourceText: store.getContentSourceText.bind(store),
+    } as unknown as KnowledgeStore;
+    const context = buildKnowledgeContext(storeWithMatchingExample, {
+      query: "Button loading pending announcement",
+      limit: 1,
+    });
+    expect(context.truncated).toBe(false);
+    expect(context.canonical_documents?.[0]?.files).toBeDefined();
+    expect(context.contextual_examples).toEqual([
+      expect.objectContaining({
+        reference: "record:component:component.button#example/pending",
+      }),
+    ]);
+  });
+
   it("exposes the verified workflow recipe, support, seams, state and file references for create and adapt requests", () => {
     const { canonical: workflow } = resolved(
       `record:guide:${WORKFLOW_GUIDE_ID}`,
@@ -201,7 +285,13 @@ describe("generated canonical retrieval", () => {
       query: "create incident record form",
       limit: 8,
     });
-    expect(markdown).toContain("@salt\\-ds/core@1\\.70\\.0");
+    const coreVersion = recipe.support.reusable_packages.find(
+      (entry) => entry.name === "@salt-ds/core",
+    )?.version;
+    expect(coreVersion).toBeDefined();
+    expect(markdown).toContain(
+      `@salt\\-ds/core@${coreVersion?.replaceAll(".", "\\.")}`,
+    );
     expect(markdown).toContain("react@18\\.3\\.1");
     expect(markdown).toContain("@salt-ds/theme/css/global.css");
     expect(markdown).toContain("OperationsDashboard");
@@ -319,4 +409,48 @@ describe("generated canonical retrieval", () => {
       ),
     ).toBeLessThanOrEqual(2 * 1024);
   });
+
+  it.each([
+    "dialog form submit actions composition",
+    "compose a dialog form with submit actions",
+  ])(
+    "keeps direct workflow and source evidence for task wording: %s",
+    (query) => {
+      const context = buildKnowledgeContext(store, { query, limit: 8 });
+      const workflow = context.canonical_documents?.find(
+        (document) =>
+          document.reference === `record:guide:${WORKFLOW_GUIDE_ID}`,
+      );
+      expect(workflow).toBeDefined();
+      expect(workflow?.sections.length).toBeGreaterThan(0);
+      expect([
+        ...(workflow?.files ?? []),
+        ...(workflow?.omissions ?? []),
+      ]).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            reference: `record:guide:${WORKFLOW_GUIDE_ID}#file/src/workflows/record-form/RecordForm.tsx`,
+          }),
+        ]),
+      );
+
+      const compact = buildKnowledgeContext(store, {
+        query,
+        limit: 8,
+        max_utf8_bytes: 3 * 1024,
+      });
+      const compactWorkflow = compact.canonical_documents?.find(
+        (document) =>
+          document.reference === `record:guide:${WORKFLOW_GUIDE_ID}`,
+      );
+      expect(compactWorkflow?.omissions).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            reference: `record:guide:${WORKFLOW_GUIDE_ID}#file/src/workflows/record-form/RecordForm.tsx`,
+          }),
+        ]),
+      );
+      expect(compact.answer_status).toBe("applicable");
+    },
+  );
 });
