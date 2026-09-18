@@ -1,0 +1,498 @@
+{
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/salt-pattern-migration-receipt-1.json",
+  "baseline": {
+    "checkpoint_sha": "37b1a7dcdecd171fd05e52497d9813bfaa7bb88e",
+    "contract": "salt-pattern-migration-baseline/1",
+    "inventory_sha256": "sha256:27785d6505a813186089f92c6ae7a2ff09cc74c900186e668aab562da07d9d4d",
+    "path": "tooling/ai/pattern-migration-v1.json",
+    "sha256": "sha256:5e6608255233ed61f355769f011b5e340fefec31b99be4c9555616c0f4435f08"
+  },
+  "batch": "06c",
+  "classified_changes": [
+    "package.json",
+    "packages/core/stories/floating-platform/floating-platform.mdx",
+    "packages/core/stories/introduction.mdx",
+    "packages/core/stories/semantic-icon-provider/semantic-icon-provider.mdx",
+    "packages/knowledge/src/build/buildRegistry.ts",
+    "packages/knowledge/src/build/catalogSemanticInputPatterns.json",
+    "packages/lab/stories/deck-layout/deck-layout.mdx",
+    "packages/lab/stories/layer-layout/layer-layout.mdx",
+    "packages/lab/stories/layout/layouts.mdx",
+    "packages/lab/stories/window/window.mdx",
+    "packages/styles/README.md",
+    "packages/styles/stories/introduction.mdx",
+    "packages/window/README.md",
+    "site/docs/components/floating-platform/index.mdx",
+    "site/docs/components/layouts/deck-layout/index.mdx",
+    "site/docs/components/layouts/index.mdx",
+    "site/docs/components/layouts/layer-layout/index.mdx",
+    "site/docs/components/semantic-icon-provider/usage.mdx",
+    "site/src/examples/patterns/manifest.json"
+  ],
+  "contract": "salt-pattern-migration-receipt/1",
+  "inventory": {
+    "example_manifest_sha256": "sha256:f1ca6723cadbc5f395c161551c3cfaf7fba3b72cd11c7f5d04e9d40810bc85d8",
+    "package_stories": [
+      {
+        "batch": "06b",
+        "destination": "site/docs/components/floating-platform/index.mdx",
+        "destination_sha256": "sha256:9ffbf965f45f14284afb9974aab7cf5a4e44b7243b001b8aa2a006cc50409cf3",
+        "disposition": "migrate",
+        "maintainer_facade": null,
+        "owner": "salt-core-maintainers",
+        "retirement_reason": null,
+        "source_path": "packages/core/stories/floating-platform/floating-platform.mdx",
+        "source_sha256": "sha256:69788e8848aff8a03983ed441ff726c4aadbc190b919f9545af4368f0e9c2631",
+        "status": "complete"
+      },
+      {
+        "batch": "06b",
+        "destination": null,
+        "destination_sha256": null,
+        "disposition": "retire",
+        "maintainer_facade": null,
+        "owner": "salt-core-maintainers",
+        "retirement_reason": "The source only redirected readers to the canonical Salt website and retained no unique supported guidance.",
+        "source_path": "packages/core/stories/introduction.mdx",
+        "source_sha256": "sha256:2d06359ac2994c87822134281bfc396239dd55847920ba8bab87f15aaf33de1b",
+        "status": "complete"
+      },
+      {
+        "batch": "06b",
+        "destination": "site/docs/components/semantic-icon-provider/usage.mdx",
+        "destination_sha256": "sha256:0771cb1a1ca37ee2c0bd9ddee884692d40bc5e59c7503b44a359967b0ba244bd",
+        "disposition": "merge",
+        "maintainer_facade": null,
+        "owner": "salt-core-maintainers",
+        "retirement_reason": null,
+        "source_path": "packages/core/stories/semantic-icon-provider/semantic-icon-provider.mdx",
+        "source_sha256": "sha256:6dcb13d15f10d11b9a889fd0c173bbd56dfc5ddb7df21b88e42d3309aa8a20e8",
+        "status": "complete"
+      },
+      {
+        "batch": "06c",
+        "destination": "site/docs/components/layouts/deck-layout/index.mdx",
+        "destination_sha256": "sha256:1d23e0b475b2b06fc72513ccdc72c1e9b0e802bb717cf48f55956eb81a78280f",
+        "disposition": "migrate",
+        "maintainer_facade": null,
+        "owner": "salt-lab-maintainers",
+        "retirement_reason": null,
+        "source_path": "packages/lab/stories/deck-layout/deck-layout.mdx",
+        "source_sha256": "sha256:7f09e5a2e3c1308c4514c32bd936693fb247a38b4d64c9bf8505430adcb85dad",
+        "status": "complete"
+      },
+      {
+        "batch": "06c",
+        "destination": "site/docs/components/layouts/layer-layout/index.mdx",
+        "destination_sha256": "sha256:888e3c44f08dcb834dbc934e27cafc6e2acfb4fee9cccadd490a0e15f351c943",
+        "disposition": "migrate",
+        "maintainer_facade": null,
+        "owner": "salt-lab-maintainers",
+        "retirement_reason": null,
+        "source_path": "packages/lab/stories/layer-layout/layer-layout.mdx",
+        "source_sha256": "sha256:662fa3e1f74ce58353e82eb487d2b32f31cd0db15fe88cff1f7d3afaa62f382a",
+        "status": "complete"
+      },
+      {
+        "batch": "06c",
+        "destination": "site/docs/components/layouts/index.mdx",
+        "destination_sha256": "sha256:c47b924d30785c953e016c6f6fdba654daceb00944511639039cdb78bfe045cc",
+        "disposition": "merge",
+        "maintainer_facade": null,
+        "owner": "salt-lab-maintainers",
+        "retirement_reason": null,
+        "source_path": "packages/lab/stories/layout/layouts.mdx",
+        "source_sha256": "sha256:2327e8efc7093675d84d18b0a082abe97723ce00088cb13fa89e8053375ca374",
+        "status": "complete"
+      },
+      {
+        "batch": "06c",
+        "destination": "packages/window/README.md",
+        "destination_sha256": "sha256:c68ee27587e375f827e4c157f5d9bc1ee909a79290d065df89be5738f609a193",
+        "disposition": "merge",
+        "maintainer_facade": null,
+        "owner": "salt-window-maintainers",
+        "retirement_reason": null,
+        "source_path": "packages/lab/stories/window/window.mdx",
+        "source_sha256": "sha256:1043307eff5ac5fa2549eda9ee43f335a6a7732035f4217bc43e013d32143e28",
+        "status": "complete"
+      },
+      {
+        "batch": "06b",
+        "destination": "packages/styles/README.md",
+        "destination_sha256": "sha256:d9e0b015c2010c2c6d579c80ce7d25a7f565a9ef7fe3d9cc58973e10487a9144",
+        "disposition": "merge",
+        "maintainer_facade": null,
+        "owner": "salt-styles-maintainers",
+        "retirement_reason": null,
+        "source_path": "packages/styles/stories/introduction.mdx",
+        "source_sha256": "sha256:180268bb877612ffe2e8132833ffd9bff81a765fddb1fec6fbf02fc60b033ae4",
+        "status": "complete"
+      }
+    ],
+    "package_story_count": 8,
+    "pattern_count": 24,
+    "patterns": [
+      {
+        "batch": "06b",
+        "content_sha256": "sha256:af9bcb82e110f0dc798cef88fbd4394d5eef9924bc1a6fcf9aa34537c1644389",
+        "example_closure_sha256": "sha256:805c10226ee8511a0a86e35de6f5f2e19003cdcc93172363f9d6b3171db4d0e0",
+        "example_id": "announcement-dialog",
+        "id": "announcement-dialog",
+        "record_key": "record:pattern:pattern.announcement-dialog",
+        "record_sha256": "sha256:bb6977d19b4b25d2b996824f344139c27371b043262cc5381a92270a417d674c",
+        "status": "complete"
+      },
+      {
+        "batch": "06b",
+        "content_sha256": "sha256:1ffcf31cda465496f40c5ece8912abbfd7a0384f6c16bbc1615b737041e42135",
+        "example_closure_sha256": "sha256:58ae36d1b5a7e1df14628d6aac0c57a7aa3ebcf65c43584e939f97309d430bd7",
+        "example_id": "app-header",
+        "id": "app-header",
+        "record_key": "record:pattern:pattern.app-header",
+        "record_sha256": "sha256:1d338ade38452faceb8cb9b32aa33c2ecdcbec7de189206fd4745b3e7e7aa877",
+        "status": "complete"
+      },
+      {
+        "batch": "06b",
+        "content_sha256": "sha256:649dce492a97dc83ed3552142d534f49493f9bf72bf13a1e3d53563dbd3bf572",
+        "example_closure_sha256": "sha256:172d46a2d6a4173516b2e1e8c0c3810805c8e1ccb1f36437b87acff5a994b57b",
+        "example_id": "breadcrumbs",
+        "id": "breadcrumbs",
+        "record_key": "record:pattern:pattern.breadcrumbs",
+        "record_sha256": "sha256:37b8c39ec5972c9dcee23d15ab52fb8f88b771d69f6919a891d2bc6767bd4608",
+        "status": "complete"
+      },
+      {
+        "batch": "06b",
+        "content_sha256": "sha256:15fc51dbd78d7049402b5690b8d8498d53ca993b42cf2ee760a11e07d3b6507e",
+        "example_closure_sha256": "sha256:ac72d9a3566a9e9d3d5e8bbc7263344ea16e508846415a7342c87fd9382002fe",
+        "example_id": "button-bar",
+        "id": "button-bar",
+        "record_key": "record:pattern:pattern.button-bar",
+        "record_sha256": "sha256:6d25dbc0b279b6bf50d78a0560fd5e905dfda91741cb59bd8b690be07891ed4f",
+        "status": "complete"
+      },
+      {
+        "batch": "06b",
+        "content_sha256": "sha256:9b9ca19deeedcfb6ed905f2dcfc72364ef75002b2e03c200fdd042d6f77de87b",
+        "example_closure_sha256": "sha256:53a3b270e14e38056c0d66fae6f8a4ce4f71af8b18c8872d295fec303d2f6101",
+        "example_id": "comments",
+        "id": "comments",
+        "record_key": "record:pattern:pattern.comments",
+        "record_sha256": "sha256:4136d2b16602b1c13c221e496d96642f3d52937296c4ff62ce23c38e21a1a164",
+        "status": "complete"
+      },
+      {
+        "batch": "06b",
+        "content_sha256": "sha256:44d6b0d62f631fd54722ab06dcdd958580af78efbca8b14f0fc74cdab903a93b",
+        "example_closure_sha256": "sha256:b286e28151265b0dd150dc9603882f1e6e9e8bbaadb1f73d20c5b19d105d4e4e",
+        "example_id": "contact-details",
+        "id": "contact-details",
+        "record_key": "record:pattern:pattern.contact-details",
+        "record_sha256": "sha256:328b87b28ed526045949d1e8c518d20cb3845e3ff42bb7bbef037c8cbe8a8393",
+        "status": "complete"
+      },
+      {
+        "batch": "06b",
+        "content_sha256": "sha256:a459e3f53140046ad5b1de00e4e7ce2702a55bf981dd0e8097145d10d8c6c96c",
+        "example_closure_sha256": "sha256:a38e4a1e719f14365e4c7d8c37a7b50a49fcc780ae829089403a9fcd5a109235",
+        "example_id": "content-status",
+        "id": "content-status",
+        "record_key": "record:pattern:pattern.content-status",
+        "record_sha256": "sha256:d9657aa8169f15bac962391f955706abe80a387a6847efe0750b8f9fc21600c8",
+        "status": "complete"
+      },
+      {
+        "batch": "06b",
+        "content_sha256": "sha256:45b18fb1abe339ed1c2f3668ccff5ce9231a78b34c2c673b4bac6fe69503e4c2",
+        "example_closure_sha256": "sha256:937c65f02e62a3b86201019c5a255d314ef3303ca6d4c4dcdbca9665bc7e2a91",
+        "example_id": "experience-customization",
+        "id": "experience-customization",
+        "record_key": "record:pattern:pattern.experience-customization",
+        "record_sha256": "sha256:76d18cb0ddefd6e1000f1dff8f2eeeede1efeabcd49e13a4aa5831511c3b5624",
+        "status": "complete"
+      },
+      {
+        "batch": "06b",
+        "content_sha256": "sha256:5167263476a0bfe75f1b79f5abbed53100a3d53b40bd7e667366d449c170776a",
+        "example_closure_sha256": "sha256:8a07a168b9e79e3d594224395c00648c57ed98114219f72b1a679effdddaafeb",
+        "example_id": "file-upload",
+        "id": "file-upload",
+        "record_key": "record:pattern:pattern.file-upload",
+        "record_sha256": "sha256:1c76faf8ffe93455398ae5888c651169e487a7d44a939f8887d2880ff4ac5500",
+        "status": "complete"
+      },
+      {
+        "batch": "06b",
+        "content_sha256": "sha256:71e40394995d8d18f5d85419ddbe3a25eb4a185e356046e1b10181aa33d71e85",
+        "example_closure_sha256": "sha256:943c1b85121fda32abc700e313d7e4dbdc092d2ed77bb3e4bd2728198028f5cf",
+        "example_id": "formatted-input",
+        "id": "formatted-input",
+        "record_key": "record:pattern:pattern.formatted-input",
+        "record_sha256": "sha256:879fd0a076db7ec7c9843c57a732d823f7c4759f7628e0144c6c93579803e3ce",
+        "status": "complete"
+      },
+      {
+        "batch": "06b",
+        "content_sha256": "sha256:47662eda116da2a8b9ef743610f13c8ba18a7f5014342308d735d6081c38f632",
+        "example_closure_sha256": "sha256:f52efe9b157bde2e6a3893603c969233a6717224798a3b8e0de56471b57a11a0",
+        "example_id": "forms",
+        "id": "forms",
+        "record_key": "record:pattern:pattern.forms",
+        "record_sha256": "sha256:947edbef9f18b5f0513de6979970d702ab2fd13dc77bd39dc37d6b112a5cc62f",
+        "status": "complete"
+      },
+      {
+        "batch": "06b",
+        "content_sha256": "sha256:d0c26a9fd9df4745d176c142c0db166037b0d6fb7ca281a446e79e993d2240b6",
+        "example_closure_sha256": "sha256:dd81b961f531156a4c87456769cd8eca978daa93d2f21065c85685b43f307135",
+        "example_id": "indication",
+        "id": "indication",
+        "record_key": "record:pattern:pattern.indication",
+        "record_sha256": "sha256:d2a3280c2492086fff5ab225e943b146f3833db2d726235758dcc5625e682b36",
+        "status": "complete"
+      },
+      {
+        "batch": "06c",
+        "content_sha256": "sha256:edc93f16b978be4b6d48bcfa5dd25fb2ae58a5934741af920213d91d38e4cff4",
+        "example_closure_sha256": "sha256:a8d9e9e0dff484d6712a219f70d136eab48f6256435ee7d0659062f7466df956",
+        "example_id": "international-phone-number-input",
+        "id": "international-phone-number",
+        "record_key": "record:pattern:pattern.international-phone-number",
+        "record_sha256": "sha256:de124310e46cb25ef5812ad71fd1ec5a59ce2085d847e3140a111a9966635f4c",
+        "status": "complete"
+      },
+      {
+        "batch": "06c",
+        "content_sha256": "sha256:e8a2e79b42184197500d12a34aac0b7efd346c248659802e37071b990b160b1c",
+        "example_closure_sha256": "sha256:c9a714269c6a9f068177b64db59bd57c5fbd0d9965c2613663b01c7425118e35",
+        "example_id": "keyboard-shortcuts",
+        "id": "keyboard-shortcuts",
+        "record_key": "record:pattern:pattern.keyboard-shortcuts",
+        "record_sha256": "sha256:05836056f93fcb14291d1ff0b687d82cda8d1d8dc49bde037be56f04d7fc52d8",
+        "status": "complete"
+      },
+      {
+        "batch": "06c",
+        "content_sha256": "sha256:bae162cb9b4127a5ba3b19bc93fa6f70f6d71a8538cb10c15012bdbcb9ceef72",
+        "example_closure_sha256": "sha256:5716e200ce0c2c97e18416d71e02c0bbc2e83bb08305eabb706862309d5e34a2",
+        "example_id": "list-builder",
+        "id": "list-builder",
+        "record_key": "record:pattern:pattern.list-builder",
+        "record_sha256": "sha256:48b4ed3c1f740a4f37e2d2b02d1c8f18ea9c45b14d13a046c4a29b55cce3efb5",
+        "status": "complete"
+      },
+      {
+        "batch": "06c",
+        "content_sha256": "sha256:a48eb17703b004765e4caa032cc201cdf377cc05b02034a07cf61f3ed5fd1cba",
+        "example_closure_sha256": "sha256:d799f8c3f6c9074a2ae2bb3a66248b5c62dd6df6556ff3db933441929d8f82c5",
+        "example_id": "menu-button",
+        "id": "menu-button",
+        "record_key": "record:pattern:pattern.menu-button",
+        "record_sha256": "sha256:a46655ba07f1828a0850fa1a11fab98ce35dca981511eb0ade581a5a9d972a6a",
+        "status": "complete"
+      },
+      {
+        "batch": "06c",
+        "content_sha256": "sha256:3964894161e1113bca782b5c93bd333e0f424837cec32d2da33186f1fd34b093",
+        "example_closure_sha256": "sha256:24f7c8e1724c98313ce3f82e285b6fc522b308ef05c04f87874390332c8bfb9a",
+        "example_id": "metric",
+        "id": "metric",
+        "record_key": "record:pattern:pattern.metric",
+        "record_sha256": "sha256:dd14743a53e9ae19d726691db6d3cb944fd6c4124bd51cc84699c48d18907cf6",
+        "status": "complete"
+      },
+      {
+        "batch": "06c",
+        "content_sha256": "sha256:13406fd9a0edf79c614f96fc53655f3c1a8e90efefe95e23813e4306edbbf415",
+        "example_closure_sha256": "sha256:f4bdc7960d7d9d02602e494c405ffac6d4eb4e96c8a23aa95d252e47364f2afd",
+        "example_id": "navigation",
+        "id": "navigation",
+        "record_key": "record:pattern:pattern.navigation",
+        "record_sha256": "sha256:3002daad0da96f120b8ff1c1f78d70cd535c9318befd39daf47b20f4ed728f0c",
+        "status": "complete"
+      },
+      {
+        "batch": "06c",
+        "content_sha256": "sha256:4a2266041555801fd8e0be4388b8f714b8013f53d115cbbdfb0294f93237c6c4",
+        "example_closure_sha256": "sha256:992db1621becc7333f37a025d84508bdc3cbef838fd2c532ffcb9c709989ae2b",
+        "example_id": "preferences-dialog",
+        "id": "preferences-dialog",
+        "record_key": "record:pattern:pattern.preferences-dialog",
+        "record_sha256": "sha256:b3000ffed43a4436add962ee0f319340d202a5d037eeb2afe90b1103b4b9fb4c",
+        "status": "complete"
+      },
+      {
+        "batch": "06c",
+        "content_sha256": "sha256:a3dfc36e892a5f412fd01d8075452f65d15bea6123cd8e6d851ef077134be47f",
+        "example_closure_sha256": "sha256:53debc578ff0c92a3c3a35da4198be44540d84a45caae52093e956ce8978f773",
+        "example_id": "search",
+        "id": "search",
+        "record_key": "record:pattern:pattern.search",
+        "record_sha256": "sha256:3bf3a04936e6deddef5aec19ca02dc6cdbfad6789957f638b636e682e5675bd2",
+        "status": "complete"
+      },
+      {
+        "batch": "06c",
+        "content_sha256": "sha256:5ed614d01c2baafac8c7341eeab967b6c759ff2a1aaa9903858067dc3aa9bf2e",
+        "example_closure_sha256": "sha256:2faff341ea2f04b8d17823346e84f7534b28ae31092476259ab415f8fb78a0dd",
+        "example_id": "selectable-card",
+        "id": "selectable-card",
+        "record_key": "record:pattern:pattern.selectable-card",
+        "record_sha256": "sha256:eef8d463cbe9f1e3d57ffb430520cf5a89ff95ec6f2ec476f85bf7686365f14c",
+        "status": "complete"
+      },
+      {
+        "batch": "06c",
+        "content_sha256": "sha256:f7b390d81cb29dea7005219fea0c756d2feec64adf225ec3b48a68c3c35621bb",
+        "example_closure_sha256": "sha256:d567ec7251cff93b7ae3f95c6124d674bf741b7a0783663d6424d907c1f65bbe",
+        "example_id": "split-button",
+        "id": "split-button",
+        "record_key": "record:pattern:pattern.split-button",
+        "record_sha256": "sha256:f88d11b6aa276b690c226df982c21502f52d9e90615cea74b7609558ff44a0c0",
+        "status": "complete"
+      },
+      {
+        "batch": "06c",
+        "content_sha256": "sha256:2cf2de02b18ab98d54323c6f542df85cf0610044c10908a3a12fb990cef5cefc",
+        "example_closure_sha256": "sha256:1818296e68b280450442d57e96792b370a9d11c4d107c9b739a166db0b4e29aa",
+        "example_id": "vertical-navigation",
+        "id": "vertical-navigation",
+        "record_key": "record:pattern:pattern.vertical-navigation",
+        "record_sha256": "sha256:1f7a4b62066f2d926abfc1ace0e096b20fe4124b4e755e38c3fb7b706136b91f",
+        "status": "complete"
+      },
+      {
+        "batch": "06c",
+        "content_sha256": "sha256:ef531a0aea6312739e60d40f8fd7f0bf19d627b3b3cbd94c837406d691c28889",
+        "example_closure_sha256": "sha256:c3fabc1e5484fd277179c8bacf87df309a1c35da0d282e5f74d98f0d75edf545",
+        "example_id": "wizard",
+        "id": "wizard",
+        "record_key": "record:pattern:pattern.wizard",
+        "record_sha256": "sha256:85da367649313291f1e1599803fc3067b1817bf908af99947147ba422ebe15c1",
+        "status": "complete"
+      }
+    ]
+  },
+  "knowledge_identity": {
+    "after": {
+      "bundle_digest": "sha256:99df22f94c160988f128d6bcefb7ea72bfb1a88648c91dcae4cb652b91a79400",
+      "compiler_digest": "sha256:3a56024b1ce27e70e4f0961b717908fdcebf4ba9f421e097dfa508ace31f86cf",
+      "semantic_digest": "sha256:0b695f5a5ef61d33abd1acace1cf99d63b65a0fbd4ca5478ab421a1219790cef",
+      "semantic_source_digest": "sha256:744b04a8d11d8ba25518a5b96fc30c030cadd4df478f17c5a4194c503121e1ca"
+    },
+    "before": {
+      "bundle_digest": "sha256:660c2b32f3bee3c6b88bed61a6093b76c8f85e2e401f5693f2d21b4533bf5459",
+      "compiler_digest": "sha256:f9dd74c9e78470360e3d0f53f0916ed81e279ac7dc9a6440625a9790960f4740",
+      "semantic_digest": "sha256:f2fb02c9e6b999935b1e9727463b4a298492f810e376c434bc3626ab050cccab",
+      "semantic_source_digest": "sha256:ae6585d7844d552e5d4f648f2f8b9b8cc91b21ffeb103e316093d4567f14f60a"
+    },
+    "delta": {
+      "bundle_changed": true,
+      "compiler_changed": true,
+      "semantic_changed": true,
+      "semantic_source_changed": true
+    }
+  },
+  "pack_report": {
+    "contract": "salt-ai-pack-report@1",
+    "path": "dist/salt-pattern-migration/06c-pack-report.json",
+    "policy_profile": "pre-agent-support",
+    "sha256": "sha256:48ec6f838f42b3b23178b5fd3f79e297a90b3e1736fb8919764e117403a5a98b"
+  },
+  "package_version_intent": [
+    {
+      "changeset": false,
+      "current_version": "0.0.0",
+      "intent": "initial-release-pending",
+      "name": "@salt-ds/cli"
+    },
+    {
+      "changeset": false,
+      "current_version": "0.0.0",
+      "intent": "initial-release-pending",
+      "name": "@salt-ds/knowledge"
+    }
+  ],
+  "predecessor": {
+    "contract": "salt-pattern-migration-receipt/1",
+    "path": "dist/salt-pattern-migration/input/06b-receipt.json",
+    "sha256": "sha256:d967cdeca8ed780380321654987acfe3fc368c99e648b9da6a1942bdb370243e",
+    "source_commit": "fe107c4583ce8f0780b8001077ff98c968dea4a6"
+  },
+  "result": "pass",
+  "schema_version": "1.0.0",
+  "semantic_change_review": {
+    "allowed": true,
+    "compiler_closure_change": {
+      "configuration_path": "packages/knowledge/src/build/catalogSemanticInputPatterns.json",
+      "configuration_sha256": "sha256:b4b6dc207a4fb5d952decec8da0e66ebc9f418ff8356d9ce1ca36ded15016697",
+      "current_compiler_digest": "sha256:3a56024b1ce27e70e4f0961b717908fdcebf4ba9f421e097dfa508ace31f86cf",
+      "policy": "storybook-semantic-input-retirement/1",
+      "predecessor_compiler_digest": "sha256:a490897e4d02c3f680ae598ea2b279de2d48599f96d81139687b70256a32e063",
+      "remaining_story_pattern_count": 0,
+      "retired_story_patterns": [
+        "packages/ag-grid-theme/stories/**/*.{ts,tsx,css,scss,json}",
+        "packages/core/stories/**/*.{ts,tsx,css,scss,json}",
+        "packages/countries/stories/**/*.{ts,tsx,css,scss,json}",
+        "packages/date-adapters/stories/**/*.{ts,tsx,css,scss,json}",
+        "packages/date-components/stories/**/*.{ts,tsx,css,scss,json}",
+        "packages/embla-carousel/stories/**/*.{ts,tsx,css,scss,json}",
+        "packages/highcharts-theme/stories/**/*.{ts,tsx,css,scss,json}",
+        "packages/icons/stories/**/*.{ts,tsx,css,scss,json}",
+        "packages/lab/stories/**/*.{ts,tsx,css,scss,json}",
+        "packages/react-resizable-panels-theme/stories/**/*.{ts,tsx,css,scss,json}",
+        "packages/styles/stories/**/*.{ts,tsx,css,scss,json}",
+        "packages/theme/stories/**/*.{ts,tsx,css,scss,json}",
+        "packages/window/stories/**/*.{ts,tsx,css,scss,json}"
+      ],
+      "reviewed_source_paths": [
+        "packages/knowledge/src/build/buildRegistry.ts"
+      ]
+    },
+    "policy": "canonical-public-destination-expansion/1",
+    "public_destinations": [
+      {
+        "page_record_key": "record:page:page.salt-components-floating-platform",
+        "page_record_sha256": "sha256:f6e5115fe8d7ef912f7f2a42a443ebffc84fa2c47278c709510a0afb8efd6174",
+        "path": "site/docs/components/floating-platform/index.mdx",
+        "source_record_key": "record:source:source.5c3c086175d042e194164568",
+        "source_record_sha256": "sha256:49ac3d4733663390aa31183673fc185bae897c15e594209346713cb03f4b24c7"
+      },
+      {
+        "page_record_key": "record:page:page.salt-components-semantic-icon-provider-usage",
+        "page_record_sha256": "sha256:116a07f9c5e6671816aa68fb59f2c5754228157505b48084aa89ce7519e9e21d",
+        "path": "site/docs/components/semantic-icon-provider/usage.mdx",
+        "source_record_key": "record:source:source.c47d6f0003cade49fcc1e142",
+        "source_record_sha256": "sha256:9271c4af5bdf55447491e4c699c2b5448f60710ea2c9818746746ed742dedd13"
+      },
+      {
+        "page_record_key": "record:page:page.salt-components-layouts-deck-layout",
+        "page_record_sha256": "sha256:acdd1c03a481b44d58a6a24b9be5c418c7ec13027aeef5a07ad8dd2cecb6f1fd",
+        "path": "site/docs/components/layouts/deck-layout/index.mdx",
+        "source_record_key": "record:source:source.5e8b37b5d799f7f40c1eb18b",
+        "source_record_sha256": "sha256:1a2cdf59de7adf072215d517e7bed2b2c23225448b993a0a0a0f48156a89cccb"
+      },
+      {
+        "page_record_key": "record:page:page.salt-components-layouts-layer-layout",
+        "page_record_sha256": "sha256:4eac13e32f92c45500d61376c0b9b952fc569e4f70254671b1e1026ee643608f",
+        "path": "site/docs/components/layouts/layer-layout/index.mdx",
+        "source_record_key": "record:source:source.9bd77007d222dc0776046f1f",
+        "source_record_sha256": "sha256:ded5e7ea2cff474bfbd6f8b3400bec16b814081113c5f39d2d324b78582aae6e"
+      },
+      {
+        "page_record_key": "record:page:page.salt-components-layouts",
+        "page_record_sha256": "sha256:00cd681d642555c19d569d1d6cc6787ff132716fb8d408a6ab4e3c340273a480",
+        "path": "site/docs/components/layouts/index.mdx",
+        "source_record_key": "record:source:source.ccedd8252bb12d62741bc258",
+        "source_record_sha256": "sha256:8de0f18175926384cafe374b1885a11a0cd0470b58e5dfc0f1f48a0923d339b2"
+      }
+    ],
+    "reason": "Executed package-story dispositions add or expand canonical public MDX pages that are selected Knowledge page records; 06c also retires the reviewed Storybook semantic input patterns. All frozen pattern records and authored example closures remain unchanged.",
+    "stable_pattern_count": 24
+  },
+  "source_clean": true,
+  "source_commit": "be9bb1d64b7157e3a4cf7c8514653fae99ae5580",
+  "unclassified_identity_changes": []
+}

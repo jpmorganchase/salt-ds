@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "plan_id": "001",
+  "unit_id": "06f",
+  "tracker_status": "DONE",
+  "completion_sha": "0fe7bf5a9c739ab3787a101ba0c6eaf81339fed4",
+  "entries": [
+    {
+      "kind": "sample-app-cohort-receipt",
+      "schema_id": "https://www.saltdesignsystem.com/ai/schemas/salt-sample-app-cohort-receipt-1.json",
+      "schema_version": "1.0.0",
+      "locator": "repo://plans/evidence/artifacts/sha256-96f1663966dc0343196661250fc10f2b380d3f3a000a1484fa3a487f9e1ffda5.json",
+      "sha256": "sha256:96f1663966dc0343196661250fc10f2b380d3f3a000a1484fa3a487f9e1ffda5",
+      "source_sha": "0fe7bf5a9c739ab3787a101ba0c6eaf81339fed4",
+      "completion_sha": "0fe7bf5a9c739ab3787a101ba0c6eaf81339fed4",
+      "workflow_class": "local-ci",
+      "environment_class": "local-worktree-node-24",
+      "retention_expires_at": "2031-08-28T00:00:00.000Z",
+      "state": "active",
+      "parents": [
+        "sha256:326812440a98da4ed171d63bbef4a5585d351ef33f5d01b2b4b491db273a7eff"
+      ],
+      "app": "next-app-router",
+      "cohort_package_count": 7,
+      "network": "offline-after-install",
+      "node_version": "24.10.0",
+      "lockfile_sha256": "sha256:625af6806e6d6232b559ed9fba3ad93d0b7525993b88db69274abdbcf983ada1",
+      "bundle_digest": "sha256:2418b7e1248f2475d6f7b0ab2143012b416a38e620d6bdfc33a1dfd63a7f3a21",
+      "semantic_digest": "sha256:a776cf7a83f747d5e7e06c3333b10a018b8005f4194337485065f5353e3d45d9",
+      "semantic_source_digest": "sha256:35f06fecd2625ef5a37782303eecfbced1931c9de6c3999ce38709622b93f4ab",
+      "compiler_digest": "sha256:48bf067eb3218ddb260a1502a983f9952271b5f7fd19bc4c7f78d819e5218e1a",
+      "server_render": "pass",
+      "hydration": "pass",
+      "runtime_errors": 0,
+      "external_requests": 0,
+      "scan_coverage": "partial",
+      "scan_reasons": [
+        "SCAN_UNSUPPORTED_CONSTRUCT"
+      ],
+      "verification": [
+        "yarn build",
+        "yarn check:salt-sample-apps -- --app next-app-router"
+      ]
+    }
+  ]
+}

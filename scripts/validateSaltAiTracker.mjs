@@ -12,7 +12,7 @@ import {
   parseArgs,
   readJson,
   repositoryRoot,
-  sha256,
+  repositoryTextSha256,
   stableJson,
 } from "./saltAiEvidenceUtils.mjs";
 
@@ -348,7 +348,7 @@ if (!args.get("--fixtures-only")) {
     const indexPath = path.resolve(repositoryRoot, relative);
     const bytes = await readFile(indexPath);
     assert(
-      sha256(bytes) === expectedDigest,
+      repositoryTextSha256(bytes) === expectedDigest,
       `Unit ${unit} evidence-index digest mismatch`,
     );
     const index = JSON.parse(bytes.toString("utf8"));

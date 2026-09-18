@@ -2,11 +2,16 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import process from "node:process";
-import { runMcpWorkflowCoverage } from "./consumer-smoke/checks.mjs";
 import {
+  runCliWorkflowCoverage,
+  runMcpWorkflowCoverage,
+} from "./consumer-smoke/checks.mjs";
+import {
+  createExactCliInfoRepo,
   createExistingSaltRepo,
   createNonSaltRepo,
   ensureBuildArtifacts,
+  installLocalCliPackages,
   installLocalPackages,
   installPublishedPackage,
   loadExactPackReport,
@@ -15,6 +20,10 @@ import {
   verifyStandaloneConsumerExample,
 } from "./consumer-smoke/fixture.mjs";
 import { parseArgs } from "./consumer-smoke/shared.mjs";
+import {
+  sha256,
+  writeJsonAtomic,
+} from "./saltAiEvidenceUtils.mjs";
 
 async function main() {
   const options = parseArgs(process.argv.slice(2));
@@ -31,6 +40,8 @@ async function main() {
     let standaloneExpectedVersion = options.expectedVersion ?? null;
     let standaloneExpectedPackageTreeSha256 = null;
     let comparisonRegistryDir = null;
+    let localCliInstallation = null;
+    let localPackReport = null;
     if (options.published) {
       const identity = await installPublishedPackage(
         installedToolsRoot,
@@ -41,22 +52,65 @@ async function main() {
     } else {
       await ensureBuildArtifacts(options.skipBuild);
       const packReport = await loadExactPackReport(options.packReport);
-      const localInstallation = await installLocalPackages(
-        installedToolsRoot,
-        packReport,
-      );
-      standaloneMcpSpec = localInstallation.tarballPath;
-      standaloneExpectedVersion = localInstallation.packMetadata.version;
-      standaloneExpectedPackageTreeSha256 =
-        localInstallation.installedTreeSha256;
-      comparisonRegistryDir = packReport.comparisonRegistryDir;
+      localPackReport = packReport;
+      if (packReport.cli) {
+        localCliInstallation = await installLocalCliPackages(
+          installedToolsRoot,
+          packReport,
+        );
+      } else {
+        const localInstallation = await installLocalPackages(
+          installedToolsRoot,
+          packReport,
+        );
+        standaloneMcpSpec = localInstallation.tarballPath;
+        standaloneExpectedVersion = localInstallation.packMetadata.version;
+        standaloneExpectedPackageTreeSha256 =
+          localInstallation.installedTreeSha256;
+        comparisonRegistryDir = packReport.comparisonRegistryDir;
+      }
     }
     await fs.mkdir(existingSaltRepo, { recursive: true });
     await fs.mkdir(nonSaltRepo, { recursive: true });
     await Promise.all([
-      createExistingSaltRepo(existingSaltRepo),
+      localCliInstallation
+        ? createExactCliInfoRepo(existingSaltRepo)
+        : createExistingSaltRepo(existingSaltRepo),
       createNonSaltRepo(nonSaltRepo),
     ]);
+    if (localCliInstallation) {
+      const receipt = await runCliWorkflowCoverage(
+        installedToolsRoot,
+        existingSaltRepo,
+        nonSaltRepo,
+        localPackReport,
+      );
+      const smokeReceiptPath = path.join(
+        path.dirname(localPackReport.reportPath),
+        "consumer-smoke-receipt.json",
+      );
+      await writeJsonAtomic(smokeReceiptPath, {
+        contract: "salt-ai-consumer-smoke/1",
+        schema_version: "1.0.0",
+        adapter: "@salt-ds/cli",
+        pack_report: {
+          path: path.basename(localPackReport.reportPath),
+          sha256: sha256(await fs.readFile(localPackReport.reportPath)),
+        },
+        result: "pass",
+        workflows: receipt,
+      });
+      console.log(
+        `Verified nonpublishable packed CLI workflows: ${JSON.stringify(receipt)}`,
+      );
+      console.log(`Wrote consumer smoke receipt: ${smokeReceiptPath}`);
+      console.log("");
+      console.log("Consumer smoke test passed.");
+      console.log(`Installed tools root: ${installedToolsRoot}`);
+      console.log(`Exact Salt repo: ${existingSaltRepo}`);
+      console.log(`Non-Salt repo: ${nonSaltRepo}`);
+      return;
+    }
     const moduleFingerprint = await verifyInstalledMcpModuleExports(
       installedToolsRoot,
       existingSaltRepo,

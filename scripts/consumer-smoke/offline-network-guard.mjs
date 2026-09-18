@@ -7,10 +7,21 @@ import {
 
 const blockedModules = new Set(BLOCKED_NETWORK_MODULES);
 const blockedBindings = new Set(BLOCKED_PROCESS_BINDINGS);
+const workerModules = new Set(["worker_threads", "node:worker_threads"]);
+const allowsNamedScannerWorker =
+  process.env.SALT_OFFLINE_ALLOW_SCANNER_WORKER === "1";
+const isScannerWorker = process.env.SALT_SCANNER_WORKER_CONTEXT === "1";
+
+function isBlockedModule(request) {
+  return (
+    blockedModules.has(request) &&
+    !(allowsNamedScannerWorker && workerModules.has(request))
+  );
+}
 
 const originalLoad = Module._load;
 Module._load = function guardedLoad(request, parent, isMain) {
-  if (blockedModules.has(request)) {
+  if (isBlockedModule(request)) {
     throw blockedNetworkError(request);
   }
   return originalLoad.call(this, request, parent, isMain);
@@ -18,7 +29,7 @@ Module._load = function guardedLoad(request, parent, isMain) {
 
 const originalGetBuiltinModule = process.getBuiltinModule.bind(process);
 process.getBuiltinModule = function guardedGetBuiltinModule(specifier) {
-  if (blockedModules.has(specifier)) {
+  if (isBlockedModule(specifier)) {
     throw blockedNetworkError(`process.getBuiltinModule(${specifier})`);
   }
   return originalGetBuiltinModule(specifier);
@@ -32,6 +43,15 @@ Module.register = function blockedModuleRegister() {
 Module.registerHooks = function blockedModuleRegisterHooks() {
   throw blockedNetworkError("node:module.registerHooks");
 };
+
+if (isScannerWorker) {
+  const workerThreads = originalGetBuiltinModule("node:worker_threads");
+  workerThreads.Worker = class BlockedNestedScannerWorker {
+    constructor() {
+      throw blockedNetworkError("nested scanner Worker");
+    }
+  };
+}
 syncBuiltinESMExports();
 
 process.dlopen = function blockedDlopen() {

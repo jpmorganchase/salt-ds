@@ -1578,8 +1578,23 @@ const canonicalCatalogFamilies = {
     codec: apiSymbolFactCodec,
     artifact: "api-symbols.json",
     loader: "by-primary-key",
-    searchable: false,
-    indexRecord: noSearch,
+    searchable: true,
+    indexRecord: (record) => ({
+      title: [record.export_name, ...record.member_path.map((member) => member.name)].join(
+        ".",
+      ),
+      summary: `${record.symbol_space} export from ${record.entrypoint}`,
+      terms: [
+        record.export_name,
+        record.entrypoint,
+        record.symbol_space,
+        ...record.member_path.map((member) => member.name),
+      ],
+      facets: {
+        family: [record.family],
+        symbol_space: [record.symbol_space],
+      },
+    }),
     resolveReferences: (record) => [record.package_ref],
     resolveContentReferences: noContentReferences,
     resolveProvenance: noReferences,

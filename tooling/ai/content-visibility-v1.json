@@ -1,11 +1,38 @@
 {
   "schema_version": "1.0.0",
+  "authoring_baseline": {
+    "checkpoint_sha": "37b1a7dcdecd171fd05e52497d9813bfaa7bb88e",
+    "strict_paths": [
+      "templates/component-pages",
+      "templates/pattern-pages"
+    ],
+    "legacy_policy": "no-new-deficits",
+    "closure_unit": "06d"
+  },
+  "provenance_kinds": [
+    "authored_normative_guidance",
+    "generated_api_fact",
+    "inferred_implementation_signal",
+    "test_receipt"
+  ],
   "source_roots": [
     {
       "path": "README.md",
       "visibility": "public",
       "content_kinds": ["docs", "metadata"],
       "reason": "Public repository landing documentation."
+    },
+    {
+      "path": "packages/cli/README.md",
+      "visibility": "public",
+      "content_kinds": ["docs", "metadata"],
+      "reason": "Staged CLI npm landing documentation."
+    },
+    {
+      "path": "packages/knowledge/README.md",
+      "visibility": "public",
+      "content_kinds": ["docs", "metadata"],
+      "reason": "Staged Knowledge npm landing documentation."
     },
     {
       "path": "docs/ai/migrations/records",
@@ -104,10 +131,34 @@
       "reason": "Public Salt site documentation, subject to item overrides."
     },
     {
+      "path": "site/src/Body",
+      "visibility": "internal",
+      "content_kinds": ["implementation"],
+      "reason": "Site rendering code is not a public guidance authority."
+    },
+    {
+      "path": "site/src/components",
+      "visibility": "internal",
+      "content_kinds": ["implementation"],
+      "reason": "Site presentation components are not canonical consumer guidance."
+    },
+    {
       "path": "site/src/examples",
       "visibility": "public",
       "content_kinds": ["example"],
       "reason": "Canonical public example implementations."
+    },
+    {
+      "path": "site/src/layouts",
+      "visibility": "internal",
+      "content_kinds": ["implementation"],
+      "reason": "Site layout implementation is not canonical consumer guidance."
+    },
+    {
+      "path": "skills/salt-design-system",
+      "visibility": "public",
+      "content_kinds": ["docs", "metadata"],
+      "reason": "Manifest-selected public Salt Agent Skill artifacts."
     },
     {
       "path": "evals",
@@ -138,6 +189,12 @@
       "visibility": "internal",
       "content_kinds": ["tooling"],
       "reason": "Governance inventories are not consumer content."
+    },
+    {
+      "path": "templates",
+      "visibility": "internal",
+      "content_kinds": ["docs", "tooling"],
+      "reason": "Contributor templates are authoring controls rather than consumer guidance."
     }
   ],
   "item_overrides": [
@@ -185,6 +242,11 @@
       "path": "site/docs/index.mdx",
       "visibility": "public",
       "reason": "The public page is selected, but internal links require public fallback or removal."
+    },
+    {
+      "path": "tooling/ai/public-docs-v1",
+      "visibility": "public",
+      "reason": "Manifest-selected staged public AI guide source."
     }
   ],
   "destination_classes": [
@@ -224,81 +286,8 @@
       "path_prefixes": ["/jpmorganchase/salt-ds/issues"]
     }
   ],
-  "unclassified": [
-    {
-      "path": "site/src/Body",
-      "reason": "Site rendering implementation needs a public-content dependency audit.",
-      "closure_batch": "visibility-1"
-    },
-    {
-      "path": "site/src/components",
-      "reason": "Site component prose/assets need explicit projection classification.",
-      "closure_batch": "visibility-1"
-    },
-    {
-      "path": "site/src/layouts",
-      "reason": "Layout-owned fragments and destinations need explicit classification.",
-      "closure_batch": "visibility-1"
-    },
-    {
-      "path": "packages/ag-grid-theme/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    },
-    {
-      "path": "packages/core/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    },
-    {
-      "path": "packages/countries/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    },
-    {
-      "path": "packages/date-components/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    },
-    {
-      "path": "packages/embla-carousel/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    },
-    {
-      "path": "packages/highcharts-theme/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    },
-    {
-      "path": "packages/icons/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    },
-    {
-      "path": "packages/lab/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    },
-    {
-      "path": "packages/react-resizable-panels-theme/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    },
-    {
-      "path": "packages/styles/stories",
-      "reason": "Story source is temporary extraction evidence, not a public destination.",
-      "closure_batch": "visibility-2"
-    }
-  ],
+  "unclassified": [],
   "closure_batches": [
-    {
-      "id": "visibility-1",
-      "paths": ["site/src/Body", "site/src/components", "site/src/layouts"],
-      "owner": "saltdesignsystem",
-      "due_unit": "06a",
-      "status": "planned"
-    },
     {
       "id": "visibility-2",
       "paths": [
@@ -315,7 +304,7 @@
       ],
       "owner": "saltdesignsystem",
       "due_unit": "06c",
-      "status": "planned"
+      "status": "complete"
     }
   ]
 }

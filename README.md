@@ -1,5 +1,7 @@
 # Salt
 
+<!-- salt-ai-navigation: staged; activation requires the verified terminal release and post-release discovery gate. -->
+
 [![@salt-ds/core](https://img.shields.io/npm/v/@salt-ds/core.svg?label=@salt-ds/core)](https://www.npmjs.com/package/@salt-ds/core)
 [![@salt-ds/lab](https://img.shields.io/npm/v/@salt-ds/lab.svg?label=@salt-ds/lab)](https://www.npmjs.com/package/@salt-ds/lab)
 [![@salt-ds/theme](https://img.shields.io/npm/v/@salt-ds/theme.svg?label=@salt-ds/theme)](https://www.npmjs.com/package/@salt-ds/theme)

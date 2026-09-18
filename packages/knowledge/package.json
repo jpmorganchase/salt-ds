@@ -2,11 +2,22 @@
   "name": "@salt-ds/knowledge",
   "version": "0.0.0",
   "private": true,
+  "description": "Version-matched offline Salt Design System knowledge for developer tooling.",
+  "homepage": "https://www.saltdesignsystem.com/salt/getting-started/ai",
+  "keywords": [
+    "salt-design-system",
+    "developer-tools",
+    "knowledge",
+    "offline"
+  ],
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpmorganchase/salt-ds.git",
     "directory": "packages/knowledge"
+  },
+  "bugs": {
+    "url": "https://www.saltdesignsystem.com/salt/support-and-contributions"
   },
   "main": "src/index.ts",
   "engines": {
@@ -23,6 +34,7 @@
     "markdown",
     "compatibility",
     "support",
+    "skills",
     "schemas"
   ],
   "publishExports": {
@@ -34,12 +46,14 @@
     "./package.json": "./package.json"
   },
   "publishEntryPath": "src/public.ts",
-  "typescriptInclude": ["src/public.ts"],
+  "typescriptInclude": [
+    "src/public.ts"
+  ],
   "typescriptRootDir": "src",
   "publishTypingEntryOnly": false,
   "publishPreserveModules": false,
   "publishSourceMaps": false,
-  "publishIncludeReadme": false,
+  "publishIncludeReadme": true,
   "publishIncludeChangelog": false,
   "publishScriptExcludes": [
     "build",
@@ -67,9 +81,9 @@
     "prepack": "yarn build"
   },
   "dependencies": {
-    "@babel/parser": "^7.28.4",
-    "@babel/traverse": "^7.28.4",
-    "@babel/types": "^7.28.4",
+    "@babel/parser": "^7.29.7",
+    "@babel/traverse": "^7.29.7",
+    "@babel/types": "^7.29.7",
     "@types/node": "^24.0.0",
     "js-yaml": "^4.1.1",
     "jsonc-parser": "^3.3.1",

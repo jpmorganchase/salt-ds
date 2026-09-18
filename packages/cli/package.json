@@ -1,0 +1,89 @@
+{
+  "name": "@salt-ds/cli",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Offline Salt Design System inspection, retrieval, scan, and Skill CLI.",
+  "homepage": "https://www.saltdesignsystem.com/salt/getting-started/ai",
+  "keywords": [
+    "salt-design-system",
+    "cli",
+    "developer-tools",
+    "accessibility"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpmorganchase/salt-ds.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://www.saltdesignsystem.com/salt/support-and-contributions"
+  },
+  "main": "src/index.ts",
+  "engines": {
+    "node": ">=22"
+  },
+  "sideEffects": false,
+  "files": [
+    "bin",
+    "schemas"
+  ],
+  "publishBinEntrypoints": {
+    "bin/salt-ds.js": {
+      "requirePath": "../dist-cjs/index.js",
+      "errorPrefix": "salt-ds error:",
+      "ignoreBrokenPipe": true,
+      "conciseErrorCodes": [
+        "SALT_CLI_USAGE",
+        "SALT_PROJECT_ROOT_NOT_DIRECTORY",
+        "SALT_PROJECT_ROOT_UNAVAILABLE",
+        "SALT_CONFIG_INVALID",
+        "SALT_CLI_SCAN_FAILED"
+      ]
+    }
+  },
+  "publishExports": {
+    ".": {
+      "types": "./dist-types/index.d.ts",
+      "import": "./dist-es/index.js",
+      "require": "./dist-cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishAdditionalEntryPaths": [
+    "src/scan/scannerWorker.ts"
+  ],
+  "typescriptInclude": [
+    "src/index.ts"
+  ],
+  "typescriptRootDir": "src",
+  "publishTypingEntryOnly": true,
+  "publishPreserveModules": false,
+  "publishScriptExcludes": [
+    "build",
+    "build:package",
+    "prepack"
+  ],
+  "publishSourceMaps": false,
+  "publishIncludeReadme": true,
+  "publishIncludeChangelog": false,
+  "bin": {
+    "salt-ds": "bin/salt-ds.js"
+  },
+  "scripts": {
+    "build:package": "yarn node ../../scripts/build.mjs",
+    "build": "yarn build:package",
+    "prepack": "yarn build"
+  },
+  "dependencies": {
+    "@salt-ds/knowledge": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^6.0.2"
+  },
+  "publishConfig": {
+    "directory": "../../dist/salt-ds-cli",
+    "provenance": true
+  }
+}

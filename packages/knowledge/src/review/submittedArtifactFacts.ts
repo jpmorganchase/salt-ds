@@ -73,6 +73,8 @@ export const MAX_SUBMITTED_AST_DEPTH = 128;
 export const MAX_SUBMITTED_FACTS = 10_000;
 export const MAX_SUBMITTED_AGGREGATE_AST_NODES = 100_000;
 export const MAX_SUBMITTED_AGGREGATE_FACTS = 20_000;
+export const MAX_SUBMITTED_AST_NODES_ABSOLUTE = 1_000_000;
+export const MAX_SUBMITTED_FACTS_ABSOLUTE = 100_000;
 
 export interface SubmittedAnalysisBudget {
   remaining_nodes: number;
@@ -457,10 +459,11 @@ function addFact(
   fact: Omit<ParsedSubmittedFact, "fact_id" | "certainty">,
   aggregateBudget?: SubmittedAnalysisBudget,
 ): ParsedSubmittedFact {
-  if (
-    facts.length >= MAX_SUBMITTED_FACTS ||
-    aggregateBudget?.remaining_facts === 0
-  ) {
+  const factLimit = Math.min(
+    MAX_SUBMITTED_FACTS_ABSOLUTE,
+    aggregateBudget?.fact_limit ?? MAX_SUBMITTED_FACTS,
+  );
+  if (facts.length >= factLimit || aggregateBudget?.remaining_facts === 0) {
     throw new SubmittedAnalysisBudgetError(
       `The submitted artifact exceeded its allocated normalized-fact analysis budget (${aggregateBudget?.fact_limit ?? MAX_SUBMITTED_FACTS} facts).`,
     );
@@ -581,7 +584,11 @@ function parseScriptFacts(
         visitedNodeCount += 1;
         currentDepth += 1;
         if (
-          visitedNodeCount > MAX_SUBMITTED_AST_NODES ||
+          visitedNodeCount >
+            Math.min(
+              MAX_SUBMITTED_AST_NODES_ABSOLUTE,
+              aggregateBudget?.node_limit ?? MAX_SUBMITTED_AST_NODES,
+            ) ||
           aggregateBudget?.remaining_nodes === 0 ||
           currentDepth > MAX_SUBMITTED_AST_DEPTH
         ) {
@@ -879,7 +886,11 @@ function parseCssFacts(
       if (!current) break;
       visitedNodeCount += 1;
       if (
-        visitedNodeCount > MAX_SUBMITTED_AST_NODES ||
+        visitedNodeCount >
+          Math.min(
+            MAX_SUBMITTED_AST_NODES_ABSOLUTE,
+            aggregateBudget?.node_limit ?? MAX_SUBMITTED_AST_NODES,
+          ) ||
         aggregateBudget?.remaining_nodes === 0 ||
         current.depth > MAX_SUBMITTED_AST_DEPTH
       ) {

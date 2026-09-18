@@ -67,5 +67,35 @@ The supported root API is `loadKnowledgeBundle`, `getKnowledgeManifest`,
 transitive bundle shipped with their adapter, perform no network/cache access,
 and never import consumer-project JavaScript.
 
+## Retrieval contract
+
+The compact search index declares salt-lexical-ranking/1. Queries use Unicode
+NFKC normalization, camel-case-aware whole tokens, and the versioned
+salt-stop-words/1 list. Stop words are removed only when meaningful tokens
+remain. Ranking proceeds through exact record ID/export/canonical-name matches,
+exact aliases/titles, normalized whole-token phrases and intersections, then a
+weighted whole-token union over title, aliases, authored terms, summary, and
+kind. Arbitrary substrings are never matches. Evidence reports the scoring
+version, matched fields and terms, and each score component; stable record IDs
+break ties.
+
+Compatibility is evaluated before ranking against exact locally observed Salt
+package versions. Records belonging to missing or unsupported package families
+are excluded and disclosed. Version-independent records remain eligible.
+
+The packed CLI exposes the same contract offline:
+
+    salt-ds docs <record-id-or-name> --format markdown|json
+    salt-ds context <query> --format markdown|json --limit <n>
+
+The docs command accepts only an exact record ID, export, canonical name, title,
+or alias. It returns choices for collisions and never guesses. Resolved JSON
+and Markdown include the verified record, its bundle digest, source-record
+citations, and the primary manifest-bound content object when one exists. The
+context command applies the deterministic ranking pipeline and returns
+record/source citations, the bundle digest, and a digest of the selected
+context. Both renderers are deterministic; context output is capped at 16 KiB
+by default.
+
 Plan 001 supports the exact current bundle only. Historical download, trust,
 pin, cache, compatibility index, and rule execution belong exclusively to Plan 002.

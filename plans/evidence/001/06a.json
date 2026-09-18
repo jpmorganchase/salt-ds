@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0.0",
+  "plan_id": "001",
+  "unit_id": "06a",
+  "tracker_status": "DONE",
+  "completion_sha": "628057bff26d0aee2d1a74e23c4063a502ddf602",
+  "entries": [
+    {
+      "kind": "migration-receipt",
+      "schema_id": "https://www.saltdesignsystem.com/ai/schemas/salt-pattern-migration-receipt-1.json",
+      "schema_version": "1.0.0",
+      "locator": "repo://plans/evidence/artifacts/sha256-fda528e2f0b24b7b9a1685a5d6fdbfcf3a65a2f8529e98b39e941335318c860f.json",
+      "sha256": "sha256:fda528e2f0b24b7b9a1685a5d6fdbfcf3a65a2f8529e98b39e941335318c860f",
+      "source_sha": "628057bff26d0aee2d1a74e23c4063a502ddf602",
+      "completion_sha": "628057bff26d0aee2d1a74e23c4063a502ddf602",
+      "workflow_class": "local-ci",
+      "environment_class": "local-worktree-node-24",
+      "retention_expires_at": "2031-08-28T00:00:00.000Z",
+      "parents": [
+        "sha256:7911494d89df6b23a0a232728367979641aa57187fb77624e4f462babb8135ee"
+      ],
+      "state": "active",
+      "batch": "06a",
+      "result": "pass",
+      "publishable": false,
+      "policy_profile": "pre-agent-support",
+      "baseline_sha256": "sha256:5e6608255233ed61f355769f011b5e340fefec31b99be4c9555616c0f4435f08",
+      "inventory_sha256": "sha256:27785d6505a813186089f92c6ae7a2ff09cc74c900186e668aab562da07d9d4d",
+      "predecessor_sha256": "sha256:7911494d89df6b23a0a232728367979641aa57187fb77624e4f462babb8135ee",
+      "pack_report_sha256": "sha256:3d71913e8f2d497c9c43ddd6040856dfca03da467cc97fcad323cf59520aac16",
+      "example_manifest_sha256": "sha256:f1ca6723cadbc5f395c161551c3cfaf7fba3b72cd11c7f5d04e9d40810bc85d8",
+      "bundle_digest": "sha256:f5729964f63afb24c4710d664b5490f17deaeea141e7adba785c72d7a8229b96",
+      "semantic_digest": "sha256:f2fb02c9e6b999935b1e9727463b4a298492f810e376c434bc3626ab050cccab",
+      "semantic_source_digest": "sha256:57ee6efa5f1979593af914f27827996c43e0a5bb51080227d4f84d0d468669f5",
+      "compiler_digest": "sha256:a490897e4d02c3f680ae598ea2b279de2d48599f96d81139687b70256a32e063",
+      "knowledge_tarball_sha256": "sha256:366ffc3b5f3971c46db077b0597df7aae60b8ed9dd95b651c19c87d9344448f8",
+      "cli_tarball_sha256": "sha256:3179271a5fb74531950e32e4eed0ecbceaaa3505dc47b69ae4310a2ae9b95599",
+      "pattern_count": 24,
+      "package_story_count": 8,
+      "completed_pattern_count": 0,
+      "completed_package_story_count": 0,
+      "component_spec_count": 138,
+      "component_test_count": 3409,
+      "component_passing_count": 3368,
+      "component_pending_count": 41,
+      "ai_tooling_test_files": 69,
+      "ai_tooling_tests": 860,
+      "verification": [
+        "yarn build:ai-tooling",
+        "yarn build-storybook",
+        "yarn test:components",
+        "yarn test:ai-tooling",
+        "yarn check:salt-docs-authoring -- --authoring-stage 06a --visibility-stage 06a",
+        "yarn check:ai-tooling:pack -- --profile pre-agent-support --report dist/salt-pattern-migration/06a-pack-report.json",
+        "yarn acquire:salt-ai:evidence -- --unit 05 --kind cohort-receipt --tracker plans/README.md --output dist/salt-pattern-migration/input/unit-05-cohort-receipt.json",
+        "yarn verify:salt-pattern-migration -- --batch 06a --baseline tooling/ai/pattern-migration-v1.json --predecessor-receipt dist/salt-pattern-migration/input/unit-05-cohort-receipt.json --pack-report dist/salt-pattern-migration/06a-pack-report.json --output dist/salt-pattern-migration/06a-receipt.json"
+      ]
+    }
+  ]
+}

@@ -222,6 +222,29 @@ export function validateKnowledgeManifestV1(value: unknown): KnowledgeManifestV1
   ) {
     throw new Error("Knowledge v1 must disclose incomplete historical coverage.");
   }
+  if (manifest.agent_support !== undefined) {
+    const agentSupport = requireObject(
+      manifest.agent_support,
+      "Knowledge agent support",
+    );
+    const skill = requireObject(agentSupport.skill, "Knowledge Skill pointer");
+    const agentsPointer = requireObject(
+      agentSupport.agents_pointer,
+      "Knowledge AGENTS pointer",
+    );
+    if (
+      Object.keys(agentSupport).sort().join("\0") !==
+        "agents_pointer\0skill" ||
+      Object.keys(skill).join("\0") !== "artifact" ||
+      Object.keys(agentsPointer).join("\0") !== "artifact" ||
+      parseKnowledgeArtifactPath(skill.artifact) !==
+        "skills/salt-design-system/SKILL.md" ||
+      parseKnowledgeArtifactPath(agentsPointer.artifact) !==
+        "skills/salt-design-system/references/managed-agents-block.md"
+    ) {
+      throw new Error("Knowledge agent-support descriptors are not the closed v1 set.");
+    }
+  }
   const parsed = manifest as unknown as KnowledgeManifestV1;
   if (computeKnowledgeBundleDigest(parsed) !== parsed.bundle_digest) {
     throw new Error("Knowledge bundle digest does not match canonical manifest bytes.");

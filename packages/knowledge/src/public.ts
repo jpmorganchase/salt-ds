@@ -16,12 +16,15 @@ export * from "./manifest/knowledgeStore.js";
 export * from "./manifest/loadKnowledge.js";
 export * from "./manifest/pathCodec.js";
 export * from "./manifest/recordReferences.js";
+export * from "./markdown/resolveKnowledgeDocument.js";
 export * from "./policy/detection.js";
 export * from "./policy/index.js";
 export * from "./policy/layerDiagnostics.js";
 export * from "./policy/projectPolicyIr.js";
 export * from "./project/boundedProjectFile.js";
+export * from "./project/inspectSaltProjectFacts.js";
 export * from "./project/projectFacts.js";
+export * from "./project/saltInstallation.js";
 export * from "./registry/paths.js";
 export type {
   ReviewCatalog,

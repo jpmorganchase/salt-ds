@@ -21,6 +21,12 @@ Bullet points go here. See the guide for further information.
 
 Bullet points go here. See the guide for further information.
 
+### Applicability and stability
+
+State the supported package, stability level, environments and important
+version constraints. Use an explicit authored waiver with an owner and reason
+when a section is genuinely inapplicable.
+
 ### Optional usage header
 
 Add further guidance here if required.
@@ -40,12 +46,27 @@ To import `ComponentName` from the core Salt package, use:
 import { ComponentName } from "@salt-ds/core";
 ```
 
+## Provider setup
+
+List every provider, stylesheet and peer dependency required to make the
+example work when copied into a consumer application. If none are required,
+state that explicitly.
+
 ## Props
 
 {/* Update packageName and componentName below as needed */}
 {/* packageName is optional and defaults to "core" if omitted */}
 
 <PropsTable packageName="core" componentName="ComponentName" />
+
+## Deprecations and migrations
+
+List supported replacements and migration steps. If there are no current
+deprecations, state that explicitly rather than inferring it from API output.
+
+## Related records
+
+Link the most relevant components, patterns, foundations and migration records.
 
 ## References
 

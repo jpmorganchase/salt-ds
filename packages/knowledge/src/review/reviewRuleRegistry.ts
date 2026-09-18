@@ -354,7 +354,7 @@ const ACTION_NAVIGATION_BINDINGS = new Map<
     {
       properties: new Set(["href", "to"]),
       evidence_statement:
-        "When the primary action is to take the user to another page or window rather than to trigger a function. Instead, use Link.",
+        "When the interaction navigates the user to a different destination rather than triggering an on-page action. Instead, use Link for inline or lower-priority navigation, or LinkButton when navigation stands alone, should stand out from inline links, or sits alongside buttons and should share their visual weight and alignment.",
     },
   ],
 ]);
@@ -658,7 +658,7 @@ const ACTION_NAVIGATION_RULE: ReviewRuleDefinition = {
         severity: "warning",
         fact,
         remediation:
-          "Use a Salt navigation component for a known destination, or remove the navigation target from the action component.",
+          "Use Salt Link for inline or lower-priority navigation, LinkButton for standalone button-weight navigation, or remove the navigation target from Button.",
         references:
           component?.usage_content_ref && supportingIndex >= 0
             ? catalogRecordReference(

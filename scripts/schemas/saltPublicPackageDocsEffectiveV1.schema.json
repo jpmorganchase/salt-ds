@@ -5,15 +5,40 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
+    "$schema",
     "schema_version",
+    "contract",
+    "mode",
+    "publishable",
     "inventory_sha256",
+    "pack_report",
     "selected_graph_sha256",
+    "mcp_disposition",
     "packages"
   ],
   "properties": {
+    "$schema": {
+      "const": "https://www.saltdesignsystem.com/schemas/salt-public-package-docs-effective-v1.json"
+    },
     "schema_version": { "const": "1.0.0" },
+    "contract": { "const": "salt-public-package-docs-effective/1" },
+    "mode": { "enum": ["provisional", "final", "rebind-landed"] },
+    "publishable": { "type": "boolean" },
     "inventory_sha256": { "$ref": "#/$defs/digest" },
+    "pack_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "policy_profile"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/digest" },
+        "policy_profile": { "const": "release-complete" }
+      }
+    },
     "selected_graph_sha256": { "$ref": "#/$defs/digest" },
+    "mcp_disposition": {
+      "enum": ["conditional-excluded", "ship", "omit"]
+    },
     "packages": {
       "type": "array",
       "minItems": 1,

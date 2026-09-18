@@ -65,12 +65,10 @@
     "@modelcontextprotocol/server": "2.0.0",
     "@salt-ds/knowledge": "workspace:*",
     "@types/node": "^24.0.0",
-    "js-yaml": "^4.1.1",
     "zod": "^4.2.0"
   },
   "devDependencies": {
     "@modelcontextprotocol/client": "^2.0.0",
-    "@types/js-yaml": "^4.0.9",
     "ajv": "^8.17.1",
     "typescript": "^6.0.2"
   },

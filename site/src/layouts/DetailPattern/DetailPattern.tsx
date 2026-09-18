@@ -24,6 +24,7 @@ import { Resources } from "./Resources";
 
 type Data = {
   showThemeControl?: boolean;
+  resources?: Array<{ href: string }>;
 };
 
 type CustomSiteState = SiteState & { data?: Data };
@@ -63,6 +64,17 @@ function PatternPageHeading({
 }
 
 export const DetailPattern: FC<LayoutProps> = ({ children }) => {
+  const hasStorybookConsumerLink =
+    useStore((state: CustomSiteState) =>
+      state.data?.resources?.some((resource) =>
+        /(?:^|\.)storybook\./iu.test(resource.href),
+      ),
+    ) ?? false;
+  if (hasStorybookConsumerLink) {
+    throw new Error(
+      "Public pattern resources must use canonical inline or source examples, not Storybook.",
+    );
+  }
   const LeftSidebar = (
     <PrimarySidebar>
       <PageNavigation />

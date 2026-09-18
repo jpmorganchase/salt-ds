@@ -1,0 +1,37 @@
+{
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/salt-public-docs-projection-1.json",
+  "bundle_version": "0.0.0",
+  "contract": "salt-public-docs-projection/1",
+  "documents": [
+    {
+      "bytes": 5471,
+      "id": "ai-guide",
+      "markdown_route": "/ai/guide/index.md",
+      "media_type": "text/markdown; charset=utf-8",
+      "route": "/ai/guide/",
+      "sha256": "sha256:2b0779512aabdff451ce375fbb22f155ec741beaaa15304433fe14dc967906db",
+      "source": "tooling/ai/public-docs-v1/guide.md",
+      "summary": "Install an exact local CLI, retrieve version-matched guidance, and scan a Salt project offline.",
+      "title": "Build with Salt developer tooling"
+    }
+  ],
+  "mcp": "excluded-until-final-disposition",
+  "mode": "preview",
+  "navigation_activation_targets": [
+    "README.md",
+    "site/docs/getting-started/index.mdx",
+    "site/docs/index.mdx"
+  ],
+  "navigation_status": "staged",
+  "nonproduction_marker": "Salt AI nonproduction preview",
+  "production_navigation": false,
+  "projection_sha256": "sha256:f2cdc6a685383686a37525772a64acf450d4b71711abfac39381491e1d7bbc77",
+  "schema_version": "1.0.0",
+  "source_commit": "c92f4f0308617ea3de80163f4e5736bf1b26fd1a",
+  "source_manifest": {
+    "bytes": 596,
+    "path": "tooling/ai/public-docs-v1/manifest.json",
+    "sha256": "sha256:8f045d8110ab5bab5b0e3ea1eff99b8e479f52d64c9779896fe1e135b5fb1e39"
+  },
+  "source_root": "tooling/ai/public-docs-v1"
+}

@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import {
   createOfflineNetworkProbeSource,
   runOfflineNetworkGuardSelfTest,
+  runOfflineScannerWorkerContainmentSelfTest,
   SUPPORTED_THIRD_PARTY_HTTP_CLIENT_PACKAGES,
 } from "../../../../scripts/consumer-smoke/offline-network-probe.mjs";
 import { BLOCKED_NETWORK_MODULES } from "../../../../scripts/consumer-smoke/offline-network-surfaces.mjs";
@@ -41,6 +42,7 @@ describe("loader-enforced offline consumer boundary", () => {
     expect(probe).toContain('["websocket", () => new WebSocket(');
     expect(probe).toContain('["eventsource", () => new EventSource(');
     expect(() => runOfflineNetworkGuardSelfTest()).not.toThrow();
+    expect(() => runOfflineScannerWorkerContainmentSelfTest()).not.toThrow();
   });
 
   it("declares that the shipped runtime supports no third-party HTTP client", () => {

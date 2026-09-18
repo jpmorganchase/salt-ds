@@ -1,0 +1,177 @@
+{
+  "$schema": "https://www.saltdesignsystem.com/schemas/salt-public-package-docs-effective-v1.json",
+  "contract": "salt-public-package-docs-effective/1",
+  "inventory_sha256": "sha256:03a6a42659389e366445a126a9a204af5b77c1cbdf84bd66ba7066b2d2baed46",
+  "mcp_disposition": "conditional-excluded",
+  "mode": "provisional",
+  "pack_report": {
+    "path": "dist/salt-ai-pack/unit-06d.json",
+    "policy_profile": "release-complete",
+    "sha256": "sha256:f861774de9d09c4a515fd1535a8a487e0e851bbc0becc25296c7177b7c6387f5"
+  },
+  "packages": [
+    {
+      "effective_public": true,
+      "lifecycle": "publishable",
+      "manifest_sha256": "sha256:59c9104701aabcb765e8a18b38c77208697fc2d4f2e45433eb26c6d1560870ab",
+      "metadata_complete": true,
+      "name": "@salt-ds/ag-grid-theme",
+      "packed_readme_sha256": "sha256:19675fbb86036661d0aeb37a1dce86d3f20171c0fef7c5bf94a1c9ef3b4763f8",
+      "readme_sha256": "sha256:19675fbb86036661d0aeb37a1dce86d3f20171c0fef7c5bf94a1c9ef3b4763f8",
+      "support_destination": "public_salt_support"
+    },
+    {
+      "effective_public": true,
+      "lifecycle": "planned",
+      "manifest_sha256": "sha256:b2b90db2bc47ead821dc6ba20b89029cff0e5f80ccb20ee896aaabe637bd29e2",
+      "metadata_complete": true,
+      "name": "@salt-ds/cli",
+      "packed_readme_sha256": "sha256:d561070b7b10c41b2991b04b04afcdd63a63823dc95d5082bbd7ef133abf5a75",
+      "readme_sha256": "sha256:d561070b7b10c41b2991b04b04afcdd63a63823dc95d5082bbd7ef133abf5a75",
+      "support_destination": "public_salt_support"
+    },
+    {
+      "effective_public": true,
+      "lifecycle": "publishable",
+      "manifest_sha256": "sha256:bca0bddf280961f3cd5074edff0b38e5ca3717fe01f3d05cae1b0db629b37686",
+      "metadata_complete": true,
+      "name": "@salt-ds/core",
+      "packed_readme_sha256": "sha256:abfcf4ffa1af7e409ce00f7eeb5e6a719d174ecebf0cc9fca8e6412d0e6e822b",
+      "readme_sha256": "sha256:abfcf4ffa1af7e409ce00f7eeb5e6a719d174ecebf0cc9fca8e6412d0e6e822b",
+      "support_destination": "public_salt_support"
+    },
+    {
+      "effective_public": true,
+      "lifecycle": "publishable",
+      "manifest_sha256": "sha256:a9fd63cd565bf8b452c7dd56cc283bd3c7e2ddc36649ad0fa9e30ac936f835e5",
+      "metadata_complete": true,
+      "name": "@salt-ds/countries",
+      "packed_readme_sha256": "sha256:da25c2476470eeca43e2963e961c691513baab4601cb9e7a1d35d19aa6181faf",
+      "readme_sha256": "sha256:da25c2476470eeca43e2963e961c691513baab4601cb9e7a1d35d19aa6181faf",
+      "support_destination": "public_salt_support"
+    },
+    {
+      "effective_public": true,
+      "lifecycle": "publishable",
+      "manifest_sha256": "sha256:200d714e0ef32744da996df9f7529ebb40de639b69cc782c2c5a226367ffb322",
+      "metadata_complete": true,
+      "name": "@salt-ds/date-adapters",
+      "packed_readme_sha256": "sha256:7a3ef8794ee2785fa5d78e93d7ead23fc2736d64c8133213a1fcff633b79d85d",
+      "readme_sha256": "sha256:7a3ef8794ee2785fa5d78e93d7ead23fc2736d64c8133213a1fcff633b79d85d",
+      "support_destination": "public_salt_support"
+    },
+    {
+      "effective_public": true,
+      "lifecycle": "publishable",
+      "manifest_sha256": "sha256:a601e3d9e7856b814f70083b85a0083a35784d3d1a53b435bb18bd367f8aa9d6",
+      "metadata_complete": true,
+      "name": "@salt-ds/date-components",
+      "packed_readme_sha256": "sha256:7bcb450b24a0cfee49d5a8eae0bff4636c7ceec814dc69fb87f3f5247c2e5db9",
+      "readme_sha256": "sha256:7bcb450b24a0cfee49d5a8eae0bff4636c7ceec814dc69fb87f3f5247c2e5db9",
+      "support_destination": "public_salt_support"
+    },
+    {
+      "effective_public": true,
+      "lifecycle": "publishable",
+      "manifest_sha256": "sha256:1897cff62116456eaa3588e7b8453ad9a29b59d9561897f6b9d2165bd8341d6c",
+      "metadata_complete": true,
+      "name": "@salt-ds/embla-carousel",
+      "packed_readme_sha256": "sha256:5106298d99fc1d92b6e619663b019b342b37dd430430603abbca504708992c0e",
+      "readme_sha256": "sha256:5106298d99fc1d92b6e619663b019b342b37dd430430603abbca504708992c0e",
+      "support_destination": "public_salt_support"
+    },
+    {
+      "effective_public": true,
+      "lifecycle": "publishable",
+      "manifest_sha256": "sha256:05f46d9e18cbc13a6ce219d96752eb89249cc111d5e838f5522f6d687825c6b6",
+      "metadata_complete": true,
+      "name": "@salt-ds/highcharts-theme",
+      "packed_readme_sha256": "sha256:3680665520a16b0d924c3ca7a12a541ed9a716747329acc7353b6b4293b59627",
+      "readme_sha256": "sha256:3680665520a16b0d924c3ca7a12a541ed9a716747329acc7353b6b4293b59627",
+      "support_destination": "public_salt_support"
+    },
+    {
+      "effective_public": true,
+      "lifecycle": "publishable",
+      "manifest_sha256": "sha256:4ec6c422660ff993e32be916b525efee6a4473e73ac180470e1037d85895ab57",
+      "metadata_complete": true,
+      "name": "@salt-ds/icons",
+      "packed_readme_sha256": "sha256:e6d819ad955ad18b5c5a8328cb05e83326d00a3c6fb411e461be47a94e88ef31",
+      "readme_sha256": "sha256:e6d819ad955ad18b5c5a8328cb05e83326d00a3c6fb411e461be47a94e88ef31",
+      "support_destination": "public_salt_support"
+    },
+    {
+      "effective_public": true,
+      "lifecycle": "planned",
+      "manifest_sha256": "sha256:e49f50228c7bd80757a0daeadf21eb81315de68f0e6c7abb4f38f1cc6c1ddd28",
+      "metadata_complete": true,
+      "name": "@salt-ds/knowledge",
+      "packed_readme_sha256": "sha256:f376e9ddf2e3389e315f4e9c7ea8b72595ca6e66d523979f70dcdfd4b4b40f42",
+      "readme_sha256": "sha256:f376e9ddf2e3389e315f4e9c7ea8b72595ca6e66d523979f70dcdfd4b4b40f42",
+      "support_destination": "public_salt_support"
+    },
+    {
+      "effective_public": true,
+      "lifecycle": "publishable",
+      "manifest_sha256": "sha256:9595429b7edd1de60c4c2b48a0795a1ed6f8abbb17ef6122626ba292161f4e3d",
+      "metadata_complete": true,
+      "name": "@salt-ds/lab",
+      "packed_readme_sha256": "sha256:36858cb194117be007e457dc35f75f3a77cadc4286dd3540c0462b13f18aae20",
+      "readme_sha256": "sha256:36858cb194117be007e457dc35f75f3a77cadc4286dd3540c0462b13f18aae20",
+      "support_destination": "public_salt_support"
+    },
+    {
+      "effective_public": false,
+      "lifecycle": "conditional",
+      "manifest_sha256": "sha256:9719b5d6238098a2e12b04c78f6cfc06e36c656a99a270b999b266c1b24bb7ea",
+      "metadata_complete": false,
+      "name": "@salt-ds/mcp",
+      "packed_readme_sha256": null,
+      "readme_sha256": "sha256:bd4eb21a2e148126932f7a60cbbfe44019bf47a57d08c8e107a5e13ef53eb8e8",
+      "support_destination": "public_salt_support"
+    },
+    {
+      "effective_public": true,
+      "lifecycle": "publishable",
+      "manifest_sha256": "sha256:ee96bfe0153808d068daa02f25956835989c9a6ef70ece35c9ddb8bd57ecaddf",
+      "metadata_complete": true,
+      "name": "@salt-ds/react-resizable-panels-theme",
+      "packed_readme_sha256": "sha256:ea5a01e31fc3456d4e0dd29a76d875fa0d11ccf8550b2b0ea55eeb62f02997cb",
+      "readme_sha256": "sha256:ea5a01e31fc3456d4e0dd29a76d875fa0d11ccf8550b2b0ea55eeb62f02997cb",
+      "support_destination": "public_salt_support"
+    },
+    {
+      "effective_public": true,
+      "lifecycle": "publishable",
+      "manifest_sha256": "sha256:ca19f3a163a24f2b4258338f997286815f86fa667c950e1a7d5865b6fdd79732",
+      "metadata_complete": true,
+      "name": "@salt-ds/styles",
+      "packed_readme_sha256": "sha256:255bb6399370ddf8ff68a8af03bd726b937d04d85233098a1416a650bd71b696",
+      "readme_sha256": "sha256:255bb6399370ddf8ff68a8af03bd726b937d04d85233098a1416a650bd71b696",
+      "support_destination": "public_salt_support"
+    },
+    {
+      "effective_public": true,
+      "lifecycle": "publishable",
+      "manifest_sha256": "sha256:ac77d534c6e0c3d26606bfdb1489c4f3c7e7c6c2e58f6287866ced3efd8cbf74",
+      "metadata_complete": true,
+      "name": "@salt-ds/theme",
+      "packed_readme_sha256": "sha256:983a7c69239998b6c0fc1deddf6d1080f92d063e8d17a962d91428c889f4a5bc",
+      "readme_sha256": "sha256:983a7c69239998b6c0fc1deddf6d1080f92d063e8d17a962d91428c889f4a5bc",
+      "support_destination": "public_salt_support"
+    },
+    {
+      "effective_public": true,
+      "lifecycle": "publishable",
+      "manifest_sha256": "sha256:aaf95567878b4e2ab4096b07815bbdfeaa77d0b124436454928bb3cdeef880aa",
+      "metadata_complete": true,
+      "name": "@salt-ds/window",
+      "packed_readme_sha256": "sha256:cdc5314f247851ee1d282e8fb73fdcaf490be65c7e39976f6b0896666a10b21e",
+      "readme_sha256": "sha256:cdc5314f247851ee1d282e8fb73fdcaf490be65c7e39976f6b0896666a10b21e",
+      "support_destination": "public_salt_support"
+    }
+  ],
+  "publishable": false,
+  "schema_version": "1.0.0",
+  "selected_graph_sha256": "sha256:18a69930f215dd083e0f758bbf3396da868aa8578444d62f828d0c9a2f514e10"
+}

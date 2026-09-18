@@ -16,6 +16,80 @@ To import `SemanticIconProvider` from the core Salt package, use:
 import { SemanticIconProvider } from "@salt-ds/core";
 ```
 
+`SemanticIconProvider` centralizes the semantic icon roles used by Salt
+components. Use it when a product needs a reviewed icon system that differs
+from Salt's defaults. Don't use it to change one decorative icon in application
+content; render that icon directly instead.
+
+## Provider setup
+
+Place the provider above every Salt component that should use the custom map.
+The `iconMap` prop is partial: unspecified semantic roles keep their Salt
+defaults.
+
+```tsx
+import { SemanticIconProvider } from "@salt-ds/core";
+import {
+  ChevronDownIcon,
+  ErrorSolidIcon,
+  SuccessCircleSolidIcon,
+} from "@salt-ds/icons";
+
+const productIcons = {
+  ExpandIcon: ChevronDownIcon,
+  ErrorIcon: ErrorSolidIcon,
+  SuccessIcon: SuccessCircleSolidIcon,
+};
+
+export function ProductIconBoundary({ children }) {
+  return (
+    <SemanticIconProvider iconMap={productIcons}>
+      {children}
+    </SemanticIconProvider>
+  );
+}
+```
+
+Keep the mapping stable across a workflow. Replacing a semantic icon must not
+change the meaning communicated by its label, status or surrounding content.
+
+## Read the active map
+
+Components that implement a Salt semantic role can read the current map with
+`useIcon`:
+
+```tsx
+import { useIcon } from "@salt-ds/core";
+
+export function ExpandIndicator() {
+  const { ExpandIcon } = useIcon();
+  return <ExpandIcon aria-hidden />;
+}
+```
+
+Use the hook for semantic roles, not as a general icon lookup. Add an
+accessible name to the owning control or status text; a decorative icon should
+remain hidden from assistive technology.
+
+## Accessibility and testing
+
+Review custom icons at every supported density and theme. Verify that status
+icons remain distinguishable without color, directional icons still match the
+application's reading direction, and icon-only controls retain an accessible
+name. Test the components that consume each overridden role rather than only
+rendering the icon map in isolation.
+
+## Deprecations and migrations
+
+There are no current deprecations. Existing applications can introduce the
+provider around one product area first because omitted roles continue to use
+the default map.
+
+## Related records
+
+See [Icon](/salt/components/icon) for general icon usage and the relevant
+component guidance for the semantics of each overridden role.
+
 ## Props
 
 <PropsTable packageName="core" componentName="SemanticIconProvider" />

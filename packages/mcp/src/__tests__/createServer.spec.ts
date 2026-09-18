@@ -2256,7 +2256,7 @@ describe("createSaltMcpServer final public boundary", () => {
           expect(evidenceValue).toBeDefined();
           if (finding.rule_id === "salt.component.action_navigation_target") {
             expect(evidenceValue).toEqual(
-              expect.stringMatching(/another page or window/iu),
+              expect.stringMatching(/different destination/iu),
             );
           }
         }

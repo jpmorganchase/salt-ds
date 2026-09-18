@@ -9,9 +9,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@salt-ds/core": "1.69.0",
+    "@salt-ds/core": "1.70.0",
     "@salt-ds/icons": "1.18.2",
-    "@salt-ds/theme": "1.44.0",
+    "@salt-ds/theme": "1.45.0",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },

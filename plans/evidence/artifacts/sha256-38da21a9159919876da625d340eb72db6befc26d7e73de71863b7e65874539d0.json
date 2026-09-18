@@ -1,0 +1,57 @@
+{
+  "adapter": "@salt-ds/cli",
+  "contract": "salt-ai-consumer-smoke/1",
+  "pack_report": {
+    "path": "unit-06d.json",
+    "sha256": "sha256:f861774de9d09c4a515fd1535a8a487e0e851bbc0becc25296c7177b7c6387f5"
+  },
+  "result": "pass",
+  "schema_version": "1.0.0",
+  "workflows": {
+    "agent_support": {
+      "agents_pointer_sha256": "sha256:44bd549153b63b348ea20324d4e3f133e7a7d7d72ae8fa901ad20af02e6b0e9e",
+      "provenance": "official",
+      "skill_sha256": "sha256:fa646985379e56d2b62248a15f10d9191c4f457378acb58020c5615de490e003"
+    },
+    "aliases": {
+      "broken_pipe": 1,
+      "help": 3,
+      "version": 2
+    },
+    "exact_info": {
+      "bundle_digest": "sha256:5c6c124608a00942e35a29db5d276db9bbd7ee06b89b7aae7061fe2493395413",
+      "coverage": "complete",
+      "package_count": 2,
+      "semantic_digest": "sha256:a154172176de0ec8e0ec211f1870e20902e333d5101f697a04044ea7a796af15"
+    },
+    "invalid_argument_cases": 26,
+    "network": "offline",
+    "node": "24.10.0",
+    "partial_info": {
+      "coverage": "partial"
+    },
+    "retrieval": {
+      "context_digest": "sha256:30204ae326152d272e10576c02bff984e7dc71a06b5b322198bb9d469b37ab0e",
+      "context_matches": 5,
+      "docs": [
+        "exact",
+        "ambiguous",
+        "missing",
+        "version-filtered"
+      ],
+      "max_utf8_bytes": 16384,
+      "scoring_version": "salt-lexical-ranking/1"
+    },
+    "scan": {
+      "coverage": "complete",
+      "findings": 1,
+      "formats": [
+        "json",
+        "pretty",
+        "prompt",
+        "sarif"
+      ],
+      "incomplete_coverage": "partial"
+    }
+  }
+}

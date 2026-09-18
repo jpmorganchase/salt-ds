@@ -27,6 +27,10 @@ const SEMVER =
   /^(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?$/u;
 const PORTABLE_PATH = /^(?!\/)(?!.*\\\\)(?!.*(?:^|\/)\.\.(?:\/|$)).+$/u;
 
+function repositoryTextSha256(bytes) {
+  return sha256(Buffer.from(bytes.toString("utf8").replaceAll("\r\n", "\n")));
+}
+
 function validatorFor(schema) {
   const ajv = new Ajv2020({ allErrors: true, strict: true });
   addFormats(ajv);
@@ -151,7 +155,7 @@ export async function validateEvaluation({
   const fixturePath = await assertFile(manifest.fixture_file);
   const fixtureBytes = await readFile(fixturePath);
   assert(
-    sha256(fixtureBytes) === manifest.fixture_sha256,
+    repositoryTextSha256(fixtureBytes) === manifest.fixture_sha256,
     "Evaluation fixture digest mismatch",
   );
   const fixtureSet = JSON.parse(fixtureBytes.toString("utf8"));
@@ -258,7 +262,10 @@ export async function validateEvaluation({
   for (const relative of manifest.protocol_files) {
     const file = await assertFile(relative);
     const bytes = await readFile(file);
-    protocolIdentities.push({ file: relative, sha256: sha256(bytes) });
+    protocolIdentities.push({
+      file: relative,
+      sha256: repositoryTextSha256(bytes),
+    });
     if (file.endsWith(".json"))
       protocolValues.push(JSON.parse(bytes.toString("utf8")));
   }
@@ -357,7 +364,8 @@ export async function validateEvaluation({
     );
     if (!allowStaleBaselines) {
       assert(
-        report.identities.manifest_sha256 === sha256(manifestBytes),
+        report.identities.manifest_sha256 ===
+          repositoryTextSha256(manifestBytes),
         `${name} evaluation manifest identity is stale`,
       );
       assert(

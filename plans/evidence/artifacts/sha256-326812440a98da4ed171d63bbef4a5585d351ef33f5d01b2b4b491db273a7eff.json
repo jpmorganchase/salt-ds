@@ -1,0 +1,207 @@
+{
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/salt-sample-app-cohort-receipt-1.json",
+  "schema_version": "1.0.0",
+  "contract": "salt-sample-app-cohort-receipt/1",
+  "source_commit": "7a288d4e95d4560c91e7ebe974ba01bebfca18e0",
+  "apps": [
+    {
+      "name": "vite-starter",
+      "path": "examples/apps/vite-starter",
+      "manifest_sha256": "sha256:0f631a5f9e362069a553da6d7b5f098ec980c085e381b9b3ae2d189691c53e10",
+      "isolated_manifest_sha256": "sha256:aad5580d6bc3e076cc2604b88bdc7ac52e1b51dd6f5ad3f0da867c4be2f5d03f"
+    }
+  ],
+  "knowledge_bundle": {
+    "version": "0.0.0",
+    "bundle_digest": "sha256:00d3fd9da6946bf8f43e2772d97da1860f5840efb636a2a10f2ebee7d5da33aa",
+    "semantic_digest": "sha256:a154172176de0ec8e0ec211f1870e20902e333d5101f697a04044ea7a796af15",
+    "semantic_source_digest": "sha256:35f06fecd2625ef5a37782303eecfbced1931c9de6c3999ce38709622b93f4ab",
+    "compiler_digest": "sha256:48bf067eb3218ddb260a1502a983f9952271b5f7fd19bc4c7f78d819e5218e1a"
+  },
+  "packages": [
+    {
+      "name": "@salt-ds/cli",
+      "version": "0.0.0",
+      "roles": [
+        "tooling",
+        "transitive"
+      ],
+      "used_by": [
+        "vite-starter"
+      ],
+      "source_manifest_sha256": "sha256:461a331addaf3580621f371ca69ea33c1a3c62f8a276affeae001bfc3ac69f69",
+      "packed_manifest_sha256": "sha256:b2b90db2bc47ead821dc6ba20b89029cff0e5f80ccb20ee896aaabe637bd29e2",
+      "tarball": {
+        "path": "dist/salt-sample-apps/vite-starter.artifacts/salt-ds-cli-0.0.0.tgz",
+        "sha256": "sha256:4a7ecd31443a8b9d746cc0b113ecf7f6a48c9b6a8919b51d226de6ed33c2ab35",
+        "integrity": "sha512-Gh/1RILDbL0ZKx+UiaZ1iwjVNN1xt/RHWw3s/B6ONuJOF2/tBwTgbkPoTII4TbaWZ7lwmQNZBQ4Rj7OjBvgLmw==",
+        "bytes": 45537,
+        "files": 13
+      }
+    },
+    {
+      "name": "@salt-ds/core",
+      "version": "1.70.0",
+      "roles": [
+        "direct"
+      ],
+      "used_by": [
+        "vite-starter"
+      ],
+      "source_manifest_sha256": "sha256:bca0bddf280961f3cd5074edff0b38e5ca3717fe01f3d05cae1b0db629b37686",
+      "packed_manifest_sha256": "sha256:670afb2a369d08c0e3cdd89e3a873166fa704b6946ad3dbe40882485988498d2",
+      "tarball": {
+        "path": "dist/salt-sample-apps/vite-starter.artifacts/salt-ds-core-1.70.0.tgz",
+        "sha256": "sha256:a3be14812e359c8d189ef67679a0979e9a329d411c1d0695e17536ecbcbd0d91",
+        "integrity": "sha512-hCfpkvpWjYsmunNj1ixFCZsheH+rH46BV3FHWZrhzClEvB28pik2TExFQOgstPbGWSowWqeEfHkxeTXoLWFcVA==",
+        "bytes": 860094,
+        "files": 2229
+      }
+    },
+    {
+      "name": "@salt-ds/icons",
+      "version": "1.18.2",
+      "roles": [
+        "direct"
+      ],
+      "used_by": [
+        "vite-starter"
+      ],
+      "source_manifest_sha256": "sha256:4ec6c422660ff993e32be916b525efee6a4473e73ac180470e1037d85895ab57",
+      "packed_manifest_sha256": "sha256:9d7491f9da8a82d8256183dc189e6ba8d13f41779f21142366aa79392b8d3790",
+      "tarball": {
+        "path": "dist/salt-sample-apps/vite-starter.artifacts/salt-ds-icons-1.18.2.tgz",
+        "sha256": "sha256:5c1eb469ce55f7dabacfd725d95b8945ebd0ace559627d34dc66cfceb357182b",
+        "integrity": "sha512-W+4OkVGHjX2cbuD9RNTqjgUSlR470KqZp3II+LXZNIMZaLhDQdORvxAeMVJ85o2nDic5FcM0qOr87BUWnqmxTw==",
+        "bytes": 431336,
+        "files": 2764
+      }
+    },
+    {
+      "name": "@salt-ds/knowledge",
+      "version": "0.0.0",
+      "roles": [
+        "tooling",
+        "transitive"
+      ],
+      "used_by": [
+        "vite-starter"
+      ],
+      "source_manifest_sha256": "sha256:8224df377e476bbf82c6ccfae7fda1ec7951b9f335ff199b41caf74bea1f649a",
+      "packed_manifest_sha256": "sha256:e49f50228c7bd80757a0daeadf21eb81315de68f0e6c7abb4f38f1cc6c1ddd28",
+      "tarball": {
+        "path": "dist/salt-sample-apps/vite-starter.artifacts/salt-ds-knowledge-0.0.0.tgz",
+        "sha256": "sha256:8eabbf9f27bf5b1cc9967feac9a4bafbdd26b43b1e1f11042466a0d55c3914ba",
+        "integrity": "sha512-GuWaWJ1KAzPp9xoic9L8nmCrOsKTA6dVjiFoDP2yTxk802BLgyF/nk+JnZMS36Tm28KXBz3DsA2Z3tL8n0IgzQ==",
+        "bytes": 3638532,
+        "files": 598
+      }
+    },
+    {
+      "name": "@salt-ds/styles",
+      "version": "0.4.0",
+      "roles": [
+        "transitive"
+      ],
+      "used_by": [
+        "vite-starter"
+      ],
+      "source_manifest_sha256": "sha256:ca19f3a163a24f2b4258338f997286815f86fa667c950e1a7d5865b6fdd79732",
+      "packed_manifest_sha256": "sha256:da95dbff66d1b367eca80d4e401efcb87a308f574bc7d08a34b091673f8e13cb",
+      "tarball": {
+        "path": "dist/salt-sample-apps/vite-starter.artifacts/salt-ds-styles-0.4.0.tgz",
+        "sha256": "sha256:69915bee0d51f06f24a005e0ced54408392ac749446668b723dd89e4eb2ad067",
+        "integrity": "sha512-8kUBZM2QIG9bvB+d60yZmEdsEkvcZvjsfHHllZSP9rBwguFBucgLxr3k+/2D02kkz/pZVilBMmDYuHcuAJ5zgw==",
+        "bytes": 15480,
+        "files": 37
+      }
+    },
+    {
+      "name": "@salt-ds/theme",
+      "version": "1.45.0",
+      "roles": [
+        "direct"
+      ],
+      "used_by": [
+        "vite-starter"
+      ],
+      "source_manifest_sha256": "sha256:ac77d534c6e0c3d26606bfdb1489c4f3c7e7c6c2e58f6287866ced3efd8cbf74",
+      "packed_manifest_sha256": "sha256:ac77d534c6e0c3d26606bfdb1489c4f3c7e7c6c2e58f6287866ced3efd8cbf74",
+      "tarball": {
+        "path": "dist/salt-sample-apps/vite-starter.artifacts/salt-ds-theme-1.45.0.tgz",
+        "sha256": "sha256:2bbce03f40fcdf2986a0f2e25cac67055263fb406cd86c39e5abb9b256574740",
+        "integrity": "sha512-1D9UGGUASDIbn1Uc/1NcnnCG5P1+y2SlFpPDBGnbtL7FvUQgwFiQJ+/oc3OATABIPqHlNCmBvN2GN9uY5w1xcA==",
+        "bytes": 47181,
+        "files": 6
+      }
+    },
+    {
+      "name": "@salt-ds/window",
+      "version": "0.1.1",
+      "roles": [
+        "transitive"
+      ],
+      "used_by": [
+        "vite-starter"
+      ],
+      "source_manifest_sha256": "sha256:aaf95567878b4e2ab4096b07815bbdfeaa77d0b124436454928bb3cdeef880aa",
+      "packed_manifest_sha256": "sha256:1272e7ff721be27c5720633e11d6e4e47ff8b8af52dc838ab670c6027dbfe2c0",
+      "tarball": {
+        "path": "dist/salt-sample-apps/vite-starter.artifacts/salt-ds-window-0.1.1.tgz",
+        "sha256": "sha256:f2eb6cc8cd313e1bbcb5a73a39bd9fa40e33ab23f1d736acc0994243c25264b3",
+        "integrity": "sha512-zhrgvQowNkpqn+y+kFXHW3MC9qocwsx+OTVyfwno5dk9AhhgLYLfwetuJ3ES+DlyTi6a6/RJEiE1MWTCRy5t/g==",
+        "bytes": 7369,
+        "files": 16
+      }
+    }
+  ],
+  "install": {
+    "package_manager": "npm",
+    "lockfiles": [
+      {
+        "app": "vite-starter",
+        "sha256": "sha256:cf0b155adf32a0850b9e8fcf4334d4c4b321cee84ea9368a8e47e084382ea29a",
+        "replay": "unchanged"
+      }
+    ],
+    "source_manifests_unchanged": true,
+    "source_lockfiles_unchanged": true,
+    "workspace_links": 0,
+    "first_party_registry_fallbacks": 0,
+    "physical_first_party_packages": 7
+  },
+  "offline_guard": {
+    "status": "pass",
+    "phase": "post-install",
+    "allowed_hosts": [
+      "127.0.0.1",
+      "::1",
+      "localhost"
+    ],
+    "negative_fixture": {
+      "target": "https://example.invalid/salt-sample-app-offline-guard",
+      "result": "blocked"
+    }
+  },
+  "checks": [
+    {
+      "app": "vite-starter",
+      "build": "pass",
+      "typecheck": "pass",
+      "interaction": "pass",
+      "a11y": "pass",
+      "keyboard": "pass",
+      "scan": {
+        "result": "pass",
+        "coverage": "partial",
+        "allow_incomplete": true,
+        "reasons": [
+          "SCAN_UNSUPPORTED_CONSTRUCT"
+        ],
+        "errors": 0,
+        "warnings": 0,
+        "findings": 0
+      }
+    }
+  ]
+}

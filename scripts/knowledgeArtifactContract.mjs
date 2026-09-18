@@ -228,10 +228,6 @@ export function verifyKnowledgeArtifactContract({
       manifest.bundle_digest,
     "Knowledge bundle digest does not match the canonical manifest.",
   );
-  assert(
-    manifest.agent_support === undefined,
-    "The pre-agent-support build must not contain agent_support.",
-  );
   const tree = manifest.artifact_tree;
   assert(
     tree?.contract === "salt-artifact-tree/1" &&
@@ -400,6 +396,57 @@ export function verifyKnowledgeArtifactContract({
     );
   }
   verifyContentObjects(generatedRoot, artifacts);
+
+  const agentSupport = manifest.agent_support;
+  assert(
+    agentSupport &&
+      Object.keys(agentSupport).sort().join("\0") === "agents_pointer\0skill",
+    "Knowledge manifest must contain the closed agent_support descriptor set.",
+  );
+  const selectedAgentArtifacts = [
+    ["skill", "skills/salt-design-system/SKILL.md"],
+    [
+      "agents_pointer",
+      "skills/salt-design-system/references/managed-agents-block.md",
+    ],
+  ];
+  const agentBytes = new Map();
+  for (const [kind, expectedPath] of selectedAgentArtifacts) {
+    assert(
+      agentSupport[kind]?.artifact === expectedPath,
+      `Knowledge ${kind} descriptor is not the reviewed public artifact.`,
+    );
+    const descriptor = artifacts.find((entry) => entry.path === expectedPath);
+    assert(
+      descriptor?.media_type === "text/markdown",
+      `Knowledge ${kind} artifact is absent or has the wrong media type.`,
+    );
+    agentBytes.set(
+      kind,
+      readExact(generatedRoot, descriptor, `Knowledge ${kind} artifact`),
+    );
+  }
+  const skillDigest = sha256(agentBytes.get("skill"));
+  const managedBlock = agentBytes.get("agents_pointer").toString("utf8");
+  assert(
+    managedBlock.includes(`bundle_version=${manifest.bundle_version}`) &&
+      managedBlock.includes(`skill_sha256=${skillDigest}`),
+    "Managed AGENTS block does not bind the exact Skill and bundle version.",
+  );
+  const allowedAgentPaths = new Set(
+    selectedAgentArtifacts.map(([, artifactPath]) => artifactPath),
+  );
+  for (const artifact of artifacts) {
+    const looksLikeAgentInstruction =
+      /(?:^|\/)AGENTS\.md$/u.test(artifact.path) ||
+      /(?:^|\/)instructions?(?:\/|\.|$)/iu.test(artifact.path) ||
+      artifact.path.startsWith("plans/") ||
+      artifact.path.startsWith("workflow-examples/");
+    assert(
+      !looksLikeAgentInstruction || allowedAgentPaths.has(artifact.path),
+      `Knowledge artifact tree selected untrusted agent instructions: ${artifact.path}`,
+    );
+  }
 
   const generationReceiptDescriptor = artifacts.find(
     (entry) => entry.path === "support/generation-receipt.json",

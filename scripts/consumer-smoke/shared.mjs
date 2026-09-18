@@ -48,7 +48,7 @@ export const distKnowledgeDir = path.join(
   "dist",
   "salt-ds-knowledge",
 );
-export const distMcpDir = path.join(repoRoot, "dist", "salt-ds-mcp");
+export const distCliDir = path.join(repoRoot, "dist", "salt-ds-cli");
 
 const CONSUMER_SMOKE_OPTIONS = new Set([
   "published",
@@ -72,6 +72,17 @@ export function getInstalledMcpBin(rootDir) {
     "mcp",
     "bin",
     "salt-mcp.js",
+  );
+}
+
+export function getInstalledCliBin(rootDir) {
+  return path.join(
+    rootDir,
+    "node_modules",
+    "@salt-ds",
+    "cli",
+    "bin",
+    "salt-ds.js",
   );
 }
 
