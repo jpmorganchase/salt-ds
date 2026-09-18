@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/schemas/salt-mcp-candidate-disposition-evidence-1.json",
+  "title": "Salt MCP candidate disposition evidence v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "contract",
+    "source_commit",
+    "plan_id",
+    "unit_id",
+    "candidate_decision",
+    "candidate_pack_report",
+    "candidate_package",
+    "evaluation_run",
+    "protocol",
+    "threshold",
+    "security_interoperability",
+    "mcp_candidate_disposition",
+    "rationale",
+    "verification"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://www.saltdesignsystem.com/ai/schemas/salt-mcp-candidate-disposition-evidence-1.json"
+    },
+    "schema_version": { "const": "1.0.0" },
+    "contract": { "const": "salt-mcp-candidate-disposition-evidence/1" },
+    "source_commit": { "$ref": "#/$defs/commit" },
+    "plan_id": { "const": "001" },
+    "unit_id": { "const": "07" },
+    "candidate_decision": { "$ref": "#/$defs/artifact" },
+    "candidate_pack_report": { "$ref": "#/$defs/artifact" },
+    "candidate_package": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "tarball"],
+      "properties": {
+        "name": { "const": "@salt-ds/mcp" },
+        "version": { "const": "0.0.0" },
+        "tarball": { "$ref": "#/$defs/artifact" }
+      }
+    },
+    "evaluation_run": { "$ref": "#/$defs/artifact" },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["spec_version", "server_sdk_version", "client_sdk_version"],
+      "properties": {
+        "spec_version": { "const": "2026-07-28" },
+        "server_sdk_version": { "const": "2.0.0" },
+        "client_sdk_version": { "const": "2.0.0" }
+      }
+    },
+    "threshold": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_cells_complete", "material_value_passed"],
+      "properties": {
+        "required_cells_complete": { "type": "boolean" },
+        "material_value_passed": { "type": "boolean" }
+      }
+    },
+    "security_interoperability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "all_deterministic_gates_passed",
+        "current_spec",
+        "legacy_rejected",
+        "offline",
+        "path_isolation",
+        "consumer_smoke"
+      ],
+      "properties": {
+        "all_deterministic_gates_passed": { "type": "boolean" },
+        "current_spec": { "type": "boolean" },
+        "legacy_rejected": { "type": "boolean" },
+        "offline": { "type": "boolean" },
+        "path_isolation": { "type": "boolean" },
+        "consumer_smoke": { "$ref": "#/$defs/artifact" }
+      }
+    },
+    "mcp_candidate_disposition": { "enum": ["ship", "omit"] },
+    "rationale": { "type": "string", "minLength": 1 },
+    "verification": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sha256", "bytes"],
+      "properties": {
+        "sha256": { "$ref": "#/$defs/digest" },
+        "bytes": { "type": "integer", "minimum": 1 }
+      }
+    }
+  }
+}

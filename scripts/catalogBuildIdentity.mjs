@@ -10,6 +10,16 @@ function sha256(bytes) {
   return `sha256:${createHash("sha256").update(bytes).digest("hex")}`;
 }
 
+function canonicalCatalogInputBytes(bytes, repoPath) {
+  const text = bytes.toString("utf8");
+  if (!Buffer.from(text, "utf8").equals(bytes)) {
+    throw new Error(
+      `Repository build input '${repoPath}' is not valid UTF-8.`,
+    );
+  }
+  return Buffer.from(text.replace(/\r\n?/gu, "\n"), "utf8");
+}
+
 function isRecord(value) {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
@@ -302,13 +312,17 @@ export function assertCatalogInputBytes(identity, repoPath, inputBytes) {
   const bytes = Buffer.isBuffer(inputBytes)
     ? inputBytes
     : Buffer.from(inputBytes);
-  const actualDigest = sha256(bytes);
-  if (bytes.byteLength !== expected.bytes || actualDigest !== expected.sha256) {
+  const canonicalBytes = canonicalCatalogInputBytes(bytes, normalizedPath);
+  const actualDigest = sha256(canonicalBytes);
+  if (
+    canonicalBytes.byteLength !== expected.bytes ||
+    actualDigest !== expected.sha256
+  ) {
     throw new Error(
       `Repository build input '${normalizedPath}' does not match the catalog input inventory.`,
     );
   }
-  return bytes;
+  return canonicalBytes;
 }
 
 function normalizeFilesystemPath(value) {

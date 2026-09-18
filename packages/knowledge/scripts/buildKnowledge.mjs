@@ -769,6 +769,15 @@ export async function verifySealedGeneratorBundleStability({
     inputAfterBundle,
     "Catalog source inventory",
   );
+  if (
+    typeof finalBundle.generator.assertCatalogInputInventoriesStable ===
+    "function"
+  ) {
+    finalBundle.generator.assertCatalogInputInventoriesStable(
+      inputBefore,
+      inputAfterBundle,
+    );
+  }
   return {
     finalBundle,
     generator: finalBundle.generator,
@@ -899,10 +908,20 @@ export function createBundleMetafileDigest(metafile) {
       "Catalog generator bundle must produce exactly one inspected output.",
     );
   }
+  const inputs = Object.fromEntries(
+    Object.entries(metafile.inputs ?? {}).map(([inputPath, input]) => [
+      inputPath,
+      {
+        ...input,
+        bytes: undefined,
+      },
+    ]),
+  );
   return sha256(
     Buffer.from(
       canonicalJson({
-        inputs: metafile.inputs,
+        contract: "salt-generator-metafile-identity/2",
+        inputs,
         output: outputs[0],
       }),
       "utf8",
@@ -1061,6 +1080,15 @@ async function bundleAndInspect(
 
 async function hashFile(filePath) {
   return sha256(await fs.readFile(filePath));
+}
+
+async function hashTextFile(filePath) {
+  const bytes = await fs.readFile(filePath);
+  const text = bytes.toString("utf8");
+  if (!Buffer.from(text, "utf8").equals(bytes)) {
+    throw new Error(`Generator text input is not valid UTF-8: ${filePath}.`);
+  }
+  return sha256(Buffer.from(text.replace(/\r\n?/gu, "\n"), "utf8"));
 }
 
 export function createGeneratorDigest(receipt) {
@@ -1311,7 +1339,7 @@ export async function buildCatalogRegistry(options = {}) {
       const orchestratorPath = assertPortablePath(
         toPosixPath(path.relative(sourceRoot, scriptPath)),
       );
-      const orchestratorSha256 = await hashFile(scriptPath);
+      const orchestratorSha256 = await hashTextFile(scriptPath);
       const orchestratorInput = inputBefore.entries.find(
         (entry) => entry.path === orchestratorPath,
       );
@@ -1374,7 +1402,6 @@ export async function buildCatalogRegistry(options = {}) {
           compilerInputPatterns,
           excludedPackageNames: options.excludedPackageNames ?? [
             "@salt-ds/knowledge",
-            "@salt-ds/mcp",
           ],
           generatorVersion: "2.0.0",
           inputInventory: inputBefore,
@@ -1401,6 +1428,7 @@ export async function buildCatalogRegistry(options = {}) {
           packageRoot: activePackageRoot,
           outputDir,
           packageVersion,
+          inputInventory: inputBefore,
           registry: built.registry,
           normalized: built.normalized,
           semanticInputInventory,
@@ -1447,7 +1475,7 @@ async function main() {
       "build",
       "catalogCompilerInputPatterns.json",
     ),
-    excludedPackageNames: ["@salt-ds/knowledge", "@salt-ds/mcp"],
+    excludedPackageNames: ["@salt-ds/knowledge"],
   });
   console.error(
     `Built registry at ${outputDir}: ${registry.packages.length} packages, ${registry.components.length} components, ${registry.icons.length} icons, ${registry.country_symbols.length} country symbols, ${registry.patterns.length} patterns, ${registry.tokens.length} tokens.`,

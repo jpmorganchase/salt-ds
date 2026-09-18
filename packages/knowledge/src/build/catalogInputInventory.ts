@@ -23,6 +23,10 @@ export interface CatalogInputInventory {
   digest: string;
   absolutePaths: ReadonlySet<string>;
   expectedByAbsolutePath: ReadonlyMap<string, CatalogInputInventoryEntry>;
+  readonly rawExpectedByPath?: ReadonlyMap<
+    string,
+    CatalogInputInventoryEntry
+  >;
 }
 
 export const CATALOG_INPUT_PATTERNS = Object.freeze([
@@ -58,10 +62,27 @@ export function validateCatalogInputPatterns(
 
 const INPUT_HASH_CONCURRENCY = 32;
 
+function canonicalCatalogInputBytes(bytes: Buffer, label: string): Buffer {
+  const text = bytes.toString("utf8");
+  if (!Buffer.from(text, "utf8").equals(bytes)) {
+    throw new Error(`Catalog input is not valid UTF-8: ${label}.`);
+  }
+  return Buffer.from(text.replace(/\r\n?/gu, "\n"), "utf8");
+}
+
+function assertUtf8Encoding(encoding: BufferEncoding): void {
+  if (encoding !== "utf8" && encoding !== "utf-8") {
+    throw new Error(
+      `Catalog inputs are text and must be read as UTF-8, received ${encoding}.`,
+    );
+  }
+}
+
 interface ActiveCatalogInputTracking {
   repoRoot: string;
   realRepoRoot: string;
   expectedByAbsolutePath: ReadonlyMap<string, CatalogInputInventoryEntry>;
+  rawExpectedByPath: ReadonlyMap<string, CatalogInputInventoryEntry>;
   globs: TrackedCatalogGlob[];
 }
 
@@ -289,6 +310,9 @@ export async function createCatalogInputInventory(
   }
 
   const entries = new Array<CatalogInputInventoryEntry>(relativePaths.length);
+  const rawEntries = new Array<CatalogInputInventoryEntry>(
+    relativePaths.length,
+  );
   let nextPathIndex = 0;
   const workerCount = Math.min(INPUT_HASH_CONCURRENCY, relativePaths.length);
   await Promise.all(
@@ -326,7 +350,8 @@ export async function createCatalogInputInventory(
           absolutePath,
           initialRealPath,
         );
-        const bytes = await fsPromises.readFile(absolutePath);
+        const rawBytes = await fsPromises.readFile(absolutePath);
+        const bytes = canonicalCatalogInputBytes(rawBytes, relativePath);
         const finalStats = await fsPromises.lstat(absolutePath, {
           bigint: true,
         });
@@ -355,29 +380,67 @@ export async function createCatalogInputInventory(
           sha256: sha256Bytes(bytes),
           bytes: bytes.byteLength,
         };
+        rawEntries[index] = {
+          path: relativePath,
+          sha256: sha256Bytes(rawBytes),
+          bytes: rawBytes.byteLength,
+        };
       }
     }),
   );
 
   const absolutePaths = new Set<string>();
   const expectedByAbsolutePath = new Map<string, CatalogInputInventoryEntry>();
+  const rawExpectedByPath = new Map<string, CatalogInputInventoryEntry>();
   for (const entry of entries) {
     const absolutePath = path.resolve(resolvedRoot, entry.path);
     const normalizedAbsolutePath = normalizeAbsolutePath(absolutePath);
     absolutePaths.add(normalizedAbsolutePath);
     expectedByAbsolutePath.set(normalizedAbsolutePath, entry);
   }
+  for (const entry of rawEntries) {
+    rawExpectedByPath.set(entry.path, entry);
+  }
 
   if (entries.length === 0) {
     throw new Error("Catalog input inventory is empty.");
   }
 
-  return {
+  const inventory: CatalogInputInventory = {
     entries,
     digest: sha256Bytes(canonicalJson(entries)),
     absolutePaths,
     expectedByAbsolutePath,
   };
+  Object.defineProperty(inventory, "rawExpectedByPath", {
+    value: rawExpectedByPath,
+    enumerable: false,
+    configurable: false,
+    writable: false,
+  });
+  return inventory;
+}
+
+export function assertCatalogInputInventoriesStable(
+  expected: CatalogInputInventory,
+  actual: CatalogInputInventory,
+): void {
+  const canonicalChanged =
+    actual.digest !== expected.digest ||
+    canonicalJson(actual.entries) !== canonicalJson(expected.entries);
+  const expectedRaw = expected.rawExpectedByPath;
+  const actualRaw = actual.rawExpectedByPath;
+  const rawChanged =
+    Boolean(expectedRaw) !== Boolean(actualRaw) ||
+    (expectedRaw !== undefined &&
+      actualRaw !== undefined &&
+      canonicalJson([...expectedRaw.values()]) !==
+        canonicalJson([...actualRaw.values()]));
+  if (canonicalChanged || rawChanged) {
+    throw new Error(
+      "Catalog inputs changed during generation; refusing to publish a mixed-source catalog.",
+    );
+  }
 }
 
 function expectedCatalogInput(
@@ -421,35 +484,54 @@ function missingFileError(error: unknown): boolean {
 function assertInventoriedBytes(
   expected: CatalogInputInventoryEntry | null,
   bytes: Buffer,
-): void {
-  if (!expected) return;
-  const actualSha256 = sha256Bytes(bytes);
-  if (bytes.byteLength !== expected.bytes || actualSha256 !== expected.sha256) {
+  label: string,
+): Buffer {
+  const canonicalBytes = canonicalCatalogInputBytes(bytes, label);
+  if (!expected) return canonicalBytes;
+  const rawExpected = activeTracking?.rawExpectedByPath.get(expected.path);
+  const actualRawSha256 = sha256Bytes(bytes);
+  if (
+    rawExpected &&
+    (bytes.byteLength !== rawExpected.bytes ||
+      actualRawSha256 !== rawExpected.sha256)
+  ) {
     throw new Error(
-      `Catalog input changed after inventory: ${expected.path}; expected ${expected.sha256}/${expected.bytes}, received ${actualSha256}/${bytes.byteLength}.`,
+      `Catalog input changed after inventory: ${expected.path}; expected raw ${rawExpected.sha256}/${rawExpected.bytes}, received ${actualRawSha256}/${bytes.byteLength}.`,
     );
   }
+  const actualSha256 = sha256Bytes(canonicalBytes);
+  if (
+    canonicalBytes.byteLength !== expected.bytes ||
+    actualSha256 !== expected.sha256
+  ) {
+    throw new Error(
+      `Catalog input changed after inventory: ${expected.path}; expected ${expected.sha256}/${expected.bytes}, received ${actualSha256}/${canonicalBytes.byteLength}.`,
+    );
+  }
+  return canonicalBytes;
 }
 
 export function readCatalogInputFileSync(
   targetPath: string,
   encoding: BufferEncoding,
 ): string {
+  assertUtf8Encoding(encoding);
   const expected = expectedCatalogInput(targetPath);
   assertTrackedCatalogInputRealPathSync(targetPath);
   const bytes = fs.readFileSync(targetPath);
   assertTrackedCatalogInputRealPathSync(targetPath);
-  assertInventoriedBytes(expected, bytes);
-  return bytes.toString(encoding);
+  return assertInventoriedBytes(expected, bytes, targetPath).toString("utf8");
 }
 
 export function readCatalogInputFileSyncOrNull(
   targetPath: string,
   encoding: BufferEncoding,
 ): string | null {
+  assertUtf8Encoding(encoding);
   if (!activeTracking) {
     try {
-      return fs.readFileSync(targetPath, encoding);
+      const bytes = fs.readFileSync(targetPath);
+      return assertInventoriedBytes(null, bytes, targetPath).toString("utf8");
     } catch (error) {
       if (missingFileError(error)) return null;
       throw error;
@@ -486,29 +568,30 @@ export function readCatalogInputFileSyncOrNull(
     }
     throw error;
   }
-  assertInventoriedBytes(expected, bytes);
-  return bytes.toString(encoding);
+  return assertInventoriedBytes(expected, bytes, targetPath).toString("utf8");
 }
 
 export async function readCatalogInputFile(
   targetPath: string,
   encoding: BufferEncoding,
 ): Promise<string> {
+  assertUtf8Encoding(encoding);
   const expected = expectedCatalogInput(targetPath);
   await assertTrackedCatalogInputRealPath(targetPath);
   const bytes = await fsPromises.readFile(targetPath);
   await assertTrackedCatalogInputRealPath(targetPath);
-  assertInventoriedBytes(expected, bytes);
-  return bytes.toString(encoding);
+  return assertInventoriedBytes(expected, bytes, targetPath).toString("utf8");
 }
 
 export async function readCatalogInputFileOrNull(
   targetPath: string,
   encoding: BufferEncoding,
 ): Promise<string | null> {
+  assertUtf8Encoding(encoding);
   if (!activeTracking) {
     try {
-      return await fsPromises.readFile(targetPath, encoding);
+      const bytes = await fsPromises.readFile(targetPath);
+      return assertInventoriedBytes(null, bytes, targetPath).toString("utf8");
     } catch (error) {
       if (missingFileError(error)) return null;
       throw error;
@@ -545,8 +628,7 @@ export async function readCatalogInputFileOrNull(
     }
     throw error;
   }
-  assertInventoriedBytes(expected, bytes);
-  return bytes.toString(encoding);
+  return assertInventoriedBytes(expected, bytes, targetPath).toString("utf8");
 }
 
 function normalizedGlobResult(
@@ -658,6 +740,7 @@ export async function withCatalogInputTracking<T>(
     repoRoot: path.resolve(repoRoot),
     realRepoRoot: fs.realpathSync.native(repoRoot),
     expectedByAbsolutePath: inventory.expectedByAbsolutePath,
+    rawExpectedByPath: inventory.rawExpectedByPath ?? new Map(),
     globs: [],
   };
   try {

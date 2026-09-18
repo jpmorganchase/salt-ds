@@ -35,6 +35,7 @@ import {
 } from "./catalogEditorialOverrides.js";
 import {
   CATALOG_INPUT_PATTERNS,
+  assertCatalogInputInventoriesStable,
   type CatalogInputInventory,
   createCatalogInputInventory,
   validateCatalogInputPatterns,
@@ -354,14 +355,7 @@ export async function buildKnowledgeSource(
       sourceRoot,
       inputPatterns,
     );
-    if (
-      finalInventory.digest !== inventory.digest ||
-      canonicalJson(finalInventory.entries) !== canonicalJson(inventory.entries)
-    ) {
-      throw new Error(
-        "Catalog inputs changed during generation; refusing to publish a mixed-source catalog.",
-      );
-    }
+    assertCatalogInputInventoriesStable(inventory, finalInventory);
     if (generatorCapability.mode === "sealed") {
       await generatorCapability.assertStable();
     }

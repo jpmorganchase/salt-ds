@@ -56,10 +56,10 @@ uplift, and unsupported-claim rate are never waivable.
 
 ```shell
 yarn eval:salt-ai:validate
-yarn eval:salt-ai:baseline
 yarn eval:salt-ai:report -- --cohort baseline-pre-platform
 ```
 
-The Unit 00b baseline characterizes current deterministic infrastructure and
-Catalog-v2. It does not claim model quality. Modes 2-4 are explicitly
-`not_available` and have no score.
+The immutable Unit 00b baseline characterizes the retired deterministic
+Catalog-v2 prototype. It is retained as historical evaluation evidence and is
+not regenerated after the Unit 07 MCP omission. It does not claim model
+quality. Modes 2-4 are explicitly `not_available` and have no score.

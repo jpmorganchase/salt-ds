@@ -22,18 +22,23 @@
   "properties": {
     "schema_version": { "const": "1.0.0" },
     "contract": { "const": "salt-ai-pack-report@1" },
-    "policy_profile": { "const": "release-complete" },
+    "policy_profile": {
+      "enum": ["release-complete", "mcp-candidate"]
+    },
     "policy_digest": { "$ref": "#/$defs/sha256" },
     "publishable": { "const": false },
     "packages": {
       "type": "array",
       "minItems": 2,
-      "maxItems": 2,
+      "maxItems": 3,
       "items": { "$ref": "#/$defs/package" }
     },
     "extraction_parity": { "$ref": "#/$defs/extractionParity" },
     "comparison_registry": { "$ref": "#/$defs/comparisonRegistry" },
-    "knowledge_bundle": { "$ref": "#/$defs/knowledgeBundle" }
+    "knowledge_bundle": { "$ref": "#/$defs/knowledgeBundle" },
+    "mcp_candidate_disposition": {
+      "$ref": "#/$defs/mcpCandidateDisposition"
+    }
   },
   "$defs": {
     "sha256": {
@@ -52,6 +57,31 @@
         },
         "sha256": { "$ref": "#/$defs/sha256" },
         "bytes": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "mcpCandidateDisposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "bytes",
+        "disposition",
+        "candidate_source_sha"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?![A-Za-z]:|/|.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "bytes": { "type": "integer", "minimum": 1 },
+        "disposition": { "const": "omit" },
+        "candidate_source_sha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        }
       }
     },
     "dependencyEdge": {
@@ -97,7 +127,12 @@
         },
         "version": { "type": "string", "pattern": "^0\\.0\\.0$" },
         "manifest": { "$ref": "#/$defs/artifact" },
-        "readme": { "$ref": "#/$defs/artifact" },
+        "readme": {
+          "anyOf": [
+            { "$ref": "#/$defs/artifact" },
+            { "type": "null" }
+          ]
+        },
         "tarball": { "$ref": "#/$defs/artifact" },
         "dependencies": {
           "type": "object",

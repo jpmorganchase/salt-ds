@@ -44,19 +44,17 @@ const repoRoot = path.resolve(
 const isWindows = process.platform === "win32";
 const require = createRequire(import.meta.url);
 const Ajv2020 = require("ajv/dist/2020").default;
-const vitestPackagePath = require.resolve("vitest/package.json");
-const vitestPackage = JSON.parse(readFileSync(vitestPackagePath, "utf8"));
-const vitestCli = path.resolve(
-  path.dirname(vitestPackagePath),
-  vitestPackage.bin.vitest,
-);
 
 function parseOptions(argv) {
   const options = {};
+  const valuedOptions = new Set([
+    "--mcp-candidate-disposition-receipt",
+    "--report",
+  ]);
   for (let index = 0; index < argv.length; index += 1) {
     const token = argv[index];
     if (token === "--") continue;
-    if (token !== "--report") {
+    if (!valuedOptions.has(token)) {
       throw new Error(`Unknown AI tooling pack option: ${token}`);
     }
     const value = argv[index + 1];
@@ -83,10 +81,93 @@ function parseOptions(argv) {
       "The AI tooling pack report must stay under dist/salt-ai-pack, dist/salt-ai-r1, or dist/salt-pattern-migration.",
     );
   }
-  return { profile: "release-complete", reportPath, reportRoot };
+  let mcpCandidateDispositionReceiptPath = null;
+  if (options["mcp-candidate-disposition-receipt"]) {
+    mcpCandidateDispositionReceiptPath = path.resolve(
+      repoRoot,
+      options["mcp-candidate-disposition-receipt"],
+    );
+    const allowedReceiptRoot = path.join(repoRoot, "dist", "salt-ai-eval");
+    if (
+      !isPathWithinRoot(
+        allowedReceiptRoot,
+        mcpCandidateDispositionReceiptPath,
+      ) ||
+      mcpCandidateDispositionReceiptPath === allowedReceiptRoot
+    ) {
+      throw new Error(
+        "The MCP candidate disposition receipt must stay under dist/salt-ai-eval.",
+      );
+    }
+  }
+  return {
+    mcpCandidateDispositionReceiptPath,
+    reportPath,
+    reportRoot,
+  };
 }
 
 const options = parseOptions(process.argv.slice(2));
+
+function loadMcpCandidateDispositionReceipt(receiptPath) {
+  if (!receiptPath) return null;
+  const stats = lstatSync(receiptPath);
+  if (!stats.isFile() || stats.isSymbolicLink()) {
+    throw new Error(
+      "The MCP candidate disposition receipt must be a regular file, not a link.",
+    );
+  }
+  const bytes = readFileSync(receiptPath);
+  const value = JSON.parse(bytes.toString("utf8"));
+  let candidateSourceSha;
+  if (value.contract === "salt-mcp-candidate-disposition-evidence/1") {
+    assertJsonSchema(
+      value,
+      "saltMcpCandidateDispositionEvidenceV1.schema.json",
+      "MCP candidate disposition evidence receipt",
+    );
+    candidateSourceSha = value.source_commit;
+  } else {
+    const schema = JSON.parse(
+      readFileSync(
+        path.join(
+          repoRoot,
+          "evals",
+          "salt-ai",
+          "mcp-candidate-disposition.schema.json",
+        ),
+        "utf8",
+      ),
+    );
+    const ajv = new Ajv2020({ allErrors: true, strict: false });
+    const validate = ajv.compile(schema);
+    if (!validate(value)) {
+      throw new Error(
+        `MCP candidate disposition receipt failed schema validation: ${JSON.stringify(validate.errors)}`,
+      );
+    }
+    candidateSourceSha = value.candidate_source_sha;
+  }
+  if (value.mcp_candidate_disposition !== "omit") {
+    throw new Error(
+      "This selected graph has no MCP workspace and requires an omit disposition.",
+    );
+  }
+  return {
+    value,
+    binding: {
+      path: normalizePath(path.relative(repoRoot, receiptPath)),
+      sha256: sha256(bytes),
+      bytes: bytes.byteLength,
+      disposition: value.mcp_candidate_disposition,
+      candidate_source_sha: candidateSourceSha,
+    },
+  };
+}
+
+const mcpCandidateDisposition = loadMcpCandidateDispositionReceipt(
+  options.mcpCandidateDispositionReceiptPath,
+);
 
 const forbiddenPublishPathSegments = [
   "archive",
@@ -115,6 +196,7 @@ const extractionParityKnowledgePackage = {
     "publishTypingEntryOnly",
     "publishPreserveModules",
     "publishIncludeReadme",
+    "publishCanonicalTextPaths",
     "publishSourceMaps",
     "saltDocs",
     "typescriptInclude",
@@ -195,6 +277,7 @@ const preAgentKnowledgePackage = {
     "publishTypingEntryOnly",
     "publishPreserveModules",
     "publishIncludeReadme",
+    "publishCanonicalTextPaths",
     "publishIncludeChangelog",
     "publishSourceMaps",
     "saltDocs",
@@ -250,62 +333,6 @@ const preAgentKnowledgePackage = {
   maxEntryCount: 640,
 };
 
-const mcpPackage = {
-  name: "@salt-ds/mcp",
-  dir: "dist/salt-ds-mcp",
-  requiredPaths: [
-    "package.json",
-    "bin/salt-mcp.js",
-    "dist-cjs",
-    "dist-es",
-    "dist-types",
-  ],
-  expectedFilesField: ["bin", "dist-cjs", "dist-es", "dist-types"],
-  forbiddenManifestFields: [
-    "publishEntryPath",
-    "publishBuildIdentityManifest",
-    "publishTypingEntryPath",
-    "publishTypingEntryOnly",
-    "publishPreserveModules",
-    "publishIncludeReadme",
-    "saltDocs",
-    "typescriptInclude",
-    "typescriptRootDir",
-  ],
-  forbiddenPublishConfigFields: ["directory"],
-  forbiddenPublishedDependencies: ["@salt-ds/semantic-core", "get-tsconfig"],
-  expectedExactDependencies: {
-    "@modelcontextprotocol/server": "2.0.0",
-    "@salt-ds/knowledge": "0.0.0",
-  },
-  expectedDeclarationFiles: ["dist-types/index.d.ts"],
-  forbiddenDeclarationImports: ["@salt-ds/semantic-core"],
-  expectedModuleMarkers: {
-    "dist-cjs/package.json": "commonjs",
-    "dist-es/package.json": "module",
-  },
-  expectedBundleFiles: {
-    bin: ["salt-mcp.js"],
-    "dist-cjs": ["index.js", "package.json"],
-    "dist-es": ["index.js", "package.json"],
-  },
-  workspaceBin: "packages/mcp/bin/salt-mcp.js",
-  publishedBin: "bin/salt-mcp.js",
-  allowedTopLevelPaths: [
-    "LICENSE",
-    "bin",
-    "dist-cjs",
-    "dist-es",
-    "dist-types",
-    "package.json",
-  ],
-  maxPackageBytes: 2_000_000,
-  maxUnpackedBytes: 8_000_000,
-  maxGeneratedBytes: 0,
-  maxSourceMapBytes: 0,
-  maxEntryCount: 16,
-};
-
 const cliPackage = {
   name: "@salt-ds/cli",
   dir: "dist/salt-ds-cli",
@@ -334,6 +361,7 @@ const cliPackage = {
     "publishScriptExcludes",
     "publishSourceMaps",
     "publishIncludeReadme",
+    "publishCanonicalTextPaths",
     "publishIncludeChangelog",
     "typescriptInclude",
     "typescriptRootDir",
@@ -958,41 +986,8 @@ function assertCliVersion(packageConfig, packageDir, manifest) {
   }
 }
 
-function assertPackedCatalogReleaseCoverage(
-  packageConfig,
-  extractedPackageDir,
-) {
-  const result = spawnSync(
-    process.execPath,
-    [
-      vitestCli,
-      "run",
-      "packages/mcp/src/__tests__/registryCoverage.spec.ts",
-      "--maxWorkers=1",
-    ],
-    {
-      cwd: repoRoot,
-      encoding: "utf8",
-      env: {
-        ...process.env,
-        SALT_MCP_PACKED_REGISTRY_DIR: path.join(
-          extractedPackageDir,
-          "generated",
-        ),
-      },
-    },
-  );
-  if (result.error || result.status !== 0) {
-    fail(
-      `${packageConfig.name} packed catalog release coverage failed: ${
-        result.error ?? `${result.stderr}${result.stdout}`
-      }`,
-    );
-  }
-}
-
 function runRealPack(packageConfig, packageDir) {
-  const temporaryRoot = mkdtempSync(path.join(os.tmpdir(), "salt-mcp-pack-"));
+  const temporaryRoot = mkdtempSync(path.join(os.tmpdir(), "salt-ai-pack-"));
   const packDirectory = path.join(temporaryRoot, "pack");
   const extractionDirectory = path.join(temporaryRoot, "extract");
   const npmCache = path.join(temporaryRoot, "npm-cache");
@@ -1389,7 +1384,6 @@ for (const packageConfig of packages) {
         path.join(extractedPackageDir, "generated"),
         "dist-to-extracted-tarball",
       );
-      assertPackedCatalogReleaseCoverage(packageConfig, extractedPackageDir);
     }
 
     if (packed.name !== packageConfig.name) {
@@ -1647,9 +1641,8 @@ for (const packageConfig of packages) {
       path.join(extractedPackageDir, "package.json"),
     );
     const packedManifest = JSON.parse(manifestBytes.toString("utf8"));
-    const readmeBytes = readFileSync(
-      path.join(extractedPackageDir, "README.md"),
-    );
+    const readmePath = path.join(extractedPackageDir, "README.md");
+    const readmeBytes = existsSync(readmePath) ? readFileSync(readmePath) : null;
     packageReports.push({
       name: packageConfig.name,
       version: packedManifest.version,
@@ -1658,11 +1651,13 @@ for (const packageConfig of packages) {
         sha256: sha256(manifestBytes),
         bytes: manifestBytes.byteLength,
       },
-      readme: {
-        path: `${packageConfig.name}/README.md`,
-        sha256: sha256(readmeBytes),
-        bytes: readmeBytes.byteLength,
-      },
+      readme: readmeBytes
+        ? {
+            path: `${packageConfig.name}/README.md`,
+            sha256: sha256(readmeBytes),
+            bytes: readmeBytes.byteLength,
+          }
+        : null,
       tarball: {
         fileName: packed.filename,
         sha256: sha256(tarballBytes),
@@ -1684,24 +1679,24 @@ const knowledgeReport = packageReports.find(
   (entry) => entry.name === "@salt-ds/knowledge",
 );
 const cliReport = packageReports.find((entry) => entry.name === "@salt-ds/cli");
-const adapterReport = cliReport;
-if (
-  !knowledgeReport ||
-  !adapterReport ||
-  packageReports.length !== packages.length
-) {
+const adapterReports = packageReports.filter(
+  (entry) => entry.name !== "@salt-ds/knowledge",
+);
+if (!knowledgeReport || !cliReport || packageReports.length !== packages.length) {
   rmSync(stagingArtifactDirectory, { recursive: true, force: true });
   throw new Error(
-    "AI tooling pack did not produce both required package reports.",
+    "AI tooling pack did not produce the required package reports.",
   );
 }
-if (
-  adapterReport.dependencies["@salt-ds/knowledge"] !== knowledgeReport.version
-) {
-  rmSync(stagingArtifactDirectory, { recursive: true, force: true });
-  throw new Error(
-    `${adapterReport.name} does not exact-pin the packed knowledge package version.`,
-  );
+for (const adapterReport of adapterReports) {
+  if (
+    adapterReport.dependencies["@salt-ds/knowledge"] !== knowledgeReport.version
+  ) {
+    rmSync(stagingArtifactDirectory, { recursive: true, force: true });
+    throw new Error(
+      `${adapterReport.name} does not exact-pin the packed knowledge package version.`,
+    );
+  }
 }
 
 let extractionParityBytes = null;
@@ -1757,17 +1752,19 @@ if (options.profile === "extraction-parity") {
 
 renameSync(stagingArtifactDirectory, finalArtifactDirectory);
 const artifactDirectoryName = path.basename(finalArtifactDirectory);
-const policy =
-  {
-    id: "release-complete@1",
-    publishable: false,
-    required_artifacts: ["agent_support.skill", "agent_support.agents_pointer"],
-    allowed_stages: ["CI_RELEASE_COMPLETE", "R2_BETA", "R3_GA"],
-  };
+const policy = {
+  id: "release-complete@1",
+  publishable: false,
+  required_artifacts: [
+    "agent_support.skill",
+    "agent_support.agents_pointer",
+  ],
+  allowed_stages: ["CI_RELEASE_COMPLETE", "R2_BETA", "R3_GA"],
+};
 const report = {
   schema_version: "1.0.0",
   contract: "salt-ai-pack-report@1",
-  policy_profile: options.profile,
+  policy_profile: "release-complete",
   policy_digest: sha256(Buffer.from(JSON.stringify(policy), "utf8")),
   publishable: false,
   packages: packageReports.map((entry) => ({
@@ -1782,7 +1779,7 @@ const report = {
     },
     dependencies: entry.dependencies,
     first_party_dependencies:
-      entry.name === adapterReport.name
+      entry.name !== knowledgeReport.name
         ? [
             {
               name: "@salt-ds/knowledge",
@@ -1798,6 +1795,9 @@ const report = {
     },
   })),
   knowledge_bundle: knowledgeBundleReport,
+  ...(mcpCandidateDisposition
+    ? { mcp_candidate_disposition: mcpCandidateDisposition.binding }
+    : {}),
 };
 try {
   assertJsonSchema(

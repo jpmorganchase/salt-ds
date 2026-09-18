@@ -1,0 +1,65 @@
+{
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/salt-selected-graph-receipt-1.json",
+  "schema_version": "1.0.0",
+  "contract": "salt-selected-graph-receipt/1",
+  "source_commit": "37e8372bf52c297bb056c1018b095897d3d2d5c6",
+  "plan_id": "001",
+  "unit_id": "07",
+  "selection_stage": "provisional",
+  "mcp_candidate_disposition": "omit",
+  "candidate_decision": {
+    "sha256": "sha256:de296a69f92271c8bb165a859044c43a6b2450efce486b11a770002743f162a1",
+    "bytes": 6031
+  },
+  "pack_report": {
+    "sha256": "sha256:1994bf349cb33e0f359a4a24f7191a1a88ae07a190412813e012862bf9deb63f",
+    "bytes": 3731
+  },
+  "packages": [
+    {
+      "name": "@salt-ds/knowledge",
+      "version": "0.0.0",
+      "tarball_sha256": "sha256:fef731834557df0ac336407f32b17a2f7da7a39cbeb3564a955ed2653df29cda"
+    },
+    {
+      "name": "@salt-ds/cli",
+      "version": "0.0.0",
+      "tarball_sha256": "sha256:07dfd1189a17b91cbe1e89cef776ab209129857e9260e1bb44173e5204b5f34d"
+    }
+  ],
+  "dependency_edges": [
+    {
+      "from": "@salt-ds/cli",
+      "to": "@salt-ds/knowledge",
+      "specifier": "0.0.0"
+    }
+  ],
+  "excluded_packages": [
+    {
+      "name": "@salt-ds/mcp",
+      "reason": "The Unit 07 material-value threshold was not proven, so the candidate disposition is omit."
+    }
+  ],
+  "knowledge_bundle": {
+    "bundle_digest": "sha256:64b430b5502d2fe02ddfb016700bf46386035efb0e0675489fb43883eb3b5b9a",
+    "semantic_digest": "sha256:a2f2d88273ea9fd72c85c9c4fded1e956d97e612d56bbb07c2238320d991eb47",
+    "semantic_source_digest": "sha256:7dbf8b2a0574f86d2d6d1a278459716da603917876087802a33d39bb29480b25",
+    "compiler_digest": "sha256:6a1176155ad9b9187077e000cf4ec2ebc32b790aeeb45b69a6838b24e4a38013"
+  },
+  "production_exposure": {
+    "mcp_package": false,
+    "mcp_binary": false,
+    "mcp_docs": false,
+    "mcp_navigation": false
+  },
+  "verification": [
+    "YARN_ENABLE_NETWORK=0 yarn install --immutable --immutable-cache --mode=skip-build",
+    "yarn build:ai-tooling",
+    "clean CRLF/LF tree parity: generated=556, knowledge-dist=598, cli-dist=13, differences=0",
+    "clean CRLF/LF consumer smoke receipt: sha256:1b134e1b6adae314f549564d41f8d08de08439b81a57ac2f589fe3124935e6cc",
+    "yarn typecheck:ai-tooling",
+    "yarn test:ai-tooling",
+    "yarn check:ai-tooling:pack -- --report dist/salt-ai-pack/unit07-repro.json",
+    "yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit07-repro.json"
+  ]
+}

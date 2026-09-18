@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
 
@@ -108,4 +109,10 @@ for (const name of fixtureNames) {
 
 console.log(
   `Salt AI governance evidence schema-validated (${receiptChecks.length} receipts, 1 compatibility policy, ${validFixtureCount} valid tracker fixtures; ${fixtureNames.length - validFixtureCount} hostile tracker fixtures exercised separately).`,
+);
+
+execFileSync(
+  process.execPath,
+  [path.join(repositoryRoot, "scripts", "testSaltAiEvidenceAcquisition.mjs")],
+  { cwd: repositoryRoot, stdio: "inherit", windowsHide: true },
 );

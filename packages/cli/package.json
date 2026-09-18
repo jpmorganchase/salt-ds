@@ -67,6 +67,12 @@
   "publishSourceMaps": false,
   "publishIncludeReadme": true,
   "publishIncludeChangelog": false,
+  "publishCanonicalTextPaths": [
+    "README.md",
+    "LICENSE",
+    "schemas/salt-config-1.schema.json",
+    "schemas/scan-result-1.schema.json"
+  ],
   "bin": {
     "salt-ds": "bin/salt-ds.js"
   },

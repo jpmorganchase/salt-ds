@@ -1,8 +1,10 @@
 # Salt AI release runbook
 
-This is a safety contract, not permission to publish. Until the applicable Plan
-001 protected release unit is active, every AI package remains private and the
-embargo must reject Changesets, versioning, publication, and deployment.
+This is a Plan 003 safety contract, not permission to publish. Plan 001 ends at
+the locally verified Unit 07 release-candidate boundary and never activates
+this runbook. Until Plan 003 is explicitly activated, every AI package remains
+private and the embargo must reject Changesets, versioning, publication, and
+deployment.
 
 ## Before any release
 

@@ -51,12 +51,8 @@ export const distKnowledgeDir = path.join(
 export const distCliDir = path.join(repoRoot, "dist", "salt-ds-cli");
 
 const CONSUMER_SMOKE_OPTIONS = new Set([
-  "published",
   "keep-temp",
   "skip-build",
-  "mcp-spec",
-  "expected-version",
-  "expected-git-head",
   "pack-report",
 ]);
 
@@ -110,52 +106,12 @@ export function parseArgs(argv) {
     index += 1;
   }
 
-  const published = flags.published === "true";
   const result = {
-    published,
     keepTemp: flags["keep-temp"] === "true",
     skipBuild: flags["skip-build"] === "true",
-    mcpSpec: flags["mcp-spec"],
-    expectedVersion: flags["expected-version"],
-    expectedGitHead: flags["expected-git-head"],
     packReport: flags["pack-report"],
   };
-
-  if (!published) {
-    assert(
-      !result.mcpSpec && !result.expectedVersion && !result.expectedGitHead,
-      "Published identity options require --published.",
-    );
-    assert(result.packReport, "Local packed smoke requires --pack-report.");
-    return result;
-  }
-
-  assert(!result.packReport, "Published smoke does not accept --pack-report.");
-
-  assert(result.mcpSpec, "Published smoke requires --mcp-spec.");
-  assert(
-    result.expectedVersion,
-    "Published smoke requires --expected-version.",
-  );
-  assert(
-    result.expectedGitHead,
-    "Published smoke requires --expected-git-head.",
-  );
-  const specMatch = result.mcpSpec.match(
-    /^@salt-ds\/mcp@(\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?)$/u,
-  );
-  assert(
-    specMatch && !/snapshot/iu.test(result.mcpSpec),
-    "Published --mcp-spec must be an exact non-snapshot @salt-ds/mcp version.",
-  );
-  assert(
-    specMatch[1] === result.expectedVersion,
-    "--mcp-spec and --expected-version must identify the same version.",
-  );
-  assert(
-    /^[0-9a-f]{40}$/u.test(result.expectedGitHead),
-    "--expected-git-head must be a full lowercase 40-character commit SHA.",
-  );
+  assert(result.packReport, "Local packed smoke requires --pack-report.");
   return result;
 }
 

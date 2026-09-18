@@ -5,6 +5,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import compilerInputPatterns from "../build/catalogCompilerInputPatterns.json";
 import {
   CATALOG_INPUT_PATTERNS,
+  assertCatalogInputInventoriesStable,
   createCatalogInputInventory,
   globCatalogInputs,
   isCatalogInputTrackingActive,
@@ -126,6 +127,83 @@ describe("catalog input inventory", () => {
       "inputs/c.txt",
     ]);
     expect(removed.digest).not.toBe(added.digest);
+  });
+
+  it("projects LF, CRLF, and lone CR inputs to one UTF-8/LF identity and read result", async () => {
+    const variants = [
+      "alpha\nbravo\ncharlie\n",
+      "alpha\r\nbravo\r\ncharlie\r\n",
+      "alpha\rbravo\rcharlie\r",
+    ];
+    const inventories = [];
+
+    for (const content of variants) {
+      const root = await createFixture({ "inputs/declared.txt": content });
+      const inventory = await createCatalogInputInventory(root, [
+        "inputs/**/*",
+      ]);
+      inventories.push(inventory);
+      await withCatalogInputTracking(root, inventory, async () => {
+        const targetPath = path.join(root, "inputs/declared.txt");
+        await expect(readCatalogInputFile(targetPath, "utf8")).resolves.toBe(
+          variants[0],
+        );
+        expect(readCatalogInputFileSync(targetPath, "utf-8")).toBe(
+          variants[0],
+        );
+      });
+    }
+
+    expect(inventories.map(({ entries }) => entries)).toEqual([
+      inventories[0]?.entries,
+      inventories[0]?.entries,
+      inventories[0]?.entries,
+    ]);
+    expect(inventories.map(({ digest }) => digest)).toEqual([
+      inventories[0]?.digest,
+      inventories[0]?.digest,
+      inventories[0]?.digest,
+    ]);
+  });
+
+  it("rejects invalid UTF-8 catalog inputs", async () => {
+    const root = await createFixture({ "inputs/declared.txt": "valid" });
+    await fs.writeFile(
+      path.join(root, "inputs/declared.txt"),
+      Buffer.from([0xc3, 0x28]),
+    );
+
+    await expect(
+      createCatalogInputInventory(root, ["inputs/**/*"]),
+    ).rejects.toThrow(/not valid UTF-8/u);
+  });
+
+  it("rejects transient schema line-ending mutation while preserving canonical identity", async () => {
+    const root = await createFixture({
+      "packages/knowledge/schemas/test.schema.json": '{"alpha":true}\n',
+    });
+    const inventory = await createCatalogInputInventory(root, [
+      "packages/knowledge/schemas/**/*.json",
+    ]);
+    const declaredPath = path.join(
+      root,
+      "packages/knowledge/schemas/test.schema.json",
+    );
+    await fs.writeFile(declaredPath, '{"alpha":true}\r\n', "utf8");
+
+    await expect(
+      withCatalogInputTracking(root, inventory, async () =>
+        readCatalogInputFile(declaredPath, "utf8"),
+      ),
+    ).rejects.toThrow(/input changed after inventory/u);
+    const crlfInventory = await createCatalogInputInventory(root, [
+      "packages/knowledge/schemas/**/*.json",
+    ]);
+    expect(crlfInventory.entries).toEqual(inventory.entries);
+    expect(crlfInventory.digest).toBe(inventory.digest);
+    expect(() =>
+      assertCatalogInputInventoriesStable(inventory, crlfInventory),
+    ).toThrow(/inputs changed during generation/u);
   });
 
   it("keeps semantic/compiler closures isolated from adapters, tests, and release tooling", async () => {

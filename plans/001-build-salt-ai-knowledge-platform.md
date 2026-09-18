@@ -1,4 +1,17 @@
-# Plan 001: Build the versioned Salt AI knowledge platform, CLI scanner, documentation channels, samples, and optional thin MCP adapter
+# Plan 001: Build the Salt AI knowledge platform release candidate, CLI scanner, documentation channels, samples, and optional thin MCP adapter
+
+> **Scope amendment — 2026-08-29:** This plan ends at the Unit 07 locally
+> verified release-candidate boundary. Unit 07 was reopened and repaired for
+> clean-checkout and cross-line-ending reproducibility after its original
+> evidence proved dependent on mixed working-tree line endings. Units 08a
+> through 09c below are
+> retained as publication design history, but ownership of version
+> materialization, npm/registry authority, trusted publishing, live web
+> deployment, promotion, rollback, and post-publication activation has moved to
+> [Plan 003](./003-publish-salt-ai-release-candidate.md). Do not execute those
+> units under Plan 001. A local `npm pack`, clean-room tarball install, consumer
+> smoke test, or web-artifact build is verification rather than publication and
+> remains in Plan 001. Plan 001 authorizes no registry or deployment mutation.
 
 > **Executor instructions:** This is a program plan made of ordered execution
 > units. Implement one code-bearing execution unit per branch and pull request,
@@ -64,7 +77,7 @@
 
 ## Status
 
-- **Status:** TODO
+- **Status:** DONE — local release candidate complete through Unit 07
 - **Priority:** P1
 - **Effort:** L — multi-phase program; do not execute in one PR
 - **Risk:** HIGH — moves a large internal package boundary and creates the first
@@ -103,21 +116,21 @@ architecture; publish only the contracts defined by this plan.
 These decisions are part of the plan. An executor must not silently substitute
 another architecture.
 
-1. Publish `@salt-ds/knowledge` as the only owner of the generated bundle,
+1. Prepare `@salt-ds/knowledge` as the only owner of the generated bundle,
    bundle reader, deterministic query layer, applicability resolver, submitted
    artifact analyzer, and the protocol-neutral project facts shared by CLI and
    MCP.
-2. Publish `@salt-ds/cli` with the executable `salt-ds`. Do not use the binary
+2. Prepare `@salt-ds/cli` with the executable `salt-ds`. Do not use the binary
    name `salt`, which collides with the established Salt infrastructure CLI.
 3. Ship `scan`, `info`, `help`, and `version` first. Add `docs` and `context`
    only after the bundle projection and retrieval quality gates pass.
 4. Build one clean, current-spec `@salt-ds/mcp` candidate as an optional thin
    adapter, not the knowledge owner. Nothing in the current prototype or
    ratified unused test snapshots is a public compatibility requirement.
-   Publish MCP only if the pre-release
-   outcome gate recommends `mcp_candidate_disposition: ship` and Unit 08c
-   confirms the exact final packed bytes; otherwise omit it from the public
-   cohort without a deprecation or migration path.
+   Plan 003 may publish MCP only if a pre-release outcome gate recommends
+   `mcp_candidate_disposition: ship` and independently confirms the exact final
+   packed bytes; otherwise it remains omitted without a deprecation or migration
+   path.
 5. Make Storybook maintainer-only. Stories may wrap canonical example modules
    for visual QA, but no published knowledge, public sample, CLI command, or
    public documentation journey may require a Storybook process or URL.
@@ -3071,7 +3084,43 @@ In either outcome, the normal production route graph remains pre-release: it
 contains no CLI/MCP install claim or candidate adapter navigation. Only ignored
 preview and immutable candidate artifacts may contain those bytes.
 
+#### Unit 07 reproducibility repair — 2026-08-29
+
+The original Unit 07 feature result and `mcp_candidate_disposition: omit`
+remain unchanged, but the selected Knowledge+CLI graph is not a valid terminal
+candidate until a clean CRLF checkout and a clean LF checkout of the same
+source commit produce identical semantic-source, compiler, semantic, bundle,
+packed-package, and consumer-smoke identities.
+
+Canonicalize every declared catalog input as valid UTF-8 with CRLF and lone CR
+converted to LF before inventory hashing and before any tracked text read.
+Reject invalid UTF-8 rather than replacing bytes. Keep path, link-topology,
+enumeration, and mid-build mutation checks fail-closed. Every copied textual
+source artifact, including package-owned JSON schemas, must use the same LF
+projection; no binary input may be silently decoded or normalized.
+
+Add focused hostile and parity tests for LF, CRLF, lone CR, invalid UTF-8, and
+post-inventory mutation. Then rebuild the exact implementation commit from two
+clean, offline source trees with opposing checkout line endings. The repaired
+Unit 07 evidence index must retain the original MCP decision, supersede the old
+selected-graph receipt with the new exact graph, record both clean-build
+identities, and remain entirely local and unpublished.
+
+**Repair completion — 2026-08-30:** Clean CRLF and LF checkouts of
+`37e8372bf52c297bb056c1018b095897d3d2d5c6` produced identical generated and
+distribution trees, Knowledge/CLI tarballs, pack report
+`sha256:1994bf349cb33e0f359a4a24f7191a1a88ae07a190412813e012862bf9deb63f`,
+and consumer-smoke receipt
+`sha256:1b134e1b6adae314f549564d41f8d08de08439b81a57ac2f589fe3124935e6cc`.
+The successor selected graph is
+`sha256:c3a1f771744133756e01c3cc737085bab63b77577564f588b21254b88a899884`;
+no package was published and no deployment or dist-tag was changed.
+
 ### 08a — Freeze the selected package graph and partition the version plan
+
+> **Transferred to Plan 003.** Units 08a through 09c are retained below so the
+> original release design remains reviewable. They are not executable Plan 001
+> work and do not gate Plan 001 completion.
 
 **Outcome:** the selected Knowledge+CLI graph, plus the MCP candidate only when
 Unit 07 recommends `ship`, and the matching web artifact are closed by one
@@ -4630,7 +4679,16 @@ quarterly for bundle budgets and, only if shipped, MCP's measured role/cost.
 
 ## Definition of done
 
-This program is complete only when all applicable boxes are true:
+Plan 001 is complete when all applicable local implementation and verification
+boxes are true through Unit 07. In this historical checklist, version
+materialization, protected workflows, npm provenance/publication, registry or
+web mutation/readback, R2/R3 activation, live discovery, and retained release
+operations are Plan 003 acceptance criteria and do not gate Plan 001. Local
+`npm pack`, clean-room install, offline smoke, deterministic web builds, package
+metadata, and consumer validation remain Plan 001 requirements.
+
+The combined original program is complete only when all applicable boxes are
+true across Plans 001 and 003:
 
 - [ ] ADR, public contracts, support matrix, owners, review dates, and baseline
       receipt are approved.

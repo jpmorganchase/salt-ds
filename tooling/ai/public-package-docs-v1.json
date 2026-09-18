@@ -20,18 +20,6 @@
       "due_unit": "06d",
       "deficits": [],
       "owner": "saltdesignsystem"
-    },
-    {
-      "name": "@salt-ds/mcp",
-      "due_unit": "08c",
-      "deficits": [
-        "bugs",
-        "description",
-        "homepage",
-        "keywords",
-        "packed_readme"
-      ],
-      "owner": "saltdesignsystem"
     }
   ],
   "packages": [
@@ -208,22 +196,6 @@
         "keywords": "present"
       },
       "packed_readme_status": "present",
-      "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
-      "support_destination": "public_salt_support"
-    },
-    {
-      "name": "@salt-ds/mcp",
-      "workspace_path": "packages/mcp",
-      "lifecycle": "conditional",
-      "readme_path": "packages/mcp/README.md",
-      "metadata_fields": {
-        "description": "missing",
-        "license": "present",
-        "repository": "present",
-        "bugs": "missing",
-        "keywords": "missing"
-      },
-      "packed_readme_status": "required_before_activation",
       "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
       "support_destination": "public_salt_support"
     },

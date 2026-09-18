@@ -293,15 +293,24 @@ for (const expected of config.scope_control.expected_maintainer_names) {
     `Scope anchor ${config.scope_anchor} is missing expected maintainer ${expected}`,
   );
 }
-assert(
-  anchor.latest_publisher?.trustedPublisher?.id ===
-    config.scope_control.expected_trusted_publisher_provider,
-  `Scope anchor ${config.scope_anchor} does not expose the expected trusted publisher`,
-);
-assert(
-  config.publisher?.approval_status === "approved",
-  "The protected OIDC publisher identity must be approved in the namespace policy",
-);
+if (mode === "preflight") {
+  assert(
+    config.publisher?.approval_status === "deferred" &&
+      config.publisher.plan ===
+        "plans/003-publish-salt-ai-release-candidate.md",
+    "Preflight namespace policy must defer publication authority to Plan 003",
+  );
+} else {
+  assert(
+    anchor.latest_publisher?.trustedPublisher?.id ===
+      config.scope_control.expected_trusted_publisher_provider,
+    `Scope anchor ${config.scope_anchor} does not expose the expected trusted publisher`,
+  );
+  assert(
+    config.publisher?.approval_status === "approved",
+    "The protected publisher identity must be approved in the namespace policy",
+  );
+}
 
 const packages = config.packages
   .map((policy) => {

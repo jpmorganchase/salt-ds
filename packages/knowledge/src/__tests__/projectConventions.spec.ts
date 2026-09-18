@@ -21,7 +21,7 @@ describe("project conventions example contract", () => {
     "../../../../workflow-examples/consumer-repo/.salt/team.json",
   ])("validates %s against the schema", (examplePath) => {
     const ajv = new Ajv2020({ allErrors: true, strict: false });
-    const schema = readJson("../../../mcp/schemas/project-conventions.schema.json");
+    const schema = readJson("../../../../scripts/schemas/project-conventions.schema.json");
     const validate = ajv.compile(schema);
 
     expect(
@@ -32,7 +32,7 @@ describe("project conventions example contract", () => {
 
   it("rejects a custom theme provider without provider_import metadata", () => {
     const ajv = new Ajv2020({ allErrors: true, strict: false });
-    const schema = readJson("../../../mcp/schemas/project-conventions.schema.json");
+    const schema = readJson("../../../../scripts/schemas/project-conventions.schema.json");
     const validate = ajv.compile(schema);
 
     expect(
@@ -52,7 +52,7 @@ describe("project conventions example contract", () => {
   it("keeps convention string and collection bounds aligned with runtime parsing", () => {
     const ajv = new Ajv2020({ allErrors: true, strict: false });
     const validate = ajv.compile(
-      readJson("../../../mcp/schemas/project-conventions.schema.json"),
+      readJson("../../../../scripts/schemas/project-conventions.schema.json"),
     );
     const accepts = (value: unknown) => ({
       schema: validate(value),
@@ -100,7 +100,7 @@ describe("project conventions example contract", () => {
   it("validates the consumer stack manifest against the stack schema", () => {
     const ajv = new Ajv2020({ allErrors: true, strict: false });
     const schema = readJson(
-      "../../../mcp/schemas/project-conventions-stack.schema.json",
+      "../../../../scripts/schemas/project-conventions-stack.schema.json",
     );
     const validate = ajv.compile(schema);
     const example = readJson(
@@ -115,7 +115,7 @@ describe("project conventions example contract", () => {
   it("keeps the published stack layer limit aligned with runtime parsing", () => {
     const ajv = new Ajv2020({ allErrors: true, strict: false });
     const validate = ajv.compile(
-      readJson("../../../mcp/schemas/project-conventions-stack.schema.json"),
+      readJson("../../../../scripts/schemas/project-conventions-stack.schema.json"),
     );
     const payload = (count: number) => ({
       contract: "project_conventions_stack_v1",
@@ -143,7 +143,7 @@ describe("project conventions example contract", () => {
   it("keeps stack source and string validation aligned with runtime parsing", () => {
     const ajv = new Ajv2020({ allErrors: true, strict: false });
     const validate = ajv.compile(
-      readJson("../../../mcp/schemas/project-conventions-stack.schema.json"),
+      readJson("../../../../scripts/schemas/project-conventions-stack.schema.json"),
     );
     const accepts = (value: unknown) => ({
       schema: validate(value),

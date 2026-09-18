@@ -4,6 +4,7 @@ import ts from "typescript";
 export { buildKnowledgeSource, buildRegistry } from "./buildRegistry.js";
 export { buildKnowledgeV1 } from "./buildKnowledgeV1.js";
 export {
+  assertCatalogInputInventoriesStable,
   createCatalogInputInventory,
   validateCatalogInputPatterns,
 } from "./catalogInputInventory.js";

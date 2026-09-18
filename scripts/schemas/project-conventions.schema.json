@@ -1,0 +1,308 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/schemas/project-conventions.schema.json",
+  "title": "Project Conventions",
+  "description": "Optional project-specific conventions that refine canonical Salt guidance without changing the core Salt MCP registry.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract", "version"],
+  "properties": {
+    "$schema": {
+      "$ref": "#/$defs/nonBlankString"
+    },
+    "contract": {
+      "const": "project_conventions_v1"
+    },
+    "id": {
+      "$ref": "#/$defs/nonBlankString"
+    },
+    "version": {
+      "$ref": "#/$defs/nonBlankString"
+    },
+    "project": {
+      "$ref": "#/$defs/nonBlankString"
+    },
+    "supported_salt_range": {
+      "$ref": "#/$defs/nonBlankString"
+    },
+    "preferred_components": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "$ref": "#/$defs/preferredComponent"
+      }
+    },
+    "approved_wrappers": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "$ref": "#/$defs/approvedWrapper"
+      }
+    },
+    "token_aliases": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "$ref": "#/$defs/tokenAlias"
+      }
+    },
+    "theme_defaults": {
+      "$ref": "#/$defs/themeDefaults"
+    },
+    "token_family_policies": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "$ref": "#/$defs/tokenFamilyPolicy"
+      }
+    },
+    "pattern_preferences": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "$ref": "#/$defs/patternPreference"
+      }
+    },
+    "banned_choices": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "$ref": "#/$defs/bannedChoice"
+      }
+    },
+    "notes": {
+      "$ref": "#/$defs/boundedStringArray"
+    }
+  },
+  "$defs": {
+    "nonBlankString": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": ".*\\S.*"
+    },
+    "boundedStringArray": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "$ref": "#/$defs/nonBlankString"
+      }
+    },
+    "preferredComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["salt_name", "prefer", "reason"],
+      "properties": {
+        "salt_name": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "prefer": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "reason": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "docs": {
+          "$ref": "#/$defs/boundedStringArray"
+        }
+      }
+    },
+    "approvedWrapper": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "wraps", "reason"],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "wraps": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "reason": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "import": {
+          "$ref": "#/$defs/importReference"
+        },
+        "use_when": {
+          "$ref": "#/$defs/boundedStringArray"
+        },
+        "avoid_when": {
+          "$ref": "#/$defs/boundedStringArray"
+        },
+        "migration_shim": {
+          "type": "boolean"
+        },
+        "docs": {
+          "$ref": "#/$defs/boundedStringArray"
+        }
+      }
+    },
+    "importReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "name"],
+      "properties": {
+        "from": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "name": {
+          "$ref": "#/$defs/nonBlankString"
+        }
+      }
+    },
+    "patternPreference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intent", "prefer", "reason"],
+      "properties": {
+        "intent": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "prefer": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "canonical_salt_start": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "reason": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "docs": {
+          "$ref": "#/$defs/boundedStringArray"
+        }
+      }
+    },
+    "tokenAlias": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["salt_name", "prefer", "reason"],
+      "properties": {
+        "salt_name": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "prefer": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "reason": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "docs": {
+          "$ref": "#/$defs/boundedStringArray"
+        }
+      }
+    },
+    "themeDefaultProp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "value"],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "value": {
+          "$ref": "#/$defs/nonBlankString"
+        }
+      }
+    },
+    "themeDefaults": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reason"],
+      "allOf": [
+        {
+          "if": {
+            "required": ["provider"],
+            "properties": {
+              "provider": {
+                "$ref": "#/$defs/nonBlankString",
+                "not": {
+                  "enum": ["SaltProvider", "SaltProviderNext"]
+                }
+              }
+            }
+          },
+          "then": {
+            "required": ["provider_import"]
+          }
+        }
+      ],
+      "properties": {
+        "provider": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "provider_import": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["from", "name"],
+          "properties": {
+            "from": {
+              "$ref": "#/$defs/nonBlankString"
+            },
+            "name": {
+              "$ref": "#/$defs/nonBlankString"
+            }
+          }
+        },
+        "imports": {
+          "$ref": "#/$defs/boundedStringArray"
+        },
+        "props": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "$ref": "#/$defs/themeDefaultProp"
+          }
+        },
+        "reason": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "docs": {
+          "$ref": "#/$defs/boundedStringArray"
+        }
+      }
+    },
+    "tokenFamilyPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["family", "mode", "reason"],
+      "properties": {
+        "family": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "mode": {
+          "enum": [
+            "prefer-local-aliases",
+            "allow-local-aliases",
+            "canonical-only"
+          ]
+        },
+        "reason": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "docs": {
+          "$ref": "#/$defs/boundedStringArray"
+        }
+      }
+    },
+    "bannedChoice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "reason"],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "reason": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "replacement": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "docs": {
+          "$ref": "#/$defs/boundedStringArray"
+        }
+      }
+    }
+  }
+}

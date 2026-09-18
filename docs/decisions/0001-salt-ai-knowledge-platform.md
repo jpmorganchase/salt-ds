@@ -114,8 +114,8 @@ Artifact-tree limits are depth 4, 256 internal children, 256 leaf entries,
 ordinary artifacts. The outer manifest target is 32 KiB, search bootstrap index
 512 KiB, default context 16 KiB, ordinary content artifact 64 KiB unless
 allowlisted, compressed package 10 MiB, and unpacked package 25 MiB. Unit 00b's
-current Catalog-v2 baseline is measured by `eval:salt-ai:baseline`; it is not a
-publishable Knowledge-v1 identity. A budget change requires measurements,
+Catalog-v2 baseline is retained as immutable Unit 00b evidence; it is not a
+publishable Knowledge-v1 identity or a regenerable post-omission command. A budget change requires measurements,
 fixtures, ADR review, and owner approval.
 
 Semantic sources are explicit Salt public source/types/tokens/migrations,
@@ -123,6 +123,13 @@ allowlisted site MDX, canonical examples, migration records, and authored
 Skill/AGENTS projections. Compiler inputs are schemas, generator/runtime source,
 rules, and declared compiler dependencies. Release tooling is recorded only in
 the release receipt. Broad `packages/*` input patterns are forbidden.
+
+Both source inventories operate on a strict text projection: valid UTF-8 with
+CRLF and lone CR converted to LF before hashing and tracked reads. Copied text
+artifacts use the same projection. The builder also retains raw identities for
+the active checkout so any mutation after inventory capture still fails closed.
+Binary inputs require a separate declared contract and are not decoded by this
+pipeline.
 
 ## Current-version boundary and package managers
 
@@ -256,6 +263,15 @@ local Knowledge/CLI extraction. They must be ratified by ADR amendment; no
 executor may invent them.
 
 ## Publication modes
+
+Publication is no longer a Plan 001 completion gate. Plan 001 ends with the
+locally packed, consumer-verified Unit 07 release candidate and authorizes no
+version, registry, or deployment mutation. The design below is retained for the
+separately activated Plan 003 publication track; none of its identities or
+controls may be treated as provisioned merely because candidate artifacts
+exist. Plan 001 namespace checks establish package-name and snapshot-lineage
+compatibility only. They do not approve a workflow, environment, credential, or
+registry mutation.
 
 The sole credentialed publisher is operator-dispatched, protected, and bound to
 an immutable approved tag or protected-branch-reachable commit. All modes share

@@ -3,7 +3,7 @@
   "plan_id": "001",
   "unit_id": "06c",
   "tracker_status": "DONE",
-  "completion_sha": "be9bb1d64b7157e3a4cf7c8514653fae99ae5580",
+  "completion_sha": "dfec7c265684c52d570369b8dfc70015bba377e9",
   "entries": [
     {
       "kind": "migration-receipt",

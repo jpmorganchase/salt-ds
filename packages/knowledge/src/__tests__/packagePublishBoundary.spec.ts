@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { readdirSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import fs from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -18,6 +18,7 @@ import {
   parseCatalogBuildBanner,
 } from "../../../../scripts/catalogBuildIdentity.mjs";
 import {
+  createBundleMetafileDigest,
   materializeVerifiedDependencySnapshot,
   verifySealedGeneratorBundleStability,
 } from "../../scripts/buildKnowledge.mjs";
@@ -44,6 +45,7 @@ type PackageManifest = {
     schemaArtifactKind: string;
     buildArtifactsField: string;
   };
+  publishCanonicalTextPaths?: string[];
   publishBundledWorkspaceDependencies?: string[];
   publishBinEntrypoints?: Record<
     string,
@@ -115,6 +117,45 @@ function expectEntriesToExclude(
 }
 
 describe("package publish boundaries", () => {
+  it("binds generator metafile topology without checkout-dependent input byte counts", () => {
+    const metafile = {
+      inputs: {
+        "src/index.ts": { bytes: 20, imports: [] },
+      },
+      outputs: {
+        "dist/index.js": {
+          bytes: 12,
+          inputs: { "src/index.ts": { bytesInOutput: 12 } },
+          imports: [],
+          exports: [],
+          entryPoint: "src/index.ts",
+        },
+      },
+    };
+    const baseline = createBundleMetafileDigest(metafile);
+    expect(
+      createBundleMetafileDigest({
+        ...metafile,
+        inputs: {
+          "src/index.ts": { bytes: 21, imports: [] },
+        },
+      }),
+    ).toBe(baseline);
+    expect(
+      createBundleMetafileDigest({
+        ...metafile,
+        inputs: {
+          "src/index.ts": {
+            bytes: 20,
+            imports: [
+              { path: "src/dependency.ts", kind: "import-statement" },
+            ],
+          },
+        },
+      }),
+    ).not.toBe(baseline);
+  });
+
   it("publishes only the Knowledge-v1 contract under the release embargo", () => {
     const manifest = readJson<PackageManifest>("../../package.json");
     const publicEntry = readFileSync(
@@ -152,6 +193,10 @@ describe("package publish boundaries", () => {
     ]);
     expect(manifest.publishSourceMaps).toBe(false);
     expect(manifest.publishPreserveModules).toBe(false);
+    expect(manifest.publishCanonicalTextPaths).toEqual([
+      "README.md",
+      "LICENSE",
+    ]);
     expect(publicEntry).not.toContain('from "./build/');
     expect(publicEntry).not.toContain("salt://");
   });
@@ -181,18 +226,6 @@ describe("package publish boundaries", () => {
         ),
       ).toThrow("Test portable path boundary");
     }
-  });
-
-  it("uses only the split SDK-v2 packages at the adapter boundary", () => {
-    const manifest = readJson<PackageManifest>("../../../mcp/package.json");
-    const dependencies = {
-      ...manifest.dependencies,
-      ...manifest.devDependencies,
-    };
-
-    expect(dependencies).not.toHaveProperty("@modelcontextprotocol/sdk");
-    expect(dependencies["@modelcontextprotocol/server"]).toBe("2.0.0");
-    expect(dependencies["@modelcontextprotocol/client"]).toMatch(/^\^2\./u);
   });
 
   it("revalidates the complete catalog input path set and rejects linked inputs", async () => {
@@ -516,6 +549,10 @@ describe("package publish boundaries", () => {
       new URL("../build/buildRegistry.ts", import.meta.url),
       "utf8",
     );
+    const knowledgeV1Builder = readFileSync(
+      new URL("../build/buildKnowledgeV1.ts", import.meta.url),
+      "utf8",
+    );
     const inputInventory = readFileSync(
       new URL("../build/catalogInputInventory.ts", import.meta.url),
       "utf8",
@@ -544,6 +581,14 @@ describe("package publish boundaries", () => {
       "options.sourceRevision ?? inventory.digest",
     );
     expect(registryBuilder).toContain("tsconfigRaw");
+    expect(registryBuilder).toContain("inputInventory: inputBefore");
+    expect(knowledgeV1Builder).toContain("withCatalogInputTracking(");
+    expect(knowledgeV1Builder).toContain(
+      'readCatalogInputFile(path.join(schemaRoot, schemaFile), "utf8")',
+    );
+    expect(knowledgeV1Builder).not.toContain(
+      'fs.readFile(path.join(schemaRoot, schemaFile)',
+    );
     expect(inputInventory).not.toContain("site/src/props");
     expect(inputInventory).toContain("semanticInputPatterns");
     expect(inputInventory).toContain("compilerInputPatterns");
@@ -557,63 +602,6 @@ describe("package publish boundaries", () => {
     expect(compilerInputPatterns).toContain("package.json");
     expect(compilerInputPatterns).toContain(".yarnrc.yml");
     expect(compilerInputPatterns).toContain("yarn.lock");
-  });
-
-  it("keeps MCP published file roots limited to runtime payload", () => {
-    const manifest = readJson<PackageManifest>("../../../mcp/package.json");
-
-    expect(manifest.publishConfig?.directory).toBe("../../dist/salt-ds-mcp");
-    expect(manifest.engines?.node).toBe(">=22");
-    expect(manifest.files).toEqual(["bin"]);
-    expect(manifest.publishIncludeReadme).toBe(false);
-    expect(manifest.saltDocs).toBeUndefined();
-    expect(manifest.typescriptInclude).toEqual(["src/index.ts"]);
-    expect(manifest.publishEntryPath).toBeUndefined();
-    expect(manifest.publishTypingEntryPath).toBeUndefined();
-    expect(manifest.publishTypingEntryOnly).toBe(true);
-    expect(manifest.publishPreserveModules).toBe(false);
-    expect(manifest.publishBuildIdentityManifest).toBeUndefined();
-    expect(manifest.publishBuildIdentityInputPatterns).toBeUndefined();
-    expect(manifest.publishCatalogArtifactPaths).toBeUndefined();
-    expectEntriesToExclude(manifest.files, FORBIDDEN_RUNTIME_FILE_ENTRIES);
-    expect(manifest.publishBundledWorkspaceDependencies).toBeUndefined();
-    expect(manifest.dependencies).not.toHaveProperty("@salt-ds/semantic-core");
-    expect(manifest.dependencies).not.toHaveProperty("get-tsconfig");
-    expect(manifest.dependencies?.["@salt-ds/knowledge"]).toBe("workspace:*");
-    expect(manifest.dependencies?.["jsonc-parser"]).toBeUndefined();
-    expect(manifest.dependencies?.["js-yaml"]).toBeUndefined();
-    expect(manifest.dependencies?.postcss).toBeUndefined();
-    expect(manifest.dependencies?.["@types/node"]).toMatch(/^\^24\./u);
-    expect(manifest.dependencies?.["@modelcontextprotocol/server"]).toBe(
-      "2.0.0",
-    );
-    expect(
-      readdirSync(new URL("../../../mcp/bin", import.meta.url)).sort(),
-    ).toEqual(["salt-mcp.js"]);
-    expect(manifest.publishBinEntrypoints).toEqual({
-      "bin/salt-mcp.js": {
-        requirePath: "../dist-cjs/index.js",
-        errorPrefix: "salt-mcp error:",
-        conciseErrorCodes: ["SALT_MCP_CLI_USAGE"],
-      },
-    });
-    expect(manifest.publishScriptExcludes).toEqual([
-      "build",
-      "build:package",
-      "build:registry",
-      "measure:runtime-loc",
-      "measure:surface",
-      "prepack",
-    ]);
-    expect(manifest.publishExports).toEqual({
-      ".": {
-        types: "./dist-types/index.d.ts",
-        import: "./dist-es/index.js",
-        require: "./dist-cjs/index.js",
-      },
-      "./package.json": "./package.json",
-    });
-    expect(manifest.publishExtraCopyPaths).toBeUndefined();
   });
 
   it("keeps the private CLI package narrow and exact-pinned to Knowledge", () => {
@@ -634,6 +622,12 @@ describe("package publish boundaries", () => {
     expect(manifest.publishIncludeReadme).toBe(true);
     expect(manifest.publishTypingEntryOnly).toBe(true);
     expect(manifest.publishPreserveModules).toBe(false);
+    expect(manifest.publishCanonicalTextPaths).toEqual([
+      "README.md",
+      "LICENSE",
+      "schemas/salt-config-1.schema.json",
+      "schemas/scan-result-1.schema.json",
+    ]);
     expect(manifest.typescriptInclude).toEqual(["src/index.ts"]);
     expect(manifest.publishBinEntrypoints).toEqual({
       "bin/salt-ds.js": {
@@ -736,6 +730,20 @@ describe("package publish boundaries", () => {
         sourceBytes,
       ),
     ).toEqual(sourceBytes);
+    expect(
+      assertCatalogInputBytes(
+        identity,
+        "packages/mcp/src/index.ts",
+        Buffer.from("export const fixture = true;\r\n", "utf8"),
+      ),
+    ).toEqual(sourceBytes);
+    expect(() =>
+      assertCatalogInputBytes(
+        identity,
+        "packages/mcp/src/index.ts",
+        Buffer.from([0xc3, 0x28]),
+      ),
+    ).toThrow(/not valid UTF-8/u);
     expect(assertCatalogManifestBytes(identity, manifestBytes)).toEqual(
       manifestBytes,
     );
@@ -877,59 +885,4 @@ describe("package publish boundaries", () => {
     );
   });
 
-  it("does not publish MCP eval runner entrypoints or fixture payloads", () => {
-    const manifest = readJson<PackageManifest>("../../../mcp/package.json");
-
-    expect(manifest.publishAdditionalEntryPaths).toBeUndefined();
-  });
-
-  it("keeps the workspace CLI on the same single bundled entrypoint", () => {
-    const workspaceBin = readFileSync(
-      new URL("../../../mcp/bin/salt-mcp.js", import.meta.url),
-      "utf8",
-    );
-
-    expect(workspaceBin).toContain(
-      "../../../dist/salt-ds-mcp/dist-cjs/index.js",
-    );
-    expect(workspaceBin).not.toContain("dist-cjs/mcp/src/index.js");
-  });
-
-  it("keeps the public-surface measurement compatible with esbuild and ESM", () => {
-    const measurementScript = readFileSync(
-      new URL("../../../mcp/scripts/measurePublicSurface.mjs", import.meta.url),
-      "utf8",
-    );
-
-    expect(measurementScript).toContain(
-      'onLoad({ filter: /.*/, namespace: "file" }',
-    );
-    expect(measurementScript).not.toContain("filter: /.*/u");
-    expect(measurementScript).toContain(
-      'path.join(builtPackageRoot, "dist-es", "package.json")',
-    );
-    const firstHitIndex = measurementScript.indexOf(
-      "await client.callTool(firstHitTool)",
-    );
-    expect(firstHitIndex).toBeGreaterThan(-1);
-    expect(firstHitIndex).toBeLessThan(
-      measurementScript.indexOf("await client.listResources()"),
-    );
-    expect(firstHitIndex).toBeLessThan(
-      measurementScript.indexOf("await client.listResourceTemplates()"),
-    );
-    expect(measurementScript).toContain(
-      "resource_inventory_warmed_before_first_hit: false",
-    );
-  });
-
-  it("does not declare private workspace or browser-test dependencies", () => {
-    const manifest = readJson<PackageManifest>("../../../mcp/package.json");
-    const dependencyNames = Object.keys(manifest.dependencies ?? {});
-
-    expect(dependencyNames).not.toContain("@salt-ds/semantic-core");
-    expect(dependencyNames).not.toContain("playwright");
-    expect(dependencyNames).not.toContain("playwright-core");
-    expect(dependencyNames).not.toContain("@playwright/test");
-  });
 });
