@@ -1,45 +1,45 @@
 /* Generated from the commercial Figma token exports. */
 .salt-theme.salt-interim[data-mode="light"] {
-  --salt-palette-categorical-1: var(--salt-color-brown-500);
-  --salt-palette-categorical-1-strong: var(--salt-color-brown-600);
-  --salt-palette-categorical-1-dataviz: var(--salt-color-brown-600);
-  --salt-palette-categorical-1-weakest: var(--salt-color-brown-100);
+  --salt-palette-categorical-1: var(--salt-color-topaz-500);
+  --salt-palette-categorical-1-strong: var(--salt-color-topaz-600);
+  --salt-palette-categorical-1-dataviz: var(--salt-color-topaz-600);
+  --salt-palette-categorical-1-weakest: var(--salt-color-topaz-100);
 
-  --salt-palette-categorical-2: var(--salt-color-topaz-500);
-  --salt-palette-categorical-2-strong: var(--salt-color-topaz-600);
-  --salt-palette-categorical-2-weakest: var(--salt-color-topaz-100);
+  --salt-palette-categorical-2: var(--salt-color-clementine-500);
+  --salt-palette-categorical-2-strong: var(--salt-color-clementine-600);
+  --salt-palette-categorical-2-weakest: var(--salt-color-clementine-100);
 
-  --salt-palette-categorical-3: var(--salt-color-clementine-500);
-  --salt-palette-categorical-3-strong: var(--salt-color-clementine-600);
-  --salt-palette-categorical-3-weakest: var(--salt-color-clementine-100);
+  --salt-palette-categorical-3: var(--salt-color-quartz-500);
+  --salt-palette-categorical-3-strong: var(--salt-color-quartz-600);
+  --salt-palette-categorical-3-weakest: var(--salt-color-quartz-100);
 
-  --salt-palette-categorical-4: var(--salt-color-quartz-500);
-  --salt-palette-categorical-4-strong: var(--salt-color-quartz-600);
-  --salt-palette-categorical-4-weakest: var(--salt-color-quartz-100);
+  --salt-palette-categorical-4: var(--salt-color-ruby-500);
+  --salt-palette-categorical-4-strong: var(--salt-color-ruby-600);
+  --salt-palette-categorical-4-weakest: var(--salt-color-ruby-100);
 
-  --salt-palette-categorical-5: var(--salt-color-smoke-500);
-  --salt-palette-categorical-5-strong: var(--salt-color-smoke-600);
-  --salt-palette-categorical-5-weakest: var(--salt-color-smoke-100);
+  --salt-palette-categorical-5: var(--salt-color-emerald-500);
+  --salt-palette-categorical-5-strong: var(--salt-color-emerald-600);
+  --salt-palette-categorical-5-weakest: var(--salt-color-emerald-100);
 
-  --salt-palette-categorical-6: var(--salt-color-clay-500);
-  --salt-palette-categorical-6-strong: var(--salt-color-clay-600);
-  --salt-palette-categorical-6-weakest: var(--salt-color-clay-100);
+  --salt-palette-categorical-6: var(--salt-color-smoke-500);
+  --salt-palette-categorical-6-strong: var(--salt-color-smoke-600);
+  --salt-palette-categorical-6-weakest: var(--salt-color-smoke-100);
 
-  --salt-palette-categorical-7: var(--salt-color-emerald-500);
-  --salt-palette-categorical-7-strong: var(--salt-color-emerald-600);
-  --salt-palette-categorical-7-weakest: var(--salt-color-emerald-100);
+  --salt-palette-categorical-7: var(--salt-color-cobalt-500);
+  --salt-palette-categorical-7-strong: var(--salt-color-cobalt-600);
+  --salt-palette-categorical-7-weakest: var(--salt-color-cobalt-100);
 
-  --salt-palette-categorical-8: var(--salt-color-salmon-500);
-  --salt-palette-categorical-8-strong: var(--salt-color-salmon-600);
-  --salt-palette-categorical-8-weakest: var(--salt-color-salmon-100);
+  --salt-palette-categorical-8: var(--salt-color-clay-500);
+  --salt-palette-categorical-8-strong: var(--salt-color-clay-600);
+  --salt-palette-categorical-8-weakest: var(--salt-color-clay-100);
 
-  --salt-palette-categorical-9: var(--salt-color-cobalt-500);
-  --salt-palette-categorical-9-strong: var(--salt-color-cobalt-600);
-  --salt-palette-categorical-9-weakest: var(--salt-color-cobalt-100);
+  --salt-palette-categorical-9: var(--salt-color-slate-500);
+  --salt-palette-categorical-9-strong: var(--salt-color-slate-600);
+  --salt-palette-categorical-9-weakest: var(--salt-color-slate-100);
 
-  --salt-palette-categorical-10: var(--salt-color-ruby-500);
-  --salt-palette-categorical-10-strong: var(--salt-color-ruby-600);
-  --salt-palette-categorical-10-weakest: var(--salt-color-ruby-100);
+  --salt-palette-categorical-10: var(--salt-color-brown-500);
+  --salt-palette-categorical-10-strong: var(--salt-color-brown-600);
+  --salt-palette-categorical-10-weakest: var(--salt-color-brown-100);
 
   --salt-palette-categorical-11: var(--salt-color-olive-500);
   --salt-palette-categorical-11-strong: var(--salt-color-olive-600);
@@ -77,52 +77,52 @@
   --salt-palette-categorical-19-strong: var(--salt-color-lime-600);
   --salt-palette-categorical-19-weakest: var(--salt-color-lime-100);
 
-  --salt-palette-categorical-20: var(--salt-color-slate-500);
-  --salt-palette-categorical-20-strong: var(--salt-color-slate-600);
-  --salt-palette-categorical-20-weakest: var(--salt-color-slate-100);
+  --salt-palette-categorical-20: var(--salt-color-salmon-500);
+  --salt-palette-categorical-20-strong: var(--salt-color-salmon-600);
+  --salt-palette-categorical-20-weakest: var(--salt-color-salmon-100);
 }
 
 .salt-theme.salt-interim[data-mode="dark"] {
-  --salt-palette-categorical-1: var(--salt-color-brown-500);
-  --salt-palette-categorical-1-strong: var(--salt-color-brown-400);
-  --salt-palette-categorical-1-dataviz: var(--salt-color-brown-500);
-  --salt-palette-categorical-1-weakest: var(--salt-color-brown-900);
+  --salt-palette-categorical-1: var(--salt-color-topaz-500);
+  --salt-palette-categorical-1-strong: var(--salt-color-topaz-400);
+  --salt-palette-categorical-1-dataviz: var(--salt-color-topaz-500);
+  --salt-palette-categorical-1-weakest: var(--salt-color-topaz-900);
 
-  --salt-palette-categorical-2: var(--salt-color-topaz-500);
-  --salt-palette-categorical-2-strong: var(--salt-color-topaz-400);
-  --salt-palette-categorical-2-weakest: var(--salt-color-topaz-900);
+  --salt-palette-categorical-2: var(--salt-color-clementine-500);
+  --salt-palette-categorical-2-strong: var(--salt-color-clementine-400);
+  --salt-palette-categorical-2-weakest: var(--salt-color-clementine-900);
 
-  --salt-palette-categorical-3: var(--salt-color-clementine-500);
-  --salt-palette-categorical-3-strong: var(--salt-color-clementine-400);
-  --salt-palette-categorical-3-weakest: var(--salt-color-clementine-900);
+  --salt-palette-categorical-3: var(--salt-color-quartz-500);
+  --salt-palette-categorical-3-strong: var(--salt-color-quartz-500);
+  --salt-palette-categorical-3-weakest: var(--salt-color-quartz-900);
 
-  --salt-palette-categorical-4: var(--salt-color-quartz-500);
-  --salt-palette-categorical-4-strong: var(--salt-color-quartz-500);
-  --salt-palette-categorical-4-weakest: var(--salt-color-quartz-900);
+  --salt-palette-categorical-4: var(--salt-color-ruby-500);
+  --salt-palette-categorical-4-strong: var(--salt-color-ruby-400);
+  --salt-palette-categorical-4-weakest: var(--salt-color-ruby-900);
 
-  --salt-palette-categorical-5: var(--salt-color-smoke-500);
-  --salt-palette-categorical-5-strong: var(--salt-color-smoke-400);
-  --salt-palette-categorical-5-weakest: var(--salt-color-smoke-900);
+  --salt-palette-categorical-5: var(--salt-color-emerald-500);
+  --salt-palette-categorical-5-strong: var(--salt-color-emerald-400);
+  --salt-palette-categorical-5-weakest: var(--salt-color-emerald-900);
 
-  --salt-palette-categorical-6: var(--salt-color-clay-500);
-  --salt-palette-categorical-6-strong: var(--salt-color-clay-400);
-  --salt-palette-categorical-6-weakest: var(--salt-color-clay-900);
+  --salt-palette-categorical-6: var(--salt-color-smoke-500);
+  --salt-palette-categorical-6-strong: var(--salt-color-smoke-400);
+  --salt-palette-categorical-6-weakest: var(--salt-color-smoke-900);
 
-  --salt-palette-categorical-7: var(--salt-color-emerald-500);
-  --salt-palette-categorical-7-strong: var(--salt-color-emerald-400);
-  --salt-palette-categorical-7-weakest: var(--salt-color-emerald-900);
+  --salt-palette-categorical-7: var(--salt-color-cobalt-500);
+  --salt-palette-categorical-7-strong: var(--salt-color-cobalt-400);
+  --salt-palette-categorical-7-weakest: var(--salt-color-cobalt-900);
 
-  --salt-palette-categorical-8: var(--salt-color-salmon-500);
-  --salt-palette-categorical-8-strong: var(--salt-color-salmon-400);
-  --salt-palette-categorical-8-weakest: var(--salt-color-salmon-900);
+  --salt-palette-categorical-8: var(--salt-color-clay-500);
+  --salt-palette-categorical-8-strong: var(--salt-color-clay-400);
+  --salt-palette-categorical-8-weakest: var(--salt-color-clay-900);
 
-  --salt-palette-categorical-9: var(--salt-color-cobalt-500);
-  --salt-palette-categorical-9-strong: var(--salt-color-cobalt-400);
-  --salt-palette-categorical-9-weakest: var(--salt-color-cobalt-900);
+  --salt-palette-categorical-9: var(--salt-color-slate-500);
+  --salt-palette-categorical-9-strong: var(--salt-color-slate-400);
+  --salt-palette-categorical-9-weakest: var(--salt-color-slate-900);
 
-  --salt-palette-categorical-10: var(--salt-color-ruby-500);
-  --salt-palette-categorical-10-strong: var(--salt-color-ruby-400);
-  --salt-palette-categorical-10-weakest: var(--salt-color-ruby-900);
+  --salt-palette-categorical-10: var(--salt-color-brown-500);
+  --salt-palette-categorical-10-strong: var(--salt-color-brown-400);
+  --salt-palette-categorical-10-weakest: var(--salt-color-brown-900);
 
   --salt-palette-categorical-11: var(--salt-color-olive-500);
   --salt-palette-categorical-11-strong: var(--salt-color-olive-400);
@@ -160,7 +160,7 @@
   --salt-palette-categorical-19-strong: var(--salt-color-lime-400);
   --salt-palette-categorical-19-weakest: var(--salt-color-lime-900);
 
-  --salt-palette-categorical-20: var(--salt-color-slate-500);
-  --salt-palette-categorical-20-strong: var(--salt-color-slate-400);
-  --salt-palette-categorical-20-weakest: var(--salt-color-slate-900);
+  --salt-palette-categorical-20: var(--salt-color-salmon-500);
+  --salt-palette-categorical-20-strong: var(--salt-color-salmon-400);
+  --salt-palette-categorical-20-weakest: var(--salt-color-salmon-900);
 }
