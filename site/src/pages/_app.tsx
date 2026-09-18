@@ -1,10 +1,10 @@
 import { StoreProvider, useCreateStore } from "@jpmorganchase/mosaic-store";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { LocalizationProvider } from "@salt-ds/date-components";
+import { amplitude, openSans, ptMono } from "@site/fonts";
 import { clsx } from "clsx";
 import type { AppProps } from "next/app";
 import * as saltComponents from "../components";
-import { amplitude, openSans, ptMono } from "../fonts";
 import * as saltLayouts from "../layouts";
 import { LayoutProvider } from "../layouts/LayoutProvider";
 import { ThemeProvider } from "../ThemeProvider";

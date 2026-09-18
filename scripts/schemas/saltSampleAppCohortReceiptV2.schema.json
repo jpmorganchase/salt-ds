@@ -452,6 +452,9 @@
             "required": [
               "contract",
               "status",
+              "navigation_current_location",
+              "worklist",
+              "theme",
               "validation",
               "cancellation_retains_draft",
               "pending_duplicate_rejected",
@@ -462,13 +465,48 @@
               "viewport_css_px",
               "zoom_claim",
               "screenshots",
-              "validation_removed_variant"
+              "validation_removed_variant",
+              "missing_worklist_behavior_variant"
             ],
             "properties": {
               "contract": {
-                "const": "salt-sample-app-record-form-workflow/1"
+                "const": "salt-sample-app-operations-dashboard-journey/1"
               },
               "status": {
+                "const": "pass"
+              },
+              "navigation_current_location": {
+                "const": "pass"
+              },
+              "worklist": {
+                "type": "object",
+                "required": [
+                  "initial_loading",
+                  "refresh_disabled_during_initial_load",
+                  "loaded_service_count",
+                  "filtering",
+                  "no_match",
+                  "no_data",
+                  "refresh_failure_preserves_data",
+                  "retry_succeeds",
+                  "inspection",
+                  "editing"
+                ],
+                "properties": {
+                  "initial_loading": { "const": "pass" },
+                  "refresh_disabled_during_initial_load": { "const": true },
+                  "loaded_service_count": { "const": 4 },
+                  "filtering": { "const": "pass" },
+                  "no_match": { "const": "pass" },
+                  "no_data": { "const": "pass" },
+                  "refresh_failure_preserves_data": { "const": true },
+                  "retry_succeeds": { "const": true },
+                  "inspection": { "const": "pass" },
+                  "editing": { "const": "pass" }
+                },
+                "additionalProperties": false
+              },
+              "theme": {
                 "const": "pass"
               },
               "validation": {
@@ -508,6 +546,12 @@
               },
               "validation_removed_variant": {
                 "const": "rejected"
+              },
+              "missing_worklist_behavior_variant": {
+                "const": "rejected"
+              },
+              "preview": {
+                "$ref": "#/$defs/workflow-preview"
               }
             },
             "additionalProperties": false
@@ -770,6 +814,73 @@
     "digest": {
       "type": "string",
       "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "workflow-preview": {
+      "type": "object",
+      "required": ["entry", "files", "tree_sha256", "recipe"],
+      "properties": {
+        "entry": {
+          "const": "index.html"
+        },
+        "files": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "required": ["path", "media_type", "bytes", "sha256"],
+            "properties": {
+              "path": {
+                "type": "string",
+                "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\)[^?#]+$"
+              },
+              "media_type": {
+                "enum": [
+                  "text/html; charset=utf-8",
+                  "text/css; charset=utf-8",
+                  "text/javascript; charset=utf-8",
+                  "application/json",
+                  "image/svg+xml",
+                  "image/png",
+                  "image/webp",
+                  "font/woff",
+                  "font/woff2"
+                ]
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 16777216
+              },
+              "sha256": {
+                "$ref": "#/$defs/digest"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "tree_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "recipe": {
+          "type": "object",
+          "required": ["artifact", "artifact_sha256", "content_identity"],
+          "properties": {
+            "artifact": {
+              "const": "examples/workflows/operations-dashboard.service-worklist/recipe.json"
+            },
+            "artifact_sha256": {
+              "$ref": "#/$defs/digest"
+            },
+            "content_identity": {
+              "$ref": "#/$defs/digest"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false

@@ -39,6 +39,11 @@ type PackageManifest = {
     semantic: string;
     compiler: string;
   };
+  publishKnowledgeInputPatterns?: {
+    semantic: string;
+    compiler: string;
+    publication: string;
+  };
   publishCatalogArtifactPaths?: {
     generationDirectory: string;
     publicationInventoryFile: string;
@@ -182,6 +187,11 @@ describe("package publish boundaries", () => {
     );
     expect(manifest.publishEntryPath).toBe("src/public.ts");
     expect(manifest.typescriptInclude).toEqual(["src/public.ts"]);
+    expect(manifest.publishKnowledgeInputPatterns).toEqual({
+      semantic: "src/build/catalogSemanticInputPatterns.json",
+      compiler: "src/build/catalogCompilerInputPatterns.json",
+      publication: "src/build/catalogPublicationInputPatterns.json",
+    });
     expect(manifest.publishExtraCopyPaths).toEqual([
       {
         from: "generated",

@@ -7,9 +7,11 @@
 # Generated files
 /.tmp/
 /.next/
+tsconfig.tsbuildinfo
 next-env.d.ts
 /snapshots/
 /public/sitemap.xml
 /public/search-data.json
+/public/ai/
 /src/props/*.json
 /src/components/css-display/*.json

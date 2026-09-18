@@ -2,6 +2,11 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { brotliCompressSync, constants as zlibConstants } from "node:zlib";
 import {
+  assembleCanonicalDocument,
+  type CanonicalDocumentStore,
+  renderCanonicalDocument,
+} from "../documents/assembleCanonicalDocument.js";
+import {
   type ArtifactDescriptor,
   createArtifactDescriptor,
   materializeArtifactTree,
@@ -84,6 +89,7 @@ export interface BuildKnowledgeV1Options {
   normalized: NormalizedKnowledgeRecords;
   semanticInputInventory: InputInventory;
   compilerInputInventory: InputInventory;
+  publicationInputInventory: InputInventory;
   generatorReceipt: unknown;
   generatorDigest: string;
   inputInventory?: CatalogInputInventory;
@@ -434,10 +440,71 @@ async function buildKnowledgeV1Tracked(
     descriptors,
   );
 
+  const workflowArtifactBytes = new Map<string, Buffer>();
+  for (const workflow of options.normalized.workflowRecipes ?? []) {
+    const recipeBytes = canonicalJsonBytes(workflow.recipeArtifact);
+    workflowArtifactBytes.set(
+      workflow.semanticMetadata.manifestPath,
+      recipeBytes,
+    );
+    await writeArtifact(
+      outputDir,
+      workflow.semanticMetadata.manifestPath,
+      recipeBytes,
+      JSON_MEDIA_TYPE,
+      descriptors,
+    );
+    for (const file of workflow.publicFiles) {
+      if (workflowArtifactBytes.has(file.artifactPath))
+        throw new Error(`Duplicate workflow artifact: ${file.artifactPath}.`);
+      workflowArtifactBytes.set(file.artifactPath, file.bytes);
+      await writeArtifact(
+        outputDir,
+        file.artifactPath,
+        file.bytes,
+        file.mediaType,
+        descriptors,
+      );
+    }
+  }
+  const contentSourceText: CanonicalDocumentStore["getContentSourceText"] = (
+    reference,
+  ) => {
+    const blob = options.normalized.contentBlobs.get(reference.id);
+    if (!blob || blob.codec !== reference.codec)
+      throw new Error(
+        `Unresolved canonical document content: ${reference.id}.`,
+      );
+    return Buffer.from(blob.bytes).toString("utf8");
+  };
+  const documentStore: CanonicalDocumentStore = {
+    getRecord: (family, id) =>
+      recordByKey.get(`record:${family}:${id}`)?.data ?? null,
+    getContentSourceText: contentSourceText,
+    getContentValue: (reference) => {
+      const text = contentSourceText(reference);
+      const blob = options.normalized.contentBlobs.get(reference.id)!;
+      return blob.mediaType.startsWith("text/") ? text : JSON.parse(text);
+    },
+    readArtifact: (artifactPath) => {
+      const bytes = workflowArtifactBytes.get(
+        parseKnowledgeArtifactPath(artifactPath),
+      );
+      if (!bytes)
+        throw new Error(`Unresolved workflow artifact: ${artifactPath}.`);
+      return bytes;
+    },
+  };
   for (const family of ["component", "pattern", "guide", "page"] as const) {
     for (const record of recordsByFamily.get(family) ?? []) {
       const kind = family === "component" ? "components" : `${family}s`;
-      const markdown = `# ${safeMarkdown(record.title)}\n\n${safeMarkdown(record.summary)}\n`;
+      const canonical = assembleCanonicalDocument(documentStore, {
+        family,
+        id: record.id,
+      });
+      const markdown = canonical
+        ? renderCanonicalDocument(canonical)
+        : `# ${safeMarkdown(record.title)}\n\n${safeMarkdown(record.summary)}\n\nContextual reference: complete workflow setup and acceptance are not supplied for this unconverted material.\n`;
       const projectionPath = `markdown/${kind}/${record.id}.md`;
       await writeArtifact(
         outputDir,
@@ -453,25 +520,30 @@ async function buildKnowledgeV1Tracked(
   const exampleIndex = {
     contract: "salt-example-index/1",
     schema_version: "1.0.0",
-    examples: [...options.registry.examples]
-      .sort((left, right) => left.id.localeCompare(right.id))
-      .map((example) => ({
-        id: example.id,
-        title:
-          "title" in example && typeof example.title === "string"
-            ? example.title
-            : example.id,
-        status: "contextual",
-        entry_file: null,
-        supporting_files: [],
-        dependencies: [],
-        css: [],
-        providers: [],
-        package_vector: [],
-        source_provenance: "verified Salt authoring source",
-        limitation:
-          "This pre-agent projection is contextual until Unit 06 publishes dependency-complete copy-ready examples.",
-      })),
+    examples: [
+      ...[...options.registry.examples]
+        .sort((left, right) => left.id.localeCompare(right.id))
+        .map((example) => ({
+          id: example.id,
+          title:
+            "title" in example && typeof example.title === "string"
+              ? example.title
+              : example.id,
+          status: "contextual",
+          entry_file: null,
+          supporting_files: [],
+          dependencies: [],
+          css: [],
+          providers: [],
+          package_vector: [],
+          source_provenance: "verified Salt authoring source",
+          limitation:
+            "Contextual illustration only; complete application setup and independent workflow acceptance are not supplied for this example.",
+        })),
+      ...(options.normalized.workflowRecipes ?? []).map(
+        (workflow) => workflow.indexEntry,
+      ),
+    ].sort((left, right) => left.id.localeCompare(right.id)),
   };
   await writeArtifact(
     outputDir,
@@ -634,6 +706,10 @@ async function buildKnowledgeV1Tracked(
     options.compilerInputInventory,
     "compiler",
   );
+  const publicationInventory = normalizedInventory(
+    options.publicationInputInventory,
+    "publication-input",
+  );
   await writeArtifact(
     outputDir,
     "support/semantic-source-inventory.json",
@@ -645,6 +721,13 @@ async function buildKnowledgeV1Tracked(
     outputDir,
     "support/compiler-inventory.json",
     canonicalJsonBytes(compilerInventory),
+    JSON_MEDIA_TYPE,
+    descriptors,
+  );
+  await writeArtifact(
+    outputDir,
+    "support/publication-input-inventory.json",
+    canonicalJsonBytes(publicationInventory),
     JSON_MEDIA_TYPE,
     descriptors,
   );
@@ -671,6 +754,7 @@ async function buildKnowledgeV1Tracked(
     schema_version: "1.0.0",
     semantic_source_digest: options.semanticInputInventory.digest,
     compiler_digest: options.compilerInputInventory.digest,
+    publication_input_digest: options.publicationInputInventory.digest,
     generator_digest: options.generatorDigest,
     generator_receipt: options.generatorReceipt,
     ruleset_digest: rulesetDigest,

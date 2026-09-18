@@ -23,6 +23,9 @@ import Ajv2020 from "ajv/dist/2020.js";
 import { execa } from "execa";
 import { chromium } from "playwright";
 import {
+  assertPackedWorkflowManifestMatchesSource,
+  readPackedWorkflowRecipe,
+  retainViteWorkflowPreview,
   selectSampleAppNames,
   unavailableAnalysis,
   verifyCurrentCliCommands,
@@ -338,6 +341,34 @@ async function verifyPublicApp(appName, registry, compatibility) {
       /from ["']@salt-ds\/lab["']/u,
       "Operations dashboard omits a public Lab component",
     );
+    const [reusableWorklist, dashboardHost] = await Promise.all([
+      readFile(
+        path.join(
+          appRoot,
+          "src",
+          "workflows",
+          "service-worklist",
+          "IncidentWorklist.tsx",
+        ),
+        "utf8",
+      ),
+      readFile(path.join(appRoot, "src", "OperationsDashboard.tsx"), "utf8"),
+    ]);
+    for (const localDemoControl of [
+      "Refresh worklist (local demo)",
+      "Retry worklist refresh (local demo)",
+      "Show empty worklist (local demo)",
+      "Restore worklist (local demo)",
+    ]) {
+      assert(
+        !reusableWorklist.includes(localDemoControl),
+        `Reusable worklist embeds host-only control: ${localDemoControl}`,
+      );
+      assert(
+        dashboardHost.includes(localDemoControl),
+        `Operations dashboard host omits local control: ${localDemoControl}`,
+      );
+    }
   }
 
   if (appName === "next-app-router") {
@@ -712,6 +743,199 @@ async function assertNoAxeViolations(page, label) {
   assert.deepEqual(accessibility.violations, [], `${label} has axe violations`);
 }
 
+async function assertServiceWorklistReady(page) {
+  await page.getByText("Showing 4 of 4 services", { exact: true }).waitFor();
+
+  const navigation = page.getByRole("navigation", {
+    name: "Primary navigation",
+  });
+  await navigation.waitFor();
+  const services = navigation.getByRole("link", { name: "Services" });
+  const incidents = navigation.getByRole("link", { name: "Incidents" });
+  assert.equal(await services.getAttribute("href"), "#services");
+  assert.equal(await services.getAttribute("aria-current"), "location");
+  assert.equal(await incidents.getAttribute("href"), "#incidents");
+  await incidents.click();
+  await page.waitForFunction(
+    () =>
+      location.hash === "#incidents" &&
+      document
+        .querySelector('nav a[href="#incidents"]')
+        ?.getAttribute("aria-current") === "location",
+  );
+  assert.equal(await incidents.getAttribute("aria-current"), "location");
+  await page.getByRole("heading", { name: "Incident worklist" }).waitFor();
+  await services.click();
+  await page.waitForFunction(
+    () =>
+      location.hash === "#services" &&
+      document
+        .querySelector('nav a[href="#services"]')
+        ?.getAttribute("aria-current") === "location",
+  );
+  assert.equal(await services.getAttribute("aria-current"), "location");
+
+  const filter = page.getByLabel("Filter services");
+  await filter.fill("risk");
+  await page.getByText("Showing 1 of 4 services", { exact: true }).waitFor();
+  await page.getByRole("row", { name: /Risk calculator/u }).waitFor();
+  assert.equal(
+    await page.getByRole("row", { name: /Order gateway/u }).count(),
+    0,
+  );
+
+  await filter.fill("missing");
+  await page
+    .getByText(
+      "No services match “missing”. Clear the filter or try another service.",
+      { exact: true },
+    )
+    .waitFor();
+  assert.equal(
+    await page
+      .getByText("There are no services available.", {
+        exact: true,
+      })
+      .count(),
+    0,
+    "No-match state was presented as an empty data set",
+  );
+  await filter.fill("risk");
+  await page.getByText("Showing 1 of 4 services", { exact: true }).waitFor();
+}
+
+async function assertServiceWorklistDetailAndRecovery(page) {
+  const inspect = page.getByRole("button", { name: "Inspect Risk calculator" });
+  await inspect.focus();
+  assert(
+    await inspect.evaluate((element) => element === document.activeElement),
+    "Worklist inspect action could not receive focus",
+  );
+  await inspect.click();
+  const details = page.getByRole("region", { name: "Incident details" });
+  await details.waitFor();
+  await details.getByRole("heading", { name: "Incident details" }).waitFor();
+  assert.match(await details.innerText(), /Risk calculator latency/u);
+
+  const edit = details.getByRole("button", { name: "Edit incident" });
+  await edit.click();
+  const editDialog = page.getByRole("dialog");
+  await editDialog.waitFor();
+  await editDialog.getByRole("heading", { name: "Edit incident" }).waitFor();
+  assert.equal(
+    await editDialog.locator('form[aria-label="Edit incident record"]').count(),
+    1,
+    "Edit dialog did not expose the RecordForm edit label",
+  );
+  const title = editDialog.getByLabel("Incident title");
+  const service = editDialog.getByLabel(
+    "Affected service or operational process",
+  );
+  assert.equal(await title.inputValue(), "Risk calculator latency");
+  assert.equal(await service.inputValue(), "Risk calculator");
+  await title.fill("Risk calculator latency escalated");
+  await service.fill("Custom risk process");
+  await editDialog.getByRole("button", { name: "Update incident" }).click();
+  await page
+    .getByRole("status")
+    .filter({ hasText: "Incident INC-1042 updated." })
+    .waitFor({ timeout: 5_000 });
+  await editDialog.waitFor({ state: "detached" });
+  assert(
+    await edit.evaluate((element) => element === document.activeElement),
+    "Edit completion did not return focus to its trigger",
+  );
+  const updatedDetails = await details.innerText();
+  assert.match(updatedDetails, /INC-1042/u);
+  assert.match(updatedDetails, /Risk calculator latency escalated/u);
+  assert.match(updatedDetails, /Custom risk process/u);
+  const selectedIncident = page.getByRole("button", {
+    name: "Inspect INC-1042: Risk calculator latency escalated",
+    exact: true,
+  });
+  assert.equal(
+    await selectedIncident.getAttribute("aria-pressed"),
+    "true",
+    "Editing a service outside the fixture list changed the selected incident",
+  );
+
+  const filter = page.getByLabel("Filter services");
+  await filter.fill("");
+  await page.getByText("Showing 4 of 4 services", { exact: true }).waitFor();
+  await page
+    .getByRole("button", { name: "Refresh worklist (local demo)" })
+    .click();
+  await page.getByText("Refreshing worklist.", { exact: true }).waitFor();
+  const refreshFailure = page.getByRole("alert").filter({
+    hasText:
+      "The worklist refresh failed. The current services remain available.",
+  });
+  try {
+    await refreshFailure.waitFor({ timeout: 5_000 });
+  } catch (error) {
+    if ((await refreshFailure.count()) === 0) {
+      throw new Error(
+        "Service worklist did not expose its deterministic first refresh failure",
+        { cause: error },
+      );
+    }
+    throw error;
+  }
+  await page.getByText("Showing 4 of 4 services", { exact: true }).waitFor();
+  await page.getByRole("row", { name: /Risk calculator/u }).waitFor();
+  await page
+    .getByRole("button", { name: "Retry worklist refresh (local demo)" })
+    .click();
+  await page
+    .getByText("Worklist refreshed. Showing 4 of 4 services.", { exact: true })
+    .waitFor({ timeout: 5_000 });
+
+  await page
+    .getByRole("button", { name: "Show empty worklist (local demo)" })
+    .click();
+  await page
+    .getByText("There are no services available.", { exact: true })
+    .waitFor();
+  assert.equal(
+    await page.getByText(/No services match/u).count(),
+    0,
+    "No-data state was presented as a filter miss",
+  );
+  await page
+    .getByRole("button", { name: "Restore worklist (local demo)" })
+    .click();
+  await page.getByText("Showing 4 of 4 services", { exact: true }).waitFor();
+}
+
+async function assertServiceWorklistNarrowLayout(page) {
+  await page.setViewportSize({ width: 320, height: 800 });
+  const navigation = page.getByRole("navigation", {
+    name: "Primary navigation",
+  });
+  await navigation.waitFor();
+  const tableScroller = page.getByRole("region", {
+    name: "Service health table",
+  });
+  await tableScroller.focus();
+  assert(
+    await tableScroller.evaluate(
+      (element) =>
+        element === document.activeElement &&
+        element.scrollWidth > element.clientWidth &&
+        document.documentElement.scrollWidth <=
+          document.documentElement.clientWidth,
+    ),
+    "Service worklist did not preserve a contained keyboard-scroll region at 320 CSS pixels",
+  );
+  await tableScroller.press("ArrowRight");
+  await page.waitForFunction(
+    () => document.querySelector(".tableScroller")?.scrollLeft > 0,
+    undefined,
+    { timeout: 2_000 },
+  );
+  await assertNoAxeViolations(page, "operations-dashboard narrow worklist");
+}
+
 async function assertRecordFormWorkflow(page, screenshotRoot) {
   const createIncident = page
     .getByRole("button", { name: "Create incident" })
@@ -979,7 +1203,6 @@ async function assertRecordFormWorkflow(page, screenshotRoot) {
   await dialog.getByRole("button", { name: "Cancel" }).click();
   await dialog.waitFor({ state: "detached" });
   return {
-    contract: "salt-sample-app-record-form-workflow/1",
     status: "pass",
     validation: "pass",
     cancellation_retains_draft: true,
@@ -1053,7 +1276,30 @@ async function browserChecks(appName, appRoot, environment, options = {}) {
         externalRequests.push(requestUrl.href);
         await route.abort("blockedbyclient");
       });
-      await page.goto(url, { waitUntil: "networkidle" });
+      const worklistClockStart = Date.UTC(2026, 8, 8, 9, 42, 0);
+      if (appName === "operations-dashboard") {
+        await page.clock.install({ time: worklistClockStart });
+        await page.clock.pauseAt(worklistClockStart + 1_000);
+      }
+      await page.goto(url, {
+        waitUntil:
+          appName === "operations-dashboard"
+            ? "domcontentloaded"
+            : "networkidle",
+      });
+      if (appName === "operations-dashboard") {
+        await page.getByText("Loading worklist.", { exact: true }).waitFor();
+        const refresh = page.getByRole("button", {
+          name: "Refresh worklist (local demo)",
+        });
+        await refresh.waitFor();
+        assert(
+          await refresh.isDisabled(),
+          "Worklist refresh was enabled during its initial load",
+        );
+        await page.clock.runFor(350);
+        await page.clock.resume();
+      }
       const axeEntry = nodeRequire.resolve("axe-core");
       const axeSource = await readFile(
         path.join(path.dirname(axeEntry), "axe.min.js"),
@@ -1167,6 +1413,7 @@ async function browserChecks(appName, appRoot, environment, options = {}) {
         await page
           .getByRole("heading", { name: "Operations overview" })
           .waitFor();
+        await assertServiceWorklistReady(page);
 
         const mode = page.getByTestId("mode-toggle");
         await mode.focus();
@@ -1192,13 +1439,6 @@ async function browserChecks(appName, appRoot, environment, options = {}) {
           "high",
         );
 
-        await page.getByLabel("Filter services").fill("risk");
-        await page.getByRole("row", { name: /Risk calculator/u }).waitFor();
-        assert.equal(
-          await page.getByRole("row", { name: /Order gateway/u }).count(),
-          0,
-        );
-
         await mode.click();
         assert.equal(
           await page.locator(".dashboardShell").getAttribute("data-mode"),
@@ -1210,24 +1450,31 @@ async function browserChecks(appName, appRoot, environment, options = {}) {
           "low",
         );
 
-        options.workflow = await assertRecordFormWorkflow(
+        const recordForm = await assertRecordFormWorkflow(
           page,
           options.screenshotRoot,
         );
-        await page.setViewportSize({ width: 600, height: 800 });
-        await page
-          .getByRole("navigation", { name: "Primary navigation" })
-          .waitFor();
-        const tableScroller = page.getByRole("region", {
-          name: "Service health table",
-        });
-        await tableScroller.focus();
-        await tableScroller.press("ArrowRight");
-        await page.waitForFunction(
-          () => document.querySelector(".tableScroller")?.scrollLeft > 0,
-          undefined,
-          { timeout: 2_000 },
-        );
+        await page.setViewportSize({ width: 1280, height: 800 });
+        await assertServiceWorklistDetailAndRecovery(page);
+        await assertServiceWorklistNarrowLayout(page);
+        options.workflow = {
+          ...recordForm,
+          contract: "salt-sample-app-operations-dashboard-journey/1",
+          navigation_current_location: "pass",
+          worklist: {
+            initial_loading: "pass",
+            refresh_disabled_during_initial_load: true,
+            loaded_service_count: 4,
+            filtering: "pass",
+            no_match: "pass",
+            no_data: "pass",
+            refresh_failure_preserves_data: true,
+            retry_succeeds: true,
+            inspection: "pass",
+            editing: "pass",
+          },
+          theme: "pass",
+        };
       }
 
       await assertNoAxeViolations(page, appName);
@@ -1279,6 +1526,99 @@ async function currentCliChecks(appRoot, environment, knowledgeManifest) {
     "Current Salt CLI commands changed the isolated sample app",
   );
   return commands;
+}
+
+function isolatedManifest(appManifest, packed) {
+  const manifest = structuredClone(appManifest);
+  manifest.dependencies ??= {};
+  manifest.devDependencies ??= {};
+  for (const entry of packed) {
+    const target = Object.hasOwn(manifest.dependencies, entry.name)
+      ? manifest.dependencies
+      : manifest.devDependencies;
+    target[entry.name] = `file:../packs/${entry.filename}`;
+  }
+  return Buffer.from(`${JSON.stringify(manifest, null, 2)}\n`);
+}
+
+async function installPackedCohort({ appName, appRoot, packed }) {
+  const manifestPath = path.join(appRoot, "package.json");
+  const originalManifestBytes = await readFile(manifestPath);
+  const manifest = JSON.parse(originalManifestBytes.toString("utf8"));
+  const installedManifestBytes = isolatedManifest(manifest, packed);
+  await writeFile(manifestPath, installedManifestBytes);
+  await run(
+    executable("npm"),
+    [
+      "install",
+      "--package-lock-only",
+      "--no-audit",
+      "--no-fund",
+      "--prefer-offline",
+    ],
+    { cwd: appRoot, label: `${appName} lockfile generation` },
+  );
+  const lockfilePath = path.join(appRoot, "package-lock.json");
+  const generatedLockfileBytes = await readFile(lockfilePath);
+  await run(executable("npm"), ["ci", "--no-audit", "--no-fund"], {
+    cwd: appRoot,
+    label: `${appName} lockfile replay`,
+  });
+  const replayedLockfileBytes = await readFile(lockfilePath);
+  assert(
+    replayedLockfileBytes.equals(generatedLockfileBytes),
+    `${appName} lockfile changed during replay`,
+  );
+  assert(
+    (await readFile(manifestPath)).equals(installedManifestBytes),
+    `${appName} isolated manifest changed during install`,
+  );
+  return { installedManifestBytes, replayedLockfileBytes };
+}
+
+async function readInstalledWorkflowRecipe(appRoot, knowledgeManifest) {
+  const requireFromApp = createRequire(path.join(appRoot, "package.json"));
+  const knowledge = requireFromApp("@salt-ds/knowledge");
+  assert.equal(
+    typeof knowledge.KnowledgeStore,
+    "function",
+    "Packed Knowledge does not export KnowledgeStore",
+  );
+  const knowledgePackagePath = requireFromApp.resolve(
+    "@salt-ds/knowledge/package.json",
+  );
+  const store = new knowledge.KnowledgeStore({
+    bundleDir: path.dirname(knowledgePackagePath),
+  });
+  assert.equal(
+    store.manifest.bundle_digest,
+    knowledgeManifest.bundle_digest,
+    "Installed KnowledgeStore reads a different bundle",
+  );
+  assert.equal(
+    store.manifest.semantic_digest,
+    knowledgeManifest.semantic_digest,
+    "Installed KnowledgeStore reads a different semantic bundle",
+  );
+  return readPackedWorkflowRecipe(store);
+}
+
+async function materializePackedWorkflow({ root, workflow }) {
+  await mkdir(root, { recursive: true });
+  for (const file of workflow.files) {
+    const target = path.join(root, ...file.path.split("/"));
+    inside(root, target, `Packed workflow file ${file.path}`);
+    await mkdir(path.dirname(target), { recursive: true });
+    await writeFile(target, file.bytes, { flag: "wx" });
+  }
+  const materializedPaths = (await sourceFiles(root)).map((file) =>
+    portable(path.relative(root, file)),
+  );
+  assert.deepEqual(
+    materializedPaths,
+    workflow.files.map((file) => file.path).toSorted(),
+    "Reconstructed workflow contains a file outside the packed recipe",
+  );
 }
 
 async function validateReceipt(receipt) {
@@ -1363,51 +1703,82 @@ try {
   let hostileFixtureVerified = false;
   for (const app of apps) {
     const isolatedRoot = path.join(tempRoot, app.name);
-    await cp(app.appRoot, isolatedRoot, { recursive: true });
-    const isolatedManifestPath = path.join(isolatedRoot, "package.json");
-    const isolatedManifest = await readJson(isolatedManifestPath);
-    isolatedManifest.dependencies ??= {};
-    isolatedManifest.devDependencies ??= {};
-    for (const entry of packed) {
-      const target = Object.hasOwn(isolatedManifest.dependencies, entry.name)
-        ? isolatedManifest.dependencies
-        : isolatedManifest.devDependencies;
-      target[entry.name] = `file:../packs/${entry.filename}`;
+    let isolatedManifestBytes;
+    let packedWorkflow;
+    let replayedLockfileBytes;
+    if (app.name === "operations-dashboard") {
+      // Bootstrap only enough consumer state to install the packed cohort. The
+      // fresh app below is written exclusively from the installed Knowledge
+      // recipe and its Store-verified artifacts.
+      const bootstrapRoot = path.join(
+        tempRoot,
+        "operations-dashboard-bootstrap",
+      );
+      await mkdir(bootstrapRoot, { recursive: true });
+      await writeFile(
+        path.join(bootstrapRoot, "package.json"),
+        app.manifestBytes,
+        {
+          flag: "wx",
+        },
+      );
+      ({
+        installedManifestBytes: isolatedManifestBytes,
+        replayedLockfileBytes,
+      } = await installPackedCohort({
+        appName: app.name,
+        appRoot: bootstrapRoot,
+        packed,
+      }));
+      const bootstrapLockfile = JSON.parse(
+        replayedLockfileBytes.toString("utf8"),
+      );
+      await verifyInstalledCohort(bootstrapRoot, packed, bootstrapLockfile);
+      packedWorkflow = await readInstalledWorkflowRecipe(
+        bootstrapRoot,
+        knowledgeManifest,
+      );
+      assertPackedWorkflowManifestMatchesSource(
+        packedWorkflow.manifestBytes,
+        app.manifestBytes,
+      );
+      await materializePackedWorkflow({
+        root: isolatedRoot,
+        workflow: packedWorkflow,
+      });
+      await cp(
+        path.join(bootstrapRoot, "node_modules"),
+        path.join(isolatedRoot, "node_modules"),
+        {
+          recursive: true,
+        },
+      );
+      await writeFile(
+        path.join(isolatedRoot, "package-lock.json"),
+        replayedLockfileBytes,
+        { flag: "wx" },
+      );
+      const reconstructedLockfile = JSON.parse(
+        replayedLockfileBytes.toString("utf8"),
+      );
+      await verifyInstalledCohort(isolatedRoot, packed, reconstructedLockfile);
+    } else {
+      await cp(app.appRoot, isolatedRoot, { recursive: true });
+      ({
+        installedManifestBytes: isolatedManifestBytes,
+        replayedLockfileBytes,
+      } = await installPackedCohort({
+        appName: app.name,
+        appRoot: isolatedRoot,
+        packed,
+      }));
+      const lockfile = JSON.parse(replayedLockfileBytes.toString("utf8"));
+      await verifyInstalledCohort(isolatedRoot, packed, lockfile);
+      await writeFile(
+        path.join(isolatedRoot, "package.json"),
+        app.manifestBytes,
+      );
     }
-    const isolatedManifestBytes = Buffer.from(
-      `${JSON.stringify(isolatedManifest, null, 2)}\n`,
-    );
-    await writeFile(isolatedManifestPath, isolatedManifestBytes);
-
-    await run(
-      executable("npm"),
-      [
-        "install",
-        "--package-lock-only",
-        "--no-audit",
-        "--no-fund",
-        "--prefer-offline",
-      ],
-      { cwd: isolatedRoot, label: `${app.name} lockfile generation` },
-    );
-    const lockfilePath = path.join(isolatedRoot, "package-lock.json");
-    const generatedLockfileBytes = await readFile(lockfilePath);
-    await run(executable("npm"), ["ci", "--no-audit", "--no-fund"], {
-      cwd: isolatedRoot,
-      label: `${app.name} lockfile replay`,
-    });
-    const replayedLockfileBytes = await readFile(lockfilePath);
-    assert(
-      replayedLockfileBytes.equals(generatedLockfileBytes),
-      `${app.name} lockfile changed during replay`,
-    );
-    assert(
-      (await readFile(isolatedManifestPath)).equals(isolatedManifestBytes),
-      `${app.name} isolated manifest changed during install`,
-    );
-    const lockfile = JSON.parse(replayedLockfileBytes.toString("utf8"));
-    await verifyInstalledCohort(isolatedRoot, packed, lockfile);
-    await writeFile(isolatedManifestPath, app.manifestBytes);
 
     if (!hostileFixtureVerified) {
       await verifyNegativeNetworkFixture(environment);
@@ -1482,6 +1853,59 @@ try {
         "Validation-removed operations dashboard was not rejected by the shared workflow assertions",
       );
       browser.workflow.validation_removed_variant = "rejected";
+      const worklistMutationRoot = path.join(
+        tempRoot,
+        "operations-dashboard-worklist-failure-removed",
+      );
+      await cp(isolatedRoot, worklistMutationRoot, { recursive: true });
+      const worklistAdapterPath = path.join(
+        worklistMutationRoot,
+        "src",
+        "workflows",
+        "service-worklist",
+        "localWorklistAdapter.ts",
+      );
+      const failureMarker = "let failedOnce = false;";
+      const adapterSource = await readFile(worklistAdapterPath, "utf8");
+      assert.equal(
+        adapterSource.split(failureMarker).length,
+        2,
+        "Worklist-failure fixture did not find exactly one fail-once gate",
+      );
+      await writeFile(
+        worklistAdapterPath,
+        adapterSource.replace(failureMarker, "let failedOnce = true;"),
+        "utf8",
+      );
+      await run(executable("npm"), ["run", "build"], {
+        cwd: worklistMutationRoot,
+        env: environment,
+        label: "failure-removed operations dashboard build",
+      });
+      let rejectedAtMissingWorklistBehavior = false;
+      try {
+        await browserChecks(
+          "operations-dashboard",
+          worklistMutationRoot,
+          environment,
+        );
+      } catch (error) {
+        rejectedAtMissingWorklistBehavior =
+          error instanceof Error &&
+          /did not expose its deterministic first refresh failure/u.test(
+            error.message,
+          );
+      }
+      assert(
+        rejectedAtMissingWorklistBehavior,
+        "Failure-removed operations dashboard was not rejected by the shared journey assertions",
+      );
+      browser.workflow.missing_worklist_behavior_variant = "rejected";
+      browser.workflow.preview = await retainViteWorkflowPreview({
+        appRoot: isolatedRoot,
+        receiptArtifactRoot: artifactRoot,
+        workflow: packedWorkflow,
+      });
     }
 
     appReceipts.push({

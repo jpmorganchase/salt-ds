@@ -14,6 +14,7 @@
   "!packages/knowledge/src/__fixtures__/**",
   "packages/knowledge/src/build/catalogCompilerInputPatterns.json",
   "packages/knowledge/src/build/catalogSemanticInputPatterns.json",
+  "packages/knowledge/src/build/catalogPublicationInputPatterns.json",
   "tooling/ai/agent-support-v1.json",
   "skills/salt-design-system/SKILL.md",
   "skills/salt-design-system/references/managed-agents-block.md"

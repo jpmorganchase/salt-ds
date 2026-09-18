@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
+import path from "node:path";
 import { brotliDecompressSync } from "node:zlib";
 import fs from "fs-extra";
-import path from "node:path";
 
 const DIGEST = /^sha256:[0-9a-f]{64}$/u;
 const PORTABLE_PATH =
@@ -26,9 +26,7 @@ function canonicalJson(value) {
       return Object.fromEntries(
         Object.entries(candidate)
           .filter(([, entry]) => entry !== undefined)
-          .sort(([left], [right]) =>
-            left < right ? -1 : left > right ? 1 : 0,
-          )
+          .sort(([left], [right]) => (left < right ? -1 : left > right ? 1 : 0))
           .map(([key, entry]) => [key, normalize(entry)]),
       );
     }
@@ -84,7 +82,8 @@ function readExact(root, descriptor, label) {
   const relativePath = descriptor.file ?? descriptor.path;
   const bytes = fs.readFileSync(resolveContained(root, relativePath));
   assert(
-    bytes.byteLength === descriptor.bytes && sha256(bytes) === descriptor.sha256,
+    bytes.byteLength === descriptor.bytes &&
+      sha256(bytes) === descriptor.sha256,
     `${label} digest/bytes mismatch: ${relativePath}`,
   );
   return bytes;
@@ -346,7 +345,10 @@ export function verifyKnowledgeArtifactContract({
     portableIdentities.add(portableIdentity);
     const bytes = readExact(generatedRoot, descriptor, "Knowledge artifact");
     if (descriptor.path === "index.json") {
-      assert(bytes.byteLength <= LIMITS.indexBytes, "Knowledge index exceeds 512 KiB.");
+      assert(
+        bytes.byteLength <= LIMITS.indexBytes,
+        "Knowledge index exceeds 512 KiB.",
+      );
     }
     if (
       descriptor.media_type === "application/json" ||
@@ -388,6 +390,7 @@ export function verifyKnowledgeArtifactContract({
     "schemas/knowledge-manifest-1.schema.json",
     "support/compiler-inventory.json",
     "support/generation-receipt.json",
+    "support/publication-input-inventory.json",
     "support/semantic-source-inventory.json",
   ]) {
     assert(
@@ -494,7 +497,16 @@ export function verifyKnowledgeArtifactContract({
       "salt-semantic-source-inventory/1",
       "support/semantic-source-inventory.json",
     ],
-    ["compiler", "salt-compiler-inventory/1", "support/compiler-inventory.json"],
+    [
+      "compiler",
+      "salt-compiler-inventory/1",
+      "support/compiler-inventory.json",
+    ],
+    [
+      "publication",
+      "salt-publication-input-inventory/1",
+      "support/publication-input-inventory.json",
+    ],
   ]) {
     const descriptor = artifacts.find((entry) => entry.path === artifactPath);
     const inventory = parseJson(
@@ -531,6 +543,12 @@ export function verifyKnowledgeArtifactContract({
       `Knowledge ${kind} inventory digest is invalid.`,
     );
     inputInventories[kind] = { inputsByPath };
+    if (kind === "publication") {
+      assert(
+        generationReceipt.publication_input_digest === inventory.digest,
+        "Knowledge generation receipt does not bind the publication input inventory.",
+      );
+    }
   }
 
   const expectedFiles = [

@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
-import { createHash } from "node:crypto";
-import { lstat, mkdir, readFile, rename, rm, writeFile } from "node:fs/promises";
+import { lstat, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 
@@ -19,8 +18,22 @@ import {
 } from "./saltAiEvidenceUtils.mjs";
 
 const args = parseArgs(process.argv.slice(2));
-const allowed = new Set(["--public-docs-preview-receipt"]);
-for (const key of args.keys()) assert(allowed.has(key), `Unknown web build option: ${key}`);
+const allowed = new Set([
+  "--public-docs-preview-receipt",
+  "--workflow-cohort-receipt",
+  "--prepare-site-preview",
+]);
+for (const key of args.keys())
+  assert(allowed.has(key), `Unknown web build option: ${key}`);
+assert(
+  !args.has("--workflow-cohort-receipt") ||
+    typeof args.get("--workflow-cohort-receipt") === "string",
+  "--workflow-cohort-receipt requires a receipt path",
+);
+assert(
+  !args.has("--prepare-site-preview") || args.has("--workflow-cohort-receipt"),
+  "Preparing the site preview requires --workflow-cohort-receipt",
+);
 
 const outputRoot = path.join(repositoryRoot, "dist", "salt-ai-web");
 const artifactRoot = path.join(outputRoot, "artifact");
@@ -52,7 +65,10 @@ function contained(root, relative) {
 
 async function regularBytes(file, label) {
   const stats = await lstat(file);
-  assert(stats.isFile() && !stats.isSymbolicLink(), `${label} is not a regular file`);
+  assert(
+    stats.isFile() && !stats.isSymbolicLink(),
+    `${label} is not a regular file`,
+  );
   return readFile(file);
 }
 
@@ -67,15 +83,22 @@ function htmlEscape(value) {
 function markdownMetadata(bytes, fallbackTitle) {
   const text = bytes.toString("utf8").replaceAll("\r\n", "\n");
   const title = text.match(/^#\s+(.+)$/mu)?.[1]?.trim() ?? fallbackTitle;
-  const summary = text
-    .split(/\n\s*\n/u)
-    .map((entry) => entry.replace(/^>\s?/gmu, "").trim())
-    .find((entry) => entry && !entry.startsWith("#") && !entry.startsWith("---")) ??
-    "Version-matched Salt Design System guidance.";
+  const summary =
+    text
+      .split(/\n\s*\n/u)
+      .map((entry) => entry.replace(/^>\s?/gmu, "").trim())
+      .find(
+        (entry) => entry && !entry.startsWith("#") && !entry.startsWith("---"),
+      ) ?? "Version-matched Salt Design System guidance.";
   return { title, summary: summary.replace(/\s+/gu, " ").slice(0, 240) };
 }
 
-const generatedRoot = path.join(repositoryRoot, "packages", "knowledge", "generated");
+const generatedRoot = path.join(
+  repositoryRoot,
+  "packages",
+  "knowledge",
+  "generated",
+);
 const verified = verifyKnowledgeArtifactContract({
   packageRoot: path.join(repositoryRoot, "packages", "knowledge"),
   manifestPath: "generated/manifest.json",
@@ -98,9 +121,15 @@ async function addRoute({
   describedby = null,
   sourceArtifact = null,
 }) {
-  assert(routePath.startsWith("/") && !routePath.includes(".."), `Invalid route ${routePath}`);
+  assert(
+    routePath.startsWith("/") && !routePath.includes(".."),
+    `Invalid route ${routePath}`,
+  );
   const key = routePath.normalize("NFC").toLowerCase();
-  assert(!routeKeys.has(key), `Web route collision: ${routeKeys.get(key)} and ${routePath}`);
+  assert(
+    !routeKeys.has(key),
+    `Web route collision: ${routeKeys.get(key)} and ${routePath}`,
+  );
   routeKeys.set(key, routePath);
   const outputRelative = routePath.endsWith("/")
     ? `${routePath.slice(1)}index.html`
@@ -125,14 +154,23 @@ async function addRoute({
 
 const markdownDocuments = [];
 for (const descriptor of verified.artifactDescriptors
-  .filter((entry) => entry.path.startsWith("markdown/") && entry.path.endsWith(".md"))
+  .filter(
+    (entry) => entry.path.startsWith("markdown/") && entry.path.endsWith(".md"),
+  )
   .sort((left, right) => left.path.localeCompare(right.path))) {
-  const bytes = await regularBytes(contained(generatedRoot, descriptor.path), descriptor.path);
-  assert(sha256(bytes) === descriptor.sha256, `${descriptor.path} differs from its manifest descriptor`);
+  const bytes = await regularBytes(
+    contained(generatedRoot, descriptor.path),
+    descriptor.path,
+  );
+  assert(
+    sha256(bytes) === descriptor.sha256,
+    `${descriptor.path} differs from its manifest descriptor`,
+  );
   const relative = descriptor.path.slice("markdown/".length);
-  const baseRelative = relative === "migrations/index.md"
-    ? "migrations/"
-    : `${relative.slice(0, -".md".length)}/`;
+  const baseRelative =
+    relative === "migrations/index.md"
+      ? "migrations/"
+      : `${relative.slice(0, -".md".length)}/`;
   markdownDocuments.push({
     bytes,
     sourceArtifact: descriptor.path,
@@ -147,7 +185,10 @@ let previewReceiptBytes = null;
 const previewInput = args.get("--public-docs-preview-receipt");
 if (previewInput) {
   const previewPath = path.resolve(repositoryRoot, String(previewInput));
-  previewReceiptBytes = await regularBytes(previewPath, "Public-docs preview receipt");
+  previewReceiptBytes = await regularBytes(
+    previewPath,
+    "Public-docs preview receipt",
+  );
   previewReceipt = JSON.parse(previewReceiptBytes.toString("utf8"));
   assert(
     previewReceipt.contract === "salt-public-docs-projection/1" &&
@@ -178,11 +219,15 @@ if (previewInput) {
   }
 }
 
-markdownDocuments.sort((left, right) => left.markdownRoute.localeCompare(right.markdownRoute));
+markdownDocuments.sort((left, right) =>
+  left.markdownRoute.localeCompare(right.markdownRoute),
+);
 const llmsRoute = `${immutableBase}/llms.txt`;
 const renderDocumentIndex = (title, documents) =>
   `# ${title}\n\nVersion-matched Salt guidance for bundle ${manifest.bundle_version} (${manifest.bundle_digest}).\n\n## Documentation\n\n${documents
-    .map((entry) => `- [${entry.title}](${entry.markdownRoute}): ${entry.summary}`)
+    .map(
+      (entry) => `- [${entry.title}](${entry.markdownRoute}): ${entry.summary}`,
+    )
     .join("\n")}\n`;
 const fullIndexBytes = Buffer.from(
   renderDocumentIndex("Salt Design System", markdownDocuments),
@@ -245,9 +290,15 @@ if (segmented) {
           ),
           "utf8",
         );
-        assert(shardBytes.byteLength <= 64 * 1024, `${shardRoute} exceeds 64 KiB`);
+        assert(
+          shardBytes.byteLength <= 64 * 1024,
+          `${shardRoute} exceeds 64 KiB`,
+        );
         indexRoutes.push({ routePath: shardRoute, bytes: shardBytes });
-        shardEntries.push({ routePath: shardRoute, count: shardDocuments.length });
+        shardEntries.push({
+          routePath: shardRoute,
+          count: shardDocuments.length,
+        });
         for (const document of shardDocuments) {
           describedbyByMarkdownRoute.set(document.markdownRoute, shardRoute);
         }
@@ -261,7 +312,10 @@ if (segmented) {
           .join("\n")}\n`,
         "utf8",
       );
-      assert(familyDirectoryBytes.byteLength <= 64 * 1024, `${family} index directory exceeds 64 KiB`);
+      assert(
+        familyDirectoryBytes.byteLength <= 64 * 1024,
+        `${family} index directory exceeds 64 KiB`,
+      );
       indexRoutes.push({ routePath, bytes: familyDirectoryBytes });
     }
     mainFamilyIndexes.push({ family, routePath, count: documents.length });
@@ -333,8 +387,14 @@ for (const [kind, pointer] of Object.entries(manifest.agent_support)) {
     (entry) => entry.path === pointer.artifact,
   );
   assert(descriptor, `Missing manifest-selected ${kind} descriptor`);
-  const bytes = await regularBytes(contained(generatedRoot, pointer.artifact), `${kind} artifact`);
-  assert(sha256(bytes) === descriptor.sha256, `${kind} artifact bytes are stale`);
+  const bytes = await regularBytes(
+    contained(generatedRoot, pointer.artifact),
+    `${kind} artifact`,
+  );
+  assert(
+    sha256(bytes) === descriptor.sha256,
+    `${kind} artifact bytes are stale`,
+  );
   const routePath = `${immutableBase}/${pointer.artifact}`;
   await addRoute({
     routePath,
@@ -348,6 +408,183 @@ for (const [kind, pointer] of Object.entries(manifest.agent_support)) {
     web_path: routePath,
     sha256: descriptor.sha256,
     bytes: descriptor.bytes,
+  };
+}
+
+let workflowPreview = null;
+const workflowInput = args.get("--workflow-cohort-receipt");
+if (workflowInput) {
+  const { readValidatedWorkflowPreview } = await import(
+    "./checkSaltSampleAppsHelpers.mjs"
+  );
+  const { createKnowledgeStore, resolveKnowledgeDocument } = await import(
+    "../dist/salt-ds-knowledge/dist-es/public.js"
+  );
+  const retained = await readValidatedWorkflowPreview({
+    cohortReceiptPath: path.resolve(repositoryRoot, String(workflowInput)),
+    verifiedKnowledge: verified,
+  });
+  const store = createKnowledgeStore({ bundleDir: generatedRoot });
+  assert(
+    store.manifest.bundle_digest === manifest.bundle_digest,
+    "Preview store bundle differs",
+  );
+  const recipeArtifact = retained.descriptor.recipe.artifact;
+  const recipeBytes = store.readArtifact(recipeArtifact);
+  const recipe = JSON.parse(recipeBytes.toString("utf8"));
+  const recipeUrl = `${immutableBase}/${recipeArtifact}`;
+  await addRoute({
+    routePath: recipeUrl,
+    bytes: recipeBytes,
+    mediaType: "application/json; charset=utf-8",
+    cacheControl: immutableCache,
+    sourceArtifact: recipeArtifact,
+  });
+  const files = [];
+  for (const file of recipe.files) {
+    const bytes = store.readArtifact(file.artifact_path);
+    assert(
+      sha256(bytes) === file.sha256 && bytes.byteLength === file.bytes,
+      `Recipe file identity differs: ${file.path}`,
+    );
+    // A source index.html is downloadable text, never an executable preview.
+    const url = `${immutableBase}/${file.artifact_path}.txt`;
+    await addRoute({
+      routePath: url,
+      bytes,
+      mediaType: "text/plain; charset=utf-8",
+      cacheControl: immutableCache,
+      sourceArtifact: file.artifact_path,
+    });
+    files.push({ ...file, url });
+  }
+  async function guidance(id) {
+    const result = resolveKnowledgeDocument(store, {
+      identifier: `record:guide:${id}`,
+    });
+    assert(
+      result.status === "resolved" && result.document?.canonical,
+      `Canonical guidance is unavailable: ${id}`,
+    );
+    const canonical = result.document.canonical;
+    const detail = store.getContentValue(
+      store.getRecord("guide", id).detail_content_ref,
+    );
+    const route = detail.document?.source.route;
+    assert(
+      typeof route === "string" && route.startsWith("/salt/"),
+      `Canonical guidance route is unavailable: ${id}`,
+    );
+    const markdown = markdownDocuments.find(
+      (entry) => entry.sourceArtifact === `markdown/guides/${id}.md`,
+    );
+    assert(markdown, `Canonical Markdown is missing: ${id}`);
+    const bytes = Buffer.from(stableJson(canonical), "utf8");
+    const url = `${immutableBase}/guidance/${id}/document.json`;
+    await addRoute({
+      routePath: url,
+      bytes,
+      mediaType: "application/json; charset=utf-8",
+      cacheControl: immutableCache,
+    });
+    return {
+      canonical,
+      route,
+      descriptor: {
+        url: markdown.markdownRoute,
+        sha256: sha256(markdown.bytes),
+        bytes: markdown.bytes.byteLength,
+        content_identity: canonical.content_identity,
+        reference: canonical.reference,
+        document: { url, sha256: sha256(bytes), bytes: bytes.byteLength },
+      },
+    };
+  }
+  const workflowGuidance = await guidance(recipe.id);
+  assert(
+    workflowGuidance.canonical.recipe_identity?.content_identity ===
+      recipe.source_identity.content_identity,
+    "Workflow guidance and recipe identity differ",
+  );
+  const button = await guidance("guide.button.loading");
+  const buttonRecord = store.getRecord("guide", "guide.button.loading");
+  const buttonDetail = store.getContentValue(buttonRecord.detail_content_ref);
+  const buttonFiles = [];
+  for (const file of button.canonical.files) {
+    const source = buttonDetail.files.find(
+      (entry) => entry.source_path === file.path,
+    );
+    assert(source, `Canonical Button source is missing: ${file.path}`);
+    const bytes = Buffer.from(
+      store.getContentSourceText(source.code_ref),
+      "utf8",
+    );
+    assert(
+      sha256(bytes) === file.sha256 && bytes.byteLength === file.bytes,
+      `Canonical Button file differs: ${file.path}`,
+    );
+    const url = `${immutableBase}/guidance/guide.button.loading/files/${file.path}.txt`;
+    await addRoute({
+      routePath: url,
+      bytes,
+      mediaType: "text/plain; charset=utf-8",
+      cacheControl: immutableCache,
+    });
+    buttonFiles.push({ ...file, url });
+  }
+  const previewBase = `${immutableBase}/examples/workflows/${recipe.id}/preview/${retained.descriptor.tree_sha256.slice(7)}`;
+  for (const file of retained.files) {
+    await addRoute({
+      routePath: `${previewBase}/${file.path}`,
+      bytes: file.bytes,
+      mediaType: file.mediaType,
+      cacheControl: immutableCache,
+    });
+  }
+  const bootstrap = {
+    contract: "salt-workflow-development/1",
+    development: true,
+    publishable: false,
+    bundle_digest: manifest.bundle_digest,
+    workflow: {
+      id: recipe.id,
+      route: workflowGuidance.route,
+      recipe: {
+        url: recipeUrl,
+        sha256: sha256(recipeBytes),
+        bytes: recipeBytes.byteLength,
+        content_identity: recipe.source_identity.content_identity,
+      },
+      guidance: workflowGuidance.descriptor,
+      preview: {
+        url: `${previewBase}/${retained.descriptor.entry}`,
+        tree_sha256: retained.descriptor.tree_sha256,
+      },
+      files,
+    },
+    button: {
+      route: button.route,
+      guidance: button.descriptor,
+      files: buttonFiles,
+    },
+  };
+  const bootstrapBytes = Buffer.from(stableJson(bootstrap), "utf8");
+  const bootstrapRoute = "/ai/development/bootstrap.json";
+  await addRoute({
+    routePath: bootstrapRoute,
+    bytes: bootstrapBytes,
+    mediaType: "application/json; charset=utf-8",
+    cacheControl: mutableCache,
+  });
+  workflowPreview = {
+    ...retained.receipt,
+    tree_sha256: retained.descriptor.tree_sha256,
+    route: bootstrap.workflow.preview.url,
+    bootstrap: {
+      path: bootstrapRoute,
+      sha256: sha256(bootstrapBytes),
+      bytes: bootstrapBytes.byteLength,
+    },
   };
 }
 
@@ -370,7 +607,8 @@ assert(
   "Knowledge npm/web projection identities differ",
 );
 const receipt = {
-  $schema: "https://www.saltdesignsystem.com/ai/schemas/salt-ai-web-release-receipt-1.json",
+  $schema:
+    "https://www.saltdesignsystem.com/ai/schemas/salt-ai-web-release-receipt-1.json",
   schema_version: "1.0.0",
   contract: "salt-ai-web-release-receipt/1",
   channel: "beta-candidate",
@@ -394,6 +632,7 @@ const receipt = {
         projection_sha256: previewReceipt.projection_sha256,
       }
     : null,
+  workflow_preview: workflowPreview,
   route_map: {
     path: "dist/salt-ai-web/route-map.json",
     sha256: sha256(routeMapBytes),
@@ -411,6 +650,52 @@ const receipt = {
   deployment: "not-performed",
 };
 await writeJsonAtomic(path.join(outputRoot, "release-receipt.json"), receipt);
+if (args.has("--prepare-site-preview")) {
+  const publicRoot = path.resolve(repositoryRoot, "site", "public");
+  const sitePreviewRoot = path.resolve(publicRoot, "ai");
+  assert(
+    path.relative(publicRoot, sitePreviewRoot) === "ai",
+    "Unexpected site preview destination",
+  );
+  for (const directory of [publicRoot, sitePreviewRoot]) {
+    const stats = await lstat(directory).catch((error) => {
+      if (error.code === "ENOENT") return null;
+      throw error;
+    });
+    assert(
+      !stats || (stats.isDirectory() && !stats.isSymbolicLink()),
+      "Site preview destination must contain only regular directories",
+    );
+  }
+  await mkdir(publicRoot, { recursive: true });
+  await rm(sitePreviewRoot, { recursive: true, force: true });
+  // Write the selector last so it cannot point at a partly copied bundle.
+  const copyOrder = [...routes].sort(
+    (left, right) =>
+      Number(left.path === "/ai/development/bootstrap.json") -
+      Number(right.path === "/ai/development/bootstrap.json"),
+  );
+  for (const route of copyOrder) {
+    assert(
+      route.path.startsWith("/ai/"),
+      "Site preview has an unexpected route",
+    );
+    const destination = contained(
+      publicRoot,
+      route.output.slice("artifact/".length),
+    );
+    const bytes = await regularBytes(
+      contained(outputRoot, route.output),
+      route.path,
+    );
+    assert(
+      sha256(bytes) === route.sha256,
+      `Web bytes changed before site copy: ${route.path}`,
+    );
+    await mkdir(path.dirname(destination), { recursive: true });
+    await writeFile(destination, bytes, { flag: "wx" });
+  }
+}
 console.log(
   `Built ${routes.length} staged Salt AI web routes for ${manifest.bundle_digest}.`,
 );

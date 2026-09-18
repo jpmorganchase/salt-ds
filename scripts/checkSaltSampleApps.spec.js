@@ -1,9 +1,13 @@
+import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 
 import Ajv2020 from "ajv/dist/2020.js";
 import { describe, expect, it } from "vitest";
 
 import {
+  assertPackedWorkflowManifestMatchesSource,
+  assertWorkflowPreviewReferenceClosure,
+  readPackedWorkflowRecipe,
   selectSampleAppNames,
   unavailableAnalysis,
   verifyCurrentCliCommands,
@@ -67,8 +71,22 @@ function commandResults() {
 
 function workflowProof() {
   return {
-    contract: "salt-sample-app-record-form-workflow/1",
+    contract: "salt-sample-app-operations-dashboard-journey/1",
     status: "pass",
+    navigation_current_location: "pass",
+    worklist: {
+      initial_loading: "pass",
+      refresh_disabled_during_initial_load: true,
+      loaded_service_count: 4,
+      filtering: "pass",
+      no_match: "pass",
+      no_data: "pass",
+      refresh_failure_preserves_data: true,
+      retry_succeeds: true,
+      inspection: "pass",
+      editing: "pass",
+    },
+    theme: "pass",
     validation: "pass",
     cancellation_retains_draft: true,
     pending_duplicate_rejected: true,
@@ -85,6 +103,28 @@ function workflowProof() {
       "narrow-320-css-px.png",
     ],
     validation_removed_variant: "rejected",
+    missing_worklist_behavior_variant: "rejected",
+  };
+}
+
+function workflowPreviewProof() {
+  return {
+    entry: "index.html",
+    files: [
+      {
+        path: "index.html",
+        media_type: "text/html; charset=utf-8",
+        bytes: 1,
+        sha256: digest,
+      },
+    ],
+    tree_sha256: digest,
+    recipe: {
+      artifact:
+        "examples/workflows/operations-dashboard.service-worklist/recipe.json",
+      artifact_sha256: digest,
+      content_identity: digest,
+    },
   };
 }
 
@@ -193,6 +233,316 @@ describe("current sample-app selection", () => {
   });
 });
 
+describe("packed workflow reconstruction input", () => {
+  const workflowId = "operations-dashboard.service-worklist";
+  const recipePath = `examples/workflows/${workflowId}/recipe.json`;
+  const filePaths = [
+    "index.html",
+    "package.json",
+    "src/OperationsDashboard.tsx",
+    "src/dashboard.css",
+    "src/main.tsx",
+    "src/vite-env.d.ts",
+    "src/workflows/record-form/RecordForm.css",
+    "src/workflows/record-form/RecordForm.tsx",
+    "src/workflows/record-form/localDemoAdapter.ts",
+    "src/workflows/record-form/types.ts",
+    "src/workflows/service-worklist/IncidentInspector.tsx",
+    "src/workflows/service-worklist/IncidentWorklist.tsx",
+    "src/workflows/service-worklist/ServiceWorklist.css",
+    "src/workflows/service-worklist/localWorklistAdapter.ts",
+    "src/workflows/service-worklist/types.ts",
+    "tsconfig.json",
+    "vite.config.ts",
+  ];
+
+  it("accepts canonical packed manifest bytes from a CRLF repository source", () => {
+    const packed = Buffer.from(
+      '{\n  "name": "salt-operations-dashboard",\n  "private": true\n}\n',
+    );
+    const source = Buffer.from(
+      packed.toString("utf8").replaceAll("\n", "\r\n"),
+    );
+
+    expect(() =>
+      assertPackedWorkflowManifestMatchesSource(packed, source),
+    ).not.toThrow();
+  });
+
+  it("rejects a packed manifest whose content differs from the source", () => {
+    const source = Buffer.from(
+      '{\r\n  "name": "salt-operations-dashboard",\r\n  "private": true\r\n}\r\n',
+    );
+    const packed = Buffer.from(
+      '{\n  "name": "salt-operations-dashboard",\n  "private": false\n}\n',
+    );
+
+    expect(() =>
+      assertPackedWorkflowManifestMatchesSource(packed, source),
+    ).toThrow(/differs from the declared operations dashboard manifest/u);
+  });
+
+  function sha256(value) {
+    return `sha256:${createHash("sha256").update(value).digest("hex")}`;
+  }
+
+  function canonical(value) {
+    if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
+    if (value && typeof value === "object") {
+      return `{${Object.entries(value)
+        .sort(([left], [right]) => left.localeCompare(right))
+        .map(([key, entry]) => `${JSON.stringify(key)}:${canonical(entry)}`)
+        .join(",")}}`;
+    }
+    return JSON.stringify(value);
+  }
+
+  function fixture() {
+    const packageBytes = Buffer.from(
+      `${JSON.stringify(
+        {
+          name: "salt-operations-dashboard",
+          private: true,
+          type: "module",
+          scripts: { typecheck: "tsc --noEmit", build: "vite build" },
+          dependencies: {
+            "@salt-ds/core": "1.0.0",
+            "@salt-ds/theme": "1.0.0",
+            react: "18.3.1",
+          },
+          devDependencies: { vite: "7.1.0" },
+        },
+        null,
+        2,
+      )}\n`,
+    );
+    const files = filePaths.map((filePath) => {
+      const bytes =
+        filePath === "package.json"
+          ? packageBytes
+          : Buffer.from(`packed ${filePath}\n`);
+      const role = filePath.startsWith("src/workflows/")
+        ? filePath.endsWith("localDemoAdapter.ts") ||
+          filePath.endsWith("localWorklistAdapter.ts")
+          ? "demo-only"
+          : "reusable"
+        : filePath === "package.json"
+          ? "setup"
+          : "demo-only";
+      return {
+        id: `workflow-file:${workflowId}:${filePath}`,
+        path: filePath,
+        artifact_path: `examples/workflows/${workflowId}/files/${filePath}`,
+        role,
+        sha256: sha256(bytes),
+        bytes: bytes.byteLength,
+        value: bytes,
+      };
+    });
+    const recipe = {
+      contract: "salt-workflow-recipe/1",
+      schema_version: "1.0.0",
+      id: workflowId,
+      source: {
+        application: "examples/apps/operations-dashboard",
+        recipe:
+          "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json",
+      },
+      files: files.map(({ value, ...file }) => file),
+      source_identity: {
+        content_identity: sha256(
+          Buffer.from(
+            canonical(
+              files.map(({ path, sha256: digest, bytes }) => ({
+                path,
+                sha256: digest,
+                bytes,
+              })),
+            ),
+          ),
+        ),
+      },
+      support: {
+        reusable_packages: [
+          { name: "@salt-ds/core", version: "1.0.0", role: "reusable" },
+          { name: "@salt-ds/theme", version: "1.0.0", role: "reusable" },
+        ],
+        demo_packages: [],
+        external_dependencies: [
+          { name: "react", version: "18.3.1", role: "reusable" },
+        ],
+        theme_css: ["@salt-ds/theme/css/global.css"],
+      },
+    };
+    const artifacts = new Map([
+      [recipePath, Buffer.from(JSON.stringify(recipe))],
+      ...files.map((file) => [file.artifact_path, file.value]),
+    ]);
+    const calls = [];
+    return {
+      artifacts,
+      calls,
+      store: {
+        manifest: {
+          compatibility: {
+            packages: [
+              { name: "@salt-ds/core", tested_version: "1.0.0" },
+              { name: "@salt-ds/theme", tested_version: "1.0.0" },
+            ],
+          },
+        },
+        getRecord: (family, id) =>
+          family === "guide" && id === workflowId
+            ? { id, detail_content_ref: { id: "content.forms.detail" } }
+            : null,
+        getContentValue: () => ({ recipe_manifest: recipePath }),
+        readArtifact: (artifactPath) => {
+          calls.push(artifactPath);
+          const value = artifacts.get(artifactPath);
+          if (!value)
+            throw new Error(`Knowledge artifact is absent: ${artifactPath}`);
+          return value;
+        },
+      },
+    };
+  }
+
+  it("uses only installed Knowledge artifacts and never reads a repository app", () => {
+    const { store, calls, artifacts } = fixture();
+    const workflow = readPackedWorkflowRecipe(store);
+    expect(workflow.id).toBe(workflowId);
+    expect(workflow.recipeBytes).toEqual(artifacts.get(recipePath));
+    expect(workflow.files.map((file) => file.path)).toEqual(
+      expect.arrayContaining(filePaths),
+    );
+    expect(calls).toContain(recipePath);
+    expect(calls).not.toContain(
+      "examples/apps/operations-dashboard/package.json",
+    );
+    expect(calls.every((path) => path.startsWith("examples/workflows/"))).toBe(
+      true,
+    );
+  });
+
+  it("rejects a missing, tampered, redirected, or extra recipe artifact", () => {
+    const missing = fixture();
+    missing.artifacts.delete(
+      `examples/workflows/${workflowId}/files/src/main.tsx`,
+    );
+    expect(() => readPackedWorkflowRecipe(missing.store)).toThrow(
+      /artifact is absent/u,
+    );
+
+    const tampered = fixture();
+    tampered.artifacts.set(
+      `examples/workflows/${workflowId}/files/src/main.tsx`,
+      Buffer.from("x".repeat("packed src/main.tsx\n".length)),
+    );
+    expect(() => readPackedWorkflowRecipe(tampered.store)).toThrow(/digest/u);
+
+    const redirected = fixture();
+    const recipe = JSON.parse(
+      redirected.artifacts.get(recipePath).toString("utf8"),
+    );
+    recipe.files[0].artifact_path =
+      "examples/workflows/elsewhere/files/index.html";
+    redirected.artifacts.set(recipePath, Buffer.from(JSON.stringify(recipe)));
+    expect(() => readPackedWorkflowRecipe(redirected.store)).toThrow(
+      /artifact path is inconsistent/u,
+    );
+
+    const extra = fixture();
+    const extraRecipe = JSON.parse(
+      extra.artifacts.get(recipePath).toString("utf8"),
+    );
+    extraRecipe.files.push({
+      ...extraRecipe.files[0],
+      id: `workflow-file:${workflowId}:README.md`,
+      path: "README.md",
+      artifact_path: `examples/workflows/${workflowId}/files/README.md`,
+    });
+    extra.artifacts.set(recipePath, Buffer.from(JSON.stringify(extraRecipe)));
+    expect(() => readPackedWorkflowRecipe(extra.store)).toThrow(
+      /extra public files/u,
+    );
+  });
+});
+
+describe("compiled workflow preview closure", () => {
+  const file = (path, media_type, source) => ({
+    path,
+    media_type,
+    content: Buffer.from(source),
+  });
+
+  it("accepts a closed relative Vite HTML and CSS tree", () => {
+    const files = [
+      file(
+        "index.html",
+        "text/html; charset=utf-8",
+        '<link href="./assets/app.css" rel="stylesheet"><script src="./assets/app.js"></script>',
+      ),
+      file(
+        "assets/app.css",
+        "text/css; charset=utf-8",
+        '@import "./theme.css";a{background:url("./mark.svg#icon")}b{background:url(data:image/png;base64,AA==)}c{src:url(data:font/woff2;base64,AA==)}',
+      ),
+      file("assets/app.js", "text/javascript; charset=utf-8", "export {};"),
+      file("assets/mark.svg", "image/svg+xml", "<svg></svg>"),
+      file("assets/theme.css", "text/css; charset=utf-8", "a{color:red}"),
+    ];
+    expect(() => assertWorkflowPreviewReferenceClosure(files)).not.toThrow();
+  });
+
+  it("rejects missing local and external HTML references", () => {
+    expect(() =>
+      assertWorkflowPreviewReferenceClosure([
+        file(
+          "index.html",
+          "text/html; charset=utf-8",
+          '<script src="./missing.js"></script>',
+        ),
+      ]),
+    ).toThrow(/missing from the retained tree/u);
+    expect(() =>
+      assertWorkflowPreviewReferenceClosure([
+        file(
+          "index.html",
+          "text/html; charset=utf-8",
+          '<script src="https://example.invalid/app.js"></script>',
+        ),
+      ]),
+    ).toThrow(/external or root-absolute/u);
+  });
+
+  it("rejects missing local and external CSS references", () => {
+    expect(() =>
+      assertWorkflowPreviewReferenceClosure([
+        file(
+          "index.html",
+          "text/html; charset=utf-8",
+          '<link href="./app.css" rel="stylesheet">',
+        ),
+        file("app.css", "text/css; charset=utf-8", '@import "./missing.css";'),
+      ]),
+    ).toThrow(/missing from the retained tree/u);
+    expect(() =>
+      assertWorkflowPreviewReferenceClosure([
+        file(
+          "index.html",
+          "text/html; charset=utf-8",
+          '<link href="./app.css" rel="stylesheet">',
+        ),
+        file(
+          "app.css",
+          "text/css; charset=utf-8",
+          "a{background:url(//cdn.example.invalid/a.png)}",
+        ),
+      ]),
+    ).toThrow(/external or root-absolute/u);
+  });
+});
+
 describe("current sample-app CLI checks", () => {
   it("propagates a supported command failure", async () => {
     const outputs = commandResults();
@@ -225,6 +575,50 @@ describe("current sample-app receipt", () => {
     expect(validate(receipt(commands)), JSON.stringify(validate.errors)).toBe(
       true,
     );
+  });
+
+  it("keeps preview optional while validating a present descriptor", async () => {
+    const commands = await currentCommands();
+    const validate = await receiptValidator();
+    const withPreview = receipt(commands);
+    withPreview.checks[0].workflow.preview = workflowPreviewProof();
+    expect(validate(withPreview), JSON.stringify(validate.errors)).toBe(true);
+
+    const unsafe = structuredClone(withPreview);
+    unsafe.checks[0].workflow.preview.files[0].path = "../index.html";
+    expect(validate(unsafe)).toBe(false);
+  });
+
+  it.each([
+    "navigation_current_location",
+    "worklist",
+    "theme",
+    "missing_worklist_behavior_variant",
+  ])("rejects operations journey proof missing %s", async (field) => {
+    const commands = await currentCommands();
+    const validate = await receiptValidator();
+    const missing = receipt(commands);
+    delete missing.checks[0].workflow[field];
+    expect(validate(missing)).toBe(false);
+  });
+
+  it.each([
+    "initial_loading",
+    "refresh_disabled_during_initial_load",
+    "loaded_service_count",
+    "filtering",
+    "no_match",
+    "no_data",
+    "refresh_failure_preserves_data",
+    "retry_succeeds",
+    "inspection",
+    "editing",
+  ])("rejects operations worklist proof missing %s", async (field) => {
+    const commands = await currentCommands();
+    const validate = await receiptValidator();
+    const missing = receipt(commands);
+    delete missing.checks[0].workflow.worklist[field];
+    expect(validate(missing)).toBe(false);
   });
 
   it("accepts one check for every member of the full app cohort", async () => {

@@ -1,4 +1,4 @@
-<!-- salt-design-system managed block; bundle_version=0.0.0; skill_sha256=sha256:e91005f7575991999375f05f4ba473718d603ee0467b54aa1e51131ca1a05813 -->
+<!-- salt-design-system managed block; bundle_version=0.0.0; skill_sha256=sha256:d8572301f1f36c6572538532f295a92a9468caf34ef8348e8e72877582aa20eb -->
 
 ## Salt Design System
 
@@ -7,7 +7,7 @@ work, use the manifest-verified Skill from the installed Salt tooling. Inspect
 it with `salt-ds skill info --json` and print it with
 `salt-ds skill print --kind skill`.
 
-Follow that Skill's six-step CLI workflow: inspect exact compatibility,
+Follow that Skill's seven-step CLI workflow: inspect exact compatibility,
 retrieve only relevant guidance, make user-authorized edits, run the
 repository's own checks plus
 `salt-ds doctor . --format json --fail-on warning`, and report identity,

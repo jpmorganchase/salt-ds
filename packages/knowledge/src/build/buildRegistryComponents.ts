@@ -692,7 +692,7 @@ function parseLivePreviewTags(mdx: string): Array<{
     title: string;
     description: string;
   }> = [];
-  let currentHeading = "";
+  const headingStack = new Map<number, string>();
   let livePreviewBuffer: string[] | null = null;
   let descriptionLines: string[] = [];
 
@@ -718,7 +718,11 @@ function parseLivePreviewTags(mdx: string): Array<{
     examples.push({
       componentName: componentNameMatch[1],
       exampleName: exampleNameMatch[1],
-      title: displayNameMatch?.[1] ?? (currentHeading || exampleNameMatch[1]),
+      title:
+        displayNameMatch?.[1] ??
+        headingStack.get(2) ??
+        [...headingStack.entries()].at(-1)?.[1] ??
+        exampleNameMatch[1],
       description,
     });
   };
@@ -732,10 +736,18 @@ function parseLivePreviewTags(mdx: string): Array<{
       continue;
     }
 
-    const headingMatch = line.trim().match(/^#{2,4}\s+(.+)$/);
+    const headingMatch = line.trim().match(/^(#{2,4})\s+(.+)$/);
     if (headingMatch) {
-      currentHeading = cleanMarkdownText(headingMatch[1]);
-      descriptionLines = [];
+      const level = headingMatch[1].length;
+      for (const existingLevel of headingStack.keys()) {
+        if (existingLevel >= level) {
+          headingStack.delete(existingLevel);
+        }
+      }
+      headingStack.set(level, cleanMarkdownText(headingMatch[2]));
+      if (level === 2 || !headingStack.has(2)) {
+        descriptionLines = [];
+      }
       continue;
     }
 

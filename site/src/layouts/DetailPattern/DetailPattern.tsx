@@ -1,5 +1,9 @@
 import type { LayoutProps } from "@jpmorganchase/mosaic-layouts";
-import { type SiteState, useStore } from "@jpmorganchase/mosaic-store";
+import {
+  type SiteState,
+  useRoute,
+  useStore,
+} from "@jpmorganchase/mosaic-store";
 import {
   Button,
   Overlay,
@@ -10,7 +14,9 @@ import {
 import { SettingsSolidIcon } from "@salt-ds/icons";
 import type { FC } from "react";
 import { LivePreviewProvider } from "../../components";
+import { workflowPreviewForRoute } from "../../components/components/patternSourceLoaders";
 import { ThemeControls } from "../../components/components/ThemeControls";
+import { WorkflowPreview } from "../../components/components/WorkflowPreview";
 import { PageNavigation } from "../../components/navigation/PageNavigation";
 import { TableOfContents } from "../../components/toc";
 import { Base } from "../Base/index";
@@ -28,6 +34,8 @@ type Data = {
 };
 
 type CustomSiteState = SiteState & { data?: Data };
+const offlineAuthorPreview =
+  process.env.NEXT_PUBLIC_SALT_OFFLINE_AUTHOR_PREVIEW === "1";
 
 function PatternPageHeading({
   title,
@@ -64,6 +72,10 @@ function PatternPageHeading({
 }
 
 export const DetailPattern: FC<LayoutProps> = ({ children }) => {
+  const { route } = useRoute();
+  const workflowPreview = offlineAuthorPreview
+    ? workflowPreviewForRoute(route)
+    : undefined;
   const hasStorybookConsumerLink =
     useStore((state: CustomSiteState) =>
       state.data?.resources?.some((resource) =>
@@ -97,7 +109,17 @@ export const DetailPattern: FC<LayoutProps> = ({ children }) => {
         RightSidebar={RightSidebar}
         Heading={PatternPageHeading}
       >
-        {children}
+        {workflowPreview ? (
+          <div className={styles.workflowContent}>
+            <WorkflowPreview registration={workflowPreview} />
+            <a className={styles.referenceLink} href="#primitive-reference">
+              Browse the pattern reference
+            </a>
+            <div id="primitive-reference">{children}</div>
+          </div>
+        ) : (
+          children
+        )}
       </Base>
     </LivePreviewProvider>
   );

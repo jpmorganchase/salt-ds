@@ -66,6 +66,8 @@ const saltConfig = {
   ],
 };
 
+const offlineAuthorPreview = process.env.SALT_OFFLINE_AUTHOR_PREVIEW === "1";
+
 export default deepmerge(saltConfig, {
   sources: [
     {
@@ -77,18 +79,24 @@ export default deepmerge(saltConfig, {
         extensions: [".mdx"],
       },
     },
-    {
-      modulePath: "@jpmorganchase/mosaic-source-http",
-      namespace: "salt",
-      options: {
-        prefixDir: "salt-github",
-        endpoints: [
-          "https://api.github.com/repos/jpmorganchase/salt-ds/releases",
-        ],
-        transformResponseToPagesModulePath: pathToFileURL(
-          require.resolve("./src/mosaic-plugins/mosaic-github-transformer.mjs"),
-        ).toString(),
-      },
-    },
+    ...(!offlineAuthorPreview
+      ? [
+          {
+            modulePath: "@jpmorganchase/mosaic-source-http",
+            namespace: "salt",
+            options: {
+              prefixDir: "salt-github",
+              endpoints: [
+                "https://api.github.com/repos/jpmorganchase/salt-ds/releases",
+              ],
+              transformResponseToPagesModulePath: pathToFileURL(
+                require.resolve(
+                  "./src/mosaic-plugins/mosaic-github-transformer.mjs",
+                ),
+              ).toString(),
+            },
+          },
+        ]
+      : []),
   ],
 });

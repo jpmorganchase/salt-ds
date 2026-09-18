@@ -36,7 +36,9 @@ afterEach(async () => {
   );
 });
 
-describe("skill command", () => {
+// These integrity tests read whole bundles; the first performs three independent
+// loads. Allow filesystem variance without changing product performance limits.
+describe("skill command", { timeout: 15_000 }, () => {
   it("separates bundle selection, integrity, and origin authentication", async () => {
     const installedInfo = JSON.parse(
       await runSkillCommand({

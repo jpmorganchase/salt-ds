@@ -9,6 +9,7 @@ import {
   shortStableId,
   stableShaId,
 } from "../catalog/catalogSerialization.js";
+import { documentSectionText } from "../documents/renderDocument.js";
 import type { SaltTokenPolicyEvidenceRef } from "../evidence.js";
 import {
   createApiSymbolId,
@@ -49,6 +50,8 @@ import type {
   ExampleRecord,
   SaltRegistry,
 } from "../types.js";
+import type { AssembledWorkflowRecipe } from "./assembleWorkflowRecipe.js";
+import type { SelectedGuidance } from "./buildSelectedGuidance.js";
 import type {
   CatalogInputInventory,
   CatalogInputInventoryEntry,
@@ -70,6 +73,7 @@ export interface KnowledgeContentBlob {
 export interface NormalizedKnowledgeRecords {
   records: Record<CatalogFamilyName, CatalogRecord[]>;
   contentBlobs: Map<string, KnowledgeContentBlob>;
+  workflowRecipes?: AssembledWorkflowRecipe[];
 }
 
 type SourceRecord = CatalogRecordForFamily<"source">;
@@ -623,6 +627,8 @@ export function normalizeKnowledgeRecords(input: {
   registry: SaltRegistry;
   inventory: CatalogInputInventory;
   tokenPolicyStructuralRoleRulePackBody?: SaltTokenPolicyStructuralRoleRulePackBody | null;
+  selectedGuidance?: SelectedGuidance[];
+  workflowRecipes?: AssembledWorkflowRecipe[];
 }): NormalizedKnowledgeRecords {
   const records = Object.fromEntries(
     CATALOG_FAMILY_NAMES.map((family) => [family, []]),
@@ -1126,6 +1132,83 @@ export function normalizeKnowledgeRecords(input: {
     };
     addRecord(fact);
     pageFacts.push(fact);
+  }
+  for (const guidance of input.selectedGuidance ?? []) {
+    const sourceRefs = uniqueStrings(guidance.sourcePaths).map((sourcePath) =>
+      sources.fromRepoPath(sourcePath),
+    );
+    const componentRefs = guidance.componentNames.map((name) => {
+      const component = componentFactByName.get(name);
+      if (!component)
+        throw new Error(
+          `Canonical document '${guidance.id}' names unknown component '${name}'.`,
+        );
+      return catalogRef("component", component.id);
+    });
+    const reference = catalogRef("guide", guidance.id);
+    addRecord({
+      family: "guide",
+      id: guidance.id,
+      name: guidance.name,
+      aliases: guidance.aliases,
+      summary: guidance.summary,
+      kind: guidance.kind,
+      keywords: guidance.document.sections.map(documentSectionText),
+      documented_entity_refs: componentRefs,
+      package_refs: guidance.packageNames.map(requirePackageRef),
+      source_refs: sourceRefs,
+      detail_content_ref: content.add(
+        "document_detail",
+        {
+          document: guidance.document,
+          recipe_manifest: guidance.recipeManifest,
+          source_refs: sourceRefs,
+          component_refs: componentRefs,
+          files: guidance.files.map((file) => ({
+            source_path: file.sourcePath,
+            language: file.language,
+            source_ref: sources.fromRepoPath(file.sourcePath),
+            code_ref: content.add(
+              "guide_snippet_code",
+              file.code,
+              "source_extraction",
+            ),
+            readiness: "contextual",
+          })),
+          limitations: guidance.limitations,
+        },
+        "source_extraction",
+      ),
+    });
+    for (const name of guidance.attach.componentNames) {
+      const component = componentFactByName.get(name);
+      if (!component)
+        throw new Error(
+          `Canonical document '${guidance.id}' cannot attach to missing component '${name}'.`,
+        );
+      component.document_ref = reference;
+    }
+    for (const name of guidance.attach.patternNames) {
+      const pattern = patternFactByName.get(name);
+      if (!pattern)
+        throw new Error(
+          `Canonical document '${guidance.id}' cannot attach to missing pattern '${name}'.`,
+        );
+      pattern.document_ref = reference;
+    }
+    for (const sourcePath of guidance.attach.pageSourcePaths) {
+      const originalPage = input.registry.pages.find(
+        (page) => page.source_path === sourcePath,
+      );
+      const page = pageFacts.find(
+        (candidate) => candidate.id === originalPage?.id,
+      );
+      if (!page)
+        throw new Error(
+          `Canonical document '${guidance.id}' cannot attach to missing page '${sourcePath}'.`,
+        );
+      page.document_ref = reference;
+    }
   }
   const pageFactByRoute = new Map(
     pageFacts.map((fact) => [fact.route, fact] as const),
@@ -2718,5 +2801,8 @@ export function normalizeKnowledgeRecords(input: {
   return {
     records,
     contentBlobs: content.blobs,
+    ...(input.workflowRecipes?.length
+      ? { workflowRecipes: input.workflowRecipes }
+      : {}),
   };
 }

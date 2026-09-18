@@ -2,6 +2,7 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "paths": {
+      "@site/fonts": ["./site/src/fonts/index.ts"],
       "~browser-test-utils/*": ["./test/browser/*"],
       "~storybook-decorators/*": ["./.storybook/decorators/*"],
       "~stories/*": [

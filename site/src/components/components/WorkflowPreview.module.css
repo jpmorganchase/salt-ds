@@ -1,0 +1,105 @@
+.container {
+  border: var(--salt-size-border) solid var(--salt-container-primary-borderColor);
+  border-radius: var(--salt-size-borderRadius);
+  margin-block: var(--salt-spacing-400);
+  overflow: hidden;
+}
+
+.header {
+  align-items: center;
+  background: var(--salt-container-primary-background);
+  border-bottom: var(--salt-size-border) solid var(--salt-container-primary-borderColor);
+  display: flex;
+  gap: var(--salt-spacing-200);
+  justify-content: space-between;
+  padding: var(--salt-spacing-200) var(--salt-spacing-300);
+}
+
+.title {
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight-strong);
+  margin: 0;
+}
+
+.status {
+  color: var(--salt-content-secondary-foreground);
+  margin: 0;
+  padding: var(--salt-spacing-300);
+}
+
+.frame {
+  border: 0;
+  display: block;
+  height: 42rem;
+  width: 100%;
+}
+
+.resources {
+  background: var(--salt-container-secondary-background);
+  border-top: var(--salt-size-border) solid var(--salt-container-primary-borderColor);
+  padding: var(--salt-spacing-200) var(--salt-spacing-300);
+}
+
+.resources h3 {
+  font-size: var(--salt-text-fontSize);
+  margin: 0 0 var(--salt-spacing-100);
+}
+
+.resources ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--salt-spacing-100) var(--salt-spacing-300);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.resources a {
+  overflow-wrap: anywhere;
+}
+
+.guidance {
+  border-top: var(--salt-size-border) solid var(--salt-container-primary-borderColor);
+  padding: var(--salt-spacing-200) var(--salt-spacing-300);
+}
+
+.guidance details {
+  border-top: var(--salt-size-border) solid var(--salt-container-primary-borderColor);
+  padding-block: var(--salt-spacing-100);
+}
+
+.guidance summary {
+  cursor: pointer;
+  font-weight: var(--salt-text-fontWeight-strong);
+}
+
+.guidanceSummary {
+  margin-block: var(--salt-spacing-200);
+}
+
+.guidanceSummary :is(h1, h2, h3, h4, h5, h6):first-child {
+  font-size: inherit;
+  margin: 0 0 var(--salt-spacing-100);
+}
+
+.workflowIntent {
+  color: var(--salt-content-secondary-foreground);
+  margin: var(--salt-spacing-100) 0 0;
+}
+
+.guidance pre {
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+.source {
+  max-width: 100%;
+  overflow: auto;
+  white-space: pre;
+}
+
+.guidanceActions {
+  display: flex;
+  gap: var(--salt-spacing-200);
+  margin-block: var(--salt-spacing-100);
+}

@@ -42,9 +42,22 @@ authoritative details.
 
 ### Component or pattern
 
-- Start with a component when you need one UI element with clear semantics.
-- Start with a pattern when the job spans multiple components or repeated page
-  structure.
+- Derive the UI roles first: for example, content container, action,
+  destination, selection control, status, layout region, or repeated flow.
+- Check Salt component and pattern coverage for those roles before composing
+  anything new. Start with a component when one element has clear semantics;
+  start with a pattern when the job spans a repeated flow or page structure.
+- Compose the selected Salt parts before writing CSS. Use tokens to customize
+  or complement those parts, not to recreate their behavior or semantics from
+  generic elements and custom roles.
+- Create custom UI only for an actual coverage gap. State the missing role or
+  behavior, keep that addition scoped to the gap, and do not duplicate an
+  existing Salt primitive under a different name.
+
+For example, a metric summary may lead to [`Card`](/salt/components/card) as
+the content container. Use its documented `variant` and `accent` props for
+hierarchy; if the whole region instead navigates or selects, consult the card
+coverage for the corresponding existing Salt component before composing it.
 
 ### Salt primitive or custom wrapper
 
@@ -56,6 +69,7 @@ authoritative details.
 
 - [Button usage](/salt/components/button/usage)
 - [Link usage](/salt/components/link/usage)
+- [Card usage](/salt/components/card/usage)
 - [Layouts overview](/salt/components/layouts/index)
 - [Patterns overview](/salt/patterns/index)
 - [Composition pitfalls](./composition-pitfalls)

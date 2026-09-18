@@ -131,7 +131,8 @@ if (
     typeof publishKnowledgeInputPatterns !== "object" ||
     Array.isArray(publishKnowledgeInputPatterns) ||
     typeof publishKnowledgeInputPatterns.semantic !== "string" ||
-    typeof publishKnowledgeInputPatterns.compiler !== "string")
+    typeof publishKnowledgeInputPatterns.compiler !== "string" ||
+    typeof publishKnowledgeInputPatterns.publication !== "string")
 ) {
   throw new Error(
     "Knowledge-v1 publication requires distinct manifest/inventory paths and cannot use the Catalog-v2 build identity.",
@@ -140,7 +141,7 @@ if (
 const knowledgeInputPatterns = publishKnowledgeManifest
   ? Object.fromEntries(
       await Promise.all(
-        ["semantic", "compiler"].map(async (kind) => {
+        ["semantic", "compiler", "publication"].map(async (kind) => {
           const relativePath = publishKnowledgeInputPatterns[kind];
           normalizePortableRepositoryBuildPath(
             relativePath,
@@ -170,7 +171,7 @@ const assertKnowledgeBuildBoundary = publishKnowledgeManifest
         manifestPath: publishKnowledgeManifest,
         publicationInventoryPath: publishKnowledgePublicationInventory,
       });
-      for (const kind of ["semantic", "compiler"]) {
+      for (const kind of ["semantic", "compiler", "publication"]) {
         await assertCompleteCatalogInputSet(
           verified.inputInventories[kind],
           repoRoot,

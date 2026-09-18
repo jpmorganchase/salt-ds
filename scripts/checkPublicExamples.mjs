@@ -1,9 +1,20 @@
 import assert from "node:assert/strict";
-import { mkdtemp, mkdir, readFile, rm, stat, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
+import {
+  mkdir,
+  mkdtemp,
+  readFile,
+  rm,
+  stat,
+  writeFile,
+} from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import Ajv2020 from "ajv/dist/2020.js";
 import { build } from "esbuild";
+import micromatch from "micromatch";
+import prettier from "prettier";
 
 import { repositoryTextBytes } from "./saltAiEvidenceUtils.mjs";
 
@@ -20,6 +31,19 @@ const sourceLoadersPath = path.join(
   "components",
   "components",
   "patternSourceLoaders.ts",
+);
+const workflowApplication = "examples/apps/operations-dashboard";
+const workflowApplicationRoot = path.join(repositoryRoot, workflowApplication);
+const workflowRecipePath = `${workflowApplication}/src/workflows/service-worklist/recipe.json`;
+const workflowRecipeAbsolutePath = path.join(
+  repositoryRoot,
+  workflowRecipePath,
+);
+const currentManifestSchemaPath = path.join(
+  repositoryRoot,
+  "scripts",
+  "schemas",
+  "saltAuthoredExampleManifestV2.schema.json",
 );
 
 const examples = [
@@ -172,16 +196,229 @@ async function expectedManifest() {
       ...(await discover(example.entry)),
     });
   }
+  const { recipe: workflowRecipe } = await validateWorkflowRecipe();
   return {
     $schema:
-      "https://www.saltdesignsystem.com/ai/schemas/salt-authored-example-manifest-1.json",
-    schemaVersion: "1.0.0",
-    contract: "salt-authored-example-manifest/1",
+      "https://www.saltdesignsystem.com/ai/schemas/salt-authored-example-manifest-2.json",
+    schemaVersion: "2.0.0",
+    contract: "salt-authored-example-manifest/2",
     examples: entries,
+    workflows: [
+      {
+        id: workflowRecipe.id,
+        title: workflowRecipe.title,
+        route: "/salt/patterns/analytical-dashboard",
+        recipe: workflowRecipePath,
+        visibility: "public",
+        stability: "experimental",
+        provenance: "authored_workflow",
+      },
+    ],
   };
 }
 
-function expectedSourceLoaders(manifest) {
+function sha256(bytes) {
+  return `sha256:${createHash("sha256").update(bytes).digest("hex")}`;
+}
+
+async function workflowInputPaths(assembler) {
+  const [recipeInput, semanticPatterns, publicationPatterns] =
+    await Promise.all([
+      readFile(workflowRecipeAbsolutePath, "utf8").then(JSON.parse),
+      readFile(
+        path.join(
+          repositoryRoot,
+          "packages/knowledge/src/build/catalogSemanticInputPatterns.json",
+        ),
+        "utf8",
+      ).then(JSON.parse),
+      readFile(
+        path.join(
+          repositoryRoot,
+          "packages/knowledge/src/build/catalogPublicationInputPatterns.json",
+        ),
+        "utf8",
+      ).then(JSON.parse),
+    ]);
+  const recipe = assembler.parseWorkflowRecipeDeclaration(recipeInput);
+  assert.equal(
+    recipe.source?.application,
+    workflowApplication,
+    "Workflow recipe must stay in the named application",
+  );
+  const semanticPaths = [
+    workflowRecipePath,
+    ...recipe.source.reusable_workflow_files.map(
+      (file) => `${workflowApplication}/${file}`,
+    ),
+    `${workflowApplication}/${recipe.setup.dependency_manifest}`,
+    ...recipe.source.canonical_guidance.map(
+      (reference) => reference.split("#", 1)[0],
+    ),
+  ].sort();
+  const publicationPaths = recipe.source.demo_application_files
+    .filter((file) => file !== recipe.setup.dependency_manifest)
+    .map((file) => `${workflowApplication}/${file}`)
+    .sort();
+
+  for (const relative of semanticPaths) {
+    assert.ok(
+      micromatch.isMatch(relative, semanticPatterns),
+      `Workflow semantic input is not registered: ${relative}`,
+    );
+    if (relative.startsWith(`${workflowApplication}/`)) {
+      assert.ok(
+        semanticPatterns.includes(relative),
+        `Workflow application semantic input must use an exact registration: ${relative}`,
+      );
+    }
+  }
+  assert.deepEqual(
+    publicationPaths,
+    [...publicationPatterns].sort(),
+    "Workflow demo-only files must exactly match the publication input registration",
+  );
+  return { recipe, semanticPaths, publicationPaths };
+}
+
+async function workflowInputInventory(paths) {
+  const entries = [];
+  for (const relative of [...paths].sort()) {
+    const bytes = repositoryTextBytes(
+      await readFile(path.join(repositoryRoot, relative)),
+    );
+    entries.push({
+      path: relative,
+      sha256: sha256(bytes),
+      bytes: bytes.byteLength,
+    });
+  }
+  return {
+    entries,
+    digest: sha256(Buffer.from(JSON.stringify(entries), "utf8")),
+  };
+}
+
+let workflowAssemblerPromise;
+async function workflowAssembler() {
+  workflowAssemblerPromise ??= (async () => {
+    const cacheRoot = path.join(repositoryRoot, "node_modules", ".cache");
+    await mkdir(cacheRoot, { recursive: true });
+    const outputRoot = await mkdtemp(path.join(cacheRoot, "salt-workflow-"));
+    const outfile = path.join(outputRoot, "assembler.mjs");
+    try {
+      await build({
+        bundle: true,
+        entryPoints: [
+          path.join(
+            repositoryRoot,
+            "packages",
+            "knowledge",
+            "src",
+            "build",
+            "assembleWorkflowRecipe.ts",
+          ),
+        ],
+        format: "esm",
+        logLevel: "silent",
+        outfile,
+        packages: "external",
+        platform: "node",
+      });
+      return await import(pathToFileURL(outfile).href);
+    } finally {
+      await rm(outputRoot, { recursive: true, force: true });
+    }
+  })();
+  return workflowAssemblerPromise;
+}
+
+let currentWorkflowPromise;
+async function validateWorkflowRecipe() {
+  currentWorkflowPromise ??= (async () => {
+    const assembler = await workflowAssembler();
+    const inputs = await workflowInputPaths(assembler);
+    const [semanticInputInventory, publicationInputInventory] =
+      await Promise.all([
+        workflowInputInventory(inputs.semanticPaths),
+        workflowInputInventory(inputs.publicationPaths),
+      ]);
+    const packageManifest = JSON.parse(
+      await readFile(
+        path.join(workflowApplicationRoot, "package.json"),
+        "utf8",
+      ),
+    );
+    const compatibility = {
+      packages: Object.entries(packageManifest.dependencies)
+        .filter(([name]) => name.startsWith("@salt-ds/"))
+        .map(([name, tested_version]) => ({ name, tested_version })),
+    };
+    const assembled = await assembler.assembleWorkflowRecipe({
+      sourceRoot: repositoryRoot,
+      semanticInputInventory,
+      publicationInputInventory,
+      compatibility,
+    });
+    return {
+      ...assembled,
+      recipe: inputs.recipe,
+      packageManifest,
+    };
+  })();
+  return currentWorkflowPromise;
+}
+
+async function compileExtractedWorkflow(tempRoot, workflow) {
+  const publicFileByArtifact = new Map(
+    workflow.publicFiles.map((file) => [file.artifactPath, file]),
+  );
+  for (const file of workflow.recipeArtifact.files) {
+    const publicFile = publicFileByArtifact.get(file.artifact_path);
+    assert.ok(
+      publicFile,
+      `Workflow artifact bytes are missing: ${file.artifact_path}`,
+    );
+    const target = path.join(tempRoot, file.path);
+    await mkdir(path.dirname(target), { recursive: true });
+    await writeFile(target, publicFile.bytes);
+  }
+  const external = [
+    ...Object.keys(workflow.packageManifest.dependencies ?? {}),
+    ...Object.keys(workflow.packageManifest.devDependencies ?? {}),
+  ].flatMap((dependency) => [dependency, `${dependency}/*`]);
+  for (const entryPoint of [
+    "src/workflows/record-form/RecordForm.tsx",
+    "src/main.tsx",
+  ]) {
+    await build({
+      absWorkingDir: tempRoot,
+      bundle: true,
+      entryPoints: [entryPoint],
+      external,
+      format: "esm",
+      jsx: "automatic",
+      loader: {
+        ".jpeg": "file",
+        ".jpg": "file",
+        ".png": "file",
+        ".svg": "file",
+      },
+      logLevel: "silent",
+      outdir: path.join(tempRoot, "build", path.basename(entryPoint)),
+      write: false,
+    });
+  }
+}
+
+async function formatGenerated(filePath, source) {
+  return prettier.format(source, {
+    ...(await prettier.resolveConfig(filePath)),
+    filepath: filePath,
+  });
+}
+
+async function expectedSourceLoaders(manifest) {
   const files = [
     ...new Set(
       manifest.examples.flatMap(({ files }) =>
@@ -197,17 +434,52 @@ function expectedSourceLoaders(manifest) {
     ({ id }) =>
       `  ${JSON.stringify(id)}: () => import(${JSON.stringify(`../../examples/patterns/${id}`)}),`,
   );
-  return [
-    "// Generated by scripts/checkPublicExamples.mjs. Do not edit by hand.",
-    "export const patternExampleLoaders = {",
-    ...modules,
-    "} as const;",
-    "",
-    "export const patternSourceLoaders = {",
-    ...entries,
-    "} as const;",
-    "",
-  ].join("\n");
+  const workflows = manifest.workflows.flatMap(
+    ({ id, route, title, recipe }) => [
+      `  ${JSON.stringify(route)}: {`,
+      `    id: ${JSON.stringify(id)},`,
+      `    route: ${JSON.stringify(route)},`,
+      `    title: ${JSON.stringify(title)},`,
+      "    recipeSourcePath:",
+      `      ${JSON.stringify(recipe)},`,
+      `    guideReference: ${JSON.stringify(`record:guide:${id}`)},`,
+      `    previewLocator: ${JSON.stringify(`workflow-preview:${id}`)},`,
+      "  },",
+    ],
+  );
+  return formatGenerated(
+    sourceLoadersPath,
+    [
+      "// Generated by scripts/checkPublicExamples.mjs. Do not edit by hand.",
+      "export const patternExampleLoaders = {",
+      ...modules,
+      "} as const;",
+      "",
+      "export const patternSourceLoaders = {",
+      ...entries,
+      "} as const;",
+      "",
+      "export type WorkflowPreviewRegistration = {",
+      "  id: string;",
+      "  route: string;",
+      "  title: string;",
+      "  recipeSourcePath: string;",
+      "  guideReference: string;",
+      "  previewLocator: string;",
+      "};",
+      "",
+      "export const workflowPreviewByRoute = {",
+      ...workflows,
+      "} as const satisfies Record<string, WorkflowPreviewRegistration>;",
+      "",
+      "export function workflowPreviewForRoute(route: string | undefined) {",
+      "  return route",
+      "    ? workflowPreviewByRoute[route as keyof typeof workflowPreviewByRoute]",
+      "    : undefined;",
+      "}",
+      "",
+    ].join("\n"),
+  );
 }
 
 async function compileExtractedExample(tempRoot, example) {
@@ -218,9 +490,10 @@ async function compileExtractedExample(tempRoot, example) {
     await writeFile(target, await readFile(source));
   }
 
-  const external = [...example.externalDependencies, ...example.saltPackages].flatMap(
-    (dependency) => [dependency, `${dependency}/*`],
-  );
+  const external = [
+    ...example.externalDependencies,
+    ...example.saltPackages,
+  ].flatMap((dependency) => [dependency, `${dependency}/*`]);
   await build({
     absWorkingDir: tempRoot,
     bundle: true,
@@ -241,24 +514,47 @@ async function compileExtractedExample(tempRoot, example) {
 }
 
 const expected = await expectedManifest();
-const expectedLoaders = expectedSourceLoaders(expected);
+const expectedLoaders = await expectedSourceLoaders(expected);
+const expectedManifestText = await formatGenerated(
+  manifestPath,
+  `${JSON.stringify(expected, null, 2)}\n`,
+);
 
 if (process.argv.includes("--write-manifest")) {
-  await writeFile(manifestPath, `${JSON.stringify(expected, null, 2)}\n`);
+  await writeFile(manifestPath, expectedManifestText);
   await writeFile(sourceLoadersPath, expectedLoaders);
   console.log(`Wrote ${toPosix(path.relative(repositoryRoot, manifestPath))}`);
-  console.log(`Wrote ${toPosix(path.relative(repositoryRoot, sourceLoadersPath))}`);
+  console.log(
+    `Wrote ${toPosix(path.relative(repositoryRoot, sourceLoadersPath))}`,
+  );
   process.exit(0);
 }
 
 const actual = JSON.parse(await readFile(manifestPath, "utf8"));
+const currentManifestSchema = JSON.parse(
+  await readFile(currentManifestSchemaPath, "utf8"),
+);
+const ajv = new Ajv2020({ allErrors: true, strict: true });
+const validateCurrentManifest = ajv.compile(currentManifestSchema);
+assert.ok(
+  validateCurrentManifest(actual),
+  `Current authored example manifest schema failure: ${ajv.errorsText(
+    validateCurrentManifest.errors,
+    { separator: "; " },
+  )}`,
+);
 assert.deepEqual(
   actual,
   expected,
   "The public example manifest is stale or its dependency closure is incomplete. Run `yarn examples:manifest` and review the diff.",
 );
-assert.equal(actual.contract, "salt-authored-example-manifest/1");
+assert.equal(actual.contract, "salt-authored-example-manifest/2");
 assert.equal(new Set(actual.examples.map(({ id }) => id)).size, 24);
+assert.deepEqual(
+  actual.workflows.map(({ id }) => id),
+  ["operations-dashboard.service-worklist"],
+  "The current manifest must register exactly the selected workflow",
+);
 assert.ok(
   actual.examples.every(
     (entry) =>
@@ -290,10 +586,14 @@ try {
     );
     await compileExtractedExample(extractionRoot, example);
   }
+  await compileExtractedWorkflow(
+    extractionRoot,
+    await validateWorkflowRecipe(),
+  );
 } finally {
   await rm(extractionRoot, { recursive: true, force: true });
 }
 
 console.log(
-  `Verified ${actual.examples.length} complete public pattern examples and their extracted builds.`,
+  `Verified ${actual.examples.length} complete public pattern examples and ${actual.workflows.length} workflow recipe with extracted builds.`,
 );

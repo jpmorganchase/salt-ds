@@ -165,6 +165,7 @@ export const componentFactCodec = z
     export_name: z.string().min(1).nullable(),
     policy_profile_ref: policyProfileReferenceCodec.nullable(),
     detail_content_ref: catalogContentReferenceCodecFor("component_detail"),
+    document_ref: guideReferenceCodec.optional(),
   })
   .strict()
   .superRefine((record, context) => {
@@ -228,6 +229,7 @@ export const patternFactCodec = z
     categories: z.array(z.string()),
     policy_profile_ref: policyProfileReferenceCodec,
     detail_content_ref: catalogContentReferenceCodecFor("pattern_detail"),
+    document_ref: guideReferenceCodec.optional(),
   })
   .strict();
 
@@ -235,14 +237,45 @@ export const guideFactCodec = z
   .object({
     family: z.literal("guide"),
     ...namedFactBaseShape,
-    kind: z.enum(["getting-started", "theming"]),
+    kind: z.enum([
+      "getting-started",
+      "theming",
+      "workflow",
+      "component-guidance",
+    ]),
     documented_entity_refs: z.array(
       z.union([componentReferenceCodec, patternReferenceCodec]),
     ),
     package_refs: z.array(packageReferenceCodec),
-    detail_content_ref: catalogContentReferenceCodecFor("guide_detail"),
+    detail_content_ref: z.union([
+      catalogContentReferenceCodecFor("guide_detail"),
+      catalogContentReferenceCodecFor("document_detail"),
+    ]),
+    source_refs: z.array(sourceReferenceCodec).optional(),
+    keywords: z.array(z.string()).optional(),
   })
-  .strict();
+  .strict()
+  .superRefine((record, context) => {
+    const structured =
+      record.kind === "workflow" || record.kind === "component-guidance";
+    if (
+      structured !==
+      (record.detail_content_ref.codec === "document_detail")
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["detail_content_ref"],
+        message: "The guide kind must match its content codec.",
+      });
+    }
+    if (structured && !record.source_refs?.length) {
+      context.addIssue({
+        code: "custom",
+        path: ["source_refs"],
+        message: "A canonical document requires source provenance.",
+      });
+    }
+  });
 
 export const pageFactCodec = z
   .object({
@@ -257,6 +290,7 @@ export const pageFactCodec = z
     body_content_ref: catalogContentReferenceCodecFor("page_body"),
     detail_content_ref: catalogContentReferenceCodecFor("page_detail"),
     source_ref: sourceReferenceCodec,
+    document_ref: guideReferenceCodec.optional(),
   })
   .strict();
 
@@ -1338,6 +1372,7 @@ const canonicalCatalogFamilies = {
       record.package_ref,
       ...(record.source_ref ? [record.source_ref] : []),
       ...(record.policy_profile_ref ? [record.policy_profile_ref] : []),
+      ...(record.document_ref ? [record.document_ref] : []),
     ],
     resolveContentReferences: (record) => [record.detail_content_ref],
     resolveProvenance: (record) =>
@@ -1406,7 +1441,10 @@ const canonicalCatalogFamilies = {
         terms: record.categories,
         facets: { category: record.categories },
       }),
-    resolveReferences: (record) => [record.policy_profile_ref],
+    resolveReferences: (record) => [
+      record.policy_profile_ref,
+      ...(record.document_ref ? [record.document_ref] : []),
+    ],
     resolveContentReferences: (record) => [record.detail_content_ref],
     resolveProvenance: noReferences,
     publicationState: "resource-ready",
@@ -1422,15 +1460,16 @@ const canonicalCatalogFamilies = {
     searchable: true,
     indexRecord: (record) =>
       namedSearch(record, {
-        terms: [record.kind],
+        terms: [record.kind, ...(record.keywords ?? [])],
         facets: { kind: [record.kind] },
       }),
     resolveReferences: (record) => [
       ...record.documented_entity_refs,
       ...record.package_refs,
+      ...(record.source_refs ?? []),
     ],
     resolveContentReferences: (record) => [record.detail_content_ref],
-    resolveProvenance: noReferences,
+    resolveProvenance: (record) => record.source_refs ?? [],
     publicationState: "resource-ready",
     canonical: true,
   }),
@@ -1456,7 +1495,10 @@ const canonicalCatalogFamilies = {
         page_kind: [record.page_kind],
       },
     }),
-    resolveReferences: (record) => [record.source_ref],
+    resolveReferences: (record) => [
+      record.source_ref,
+      ...(record.document_ref ? [record.document_ref] : []),
+    ],
     resolveContentReferences: (record) => [
       record.body_content_ref,
       record.detail_content_ref,

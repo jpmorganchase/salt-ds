@@ -24,6 +24,12 @@ retrieval and explicit workspace selection. Plan 033 now starts one reusable
 record form in the existing operations dashboard, followed by shared form/Button
 guidance for the website, portable files, Markdown and local tools. GitHub Copilot
 with npm is the first consumer route.
+The 2026-09-08 user-directed continuation expands the local runnable preview to
+one coherent service-operations application: navigation, worklist states and
+record inspection/editing, with the existing form retained as a reusable part.
+It replaces the narrow unreleased recipe through the same canonical delivery
+path. This local scope change precedes consumer observations; it does not claim
+human acceptance or supported-release readiness.
 Known CLI/Knowledge tooling identities are distinct from UI compatibility;
 unknown Salt UI families and unverifiable UI installs remain explicit. Doctor
 is technically unqualified and selected for retirement before supported preview

@@ -73,5 +73,14 @@
   "site/src/components/css-display/descriptions.ts",
   "site/src/components/icon-preview/salt-icon-synonym.json",
   "site/src/examples/**/*.{ts,tsx,css,scss,json}",
+  "examples/apps/operations-dashboard/package.json",
+  "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json",
+  "examples/apps/operations-dashboard/src/workflows/record-form/RecordForm.tsx",
+  "examples/apps/operations-dashboard/src/workflows/record-form/RecordForm.css",
+  "examples/apps/operations-dashboard/src/workflows/record-form/types.ts",
+  "examples/apps/operations-dashboard/src/workflows/service-worklist/types.ts",
+  "examples/apps/operations-dashboard/src/workflows/service-worklist/IncidentWorklist.tsx",
+  "examples/apps/operations-dashboard/src/workflows/service-worklist/IncidentInspector.tsx",
+  "examples/apps/operations-dashboard/src/workflows/service-worklist/ServiceWorklist.css",
   "tooling/ai/migration-records-v1.json"
 ]

@@ -711,6 +711,7 @@ export async function verifySealedGeneratorBundleStability({
   sourceRoot,
   semanticInputPatterns = [],
   compilerInputPatterns = [],
+  publicationInputPatterns = [],
   dependencyInventory,
   createDependencyInventory,
   buildBundle,
@@ -724,6 +725,7 @@ export async function verifySealedGeneratorBundleStability({
   const inputPatterns = [
     ...semanticInputPatterns,
     ...compilerInputPatterns,
+    ...publicationInputPatterns,
   ];
   const inputBefore = await firstBundle.generator.createCatalogInputInventory(
     sourceRoot,
@@ -1145,6 +1147,15 @@ export async function buildCatalogRegistry(options = {}) {
           "catalogCompilerInputPatterns.json",
         ),
     );
+    const publicationInputPatternsPath = path.resolve(
+      options.publicationInputPatternsPath ??
+        path.join(
+          activePackageRoot,
+          "src",
+          "build",
+          "catalogPublicationInputPatterns.json",
+        ),
+    );
     for (const [label, candidate] of [
       ["package root", activePackageRoot],
       ["output root", outputDir],
@@ -1152,17 +1163,25 @@ export async function buildCatalogRegistry(options = {}) {
       ["source-map replacement", activeGeneratorNoSourceMapPath],
       ["semantic input patterns", semanticInputPatternsPath],
       ["compiler input patterns", compilerInputPatternsPath],
+      ["publication input patterns", publicationInputPatternsPath],
     ]) {
       if (!isWithin(sourceRoot, candidate)) {
         throw new Error(`Catalog ${label} escapes the repository root.`);
       }
     }
-    const [packageManifest, semanticInputPatterns, compilerInputPatterns] =
-      await Promise.all([
-        fs.readFile(path.join(activePackageRoot, "package.json"), "utf8").then(JSON.parse),
-        fs.readFile(semanticInputPatternsPath, "utf8").then(JSON.parse),
-        fs.readFile(compilerInputPatternsPath, "utf8").then(JSON.parse),
-      ]);
+    const [
+      packageManifest,
+      semanticInputPatterns,
+      compilerInputPatterns,
+      publicationInputPatterns,
+    ] = await Promise.all([
+      fs
+        .readFile(path.join(activePackageRoot, "package.json"), "utf8")
+        .then(JSON.parse),
+      fs.readFile(semanticInputPatternsPath, "utf8").then(JSON.parse),
+      fs.readFile(compilerInputPatternsPath, "utf8").then(JSON.parse),
+      fs.readFile(publicationInputPatternsPath, "utf8").then(JSON.parse),
+    ]);
     const packageVersion = options.packageVersion ?? packageManifest.version;
     if (
       typeof packageVersion !== "string" ||
@@ -1312,6 +1331,7 @@ export async function buildCatalogRegistry(options = {}) {
         sourceRoot,
         semanticInputPatterns,
         compilerInputPatterns,
+        publicationInputPatterns,
         dependencyInventory: dependencyBefore,
         createDependencyInventory: createGeneratorDependencyInventory,
         assertToolSnapshotStable: () => toolSnapshot.assertStable(),
@@ -1394,48 +1414,57 @@ export async function buildCatalogRegistry(options = {}) {
         );
       };
       const built = await generator.buildKnowledgeSource({
-          sourceRoot,
-          packageRoot: activePackageRoot,
-          outputDir,
-          packageVersion,
-          semanticInputPatterns,
-          compilerInputPatterns,
-          excludedPackageNames: options.excludedPackageNames ?? [
-            "@salt-ds/knowledge",
-          ],
-          generatorVersion: "2.0.0",
-          inputInventory: inputBefore,
-          generatorDependencyInventory: dependencyBefore,
-          generatorReceipt: receipt,
-          assertGeneratorDependenciesStable,
-          generatorDependencySnapshotRoot: temporaryToolRoot,
-        });
+        sourceRoot,
+        packageRoot: activePackageRoot,
+        outputDir,
+        packageVersion,
+        semanticInputPatterns,
+        compilerInputPatterns,
+        publicationInputPatterns,
+        excludedPackageNames: options.excludedPackageNames ?? [
+          "@salt-ds/knowledge",
+        ],
+        generatorVersion: "2.0.0",
+        inputInventory: inputBefore,
+        generatorDependencyInventory: dependencyBefore,
+        generatorReceipt: receipt,
+        assertGeneratorDependenciesStable,
+        generatorDependencySnapshotRoot: temporaryToolRoot,
+      });
       await toolSnapshot.assertStable();
       await assertGeneratorDependenciesStable();
-        const [semanticInputInventory, compilerInputInventory] =
-          await Promise.all([
-            generator.createCatalogInputInventory(
-              sourceRoot,
-              semanticInputPatterns,
-            ),
-            generator.createCatalogInputInventory(
-              sourceRoot,
-              compilerInputPatterns,
-            ),
-          ]);
-        await generator.buildKnowledgeV1({
+      const [
+        semanticInputInventory,
+        compilerInputInventory,
+        publicationInputInventory,
+      ] = await Promise.all([
+        generator.createCatalogInputInventory(
           sourceRoot,
-          packageRoot: activePackageRoot,
-          outputDir,
-          packageVersion,
-          inputInventory: inputBefore,
-          registry: built.registry,
-          normalized: built.normalized,
-          semanticInputInventory,
-          compilerInputInventory,
-          generatorReceipt: receipt,
-          generatorDigest,
-        });
+          semanticInputPatterns,
+        ),
+        generator.createCatalogInputInventory(
+          sourceRoot,
+          compilerInputPatterns,
+        ),
+        generator.createCatalogInputInventory(
+          sourceRoot,
+          publicationInputPatterns,
+        ),
+      ]);
+      await generator.buildKnowledgeV1({
+        sourceRoot,
+        packageRoot: activePackageRoot,
+        outputDir,
+        packageVersion,
+        inputInventory: inputBefore,
+        registry: built.registry,
+        normalized: built.normalized,
+        semanticInputInventory,
+        compilerInputInventory,
+        publicationInputInventory,
+        generatorReceipt: receipt,
+        generatorDigest,
+      });
       return built.registry;
     } finally {
       await esbuildToStop?.stop?.();
@@ -1455,7 +1484,9 @@ async function main() {
     path.resolve(outputDir) !== path.resolve(packageRoot, "generated") ||
     !isWithin(packageRoot, outputDir)
   ) {
-    throw new Error("Knowledge comparison output must stay inside the package.");
+    throw new Error(
+      "Knowledge comparison output must stay inside the package.",
+    );
   }
   await fs.rm(outputDir, { recursive: true, force: true });
   const registry = await buildCatalogRegistry({
@@ -1474,6 +1505,12 @@ async function main() {
       "src",
       "build",
       "catalogCompilerInputPatterns.json",
+    ),
+    publicationInputPatternsPath: path.join(
+      packageRoot,
+      "src",
+      "build",
+      "catalogPublicationInputPatterns.json",
     ),
     excludedPackageNames: ["@salt-ds/knowledge"],
   });

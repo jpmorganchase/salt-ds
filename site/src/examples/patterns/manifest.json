@@ -1,7 +1,7 @@
 {
-  "$schema": "https://www.saltdesignsystem.com/ai/schemas/salt-authored-example-manifest-1.json",
-  "schemaVersion": "1.0.0",
-  "contract": "salt-authored-example-manifest/1",
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/salt-authored-example-manifest-2.json",
+  "schemaVersion": "2.0.0",
+  "contract": "salt-authored-example-manifest/2",
   "examples": [
     {
       "id": "announcement-dialog",
@@ -21,13 +21,8 @@
         "patterns/announcement-dialog/index.tsx",
         "patterns/assets/exampleImage4x.png"
       ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/icons"
-      ]
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"]
     },
     {
       "id": "app-header",
@@ -42,17 +37,9 @@
         "guidance": "site/docs/patterns/app-header.mdx",
         "maintainerFacade": "packages/core/stories/patterns/app-header/app-header.stories.tsx"
       },
-      "files": [
-        "patterns/app-header/index.tsx",
-        "patterns/assets/logo.svg"
-      ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/icons"
-      ]
+      "files": ["patterns/app-header/index.tsx", "patterns/assets/logo.svg"],
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"]
     },
     {
       "id": "breadcrumbs",
@@ -67,16 +54,9 @@
         "guidance": "site/docs/patterns/breadcrumbs.mdx",
         "maintainerFacade": "packages/core/stories/patterns/breadcrumbs/breadcrumbs.stories.tsx"
       },
-      "files": [
-        "patterns/breadcrumbs/index.tsx"
-      ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/icons"
-      ]
+      "files": ["patterns/breadcrumbs/index.tsx"],
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"]
     },
     {
       "id": "button-bar",
@@ -91,16 +71,9 @@
         "guidance": "site/docs/patterns/button-bar.mdx",
         "maintainerFacade": "packages/core/stories/patterns/button-bar/button-bar.stories.tsx"
       },
-      "files": [
-        "patterns/button-bar/index.tsx"
-      ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/icons"
-      ]
+      "files": ["patterns/button-bar/index.tsx"],
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"]
     },
     {
       "id": "comments",
@@ -115,16 +88,9 @@
         "guidance": "site/docs/patterns/comments.mdx",
         "maintainerFacade": "packages/core/stories/patterns/comments/comments.stories.tsx"
       },
-      "files": [
-        "patterns/comments/index.tsx"
-      ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/icons"
-      ]
+      "files": ["patterns/comments/index.tsx"],
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"]
     },
     {
       "id": "contact-details",
@@ -145,13 +111,8 @@
         "patterns/assets/avatar3.png",
         "patterns/contact-details/index.tsx"
       ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/icons"
-      ]
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"]
     },
     {
       "id": "content-status",
@@ -166,15 +127,9 @@
         "guidance": "site/docs/patterns/content-status.mdx",
         "maintainerFacade": "packages/core/stories/patterns/content-status/content-status.stories.tsx"
       },
-      "files": [
-        "patterns/content-status/index.tsx"
-      ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core"
-      ]
+      "files": ["patterns/content-status/index.tsx"],
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core"]
     },
     {
       "id": "experience-customization",
@@ -212,16 +167,8 @@
         "patterns/wizard/useWizardForm.ts",
         "patterns/wizard/utils/index.ts"
       ],
-      "externalDependencies": [
-        "clsx",
-        "react",
-        "yup"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/countries",
-        "@salt-ds/icons"
-      ]
+      "externalDependencies": ["clsx", "react", "yup"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/countries", "@salt-ds/icons"]
     },
     {
       "id": "file-upload",
@@ -236,19 +183,9 @@
         "guidance": "site/docs/patterns/file-upload.mdx",
         "maintainerFacade": "packages/core/stories/patterns/file-upload/file-upload.stories.tsx"
       },
-      "files": [
-        "patterns/file-upload/index.tsx"
-      ],
-      "externalDependencies": [
-        "@faker-js/faker",
-        "clsx",
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/icons",
-        "@salt-ds/lab"
-      ]
+      "files": ["patterns/file-upload/index.tsx"],
+      "externalDependencies": ["@faker-js/faker", "clsx", "react"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons", "@salt-ds/lab"]
     },
     {
       "id": "formatted-input",
@@ -267,12 +204,8 @@
         "patterns/formatted-input/index.tsx",
         "patterns/formatted-input/useFormattedInput.ts"
       ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core"
-      ]
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core"]
     },
     {
       "id": "forms",
@@ -287,15 +220,9 @@
         "guidance": "site/docs/patterns/forms.mdx",
         "maintainerFacade": "packages/core/stories/patterns/forms/forms.stories.tsx"
       },
-      "files": [
-        "patterns/forms/index.tsx"
-      ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core"
-      ]
+      "files": ["patterns/forms/index.tsx"],
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core"]
     },
     {
       "id": "indication",
@@ -310,16 +237,9 @@
         "guidance": "site/docs/patterns/indication.mdx",
         "maintainerFacade": "packages/core/stories/patterns/indication/indication.stories.tsx"
       },
-      "files": [
-        "patterns/indication/index.tsx"
-      ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/icons"
-      ]
+      "files": ["patterns/indication/index.tsx"],
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"]
     },
     {
       "id": "international-phone-number-input",
@@ -334,16 +254,9 @@
         "guidance": "site/docs/patterns/international-phone-number-input.mdx",
         "maintainerFacade": "packages/core/stories/patterns/international-phone-number/international-phone-number.stories.tsx"
       },
-      "files": [
-        "patterns/international-phone-number-input/index.tsx"
-      ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/countries"
-      ]
+      "files": ["patterns/international-phone-number-input/index.tsx"],
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/countries"]
     },
     {
       "id": "keyboard-shortcuts",
@@ -362,14 +275,8 @@
         "patterns/keyboard-shortcuts/example.module.css",
         "patterns/keyboard-shortcuts/index.tsx"
       ],
-      "externalDependencies": [
-        "react",
-        "react-hotkeys-hook"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/icons"
-      ]
+      "externalDependencies": ["react", "react-hotkeys-hook"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"]
     },
     {
       "id": "list-builder",
@@ -389,13 +296,8 @@
         "patterns/list-builder/example.module.css",
         "patterns/list-builder/index.tsx"
       ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/icons"
-      ]
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"]
     },
     {
       "id": "menu-button",
@@ -410,16 +312,9 @@
         "guidance": "site/docs/patterns/menu-button.mdx",
         "maintainerFacade": "packages/core/stories/patterns/menu-button/menu-button.stories.tsx"
       },
-      "files": [
-        "patterns/menu-button/index.tsx"
-      ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/icons"
-      ]
+      "files": ["patterns/menu-button/index.tsx"],
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"]
     },
     {
       "id": "metric",
@@ -434,16 +329,9 @@
         "guidance": "site/docs/patterns/metric.mdx",
         "maintainerFacade": "packages/core/stories/patterns/metric/metric.stories.tsx"
       },
-      "files": [
-        "patterns/metric/index.tsx"
-      ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/icons"
-      ]
+      "files": ["patterns/metric/index.tsx"],
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"]
     },
     {
       "id": "navigation",
@@ -458,17 +346,9 @@
         "guidance": "site/docs/patterns/navigation.mdx",
         "maintainerFacade": "packages/core/stories/patterns/navigation/navigation.stories.tsx"
       },
-      "files": [
-        "patterns/assets/logo.svg",
-        "patterns/navigation/index.tsx"
-      ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/icons"
-      ]
+      "files": ["patterns/assets/logo.svg", "patterns/navigation/index.tsx"],
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"]
     },
     {
       "id": "preferences-dialog",
@@ -483,15 +363,9 @@
         "guidance": "site/docs/patterns/preferences-dialog.mdx",
         "maintainerFacade": "packages/core/stories/patterns/preferences-dialog/preferences-dialog.stories.tsx"
       },
-      "files": [
-        "patterns/preferences-dialog/index.tsx"
-      ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core"
-      ]
+      "files": ["patterns/preferences-dialog/index.tsx"],
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core"]
     },
     {
       "id": "search",
@@ -506,16 +380,9 @@
         "guidance": "site/docs/patterns/search.mdx",
         "maintainerFacade": "packages/core/stories/patterns/search/search.stories.tsx"
       },
-      "files": [
-        "patterns/search/index.tsx"
-      ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/icons"
-      ]
+      "files": ["patterns/search/index.tsx"],
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"]
     },
     {
       "id": "selectable-card",
@@ -536,13 +403,8 @@
         "patterns/assets/avatar3.png",
         "patterns/selectable-card/index.tsx"
       ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/icons"
-      ]
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"]
     },
     {
       "id": "split-button",
@@ -557,16 +419,9 @@
         "guidance": "site/docs/patterns/split-button.mdx",
         "maintainerFacade": "packages/core/stories/patterns/split-button/split-button.stories.tsx"
       },
-      "files": [
-        "patterns/split-button/index.tsx"
-      ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/icons"
-      ]
+      "files": ["patterns/split-button/index.tsx"],
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"]
     },
     {
       "id": "vertical-navigation",
@@ -581,16 +436,9 @@
         "guidance": "site/docs/patterns/vertical-navigation.mdx",
         "maintainerFacade": "packages/core/stories/patterns/vertical-navigation/vertical-navigation.stories.tsx"
       },
-      "files": [
-        "patterns/vertical-navigation/index.tsx"
-      ],
-      "externalDependencies": [
-        "react"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/icons"
-      ]
+      "files": ["patterns/vertical-navigation/index.tsx"],
+      "externalDependencies": ["react"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"]
     },
     {
       "id": "wizard",
@@ -618,15 +466,19 @@
         "patterns/wizard/useWizardForm.ts",
         "patterns/wizard/utils/index.ts"
       ],
-      "externalDependencies": [
-        "clsx",
-        "react",
-        "yup"
-      ],
-      "saltPackages": [
-        "@salt-ds/core",
-        "@salt-ds/icons"
-      ]
+      "externalDependencies": ["clsx", "react", "yup"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"]
+    }
+  ],
+  "workflows": [
+    {
+      "id": "operations-dashboard.service-worklist",
+      "title": "Service operations worklist",
+      "route": "/salt/patterns/analytical-dashboard",
+      "recipe": "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json",
+      "visibility": "public",
+      "stability": "experimental",
+      "provenance": "authored_workflow"
     }
   ]
 }

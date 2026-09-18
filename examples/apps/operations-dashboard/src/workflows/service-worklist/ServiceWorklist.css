@@ -1,0 +1,88 @@
+.servicePanel,
+.incidentWorklist,
+.incidentInspector {
+  min-width: 0;
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: var(--salt-spacing-200);
+  padding: var(--salt-spacing-250);
+}
+
+.panelHeader h2,
+.incidentWorklist h2,
+.incidentInspector h2 {
+  margin: 0 0 var(--salt-spacing-50);
+}
+
+.tableScroller {
+  overflow-x: auto;
+}
+
+.tableScroller:focus-visible {
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
+}
+
+.tableScroller table {
+  min-width: 760px;
+  width: 100%;
+}
+
+.incidentWorklistContent {
+  display: grid;
+  gap: var(--salt-spacing-200);
+}
+
+.worklistActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--salt-spacing-100);
+}
+
+.worklistMessage,
+.worklistCount {
+  margin: 0;
+  padding: 0 var(--salt-spacing-250) var(--salt-spacing-250);
+}
+
+.incidentInspector {
+  align-self: start;
+}
+
+.incidentDetailsList {
+  display: grid;
+  gap: var(--salt-spacing-150);
+  margin: 0 0 var(--salt-spacing-250);
+}
+
+.incidentDetailsList div {
+  display: grid;
+  gap: var(--salt-spacing-50);
+}
+
+.incidentDetailsList dt {
+  color: var(--salt-content-secondary-foreground);
+}
+
+.incidentDetailsList dd {
+  margin: 0;
+}
+
+.incidentList {
+  display: grid;
+  gap: var(--salt-spacing-50);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 760px) {
+  .panelHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

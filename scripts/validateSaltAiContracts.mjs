@@ -540,6 +540,7 @@ async function validateCurrentSchemas() {
   for (const name of [
     "saltAiCandidateReceiptV1.schema.json",
     "saltAuthoredExampleManifestV1.schema.json",
+    "saltAuthoredExampleManifestV2.schema.json",
     "saltPatternMigrationReceiptV1.schema.json",
     "saltMcpCandidateDispositionEvidenceV1.schema.json",
     "saltSelectedGraphReceiptV1.schema.json",
