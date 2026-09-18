@@ -250,7 +250,10 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     registryRef.current = new ListControlRegistry<Item>();
   }
   const registry = registryRef.current;
+  const scheduleRebuildRef = useRef<(() => void) | undefined>(undefined);
 
+  // React state (including controlled props) is authoritative. The store only
+  // publishes committed state to the affected Options.
   useIsomorphicLayoutEffect(() => {
     optionStateStore.setActiveId(activeState?.id);
   }, [activeState?.id, optionStateStore]);
@@ -267,9 +270,12 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     (optionValue: OptionValue<Item>, element: HTMLElement) => {
       const unregisterOptionState = optionStateStore.register(optionValue);
       const unregisterRegistry = registry.register(optionValue, element);
+      // Changes to option metadata need not produce a child-list mutation.
+      scheduleRebuildRef.current?.();
       return () => {
         unregisterRegistry();
         unregisterOptionState();
+        scheduleRebuildRef.current?.();
       };
     },
     [optionStateStore, registry],
@@ -277,9 +283,32 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
 
   useEffect(() => {
     if (!listElement) return;
-    const rebuild = () => registry.rebuild(listElement);
+    const rebuild = () => {
+      // Registration can queue this job before MutationObserver delivery.
+      // The current DOM includes those mutations, so consume them here to
+      // avoid rebuilding the same collection again from the observer.
+      mutationObserver.takeRecords();
+      registry.rebuild(listElement);
+    };
     const coalescedRebuild = createCoalescedRebuild(rebuild);
-    const mutationObserver = new MutationObserver(coalescedRebuild.schedule);
+    scheduleRebuildRef.current = coalescedRebuild.schedule;
+    const containsOption = (node: Node) =>
+      node.nodeType === Node.ELEMENT_NODE &&
+      ((node as Element).matches('[role="option"]') ||
+        (node as Element).querySelector('[role="option"]') !== null);
+    const mutationObserver = new MutationObserver((mutations) => {
+      // Check added AND removed subtrees so moving a group is handled too.
+      // Checkmarks, badges, and other option content do not change DOM order.
+      if (
+        mutations.some(
+          ({ addedNodes, removedNodes }) =>
+            Array.from(addedNodes).some(containsOption) ||
+            Array.from(removedNodes).some(containsOption),
+        )
+      ) {
+        coalescedRebuild.schedule();
+      }
+    });
     mutationObserver.observe(listElement, {
       childList: true,
       subtree: true,
@@ -288,6 +317,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     rebuild();
 
     return () => {
+      scheduleRebuildRef.current = undefined;
       coalescedRebuild.cancel();
       mutationObserver.disconnect();
     };
