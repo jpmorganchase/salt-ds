@@ -4,9 +4,8 @@ import type {
 } from "@modelcontextprotocol/server";
 import * as z from "zod/v4";
 import {
-  CATALOG_SEARCH_TARGET_FAMILY_NAMES,
   DEFAULT_SEARCH_RESULTS,
-  EXACT_SEMVER_PATTERN,
+  KNOWLEDGE_SEARCH_TARGET_FAMILY_NAMES,
   MAX_REVIEW_ARTIFACT_ID_CHARS,
   MAX_REVIEW_ARTIFACT_ID_JSON_UTF8_BYTES,
   MAX_REVIEW_ARTIFACT_UTF8_BYTES,
@@ -25,6 +24,8 @@ const MAX_QUERY_CHARS = 2_000;
 const MAX_PATH_CHARS = 4_096;
 const MAX_ARTIFACT_CHARS = 256 * 1024;
 const NON_WHITESPACE = /\S/u;
+const EXACT_SEMVER_PATTERN =
+  /^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*)(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/u;
 const READ_ONLY_ANNOTATIONS: ToolAnnotations = {
   readOnlyHint: true,
   destructiveHint: false,
@@ -62,14 +63,14 @@ const KNOWLEDGE_APPLICABILITY_SCHEMA = z
   .object({
     state: z.enum(["current", "applicable", "unknown"]),
     basis: z.enum([
-      "catalog_current_target",
-      "exact_catalog_package_version",
+      "knowledge_current_target",
+      "exact_knowledge_package_version",
       "deprecation_timeline",
       "evidence_unavailable",
     ]),
     package_name: z.string().nullable(),
     target_version: z.string().nullable(),
-    catalog_version: z.string().nullable(),
+    knowledge_version: z.string().nullable(),
     peer_compatibility: z.literal("not_evaluated"),
     historical_completeness: z.literal(false),
   })
@@ -99,7 +100,7 @@ const SEARCH_RESULT_SCHEMA = z
         matches: z.array(
           z
             .object({
-              family: z.enum(CATALOG_SEARCH_TARGET_FAMILY_NAMES),
+              family: z.enum(KNOWLEDGE_SEARCH_TARGET_FAMILY_NAMES),
               id: z.string().min(1),
               title: z.string(),
               summary: z.string().max(240),
@@ -131,7 +132,9 @@ const SEARCH_RESULT_SCHEMA = z
     scope: z
       .object({
         kind: z.literal("catalog_search"),
-        searched_families: z.array(z.enum(CATALOG_SEARCH_TARGET_FAMILY_NAMES)),
+        searched_families: z.array(
+          z.enum(KNOWLEDGE_SEARCH_TARGET_FAMILY_NAMES),
+        ),
         searched_statuses: z
           .array(z.enum(["stable", "beta", "lab", "deprecated"]))
           .nullable(),
@@ -634,7 +637,7 @@ const REVIEW_RESULT_SCHEMA = z
     limitations: z.array(z.string()),
     provenance: z
       .object({
-        catalog_version: z.string(),
+        knowledge_version: z.string(),
         semantic_digest: SHA256_SCHEMA.nullable(),
         project_context_digest: SHA256_SCHEMA.nullable(),
         project_policy_digest: SHA256_SCHEMA.nullable(),
@@ -652,9 +655,9 @@ const SEARCH_INPUT_SCHEMA = z
       .regex(NON_WHITESPACE)
       .describe("Non-blank Salt concept, component, token, or API query."),
     families: z
-      .array(z.enum(CATALOG_SEARCH_TARGET_FAMILY_NAMES))
+      .array(z.enum(KNOWLEDGE_SEARCH_TARGET_FAMILY_NAMES))
       .min(1)
-      .max(CATALOG_SEARCH_TARGET_FAMILY_NAMES.length)
+      .max(KNOWLEDGE_SEARCH_TARGET_FAMILY_NAMES.length)
       .describe(
         "Optional catalog-family filter; all searchable families are used by default.",
       )

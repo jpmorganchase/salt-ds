@@ -16,12 +16,13 @@ interface StylelintConfig {
 
 const POST_BUILD_STEPS = [
   "yarn typecheck",
-  "yarn typecheck:mcp",
+  "yarn typecheck:ai-tooling",
   "yarn test:ai-tooling",
   "yarn workspace @salt-ds/mcp measure:runtime-loc",
   "yarn workspace @salt-ds/mcp measure:surface",
-  "yarn check:ai-tooling:pack",
-  "yarn smoke:consumer --skip-build",
+  "yarn build:ai-tooling",
+  "yarn check:ai-tooling:pack -- --profile pre-agent-support --report dist/salt-ai-pack/unit-03.json",
+  "yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit-03.json",
 ];
 
 async function readScripts(): Promise<Record<string, string>> {
@@ -70,7 +71,9 @@ describe("release verification scripts", () => {
       "utf8",
     );
     const build = workflow.indexOf("run: yarn build");
-    const mcpPackageGate = workflow.indexOf("run: yarn check:ai-tooling:pack");
+    const mcpPackageGate = workflow.indexOf(
+      "run: yarn check:ai-tooling:pack -- --profile pre-agent-support --report dist/salt-ai-pack/unit-03.json",
+    );
     const datePackageGate = workflow.indexOf(
       "run: yarn check:date-adapters:pack",
     );
@@ -82,11 +85,11 @@ describe("release verification scripts", () => {
     expect(coreTypeGate).toBeGreaterThan(build);
   });
 
-  it("reuses the full release build without rebuilding packages", async () => {
+  it("checks the AI embargo before reusing the full release build", async () => {
     const scripts = await readScripts();
 
     expect(scripts.release).toBe(
-      "yarn build && yarn release:verify:after-build && yarn changeset publish",
+      "yarn verify:salt-ai-release-embargo && yarn build && yarn release:verify:after-build && yarn changeset publish",
     );
   });
 
@@ -103,7 +106,7 @@ describe("release verification scripts", () => {
       "node ./scripts/consumerRepoSmoke.mjs",
     );
     expect(scripts["release:verify:mcp:after-build"]).toContain(
-      "yarn smoke:consumer --skip-build",
+      "yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit-03.json",
     );
   });
 

@@ -2,7 +2,7 @@ import {
   currentKnowledgeApplicability,
   MAX_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES,
   reviewSaltCode,
-  type SaltCatalogRuntimeContext,
+  type KnowledgeRuntimeContext,
   searchSalt,
 } from "../core/runtime.js";
 import { inspectSaltProject } from "./inspectSaltProject.js";
@@ -21,14 +21,14 @@ import type {
   SearchToolResult,
 } from "./toolDefinitions.js";
 
-export type SaltToolOperationContext = SaltCatalogRuntimeContext & {
+export type SaltToolOperationContext = KnowledgeRuntimeContext & {
   projectAccess: ProjectAccessPolicy;
   projectPolicySnapshots: ProjectPolicySnapshotCache;
   measureFinalResultUtf8Bytes: (payload: unknown) => number;
 };
 
 function catalogPackageVersions(
-  context: SaltCatalogRuntimeContext,
+  context: KnowledgeRuntimeContext,
 ): ReadonlyMap<string, string> {
   return new Map(
     context.store

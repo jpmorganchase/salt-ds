@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "plan_id": "001",
+  "unit_id": "01",
+  "tracker_status": "DONE",
+  "completion_sha": "9159f98ad9affdb054c09d7ad344f97bea89c64f",
+  "entries": [
+    {
+      "kind": "normalized-characterization-receipt",
+      "schema_id": "https://www.saltdesignsystem.com/ai/characterization/normalized-1.json",
+      "schema_version": "1.0.0",
+      "locator": "repo://plans/evidence/artifacts/sha256-e3ea9235b622142d505691bdd010feabf5aff11bc0c290881db0cb41fa7a9d99.json",
+      "sha256": "sha256:e3ea9235b622142d505691bdd010feabf5aff11bc0c290881db0cb41fa7a9d99",
+      "source_sha": "9159f98ad9affdb054c09d7ad344f97bea89c64f",
+      "completion_sha": "9159f98ad9affdb054c09d7ad344f97bea89c64f",
+      "workflow_class": "local-ci",
+      "environment_class": "local-worktree-node-24",
+      "retention_expires_at": "2031-08-27T00:00:00.000Z",
+      "parents": [],
+      "state": "active",
+      "baseline_sha256": "sha256:0e7f974cc1baed2d57ee58e7570eb2a7c247f40749b4b6f54ed46d4da6801be7",
+      "semantic_digest": "sha256:ddb91ebdd41f9b256e986967f651aa5710064ec50c52a57b823294e5d70c78aa",
+      "normalized_input_projection_digest": "sha256:eb3f624c003663b289917e87c69d9560eceae1c578e643b19621c530b0af9d8e",
+      "verification": [
+        "yarn vitest run packages/mcp/src/core packages/mcp/src/server packages/mcp/src/__tests__/createServer.spec.ts packages/mcp/src/__tests__/architectureBoundary.spec.ts --maxWorkers=4",
+        "yarn workspace @salt-ds/mcp build",
+        "yarn typecheck:mcp",
+        "yarn test:ai-tooling",
+        "yarn validate:salt-ai:contracts",
+        "yarn prettier --check packages/mcp/package.json packages/mcp/scripts/buildRegistry.mjs packages/mcp/src/__tests__ packages/mcp/src/core packages/mcp/src/server/inspectSaltProject.ts packages/mcp/src/server/projectContext/installationTypes.ts scripts/build.mjs scripts/catalogBuildIdentity.mjs",
+        "git diff --check"
+      ]
+    }
+  ]
+}

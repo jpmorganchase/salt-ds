@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "id": "activation-discover-project",
+  "suite": "activation",
+  "family": "discovery",
+  "fixture_id": "activation-discover-project",
+  "goal": "Unaided, discover how to identify the exact local Salt package vector.",
+  "profiles": [
+    "managed_agents_only",
+    "registered_skill_only",
+    "managed_agents_and_skill"
+  ],
+  "checks": [
+    { "id": "uses-info", "kind": "activation", "expected": "salt-ds-info-json" }
+  ],
+  "non_goals": ["Outcome task scoring"]
+}

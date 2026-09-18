@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "id": "valid-noop",
+  "suite": "task",
+  "family": "control",
+  "fixture_id": "repo-valid-noop",
+  "package_vector": [{ "name": "@salt-ds/core", "version": "1.69.0" }],
+  "goal": "Verify the valid public import and Button composition and make no change.",
+  "modes": [
+    "mode_1_base_tools",
+    "mode_2_markdown",
+    "mode_3_cli_bootstrap",
+    "mode_4_mcp_candidate"
+  ],
+  "mcp_eligible": false,
+  "allowed_variants": ["No-op with bounded explanation"],
+  "checks": [{ "id": "no-change", "kind": "diff", "expected": "empty" }],
+  "non_goals": ["Restyle working code"],
+  "human_rubric": null
+}

@@ -1,37 +1,35 @@
 import {
+  isCanonicalSiteRoute,
+  isSafeAbsoluteHttpsUrl,
+  type KnowledgeRecordFamily,
+  officialSaltSiteUrl,
+} from "@salt-ds/knowledge";
+import {
   type ProjectPolicyResourceKind,
   projectPolicyResourceTemplate,
   projectPolicyResourceUri,
 } from "../policy/projectPolicyResourceIdentity.js";
-import { isSafeAbsoluteHttpsUrl } from "./catalogHttpsUrl.js";
 import {
   catalogManifestResourceUri,
   catalogRecordResourceTemplate,
   catalogRecordResourceUri,
+  type KnowledgeManifestIdentity,
 } from "./catalogResourceIdentity.js";
-import type {
-  CatalogManifest,
-  CatalogRuntimeFamilyName,
-} from "./catalogSchemaV2.js";
-import {
-  isCanonicalSiteRoute,
-  officialSaltSiteUrl,
-} from "./catalogSiteRoute.js";
 
 export type CatalogPublicCitation =
-  | { kind: "catalog_manifest"; manifest: CatalogManifest }
+  | { kind: "catalog_manifest"; manifest: KnowledgeManifestIdentity }
   | {
       kind: "catalog_record";
-      manifest: CatalogManifest;
-      family: CatalogRuntimeFamilyName;
+      manifest: KnowledgeManifestIdentity;
+      family: KnowledgeRecordFamily;
       id: string;
     }
   | {
       kind: "catalog_record_template";
-      manifest: CatalogManifest;
-      family: CatalogRuntimeFamilyName;
+      manifest: KnowledgeManifestIdentity;
+      family: KnowledgeRecordFamily;
     }
-  | { kind: "catalog_family_template"; manifest: CatalogManifest }
+  | { kind: "catalog_family_template"; manifest: KnowledgeManifestIdentity }
   | { kind: "project_policy_template" }
   | {
       kind: "project_policy_chunk_template";

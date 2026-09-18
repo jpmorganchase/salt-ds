@@ -1,5 +1,6 @@
 import path from "node:path";
 import {
+  createSaltProjectFacts,
   deriveComparableSaltVersion,
   detectProjectPolicy,
   jsonUtf8Bytes,
@@ -257,6 +258,34 @@ export async function inspectSaltProject(
           currentSaltVersion,
           policy: detectedPolicy,
         });
+  const projectFacts = createSaltProjectFacts({
+    rootDir,
+    packageManifest:
+      packageInspection.status === "valid"
+        ? {
+            status: "valid",
+            path: packageInspection.path,
+            name:
+              typeof packageJson?.name === "string" ? packageJson.name : null,
+            packageManager:
+              typeof packageJson?.packageManager === "string"
+                ? packageJson.packageManager
+                : null,
+          }
+        : packageInspection.status === "invalid"
+          ? {
+              status: "invalid",
+              path: packageInspection.path,
+              reason: packageInspection.reason,
+            }
+          : { status: "absent", path: null },
+    declaredSaltPackages,
+    installation,
+    detectedPolicy,
+    policyEvaluation: policyInspection?.ir
+      ? { ir: policyInspection.ir, limitations: policyInspection.limitations }
+      : null,
+  });
   limitations.push(SALT_INSTALLATION_SCOPE_LIMITATION);
   if (installation.inspection.status === "limited") {
     limitations.push(
@@ -270,7 +299,7 @@ export async function inspectSaltProject(
   }
   limitations.push(...(policyInspection?.limitations ?? []));
 
-  const policyIr = policyInspection?.ir ?? null;
+  const policyIr = projectFacts.policy.evaluation?.ir ?? null;
   const policySnapshot = policyInspection
     ? createProjectPolicySnapshot({
         authorization,
@@ -514,7 +543,7 @@ export async function inspectSaltProject(
         applicability: resolvePackageKnowledgeApplicability({
           packageName: entry.name,
           targetVersion: entry.resolvedVersion,
-          catalogVersion: catalogPackageVersions.get(entry.name),
+          knowledgeVersion: catalogPackageVersions.get(entry.name),
         }),
         provenance: {
           observed_version: "untrusted_project_data" as const,

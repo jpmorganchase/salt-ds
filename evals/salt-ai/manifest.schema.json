@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/evals/manifest-1.json",
+  "title": "Salt AI evaluation corpus manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "corpus_id",
+    "fixture_file",
+    "fixture_sha256",
+    "case_files",
+    "activation_case_files",
+    "protocol_files",
+    "counts"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "corpus_id": { "const": "salt-ai-outcome-v1" },
+    "fixture_file": { "$ref": "#/$defs/path" },
+    "fixture_sha256": { "$ref": "#/$defs/digest" },
+    "case_files": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 15,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/path" }
+    },
+    "activation_case_files": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/path" }
+    },
+    "protocol_files": {
+      "type": "array",
+      "minItems": 5,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/path" }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outcome_cases",
+        "activation_cases",
+        "retrieval_gold_queries"
+      ],
+      "properties": {
+        "outcome_cases": { "type": "integer", "minimum": 12, "maximum": 15 },
+        "activation_cases": { "type": "integer", "minimum": 3 },
+        "retrieval_gold_queries": { "type": "integer", "minimum": 40 }
+      }
+    }
+  },
+  "$defs": {
+    "path": {
+      "type": "string",
+      "pattern": "^evals/salt-ai/(?!.*\\.\\.)(?!.*\\\\).+"
+    },
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+  }
+}

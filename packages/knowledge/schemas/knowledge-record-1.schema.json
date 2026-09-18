@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/schemas/knowledge-record-1.json",
+  "title": "Salt knowledge record v1",
+  "type": "object",
+  "required": ["key", "family", "id", "title", "summary", "data"],
+  "properties": {
+    "key": { "type": "string", "pattern": "^record:[a-z_]+:.+$" },
+    "family": { "type": "string", "pattern": "^[a-z_]+$" },
+    "id": { "type": "string", "minLength": 1 },
+    "title": { "type": "string" },
+    "summary": { "type": "string" },
+    "data": {},
+    "content_value": {}
+  },
+  "additionalProperties": false
+}

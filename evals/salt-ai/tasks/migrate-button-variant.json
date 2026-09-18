@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "id": "migrate-button-variant",
+  "suite": "task",
+  "family": "migrate",
+  "fixture_id": "repo-migrate-button-variant",
+  "package_vector": [{ "name": "@salt-ds/core", "version": "1.69.0" }],
+  "goal": "Migrate the deprecated Button variant to the supported appearance and sentiment props.",
+  "modes": [
+    "mode_1_base_tools",
+    "mode_2_markdown",
+    "mode_3_cli_bootstrap",
+    "mode_4_mcp_candidate"
+  ],
+  "mcp_eligible": true,
+  "allowed_variants": ["appearance=solid and sentiment=accented"],
+  "checks": [
+    {
+      "id": "deprecated-prop-removed",
+      "kind": "ast",
+      "expected": "variant-absent"
+    },
+    { "id": "replacement-exact", "kind": "ast", "expected": "solid-accented" }
+  ],
+  "non_goals": ["Change visible copy"],
+  "human_rubric": null
+}

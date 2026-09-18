@@ -1,0 +1,66 @@
+{
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/salt-snapshot-package-compatibility-1.json",
+  "schema_version": "1.0.0",
+  "policy_id": "salt-ai-unused-test-snapshots/1",
+  "decision_status": "approved",
+  "approved_at": "2026-08-27",
+  "approval_basis": "The package owner confirmed these pre-stable snapshots were tests and are not used; they create no runtime API compatibility obligation.",
+  "packages": [
+    {
+      "name": "@salt-ds/cli",
+      "allowed_versions": [
+        "0.0.0-snapshot-20260330131032",
+        "0.0.0-snapshot-20260330133530",
+        "0.0.0-snapshot-20260330204214",
+        "0.0.0-snapshot-20260331110424",
+        "0.0.0-snapshot-20260331131717",
+        "0.0.0-snapshot-20260331141637"
+      ],
+      "expected_dist_tags": {
+        "latest": "0.0.0-snapshot-20260330131032",
+        "snapshot": "0.0.0-snapshot-20260331141637"
+      },
+      "allowed_repository_directories": ["packages/mcp"],
+      "require_integrity": true,
+      "require_provenance": true,
+      "expected_deprecated_versions": []
+    },
+    {
+      "name": "@salt-ds/mcp",
+      "allowed_versions": [
+        "0.0.0-snapshot-20260317135132",
+        "0.0.0-snapshot-20260317141840",
+        "0.0.0-snapshot-20260317164320",
+        "0.0.0-snapshot-20260318105832",
+        "0.0.0-snapshot-20260324095809",
+        "0.0.0-snapshot-20260324111937",
+        "0.0.0-snapshot-20260330125735",
+        "0.0.0-snapshot-20260330131032",
+        "0.0.0-snapshot-20260330133530",
+        "0.0.0-snapshot-20260330204214",
+        "0.0.0-snapshot-20260331110424",
+        "0.0.0-snapshot-20260331131717",
+        "0.0.0-snapshot-20260331141637"
+      ],
+      "expected_dist_tags": {
+        "latest": "0.0.0-snapshot-20260317135132",
+        "snapshot": "0.0.0-snapshot-20260331141637"
+      },
+      "allowed_repository_directories": ["packages/mcp", "packages/salt-mcp"],
+      "require_integrity": true,
+      "require_provenance": true,
+      "expected_deprecated_versions": []
+    }
+  ],
+  "first_protected_transition": {
+    "minimum_version": "1.0.0",
+    "preserve_snapshot_runtime_api": false,
+    "require_protected_release": true,
+    "require_exact_registry_readback": true,
+    "deprecate_approved_snapshots": true,
+    "ship_action": "activate-stable-and-remove-snapshot-tag",
+    "omit_action": "deprecate-snapshots-and-remove-all-dist-tags",
+    "require_successor_namespace_policy": true,
+    "unexpected_registry_identity_action": "stop"
+  }
+}

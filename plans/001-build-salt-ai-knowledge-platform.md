@@ -90,10 +90,11 @@ an Agent Skill, sample applications, and MCP are projections or adapters over
 the same bytes and result contracts. No consumer needs Storybook or MCP to learn
 or validate Salt.
 
-This is a clean-slate product decision. `@salt-ds/mcp` has not been released,
-so its current command names, exports, resource identities, Roots behavior, and
-Catalog-v2 packaging are implementation evidence rather than compatibility
-obligations. Reuse the deterministic catalog, integrity, applicability, and
+This is a clean-slate product decision. `@salt-ds/mcp` has no stable release;
+Plan 001a ratifies its unused `0.0.0-snapshot-*` test artifacts as creating no
+compatibility obligation. Its current command names, exports, resource
+identities, Roots behavior, and Catalog-v2 packaging are implementation
+evidence only. Reuse the deterministic catalog, integrity, applicability, and
 filesystem work where characterization proves it still serves the new
 architecture; publish only the contracts defined by this plan.
 
@@ -111,8 +112,9 @@ another architecture.
 3. Ship `scan`, `info`, `help`, and `version` first. Add `docs` and `context`
    only after the bundle projection and retrieval quality gates pass.
 4. Build one clean, current-spec `@salt-ds/mcp` candidate as an optional thin
-   adapter, not the knowledge owner. Nothing in the current unreleased package
-   is a public compatibility requirement. Publish MCP only if the pre-release
+   adapter, not the knowledge owner. Nothing in the current prototype or
+   ratified unused test snapshots is a public compatibility requirement.
+   Publish MCP only if the pre-release
    outcome gate recommends `mcp_candidate_disposition: ship` and Unit 08c
    confirms the exact final packed bytes; otherwise omit it from the public
    cohort without a deprecation or migration path.
@@ -1681,9 +1683,10 @@ scope and granular publish permission are controlled. Existing registry bytes
 are never treated as equivalent merely because repository history once used the
 name. If Knowledge or CLI has an incompatible prior public identity, or any name
 is uncontrolled, STOP and ratify a new name (or a separately scoped major/
-compatibility plan) before Unit 00b. The unreleased MCP requires no migration,
-but registry evidence must still confirm that assumption. Re-run the check at
-the final publisher gate; no command reserves, deprecates, or publishes a name.
+compatibility plan) before Unit 00b. Plan 001a is that approved compatibility
+addendum: it allowlists only the exact unused CLI/MCP test snapshots and grants
+no runtime compatibility. Re-run the check at the final publisher gate; Unit
+00a reserves, deprecates, and publishes nothing.
 
 **Verification (00a):**
 
@@ -2950,9 +2953,9 @@ R2, or is omitted before any public contract exists.
 **Required result:**
 
 - Treat the repository's current MCP implementation as a characterization
-  oracle only. It is version `0.0.0` and unreleased, so its exports, CLI flags,
-  tool names, URI grammar, Catalog-v2 bytes, Roots behavior, and wire snapshots
-  create no compatibility or migration obligation.
+  oracle only. It has no stable version; Plan 001a's unused test snapshots grant
+  no compatibility. Its exports, CLI flags, tool names, URI grammar, Catalog-v2
+  bytes, Roots behavior, and wire snapshots create no migration obligation.
 - Implement the ratified MCP contract above as a clean v1 candidate. MCP
   exact-pins and imports `@salt-ds/knowledge` only through its package root;
   remove its generator scripts, compiler dependencies, Catalog-v2
@@ -3055,9 +3058,10 @@ and tracker-bound. If the candidate disposition is
 `ship`, the packed MCP has no catalog/compiler copy, selects the identical
 knowledge version/digests as CLI, passes the complete host/security matrix, and
 joins the provisional Unit 08a package set. If it is `omit`, Unit 08a excludes the
-package, binary, metadata, README, docs, and mode-4 release claims. Because no
-MCP was ever released, omission needs no compatibility window, alias,
-deprecation, or migration work.
+package, binary, metadata, README, docs, and mode-4 release claims. Because MCP
+has no stable release and its unused snapshots are governed by Plan 001a,
+omission needs no compatibility window, alias, or migration code; the protected
+transition still performs Plan 001a's exact snapshot deprecation/tag cleanup.
 In either outcome, the normal production route graph remains pre-release: it
 contains no CLI/MCP install claim or candidate adapter navigation. Only ignored
 preview and immutable candidate artifacts may contain those bytes.
@@ -3595,7 +3599,7 @@ Run a snapshot version/release rehearsal before the first beta and prove
 Changesets updates CLI and the selected MCP exact dependant whenever knowledge
 changes. Verify the earlier split of `.changeset/quiet-catalogs-search.md`:
 valid ordinary-package bumps/notes remain in the ordinary partition, while the
-unreleased MCP major/compatibility prose is absent and any shipped MCP has only
+prototype MCP major/compatibility prose is absent and any shipped MCP has only
 its reviewed initial-minor entry.
 Do not hand-edit built package versions.
 
@@ -3754,7 +3758,8 @@ implementation ref.
    premerge-to-landed retirement pair.
    Any Knowledge/CLI content delta invalidates the rebind and returns to the
    retained pre-cleanup candidate ref for a fresh full decision. No alias,
-   deprecation, migration, or compatibility code is added.
+   migration, or compatibility code is added; Plan 001a's protected registry
+   cleanup remains mandatory and receipt-bound.
 6. Only after final `ship` or a clean `omit` graph passes, merge the exact
    version PR. Re-run `applied` on the landed immutable ref and require its
    package names, versions, tarball/content digests, web digest, partition

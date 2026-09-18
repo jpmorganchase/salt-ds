@@ -1,5 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/server";
-import { loadCatalogRuntimeContext } from "../core/runtime.js";
+import { loadKnowledgeRuntimeContext } from "../core/runtime.js";
 import {
   createProjectAccessPolicy,
   type ProjectAccessOptions,
@@ -19,9 +19,8 @@ interface CreateServerOptions {
 }
 
 export async function createSaltMcpServer(options: CreateServerOptions = {}) {
-  const context = await loadCatalogRuntimeContext({
-    registryDir: options.registryDir,
-    prefetch: true,
+  const context = await loadKnowledgeRuntimeContext({
+    bundleDir: options.registryDir,
   });
   const projectAccess = await createProjectAccessPolicy(options.projectAccess);
   const projectPolicySnapshots = new ProjectPolicySnapshotCache();

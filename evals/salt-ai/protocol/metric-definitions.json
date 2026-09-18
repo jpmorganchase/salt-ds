@@ -1,0 +1,137 @@
+{
+  "schema_version": "1.0.0",
+  "metrics": [
+    {
+      "id": "task_success",
+      "formula": "successful_scheduled_cells/all_scheduled_cells",
+      "minimum_denominator": 252,
+      "gate": null,
+      "waivable": false
+    },
+    {
+      "id": "version_correctness",
+      "formula": "passed_version_assertions/all_version_assertions",
+      "minimum_denominator": 1,
+      "gate": 1,
+      "waivable": false
+    },
+    {
+      "id": "retrieval_recall_at_5",
+      "formula": "gold_queries_with_applicable_hit_at_5/eligible_gold_queries",
+      "minimum_denominator": 40,
+      "gate": 0.95,
+      "waivable": false
+    },
+    {
+      "id": "scan_precision",
+      "formula": "tp/(tp+fp)",
+      "minimum_denominator": 20,
+      "minimum_negative_fixtures_per_rule": 20,
+      "gate": 0.95,
+      "waivable": false
+    },
+    {
+      "id": "scan_recall",
+      "formula": "tp/(tp+fn)",
+      "minimum_denominator": 20,
+      "minimum_positive_fixtures_per_rule": 20,
+      "gate": 0.9,
+      "waivable": false
+    },
+    {
+      "id": "unsupported_claim_rate",
+      "formula": "unsupported_atomic_salt_claims/all_assessable_atomic_salt_claims",
+      "minimum_denominator": 200,
+      "gate_exclusive_maximum": 0.02,
+      "reviewers": 2,
+      "waivable": false
+    },
+    {
+      "id": "mode_3_task_success_uplift",
+      "formula": "mode_3_task_success-mode_2_task_success",
+      "minimum_denominator": 252,
+      "gate": 0.1,
+      "waivable": false
+    },
+    {
+      "id": "mcp_material_increment",
+      "formula": "mode_4-mode_3_on_mcp_eligible_subset",
+      "minimum_denominator": 1,
+      "gate": "0.05_or_two_paired_cells_per_host_model",
+      "waivable": false
+    },
+    {
+      "id": "bundle_integrity",
+      "formula": "all_hash_byte_tree_checks_pass",
+      "minimum_denominator": 1,
+      "gate": true,
+      "waivable": false
+    },
+    {
+      "id": "deterministic_identity",
+      "formula": "two_clean_builds_identical",
+      "minimum_denominator": 2,
+      "gate": true,
+      "waivable": false
+    },
+    {
+      "id": "official_provenance",
+      "formula": "all_release_subjects_verified",
+      "minimum_denominator": 1,
+      "gate": true,
+      "waivable": false
+    },
+    {
+      "id": "privacy_security_path_isolation",
+      "formula": "all_security_fixtures_pass",
+      "minimum_denominator": 1,
+      "gate": true,
+      "waivable": false
+    },
+    {
+      "id": "failed_coverage",
+      "formula": "failed_coverage_never_clean_or_overridden",
+      "minimum_denominator": 1,
+      "gate": true,
+      "waivable": false
+    },
+    {
+      "id": "required_cells_complete",
+      "formula": "completed_required_cells/scheduled_required_cells",
+      "minimum_denominator": 252,
+      "gate": 1,
+      "waivable": false
+    },
+    {
+      "id": "public_example_coverage",
+      "formula": "public_items_with_examples/all_public_items",
+      "minimum_denominator": 1,
+      "gate": 1,
+      "waivable": true
+    },
+    {
+      "id": "cold_scan_latency",
+      "formula": "wall_time_ms",
+      "minimum_denominator": 3,
+      "gate": "baseline_plus_ratified_regression_budget",
+      "waivable": true
+    },
+    {
+      "id": "package_size",
+      "formula": "compressed_and_unpacked_bytes",
+      "minimum_denominator": 1,
+      "gate": "10MiB_compressed_25MiB_unpacked",
+      "waivable": true
+    }
+  ],
+  "reporting": [
+    "overall",
+    "case_macro",
+    "category_macro",
+    "micro",
+    "numerator",
+    "denominator",
+    "interval",
+    "reviewer_agreement"
+  ]
+}

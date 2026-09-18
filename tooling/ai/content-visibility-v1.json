@@ -1,0 +1,321 @@
+{
+  "schema_version": "1.0.0",
+  "source_roots": [
+    {
+      "path": "README.md",
+      "visibility": "public",
+      "content_kinds": ["docs", "metadata"],
+      "reason": "Public repository landing documentation."
+    },
+    {
+      "path": "docs/ai/migrations/records",
+      "visibility": "public",
+      "content_kinds": ["migration"],
+      "reason": "Canonical authored migration records."
+    },
+    {
+      "path": "packages/ag-grid-theme/css",
+      "visibility": "public",
+      "content_kinds": ["api", "implementation"],
+      "reason": "Published theme CSS."
+    },
+    {
+      "path": "packages/ag-grid-theme/src",
+      "visibility": "public",
+      "content_kinds": ["api", "implementation"],
+      "reason": "Published package source."
+    },
+    {
+      "path": "packages/core/src",
+      "visibility": "public",
+      "content_kinds": ["api", "implementation"],
+      "reason": "Published package API source."
+    },
+    {
+      "path": "packages/countries/src",
+      "visibility": "public",
+      "content_kinds": ["api", "implementation"],
+      "reason": "Published package API source."
+    },
+    {
+      "path": "packages/date-adapters/src",
+      "visibility": "public",
+      "content_kinds": ["api", "implementation"],
+      "reason": "Published package API source."
+    },
+    {
+      "path": "packages/date-components/src",
+      "visibility": "public",
+      "content_kinds": ["api", "implementation"],
+      "reason": "Published package API source."
+    },
+    {
+      "path": "packages/embla-carousel/src",
+      "visibility": "public",
+      "content_kinds": ["api", "implementation"],
+      "reason": "Published package API source."
+    },
+    {
+      "path": "packages/highcharts-theme/src",
+      "visibility": "public",
+      "content_kinds": ["api", "implementation"],
+      "reason": "Published package API source."
+    },
+    {
+      "path": "packages/icons/src",
+      "visibility": "public",
+      "content_kinds": ["api", "implementation"],
+      "reason": "Published package API source."
+    },
+    {
+      "path": "packages/lab/src",
+      "visibility": "public",
+      "content_kinds": ["api", "implementation"],
+      "reason": "Published prerelease package API source."
+    },
+    {
+      "path": "packages/react-resizable-panels-theme/index.css",
+      "visibility": "public",
+      "content_kinds": ["api", "implementation", "metadata"],
+      "reason": "Published package CSS entry."
+    },
+    {
+      "path": "packages/styles/src",
+      "visibility": "public",
+      "content_kinds": ["api", "implementation"],
+      "reason": "Published package API source."
+    },
+    {
+      "path": "packages/theme/css",
+      "visibility": "public",
+      "content_kinds": ["api", "implementation"],
+      "reason": "Published theme CSS."
+    },
+    {
+      "path": "packages/window/src",
+      "visibility": "public",
+      "content_kinds": ["api", "implementation"],
+      "reason": "Published package API source."
+    },
+    {
+      "path": "site/docs",
+      "visibility": "public",
+      "content_kinds": ["docs"],
+      "reason": "Public Salt site documentation, subject to item overrides."
+    },
+    {
+      "path": "site/src/examples",
+      "visibility": "public",
+      "content_kinds": ["example"],
+      "reason": "Canonical public example implementations."
+    },
+    {
+      "path": "evals",
+      "visibility": "internal",
+      "content_kinds": ["test", "tooling"],
+      "reason": "Evaluation governance is not consumer knowledge."
+    },
+    {
+      "path": "packages/mcp",
+      "visibility": "internal",
+      "content_kinds": ["tooling", "implementation"],
+      "reason": "Unreleased adapter/compiler prototype is excluded as semantic content."
+    },
+    {
+      "path": "plans",
+      "visibility": "internal",
+      "content_kinds": ["tooling"],
+      "reason": "Execution plans are maintainer control data."
+    },
+    {
+      "path": "scripts",
+      "visibility": "internal",
+      "content_kinds": ["tooling"],
+      "reason": "Repository and release tooling is not knowledge content."
+    },
+    {
+      "path": "tooling",
+      "visibility": "internal",
+      "content_kinds": ["tooling"],
+      "reason": "Governance inventories are not consumer content."
+    }
+  ],
+  "item_overrides": [
+    {
+      "path": "packages/core/src/__tests__",
+      "visibility": "internal",
+      "reason": "Test source is not a public API fact source."
+    },
+    {
+      "path": "packages/countries/src/__tests__",
+      "visibility": "internal",
+      "reason": "Test source is not a public API fact source."
+    },
+    {
+      "path": "packages/date-adapters/src/__tests__",
+      "visibility": "internal",
+      "reason": "Test source is not a public API fact source."
+    },
+    {
+      "path": "packages/date-components/src/__tests__",
+      "visibility": "internal",
+      "reason": "Test source is not a public API fact source."
+    },
+    {
+      "path": "packages/embla-carousel/src/__tests__",
+      "visibility": "internal",
+      "reason": "Test source is not a public API fact source."
+    },
+    {
+      "path": "packages/icons/src/__tests__",
+      "visibility": "internal",
+      "reason": "Test source is not a public API fact source."
+    },
+    {
+      "path": "packages/lab/src/__tests__",
+      "visibility": "internal",
+      "reason": "Test source is not a public API fact source."
+    },
+    {
+      "path": "packages/styles/src/__tests__",
+      "visibility": "internal",
+      "reason": "Test source is not a public API fact source."
+    },
+    {
+      "path": "site/docs/index.mdx",
+      "visibility": "public",
+      "reason": "The public page is selected, but internal links require public fallback or removal."
+    }
+  ],
+  "destination_classes": [
+    {
+      "id": "salt_public_relative",
+      "visibility": "public",
+      "schemes": ["relative"],
+      "hosts": [],
+      "path_prefixes": ["/salt/"]
+    },
+    {
+      "id": "salt_public_site",
+      "visibility": "public",
+      "schemes": ["https"],
+      "hosts": ["www.saltdesignsystem.com"],
+      "path_prefixes": ["/salt/"]
+    },
+    {
+      "id": "salt_public_repository",
+      "visibility": "public",
+      "schemes": ["https"],
+      "hosts": ["github.com"],
+      "path_prefixes": ["/jpmorganchase/salt-ds/"]
+    },
+    {
+      "id": "jpm_internal_go",
+      "visibility": "internal",
+      "schemes": ["https"],
+      "hosts": ["go"],
+      "path_prefixes": ["/"]
+    },
+    {
+      "id": "github_issues_support",
+      "visibility": "forbidden",
+      "schemes": ["https"],
+      "hosts": ["github.com"],
+      "path_prefixes": ["/jpmorganchase/salt-ds/issues"]
+    }
+  ],
+  "unclassified": [
+    {
+      "path": "site/src/Body",
+      "reason": "Site rendering implementation needs a public-content dependency audit.",
+      "closure_batch": "visibility-1"
+    },
+    {
+      "path": "site/src/components",
+      "reason": "Site component prose/assets need explicit projection classification.",
+      "closure_batch": "visibility-1"
+    },
+    {
+      "path": "site/src/layouts",
+      "reason": "Layout-owned fragments and destinations need explicit classification.",
+      "closure_batch": "visibility-1"
+    },
+    {
+      "path": "packages/ag-grid-theme/stories",
+      "reason": "Story source is temporary extraction evidence, not a public destination.",
+      "closure_batch": "visibility-2"
+    },
+    {
+      "path": "packages/core/stories",
+      "reason": "Story source is temporary extraction evidence, not a public destination.",
+      "closure_batch": "visibility-2"
+    },
+    {
+      "path": "packages/countries/stories",
+      "reason": "Story source is temporary extraction evidence, not a public destination.",
+      "closure_batch": "visibility-2"
+    },
+    {
+      "path": "packages/date-components/stories",
+      "reason": "Story source is temporary extraction evidence, not a public destination.",
+      "closure_batch": "visibility-2"
+    },
+    {
+      "path": "packages/embla-carousel/stories",
+      "reason": "Story source is temporary extraction evidence, not a public destination.",
+      "closure_batch": "visibility-2"
+    },
+    {
+      "path": "packages/highcharts-theme/stories",
+      "reason": "Story source is temporary extraction evidence, not a public destination.",
+      "closure_batch": "visibility-2"
+    },
+    {
+      "path": "packages/icons/stories",
+      "reason": "Story source is temporary extraction evidence, not a public destination.",
+      "closure_batch": "visibility-2"
+    },
+    {
+      "path": "packages/lab/stories",
+      "reason": "Story source is temporary extraction evidence, not a public destination.",
+      "closure_batch": "visibility-2"
+    },
+    {
+      "path": "packages/react-resizable-panels-theme/stories",
+      "reason": "Story source is temporary extraction evidence, not a public destination.",
+      "closure_batch": "visibility-2"
+    },
+    {
+      "path": "packages/styles/stories",
+      "reason": "Story source is temporary extraction evidence, not a public destination.",
+      "closure_batch": "visibility-2"
+    }
+  ],
+  "closure_batches": [
+    {
+      "id": "visibility-1",
+      "paths": ["site/src/Body", "site/src/components", "site/src/layouts"],
+      "owner": "saltdesignsystem",
+      "due_unit": "06a",
+      "status": "planned"
+    },
+    {
+      "id": "visibility-2",
+      "paths": [
+        "packages/ag-grid-theme/stories",
+        "packages/core/stories",
+        "packages/countries/stories",
+        "packages/date-components/stories",
+        "packages/embla-carousel/stories",
+        "packages/highcharts-theme/stories",
+        "packages/icons/stories",
+        "packages/lab/stories",
+        "packages/react-resizable-panels-theme/stories",
+        "packages/styles/stories"
+      ],
+      "owner": "saltdesignsystem",
+      "due_unit": "06c",
+      "status": "planned"
+    }
+  ]
+}

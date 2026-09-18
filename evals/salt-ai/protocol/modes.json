@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "modes": [
+    {
+      "id": "mode_1_base_tools",
+      "ordinal": 1,
+      "required_for_ga": true,
+      "adds": ["repository", "file", "edit", "test"],
+      "excludes": [
+        "supplied_salt_markdown",
+        "salt_skill",
+        "managed_agents",
+        "salt_cli",
+        "salt_mcp"
+      ]
+    },
+    {
+      "id": "mode_2_markdown",
+      "ordinal": 2,
+      "required_for_ga": true,
+      "adds": ["manifest_selected_salt_markdown"],
+      "inherits": "mode_1_base_tools"
+    },
+    {
+      "id": "mode_3_cli_bootstrap",
+      "ordinal": 3,
+      "required_for_ga": true,
+      "adds": ["project_local_salt_ds", "selected_bootstrap_profile"],
+      "inherits": "mode_2_markdown"
+    },
+    {
+      "id": "mode_4_mcp_candidate",
+      "ordinal": 4,
+      "required_for_ga": false,
+      "conditional_on": "mcp_final_disposition_ship",
+      "closed_omit_status": "not_selected",
+      "adds": ["same_bundle_digest_salt_mcp"],
+      "inherits": "mode_3_cli_bootstrap"
+    }
+  ],
+  "diagnostic_references": ["legacy_docs_reference", "prototype_mcp_reference"]
+}

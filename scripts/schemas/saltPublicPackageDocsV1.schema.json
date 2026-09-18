@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/schemas/salt-public-package-docs-v1.json",
+  "title": "Salt public package documentation inventory v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "support_destinations", "packages"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "support_destinations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["public_salt_support", "none"],
+      "properties": {
+        "public_salt_support": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://www\\.saltdesignsystem\\.com/salt/support-and-contributions$"
+        },
+        "none": { "type": "null" }
+      }
+    },
+    "packages": {
+      "type": "array",
+      "minItems": 16,
+      "maxItems": 16,
+      "items": { "$ref": "#/$defs/package" }
+    }
+  },
+  "$defs": {
+    "owner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["primary", "backup"],
+      "properties": {
+        "primary": { "type": "string", "minLength": 1 },
+        "backup": { "type": "string", "minLength": 1 }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["description", "license", "repository", "bugs", "keywords"],
+      "properties": {
+        "description": { "enum": ["present", "missing", "planned"] },
+        "license": { "enum": ["present", "missing", "planned"] },
+        "repository": { "enum": ["present", "missing", "planned"] },
+        "bugs": { "enum": ["present", "missing", "planned"] },
+        "keywords": { "enum": ["present", "missing", "planned"] }
+      }
+    },
+    "package": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "workspace_path",
+        "lifecycle",
+        "readme_path",
+        "metadata_fields",
+        "packed_readme_status",
+        "owner",
+        "support_destination"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^@salt-ds/[a-z0-9][a-z0-9._-]*$"
+        },
+        "workspace_path": {
+          "anyOf": [
+            { "type": "string", "pattern": "^packages/[a-z0-9][a-z0-9._-]*$" },
+            { "type": "null" }
+          ]
+        },
+        "lifecycle": { "enum": ["publishable", "planned", "conditional"] },
+        "readme_path": {
+          "type": "string",
+          "pattern": "^packages/[a-z0-9][a-z0-9._-]*/README\\.md$"
+        },
+        "metadata_fields": { "$ref": "#/$defs/metadata" },
+        "packed_readme_status": {
+          "enum": ["present", "required_before_activation"]
+        },
+        "owner": { "$ref": "#/$defs/owner" },
+        "support_destination": { "enum": ["public_salt_support", "none"] }
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "contract": "unit-03-pre-agent-pack-receipt",
+  "plan_id": "001",
+  "unit_id": "03",
+  "source_sha": "20aba96d6d451ed4a6ad1b563ff10496bbfa4a83",
+  "completion_sha": "20aba96d6d451ed4a6ad1b563ff10496bbfa4a83",
+  "pack_report": {
+    "contract": "salt-ai-pack-report@1",
+    "policy_profile": "pre-agent-support",
+    "publishable": false,
+    "path": "dist/salt-ai-pack/unit-03.json",
+    "sha256": "sha256:145cc94c2278f667bbaeb7dd6026c1dd38cabb97b22804f88aa78888460626d8",
+    "bytes": 3031
+  },
+  "knowledge_bundle": {
+    "bundle_digest": "sha256:7d0afffd17ee2bc0118fafdfbe4d1b41e9d283bf7a72ba4447e6ac25a963f1e7",
+    "semantic_digest": "sha256:f2fb02c9e6b999935b1e9727463b4a298492f810e376c434bc3626ab050cccab",
+    "semantic_source_digest": "sha256:ae6585d7844d552e5d4f648f2f8b9b8cc91b21ffeb103e316093d4567f14f60a",
+    "compiler_digest": "sha256:2e27a7ae2658f71abc233ffcb58e5bb33e5662c3846615fa255992144ca016f4",
+    "manifest_sha256": "sha256:c125411e5db853588928576ff5357141ca6b9372fa61149ce86a141ca1e7c957",
+    "manifest_bytes": 3265,
+    "artifact_count": 539,
+    "artifact_bytes": 24091873
+  },
+  "packages": [
+    {
+      "name": "@salt-ds/knowledge",
+      "version": "0.0.0",
+      "tarball_sha256": "sha256:ecf65d787fd63251ee1ba929fab12b9f83513d8a213f1f2ad214befcb377880e",
+      "tarball_bytes": 3584489,
+      "packed_files": 583,
+      "prototype_catalog": false,
+      "workspace_link": false
+    },
+    {
+      "name": "@salt-ds/mcp",
+      "version": "0.0.0",
+      "tarball_sha256": "sha256:ee19a8a0a85d4f566af301dd76d6dea5850ffa23e2f4f309e38ab1fa2aea7454",
+      "tarball_bytes": 92394,
+      "packed_files": 8,
+      "prototype_catalog": false,
+      "workspace_link": false
+    }
+  ],
+  "verification": [
+    "yarn build:ai-tooling",
+    "yarn vitest run packages/knowledge/src --maxWorkers=4",
+    "yarn typecheck:ai-tooling",
+    "yarn test:ai-tooling",
+    "yarn check:ai-tooling:pack -- --profile pre-agent-support --report dist/salt-ai-pack/unit-03.json",
+    "git diff --check"
+  ]
+}

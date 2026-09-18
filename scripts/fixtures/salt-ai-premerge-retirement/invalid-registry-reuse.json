@@ -1,0 +1,19 @@
+{
+  "valid": false,
+  "mode": "registry",
+  "registry": {
+    "schema_version": "1.0.0",
+    "pairs": [
+      {
+        "scope": "001/08c",
+        "premerge_kind": "reused-premerge",
+        "landed_kind": "first-landed"
+      },
+      {
+        "scope": "001/09c",
+        "premerge_kind": "reused-premerge",
+        "landed_kind": "second-landed"
+      }
+    ]
+  }
+}

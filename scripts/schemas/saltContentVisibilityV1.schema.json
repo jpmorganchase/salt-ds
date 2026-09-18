@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/schemas/salt-content-visibility-v1.json",
+  "title": "Salt content visibility inventory v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "source_roots",
+    "item_overrides",
+    "destination_classes",
+    "unclassified",
+    "closure_batches"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "source_roots": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/source" }
+    },
+    "item_overrides": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/override" }
+    },
+    "destination_classes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/destination" }
+    },
+    "unclassified": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/unclassified" }
+    },
+    "closure_batches": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/batch" }
+    }
+  },
+  "$defs": {
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "visibility", "content_kinds", "reason"],
+      "properties": {
+        "path": { "$ref": "#/$defs/path" },
+        "visibility": { "enum": ["public", "internal"] },
+        "content_kinds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "api",
+              "docs",
+              "example",
+              "migration",
+              "metadata",
+              "implementation",
+              "test",
+              "tooling",
+              "story"
+            ]
+          }
+        },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "override": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "visibility", "reason"],
+      "properties": {
+        "path": { "$ref": "#/$defs/path" },
+        "visibility": { "enum": ["public", "internal"] },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "destination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "visibility", "schemes", "hosts", "path_prefixes"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+        "visibility": { "enum": ["public", "internal", "forbidden"] },
+        "schemes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "enum": ["relative", "https"] }
+        },
+        "hosts": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "path_prefixes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "unclassified": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "reason", "closure_batch"],
+      "properties": {
+        "path": { "$ref": "#/$defs/path" },
+        "reason": { "type": "string", "minLength": 1 },
+        "closure_batch": { "type": "string", "pattern": "^visibility-[0-9]+$" }
+      }
+    },
+    "batch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "paths", "owner", "due_unit", "status"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^visibility-[0-9]+$" },
+        "paths": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/path" }
+        },
+        "owner": { "type": "string", "minLength": 1 },
+        "due_unit": { "type": "string", "pattern": "^[0-9]{2}[a-z]?$" },
+        "status": { "enum": ["planned", "complete"] }
+      }
+    }
+  }
+}

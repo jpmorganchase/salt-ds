@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "contract": "unit-02-pack-and-smoke-receipt",
+  "plan_id": "001",
+  "unit_id": "02",
+  "source_sha": "df2fec7f03bf8d2066e407c3405af236974e19ec",
+  "completion_sha": "df2fec7f03bf8d2066e407c3405af236974e19ec",
+  "pack_report": {
+    "contract": "salt-ai-pack-report@1",
+    "policy_profile": "extraction-parity",
+    "publishable": false,
+    "path": "dist/salt-ai-pack/unit-02.json",
+    "sha256": "sha256:a6f18f19af8b0bf746cea8c5df9cc09f370c323eb2aa3987adc3f5c10740b775",
+    "bytes": 10036,
+    "extraction_parity_sha256": "sha256:d36653fc6e2cf35f48fa2f85a6a2135965045998b47cd7d65710efed018943f1"
+  },
+  "packages": [
+    {
+      "name": "@salt-ds/knowledge",
+      "version": "0.0.0",
+      "manifest_sha256": "sha256:c6bf2d5855bd4f5665abed7c6d98f7b11c33b49b3934a249bd47e0301bf3906a",
+      "manifest_bytes": 1046,
+      "tarball_sha256": "sha256:9f2ffc8a2dca799396057c0e5f3f97bb23d3c126a3c46e862262647d58dff290",
+      "tarball_bytes": 215699,
+      "packed_files": 44,
+      "generated_files": 0
+    },
+    {
+      "name": "@salt-ds/mcp",
+      "version": "0.0.0",
+      "manifest_sha256": "sha256:d9f6c3503df7a6bdf8875cbea311bffd463f73648c099aef8c0f4939c2daf974",
+      "manifest_bytes": 950,
+      "tarball_sha256": "sha256:9f0f35f990ff8c63a7fa0dde8e054a088676e803ffa94e60981b6f9f678709be",
+      "tarball_bytes": 92279,
+      "packed_files": 8,
+      "generated_files": 0,
+      "first_party_dependencies": [
+        {
+          "name": "@salt-ds/knowledge",
+          "version": "0.0.0",
+          "tarball_sha256": "sha256:9f2ffc8a2dca799396057c0e5f3f97bb23d3c126a3c46e862262647d58dff290"
+        }
+      ]
+    }
+  ],
+  "consumer_smoke": {
+    "result": "passed",
+    "network": "offline",
+    "workspace_links": 0,
+    "registry_fallbacks": 0,
+    "installed_declarations": "typechecked",
+    "module_formats": [
+      "cjs",
+      "esm"
+    ],
+    "workflows": [
+      "inspect",
+      "review",
+      "search",
+      "stdio"
+    ]
+  },
+  "commands": [
+    "yarn check:ai-tooling:pack -- --profile extraction-parity --report dist/salt-ai-pack/unit-02.json",
+    "yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit-02.json"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-release-embargo-receipt-1.json",
+  "title": "Salt AI release embargo receipt v1",
+  "type": "object",
+  "required": ["schema_version", "kind", "source_commit", "ai_packages", "package_states", "release_script", "changesets", "result"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "kind": { "const": "release-embargo-receipt" },
+    "source_commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
+    "ai_packages": { "type": "array", "uniqueItems": true, "items": { "type": "string" } },
+    "package_states": { "type": "array", "items": { "type": "object" } },
+    "release_script": { "type": "string" },
+    "changesets": { "type": "array", "items": { "type": "object" } },
+    "result": { "const": "pass" }
+  },
+  "additionalProperties": true
+}

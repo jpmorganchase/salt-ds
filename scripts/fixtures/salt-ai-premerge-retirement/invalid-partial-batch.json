@@ -1,0 +1,12 @@
+{
+  "valid": false,
+  "mode": "selection",
+  "scope": "001/08c",
+  "pairs": [
+    {
+      "scope": "001/08c",
+      "premerge_kind": "pack-report-premerge",
+      "landed_kind": "pack-report"
+    }
+  ]
+}

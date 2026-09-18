@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "contract": "unit-03-consumer-smoke-receipt",
+  "plan_id": "001",
+  "unit_id": "03",
+  "source_sha": "20aba96d6d451ed4a6ad1b563ff10496bbfa4a83",
+  "completion_sha": "20aba96d6d451ed4a6ad1b563ff10496bbfa4a83",
+  "pack_receipt_sha256": "sha256:55ba9357dd88fba0e33ab334e12d6501e520198f8ede002267e446fa8f5572e3",
+  "pack_report_sha256": "sha256:145cc94c2278f667bbaeb7dd6026c1dd38cabb97b22804f88aa78888460626d8",
+  "packages": [
+    {
+      "name": "@salt-ds/knowledge",
+      "version": "0.0.0",
+      "tarball_sha256": "sha256:ecf65d787fd63251ee1ba929fab12b9f83513d8a213f1f2ad214befcb377880e"
+    },
+    {
+      "name": "@salt-ds/mcp",
+      "version": "0.0.0",
+      "tarball_sha256": "sha256:ee19a8a0a85d4f566af301dd76d6dea5850ffa23e2f4f309e38ab1fa2aea7454"
+    }
+  ],
+  "consumer_smoke": {
+    "result": "passed",
+    "network": "offline",
+    "workspace_links": 0,
+    "registry_fallbacks": 0,
+    "installed_declarations": "typechecked",
+    "module_formats": [
+      "cjs",
+      "esm"
+    ],
+    "workflows": [
+      "inspect",
+      "review",
+      "search",
+      "stdio"
+    ]
+  },
+  "verification": [
+    "yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit-03.json"
+  ]
+}

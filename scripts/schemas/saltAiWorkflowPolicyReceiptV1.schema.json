@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-workflow-policy-receipt-1.json",
+  "title": "Salt AI workflow policy receipt v1",
+  "type": "object",
+  "required": ["schema_version", "kind", "source_commit", "workflows", "prohibited_events", "result"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "kind": { "const": "workflow-policy-receipt" },
+    "source_commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
+    "workflows": { "type": "array", "items": { "type": "object" } },
+    "prohibited_events": { "type": "array", "uniqueItems": true, "items": { "type": "string" } },
+    "result": { "const": "pass" }
+  },
+  "additionalProperties": true
+}

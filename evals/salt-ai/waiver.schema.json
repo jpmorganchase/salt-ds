@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/evals/waiver-1.json",
+  "title": "Salt AI metric waiver v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "metric_id",
+    "required_value",
+    "observed_value",
+    "affected_cases",
+    "risk",
+    "rationale",
+    "owner",
+    "tracking_reference",
+    "approved_on",
+    "expires_on"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "metric_id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+    "required_value": {
+      "anyOf": [
+        { "type": "number" },
+        { "type": "string" },
+        { "type": "boolean" }
+      ]
+    },
+    "observed_value": {
+      "anyOf": [
+        { "type": "number" },
+        { "type": "string" },
+        { "type": "boolean" }
+      ]
+    },
+    "affected_cases": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" }
+    },
+    "risk": { "type": "string", "minLength": 1 },
+    "rationale": { "type": "string", "minLength": 1 },
+    "owner": { "type": "string", "minLength": 1 },
+    "tracking_reference": { "type": "string", "minLength": 1 },
+    "approved_on": { "type": "string", "format": "date" },
+    "expires_on": { "type": "string", "format": "date" }
+  }
+}

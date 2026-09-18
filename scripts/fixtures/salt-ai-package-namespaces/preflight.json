@@ -1,0 +1,25 @@
+{
+  "packages": [
+    {
+      "name": "@salt-ds/core",
+      "status": "present",
+      "versions": ["1.69.0"],
+      "dist_tags": { "latest": "1.69.0" },
+      "deprecated_versions": [],
+      "repository": "git+https://github.com/jpmorganchase/salt-ds.git",
+      "maintainers": [
+        { "name": "brooklynrob" },
+        { "name": "saltdesignsystem" }
+      ],
+      "latest_publisher": {
+        "name": "GitHub Actions",
+        "trustedPublisher": { "id": "github", "oidcConfigId": "fixture" }
+      },
+      "latest_integrity": "sha512-fixture",
+      "latest_attestations": { "provenance": { "predicateType": "https://slsa.dev/provenance/v1" } }
+    },
+    { "name": "@salt-ds/cli", "status": "absent" },
+    { "name": "@salt-ds/knowledge", "status": "absent" },
+    { "name": "@salt-ds/mcp", "status": "absent" }
+  ]
+}

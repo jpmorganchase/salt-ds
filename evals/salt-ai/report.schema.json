@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/evals/report-1.json",
+  "title": "Salt AI sanitized evaluation report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "cohort_id",
+    "sanitization",
+    "identities",
+    "corpus",
+    "modes",
+    "catalog_baseline",
+    "load_sensitive_tests",
+    "verification",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "cohort_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "sanitization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "raw_prompts_committed",
+        "raw_output_committed",
+        "credentials_committed",
+        "absolute_paths_committed",
+        "proprietary_fixtures_committed"
+      ],
+      "properties": {
+        "raw_prompts_committed": { "const": false },
+        "raw_output_committed": { "const": false },
+        "credentials_committed": { "const": false },
+        "absolute_paths_committed": { "const": false },
+        "proprietary_fixtures_committed": { "const": false }
+      }
+    },
+    "identities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["manifest_sha256", "protocol_sha256", "fixture_sha256"],
+      "properties": {
+        "manifest_sha256": { "$ref": "#/$defs/digest" },
+        "protocol_sha256": { "$ref": "#/$defs/digest" },
+        "fixture_sha256": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "corpus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outcome_cases",
+        "activation_cases",
+        "retrieval_gold_queries"
+      ],
+      "properties": {
+        "outcome_cases": { "type": "integer", "minimum": 12, "maximum": 15 },
+        "activation_cases": { "type": "integer", "minimum": 3 },
+        "retrieval_gold_queries": { "type": "integer", "minimum": 40 }
+      }
+    },
+    "modes": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["mode_id", "status", "scored", "metrics", "reason"],
+        "properties": {
+          "mode_id": {
+            "enum": [
+              "mode_1_base_tools",
+              "mode_2_markdown",
+              "mode_3_cli_bootstrap",
+              "mode_4_mcp_candidate"
+            ]
+          },
+          "status": {
+            "enum": [
+              "baseline_available",
+              "available",
+              "not_available",
+              "not_selected"
+            ]
+          },
+          "scored": { "type": "boolean" },
+          "metrics": { "anyOf": [{ "type": "object" }, { "type": "null" }] },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "catalog_baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract",
+        "build_count",
+        "deterministic",
+        "manifest_bytes",
+        "artifact_count",
+        "artifact_bytes",
+        "record_count",
+        "semantic_digest",
+        "derived_bundle_identity",
+        "artifact_set_digest",
+        "timings_ms"
+      ],
+      "properties": {
+        "contract": { "const": "catalog-v2-internal-characterization" },
+        "build_count": { "const": 2 },
+        "deterministic": { "const": true },
+        "manifest_bytes": { "type": "integer", "minimum": 1 },
+        "artifact_count": { "type": "integer", "minimum": 1 },
+        "artifact_bytes": { "type": "integer", "minimum": 1 },
+        "record_count": { "type": "integer", "minimum": 1 },
+        "semantic_digest": { "$ref": "#/$defs/digest" },
+        "derived_bundle_identity": { "$ref": "#/$defs/digest" },
+        "artifact_set_digest": { "$ref": "#/$defs/digest" },
+        "timings_ms": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cold_load",
+            "warm_load",
+            "search",
+            "inspection",
+            "review"
+          ],
+          "properties": {
+            "cold_load": { "type": "number", "minimum": 0 },
+            "warm_load": { "type": "number", "minimum": 0 },
+            "search": { "type": "number", "minimum": 0 },
+            "inspection": { "type": "number", "minimum": 0 },
+            "review": { "type": "number", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "load_sensitive_tests": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "file", "setup", "bound_ms", "baseline_ms"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "file": {
+            "type": "string",
+            "pattern": "^packages/mcp/src/.+\\.spec\\.ts$"
+          },
+          "setup": { "type": "string", "minLength": 1 },
+          "bound_ms": { "type": "integer", "minimum": 1 },
+          "baseline_ms": { "type": "number", "minimum": 0 }
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pack", "consumer_smoke"],
+      "properties": {
+        "pack": { "$ref": "#/$defs/verification" },
+        "consumer_smoke": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/verification" }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "runtime", "status", "evidence"],
+      "properties": {
+        "command": { "type": "string", "minLength": 1 },
+        "runtime": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["passed", "required_external_matrix"] },
+        "evidence": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/ai/schemas/knowledge-manifest-1.json",
+  "title": "Salt knowledge manifest v1",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "record_schema_version",
+    "bundle_version",
+    "semantic_digest",
+    "bundle_digest",
+    "semantic_source_digest",
+    "compiler_digest",
+    "reader_contract",
+    "analyzer_contract",
+    "ruleset",
+    "operation_capabilities",
+    "compatibility",
+    "artifact_tree",
+    "support_artifacts",
+    "limitations"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://www.saltdesignsystem.com/ai/schemas/knowledge-manifest-1.json"
+    },
+    "schema_version": { "const": "1.0.0" },
+    "record_schema_version": { "const": "1.0.0" },
+    "bundle_version": { "$ref": "#/$defs/version" },
+    "semantic_digest": { "$ref": "#/$defs/digest" },
+    "bundle_digest": { "$ref": "#/$defs/digest" },
+    "semantic_source_digest": { "$ref": "#/$defs/digest" },
+    "compiler_digest": { "$ref": "#/$defs/digest" },
+    "reader_contract": { "const": "salt-knowledge-reader/1" },
+    "analyzer_contract": { "const": "salt-artifact-analyzer/1" },
+    "ruleset": {
+      "type": "object",
+      "required": ["id", "version", "digest", "required_rule_implementations"],
+      "properties": {
+        "id": { "const": "salt-rules-current" },
+        "version": { "$ref": "#/$defs/version" },
+        "digest": { "$ref": "#/$defs/digest" },
+        "required_rule_implementations": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "operation_capabilities": {
+      "$ref": "https://www.saltdesignsystem.com/ai/schemas/operation-capabilities-1.json"
+    },
+    "compatibility": {
+      "type": "object",
+      "required": ["packages"],
+      "properties": {
+        "packages": {
+          "type": "array",
+          "minItems": 13,
+          "maxItems": 13,
+          "items": {
+            "type": "object",
+            "required": ["name", "tested_version", "supported_range", "required"],
+            "properties": {
+              "name": { "type": "string", "pattern": "^@salt-ds/" },
+              "tested_version": { "$ref": "#/$defs/version" },
+              "supported_range": { "$ref": "#/$defs/version" },
+              "required": { "type": "boolean" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifact_tree": {
+      "type": "object",
+      "required": [
+        "contract",
+        "path_codec",
+        "root",
+        "node_count",
+        "tree_bytes",
+        "artifact_count",
+        "artifact_bytes",
+        "max_node_bytes",
+        "max_leaf_entries",
+        "max_internal_children",
+        "max_nodes",
+        "max_tree_bytes",
+        "max_artifacts"
+      ],
+      "properties": {
+        "contract": { "const": "salt-artifact-tree/1" },
+        "path_codec": { "const": "salt-posix-relative-path/1" },
+        "root": {
+          "$ref": "https://www.saltdesignsystem.com/ai/schemas/artifact-tree-node-1.json#/$defs/reference"
+        },
+        "node_count": { "type": "integer", "minimum": 1, "maximum": 512 },
+        "tree_bytes": { "type": "integer", "minimum": 1, "maximum": 8388608 },
+        "artifact_count": { "type": "integer", "minimum": 1, "maximum": 40000 },
+        "artifact_bytes": { "type": "integer", "minimum": 1 },
+        "max_node_bytes": { "const": 65536 },
+        "max_leaf_entries": { "const": 256 },
+        "max_internal_children": { "const": 256 },
+        "max_nodes": { "const": 512 },
+        "max_tree_bytes": { "const": 8388608 },
+        "max_artifacts": { "const": 40000 }
+      },
+      "additionalProperties": false
+    },
+    "support_artifacts": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["kind", "artifact"],
+        "properties": {
+          "kind": {
+            "enum": [
+              "semantic_source_inventory",
+              "compiler_inventory",
+              "generation_receipt"
+            ]
+          },
+          "artifact": { "$ref": "#/$defs/path" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "limitations": {
+      "type": "object",
+      "required": ["historical_completeness"],
+      "properties": { "historical_completeness": { "const": false } },
+      "additionalProperties": false
+    },
+    "agent_support": {
+      "type": "object",
+      "required": ["skill", "agents_pointer"],
+      "properties": {
+        "skill": { "$ref": "#/$defs/artifactPointer" },
+        "agents_pointer": { "$ref": "#/$defs/artifactPointer" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "path": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*%)(?!.*\\\\)[^/]+(?:/[^/]+)*$"
+    },
+    "artifactPointer": {
+      "type": "object",
+      "required": ["artifact"],
+      "properties": { "artifact": { "$ref": "#/$defs/path" } },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

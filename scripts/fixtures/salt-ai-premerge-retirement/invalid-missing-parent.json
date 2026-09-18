@@ -1,0 +1,34 @@
+{
+  "valid": false,
+  "mode": "retirement",
+  "scope": "001/09c",
+  "pairs": [
+    {
+      "scope": "001/09c",
+      "premerge_kind": "discovery-deployment-candidate-premerge-receipt",
+      "landed_kind": "discovery-deployment-landed-candidate-receipt"
+    }
+  ],
+  "index": {
+    "schema_version": "1.0.0",
+    "plan_id": "001",
+    "unit_id": "09c",
+    "tracker_status": "IN PROGRESS",
+    "completion_sha": null,
+    "entries": [
+      {
+        "kind": "discovery-deployment-candidate-premerge-receipt",
+        "sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "state": "active",
+        "evidence_phase": "premerge",
+        "parents": []
+      },
+      {
+        "kind": "discovery-deployment-landed-candidate-receipt",
+        "sha256": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "state": "active",
+        "parents": []
+      }
+    ]
+  }
+}

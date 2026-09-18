@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0.0",
+  "plan_id": "001",
+  "unit_id": "00b",
+  "tracker_status": "DONE",
+  "completion_sha": "e7ac637629f1a0daab65ed8a15a508794b9cde0a",
+  "entries": [
+    {
+      "kind": "evaluation-baseline-report",
+      "schema_id": "https://www.saltdesignsystem.com/ai/evals/report-1.json",
+      "schema_version": "1.0.0",
+      "locator": "repo://plans/evidence/artifacts/sha256-ebd23345537f4e2ef7f9c10bbf033d1373b6990a3a4bd61f82c86887299bd3bd.json",
+      "sha256": "sha256:ebd23345537f4e2ef7f9c10bbf033d1373b6990a3a4bd61f82c86887299bd3bd",
+      "source_sha": "e7ac637629f1a0daab65ed8a15a508794b9cde0a",
+      "completion_sha": "e7ac637629f1a0daab65ed8a15a508794b9cde0a",
+      "workflow_class": "local-ci",
+      "environment_class": "local-worktree-node-24",
+      "retention_expires_at": "2031-08-27T00:00:00.000Z",
+      "parents": [],
+      "state": "active",
+      "contract_inventory_digests": [
+        {
+          "path": "docs/decisions/0001-salt-ai-knowledge-platform.md",
+          "sha256": "sha256:5336acb3c96da14a6374529978756de9e6716a54ba514bf5463dc5bfc42888cb"
+        },
+        {
+          "path": "evals/salt-ai/manifest.json",
+          "sha256": "sha256:231179b50b0c8969e48d95795c93aaf5489fee7defb35a644c095ba33ffcb1c9"
+        },
+        {
+          "path": "scripts/schemas/saltContentVisibilityV1.schema.json",
+          "sha256": "sha256:c3e0cbca9d1bcc26220b326863c8644c21f0bbf9b74c6de972f654e36b1d16e1"
+        },
+        {
+          "path": "scripts/schemas/saltPublicPackageDocsEffectiveV1.schema.json",
+          "sha256": "sha256:c391479c241271ab4c50379a0e2f223c03f00629ca7cd54811f584768ed74ab3"
+        },
+        {
+          "path": "scripts/schemas/saltPublicPackageDocsV1.schema.json",
+          "sha256": "sha256:d27f146e5cf6a977d5e37e83102ca92e044796f38ba58c7c95968ec1f90a7eb0"
+        },
+        {
+          "path": "tooling/ai/content-visibility-v1.json",
+          "sha256": "sha256:ad85a6209d10ec3ae6ec1b25f94aa29077c873b3829428d146b7a2b61b018298"
+        },
+        {
+          "path": "tooling/ai/migration-records-v1.json",
+          "sha256": "sha256:7e7b969090adb7439e6273414ee82123e59de3510ffe0dae01adb01054cf92d1"
+        },
+        {
+          "path": "tooling/ai/premerge-evidence-pairs-v1.json",
+          "sha256": "sha256:c9f92348c997101b2160502348eb3118b80ec100e64ddf4ae53595430f715b33"
+        },
+        {
+          "path": "tooling/ai/public-package-docs-v1.json",
+          "sha256": "sha256:71aa0f6657667423ced058c49f7078e5e4c55bf00705a736a001d84e6e9faf9d"
+        }
+      ],
+      "pack_report": {
+        "compressed_bytes": 2870144,
+        "file_count": 32,
+        "generated_bytes": 10799846,
+        "sha256": "sha256:ab9be9684727b175162eae41b4dcbdff9c5f3427fb44b0a08a22777b8723f9e5",
+        "unpacked_bytes": 11989909
+      },
+      "verification": [
+        "yarn workspace @salt-ds/mcp build",
+        "yarn test:ai-tooling",
+        "yarn typecheck:mcp",
+        "yarn check:ai-tooling:pack",
+        "yarn smoke:consumer --skip-build",
+        "yarn validate:salt-ai:contracts",
+        "yarn validate:salt-ai:tracker -- --require-plan 001 --require-unit 00a --require-kind package-namespace-receipt --require-kind ordinary-baseline-receipt",
+        "yarn eval:salt-ai:validate --require-baseline",
+        "yarn eval:salt-ai:baseline",
+        "yarn eval:salt-ai:report -- --cohort baseline-pre-platform",
+        "yarn verify:salt-ai-release-embargo",
+        "yarn exec prettier --check AGENTS.md docs/ai docs/decisions evals/salt-ai tooling/ai scripts/schemas"
+      ]
+    }
+  ]
+}

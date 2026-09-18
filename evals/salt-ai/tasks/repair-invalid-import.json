@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "id": "repair-invalid-import",
+  "suite": "task",
+  "family": "repair",
+  "fixture_id": "repo-repair-invalid-import",
+  "package_vector": [{ "name": "@salt-ds/core", "version": "1.69.0" }],
+  "goal": "Repair the unsupported Salt import while preserving behavior.",
+  "modes": [
+    "mode_1_base_tools",
+    "mode_2_markdown",
+    "mode_3_cli_bootstrap",
+    "mode_4_mcp_candidate"
+  ],
+  "mcp_eligible": true,
+  "allowed_variants": ["Public package-root import"],
+  "checks": [
+    { "id": "public-import", "kind": "ast", "expected": "@salt-ds/core" },
+    { "id": "compiles", "kind": "command", "expected": "pass" }
+  ],
+  "non_goals": ["Change the component"],
+  "human_rubric": null
+}

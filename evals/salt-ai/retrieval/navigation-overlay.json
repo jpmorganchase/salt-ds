@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.0.0",
+  "id": "retrieval-navigation-overlay",
+  "suite": "retrieval",
+  "family": "retrieval",
+  "fixture_id": "repo-retrieval-navigation",
+  "package_vector": [
+    { "name": "@salt-ds/core", "version": "1.69.0" },
+    { "name": "@salt-ds/lab", "version": "1.0.0-alpha.102" }
+  ],
+  "goal": "Retrieve exact applicable navigation, overlay, form, and layout records.",
+  "modes": ["mode_2_markdown", "mode_3_cli_bootstrap", "mode_4_mcp_candidate"],
+  "mcp_eligible": true,
+  "allowed_variants": ["Any declared applicable gold record in the first five"],
+  "checks": [
+    { "id": "recall-at-5", "kind": "retrieval", "expected": ">=0.95" }
+  ],
+  "non_goals": ["Semantic answer grading"],
+  "human_rubric": null,
+  "gold_queries": [
+    {
+      "id": "nav-01",
+      "query": "button or link for navigation",
+      "category": "component",
+      "gold": ["record:core:button", "record:core:link"]
+    },
+    {
+      "id": "nav-02",
+      "query": "vertical navigation",
+      "category": "pattern",
+      "gold": ["record:pattern:vertical-navigation"]
+    },
+    {
+      "id": "nav-03",
+      "query": "menu button",
+      "category": "pattern",
+      "gold": ["record:pattern:menu-button"]
+    },
+    {
+      "id": "nav-04",
+      "query": "mega menu",
+      "category": "component",
+      "gold": ["record:lab:mega-menu"]
+    },
+    {
+      "id": "nav-05",
+      "query": "dialog overlay",
+      "category": "component",
+      "gold": ["record:core:dialog"]
+    },
+    {
+      "id": "nav-06",
+      "query": "drawer",
+      "category": "component",
+      "gold": ["record:core:drawer"]
+    },
+    {
+      "id": "nav-07",
+      "query": "side panel",
+      "category": "component",
+      "gold": ["record:core:side-panel"]
+    },
+    {
+      "id": "nav-08",
+      "query": "tooltip",
+      "category": "component",
+      "gold": ["record:core:tooltip"]
+    },
+    {
+      "id": "nav-09",
+      "query": "dropdown",
+      "category": "component",
+      "gold": ["record:core:dropdown"]
+    },
+    {
+      "id": "nav-10",
+      "query": "combo box",
+      "category": "component",
+      "gold": ["record:core:combo-box"]
+    },
+    {
+      "id": "nav-11",
+      "query": "labelled field",
+      "category": "component",
+      "gold": ["record:core:form-field"]
+    },
+    {
+      "id": "nav-12",
+      "query": "form pattern",
+      "category": "pattern",
+      "gold": ["record:pattern:forms"]
+    },
+    {
+      "id": "nav-13",
+      "query": "tabs",
+      "category": "component",
+      "gold": ["record:core:tabs"]
+    },
+    {
+      "id": "nav-14",
+      "query": "toolbar",
+      "category": "component",
+      "gold": ["record:core:toolbar"]
+    },
+    {
+      "id": "nav-15",
+      "query": "breadcrumbs",
+      "category": "component",
+      "gold": ["record:core:breadcrumbs"]
+    },
+    {
+      "id": "nav-16",
+      "query": "stack layout",
+      "category": "component",
+      "gold": ["record:core:stack-layout"]
+    },
+    {
+      "id": "nav-17",
+      "query": "grid layout",
+      "category": "component",
+      "gold": ["record:core:grid-layout"]
+    },
+    {
+      "id": "nav-18",
+      "query": "keyboard shortcuts",
+      "category": "pattern",
+      "gold": ["record:pattern:keyboard-shortcuts"]
+    },
+    {
+      "id": "nav-19",
+      "query": "search pattern",
+      "category": "pattern",
+      "gold": ["record:pattern:search"]
+    },
+    {
+      "id": "nav-20",
+      "query": "file upload",
+      "category": "pattern",
+      "gold": ["record:pattern:file-upload"]
+    }
+  ]
+}

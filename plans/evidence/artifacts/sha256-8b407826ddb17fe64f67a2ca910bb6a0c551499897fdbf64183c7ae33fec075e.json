@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0.0",
+  "contract": "unit-02-semantic-comparison-receipt",
+  "plan_id": "001",
+  "unit_id": "02",
+  "source_sha": "df2fec7f03bf8d2066e407c3405af236974e19ec",
+  "completion_sha": "df2fec7f03bf8d2066e407c3405af236974e19ec",
+  "baseline": {
+    "path": "packages/knowledge/src/__fixtures__/unit01-semantic-characterization.json",
+    "sha256": "sha256:0e7f974cc1baed2d57ee58e7570eb2a7c247f40749b4b6f54ed46d4da6801be7",
+    "semantic_digest": "sha256:ddb91ebdd41f9b256e986967f651aa5710064ec50c52a57b823294e5d70c78aa",
+    "input_count": 4206
+  },
+  "extraction_parity": {
+    "contract": "extraction-parity@1",
+    "path": "packages/knowledge/generated/extraction-parity.json",
+    "sha256": "sha256:d36653fc6e2cf35f48fa2f85a6a2135965045998b47cd7d65710efed018943f1",
+    "bytes": 2323,
+    "status": "passed",
+    "semantic_digest": "sha256:ddb91ebdd41f9b256e986967f651aa5710064ec50c52a57b823294e5d70c78aa",
+    "normalized_semantic_projection_sha256": "sha256:3860d7fa728eecce7b18f79191beda73ee8631aa25ad8d392f95edc052573e74",
+    "normalized_input_projection_digest": "sha256:f0e400019bfdd879eb9bd4dd34a227893fd8d23da5c7eb7ff589a895863898b8",
+    "input_count": 4216,
+    "comparison_domains": [
+      "applicability",
+      "findings",
+      "integrity",
+      "package_facts",
+      "queries",
+      "records"
+    ]
+  },
+  "determinism": {
+    "clean_builds": 2,
+    "result": "byte-identical",
+    "registry_inventory_digest": "sha256:4ded22e87e1416efcd59a86e1d09907de6e80d352aa84ebd278158446d64c8",
+    "knowledge_tarball_sha256": "sha256:9f2ffc8a2dca799396057c0e5f3f97bb23d3c126a3c46e862262647d58dff290",
+    "mcp_tarball_sha256": "sha256:9f0f35f990ff8c63a7fa0dde8e054a088676e803ffa94e60981b6f9f678709be",
+    "pack_report_sha256": "sha256:a6f18f19af8b0bf746cea8c5df9cc09f370c323eb2aa3987adc3f5c10740b775"
+  },
+  "verification": {
+    "exact_unit_suite": {
+      "test_files": 42,
+      "tests": 636,
+      "result": "passed"
+    },
+    "full_ai_tooling_suite": {
+      "test_files": 68,
+      "tests": 919,
+      "result": "passed"
+    },
+    "commands": [
+      "yarn build:ai-tooling",
+      "yarn typecheck:ai-tooling",
+      "yarn test:ai-tooling",
+      "yarn vitest run packages/knowledge/src packages/mcp/src/__tests__/architectureBoundary.spec.ts --maxWorkers=4",
+      "yarn validate:salt-ai:contracts",
+      "git diff --check"
+    ]
+  }
+}

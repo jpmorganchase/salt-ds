@@ -23,9 +23,11 @@ import {
   formatCatalogBuildBanner,
   isPathWithinRoot,
   normalizePortableRepositoryBuildPath,
+  validateCatalogBuildInputPatterns,
 } from "./catalogBuildIdentity.mjs";
 import { makeTypings } from "./makeTypings.mjs";
 import { distinct, emptyDir, getTypescriptConfig } from "./utils.mjs";
+import { verifyKnowledgeArtifactContract } from "./knowledgeArtifactContract.mjs";
 
 const cwd = process.cwd();
 const repoRoot = path.resolve(
@@ -44,12 +46,18 @@ const {
   publishScriptExcludes = [],
   publishAdditionalDependencies = {},
   publishAdditionalEntryPaths = [],
+  publishEntryPath,
   publishBuildIdentityManifest,
+  publishBuildIdentityInputPatterns,
+  publishCatalogArtifactPaths,
   publishExtraCopyPaths = [],
   publishPreserveModules = true,
   publishSourceMaps = true,
   publishIncludeReadme = true,
   publishIncludeChangelog = true,
+  publishKnowledgeManifest,
+  publishKnowledgePublicationInventory,
+  publishKnowledgeInputPatterns,
   generateTypings = true,
   publishTypingEntryOnly = false,
   publishConfig,
@@ -74,7 +82,13 @@ const hasPublishDirectory = Boolean(publishConfig?.directory);
 const outputDir = hasPublishDirectory
   ? path.resolve(cwd, publishConfig.directory)
   : cwd;
-const sourceEntryPath = path.join(cwd, "src", "index.ts");
+const sourceEntryPath = path.resolve(
+  cwd,
+  publishEntryPath ?? path.join("src", "index.ts"),
+);
+if (!isPathWithinRoot(cwd, sourceEntryPath)) {
+  throw new Error("publishEntryPath must stay inside the package root.");
+}
 const additionalSourceEntryPaths = publishAdditionalEntryPaths.map(
   (entryPath) => path.join(cwd, entryPath),
 );
@@ -95,17 +109,150 @@ if (
 const buildIdentityManifestPath = publishBuildIdentityManifest
   ? path.resolve(cwd, publishBuildIdentityManifest)
   : null;
+if (
+  publishKnowledgeManifest !== undefined &&
+  (publishBuildIdentityManifest !== undefined ||
+    typeof publishKnowledgeManifest !== "string" ||
+    typeof publishKnowledgePublicationInventory !== "string" ||
+    typeof publishKnowledgeInputPatterns !== "object" ||
+    Array.isArray(publishKnowledgeInputPatterns) ||
+    typeof publishKnowledgeInputPatterns.semantic !== "string" ||
+    typeof publishKnowledgeInputPatterns.compiler !== "string")
+) {
+  throw new Error(
+    "Knowledge-v1 publication requires distinct manifest/inventory paths and cannot use the Catalog-v2 build identity.",
+  );
+}
+const knowledgeInputPatterns = publishKnowledgeManifest
+  ? Object.fromEntries(
+      await Promise.all(
+        ["semantic", "compiler"].map(async (kind) => {
+          const relativePath = publishKnowledgeInputPatterns[kind];
+          normalizePortableRepositoryBuildPath(
+            relativePath,
+            `publishKnowledgeInputPatterns.${kind} is unsafe`,
+          );
+          const patternPath = path.resolve(cwd, relativePath);
+          if (!isPathWithinRoot(cwd, patternPath)) {
+            throw new Error(
+              `publishKnowledgeInputPatterns.${kind} escapes the package.`,
+            );
+          }
+          return [
+            kind,
+            validateCatalogBuildInputPatterns(
+              JSON.parse(await fs.readFile(patternPath, "utf8")),
+              `publishKnowledgeInputPatterns.${kind}`,
+            ),
+          ];
+        }),
+      ),
+    )
+  : null;
+const assertKnowledgeBuildBoundary = publishKnowledgeManifest
+  ? async () => {
+      const verified = verifyKnowledgeArtifactContract({
+        packageRoot: cwd,
+        manifestPath: publishKnowledgeManifest,
+        publicationInventoryPath: publishKnowledgePublicationInventory,
+      });
+      for (const kind of ["semantic", "compiler"]) {
+        await assertCompleteCatalogInputSet(
+          verified.inputInventories[kind],
+          repoRoot,
+          knowledgeInputPatterns[kind],
+        );
+      }
+      return verified;
+    }
+  : async () => null;
+await assertKnowledgeBuildBoundary();
+if (
+  buildIdentityManifestPath &&
+  (!publishBuildIdentityInputPatterns ||
+    typeof publishBuildIdentityInputPatterns !== "object" ||
+    Array.isArray(publishBuildIdentityInputPatterns) ||
+    typeof publishBuildIdentityInputPatterns.semantic !== "string" ||
+    typeof publishBuildIdentityInputPatterns.compiler !== "string")
+) {
+  throw new Error(
+    "publishBuildIdentityInputPatterns must declare semantic and compiler pattern files.",
+  );
+}
+const catalogInputPatterns = buildIdentityManifestPath
+  ? (
+      await Promise.all(
+        [
+          ["semantic", publishBuildIdentityInputPatterns.semantic],
+          ["compiler", publishBuildIdentityInputPatterns.compiler],
+        ].map(async ([kind, relativePath]) => {
+          normalizePortableRepositoryBuildPath(
+            relativePath,
+            `publishBuildIdentityInputPatterns.${kind} is unsafe`,
+          );
+          const patternPath = path.resolve(cwd, relativePath);
+          if (!isPathWithinRoot(cwd, patternPath)) {
+            throw new Error(
+              `publishBuildIdentityInputPatterns.${kind} escapes the package.`,
+            );
+          }
+          return validateCatalogBuildInputPatterns(
+            JSON.parse(await fs.readFile(patternPath, "utf8")),
+            `publishBuildIdentityInputPatterns.${kind}`,
+          );
+        }),
+      )
+    ).flat()
+  : [];
 const catalogBuildIdentity = buildIdentityManifestPath
   ? createCatalogBuildIdentity(await fs.readFile(buildIdentityManifestPath))
   : null;
+if (
+  catalogBuildIdentity &&
+  (!publishCatalogArtifactPaths ||
+    typeof publishCatalogArtifactPaths !== "object" ||
+    Array.isArray(publishCatalogArtifactPaths) ||
+    typeof publishCatalogArtifactPaths.generationDirectory !== "string" ||
+    typeof publishCatalogArtifactPaths.publicationInventoryFile !== "string" ||
+    typeof publishCatalogArtifactPaths.schemaArtifactKind !== "string" ||
+    typeof publishCatalogArtifactPaths.buildArtifactsField !== "string")
+) {
+  throw new Error(
+    "publishCatalogArtifactPaths must name the generation, publication inventory, schema kind, and build-artifact field.",
+  );
+}
+if (catalogBuildIdentity) {
+  for (const [label, value] of [
+    ["generationDirectory", publishCatalogArtifactPaths.generationDirectory],
+    [
+      "publicationInventoryFile",
+      publishCatalogArtifactPaths.publicationInventoryFile,
+    ],
+  ]) {
+    normalizePortableRepositoryBuildPath(
+      value,
+      `publishCatalogArtifactPaths.${label} is unsafe`,
+    );
+  }
+  for (const label of ["schemaArtifactKind", "buildArtifactsField"]) {
+    if (!/^[a-z][a-z0-9_]*$/u.test(publishCatalogArtifactPaths[label])) {
+      throw new Error(`publishCatalogArtifactPaths.${label} is invalid.`);
+    }
+  }
+}
 const catalogBuildBanner = catalogBuildIdentity
   ? formatCatalogBuildBanner(catalogBuildIdentity)
   : undefined;
 async function assertBuildBoundaryInputs() {
   if (!catalogBuildIdentity) return;
-  await assertCompleteCatalogInputSet(catalogBuildIdentity, repoRoot);
+  await assertCompleteCatalogInputSet(
+    catalogBuildIdentity,
+    repoRoot,
+    catalogInputPatterns,
+  );
 }
 await assertBuildBoundaryInputs();
+await assertKnowledgeBuildBoundary();
 
 function repositoryModulePath(id) {
   if (!catalogBuildIdentity || !path.isAbsolute(id) || id.includes("\0")) {
@@ -272,6 +419,7 @@ await bundle.write({
 
 await bundle.close();
 await assertBuildBoundaryInputs();
+await assertKnowledgeBuildBoundary();
 
 if (hasPublishDirectory) {
 // The repository root intentionally has no package `type`, while the build
@@ -311,9 +459,11 @@ const publishedDependencies = await transformWorkspaceDeps({
 const publishedPeerDependencies = packageJson.peerDependencies
   ? await transformWorkspaceDeps(packageJson.peerDependencies)
   : null;
-const publishedExtraCopyPaths = publishExtraCopyPaths.map((copyConfig) =>
-  typeof copyConfig === "string" ? copyConfig : copyConfig.to,
-);
+const publishedExtraCopyPaths = publishExtraCopyPaths
+  .map((copyConfig) =>
+    typeof copyConfig === "string" ? copyConfig : copyConfig.to,
+  )
+  .filter((copyPath) => copyPath !== ".");
 
 function assertPortableRelativeCopyPath(relativePath, label) {
   normalizePortableRepositoryBuildPath(
@@ -327,7 +477,26 @@ async function copyPublishExtraFile(fromPath, toPath, capturedBytes) {
     await outputFile(toPath, capturedBytes);
     return;
   }
-  await fs.cp(fromPath, toPath, { recursive: true });
+  if (path.resolve(fromPath) === path.resolve(toPath)) {
+    throw new Error(`Publish copy source and destination are identical: ${fromPath}`);
+  }
+  const before = await fs.lstat(fromPath, { bigint: true });
+  if (!before.isFile() || before.isSymbolicLink()) {
+    throw new Error(`Publish copy source is not a regular file: ${fromPath}`);
+  }
+  const bytes = await fs.readFile(fromPath);
+  const after = await fs.lstat(fromPath, { bigint: true });
+  if (
+    !after.isFile() ||
+    after.isSymbolicLink() ||
+    before.dev !== after.dev ||
+    before.ino !== after.ino ||
+    before.size !== after.size ||
+    before.mtimeNs !== after.mtimeNs
+  ) {
+    throw new Error(`Publish copy source changed while it was read: ${fromPath}`);
+  }
+  await outputFile(toPath, bytes);
 }
 
 function sha256(bytes) {
@@ -399,6 +568,9 @@ async function readManifestBoundInventory(copyConfig, fromPath) {
     );
   }
   const inventory = JSON.parse(inventoryBytes.toString("utf8"));
+  const generationDirectory = publishCatalogArtifactPaths.generationDirectory;
+  const publicationInventoryFile =
+    publishCatalogArtifactPaths.publicationInventoryFile;
   const expectedInventoryGeneration =
     typeof entry.file === "string" ? path.posix.dirname(entry.file) : null;
   if (
@@ -406,9 +578,12 @@ async function readManifestBoundInventory(copyConfig, fromPath) {
     inventory.semantic_digest !== manifest.semantic_digest ||
     !Array.isArray(inventory.files) ||
     typeof inventory.generation !== "string" ||
-    !/^catalog-generations\/[0-9a-f]{64}$/u.test(inventory.generation) ||
+    !inventory.generation.startsWith(`${generationDirectory}/`) ||
+    !/^[0-9a-f]{64}$/u.test(
+      inventory.generation.slice(generationDirectory.length + 1),
+    ) ||
     inventory.generation !== expectedInventoryGeneration ||
-    entry.file !== `${inventory.generation}/catalog-publication.json`
+    entry.file !== `${inventory.generation}/${publicationInventoryFile}`
   ) {
     throw new Error(
       `${entry.file} must match the manifest schema, semantic identity, and immutable generation`,
@@ -430,7 +605,7 @@ async function readManifestBoundInventory(copyConfig, fromPath) {
     );
   }
   const schemaEntries = (manifest.support_artifacts ?? []).filter(
-    (artifact) => artifact.kind === "json_schema",
+    (artifact) => artifact.kind === publishCatalogArtifactPaths.schemaArtifactKind,
   );
   if (schemaEntries.length !== 1) {
     throw new Error(
@@ -467,7 +642,13 @@ async function readManifestBoundInventory(copyConfig, fromPath) {
     strict: false,
   });
   const buildRecordValidators = new Map();
-  for (const artifact of manifest.build_artifacts) {
+  const buildArtifacts = manifest[publishCatalogArtifactPaths.buildArtifactsField];
+  if (!Array.isArray(buildArtifacts)) {
+    throw new Error(
+      `${copyConfig.filesFromManifest} has no configured build-artifact array.`,
+    );
+  }
+  for (const artifact of buildArtifacts) {
     assertPortableRelativeCopyPath(
       artifact.file,
       `${copyConfig.filesFromManifest} build artifact file`,
@@ -732,6 +913,7 @@ for (const file of FILES_TO_COPY) {
 }
 
 for (const copyConfig of publishExtraCopyPaths) {
+  await assertKnowledgeBuildBoundary();
   const fromPath =
     typeof copyConfig === "string"
       ? path.join(cwd, copyConfig)
@@ -759,6 +941,7 @@ for (const copyConfig of publishExtraCopyPaths) {
   } else {
     await fs.cp(fromPath, toPath, { recursive: true });
   }
+  await assertKnowledgeBuildBoundary();
 }
 
 for (const [relativeBinPath, entrypoint] of Object.entries(

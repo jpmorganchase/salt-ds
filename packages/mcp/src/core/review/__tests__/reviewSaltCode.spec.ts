@@ -1,22 +1,141 @@
 import { describe, expect, it } from "vitest";
-import type { CatalogStoreV2 } from "../../catalog/catalogStoreV2.js";
-import type { ProjectConventions } from "../../policy/index.js";
-import { compileSaltProjectPolicyIrV2 } from "../../policy/projectPolicyIr.js";
+import type {
+  KnowledgeRecordStore,
+  ReviewCatalog,
+  ReviewComponent,
+  ReviewDeprecation,
+} from "@salt-ds/knowledge";
+import type { ProjectConventions } from "@salt-ds/knowledge";
+import { compileSaltProjectPolicyIrV2 } from "@salt-ds/knowledge";
 import {
   jsonUtf8Bytes,
   MAX_NON_SEARCH_STRUCTURED_CONTENT_UTF8_BYTES,
 } from "../../publicResultBudget.js";
-import type {
-  ComponentRecord,
-  DeprecationRecord,
-  SaltRegistry,
-  TokenRecord,
-} from "../../types.js";
-import { createReviewCatalogFromLegacyRegistry } from "../reviewCatalogAdapter.js";
 import {
+  analyzeSaltCode as analyzeSaltCodeProduction,
   MAX_REVIEW_SUBMITTED_UTF8_BYTES,
   reviewSaltCode as reviewSaltCodeProduction,
 } from "../reviewSaltCode.js";
+
+type ComponentRecord = Record<string, any>;
+type DeprecationRecord = Record<string, any>;
+type TokenRecord = Record<string, any>;
+interface SaltRegistry {
+  generated_at: string | null;
+  version: string;
+  semantic_hash: string | null;
+  build_info: unknown;
+  packages: Array<Record<string, any>>;
+  components: ComponentRecord[];
+  icons: Array<Record<string, any>>;
+  country_symbols: Array<Record<string, any>>;
+  pages: Array<Record<string, any>>;
+  patterns: Array<Record<string, any>>;
+  guides: Array<Record<string, any>>;
+  tokens: TokenRecord[];
+  deprecations: DeprecationRecord[];
+  examples: Array<Record<string, any>>;
+}
+
+function mapLegacyComponent(component: ComponentRecord): ReviewComponent {
+  return {
+    id: component.id,
+    status: component.status,
+    package: { name: component.package.name },
+    source: { export_name: component.source.export_name },
+    ...(component.sub_components
+      ? {
+          sub_components: component.sub_components.map(
+            (entry: Record<string, any>) => ({
+              export_name: entry.export_name,
+            }),
+          ),
+        }
+      : {}),
+    ...(component.canonical_example_exports
+      ? {
+          canonical_example_exports: component.canonical_example_exports.map(
+            (entry: Record<string, any>) => ({
+              export_name: entry.export_name,
+            }),
+          ),
+        }
+      : {}),
+    props: component.props.map((prop: Record<string, any>) => ({
+      name: prop.name,
+    })),
+    ...(component.prop_subjects
+      ? {
+          prop_subjects: component.prop_subjects.map(
+            (subject: Record<string, any>) => ({
+              package: subject.package,
+              entrypoint: subject.entrypoint,
+              export_name: subject.export_name,
+              symbol_space: subject.symbol_space,
+              member_path: subject.member_path.map(
+                (member: Record<string, any>) => ({ ...member }),
+              ),
+            }),
+          ),
+        }
+      : {}),
+    when_not_to_use: [...component.when_not_to_use],
+    ...(component.usage_content_ref
+      ? { usage_content_ref: component.usage_content_ref }
+      : {}),
+  };
+}
+
+function mapLegacyDeprecation(
+  deprecation: DeprecationRecord,
+): ReviewDeprecation {
+  const mapIdentity = (identity: Record<string, any>) => ({
+    package: identity.package,
+    entrypoint: identity.entrypoint,
+    export_name: identity.export_name,
+    symbol_space: identity.symbol_space,
+    member_path: identity.member_path.map((member: Record<string, any>) => ({
+      ...member,
+    })),
+  });
+  return {
+    id: deprecation.id,
+    subject: mapIdentity(deprecation.subject),
+    package: deprecation.package,
+    name: deprecation.name,
+    deprecated_in: deprecation.deprecated_in,
+    removed_in: deprecation.removed_in,
+    replacement: {
+      mode: deprecation.replacement.mode,
+      target: deprecation.replacement.target
+        ? mapIdentity(deprecation.replacement.target)
+        : null,
+    },
+    migration: { strategy: deprecation.migration.strategy },
+  };
+}
+
+function createReviewCatalogFromLegacyRegistry(
+  value: SaltRegistry,
+): ReviewCatalog {
+  return {
+    version: value.version,
+    semanticDigest: value.semantic_hash,
+    components: value.components.map(mapLegacyComponent),
+    deprecations: value.deprecations.map(mapLegacyDeprecation),
+    tokens: value.tokens.map((token) => ({
+      name: token.name,
+      category: token.category,
+      deprecated: token.deprecated,
+      declarations: (token.declarations ?? []).map(
+        (declaration: Record<string, any>) => ({
+          id: declaration.id,
+          deprecated: declaration.deprecated,
+        }),
+      ),
+    })),
+  };
+}
 
 function button(): ComponentRecord {
   return {
@@ -92,7 +211,7 @@ function registry(overrides: Partial<SaltRegistry> = {}): SaltRegistry {
   };
 }
 
-function fixtureStore(fixtureRegistry: SaltRegistry): CatalogStoreV2 {
+function fixtureStore(fixtureRegistry: SaltRegistry): KnowledgeRecordStore {
   const contentRecords = new Map<string, unknown>();
   for (const component of fixtureRegistry.components) {
     if (component.usage_content_ref) {
@@ -157,7 +276,7 @@ function fixtureStore(fixtureRegistry: SaltRegistry): CatalogStoreV2 {
     getContentJson(reference: { id: string }) {
       return contentRecords.get(reference.id) ?? null;
     },
-  } as unknown as CatalogStoreV2;
+  } as unknown as KnowledgeRecordStore;
 }
 
 function reviewSaltCode(
@@ -174,6 +293,19 @@ function reviewSaltCode(
     },
     input,
     policy,
+  );
+}
+
+function analyzeSaltCode(
+  fixtureRegistry: SaltRegistry,
+  input: Parameters<typeof analyzeSaltCodeProduction>[1],
+) {
+  return analyzeSaltCodeProduction(
+    {
+      reviewCatalog: createReviewCatalogFromLegacyRegistry(fixtureRegistry),
+      store: fixtureStore(fixtureRegistry),
+    },
+    input,
   );
 }
 
@@ -291,6 +423,44 @@ const NAVIGATION_SOURCE = [
 ].join("\n");
 
 describe("bounded public review", () => {
+  it("keeps the complete analyzer independent from public result selection", () => {
+    const input = {
+      max_findings: 1,
+      artifacts: [
+        {
+          id: "complete.tsx",
+          language: "tsx" as const,
+          text: [
+            'import { Button } from "@salt-ds/core";',
+            "export const Demo = () => <>",
+            ...Array.from(
+              { length: 6 },
+              (_, index) => `<Button key={${index}} href="/next" />`,
+            ),
+            "</>;",
+          ].join("\n"),
+        },
+      ],
+    };
+
+    const complete = analyzeSaltCode(registry(), input);
+    const publicResult = reviewSaltCode(registry(), input);
+
+    expect(complete).not.toHaveProperty("data");
+    expect(complete.coverage).not.toHaveProperty("result_budget");
+    expect(complete.coverage.detected_findings).toBe(6);
+    expect(complete.results[0]?.findings).toHaveLength(6);
+    expect(complete.results[0]?.coverage).toMatchObject({
+      detected_findings: 6,
+      returned_findings: 6,
+      truncated: false,
+    });
+    expect(publicResult.coverage).toMatchObject({
+      detected_findings: 6,
+      returned_findings: 1,
+      truncated: true,
+    });
+  });
   it("finds grounded navigation usage before its valid later import", () => {
     const result = reviewSaltCode(registry(), {
       artifacts: [
@@ -653,10 +823,12 @@ describe("bounded public review", () => {
   it("never turns an allow-local-aliases family policy into a replacement", () => {
     const token = deprecatedToken();
     token.deprecated = false;
-    token.declarations = token.declarations?.map((declaration) => ({
-      ...declaration,
-      deprecated: false,
-    }));
+    token.declarations = token.declarations?.map(
+      (declaration: Record<string, any>) => ({
+        ...declaration,
+        deprecated: false,
+      }),
+    );
     const result = reviewSaltCode(
       registry({ tokens: [token] }),
       {
@@ -1140,7 +1312,7 @@ describe("bounded public review", () => {
           basis: "deprecation_timeline",
           package_name: "@salt-ds/core",
           target_version: "1.35.0",
-          catalog_version: null,
+          knowledge_version: null,
           peer_compatibility: "not_evaluated",
           historical_completeness: false,
         },
@@ -1362,15 +1534,15 @@ describe("bounded public review", () => {
       reason_code: "DEPRECATED_AT_TARGET_VERSION",
       applicability: {
         state: "applicable",
-        basis: "exact_catalog_package_version",
+        basis: "exact_knowledge_package_version",
         target_version: "2.5.0",
-        catalog_version: "2.5.0",
+        knowledge_version: "2.5.0",
         peer_compatibility: "not_evaluated",
         historical_completeness: false,
       },
       remediation_applicability: {
         state: "applicable",
-        basis: "exact_catalog_package_version",
+        basis: "exact_knowledge_package_version",
         historical_completeness: false,
       },
     });

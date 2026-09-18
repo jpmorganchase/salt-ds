@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "profiles": [
+    {
+      "id": "managed_agents_only",
+      "artifacts": ["managed_agents"],
+      "tie_break_rank": 1
+    },
+    {
+      "id": "registered_skill_only",
+      "artifacts": ["registered_skill"],
+      "tie_break_rank": 1
+    },
+    {
+      "id": "managed_agents_and_skill",
+      "artifacts": ["managed_agents", "registered_skill"],
+      "tie_break_rank": 2
+    }
+  ],
+  "selection": [
+    "highest_unaided_discovery_setup_success",
+    "no_deterministic_correctness_regression",
+    "fewest_artifacts",
+    "fewest_bootstrap_tokens",
+    "lexical_profile_id"
+  ]
+}

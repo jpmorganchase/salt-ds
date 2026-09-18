@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it, vi } from "vitest";
-import { compileSaltProjectPolicyIrV2 } from "../../core/policy/projectPolicyIr.js";
+import { compileSaltProjectPolicyIrV2 } from "@salt-ds/knowledge";
 import {
   type AuthorizedProjectPolicySnapshot,
   loadAuthorizedProjectPolicySnapshot,

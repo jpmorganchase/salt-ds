@@ -259,7 +259,7 @@ describe("Salt tool response adapters", () => {
             returned_salt_packages: 1,
             package_assessments_truncated: true,
             applicability_count_scope: "returned_packages_only",
-            exact_catalog_package_version: 0,
+            exact_knowledge_package_version: 0,
             current: 1,
             unknown: 0,
             peer_compatibility: "not_evaluated",

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.saltdesignsystem.com/schemas/salt-public-package-docs-effective-v1.json",
+  "title": "Salt effective public package documentation receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "inventory_sha256",
+    "selected_graph_sha256",
+    "packages"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "inventory_sha256": { "$ref": "#/$defs/digest" },
+    "selected_graph_sha256": { "$ref": "#/$defs/digest" },
+    "packages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "lifecycle",
+          "effective_public",
+          "manifest_sha256",
+          "readme_sha256",
+          "packed_readme_sha256",
+          "metadata_complete",
+          "support_destination"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^@salt-ds/[a-z0-9][a-z0-9._-]*$"
+          },
+          "lifecycle": { "enum": ["publishable", "planned", "conditional"] },
+          "effective_public": { "type": "boolean" },
+          "manifest_sha256": {
+            "anyOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }]
+          },
+          "readme_sha256": {
+            "anyOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }]
+          },
+          "packed_readme_sha256": {
+            "anyOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }]
+          },
+          "metadata_complete": { "type": "boolean" },
+          "support_destination": { "enum": ["public_salt_support", "none"] }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+  }
+}

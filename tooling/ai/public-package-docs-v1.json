@@ -1,0 +1,265 @@
+{
+  "schema_version": "1.0.0",
+  "support_destinations": {
+    "public_salt_support": "https://www.saltdesignsystem.com/salt/support-and-contributions",
+    "none": null
+  },
+  "packages": [
+    {
+      "name": "@salt-ds/ag-grid-theme",
+      "workspace_path": "packages/ag-grid-theme",
+      "lifecycle": "publishable",
+      "readme_path": "packages/ag-grid-theme/README.md",
+      "metadata_fields": {
+        "description": "present",
+        "license": "present",
+        "repository": "present",
+        "bugs": "present",
+        "keywords": "present"
+      },
+      "packed_readme_status": "present",
+      "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "support_destination": "public_salt_support"
+    },
+    {
+      "name": "@salt-ds/cli",
+      "workspace_path": null,
+      "lifecycle": "planned",
+      "readme_path": "packages/cli/README.md",
+      "metadata_fields": {
+        "description": "planned",
+        "license": "planned",
+        "repository": "planned",
+        "bugs": "planned",
+        "keywords": "planned"
+      },
+      "packed_readme_status": "required_before_activation",
+      "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "support_destination": "public_salt_support"
+    },
+    {
+      "name": "@salt-ds/core",
+      "workspace_path": "packages/core",
+      "lifecycle": "publishable",
+      "readme_path": "packages/core/README.md",
+      "metadata_fields": {
+        "description": "present",
+        "license": "present",
+        "repository": "present",
+        "bugs": "present",
+        "keywords": "present"
+      },
+      "packed_readme_status": "present",
+      "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "support_destination": "public_salt_support"
+    },
+    {
+      "name": "@salt-ds/countries",
+      "workspace_path": "packages/countries",
+      "lifecycle": "publishable",
+      "readme_path": "packages/countries/README.md",
+      "metadata_fields": {
+        "description": "present",
+        "license": "present",
+        "repository": "present",
+        "bugs": "present",
+        "keywords": "present"
+      },
+      "packed_readme_status": "present",
+      "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "support_destination": "public_salt_support"
+    },
+    {
+      "name": "@salt-ds/date-adapters",
+      "workspace_path": "packages/date-adapters",
+      "lifecycle": "publishable",
+      "readme_path": "packages/date-adapters/README.md",
+      "metadata_fields": {
+        "description": "present",
+        "license": "present",
+        "repository": "present",
+        "bugs": "present",
+        "keywords": "present"
+      },
+      "packed_readme_status": "present",
+      "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "support_destination": "public_salt_support"
+    },
+    {
+      "name": "@salt-ds/date-components",
+      "workspace_path": "packages/date-components",
+      "lifecycle": "publishable",
+      "readme_path": "packages/date-components/README.md",
+      "metadata_fields": {
+        "description": "present",
+        "license": "present",
+        "repository": "present",
+        "bugs": "present",
+        "keywords": "present"
+      },
+      "packed_readme_status": "present",
+      "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "support_destination": "public_salt_support"
+    },
+    {
+      "name": "@salt-ds/embla-carousel",
+      "workspace_path": "packages/embla-carousel",
+      "lifecycle": "publishable",
+      "readme_path": "packages/embla-carousel/README.md",
+      "metadata_fields": {
+        "description": "present",
+        "license": "present",
+        "repository": "present",
+        "bugs": "present",
+        "keywords": "present"
+      },
+      "packed_readme_status": "present",
+      "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "support_destination": "public_salt_support"
+    },
+    {
+      "name": "@salt-ds/highcharts-theme",
+      "workspace_path": "packages/highcharts-theme",
+      "lifecycle": "publishable",
+      "readme_path": "packages/highcharts-theme/README.md",
+      "metadata_fields": {
+        "description": "present",
+        "license": "present",
+        "repository": "present",
+        "bugs": "present",
+        "keywords": "present"
+      },
+      "packed_readme_status": "present",
+      "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "support_destination": "public_salt_support"
+    },
+    {
+      "name": "@salt-ds/icons",
+      "workspace_path": "packages/icons",
+      "lifecycle": "publishable",
+      "readme_path": "packages/icons/README.md",
+      "metadata_fields": {
+        "description": "present",
+        "license": "present",
+        "repository": "present",
+        "bugs": "present",
+        "keywords": "present"
+      },
+      "packed_readme_status": "present",
+      "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "support_destination": "public_salt_support"
+    },
+    {
+      "name": "@salt-ds/knowledge",
+      "workspace_path": null,
+      "lifecycle": "planned",
+      "readme_path": "packages/knowledge/README.md",
+      "metadata_fields": {
+        "description": "planned",
+        "license": "planned",
+        "repository": "planned",
+        "bugs": "planned",
+        "keywords": "planned"
+      },
+      "packed_readme_status": "required_before_activation",
+      "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "support_destination": "public_salt_support"
+    },
+    {
+      "name": "@salt-ds/lab",
+      "workspace_path": "packages/lab",
+      "lifecycle": "publishable",
+      "readme_path": "packages/lab/README.md",
+      "metadata_fields": {
+        "description": "present",
+        "license": "present",
+        "repository": "present",
+        "bugs": "present",
+        "keywords": "present"
+      },
+      "packed_readme_status": "present",
+      "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "support_destination": "public_salt_support"
+    },
+    {
+      "name": "@salt-ds/mcp",
+      "workspace_path": "packages/mcp",
+      "lifecycle": "conditional",
+      "readme_path": "packages/mcp/README.md",
+      "metadata_fields": {
+        "description": "missing",
+        "license": "present",
+        "repository": "present",
+        "bugs": "missing",
+        "keywords": "missing"
+      },
+      "packed_readme_status": "required_before_activation",
+      "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "support_destination": "public_salt_support"
+    },
+    {
+      "name": "@salt-ds/react-resizable-panels-theme",
+      "workspace_path": "packages/react-resizable-panels-theme",
+      "lifecycle": "publishable",
+      "readme_path": "packages/react-resizable-panels-theme/README.md",
+      "metadata_fields": {
+        "description": "present",
+        "license": "present",
+        "repository": "present",
+        "bugs": "present",
+        "keywords": "present"
+      },
+      "packed_readme_status": "present",
+      "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "support_destination": "public_salt_support"
+    },
+    {
+      "name": "@salt-ds/styles",
+      "workspace_path": "packages/styles",
+      "lifecycle": "publishable",
+      "readme_path": "packages/styles/README.md",
+      "metadata_fields": {
+        "description": "present",
+        "license": "present",
+        "repository": "present",
+        "bugs": "present",
+        "keywords": "present"
+      },
+      "packed_readme_status": "present",
+      "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "support_destination": "public_salt_support"
+    },
+    {
+      "name": "@salt-ds/theme",
+      "workspace_path": "packages/theme",
+      "lifecycle": "publishable",
+      "readme_path": "packages/theme/README.md",
+      "metadata_fields": {
+        "description": "present",
+        "license": "present",
+        "repository": "present",
+        "bugs": "present",
+        "keywords": "present"
+      },
+      "packed_readme_status": "present",
+      "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "support_destination": "public_salt_support"
+    },
+    {
+      "name": "@salt-ds/window",
+      "workspace_path": "packages/window",
+      "lifecycle": "publishable",
+      "readme_path": "packages/window/README.md",
+      "metadata_fields": {
+        "description": "present",
+        "license": "present",
+        "repository": "present",
+        "bugs": "present",
+        "keywords": "present"
+      },
+      "packed_readme_status": "present",
+      "owner": { "primary": "saltdesignsystem", "backup": "brooklynrob" },
+      "support_destination": "public_salt_support"
+    }
+  ]
+}

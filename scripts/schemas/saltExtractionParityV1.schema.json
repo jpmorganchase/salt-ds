@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://salt-ds.github.io/schemas/salt-extraction-parity-v1.schema.json",
+  "title": "Salt extraction parity receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "contract",
+    "status",
+    "baseline",
+    "current",
+    "normalized_semantic_projection_sha256",
+    "comparisons",
+    "intentionally_dropped_mcp_only_fields"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "contract": { "const": "extraction-parity@1" },
+    "status": { "const": "passed" },
+    "baseline": { "$ref": "#/$defs/baseline" },
+    "current": { "$ref": "#/$defs/current" },
+    "normalized_semantic_projection_sha256": { "$ref": "#/$defs/sha256" },
+    "comparisons": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": { "$ref": "#/$defs/comparison" }
+    },
+    "intentionally_dropped_mcp_only_fields": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "bytes"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "bytes": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "bytes",
+        "semantic_digest",
+        "input_count"
+      ],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "bytes": { "type": "integer", "minimum": 1 },
+        "semantic_digest": { "$ref": "#/$defs/sha256" },
+        "input_count": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "current": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "semantic_digest",
+        "input_count",
+        "normalized_input_projection_digest"
+      ],
+      "properties": {
+        "semantic_digest": { "$ref": "#/$defs/sha256" },
+        "input_count": { "type": "integer", "minimum": 1 },
+        "normalized_input_projection_digest": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "domain",
+        "status",
+        "baseline_sha256",
+        "current_sha256"
+      ],
+      "properties": {
+        "domain": {
+          "enum": [
+            "records",
+            "package_facts",
+            "queries",
+            "findings",
+            "applicability",
+            "integrity"
+          ]
+        },
+        "status": { "const": "passed" },
+        "baseline_sha256": { "$ref": "#/$defs/sha256" },
+        "current_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    }
+  }
+}

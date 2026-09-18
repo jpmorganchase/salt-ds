@@ -1,0 +1,17 @@
+[
+  "package.json",
+  "tsconfig.json",
+  ".yarnrc.yml",
+  "yarn.lock",
+  "scripts/catalogBuildIdentity.mjs",
+  "packages/knowledge/package.json",
+  "packages/knowledge/tsconfig.json",
+  "packages/knowledge/schemas/**/*.json",
+  "packages/knowledge/scripts/buildKnowledge.mjs",
+  "packages/knowledge/src/**/*.ts",
+  "!packages/knowledge/src/**/__tests__/**",
+  "!packages/knowledge/src/__tests__/**",
+  "!packages/knowledge/src/__fixtures__/**",
+  "packages/knowledge/src/build/catalogCompilerInputPatterns.json",
+  "packages/knowledge/src/build/catalogSemanticInputPatterns.json"
+]

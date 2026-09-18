@@ -1,0 +1,128 @@
+{
+  "catalog_baseline": {
+    "artifact_bytes": 9006778,
+    "artifact_count": 20,
+    "artifact_set_digest": "sha256:9710c1ecb5b0a6d5262e74877536ab7a2d384829b42af8e6c834159dc13cda4c",
+    "build_count": 2,
+    "contract": "catalog-v2-internal-characterization",
+    "derived_bundle_identity": "sha256:90948de20a7a6849cb8b86e774fc4e1b577e640d9072f5db80b2e555a5cc4f40",
+    "deterministic": true,
+    "manifest_bytes": 658082,
+    "record_count": 25777,
+    "semantic_digest": "sha256:ddb91ebdd41f9b256e986967f651aa5710064ec50c52a57b823294e5d70c78aa",
+    "timings_ms": {
+      "cold_load": 3762.594,
+      "inspection": 29.061,
+      "review": 26.192,
+      "search": 31.341,
+      "warm_load": 2794.171
+    }
+  },
+  "cohort_id": "baseline-pre-platform",
+  "corpus": {
+    "activation_cases": 3,
+    "outcome_cases": 14,
+    "retrieval_gold_queries": 40
+  },
+  "identities": {
+    "fixture_sha256": "sha256:e44a6d1f7005a12b69f21a6ec38442258c3895d4395f6d49a56290ce0efa4141",
+    "manifest_sha256": "sha256:231179b50b0c8969e48d95795c93aaf5489fee7defb35a644c095ba33ffcb1c9",
+    "protocol_sha256": "sha256:b544f3e610fcdf343081de0ae87333b13c21ebb79a2264ae2774a9de8f6696c7"
+  },
+  "limitations": [
+    "Catalog-v2 is internal characterization evidence and is not a Knowledge-v1 public compatibility contract.",
+    "Timing values are single-host baselines used to derive later explicit bounds, not cross-host performance claims.",
+    "No model quality, mode-2/3 uplift, MCP increment, or statistical significance is claimed in Unit 00b.",
+    "Node 22/24 pack and consumer smoke remain separate release-matrix gates."
+  ],
+  "load_sensitive_tests": [
+    {
+      "baseline_ms": 94.584,
+      "bound_ms": 360000,
+      "file": "packages/mcp/src/__tests__/loadRegistry.spec.ts",
+      "id": "load-registry-setup",
+      "setup": "copy a verified complete Catalog-v2 fixture"
+    },
+    {
+      "baseline_ms": 3762.594,
+      "bound_ms": 360000,
+      "file": "packages/mcp/src/__tests__/createServer.spec.ts",
+      "id": "create-server-setup",
+      "setup": "cold createSaltMcpServer with full prefetch"
+    },
+    {
+      "baseline_ms": 2823.232,
+      "bound_ms": 360000,
+      "file": "packages/mcp/src/__tests__/outcomeBoundaries.spec.ts",
+      "id": "outcome-boundaries-setup",
+      "setup": "warm catalog context plus bounded project inspection"
+    }
+  ],
+  "modes": [
+    {
+      "metrics": {
+        "deterministic_readiness": {
+          "denominator": 14,
+          "harness_identity": "sha256:9b8fcf59f778d8954d004be090fa969e45cbc6e90d588a9ceb1742d2d0d02d6d",
+          "numerator": 14,
+          "passed": true
+        }
+      },
+      "mode_id": "mode_1_base_tools",
+      "reason": "Unit 00b validates the base-tools corpus and deterministic graders; no controlled-model quality run is claimed.",
+      "scored": false,
+      "status": "baseline_available"
+    },
+    {
+      "metrics": null,
+      "mode_id": "mode_2_markdown",
+      "reason": "Normalized Knowledge-v1 Markdown is introduced by Unit 05.",
+      "scored": false,
+      "status": "not_available"
+    },
+    {
+      "metrics": null,
+      "mode_id": "mode_3_cli_bootstrap",
+      "reason": "The CLI and selected Skill/AGENTS bootstrap are introduced by Unit 06d.",
+      "scored": false,
+      "status": "not_available"
+    },
+    {
+      "metrics": null,
+      "mode_id": "mode_4_mcp_candidate",
+      "reason": "The thin MCP candidate is evaluated only after Units 06g and 07.",
+      "scored": false,
+      "status": "not_available"
+    }
+  ],
+  "sanitization": {
+    "absolute_paths_committed": false,
+    "credentials_committed": false,
+    "proprietary_fixtures_committed": false,
+    "raw_output_committed": false,
+    "raw_prompts_committed": false
+  },
+  "schema_version": "1.0.0",
+  "verification": {
+    "consumer_smoke": [
+      {
+        "command": "yarn smoke:consumer --skip-build",
+        "evidence": "Release CI matrix requirement; no local result is fabricated.",
+        "runtime": "Node 22",
+        "status": "required_external_matrix"
+      },
+      {
+        "command": "yarn smoke:consumer --skip-build",
+        "evidence": "Executed as a separate Unit 00b gate and release CI matrix requirement.",
+        "runtime": "Node 24",
+        "status": "required_external_matrix"
+      }
+    ],
+    "pack": {
+      "command": "yarn check:ai-tooling:pack",
+      "evidence": "Executed as a separate Unit 00b gate; this sanitized baseline does not infer another process result.",
+      "runtime": "Node 24.10.0",
+      "status": "required_external_matrix"
+    }
+  }
+}

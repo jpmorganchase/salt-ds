@@ -1,0 +1,39 @@
+{
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/salt-ai-release-embargo-receipt-1.json",
+  "ai_packages": [
+    "@salt-ds/cli",
+    "@salt-ds/knowledge",
+    "@salt-ds/mcp"
+  ],
+  "changesets": [
+    {
+      "path": ".changeset/bright-docs-guide.md",
+      "sha256": "sha256:9081faabe2976b9b9b01daa9eb1396b1cb4a32f028fe42f8247eb30cec41fd3a"
+    },
+    {
+      "path": ".changeset/calm-icon-order.md",
+      "sha256": "sha256:947c49bb9a2981f45cebd3de1aa2bbf58288b3c6f85c91c203ddc509f4ea4690"
+    },
+    {
+      "path": ".changeset/green-react-types.md",
+      "sha256": "sha256:a058ac4fc3de9320cd3f63815ad38d93ea851ac39630c47cadee81364e0a6f14"
+    },
+    {
+      "path": ".changeset/quiet-catalogs-search.md",
+      "sha256": "sha256:50c3927cd96a19ee03f35cfce0318e13d7e0d18c86666b40c1eba8d04bce5f2f"
+    }
+  ],
+  "kind": "release-embargo-receipt",
+  "package_states": [
+    {
+      "manifest": "packages/mcp/package.json",
+      "name": "@salt-ds/mcp",
+      "private": true,
+      "version": "0.0.0"
+    }
+  ],
+  "release_script": "yarn verify:salt-ai-release-embargo && yarn build && yarn release:verify:after-build && yarn changeset publish",
+  "result": "pass",
+  "schema_version": "1.0.0",
+  "source_commit": "db3d38c165a259aa19db422af02b6423c80fa288"
+}

@@ -1,0 +1,57 @@
+{
+  "valid": true,
+  "now": "2026-08-27T00:00:00.000Z",
+  "index": {
+    "schema_version": "1.0.0",
+    "plan_id": "001",
+    "unit_id": "00a",
+    "tracker_status": "IN PROGRESS",
+    "completion_sha": null,
+    "entries": [
+      {
+        "kind": "fixture-receipt",
+        "schema_id": "fixture/1",
+        "schema_version": "1.0.0",
+        "locator": "repo://x/sha256-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json",
+        "sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source_sha": "61287edaf8bf6d853f0a52630f0f0849bd651e74",
+        "completion_sha": null,
+        "workflow_class": "local-ci",
+        "environment_class": "test",
+        "retention_expires_at": "2026-08-26T00:00:00.000Z",
+        "parents": [],
+        "state": "superseded",
+        "successor_sha256": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      {
+        "kind": "fixture-receipt",
+        "schema_id": "fixture/1",
+        "schema_version": "1.0.0",
+        "locator": "repo://x/sha256-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.json",
+        "sha256": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "source_sha": "61287edaf8bf6d853f0a52630f0f0849bd651e74",
+        "completion_sha": null,
+        "workflow_class": "local-ci",
+        "environment_class": "test",
+        "retention_expires_at": "2026-08-26T00:00:00.000Z",
+        "parents": [],
+        "state": "superseded",
+        "successor_sha256": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      {
+        "kind": "fixture-receipt",
+        "schema_id": "fixture/1",
+        "schema_version": "1.0.0",
+        "locator": "repo://x/sha256-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc.json",
+        "sha256": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "source_sha": "61287edaf8bf6d853f0a52630f0f0849bd651e74",
+        "completion_sha": null,
+        "workflow_class": "local-ci",
+        "environment_class": "test",
+        "retention_expires_at": "2099-01-01T00:00:00.000Z",
+        "parents": [],
+        "state": "active"
+      }
+    ]
+  }
+}

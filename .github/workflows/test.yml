@@ -65,7 +65,7 @@ jobs:
       - name: Check Core declarations against supported React types
         run: yarn check:core-react-types
       - name: Check AI tooling package dry runs
-        run: yarn check:ai-tooling:pack
+        run: yarn check:ai-tooling:pack -- --profile pre-agent-support --report dist/salt-ai-pack/unit-03.json
       - name: Check Date Adapters packed consumers
         run: yarn check:date-adapters:pack
       - name: Check public docs, links, package presentation, and examples
@@ -107,7 +107,7 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: Build MCP registry test inputs
-        run: yarn workspace @salt-ds/mcp build:registry
+        run: yarn workspace @salt-ds/knowledge build:knowledge
       - run: yarn run test
   consumer-smoke:
     name: Consumer smoke (Node ${{ matrix.node }})
@@ -129,7 +129,10 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: Consumer smoke test
-        run: yarn smoke:consumer
+        run: |
+          yarn build:ai-tooling
+          yarn check:ai-tooling:pack -- --profile pre-agent-support --report dist/salt-ai-pack/unit-03.json
+          yarn smoke:consumer --skip-build --pack-report dist/salt-ai-pack/unit-03.json
   browser-tests:
     name: Browser Tests (React ${{ matrix.react }})
     strategy:

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://www.saltdesignsystem.com/ai/schemas/salt-ordinary-baseline-1.json",
+  "entries": [],
+  "entry_count": 0,
+  "inventory_digest": "sha256:e592003019727d41edb0b25c99e0c0d2ede766ea2bffdb709dfdf440cb2ecb31",
+  "inventory_path": "tooling/ai/ordinary-legacy-attestations-v1.json",
+  "kind": "ordinary-baseline-receipt",
+  "schema_version": "1.0.0",
+  "sealed": true,
+  "source_commit": "db3d38c165a259aa19db422af02b6423c80fa288"
+}
