@@ -1,0 +1,40 @@
+{
+  "accepted": [
+    "packages/core/src/button/Button.tsx",
+    "Packages/Core.ts",
+    "docs/naïve.md",
+    "node_modules/@scope/tool/index.js",
+    "component/COM0/value.ts",
+    "component/lpt10.ts",
+    "component/auxiliary.ts"
+  ],
+  "rejected": [
+    "",
+    " packages/core.ts",
+    "packages/core.ts ",
+    "/packages/core.ts",
+    "C:/packages/core.ts",
+    "//server/share/file.ts",
+    "packages\\core.ts",
+    "packages//core.ts",
+    "packages/core/",
+    "./packages/core.ts",
+    "packages/../core.ts",
+    "packages/<core>.ts",
+    "packages/control\u0001.ts",
+    "packages/core./file.ts",
+    "packages/core /file.ts",
+    "con",
+    "PRN.txt",
+    "packages/AUX/file.ts",
+    "packages/nul.json",
+    "packages/com1/file.ts",
+    "packages/COM9.txt",
+    "packages/lpt1/file.ts",
+    "packages/LPT9.foo",
+    "packages/com¹.ts",
+    "packages/LPT²/file.ts",
+    "packages/com³/file.ts",
+    "docs/naïve.md"
+  ]
+}

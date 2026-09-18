@@ -1,13 +1,23 @@
 {
   "name": "@salt-ds/date-adapters",
   "version": "1.0.2",
+  "description": "Date-library adapters for Salt Design System date components.",
+  "homepage": "https://www.saltdesignsystem.com/salt/components/localization-provider/usage",
+  "keywords": [
+    "salt-design-system",
+    "date",
+    "localization",
+    "adapter"
+  ],
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpmorganchase/salt-ds.git",
     "directory": "packages/date-adapters"
   },
-  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "bugs": {
+    "url": "https://www.saltdesignsystem.com/salt/support-and-contributions"
+  },
   "main": "src/index.ts",
   "typings": "dist-types/types/index.d.ts",
   "files": [
@@ -15,19 +25,28 @@
     "dist-es",
     "dist-types"
   ],
+  "saltSourceEntrypoints": {
+    ".": "src/types/index.ts",
+    "./date-fns": "src/date-fns-adapter/index.ts",
+    "./date-fns-tz": "src/date-fns-tz-adapter/index.ts",
+    "./dayjs": "src/dayjs-adapter/index.ts",
+    "./luxon": "src/luxon-adapter/index.ts",
+    "./moment": "src/moment-adapter/index.ts"
+  },
   "sideEffects": false,
   "peerDependencies": {
     "@date-fns/tz": "^1.4.1",
     "@types/luxon": "^3.7.1",
-    "@types/react": ">=16.14.0",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.20",
     "luxon": "^3.7.2",
-    "moment": "^2.30.1",
     "moment-timezone": "^0.6.1"
   },
   "peerDependenciesMeta": {
     "@date-fns/tz": {
+      "optional": true
+    },
+    "@types/luxon": {
       "optional": true
     },
     "date-fns": {
@@ -39,7 +58,7 @@
     "luxon": {
       "optional": true
     },
-    "moment": {
+    "moment-timezone": {
       "optional": true
     }
   },

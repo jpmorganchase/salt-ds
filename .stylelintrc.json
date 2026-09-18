@@ -67,6 +67,12 @@
       }
     },
     {
+      "files": ["**/theme/css/legacy/**/*.css"],
+      "rules": {
+        "salt/no-deprecated-token-usage": null
+      }
+    },
+    {
       "files": ["**/lab/**/*.css"],
       "rules": {
         "salt/no-deprecated-token-usage": [

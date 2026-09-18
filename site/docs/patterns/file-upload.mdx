@@ -9,10 +9,11 @@ aliases:
 data:
   resources:
     [
-      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-file-upload--file-upload-example", label: "Examples" }
     ]
-  components: ["File Drop Zone", "Static List"]
+  components: ["File drop zone", "Static list"]
 ---
+
+<LivePreview componentName="patterns/file-upload" exampleName="FileUploadExample" />
 
 <Diagram
   src="/img/patterns/file-upload/file-upload.png"
@@ -27,6 +28,12 @@ Use this pattern to:
 - Upload files by dragging and dropping, or by using a button to select a file in a new window or file browser.
 - Upload single or multiple files within modals or full-page experiences.
 - Display file upload progress, file listings, and management options.
+
+## When not to use
+
+- When users only need to browse files or records that already exist in the product, use a list, table, or data grid surface instead.
+- When users are entering a file URL, path, or other text reference without transferring a file, use an input field instead.
+- When the main task is ongoing file management after upload, use a full-page layout or drawer workflow around the file list and actions instead of a standalone embedded upload area.
 
 <GuidanceCallout type="positive" customPillText="Best practices">
   - Consider using a full-page layout or a drawer if additional actions need to be performed on the files. 

@@ -1,6 +1,6 @@
 ---
 title: Content status
-description: "A content status provides information about content in a container component of an application. It remains onscreen until a situation resolves or the user takes action, making it a great tool for communication and guidance."
+description: "A content status communicates loading, empty, warning, error, and success states inside a container component or bounded content region. Use it to keep state messaging attached to the content the user is already working with."
 layout: DetailPattern
 tags:
   - pattern
@@ -9,10 +9,11 @@ aliases:
 data:
   resources:
     [
-      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-content-status--info", label: "Examples" }
     ]
   components: ["Button", "Progress", "Spinner", "Stack layout", "Status indicator", "Text"]
 ---
+
+<LivePreview componentName="patterns/content-status" exampleName="Info" />
 
 <Diagram
   src="/img/patterns/content-status/content-status.png"
@@ -22,11 +23,19 @@ data:
 
 ## When to use
 
-Use this pattern in a container component:
+Use this pattern in a container component when the state belongs to the content area itself:
+
+- When a bounded region or local content area needs a loading, empty, warning, error, or success state.
 - When content is loading.
-- To share information with users.
-- To let users know there’s an error.
-- When the user has successfully submitted content.
+- When a container has no data to show and you need an empty-state message.
+- To share information, warnings, or errors with users that relate to the current content area.
+- When the user has successfully submitted content or completed an action.
+
+## When not to use
+
+- When the message should reach across the app or the whole page, use Banner or Toast instead.
+- When the state requires a full workflow interruption or a decision, use Dialog or the owning form pattern instead.
+- When the state is not tied to a container, use inline text or another component instead.
 
 ## How to build
 
@@ -47,9 +56,9 @@ The content status consists of three functional areas:
 
 ### Layout
 
-- Use [`StackLayout`](/salt/components/layouts/stack-layout) to display the two lists and move buttons that make up list builder in a row formation.
-- Use [`Text`](/salt/components/text), [`Button`](/salt/components/button) and [`Input`](/salt/components/input) to assemble the header area.
-- Use [`StackLayout`](/salt/components/layouts/stack-layout) to orient the move buttons between the two lists in a column formation.
+- Use [`StackLayout`](/salt/components/layouts/stack-layout) to arrange the visual indicator, title, supporting message, and optional action vertically.
+- Use [`Text`](/salt/components/text) for the title and supporting message.
+- Add a [`Button`](/salt/components/button) only when the status offers an action, such as reloading content.
 
 <Diagram
   src="/img/patterns/content-status/content-status-layout.png"
@@ -91,7 +100,7 @@ We've used a [spinner](/salt/components/spinner) component to reassure users in 
 
 ## Info message
 
-Use this variant to communicate useful information. For example, if there’s no data available, this variation can communicate that message to let users know why they can't see any content.
+Use this variant to communicate useful information. For example, if there’s no data available, this variation can communicate an empty-state message and let users know why they can't see any content.
 
 <Diagram
   src="/img/patterns/content-status/content-status-info.png"

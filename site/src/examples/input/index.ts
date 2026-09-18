@@ -1,6 +1,7 @@
 export * from "./Basic";
 export * from "./Bordered";
 export * from "./ButtonAdornments";
+export * from "./Controlled";
 export * from "./Disabled";
 export * from "./EmptyReadonlyMarker";
 export * from "./Placeholder";

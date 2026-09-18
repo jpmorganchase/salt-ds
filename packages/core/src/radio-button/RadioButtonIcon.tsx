@@ -12,7 +12,7 @@ export interface RadioButtonIconProps extends ComponentPropsWithoutRef<"div"> {
   checked?: boolean;
   disabled?: boolean;
   /**
-   * @deprecated since 1.8.0-rc.2. Use `validationStatus` instead.
+   * @deprecated since 1.8.0-rc.2. Use {@link RadioButtonIconProps.validationStatus validationStatus} instead.
    */
   error?: boolean;
   readOnly?: boolean;

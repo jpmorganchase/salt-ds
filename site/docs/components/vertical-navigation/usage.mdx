@@ -16,8 +16,11 @@ For further details on how to use the component to provide navigation, see the [
 
 If your app uses a routing library such as [React Router](https://reactrouter.com/en/main) or [Next.js](https://nextjs.org/docs/app/building-your-application/routing), use the `render` prop on navigation item triggers to render the routing library’s link component. See the [render prop guide](/salt/getting-started/render-prop) for the supported render forms.
 
+Only provide `href` when the item has a real navigation destination. For an in-page action with no destination, omit `href`; `VerticalNavigationItemTrigger` then renders as a button. Do not ship placeholder destinations such as `href="#"`.
+
 ### When to use
 
+- When you need structured vertical navigation. Prefer `VerticalNavigation` over using `NavigationItem` in vertical mode for new implementations.
 - When you have multiple levels of navigation in your application or website.
 - We suggest first considering a horizontal group of navigation items for distinct webpages or applications. If you have multiple (more than eight) services to navigate to at a platform level, or have navigation across distinct apps, consider using a vertical group instead.
 - If you need your items to remain visible on scroll, we recommend displaying navigation items in a fixed app header (or header area).

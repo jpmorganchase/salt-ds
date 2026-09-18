@@ -7,9 +7,14 @@ export interface ValidationStatuses {
 
 export type ValidationStatus = keyof ValidationStatuses;
 
-const ValidationStatusValues = ["error", "warning", "success", "info"] as const;
+export const ValidationStatusValues = [
+  "error",
+  "warning",
+  "success",
+  "info",
+] as const;
 
 /**
- * @deprecated since 1.55.0. Use `ValidationStatusValues`.
+ * @deprecated since 1.55.0. Use {@link ValidationStatusValues}.
  */
 export const VALIDATION_NAMED_STATUS = ValidationStatusValues;

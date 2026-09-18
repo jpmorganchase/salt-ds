@@ -20,6 +20,9 @@ npm install highcharts@^10 highcharts-react-official @salt-ds/highcharts-theme
 yarn add highcharts@^10 highcharts-react-official @salt-ds/highcharts-theme
 ```
 
+`@salt-ds/theme`, React and React DOM are also peer dependencies. Import the
+current Salt theme CSS and render charts inside the current Salt provider.
+
 ## Quick start
 
 ```jsx
@@ -56,3 +59,7 @@ const options = useChart(chartRef, chartOptions, { fillPatterns: true });
 ## Accessibility
 
 Enable the Highcharts accessibility module. For consistent behavior in Highcharts v10 and v11, initialize it with your `Highcharts` instance; in Highcharts v12+ it auto-initializes on import. See [Chart accessibility](https://www.saltdesignsystem.com/salt/components/chart/accessibility).
+
+The package styles Highcharts but does not include Highcharts or its commercial
+license. Verify module initialization against the Highcharts major version used
+by your application.

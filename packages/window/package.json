@@ -1,13 +1,23 @@
 {
   "name": "@salt-ds/window",
   "version": "0.1.1",
+  "description": "React window context utilities for Salt Design System.",
+  "homepage": "https://www.saltdesignsystem.com/salt/getting-started/developing",
+  "keywords": [
+    "salt-design-system",
+    "react",
+    "window",
+    "context"
+  ],
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpmorganchase/salt-ds.git",
     "directory": "packages/window"
   },
-  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "bugs": {
+    "url": "https://www.saltdesignsystem.com/salt/support-and-contributions"
+  },
   "main": "src/index.ts",
   "typings": "dist-types/index.d.ts",
   "files": [
@@ -17,7 +27,7 @@
   ],
   "sideEffects": false,
   "peerDependencies": {
-    "@types/react": ">=16.14.0",
+    "@types/react": ">=18.3.0",
     "react": ">=16.14.0",
     "react-dom": ">=16.14.0"
   },

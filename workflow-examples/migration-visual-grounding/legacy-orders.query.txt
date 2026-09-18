@@ -1,0 +1,1 @@
+Build a sidebar with vertical navigation, a main content area, a toolbar of actions, and a confirmation dialog with loading and error states for a legacy orders flow.

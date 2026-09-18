@@ -1,0 +1,54 @@
+{
+  "schema": "salt_runtime_validation_report_v2",
+  "task_id": "legacy-orders-migration-runtime-validation",
+  "source": {
+    "kind": "local_fixture",
+    "url": "legacy-orders.runtime.html",
+    "command": "serve workflow-examples/migration-visual-grounding/legacy-orders.runtime.html"
+  },
+  "salt_analysis": {
+    "operation": "review_salt_code",
+    "scope": "submitted_text_only",
+    "captured": [
+      "scope",
+      "limitations",
+      "provenance",
+      "data.results[].artifact",
+      "data.results[].outcome",
+      "data.results[].summary",
+      "data.results[].findings",
+      "data.results[].coverage",
+      "data.results[].limitations"
+    ]
+  },
+  "classification": {
+    "design_system_issues": [
+      {
+        "id": "salt-toolbar-actions",
+        "severity": "review",
+        "summary": "Confirm migrated toolbar actions map to source-backed Salt components before implementation."
+      }
+    ],
+    "runtime_issues": [
+      {
+        "id": "runtime-loading-state",
+        "severity": "review",
+        "summary": "The live fixture exposes a loading state that must remain visible in the migration plan."
+      }
+    ],
+    "accessibility_issues": [],
+    "build_test_issues": [],
+    "missing_evidence": [
+      {
+        "id": "component-preview-run-not-captured",
+        "owner": "host",
+        "recommended_host_step": "Run the local app, component preview, accessibility check, or a repo-provided check and attach the result before making a runtime-validation claim."
+      }
+    ]
+  },
+  "host_follow_up": {
+    "agent_owned": true,
+    "coding_authorized": false,
+    "recommended_host_step": "Present the runtime finding and Salt evidence separately, obtain any required authorization, and rerun the relevant host checks after changes."
+  }
+}
