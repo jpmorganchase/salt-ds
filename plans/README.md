@@ -127,6 +127,10 @@ publication authority as deferred to Plan 003.
 
 - **Active plan/unit:** Plan 033 / Unit `033/02a`
 - **Checkpoint:** `4f009ec3601b801856a69c0ac56928fc65c7bc65`
+- **Continuation checkpoint:** `dd3e60cbe957c8b1e91027a2164fd9bc922038c4`
+  for current-branch ancestry and changed-file quality after history consolidation.
+  The original unit start and completed evidence remain historical; no prior
+  runtime result is inferred for the rebased source.
 - **Status:** IN PROGRESS — Unit 033/02a
 - **Current control:** `plans/evidence/033/control.json`
 - **Predecessor disposition:** Plan 006 / Unit `006/00` is superseded unfinished
@@ -182,6 +186,10 @@ publication authority as deferred to Plan 003.
   dispatch, with separate image-capability checks before one conditional fresh
   task. It preserves the earlier results and pending human gates; see
   [coordinated workflow results](../evals/salt-ai/ui-agent/COORDINATED_RESULTS.md).
+  The 2026-09-19 follow-up authorizes context qualification retention and the
+  package-delivered consumer Skill alignment within Unit 033/02a, plus explicit
+  history reconciliation for current checks. It preserves human gates and the
+  release boundary; no additional product model trial is dispatched.
 - **Successor eligibility:** each next unit requires a reviewed control
   transition with actual completion evidence; Plan 003 remains deferred.
 

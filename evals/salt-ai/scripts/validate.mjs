@@ -32,6 +32,8 @@ const FROZEN_BASELINE = Object.freeze({
   index: "plans/evidence/004/index.json",
   unit: "004/01",
   sourceSha: "da1d249225c7044dad1c3aa08c960eb08f84dddb",
+  // Historical provenance survives branch rebases and consolidation.
+  historicalHeadSha: "0c6267578ae3f1ad4d90a83f9ce3f530057994c3",
   report: "evals/salt-ai/baselines/baseline-pre-platform.json",
   manifest: "evals/salt-ai/manifest.json",
   fixture: "evals/salt-ai/fixtures/repositories.json",
@@ -281,7 +283,7 @@ export async function validateFrozenBaseline({
     "merge-base",
     "--is-ancestor",
     FROZEN_BASELINE.sourceSha,
-    "HEAD",
+    FROZEN_BASELINE.historicalHeadSha,
   ]);
 
   const sourceReportBytes = gitBlob(

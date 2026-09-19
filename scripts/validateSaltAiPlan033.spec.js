@@ -54,6 +54,11 @@ function readme(control) {
   return [
     `- **Active plan/unit:** ${active ? `Plan 033 / Unit \`${active.unit}\`` : "none"}`,
     `- **Checkpoint:** ${active ? `\`${active.checkpoint_sha}\`` : "none"}`,
+    ...(control.history_reconciliation
+      ? [
+          `- **Continuation checkpoint:** \`${control.history_reconciliation.continuation_checkpoint_sha}\``,
+        ]
+      : []),
     `- **Status:** ${active ? `IN PROGRESS — Unit ${active.unit}` : "DONE"}`,
     "- **Current control:** `plans/evidence/033/control.json`",
   ].join("\n");
@@ -124,6 +129,67 @@ function fixture() {
   const control = controlAt(record(root, "seed"));
   save(root, control);
   return { root, control };
+}
+function reconciledFixture() {
+  const { root, control } = fixture();
+  for (const relative of [
+    "packages/knowledge",
+    "packages/cli",
+    "skills",
+    "evals",
+    "docs/ai",
+    "tooling/ai",
+    "scripts/schemas",
+    "scripts/fixtures",
+  ])
+    write(root, `${relative}/source.txt`, relative);
+  for (const relative of [
+    "catalogBuildIdentity.mjs",
+    "catalogArtifactContract.mjs",
+    "knowledgeArtifactContract.mjs",
+    "saltAiEvidenceUtils.mjs",
+    "validateSaltAiPlan033.mjs",
+    "validateSaltAiContracts.mjs",
+    "checkChangedQuality.mjs",
+  ])
+    write(root, `scripts/${relative}`, relative);
+  for (let index = 0; index < 2; index += 1) {
+    const unit = control.units[index];
+    unit.status = "DONE";
+    unit.completion_sha = record(root, `complete ${unit.id}`);
+    const next = control.units[index + 1];
+    next.status = "IN_PROGRESS";
+    next.checkpoint_sha = unit.completion_sha;
+    control.active_dispatch = {
+      unit: next.id,
+      checkpoint_sha: next.checkpoint_sha,
+    };
+    save(root, control);
+  }
+  const historical = record(root, "preserved historical head");
+  const rebased = run(root, [
+    "commit-tree",
+    `${historical}^{tree}`,
+    "-m",
+    "rebased",
+  ]);
+  run(root, ["checkout", "--quiet", "--detach", rebased]);
+  const presquash = record(root, "upstream reconciliation");
+  const continuation = run(root, [
+    "commit-tree",
+    `${presquash}^{tree}`,
+    "-m",
+    "consolidated",
+  ]);
+  run(root, ["checkout", "--quiet", "--detach", continuation]);
+  control.history_reconciliation = {
+    historical_head_sha: historical,
+    rebased_head_sha: rebased,
+    presquash_head_sha: presquash,
+    continuation_checkpoint_sha: continuation,
+  };
+  save(root, control);
+  return { root, control, historical, continuation };
 }
 afterEach(() => {
   for (const root of roots.splice(0))
@@ -297,6 +363,99 @@ describe("Plan 033 current-state control", () => {
     control.plan_sha256 = planDigest(Buffer.from(revised));
     write(root, "plans/evidence/033/control.json", JSON.stringify(control));
     expect(() => validateRepository({ root })).not.toThrow();
+  }, 15000);
+  it("reconciles preserved history with equivalent source trees and a current continuation", () => {
+    const { root, control, historical, continuation } = reconciledFixture();
+    expect(() =>
+      run(root, ["merge-base", "--is-ancestor", historical, continuation]),
+    ).toThrow();
+    expect(() => validateRepository({ root })).not.toThrow();
+    const originalCheckpoint = control.units[2].checkpoint_sha;
+    record(root, "ordinary continuation work");
+    expect(() => validateRepository({ root })).not.toThrow();
+    control.units[2].status = "DONE";
+    control.units[2].completion_sha = record(root, "complete continued unit");
+    control.active_dispatch = null;
+    save(root, control);
+    expect(control.units[2].checkpoint_sha).toBe(originalCheckpoint);
+    expect(() => validateRepository({ root })).not.toThrow();
+  }, 30000);
+  it("rejects altered historical completions and original checkpoints", () => {
+    const { root, control } = reconciledFixture();
+    const saved = structuredClone(control);
+    control.units[0].completion_sha = control.units[1].completion_sha;
+    save(root, control);
+    expect(() => validateRepository({ root })).toThrow(
+      /historical evidence changed/u,
+    );
+    const changed = structuredClone(saved);
+    changed.units[2].checkpoint_sha =
+      changed.history_reconciliation.continuation_checkpoint_sha;
+    changed.active_dispatch.checkpoint_sha = changed.units[2].checkpoint_sha;
+    save(root, changed);
+    expect(() => validateRepository({ root })).toThrow(
+      /original checkpoint changed/u,
+    );
+  }, 15000);
+  it("rejects missing history and a continuation outside current ancestry", () => {
+    const { root, control, continuation } = reconciledFixture();
+    const saved = structuredClone(control);
+    control.history_reconciliation.historical_head_sha = "f".repeat(40);
+    save(root, control);
+    expect(() => validateRepository({ root })).toThrow(
+      /does not name a commit/u,
+    );
+    const unrelated = run(root, [
+      "commit-tree",
+      `${continuation}^{tree}`,
+      "-m",
+      "unrelated",
+    ]);
+    saved.history_reconciliation.continuation_checkpoint_sha = unrelated;
+    save(root, saved);
+    expect(() => validateRepository({ root })).toThrow(
+      /continuation checkpoint is not an ancestor/u,
+    );
+  }, 15000);
+  it.each([
+    "packages/knowledge/source.txt",
+    "tooling/ai/agent-support-v1.json",
+    "scripts/validateSaltAiPlan033.mjs",
+  ])(
+    "rejects copied controls when preserved source differs: %s",
+    (relative) => {
+      const { root, control } = reconciledFixture();
+      // Change only the candidate rebase source, keeping its historical controls.
+      run(root, [
+        "checkout",
+        "--force",
+        "--quiet",
+        "--detach",
+        control.history_reconciliation.rebased_head_sha,
+      ]);
+      write(root, relative, "changed source");
+      const changed = record(
+        root,
+        "changed source with copied historical controls",
+      );
+      control.history_reconciliation.rebased_head_sha = changed;
+      control.history_reconciliation.presquash_head_sha = changed;
+      control.history_reconciliation.continuation_checkpoint_sha = changed;
+      save(root, control);
+      expect(() => validateRepository({ root })).toThrow(
+        /preserved source tree differs/u,
+      );
+    },
+    15000,
+  );
+  it("rejects a consolidation that changes the pre-squash tree", () => {
+    const { root, control } = reconciledFixture();
+    const changed = record(root, "unpreserved consolidation");
+    control.history_reconciliation.continuation_checkpoint_sha = changed;
+    save(root, control);
+    expect(() => validateRepository({ root })).toThrow(
+      /consolidated source tree differs/u,
+    );
   }, 15000);
   it("rejects nonexistent commits, non-ancestor checkpoints and a stale package command", () => {
     const { root, control } = fixture();

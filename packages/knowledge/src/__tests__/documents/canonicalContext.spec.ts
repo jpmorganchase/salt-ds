@@ -1,9 +1,13 @@
 import { describe, expect, it } from "vitest";
 
+import { assembleCanonicalDocument } from "../../documents/assembleCanonicalDocument.js";
+import { canonicalJson } from "../../manifest/canonicalJson.js";
 import { sha256Digest } from "../../manifest/digestCodec.js";
 import type { KnowledgeRecordStore } from "../../manifest/knowledgeStore.js";
 import {
   buildKnowledgeContext,
+  KnowledgeContextInputError,
+  MIN_KNOWLEDGE_CONTEXT_UTF8_BYTES,
   renderKnowledgeContext,
 } from "../../search/searchSalt.js";
 
@@ -121,9 +125,14 @@ function workflowFile(path: string, role: "reusable" | "setup" | "demo-only") {
 }
 
 function fixtureStore(
-  options: { longFormGuidance?: boolean; sourceExample?: boolean } = {},
+  options: {
+    longFormGuidance?: boolean;
+    sourceExample?: boolean;
+    recipeLimitations?: string[];
+  } = {},
 ): KnowledgeRecordStore {
   const recipe = workflowRecipe();
+  if (options.recipeLimitations) recipe.limitations = options.recipeLimitations;
   const artifacts = new Map<string, Buffer>([
     [recipePath, Buffer.from(JSON.stringify(recipe), "utf8")],
     ...recipe.files.map(
@@ -131,7 +140,7 @@ function fixtureStore(
         [
           file.artifact_path,
           Buffer.from(
-            `export const ${file.id.replaceAll(/[^A-Za-z]/gu, "")} = true;\n`,
+            `export const ${file.path.replaceAll(/[^A-Za-z]/gu, "")} = true;\n`,
             "utf8",
           ),
         ] as const,
@@ -370,6 +379,164 @@ function fixtureStore(
 }
 
 describe("canonical knowledge context", () => {
+  it.each([undefined, 8 * 1024, 3 * 1024])(
+    "retains complete qualifications and recipe identity before guidance within budget %s",
+    (budget) => {
+      const store = fixtureStore({
+        longFormGuidance: true,
+        recipeLimitations: [
+          "The local demonstration does not call a production service.",
+          "Production scale data and arbitrary adaptations are unverified.",
+        ],
+      });
+      const canonical = assembleCanonicalDocument(store, {
+        family: "guide",
+        id: "guide.forms.workflow",
+      });
+      if (!canonical?.recipe_identity) {
+        throw new Error("Expected a canonical workflow recipe.");
+      }
+      const input = {
+        query: "create record form",
+        limit: 8,
+        max_utf8_bytes: budget,
+      };
+      const result = buildKnowledgeContext(store, input);
+      const document = result.canonical_documents?.[0];
+      expect(result.truncated).toBe(true);
+      expect(result.answer_status).toBe("applicable");
+      expect(document?.sections.length).toBeGreaterThan(0);
+      expect(document?.sections.map((section) => section.id)).not.toContain(
+        "overview",
+      );
+      expect(document?.limitations).toEqual(canonical.limitations);
+      expect(document?.recipe_identity).toEqual(canonical.recipe_identity);
+      expect(document?.readiness).toBe("runnable");
+      expect(document?.content_identity).toBe(canonical.content_identity);
+      for (const omission of document?.omissions ?? []) {
+        const [reference, fragment] = omission.reference.split("#");
+        expect(reference).toBe(canonical.reference);
+        expect(
+          assembleCanonicalDocument(
+            store,
+            { family: "guide", id: "guide.forms.workflow" },
+            fragment,
+          )?.reference,
+        ).toBe(omission.reference);
+      }
+      expect(buildKnowledgeContext(store, input)).toEqual(result);
+      const { context_digest, utf8_bytes, ...digestInput } = result;
+      expect(context_digest).toBe(sha256Digest(canonicalJson(digestInput)));
+      expect(utf8_bytes).toBe(
+        Buffer.byteLength(JSON.stringify(result), "utf8"),
+      );
+      expect(utf8_bytes + 1).toBeLessThanOrEqual(budget ?? 16 * 1024);
+      const markdown = renderKnowledgeContext(store, input);
+      expect(markdown).toContain("Readiness: runnable.");
+      expect(markdown).toContain("does not call a production service");
+      expect(markdown).toContain(
+        "Production scale data and arbitrary adaptations are unverified",
+      );
+      expect(markdown).toContain(canonical.recipe_identity.recipe_sha256);
+      expect(markdown).toContain(canonical.recipe_identity.content_identity);
+      expect(Buffer.byteLength(markdown, "utf8")).toBeLessThanOrEqual(
+        budget ?? 16 * 1024,
+      );
+    },
+  );
+
+  it.each([undefined, 2 * 1024])(
+    "omits qualified guidance with a resolvable reference when its limits cannot fit budget %s",
+    (budget) => {
+      const limitations = [
+        "Production data remains unverified. ".repeat(1_000),
+      ];
+      const store = fixtureStore({ recipeLimitations: limitations });
+      const input = {
+        query: "create record form",
+        limit: 8,
+        max_utf8_bytes: budget,
+      };
+      const result = buildKnowledgeContext(store, input);
+      expect(result.truncated).toBe(true);
+      expect(result.canonical_documents).toBeUndefined();
+      expect(result.answer_status).toBe("contextual");
+      expect(result.limitations?.join(" ")).toContain(
+        "Canonical guidance was omitted to fit the output budget; resolve record:guide:guide.forms.workflow for the complete document.",
+      );
+      expect(
+        assembleCanonicalDocument(store, {
+          family: "guide",
+          id: "guide.forms.workflow",
+        })?.limitations,
+      ).toEqual(limitations);
+      const { context_digest, utf8_bytes, ...digestInput } = result;
+      expect(context_digest).toBe(sha256Digest(canonicalJson(digestInput)));
+      expect(utf8_bytes).toBe(
+        Buffer.byteLength(JSON.stringify(result), "utf8"),
+      );
+      expect(utf8_bytes + 1).toBeLessThanOrEqual(budget ?? 16 * 1024);
+      const markdown = renderKnowledgeContext(store, input);
+      expect(markdown).toContain("Canonical guidance was omitted");
+      expect(markdown).toContain("record:guide:guide.forms.workflow");
+      expect(markdown).not.toContain("Readiness: runnable.");
+      expect(Buffer.byteLength(markdown, "utf8")).toBeLessThanOrEqual(
+        budget ?? 16 * 1024,
+      );
+    },
+  );
+
+  it("discloses omitted canonical qualifications even when a neutral query retains a source illustration", () => {
+    const baseStore = fixtureStore({
+      recipeLimitations: ["Production data remains unverified. ".repeat(1_000)],
+    });
+    const store = {
+      ...baseStore,
+      getFamily: (family: string) =>
+        family === "evidence"
+          ? [
+              {
+                family: "evidence",
+                id: "example:guide:guide.forms.workflow:pending",
+                evidence_kind: "executable_example",
+                local_id: "pending",
+                owner: { family: "guide", id: "guide.forms.workflow" },
+                owner_ordinal: 0,
+                title: "Pending record form",
+                description: "Show a pending form action.",
+                intent: ["pending", "form"],
+                source_ref: { family: "source", id: "source.forms.pending" },
+                supporting_files: [],
+              },
+            ]
+          : baseStore.getFamily(family),
+    } as KnowledgeRecordStore;
+    const input = { query: "record form pending", limit: 8 };
+    const result = buildKnowledgeContext(store, input);
+    expect(result.canonical_documents).toBeUndefined();
+    expect(result.contextual_examples).toHaveLength(1);
+    expect(result.answer_status).toBe("contextual");
+    expect(result.truncated).toBe(true);
+    expect(result.limitations?.join(" ")).toContain(
+      "Canonical guidance was omitted to fit the output budget; resolve record:guide:guide.forms.workflow for the complete document.",
+    );
+    const markdown = renderKnowledgeContext(store, input);
+    expect(markdown).toContain("Canonical guidance was omitted");
+    expect(markdown).toContain("record:guide:guide.forms.workflow");
+    expect(markdown).toContain(
+      "record:guide:guide.forms.workflow#example/pending",
+    );
+  });
+
+  it("rejects a budget that cannot fit even the required qualified-document omission", () => {
+    expect(() =>
+      buildKnowledgeContext(fixtureStore(), {
+        query: "create record form",
+        max_utf8_bytes: MIN_KNOWLEDGE_CONTEXT_UTF8_BYTES,
+      }),
+    ).toThrow(KnowledgeContextInputError);
+  });
+
   it("keeps complete fitting guidance for a multi-word query without source examples", () => {
     const result = buildKnowledgeContext(fixtureStore(), {
       query: "Button loading announcement",
@@ -631,13 +798,20 @@ describe("canonical knowledge context", () => {
       "Truncated: yes; evidence was omitted to fit the output budget",
     );
     expect(compact.canonical_documents?.[0]?.sections).toHaveLength(1);
+    // Qualification bytes reserve space before selecting the smaller section.
     expect(compact.canonical_documents?.[0]?.sections[0]?.id).toBe(
-      "prerequisites",
+      "acceptance",
+    );
+    expect(compact.canonical_documents?.[0]?.limitations).toEqual(
+      workflowRecipe().limitations,
+    );
+    expect(compact.canonical_documents?.[0]?.recipe_identity).toEqual(
+      workflowRecipe().source_identity,
     );
     expect(compact.canonical_documents?.[0]?.omissions).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          reference: "record:guide:guide.forms.workflow#adaptation",
+          reference: "record:guide:guide.forms.workflow#prerequisites",
         }),
         expect.objectContaining({
           reference:

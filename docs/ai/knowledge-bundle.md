@@ -147,6 +147,17 @@ with only `context_digest` and `utf8_bytes` omitted. It covers the final matches
 query, excluded package families, and truncation flag. Removing even the last
 match sets `truncated` and changes the digest accordingly.
 
+Every selected canonical document retains its complete authored limitations,
+readiness, content identity and recipe identity, including compact variants.
+These qualifications consume the budget before guidance sections; a smaller
+budget can therefore return fewer complete sections. If no section and its
+qualifications fit, context reports a contextual answer with an explicit
+omission and a resolvable complete-document reference. Source illustrations do
+not replace that disclosure. A budget too small for even the required omission
+is rejected instead of reporting that no applicable evidence exists. JSON and
+Markdown preserve the same qualifications, and the final digest and byte count
+include them.
+
 `utf8_bytes` counts the complete serialized JSON value, including its own field.
 It excludes the single line-feed byte appended by the CLI. The JSON value and
 that framing byte together must fit the 16 KiB default transport budget.

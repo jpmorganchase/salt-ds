@@ -217,6 +217,36 @@ describe("frozen evaluation baseline metadata", () => {
     });
   });
 
+  it("keeps frozen provenance in preserved history after branch consolidation", async () => {
+    const ancestryChecks = [];
+    const gitCommand = (arguments_) => {
+      if (arguments_[0] === "merge-base") ancestryChecks.push(arguments_);
+      return realGit(arguments_);
+    };
+    await expect(validateFrozenBaseline({ gitCommand })).resolves.toMatchObject(
+      {
+        report: { cohort_id: "baseline-pre-platform" },
+      },
+    );
+    expect(ancestryChecks).toEqual([
+      [
+        "merge-base",
+        "--is-ancestor",
+        frozenSource,
+        "0c6267578ae3f1ad4d90a83f9ce3f530057994c3",
+      ],
+    ]);
+  });
+  it("rejects frozen provenance outside the preserved historical ancestry", async () => {
+    const gitCommand = (arguments_) => {
+      if (arguments_[0] === "merge-base")
+        throw new Error("Historical source is not an ancestor");
+      return realGit(arguments_);
+    };
+    await expect(validateFrozenBaseline({ gitCommand })).rejects.toThrow(
+      /not an ancestor/u,
+    );
+  });
   it("rejects a changed historical input independently", async () => {
     const gitCommand = (arguments_) => {
       const bytes = realGit(arguments_);

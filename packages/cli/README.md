@@ -47,6 +47,10 @@ hoisted package manifest can be `node_modules/@salt-ds/core/package.json`.
 An absolute or escaping `--project` is invalid. Contained symlinks resolve to
 their canonical location; a symlink outside the root is rejected.
 
+The packaged Skill follows this selected-application retrieval workflow, then
+applies Salt composition guidance and the consumer application's own checks.
+It does not require Doctor or host-specific creator/reviewer orchestration.
+
 ## Doctor
 
 The separate source-analysis command remains available:

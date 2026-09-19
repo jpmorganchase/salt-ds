@@ -265,6 +265,8 @@ describe("generated canonical retrieval", () => {
     const adapted = contextDocument("adapt an existing incident record form");
     for (const { document } of [created, adapted]) {
       expect(document.reference).toBe(`record:guide:${WORKFLOW_GUIDE_ID}`);
+      expect(document.limitations).toEqual(workflow.limitations);
+      expect(document.recipe_identity).toEqual(workflow.recipe_identity);
       expect(document.sections.map((section) => section.purpose)).toEqual(
         expect.arrayContaining([
           "prerequisites",
@@ -297,6 +299,12 @@ describe("generated canonical retrieval", () => {
     expect(markdown).toContain("OperationsDashboard");
     expect(markdown).toMatch(/pending/u);
     expect(markdown).toMatch(/retry/u);
+    expect(markdown).toContain("production\\-scale data");
+    expect(markdown).toContain(
+      "does not certify arbitrary consumer adaptations",
+    );
+    expect(markdown).toContain(recipe.source_identity.recipe_sha256);
+    expect(markdown).toContain(recipe.source_identity.content_identity);
   });
 
   it("round-trips every generated preview and workflow file reference through the resolver", () => {
@@ -352,10 +360,13 @@ describe("generated canonical retrieval", () => {
       CONTEXT_LIMIT,
     );
 
-    const compact = contextDocument("create incident record form", 3 * 1024);
+    const compact = contextDocument("create incident record form", 4 * 1024);
     expect(compact.result.truncated).toBe(true);
-    expect(compact.result.utf8_bytes).toBeLessThanOrEqual(3 * 1024);
+    expect(compact.result.utf8_bytes).toBeLessThanOrEqual(4 * 1024);
     expect(compact.document.sections.length).toBeGreaterThan(0);
+    const workflow = resolved(`record:guide:${WORKFLOW_GUIDE_ID}`).canonical;
+    expect(compact.document.limitations).toEqual(workflow.limitations);
+    expect(compact.document.recipe_identity).toEqual(workflow.recipe_identity);
     const omission = compact.document.omissions.find((entry) =>
       entry.reference.startsWith(`record:guide:${WORKFLOW_GUIDE_ID}#`),
     );
@@ -371,11 +382,11 @@ describe("generated canonical retrieval", () => {
         renderKnowledgeContext(store, {
           query: "create incident record form",
           limit: 8,
-          max_utf8_bytes: 3 * 1024,
+          max_utf8_bytes: 4 * 1024,
         }),
         "utf8",
       ),
-    ).toBeLessThanOrEqual(3 * 1024);
+    ).toBeLessThanOrEqual(4 * 1024);
 
     const tiny = buildKnowledgeContext(store, {
       query: "create incident record form",
@@ -437,7 +448,7 @@ describe("generated canonical retrieval", () => {
       const compact = buildKnowledgeContext(store, {
         query,
         limit: 8,
-        max_utf8_bytes: 3 * 1024,
+        max_utf8_bytes: 4 * 1024,
       });
       const compactWorkflow = compact.canonical_documents?.find(
         (document) =>
@@ -451,6 +462,23 @@ describe("generated canonical retrieval", () => {
         ]),
       );
       expect(compact.answer_status).toBe("applicable");
+      expect(compactWorkflow?.limitations).toEqual(workflow?.limitations);
+      expect(compactWorkflow?.recipe_identity).toEqual(
+        workflow?.recipe_identity,
+      );
+      const tinyInput = { query, limit: 8, max_utf8_bytes: 3 * 1024 };
+      const tiny = buildKnowledgeContext(store, tinyInput);
+      expect(tiny.canonical_documents).toBeUndefined();
+      expect(tiny.answer_status).toBe("contextual");
+      expect(tiny.limitations?.join(" ")).toContain(
+        `resolve record:guide:${WORKFLOW_GUIDE_ID} for the complete document`,
+      );
+      expect(tiny.utf8_bytes + 1).toBeLessThanOrEqual(tinyInput.max_utf8_bytes);
+      const tinyMarkdown = renderKnowledgeContext(store, tinyInput);
+      expect(tinyMarkdown).toContain("Canonical guidance was omitted");
+      expect(Buffer.byteLength(tinyMarkdown, "utf8")).toBeLessThanOrEqual(
+        tinyInput.max_utf8_bytes,
+      );
     },
   );
 });

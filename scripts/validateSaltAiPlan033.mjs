@@ -54,6 +54,9 @@ export function validateControlObject(control, expectedDigest) {
       "predecessor",
       "active_dispatch",
       "units",
+      ...(Object.hasOwn(control ?? {}, "history_reconciliation")
+        ? ["history_reconciliation"]
+        : []),
     ],
     "Plan 033 control",
   );
@@ -80,6 +83,25 @@ export function validateControlObject(control, expectedDigest) {
     Array.isArray(control.units) && control.units.length === units.length,
     "Plan 033 units are incomplete",
   );
+  if (Object.hasOwn(control, "history_reconciliation")) {
+    const reconciliation = control.history_reconciliation;
+    exactKeys(
+      reconciliation,
+      [
+        "historical_head_sha",
+        "rebased_head_sha",
+        "presquash_head_sha",
+        "continuation_checkpoint_sha",
+      ],
+      "Plan 033 history reconciliation",
+    );
+    invariant(
+      Object.values(reconciliation).every(
+        (value) => typeof value === "string" && sha.test(value),
+      ),
+      "Plan 033 history reconciliation has an invalid commit",
+    );
+  }
   let active = null;
   let todo = false;
   for (const [index, unit] of control.units.entries()) {
@@ -161,6 +183,12 @@ export function validateReadme(source, control) {
       (active ? `${quote}${active.checkpoint_sha}${quote}` : "none"),
     "README checkpoint differs from Plan 033 control",
   );
+  if (control.history_reconciliation)
+    invariant(
+      field("Continuation checkpoint") ===
+        `${quote}${control.history_reconciliation.continuation_checkpoint_sha}${quote}`,
+      "README continuation checkpoint differs from Plan 033 control",
+    );
   invariant(
     field("Status") === (active ? `IN PROGRESS — Unit ${active.unit}` : "DONE"),
     "README status differs from Plan 033 control",
@@ -238,21 +266,7 @@ function ancestor(root, earlier, later, label) {
     throw new Error(`${label} is not an ancestor`);
   }
 }
-export function validateRepository({ root = repositoryRoot } = {}) {
-  const head = git(root, ["rev-parse", "--verify", "HEAD^{commit}"]);
-  const control = validateControlObject(
-    JSON.parse(readFileSync(path.join(root, controlPath), "utf8")),
-    planDigest(readFileSync(path.join(root, planPath))),
-  );
-  validateReadme(readFileSync(path.join(root, readmePath), "utf8"), control);
-  validatePlanStatus(readFileSync(path.join(root, planPath), "utf8"), control);
-  validateTerminal032(root, control.predecessor.completion_sha);
-  invariant(
-    JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")).scripts?.[
-      "validate:salt-ai:plan-033"
-    ] === "node ./scripts/validateSaltAiPlan033.mjs",
-    "Plan 033 package command differs",
-  );
+function validateCommitOrder(root, control, head) {
   commit(
     root,
     control.predecessor.completion_sha,
@@ -282,6 +296,138 @@ export function validateRepository({ root = repositoryRoot } = {}) {
       previous = unit.completion_sha;
     }
   }
+}
+function validateHistoryReconciliation(root, control, head) {
+  const reconciliation = control.history_reconciliation;
+  const historical = reconciliation.historical_head_sha;
+  const rebased = reconciliation.rebased_head_sha;
+  const presquash = reconciliation.presquash_head_sha;
+  const continuation = reconciliation.continuation_checkpoint_sha;
+  for (const [label, value] of Object.entries(reconciliation))
+    commit(root, value, `Plan 033 ${label}`);
+  ancestor(root, rebased, presquash, "Plan 033 pre-squash history");
+  ancestor(root, continuation, head, "Plan 033 continuation checkpoint");
+  // These named source trees and files survived the rebase unchanged. Shared
+  // upstream build inputs are outside this preservation boundary; historical
+  // runtime results do not establish current behavior after the rebase. The later
+  // reconciliation commit may adapt the preserved sources before consolidation.
+  for (const relative of [
+    "packages/knowledge",
+    "packages/cli",
+    "skills",
+    "evals",
+    "plans",
+    "docs/ai",
+    "tooling/ai",
+    "scripts/schemas",
+    "scripts/fixtures",
+    "scripts/catalogBuildIdentity.mjs",
+    "scripts/catalogArtifactContract.mjs",
+    "scripts/knowledgeArtifactContract.mjs",
+    "scripts/saltAiEvidenceUtils.mjs",
+    "scripts/validateSaltAiPlan033.mjs",
+    "scripts/validateSaltAiContracts.mjs",
+    "scripts/checkChangedQuality.mjs",
+  ])
+    invariant(
+      git(root, ["rev-parse", `${historical}:${relative}`]) ===
+        git(root, ["rev-parse", `${rebased}:${relative}`]),
+      `Plan 033 preserved source tree differs: ${relative}`,
+    );
+  invariant(
+    git(root, ["rev-parse", `${presquash}^{tree}`]) ===
+      git(root, ["rev-parse", `${continuation}^{tree}`]),
+    "Plan 033 consolidated source tree differs from its pre-squash source",
+  );
+  for (const relative of [
+    planPath,
+    controlPath,
+    terminalPlanPath,
+    terminalControlPath,
+  ])
+    invariant(
+      git(root, ["rev-parse", `${historical}:${relative}`]) ===
+        git(root, ["rev-parse", `${continuation}:${relative}`]),
+      `Plan 033 preserved control source differs: ${relative}`,
+    );
+  for (const relative of [terminalPlanPath, terminalControlPath])
+    invariant(
+      planDigest(readFileSync(path.join(root, relative))) ===
+        planDigest(
+          execFileSync("git", ["show", `${historical}:${relative}`], {
+            cwd: root,
+            stdio: "pipe",
+          }),
+        ),
+      `Plan 033 terminal predecessor evidence changed: ${relative}`,
+    );
+  const frozen = validateControlObject(
+    JSON.parse(git(root, ["show", `${historical}:${controlPath}`])),
+    planDigest(
+      execFileSync("git", ["show", `${historical}:${planPath}`], {
+        cwd: root,
+        stdio: "pipe",
+      }),
+    ),
+  );
+  invariant(
+    !frozen.history_reconciliation && frozen.active_dispatch !== null,
+    "Plan 033 historical control is not an unreconciled active plan",
+  );
+  invariant(
+    isDeepStrictEqual(control.predecessor, frozen.predecessor),
+    "Plan 033 predecessor differs from its preserved control",
+  );
+  validateCommitOrder(root, frozen, historical);
+  let previous = continuation;
+  for (const [index, unit] of control.units.entries()) {
+    const historicalUnit = frozen.units[index];
+    if (historicalUnit.status === "DONE") {
+      invariant(
+        isDeepStrictEqual(unit, historicalUnit),
+        `${unit.id} completed historical evidence changed`,
+      );
+      continue;
+    }
+    if (unit.status === "TODO") continue;
+    let checkpoint = unit.checkpoint_sha;
+    if (historicalUnit.status === "IN_PROGRESS") {
+      invariant(
+        checkpoint === historicalUnit.checkpoint_sha,
+        `${unit.id} original checkpoint changed`,
+      );
+      checkpoint = continuation;
+    } else {
+      commit(root, checkpoint, `${unit.id} checkpoint`);
+      ancestor(root, previous, checkpoint, `${unit.id} checkpoint`);
+      ancestor(root, checkpoint, head, `${unit.id} checkpoint`);
+    }
+    if (unit.status === "DONE") {
+      commit(root, unit.completion_sha, `${unit.id} completion`);
+      ancestor(root, checkpoint, unit.completion_sha, `${unit.id} completion`);
+      ancestor(root, unit.completion_sha, head, `${unit.id} completion`);
+      previous = unit.completion_sha;
+    }
+  }
+}
+export function validateRepository({ root = repositoryRoot } = {}) {
+  const head = git(root, ["rev-parse", "--verify", "HEAD^{commit}"]);
+  const control = validateControlObject(
+    JSON.parse(readFileSync(path.join(root, controlPath), "utf8")),
+    planDigest(readFileSync(path.join(root, planPath))),
+  );
+  validateReadme(readFileSync(path.join(root, readmePath), "utf8"), control);
+  validatePlanStatus(readFileSync(path.join(root, planPath), "utf8"), control);
+  validateTerminal032(root, control.predecessor.completion_sha);
+  invariant(
+    JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")).scripts?.[
+      "validate:salt-ai:plan-033"
+    ] === "node ./scripts/validateSaltAiPlan033.mjs",
+    "Plan 033 package command differs",
+  );
+  if (control.history_reconciliation)
+    validateHistoryReconciliation(root, control, head);
+  else validateCommitOrder(root, control, head);
   return control;
 }
 if (

@@ -15,7 +15,7 @@ its manifest and lockfile, and its ordinary browser and project checks. The
 project-local CLI must report compatible packages before Salt-specific choices:
 
 ```sh
-node ./node_modules/@salt-ds/cli/bin/salt-ds.js info --json
+node ./node_modules/@salt-ds/cli/bin/salt-ds.js info --root . --project . --json
 ```
 
 If the project uses a different package layout, locate the declared local CLI
@@ -23,7 +23,14 @@ binary instead. Do not use `npx`, a registry, or a cache to fill a missing
 package. The candidate is unreleased; maintainers prepare and verify its local
 package cohort through the existing [contributor build and pack guide](contributing.md#current-workflow-authoring).
 Use the existing [CLI workflow](../../packages/cli/README.md#workflow) for
-workspace selection and bounded local retrieval.
+workspace selection and bounded local retrieval. For a workspace child, keep
+`--root` at the repository boundary and pass its relative path with `--project`
+consistently to `info`, `context` and `docs`; locating a hoisted binary is not
+enough to select the application.
+
+The package-delivered `salt-design-system` Skill provides the consumer retrieval
+and implementation workflow. The local `salt-ui` Skill and host profiles below
+add experimental independent-review orchestration and are not packaged with it.
 
 For component adaptation, follow the example references returned by local
 `context` or `docs`, then resolve the selected `#example/` reference with `docs`

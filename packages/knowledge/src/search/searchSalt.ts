@@ -624,11 +624,11 @@ export interface KnowledgeContextCanonicalDocument {
   source_url: string;
   source_records: string[];
   content_identity: string;
-  recipe_identity?: CanonicalDocumentSelection["recipe_identity"];
+  recipe_identity: CanonicalDocumentSelection["recipe_identity"];
   readiness: CanonicalDocumentSelection["readiness"];
   sections: Array<Omit<CanonicalDocumentSection, "search_text">>;
   files?: CanonicalDocumentSelection["files"];
-  limitations?: string[];
+  limitations: string[];
   omissions: CanonicalDocumentSelection["omissions"];
 }
 
@@ -941,9 +941,7 @@ function canonicalSelectionForContext(
 ): CanonicalDocumentSelection {
   return {
     ...document,
-    recipe_identity: document.recipe_identity ?? null,
     files: document.files ?? [],
-    limitations: document.limitations ?? [],
     sections: document.sections.map((section) => ({
       ...section,
       search_text: "",
@@ -1210,8 +1208,12 @@ function compactCanonicalDocument(
     source_url: document.source_url,
     source_records: document.source_records,
     content_identity: document.content_identity,
+    // Qualifications and provenance are inseparable from selected guidance.
+    // The budget selector must drop sections (or the document), never these.
+    recipe_identity: document.recipe_identity,
     readiness: document.readiness,
     sections,
+    limitations: document.limitations,
     omissions,
   };
 }
@@ -1352,20 +1354,26 @@ function contextualResultFields(
           : undefined,
     };
   }
-  if (candidates.source_examples.length > 0) {
+  if (
+    candidates.source_examples.length > 0 ||
+    candidates.omitted_document_reference
+  ) {
     return {
-      contextual_examples: candidates.source_examples,
+      ...(candidates.source_examples.length > 0
+        ? { contextual_examples: candidates.source_examples }
+        : {}),
       answer_status: "contextual",
       limitations: [
-        "Selected source examples are contextual; resolve their references for exact code and support evidence.",
-      ],
-    };
-  }
-  if (candidates.omitted_document_reference) {
-    return {
-      answer_status: "contextual",
-      limitations: [
-        `Canonical guidance was omitted to fit the output budget; resolve ${candidates.omitted_document_reference} for the complete document.`,
+        ...(candidates.source_examples.length > 0
+          ? [
+              "Selected source examples are contextual; resolve their references for exact code and support evidence.",
+            ]
+          : []),
+        ...(candidates.omitted_document_reference
+          ? [
+              `Canonical guidance was omitted to fit the output budget; resolve ${candidates.omitted_document_reference} for the complete document.`,
+            ]
+          : []),
       ],
     };
   }
@@ -1561,6 +1569,11 @@ export function buildKnowledgeContext(
           return result;
         }
       }
+    }
+    if (candidates.documents.length > 0) {
+      // The variants already tried an omission with no matches or examples.
+      // Dropping its reference would falsely imply no applicable guide exists.
+      throw new KnowledgeContextInputError(KNOWLEDGE_CONTEXT_INPUT_ERROR);
     }
   }
   throw new KnowledgeContextInputError(KNOWLEDGE_CONTEXT_INPUT_ERROR);

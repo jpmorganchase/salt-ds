@@ -29,7 +29,7 @@ This adoption updates this plan/control, Plan 032's completion record, the activ
 
 Only the named unit executes. Unit 033/01 authorizes local source changes, builds, browser tests and scoped npm setup inside the existing `checkSaltSampleApps` temporary sample-app fixtures and their deliberate negative copies. Those fixtures may obtain declared dependencies and install the exact locally packed CLI/Knowledge cohort; no installation in actual consumer repositories is authorized. Browser/application/tool runtime stays offline, with application state simulations local and tooling read-only. Publication, version materialization, dist-tags, deployment, consumer contact and product host/model trials remain separate. The user-authorized implementation proceeds without those external actions; missing participant access does not block local correctness work.
 
-Before each review run current-plan validation, contracts, `yarn check:changed-quality -- --base <recorded-unit-start-sha>`, `git diff --check` and the unit's specific checks. Rebuild generated Knowledge before tests consuming it whenever its inputs change. Runtime correctness receipts cannot qualify Doctor, and automated accessibility checks cannot stand in for declared manual review. Readiness must disclose outstanding owner/design review and tested scope honestly.
+Before each review run current-plan validation, contracts, `yarn check:changed-quality -- --base <recorded-continuation-sha-or-unit-start-sha>`, `git diff --check` and the unit's specific checks. Rebuild generated Knowledge before tests consuming it whenever its inputs change. Runtime correctness receipts cannot qualify Doctor, and automated accessibility checks cannot stand in for declared manual review. Readiness must disclose outstanding owner/design review and tested scope honestly.
 
 ## Product and authoring pivot
 
@@ -542,6 +542,56 @@ and final outcomes in
 [coordinated workflow results](../evals/salt-ai/ui-agent/COORDINATED_RESULTS.md).
 This one task demonstrates the parent-coordinated route within its two-repair
 limit, without changing earlier failures, human gates or the active checkpoint.
+
+### User-directed consumer-contract follow-up
+
+The 2026-09-19 request authorizes the assessed consumer-contract repairs from
+`dd3e60cbe957c8b1e91027a2164fd9bc922038c4`, within Unit 033/02a. Reconcile the
+active validation boundary with the consolidated branch history using verifiable
+source identities; preserve original completion records and frozen evidence.
+Do not turn historical results into fresh verification or weaken the checks to
+accept an unrelated source tree. Use the continuation checkpoint above as the
+changed-file quality base; preserve the original unit start in the control.
+Earlier runtime results remain historical after upstream dependency changes.
+The control records the preserved history, rebased source, pre-squash source and
+current continuation commits. Validators check the named source trees and files
+across the rebase, including AI support metadata, artifact/provenance helpers and
+current validators, plus full tree equality across consolidation. Shared upstream
+build inputs remain outside that preservation boundary; historical runtime results
+do not establish current behavior. Keep those Git objects available when
+transferring the branch; absent provenance fails closed.
+
+First repair bounded context assembly in `packages/knowledge/src/search/` and
+its focused document/retrieval tests. Every selected canonical document must
+retain its material limitations and recipe identity when compacted. Select
+fewer guidance sections when needed; if qualified guidance cannot fit, report
+an explicit contextual omission with a resolvable reference. Preserve the
+16 KiB default, final serialization accounting, digest integrity, exact-current
+compatibility and deterministic retrieval. Update the current retrieval contract
+and test JSON and Markdown at default and smaller budgets, including limitations
+that cannot fit alongside guidance.
+
+Then align the existing package-delivered `salt-design-system` Skill and managed
+pointer with the task, project inspection, bounded context/docs, Salt composition,
+implementation and consumer-verification workflow. Retain the delivered artifact
+paths and integrity binding. Carry repository authority and explicit application
+selection through every retrieval command, including hoisted workspaces. Remove
+Doctor as a required consumer workflow without retiring its implementation in
+this change. Align current experimental Skill wording and entry documentation;
+host-specific creator/reviewer orchestration remains experimental and outside
+the packaged consumer Skill. Historical trials retain their original inputs and
+outcomes.
+
+Verify focused context, Skill and history-validation regressions, tooling types,
+rebuilt Knowledge/CLI tests, current plan/contracts, package validation and the
+installed offline consumer retrieval/Skill path in the existing temporary
+fixtures. Reuse local dependencies and candidate artifacts without registry
+fallback. Run changed-file quality, diff checks and closeout source review using
+the existing authorized host account. No new model product trial, consumer
+contact, actual consumer installation, publication, deployment, API-surface
+redesign or compatibility relaxation is authorized by this follow-up. Owner,
+design, manual accessibility and independent human maintainer gates stay pending;
+Unit 033/02a remains in progress and workflow readiness remains runnable.
 
 ## Conditional Unit 033/03 — Expand workflows from observed need
 

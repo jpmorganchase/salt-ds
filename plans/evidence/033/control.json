@@ -1,7 +1,7 @@
 {
   "contract": "salt-ai-plan-033-control/1",
   "plan_id": "033",
-  "plan_sha256": "7379b489ccf7b44d957a5c9a0e7cdbc938ff4af9377201e339d791a567838645",
+  "plan_sha256": "a8e15f62740348e941016e989c011a9cea0d9e53486751c5d646d3319ea8f57e",
   "predecessor": {
     "plan_id": "032",
     "completion_sha": "d2c7000865da920655d6461eb46e95f7eb84db43"
@@ -29,5 +29,11 @@
       "checkpoint_sha": "4f009ec3601b801856a69c0ac56928fc65c7bc65",
       "completion_sha": null
     }
-  ]
+  ],
+  "history_reconciliation": {
+    "historical_head_sha": "0c6267578ae3f1ad4d90a83f9ce3f530057994c3",
+    "rebased_head_sha": "6cc6e539945c178297170742eb455e0f0f9a9713",
+    "presquash_head_sha": "624943e2e7b120ddcc726a85c0138335dc7344d7",
+    "continuation_checkpoint_sha": "dd3e60cbe957c8b1e91027a2164fd9bc922038c4"
+  }
 }
