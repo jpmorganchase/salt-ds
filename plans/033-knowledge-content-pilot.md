@@ -4,6 +4,7 @@
 
 - Status: IN PROGRESS — activated within Unit 033/02a on 2026-09-19.
 - Planned at: `53ab0863e`, 2026-09-19.
+- Pilot implementation: committed at `b67c32832` on 2026-09-20 after clean source review, verification and the user's guidance acceptance.
 - Category: direction/content; priority P1; effort M–L (several days, re-estimate after the content pass); risk MED.
 - Parent: `plans/033-deliver-verified-salt-workflows.md`, current Unit `033/02a`.
 - User direction: improve canonical Salt knowledge and deterministic task context; keep infrastructure proportionate to the content problem.
@@ -116,7 +117,97 @@ The offline author preview rendered the edited Forms, Dialog usage and Button ba
 
 The user explicitly approved external source review. The final UTF-8-mode `autoreview --mode local` run exits 0 with no accepted/actionable findings. Accepted findings and behavior regressions were repaired within the existing context boundary: preserve constraint and mixed-role evidence, retain directly matching authored guidance and screen-reader semantics, keep ownership priority consistent, retain component/example references, and disclose every omitted guide in terminal packets. Request-local score reuse avoids repeated computation. A suggestion to retain every lexical match in role-focused compact packets was declined: requested roles intentionally take priority under a finite budget, while complete-guide references preserve access to secondary evidence and qualification groups remain atomic. The ignored review reports and scope decisions are in `dist/task-knowledge-pilot/autoreview.json` and `review-attempts.json`.
 
-All ten development questions deliver complete required evidence at 16 KiB. At 8 KiB, three are complete and seven have explicit resolvable omissions. The additional real-content focus/validation case retains all seven required Forms facts at 16 KiB and discloses a qualified omission at 8 KiB. Its regression and the multi-guide terminal-disclosure regression both failed before their respective repairs. The user's guidance acceptance is recorded above; the remaining workflow and maintainer reviews, readiness promotion, publication and deployment remain separate. Changes remain uncommitted.
+All ten development questions deliver complete required evidence at 16 KiB. At 8 KiB, three are complete and seven have explicit resolvable omissions. The additional real-content focus/validation case retains all seven required Forms facts at 16 KiB and discloses a qualified omission at 8 KiB. Its regression and the multi-guide terminal-disclosure regression both failed before their respective repairs. The user's guidance acceptance is recorded above; the remaining workflow and maintainer reviews, readiness promotion, publication and deployment remain separate. The verified pilot implementation is committed at `b67c32832`.
+
+## Follow-through on 2026-09-20
+
+The user requested the proposed commit, workflow check, authoring exercise and
+small knowledge-gap report. The original pilot commit is `b67c32832`; the
+following work stays within Unit 033/02a and does not expand the workflow family.
+
+### Running workflow
+
+A fresh local source preview used the current workspace packages (Core 1.71.0,
+Lab 1.0.0-alpha.104 and Theme 1.46.0) and existing local dependencies. All 17
+exported workflow files matched current application sources after CRLF
+normalization. The older packed preview uses a different package cohort and was
+not treated as current evidence.
+
+The existing sample-app acceptance functions ran unchanged against this source
+preview. Validation, pending duplicate prevention, retained drafts after failure,
+retry, cancellation, labels/error associations, keyboard/focus, filtering,
+worklist recovery, empty states, theme controls, axe and 320 CSS-pixel layout
+checks passed. There were no runtime errors or external requests. The separate
+interactive browser walkthrough confirmed the edit/invalid/pending/fail/retry
+sequence, focus restoration, preservation after Cancel, and keyboard focus wrap.
+At 320 by 720 CSS pixels, the dialog and page fit the viewport; its stacked
+last action was reachable by keyboard and scrolled into view.
+
+Evidence remains ignored under `dist/task-knowledge-pilot/workflow-review/`:
+`provenance.json`, `result.json`, `interactive-walkthrough.json` and seven
+screenshots. This is current-source verification, not a fresh installed-package
+cohort, independent human design acceptance, actual browser zoom testing or
+screen-reader speech verification.
+
+### Authoring rehearsal
+
+An agent-run rehearsal changed only an ignored copy of Forms from “If it fails”
+to “If submission fails”. The actual parser, canonical assembler, Markdown
+renderer and context builder delivered the changed clause under the same Forms
+source reference; canonical document identity changed, and workflow readiness,
+limitations and retry qualifications remained present. The changed context was
+11,616 JSON bytes and 7,796 Markdown bytes within the 16 KiB budget.
+
+An unsupported component in the copied selected section produced
+`MDX_UNSUPPORTED_COMPONENT`, the correct section ID and a source-body location;
+removing it cleared the diagnostic. Evidence is in
+`dist/task-knowledge-pilot/authoring-rehearsal/result.json`, with the source diff,
+diagnostic, rendered Markdown and both context outputs beside it.
+
+This rehearsed an existing discoverable section through a temporary content
+overlay on a verified baseline. It did not generate a new sealed bundle, update
+the lexical index, render the copied edit on the website or measure independent
+maintainer effort. Canonical source prose was unchanged. The rehearsal exposed
+a needless pronoun dependency in the failed-save evidence anchor; it now keeps
+“fails, retain the draft” and “offer a retry”, allowing this clarification while
+retaining the decisive failure/recovery clauses. All 27 existing pilot evidence
+checks pass after this focused fixture adjustment; no new permanent tests or
+runtime changes were added.
+
+### Prepared independent maintainer exercise
+
+Have a maintainer who did not build the compiler use the existing
+[author guide](../docs/ai/contributing.md#current-workflow-authoring) to change
+the example's minimum trimmed incident-title length from five to eight
+characters, with matching example-specific explanatory guidance. This is an
+exercise proposal, not an adopted global Forms rule or a change already made.
+
+The relevant source boundaries are the record-form validator and error message
+in `types.ts`, the input's `minLength` in `RecordForm.tsx`, and an explanatory
+acceptance clause in the service-worklist recipe. Update the existing affected
+sample-app assertions for seven-character rejection and eight-character
+acceptance; preserve the meaningful validation/pending/failure/retry checks.
+Record the repeated threshold/message facts rather than disguising their
+maintenance cost. Do not manually update generated output or add a second
+AI-only explanation.
+
+Follow the author guide's ordinary generation, packed reconstruction and offline
+preview path, inspecting website guidance, source view/downloads, Markdown and
+CLI evidence. Exercise one unsupported MDX block in a selected copied or
+reversible source change, record the diagnostic and its correction, then restore
+valid content. Record active editing time separately from build/wait time, actual
+source files edited, repeated facts, diagnostic clarity and help required from
+the compiler author. The agent rehearsal above does not substitute for this
+independent human exercise. No maintainer has been contacted or recorded as
+having completed it.
+
+The [knowledge-gap report](./033-knowledge-gap-report.md) identifies three
+candidate editorial decisions: DialogActions/Button bar composition,
+preservation versus discard criteria, and the scope of refresh/recovery
+guidance. It distinguishes missing authored decisions from selected-content
+boundaries and qualified budget omissions. Select the first content follow-up
+using the maintainer exercise and workflow review; no new infrastructure is
+required by this report.
 
 ## Implementation sequence
 
