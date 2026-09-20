@@ -422,25 +422,33 @@ export function OperationsDashboard() {
               allServiceCount={emptyDemo ? 0 : services.length}
               incidents={emptyDemo ? [] : incidents}
               localDemoControls={
-                emptyDemo ? (
-                  <Button
-                    appearance="transparent"
-                    onClick={() => setEmptyDemo(false)}
-                  >
-                    Restore worklist (local demo)
-                  </Button>
-                ) : (
-                  <Button
-                    appearance="transparent"
-                    onClick={() => {
-                      setEmptyDemo(true);
-                      setSelectedServiceId(undefined);
-                      setSelectedIncidentId(undefined);
-                    }}
-                  >
-                    Show empty worklist (local demo)
-                  </Button>
-                )
+                <FlexLayout
+                  align="center"
+                  gap={1}
+                  role="group"
+                  aria-label="Local demo controls"
+                >
+                  <Text color="secondary">Local demo:</Text>
+                  {emptyDemo ? (
+                    <Button
+                      appearance="transparent"
+                      onClick={() => setEmptyDemo(false)}
+                    >
+                      Restore worklist
+                    </Button>
+                  ) : (
+                    <Button
+                      appearance="transparent"
+                      onClick={() => {
+                        setEmptyDemo(true);
+                        setSelectedServiceId(undefined);
+                        setSelectedIncidentId(undefined);
+                      }}
+                    >
+                      Show empty state
+                    </Button>
+                  )}
+                </FlexLayout>
               }
               onInspect={inspectService}
               onInspectIncident={inspectIncident}
@@ -448,9 +456,7 @@ export function OperationsDashboard() {
               onRefresh={refreshWorklist}
               onRetryRefresh={refreshWorklist}
               query={query}
-              refreshLabel="Refresh worklist (local demo)"
               refreshMessage={refreshMessage}
-              retryLabel="Retry worklist refresh (local demo)"
               selectedIncidentId={selectedIncidentId}
               services={visibleServices}
               state={worklistState}
@@ -472,7 +478,6 @@ export function OperationsDashboard() {
             else setDialogOpen(true);
           }}
           size="medium"
-          status="warning"
         >
           <DialogHeader
             header={dialogMode === "edit" ? "Edit incident" : "Create incident"}

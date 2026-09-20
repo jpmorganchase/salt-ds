@@ -354,12 +354,7 @@ async function verifyPublicApp(appName, registry, compatibility) {
       ),
       readFile(path.join(appRoot, "src", "OperationsDashboard.tsx"), "utf8"),
     ]);
-    for (const localDemoControl of [
-      "Refresh worklist (local demo)",
-      "Retry worklist refresh (local demo)",
-      "Show empty worklist (local demo)",
-      "Restore worklist (local demo)",
-    ]) {
+    for (const localDemoControl of ["Show empty state", "Restore worklist"]) {
       assert(
         !reusableWorklist.includes(localDemoControl),
         `Reusable worklist embeds host-only control: ${localDemoControl}`,
@@ -862,9 +857,7 @@ async function assertServiceWorklistDetailAndRecovery(page) {
   const filter = page.getByLabel("Filter services");
   await filter.fill("");
   await page.getByText("Showing 4 of 4 services", { exact: true }).waitFor();
-  await page
-    .getByRole("button", { name: "Refresh worklist (local demo)" })
-    .click();
+  await page.getByRole("button", { name: "Refresh worklist" }).click();
   await page.getByText("Refreshing worklist.", { exact: true }).waitFor();
   const refreshFailure = page.getByRole("alert").filter({
     hasText:
@@ -883,16 +876,12 @@ async function assertServiceWorklistDetailAndRecovery(page) {
   }
   await page.getByText("Showing 4 of 4 services", { exact: true }).waitFor();
   await page.getByRole("row", { name: /Risk calculator/u }).waitFor();
-  await page
-    .getByRole("button", { name: "Retry worklist refresh (local demo)" })
-    .click();
+  await page.getByRole("button", { name: "Retry worklist refresh" }).click();
   await page
     .getByText("Worklist refreshed. Showing 4 of 4 services.", { exact: true })
     .waitFor({ timeout: 5_000 });
 
-  await page
-    .getByRole("button", { name: "Show empty worklist (local demo)" })
-    .click();
+  await page.getByRole("button", { name: "Show empty state" }).click();
   await page
     .getByText("There are no services available.", { exact: true })
     .waitFor();
@@ -901,9 +890,7 @@ async function assertServiceWorklistDetailAndRecovery(page) {
     0,
     "No-data state was presented as a filter miss",
   );
-  await page
-    .getByRole("button", { name: "Restore worklist (local demo)" })
-    .click();
+  await page.getByRole("button", { name: "Restore worklist" }).click();
   await page.getByText("Showing 4 of 4 services", { exact: true }).waitFor();
 }
 
@@ -1290,7 +1277,7 @@ async function browserChecks(appName, appRoot, environment, options = {}) {
       if (appName === "operations-dashboard") {
         await page.getByText("Loading worklist.", { exact: true }).waitFor();
         const refresh = page.getByRole("button", {
-          name: "Refresh worklist (local demo)",
+          name: "Refresh worklist",
         });
         await refresh.waitFor();
         assert(

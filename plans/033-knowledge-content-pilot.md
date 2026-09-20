@@ -310,6 +310,45 @@ Human workflow-owner, rendered design, manual accessibility and independent
 maintainer acceptance remain separate and pending. Workflow readiness remains
 `runnable`; no publication, deployment or model trial occurred.
 
+### Laptop UI review follow-up (2026-09-21)
+
+The user's live review identified an inappropriate warning status on the record
+editor, visually unclear form-error text and verbose action labels. This scoped
+follow-up starts from `42ae61be929d26ff3510f09ecd86678e03cd48c3`.
+The editor now uses the ordinary Dialog appearance. A single error Banner shows
+the validation summary or save failure, while field-level messages, focus and
+recovery behavior remain intact. Worklist refresh/retry use icon buttons with
+accessible names and tooltips; service-table actions show Inspect with the
+service name retained in the accessible label. Local simulation controls use a
+labelled group and short visible text. Incident-list entries keep their visible
+record identity.
+
+The existing browser acceptance keeps its behavioral assertions and updates
+only action locators and which controls are host-only simulations. No new test
+snapshots, public component APIs or general rules about status dialogs are added.
+The final bundle is `sha256:ee11d931f889623bd6d54fccc4f5117c903369a2a260b7b0858f9e16c0d0830c`.
+All 17 exported workflow files match current source after line-ending
+normalization, and the recipe facts match. Package checks passed in
+`dist/salt-ai-pack/task-knowledge-ui-feedback.json`; Knowledge is 25,853,734
+unpacked bytes against the unchanged 26,214,400-byte limit. Its tarball digest is
+`sha256:dae80ff9c860e475ba34a3298d7198cbbc220a3776b1b7d0b75ba307c4dd5595`.
+
+The current-source preview passed the existing workflow browser acceptance and
+independent visual checks, including error recovery, focus, icon tooltips,
+keyboard use, accessibility checks and a 320px viewport, with no runtime errors
+or external requests. Source-preview typechecking passed using the repository's
+source aliases and declarations; this is not a newly installed consumer cohort.
+All 858 Knowledge, CLI and browser-harness tests passed across 62 files, and
+source review returned no findings. The only subsequent source change reordered
+named imports; `dist/task-knowledge-ui-feedback/post-review-source-check.json`
+records that exact difference before the final rebuild and exported-file check.
+Evidence remains under `dist/task-knowledge-ui-feedback/`. Plan consistency,
+contracts, public docs, changed-file quality and release embargo checks passed.
+
+The 2026-09-20 candidate above remains historical evidence for that content pass.
+Human acceptance remains in progress and workflow readiness stays `runnable`.
+No consumer installation, publication, deployment or model trial occurred.
+
 ## Implementation sequence
 
 ### 1. Establish the content and expected evidence

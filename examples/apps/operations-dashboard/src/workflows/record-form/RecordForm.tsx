@@ -1,4 +1,6 @@
 import {
+  Banner,
+  BannerContent,
   Button,
   DialogActions,
   DialogContent,
@@ -68,6 +70,12 @@ export function RecordForm({
   const serviceMessage =
     errors.service ??
     "Name the service or operational process affected by this record.";
+  const errorMessage =
+    hasSubmitted && hasErrors(errors)
+      ? "Review the incident details before saving."
+      : submission.status === "failed"
+        ? submission.message
+        : undefined;
 
   return (
     <form
@@ -78,15 +86,12 @@ export function RecordForm({
     >
       <DialogContent>
         <StackLayout className="recordFormFields" gap={2}>
-          {hasSubmitted && hasErrors(errors) && (
-            <div className="recordFormAlert" role="alert">
-              Review the incident details before saving.
-            </div>
-          )}
-          {submission.status === "failed" && (
-            <div className="recordFormAlert" role="alert">
-              {submission.message}
-            </div>
+          {errorMessage && (
+            <Banner status="error">
+              <BannerContent className="recordFormAlert" role="alert">
+                {errorMessage}
+              </BannerContent>
+            </Banner>
           )}
           <FormField
             id={`${formId}-incident-title`}

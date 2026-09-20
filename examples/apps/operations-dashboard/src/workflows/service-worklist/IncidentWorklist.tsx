@@ -14,9 +14,10 @@ import {
   Text,
   TH,
   THead,
+  Tooltip,
   TR,
 } from "@salt-ds/core";
-import { SearchIcon } from "@salt-ds/icons";
+import { RefreshIcon, SearchIcon } from "@salt-ds/icons";
 import type { ReactNode } from "react";
 import type { IncidentRecord, ServiceRecord } from "./types";
 import "./ServiceWorklist.css";
@@ -146,9 +147,10 @@ export function IncidentWorklist({
                         <TD>
                           <Button
                             appearance="bordered"
+                            aria-label={`Inspect ${service.name}`}
                             onClick={() => onInspect(service)}
                           >
-                            Inspect {service.name}
+                            Inspect
                           </Button>
                         </TD>
                       </TR>
@@ -175,15 +177,18 @@ export function IncidentWorklist({
             </Text>
           </div>
           <div className="worklistActions">
-            <Button
-              appearance="bordered"
-              disabled={isLoading}
-              loading={isRefreshing}
-              loadingAnnouncement="Refreshing worklist."
-              onClick={onRefresh}
-            >
-              {refreshLabel}
-            </Button>
+            <Tooltip content={refreshLabel} placement="top">
+              <Button
+                appearance="bordered"
+                aria-label={refreshLabel}
+                disabled={isLoading}
+                loading={isRefreshing}
+                loadingAnnouncement="Refreshing worklist."
+                onClick={onRefresh}
+              >
+                <RefreshIcon aria-hidden />
+              </Button>
+            </Tooltip>
             {localDemoControls}
           </div>
           {state === "error" && (
@@ -193,9 +198,15 @@ export function IncidentWorklist({
                 available.
               </BannerContent>
               <BannerActions>
-                <Button appearance="bordered" onClick={onRetryRefresh}>
-                  {retryLabel}
-                </Button>
+                <Tooltip content={retryLabel} placement="top">
+                  <Button
+                    appearance="bordered"
+                    aria-label={retryLabel}
+                    onClick={onRetryRefresh}
+                  >
+                    <RefreshIcon aria-hidden />
+                  </Button>
+                </Tooltip>
               </BannerActions>
             </Banner>
           )}
