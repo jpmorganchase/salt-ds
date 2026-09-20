@@ -4,12 +4,17 @@
   min-width: 0;
 }
 
+.servicePanel > section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-200);
+}
+
 .panelHeader {
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: var(--salt-spacing-200);
-  padding: var(--salt-spacing-250);
 }
 
 .panelHeader h2,
@@ -46,7 +51,6 @@
 .worklistMessage,
 .worklistCount {
   margin: 0;
-  padding: 0 var(--salt-spacing-250) var(--salt-spacing-250);
 }
 
 .incidentInspector {
