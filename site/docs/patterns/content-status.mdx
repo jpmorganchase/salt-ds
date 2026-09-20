@@ -7,10 +7,16 @@ tags:
 aliases:
   - /salt/patterns/content-status
 data:
-  resources:
+  resources: []
+  components:
     [
+      "Button",
+      "Progress",
+      "Spinner",
+      "Stack layout",
+      "Status indicator",
+      "Text",
     ]
-  components: ["Button", "Progress", "Spinner", "Stack layout", "Status indicator", "Text"]
 ---
 
 <LivePreview componentName="patterns/content-status" exampleName="Info" />
@@ -26,18 +32,42 @@ data:
 Use this pattern in a container component when the state belongs to the content area itself:
 
 - When a bounded region or local content area needs a loading, empty, warning, error, or success state.
-- When content is loading.
+- When content is loading and no useful previous content is available.
 - When a container has no data to show and you need an empty-state message.
 - To share information, warnings, or errors with users that relate to the current content area.
 - When the user has successfully submitted content or completed an action.
 
 ## When not to use
 
-- When the message should reach across the app or the whole page, use Banner or Toast instead.
+- When a refresh fails and previously loaded content remains visible, use [Banner](/salt/components/banner/usage) in the related container. Use a page-level Banner when the issue affects the whole page.
+- When the message concerns an event in a peripheral application or workflow, use [Toast](/salt/components/toast/usage).
 - When the state requires a full workflow interruption or a decision, use Dialog or the owning form pattern instead.
 - When the state is not tied to a container, use inline text or another component instead.
 
 ## How to build
+
+### Choosing how to communicate loading and recovery
+
+Choose feedback according to whether useful content is already available and
+which part of the task is affected:
+
+- **No content yet:** use Content status within the affected region for initial loading, an initial-load failure with Retry, or an empty result after a successful request. A failed request is not an empty result.
+- **Refreshing existing content:** retain the content and show a local loading indication, such as a [loading Refresh button](/salt/components/button/examples#loading).
+- **Refresh failed, previous content remains:** show a [Banner](/salt/components/banner/usage) in the related container, explain that the data was not updated, and offer Retry. For example: “Couldn't refresh. Showing previously loaded data.”
+- **The whole page is affected:** use a page-level Banner.
+
+Choose severity according to whether users can safely continue or their task is
+blocked, rather than treating every failed request as the same severity.
+
+Preserve filters, selection, scroll position, and keyboard focus during a refresh
+where they remain valid. Updating the displayed records must not overwrite an
+unsaved editing draft. If a new search, filter, or account changes the scope, make
+clear that any retained rows are previous results; do not present them as matching
+the new request.
+
+When freshness matters, show when the data was last updated. Retaining content
+does not make stale data safe: disable or revalidate actions that require current
+data until its freshness is established.
 
 ### Anatomy
 
@@ -68,8 +98,10 @@ The content status consists of three functional areas:
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
+
 - Text line length shouldn't exceed 80 characters. See the [typography foundation](/salt/foundations/typography) for more information.
 - You should horizontally and vertically center the pattern in the container.
+
 </GuidanceCallout>
 
 ### Supporting messages
@@ -132,12 +164,14 @@ Use the error status to communicate a critical issue that prevents the user from
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
- Error and warning messages should: 
- 1. Notify users when there’s an issue. 
- 2. Identify and explain the issue. 
- 3. Provide a resolution.
-</GuidanceCallout>
 
+Error and warning messages should:
+
+1. Notify users when there’s an issue.
+2. Identify and explain the issue.
+3. Provide a resolution.
+
+</GuidanceCallout>
 
 ## Success message
 

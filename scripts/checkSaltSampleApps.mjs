@@ -958,7 +958,7 @@ async function assertRecordFormWorkflow(page, screenshotRoot) {
 
   const title = page.getByLabel("Incident title");
   const service = page.getByLabel("Affected service or operational process");
-  const cancel = dialog.getByRole("button", { name: "Cancel" });
+  const close = dialog.getByRole("button", { name: "Close" });
   const submit = dialog.getByRole("button", { name: "Create incident" });
   for (const input of [title, service]) {
     const labelledBy = await input.getAttribute("aria-labelledby");
@@ -985,18 +985,18 @@ async function assertRecordFormWorkflow(page, screenshotRoot) {
   );
   await page.keyboard.press("Tab");
   assert(
-    await cancel.evaluate((element) => element === document.activeElement),
-    "Tab did not move from affected service to Cancel",
+    await close.evaluate((element) => element === document.activeElement),
+    "Tab did not move from affected service to Close",
   );
   await page.keyboard.press("Tab");
   assert(
     await submit.evaluate((element) => element === document.activeElement),
-    "Tab did not move from Cancel to Create incident",
+    "Tab did not move from Close to Create incident",
   );
   await page.keyboard.press("Shift+Tab");
   assert(
-    await cancel.evaluate((element) => element === document.activeElement),
-    "Shift+Tab did not return from Create incident to Cancel",
+    await close.evaluate((element) => element === document.activeElement),
+    "Shift+Tab did not return from Create incident to Close",
   );
 
   await page.keyboard.press("Escape");
@@ -1011,15 +1011,15 @@ async function assertRecordFormWorkflow(page, screenshotRoot) {
   dialog = page.getByRole("dialog");
   await dialog.waitFor();
 
-  await title.fill("Draft retained on cancel");
+  await title.fill("Draft retained on close");
   await service.fill("Order gateway");
-  await cancel.focus();
+  await close.focus();
   await page.keyboard.press("Enter");
   await dialog.waitFor({ state: "detached" });
   await createIncident.click();
   dialog = page.getByRole("dialog");
   await dialog.waitFor();
-  assert.equal(await title.inputValue(), "Draft retained on cancel");
+  assert.equal(await title.inputValue(), "Draft retained on close");
   assert.equal(await service.inputValue(), "Order gateway");
 
   await title.fill("");
@@ -1102,7 +1102,7 @@ async function assertRecordFormWorkflow(page, screenshotRoot) {
   await page.getByText("Saving incident.", { exact: true }).waitFor();
   assert((await title.getAttribute("readonly")) !== null);
   assert((await service.getAttribute("readonly")) !== null);
-  assert(await dialog.getByRole("button", { name: "Cancel" }).isDisabled());
+  assert(await dialog.getByRole("button", { name: "Close" }).isDisabled());
   await page.keyboard.press("Escape");
   assert.equal(await dialog.count(), 1, "Pending record form closed on Escape");
   await dialog
@@ -1200,7 +1200,7 @@ async function assertRecordFormWorkflow(page, screenshotRoot) {
       narrowLayout.controlsVisible,
     `Record form or its controls overflowed the 320 CSS-pixel viewport: ${JSON.stringify(narrowLayout)}`,
   );
-  await dialog.getByRole("button", { name: "Cancel" }).click();
+  await dialog.getByRole("button", { name: "Close" }).click();
   await dialog.waitFor({ state: "detached" });
   return {
     status: "pass",

@@ -66,6 +66,12 @@ const FORMS_SELECTORS: readonly SelectedMdxSectionSelector[] = [
     include_descendants: false,
   },
   {
+    id: "forms.cancellation-and-drafts",
+    heading_path: ["How to build", "Cancellation and drafts"],
+    include_descendants: true,
+    semantic_role: "behavior",
+  },
+  {
     id: "forms.anatomy",
     heading_path: ["How to build", "Anatomy"],
     include_descendants: false,
@@ -176,6 +182,15 @@ const CONTENT_STATUS_SELECTORS: readonly SelectedMdxSectionSelector[] = [
     include_descendants: false,
   },
   {
+    id: "content-status.loading-and-recovery",
+    heading_path: [
+      "How to build",
+      "Choosing how to communicate loading and recovery",
+    ],
+    include_descendants: true,
+    semantic_role: "decision",
+  },
+  {
     id: "content-status.supporting-messages",
     heading_path: ["How to build", "Supporting messages"],
     include_descendants: false,
@@ -221,9 +236,37 @@ const DIALOG_USAGE_SELECTORS: readonly SelectedMdxSectionSelector[] = [
   {
     id: "dialog.using",
     heading_path: ["Using the component"],
-    include_descendants: true,
+    include_descendants: false,
     semantic_role: "use-condition",
-    qualification_group: "dialog.use",
+    qualification_group: "forms.surface",
+  },
+  {
+    id: "dialog.using.when-to-use",
+    heading_path: ["Using the component", "When to use"],
+    include_descendants: false,
+    semantic_role: "use-condition",
+    qualification_group: "forms.surface",
+  },
+  {
+    id: "dialog.using.when-not-to-use",
+    heading_path: ["Using the component", "When not to use"],
+    include_descendants: false,
+    semantic_role: "exclusion",
+    qualification_group: "forms.surface",
+  },
+  {
+    id: "dialog.using.forms-in-dialogs",
+    heading_path: ["Using the component", "Forms in dialogs"],
+    include_descendants: false,
+    semantic_role: "behavior",
+    qualification_group: "dialog.forms",
+  },
+  {
+    id: "dialog.using.action-composition",
+    heading_path: ["Using the component", "Action composition"],
+    include_descendants: false,
+    semantic_role: "composition",
+    qualification_group: "dialog.actions",
   },
 ];
 const DIALOG_EXAMPLES_SELECTORS: readonly SelectedMdxSectionSelector[] = [
@@ -269,12 +312,14 @@ const BUTTON_BAR_SELECTORS: readonly SelectedMdxSectionSelector[] = [
     heading_path: ["How to build", "Layout"],
     include_descendants: false,
     semantic_role: "composition",
+    qualification_group: "button-bar.dialog-actions",
   },
   {
     id: "button-bar.dialog-order",
     heading_path: ["Button order", "Dialog"],
     include_descendants: false,
     semantic_role: "composition",
+    qualification_group: "button-bar.dialog-actions",
   },
   {
     id: "button-bar.stacked",
@@ -758,7 +803,7 @@ export async function buildSelectedGuidance(
       sourceRoot: input.sourceRoot,
       declared,
       sourcePath: assertDeclared(declared, CONTENT_STATUS_DOCUMENT_PATH),
-      documentId: recipe.id,
+      documentId: "guide.content-status",
       route: "/salt/patterns/content-status",
       selectors: CONTENT_STATUS_SELECTORS,
       fallbackTitle: "Content status",
@@ -894,10 +939,10 @@ export async function buildSelectedGuidance(
     );
   }
   const buttonName = `Button ${buttonHeading}`;
+  requireSupportedDocument(contentStatus.document);
   const workflowDocument = mergeWorkflowDocuments([
     analyticalDashboard,
     navigation,
-    contentStatus,
     forms,
     choosingPrimitive,
     compositionPitfalls,
@@ -910,7 +955,6 @@ export async function buildSelectedGuidance(
   const workflowSourcePaths = unique([
     ANALYTICAL_DASHBOARD_DOCUMENT_PATH,
     NAVIGATION_DOCUMENT_PATH,
-    CONTENT_STATUS_DOCUMENT_PATH,
     FORMS_DOCUMENT_PATH,
     CHOOSING_PRIMITIVE_DOCUMENT_PATH,
     COMPOSITION_PITFALLS_DOCUMENT_PATH,
@@ -959,14 +1003,12 @@ export async function buildSelectedGuidance(
         patternNames: [
           analyticalDashboard.title,
           navigation.title,
-          contentStatus.title,
           forms.title,
           "Metric",
         ],
         pageSourcePaths: [
           ANALYTICAL_DASHBOARD_DOCUMENT_PATH,
           NAVIGATION_DOCUMENT_PATH,
-          CONTENT_STATUS_DOCUMENT_PATH,
           FORMS_DOCUMENT_PATH,
           CHOOSING_PRIMITIVE_DOCUMENT_PATH,
           COMPOSITION_PITFALLS_DOCUMENT_PATH,
@@ -997,6 +1039,25 @@ export async function buildSelectedGuidance(
       },
       files: [buttonFile],
       limitations: buttonLimitations,
+    },
+    {
+      id: "guide.content-status",
+      name: contentStatus.title,
+      aliases: [contentStatus.title],
+      summary: summaryFromDocument(contentStatus.document, contentStatus.title),
+      kind: "component-guidance",
+      document: contentStatus.document,
+      recipeManifest: null,
+      sourcePaths: [CONTENT_STATUS_DOCUMENT_PATH],
+      componentNames: ["Banner"],
+      packageNames: ["@salt-ds/core"],
+      attach: {
+        componentNames: ["Banner"],
+        patternNames: [contentStatus.title],
+        pageSourcePaths: [CONTENT_STATUS_DOCUMENT_PATH],
+      },
+      files: [],
+      limitations: [],
     },
   ];
 }

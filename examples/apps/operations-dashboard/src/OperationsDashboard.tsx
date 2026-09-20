@@ -476,11 +476,11 @@ export function OperationsDashboard() {
         >
           <DialogHeader
             header={dialogMode === "edit" ? "Edit incident" : "Create incident"}
-            description={
+            description={`${
               dialogMode === "edit"
                 ? "Update this local incident record. No data leaves this demo."
                 : "Save a local incident record for the selected service. No data leaves this demo."
-            }
+            } Close keeps unsaved changes for reopening. Reloading this demo clears them.`}
           />
           <RecordForm
             draft={activeDraft}

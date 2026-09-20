@@ -295,7 +295,11 @@ async function verifyCurrentProductAuthoring() {
       );
     }
   }
-  for (const id of [workflow.id, "guide.button.loading"]) {
+  for (const id of [
+    workflow.id,
+    "guide.button.loading",
+    "guide.content-status",
+  ]) {
     const result = resolveKnowledgeDocument(store, {
       identifier: `record:guide:${id}`,
     });

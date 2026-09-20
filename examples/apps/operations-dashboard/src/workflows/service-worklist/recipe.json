@@ -86,7 +86,7 @@
       "onCancel"
     ],
     "submission_state": ["idle", "pending", "failed"],
-    "cancellation": "The dashboard owns whether the editor is open. Filters, selection, and the form draft are owned by the dashboard. Cancel closes the editor without clearing the host-owned draft; reopening restores it.",
+    "cancellation": "The dashboard owns whether the editor is open, filters, selection, and drafts. Close or Escape closes the editor without clearing the host-owned draft; reopening restores it. The dashboard keeps one create draft and a separate edit draft per incident in memory, including when selection changes. Successful submission clears the corresponding draft. Reloading the demo or unmounting the dashboard clears all drafts; they are not saved to durable storage.",
     "simulation": "The host owns worklist state (loading, ready, refreshing, or error), query and selected incident ID separately from form submission. Empty and no-match views derive from the available records and query. The local worklist adapter refresh fails once, preserves the current worklist, and succeeds on retry. The local record adapter delays a save, rejects the first save once per application session, and succeeds on retry. Neither adapter makes a network request or sends a notification."
   },
   "acceptance": {

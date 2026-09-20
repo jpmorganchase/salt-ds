@@ -1678,21 +1678,29 @@ function canonicalContextVariants(
       ],
     };
   });
-  return candidates.source_examples.length > 0
-    ? disclosedVariants.flatMap((variant) => {
-        const withoutExamples = {
-          ...variant,
-          source_examples: [],
-          truncated: true,
-        };
-        // A tiny workflow response must still identify its omitted complete
-        // guide. Source illustrations do not replace those setup/acceptance facts.
-        return candidates.intent !== "general" &&
-          (variant.omitted_document_references?.length ?? 0) > 0
-          ? [withoutExamples, variant]
-          : [variant, withoutExamples];
-      })
-    : disclosedVariants;
+  if (candidates.source_examples.length === 0) return disclosedVariants;
+  const withoutExamples = (variant: CanonicalContextCandidates) => ({
+    ...variant,
+    source_examples: [],
+    truncated: true,
+  });
+  const withDocuments = disclosedVariants.filter(
+    (variant) => variant.documents.length > 0,
+  );
+  const omittedDocuments = disclosedVariants.filter(
+    (variant) => variant.documents.length === 0,
+  );
+  // Keep example resolver references while trying smaller qualified guidance.
+  // Canonical evidence still takes precedence over an example-only fallback.
+  return [
+    ...withDocuments,
+    ...withDocuments.map(withoutExamples),
+    ...omittedDocuments.flatMap((variant) =>
+      candidates.intent !== "general"
+        ? [withoutExamples(variant), variant]
+        : [variant, withoutExamples(variant)],
+    ),
+  ];
 }
 
 function contextualResultFields(
@@ -1936,24 +1944,30 @@ export function buildKnowledgeContext(
       input.installed_versions,
     );
     for (const candidate of canonicalContextVariants(candidates)) {
-      const matchVariants = [
-        {
-          matches: search.matches.slice(0, matchCount),
+      // No match prefix can fit if the canonical payload alone exceeds budget.
+      if (
+        Buffer.byteLength(JSON.stringify(candidate.documents), "utf8") >
+        maxBytes
+      )
+        continue;
+      const matchVariants = Array.from(
+        { length: matchCount + 1 },
+        (_, omitted) => ({
+          matches: search.matches.slice(0, matchCount - omitted),
           truncated:
-            matchCount < search.matches.length || candidate.truncated === true,
-        },
-        ...(!(
-          candidates.direct_evidence_focus &&
-          candidate.documents.length > 0 &&
-          candidate.truncated !== true
-        ) &&
-        (candidate.documents.length > 0 ||
-          candidate.source_examples.length > 0 ||
-          (candidate.omitted_document_references?.length ?? 0) > 0) &&
-        matchCount > 0
-          ? [{ matches: [], truncated: true }]
-          : []),
-      ];
+            omitted > 0 ||
+            matchCount < search.matches.length ||
+            candidate.truncated === true,
+        }),
+      ).filter(
+        (variant) =>
+          variant.matches.length > 0 ||
+          !(
+            candidates.direct_evidence_focus &&
+            candidate.documents.length > 0 &&
+            candidate.truncated !== true
+          ),
+      );
       for (const selectedMatches of matchVariants) {
         const result = finalizeKnowledgeContext({
           ...base,

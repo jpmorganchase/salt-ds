@@ -61,7 +61,7 @@ The user's illustrations are design questions, not approved Salt policy:
 - Tabs already has use/exclusion guidance and Stepper/NavigationItem alternatives (`tabs/usage.mdx:13–22`). It does not establish the proposed same-data view-switching preference.
 - Dialog explicitly supports confirmations (`dialog/examples.mdx:27`); do not author a blanket prohibition.
 - This recipe's submission values are `idle`, `pending`, `failed`. Validation, retry, success and cancellation also describe outcomes/transitions; do not fabricate a universal eight-state enum.
-- Background-refresh retention is currently documented example behavior; promoting it to general Content status guidance is later editorial work.
+- At the planning baseline, background-refresh retention was example behavior. The accepted follow-up below authors its general conditions in Content status.
 
 ## Ten development evidence cases
 
@@ -105,7 +105,7 @@ The anchors retain decisive conditions and negation without requiring complete s
 
 JSON measurements include the framing newline. Measurements use the exact four-package example scope and the generated documentation candidate's tested versions, after rebuilding the current context implementation and canonical content. They are development measurements rather than packed-artifact verification; no temporary compiler or bundle identity is treated as the final candidate. A preliminary read-only probe used fewer representative facts, so its earlier evidence-presence counts are not a baseline score for this stronger suite. Full repository, packed-consumer and author-preview verification remain separately reported. Workflow readiness stays `runnable`; workflow-owner, design, accessibility and independent maintainer acceptance remain pending.
 
-## Current local verification
+## Original pilot local verification
 
 All 818 Knowledge/CLI tests across 61 files pass, along with tooling build and type checks, current plan and contract validation, evaluation-fixture validation, public documentation checks, release embargo, changed-file quality and whitespace checks. The full suite ran through the installed Vitest entry with one worker because this checkout lacks the command shim. Earlier verification exposed a five-second timeout and two CLI reference regressions; the final suite passes without competing build work. No assertion or timeout threshold was relaxed.
 
@@ -201,13 +201,114 @@ the compiler author. The agent rehearsal above does not substitute for this
 independent human exercise. No maintainer has been contacted or recorded as
 having completed it.
 
-The [knowledge-gap report](./033-knowledge-gap-report.md) identifies three
-candidate editorial decisions: DialogActions/Button bar composition,
-preservation versus discard criteria, and the scope of refresh/recovery
-guidance. It distinguishes missing authored decisions from selected-content
-boundaries and qualified budget omissions. Select the first content follow-up
-using the maintainer exercise and workflow review; no new infrastructure is
-required by this report.
+The [knowledge-gap report](./033-knowledge-gap-report.md) identified three
+editorial decisions: DialogActions/Button bar composition, preservation versus
+discard criteria, and refresh/recovery feedback. The user accepted all three,
+with Banner feedback scoped to the affected container when useful previous
+content remains. The follow-up below implements that direction; the original
+inventory and verification results remain historical.
+
+## Accepted content decisions on 2026-09-20
+
+The follow-up begins at `bca9cad834d29f5126851034c953c863b16179c6` and stays in
+Unit 033/02a. DialogActions always follows Button bar guidance; SplitLayout and
+FlowLayout are optional composition tools, and wrapping does not replace
+explicit narrow-screen stacking. Forms now distinguishes abandoning unsaved
+edits from pausing draft work, including meaningful-loss protection and avoiding
+nested confirmation dialogs. The example's retaining action is Close, with a
+bordered secondary appearance and a visible reload-lifetime note. Its recipe
+and README explain actual in-memory ownership and clearing behavior. No durable
+persistence or separate discard feature is added.
+
+Content status connects initial loading/empty/failure, local refresh progress,
+and a Banner with Retry when previous content remains after refresh failure.
+Banner usage links to this guidance. It preserves valid selection and focus,
+protects drafts, distinguishes previous results after a scope change, and
+qualifies continued use when stale data would be unsafe.
+
+The new sections enter Knowledge through existing selectors. The expanded
+combined workflow initially exceeded the unchanged 65,536-byte document resource
+cap, so Content status becomes its own contextual guide using the same existing
+shape as Button Loading. Its pattern/page attachments transfer; the recipe still
+declares the canonical source, and unsupported selected MDX remains an error.
+A canonical Analytical dashboard link keeps the separate guidance discoverable
+in the workflow panel. Forms explicitly links its overlay choice to Dialog use
+and interruption conditions; those sections are one qualified evidence group
+within this editor workflow. Button bar layout and dialog order likewise remain
+together. Dialog form behavior and action composition have their own roles instead of
+inheriting the general use-condition group. Status-dialog configuration remains
+in canonical Dialog usage, outside this record-editor projection; the example
+does not use a status dialog. Lexical ranking is unchanged. The larger guidance
+exposed two existing CLI journey regressions: context dropped named-component
+and example references too early. Budget fallback now tries shorter ranked
+match prefixes and smaller qualified guidance before dropping example references;
+canonical guidance still precedes an example-only fallback. Existing reference,
+qualification and byte-budget checks remain in force.
+The development corpus updates cancellation and action-composition evidence
+and adds one natural refresh-feedback question. There is no new schema,
+query-specific ranking rule or fixed corpus-size assertion. Existing behavioral
+checks retain their assertions with Close as the expected label.
+
+### Follow-up verification (2026-09-20)
+
+The final built bundle is `sha256:d87b47ff4d81a16a530f3c42306e174152505c997ecea106a5bd3a2c4dcfb8c4`. All eleven development questions deliver
+required evidence at 16 KiB. At 8 KiB, one remains complete and ten disclose
+qualified, resolvable omissions. These omissions are not complete answers.
+JSON measurements include the framing newline; Markdown is measured separately.
+The scope remains Core 1.71.0, Icons 1.18.2, Lab 1.0.0-alpha.104 and Theme 1.46.0.
+
+| Case               | 16 KiB JSON / Markdown | 8 KiB evidence     | 8 KiB JSON / Markdown |
+| ------------------ | ---------------------- | ------------------ | --------------------- |
+| editor-surface     | 16,293 / 10,558        | Qualified omission | 7,045 / 4,450         |
+| editor-ownership   | 15,723 / 10,610        | Qualified omission | 7,861 / 4,735         |
+| invalid-fields     | 16,336 / 10,833        | Qualified omission | 7,847 / 4,721         |
+| pending-save       | 16,201 / 11,226        | Qualified omission | 7,394 / 4,278         |
+| failed-save        | 16,368 / 11,204        | Qualified omission | 7,149 / 4,609         |
+| cancel-policy      | 15,895 / 10,405        | Qualified omission | 7,295 / 4,124         |
+| dialog-composition | 16,239 / 11,388        | Qualified omission | 7,861 / 4,944         |
+| dialog-focus       | 12,918 / 7,177         | Complete           | 8,050 / 4,428         |
+| narrow-screen      | 15,059 / 9,152         | Qualified omission | 7,772 / 4,824         |
+| example-limits     | 15,570 / 10,271        | Qualified omission | 7,441 / 4,243         |
+| refresh-feedback   | 16,301 / 10,994        | Qualified omission | 6,797 / 4,172         |
+
+The complete Knowledge/CLI suite passed: 824 tests in 61 files. Final typechecking,
+public-document/example checks, contract/evaluation validation, Plan 033,
+release-embargo and changed-file quality checks passed. Existing regressions
+verify named-component discovery, contextual example resolution, canonical
+qualification groups and both byte budgets. Tests no longer require an exact
+corpus size, exactly one returned guide or an empty match list in a tiny packet.
+No timeout or package/context limit was raised.
+
+The final package check passed with 630 Knowledge files and 25,853,055 unpacked
+bytes against the existing 26,214,400-byte limit. The Knowledge tarball SHA-256 is
+`a5a6dce5e2da7b37d4708ea6c9a4aa268dc91a0f75b8b73e2a32bda17be00055`;
+the CLI tarball SHA-256 is
+`ce10b80a7c460b90d69be57e1e7dd3c475b43e69b644f6cf299f72145102eed1`.
+The offline packaged CLI passed 42 operations across standalone and hoisted
+layouts, including all eleven evidence questions, mixed invalid-field/focus
+wording and the two Dialog component/example reference regressions. Both
+fixtures remained unchanged. Existing dependencies were copied locally; no
+package installation or live consumer cohort is implied.
+
+Six canonical pages passed fresh-snapshot/rendered author checks and visual
+inspection. The source workflow preview passed the existing validation,
+pending/duplicate-prevention, failure/retry, draft retention, focus/keyboard,
+refresh/empty, theme, narrow-screen and automated accessibility checks. All 17
+workflow files and recipe facts were rebound to the final generated artifact;
+no app source changed after the browser pass. This is local source-preview
+proof, not a new installed UI cohort or manual accessibility acceptance.
+
+Final structured source review is clean after narrowing the Content status
+Banner overview rule to failed refreshes with retained content and qualifying
+initial loading by the absence of useful previous content. Prior failed
+attempts and review findings remain in ignored local evidence. Final reports are
+under `dist/task-knowledge-decisions/` and the exact pack report is
+`dist/salt-ai-pack/task-knowledge-decisions.json`; raw output and generated
+Knowledge are not committed.
+
+Human workflow-owner, rendered design, manual accessibility and independent
+maintainer acceptance remain separate and pending. Workflow readiness remains
+`runnable`; no publication, deployment or model trial occurred.
 
 ## Implementation sequence
 

@@ -65,10 +65,22 @@ fails, preserve entered values, explain the problem alongside the relevant
 [field](/salt/components/form-field/usage), announce a concise error summary, and move focus to the first field that
 needs attention. While a submission is pending, [make progress clear](/salt/components/button/examples#loading) and avoid
 accepting another submission or closing the form. If it fails, retain the draft
-and offer a retry. A cancel action should state whether it preserves the draft
-or asks for confirmation before discarding it.
+and offer a retry.
 
 For a form presented in a dialog, follow the [dialog focus guidance](/salt/components/dialog/accessibility#focus). Use the [button bar pattern](/salt/patterns/button-bar#dialog) for action placement and its [stacked layout guidance](/salt/patterns/button-bar#stacked-button-bar) for narrow views.
+
+### Cancellation and drafts
+
+In a Save/Cancel editor, **Cancel** abandons unsaved edits. If nothing has changed,
+close immediately. When cancellation would lose meaningful work, offer **Keep
+editing** and **Discard changes** before discarding it. In a dialog, progressively
+disclose this choice within the existing dialog; do not [open a second dialog](/salt/components/dialog/usage#when-not-to-use).
+
+For longer tasks that users can pause and resume, preserve a draft and use
+**Close** to leave the editor or **Save draft** to explicitly save unfinished work.
+Make the preservation policy clear and provide a separate action to discard the
+draft. Closing an editor is not a successful submission: distinguish a draft
+retained only in the current session from one saved durably for later use.
 
 ### Anatomy
 
@@ -238,6 +250,8 @@ An overlay typically displays smaller forms that:
 - Collect information to inform a larger workflow.
 - Display on application boot (i.e., as the app loads).
 - Enable access/feedback (i.e., credentials input, reviews).
+
+For a dialog form, also apply the [Dialog use and interruption guidance](/salt/components/dialog/usage#using-the-component) when choosing between an overlay and a full page.
 
 <Diagram
   src="/img/patterns/forms/form-overlay.png"

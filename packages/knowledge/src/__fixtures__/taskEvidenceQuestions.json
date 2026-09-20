@@ -11,7 +11,8 @@
   },
   "documents": {
     "workflow": "record:guide:operations-dashboard.service-worklist",
-    "button": "record:guide:guide.button.loading"
+    "button": "record:guide:guide.button.loading",
+    "contentStatus": "record:guide:guide.content-status"
   },
   "sources": {
     "forms": "site/docs/patterns/forms.mdx",
@@ -20,7 +21,8 @@
     "dialogAccessibility": "site/docs/components/dialog/accessibility.mdx",
     "buttonBar": "site/docs/patterns/button-bar.mdx",
     "buttonExamples": "site/docs/components/button/examples.mdx",
-    "recipe": "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json"
+    "recipe": "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json",
+    "contentStatus": "site/docs/patterns/content-status.mdx"
   },
   "qualifications": {
     "document": "workflow",
@@ -224,12 +226,22 @@
       "required": [
         {
           "document": "workflow",
-          "section": "forms.submission-and-recovery",
+          "section": "forms.cancellation-and-drafts",
           "source": "forms",
           "fragments": [
-            "cancel action should state whether",
-            "preserves the draft",
-            "confirmation before discarding"
+            "Cancel abandons unsaved edits",
+            "If nothing has changed, close immediately",
+            "lose meaningful work",
+            "Keep editing",
+            "Discard changes",
+            "within the existing dialog",
+            "do not open a second dialog",
+            "preserve a draft",
+            "Close",
+            "Save draft",
+            "separate action to discard",
+            "current session",
+            "saved durably"
           ]
         },
         {
@@ -237,9 +249,14 @@
           "section": "adaptation",
           "source": "recipe",
           "fragments": [
-            "Cancel closes the editor without clearing",
+            "Close or Escape closes the editor without clearing",
             "host-owned draft",
-            "reopening restores it"
+            "reopening restores it",
+            "in memory",
+            "selection changes",
+            "Successful submission clears the corresponding draft",
+            "Reloading the demo or unmounting the dashboard clears all drafts",
+            "not saved to durable storage"
           ]
         }
       ]
@@ -287,7 +304,11 @@
             "StackLayout",
             "group your buttons",
             "SplitLayout",
-            "separate the button groups"
+            "separate the button groups",
+            "FlowLayout",
+            "wrap across rows",
+            "Wrapping does not replace",
+            "full-width stacked button bar"
           ]
         },
         {
@@ -296,7 +317,10 @@
           "source": "buttonBar",
           "fragments": [
             "core actions on the right",
-            "actions are the last focal point"
+            "actions are the last focal point",
+            "DialogActions",
+            "always follow this pattern",
+            "hierarchy, grouping, order, and responsive layout"
           ]
         }
       ]
@@ -398,12 +422,53 @@
           ]
         }
       ]
+    },
+    {
+      "id": "refresh-feedback",
+      "scope": "operations-example",
+      "question": "Should a worklist use a Banner when a refresh fails but the previous data is still visible?",
+      "required": [
+        {
+          "document": "contentStatus",
+          "section": "content-status.loading-and-recovery",
+          "source": "contentStatus",
+          "fragments": [
+            "No content yet",
+            "Content status within the affected region",
+            "initial-load failure with Retry",
+            "failed request is not an empty result",
+            "Refreshing existing content",
+            "retain the content",
+            "local loading indication",
+            "Refresh failed, previous content remains",
+            "Banner in the related container",
+            "data was not updated",
+            "offer Retry",
+            "whole page is affected",
+            "page-level Banner",
+            "whether users can safely continue",
+            "task is blocked",
+            "Preserve filters, selection, scroll position, and keyboard focus",
+            "where they remain valid",
+            "must not overwrite an unsaved editing draft",
+            "previous results",
+            "do not present them as matching the new request",
+            "does not make stale data safe",
+            "disable or revalidate actions"
+          ]
+        }
+      ]
     }
   ],
   "qualified_units": [
-    ["forms.full-page", "forms.overlay"],
-    ["dialog.using", "dialog.using.when-not-to-use"],
+    [
+      "forms.full-page",
+      "forms.overlay",
+      "dialog.using",
+      "dialog.using.when-not-to-use"
+    ],
     ["button.loading", "button.loading.best-practices"],
-    ["dialog.focus", "dialog.initial-focus", "dialog.focus-sequence"]
+    ["dialog.focus", "dialog.initial-focus", "dialog.focus-sequence"],
+    ["button-bar.layout", "button-bar.dialog-order"]
   ]
 }

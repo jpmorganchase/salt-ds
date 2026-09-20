@@ -24,7 +24,7 @@ It has no Storybook, repository-only source alias or MCP prerequisite.
 1. Filter services with `Risk`, then try a term with no matches. Clearing the
    filter restores the full service list.
 2. Inspect a service or select an incident from the incident worklist. Edit its
-   title or affected service/process. Cancel and reopen the same record to see
+   title or affected service/process. Close and reopen the same record to see
    the retained draft.
 3. Submit an invalid title to inspect validation and focus movement. A valid
    first save waits 1.5 seconds and fails once per app session; retry saves the
@@ -32,7 +32,7 @@ It has no Storybook, repository-only source alias or MCP prerequisite.
    and dialog closure.
 4. Create another incident. Each created record has its own identity and can be
    selected independently. A successful create starts a fresh draft for the
-   next record; cancellation preserves an unfinished draft.
+   next record; closing preserves an unfinished draft.
 5. Refresh the worklist. The first refresh fails while the existing data remains
    available; retry restores the ready state. Use the labelled local demo
    controls to inspect the distinct empty-data state.
@@ -50,10 +50,14 @@ and failure simulation.
 `OperationsDashboard` owns the service/incident collections, query, selected
 incident ID and asynchronous state. It keeps an unfinished create draft and a
 separate edit draft for each incident. Selection uses the incident ID so changing
-an affected service does not lose the selected record.
+an affected service does not lose the selected record. Closing the editor or
+changing the selection keeps these drafts in memory; a successful save clears
+the corresponding draft. Reloading the demo or unmounting the dashboard clears
+all drafts.
 
 `RecordForm` accepts `draft`, `onChange`, `onSubmit`, `onCancel`, and a submission
-state of `idle`, `pending`, or `failed` with a message. The host owns the `Dialog`
+state of `idle`, `pending`, or `failed` with a message. The `onCancel` callback
+handles the draft-preserving Close action in this example. The host owns the `Dialog`
 and header; the form supplies its content and actions. `formLabel` and
 `submitLabel` distinguish creating from editing.
 

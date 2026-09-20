@@ -117,7 +117,7 @@ describe("buildSelectedGuidance", () => {
     ).resolves.toEqual([]);
   });
 
-  it("builds the service-worklist workflow and Button Loading guides from declared inputs", async () => {
+  it("builds the workflow and independent component guidance from declared inputs", async () => {
     const inventory = await createCatalogInputInventory(
       repoRoot,
       trackedSourcePaths,
@@ -129,6 +129,7 @@ describe("buildSelectedGuidance", () => {
     expect(guides.map((guide) => guide.id)).toEqual([
       "operations-dashboard.service-worklist",
       "guide.button.loading",
+      "guide.content-status",
     ]);
     const workflow = guides[0];
     expect(workflow.summary).toBe(
@@ -158,7 +159,6 @@ describe("buildSelectedGuidance", () => {
       expect.arrayContaining([
         analyticalDashboardPath,
         navigationPath,
-        contentStatusPath,
         choosingPrimitivePath,
         compositionPitfallsPath,
         formsPath,
@@ -172,17 +172,10 @@ describe("buildSelectedGuidance", () => {
     );
     expect(workflow.attach).toEqual({
       componentNames: [],
-      patternNames: [
-        "Analytical dashboard",
-        "Navigation",
-        "Content status",
-        "Forms",
-        "Metric",
-      ],
+      patternNames: ["Analytical dashboard", "Navigation", "Forms", "Metric"],
       pageSourcePaths: [
         analyticalDashboardPath,
         navigationPath,
-        contentStatusPath,
         formsPath,
         choosingPrimitivePath,
         compositionPitfallsPath,
@@ -204,7 +197,6 @@ describe("buildSelectedGuidance", () => {
     ).toMatchObject({
       "dashboard.overview": { source_path: analyticalDashboardPath },
       "navigation.overview": { source_path: navigationPath },
-      "content-status.overview": { source_path: contentStatusPath },
       "forms.overview": { source_path: formsPath },
       "primitive.overview": { source_path: choosingPrimitivePath },
       "composition.overview": { source_path: compositionPitfallsPath },
@@ -236,6 +228,38 @@ describe("buildSelectedGuidance", () => {
       ),
     });
 
+    const contentStatus = guides[2];
+    expect(contentStatus).toMatchObject({
+      id: "guide.content-status",
+      kind: "component-guidance",
+      name: "Content status",
+      document: {
+        source: {
+          document_id: "guide.content-status",
+          source_path: contentStatusPath,
+        },
+        diagnostics: [],
+      },
+      recipeManifest: null,
+      sourcePaths: [contentStatusPath],
+      packageNames: ["@salt-ds/core"],
+      attach: {
+        componentNames: ["Banner"],
+        patternNames: ["Content status"],
+        pageSourcePaths: [contentStatusPath],
+      },
+    });
+    expect(
+      contentStatus.document.sections.some(
+        (section) => section.id === "content-status.overview",
+      ),
+    ).toBe(true);
+    expect(
+      workflow.document.sections.some((section) =>
+        section.id.startsWith("content-status."),
+      ),
+    ).toBe(false);
+
     const loading = guides[1];
     expect(loading.document.diagnostics).toEqual([]);
     expect(loading.name).toBe("Button Loading");
@@ -260,26 +284,29 @@ describe("buildSelectedGuidance", () => {
     ]);
   });
 
-  it("reports an unsupported selected source with its own provenance", async () => {
-    const sourceRoot = await copiedFixture();
-    const fixtureFormsPath = path.join(sourceRoot, formsPath);
-    const original = canonicalText(await readFile(fixtureFormsPath, "utf8"));
-    const unsupportedSource = original.replace(
-      /^(---\n[\s\S]*?\n---\n)/u,
-      '$1\n{(() => { throw new Error("must stay inert"); })()}\n',
-    );
-    expect(unsupportedSource).not.toBe(original);
-    await writeFile(fixtureFormsPath, unsupportedSource, "utf8");
+  it.each([formsPath, contentStatusPath])(
+    "reports unsupported selected source %s with its own provenance",
+    async (sourcePath) => {
+      const sourceRoot = await copiedFixture();
+      const fixturePath = path.join(sourceRoot, sourcePath);
+      const original = canonicalText(await readFile(fixturePath, "utf8"));
+      const unsupportedSource = original.replace(
+        /^(---\n[\s\S]*?\n---\n)/u,
+        '$1\n{(() => { throw new Error("must stay inert"); })()}\n',
+      );
+      expect(unsupportedSource).not.toBe(original);
+      await writeFile(fixturePath, unsupportedSource, "utf8");
 
-    await expect(
-      buildSelectedGuidance({ ...input(), sourceRoot }),
-    ).rejects.toThrow(
-      new RegExp(
-        `${formsPath.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&")}.*MDX_EXPRESSION_INERT`,
-        "u",
-      ),
-    );
-  });
+      await expect(
+        buildSelectedGuidance({ ...input(), sourceRoot }),
+      ).rejects.toThrow(
+        new RegExp(
+          `${sourcePath.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&")}.*MDX_EXPRESSION_INERT`,
+          "u",
+        ),
+      );
+    },
+  );
 
   it("rejects an AST-selected LivePreview absent from the tracked inventory", async () => {
     const inventory = await createCatalogInputInventory(

@@ -1,16 +1,61 @@
 # Plan 033 pilot knowledge gaps
 
 This is a bounded content inventory for the editable-record pilot, inspected on
-2026-09-20. It compares canonical source guidance with the current generated
-workflow and Button Loading guides. It is not a completeness score, a requirement
-for new headings, or a full audit of Salt documentation.
+2026-09-20. The inventory compares canonical source guidance with the generated
+workflow and Button Loading guides before the accepted follow-up below. It is not
+a completeness score, a requirement for new headings, or a full audit of Salt
+documentation.
 
-The pilot already supplies the evidence for its ten agreed questions at the
-default 16 KiB context budget. The most useful next work is to clarify a few
-remaining design choices and observe the authoring process, rather than extend
-the retrieval infrastructure.
+The original pilot supplied the evidence for its ten agreed questions at the
+default 16 KiB context budget. The user subsequently accepted the three content
+decisions below. Independent observation of the authoring process remains
+outstanding.
 
-## Evidence by topic
+## Confirmed composition decision
+
+On 2026-09-20, the user clarified that dialog actions should always follow the
+Button bar guidance, and may use `SplitLayout` and `FlowLayout`. This resolves
+the policy question in the first candidate below. Dialog usage and Button bar
+now state this rule and link to each other; the inventory below describes the
+sources at inspection time. Layout components remain optional composition tools,
+not exceptions to the Button bar guidance.
+
+## Confirmed cancellation direction
+
+On 2026-09-20, the user agreed with the proposed distinction between abandoning
+edits and pausing work. With no changes, close without confirmation. In a simple
+Save/Cancel editor, Cancel abandons unsaved edits; protect meaningful work with
+explicit Keep editing and Discard changes choices. For a longer, interruptible
+task, retain a resumable draft and use a clear Close or Save draft action with a
+separate way to discard it. A failed save retains the draft and offers retry.
+
+Forms now states these decision factors in **Cancellation and drafts**, and
+Dialog links to that section. The example labels its preserving action **Close**,
+uses the bordered secondary appearance, and explains that reloading clears its
+drafts. The recipe and README describe retention across selection changes and
+clearing on successful submission or dashboard unmount. This does not add durable
+draft storage or a separate discard feature.
+
+## Confirmed refresh and recovery direction
+
+The user accepted Content status when a region has no content, local loading
+feedback while existing content refreshes, and a Banner with Retry in the
+related container when refresh fails but previous data remains. Whole-page
+issues use a page Banner. Severity follows impact and safe continuation.
+Content status now owns **Choosing how to communicate loading and recovery**;
+Banner usage links back to it.
+
+This guidance preserves valid filters, selection, scroll and focus, protects
+unsaved drafts, distinguishes previous results after a scope change, and requires
+disabling or revalidating actions when stale data would be unsafe. The added
+refresh-feedback question checks those conditions. All eleven follow-up questions
+now deliver their required evidence at 16 KiB; at 8 KiB, one is complete and ten
+return qualified, resolvable omissions. The final source review, 824-test suite,
+42 offline packaged CLI operations and local rendered checks passed. Exact
+verification and limits are recorded separately in the pilot handoff; the older
+inventory and results below remain historical.
+
+## Evidence by topic at the original inspection
 
 “Missing” below means the selected canonical sources do not answer the named
 question. It does not mean every page needs that information or that the answer
@@ -46,7 +91,8 @@ The abbreviated fragments in each row share that row's first complete record
 reference. They are listed for inspection, not as new identifiers.
 
 Some authored material is outside the selected workflow projection. Dialog's
-accessible-name, scrollable-content and keyboard-interaction sections remain in
+status-dialog configuration remains in canonical usage; this editor does not use
+a status dialog. Its accessible-name, scrollable-content and keyboard-interaction sections remain in
 its canonical accessibility page; Button bar's use/exclusion and appearance
 guidance remain in its canonical pattern page. The selected Button guide covers
 Loading, rather than duplicating all Button usage guidance. The selection is
@@ -55,8 +101,8 @@ visible in
 These are selection boundaries, not missing authored knowledge. This inventory
 does not claim that those additional questions were tested through `context`.
 
-For the tested questions, no required default-budget evidence is known to be
-missing. At 8 KiB, seven of ten packets explicitly omit some evidence while
+For the original tested candidate, no required default-budget evidence was
+missing. At 8 KiB, seven of ten packets explicitly omitted some evidence while
 retaining resolvable references; three remain complete. Those are delivery
 omissions and must not be counted as complete answers or corrected by inventing
 new prose. The exact evidence and limits are recorded in the
@@ -79,23 +125,23 @@ to complete an edit using only the author guide have not been established by a
 maintainer who did not build the compiler. A rehearsal is useful preparation;
 it must not be described as that independent exercise.
 
-## Three candidate content improvements
+## Three content improvements identified at the original inspection
 
 1. **Explain the action-area composition once.** In Dialog/Forms guidance, connect
    `DialogActions` to the Button bar's placement and responsive layout advice.
-   Have Salt maintainers establish the intended distinction before describing
-   equivalence or alternatives. Check the question “How do I apply the Button bar
-   pattern inside a dialog?” against that approved explanation.
+   Apply the user's confirmed rule above and describe `SplitLayout` and
+   `FlowLayout` as available composition tools. Check the question “How do I
+   apply the Button bar pattern inside a dialog?” against that explanation.
 2. **Add decision factors for cancellation policy.** Extend the existing Forms
-   paragraph with reviewed conditions for preserving a draft versus asking to
-   discard it. Keep the current worklist's preserve-on-cancel behavior in the
-   recipe. The desired answer explains a choice rather than turning the example
-   into the default for every application.
+   paragraph using the confirmed cancellation direction above. Reconcile the
+   example's preserving-action label and recipe together, keeping its in-memory
+   limits explicit. The desired answer explains a choice rather than turning
+   the example into the default for every application.
 3. **Decide the scope of refresh/recovery guidance.** Review the worklist's
    preserve-content-on-refresh behavior alongside Content status. If Salt wants
    a general recommendation, author its conditions and exceptions there and link
    the example. Until then, report it only as this example's behavior.
 
-Choose the first follow-up after observing the authoring exercise and workflow
-review. None of these candidates requires a new metadata system, mandatory page
-structure, knowledge service or test snapshot.
+The user accepted these three follow-ups, now implemented as described above.
+They require no new metadata system, mandatory page structure, knowledge service
+or test snapshot. The independent maintainer exercise remains outstanding.

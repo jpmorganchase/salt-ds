@@ -16,6 +16,7 @@ import { buildKnowledgeContext, renderKnowledgeContext } from "./searchSalt.js";
 const REPO_ROOT = path.resolve(import.meta.dirname, "../../../..");
 const WORKFLOW_GUIDE_ID = "operations-dashboard.service-worklist";
 const BUTTON_GUIDE_ID = "guide.button.loading";
+const CONTENT_STATUS_GUIDE_ID = "guide.content-status";
 const CONTEXT_LIMIT = 16 * 1024;
 
 let store: KnowledgeStore;
@@ -36,14 +37,15 @@ function resolved(identifier: string) {
   return { result, canonical: result.document.canonical };
 }
 
-function contextDocument(query: string, budget = CONTEXT_LIMIT) {
+function workflowContextDocument(query: string, budget = CONTEXT_LIMIT) {
   const result = buildKnowledgeContext(store, {
     query,
     limit: 8,
     max_utf8_bytes: budget,
   });
-  expect(result.canonical_documents).toHaveLength(1);
-  const document = result.canonical_documents?.[0];
+  const document = result.canonical_documents?.find(
+    (entry) => entry.reference === `record:guide:${WORKFLOW_GUIDE_ID}`,
+  );
   if (!document) throw new Error(`Expected canonical evidence for ${query}.`);
   return { result, document };
 }
@@ -261,8 +263,10 @@ describe("generated canonical retrieval", () => {
     expect(recipe.adaptation.simulation).toMatch(/retry/u);
     expect(recipe.acceptance.automated.join(" ")).toMatch(/retry/u);
 
-    const created = contextDocument("create incident record form");
-    const adapted = contextDocument("adapt an existing incident record form");
+    const created = workflowContextDocument("create incident record form");
+    const adapted = workflowContextDocument(
+      "adapt an existing incident record form",
+    );
     for (const { document } of [created, adapted]) {
       expect(document.reference).toBe(`record:guide:${WORKFLOW_GUIDE_ID}`);
       expect(document.limitations).toEqual(workflow.limitations);
@@ -321,7 +325,11 @@ describe("generated canonical retrieval", () => {
   });
 
   it("makes the generated Markdown projection exactly the canonical guide content", () => {
-    for (const id of [BUTTON_GUIDE_ID, WORKFLOW_GUIDE_ID]) {
+    for (const id of [
+      BUTTON_GUIDE_ID,
+      WORKFLOW_GUIDE_ID,
+      CONTENT_STATUS_GUIDE_ID,
+    ]) {
       const { canonical } = resolved(`record:guide:${id}`);
       const generated = store
         .readArtifact(`markdown/guides/${id}.md`)
@@ -333,6 +341,13 @@ describe("generated canonical retrieval", () => {
 
   it.each([
     { family: "component", id: "component.button", folder: "components" },
+    { family: "component", id: "component.banner", folder: "components" },
+    { family: "pattern", id: "pattern.content-status", folder: "patterns" },
+    {
+      family: "page",
+      id: "page.salt-patterns-content-status",
+      folder: "pages",
+    },
     { family: "pattern", id: "pattern.forms", folder: "patterns" },
     {
       family: "page",
@@ -395,7 +410,10 @@ describe("generated canonical retrieval", () => {
       CONTEXT_LIMIT,
     );
 
-    const compact = contextDocument("create incident record form", 4 * 1024);
+    const compact = workflowContextDocument(
+      "create incident record form",
+      4 * 1024,
+    );
     expect(compact.result.truncated).toBe(true);
     expect(compact.result.utf8_bytes).toBeLessThanOrEqual(4 * 1024);
     expect(compact.document.sections.length).toBeGreaterThan(0);
@@ -428,7 +446,14 @@ describe("generated canonical retrieval", () => {
       limit: 8,
       max_utf8_bytes: 2 * 1024,
     });
-    expect(tiny.matches).toEqual([]);
+    expect(tiny.truncated).toBe(true);
+    for (const match of tiny.matches) {
+      expect(
+        resolveKnowledgeDocument(store, {
+          identifier: match.citation.record_key,
+        }).status,
+      ).toBe("resolved");
+    }
     expect(tiny.canonical_documents).toBeUndefined();
     expect(tiny.answer_status).toBe("contextual");
     const limitation = tiny.limitations?.find((entry) =>

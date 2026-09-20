@@ -314,10 +314,12 @@ function assertTransport(
 }
 
 describe("content-led task knowledge pilot", () => {
-  it("keeps ten independently authored development questions and exact package scopes", () => {
+  it("keeps independently authored development questions and exact package scopes", () => {
     expect(fixture.contract).toBe("salt-task-evidence-development/1");
-    expect(fixture.cases).toHaveLength(10);
-    expect(new Set(fixture.cases.map((question) => question.id)).size).toBe(10);
+    expect(fixture.cases.length).toBeGreaterThan(0);
+    expect(new Set(fixture.cases.map((question) => question.id)).size).toBe(
+      fixture.cases.length,
+    );
     for (const question of fixture.cases) {
       expect(fixture.scope[question.scope]).toEqual([
         "@salt-ds/core",

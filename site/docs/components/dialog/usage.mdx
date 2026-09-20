@@ -30,9 +30,15 @@ For status dialogs you can set the `status` prop to `error`, `warning`, `success
 
 When a dialog contains a form, follow the Forms pattern's
 [submission and recovery guidance](/salt/patterns/forms#submission-and-recovery)
-for draft ownership, validation, pending submission, failure, retry, and
-cancellation. The [default example](/salt/components/dialog/examples#default)
+for draft ownership, validation, pending submission, failure, and retry. Follow
+its [cancellation and draft guidance](/salt/patterns/forms#cancellation-and-drafts)
+to distinguish abandoning edits from pausing work. The [default example](/salt/components/dialog/examples#default)
 shows the header, content, and action composition.
+
+### Action composition
+
+`DialogActions` always follows the [Button bar pattern](/salt/patterns/button-bar#dialog)
+for hierarchy, grouping, order, layout, and responsive behavior.
 
 ## Import
 

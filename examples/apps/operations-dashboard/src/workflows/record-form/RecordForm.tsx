@@ -136,12 +136,8 @@ export function RecordForm({
         </StackLayout>
       </DialogContent>
       <DialogActions className="recordFormActions">
-        <Button
-          appearance="transparent"
-          disabled={isPending}
-          onClick={onCancel}
-        >
-          Cancel
+        <Button appearance="bordered" disabled={isPending} onClick={onCancel}>
+          Close
         </Button>
         <Button
           type="submit"
