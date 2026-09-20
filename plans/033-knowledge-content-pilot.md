@@ -349,6 +349,41 @@ The 2026-09-20 candidate above remains historical evidence for that content pass
 Human acceptance remains in progress and workflow readiness stays `runnable`.
 No consumer installation, publication, deployment or model trial occurred.
 
+### Live UI acceptance and export refresh (2026-09-21)
+
+After the live review changes in `aeb8a1f09`, `20a8929be` and `167f70b2c`, the
+user responded "looks good" to the validation, failed-save recovery and
+close/reopen review checklist. This records acceptance of the reviewed live
+layout and incident interactions. It does not establish a formal manual
+accessibility audit or completion of the independent maintainer exercise.
+Workflow readiness remains `runnable` and Unit 033/02a remains in progress.
+
+The Service health heading and description now precede the filter, and the
+content uses Panel's own padding with gaps between sections. Independent local
+browser checks at 1280px and 320px confirmed alignment, no page overflow,
+filter/no-match/clear and empty/restore behavior. Evidence is preserved under
+`dist/task-service-header-review/` and `dist/task-service-padding-review/`.
+
+The export rebuilt from `167f70b2c3392a5468769491d19f05744812f33f` is bundle
+`sha256:cafc852f840bedf54b715533cc833c5aba4532ebc5488df07940a9ea8246c713`.
+All 17 workflow files match the accepted source after line-ending normalization,
+and the recipe facts match. The 65 focused task-evidence, canonical retrieval,
+reference and context-budget tests passed against the regenerated candidate.
+All eleven development questions retain required evidence at 16 KiB; at 8 KiB,
+one is complete and ten disclose qualified, resolvable omissions. The accepted
+app source did not change during regeneration; previous browser evidence remains
+scoped to the local source preview, with no new installed consumer cohort.
+
+Knowledge/CLI typechecking, public documentation/extracted examples,
+plan/contracts/evaluation, release-embargo and changed-file quality checks passed. The package report is `dist/salt-ai-pack/task-ui-accepted.json`:
+630 Knowledge files, 25,853,627 unpacked bytes against the unchanged
+26,214,400-byte limit, tarball digest
+`sha256:277dcd0b70b7f3dcf3ce76c681a9495d0abb03a24bb8e20ca7c777a7e20ed82e`.
+Current export and context evidence is under `dist/task-ui-accepted/`;
+the earlier bundle records remain historical. Generated artifacts and raw
+reports are not committed. The next step remains the prepared independent
+maintainer exercise above.
+
 ## Implementation sequence
 
 ### 1. Establish the content and expected evidence
