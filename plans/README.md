@@ -44,6 +44,16 @@ checks passed; see the
 [coordinated workflow results](../evals/salt-ai/ui-agent/COORDINATED_RESULTS.md).
 The unit remains in progress with its human gates pending.
 
+## Content-led next iteration
+
+The 2026-09-19 direction prioritizes canonical Salt decisions and task evidence
+over additional AI infrastructure. The [supporting pilot handoff](./033-knowledge-content-pilot.md)
+now activates one existing editable-record journey within Unit 033/02a: correct and connect its content,
+write ten deterministic evidence questions, then preserve semantic roles and
+conditioned alternatives in the current Knowledge/context path. A pilot gap
+report follows only once those content needs are clear. The existing
+Unit 033/02a dispatch and its outstanding human reviews remain current.
+
 ## Execution order and status
 
 | Plan                                                               | Title                                                                                                           | Priority | Effort         | Depends on                  | Status                                                        |

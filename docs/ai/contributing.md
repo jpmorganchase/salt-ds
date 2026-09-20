@@ -139,3 +139,24 @@ facts, and friction in the ordinary review. Deliberately remove a declared
 file or use unsupported content once, and record the diagnostic and the source
 correction it identifies. That exercise is human review evidence; it does not
 replace the automated checks above.
+
+## Authoring task evidence
+
+Keep intent, alternatives, composition, state expectations and accessibility in
+canonical MDX. Use recognizable headings such as When to use, When not to use,
+Composition, Submission and recovery, and Accessibility where they help the
+reader. No page is required to carry every heading. Link to existing guidance
+instead of repeating it. Code continues to supply API and version facts.
+
+The selected-guidance descriptors preserve whole source sections and their
+semantic roles. A sparse selector override is appropriate when a heading such
+as Default does not identify its composition role. Pair separate conditions
+and exclusions in a qualification group; do not group a whole workflow merely
+to force it into context. Unknown headings remain generic guidance.
+
+For the editable-record pilot, add expected source clauses to
+`packages/knowledge/src/__fixtures__/taskEvidenceQuestions.json` before changing
+selection. Run `taskKnowledgePilot.spec.ts` after rebuilding Knowledge. A
+matching citation without the decisive clause is a miss; a qualified omission
+is a separate compact-output outcome. Example-specific behavior stays in the
+recipe and does not become universal Salt policy.

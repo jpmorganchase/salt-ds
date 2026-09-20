@@ -4,6 +4,7 @@ import { brotliCompressSync, constants as zlibConstants } from "node:zlib";
 import {
   assembleCanonicalDocument,
   type CanonicalDocumentStore,
+  canonicalDocumentReference,
   renderCanonicalDocument,
 } from "../documents/assembleCanonicalDocument.js";
 import {
@@ -17,6 +18,10 @@ import {
 } from "../manifest/canonicalJson.js";
 import { sha256Digest } from "../manifest/digestCodec.js";
 import { parseKnowledgeArtifactPath } from "../manifest/pathCodec.js";
+import {
+  escapeUntrustedMarkdownText,
+  renderUntrustedMarkdownEvidence,
+} from "../markdown/untrustedMarkdown.js";
 import {
   type CatalogRecord,
   type CatalogRuntimeFamilyName,
@@ -498,14 +503,37 @@ async function buildKnowledgeV1Tracked(
   for (const family of ["component", "pattern", "guide", "page"] as const) {
     for (const record of recordsByFamily.get(family) ?? []) {
       const kind = family === "component" ? "components" : `${family}s`;
-      const canonical = assembleCanonicalDocument(documentStore, {
-        family,
-        id: record.id,
-      });
-      const markdown = canonical
-        ? renderCanonicalDocument(canonical)
-        : `# ${safeMarkdown(record.title)}\n\n${safeMarkdown(record.summary)}\n\nContextual reference: complete workflow setup and acceptance are not supplied for this unconverted material.\n`;
+      const reference = { family, id: record.id };
+      const canonicalReference = canonicalDocumentReference(
+        documentStore,
+        reference,
+      );
+      const canonical = assembleCanonicalDocument(documentStore, reference);
       const projectionPath = `markdown/${kind}/${record.id}.md`;
+      let markdown: string;
+      if (canonical && canonicalReference) {
+        if (family === "guide" && record.id === canonicalReference.id) {
+          markdown = renderCanonicalDocument(canonical);
+        } else {
+          // Attached records keep their own identity and point to the one
+          // complete guide artifact. Runtime docs still assemble the guide.
+          const guidePath = parseKnowledgeArtifactPath(
+            `markdown/guides/${canonicalReference.id}.md`,
+          );
+          const relativeGuidePath = path.posix
+            .relative(path.posix.dirname(projectionPath), guidePath)
+            .split("/")
+            .map((segment) =>
+              encodeURIComponent(segment)
+                .replace(/\(/gu, "%28")
+                .replace(/\)/gu, "%29"),
+            )
+            .join("/");
+          markdown = `# ${safeMarkdown(record.title)}\n\n${safeMarkdown(record.summary)}\n\nComplete guidance, prerequisites, acceptance, and limitations: [${escapeUntrustedMarkdownText(safeMarkdown(canonical.title))}](${relativeGuidePath}).\n\nCanonical reference: ${renderUntrustedMarkdownEvidence(canonical.reference, { mode: "inline" })}\n`;
+        }
+      } else {
+        markdown = `# ${safeMarkdown(record.title)}\n\n${safeMarkdown(record.summary)}\n\nContextual reference: complete workflow setup and acceptance are not supplied for this unconverted material.\n`;
+      }
       await writeArtifact(
         outputDir,
         projectionPath,

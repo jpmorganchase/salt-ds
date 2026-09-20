@@ -26,6 +26,14 @@ Dialogs are interruptive by nature and should be used sparingly. Use dialogs to 
 
 For status dialogs you can set the `status` prop to `error`, `warning`, `success`, or `info` to render a status icon in the title and change the border color of the dialog. For accessibility reasons, pass `role="alertdialog"` to the dialog component when rendering an alert dialog. You should rely on users' acknowledgment of the message by clicking the action button.
 
+### Forms in dialogs
+
+When a dialog contains a form, follow the Forms pattern's
+[submission and recovery guidance](/salt/patterns/forms#submission-and-recovery)
+for draft ownership, validation, pending submission, failure, retry, and
+cancellation. The [default example](/salt/components/dialog/examples#default)
+shows the header, content, and action composition.
+
 ## Import
 
 To import `Dialog` and related components from the core Salt package, use:

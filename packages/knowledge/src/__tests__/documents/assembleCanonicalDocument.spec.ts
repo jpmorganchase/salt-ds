@@ -351,6 +351,8 @@ describe("assembleCanonicalDocument", () => {
       (section) => section.id === "forms.spacing",
     );
     expect(loading).toMatchObject({
+      semantic_role: "behavior",
+      qualification_group: "loading",
       source_path: "site/docs/components/button/examples.mdx",
       source_url:
         "https://www.saltdesignsystem.com/salt/components/button/examples",
@@ -365,6 +367,21 @@ describe("assembleCanonicalDocument", () => {
     expect(spacing?.markdown).toContain(
       "Source: [site/docs/patterns/forms\\.mdx]",
     );
+    const setup = selection?.sections.find(
+      (section) => section.id === "prerequisites",
+    );
+    expect(setup).toMatchObject({
+      source_path: emittedRecipe().source.recipe,
+      semantic_role: "composition",
+    });
+    const wrapper = emittedRecipe().setup.dialog_wrapper;
+    expect(setup?.markdown).toContain("The reusable form supplies");
+    for (const component of [
+      ...wrapper.required_components,
+      ...wrapper.form_components,
+    ]) {
+      expect(setup?.markdown).toContain(component);
+    }
     const markdown = renderCanonicalDocument(selection!);
     expect(markdown).toContain(
       "[Forms](https://www.saltdesignsystem.com/salt/patterns/forms#submission)",

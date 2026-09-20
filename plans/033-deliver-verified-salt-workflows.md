@@ -593,6 +593,37 @@ redesign or compatibility relaxation is authorized by this follow-up. Owner,
 design, manual accessibility and independent human maintainer gates stay pending;
 Unit 033/02a remains in progress and workflow readiness remains runnable.
 
+### User-directed content and task-knowledge pilot
+
+The 2026-09-19 instruction to start activates the bounded
+[supporting content pilot](./033-knowledge-content-pilot.md) from
+`53ab0863e0ffcd1e14803b7e0041ce428c6d8b06`, within Unit 033/02a. Begin
+with canonical Forms, Dialog, Button loading and Button bar guidance for the
+existing editable-record workflow, and ten independently authored deterministic
+evidence questions. Correct source-backed editorial inconsistencies and useful
+cross-links before measuring the current context gaps. Preserve unresolved design
+preferences as gaps; do not manufacture Salt policy from illustrative suggestions.
+
+Then preserve the semantic roles and conditional alternative evidence needed by
+those questions in the existing document model and bounded context assembly.
+Reuse the recipe's ownership, actual states, acceptance and limitations. Keep
+lexical discovery, exact-current compatibility, the 16 KiB default and explicit
+qualified omissions. Do not introduce a graph/retrieval service, runtime model,
+new workflow family or parallel prose corpus. An extra relation kind is justified
+only when existing source-backed sections cannot represent the pilot faithfully.
+
+Verify the new evidence cases and their deliberate negatives, current extraction
+and retrieval regressions, types, rebuilt Knowledge/CLI artifacts, package limits,
+current plan/contracts, release embargo, edited documentation and available local
+offline preview/consumer paths. Reuse current local dependencies and temporary
+fixtures without registry installation or network fallback. Closeout source
+review uses the existing authorized host account. No new product model trial,
+consumer contact, publication, deployment or human-approval claim is authorized.
+Historical evaluation inputs stay frozen. Unit 033/02a remains in progress and
+readiness remains runnable; the independent maintainer and human reviews remain
+pending. Defer the optional completeness report until the pilot demonstrates its
+useful evidence dimensions.
+
 ## Conditional Unit 033/03 — Expand workflows from observed need
 
 Scope: adopt only a genuinely additional workflow or modification case justified by observed need, extending canonical examples/docs and the same schema/assembler/harness. Navigation, the operational worklist and record editing now belong to the single service-worklist journey in Unit 033/02a; do not reimplement them as separate workflow families merely to complete this backlog. Reuse that workflow's preview and fixture setup. Create a separate integration fixture only when it proves a distinct supported environment, as the existing Next App Router fixture does. Reuse selected public material from the operations dashboard without importing repository-only source into consumer output.

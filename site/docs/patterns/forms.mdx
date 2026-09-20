@@ -62,11 +62,13 @@ Use the pattern when:
 
 Keep a form's draft in the application that owns the workflow. When validation
 fails, preserve entered values, explain the problem alongside the relevant
-field, announce a concise error summary, and move focus to the first field that
-needs attention. While a submission is pending, make progress clear and avoid
+[field](/salt/components/form-field/usage), announce a concise error summary, and move focus to the first field that
+needs attention. While a submission is pending, [make progress clear](/salt/components/button/examples#loading) and avoid
 accepting another submission or closing the form. If it fails, retain the draft
 and offer a retry. A cancel action should state whether it preserves the draft
 or asks for confirmation before discarding it.
+
+For a form presented in a dialog, follow the [dialog focus guidance](/salt/components/dialog/accessibility#focus). Use the [button bar pattern](/salt/patterns/button-bar#dialog) for action placement and its [stacked layout guidance](/salt/patterns/button-bar#stacked-button-bar) for narrow views.
 
 ### Anatomy
 

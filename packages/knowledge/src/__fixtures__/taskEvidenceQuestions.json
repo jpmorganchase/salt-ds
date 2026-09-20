@@ -1,0 +1,409 @@
+{
+  "contract": "salt-task-evidence-development/1",
+  "note": "Development evidence cases use independent source-backed fact anchors, preserving decisive conditions and negation without freezing full prose. They are not a holdout, semantic answer evaluation, or human approval.",
+  "scope": {
+    "operations-example": [
+      "@salt-ds/core",
+      "@salt-ds/icons",
+      "@salt-ds/lab",
+      "@salt-ds/theme"
+    ]
+  },
+  "documents": {
+    "workflow": "record:guide:operations-dashboard.service-worklist",
+    "button": "record:guide:guide.button.loading"
+  },
+  "sources": {
+    "forms": "site/docs/patterns/forms.mdx",
+    "dialogUsage": "site/docs/components/dialog/usage.mdx",
+    "dialogExamples": "site/docs/components/dialog/examples.mdx",
+    "dialogAccessibility": "site/docs/components/dialog/accessibility.mdx",
+    "buttonBar": "site/docs/patterns/button-bar.mdx",
+    "buttonExamples": "site/docs/components/button/examples.mdx",
+    "recipe": "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json"
+  },
+  "qualifications": {
+    "document": "workflow",
+    "source": "recipe",
+    "readiness": "runnable",
+    "limitation_facts": [
+      [
+        "in-memory incidents",
+        "does not model",
+        "backend",
+        "concurrent edits",
+        "production-scale data"
+      ],
+      ["runnable readiness", "does not certify", "consumer adaptations"]
+    ]
+  },
+  "cases": [
+    {
+      "id": "editor-surface",
+      "scope": "operations-example",
+      "question": "Should this short record editor use a dialog or a page?",
+      "required": [
+        {
+          "document": "workflow",
+          "section": "forms.full-page",
+          "source": "forms",
+          "fragments": [
+            "application layout",
+            "Long and complex, or",
+            "requires multiple columns",
+            "self-contained workflow"
+          ]
+        },
+        {
+          "document": "workflow",
+          "section": "forms.overlay",
+          "source": "forms",
+          "fragments": ["smaller forms", "inform a larger workflow"]
+        },
+        {
+          "document": "workflow",
+          "section": "dialog.using",
+          "source": "dialogUsage",
+          "fragments": [
+            "interruptive",
+            "used sparingly",
+            "critical information",
+            "requires immediate action"
+          ]
+        },
+        {
+          "document": "workflow",
+          "section": "dialog.using.when-not-to-use",
+          "source": "dialogUsage",
+          "fragments": [
+            "don't need to interrupt",
+            "peripheral application or workflow",
+            "Toast",
+            "current workflow",
+            "Banner",
+            "dialog from another dialog"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "editor-ownership",
+      "scope": "operations-example",
+      "question": "Who owns the draft and whether the editor is open?",
+      "required": [
+        {
+          "document": "workflow",
+          "section": "forms.submission-and-recovery",
+          "source": "forms",
+          "fragments": [
+            "Keep a form's draft",
+            "application that owns the workflow"
+          ]
+        },
+        {
+          "document": "workflow",
+          "section": "adaptation",
+          "source": "recipe",
+          "fragments": [
+            "OperationsDashboard",
+            "RecordForm",
+            "draft",
+            "submission",
+            "onChange",
+            "onSubmit",
+            "onCancel",
+            "without clearing the host-owned draft",
+            "reopening restores it",
+            "dashboard owns whether the editor is open"
+          ]
+        },
+        {
+          "document": "workflow",
+          "section": "prerequisites",
+          "source": "recipe",
+          "fragments": ["host application", "Dialog", "DialogHeader"]
+        }
+      ]
+    },
+    {
+      "id": "invalid-fields",
+      "scope": "operations-example",
+      "question": "What happens when submitted fields are invalid?",
+      "required": [
+        {
+          "document": "workflow",
+          "section": "forms.submission-and-recovery",
+          "source": "forms",
+          "fragments": [
+            "When validation fails",
+            "preserve entered values",
+            "alongside the relevant field",
+            "announce",
+            "error summary",
+            "move focus",
+            "first field that needs attention"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pending-save",
+      "scope": "operations-example",
+      "question": "How should Save behave while pending?",
+      "required": [
+        {
+          "document": "workflow",
+          "section": "forms.submission-and-recovery",
+          "source": "forms",
+          "fragments": [
+            "submission is pending",
+            "make progress clear",
+            "avoid accepting another submission or closing"
+          ]
+        },
+        {
+          "document": "workflow",
+          "section": "acceptance",
+          "source": "recipe",
+          "fragments": [
+            "pending submission",
+            "fields read-only",
+            "prevents duplicate submit or dialog closure"
+          ]
+        },
+        {
+          "document": "button",
+          "section": "button.loading",
+          "source": "buttonExamples",
+          "fragments": ["must wait", "display a spinner"]
+        },
+        {
+          "document": "button",
+          "section": "button.loading.best-practices",
+          "source": "buttonExamples",
+          "fragments": [
+            "loading",
+            "in conjunction with",
+            "loadingAnnouncement",
+            "screen readers"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "failed-save",
+      "scope": "operations-example",
+      "question": "Should a failed save clear or close the form?",
+      "required": [
+        {
+          "document": "workflow",
+          "section": "forms.submission-and-recovery",
+          "source": "forms",
+          "fragments": ["If it fails, retain the draft", "offer a retry"]
+        },
+        {
+          "document": "workflow",
+          "section": "adaptation",
+          "source": "recipe",
+          "fragments": [
+            "local record adapter",
+            "delays a save",
+            "rejects the first save",
+            "once per application session",
+            "succeeds on retry",
+            "Neither adapter makes a network request",
+            "sends a notification"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cancel-policy",
+      "scope": "operations-example",
+      "question": "Does Cancel discard the edits?",
+      "required": [
+        {
+          "document": "workflow",
+          "section": "forms.submission-and-recovery",
+          "source": "forms",
+          "fragments": [
+            "cancel action should state whether",
+            "preserves the draft",
+            "confirmation before discarding"
+          ]
+        },
+        {
+          "document": "workflow",
+          "section": "adaptation",
+          "source": "recipe",
+          "fragments": [
+            "Cancel closes the editor without clearing",
+            "host-owned draft",
+            "reopening restores it"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dialog-composition",
+      "scope": "operations-example",
+      "question": "What goes in the dialog and where do Save and Cancel go?",
+      "required": [
+        {
+          "document": "workflow",
+          "section": "dialog.default",
+          "source": "dialogExamples",
+          "fragments": ["header", "content area", "action bar"]
+        },
+        {
+          "document": "workflow",
+          "section": "prerequisites",
+          "source": "recipe",
+          "fragments": [
+            "host application",
+            "DialogHeader",
+            "DialogContent",
+            "DialogActions"
+          ]
+        },
+        {
+          "document": "workflow",
+          "section": "forms.anatomy",
+          "source": "forms",
+          "fragments": [
+            "Heading",
+            "Label",
+            "Form controls",
+            "Helper text",
+            "Button bar"
+          ]
+        },
+        {
+          "document": "workflow",
+          "section": "button-bar.layout",
+          "source": "buttonBar",
+          "fragments": [
+            "Button",
+            "StackLayout",
+            "group your buttons",
+            "SplitLayout",
+            "separate the button groups"
+          ]
+        },
+        {
+          "document": "workflow",
+          "section": "button-bar.dialog-order",
+          "source": "buttonBar",
+          "fragments": [
+            "core actions on the right",
+            "actions are the last focal point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dialog-focus",
+      "scope": "operations-example",
+      "question": "Where does focus go when the editor opens and closes?",
+      "required": [
+        {
+          "document": "workflow",
+          "section": "dialog.focus",
+          "source": "dialogAccessibility",
+          "fragments": [
+            "trap focus",
+            "when open",
+            "first focusable element",
+            "When the dialog is closed",
+            "focus will return",
+            "element that triggered"
+          ]
+        },
+        {
+          "document": "workflow",
+          "section": "dialog.initial-focus",
+          "source": "dialogAccessibility",
+          "fragments": [
+            "initialFocus",
+            "accepts a number",
+            "index of the tabbable element",
+            "ref to an element"
+          ]
+        },
+        {
+          "document": "workflow",
+          "section": "dialog.focus-sequence",
+          "source": "dialogAccessibility",
+          "fragments": [
+            "confirmation, the call to action",
+            "call to action button takes focus first",
+            "destructive interactions, the cancel",
+            "cancel button takes focus first"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "narrow-screen",
+      "scope": "operations-example",
+      "question": "What changes on a narrow screen?",
+      "required": [
+        {
+          "document": "workflow",
+          "section": "dialog.sizes",
+          "source": "dialogExamples",
+          "fragments": [
+            "depends on the amount of content",
+            "sizes are responsive to the Salt breakpoints",
+            "entirely visible in the viewport"
+          ]
+        },
+        {
+          "document": "workflow",
+          "section": "button-bar.stacked",
+          "source": "buttonBar",
+          "fragments": [
+            "xs breakpoint by default",
+            "full width",
+            "when stacked",
+            "importance from the top down"
+          ]
+        },
+        {
+          "document": "workflow",
+          "section": "forms.top-down-reading-order",
+          "source": "forms",
+          "fragments": [
+            "top down reading order",
+            "maintain a logical order",
+            "different browser zoom levels"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "example-limits",
+      "scope": "operations-example",
+      "question": "Does the example establish concurrent editing or production-scale behavior?",
+      "required": [
+        {
+          "document": "workflow",
+          "section": "acceptance",
+          "source": "recipe",
+          "fragments": [
+            "Review still required",
+            "workflow owner review",
+            "design review",
+            "accessibility review"
+          ]
+        }
+      ]
+    }
+  ],
+  "qualified_units": [
+    ["forms.full-page", "forms.overlay"],
+    ["dialog.using", "dialog.using.when-not-to-use"],
+    ["button.loading", "button.loading.best-practices"],
+    ["dialog.focus", "dialog.initial-focus", "dialog.focus-sequence"]
+  ]
+}

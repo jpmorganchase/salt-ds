@@ -1,6 +1,6 @@
 # Salt AI evaluation and metadata validation
 
-Plan 032 is the active consumer-entry plan. Its current checks validate product
+Plan 033 is the active workflow and content pilot plan. Its current checks validate product
 behavior and the consistency of evaluation definitions separately. A metadata
 validation pass does not establish retrieval quality, model performance,
 consumer outcomes, or Doctor qualification.
@@ -34,6 +34,23 @@ performance qualification remains separate and has not passed. Current CI runs
 the repository/product tests, current contracts, the active-plan consistency
 check, and the release embargo without automatically replaying historical
 evidence acquisition.
+
+## Task evidence pilot
+
+The ten development questions in
+`packages/knowledge/src/__fixtures__/taskEvidenceQuestions.json` cover the
+existing editable-record workflow. Their expected clauses come from canonical
+Forms, Dialog, Button and Button bar guidance and the example recipe. The
+`taskKnowledgePilot.spec.ts` suite checks delivered section text and provenance,
+not only record hits. At the default 16 KiB budget, required evidence must be
+present; at 8 KiB, missing evidence must be disclosed through a relevant,
+resolvable omission. Conditions, exclusions, readiness and example limitations
+must remain with any retained recommendation.
+
+The suite also checks byte limits, deterministic digests, incompatible versions,
+and mutations that remove a decisive clause or workflow limitation. These are
+development regressions, separate from the frozen 40-query corpus. They do not
+establish maintainer approval, a held-out retrieval score or agent performance.
 
 ## Preserved baseline reports
 

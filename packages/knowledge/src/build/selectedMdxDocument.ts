@@ -8,6 +8,7 @@ import type {
   DocumentInline,
   DocumentModel,
   DocumentSection,
+  DocumentSemanticRole,
   DocumentSourceRange,
   SelectedMdxDiagnosticCode,
 } from "../documents/documentSchema.js";
@@ -16,6 +17,8 @@ export interface SelectedMdxSectionSelector {
   id: string;
   heading_path: readonly string[];
   include_descendants: boolean;
+  semantic_role?: DocumentSemanticRole;
+  qualification_group?: string;
 }
 
 export interface ParseSelectedMdxDocumentInput {
@@ -767,6 +770,98 @@ function selectedPurposeId(
   return identifiers.get(section)!;
 }
 
+const SEMANTIC_HEADINGS: Readonly<Record<string, DocumentSemanticRole>> = {
+  "when to use": "use-condition",
+  "use when": "use-condition",
+  "when not to use": "exclusion",
+  "do not use when": "exclusion",
+  avoid: "exclusion",
+  alternatives: "decision",
+  "consider instead": "decision",
+  "common decisions": "decision",
+  "start with user intent": "decision",
+  composition: "composition",
+  anatomy: "composition",
+  "standard layout": "composition",
+  "button order": "composition",
+  interaction: "behavior",
+  behavior: "behavior",
+  behaviour: "behavior",
+  states: "behavior",
+  "state ownership": "behavior",
+  "submission and recovery": "behavior",
+  loading: "behavior",
+  accessibility: "accessibility",
+  focus: "accessibility",
+  "initial focus": "accessibility",
+  "focus sequence": "accessibility",
+  "accessible name": "accessibility",
+  constraints: "constraint",
+  limitations: "constraint",
+};
+
+function semanticRole(
+  section: SourceSection,
+  selected: ReadonlyMap<SourceSection, SelectedMdxSectionSelector | null>,
+): DocumentSemanticRole {
+  let current: SourceSection | null = section;
+  while (current) {
+    const explicit = selected.get(current)?.semantic_role;
+    if (explicit) return explicit;
+    const role =
+      SEMANTIC_HEADINGS[current.heading_path.at(-1)?.toLowerCase() ?? ""];
+    if (role) return role;
+    current = current.parent;
+  }
+  return "guidance";
+}
+
+function qualificationGroups(
+  selected: ReadonlyMap<SourceSection, SelectedMdxSectionSelector | null>,
+): Map<SourceSection, string> {
+  const roots = [...selected].filter(
+    (entry): entry is [SourceSection, SelectedMdxSectionSelector] =>
+      entry[1] !== null,
+  );
+  const groups = new Map<SourceSection, string>();
+  for (const [section, selector] of roots) {
+    if (selector.qualification_group) {
+      groups.set(section, selector.qualification_group);
+      continue;
+    }
+    const role = semanticRole(section, selected);
+    const counterpart = roots.find(
+      ([candidate]) =>
+        candidate.parent === section.parent &&
+        ((role === "use-condition" &&
+          semanticRole(candidate, selected) === "exclusion") ||
+          (role === "exclusion" &&
+            semanticRole(candidate, selected) === "use-condition")),
+    );
+    if (counterpart) {
+      const useId = role === "use-condition" ? selector.id : counterpart[1].id;
+      groups.set(
+        section,
+        counterpart[1].qualification_group ?? `${useId}.conditions`,
+      );
+    } else if (
+      selector.include_descendants &&
+      section.heading_path.length > 0 &&
+      section.heading_path.at(-1)?.toLowerCase() !== "how to build"
+    ) {
+      groups.set(section, selector.id);
+    }
+  }
+  for (const section of selected.keys()) {
+    if (groups.has(section)) continue;
+    let ancestor = section.parent;
+    while (ancestor && !groups.has(ancestor)) ancestor = ancestor.parent;
+    const inherited = ancestor ? groups.get(ancestor) : undefined;
+    if (inherited) groups.set(section, inherited);
+  }
+  return groups;
+}
+
 export function parseSelectedMdxDocument(
   input: ParseSelectedMdxDocumentInput,
 ): DocumentModel {
@@ -862,8 +957,10 @@ export function parseSelectedMdxDocument(
     );
   }
 
+  const groups = qualificationGroups(selected);
   const output: DocumentSection[] = selectedSections.map((section) => {
     const id = identifiers.get(section)!;
+    const qualificationGroup = groups.get(section);
     const converter = new SectionConverter(
       diagnostics,
       id,
@@ -872,6 +969,10 @@ export function parseSelectedMdxDocument(
     return {
       id,
       source: { ...input.source },
+      semantic_role: semanticRole(section, selected),
+      ...(qualificationGroup
+        ? { qualification_group: qualificationGroup }
+        : {}),
       heading_path: [...section.heading_path],
       heading: section.heading
         ? converter.inline(section.heading.children ?? [])

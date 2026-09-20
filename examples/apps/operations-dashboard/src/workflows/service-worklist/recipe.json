@@ -46,7 +46,11 @@
       "site/docs/patterns/forms.mdx",
       "site/docs/components/button/examples.mdx#loading",
       "site/docs/getting-started/choosing-the-right-primitive.mdx",
-      "site/docs/getting-started/composition-pitfalls.mdx"
+      "site/docs/getting-started/composition-pitfalls.mdx",
+      "site/docs/components/dialog/usage.mdx",
+      "site/docs/components/dialog/examples.mdx",
+      "site/docs/components/dialog/accessibility.mdx",
+      "site/docs/patterns/button-bar.mdx"
     ]
   },
   "setup": {
@@ -82,7 +86,7 @@
       "onCancel"
     ],
     "submission_state": ["idle", "pending", "failed"],
-    "cancellation": "Filters, selection, and the form draft are owned by the dashboard. Cancel closes the editor without clearing the host-owned draft; reopening restores it.",
+    "cancellation": "The dashboard owns whether the editor is open. Filters, selection, and the form draft are owned by the dashboard. Cancel closes the editor without clearing the host-owned draft; reopening restores it.",
     "simulation": "The host owns worklist state (loading, ready, refreshing, or error), query and selected incident ID separately from form submission. Empty and no-match views derive from the available records and query. The local worklist adapter refresh fails once, preserves the current worklist, and succeeds on retry. The local record adapter delays a save, rejects the first save once per application session, and succeeds on retry. Neither adapter makes a network request or sends a notification."
   },
   "acceptance": {

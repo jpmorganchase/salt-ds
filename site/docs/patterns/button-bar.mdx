@@ -7,20 +7,18 @@ tags:
 aliases:
   - /salt/patterns/button-bar
 data:
-  resources:
-    [
-    ]
+  resources: []
   components: ["Button", "Split layout", "Stack layout"]
   relatedPatterns: ["Forms"]
 ---
 
 <LivePreview componentName="patterns/button-bar" exampleName="ButtonBar" />
 
-  <Diagram
-    src="/img/patterns/button-bar/button-bar-hero-shot.png"
-    alt="Example button bar, with CTA to the left then primary. On the right side there are two secondary buttons."
-    border
-  />
+<Diagram
+  src="/img/patterns/button-bar/button-bar-hero-shot.png"
+  alt="Example button bar, with CTA to the left then primary. On the right side there are two secondary buttons."
+  border
+/>
 
 ## When to use
 
@@ -45,18 +43,18 @@ A button bar typically contains:
 1. **Buttons**: possible actions for users to take.
 2. **Groups**: used to visually communicate which buttons are related to each other.
 
-  <Diagram
-    src="/img/patterns/button-bar/button-bar-anatomy.png"
-    alt="A button bar anatomy."
-    contentPosition="top"
-    border
-  />
+<Diagram
+  src="/img/patterns/button-bar/button-bar-anatomy.png"
+  alt="A button bar anatomy."
+  contentPosition="top"
+  border
+/>
 
 ### Layout
 
-* Use [`Button`](/salt/components/button) to display actions in a button bar.
-* Use [`StackLayout`](/salt/components/layouts/stack-layout) to group your buttons together.
-* Use [`SplitLayout`](/salt/components/layouts/split-layout) to separate the button groups and keep core actions visually clear.
+- Use [`Button`](/salt/components/button) to display actions in a button bar.
+- Use [`StackLayout`](/salt/components/layouts/stack-layout) to group your buttons together.
+- Use [`SplitLayout`](/salt/components/layouts/split-layout) to separate the button groups and keep core actions visually clear.
 
   <Diagram
     src="/img/patterns/button-bar/button-bar-layout-1.png"
@@ -77,45 +75,49 @@ A button bar typically contains:
 There are three button appearances to choose from. Choosing the correct button depends on the context and is ultimately the choice of the application team. For guidance on button choices, please see the Button docs. We recommend using the accented button set for a majority of use cases, alongside the following guidelines for consistent design:
 
 **Solid**
+
 - Use for the primary path you intend the user to take.
 - In almost all cases, your scenario should have one solid button within the button bar so the desired path is clear.
 - This is commonly an affirmative action allowing users to proceed or complete the task, such as **Next**, **Save** or **Submit**.
 
 **Bordered**
+
 - Use for the secondary functions you're offering the user.
 - There can be multiple equally weighted secondary functions within a button bar.
 - You can use it as a dismissive action alongside the affirmative (solid) action, such as **Cancel** or **Dismiss**.
 
 **Transparent**
+
 - Use for the tertiary functions you're offering the user.
 - There can be multiple equally weighted tertiary functions within a button bar.
 - This is commonly a related task or function that’s lower priority than the secondary functions, such as **Import** or **Export**.
 
-Remember to use a hierarchy when making your button choices, much like following a type ramp. In Example 1 below, Cancel is the alternate function and uses a solid button because there are only two options. However, in Example 2, Cancel uses the transparent button because three actions are available to the user, with this one being tertiary and the least desired option.
+Remember to use a hierarchy when making your button choices, much like following a type ramp. In Example 1 below, Cancel is the alternate function and uses a bordered button because there are only two options. However, in Example 2, Cancel uses the transparent button because three actions are available to the user, with this one being tertiary and the least desired option.
 
 ### Example 1
 
-    - The **Submit** solid action uses the solid button.
-    - The **Cancel** secondary action uses the bordered button.
+- The **Submit** solid action uses the solid button.
+- The **Cancel** secondary action uses the bordered button.
 
-  <Diagram
-    src="/img/patterns/button-bar/button-options-example-1.png"
-    alt="Example showing button bar with Submit on the left as a solid, and Cancel as bordered to the right of Submit."
-  />
+<Diagram
+  src="/img/patterns/button-bar/button-options-example-1.png"
+  alt="Example showing button bar with Submit on the left as a solid, and Cancel as bordered to the right of Submit."
+/>
 
 ### Example 2
 
-    - The **Next** primary action uses the solid button.
-    - The **Previous** alternate action uses the bordered button (order follows sequential forms).
-    - The **Cancel** tertiary action uses the transparent button.
+- The **Next** primary action uses the solid button.
+- The **Previous** alternate action uses the bordered button (order follows sequential forms).
+- The **Cancel** tertiary action uses the transparent button.
 
-  <Diagram
-    src="/img/patterns/button-bar/button-options-example-2.png"
-    alt="Example showing button bar with Next button on right as solid, Previous as bordered to the left of Next, and Cancel as transparent to the left of Previous."
-  />
+<Diagram
+  src="/img/patterns/button-bar/button-options-example-2.png"
+  alt="Example showing button bar with Next button on right as solid, Previous as bordered to the left of Next, and Cancel as transparent to the left of Previous."
+/>
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  Provide only one solid button for a given task—the action that allows the user to complete the task.
+  Provide only one solid button for a given task—the action that allows the user
+  to complete the task.
 </GuidanceCallout>
 
 ## Combining button sentiments
@@ -135,38 +137,43 @@ In the example below, the ‘Delete now’ button is styled using a solid appear
 The container and the type of scenario determine the position of actions (solid, bordered and transparent buttons).
 
 ### Default/Single step form
-    - Groups core actions on the left.
-    - Follows an F-pattern reading model, allowing users to scan down quickly.
 
-  <Diagram
-    src="/img/patterns/button-bar/vert-nav-layout-2.png"
-    alt="Example showing default button bar order, Submit solid on the left and Cancel bordered to the right of Submit."
-    border
-  />
-    
+- Groups core actions on the left.
+- Follows an F-pattern reading model, allowing users to scan down quickly.
+
+<Diagram
+  src="/img/patterns/button-bar/vert-nav-layout-2.png"
+  alt="Example showing default button bar order, Submit solid on the left and Cancel bordered to the right of Submit."
+  border
+/>
+
 ### Multi-step form
-    - Groups core actions on the right.
-    - Always positions **Next** right of **Previous** and **Cancel** to reflect the direction of the steps.
 
-  <Diagram
-    src="/img/patterns/button-bar/vert-nav-layout-3.png"
-    alt="Example showing form with button bar underneath and core actions on the right."
-    border
-  />
+- Groups core actions on the right.
+- Always positions **Next** right of **Previous** and **Cancel** to reflect the direction of the steps.
+
+<Diagram
+  src="/img/patterns/button-bar/vert-nav-layout-3.png"
+  alt="Example showing form with button bar underneath and core actions on the right."
+  border
+/>
 
 ### Dialog
-    - Always displays core actions on the right.
-    - Follows a Z-pattern reading model, where actions are the last focal point in the dialog.
 
-  <Diagram
-    src="/img/patterns/button-bar/vert-nav-layout-4.png"
-    alt="Example showing a dialog with a form and button bar underneath. The core actions are on the right."
-    border
-  />
+- Always displays core actions on the right.
+- Follows a Z-pattern reading model, where actions are the last focal point in the dialog.
+
+<Diagram
+  src="/img/patterns/button-bar/vert-nav-layout-4.png"
+  alt="Example showing a dialog with a form and button bar underneath. The core actions are on the right."
+  border
+/>
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  - Group core onward actions for the form to ensure they remain accessible on browser zoom (e.g., **Previous**, **Next**, **Cancel** or **Submit**).
-  - You should display tertiary actions that aren’t core to the workflow at the opposite end of the button bar.
+
+- Group core onward actions for the form to ensure they remain accessible on browser zoom (e.g., **Previous**, **Next**, **Cancel** or **Submit**).
+- You should display tertiary actions that aren’t core to the workflow at the opposite end of the button bar.
+
 </GuidanceCallout>
 
 ## Button bar position
@@ -176,10 +183,12 @@ There are two ways to position the button bar.
 ### Fixed
 
 Fix the button bar at the bottom of the viewport when:
+
 - A user can proceed (or step back) regardless of task completion.
 - The task is in a wizard.
 
 If content overflows, the button bar uses a secondary border style.
+
 <Diagrams>
   <Diagram
     src="/img/patterns/button-bar/button-bar-fixed-1.png"
@@ -187,7 +196,8 @@ If content overflows, the button bar uses a secondary border style.
     contentPosition="top"
     border
   >
-  When fields overflow behind the button bar, a border should indicate if more fields are available. 
+    When fields overflow behind the button bar, a border should indicate if more
+    fields are available.
   </Diagram>
   <Diagram
     src="/img/patterns/button-bar/button-bar-fixed-2.png"
@@ -195,13 +205,16 @@ If content overflows, the button bar uses a secondary border style.
     contentPosition="top"
     border
   >
-  Hide the button bar border if content is no longer overflowing (i.e., the user has reached the bottom of the form or the form is entirely above the fold).
+    Hide the button bar border if content is no longer overflowing (i.e., the
+    user has reached the bottom of the form or the form is entirely above the
+    fold).
   </Diagram>
 </Diagrams>
 
 ### In line
 
 The button bar is located at the end of the task when:
+
 - The user needs to complete the entire task before proceeding, for example, if there are mandatory fields in a form.
 - The system needs the user to acknowledge all information on the page.
 
@@ -212,7 +225,8 @@ The button bar is located at the end of the task when:
     contentPosition="top"
     border
   >
-  When the button bar is at the end of the task, the button may not be visible when the user is at the top.
+    When the button bar is at the end of the task, the button may not be visible
+    when the user is at the top.
   </Diagram>
   <Diagram
     src="/img/patterns/button-bar/button-bar-in-line-2.png"
@@ -220,7 +234,7 @@ The button bar is located at the end of the task when:
     contentPosition="top"
     border
   >
-  The button bar is visible when the user scrolls to the bottom of the task.
+    The button bar is visible when the user scrolls to the bottom of the task.
   </Diagram>
 </Diagrams>
 
@@ -232,16 +246,18 @@ We recommend stacking at the xs breakpoint by default. Buttons will expand to fi
 
 Order of stacked buttons: In a stacked button layout, we recommend buttons stack in order of importance from the top down.
 
-  <Diagram
-    src="/img/patterns/button-bar/vert-nav-layout-5.png"
-    alt="Example button bar, vertically stacked."
-    contentPosition="top"
-    border
-  />
+<Diagram
+  src="/img/patterns/button-bar/vert-nav-layout-5.png"
+  alt="Example button bar, vertically stacked."
+  contentPosition="top"
+  border
+/>
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  - Enable the stacked layout when you have longer button labels that may not fit within the horizontal layout at smaller button bar widths.
-  - If users will access your application on a mobile device, use a stacked button layout to ensure an adequate touch-area for the buttons.
+
+- Enable the stacked layout when you have longer button labels that may not fit within the horizontal layout at smaller button bar widths.
+- If users will access your application on a mobile device, use a stacked button layout to ensure an adequate touch-area for the buttons.
+
 </GuidanceCallout>
 
 ### Building a stacked button bar
@@ -249,20 +265,20 @@ Order of stacked buttons: In a stacked button layout, we recommend buttons stack
 1. Build a button bar following the foundational guidelines provided earlier in the documentation.
 2. Adjust the direction property on both stack layout and split layout (if used) to `{{xs: "column", sm: "row"}}`. This responsive setting arranges the buttons into a column for extra small (xs) screens and a row for small (sm) screens and upwards. This ensures a responsive layout that adapts to the viewport width.
 3. When the button bar has core actions on the right, you'll need to configure an alternative stack layout.
-    - Reverse the buttons in this layout to ensure that the core actions are at the top.
+   - Reverse the buttons in this layout to ensure that the core actions are at the top.
 
-  <Diagram
-    src="/img/patterns/button-bar/button-bar-building-stacked-button-bar-1.png"
-    alt="Diagram showing how to build a stacked button bar."
-    contentPosition="top"
-    border
-  />
+<Diagram
+  src="/img/patterns/button-bar/button-bar-building-stacked-button-bar-1.png"
+  alt="Diagram showing how to build a stacked button bar."
+  contentPosition="top"
+  border
+/>
 
-  <Diagram
-    src="/img/patterns/button-bar/button-bar-building-stacked-button-bar-2.png"
-    alt="Diagram showing how to build a stacked button bar."
-    contentPosition="top"
-    border
-  />
+<Diagram
+  src="/img/patterns/button-bar/button-bar-building-stacked-button-bar-2.png"
+  alt="Diagram showing how to build a stacked button bar."
+  contentPosition="top"
+  border
+/>
 
 :fragment{src="./fragments/feedback.mdx"}

@@ -26,6 +26,12 @@ const CHOOSING_PRIMITIVE_DOCUMENT_PATH =
   "site/docs/getting-started/choosing-the-right-primitive.mdx";
 const COMPOSITION_PITFALLS_DOCUMENT_PATH =
   "site/docs/getting-started/composition-pitfalls.mdx";
+const DIALOG_USAGE_DOCUMENT_PATH = "site/docs/components/dialog/usage.mdx";
+const DIALOG_EXAMPLES_DOCUMENT_PATH =
+  "site/docs/components/dialog/examples.mdx";
+const DIALOG_ACCESSIBILITY_DOCUMENT_PATH =
+  "site/docs/components/dialog/accessibility.mdx";
+const BUTTON_BAR_DOCUMENT_PATH = "site/docs/patterns/button-bar.mdx";
 const FORMS_STANDARD_LAYOUT_SOURCE_PATH =
   "site/src/examples/patterns/forms/index.tsx";
 const BUTTON_LOADING_SOURCE_PATH = "site/src/examples/button/Loading.tsx";
@@ -68,6 +74,30 @@ const FORMS_SELECTORS: readonly SelectedMdxSectionSelector[] = [
     id: "forms.standard-layout",
     heading_path: ["How to build", "Standard layout"],
     include_descendants: true,
+  },
+  {
+    id: "forms.full-page",
+    heading_path: ["Full page"],
+    include_descendants: false,
+    semantic_role: "decision",
+    qualification_group: "forms.surface",
+  },
+  {
+    id: "forms.overlay",
+    heading_path: ["Overlay (dialog/drawer)"],
+    include_descendants: false,
+    semantic_role: "decision",
+    qualification_group: "forms.surface",
+  },
+  {
+    id: "forms.top-down-reading-order",
+    heading_path: [
+      "How to build",
+      "Multiple columns",
+      "Top down reading order",
+    ],
+    include_descendants: false,
+    semantic_role: "constraint",
   },
 ];
 
@@ -187,6 +217,73 @@ const BUTTON_LOADING_SELECTORS: readonly SelectedMdxSectionSelector[] = [
   },
 ];
 
+const DIALOG_USAGE_SELECTORS: readonly SelectedMdxSectionSelector[] = [
+  {
+    id: "dialog.using",
+    heading_path: ["Using the component"],
+    include_descendants: true,
+    semantic_role: "use-condition",
+    qualification_group: "dialog.use",
+  },
+];
+const DIALOG_EXAMPLES_SELECTORS: readonly SelectedMdxSectionSelector[] = [
+  {
+    id: "dialog.default",
+    heading_path: ["Default"],
+    include_descendants: false,
+    semantic_role: "composition",
+  },
+  {
+    id: "dialog.sizes",
+    heading_path: ["Sizes"],
+    include_descendants: true,
+    semantic_role: "constraint",
+  },
+];
+const DIALOG_ACCESSIBILITY_SELECTORS: readonly SelectedMdxSectionSelector[] = [
+  {
+    id: "dialog.focus",
+    heading_path: ["Best practices", "Focus"],
+    include_descendants: false,
+    semantic_role: "accessibility",
+    qualification_group: "dialog.focus",
+  },
+  {
+    id: "dialog.initial-focus",
+    heading_path: ["Best practices", "Initial focus"],
+    include_descendants: false,
+    semantic_role: "accessibility",
+    qualification_group: "dialog.focus",
+  },
+  {
+    id: "dialog.focus-sequence",
+    heading_path: ["Best practices", "Focus sequence"],
+    include_descendants: false,
+    semantic_role: "accessibility",
+    qualification_group: "dialog.focus",
+  },
+];
+const BUTTON_BAR_SELECTORS: readonly SelectedMdxSectionSelector[] = [
+  {
+    id: "button-bar.layout",
+    heading_path: ["How to build", "Layout"],
+    include_descendants: false,
+    semantic_role: "composition",
+  },
+  {
+    id: "button-bar.dialog-order",
+    heading_path: ["Button order", "Dialog"],
+    include_descendants: false,
+    semantic_role: "composition",
+  },
+  {
+    id: "button-bar.stacked",
+    heading_path: ["Stacked button bar"],
+    include_descendants: false,
+    semantic_role: "constraint",
+  },
+];
+
 export interface SelectedGuidanceFile {
   sourcePath: string;
   language: "tsx" | "css" | "json" | "text";
@@ -198,6 +295,8 @@ export interface SelectedGuidance {
   name: string;
   aliases: string[];
   summary: string;
+  /** Authored recipe facts that are not part of the selected MDX. */
+  keywords?: string[];
   kind: "workflow" | "component-guidance";
   document: DocumentModel;
   recipeManifest: string | null;
@@ -608,6 +707,10 @@ export async function buildSelectedGuidance(
     `${BUTTON_DOCUMENT_PATH}#loading`,
     CHOOSING_PRIMITIVE_DOCUMENT_PATH,
     COMPOSITION_PITFALLS_DOCUMENT_PATH,
+    DIALOG_USAGE_DOCUMENT_PATH,
+    DIALOG_EXAMPLES_DOCUMENT_PATH,
+    DIALOG_ACCESSIBILITY_DOCUMENT_PATH,
+    BUTTON_BAR_DOCUMENT_PATH,
   ];
   if (
     canonicalGuidance.length !== requiredGuidance.length ||
@@ -628,6 +731,10 @@ export async function buildSelectedGuidance(
     button,
     choosingPrimitive,
     compositionPitfalls,
+    dialogUsage,
+    dialogExamples,
+    dialogAccessibility,
+    buttonBar,
   ] = await Promise.all([
     parseSelectedDocument({
       sourceRoot: input.sourceRoot,
@@ -691,6 +798,42 @@ export async function buildSelectedGuidance(
       route: "/salt/getting-started/composition-pitfalls",
       selectors: COMPOSITION_PITFALLS_SELECTORS,
       fallbackTitle: "Composition pitfalls",
+    }),
+    parseSelectedDocument({
+      sourceRoot: input.sourceRoot,
+      declared,
+      sourcePath: assertDeclared(declared, DIALOG_USAGE_DOCUMENT_PATH),
+      documentId: recipe.id,
+      route: "/salt/components/dialog/usage",
+      selectors: DIALOG_USAGE_SELECTORS,
+      fallbackTitle: "Dialog",
+    }),
+    parseSelectedDocument({
+      sourceRoot: input.sourceRoot,
+      declared,
+      sourcePath: assertDeclared(declared, DIALOG_EXAMPLES_DOCUMENT_PATH),
+      documentId: recipe.id,
+      route: "/salt/components/dialog/examples",
+      selectors: DIALOG_EXAMPLES_SELECTORS,
+      fallbackTitle: "Dialog",
+    }),
+    parseSelectedDocument({
+      sourceRoot: input.sourceRoot,
+      declared,
+      sourcePath: assertDeclared(declared, DIALOG_ACCESSIBILITY_DOCUMENT_PATH),
+      documentId: recipe.id,
+      route: "/salt/components/dialog/accessibility",
+      selectors: DIALOG_ACCESSIBILITY_SELECTORS,
+      fallbackTitle: "Dialog",
+    }),
+    parseSelectedDocument({
+      sourceRoot: input.sourceRoot,
+      declared,
+      sourcePath: assertDeclared(declared, BUTTON_BAR_DOCUMENT_PATH),
+      documentId: recipe.id,
+      route: "/salt/patterns/button-bar",
+      selectors: BUTTON_BAR_SELECTORS,
+      fallbackTitle: "Button bar",
     }),
   ]);
 
@@ -758,6 +901,10 @@ export async function buildSelectedGuidance(
     forms,
     choosingPrimitive,
     compositionPitfalls,
+    dialogUsage,
+    dialogExamples,
+    dialogAccessibility,
+    buttonBar,
   ]);
   const buttonLimitations = diagnosticsLimitations(button.document, buttonName);
   const workflowSourcePaths = unique([
@@ -767,6 +914,10 @@ export async function buildSelectedGuidance(
     FORMS_DOCUMENT_PATH,
     CHOOSING_PRIMITIVE_DOCUMENT_PATH,
     COMPOSITION_PITFALLS_DOCUMENT_PATH,
+    DIALOG_USAGE_DOCUMENT_PATH,
+    DIALOG_EXAMPLES_DOCUMENT_PATH,
+    DIALOG_ACCESSIBILITY_DOCUMENT_PATH,
+    BUTTON_BAR_DOCUMENT_PATH,
     recipeSourcePath,
     ...reusablePaths,
     packagePath,
@@ -780,6 +931,12 @@ export async function buildSelectedGuidance(
       name: recipe.title,
       aliases: unique([recipe.title, ...recipe.intent.aliases]),
       summary: recipe.intent.summary,
+      keywords: [
+        ...Object.values(recipe.adaptation).flat(),
+        ...recipe.acceptance.automated,
+        ...recipe.acceptance.manual_review_pending,
+        ...recipe.limitations,
+      ],
       kind: "workflow",
       document: workflowDocument,
       recipeManifest: manifestPath,
@@ -813,6 +970,10 @@ export async function buildSelectedGuidance(
           FORMS_DOCUMENT_PATH,
           CHOOSING_PRIMITIVE_DOCUMENT_PATH,
           COMPOSITION_PITFALLS_DOCUMENT_PATH,
+          DIALOG_USAGE_DOCUMENT_PATH,
+          DIALOG_EXAMPLES_DOCUMENT_PATH,
+          DIALOG_ACCESSIBILITY_DOCUMENT_PATH,
+          BUTTON_BAR_DOCUMENT_PATH,
         ],
       },
       files: [formsFile],

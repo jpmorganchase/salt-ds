@@ -25,6 +25,10 @@ const choosingPrimitivePath =
 const compositionPitfallsPath =
   "site/docs/getting-started/composition-pitfalls.mdx";
 const buttonPath = "site/docs/components/button/examples.mdx";
+const dialogUsagePath = "site/docs/components/dialog/usage.mdx";
+const dialogExamplesPath = "site/docs/components/dialog/examples.mdx";
+const dialogAccessibilityPath = "site/docs/components/dialog/accessibility.mdx";
+const buttonBarPath = "site/docs/patterns/button-bar.mdx";
 const formsPreviewPath = "site/src/examples/patterns/forms/index.tsx";
 const buttonPreviewPath = "site/src/examples/button/Loading.tsx";
 const reusablePaths = [
@@ -47,6 +51,10 @@ const semanticSourcePaths = [
   compositionPitfallsPath,
   formsPath,
   buttonPath,
+  dialogUsagePath,
+  dialogExamplesPath,
+  dialogAccessibilityPath,
+  buttonBarPath,
   recipeSourcePath,
   ...reusablePaths,
   packagePath,
@@ -178,6 +186,10 @@ describe("buildSelectedGuidance", () => {
         formsPath,
         choosingPrimitivePath,
         compositionPitfallsPath,
+        dialogUsagePath,
+        dialogExamplesPath,
+        dialogAccessibilityPath,
+        buttonBarPath,
       ],
     });
     expect(

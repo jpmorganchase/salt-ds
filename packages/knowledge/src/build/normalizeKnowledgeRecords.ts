@@ -1153,7 +1153,10 @@ export function normalizeKnowledgeRecords(input: {
       aliases: guidance.aliases,
       summary: guidance.summary,
       kind: guidance.kind,
-      keywords: guidance.document.sections.map(documentSectionText),
+      keywords: uniqueStrings([
+        ...guidance.document.sections.map(documentSectionText),
+        ...(guidance.keywords ?? []),
+      ]),
       documented_entity_refs: componentRefs,
       package_refs: guidance.packageNames.map(requirePackageRef),
       source_refs: sourceRefs,

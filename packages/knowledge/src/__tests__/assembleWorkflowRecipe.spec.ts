@@ -47,6 +47,10 @@ const semanticPaths = [
   "site/docs/patterns/forms.mdx",
   "site/docs/getting-started/choosing-the-right-primitive.mdx",
   "site/docs/getting-started/composition-pitfalls.mdx",
+  "site/docs/components/dialog/usage.mdx",
+  "site/docs/components/dialog/examples.mdx",
+  "site/docs/components/dialog/accessibility.mdx",
+  "site/docs/patterns/button-bar.mdx",
 ];
 const publicationPaths = [
   "examples/apps/operations-dashboard/index.html",

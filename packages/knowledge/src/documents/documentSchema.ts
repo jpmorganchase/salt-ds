@@ -76,6 +76,19 @@ export type DocumentBlock =
     }
   | { kind: "unsupported"; diagnostic_id: string };
 
+export const DOCUMENT_SEMANTIC_ROLES = [
+  "guidance",
+  "use-condition",
+  "exclusion",
+  "decision",
+  "composition",
+  "behavior",
+  "accessibility",
+  "constraint",
+] as const;
+
+export type DocumentSemanticRole = (typeof DOCUMENT_SEMANTIC_ROLES)[number];
+
 export interface DocumentSection {
   id: string;
   /**
@@ -83,6 +96,9 @@ export interface DocumentSection {
    * another document. Absent sections inherit DocumentModel.source.
    */
   source?: DocumentSource;
+  semantic_role: DocumentSemanticRole;
+  /** Sections in the same group must be supplied or omitted together. */
+  qualification_group?: string;
   heading_path: string[];
   heading: DocumentInline[] | null;
   level: number | null;
@@ -281,6 +297,8 @@ const sectionCodec: z.ZodType<DocumentSection> = z
   .object({
     id: sectionIdCodec,
     source: sourceCodec.optional(),
+    semantic_role: z.enum(DOCUMENT_SEMANTIC_ROLES),
+    qualification_group: sectionIdCodec.optional(),
     heading_path: z.array(z.string()),
     heading: z.array(inlineCodec).nullable(),
     level: z.number().int().min(1).max(6).nullable(),

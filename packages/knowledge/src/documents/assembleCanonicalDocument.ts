@@ -7,6 +7,7 @@ import {
   renderUntrustedMarkdownEvidence,
 } from "../markdown/untrustedMarkdown.js";
 import type { CatalogPayloadForCodec } from "../records/contentCodecs.js";
+import type { DocumentSemanticRole } from "./documentSchema.js";
 import {
   documentInlineText,
   documentSectionText,
@@ -27,9 +28,11 @@ export interface CanonicalDocumentSection {
   id: string;
   title: string;
   reference: string;
-  /** Exact MDX provenance when this is a selected documentation section. */
+  /** Exact authored provenance for selected MDX and recipe sections. */
   source_path?: string;
   source_url?: string;
+  semantic_role?: DocumentSemanticRole;
+  qualification_group?: string;
   purpose:
     | "guidance"
     | "prerequisites"
@@ -131,6 +134,13 @@ function recipeSections(
     id,
     title,
     purpose,
+    source_path: recipe.source.recipe,
+    semantic_role:
+      purpose === "prerequisites"
+        ? "composition"
+        : purpose === "implementation"
+          ? "guidance"
+          : "behavior",
     reference: `${base}#${id}`,
     markdown: `## ${escapeUntrustedMarkdownText(title)}\n\n${body}`,
     search_text: `${title} ${searchText}`,
@@ -155,8 +165,8 @@ function recipeSections(
       "prerequisites",
       "Prerequisites and setup",
       "prerequisites",
-      `Reusable workflow dependencies:\n\n${markdownList(reusablePackages)}\n\nProvider: ${escapeUntrustedMarkdownText(recipe.support.provider)}.\n\nImport the theme CSS once in the host application:\n\n${renderUntrustedMarkdownCode(recipe.support.theme_css.map((file) => `import ${JSON.stringify(file)};`).join("\n"), "tsx")}\n\n${escapeUntrustedMarkdownText(recipe.setup.dialog_wrapper.owner)} supplies ${recipe.setup.dialog_wrapper.required_components.map((name) => renderUntrustedMarkdownEvidence(name, { mode: "inline" })).join(" and ")}.\n\nThe complete demo also uses:\n\n${markdownList(demoPackages)}`,
-      `${reusablePackages.join(" ")} ${recipe.support.provider} ${recipe.support.theme_css.join(" ")} provider theme dependencies install setup`,
+      `Reusable workflow dependencies:\n\n${markdownList(reusablePackages)}\n\nProvider: ${escapeUntrustedMarkdownText(recipe.support.provider)}.\n\nImport the theme CSS once in the host application:\n\n${renderUntrustedMarkdownCode(recipe.support.theme_css.map((file) => `import ${JSON.stringify(file)};`).join("\n"), "tsx")}\n\n${escapeUntrustedMarkdownText(recipe.setup.dialog_wrapper.owner)} supplies ${recipe.setup.dialog_wrapper.required_components.map((name) => renderUntrustedMarkdownEvidence(name, { mode: "inline" })).join(" and ")}. The reusable form supplies ${recipe.setup.dialog_wrapper.form_components.map((name) => renderUntrustedMarkdownEvidence(name, { mode: "inline" })).join(" and ")}.\n\nThe complete demo also uses:\n\n${markdownList(demoPackages)}`,
+      `${reusablePackages.join(" ")} ${recipe.support.provider} ${recipe.support.theme_css.join(" ")} provider theme dependencies install setup ${recipe.setup.dialog_wrapper.owner} ${recipe.setup.dialog_wrapper.required_components.join(" ")} ${recipe.setup.dialog_wrapper.form_components.join(" ")}`,
     ),
     section(
       "implementation",
@@ -271,6 +281,10 @@ export function assembleCanonicalDocument(
         source_path: source.source_path,
         source_url: sourceUrl,
         purpose: "guidance",
+        semantic_role: section.semantic_role,
+        ...(section.qualification_group
+          ? { qualification_group: section.qualification_group }
+          : {}),
         markdown: `${renderDocumentSection(section, {
           ...options,
           route: source.route,

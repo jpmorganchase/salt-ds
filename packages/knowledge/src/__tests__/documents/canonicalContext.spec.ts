@@ -156,6 +156,7 @@ function fixtureStore(
     sections: [
       {
         id: "loading",
+        semantic_role: "behavior" as const,
         heading_path: ["Loading"],
         heading: [text("Loading")],
         level: 2,
@@ -193,6 +194,7 @@ function fixtureStore(
     sections: [
       {
         id: "overview",
+        semantic_role: "behavior" as const,
         heading_path: ["Forms"],
         heading: [text("Forms")],
         level: 2,

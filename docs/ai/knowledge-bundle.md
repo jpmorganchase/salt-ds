@@ -127,6 +127,14 @@ record, its bundle digest, source-record citations, and primary manifest-bound
 content when present. Pages return their body content; component records return
 their detail content. Repository Markdown remains inert evidence.
 
+Generated Markdown stores each complete canonical guide once under
+`markdown/guides/`. Attached component, pattern and page projections retain
+their own title and summary and link to that guide with a relative Markdown
+link and its canonical record reference. The files remain portable within the
+bundle. Resolving those records through `docs` still returns the complete
+canonical document; this presentation rule avoids duplicating a workflow for
+every contributing page.
+
 Component source examples are available through the same `docs` command. An
 owner document lists example titles and stable
 `record:<family>:<id>#example/<local-id>` references. Resolve one of those
@@ -146,6 +154,30 @@ citations, the bundle digest, and a digest of the final selected context. The
 with only `context_digest` and `utf8_bytes` omitted. It covers the final matches,
 query, excluded package families, and truncation flag. Removing even the last
 match sets `truncated` and changes the digest accordingly.
+
+Selected MDX sections carry an orthogonal `semantic_role`: guidance,
+use-condition, exclusion, decision, composition, behavior, accessibility or
+constraint. Recognized headings and their nearest recognized ancestors supply
+these roles; unknown headings stay guidance. Sparse selector overrides express
+ambiguous headings without copying canonical prose into metadata. Existing
+section `purpose` values still identify guidance, API and recipe sections.
+
+A `qualification_group` binds related complete sections, such as when-to-use
+and when-not-to-use or a loading example and its accessibility advice. Context
+selection and every compact fallback retain the entire group or disclose its
+omission. Roles and groups participate in the content identity. Authored links
+and whole decision sections retain conditions and alternatives; this pilot does
+not introduce a separate relationship graph.
+
+Task context uses a small deterministic cue vocabulary to select these authored
+roles. Roles add context alongside directly matching authored sections; mixed
+questions select each applicable role before budget compaction.
+Explicit API questions retain their existing selection. If ordinary record
+matches contain no compatible canonical guide, context also searches
+the guide family in the same lexical index. A task can follow one authored AST
+link hop to another selected guide (at most 32 distinct links), preserving the
+target's package compatibility and section qualifications. Text inside code is
+not a relationship. Context never synthesizes a preference or fetches a link.
 
 Every selected canonical document retains its complete authored limitations,
 readiness, content identity and recipe identity, including compact variants.

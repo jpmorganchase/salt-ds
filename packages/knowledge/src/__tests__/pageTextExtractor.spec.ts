@@ -15,6 +15,122 @@ function source(documentId: string, sourcePath: string, route: string) {
 }
 
 describe("parseSelectedMdxDocument", () => {
+  it("classifies known headings, keeps conditions paired, and supports sparse explicit semantics", () => {
+    const document = parseSelectedMdxDocument({
+      source: source(
+        "guide.example",
+        "site/docs/patterns/forms.mdx",
+        "/salt/patterns/forms",
+      ),
+      mdx: [
+        "## When to use",
+        "Choose this for a focused task.",
+        "## When not to use",
+        "Avoid this for a long task.",
+        "## How to build",
+        "General construction guidance.",
+        "### Accessibility",
+        "Preserve accessible names.",
+        "#### Details",
+        "Names remain available.",
+        "### Surface",
+        "Consider the space needed.",
+        "### Unknown",
+        "Unclassified prose.",
+      ].join("\n\n"),
+      selectors: [
+        {
+          id: "example.use",
+          heading_path: ["When to use"],
+          include_descendants: false,
+        },
+        {
+          id: "example.avoid",
+          heading_path: ["When not to use"],
+          include_descendants: false,
+        },
+        {
+          id: "example.build",
+          heading_path: ["How to build"],
+          include_descendants: false,
+        },
+        {
+          id: "example.accessibility",
+          heading_path: ["How to build", "Accessibility"],
+          include_descendants: true,
+        },
+        {
+          id: "example.surface",
+          heading_path: ["How to build", "Surface"],
+          include_descendants: false,
+          semantic_role: "decision",
+          qualification_group: "example.surfaces",
+        },
+        {
+          id: "example.unknown",
+          heading_path: ["How to build", "Unknown"],
+          include_descendants: false,
+        },
+      ],
+    });
+    expect(document.diagnostics).toEqual([]);
+    const sections = new Map(
+      document.sections.map((section) => [section.id, section]),
+    );
+    for (const [id, role] of Object.entries({
+      "example.use": "use-condition",
+      "example.avoid": "exclusion",
+      "example.build": "guidance",
+      "example.accessibility": "accessibility",
+      "example.surface": "decision",
+      "example.unknown": "guidance",
+    })) {
+      expect(sections.get(id)?.semantic_role).toBe(role);
+    }
+    const conditions = sections.get("example.use")?.qualification_group;
+    expect(conditions).toMatch(/\S/u);
+    expect(sections.get("example.avoid")?.qualification_group).toBe(conditions);
+    const accessibility = sections.get("example.accessibility");
+    expect(accessibility?.qualification_group).toMatch(/\S/u);
+    const inherited = document.sections.find(
+      (section) => section.heading_path.at(-1) === "Details",
+    );
+    expect(inherited?.semantic_role).toBe("accessibility");
+    expect(inherited?.qualification_group).toBe(
+      accessibility?.qualification_group,
+    );
+    expect(sections.get("example.surface")?.qualification_group).toBe(
+      "example.surfaces",
+    );
+    expect(sections.get("example.build")?.qualification_group).toBeUndefined();
+    expect(
+      sections.get("example.unknown")?.qualification_group,
+    ).toBeUndefined();
+    expect(parseDocumentModel(document)).toEqual(document);
+    expect(() =>
+      parseDocumentModel({
+        ...document,
+        sections: [
+          { ...document.sections[0], semantic_role: "inferred-policy" },
+        ],
+      }),
+    ).toThrow();
+    expect(() =>
+      parseDocumentModel({
+        ...document,
+        sections: [
+          { ...document.sections[0], qualification_group: "../unsafe" },
+        ],
+      }),
+    ).toThrow();
+    expect(() =>
+      parseDocumentModel({
+        ...document,
+        sections: [{ ...document.sections[0], semantic_role: undefined }],
+      }),
+    ).toThrow();
+  });
+
   it("keeps Button Loading attached to its h2 purpose, including its nested best-practice rationale", async () => {
     const raw = await readFile(
       path.join(repoRoot, "site/docs/components/button/examples.mdx"),
@@ -41,6 +157,16 @@ describe("parseSelectedMdxDocument", () => {
       "button.loading",
       "button.loading.best-practices",
     ]);
+    const loading = document.sections.find(
+      (section) => section.id === "button.loading",
+    );
+    const rationale = document.sections.find(
+      (section) => section.heading_path.at(-1) === "Best practices",
+    );
+    expect(loading?.semantic_role).toBe("behavior");
+    expect(rationale?.semantic_role).toBe("behavior");
+    expect(loading?.qualification_group).toMatch(/\S/u);
+    expect(rationale?.qualification_group).toBe(loading?.qualification_group);
     expect(document.sections[0].blocks).toEqual(
       expect.arrayContaining([
         expect.objectContaining({

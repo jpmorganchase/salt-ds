@@ -30,6 +30,7 @@ describe("renderDocument", () => {
     const markdown = renderDocumentSection(
       {
         id: "submission",
+        semantic_role: "behavior" as const,
         heading_path: ["Forms", "Submission"],
         heading: [{ kind: "text", value: "Submission" }],
         level: 2,
@@ -116,6 +117,7 @@ describe("renderDocument", () => {
     expect(
       documentSectionText({
         id: "button.loading",
+        semantic_role: "behavior" as const,
         heading_path: ["Button", "Loading"],
         heading: null,
         level: null,

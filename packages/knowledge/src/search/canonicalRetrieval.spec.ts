@@ -331,6 +331,41 @@ describe("generated canonical retrieval", () => {
     }
   });
 
+  it.each([
+    { family: "component", id: "component.button", folder: "components" },
+    { family: "pattern", id: "pattern.forms", folder: "patterns" },
+    {
+      family: "page",
+      id: "page.salt-components-dialog-accessibility",
+      folder: "pages",
+    },
+  ])(
+    "links an attached $family projection to its complete canonical guide",
+    ({ family, id, folder }) => {
+      const { canonical } = resolved(`record:${family}:${id}`);
+      const projectionPath = `markdown/${folder}/${id}.md`;
+      const projection = store.readArtifact(projectionPath).toString("utf8");
+      const destinations = [...projection.matchAll(/\]\(([^)]+)\)/gu)].map(
+        (match) =>
+          path.posix.normalize(
+            path.posix.join(
+              path.posix.dirname(projectionPath),
+              decodeURIComponent(match[1]),
+            ),
+          ),
+      );
+      const guidePath = `markdown/guides/${canonical.reference.slice("record:guide:".length)}.md`;
+      expect(destinations).toContain(guidePath);
+      expect(projection).toContain(canonical.reference);
+      const complete = store.readArtifact(guidePath).toString("utf8");
+      expect(complete).toBe(renderCanonicalDocument(canonical));
+      expect(complete).toContain(canonical.content_identity);
+      expect(Buffer.byteLength(projection, "utf8")).toBeLessThan(
+        Buffer.byteLength(complete, "utf8"),
+      );
+    },
+  );
+
   it("keeps unrelated create requests contextual and bounds real JSON and Markdown context", () => {
     const unsupported = buildKnowledgeContext(store, {
       query: "create unsupported drag drop kanban",
