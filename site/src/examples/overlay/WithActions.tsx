@@ -25,12 +25,10 @@ const checkboxesData = [
   },
 ];
 
-interface WithActionsContentProps {
-  id?: string;
-  onClose: () => void;
-}
+export const WithActions = (): ReactElement => {
+  const [open, setOpen] = useState(false);
+  const id = useId();
 
-const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
   const [controlledValues, setControlledValues] = useState([
     checkboxesData[0].value,
   ]);
@@ -39,6 +37,8 @@ const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
     checked: false,
     indeterminate: true,
   });
+
+  const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const updatedChecked = event.target.checked;
@@ -69,46 +69,8 @@ const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
 
   const handleExport = () => {
     console.log(`${controlledValues.length} file(s) exported`);
-    onClose();
+    setOpen(false);
   };
-
-  return (
-    <>
-      <OverlayHeader header="Export" id={id} />
-      <OverlayPanelContent>
-        <StackLayout gap={1}>
-          <Checkbox
-            indeterminate={indeterminate}
-            checked={!indeterminate}
-            label={`${controlledValues.length} of 2 selected`}
-            onChange={handleChange}
-          />
-          <Divider variant="secondary" />
-          <CheckboxGroup
-            checkedValues={controlledValues}
-            onChange={handleGroupChange}
-          >
-            {checkboxesData.map((data) => (
-              <Checkbox key={data.value} {...data} />
-            ))}
-          </CheckboxGroup>
-          <Divider variant="secondary" />
-        </StackLayout>
-      </OverlayPanelContent>
-      <OverlayFooter>
-        <Button onClick={handleExport} style={{ width: "100%" }}>
-          Export
-        </Button>
-      </OverlayFooter>
-    </>
-  );
-};
-
-export const WithActions = (): ReactElement => {
-  const [open, setOpen] = useState(false);
-  const id = useId();
-
-  const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
 
   return (
     <Overlay open={open} onOpenChange={onOpenChange} placement="bottom">
@@ -121,12 +83,32 @@ export const WithActions = (): ReactElement => {
         }}
         aria-labelledby={id}
       >
-        <WithActionsContent
-          id={id}
-          onClose={() => {
-            setOpen(false);
-          }}
-        />
+        <OverlayHeader header="Export" id={id} />
+        <OverlayPanelContent>
+          <StackLayout gap={1}>
+            <Checkbox
+              indeterminate={indeterminate}
+              checked={!indeterminate}
+              label={`${controlledValues.length} of 2 selected`}
+              onChange={handleChange}
+            />
+            <Divider variant="secondary" />
+            <CheckboxGroup
+              checkedValues={controlledValues}
+              onChange={handleGroupChange}
+            >
+              {checkboxesData.map((data) => (
+                <Checkbox key={data.value} {...data} />
+              ))}
+            </CheckboxGroup>
+            <Divider variant="secondary" />
+          </StackLayout>
+        </OverlayPanelContent>
+        <OverlayFooter>
+          <Button onClick={handleExport} style={{ width: "100%" }}>
+            Export
+          </Button>
+        </OverlayFooter>
       </OverlayPanel>
     </Overlay>
   );
