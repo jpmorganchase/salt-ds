@@ -3,6 +3,10 @@ import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { linkTokensToComponents } from "../build/buildRegistryTokens.js";
+import {
+  createCatalogInputInventory,
+  withCatalogInputTracking,
+} from "../build/catalogInputInventory.js";
 import type { ComponentRecord, TokenRecord } from "../types.js";
 
 const temporaryRoots: string[] = [];
@@ -56,12 +60,13 @@ function token(name: string): TokenRecord {
 }
 
 describe("component token applicability", () => {
-  it("uses implementation sources without admitting tests or stories", async () => {
+  it("uses implementation sources without admitting tests, stories or build outputs", async () => {
     const repoRoot = await fs.mkdtemp(
       path.join(os.tmpdir(), "salt-token-applicability-"),
     );
     temporaryRoots.push(repoRoot);
-    const sourceRoot = path.join(repoRoot, "packages", "fixture", "src");
+    const packageRoot = path.join(repoRoot, "packages", "fixture");
+    const sourceRoot = path.join(packageRoot, "src");
     await fs.mkdir(path.join(sourceRoot, "__tests__"), { recursive: true });
     await Promise.all([
       fs.writeFile(
@@ -86,18 +91,71 @@ describe("component token applicability", () => {
       ),
     ]);
 
+    await fs.writeFile(
+      path.join(packageRoot, "theme.css"),
+      ".fixture { color: var(--salt-root-token); }",
+    );
+    for (const [directory, file] of [
+      ["dist-types", "index.d.ts"],
+      ["dist-cjs", "theme.css"],
+      ["dist-es", "theme.css"],
+    ]) {
+      await fs.mkdir(path.join(packageRoot, directory), { recursive: true });
+      await fs.writeFile(
+        path.join(packageRoot, directory, file),
+        "/* generated output references --salt-built-token */",
+      );
+    }
+    const rootCssOutputs = [
+      ["ag-grid-theme", "salt-ag-theme.css", "--salt-grid-source-token"],
+      [
+        "react-resizable-panels-theme",
+        "index.css",
+        "--salt-splitter-source-token",
+      ],
+    ] as const;
+    for (const [packageName, cssFile, sourceToken] of rootCssOutputs) {
+      const themeRoot = path.join(repoRoot, "packages", packageName);
+      await fs.mkdir(path.join(themeRoot, "src"), { recursive: true });
+      await fs.writeFile(
+        path.join(themeRoot, "src", cssFile),
+        `.fixture { color: var(${sourceToken}); }`,
+      );
+      await fs.writeFile(
+        path.join(themeRoot, cssFile),
+        "/* generated output references --salt-built-token */",
+      );
+    }
+    const inventory = await createCatalogInputInventory(repoRoot, [
+      "packages/fixture/src/**/*",
+      "packages/fixture/*.css",
+      "packages/ag-grid-theme/src/**/*",
+      "packages/react-resizable-panels-theme/src/**/*",
+    ]);
     const tokenNames = [
       "--salt-production-token",
+      "--salt-root-token",
+      "--salt-grid-source-token",
+      "--salt-splitter-source-token",
+      "--salt-built-token",
       "--salt-spec-token",
       "--salt-test-token",
       "--salt-story-token",
       "--salt-nested-test-token",
     ];
-    const result = await linkTokensToComponents(
-      repoRoot,
-      [component("packages/fixture/src")],
-      tokenNames.map(token),
-    );
+    const scan = () =>
+      withCatalogInputTracking(repoRoot, inventory, () =>
+        linkTokensToComponents(
+          repoRoot,
+          [
+            component("packages/fixture"),
+            component("packages/ag-grid-theme"),
+            component("packages/react-resizable-panels-theme"),
+          ],
+          tokenNames.map(token),
+        ),
+      );
+    const result = await scan();
 
     expect(
       Object.fromEntries(
@@ -105,11 +163,21 @@ describe("component token applicability", () => {
       ),
     ).toEqual({
       "--salt-production-token": ["Fixture"],
+      "--salt-root-token": ["Fixture"],
+      "--salt-grid-source-token": ["Fixture"],
+      "--salt-splitter-source-token": ["Fixture"],
+      "--salt-built-token": [],
       "--salt-spec-token": [],
       "--salt-test-token": [],
       "--salt-story-token": [],
       "--salt-nested-test-token": [],
     });
+
+    await fs.writeFile(
+      path.join(sourceRoot, "undeclared.ts"),
+      "const untracked = 'var(--salt-production-token)';",
+    );
+    await expect(scan()).rejects.toThrow(/undeclared input/u);
   });
 });
 

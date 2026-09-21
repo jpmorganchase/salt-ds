@@ -35,14 +35,13 @@ const DIALOG_EXAMPLES_DOCUMENT_PATH =
 const DIALOG_ACCESSIBILITY_DOCUMENT_PATH =
   "site/docs/components/dialog/accessibility.mdx";
 const BUTTON_BAR_DOCUMENT_PATH = "site/docs/patterns/button-bar.mdx";
-const FORMS_STANDARD_LAYOUT_SOURCE_PATH =
-  "site/src/examples/patterns/forms/index.tsx";
+const FORMS_EXAMPLES_SOURCE_PATH = "site/src/examples/patterns/forms/index.tsx";
 const BUTTON_LOADING_SOURCE_PATH = "site/src/examples/button/Loading.tsx";
 // These existing site previews belong to the selected document descriptors,
 // separately from the recipe's app files. Their reads remain in the sealed
 // compiler input inventory and their paths enter the returned guide provenance.
 const SELECTED_PREVIEW_SOURCE_PATHS = new Set([
-  FORMS_STANDARD_LAYOUT_SOURCE_PATH,
+  FORMS_EXAMPLES_SOURCE_PATH,
   BUTTON_LOADING_SOURCE_PATH,
 ]);
 
@@ -107,6 +106,15 @@ const FORMS_SELECTORS: readonly SelectedMdxSectionSelector[] = [
     ],
     include_descendants: false,
     semantic_role: "constraint",
+  },
+];
+
+const FORMS_ERROR_SUMMARY_SELECTORS: readonly SelectedMdxSectionSelector[] = [
+  {
+    id: "forms.error-summary",
+    heading_path: ["How to build", "Submission and recovery", "Error summary"],
+    include_descendants: false,
+    semantic_role: "accessibility",
   },
 ];
 
@@ -763,6 +771,7 @@ export async function buildSelectedGuidance(
     navigation,
     contentStatus,
     forms,
+    formsErrorSummary,
     button,
     buttonAccessibility,
     choosingPrimitive,
@@ -806,6 +815,15 @@ export async function buildSelectedGuidance(
       documentId: recipe.id,
       route: "/salt/patterns/forms",
       selectors: FORMS_SELECTORS,
+      fallbackTitle: "Forms",
+    }),
+    parseSelectedDocument({
+      sourceRoot: input.sourceRoot,
+      declared,
+      sourcePath: assertDeclared(declared, FORMS_DOCUMENT_PATH),
+      documentId: "guide.forms.error-summary",
+      route: "/salt/patterns/forms",
+      selectors: FORMS_ERROR_SUMMARY_SELECTORS,
       fallbackTitle: "Forms",
     }),
     parseSelectedDocument({
@@ -886,7 +904,13 @@ export async function buildSelectedGuidance(
     forms.document,
     "patterns/forms",
     "StandardLayout",
-    FORMS_STANDARD_LAYOUT_SOURCE_PATH,
+    FORMS_EXAMPLES_SOURCE_PATH,
+  );
+  requiredPreview(
+    formsErrorSummary.document,
+    "patterns/forms",
+    "ErrorSummary",
+    FORMS_EXAMPLES_SOURCE_PATH,
   );
   const buttonPreviewPath = requiredPreview(
     button.document,
@@ -939,6 +963,7 @@ export async function buildSelectedGuidance(
     );
   }
   const buttonName = `Button ${buttonHeading}`;
+  requireSupportedDocument(formsErrorSummary.document);
   requireSupportedDocument(contentStatus.document);
   requireSupportedDocument(buttonAccessibility.document);
   const workflowDocuments = [
@@ -1007,6 +1032,28 @@ export async function buildSelectedGuidance(
       },
       files: [formsFile],
       limitations: workflowLimitations,
+    },
+    {
+      id: "guide.forms.error-summary",
+      name: "Forms error summary",
+      aliases: ["Forms error summary"],
+      summary: summaryFromDocument(
+        formsErrorSummary.document,
+        "Forms error summary",
+      ),
+      kind: "component-guidance",
+      document: formsErrorSummary.document,
+      recipeManifest: null,
+      sourcePaths: [FORMS_DOCUMENT_PATH, formsPreviewPath],
+      componentNames: ["Banner", "Form field", "Input", "Link", "Button"],
+      packageNames: ["@salt-ds/core"],
+      attach: {
+        componentNames: [],
+        patternNames: [],
+        pageSourcePaths: [],
+      },
+      files: [formsFile],
+      limitations: [],
     },
     {
       id: "guide.button.loading",

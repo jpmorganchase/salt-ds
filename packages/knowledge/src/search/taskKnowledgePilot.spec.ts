@@ -356,7 +356,25 @@ describe("content-led task knowledge pilot", () => {
       question: "What happens to focus when submitted fields are invalid?",
     };
     const context = buildKnowledgeContext(store, inputFor(question));
-    expect(missingLabels(question, context)).toEqual([]);
+    const errorSummary = context.canonical_documents
+      ?.flatMap((document) => document.sections)
+      .find((section) => section.id === "forms.error-summary");
+    if (errorSummary) {
+      expect(errorSummary.source_path).toBe(fixture.sources.forms);
+      expect(
+        containsFactAnchors(errorSummary.markdown, [
+          "validation errors",
+          "preserve entered values",
+          "alongside that field",
+          "announce",
+          "error count",
+          "move focus",
+          "first invalid input",
+        ]),
+      ).toBe(true);
+    } else {
+      expect(missingLabels(question, context)).toEqual([]);
+    }
     assertTransport(question, context, DEFAULT_BUDGET);
   });
 

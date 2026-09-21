@@ -69,6 +69,26 @@ and offer a retry.
 
 For a form presented in a dialog, follow the [dialog focus guidance](/salt/components/dialog/accessibility#focus). Use the [button bar pattern](/salt/patterns/button-bar#dialog) for action placement and its [stacked layout guidance](/salt/patterns/button-bar#stacked-button-bar) for narrow views.
 
+#### Error summary
+
+For a larger form, use a [Banner](/salt/components/banner) above the fields to list
+validation errors. Link each error to its input and repeat the specific feedback
+alongside that field. The summary helps users find problems across the form; it
+does not replace field feedback.
+
+On submit, preserve entered values and move focus to the first invalid input
+after its error message is rendered. Set `aria-invalid` on the input itself and
+associate its feedback through FormField. Summary links must also move keyboard
+focus to the input, not just scroll to it. Announce a concise error count politely;
+avoid adding competing live announcements to the banner and every field.
+
+This example checks three required fields locally. Submit with missing details,
+use the summary links, and correct the fields. Resubmitting checks the remaining
+errors without clearing any values. A valid submission only confirms that the
+example's required details are present; it does not send data.
+
+<LivePreview componentName="patterns/forms" exampleName="ErrorSummary" />
+
 ### Cancellation and drafts
 
 In a Save/Cancel editor, **Cancel** abandons unsaved edits. If nothing has changed,

@@ -249,6 +249,36 @@ describe("buildSelectedGuidance", () => {
       ),
     });
 
+    const errorSummary = guides.find(
+      (guide) => guide.id === "guide.forms.error-summary",
+    );
+    if (!errorSummary) throw new Error("Missing Forms error summary guidance.");
+
+    const errorSummarySection = errorSummary.document.sections.find(
+      (section) => section.id === "forms.error-summary",
+    );
+    expect(errorSummarySection?.blocks).toContainEqual(
+      expect.objectContaining({
+        kind: "live_preview",
+        example_name: "ErrorSummary",
+        example_source_path: formsPreviewPath,
+      }),
+    );
+    expect(errorSummary.files).toEqual([
+      {
+        sourcePath: formsPreviewPath,
+        language: "tsx",
+        code: canonicalText(
+          await readFile(path.join(repoRoot, formsPreviewPath), "utf8"),
+        ),
+      },
+    ]);
+    expect(
+      workflow.document.sections.some(
+        (section) => section.id === "forms.error-summary",
+      ),
+    ).toBe(false);
+
     const accessibleName = guides.find(
       (guide) => guide.id === "guide.button.accessible-name",
     );
