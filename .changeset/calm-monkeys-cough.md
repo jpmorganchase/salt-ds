@@ -2,6 +2,8 @@
 "@salt-ds/core": minor
 ---
 
-Add `OverlayFooter`, a composable layout section that owns the inner padding of an overlay panel. Use it as a direct child of `OverlayPanel` with `OverlayHeader` and `OverlayPanelContent` to create structured layouts.
+Add `OverlayFooter`, a composable layout section for an overlay panel. Use it as a direct child of `OverlayPanel` with `OverlayHeader` and `OverlayPanelContent` to create structured layouts.
 
-Add the `--saltOverlay-header-padding` CSS variable to `OverlayHeader`, alongside the existing `--saltOverlay-content-padding` and `--saltOverlay-footer-padding`.
+`OverlayHeader` and `OverlayFooter` own their padding on all sides. `OverlayPanelContent` drops its top padding after an `OverlayHeader` and its bottom padding before an `OverlayFooter`, so adjacent sections share a single gap.
+
+Add the `--saltOverlay-header-padding` and `--saltOverlay-footer-padding` CSS variables to `OverlayHeader` and `OverlayFooter`, alongside the existing `--saltOverlay-content-padding`.

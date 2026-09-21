@@ -8,6 +8,14 @@
   display: flex;
 }
 
+.saltOverlayHeader ~ .saltOverlayPanelContent {
+  padding-top: 0;
+}
+
+.saltOverlayPanelContent:not(:last-child) {
+  padding-bottom: 0;
+}
+
 .saltOverlayPanelContent-container {
   flex: 1;
   min-width: 0;

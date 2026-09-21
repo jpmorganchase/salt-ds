@@ -26,8 +26,3 @@
 .saltOverlayHeader-actionsContainer {
   align-self: flex-start;
 }
-
-/* Overrides */
-.saltOverlayHeader ~ .saltOverlayPanelContent {
-  padding-top: 0;
-}
