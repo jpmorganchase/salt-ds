@@ -97,6 +97,11 @@ block is available with `--kind agents`; neither command edits the repository.
 
 ## Maintainer verification
 
+The owner named in the recipe reviews affected behavior when dependencies,
+public APIs, tokens, interaction states or accessibility behavior change.
+Use focused checks for routine edits and the installed-package gate below at
+integration checkpoints or when package/setup contracts change.
+
 ```sh
 yarn build:ai-tooling
 yarn check:salt-sample-apps -- --app operations-dashboard
