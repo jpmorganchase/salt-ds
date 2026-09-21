@@ -106,36 +106,64 @@ function assertNpmVersion(version) {
   }
 }
 
-async function publishPackage(tarballPath, npmTag) {
-  try {
-    await execFile(
-      "npm",
-      [
-        "publish",
-        tarballPath,
-        "--tag",
-        npmTag,
-        "--registry",
-        npmRegistry,
-        "--access",
-        "public",
-        "--provenance",
-        "--ignore-scripts",
-        "--json",
-      ],
-      {
-        maxBuffer: 20 * 1024 * 1024,
-      },
-    );
-  } catch (error) {
-    const output = [error.stdout, error.stderr]
-      .filter((value) => typeof value === "string" && value.trim() !== "")
-      .map((value) => value.trim())
-      .join("\n");
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
-    throw new Error(
-      `npm publish failed${output === "" ? `: ${error.message}` : `:\n${output}`}`,
-    );
+async function publishPackage(tarballPath, npmTag) {
+  // npm's OIDC trusted-publishing token exchange can fail transiently
+  // (network blips, brief registry-side throttling), surfacing as an
+  // opaque auth error rather than something retryable-looking. Retry a
+  // few times with backoff before giving up.
+  const maxAttempts = 3;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      await execFile(
+        "npm",
+        [
+          "publish",
+          tarballPath,
+          "--tag",
+          npmTag,
+          "--registry",
+          npmRegistry,
+          "--access",
+          "public",
+          "--provenance",
+          "--ignore-scripts",
+          "--json",
+        ],
+        {
+          maxBuffer: 20 * 1024 * 1024,
+        },
+      );
+      return;
+    } catch (error) {
+      const output = [error.stdout, error.stderr]
+        .filter((value) => typeof value === "string" && value.trim() !== "")
+        .map((value) => value.trim())
+        .join("\n");
+
+      const message = `npm publish failed${output === "" ? `: ${error.message}` : `:\n${output}`}`;
+
+      // A prior attempt can succeed on npm's side while the response is
+      // lost to a network blip, making a retry see "already published".
+      // Treat that as success rather than a real failure.
+      if (output.includes("cannot publish over the previously published")) {
+        console.warn(`${message}\nTreating as already published; continuing.`);
+        return;
+      }
+
+      if (attempt === maxAttempts) {
+        throw new Error(message);
+      }
+
+      console.warn(
+        `${message}\nRetrying (attempt ${attempt + 1}/${maxAttempts})...`,
+      );
+      await sleep(attempt * 10_000);
+    }
   }
 }
 
