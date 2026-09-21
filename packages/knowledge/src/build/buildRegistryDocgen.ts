@@ -53,6 +53,43 @@ const DOCGEN_COMPILER_OPTIONS: ts.CompilerOptions = {
   types: [],
 };
 
+function docgenCompilerOptions(repoRoot: string): ts.CompilerOptions {
+  const configPath = path.join(repoRoot, "tsconfig.json");
+  const configSource = readCatalogInputFileSyncOrNull(configPath, "utf8");
+  if (configSource === null) return DOCGEN_COMPILER_OPTIONS;
+  const parsed = ts.parseConfigFileTextToJson(configPath, configSource);
+  if (parsed.error) {
+    throw new Error(
+      `Cannot parse docgen TypeScript config: ${ts.flattenDiagnosticMessageText(parsed.error.messageText, "\n")}.`,
+    );
+  }
+  const converted = ts.convertCompilerOptionsFromJson(
+    { paths: parsed.config?.compilerOptions?.paths },
+    repoRoot,
+    configPath,
+  );
+  if (converted.errors.length > 0) {
+    throw new Error(
+      `Cannot load docgen TypeScript paths: ${converted.errors
+        .map((error) =>
+          ts.flattenDiagnosticMessageText(error.messageText, "\n"),
+        )
+        .join("; ")}.`,
+    );
+  }
+  return {
+    ...DOCGEN_COMPILER_OPTIONS,
+    // Cross-package props must come from inventoried sources even when an
+    // ordinary package build has populated its published declaration paths.
+    paths: Object.fromEntries(
+      Object.entries(converted.options.paths ?? {}).map(([name, targets]) => [
+        name,
+        targets.map((target) => path.resolve(repoRoot, target)),
+      ]),
+    ),
+  };
+}
+
 const DOCGEN_PARSER_OPTIONS: docgen.ParserOptions = {
   propFilter: (prop) =>
     !/@types[\\/]react[\\/]/u.test(prop.parent?.fileName ?? ""),
@@ -120,8 +157,9 @@ function isFirstPartyRepoPath(repoRoot: string, targetPath: string): boolean {
 
 export function createTrackedDocgenCompilerHost(
   repoRoot: string,
+  compilerOptions: ts.CompilerOptions = DOCGEN_COMPILER_OPTIONS,
 ): ts.CompilerHost {
-  const compilerHost = ts.createCompilerHost(DOCGEN_COMPILER_OPTIONS);
+  const compilerHost = ts.createCompilerHost(compilerOptions);
   const originalReadFile = compilerHost.readFile.bind(compilerHost);
   const originalFileExists = compilerHost.fileExists.bind(compilerHost);
   const originalDirectoryExists =
@@ -234,11 +272,12 @@ export function createTrackedDocgenCompilerHost(
 function createTrackedDocgenProgram(
   repoRoot: string,
   entryPath: string,
+  compilerOptions: ts.CompilerOptions,
 ): ts.Program {
   return ts.createProgram(
     [entryPath],
-    DOCGEN_COMPILER_OPTIONS,
-    createTrackedDocgenCompilerHost(repoRoot),
+    compilerOptions,
+    createTrackedDocgenCompilerHost(repoRoot, compilerOptions),
   );
 }
 
@@ -718,8 +757,9 @@ export async function loadPropMetadata(
   repoRoot: string,
 ): Promise<PropMetadata> {
   const byPackage = new Map<string, Map<string, DocgenComponentShape[]>>();
+  const compilerOptions = docgenCompilerOptions(repoRoot);
   const parser = docgen.withCompilerOptions(
-    DOCGEN_COMPILER_OPTIONS,
+    compilerOptions,
     DOCGEN_PARSER_OPTIONS,
   );
 
@@ -731,7 +771,11 @@ export async function loadPropMetadata(
       "src",
       "index.ts",
     );
-    const program = createTrackedDocgenProgram(repoRoot, entryPath);
+    const program = createTrackedDocgenProgram(
+      repoRoot,
+      entryPath,
+      compilerOptions,
+    );
     const valueExportNames = publicValueExportNames(program, entryPath);
     const parsed = parser
       .parseWithProgramProvider(entryPath, () => program)

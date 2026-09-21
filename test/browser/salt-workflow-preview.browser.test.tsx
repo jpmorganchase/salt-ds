@@ -2,7 +2,10 @@ import { describe, expect, it, vi } from "vitest";
 import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { workflowPreviewForRoute } from "../../site/src/components/components/patternSourceLoaders";
-import { WorkflowPreview } from "../../site/src/components/components/WorkflowPreview";
+import {
+  ButtonLoadingResources,
+  WorkflowPreview,
+} from "../../site/src/components/components/WorkflowPreview";
 
 type Artifact = {
   url: string;
@@ -198,6 +201,153 @@ describe("verified development workflow preview", () => {
       )
       .toHaveTextContent("No notification was sent.");
   }, 20_000);
+
+  it("clears a source failure when the reader retries successfully", async () => {
+    const originalFetch = globalThis.fetch;
+    const bootstrap = (await (
+      await originalFetch("/ai/development/bootstrap.json")
+    ).json()) as Bootstrap;
+    const file = bootstrap.button.files[0];
+    if (!file) throw new Error("Button resources must include a source file");
+    const sourceBytes = await (await originalFetch(file.url)).arrayBuffer();
+    const source = new TextDecoder().decode(sourceBytes);
+    const filePath = new URL(file.url, window.location.origin).pathname;
+    let firstAttempt = true;
+    let finishRetry: ((response: Response) => void) | undefined;
+    const retryResponse = new Promise<Response>((resolve) => {
+      finishRetry = resolve;
+    });
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
+        const url = new URL(input.toString(), window.location.origin);
+        if (url.pathname === filePath) {
+          if (firstAttempt) {
+            firstAttempt = false;
+            return Promise.resolve(new Response(null, { status: 503 }));
+          }
+          return retryResponse;
+        }
+        return originalFetch(input, init);
+      }),
+    );
+    try {
+      await render(<ButtonLoadingResources />);
+      const fileItem = page
+        .getByRole("listitem")
+        .filter({ hasText: file.path });
+      await fileItem.getByText(file.path, { exact: true }).click();
+      const viewSource = fileItem.getByRole("button", { name: "View source" });
+      await viewSource.click();
+      await expect
+        .element(fileItem.getByText(/source is unavailable/iu))
+        .toBeVisible();
+
+      await viewSource.click();
+      await expect
+        .element(fileItem.getByText(/source is unavailable/iu))
+        .not.toBeInTheDocument();
+      finishRetry?.(new Response(sourceBytes));
+      await expect
+        .poll(() => fileItem.element().querySelector("pre")?.textContent)
+        .toBe(source);
+      await expect
+        .element(fileItem.getByText(/source is unavailable/iu))
+        .not.toBeInTheDocument();
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
+  it("shows Button resource loading before an unavailable bootstrap", async () => {
+    let finishLoading: ((response: Response) => void) | undefined;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(
+        () =>
+          new Promise<Response>((resolve) => {
+            finishLoading = resolve;
+          }),
+      ),
+    );
+    try {
+      await render(<ButtonLoadingResources />);
+      const resources = page.getByRole("region", {
+        name: "Button loading resources",
+      });
+      await expect
+        .element(resources.getByRole("status"))
+        .toHaveTextContent(/Loading/iu);
+      finishLoading?.(new Response(null, { status: 503 }));
+      await expect
+        .element(resources.getByRole("status"))
+        .toHaveTextContent(/unavailable/iu);
+      await expect
+        .element(
+          resources.getByRole("link", { name: "Button loading document" }),
+        )
+        .not.toBeInTheDocument();
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
+  it.each(["integrity", "document identity"] as const)(
+    "shows unavailable Button resources after a guidance %s failure",
+    async (failure) => {
+      const bootstrap = (await (
+        await fetch("/ai/development/bootstrap.json")
+      ).json()) as Bootstrap;
+      const documentUrl = bootstrap.button.guidance.document.url;
+      const document = (await (await fetch(documentUrl)).json()) as {
+        content_identity: string;
+      };
+      if (failure === "integrity") {
+        bootstrap.button.guidance.document.sha256 = `sha256:${"0".repeat(64)}`;
+      } else {
+        document.content_identity = "mismatched-document-identity";
+        bootstrap.button.guidance.document = await jsonArtifact(
+          documentUrl,
+          document,
+        );
+      }
+      vi.stubGlobal(
+        "fetch",
+        vi.fn(async (input: RequestInfo | URL) => {
+          const url = new URL(input.toString(), window.location.origin);
+          const body =
+            url.pathname === "/ai/development/bootstrap.json"
+              ? bootstrap
+              : url.pathname ===
+                  new URL(documentUrl, window.location.origin).pathname
+                ? document
+                : undefined;
+          return new Response(body ? JSON.stringify(body) : undefined, {
+            status: body ? 200 : 404,
+          });
+        }),
+      );
+      try {
+        await render(<ButtonLoadingResources />);
+        const resources = page.getByRole("region", {
+          name: "Button loading resources",
+        });
+        await expect
+          .element(resources.getByRole("status"))
+          .toHaveTextContent(/unavailable/iu);
+        await expect
+          .element(
+            resources.getByRole("link", { name: "Button loading document" }),
+          )
+          .not.toBeInTheDocument();
+        await expect
+          .element(resources.getByRole("region", { name: "Verified guidance" }))
+          .not.toBeInTheDocument();
+      } finally {
+        vi.unstubAllGlobals();
+      }
+    },
+  );
 
   it("rejects a bootstrap whose verified recipe identity does not match", async () => {
     const registration = workflowPreviewForRoute(

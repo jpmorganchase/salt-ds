@@ -24,6 +24,7 @@ import { execa } from "execa";
 import { chromium } from "playwright";
 import {
   assertPackedWorkflowManifestMatchesSource,
+  packSampleAppCandidate,
   readPackedWorkflowRecipe,
   retainViteWorkflowPreview,
   selectSampleAppNames,
@@ -176,19 +177,19 @@ async function packageRegistry() {
       continue;
     }
     assert(!registry.has(manifest.name), `Duplicate package ${manifest.name}`);
+    const publishDirectory = manifest.publishConfig?.directory;
     assert(
-      typeof manifest.publishConfig?.directory === "string",
-      `${manifest.name} has no publish directory`,
+      publishDirectory === undefined ||
+        (typeof publishDirectory === "string" && publishDirectory.length > 0),
+      `${manifest.name} has an invalid publish directory`,
     );
-    const distributionRoot = path.resolve(
-      packageRoot,
-      manifest.publishConfig.directory,
-    );
-    inside(
-      path.join(repositoryRoot, "dist"),
-      distributionRoot,
-      `${manifest.name} publish directory`,
-    );
+    const distributionRoot = publishDirectory
+      ? inside(
+          path.join(repositoryRoot, "dist"),
+          path.resolve(packageRoot, publishDirectory),
+          `${manifest.name} publish directory`,
+        )
+      : null;
     registry.set(manifest.name, {
       manifest,
       manifestBytes,
@@ -472,30 +473,6 @@ async function packCohort(cohort, artifactRoot, receiptKey, compatibility) {
   await mkdir(artifactRoot, { recursive: true });
   const packed = [];
   for (const entry of cohort) {
-    const distributionManifestPath = path.join(
-      entry.candidate.distributionRoot,
-      "package.json",
-    );
-    const distributionManifestBytes = await readFile(distributionManifestPath);
-    const distributionManifest = JSON.parse(
-      distributionManifestBytes.toString("utf8"),
-    );
-    assert.equal(
-      distributionManifest.name,
-      entry.name,
-      `${entry.name} distribution name is stale`,
-    );
-    assert.equal(
-      distributionManifest.version,
-      entry.candidate.manifest.version,
-      `${entry.name} distribution version is stale; run yarn build`,
-    );
-    assert(
-      await pathExists(
-        path.join(entry.candidate.distributionRoot, "README.md"),
-      ),
-      `${entry.name} distribution README is missing`,
-    );
     if (!toolingPackages.includes(entry.name)) {
       assert.equal(
         compatibility.get(entry.name),
@@ -504,40 +481,19 @@ async function packCohort(cohort, artifactRoot, receiptKey, compatibility) {
       );
     }
 
-    const pack = await run(
-      executable("npm"),
-      [
-        "pack",
-        "--json",
-        "--pack-destination",
-        artifactRoot,
-        entry.candidate.distributionRoot,
-      ],
-      { capture: true, label: `${entry.name} candidate pack` },
-    );
-    const metadata = JSON.parse(pack.stdout);
-    assert.equal(
-      metadata.length,
-      1,
-      `${entry.name} produced multiple tarballs`,
-    );
-    const [result] = metadata;
-    assert.equal(
-      result.name,
-      entry.name,
-      `${entry.name} npm pack name mismatch`,
-    );
-    assert.equal(
-      result.version,
-      entry.candidate.manifest.version,
-      `${entry.name} npm pack version mismatch`,
-    );
-    assert(
-      result.files.some((file) => file.path === "README.md"),
-      `${entry.name} tarball omits README.md`,
-    );
-    const tarballPath = path.join(artifactRoot, result.filename);
-    const tarballBytes = await readFile(tarballPath);
+    const {
+      manifest: distributionManifest,
+      manifestBytes: packedManifestBytes,
+      filename,
+      tarballPath,
+      tarballBytes,
+      files,
+    } = await packSampleAppCandidate({
+      candidate: entry.candidate,
+      artifactRoot,
+      run,
+    });
+    const integrity = `sha512-${createHash("sha512").update(tarballBytes).digest("base64")}`;
     const relativeTarball = portable(
       path.relative(repositoryRoot, tarballPath),
     );
@@ -547,11 +503,10 @@ async function packCohort(cohort, artifactRoot, receiptKey, compatibility) {
       ),
       `${entry.name} tarball escaped its artifact directory`,
     );
-    assert(/^sha512-[A-Za-z0-9+/]+={0,2}$/u.test(result.integrity));
     packed.push({
       ...entry,
       distributionManifest,
-      filename: result.filename,
+      filename,
       tarballPath,
       receipt: {
         name: entry.name,
@@ -559,13 +514,13 @@ async function packCohort(cohort, artifactRoot, receiptKey, compatibility) {
         roles: entry.roles,
         used_by: entry.usedBy,
         source_manifest_sha256: sha256(entry.candidate.manifestBytes),
-        packed_manifest_sha256: sha256(distributionManifestBytes),
+        packed_manifest_sha256: sha256(packedManifestBytes),
         tarball: {
           path: relativeTarball,
           sha256: sha256(tarballBytes),
-          integrity: result.integrity,
+          integrity,
           bytes: tarballBytes.byteLength,
-          files: result.files.length,
+          files: files.length,
         },
       },
     });

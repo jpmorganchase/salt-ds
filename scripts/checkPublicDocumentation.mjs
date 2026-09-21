@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
-import { readFile, readdir, stat } from "node:fs/promises";
+import { mkdtemp, readdir, readFile, rm, stat } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
@@ -47,13 +48,99 @@ function publicRoute(file) {
 
 function links(source) {
   const results = [];
-  for (const match of source.matchAll(/\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/gu)) {
+  for (const match of source.matchAll(
+    /\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/gu,
+  )) {
     results.push(match[1]);
   }
-  for (const match of source.matchAll(/\b(?:href|src|srcDark)=["']([^"']+)["']/gu)) {
+  for (const match of source.matchAll(
+    /\b(?:href|src|srcDark)=["']([^"']+)["']/gu,
+  )) {
     results.push(match[1]);
   }
   return results;
+}
+
+async function verifyPackedDocumentation(manifest, packageRoot, readme) {
+  const temporaryDirectory = await mkdtemp(
+    path.join(tmpdir(), "salt-public-documentation-"),
+  );
+  try {
+    let archivePath = path.join(temporaryDirectory, "package.tgz");
+    const publishDirectory = manifest.publishConfig?.directory;
+    if (publishDirectory) {
+      const preparedRoot = path.resolve(packageRoot, publishDirectory);
+      const relativeRoot = path.relative(repositoryRoot, preparedRoot);
+      assert.ok(
+        relativeRoot !== ".." &&
+          !relativeRoot.startsWith(`..${path.sep}`) &&
+          !path.isAbsolute(relativeRoot),
+        `${manifest.name}: publish directory is outside the repository`,
+      );
+      const pack = await execa(
+        process.platform === "win32" ? "npm.cmd" : "npm",
+        [
+          "pack",
+          "--ignore-scripts",
+          "--offline",
+          "--json",
+          "--pack-destination",
+          temporaryDirectory,
+          preparedRoot,
+        ],
+        { cwd: repositoryRoot },
+      );
+      const metadata = JSON.parse(pack.stdout)[0];
+      archivePath = path.join(temporaryDirectory, metadata.filename);
+    } else {
+      await execa(
+        process.execPath,
+        [
+          path.join(repositoryRoot, ".yarn", "releases", "yarn-4.17.0.cjs"),
+          "workspace",
+          manifest.name,
+          "pack",
+          "--out",
+          archivePath,
+        ],
+        {
+          cwd: repositoryRoot,
+          env: { COREPACK_ENABLE_NETWORK: "0", YARN_ENABLE_NETWORK: "0" },
+        },
+      );
+    }
+    const [{ stdout: packedManifestText }, { stdout: packedReadme }] =
+      await Promise.all([
+        execa("tar", ["-xOf", archivePath, "package/package.json"]),
+        execa("tar", ["-xOf", archivePath, "package/README.md"], {
+          stripFinalNewline: false,
+        }),
+      ]);
+    const packedManifest = JSON.parse(packedManifestText);
+    for (const field of [
+      "name",
+      "version",
+      "description",
+      "homepage",
+      "keywords",
+      "license",
+      "repository",
+      "bugs",
+    ]) {
+      assert.deepEqual(
+        packedManifest[field],
+        manifest[field],
+        `${manifest.name}: packed ${field} is stale`,
+      );
+    }
+    assert.equal(
+      packedReadme,
+      readme,
+      `${manifest.name}: packed README is stale`,
+    );
+  } finally {
+    await rm(temporaryDirectory, { recursive: true, force: true });
+  }
 }
 
 const mdxFiles = await walk(siteDocsRoot, (file) => file.endsWith(".mdx"));
@@ -123,50 +210,65 @@ for (const directory of packageDirectories) {
   if (manifest.private === true) continue;
   publicPackages.push({ manifest, packageRoot });
 }
-assert.equal(publicPackages.length, 13, "Expected 13 publishable Salt packages");
+assert.equal(
+  publicPackages.length,
+  13,
+  "Expected 13 publishable Salt packages",
+);
 
 for (const { manifest, packageRoot } of publicPackages) {
   const relativePackageRoot = path.relative(repositoryRoot, packageRoot);
   const readmePath = path.join(packageRoot, "README.md");
   assert.ok(await exists(readmePath), `${manifest.name}: README.md is missing`);
   const readme = await readFile(readmePath, "utf8");
-  assert.ok(readme.length >= 500, `${manifest.name}: README.md is not useful enough`);
-  assert.match(readme, /^## (?:Install|Installation)$/mu, `${manifest.name}: README needs installation guidance`);
-  assert.match(readme, /^## (?:Usage|Quick start)$/mu, `${manifest.name}: README needs usage guidance`);
-  assert.ok(manifest.description?.length >= 20, `${manifest.name}: description is missing`);
-  assert.match(manifest.homepage ?? "", /^https:\/\/www\.saltdesignsystem\.com\//u, `${manifest.name}: canonical homepage is missing`);
-  assert.ok(Array.isArray(manifest.keywords) && manifest.keywords.length >= 3, `${manifest.name}: keywords are missing`);
-  assert.equal(manifest.license, "Apache-2.0", `${manifest.name}: license must be Apache-2.0`);
-  assert.match(manifest.repository?.url ?? "", /github\.com\/jpmorganchase\/salt-ds/u, `${manifest.name}: repository URL is missing`);
-  assert.equal(manifest.repository?.directory, relativePackageRoot.replaceAll("\\", "/"));
-  assert.equal(manifest.bugs?.url, supportUrl, `${manifest.name}: support URL is not canonical`);
+  assert.ok(
+    readme.length >= 500,
+    `${manifest.name}: README.md is not useful enough`,
+  );
+  assert.match(
+    readme,
+    /^## (?:Install|Installation)$/mu,
+    `${manifest.name}: README needs installation guidance`,
+  );
+  assert.match(
+    readme,
+    /^## (?:Usage|Quick start)$/mu,
+    `${manifest.name}: README needs usage guidance`,
+  );
+  assert.ok(
+    manifest.description?.length >= 20,
+    `${manifest.name}: description is missing`,
+  );
+  assert.match(
+    manifest.homepage ?? "",
+    /^https:\/\/www\.saltdesignsystem\.com\//u,
+    `${manifest.name}: canonical homepage is missing`,
+  );
+  assert.ok(
+    Array.isArray(manifest.keywords) && manifest.keywords.length >= 3,
+    `${manifest.name}: keywords are missing`,
+  );
+  assert.equal(
+    manifest.license,
+    "Apache-2.0",
+    `${manifest.name}: license must be Apache-2.0`,
+  );
+  assert.match(
+    manifest.repository?.url ?? "",
+    /github\.com\/jpmorganchase\/salt-ds/u,
+    `${manifest.name}: repository URL is missing`,
+  );
+  assert.equal(
+    manifest.repository?.directory,
+    relativePackageRoot.replaceAll("\\", "/"),
+  );
+  assert.equal(
+    manifest.bugs?.url,
+    supportUrl,
+    `${manifest.name}: support URL is not canonical`,
+  );
 
-  const distRoot = path.join(
-    repositoryRoot,
-    "dist",
-    manifest.name.replace("@salt-ds/", "salt-ds-"),
-  );
-  const distManifestPath = path.join(distRoot, "package.json");
-  assert.ok(await exists(distManifestPath), `${manifest.name}: built package is missing`);
-  const distManifest = JSON.parse(await readFile(distManifestPath, "utf8"));
-  for (const field of [
-    "description",
-    "homepage",
-    "keywords",
-    "license",
-    "repository",
-    "bugs",
-  ]) {
-    assert.deepEqual(distManifest[field], manifest[field], `${manifest.name}: built ${field} is stale`);
-  }
-  assert.ok(await exists(path.join(distRoot, "README.md")), `${manifest.name}: built README is missing`);
-  const pack = await execa(
-    process.platform === "win32" ? "npm.cmd" : "npm",
-    ["pack", "--dry-run", "--json", distRoot],
-    { cwd: repositoryRoot },
-  );
-  const metadata = JSON.parse(pack.stdout)[0];
-  assert.ok(metadata.files.some(({ path: file }) => file === "README.md"), `${manifest.name}: npm pack omits README.md`);
+  await verifyPackedDocumentation(manifest, packageRoot, readme);
 }
 
 const publicTextFiles = [
@@ -176,20 +278,41 @@ const publicTextFiles = [
   ...(await walk(path.join(repositoryRoot, "examples", "apps"), (file) =>
     /\.(?:css|html|js|json|md|mjs|ts|tsx)$/u.test(file),
   )),
-  ...publicPackages.map(({ packageRoot }) => path.join(packageRoot, "README.md")),
+  ...publicPackages.map(({ packageRoot }) =>
+    path.join(packageRoot, "README.md"),
+  ),
 ];
 for (const file of publicTextFiles) {
   const source = await readFile(file, "utf8");
-  assert.doesNotMatch(source, /https:\/\/storybook\.saltdesignsystem\.com/iu, `${path.relative(repositoryRoot, file)} exposes a Storybook URL`);
-  assert.doesNotMatch(source, /https:\/\/github\.com\/jpmorganchase\/salt-ds\/issues/iu, `${path.relative(repositoryRoot, file)} uses GitHub Issues as support`);
+  assert.doesNotMatch(
+    source,
+    /https:\/\/storybook\.saltdesignsystem\.com/iu,
+    `${path.relative(repositoryRoot, file)} exposes a Storybook URL`,
+  );
+  assert.doesNotMatch(
+    source,
+    /https:\/\/github\.com\/jpmorganchase\/salt-ds\/issues/iu,
+    `${path.relative(repositoryRoot, file)} uses GitHub Issues as support`,
+  );
   if (!file.endsWith(path.join("packages", "mcp", "README.md"))) {
-    assert.doesNotMatch(source, /@salt-ds\/mcp/iu, `${path.relative(repositoryRoot, file)} presents unreleased AI tooling`);
+    assert.doesNotMatch(
+      source,
+      /@salt-ds\/mcp/iu,
+      `${path.relative(repositoryRoot, file)} presents unreleased AI tooling`,
+    );
   }
 }
 
 const patternManifest = JSON.parse(
   await readFile(
-    path.join(repositoryRoot, "site", "src", "examples", "patterns", "manifest.json"),
+    path.join(
+      repositoryRoot,
+      "site",
+      "src",
+      "examples",
+      "patterns",
+      "manifest.json",
+    ),
     "utf8",
   ),
 );

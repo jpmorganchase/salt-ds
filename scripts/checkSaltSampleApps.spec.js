@@ -1,17 +1,22 @@
 import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
 
 import Ajv2020 from "ajv/dist/2020.js";
+import { execa } from "execa";
 import { describe, expect, it } from "vitest";
 
 import {
   assertPackedWorkflowManifestMatchesSource,
   assertWorkflowPreviewReferenceClosure,
+  packSampleAppCandidate,
   readPackedWorkflowRecipe,
   selectSampleAppNames,
   unavailableAnalysis,
   verifyCurrentCliCommands,
 } from "./checkSaltSampleAppsHelpers.mjs";
+import { repositoryRoot } from "./saltAiEvidenceUtils.mjs";
 
 const digest = `sha256:${"a".repeat(64)}`;
 const otherDigest = `sha256:${"b".repeat(64)}`;
@@ -699,4 +704,92 @@ describe("current sample-app receipt", () => {
     unrelated.checks[0].hydration = "pass";
     expect(validate(unrelated)).toBe(false);
   });
+});
+
+describe("sample-app candidate publication", () => {
+  it("packs effective workspace metadata and rejects a missing published entrypoint", async () => {
+    const root = await fs.mkdtemp(path.join(tmpdir(), "salt-sample-pack-"));
+    try {
+      const manifest = {
+        name: "@fixture/application",
+        version: "1.2.3",
+        main: "src/index.ts",
+        typings: "dist-types/index.d.ts",
+        files: ["dist-cjs", "dist-es", "dist-types"],
+        dependencies: { "@fixture/dependency": "workspace:^" },
+        publishConfig: {
+          main: "dist-cjs/index.js",
+          module: "dist-es/index.js",
+        },
+      };
+      const files = {
+        "package.json": JSON.stringify({
+          private: true,
+          workspaces: ["packages/*"],
+        }),
+        "yarn.lock": "",
+        ".yarnrc.yml": "enableNetwork: false\nenableTelemetry: false\n",
+        "packages/application/package.json": JSON.stringify(manifest),
+        "packages/application/README.md": "# Package fixture\n",
+        "packages/application/src/index.ts": "export const value = 1;\n",
+        "packages/application/dist-cjs/index.js": "exports.value = 1;\n",
+        "packages/application/dist-es/index.js": "export const value = 1;\n",
+        "packages/application/dist-types/index.d.ts":
+          "export declare const value: number;\n",
+        "packages/dependency/package.json": JSON.stringify({
+          name: "@fixture/dependency",
+          version: "4.5.6",
+        }),
+      };
+      for (const [relative, content] of Object.entries(files)) {
+        const destination = path.join(root, relative);
+        await fs.mkdir(path.dirname(destination), { recursive: true });
+        await fs.writeFile(destination, content);
+      }
+      const artifactRoot = path.join(root, "artifacts");
+      await fs.mkdir(artifactRoot);
+      const yarnConfig = await fs.readFile(
+        path.join(repositoryRoot, ".yarnrc.yml"),
+        "utf8",
+      );
+      const yarnPath = path.resolve(
+        repositoryRoot,
+        yarnConfig.match(/^yarnPath: (.+)$/mu)[1].trim(),
+      );
+      const run = (command, args, options) =>
+        execa(
+          command.startsWith("yarn") ? process.execPath : command,
+          command.startsWith("yarn") ? [yarnPath, ...args] : args,
+          { cwd: options.cwd ?? root, stripFinalNewline: false },
+        );
+      const input = {
+        candidate: {
+          manifest,
+          packageRoot: path.join(root, "packages/application"),
+          distributionRoot: null,
+        },
+        artifactRoot,
+        run,
+      };
+      const packed = await packSampleAppCandidate(input);
+      expect(packed.manifest).toMatchObject({
+        main: "dist-cjs/index.js",
+        module: "dist-es/index.js",
+        dependencies: { "@fixture/dependency": "^4.5.6" },
+      });
+      expect(packed.files).not.toContain("src/index.ts");
+      expect(
+        await fs.readFile(
+          path.join(input.candidate.packageRoot, "package.json"),
+          "utf8",
+        ),
+      ).toBe(files["packages/application/package.json"]);
+      await fs.rm(path.join(input.candidate.packageRoot, "dist-es/index.js"));
+      await expect(packSampleAppCandidate(input)).rejects.toThrow(
+        /packed entrypoint is missing: dist-es\/index\.js/u,
+      );
+    } finally {
+      await fs.rm(root, { recursive: true, force: true });
+    }
+  }, 30_000);
 });

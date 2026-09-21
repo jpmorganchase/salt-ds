@@ -16,6 +16,8 @@ import path from "node:path";
 import Ajv2020 from "ajv/dist/2020.js";
 import postcss from "postcss";
 
+import { resolvePackageArchiveEntry } from "./packageArchivePath.mjs";
+
 import {
   repositoryRoot,
   repositoryTextBytes,
@@ -34,6 +36,143 @@ export function selectSampleAppNames(selectedApp) {
     `Unknown sample app: ${selectedApp}`,
   );
   return selectedApp ? [selectedApp] : [...SAMPLE_APP_NAMES];
+}
+
+export async function packSampleAppCandidate({ candidate, artifactRoot, run }) {
+  const { manifest: source, packageRoot, distributionRoot } = candidate;
+  const filename = `${source.name.replace(/^@/u, "").replaceAll("/", "-")}-${source.version}.tgz`;
+  assert(
+    portable(filename) && !filename.includes("/"),
+    "Unsafe candidate tarball name",
+  );
+  const tarballPath = path.join(artifactRoot, filename);
+  const executable = (name) =>
+    process.platform === "win32" ? `${name}.cmd` : name;
+  if (distributionRoot) {
+    const manifest = JSON.parse(
+      await readFile(path.join(distributionRoot, "package.json"), "utf8"),
+    );
+    assert.equal(
+      manifest.name,
+      source.name,
+      `${source.name} distribution name is stale`,
+    );
+    assert.equal(
+      manifest.version,
+      source.version,
+      `${source.name} distribution version is stale; run yarn build`,
+    );
+    const result = await run(
+      executable("npm"),
+      [
+        "pack",
+        "--json",
+        "--ignore-scripts",
+        "--pack-destination",
+        artifactRoot,
+        distributionRoot,
+      ],
+      { capture: true, label: `${source.name} candidate pack` },
+    );
+    const metadata = JSON.parse(result.stdout);
+    assert.equal(
+      metadata.length,
+      1,
+      `${source.name} produced multiple tarballs`,
+    );
+    assert.equal(
+      metadata[0].filename,
+      filename,
+      `${source.name} tarball name differs`,
+    );
+  } else {
+    // Yarn applies ordinary workspace publishConfig fields and workspace ranges.
+    await run(executable("yarn"), ["pack", "--out", tarballPath], {
+      cwd: packageRoot,
+      capture: true,
+      label: `${source.name} candidate pack`,
+    });
+  }
+  const listing = await run("tar", ["-tzf", tarballPath], {
+    capture: true,
+    label: `${source.name} tarball inventory`,
+  });
+  const entries = listing.stdout
+    .split(/\r?\n/u)
+    .filter(Boolean)
+    .map((entry) => resolvePackageArchiveEntry(artifactRoot, entry));
+  const files = entries
+    .filter((entry) => !entry.directory)
+    .map((entry) => entry.entry.slice("package/".length));
+  assert.equal(
+    new Set(files).size,
+    files.length,
+    `${source.name} tarball contains duplicate files`,
+  );
+  assert(files.includes("README.md"), `${source.name} tarball omits README.md`);
+  assert(
+    files.includes("package.json"),
+    `${source.name} tarball omits package.json`,
+  );
+  const result = await run(
+    "tar",
+    ["-xOf", tarballPath, "package/package.json"],
+    {
+      capture: true,
+      label: `${source.name} packed manifest`,
+    },
+  );
+  const manifestBytes = Buffer.from(result.stdout, "utf8");
+  const manifest = JSON.parse(result.stdout);
+  assert.equal(
+    manifest.name,
+    source.name,
+    `${source.name} packed name differs`,
+  );
+  assert.equal(
+    manifest.version,
+    source.version,
+    `${source.name} packed version differs`,
+  );
+  function containsWorkspaceRange(value) {
+    if (typeof value === "string") return value.startsWith("workspace:");
+    return (
+      value &&
+      typeof value === "object" &&
+      Object.values(value).some(containsWorkspaceRange)
+    );
+  }
+  assert(
+    !containsWorkspaceRange(manifest),
+    `${source.name} packed manifest contains a workspace dependency`,
+  );
+  const targets = [
+    ...["main", "module", "types", "typings", "style"]
+      .map((field) => manifest[field])
+      .filter((target) => target !== undefined),
+    ...(typeof manifest.bin === "string"
+      ? [manifest.bin]
+      : Object.values(manifest.bin ?? {})),
+  ];
+  for (const target of targets) {
+    assert(
+      typeof target === "string",
+      `${source.name} has an invalid packed entrypoint`,
+    );
+    const relative = target.replace(/^\.\//u, "");
+    assert(
+      portable(relative) && files.includes(relative),
+      `${source.name} packed entrypoint is missing: ${target}; run its build`,
+    );
+  }
+  return {
+    manifest,
+    manifestBytes,
+    filename,
+    tarballPath,
+    tarballBytes: await readFile(tarballPath),
+    files,
+  };
 }
 
 function parseResult(result, label) {

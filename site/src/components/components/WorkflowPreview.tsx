@@ -423,8 +423,12 @@ function VerifiedFileViewer({ file }: { file: WorkflowFile }) {
   const filename = file.path.split("/").at(-1) ?? "source.txt";
 
   const viewSource = () => {
+    setFailed(false);
     void fetchVerifiedBytes(file)
-      .then((bytes) => setSource(new TextDecoder().decode(bytes)))
+      .then((bytes) => {
+        setSource(new TextDecoder().decode(bytes));
+        setFailed(false);
+      })
       .catch(() => setFailed(true));
   };
 
@@ -593,6 +597,7 @@ export function ButtonLoadingResources() {
   const registration = Object.values(workflowPreviewByRoute)[0];
   const [bootstrap, setBootstrap] = useState<DevelopmentBootstrap>();
   const [guidance, setGuidance] = useState<CanonicalDocument>();
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     if (!registration) return;
@@ -612,40 +617,53 @@ export function ButtonLoadingResources() {
         return { bootstrap: next, guidance: document };
       })
       .then((loaded) => {
+        if (controller.signal.aborted) return;
         setBootstrap(loaded.bootstrap);
         setGuidance(loaded.guidance);
       })
-      .catch(() => undefined);
+      .catch(() => {
+        if (!controller.signal.aborted) setFailed(true);
+      });
     return () => controller.abort();
   }, [registration]);
 
-  if (!bootstrap || !guidance) return null;
+  if (!registration) return null;
   return (
     <section className={styles.container} aria-label="Button loading resources">
       <div className={styles.resources}>
         <h3>Verified Button loading resources</h3>
-        <ul>
-          <li>
-            <a download href={bootstrap.button.guidance.url}>
-              Button loading Markdown
-            </a>
-          </li>
-          <li>
-            <a download href={bootstrap.button.guidance.document.url}>
-              Button loading document
-            </a>
-          </li>
-          {bootstrap.button.files.map((file) => (
-            <VerifiedFileViewer file={file} key={file.path} />
-          ))}
-        </ul>
+        {!bootstrap || !guidance ? (
+          <p className={styles.status} role="status">
+            {failed
+              ? "The verified Button resources are unavailable."
+              : "Loading verified Button resources…"}
+          </p>
+        ) : (
+          <ul>
+            <li>
+              <a download href={bootstrap.button.guidance.url}>
+                Button loading Markdown
+              </a>
+            </li>
+            <li>
+              <a download href={bootstrap.button.guidance.document.url}>
+                Button loading document
+              </a>
+            </li>
+            {bootstrap.button.files.map((file) => (
+              <VerifiedFileViewer file={file} key={file.path} />
+            ))}
+          </ul>
+        )}
       </div>
-      <GuidanceContext
-        document={guidance}
-        documentUrl={bootstrap.button.guidance.document.url}
-        markdownUrl={bootstrap.button.guidance.url}
-        fileUrls={bootstrap.button.files.map((file) => file.url)}
-      />
+      {bootstrap && guidance && (
+        <GuidanceContext
+          document={guidance}
+          documentUrl={bootstrap.button.guidance.document.url}
+          markdownUrl={bootstrap.button.guidance.url}
+          fileUrls={bootstrap.button.files.map((file) => file.url)}
+        />
+      )}
     </section>
   );
 }

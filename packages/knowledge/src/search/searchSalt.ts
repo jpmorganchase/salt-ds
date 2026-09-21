@@ -13,6 +13,7 @@ import type {
   KnowledgeRecordFamily,
   KnowledgeRecordStore,
 } from "../manifest/knowledgeStore.js";
+import { renderExcludedPackageFamilies } from "../markdown/renderExcludedPackageFamilies.js";
 import {
   renderUntrustedMarkdownEvidence,
   resolveUntrustedMarkdownLink,
@@ -1835,6 +1836,7 @@ function renderFinalKnowledgeContext(result: KnowledgeContextResult): string {
       ? "yes; evidence was omitted to fit the output budget"
       : "no"
   }\n`;
+  output += renderExcludedPackageFamilies(result.excluded_package_families);
   for (const match of result.matches) {
     const sources = match.citation.source_records.length
       ? `; sources ${match.citation.source_records

@@ -5,8 +5,10 @@ import process from "node:process";
 
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
-import { assertCompleteCatalogInputSet } from "./catalogBuildIdentity.mjs";
-import { validateCurrentWebArtifacts } from "./checkSaltDocsAuthoringCurrent.mjs";
+import {
+  validateCurrentSourceInventories,
+  validateCurrentWebArtifacts,
+} from "./checkSaltDocsAuthoringCurrent.mjs";
 import {
   assert,
   parseArgs,
@@ -266,35 +268,7 @@ async function verifyCurrentProductAuthoring() {
   const store = createKnowledgeStore({
     bundleDir: absolute("packages/knowledge/generated"),
   });
-  for (const [kind, inventoryArtifact, patternsPath] of [
-    [
-      "semantic source",
-      "support/semantic-source-inventory.json",
-      "packages/knowledge/src/build/catalogSemanticInputPatterns.json",
-    ],
-    [
-      "publication input",
-      "support/publication-input-inventory.json",
-      "packages/knowledge/src/build/catalogPublicationInputPatterns.json",
-    ],
-  ]) {
-    const inventory = JSON.parse(store.readArtifact(inventoryArtifact));
-    try {
-      await assertCompleteCatalogInputSet(
-        {
-          inputsByPath: new Map(
-            inventory.entries.map((entry) => [entry.path, entry]),
-          ),
-        },
-        repositoryRoot,
-        await readJson(absolute(patternsPath)),
-      );
-    } catch (error) {
-      throw new Error(
-        `Current authoring ${kind} inventory is stale: ${error.message} Run yarn build:ai-tooling and rebuild preview.`,
-      );
-    }
-  }
+  await validateCurrentSourceInventories({ store, repositoryRoot });
   for (const id of [
     workflow.id,
     "guide.button.loading",

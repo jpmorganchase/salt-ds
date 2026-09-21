@@ -11,6 +11,7 @@ import {
   resolveKnowledgeRecordCompatibility,
   type SaltKnowledgeRecordReference,
 } from "../search/searchSalt.js";
+import { renderExcludedPackageFamilies } from "./renderExcludedPackageFamilies.js";
 import {
   renderUntrustedMarkdownCode,
   renderUntrustedMarkdownEvidence,
@@ -779,6 +780,9 @@ export function resolveKnowledgeDocument(
 export function renderKnowledgeDocumentMarkdown(
   result: KnowledgeDocumentResult,
 ): string {
+  const exclusions = renderExcludedPackageFamilies(
+    result.excluded_package_families,
+  );
   if (result.status !== "resolved" || !result.document) {
     const choices =
       result.choices.length === 0
@@ -810,6 +814,7 @@ export function renderKnowledgeDocumentMarkdown(
       "\n\nStatus: " +
       result.status +
       choices +
+      exclusions +
       "\n\nBundle: " +
       renderUntrustedMarkdownEvidence(result.bundle.digest, {
         mode: "inline",
@@ -860,7 +865,7 @@ export function renderKnowledgeDocumentMarkdown(
       result.document.content
         ? `\n## Component reference\n\n${renderUntrustedMarkdownEvidence(result.document.content.value, { mode: "block" })}\n`
         : "";
-    return `${renderCanonicalDocument(result.document.canonical)}${nativeComponentDetail}${renderedExamples}\n\nBundle: ${renderUntrustedMarkdownEvidence(result.bundle.digest, { mode: "inline" })}\n`;
+    return `${renderCanonicalDocument(result.document.canonical)}${nativeComponentDetail}${renderedExamples}${exclusions}\n\nBundle: ${renderUntrustedMarkdownEvidence(result.bundle.digest, { mode: "inline" })}\n`;
   }
   const content = result.document.content
     ? "\n\n## Verified detail\n\n" +
@@ -907,6 +912,7 @@ export function renderKnowledgeDocumentMarkdown(
     content +
     limitations +
     renderedExamples +
+    exclusions +
     "\n"
   );
 }
