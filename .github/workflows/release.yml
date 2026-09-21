@@ -486,17 +486,49 @@ jobs:
           NPM_CONFIG_PROVENANCE: "true"
         with:
           script: |
-            let output = '';
-            await exec.exec(
-              'yarn',
-              ['changeset', 'publish', '--tag', 'snapshot', '--no-git-tag'],
-              {
-                listeners: {
-                  stdout: (data) => { output += data.toString(); },
-                  stderr: (data) => { output += data.toString(); },
+            // Yarn's npm OIDC "trusted publishing" auth exchange is done
+            // per-package, and `changeset publish` fires up to 10 of these
+            // in parallel. Under that concurrency the exchange occasionally
+            // fails (rate limiting/transient network errors), which Yarn
+            // surfaces as a generic `YN0033: No authentication configured
+            // for request` rather than a retryable error. `changeset
+            // publish` is safe to re-run: packages already published to the
+            // registry are detected and skipped, so a retry only needs to
+            // succeed for the packages that failed the first time.
+            const maxAttempts = 3;
+            const combinedOutput = [];
+
+            for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+              let output = '';
+              const exitCode = await exec.exec(
+                'yarn',
+                ['changeset', 'publish', '--tag', 'snapshot', '--no-git-tag'],
+                {
+                  ignoreReturnCode: true,
+                  listeners: {
+                    stdout: (data) => { output += data.toString(); },
+                    stderr: (data) => { output += data.toString(); },
+                  },
                 },
-              },
-            );
+              );
+
+              combinedOutput.push(output);
+
+              if (exitCode === 0) {
+                break;
+              }
+
+              if (attempt === maxAttempts) {
+                throw new Error(
+                  `yarn changeset publish failed after ${maxAttempts} attempts (exit code ${exitCode}).`,
+                );
+              }
+
+              core.warning(
+                `yarn changeset publish failed (attempt ${attempt}/${maxAttempts}), retrying...`,
+              );
+              await new Promise((resolve) => setTimeout(resolve, attempt * 10000));
+            }
 
             // `changeset publish` prints a banner followed by an indented
             // list of `name@version` tags for each successfully published
@@ -507,13 +539,19 @@ jobs:
             //   🦋    @salt-ds/lab@0.0.0-snapshot-20260814000000
             //
             // Anchoring on the banner string avoids picking up unrelated
-            // `name@version` mentions in warnings or errors.
-            const [, after = ''] = output.split('packages published successfully:\n');
-            const newTags = after
-              .split('\n')
-              .flatMap((line) => Array.from(line.matchAll(/\s+(\S+@\S+)/g), (m) => m[1]));
+            // `name@version` mentions in warnings or errors. Tags are
+            // collected across all attempts since a retry's banner only
+            // lists packages published during that specific attempt.
+            const newTags = new Set();
+            for (const output of combinedOutput) {
+              const [, after = ''] = output.split('packages published successfully:\n');
+              after
+                .split('\n')
+                .flatMap((line) => Array.from(line.matchAll(/\s+(\S+@\S+)/g), (m) => m[1]))
+                .forEach((tag) => newTags.add(tag));
+            }
 
-            core.setOutput('publishedTags', newTags.join('\n'));
+            core.setOutput('publishedTags', Array.from(newTags).join('\n'));
 
       - name: Update snapshot status comment
         if: success() && steps.snapshot_status.outputs.commentId != ''
