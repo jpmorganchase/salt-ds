@@ -120,12 +120,23 @@ describe("buildSelectedGuidance", () => {
   });
 
   it("builds the workflow and independent component guidance from declared inputs", async () => {
+    const sourceRoot = await copiedFixture();
+    const buttonSourcePath = path.join(sourceRoot, buttonPath);
+    const buttonSource = canonicalText(
+      await readFile(buttonSourcePath, "utf8"),
+    );
+    const nestedSummarySource = buttonSource.replace(
+      /(## Loading\n\n)[^\n]+/u,
+      "$1Use **nested [loading `announcements`](../tooltip)** during a pending action.",
+    );
+    expect(nestedSummarySource).not.toBe(buttonSource);
+    await writeFile(buttonSourcePath, nestedSummarySource, "utf8");
     const inventory = await createCatalogInputInventory(
-      repoRoot,
+      sourceRoot,
       trackedSourcePaths,
     );
-    const guides = await withCatalogInputTracking(repoRoot, inventory, () =>
-      buildSelectedGuidance(input()),
+    const guides = await withCatalogInputTracking(sourceRoot, inventory, () =>
+      buildSelectedGuidance({ ...input(), sourceRoot }),
     );
 
     expect(guides.map((guide) => guide.id)).toEqual(
@@ -136,10 +147,14 @@ describe("buildSelectedGuidance", () => {
         "guide.button.accessible-name",
       ]),
     );
-    const workflow = guides[0];
-    expect(workflow.summary).toBe(
-      "Build a runnable service-operations dashboard with a persistent shell, worklist filters, local loading, empty and error recovery states, incident inspection, and an editable record form.",
+    const workflow = guides.find(
+      (guide) => guide.id === "operations-dashboard.service-worklist",
     );
+    if (!workflow) throw new Error("Missing selected workflow guidance.");
+    const authored = JSON.parse(
+      await readFile(path.join(sourceRoot, recipeSourcePath), "utf8"),
+    ) as { intent: { summary: string } };
+    expect(workflow.summary).toBe(authored.intent.summary);
     expect(workflow.aliases).toEqual(
       expect.arrayContaining([
         "Service operations worklist",
@@ -207,16 +222,16 @@ describe("buildSelectedGuidance", () => {
       "primitive.overview": { source_path: choosingPrimitivePath },
       "composition.overview": { source_path: compositionPitfallsPath },
     });
-    const buildHeading = workflow.document.sections.findIndex(
-      (section) => section.id === "forms.how-to-build",
-    );
-    expect(buildHeading).toBeGreaterThan(-1);
-    expect(workflow.document.sections[buildHeading]).toMatchObject({
-      heading_path: ["How to build"],
-      level: 2,
-    });
-    expect(workflow.document.sections[buildHeading + 1]).toMatchObject({
-      id: "forms.submission-and-recovery",
+    expect(
+      workflow.document.sections.find(
+        (section) => section.id === "forms.how-to-build",
+      ),
+    ).toMatchObject({ heading_path: ["How to build"], level: 2 });
+    expect(
+      workflow.document.sections.find(
+        (section) => section.id === "forms.submission-and-recovery",
+      ),
+    ).toMatchObject({
       heading_path: ["How to build", "Submission and recovery"],
       level: 3,
     });
@@ -259,7 +274,10 @@ describe("buildSelectedGuidance", () => {
       },
     });
 
-    const contentStatus = guides[2];
+    const contentStatus = guides.find(
+      (guide) => guide.id === "guide.content-status",
+    );
+    if (!contentStatus) throw new Error("Missing content status guidance.");
     expect(contentStatus).toMatchObject({
       id: "guide.content-status",
       kind: "component-guidance",
@@ -291,13 +309,16 @@ describe("buildSelectedGuidance", () => {
       ),
     ).toBe(false);
 
-    const loading = guides[1];
+    const loading = guides.find((guide) => guide.id === "guide.button.loading");
+    if (!loading) throw new Error("Missing Button Loading guidance.");
     expect(loading.document.diagnostics).toEqual([]);
     expect(loading.name).toBe("Button Loading");
     expect(loading.aliases).toEqual(
       expect.arrayContaining(["Button Loading", "Loading", "Best practices"]),
     );
-    expect(loading.summary).toContain("loading state for a button");
+    expect(loading.summary).toBe(
+      "Use nested loading announcements during a pending action.",
+    );
     expect(loading.packageNames).toEqual(["@salt-ds/core"]);
     expect(loading.attach).toEqual({
       componentNames: ["Button"],

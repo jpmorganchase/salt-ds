@@ -215,6 +215,8 @@ describe("catalog input inventory", () => {
       "packages/mcp/src/index.ts": "export const mcp = 1;\n",
       "packages/knowledge/src/__tests__/fixture.spec.ts":
         "export const testOnly = 1;\n",
+      "packages/knowledge/src/search/fixture.spec.ts":
+        "export const colocatedTestOnly = 1;\n",
       "scripts/checkAiToolingPackageDryRun.mjs":
         "export const releaseTool = 1;\n",
     });
@@ -231,6 +233,7 @@ describe("catalog input inventory", () => {
       "packages/cli/src/index.ts",
       "packages/mcp/src/index.ts",
       "packages/knowledge/src/__tests__/fixture.spec.ts",
+      "packages/knowledge/src/search/fixture.spec.ts",
       "scripts/checkAiToolingPackageDryRun.mjs",
     ]) {
       await fs.writeFile(path.join(root, relativePath), "changed\n", "utf8");

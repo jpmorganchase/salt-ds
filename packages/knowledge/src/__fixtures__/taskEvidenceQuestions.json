@@ -482,6 +482,24 @@
           ]
         }
       ]
+    },
+    {
+      "id": "dialog-accessible-name",
+      "scope": "operations-example",
+      "question": "How does the incident editor get an accessible name, and what if its header cannot be shown?",
+      "required": [
+        {
+          "document": "workflow",
+          "section": "dialog.accessible-name",
+          "source": "dialogAccessibility",
+          "fragments": [
+            "visible DialogHeader",
+            "recommended",
+            "if design constraints prevent this",
+            "aria-label attribute directly to the Dialog"
+          ]
+        }
+      ]
     }
   ],
   "qualified_units": [

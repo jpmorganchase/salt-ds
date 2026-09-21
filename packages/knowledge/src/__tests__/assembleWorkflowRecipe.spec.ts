@@ -148,21 +148,38 @@ describe("assembleWorkflowRecipe", () => {
         }),
     );
 
-    expect(result.recipeArtifact.files).toHaveLength(17);
+    const authored = JSON.parse(
+      await readFile(path.join(repositoryRoot, recipePath), "utf8"),
+    ) as {
+      source: {
+        reusable_workflow_files: string[];
+        demo_application_files: string[];
+      };
+      setup: { dependency_manifest: string };
+    };
+    const expectedFiles = [
+      ...authored.source.reusable_workflow_files.map((filePath) => ({
+        path: filePath,
+        role: "reusable",
+      })),
+      ...authored.source.demo_application_files.map((filePath) => ({
+        path: filePath,
+        role:
+          filePath === authored.setup.dependency_manifest
+            ? "setup"
+            : "demo-only",
+      })),
+    ];
+    expect(
+      result.recipeArtifact.files
+        .map(({ path: filePath, role }) => ({ path: filePath, role }))
+        .sort((a, b) => a.path.localeCompare(b.path)),
+    ).toEqual(expectedFiles.sort((a, b) => a.path.localeCompare(b.path)));
     expect(() =>
       result.publicFiles.map((file) =>
         createArtifactDescriptor(file.artifactPath, file.mediaType, file.bytes),
       ),
     ).not.toThrow();
-    expect(
-      result.recipeArtifact.files.filter((file) => file.role === "reusable"),
-    ).toHaveLength(7);
-    expect(
-      result.recipeArtifact.files.filter((file) => file.role === "setup"),
-    ).toHaveLength(1);
-    expect(
-      result.recipeArtifact.files.filter((file) => file.role === "demo-only"),
-    ).toHaveLength(9);
     expect(result.recipeArtifact.support.reusable_packages).toEqual([
       {
         name: "@salt-ds/core",
@@ -190,7 +207,9 @@ describe("assembleWorkflowRecipe", () => {
       "@salt-ds/theme",
       "react",
     ]);
-    expect(result.semanticMetadata.sourcePaths).toEqual(semanticPaths.sort());
+    expect(result.semanticMetadata.sourcePaths).toEqual(
+      [...semanticPaths].sort(),
+    );
     expect(result.semanticMetadata.sourcePaths).not.toContain(
       "examples/apps/operations-dashboard/src/OperationsDashboard.tsx",
     );

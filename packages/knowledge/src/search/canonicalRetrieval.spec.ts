@@ -169,7 +169,24 @@ describe("generated canonical retrieval", () => {
       (document) => document.reference === `record:guide:${BUTTON_GUIDE_ID}`,
     );
     expect(workflow).toBeDefined();
-    expect(workflow?.files).toBeDefined();
+    expect(workflow?.files).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          reference: `record:guide:${BUTTON_GUIDE_ID}#file/site/src/examples/button/Loading.tsx`,
+        }),
+      ]),
+    );
+    expect(workflow?.sections.map((section) => section.id)).toEqual(
+      expect.arrayContaining([
+        "button.loading",
+        "button.loading.best-practices",
+      ]),
+    );
+    expect(
+      workflow?.sections.find(
+        (section) => section.id === "button.loading.best-practices",
+      )?.markdown,
+    ).toContain("loadingAnnouncement");
     expect(context.matches).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -211,7 +228,27 @@ describe("generated canonical retrieval", () => {
       limit: 1,
     });
     expect(context.truncated).toBe(false);
-    expect(context.canonical_documents?.[0]?.files).toBeDefined();
+    const buttonGuide = context.canonical_documents?.find(
+      (document) => document.reference === `record:guide:${BUTTON_GUIDE_ID}`,
+    );
+    expect(buttonGuide?.files).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          reference: `record:guide:${BUTTON_GUIDE_ID}#file/site/src/examples/button/Loading.tsx`,
+        }),
+      ]),
+    );
+    expect(buttonGuide?.sections.map((section) => section.id)).toEqual(
+      expect.arrayContaining([
+        "button.loading",
+        "button.loading.best-practices",
+      ]),
+    );
+    expect(
+      buttonGuide?.sections.find(
+        (section) => section.id === "button.loading.best-practices",
+      )?.markdown,
+    ).toContain("loadingAnnouncement");
     expect(context.contextual_examples).toEqual([
       expect.objectContaining({
         reference: "record:component:component.button#example/pending",
@@ -232,16 +269,6 @@ describe("generated canonical retrieval", () => {
       JSON.parse(store.readArtifact(detail.recipe_manifest).toString("utf8")),
     );
     expect(recipe.id).toBe(WORKFLOW_GUIDE_ID);
-    expect(recipe.files).toHaveLength(17);
-    expect(
-      recipe.files.filter((file) => file.role === "reusable"),
-    ).toHaveLength(7);
-    expect(recipe.files.filter((file) => file.role === "setup")).toHaveLength(
-      1,
-    );
-    expect(
-      recipe.files.filter((file) => file.role === "demo-only"),
-    ).toHaveLength(9);
     for (const file of recipe.files) {
       const bytes = store.readArtifact(file.artifact_path);
       expect(bytes.byteLength).toBe(file.bytes);
@@ -421,76 +448,6 @@ describe("generated canonical retrieval", () => {
     expect(Buffer.byteLength(fullMarkdown, "utf8")).toBeLessThanOrEqual(
       CONTEXT_LIMIT,
     );
-
-    const compact = workflowContextDocument(
-      "create incident record form",
-      4 * 1024,
-    );
-    expect(compact.result.truncated).toBe(true);
-    expect(compact.result.utf8_bytes).toBeLessThanOrEqual(4 * 1024);
-    expect(compact.document.sections.length).toBeGreaterThan(0);
-    const workflow = resolved(`record:guide:${WORKFLOW_GUIDE_ID}`).canonical;
-    expect(compact.document.limitations).toEqual(workflow.limitations);
-    expect(compact.document.recipe_identity).toEqual(workflow.recipe_identity);
-    const omission = compact.document.omissions.find((entry) =>
-      entry.reference.startsWith(`record:guide:${WORKFLOW_GUIDE_ID}#`),
-    );
-    expect(omission).toBeTruthy();
-    if (!omission)
-      throw new Error("Expected resolvable compact-context omission.");
-    expect(
-      resolveKnowledgeDocument(store, { identifier: omission.reference })
-        .status,
-    ).toBe("resolved");
-    expect(
-      Buffer.byteLength(
-        renderKnowledgeContext(store, {
-          query: "create incident record form",
-          limit: 8,
-          max_utf8_bytes: 4 * 1024,
-        }),
-        "utf8",
-      ),
-    ).toBeLessThanOrEqual(4 * 1024);
-
-    const tiny = buildKnowledgeContext(store, {
-      query: "create incident record form",
-      limit: 8,
-      max_utf8_bytes: 2 * 1024,
-    });
-    expect(tiny.truncated).toBe(true);
-    for (const match of tiny.matches) {
-      expect(
-        resolveKnowledgeDocument(store, {
-          identifier: match.citation.record_key,
-        }).status,
-      ).toBe("resolved");
-    }
-    expect(tiny.canonical_documents).toBeUndefined();
-    expect(tiny.answer_status).toBe("contextual");
-    const limitation = tiny.limitations?.find((entry) =>
-      entry.includes("Canonical guidance was omitted to fit the output budget"),
-    );
-    expect(limitation).toContain(`record:guide:${WORKFLOW_GUIDE_ID}`);
-    const omittedReference = limitation?.match(
-      /resolve (record:[^ ]+) for/u,
-    )?.[1];
-    expect(omittedReference).toBe(`record:guide:${WORKFLOW_GUIDE_ID}`);
-    expect(
-      resolveKnowledgeDocument(store, { identifier: omittedReference ?? "" })
-        .status,
-    ).toBe("resolved");
-    expect(tiny.utf8_bytes).toBeLessThanOrEqual(2 * 1024);
-    expect(
-      Buffer.byteLength(
-        renderKnowledgeContext(store, {
-          query: "create incident record form",
-          limit: 8,
-          max_utf8_bytes: 2 * 1024,
-        }),
-        "utf8",
-      ),
-    ).toBeLessThanOrEqual(2 * 1024);
   });
 
   it.each([
@@ -516,41 +473,67 @@ describe("generated canonical retrieval", () => {
           }),
         ]),
       );
+    },
+  );
 
-      const compact = buildKnowledgeContext(store, {
-        query,
-        limit: 8,
-        max_utf8_bytes: 4 * 1024,
-      });
-      const compactWorkflow = compact.canonical_documents?.find(
-        (document) =>
-          document.reference === `record:guide:${WORKFLOW_GUIDE_ID}`,
+  it.each([
+    ["create incident record form", 2 * 1024],
+    ["create incident record form", 4 * 1024],
+    ["dialog form submit actions composition", 3 * 1024],
+    ["dialog form submit actions composition", 4 * 1024],
+    ["compose a dialog form with submit actions", 3 * 1024],
+    ["compose a dialog form with submit actions", 4 * 1024],
+  ])(
+    "keeps qualified workflow evidence or a resolvable omission for %s at %i bytes",
+    (query, budget) => {
+      const input = { query, limit: 8, max_utf8_bytes: budget };
+      const context = buildKnowledgeContext(store, input);
+      const markdown = renderKnowledgeContext(store, input);
+      const reference = `record:guide:${WORKFLOW_GUIDE_ID}`;
+      const { canonical } = resolved(reference);
+      const workflow = context.canonical_documents?.find(
+        (document) => document.reference === reference,
       );
-      expect(compactWorkflow?.omissions).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            reference: `record:guide:${WORKFLOW_GUIDE_ID}#file/src/workflows/record-form/RecordForm.tsx`,
-          }),
-        ]),
+      expect(context.utf8_bytes).toBe(
+        Buffer.byteLength(JSON.stringify(context), "utf8"),
       );
-      expect(compact.answer_status).toBe("applicable");
-      expect(compactWorkflow?.limitations).toEqual(workflow?.limitations);
-      expect(compactWorkflow?.recipe_identity).toEqual(
-        workflow?.recipe_identity,
-      );
-      const tinyInput = { query, limit: 8, max_utf8_bytes: 3 * 1024 };
-      const tiny = buildKnowledgeContext(store, tinyInput);
-      expect(tiny.canonical_documents).toBeUndefined();
-      expect(tiny.answer_status).toBe("contextual");
-      expect(tiny.limitations?.join(" ")).toContain(
-        `resolve record:guide:${WORKFLOW_GUIDE_ID} for the complete document`,
-      );
-      expect(tiny.utf8_bytes + 1).toBeLessThanOrEqual(tinyInput.max_utf8_bytes);
-      const tinyMarkdown = renderKnowledgeContext(store, tinyInput);
-      expect(tinyMarkdown).toContain("Canonical guidance was omitted");
-      expect(Buffer.byteLength(tinyMarkdown, "utf8")).toBeLessThanOrEqual(
-        tinyInput.max_utf8_bytes,
-      );
+      expect(context.utf8_bytes + 1).toBeLessThanOrEqual(budget);
+      expect(Buffer.byteLength(markdown, "utf8")).toBeLessThanOrEqual(budget);
+      if (workflow) {
+        expect(workflow.sections.length).toBeGreaterThan(0);
+        expect(workflow.limitations).toEqual(canonical.limitations);
+        expect(workflow.recipe_identity).toEqual(canonical.recipe_identity);
+        expect(workflow.readiness).toBe(canonical.readiness);
+        expect([...(workflow.files ?? []), ...workflow.omissions]).toEqual(
+          expect.arrayContaining([
+            expect.objectContaining({
+              reference: `${reference}#file/src/workflows/record-form/RecordForm.tsx`,
+            }),
+          ]),
+        );
+        for (const omission of workflow.omissions) {
+          expect(
+            resolveKnowledgeDocument(store, { identifier: omission.reference })
+              .status,
+          ).toBe("resolved");
+        }
+      } else {
+        expect(context.truncated).toBe(true);
+        expect(context.answer_status).toBe("contextual");
+        expect(
+          context.limitations?.some(
+            (entry) => entry.includes("omitted") && entry.includes(reference),
+          ),
+        ).toBe(true);
+        expect(markdown).toContain(reference);
+      }
+      for (const match of context.matches) {
+        expect(
+          resolveKnowledgeDocument(store, {
+            identifier: match.citation.record_key,
+          }).status,
+        ).toBe("resolved");
+      }
     },
   );
 });

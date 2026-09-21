@@ -4,6 +4,7 @@ import type {
   DocumentBlock,
   DocumentModel,
 } from "../documents/documentSchema.js";
+import { documentInlineText } from "../documents/renderDocument.js";
 import {
   type AuthoredWorkflowRecipe,
   parseAuthoredWorkflowRecipe,
@@ -254,14 +255,12 @@ const DIALOG_USAGE_SELECTORS: readonly SelectedMdxSectionSelector[] = [
     id: "dialog.using.when-to-use",
     heading_path: ["Using the component", "When to use"],
     include_descendants: false,
-    semantic_role: "use-condition",
     qualification_group: "forms.surface",
   },
   {
     id: "dialog.using.when-not-to-use",
     heading_path: ["Using the component", "When not to use"],
     include_descendants: false,
-    semantic_role: "exclusion",
     qualification_group: "forms.surface",
   },
   {
@@ -295,24 +294,26 @@ const DIALOG_EXAMPLES_SELECTORS: readonly SelectedMdxSectionSelector[] = [
 ];
 const DIALOG_ACCESSIBILITY_SELECTORS: readonly SelectedMdxSectionSelector[] = [
   {
+    id: "dialog.accessible-name",
+    heading_path: ["Best practices", "Accessible name"],
+    include_descendants: false,
+  },
+  {
     id: "dialog.focus",
     heading_path: ["Best practices", "Focus"],
     include_descendants: false,
-    semantic_role: "accessibility",
     qualification_group: "dialog.focus",
   },
   {
     id: "dialog.initial-focus",
     heading_path: ["Best practices", "Initial focus"],
     include_descendants: false,
-    semantic_role: "accessibility",
     qualification_group: "dialog.focus",
   },
   {
     id: "dialog.focus-sequence",
     heading_path: ["Best practices", "Focus sequence"],
     include_descendants: false,
-    semantic_role: "accessibility",
     qualification_group: "dialog.focus",
   },
 ];
@@ -328,7 +329,6 @@ const BUTTON_BAR_SELECTORS: readonly SelectedMdxSectionSelector[] = [
     id: "button-bar.dialog-order",
     heading_path: ["Button order", "Dialog"],
     include_descendants: false,
-    semantic_role: "composition",
     qualification_group: "button-bar.dialog-actions",
   },
   {
@@ -679,28 +679,7 @@ function inlineText(blocks: readonly DocumentBlock[]): string[] {
   const text: string[] = [];
   for (const block of blocks) {
     if (block.kind === "paragraph" || block.kind === "heading") {
-      const value = block.children
-        .map((inline) => {
-          if (inline.kind === "text" || inline.kind === "inline_code") {
-            return inline.value;
-          }
-          if (
-            inline.kind === "emphasis" ||
-            inline.kind === "strong" ||
-            inline.kind === "delete" ||
-            inline.kind === "link"
-          ) {
-            return inline.children
-              .map((child) =>
-                child.kind === "text" || child.kind === "inline_code"
-                  ? child.value
-                  : "",
-              )
-              .join("");
-          }
-          return inline.kind === "break" ? " " : "";
-        })
-        .join("")
+      const value = documentInlineText(block.children)
         .replace(/\s+/gu, " ")
         .trim();
       if (value) text.push(value);
@@ -962,7 +941,7 @@ export async function buildSelectedGuidance(
   const buttonName = `Button ${buttonHeading}`;
   requireSupportedDocument(contentStatus.document);
   requireSupportedDocument(buttonAccessibility.document);
-  const workflowDocument = mergeWorkflowDocuments([
+  const workflowDocuments = [
     analyticalDashboard,
     navigation,
     forms,
@@ -972,18 +951,14 @@ export async function buildSelectedGuidance(
     dialogExamples,
     dialogAccessibility,
     buttonBar,
-  ]);
+  ];
+  const workflowDocument = mergeWorkflowDocuments(workflowDocuments);
+  const workflowGuidancePaths = workflowDocuments.map(
+    ({ document }) => document.source.source_path,
+  );
   const buttonLimitations = diagnosticsLimitations(button.document, buttonName);
   const workflowSourcePaths = unique([
-    ANALYTICAL_DASHBOARD_DOCUMENT_PATH,
-    NAVIGATION_DOCUMENT_PATH,
-    FORMS_DOCUMENT_PATH,
-    CHOOSING_PRIMITIVE_DOCUMENT_PATH,
-    COMPOSITION_PITFALLS_DOCUMENT_PATH,
-    DIALOG_USAGE_DOCUMENT_PATH,
-    DIALOG_EXAMPLES_DOCUMENT_PATH,
-    DIALOG_ACCESSIBILITY_DOCUMENT_PATH,
-    BUTTON_BAR_DOCUMENT_PATH,
+    ...workflowGuidancePaths,
     recipeSourcePath,
     ...reusablePaths,
     packagePath,
@@ -1028,17 +1003,7 @@ export async function buildSelectedGuidance(
           forms.title,
           "Metric",
         ],
-        pageSourcePaths: [
-          ANALYTICAL_DASHBOARD_DOCUMENT_PATH,
-          NAVIGATION_DOCUMENT_PATH,
-          FORMS_DOCUMENT_PATH,
-          CHOOSING_PRIMITIVE_DOCUMENT_PATH,
-          COMPOSITION_PITFALLS_DOCUMENT_PATH,
-          DIALOG_USAGE_DOCUMENT_PATH,
-          DIALOG_EXAMPLES_DOCUMENT_PATH,
-          DIALOG_ACCESSIBILITY_DOCUMENT_PATH,
-          BUTTON_BAR_DOCUMENT_PATH,
-        ],
+        pageSourcePaths: workflowGuidancePaths,
       },
       files: [formsFile],
       limitations: workflowLimitations,

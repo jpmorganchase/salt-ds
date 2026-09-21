@@ -169,15 +169,17 @@ afterEach(async () => {
 });
 
 describe("buildKnowledgeSource publication defaults", () => {
-  it("inventories all nine demo files for the selected workflow", async () => {
+  it("inventories the selected workflow's demo files by default", async () => {
     const root = await createWorkflowFixture();
     const inventory = await captureBuildInventory(root);
     const workflow = await assembleWithCapturedInventory(root, inventory);
 
-    expect(workflow.recipeArtifact.files).toHaveLength(17);
     expect(
-      workflow.recipeArtifact.files.filter((file) => file.role === "demo-only"),
-    ).toHaveLength(publicationPaths.length);
+      workflow.recipeArtifact.files
+        .filter((file) => file.role === "demo-only")
+        .map((file) => `examples/apps/operations-dashboard/${file.path}`)
+        .sort(),
+    ).toEqual([...publicationPaths].sort());
   });
 
   it("keeps an explicit empty publication override authoritative", async () => {

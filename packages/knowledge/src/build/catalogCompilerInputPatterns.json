@@ -10,6 +10,7 @@
   "packages/knowledge/schemas/**/*.json",
   "packages/knowledge/scripts/buildKnowledge.mjs",
   "packages/knowledge/src/**/*.ts",
+  "!packages/knowledge/src/**/*.spec.ts",
   "!packages/knowledge/src/**/__tests__/**",
   "!packages/knowledge/src/__tests__/**",
   "!packages/knowledge/src/__fixtures__/**",
