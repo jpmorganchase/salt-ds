@@ -22,6 +22,8 @@ const NAVIGATION_DOCUMENT_PATH = "site/docs/patterns/navigation.mdx";
 const CONTENT_STATUS_DOCUMENT_PATH = "site/docs/patterns/content-status.mdx";
 const FORMS_DOCUMENT_PATH = "site/docs/patterns/forms.mdx";
 const BUTTON_DOCUMENT_PATH = "site/docs/components/button/examples.mdx";
+const BUTTON_ACCESSIBILITY_DOCUMENT_PATH =
+  "site/docs/components/button/accessibility.mdx";
 const CHOOSING_PRIMITIVE_DOCUMENT_PATH =
   "site/docs/getting-started/choosing-the-right-primitive.mdx";
 const COMPOSITION_PITFALLS_DOCUMENT_PATH =
@@ -229,6 +231,14 @@ const BUTTON_LOADING_SELECTORS: readonly SelectedMdxSectionSelector[] = [
     id: "button.loading",
     heading_path: ["Loading"],
     include_descendants: true,
+  },
+];
+
+const BUTTON_ACCESSIBILITY_SELECTORS: readonly SelectedMdxSectionSelector[] = [
+  {
+    id: "button.accessible-name",
+    heading_path: ["Best practices", "Accessible name"],
+    include_descendants: false,
   },
 ];
 
@@ -750,6 +760,7 @@ export async function buildSelectedGuidance(
     CONTENT_STATUS_DOCUMENT_PATH,
     FORMS_DOCUMENT_PATH,
     `${BUTTON_DOCUMENT_PATH}#loading`,
+    `${BUTTON_ACCESSIBILITY_DOCUMENT_PATH}#accessible-name`,
     CHOOSING_PRIMITIVE_DOCUMENT_PATH,
     COMPOSITION_PITFALLS_DOCUMENT_PATH,
     DIALOG_USAGE_DOCUMENT_PATH,
@@ -774,6 +785,7 @@ export async function buildSelectedGuidance(
     contentStatus,
     forms,
     button,
+    buttonAccessibility,
     choosingPrimitive,
     compositionPitfalls,
     dialogUsage,
@@ -824,6 +836,15 @@ export async function buildSelectedGuidance(
       documentId: "guide.button.loading",
       route: "/salt/components/button/examples",
       selectors: BUTTON_LOADING_SELECTORS,
+      fallbackTitle: "Button",
+    }),
+    parseSelectedDocument({
+      sourceRoot: input.sourceRoot,
+      declared,
+      sourcePath: assertDeclared(declared, BUTTON_ACCESSIBILITY_DOCUMENT_PATH),
+      documentId: "guide.button.accessible-name",
+      route: "/salt/components/button/accessibility",
+      selectors: BUTTON_ACCESSIBILITY_SELECTORS,
       fallbackTitle: "Button",
     }),
     parseSelectedDocument({
@@ -940,6 +961,7 @@ export async function buildSelectedGuidance(
   }
   const buttonName = `Button ${buttonHeading}`;
   requireSupportedDocument(contentStatus.document);
+  requireSupportedDocument(buttonAccessibility.document);
   const workflowDocument = mergeWorkflowDocuments([
     analyticalDashboard,
     navigation,
@@ -1055,6 +1077,28 @@ export async function buildSelectedGuidance(
         componentNames: ["Banner"],
         patternNames: [contentStatus.title],
         pageSourcePaths: [CONTENT_STATUS_DOCUMENT_PATH],
+      },
+      files: [],
+      limitations: [],
+    },
+    {
+      id: "guide.button.accessible-name",
+      name: "Button accessible name",
+      aliases: ["Button accessible name"],
+      summary: summaryFromDocument(
+        buttonAccessibility.document,
+        "Button accessible name",
+      ),
+      kind: "component-guidance",
+      document: buttonAccessibility.document,
+      recipeManifest: null,
+      sourcePaths: [BUTTON_ACCESSIBILITY_DOCUMENT_PATH],
+      componentNames: ["Button"],
+      packageNames: ["@salt-ds/core"],
+      attach: {
+        componentNames: [],
+        patternNames: [],
+        pageSourcePaths: [BUTTON_ACCESSIBILITY_DOCUMENT_PATH],
       },
       files: [],
       limitations: [],

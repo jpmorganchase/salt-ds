@@ -114,16 +114,18 @@ The user accepted the six guidance statements presented in the conversation on
 2026-09-20. That resolves the requested content review of those statements; it
 does not establish approval of every surrounding page.
 
-Workflow-owner, rendered design and manual accessibility acceptance remain
-separate. An agent-led browser check or automated accessibility pass can report
-observed behavior, but cannot supply those human signoffs. The recipe remains
+The user accepted the reviewed live layout and incident interactions on
+2026-09-21. Formal manual accessibility and broader workflow-promotion acceptance
+remain separate; an agent-led browser check cannot supply those signoffs. The recipe remains
 `runnable` and continues to disclose its pending reviews.
 
 There is no independent maintainer usability observation yet. In particular,
 elapsed authoring effort, confusing diagnostics, repeated facts and the ability
 to complete an edit using only the author guide have not been established by a
 maintainer who did not build the compiler. A rehearsal is useful preparation;
-it must not be described as that independent exercise.
+it must not be described as independent human observation. Observe the next real
+maintainer change; the artificial threshold exercise and mandatory deliberate
+authoring failure were retired by the user on 2026-09-21.
 
 ## Three content improvements identified at the original inspection
 
@@ -144,4 +146,4 @@ it must not be described as that independent exercise.
 
 The user accepted these three follow-ups, now implemented as described above.
 They require no new metadata system, mandatory page structure, knowledge service
-or test snapshot. The independent maintainer exercise remains outstanding.
+or test snapshot. Independent observation of a real maintainer change remains outstanding.

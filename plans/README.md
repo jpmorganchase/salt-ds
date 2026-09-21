@@ -48,11 +48,13 @@ The unit remains in progress with its human gates pending.
 
 The 2026-09-19 direction prioritizes canonical Salt decisions and task evidence
 over additional AI infrastructure. The [supporting pilot handoff](./033-knowledge-content-pilot.md)
-now activates one existing editable-record journey within Unit 033/02a: correct and connect its content,
-write ten deterministic evidence questions, then preserve semantic roles and
-conditioned alternatives in the current Knowledge/context path. A pilot gap
-report follows only once those content needs are clear. The existing
-Unit 033/02a dispatch and its outstanding human reviews remain current.
+has delivered the editable-record guidance and task evidence within Unit 033/02a.
+The user accepted the live UI review on 2026-09-21. Continue with one real content
+question at a time, beginning with concise repeated-action labels and accessible
+record context. Use focused checks for routine edits and batch full verification
+at integration checkpoints. Learn about authoring friction from the next genuine
+maintainer change; the artificial threshold exercise is retired. Unit 033/02a
+and the existing promotion/release boundaries remain current.
 
 ## Execution order and status
 
@@ -161,8 +163,9 @@ publication authority as deferred to Plan 003.
   and establishes the author update path. The 2026-09-08 user-directed iteration
   expands the runnable recipe into a coherent operations-dashboard journey with
   navigation, worklist states and record inspection/editing through that same
-  delivery path. Manual workflow promotion reviews and the independent
-  maintainer exercise remain pending; local implementation does not promote it.
+  delivery path. The scoped live UI review is accepted; formal manual accessibility
+  and independent authoring observation remain separate. Routine edits use focused
+  checks; local implementation does not promote the workflow.
 - **Foundation completion:** Plan 032 is DONE at
   `d2c7000865da920655d6461eb46e95f7eb84db43`; its terminal control is
   `plans/evidence/032/control.json`.

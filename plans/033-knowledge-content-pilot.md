@@ -8,6 +8,7 @@
 - Category: direction/content; priority P1; effort M–L (several days, re-estimate after the content pass); risk MED.
 - Parent: `plans/033-deliver-verified-salt-workflows.md`, current Unit `033/02a`.
 - User direction: improve canonical Salt knowledge and deterministic task context; keep infrastructure proportionate to the content problem.
+- Current focus: the live UI review is complete within its recorded scope; use focused checks and answer the repeated-action naming question below.
 - Content review: the user accepted the six guidance statements presented in the conversation on 2026-09-20: "The guidance looks correct."
 
 Start with **edit one existing record, submit, fail and retry**. Make its design decisions, composition, state ownership, accessibility and limitations available as source-backed evidence. Use the existing service-worklist, Forms, Dialog, Button and Button bar material. This is a test of a better knowledge representation, not another application or workflow family.
@@ -16,7 +17,7 @@ The first deliverable is corrected canonical guidance and ten question-to-eviden
 
 The parent plan now records this selected pilot scope within the current unit; its existing plan digest/control are updated together. Preserve the original checkpoint and historical evidence. Do not invent another control file or validator. This handoff does not complete Unit 033/02a, promote the runnable workflow, or grant consumer contact, installation, model-trial, publishing or deployment authority. Existing human acceptance work remains separate.
 
-The user's content acceptance covers retaining values with field feedback, a concise announced error summary and first-invalid-field focus; progress and prevention of duplicate submission or closure while saving; draft retention and retry after failure; an explicit cancellation policy with draft preservation in this example; application ownership of the draft and editor visibility; and choosing a dialog or page according to the task and interruption involved. This records review of the guidance presented in the conversation. Workflow-owner, rendered design, manual accessibility and independent maintainer reviews remain pending.
+The user's content acceptance covers retaining values with field feedback, a concise announced error summary and first-invalid-field focus; progress and prevention of duplicate submission or closure while saving; draft retention and retry after failure; an explicit cancellation policy with draft preservation in this example; application ownership of the draft and editor visibility; and choosing a dialog or page according to the task and interruption involved. This records review of the guidance presented in the conversation. The later live UI acceptance is recorded below. Formal manual accessibility and independent maintainer observations remain separate; local checks do not imply broader workflow promotion.
 
 ## What the branch already provides
 
@@ -51,6 +52,7 @@ Primary content sources:
 - `site/docs/components/dialog/usage.mdx`, `examples.mdx`, `accessibility.mdx`: interruption tradeoff, composition, responsive sizing, focus and confirmation distinctions.
 - `site/docs/patterns/button-bar.mdx`: action composition, appearance, ordering and narrow-screen behavior.
 - `site/docs/components/button/examples.mdx#loading`: pending-action feedback and `loadingAnnouncement`.
+- `site/docs/components/button/accessibility.mdx#accessible-name`: concise visible actions with record-specific accessible names; icon naming and supplementary tooltips.
 - `examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json`: existing example identity, ownership, actual states and limitations.
 
 Correct the Button bar contradiction before using it as expected evidence: the paragraph at line 94 calls Example 1 Cancel solid, while the following example and image description at lines 99–103 call it bordered. Check the actual referenced example/diagram and reconcile the prose; do not invent a general Cancel appearance rule.
@@ -174,32 +176,16 @@ retaining the decisive failure/recovery clauses. All 27 existing pilot evidence
 checks pass after this focused fixture adjustment; no new permanent tests or
 runtime changes were added.
 
-### Prepared independent maintainer exercise
+### Learn from the next real maintainer change
 
-Have a maintainer who did not build the compiler use the existing
-[author guide](../docs/ai/contributing.md#current-workflow-authoring) to change
-the example's minimum trimmed incident-title length from five to eight
-characters, with matching example-specific explanatory guidance. This is an
-exercise proposal, not an adopted global Forms rule or a change already made.
-
-The relevant source boundaries are the record-form validator and error message
-in `types.ts`, the input's `minLength` in `RecordForm.tsx`, and an explanatory
-acceptance clause in the service-worklist recipe. Update the existing affected
-sample-app assertions for seven-character rejection and eight-character
-acceptance; preserve the meaningful validation/pending/failure/retry checks.
-Record the repeated threshold/message facts rather than disguising their
-maintenance cost. Do not manually update generated output or add a second
-AI-only explanation.
-
-Follow the author guide's ordinary generation, packed reconstruction and offline
-preview path, inspecting website guidance, source view/downloads, Markdown and
-CLI evidence. Exercise one unsupported MDX block in a selected copied or
-reversible source change, record the diagnostic and its correction, then restore
-valid content. Record active editing time separately from build/wait time, actual
-source files edited, repeated facts, diagnostic clarity and help required from
-the compiler author. The agent rehearsal above does not substitute for this
-independent human exercise. No maintainer has been contacted or recorded as
-having completed it.
+The earlier five-to-eight-character title exercise is retired by the user's
+2026-09-21 simplification. Observe the next genuine source-guidance change by a
+maintainer who did not build the compiler, using the existing contributor notes.
+Record confusing steps, duplicated facts and help required in the ordinary
+review. A separate rehearsal or deliberate broken source is unnecessary;
+existing invalid-input regressions remain. An agent change does not establish
+independent human authoring effort, and that observation does not block the
+bounded content follow-up below.
 
 The [knowledge-gap report](./033-knowledge-gap-report.md) identified three
 editorial decisions: DialogActions/Button bar composition, preservation versus
@@ -381,10 +367,27 @@ plan/contracts/evaluation, release-embargo and changed-file quality checks passe
 `sha256:277dcd0b70b7f3dcf3ce76c681a9495d0abb03a24bb8e20ca7c777a7e20ed82e`.
 Current export and context evidence is under `dist/task-ui-accepted/`;
 the earlier bundle records remain historical. Generated artifacts and raw
-reports are not committed. The next step remains the prepared independent
-maintainer exercise above.
+reports are not committed. The current follow-up below supersedes the
+proposed maintainer exercise.
 
-## Implementation sequence
+## Current content follow-up
+
+Answer the user's concrete question: **How do repeated Inspect actions keep a
+short visible label while screen readers announce the relevant record?**
+Add the canonical explanation to Button accessibility, select that section
+through the existing component-guidance path, and add one question to the
+existing evidence fixture. Preserve visible action wording in the accessible name, add the item
+context, and keep icon tooltips supplementary to accessible names. Reuse the
+reviewed worklist as the example; do not change its behavior or add infrastructure.
+
+Use the [short authoring path](../docs/ai/contributing.md#current-workflow-authoring).
+Regenerate changed Knowledge once, run the relevant evidence/extraction tests,
+inspect the authored content, and summarize the result in the commit/review.
+Do not repeat the complete package/site pipeline or add another evidence ledger
+for this ordinary content edit. The parent plan's proportionate iteration rules
+apply; historical pilot results below remain unchanged.
+
+## Original pilot implementation sequence
 
 ### 1. Establish the content and expected evidence
 
@@ -422,7 +425,7 @@ Implementation files are limited to the primary content sources above; their sel
 
 No UI component API changes, new application behavior, global page conversion, installation, ranking service, embeddings, graph database, LLM runtime, agent-host expansion or new release/control framework. No edits to frozen retrieval JSON, baseline reports, historical plan evidence or model trials. If another ownership boundary is required, narrow the pilot and report the dependency.
 
-Existing verification commands (run as applicable, in this order):
+Full integration-checkpoint commands (run the applicable checks in dependency order; routine edits follow the short authoring path above):
 
 ```shell
 yarn validate:salt-ai:plan-033
@@ -441,7 +444,7 @@ git diff --check
 
 Expected: every command exits 0, existing retrieval regressions remain green, all ten default-budget evidence cases pass, compact omissions are explicit, and the exact candidate passes package limits. Run new focused parser/codec tests explicitly if their paths are outside the listed directories. Do not change thresholds to pass the pilot.
 
-For edited canonical MDX, verify its rendered author preview through the existing offline-author workflow in `docs/ai/contributing.md:94–147`. That workflow already separates generation, packed sample reconstruction, web artifact verification and offline site preview; reuse it and its existing temporary fixtures/local dependencies. Do not fetch/install dependencies or call model services under this handoff. If a required local dependency is unavailable, report the specific unverified surface instead of claiming a preview passed.
+For prose-only canonical MDX edits, inspect the changed wording and its generated section. Use the existing local author preview in `docs/ai/contributing.md` when presentation or rendering changes; reserve rebuilding the complete offline site for a checkpoint or renderer change. That workflow already separates generation, packed sample reconstruction, web artifact verification and offline site preview; reuse it and its existing temporary fixtures/local dependencies. Do not fetch/install dependencies or call model services under this handoff. If a required local dependency is unavailable, report the specific unverified surface instead of claiming a preview passed.
 
 Use ordinary reviewable commits after verification, matching `fix(ai): ...` / `feat(ai): ...` conventions. A new branch, if needed, uses `codex/`. Do not push, publish or promote through this handoff.
 
@@ -457,7 +460,7 @@ Use ordinary reviewable commits after verification, matching `fix(ai): ...` / `f
 
 Then consider a **non-blocking pilot knowledge-gap report** using the same emitted sections and source references. The existing `scripts/checkSaltDocsAuthoring.mjs` is a strict integrity/preview check, not a completeness report: preserve its default failures. An optional report may show evidence present, missing and not applicable for the selected topics, without requiring a web build or twelve headings on every page. Heading presence cannot establish editorial correctness; known unresolved decisions require human review. Build this only after the pilot has established what maintainers need to see.
 
-After the existing independent maintainer exercise shows the authoring model is affordable, expand to the selection/view-switching cluster and eventually 30–50 maintained questions. Keep proposed new preferences unresolved until canonical Salt guidance establishes them. Agent implementation trials remain a separately authorized later measurement.
+Choose additional questions from real content needs, one at a time. Use independent observation of the next genuine maintainer change before claiming affordable authoring or planning broad corpus expansion. Keep proposed new preferences unresolved until canonical Salt guidance establishes them. Agent implementation trials remain a separately authorized later measurement.
 
 ## Assessment limits and rejected directions
 

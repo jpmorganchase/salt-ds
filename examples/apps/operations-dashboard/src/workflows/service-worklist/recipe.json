@@ -45,6 +45,7 @@
       "site/docs/patterns/content-status.mdx",
       "site/docs/patterns/forms.mdx",
       "site/docs/components/button/examples.mdx#loading",
+      "site/docs/components/button/accessibility.mdx#accessible-name",
       "site/docs/getting-started/choosing-the-right-primitive.mdx",
       "site/docs/getting-started/composition-pitfalls.mdx",
       "site/docs/components/dialog/usage.mdx",

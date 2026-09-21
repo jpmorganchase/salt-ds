@@ -41,6 +41,7 @@ const semanticPaths = [
   "examples/apps/operations-dashboard/src/workflows/service-worklist/ServiceWorklist.css",
   "examples/apps/operations-dashboard/src/workflows/service-worklist/types.ts",
   "site/docs/components/button/examples.mdx",
+  "site/docs/components/button/accessibility.mdx",
   "site/docs/patterns/analytical-dashboard.mdx",
   "site/docs/patterns/navigation.mdx",
   "site/docs/patterns/content-status.mdx",

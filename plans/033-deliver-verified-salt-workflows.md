@@ -9,7 +9,7 @@
 - Planned at: `e55fa54e215503b4a0e521e2f5ee054b9f0068ce`, 2026-09-06.
 - Depends on: foundation fixes and same-project package verification from the canonical [Plan 032 execution handoff](./032-fix-the-real-consumer-entry-path.md); adopted successor dispatch. Content discovery/design can proceed independently of Doctor qualification.
 
-Before execution, run `git diff --stat e55fa54e215503b4a0e521e2f5ee054b9f0068ce..HEAD -- packages/knowledge/src packages/cli/src site examples/apps scripts test/browser` and compare affected source against the evidence below. Revise stale unit details before implementation. Only the subsequently adopted unit is executable; use its active control checks and ordinary `codex/` branch convention. Whenever a unit changes generated content or its contract, rebuild that candidate before tests that consume generated Knowledge, then verify the packed output.
+Before execution, run `git diff --stat e55fa54e215503b4a0e521e2f5ee054b9f0068ce..HEAD -- packages/knowledge/src packages/cli/src site examples/apps scripts test/browser` and compare affected source against the evidence below. Revise stale unit details before implementation. Only the subsequently adopted unit is executable; use its active control checks and ordinary `codex/` branch convention. Rebuild changed Knowledge inputs before tests that consume generated output. Verify packed output at an integration checkpoint or when package contracts change; use the proportionate iteration rules below for routine edits.
 
 Salt AI should help a developer and their existing agent produce an accepted interface. The first implementation established a complete record form and faithful Button loading guidance. On 2026-09-08 the user rejected that scope as insufficient for a meaningful platform test and directed continued, purposeful progress toward the complete platform. The next local delivery therefore covers one coherent operations-dashboard journey: navigation, a filterable worklist, record inspection and editing, and empty/loading/failure/recovery states. Its guidance and complete files must work through the existing website, Markdown and CLI path. This expands runnable application coverage; owner/design/manual accessibility review, the independent maintainer exercise and real consumer observations remain outstanding and are not inferred from local checks.
 
@@ -30,6 +30,31 @@ This adoption updates this plan/control, Plan 032's completion record, the activ
 Only the named unit executes. Unit 033/01 authorizes local source changes, builds, browser tests and scoped npm setup inside the existing `checkSaltSampleApps` temporary sample-app fixtures and their deliberate negative copies. Those fixtures may obtain declared dependencies and install the exact locally packed CLI/Knowledge cohort; no installation in actual consumer repositories is authorized. Browser/application/tool runtime stays offline, with application state simulations local and tooling read-only. Publication, version materialization, dist-tags, deployment, consumer contact and product host/model trials remain separate. The user-authorized implementation proceeds without those external actions; missing participant access does not block local correctness work.
 
 Before each review run current-plan validation, contracts, `yarn check:changed-quality -- --base <recorded-continuation-sha-or-unit-start-sha>`, `git diff --check` and the unit's specific checks. Rebuild generated Knowledge before tests consuming it whenever its inputs change. Runtime correctness receipts cannot qualify Doctor, and automated accessibility checks cannot stand in for declared manual review. Readiness must disclose outstanding owner/design review and tested scope honestly.
+
+## Proportionate iteration (2026-09-21)
+
+The user accepted the live layout and incident interaction review, then directed
+simpler delivery. Treat that UI review as complete within its recorded scope;
+formal manual accessibility and independent authoring observations remain
+separate. Unit 033/02a stays active and the workflow stays `runnable`.
+
+For routine edits, use the smallest meaningful check: inspect layout changes in
+the browser; for canonical content, regenerate Knowledge once and run the
+relevant evidence/extraction checks. Run current-plan/contracts and changed-file
+quality before review. Batch package reconstruction, full suites and website
+builds at an integration checkpoint, or run the affected ones when their
+contracts change. Never claim an older export represents newer source.
+Record routine changes in Git and a concise review summary; retain existing
+historical evidence without adding a plan entry or digest ledger for each edit.
+
+Use the next real maintainer change to learn about authoring friction. Retire the
+artificial five-to-eight-character exercise and mandatory deliberate failure.
+The next bounded content question is how repeated Inspect actions keep a short
+visible label while including the record in their accessible name. Author it in
+Button accessibility and select it through the existing component-guidance path
+and task-evidence fixture. No schema, ranking system or additional workflow is needed.
+The existing contributor document supplies the short authoring path. Publication,
+installation, network/model trials and workflow-promotion boundaries are unchanged.
 
 ## Product and authoring pivot
 
@@ -177,9 +202,9 @@ Local author preview may add an opt-in `SALT_OFFLINE_AUTHOR_PREVIEW` path in the
 3. Render the workflow through its declared public setup. The outer site chrome can retain its providers, but verify an isolated preview/application with only the exported setup. Make loading/error/retry/success states inspectable through local deterministic fixtures. Avoid screenshot-only demonstrations of behavior.
 4. Test that source view, exported files, Markdown and CLI resolve the same recipe and content identity. The downloadable files must reconstruct the independently tested app. Where the site uses a release bundle, it must not silently mix current-HEAD code into an older labelled preview. Maintain a clearly labelled current development preview separately.
 5. Give authors a short documented path using existing generation, preview and affected checks. Derive repetitive facts and issue diagnostics naming the source file/section and correction needed. Extend existing commands only where necessary; specify and test new filtering options before advertising them. A custom authoring application is out of scope.
-6. Have a maintainer who did not build the compiler make one realistic change to the pilot's behavior and explanatory guidance, regenerate, preview and validate it using only the author guide. Record elapsed active work, manually edited sources, repeated facts and friction in the ordinary review. The change must propagate to all four surfaces without manual edits to generated files or a second prose copy. The maintainer must be able to identify a deliberate missing-file or unsupported-content failure from the diagnostic. Fix duplication before expanding the corpus.
+6. Observe the next genuine documentation or workflow change by a maintainer who did not build the compiler. Use the existing contributor notes, preview the affected surface and check the relevant evidence. Note confusing steps, duplicated facts and help needed in the ordinary review. Do not manufacture a threshold change or deliberate authoring failure for this observation; existing negative tests cover invalid inputs. Independent human observation remains necessary before claiming the authoring process is affordable, but does not block small content improvements. Verify propagation across all four surfaces at the next integration checkpoint.
 
-Verification combines the affected Knowledge/CLI tests, types/contracts, `yarn check:public-examples`, `yarn check:public-docs`, the revised sample-app reconstruction gate and the existing site build/preview path. The public-example check externalizes package dependencies; the public-doc check requires built packages and uses `npm pack --dry-run`. Neither replaces real installed-package acceptance. `yarn workspace @salt-ds/site build` is the existing site-build command; its normal generated prerequisites and local dependencies must be available in the activated unit. Reuse `yarn build:salt-ai-web` and `yarn verify:salt-ai-web` for local generated route/file integrity where their adopted current-product scope applies; these commands do not deploy.
+At an integration checkpoint, verification combines the affected Knowledge/CLI tests, types/contracts, `yarn check:public-examples`, `yarn check:public-docs`, the revised sample-app reconstruction gate and the existing site build/preview path. The public-example check externalizes package dependencies; the public-doc check requires built packages and uses `npm pack --dry-run`. Neither replaces real installed-package acceptance. `yarn workspace @salt-ds/site build` is the existing site-build command; its normal generated prerequisites and local dependencies must be available in the activated unit. Reuse `yarn build:salt-ai-web` and `yarn verify:salt-ai-web` for local generated route/file integrity where their adopted current-product scope applies; these commands do not deploy.
 
 A build alone does not prove a working preview. Place the proposed preview test under the existing `test/browser` include, then run `yarn vitest run --config vitest.browser.config.mts --browser.headless test/browser/salt-workflow-preview.browser.test.tsx` to verify named states, guidance and file references. The browser setup includes maintainer globals, so the separate packed sample-app reconstruction remains the proof of provider/setup completeness. Do not add a site-local test that the current config never discovers. The maintainer exercise separately verifies the actual site path and author instructions. Publication or deployment remains a separate release action.
 

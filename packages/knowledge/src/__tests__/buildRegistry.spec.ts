@@ -56,6 +56,7 @@ const semanticPaths = [
   "site/docs/patterns/navigation.mdx",
   "site/docs/patterns/content-status.mdx",
   "site/docs/components/button/examples.mdx",
+  "site/docs/components/button/accessibility.mdx",
   "site/docs/patterns/forms.mdx",
   "site/docs/getting-started/choosing-the-right-primitive.mdx",
   "site/docs/getting-started/composition-pitfalls.mdx",

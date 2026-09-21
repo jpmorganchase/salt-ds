@@ -128,23 +128,35 @@ describe("generated canonical retrieval", () => {
       manifest: store.manifest,
       readArtifact: store.readArtifact.bind(store),
       getFamily: (family: any) =>
-        family === "evidence"
-          ? [
-              {
-                family: "evidence",
-                id: "example:component:component.spinner:unrelated",
-                evidence_kind: "executable_example",
-                local_id: "unrelated",
-                owner: { family: "component", id: "component.spinner" },
-                owner_ordinal: 0,
-                title: "Unrelated illustration",
-                description: "An unrelated illustration with a separate topic.",
-                intent: ["unrelated"],
-                source_ref: { family: "source", id: "source.unrelated" },
-                supporting_files: [],
-              },
-            ]
-          : store.getFamily(family),
+        family === "search_document"
+          ? store
+              .getFamily("search_document")
+              .filter(
+                ({ target }) =>
+                  (target.family === "component" &&
+                    ["component.button", "component.spinner"].includes(
+                      target.id,
+                    )) ||
+                  (target.family === "guide" && target.id === BUTTON_GUIDE_ID),
+              )
+          : family === "evidence"
+            ? [
+                {
+                  family: "evidence",
+                  id: "example:component:component.spinner:unrelated",
+                  evidence_kind: "executable_example",
+                  local_id: "unrelated",
+                  owner: { family: "component", id: "component.spinner" },
+                  owner_ordinal: 0,
+                  title: "Unrelated illustration",
+                  description:
+                    "An unrelated illustration with a separate topic.",
+                  intent: ["unrelated"],
+                  source_ref: { family: "source", id: "source.unrelated" },
+                  supporting_files: [],
+                },
+              ]
+            : store.getFamily(family),
       getRecord: store.getRecord.bind(store),
       getContentValue: store.getContentValue.bind(store),
       getContentSourceText: store.getContentSourceText.bind(store),

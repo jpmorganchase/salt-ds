@@ -12,6 +12,7 @@
   "documents": {
     "workflow": "record:guide:operations-dashboard.service-worklist",
     "button": "record:guide:guide.button.loading",
+    "buttonAccessibility": "record:guide:guide.button.accessible-name",
     "contentStatus": "record:guide:guide.content-status"
   },
   "sources": {
@@ -21,6 +22,7 @@
     "dialogAccessibility": "site/docs/components/dialog/accessibility.mdx",
     "buttonBar": "site/docs/patterns/button-bar.mdx",
     "buttonExamples": "site/docs/components/button/examples.mdx",
+    "buttonAccessibility": "site/docs/components/button/accessibility.mdx",
     "recipe": "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json",
     "contentStatus": "site/docs/patterns/content-status.mdx"
   },
@@ -455,6 +457,28 @@
             "do not present them as matching the new request",
             "does not make stale data safe",
             "disable or revalidate actions"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "repeated-action-labels",
+      "scope": "operations-example",
+      "question": "How do I label repeated Inspect actions without putting every record name on the button?",
+      "required": [
+        {
+          "document": "buttonAccessibility",
+          "section": "button.accessible-name",
+          "source": "buttonAccessibility",
+          "fragments": [
+            "record name in its row",
+            "aria-label",
+            "visible label text",
+            "record context",
+            "only when space is limited",
+            "users recognize the icon",
+            "Otherwise, keep visible text",
+            "does not replace the accessible name"
           ]
         }
       ]

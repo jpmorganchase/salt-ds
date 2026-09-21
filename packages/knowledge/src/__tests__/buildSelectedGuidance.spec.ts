@@ -25,6 +25,7 @@ const choosingPrimitivePath =
 const compositionPitfallsPath =
   "site/docs/getting-started/composition-pitfalls.mdx";
 const buttonPath = "site/docs/components/button/examples.mdx";
+const buttonAccessibilityPath = "site/docs/components/button/accessibility.mdx";
 const dialogUsagePath = "site/docs/components/dialog/usage.mdx";
 const dialogExamplesPath = "site/docs/components/dialog/examples.mdx";
 const dialogAccessibilityPath = "site/docs/components/dialog/accessibility.mdx";
@@ -51,6 +52,7 @@ const semanticSourcePaths = [
   compositionPitfallsPath,
   formsPath,
   buttonPath,
+  buttonAccessibilityPath,
   dialogUsagePath,
   dialogExamplesPath,
   dialogAccessibilityPath,
@@ -126,11 +128,14 @@ describe("buildSelectedGuidance", () => {
       buildSelectedGuidance(input()),
     );
 
-    expect(guides.map((guide) => guide.id)).toEqual([
-      "operations-dashboard.service-worklist",
-      "guide.button.loading",
-      "guide.content-status",
-    ]);
+    expect(guides.map((guide) => guide.id)).toEqual(
+      expect.arrayContaining([
+        "operations-dashboard.service-worklist",
+        "guide.button.loading",
+        "guide.content-status",
+        "guide.button.accessible-name",
+      ]),
+    );
     const workflow = guides[0];
     expect(workflow.summary).toBe(
       "Build a runnable service-operations dashboard with a persistent shell, worklist filters, local loading, empty and error recovery states, incident inspection, and an editable record form.",
@@ -167,6 +172,7 @@ describe("buildSelectedGuidance", () => {
       ]),
     );
     expect(workflow.sourcePaths).not.toContain(buttonPath);
+    expect(workflow.sourcePaths).not.toContain(buttonAccessibilityPath);
     expect(workflow.sourcePaths).not.toContain(
       `${workflowRoot}/src/workflows/record-form/localDemoAdapter.ts`,
     );
@@ -226,6 +232,31 @@ describe("buildSelectedGuidance", () => {
       code: canonicalText(
         await readFile(path.join(repoRoot, formsPreviewPath), "utf8"),
       ),
+    });
+
+    const accessibleName = guides.find(
+      (guide) => guide.id === "guide.button.accessible-name",
+    );
+    expect(accessibleName).toMatchObject({
+      id: "guide.button.accessible-name",
+      kind: "component-guidance",
+      document: {
+        source: {
+          document_id: "guide.button.accessible-name",
+          source_path: buttonAccessibilityPath,
+        },
+        sections: [expect.objectContaining({ id: "button.accessible-name" })],
+        diagnostics: [],
+      },
+      recipeManifest: null,
+      sourcePaths: [buttonAccessibilityPath],
+      componentNames: ["Button"],
+      packageNames: ["@salt-ds/core"],
+      attach: {
+        componentNames: [],
+        patternNames: [],
+        pageSourcePaths: [buttonAccessibilityPath],
+      },
     });
 
     const contentStatus = guides[2];

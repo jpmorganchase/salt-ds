@@ -39,8 +39,9 @@ evaluated rules found nothing.
 
 ## Local verification
 
-Use the single Plan 033 consistency check for the current worktree and recorded
-control. There are no lifecycle phases or prescribed commit sequences. Record
+Before review, use the Plan 033 consistency check for the current worktree
+and recorded control. There are no lifecycle phases or prescribed commit
+sequences. Record
 actual unit start and completion commits, keep README/control status consistent,
 and update the plan digest after reviewed plan edits. The retained Plan 032 and
 Plan 006 validators have historical semantics and do not establish current dispatch or
@@ -66,28 +67,83 @@ For an explicit historical audit or a change to those readers, use
 frozen inputs. Phase-based Plan 006 commands remain historical; they do not
 replace the current Plan 033 check.
 
-Also run the exact verification block for the active execution unit. Record
-commands, package-size changes, semantic/bundle identities, and limitations in
-the review description. Use Salt's public support-and-contributions destination;
-do not add AI-scoped GitHub Issues routing.
+Complete the active unit's verification block before its integration review.
+Routine edits use the focused checks below; record results and limitations in
+the ordinary review rather than repeating a full checkpoint for every edit.
+Use Salt's public support-and-contributions destination; do not add AI-scoped
+GitHub Issues routing.
 
 ## Current workflow authoring
 
-The service-operations workflow is maintained from its application recipe at
-`examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json`
-and its declared canonical pattern and component-selection guidance. Button
-loading retains its component example. The recipe declares the complete public
-file inventory; keep reusable components and their styles separate from local
-demo adapters and simulation controls. Do not edit
-generated manifests, Knowledge output, web files, or a second prose copy. After
-changing behaviour or guidance, first regenerate the public-example inventory:
+Start with a real developer question or example improvement:
+
+1. Edit the canonical MDX for design guidance, or the workflow source for
+   example behavior. The service-operations workflow's
+   `examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json`
+   identifies its public files and guidance. Keep reusable code separate from
+   local demo adapters; Button loading retains its component example.
+2. Read changed prose in its generated section. Use the existing local preview
+   when presentation, rendering or interaction changes, and check what a reader
+   will encounter.
+3. Check the changed surface. A layout adjustment needs formatting and a focused
+   browser check. A behavior change also needs its relevant interaction checks.
+   For canonical content, rebuild Knowledge and check that the relevant task
+   question receives the decisive guidance, as described below.
+
+Do not edit generated manifests, Knowledge output, web files, or a second prose
+copy. Regenerate the public-example inventory only when its files or recipe
+change:
 
 ```shell
 yarn examples:manifest
 ```
 
-Then run the ordinary heavy verification path. It deliberately separates
-generation from checks, and needs built packages before checks that read them:
+Learn authoring friction from the next genuine maintainer change. Note confusing
+instructions or repeated facts in its ordinary review; no contrived failure or
+timed exercise is required. An agent rehearsal does not establish independent
+human authoring experience, and neither changes workflow readiness or promotion
+and release requirements.
+
+## Authoring task evidence
+
+Keep intent, alternatives, composition, state expectations and accessibility in
+canonical MDX. Use recognizable headings such as When to use, When not to use,
+Composition, Submission and recovery, and Accessibility where they help the
+reader. No page is required to carry every heading. Link to existing guidance
+instead of repeating it. Code continues to supply API and version facts.
+
+The selected-guidance descriptors preserve whole source sections and their
+semantic roles. A sparse selector override is appropriate when a heading such
+as Default does not identify its composition role. Pair separate conditions
+and exclusions in a qualification group; do not group a whole workflow merely
+to force it into context. Unknown headings remain generic guidance.
+
+For the editable-record pilot, add the expected evidence for a real question to
+`packages/knowledge/src/__fixtures__/taskEvidenceQuestions.json` before changing
+selection. Check meaningful clauses and conditions rather than exact prose or
+output snapshots. Rebuild from the edited source before checking the evidence:
+
+```shell
+yarn workspace @salt-ds/knowledge build:knowledge
+yarn vitest run packages/knowledge/src/search/taskKnowledgePilot.spec.ts --maxWorkers=1
+```
+
+This checks the generated Knowledge used by task context. To inspect the CLI
+output too, first run `yarn build:ai-tooling` so its packaged Knowledge is fresh.
+A matching citation without the decisive clause is a miss; a qualified omission
+is a separate compact-output outcome. Example-specific behavior stays in the
+recipe and does not become universal Salt policy.
+
+## Integration checkpoint
+
+Run the complete path at the active unit's integration checkpoint to verify
+export, packaging and web integration together. It separates generation from
+checks and requires fresh built packages before their consumers.
+The commands assume existing local dependencies. In particular,
+`check:salt-sample-apps` installs the packed consumer cohort: run that step only
+when the active unit explicitly authorizes it. A source preview does not prove
+an installed-package reconstruction. This guide grants no installation, network,
+model-call, publication or deployment authority.
 
 ```shell
 yarn check:public-examples
@@ -129,34 +185,3 @@ yarn workspace @salt-ds/site serve:offline-author
 # Separately, test the generated static-artifact component surface:
 yarn vitest run --config vitest.browser.config.mts --browser.headless test/browser/salt-workflow-preview.browser.test.tsx
 ```
-
-The automated path proves generated-source consistency and the current
-workflow's installed-package reconstruction. A maintainer who did not build
-the compiler must also make one realistic workflow behaviour and guidance
-change using this guide, regenerate, preview, and review the four rendered
-surfaces. Record active elapsed time, manually edited source files, repeated
-facts, and friction in the ordinary review. Deliberately remove a declared
-file or use unsupported content once, and record the diagnostic and the source
-correction it identifies. That exercise is human review evidence; it does not
-replace the automated checks above.
-
-## Authoring task evidence
-
-Keep intent, alternatives, composition, state expectations and accessibility in
-canonical MDX. Use recognizable headings such as When to use, When not to use,
-Composition, Submission and recovery, and Accessibility where they help the
-reader. No page is required to carry every heading. Link to existing guidance
-instead of repeating it. Code continues to supply API and version facts.
-
-The selected-guidance descriptors preserve whole source sections and their
-semantic roles. A sparse selector override is appropriate when a heading such
-as Default does not identify its composition role. Pair separate conditions
-and exclusions in a qualification group; do not group a whole workflow merely
-to force it into context. Unknown headings remain generic guidance.
-
-For the editable-record pilot, add expected source clauses to
-`packages/knowledge/src/__fixtures__/taskEvidenceQuestions.json` before changing
-selection. Run `taskKnowledgePilot.spec.ts` after rebuilding Knowledge. A
-matching citation without the decisive clause is a miss; a qualified omission
-is a separate compact-output outcome. Example-specific behavior stays in the
-recipe and does not become universal Salt policy.
