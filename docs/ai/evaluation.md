@@ -41,11 +41,9 @@ The development questions in
 `packages/knowledge/src/__fixtures__/taskEvidenceQuestions.json` cover the
 existing editable-record workflow. Their expected clauses come from canonical
 Forms, Dialog, Button, Button bar and Content status guidance and the example
-recipe. The original ten questions now include one additional refresh-feedback
-case. The
-`taskKnowledgePilot.spec.ts` suite checks delivered section text and provenance,
-not only record hits. At the default 16 KiB budget, required evidence must be
-present; at 8 KiB, missing evidence must be disclosed through a relevant,
+recipe. The `taskKnowledgePilot.spec.ts` suite checks delivered section text and
+provenance, not only record hits. At the default 16 KiB budget, required evidence
+must be present; at 8 KiB, missing evidence must be disclosed through a relevant,
 resolvable omission. Conditions, exclusions, readiness and example limitations
 must remain with any retained recommendation.
 

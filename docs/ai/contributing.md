@@ -39,10 +39,10 @@ evaluated rules found nothing.
 
 ## Local verification
 
-Before review, use the Plan 033 consistency check for the current worktree
-and recorded control. There are no lifecycle phases or prescribed commit
-sequences. Record
-actual unit start and completion commits, keep README/control status consistent,
+Before routine review, run focused tests for the changed behavior and the
+checks below. Use the full product suite at the integration checkpoint.
+There are no lifecycle phases or prescribed commit sequences. Record actual
+unit start and completion commits, keep README/control status consistent,
 and update the plan digest after reviewed plan edits. The retained Plan 032 and
 Plan 006 validators have historical semantics and do not establish current dispatch or
 Doctor fitness.
@@ -50,12 +50,10 @@ Doctor fitness.
 ```shell
 yarn validate:salt-ai:plan-033
 yarn validate:salt-ai:contracts
-yarn test:ai-tooling
 yarn verify:salt-ai-release-embargo
 ```
 
-`test:ai-tooling` runs product regressions. It does not replay historical
-governance acquisition. `eval:salt-ai:validate` is the standalone evaluation
+`eval:salt-ai:validate` is the standalone evaluation
 metadata check, also called by current contracts; it verifies definitions and
 identities without executing model trials or establishing retrieval quality.
 See [evaluation.md](./evaluation.md) for current counts and frozen baseline
@@ -138,15 +136,15 @@ recipe and does not become universal Salt policy.
 
 Run the complete path at the active unit's integration checkpoint to verify
 export, packaging and web integration together. It separates generation from
-checks and requires fresh built packages before their consumers.
-The commands assume existing local dependencies. In particular,
+checks and requires fresh built packages before their consumers. The full
+Knowledge/CLI suite runs product regressions without replaying historical
+governance acquisition. The commands assume existing local dependencies. In particular,
 `check:salt-sample-apps` installs the packed consumer cohort: run that step only
 when the active unit explicitly authorizes it. A source preview does not prove
 an installed-package reconstruction. This guide grants no installation, network,
 model-call, publication or deployment authority.
 
 ```shell
-yarn check:public-examples
 yarn build:ai-tooling
 yarn vitest run packages/knowledge/src packages/cli/src --maxWorkers=1
 yarn typecheck:ai-tooling
@@ -154,7 +152,6 @@ yarn validate:salt-ai:contracts
 yarn check:ai-tooling:pack -- --report dist/salt-ai-pack/plan-033.json
 yarn check:salt-sample-apps -- --app operations-dashboard
 yarn build:salt-ai-web -- --workflow-cohort-receipt dist/salt-sample-apps/operations-dashboard-cohort-receipt.json --prepare-site-preview
-yarn verify:salt-ai-web -- --verify-site-preview
 yarn check:salt-docs-authoring -- --current-product --require-web-route-map dist/salt-ai-web/route-map.json
 yarn check:public-docs
 ```
@@ -164,8 +161,11 @@ generation, the selected recipe and guidance, then reruns the existing web
 preview verifier against the explicit generated route map. It rejects stale
 bundle, bootstrap, route-map, or selected-guidance identities. It is not the
 historical stage-based authoring audit, and it requires the route map produced
-by the web build. `check:public-examples` and `check:public-docs` remain
-separate checks.
+by the web build. It includes public-example and web-preview verification;
+there is no need to repeat those checks at the same checkpoint. For diagnosis,
+run `yarn check:public-examples` or
+`yarn verify:salt-ai-web -- --verify-site-preview` separately.
+`check:public-docs` remains a separate check.
 
 For a local, offline author preview, opt in before producing the Mosaic
 snapshot and site build. The opt-in replaces Google font loading with the
