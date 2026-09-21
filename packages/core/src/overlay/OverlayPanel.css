@@ -28,3 +28,15 @@
   overflow-y: auto;
   box-sizing: border-box;
 }
+
+.saltOverlayPanel-content.saltOverlayPanel-sectioned {
+  display: flex;
+  flex-direction: column;
+}
+
+@supports selector(:has(*)) {
+  .saltOverlayPanel-content:has(> .saltOverlayHeader, > .saltOverlayPanelContent, > .saltOverlayFooter) {
+    display: flex;
+    flex-direction: column;
+  }
+}

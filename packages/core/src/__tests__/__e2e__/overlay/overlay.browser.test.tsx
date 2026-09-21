@@ -20,6 +20,11 @@ const {
   WithTooltip,
 } = composedStories;
 const trigger = () => page.getByRole("button", { name: /Show Overlay/i });
+const rectOf = (root: Element, selector: string) => {
+  const section = root.querySelector(selector);
+  if (!section) throw new Error(`${selector} was not rendered`);
+  return section.getBoundingClientRect();
+};
 
 describe("GIVEN an Overlay", () => {
   checkAccessibility(composedStories);
@@ -190,6 +195,38 @@ describe("GIVEN an Overlay", () => {
         )
         .toBe(true);
     });
+
+    it("THEN it should keep the header and footer in place while the content scrolls", async () => {
+      await renderWithSalt(<WithSections />);
+      await trigger().click();
+
+      const panel = page.getByRole("dialog").element();
+      const content = panel.querySelector<HTMLElement>(
+        ".saltOverlayPanelContent-container",
+      );
+      if (!content) {
+        throw new Error("Overlay panel content was not rendered");
+      }
+
+      await expect
+        .poll(() => content.scrollHeight)
+        .toBeGreaterThan(content.clientHeight);
+
+      const headerTop = rectOf(panel, ".saltOverlayHeader").top;
+      const footerBottom = rectOf(panel, ".saltOverlayFooter").bottom;
+      expect(footerBottom).toBeLessThanOrEqual(
+        panel.getBoundingClientRect().bottom,
+      );
+
+      content.scrollTop = content.scrollHeight;
+      await expect.poll(() => content.scrollTop).toBeGreaterThan(0);
+
+      expect(rectOf(panel, ".saltOverlayHeader").top).toBeCloseTo(headerTop, 1);
+      expect(rectOf(panel, ".saltOverlayFooter").bottom).toBeCloseTo(
+        footerBottom,
+        1,
+      );
+    });
   });
 
   it("should support tooltip on overlay triggers", async () => {
@@ -221,7 +258,7 @@ describe("GIVEN an Overlay", () => {
 
     const panel = page.getByRole("dialog").element();
     const content = panel.querySelector<HTMLElement>(
-      ".saltOverlayPanel-content",
+      ".saltOverlayPanelContent-container",
     );
     if (!content) {
       throw new Error("Overlay panel content was not rendered");
@@ -233,7 +270,18 @@ describe("GIVEN an Overlay", () => {
     expect(panel.getBoundingClientRect().height).toBeLessThanOrEqual(
       window.innerHeight,
     );
-    expect(getComputedStyle(content).overflowY).toBe("auto");
-    expect(content.scrollHeight).toBeGreaterThan(content.clientHeight);
+    await expect
+      .poll(() => content.scrollHeight)
+      .toBeGreaterThan(content.clientHeight);
+
+    const headerTop = rectOf(panel, ".saltOverlayHeader").top;
+    content.scrollTop = content.scrollHeight;
+    await expect.poll(() => content.scrollTop).toBeGreaterThan(0);
+
+    const header = rectOf(panel, ".saltOverlayHeader");
+    expect(header.top).toBeCloseTo(headerTop, 1);
+    expect(header.bottom).toBeLessThanOrEqual(
+      panel.getBoundingClientRect().bottom,
+    );
   });
 });

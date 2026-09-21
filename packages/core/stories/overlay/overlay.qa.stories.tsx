@@ -119,9 +119,9 @@ export const WithSections: StoryFn<QAContainerProps> = (props) => {
           <OverlayTrigger>
             <Button>Show Overlay</Button>
           </OverlayTrigger>
-          <OverlayPanel style={{ width: 320 }}>
+          <OverlayPanel style={{ width: 320, maxHeight: 200 }}>
             <OverlayHeader header="Review changes" />
-            <OverlayPanelContent style={{ height: 120 }}>
+            <OverlayPanelContent>
               <StackLayout>
                 <Text>
                   Review the account updates before saving. The footer remains

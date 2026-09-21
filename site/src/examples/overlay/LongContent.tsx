@@ -38,11 +38,12 @@ export const LongContent = (): ReactElement => {
       <OverlayPanel
         style={{
           width: 300,
+          maxHeight: 180,
         }}
         aria-labelledby={id}
       >
         <OverlayHeader header="Long content" actions={closeButton} id={id} />
-        <OverlayPanelContent style={{ height: 200 }}>
+        <OverlayPanelContent>
           <StackLayout>
             <Text>
               This example text is intended to demonstrate layout and formatting

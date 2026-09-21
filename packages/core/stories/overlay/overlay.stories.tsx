@@ -174,9 +174,9 @@ export const WithSections = ({ onOpenChange }: OverlayProps) => {
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
-      <OverlayPanel style={{ width: 320 }} aria-labelledby={id}>
+      <OverlayPanel style={{ width: 320, maxHeight: 200 }} aria-labelledby={id}>
         <OverlayHeader header="Review changes" id={id} />
-        <OverlayPanelContent style={{ height: 120 }}>
+        <OverlayPanelContent>
           <StackLayout>
             <Text>
               Review the account updates before saving. The footer remains
@@ -231,10 +231,11 @@ export const LongContent = () => {
       <OverlayPanel
         style={{
           width: 300,
+          maxHeight: 240,
         }}
       >
         <OverlayHeader header="Title" actions={closeButton} />
-        <OverlayPanelContent style={{ height: 200 }}>
+        <OverlayPanelContent>
           <StackLayout>
             <Text>
               Lorem Ipsum is simply dummy text of the printing and typesetting

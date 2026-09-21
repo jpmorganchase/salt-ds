@@ -25,9 +25,9 @@ export const WithSections = (): ReactElement => {
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
-      <OverlayPanel style={{ width: 320 }} aria-labelledby={id}>
+      <OverlayPanel style={{ width: 320, maxHeight: 200 }} aria-labelledby={id}>
         <OverlayHeader header="Review changes" id={id} />
-        <OverlayPanelContent style={{ height: 120 }}>
+        <OverlayPanelContent>
           <StackLayout>
             <Text>
               Review the account updates before saving. The footer remains

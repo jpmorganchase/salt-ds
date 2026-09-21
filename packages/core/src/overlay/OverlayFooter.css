@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: flex-end;
   gap: var(--salt-spacing-100);
+  flex-shrink: 0;
   box-sizing: border-box;
 }
 
