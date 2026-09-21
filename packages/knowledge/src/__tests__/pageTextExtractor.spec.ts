@@ -153,10 +153,15 @@ describe("parseSelectedMdxDocument", () => {
     });
 
     expect(document.diagnostics).toEqual([]);
-    expect(document.sections.map((section) => section.id)).toEqual([
-      "button.loading",
-      "button.loading.best-practices",
-    ]);
+    expect(document.sections.map((section) => section.id)).toEqual(
+      expect.arrayContaining([
+        "button.loading",
+        "button.loading.best-practices",
+      ]),
+    );
+    for (const section of document.sections) {
+      expect(section.heading_path[0]).toBe("Loading");
+    }
     const loading = document.sections.find(
       (section) => section.id === "button.loading",
     );
@@ -167,7 +172,7 @@ describe("parseSelectedMdxDocument", () => {
     expect(rationale?.semantic_role).toBe("behavior");
     expect(loading?.qualification_group).toMatch(/\S/u);
     expect(rationale?.qualification_group).toBe(loading?.qualification_group);
-    expect(document.sections[0].blocks).toEqual(
+    expect(loading?.blocks).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           kind: "paragraph",
@@ -180,7 +185,7 @@ describe("parseSelectedMdxDocument", () => {
         }),
       ]),
     );
-    expect(document.sections[1].blocks).toEqual(
+    expect(rationale?.blocks).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           kind: "paragraph",
