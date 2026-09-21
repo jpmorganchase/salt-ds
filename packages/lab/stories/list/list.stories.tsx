@@ -2,6 +2,7 @@ import {
   Button,
   FlexItem,
   FlexLayout,
+  H4,
   StackLayout,
   StatusIndicator,
   Text,
@@ -371,33 +372,39 @@ export const TabToSelect: StoryFn<ListProps> = () => {
   return (
     <FlexLayout>
       <FlexItem>
-        <h4>default</h4>
-        <List
-          aria-label="List example"
-          width={240}
-          source={usa_states}
-          tabToSelect
-        />
+        <StackLayout gap={1}>
+          <H4>default</H4>
+          <List
+            aria-label="List example"
+            width={240}
+            source={usa_states}
+            tabToSelect
+          />
+        </StackLayout>
       </FlexItem>
       <FlexItem>
-        <h4>deselectable</h4>
-        <List
-          aria-label="Deselectable List example"
-          width={240}
-          selectionStrategy="deselectable"
-          source={usa_states}
-          tabToSelect
-        />
+        <StackLayout gap={1}>
+          <H4>deselectable</H4>
+          <List
+            aria-label="Deselectable List example"
+            width={240}
+            selectionStrategy="deselectable"
+            source={usa_states}
+            tabToSelect
+          />
+        </StackLayout>
       </FlexItem>
       <FlexItem>
-        <h4>multiple</h4>
-        <List
-          aria-label="MultiSelectable List example"
-          width={240}
-          selectionStrategy="multiple"
-          source={usa_states}
-          tabToSelect
-        />
+        <StackLayout gap={1}>
+          <H4>multiple</H4>
+          <List
+            aria-label="MultiSelectable List example"
+            width={240}
+            selectionStrategy="multiple"
+            source={usa_states}
+            tabToSelect
+          />
+        </StackLayout>
       </FlexItem>
     </FlexLayout>
   );
@@ -706,7 +713,7 @@ export const WithTextHighlight: StoryFn<ListProps> = () => {
 };
 
 export const DisableTypeToSelect: StoryFn<ListProps> = () => {
-  const handleChange: SelectionChangeHandler = (evt, selected) => {
+  const handleChange: SelectionChangeHandler = (_evt, selected) => {
     console.log("selectionChanged", selected);
   };
 
