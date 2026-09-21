@@ -3,3 +3,5 @@
 ---
 
 Add `OverlayFooter`, a composable layout section that owns the inner padding of an overlay panel. Use it as a direct child of `OverlayPanel` with `OverlayHeader` and `OverlayPanelContent` to create structured layouts.
+
+Add the `--saltOverlay-header-padding` CSS variable to `OverlayHeader`, alongside the existing `--saltOverlay-content-padding` and `--saltOverlay-footer-padding`.
