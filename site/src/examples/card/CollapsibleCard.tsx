@@ -23,7 +23,7 @@ export const CollapsibleCard = (): ReactElement => {
       onOpenChange={(_, isOpen) => setExpanded(isOpen)}
       open={expanded}
     >
-      <Card style={{ width: "360px" }}>
+      <Card style={{ maxWidth: "360px" }}>
         <CardHeader>
           <FlexLayout align="start" gap={1} justify="space-between">
             <StackLayout gap={0.5}>
