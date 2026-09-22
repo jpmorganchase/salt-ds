@@ -53,6 +53,22 @@
   padding-top: calc(var(--drawer-padding) + var(--drawer-resizeHandleSize));
 }
 
+/* A focused resize handle draws its ring just outside the strip, which sits
+   flush with the Drawer's edge, so `overflow: auto` would clip it. A sectioned
+   Drawer scrolls inside DrawerContent rather than scrolling itself, so it can
+   clip with a margin instead, which lets the ring paint. */
+.saltDrawer-resizable.saltDrawer-sectioned {
+  overflow: clip;
+  overflow-clip-margin: var(--salt-focused-outlineWidth);
+}
+
+@supports selector(:has(*)) {
+  .saltDrawer-resizable:has(> .saltDrawerHeader, > .saltDrawerContent, > .saltDrawerFooter) {
+    overflow: clip;
+    overflow-clip-margin: var(--salt-focused-outlineWidth);
+  }
+}
+
 /* Styles applied when variant = "primary" */
 .saltDrawer-primary {
   --drawer-background: var(--salt-container-primary-background);
