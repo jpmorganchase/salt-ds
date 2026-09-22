@@ -157,27 +157,47 @@ export const ToggleButtonGroup = forwardRef<
   );
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    const elements: HTMLElement[] = Array.from(
-      groupRef.current?.querySelectorAll("button:not([disabled])") ?? [],
-    );
+    onKeyDown?.(event);
+    if (event.defaultPrevented) {
+      return;
+    }
 
-    const doc = ownerDocument(groupRef.current);
-
-    const currentIndex = elements.indexOf(doc.activeElement as HTMLElement);
+    let direction: number;
     switch (event.key) {
       case "ArrowDown":
       case "ArrowRight":
-        elements[(currentIndex + 1) % elements.length]?.focus();
+        direction = 1;
         break;
       case "ArrowUp":
       case "ArrowLeft":
-        elements[
-          (currentIndex - 1 + elements.length) % elements.length
-        ]?.focus();
+        direction = -1;
         break;
+      default:
+        return;
     }
 
-    onKeyDown?.(event);
+    const group = groupRef.current;
+    const elements = Array.from(
+      group?.querySelectorAll<HTMLButtonElement>(
+        'button[role="radio"]:not([disabled])',
+      ) ?? [],
+    ).filter((element) => element.closest(".saltToggleButtonGroup") === group);
+    const doc = ownerDocument(group);
+    const currentIndex = elements.indexOf(
+      doc.activeElement as HTMLButtonElement,
+    );
+    if (currentIndex === -1) {
+      return;
+    }
+
+    event.preventDefault();
+    const next =
+      elements[(currentIndex + direction + elements.length) % elements.length];
+    next.focus();
+    // Toolbar arrows navigate without changing the selected command.
+    if (!readOnly && !group?.closest('[role="toolbar"]')) {
+      next.click();
+    }
   };
 
   return (

@@ -187,7 +187,7 @@ function recipeSections(
       "States, recovery and acceptance",
       "acceptance",
       `${markdownList(recipe.acceptance.automated)}\n\nReview still required:\n\n${markdownList(recipe.acceptance.manual_review_pending)}\n\nInstalled application acceptance: ${escapeUntrustedMarkdownText(recipe.readiness.packed_application_acceptance)}. Static file checks have passed.`,
-      `states validation pending failure retry success keyboard focus accessibility acceptance ${recipe.acceptance.automated.join(" ")}`,
+      `states validation pending failure retry success keyboard focus accessibility acceptance ${[...recipe.acceptance.automated, ...recipe.acceptance.manual_review_pending, ...recipe.limitations].join(" ")}`,
     ),
   ];
 }

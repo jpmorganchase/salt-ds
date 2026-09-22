@@ -680,6 +680,7 @@ type CanonicalContextIntent = "general" | "workflow" | "adaptation";
 
 interface CanonicalContextCandidates {
   documents: KnowledgeContextCanonicalDocument[];
+  section_priorities: ReadonlyMap<string, number>;
   source_examples: KnowledgeContextSourceExample[];
   had_canonical_document: boolean;
   had_incompatible_canonical_document: boolean;
@@ -1198,6 +1199,20 @@ function canonicalContextCandidates(
   const intent = canonicalContextIntent(queryWords);
   const guides = new Set<string>();
   const documents: KnowledgeContextCanonicalDocument[] = [];
+  const sectionPriorities = new Map<string, number>();
+  const addDocument = (
+    document: CanonicalDocumentSelection,
+    sections: readonly CanonicalDocumentSection[],
+  ) => {
+    // Compute priority before the public projection removes search-only evidence.
+    for (const section of sections) {
+      sectionPriorities.set(
+        section.reference,
+        contextSectionPriority(section, intent, queryWords),
+      );
+    }
+    documents.push(toCanonicalContextDocument(document, sections));
+  };
   const sourceExamples = sourceExamplesForMatches(store, matches, queryWords);
   let hadCanonicalDocument = false;
   let hadIncompatibleCanonicalDocument = false;
@@ -1217,7 +1232,7 @@ function canonicalContextCandidates(
     hadCanonicalDocument = true;
     const sections = selectedCanonicalSections(document, queryWords, intent);
     if (sections.length > 0) {
-      documents.push(toCanonicalContextDocument(document, sections));
+      addDocument(document, sections);
     }
   }
   // Follow one authored link hop to another selected guide, constrained by
@@ -1270,16 +1285,15 @@ function canonicalContextCandidates(
       );
       if (!section) continue;
       guides.add(guide.id);
-      documents.push(
-        toCanonicalContextDocument(
-          linked,
-          qualifiedSections(linked.sections, new Set([section])),
-        ),
+      addDocument(
+        linked,
+        qualifiedSections(linked.sections, new Set([section])),
       );
     }
   }
   return {
     documents,
+    section_priorities: sectionPriorities,
     source_examples: sourceExamples,
     had_canonical_document: hadCanonicalDocument,
     had_incompatible_canonical_document: hadIncompatibleCanonicalDocument,
@@ -1443,24 +1457,9 @@ function canonicalContextVariants(
       ? [candidates, { ...candidates, source_examples: [], truncated: true }]
       : [candidates];
   }
-  const priorities = new Map<
-    KnowledgeContextCanonicalDocument["sections"][number],
-    number
-  >();
   const sectionPriority = (
     section: KnowledgeContextCanonicalDocument["sections"][number],
-  ): number => {
-    let priority = priorities.get(section);
-    if (priority === undefined) {
-      priority = contextSectionPriority(
-        section,
-        candidates.intent,
-        candidates.query_words,
-      );
-      priorities.set(section, priority);
-    }
-    return priority;
-  };
+  ): number => candidates.section_priorities.get(section.reference) ?? 0;
   // A lower-ranked broad guide must not force a fitting leading document
   // (and its matches/files) to compact. Try intact prefixes first, then
   // shrink sections while retaining their qualification groups.
@@ -1611,30 +1610,33 @@ function canonicalContextVariants(
         ),
       });
     }
-    // When the highest-priority whole section cannot fit, preserve a smaller
-    // authored section before giving up canonical evidence. The first omitted
-    // reference still points to the highest-priority next step.
-    for (const document of documents) {
-      const rankedSections = [...document.sections].sort(
-        (left, right) =>
-          sectionPriority(right) - sectionPriority(left) ||
-          document.sections.indexOf(left) - document.sections.indexOf(right),
-      );
-      for (const section of rankedSections) {
-        variants.push({
-          ...candidates,
-          truncated: true,
-          documents: [
-            compactCanonicalDocument(
-              document,
-              1,
-              sectionPriority,
-              candidates.query_words,
-              section.id,
-            ),
-          ],
-        });
-      }
+  }
+  // Try every compact document prefix before falling back to one section.
+  // A small fragment of a broad first guide must not hide a fitting packet
+  // containing the focused guidance in a later document.
+  // When the highest-priority whole section cannot fit, preserve a smaller
+  // authored section before giving up canonical evidence. The first omitted
+  // reference still points to the highest-priority next step.
+  for (const document of candidates.documents) {
+    const rankedSections = [...document.sections].sort(
+      (left, right) =>
+        sectionPriority(right) - sectionPriority(left) ||
+        document.sections.indexOf(left) - document.sections.indexOf(right),
+    );
+    for (const section of rankedSections) {
+      variants.push({
+        ...candidates,
+        truncated: true,
+        documents: [
+          compactCanonicalDocument(
+            document,
+            1,
+            sectionPriority,
+            candidates.query_words,
+            section.id,
+          ),
+        ],
+      });
     }
   }
   variants.push({
@@ -1691,11 +1693,10 @@ function canonicalContextVariants(
   const omittedDocuments = disclosedVariants.filter(
     (variant) => variant.documents.length === 0,
   );
-  // Keep example resolver references while trying smaller qualified guidance.
-  // Canonical evidence still takes precedence over an example-only fallback.
+  // Preserve canonical evidence before retaining optional example summaries.
+  // Try the same guidance without examples before shrinking the documents.
   return [
-    ...withDocuments,
-    ...withDocuments.map(withoutExamples),
+    ...withDocuments.flatMap((variant) => [variant, withoutExamples(variant)]),
     ...omittedDocuments.flatMap((variant) =>
       candidates.intent !== "general"
         ? [withoutExamples(variant), variant]

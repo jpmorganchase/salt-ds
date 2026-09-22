@@ -12,14 +12,57 @@ data:
 
 ### When to use
 
-- To make a single selection when switching between opposing yet mutually exclusive options.
+- To make a single selection between mutually exclusive options that take immediate effect.
+- To switch the same records between list and card presentations, keeping one view selected.
 - To visually prioritize options higher than [`RadioButton`](../radio-button) or [`Switch`](../switch).
 
 ### When not to use
 
-- To present an instantaneous or binary choice between two options. Instead, use [`Switch`](../switch).
+- To turn an independent setting on or off. Instead, use [`Switch`](../switch).
+- To switch between distinct content panels, such as Details and History. Instead, use [`Tabs`](../tabs).
 - When the options in the group are not high priority and high affordance is not necessary. Instead, use [`RadioButtonGroup`](../radio-button).
 - When all options in the group don’t need to be visible at once. Consider using [`Dropdown`](../dropdown).
+
+## View switching
+
+Use `ToggleButtonGroup` to switch the same underlying records between List and
+Cards. This presentation choice is not navigation to different content.
+
+### Alternatives
+
+- Use [`Tabs`](../tabs/usage) for distinct content panels, such as Details,
+  Activity and History.
+- Use [`NavigationItem`](../navigation-item/usage) for application destinations.
+- [`SegmentedButtonGroup`](../segmented-button-group/usage) lays out related
+  actions. It does not provide a selected value or selection behavior; use
+  `ToggleButtonGroup` for a persistent presentation choice.
+
+### State and focus
+
+The application owns the presentation, query, filters, sort and selected record.
+Keep shared state outside the alternative presentations, preserving it wherever
+it remains applicable. Keep focus on the view control. Presentation changes must
+not submit forms or save edits.
+
+Outside a toolbar, arrow keys focus and select an adjacent enabled option.
+Inside a toolbar, arrows move focus without changing selection; Space or Enter
+selects. See [keyboard interactions](./accessibility).
+
+#### Accessible labels
+
+Give the group an accessible name such as View and use visible List and Cards
+labels. Initialize one selected value; activating it again keeps that view
+selected.
+
+#### Loading and examples
+
+If switching presentation requires loading data, follow
+[Content status](../../patterns/content-status): retain useful content and make
+loading or failure clear. Do not silently clear a filter or an unsaved draft.
+
+See the [list and card example](./examples#view-switching) for a local collection
+with a shared filter and record selection. It does not demonstrate remote loading,
+large collections or persistence across page visits.
 
 ## Content
 

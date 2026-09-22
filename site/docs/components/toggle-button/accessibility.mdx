@@ -15,6 +15,12 @@ data:
 
 ## Keyboard interactions
 
+Outside a toolbar, arrow keys move focus and select the next or previous enabled
+option. In a toolbar, arrow keys move focus without changing selection; Space or
+Enter selects the focused option. Horizontal arrows continue to adjacent toolbar
+controls at a group boundary, and Tab leaves the toolbar. Read-only groups allow
+focus movement without changing selection.
+
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
@@ -36,14 +42,14 @@ data:
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Right arrow / Down arrow">
 
-- This action moves focus to the next toggle button in the toggle button group.
-- If focus is on the last toggle button, this action wraps focus to the first toggle button.
+- This action moves focus to the next enabled toggle button in the group and selects it, except in a toolbar or a read-only group.
+- Outside a toolbar, if focus is on the last enabled toggle button, this action wraps focus to the first enabled toggle button.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Left arrow / Up arrow">
 
-- This action moves focus to the previous toggle button in the toggle button group.
-- If focus is on the first toggle button, this action wraps focus to the last toggle button.
+- This action moves focus to the previous enabled toggle button in the group and selects it, except in a toolbar or a read-only group.
+- Outside a toolbar, if focus is on the first enabled toggle button, this action wraps focus to the last enabled toggle button.
 
 </KeyboardControl>
 </KeyboardControls>

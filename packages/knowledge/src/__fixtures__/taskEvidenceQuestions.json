@@ -14,7 +14,8 @@
     "button": "record:guide:guide.button.loading",
     "buttonAccessibility": "record:guide:guide.button.accessible-name",
     "contentStatus": "record:guide:guide.content-status",
-    "formIntegration": "record:guide:guide.forms.integration"
+    "formIntegration": "record:guide:guide.forms.integration",
+    "viewSwitching": "record:guide:guide.view-switching"
   },
   "sources": {
     "forms": "site/docs/patterns/forms.mdx",
@@ -26,7 +27,8 @@
     "buttonAccessibility": "site/docs/components/button/accessibility.mdx",
     "recipe": "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json",
     "contentStatus": "site/docs/patterns/content-status.mdx",
-    "formIntegration": "site/docs/getting-started/form-integration.mdx"
+    "formIntegration": "site/docs/getting-started/form-integration.mdx",
+    "viewSwitching": "site/docs/components/toggle-button/usage.mdx"
   },
   "qualifications": {
     "document": "workflow",
@@ -537,6 +539,46 @@
           ]
         }
       ]
+    },
+    {
+      "id": "list-card-view-switching",
+      "scope": "operations-example",
+      "question": "Which control should switch the same records between list and card presentations and preserve filters and selection?",
+      "required": [
+        {
+          "document": "viewSwitching",
+          "section": "view-switching.choice",
+          "source": "viewSwitching",
+          "fragments": [
+            "ToggleButtonGroup",
+            "same underlying records",
+            "not navigation"
+          ]
+        },
+        {
+          "document": "viewSwitching",
+          "section": "view-switching.choice.alternatives",
+          "source": "viewSwitching",
+          "fragments": [
+            "Tabs",
+            "distinct content panels",
+            "SegmentedButtonGroup",
+            "does not provide a selected value"
+          ]
+        },
+        {
+          "document": "viewSwitching",
+          "section": "view-switching.choice.state-and-focus",
+          "source": "viewSwitching",
+          "fragments": [
+            "application owns",
+            "filters, sort and selected record",
+            "Keep focus on the view control",
+            "Inside a toolbar",
+            "without changing selection"
+          ]
+        }
+      ]
     }
   ],
   "qualified_units": [
@@ -548,6 +590,7 @@
     ],
     ["button.loading", "button.loading.best-practices"],
     ["dialog.focus", "dialog.initial-focus", "dialog.focus-sequence"],
-    ["button-bar.layout", "button-bar.dialog-order"]
+    ["button-bar.layout", "button-bar.dialog-order"],
+    ["view-switching.choice", "view-switching.choice.alternatives"]
   ]
 }

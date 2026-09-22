@@ -22,6 +22,19 @@ A `ToggleButtonGroup` allows users to make a single selection from a set of rela
   exampleName="ToggleButtonGroupDefault"
 />
 
+## View switching
+
+Switch the same incident records between List and Cards with `ToggleButtonGroup`.
+The filter and selected record belong to the application and survive the switch.
+The view controls stay mounted so keyboard focus remains on the selected control.
+See [view-switching guidance](./usage#view-switching) for component alternatives
+and state ownership.
+
+<LivePreview
+  componentName="toggle-button"
+  exampleName="ToggleButtonGroupViewSwitching"
+/>
+
 ## Group orientation
 
 By default, a toggle button group has horizontal alignment. To present the options in a stacked layout, orientate the group vertically using the `orientation=”vertical”` prop.

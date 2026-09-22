@@ -1555,6 +1555,12 @@ describe("Toolbar keyboard, focus and portals", () => {
           .element(page.getByRole(role, { name, exact: true }))
           .toHaveFocus();
       }
+      await expect
+        .element(page.getByRole("radio", { name: "All", exact: true }))
+        .toHaveAttribute("aria-checked", "true");
+      await expect
+        .element(page.getByRole("radio", { name: "Archived", exact: true }))
+        .toHaveAttribute("aria-checked", "false");
       for (const name of sequence.slice(0, -1).reverse()) {
         await userEvent.keyboard("{ArrowLeft}");
         await expect.element(page.getByRole("radio", { name })).toHaveFocus();
@@ -1563,6 +1569,17 @@ describe("Toolbar keyboard, focus and portals", () => {
       await expect
         .element(page.getByRole("button", { name: "First Run" }))
         .toHaveFocus();
+      page
+        .getByRole("radio", { name: "Active", exact: true })
+        .element()
+        .focus();
+      await userEvent.keyboard(" ");
+      await expect
+        .element(page.getByRole("radio", { name: "Active", exact: true }))
+        .toHaveAttribute("aria-checked", "true");
+      await expect
+        .element(page.getByRole("radio", { name: "All", exact: true }))
+        .toHaveAttribute("aria-checked", "false");
     },
   );
 
@@ -1587,6 +1604,12 @@ describe("Toolbar keyboard, focus and portals", () => {
         const role = name === "Confirm view" ? "button" : "radio";
         await expect.element(page.getByRole(role, { name })).toHaveFocus();
       }
+      await expect
+        .element(page.getByRole("radio", { name: "All", exact: true }))
+        .toHaveAttribute("aria-checked", "true");
+      await expect
+        .element(page.getByRole("radio", { name: "Archived", exact: true }))
+        .toHaveAttribute("aria-checked", "false");
     },
   );
 

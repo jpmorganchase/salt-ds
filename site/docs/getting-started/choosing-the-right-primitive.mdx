@@ -17,7 +17,7 @@ authoritative details.
   navigation, [`VerticalNavigation`](/salt/components/vertical-navigation).
 - Follow a destination within page content, such as a help article or download:
   use [`Link`](/salt/components/link).
-- Switch between related views within the same page: use
+- Switch between distinct content panels within the same page: use
   [`Tabs`](/salt/components/tabs).
 - Show or hide related content: use a disclosure primitive such as
   [`Accordion`](/salt/components/accordion) or
@@ -29,15 +29,16 @@ authoritative details.
 
 ## Quick decision table
 
-| User intent                     | Prefer                                                                                                               | Main thing to avoid                                 |
-| ------------------------------- | -------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| Trigger work                    | [`Button`](/salt/components/button)                                                                                  | `Link` or custom link-like actions                  |
-| Navigate across an app or site  | [`NavigationItem`](/salt/components/navigation-item) or [`VerticalNavigation`](/salt/components/vertical-navigation) | Custom navigation that recreates covered behavior   |
-| Follow an inline destination    | [`Link`](/salt/components/link)                                                                                      | `Button` used as route or document navigation       |
-| Switch related in-page views    | [`Tabs`](/salt/components/tabs)                                                                                      | Treating local panels as separate destinations      |
-| Repeated multi-part flow        | [Patterns](/salt/patterns/index)                                                                                     | ad hoc assemblies                                   |
-| Arrange page or shell structure | [Layouts](/salt/components/layouts/index)                                                                            | generic wrappers that add no value                  |
-| Existing Salt screen            | Salt primitives                                                                                                      | recreated native or role-based interactive elements |
+| User intent                                    | Prefer                                                                                                               | Main thing to avoid                                 |
+| ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Trigger work                                   | [`Button`](/salt/components/button)                                                                                  | `Link` or custom link-like actions                  |
+| Navigate across an app or site                 | [`NavigationItem`](/salt/components/navigation-item) or [`VerticalNavigation`](/salt/components/vertical-navigation) | Custom navigation that recreates covered behavior   |
+| Follow an inline destination                   | [`Link`](/salt/components/link)                                                                                      | `Button` used as route or document navigation       |
+| Switch distinct content panels                 | [`Tabs`](/salt/components/tabs)                                                                                      | Treating local panels as separate destinations      |
+| Change the same records between List and Cards | [`ToggleButtonGroup`](/salt/components/toggle-button/usage#view-switching)                                           | Tabs used for presentation settings                 |
+| Repeated multi-part flow                       | [Patterns](/salt/patterns/index)                                                                                     | ad hoc assemblies                                   |
+| Arrange page or shell structure                | [Layouts](/salt/components/layouts/index)                                                                            | generic wrappers that add no value                  |
+| Existing Salt screen                           | Salt primitives                                                                                                      | recreated native or role-based interactive elements |
 
 ## Common decisions
 
@@ -53,11 +54,19 @@ authoritative details.
 - Use horizontal `NavigationItem` for application or website destinations,
   such as a header linking Overview, Team, and Settings. Use
   `VerticalNavigation` for new structured vertical navigation.
-- Use `Tabs` for related views of content within the same page. The presence
+- Use `Tabs` for distinct content panels within the same page. The presence
   of a URL fragment alone does not decide the component: establish whether
   the user is navigating to a destination or switching a local panel.
 - Preserve the application's routing owner. Follow the selected component's
   usage guidance for integrating its link with the existing router.
+
+### Tabs or ToggleButtonGroup
+
+Use `Tabs` for distinct panels such as Details and History. Use `ToggleButtonGroup`
+for different presentations of the same records, such as List and Cards. Keep the
+query, filters, sort and selected record in shared application state. Follow the
+[view-switching guidance](/salt/components/toggle-button/usage#view-switching)
+for selection, focus and the distinction from `SegmentedButtonGroup`.
 
 ### Component or pattern
 
@@ -91,6 +100,7 @@ coverage for the corresponding existing Salt component before composing it.
 - [NavigationItem usage](/salt/components/navigation-item/usage)
 - [VerticalNavigation usage](/salt/components/vertical-navigation/usage)
 - [Tabs usage](/salt/components/tabs/usage)
+- [View switching](/salt/components/toggle-button/usage#view-switching)
 - [Card usage](/salt/components/card/usage)
 - [Layouts overview](/salt/components/layouts/index)
 - [Patterns overview](/salt/patterns/index)

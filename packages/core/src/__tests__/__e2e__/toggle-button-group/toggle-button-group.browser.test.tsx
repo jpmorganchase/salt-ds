@@ -49,11 +49,13 @@ function ControlledGroup({
   disabled,
   initialValue = "print",
   onChange,
+  orientation,
   readOnly,
 }: {
   disabled?: boolean;
   initialValue?: string;
   onChange?: (event: SyntheticEvent<HTMLButtonElement>) => void;
+  orientation?: "horizontal" | "vertical";
   readOnly?: boolean;
 }) {
   const [value, setValue] = useState(initialValue);
@@ -66,6 +68,7 @@ function ControlledGroup({
     <Group
       disabled={disabled}
       onChange={handleChange}
+      orientation={orientation}
       readOnly={readOnly}
       value={value}
     />
@@ -114,6 +117,40 @@ describe("GIVEN an uncontrolled ToggleButtonGroup", () => {
     expect(onChange.mock.lastCall?.[0].target).toHaveProperty("value", "print");
   });
 
+  it("selects with arrows, skipping disabled options and wrapping", async () => {
+    const onChange = vi.fn();
+    await renderWithSalt(
+      <Group
+        defaultValue="alert"
+        onChange={(event) => onChange(event.currentTarget.value)}
+      />,
+    );
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("radio", { name: "Alert" }))
+      .toHaveFocus();
+
+    for (const [key, name] of [
+      ["{ArrowRight}", "Search"],
+      ["{ArrowDown}", "Print"],
+      ["{ArrowRight}", "Alert"],
+      ["{ArrowLeft}", "Print"],
+      ["{ArrowUp}", "Search"],
+    ]) {
+      await userEvent.keyboard(key);
+      const selected = page.getByRole("radio", { name });
+      await expect.element(selected).toHaveFocus();
+      await expect.element(selected).toHaveAttribute("aria-checked", "true");
+    }
+    expect(onChange.mock.calls).toEqual([
+      ["search"],
+      ["print"],
+      ["alert"],
+      ["print"],
+      ["search"],
+    ]);
+  });
+
   it("does not deselect the selected button", async () => {
     const onChange = vi.fn();
     await renderWithSalt(<Group defaultValue="print" onChange={onChange} />);
@@ -125,9 +162,11 @@ describe("GIVEN an uncontrolled ToggleButtonGroup", () => {
 });
 
 describe("GIVEN a controlled ToggleButtonGroup", () => {
-  it("updates value and roving tab index", async () => {
+  it("updates value and roving tab index for click and arrow selection", async () => {
     const onChange = vi.fn();
-    await renderWithSalt(<ControlledGroup onChange={onChange} />);
+    await renderWithSalt(
+      <ControlledGroup onChange={onChange} orientation="vertical" />,
+    );
     const radios = page.getByRole("radio");
     await expect.element(radios).toHaveLength(4);
     await expect.element(radios.nth(3)).toHaveAttribute("aria-checked", "true");
@@ -139,6 +178,40 @@ describe("GIVEN a controlled ToggleButtonGroup", () => {
     await expect.element(radios.nth(0)).toHaveAttribute("aria-checked", "true");
     await expect.element(radios.nth(0)).toHaveAttribute("tabindex", "0");
     await expect.element(radios.nth(3)).toHaveAttribute("tabindex", "-1");
+
+    await userEvent.keyboard("{ArrowDown}");
+    expect(onChange).toHaveBeenCalledTimes(2);
+    expect(onChange.mock.lastCall?.[0].target).toHaveProperty(
+      "value",
+      "search",
+    );
+    await expect.element(radios.nth(2)).toHaveFocus();
+    await expect.element(radios.nth(2)).toHaveAttribute("aria-checked", "true");
+    await expect
+      .element(radios.nth(0))
+      .toHaveAttribute("aria-checked", "false");
+  });
+
+  it("leaves selection controlled by the supplied value", async () => {
+    const onChange = vi.fn();
+    await renderWithSalt(
+      <Group
+        value="print"
+        onChange={(event) => onChange(event.currentTarget.value)}
+      />,
+    );
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowRight}");
+    await expect
+      .element(page.getByRole("radio", { name: "Alert" }))
+      .toHaveFocus();
+    await expect
+      .element(page.getByRole("radio", { name: "Alert" }))
+      .toHaveAttribute("aria-checked", "false");
+    await expect
+      .element(page.getByRole("radio", { name: "Print" }))
+      .toHaveAttribute("aria-checked", "true");
+    expect(onChange).toHaveBeenCalledExactlyOnceWith("alert");
   });
 
   it("does not deselect the selected value", async () => {
@@ -193,7 +266,10 @@ describe("GIVEN a read-only ToggleButtonGroup", () => {
   });
 
   it("remains focusable with arrow-key navigation", async () => {
-    await renderWithSalt(<Group disableHome={false} readOnly value="home" />);
+    const onChange = vi.fn();
+    await renderWithSalt(
+      <Group disableHome={false} onChange={onChange} readOnly value="home" />,
+    );
     await userEvent.tab();
     await expect
       .element(page.getByRole("radio", { name: "Home" }))
@@ -206,6 +282,13 @@ describe("GIVEN a read-only ToggleButtonGroup", () => {
     await expect
       .element(page.getByRole("radio", { name: "Print" }))
       .toHaveFocus();
+    await expect
+      .element(page.getByRole("radio", { name: "Home" }))
+      .toHaveAttribute("aria-checked", "true");
+    await expect
+      .element(page.getByRole("radio", { name: "Print" }))
+      .toHaveAttribute("aria-checked", "false");
+    expect(onChange).not.toHaveBeenCalled();
   });
 });
 

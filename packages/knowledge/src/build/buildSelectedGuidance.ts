@@ -24,6 +24,8 @@ const CONTENT_STATUS_DOCUMENT_PATH = "site/docs/patterns/content-status.mdx";
 const FORMS_DOCUMENT_PATH = "site/docs/patterns/forms.mdx";
 const FORM_INTEGRATION_DOCUMENT_PATH =
   "site/docs/getting-started/form-integration.mdx";
+const VIEW_SWITCHING_DOCUMENT_PATH =
+  "site/docs/components/toggle-button/usage.mdx";
 const BUTTON_DOCUMENT_PATH = "site/docs/components/button/examples.mdx";
 const BUTTON_ACCESSIBILITY_DOCUMENT_PATH =
   "site/docs/components/button/accessibility.mdx";
@@ -161,6 +163,29 @@ const FORM_INTEGRATION_SELECTORS: readonly SelectedMdxSectionSelector[] = [
     heading_path: ["Formik and TanStack Form"],
     include_descendants: false,
     semantic_role: "composition",
+  },
+];
+
+const VIEW_SWITCHING_SELECTORS: readonly SelectedMdxSectionSelector[] = [
+  {
+    id: "view-switching.choice",
+    heading_path: ["View switching"],
+    include_descendants: false,
+    semantic_role: "decision",
+    qualification_group: "view-switching.choice",
+  },
+  {
+    id: "view-switching.choice.alternatives",
+    heading_path: ["View switching", "Alternatives"],
+    include_descendants: false,
+    semantic_role: "decision",
+    qualification_group: "view-switching.choice",
+  },
+  {
+    id: "view-switching.choice.state-and-focus",
+    heading_path: ["View switching", "State and focus"],
+    include_descendants: false,
+    semantic_role: "behavior",
   },
 ];
 
@@ -819,6 +844,7 @@ export async function buildSelectedGuidance(
     forms,
     formsErrorSummary,
     formIntegration,
+    viewSwitching,
     button,
     buttonAccessibility,
     choosingPrimitive,
@@ -883,6 +909,15 @@ export async function buildSelectedGuidance(
       route: "/salt/getting-started/form-integration",
       selectors: FORM_INTEGRATION_SELECTORS,
       fallbackTitle: "Form integration",
+    }),
+    parseSelectedDocument({
+      sourceRoot: input.sourceRoot,
+      declared: declaredSourcePaths([VIEW_SWITCHING_DOCUMENT_PATH]),
+      sourcePath: VIEW_SWITCHING_DOCUMENT_PATH,
+      documentId: "guide.view-switching",
+      route: "/salt/components/toggle-button/usage",
+      selectors: VIEW_SWITCHING_SELECTORS,
+      fallbackTitle: "View switching",
     }),
     parseSelectedDocument({
       sourceRoot: input.sourceRoot,
@@ -1148,6 +1183,29 @@ export async function buildSelectedGuidance(
       limitations: [
         "The React 19 and form-library recipes require runtime verification in the consuming application.",
       ],
+    },
+    {
+      id: "guide.view-switching",
+      name: "View switching",
+      aliases: [
+        "View switching",
+        "List and card presentation",
+        "Tabs or ToggleButtonGroup",
+      ],
+      summary: summaryFromDocument(viewSwitching.document, "View switching"),
+      kind: "component-guidance",
+      document: viewSwitching.document,
+      recipeManifest: null,
+      sourcePaths: [VIEW_SWITCHING_DOCUMENT_PATH],
+      componentNames: ["Toggle button", "Tabs", "Segmented button group"],
+      packageNames: ["@salt-ds/core"],
+      attach: {
+        componentNames: ["Toggle button"],
+        patternNames: [],
+        pageSourcePaths: [VIEW_SWITCHING_DOCUMENT_PATH],
+      },
+      files: [],
+      limitations: [],
     },
     {
       id: "guide.button.loading",

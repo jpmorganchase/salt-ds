@@ -65,6 +65,7 @@ const semanticSourcePaths = [
 const trackedSourcePaths = [
   ...semanticSourcePaths,
   formIntegrationPath,
+  "site/docs/components/toggle-button/usage.mdx",
   formsPreviewPath,
   buttonPreviewPath,
 ];
