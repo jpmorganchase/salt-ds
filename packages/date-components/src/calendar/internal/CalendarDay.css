@@ -247,7 +247,6 @@
 
 .saltCalendarDay-unselectable,
 .saltCalendarDay-unselectable:hover {
-  opacity: 0.4;
   background: var(--salt-selectable-background);
   cursor: var(--salt-cursor-disabled);
 }
