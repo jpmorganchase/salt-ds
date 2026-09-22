@@ -316,7 +316,7 @@ export const CollapsibleCard: StoryFn<typeof Card> = (args) => {
             <CollapsibleTrigger>
               <Button
                 appearance="transparent"
-                aria-label={`${expanded ? "Hide" : "Show"} Q2 2026 report highlights`}
+                aria-label="Q2 2026 report highlights"
                 sentiment="neutral"
               >
                 {expanded ? (
