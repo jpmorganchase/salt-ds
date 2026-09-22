@@ -9,9 +9,7 @@ import * as overlayStories from "~stories/overlay/overlay.stories";
 const composedStories = composeStories(overlayStories);
 const {
   Default,
-  Right,
-  Bottom,
-  Left,
+  Placement,
   CloseButton,
   HideArrow,
   LongContent,
@@ -88,16 +86,16 @@ describe("GIVEN an Overlay", () => {
   });
 
   const placementCases = [
-    ["top", Default, "y", "greater"] as const,
-    ["right", Right, "x", "less"] as const,
-    ["bottom", Bottom, "y", "less"] as const,
-    ["left", Left, "x", "greater"] as const,
+    ["top", "y", "greater"] as const,
+    ["right", "x", "less"] as const,
+    ["bottom", "y", "less"] as const,
+    ["left", "x", "greater"] as const,
   ];
 
-  for (const [placement, Story, axis, comparison] of placementCases) {
+  for (const [placement, axis, comparison] of placementCases) {
     describe(`WHEN mounted ${placement}`, () => {
       it(`THEN it should appear on ${placement} of trigger element`, async () => {
-        await renderWithSalt(<Story />);
+        await renderWithSalt(<Placement placement={placement} />);
         await trigger().click();
         const dialog = page.getByRole("dialog");
         const overlayTrigger = page.getByText(/Show Overlay/i);

@@ -14,7 +14,7 @@
   "scripts": {
     "start": "yarn storybook",
     "build": "yarn workspaces foreach --exclude @salt-ds/site -Apt run build && yarn bundle:css",
-    "release": "yarn build && yarn changeset publish",
+    "release": "yarn build && node scripts/publishWithRetry.mjs",
     "build:ag-grid-theme": "yarn workspace @salt-ds/ag-grid-theme build",
     "build:highcharts-theme": "yarn workspaces foreach -Rpt --from @salt-ds/highcharts-theme run build",
     "bundle:css": "yarn bundle:core:css && yarn bundle:lab:css && yarn bundle:date-components:css && yarn bundle:embla-carousel:css && yarn copy:icon:css && yarn copy:countries:css",
@@ -129,7 +129,7 @@
     "browserslist-to-esbuild": "^2.1.1",
     "execa": "^10.0.0",
     "get-tsconfig": "^4.7.5",
-    "playwright": "1.62.1",
+    "playwright": "1.63.0",
     "rollup": "^4.24.2",
     "rollup-plugin-esbuild": "^6.1.1",
     "rollup-plugin-postcss": "^4.0.2",

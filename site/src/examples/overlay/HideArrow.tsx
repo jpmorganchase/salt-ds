@@ -20,7 +20,7 @@ export const HideArrow = (): ReactElement => {
       <OverlayPanel aria-labelledby={id}>
         <OverlayHeader header="Title" id={id} />
         <OverlayPanelContent>
-          <Text>Content of Overlay</Text>
+          <Text as="p">Content of Overlay</Text>
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>

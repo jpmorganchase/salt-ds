@@ -16,13 +16,13 @@ The `Overlay` component allows the user to expose and interact with supplemental
 
 ## Placement
 
-Use the `placement` prop to position overlay content to the `top`, `bottom`, `left` or `right` of the trigger element.
+Use the `placement` prop to position overlay content relative to the trigger. The default placement is `top`.
 
 <LivePreview componentName="overlay" exampleName="Placement" />
 
 ## Sections
 
-Use `OverlayHeader`, `OverlayPanelContent` and `OverlayFooter` to create distinct padded sections within `OverlayPanel`. Sections need to be direct children of `OverlayPanel` so their spacing rules apply; adjacent sections share a single `--salt-spacing-100` gap. When `OverlayPanel` has a constrained height, `OverlayHeader` and `OverlayFooter` stay in place while `OverlayPanelContent` scrolls.
+Use `OverlayHeader`, `OverlayPanelContent` and `OverlayFooter` to create distinct padded sections within `OverlayPanel`. Sections need to be direct children of `OverlayPanel` for their spacing rules to apply. When `OverlayPanel` has a constrained height, `OverlayHeader` and `OverlayFooter` stay in place while `OverlayPanelContent` scrolls.
 
 `OverlayHeader` follows the [Header Block pattern](/salt/patterns/header-block). Pass the title to `header`, and add `preheader` or `description` when needed.
 

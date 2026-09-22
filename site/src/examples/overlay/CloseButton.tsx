@@ -37,7 +37,7 @@ export const CloseButton = (): ReactElement => {
       <OverlayPanel aria-labelledby={id}>
         <OverlayHeader header="Title" actions={closeButton} id={id} />
         <OverlayPanelContent>
-          <Text>Content of Overlay</Text>
+          <Text as="p">Content of Overlay</Text>
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>

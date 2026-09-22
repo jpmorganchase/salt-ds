@@ -26,7 +26,7 @@ export const OverlayTemplate = (props: OverlayProps): ReactElement => {
         <OverlayHeader header="Title" id={id} />
         <OverlayPanelContent>
           <StackLayout gap={1}>
-            <Text>Content of Overlay</Text>
+            <Text as="p">Content of Overlay</Text>
             <Tooltip content="I'm a tooltip">
               <Button>hover me</Button>
             </Tooltip>

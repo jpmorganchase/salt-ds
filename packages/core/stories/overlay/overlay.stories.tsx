@@ -19,11 +19,33 @@ import { CloseIcon, MicroMenuIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type ChangeEvent, useState } from "react";
 
+const placementOptions = [
+  "top",
+  "top-start",
+  "top-end",
+  "right",
+  "right-start",
+  "right-end",
+  "bottom",
+  "bottom-start",
+  "bottom-end",
+  "left",
+  "left-start",
+  "left-end",
+] satisfies NonNullable<OverlayProps["placement"]>[];
+
 export default {
   title: "Core/Overlay",
+  component: Overlay,
+  argTypes: {
+    placement: {
+      options: placementOptions,
+      control: { type: "select" },
+    },
+  },
 } as Meta<typeof Overlay>;
 
-export const Default: StoryFn<OverlayProps> = ({ ...args }) => {
+const OverlayTemplate = ({ ...args }: OverlayProps) => {
   const id = useId();
 
   return (
@@ -35,26 +57,28 @@ export const Default: StoryFn<OverlayProps> = ({ ...args }) => {
       <OverlayPanel aria-labelledby={id}>
         <OverlayHeader header="Title" id={id} />
         <OverlayPanelContent>
-          <Text>Content of Overlay</Text>
+          <Text as="p">Content of Overlay</Text>
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
   );
 };
 
-export const Bottom = Default.bind({});
-Bottom.args = {
-  placement: "bottom",
-};
+export const Default: StoryFn<OverlayProps> = OverlayTemplate;
 
-export const Left = Default.bind({});
-Left.args = {
-  placement: "left",
-};
-
-export const Right = Default.bind({});
-Right.args = {
-  placement: "right",
+export const Placement: StoryFn<OverlayProps> = (args) => (
+  <div
+    style={{
+      display: "grid",
+      minHeight: 300,
+      placeItems: "center",
+    }}
+  >
+    <OverlayTemplate {...args} />
+  </div>
+);
+Placement.args = {
+  placement: "bottom-start",
 };
 
 export const HideArrow = Default.bind({});
@@ -84,7 +108,7 @@ const HeaderTemplate: StoryFn = ({ onOpenChange, ...props }: OverlayProps) => {
         <OverlayHeader header="Header block" {...props} />
         <OverlayPanelContent>
           <StackLayout gap={1}>
-            <Text>
+            <Text as="p">
               Content of Overlay. Lorem Ipsum is simply dummy text of the
               printing and typesetting industry. Lorem Ipsum has been the
               industry's standard dummy text ever since the 1500s. When an
@@ -147,7 +171,7 @@ export const CloseButton = ({ onOpenChange }: OverlayProps) => {
         <OverlayHeader header="Title" actions={closeButton} id={id} />
         <OverlayPanelContent>
           <StackLayout gap={1}>
-            <Text>Content of Overlay</Text>
+            <Text as="p">Content of Overlay</Text>
             <Tooltip content={"I'm a tooltip"}>
               <Button>hover me</Button>
             </Tooltip>
@@ -178,15 +202,15 @@ export const WithSections = ({ onOpenChange }: OverlayProps) => {
         <OverlayHeader header="Review changes" id={id} />
         <OverlayPanelContent>
           <StackLayout>
-            <Text>
+            <Text as="p">
               Review the account updates before saving. The footer remains
               available while this content scrolls.
             </Text>
-            <Text>
+            <Text as="p">
               Contact details, notification preferences, and security settings
               will be updated when you save.
             </Text>
-            <Text>
+            <Text as="p">
               You can cancel to close the overlay without applying these
               changes.
             </Text>
@@ -237,13 +261,13 @@ export const LongContent = () => {
         <OverlayHeader header="Title" actions={closeButton} />
         <OverlayPanelContent>
           <StackLayout>
-            <Text>
+            <Text as="p">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
               type and scrambled it to make a type specimen book.
             </Text>
-            <Text>
+            <Text as="p">
               It has survived not only five centuries, but also the leap into
               electronic typesetting, remaining essentially unchanged. It was
               popularised in the 1960s with the release of Letraset sheets
@@ -377,7 +401,7 @@ export const WithTooltip: StoryFn<OverlayProps> = ({ ...args }) => {
       <OverlayPanel aria-labelledby={id}>
         <OverlayHeader header="Title" id={id} />
         <OverlayPanelContent>
-          <Text>Content of Overlay</Text>
+          <Text as="p">Content of Overlay</Text>
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>

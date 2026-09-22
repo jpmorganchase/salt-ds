@@ -45,12 +45,12 @@ export const LongContent = (): ReactElement => {
         <OverlayHeader header="Long content" actions={closeButton} id={id} />
         <OverlayPanelContent>
           <StackLayout>
-            <Text>
+            <Text as="p">
               This example text is intended to demonstrate layout and formatting
               within the component. The content shown here is for illustrative
               purposes and does not represent actual information or advice.
             </Text>
-            <Text>
+            <Text as="p">
               Sample paragraphs like this can be used to visualize how text will
               appear in different scenarios. The wording is generic and designed
               to help review spacing, alignment, and overall presentation in the

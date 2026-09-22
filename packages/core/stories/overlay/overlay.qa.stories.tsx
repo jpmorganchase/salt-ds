@@ -36,7 +36,7 @@ export const Default: StoryFn<QAContainerProps> = (props) => {
         <OverlayPanel>
           <OverlayHeader header="Title" />
           <OverlayPanelContent>
-            <Text>Content of Overlay</Text>
+            <Text as="p">Content of Overlay</Text>
           </OverlayPanelContent>
         </OverlayPanel>
       </Overlay>
@@ -83,7 +83,7 @@ export const CloseButton: StoryFn<QAContainerProps> = (props) => {
             actions={closeButton}
           />
           <OverlayPanelContent>
-            <Text>Content of Overlay</Text>
+            <Text as="p">Content of Overlay</Text>
           </OverlayPanelContent>
         </OverlayPanel>
       </Overlay>
@@ -123,15 +123,15 @@ export const WithSections: StoryFn<QAContainerProps> = (props) => {
             <OverlayHeader header="Review changes" />
             <OverlayPanelContent>
               <StackLayout>
-                <Text>
+                <Text as="p">
                   Review the account updates before saving. The footer remains
                   available while this content scrolls.
                 </Text>
-                <Text>
+                <Text as="p">
                   Contact details, notification preferences, and security
                   settings will be updated when you save.
                 </Text>
-                <Text>
+                <Text as="p">
                   You can cancel to close the overlay without applying these
                   changes.
                 </Text>
@@ -162,7 +162,7 @@ const HideArrowTemplate: StoryFn<typeof Overlay> = (args) => (
     <OverlayPanel>
       <OverlayHeader header="Title" />
       <OverlayPanelContent>
-        <Text>Content of Overlay</Text>
+        <Text as="p">Content of Overlay</Text>
       </OverlayPanelContent>
     </OverlayPanel>
   </Overlay>

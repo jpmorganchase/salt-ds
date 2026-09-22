@@ -6,4 +6,4 @@ Add `OverlayFooter`, a composable layout section for an overlay panel. Use it as
 
 `OverlayHeader` and `OverlayFooter` own their padding on all sides. `OverlayPanelContent` drops its top padding after an `OverlayHeader` and its bottom padding before an `OverlayFooter`, so adjacent sections share a single gap.
 
-Add the `--saltOverlay-header-padding` and `--saltOverlay-footer-padding` CSS variables to `OverlayHeader` and `OverlayFooter`, alongside the existing `--saltOverlay-content-padding`.
+Add the `--saltOverlay-header-padding` and `--saltOverlay-footer-padding` CSS variables to `OverlayHeader` and `OverlayFooter`.

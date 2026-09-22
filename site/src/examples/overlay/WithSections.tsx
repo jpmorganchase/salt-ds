@@ -29,15 +29,15 @@ export const WithSections = (): ReactElement => {
         <OverlayHeader header="Review changes" id={id} />
         <OverlayPanelContent>
           <StackLayout>
-            <Text>
+            <Text as="p">
               Review the account updates before saving. The footer remains
               available while this content scrolls.
             </Text>
-            <Text>
+            <Text as="p">
               Contact details, notification preferences, and security settings
               will be updated when you save.
             </Text>
-            <Text>
+            <Text as="p">
               You can cancel to close the overlay without applying these
               changes.
             </Text>
