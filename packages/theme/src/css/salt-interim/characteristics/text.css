@@ -28,7 +28,7 @@
   --salt-text-code-fontWeight: var(--salt-typography-fontWeight-regular);
 
   /* Action */
-  --salt-text-action-letterSpacing: 0;
+  --salt-text-action-letterSpacing: 4%;
   --salt-text-action-textTransform: none;
   --salt-text-action-textAlign: center;
   --salt-text-action-fontFamily: var(--salt-typography-fontFamily-roboto);
