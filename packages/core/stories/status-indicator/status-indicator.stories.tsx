@@ -6,6 +6,7 @@ import {
   VALIDATION_NAMED_STATUS,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
+import "./status-indicator.stories.css";
 
 export default {
   title: "Core/Status Indicator",
@@ -49,14 +50,15 @@ export const WithText: StoryFn<typeof StatusIndicator> = (args) => {
       <StatusIndicator
         {...args}
         aria-hidden
+        className="status-indicator-with-text"
         status={status}
-        style={{
-          marginTop:
-            "calc((var(--salt-text-lineHeight) - max(var(--salt-size-icon), 12px)) / 2)",
-        }}
       />
-      <Text color={status}>
-        <i>Request could not be submitted. Please try again later.</i>
+      <Text
+        className="status-indicator-with-text-label"
+        color={status}
+        styleAs="label"
+      >
+        Request could not be submitted. Please try again later.
       </Text>
     </FlexLayout>
   );
