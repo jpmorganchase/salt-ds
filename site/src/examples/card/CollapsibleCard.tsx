@@ -33,7 +33,7 @@ export const CollapsibleCard = (): ReactElement => {
             <CollapsibleTrigger>
               <Button
                 appearance="transparent"
-                aria-label={`${expanded ? "Hide" : "Show"} report highlights`}
+                aria-label="Q2 2026 report highlights"
                 sentiment="neutral"
               >
                 {expanded ? (
