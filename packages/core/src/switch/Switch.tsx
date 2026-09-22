@@ -113,6 +113,7 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(
       a11yProps: formFieldA11yProps,
       disabled: formFieldDisabled,
       readOnly: formFieldReadOnly,
+      validationStatus,
     } = useFormFieldProps();
 
     const disabled = formFieldDisabled || disabledProp;
@@ -145,6 +146,7 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(
         {...rest}
       >
         <input
+          aria-invalid={validationStatus === "error" || undefined}
           aria-readonly={readOnly || undefined}
           aria-describedby={
             clsx(formFieldA11yProps?.["aria-describedby"], inputDescribedBy) ||

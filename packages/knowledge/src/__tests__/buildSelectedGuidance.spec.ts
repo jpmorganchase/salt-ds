@@ -17,6 +17,7 @@ const recipeSourcePath = `${workflowRoot}/src/workflows/service-worklist/recipe.
 const manifestPath =
   "examples/workflows/operations-dashboard.service-worklist/recipe.json";
 const formsPath = "site/docs/patterns/forms.mdx";
+const formIntegrationPath = "site/docs/getting-started/form-integration.mdx";
 const analyticalDashboardPath = "site/docs/patterns/analytical-dashboard.mdx";
 const navigationPath = "site/docs/patterns/navigation.mdx";
 const contentStatusPath = "site/docs/patterns/content-status.mdx";
@@ -63,6 +64,7 @@ const semanticSourcePaths = [
 ];
 const trackedSourcePaths = [
   ...semanticSourcePaths,
+  formIntegrationPath,
   formsPreviewPath,
   buttonPreviewPath,
 ];
@@ -138,6 +140,10 @@ describe("buildSelectedGuidance", () => {
     const guides = await withCatalogInputTracking(sourceRoot, inventory, () =>
       buildSelectedGuidance({ ...input(), sourceRoot }),
     );
+
+    for (const guide of guides) {
+      expect(guide.document.diagnostics, guide.id).toEqual([]);
+    }
 
     expect(guides.map((guide) => guide.id)).toEqual(
       expect.arrayContaining([

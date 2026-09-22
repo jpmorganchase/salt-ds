@@ -600,9 +600,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           autoComplete="off"
           aria-describedby={startAriaDescribedBy}
           aria-labelledby={startAriaLabelledBy}
-          aria-invalid={
-            (!isReadOnly && validationStatus === "error") || undefined
-          }
+          aria-invalid={validationStatus === "error" || undefined}
           aria-label={startAriaLabel}
           id={startInputID}
           className={withBaseName("input")}
@@ -629,9 +627,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           autoComplete="off"
           aria-describedby={endAriaDescribedBy}
           aria-labelledby={endAriaLabelledBy}
-          aria-invalid={
-            (!isReadOnly && validationStatus === "error") || undefined
-          }
+          aria-invalid={validationStatus === "error" || undefined}
           aria-label={endAriaLabel}
           id={endInputID}
           className={withBaseName("input")}

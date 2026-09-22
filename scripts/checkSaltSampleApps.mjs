@@ -1039,14 +1039,13 @@ async function assertRecordFormWorkflow(page, screenshotRoot) {
     /Enter at least 5 characters/u,
     "Record form accepted a short invalid title",
   );
+  await page.clock.pauseAt((await page.evaluate(() => Date.now())) + 1_000);
   await title.fill("Latency regression affecting order flow");
   await submit.click();
   await page.getByText("Saving incident.", { exact: true }).waitFor();
   assert((await title.getAttribute("readonly")) !== null);
   assert((await service.getAttribute("readonly")) !== null);
-  assert(await dialog.getByRole("button", { name: "Close" }).isDisabled());
-  await page.keyboard.press("Escape");
-  assert.equal(await dialog.count(), 1, "Pending record form closed on Escape");
+  assert(await close.isEnabled(), "Pending record form disabled Close");
   await dialog
     .locator('form[aria-label="Create incident record"]')
     .evaluate((form) => form.requestSubmit());
@@ -1056,6 +1055,45 @@ async function assertRecordFormWorkflow(page, screenshotRoot) {
       fullPage: true,
     });
   }
+  await page.keyboard.press("Escape");
+  await dialog.waitFor({ state: "detached" });
+  assert(
+    await createIncident.evaluate(
+      (element) => element === document.activeElement,
+    ),
+    "Pending record form did not return focus after Escape",
+  );
+  await createIncident.click();
+  dialog = page.getByRole("dialog");
+  await dialog.waitFor();
+  assert.equal(
+    await title.inputValue(),
+    "Latency regression affecting order flow",
+  );
+  assert.equal(await service.inputValue(), "Risk calculator");
+  await title.fill("Draft changed after cancelling save");
+  await page.clock.runFor(1_600);
+  assert.equal(
+    await dialog.count(),
+    1,
+    "Cancelled save closed the reopened editor",
+  );
+  assert.equal(await title.inputValue(), "Draft changed after cancelling save");
+  assert.equal(
+    await dialog.getByRole("alert").count(),
+    0,
+    "Cancelled save changed submission feedback",
+  );
+  assert.equal(
+    await page.getByText("Saving incident.", { exact: true }).count(),
+    0,
+  );
+  assert.equal(await title.getAttribute("readonly"), null);
+
+  await title.fill("Latency regression affecting order flow");
+  await submit.click();
+  await page.clock.runFor(1_600);
+  await page.clock.resume();
 
   const failure = page.getByRole("alert").filter({
     hasText:

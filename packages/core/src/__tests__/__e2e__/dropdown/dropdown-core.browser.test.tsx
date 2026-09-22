@@ -53,9 +53,10 @@ async function expectActive(nameOrIndex: string | number) {
       const activeId = combobox()
         .element()
         .getAttribute("aria-activedescendant");
-      const options = await (typeof nameOrIndex === "number"
-        ? page.getByRole("option")
-        : page.getByRole("option", { name: nameOrIndex })
+      const options = await (
+        typeof nameOrIndex === "number"
+          ? page.getByRole("option")
+          : page.getByRole("option", { name: nameOrIndex })
       ).elements();
       const option =
         typeof nameOrIndex === "number"
@@ -511,16 +512,25 @@ describe("Given a core Dropdown", () => {
     await expect.element(combobox()).toHaveClass("saltDropdown-warning");
   });
 
-  it("prioritizes FormField validation status", async () => {
-    await renderWithSalt(
-      <FormField validationStatus="error">
+  it("prioritizes FormField validation status and updates native invalid state", async () => {
+    const field = (status: "error" | "warning" | "success", override = {}) => (
+      <FormField validationStatus={status}>
         <FormFieldLabel>Field</FormFieldLabel>
-        <Dropdown validationStatus="warning">
+        <Dropdown validationStatus="warning" {...override}>
           <Option value={1}>1</Option>
         </Dropdown>
-      </FormField>,
+      </FormField>
     );
+    const { rerender } = await renderWithSalt(field("error"));
     await expect.element(combobox()).toHaveClass("saltDropdown-error");
     await expect.element(combobox()).not.toHaveClass("saltDropdown-warning");
+    await expect.element(combobox()).toHaveAttribute("aria-invalid", "true");
+
+    await rerender(field("warning"));
+    await expect.element(combobox()).not.toHaveAttribute("aria-invalid");
+    await rerender(field("success"));
+    await expect.element(combobox()).not.toHaveAttribute("aria-invalid");
+    await rerender(field("error", { "aria-invalid": false }));
+    await expect.element(combobox()).toHaveAttribute("aria-invalid", "false");
   });
 });

@@ -1,4 +1,5 @@
 import type {
+  AriaAttributes,
   CSSProperties,
   HTMLAttributes,
   KeyboardEvent,
@@ -49,6 +50,7 @@ export interface DropdownHookProps
 }
 
 export interface DropdownHookTriggerProps {
+  "aria-invalid"?: AriaAttributes["aria-invalid"];
   "aria-expanded"?: boolean;
   "aria-labelledby"?: string;
   "aria-owns"?: string;

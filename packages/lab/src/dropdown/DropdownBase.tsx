@@ -8,7 +8,14 @@ import {
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { Children, cloneElement, forwardRef, useRef, useState } from "react";
+import {
+  type AriaAttributes,
+  Children,
+  cloneElement,
+  forwardRef,
+  useRef,
+  useState,
+} from "react";
 import { Portal } from "../portal";
 import { forwardCallbackProps } from "../utils";
 import { isDesktop, useWindow as usePortalWindow } from "../window";
@@ -19,6 +26,7 @@ import { useDropdownBase } from "./useDropdownBase";
 // Define the common props that we will act on, if present,
 // so we can type them.
 export type MaybeChildProps = {
+  "aria-invalid"?: AriaAttributes["aria-invalid"];
   className?: string;
   id?: string;
   role?: string;
@@ -118,12 +126,14 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
 
     const getTriggerComponent = () => {
       const {
+        "aria-invalid": defaultAriaInvalid,
         id: defaultId,
         role: defaultRole,
         ...restTriggerProps
       } = triggerProps;
 
       const {
+        "aria-invalid": ariaInvalid = defaultAriaInvalid,
         id = defaultId,
         role = defaultRole,
         ...ownProps
@@ -133,6 +143,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
         trigger,
         forwardCallbackProps(ownProps, {
           ...restTriggerProps,
+          "aria-invalid": ariaInvalid,
           id,
           role,
         }),

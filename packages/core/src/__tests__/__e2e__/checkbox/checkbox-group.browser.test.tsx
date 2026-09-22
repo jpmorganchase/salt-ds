@@ -52,6 +52,52 @@ async function expectAllChecked(checked: boolean) {
 }
 
 describe("GIVEN a CheckboxGroup", () => {
+  it("updates inherited invalid state and preserves group and input overrides", async () => {
+    const field = (
+      status: "error" | "warning" | "success",
+      groupProps: CheckboxGroupProps = {},
+    ) => (
+      <FormField validationStatus={status}>
+        <CheckboxGroup validationStatus="warning" {...groupProps}>
+          <Checkbox
+            label="Inherited"
+            value="inherited"
+            validationStatus="error"
+          />
+          <Checkbox
+            label="Overridden"
+            value="overridden"
+            inputProps={{ "aria-invalid": false }}
+          />
+          <Checkbox label="Disabled" value="disabled" disabled />
+        </CheckboxGroup>
+      </FormField>
+    );
+    const { rerender } = await renderWithSalt(field("error"));
+    const group = page.getByRole("group");
+    const inherited = page.getByRole("checkbox", { name: "Inherited" });
+
+    await expect.element(group).toHaveAttribute("aria-invalid", "true");
+    await expect.element(inherited).toHaveAttribute("aria-invalid", "true");
+    await expect
+      .element(page.getByRole("checkbox", { name: "Overridden" }))
+      .toHaveAttribute("aria-invalid", "false");
+    await expect
+      .element(page.getByRole("checkbox", { name: "Disabled" }))
+      .not.toHaveAttribute("aria-invalid");
+
+    await rerender(field("warning"));
+    await expect.element(group).not.toHaveAttribute("aria-invalid");
+    await expect.element(inherited).not.toHaveAttribute("aria-invalid");
+    await rerender(field("success"));
+    await expect.element(group).not.toHaveAttribute("aria-invalid");
+    await expect.element(inherited).not.toHaveAttribute("aria-invalid");
+
+    await rerender(field("error", { "aria-invalid": "grammar" }));
+    await expect.element(group).toHaveAttribute("aria-invalid", "grammar");
+    await expect.element(inherited).toHaveAttribute("aria-invalid", "true");
+  });
+
   it("renders its checkboxes and values", async () => {
     await renderWithSalt(<Group />);
     await expect.element(page.getByRole("checkbox")).toHaveLength(3);

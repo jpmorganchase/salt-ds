@@ -175,6 +175,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         {...rest}
       >
         <input
+          aria-invalid={validationStatus === "error" || undefined}
           aria-describedby={
             clsx(
               radioGroup === undefined

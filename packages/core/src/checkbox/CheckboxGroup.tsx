@@ -118,6 +118,7 @@ export const CheckboxGroup = forwardRef<
 
   return (
     <fieldset
+      aria-invalid={validationStatus === "error" || undefined}
       aria-labelledby={
         clsx(a11yProps?.["aria-labelledby"], ariaLabelledBy) || undefined
       }

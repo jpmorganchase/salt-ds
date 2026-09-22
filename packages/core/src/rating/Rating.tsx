@@ -79,6 +79,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     getLabel = defaultGetLabel,
     getVisibleLabel,
     labelPlacement = "right",
+    "aria-invalid": ariaInvalid,
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
@@ -95,6 +96,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
   const {
     disabled: formFieldDisabled,
     readOnly: formFieldReadOnly,
+    validationStatus: formFieldValidationStatus,
     a11yProps: {
       "aria-describedby": formFieldDescribedBy,
       "aria-labelledby": formFieldLabelledBy,
@@ -142,6 +144,9 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
     >
       <div
         role="radiogroup"
+        aria-invalid={
+          ariaInvalid ?? (formFieldValidationStatus === "error" || undefined)
+        }
         className={withBaseName("container")}
         aria-readonly={readOnly || undefined}
         aria-label={ariaLabel}

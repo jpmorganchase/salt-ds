@@ -79,12 +79,19 @@ export function OperationsDashboard() {
   const [worklistAdapter] = useState(() =>
     createLocalWorklistAdapter(initialServices),
   );
-  const submitting = useRef(false);
+  const pendingSaveRef = useRef<AbortController | null>(null);
   const nextIncidentId = useRef(1043);
   const createTriggerRef = useRef<HTMLButtonElement>(null);
   const inspectorTriggerRef = useRef<HTMLButtonElement>(null);
   const dialogTriggerRef = useRef<HTMLButtonElement | null>(null);
   const [restoreDialogFocus, setRestoreDialogFocus] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      pendingSaveRef.current?.abort();
+      pendingSaveRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -144,7 +151,8 @@ export function OperationsDashboard() {
   const regionCount = new Set(services.map((service) => service.region)).size;
 
   const closeRecordForm = () => {
-    if (submitting.current || submission.status === "pending") return;
+    pendingSaveRef.current?.abort();
+    pendingSaveRef.current = null;
     setSubmission({ status: "idle" });
     setDialogOpen(false);
     setRestoreDialogFocus(true);
@@ -186,13 +194,16 @@ export function OperationsDashboard() {
   };
 
   const submitIncident = (nextDraft: RecordDraft) => {
-    if (submitting.current) return;
-    submitting.current = true;
+    if (pendingSaveRef.current) return;
+    const controller = new AbortController();
+    pendingSaveRef.current = controller;
     setActivityNotice(undefined);
     setSubmission({ status: "pending" });
     void localDemoAdapter
-      .submit(nextDraft)
+      .submit(nextDraft, controller.signal)
       .then((record) => {
+        if (pendingSaveRef.current !== controller || controller.signal.aborted)
+          return;
         if (dialogMode === "edit" && editingIncidentId) {
           setIncidents((currentIncidents) =>
             currentIncidents.map((incident) =>
@@ -231,6 +242,8 @@ export function OperationsDashboard() {
         setRestoreDialogFocus(true);
       })
       .catch((error: unknown) => {
+        if (pendingSaveRef.current !== controller || controller.signal.aborted)
+          return;
         const message =
           error instanceof Error
             ? error.message
@@ -238,7 +251,8 @@ export function OperationsDashboard() {
         setSubmission({ status: "failed", message });
       })
       .finally(() => {
-        submitting.current = false;
+        if (pendingSaveRef.current === controller)
+          pendingSaveRef.current = null;
       });
   };
 
@@ -485,7 +499,7 @@ export function OperationsDashboard() {
               dialogMode === "edit"
                 ? "Update this local incident record. No data leaves this demo."
                 : "Save a local incident record for the selected service. No data leaves this demo."
-            } Close keeps unsaved changes for reopening. Reloading this demo clears them.`}
+            } Close or Escape cancels a pending local save and keeps unsaved changes for reopening. Reloading this demo clears them.`}
           />
           <RecordForm
             draft={activeDraft}

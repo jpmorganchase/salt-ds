@@ -3,6 +3,7 @@ import {
   FormFieldLabel,
   RadioButton,
   RadioButtonGroup,
+  type RadioButtonGroupProps,
 } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
 import { describe, expect, it, vi } from "vitest";
@@ -15,6 +16,52 @@ const composedStories = composeStories(radioButtonStories);
 
 describe("GIVEN a RadioButtonGroup", () => {
   checkAccessibility(composedStories);
+
+  it("updates inherited invalid state and preserves group and input overrides", async () => {
+    const field = (
+      status: "error" | "warning" | "success",
+      groupProps: RadioButtonGroupProps = {},
+    ) => (
+      <FormField validationStatus={status}>
+        <RadioButtonGroup validationStatus="warning" {...groupProps}>
+          <RadioButton
+            label="Inherited"
+            value="inherited"
+            validationStatus="error"
+          />
+          <RadioButton
+            label="Overridden"
+            value="overridden"
+            inputProps={{ "aria-invalid": "spelling" }}
+          />
+          <RadioButton label="Disabled" value="disabled" disabled />
+        </RadioButtonGroup>
+      </FormField>
+    );
+    const { rerender } = await renderWithSalt(field("error"));
+    const group = page.getByRole("radiogroup");
+    const inherited = page.getByRole("radio", { name: "Inherited" });
+
+    await expect.element(group).toHaveAttribute("aria-invalid", "true");
+    await expect.element(inherited).toHaveAttribute("aria-invalid", "true");
+    await expect
+      .element(page.getByRole("radio", { name: "Overridden" }))
+      .toHaveAttribute("aria-invalid", "spelling");
+    await expect
+      .element(page.getByRole("radio", { name: "Disabled" }))
+      .not.toHaveAttribute("aria-invalid");
+
+    await rerender(field("warning"));
+    await expect.element(group).not.toHaveAttribute("aria-invalid");
+    await expect.element(inherited).not.toHaveAttribute("aria-invalid");
+    await rerender(field("success"));
+    await expect.element(group).not.toHaveAttribute("aria-invalid");
+    await expect.element(inherited).not.toHaveAttribute("aria-invalid");
+
+    await rerender(field("error", { "aria-invalid": false }));
+    await expect.element(group).toHaveAttribute("aria-invalid", "false");
+    await expect.element(inherited).toHaveAttribute("aria-invalid", "true");
+  });
 
   it("renders its radio children", async () => {
     await renderWithSalt(

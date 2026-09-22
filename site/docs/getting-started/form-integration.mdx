@@ -1,0 +1,347 @@
+---
+title: Form integration
+description: "Connect Salt form controls to application state, React form Actions and form libraries. Preserve values on failure and reset deliberately."
+layout: DetailTechnical
+sidebar:
+  label: Form integration
+---
+
+Salt supplies controls, labels and feedback. The application or form library owns
+values, validation rules, when errors appear, submission and reset. Follow the
+[Forms guidance](/salt/patterns/forms) for interaction and recovery guidance.
+
+## Validation and accessible feedback
+
+Set `FormField validationStatus="error"` when the application decides a field is
+invalid. Participating controls expose `aria-invalid` on their input or accessible
+group and associate the label and helper text. Warning and success states alone do not
+mark a field invalid; NumberInput retains its independent out-of-range check. A native control's explicit `aria-invalid` value overrides
+the default; for example, use `inputProps` on Input or `textAreaProps` on
+MultilineInput. Supply specific feedback through `FormFieldHelperText`.
+
+This communicates a validation result; it does not run validation or call
+`setCustomValidity`. Use native constraints or your form library to decide validity.
+Do not show required-field errors before the chosen validation trigger. Keep
+cross-field validation on the group and distinguish field errors from a failed
+save, which belongs in the form's [error feedback](/salt/patterns/forms#submission-and-recovery).
+
+## Bind the value that the user is choosing
+
+Match each control's value, native submission and focus target to the form library.
+
+ListBox, ToggleButtonGroup and other controls without FormField participation need
+explicit labels, error associations and invalid semantics on their accessible
+control/group. Do not assume wrapping any widget in FormField connects it.
+
+Lab's legacy FormField and Input-based controls use the legacy context. Their
+native prop/ref paths differ from Core: InputLegacy, SearchInput and FormattedInput
+forward their ordinary ref to the input, while the current Lab ComboBox does not.
+Use the relevant component API when adapting an existing Lab form.
+
+### Input, MultilineInput
+
+Control `value`; a named field contributes its text to
+`FormData`. Use `inputRef` / `textAreaRef` for native focus; put native change/blur
+handlers in `inputProps` / `textAreaProps`. The ordinary ref targets the wrapper.
+
+### NumberInput
+
+Use `value` and `onNumberChange` for a parsed number, or `onChange`
+for draft text. Native submission contains the displayed text, including formatting.
+Serialize the parsed value when the server expects a number. Use `inputRef` and
+`inputProps` for native focus/blur.
+
+### Checkbox, RadioButton and their groups
+
+Bind `checked`, CheckboxGroup
+`checkedValues`, or RadioButtonGroup `value`, as appropriate. Named checked inputs
+submit their values; unchecked inputs are absent from `FormData`. Use each child's
+`inputRef` and native `inputProps` for the form library's focus/blur binding.
+
+### Switch
+
+Bind `checked` and `onChange`. Its named native checkbox submits only when
+checked. Put native input handlers in `inputProps`; the ordinary ref targets the
+label, not the input.
+
+### Slider, RangeSlider
+
+Bind `value` and `onChange`. Use `name`, or `startName` and
+`endName`, to submit numeric text from the native range inputs. The ordinary ref
+targets the track. Focus the appropriate input inside it when adapting a library's
+error-focus behavior.
+
+### Rating
+
+Bind `value` and `onChange`. A named selected radio submits its value. The
+ordinary ref targets the wrapper. Focus the selected or first enabled radio when
+needed.
+
+### Dropdown, ListBox, ToggleButtonGroup
+
+Bind the selected value(s) through their
+selection APIs. They do not create a named native field for the selection. Serialize
+application state or supply a named hidden input. Use the component's focusable
+element and selection callback, rather than assuming a text-input event.
+
+### ComboBox, TokenizedInput / TokenizedInputNext
+
+Selected options or tokens and
+editing text are separate values. The named input/textarea submits editing text, not
+the selected collection. Serialize the selected identifiers separately. Core ComboBox
+uses `inputRef`; TokenizedInputNext uses `textAreaRef`. Keep selection and text-change
+bindings separate.
+
+### DateInputSingle / DatePickerSingleInput, DateInputRange / DatePickerRangeInput
+
+Bind dates using the date APIs. Native named fields submit formatted text; use an
+explicit date/time-zone serialization policy for application data. Range inputs use
+`startName` / `endName`. Use `inputRef`, or `startInputRef` / `endInputRef`. Range
+native props can identify an error on one endpoint.
+
+### Calendar, selection lists/trees, ColorChooser
+
+Bind selected values and serialize
+them in the host. A selection widget is not automatically a successful native form
+field. Follow the component's own selection and focus API.
+
+### FileDropZone
+
+The host owns files, validation and its native file input. Drop-zone
+status is feedback about the drop, not an input validation API. Label and focus the
+host's actual file input or browse action.
+
+## Submission and reset
+
+Use `type="submit"`; Salt Button defaults to `type="button"`. Show `loading` and
+guard duplicate submissions. Read-only fields enter `FormData`; disabled native
+fields do not.
+
+Controls can own internal state: `form.reset()` is not a reset contract for every
+Salt control. Use controlled values and reset the application/form-library state
+explicitly, including selection, editing text and validation. Keep the draft on
+validation or save failure. Reset after confirmed success or an explicit user action.
+
+## React 19 form Actions
+
+React 19's [form Actions](https://react.dev/reference/react-dom/components/form)
+receive `FormData` and reset uncontrolled native fields after a fulfilled Action.
+Returning validation errors is still a fulfilled Action. The controlled values in
+this example preserve the draft on failure and clear it deliberately on success.
+`save` is supplied by the host; server-side validation remains the host's responsibility.
+
+This is a React 19 integration recipe, not a live preview in the React 18 documentation
+site. Its React 19 runtime must be checked in the consuming application.
+
+[`useActionState`](https://react.dev/reference/react/useActionState) supplies the
+pending state here. If the submit button is a separate component, it can instead
+read `useFormStatus` when rendered **inside** the owning form. Keep these hooks in
+the React 19 application; Salt controls do not require them.
+
+### Action example
+
+```tsx
+"use client";
+
+import { useActionState, useEffect, useRef, useState } from "react";
+import {
+  Banner,
+  BannerContent,
+  Button,
+  FormField,
+  FormFieldLabel,
+  FormFieldHelperText,
+  Input,
+  StackLayout,
+} from "@salt-ds/core";
+
+type Result = { fieldError: string; saveError: string; saved: boolean };
+const initialResult: Result = { fieldError: "", saveError: "", saved: false };
+
+export function ActionForm({
+  save,
+}: {
+  save: (name: string) => Promise<void>;
+}) {
+  const [name, setName] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [result, action, pending] = useActionState(
+    async (_previous: Result, data: FormData): Promise<Result> => {
+      const submittedName = String(data.get("name") ?? "").trim();
+      if (!submittedName)
+        return { ...initialResult, fieldError: "Enter a name." };
+      try {
+        await save(submittedName);
+        setName("");
+        return { ...initialResult, saved: true };
+      } catch {
+        return {
+          ...initialResult,
+          saveError: "Could not save. Your details are still here; try again.",
+        };
+      }
+    },
+    initialResult,
+  );
+  useEffect(() => {
+    if (result.fieldError) inputRef.current?.focus();
+  }, [result]);
+
+  return (
+    <form
+      action={action}
+      noValidate
+      onSubmit={(event) => {
+        if (pending) event.preventDefault();
+      }}
+    >
+      <StackLayout>
+        {result.saveError && (
+          <Banner status="error">
+            <BannerContent role="alert">{result.saveError}</BannerContent>
+          </Banner>
+        )}
+        <FormField
+          necessity="required"
+          validationStatus={result.fieldError ? "error" : undefined}
+        >
+          <FormFieldLabel>Name</FormFieldLabel>
+          <Input
+            name="name"
+            value={name}
+            inputRef={inputRef}
+            readOnly={pending}
+            emptyReadOnlyMarker=""
+            inputProps={{
+              onChange: (event) => setName(event.currentTarget.value),
+            }}
+          />
+          {result.fieldError && (
+            <FormFieldHelperText>{result.fieldError}</FormFieldHelperText>
+          )}
+        </FormField>
+        <Button type="submit" loading={pending}>
+          Save
+        </Button>
+        <div role="status">{result.saved ? "Saved." : ""}</div>
+      </StackLayout>
+    </form>
+  );
+}
+```
+
+## React Hook Form
+
+Use `Controller` for controls with managed values. Connect the library's ref to the
+native input so error focus works; spreading a registration ref onto Core Input
+would target its wrapper. This recipe uses React Hook Form 7 and controlled defaults.
+It is consumer code; React Hook Form is not required by Salt.
+
+For checkbox/radio fields, bind `checked` rather than a text `value`. For Dropdown, ListBox and Core ComboBox, adapt `onSelectionChange` to the
+library's value setter. ToggleButtonGroup uses `onChange` with
+`event.currentTarget.value`; TokenizedInputNext uses `onChange(event, items)`.
+Serialize selected values from library state rather than the editing text. The library decides validation
+on change, blur or submit; Salt presents the resulting state.
+
+### Controller example
+
+```tsx
+import { Controller, useForm } from "react-hook-form";
+import {
+  Banner,
+  BannerContent,
+  Button,
+  FormField,
+  FormFieldLabel,
+  FormFieldHelperText,
+  Input,
+  StackLayout,
+} from "@salt-ds/core";
+
+export function LibraryForm({
+  save,
+}: {
+  save: (name: string) => Promise<void>;
+}) {
+  const { control, handleSubmit, reset, setError, formState } = useForm({
+    defaultValues: { name: "" },
+  });
+  const submit = handleSubmit(async ({ name }) => {
+    try {
+      await save(name.trim());
+      reset({ name: "" });
+    } catch {
+      setError("root.save", {
+        message: "Could not save. Your details are still here; try again.",
+      });
+    }
+  });
+
+  return (
+    <form
+      noValidate
+      onSubmit={(event) => {
+        if (formState.isSubmitting) event.preventDefault();
+        else void submit(event);
+      }}
+    >
+      <StackLayout>
+        {formState.errors.root?.save && (
+          <Banner status="error">
+            <BannerContent role="alert">
+              {formState.errors.root.save.message}
+            </BannerContent>
+          </Banner>
+        )}
+        <Controller
+          name="name"
+          control={control}
+          rules={{
+            validate: (value) => Boolean(value.trim()) || "Enter a name.",
+          }}
+          render={({ field, fieldState }) => (
+            <FormField
+              necessity="required"
+              validationStatus={fieldState.invalid ? "error" : undefined}
+            >
+              <FormFieldLabel>Name</FormFieldLabel>
+              <Input
+                name={field.name}
+                value={field.value}
+                inputRef={field.ref}
+                readOnly={formState.isSubmitting}
+                emptyReadOnlyMarker=""
+                inputProps={{ onChange: field.onChange, onBlur: field.onBlur }}
+              />
+              {fieldState.error && (
+                <FormFieldHelperText>
+                  {fieldState.error.message}
+                </FormFieldHelperText>
+              )}
+            </FormField>
+          )}
+        />
+        <Button type="submit" loading={formState.isSubmitting}>
+          Save
+        </Button>
+      </StackLayout>
+    </form>
+  );
+}
+```
+
+## Formik and TanStack Form
+
+- With [Formik `useField`](https://formik.org/docs/api/useField), bind `field.name`,
+  `field.value`, `field.onChange` and `field.onBlur` to the native text input paths
+  above. Choose when to expose `meta.error`, such as after `meta.touched` or a submit
+  attempt. Use `resetForm` after successful submission and native refs for error focus.
+- With [TanStack Form](https://tanstack.com/form/latest/docs/framework/react/guides/ui-libraries),
+  bind `field.state.value`; call `field.handleChange(event.currentTarget.value)`
+  and `field.handleBlur()` from native handlers. Adapt checkbox/selection callbacks
+  to their actual values. Map the chosen field error state into FormField and reset
+  through the form API.
+
+Check the full consumer journey: submit the intended values, focus an invalid
+field, retain edits after a failed save, retry, and reset every owned value after
+success. Rendering compatibility alone does not establish these behaviors.

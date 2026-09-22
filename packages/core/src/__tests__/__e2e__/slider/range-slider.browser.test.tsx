@@ -1,4 +1,11 @@
+import {
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
+  RangeSlider,
+} from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
+import { useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { act, renderWithSalt } from "~browser-test-utils/render";
@@ -51,7 +58,69 @@ async function dispatchPointer(
   });
 }
 
+function ValidatedRangeSlider() {
+  const [value, setValue] = useState<[number, number]>([2, 4]);
+  return (
+    <FormField validationStatus={value[1] < 5 ? "error" : "success"}>
+      <FormFieldLabel>Range</FormFieldLabel>
+      <RangeSlider
+        min={0}
+        max={10}
+        value={value}
+        onChange={(_, next) => setValue(next)}
+      />
+      <FormFieldHelperText>
+        {value[1] < 5
+          ? "The upper bound must be at least 5."
+          : "Range accepted."}
+      </FormFieldHelperText>
+    </FormField>
+  );
+}
+
 describe("Given a Range Slider", () => {
+  it("updates both native thumbs when the field is corrected", async () => {
+    await renderWithSalt(<ValidatedRangeSlider />);
+    for (const input of await sliders().elements()) {
+      expect(input).toHaveAttribute("aria-invalid", "true");
+      expect(input).toHaveAccessibleDescription(
+        /2 to 4, range minimum 0, maximum 10/,
+      );
+      expect(input).toHaveAccessibleDescription(
+        /The upper bound must be at least 5/,
+      );
+    }
+    await press(1, "{ArrowRight}");
+    await expectValues("2", "5");
+    for (const input of await sliders().elements()) {
+      expect(input).not.toHaveAttribute("aria-invalid");
+      expect(input).toHaveAccessibleDescription(
+        /2 to 5, range minimum 0, maximum 10/,
+      );
+      expect(input).toHaveAccessibleDescription(/Range accepted/);
+    }
+  });
+
+  it("preserves an explicit invalid value on both native thumbs", async () => {
+    await renderWithSalt(
+      <FormField validationStatus="error">
+        <RangeSlider
+          aria-label="Range"
+          aria-invalid="grammar"
+          aria-describedby="range-hint"
+        />
+        <p id="range-hint">Choose the lower and upper limits.</p>
+      </FormField>,
+    );
+    for (const input of await sliders().elements()) {
+      expect(input).toHaveAttribute("aria-invalid", "grammar");
+      expect(input).toHaveAccessibleDescription(/range minimum 0, maximum 100/);
+      expect(input).toHaveAccessibleDescription(
+        /Choose the lower and upper limits/,
+      );
+    }
+  });
+
   it("renders with default props", async () => {
     await renderWithSalt(<Default />);
     await expect.element(sliders()).toHaveLength(2);

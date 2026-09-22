@@ -58,14 +58,21 @@ Use the pattern when:
 
 ## How to build
 
+### Form integration
+
+For native submission, React 19 Actions, React Hook Form, Formik and TanStack Form,
+see [Form integration](/salt/getting-started/form-integration). It explains validation
+ownership, native refs, composite selection values and explicit reset behavior.
+
 ### Submission and recovery
 
 Keep a form's draft in the application that owns the workflow. When validation
 fails, preserve entered values, explain the problem alongside the relevant
 [field](/salt/components/form-field/usage), announce a concise error summary, and move focus to the first field that
 needs attention. While a submission is pending, [make progress clear](/salt/components/button/examples#loading) and avoid
-accepting another submission or closing the form. If it fails, retain the draft
-and offer a retry.
+accepting another submission. A dialog must still close with Escape and restore
+focus. Closing does not itself cancel a request: the host must preserve the draft
+and handle its outcome. If a save fails, retain the draft and offer a retry.
 
 For a form presented in a dialog, follow the [dialog focus guidance](/salt/components/dialog/accessibility#focus). Use the [button bar pattern](/salt/patterns/button-bar#dialog) for action placement and its [stacked layout guidance](/salt/patterns/button-bar#stacked-button-bar) for narrow views.
 
@@ -77,8 +84,9 @@ alongside that field. The summary helps users find problems across the form; it
 does not replace field feedback.
 
 On submit, preserve entered values and move focus to the first invalid input
-after its error message is rendered. Set `aria-invalid` on the input itself and
-associate its feedback through FormField. Summary links must also move keyboard
+after its error message is rendered. Set `FormField validationStatus="error"`;
+participating controls expose `aria-invalid` and associate the field feedback.
+For custom controls, connect those semantics explicitly. Summary links must also move keyboard
 focus to the input, not just scroll to it. Announce a concise error count politely;
 avoid adding competing live announcements to the banner and every field.
 

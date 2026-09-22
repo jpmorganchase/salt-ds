@@ -1,4 +1,10 @@
-import { FormField, Input, useFormFieldLegacyProps } from "@salt-ds/lab";
+import {
+  Dropdown,
+  DropdownButton,
+  FormField,
+  Input,
+  useFormFieldLegacyProps,
+} from "@salt-ds/lab";
 import type { ComponentProps } from "react";
 import { describe, expect, it } from "vitest";
 import { page } from "vitest/browser";
@@ -118,6 +124,62 @@ describe("GIVEN a legacy FormField", () => {
     await expect
       .element(page.getByLabelText(/Optional/i))
       .toHaveTextContent("Child Component");
+  });
+
+  it("updates native invalid state when legacy field validation changes", async () => {
+    const fields = (
+      validationStatus?: ComponentProps<typeof FormField>["validationStatus"],
+    ) => (
+      <>
+        <FormField
+          label="Legacy value"
+          validationStatus={validationStatus}
+          readOnly
+        >
+          <Input defaultValue="Existing value" />
+        </FormField>
+        <FormField label="Legacy choice" validationStatus={validationStatus}>
+          <Dropdown source={["One", "Two"]} />
+        </FormField>
+      </>
+    );
+    const { rerender } = await renderWithSalt(fields("error"));
+    const input = page.getByRole("textbox", { name: "Legacy value" });
+    const dropdown = page.getByRole("listbox", { name: "Legacy choice" });
+
+    for (const control of [input, dropdown]) {
+      await expect.element(control).toHaveAttribute("aria-invalid", "true");
+    }
+    await expect.element(input).toHaveValue("Existing value");
+
+    for (const status of ["warning", undefined] as const) {
+      await rerender(fields(status));
+      for (const control of [input, dropdown]) {
+        await expect.element(control).not.toHaveAttribute("aria-invalid");
+      }
+    }
+  });
+
+  it("preserves explicit invalid state on a legacy input and custom dropdown trigger", async () => {
+    await renderWithSalt(
+      <>
+        <FormField label="Legacy value" validationStatus="error">
+          <Input inputProps={{ "aria-invalid": "spelling" }} />
+        </FormField>
+        <FormField label="Legacy choice" validationStatus="error">
+          <Dropdown
+            source={["One", "Two"]}
+            triggerComponent={<DropdownButton aria-invalid={false} />}
+          />
+        </FormField>
+      </>,
+    );
+    await expect
+      .element(page.getByRole("textbox", { name: "Legacy value" }))
+      .toHaveAttribute("aria-invalid", "spelling");
+    await expect
+      .element(page.getByRole("listbox", { name: "Legacy choice" }))
+      .toHaveAttribute("aria-invalid", "false");
   });
 
   it("renders a warning indicator", async () => {

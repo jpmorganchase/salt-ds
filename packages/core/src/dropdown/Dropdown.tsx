@@ -461,6 +461,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         role="combobox"
         type="button"
         disabled={disabled}
+        aria-invalid={validationStatus === "error" || undefined}
         aria-readonly={readOnly ? "true" : undefined}
         aria-required={required ? "true" : undefined}
         aria-expanded={openState}

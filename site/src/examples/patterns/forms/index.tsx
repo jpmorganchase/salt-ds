@@ -410,7 +410,6 @@ export const ErrorSummary = () => {
                 inputRefs.current[name] = input;
               }}
               inputProps={{
-                "aria-invalid": isInvalid,
                 onChange: (event) => {
                   const value = event.currentTarget.value;
                   setValues((previous) => ({ ...previous, [name]: value }));

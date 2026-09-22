@@ -1,4 +1,11 @@
+import {
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
+  Slider,
+} from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
+import { useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { act, renderWithSalt } from "~browser-test-utils/render";
@@ -48,7 +55,67 @@ async function dispatchPointer(
   });
 }
 
+function ValidatedSlider() {
+  const [value, setValue] = useState(4);
+  return (
+    <FormField validationStatus={value < 5 ? "error" : "warning"}>
+      <FormFieldLabel>Volume</FormFieldLabel>
+      <Slider
+        min={0}
+        max={10}
+        value={value}
+        onChange={(_, next) => setValue(next)}
+      />
+      <FormFieldHelperText>
+        {value < 5 ? "Choose at least 5." : "Value accepted."}
+      </FormFieldHelperText>
+    </FormField>
+  );
+}
+
 describe("Given a Slider", () => {
+  it("updates native invalid semantics when the field is corrected", async () => {
+    await renderWithSalt(<ValidatedSlider />);
+    await expect.element(slider()).toHaveAttribute("aria-invalid", "true");
+    await expect
+      .element(slider())
+      .toHaveAccessibleDescription(/range minimum 0, maximum 10/);
+    await expect
+      .element(slider())
+      .toHaveAccessibleDescription(/Choose at least 5/);
+    await press("{ArrowRight}");
+    await expect.element(slider()).toHaveValue("5");
+    await expect.element(slider()).not.toHaveAttribute("aria-invalid");
+    await expect
+      .element(slider())
+      .toHaveAccessibleDescription(/Value accepted/);
+    await expect
+      .element(slider())
+      .toHaveAccessibleDescription(/range minimum 0, maximum 10/);
+    await press("{ArrowLeft}");
+    await expect.element(slider()).toHaveAttribute("aria-invalid", "true");
+  });
+
+  it("applies an explicit invalid override to the native input", async () => {
+    await renderWithSalt(
+      <FormField validationStatus="error">
+        <Slider
+          aria-label="Volume"
+          aria-invalid={false}
+          aria-describedby="volume-hint"
+        />
+        <p id="volume-hint">Adjust the speaker volume.</p>
+      </FormField>,
+    );
+    await expect.element(slider()).toHaveAttribute("aria-invalid", "false");
+    await expect
+      .element(slider())
+      .toHaveAccessibleDescription(/range minimum 0, maximum 100/);
+    await expect
+      .element(slider())
+      .toHaveAccessibleDescription(/Adjust the speaker volume/);
+  });
+
   it("renders with the default props", async () => {
     await renderWithSalt(<Default />);
     await expect.element(slider()).toHaveValue("50");

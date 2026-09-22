@@ -1,3 +1,4 @@
+import { NumberInput } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
 import { describe, expect, it } from "vitest";
 import { page } from "vitest/browser";
@@ -10,6 +11,54 @@ const { Default } = composedStories;
 
 describe("Number Input - Accessibility", () => {
   checkAccessibility(composedStories);
+
+  it("exposes explicit errors for empty and read-only values", async () => {
+    const { rerender } = await renderWithSalt(
+      <NumberInput validationStatus="error" />,
+    );
+    await expect
+      .element(page.getByRole("spinbutton"))
+      .toHaveAttribute("aria-invalid", "true");
+
+    await rerender(<NumberInput validationStatus="warning" />);
+    await expect
+      .element(page.getByRole("spinbutton"))
+      .not.toHaveAttribute("aria-invalid");
+    await rerender(<NumberInput readOnly validationStatus="error" />);
+    await expect
+      .element(page.getByRole("textbox"))
+      .toHaveAttribute("aria-invalid", "true");
+    await rerender(<NumberInput readOnly validationStatus="success" />);
+    await expect
+      .element(page.getByRole("textbox"))
+      .not.toHaveAttribute("aria-invalid");
+  });
+
+  it("preserves native invalid overrides over status and range errors", async () => {
+    const { rerender } = await renderWithSalt(
+      <NumberInput
+        value={-10}
+        min={0}
+        validationStatus="error"
+        inputProps={{ "aria-invalid": false }}
+      />,
+    );
+    const input = page.getByRole("spinbutton");
+    await expect.element(input).toHaveAttribute("aria-invalid", "false");
+
+    await rerender(
+      <NumberInput
+        value={-10}
+        min={0}
+        inputProps={{ "aria-invalid": "grammar" }}
+      />,
+    );
+    await expect.element(input).toHaveAttribute("aria-invalid", "grammar");
+    await rerender(<NumberInput value={-10} min={0} />);
+    await expect.element(input).toHaveAttribute("aria-invalid", "true");
+    await rerender(<NumberInput value={10} min={0} />);
+    await expect.element(input).toHaveAttribute("aria-invalid", "false");
+  });
 
   it("sets the default ARIA attributes on the input", async () => {
     await renderWithSalt(

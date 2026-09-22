@@ -1,3 +1,5 @@
+import { FormField, FormFieldLabel, type FormFieldProps } from "@salt-ds/core";
+import { TokenizedInputNext } from "@salt-ds/lab";
 import { composeStories } from "@storybook/react-vite";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
@@ -21,6 +23,37 @@ describe("GIVEN a Tokenized Input", () => {
     const inputs = page.getByRole("textbox");
     if ((await inputs.elements()).length > 0) await inputs.first().hover();
     return result;
+  });
+
+  it("uses resolved validation state on the textarea while preserving explicit overrides", async () => {
+    const field = (
+      status?: FormFieldProps["validationStatus"],
+      override?: boolean,
+    ) => (
+      <FormField validationStatus={status} readOnly>
+        <FormFieldLabel>Destinations</FormFieldLabel>
+        <TokenizedInputNext
+          defaultSelected={["Tokyo"]}
+          validationStatus="error"
+          textAreaProps={
+            override === undefined ? undefined : { "aria-invalid": override }
+          }
+        />
+      </FormField>
+    );
+    const { rerender } = await renderWithSalt(field("error"));
+    const input = page.getByRole("textbox", { name: /Destinations/ });
+    await expect.element(input).toHaveAttribute("aria-invalid", "true");
+    await expect.element(page.getByRole("option")).toHaveTextContent("Tokyo");
+
+    for (const status of ["warning", "success"] as const) {
+      await rerender(field(status));
+      await expect.element(input).not.toHaveAttribute("aria-invalid");
+    }
+    await rerender(field());
+    await expect.element(input).toHaveAttribute("aria-invalid", "true");
+    await rerender(field("error", false));
+    await expect.element(input).toHaveAttribute("aria-invalid", "false");
   });
 
   it("SHOULD mount as disabled", async () => {

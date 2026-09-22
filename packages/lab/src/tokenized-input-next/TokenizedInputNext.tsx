@@ -301,6 +301,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
             );
           })}
         <textarea
+          aria-invalid={validationStatus === "error" || undefined}
           aria-labelledby={
             clsx(inputAriaLabelledBy, textAreaLabelledBy) || undefined
           }

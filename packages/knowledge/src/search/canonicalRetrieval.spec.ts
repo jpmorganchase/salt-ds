@@ -520,11 +520,16 @@ describe("generated canonical retrieval", () => {
       } else {
         expect(context.truncated).toBe(true);
         expect(context.answer_status).toBe("contextual");
-        expect(
+        const hasWorkflowOmission =
+          context.canonical_documents?.some((document) =>
+            document.omissions.some(
+              (omission) => omission.reference === reference,
+            ),
+          ) ||
           context.limitations?.some(
             (entry) => entry.includes("omitted") && entry.includes(reference),
-          ),
-        ).toBe(true);
+          );
+        expect(hasWorkflowOmission).toBe(true);
         expect(markdown).toContain(reference);
       }
       for (const match of context.matches) {

@@ -228,6 +228,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
           </div>
         )}
         <input
+          aria-invalid={validationStatus === "error" || undefined}
           aria-describedby={
             clsx(formFieldDescribedBy, inputDescribedBy) || undefined
           }

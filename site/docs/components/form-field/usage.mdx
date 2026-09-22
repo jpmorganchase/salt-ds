@@ -14,6 +14,15 @@ data:
 - Align the form field to the correct Salt layout grid for your density and viewport size. Set the width of the form control to the number of columns that best reflects the length of the control’s expected value. You can set the form control width independently of the form field label and form field helper text if required.
 - Use a form field as a wrapper for editable components in a form layout—such as a simple form, filter panel or cash ticket.
 
+### Validation state
+
+The application or form library decides when a value is invalid. Set
+`validationStatus="error"` to expose that result on participating controls through
+`aria-invalid`; warning and success do not set this default invalid state. Supply
+specific feedback through `FormFieldHelperText`. Explicit native `aria-invalid`
+props remain available for overrides. See [Form integration](/salt/getting-started/form-integration)
+for control-specific value, ref and submission bindings.
+
 ### Form pattern
 
 Follow the Salt [forms pattern](/salt/patterns/forms) for guidance using form fields in forms.

@@ -1,4 +1,6 @@
+import { FormField, FormFieldLabel, Rating } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
+import { useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { checkAccessibility } from "~browser-test-utils/accessibility";
@@ -48,7 +50,37 @@ async function exerciseKeyboard(Story: typeof Default | typeof Controlled) {
   expectChange(spy, 1);
 }
 
+function ValidatedRating() {
+  const [value, setValue] = useState(0);
+  return (
+    <FormField validationStatus={value === 0 ? "error" : "success"}>
+      <FormFieldLabel>Rating</FormFieldLabel>
+      <Rating value={value} onChange={(_, next) => setValue(next)} />
+    </FormField>
+  );
+}
+
 describe("GIVEN a Rating component", () => {
+  it("clears group invalid semantics when a rating is selected", async () => {
+    await renderWithSalt(<ValidatedRating />);
+    const group = page.getByRole("radiogroup", { name: "Rating" });
+    await expect.element(group).toHaveAttribute("aria-invalid", "true");
+    await radio("3 Stars").click();
+    await expect.element(radio("3 Stars")).toBeChecked();
+    await expect.element(group).not.toHaveAttribute("aria-invalid");
+  });
+
+  it("preserves an explicit invalid value on the accessible group", async () => {
+    await renderWithSalt(
+      <FormField validationStatus="error">
+        <Rating aria-label="Rating" aria-invalid="spelling" />
+      </FormField>,
+    );
+    await expect
+      .element(page.getByRole("radiogroup", { name: "Rating" }))
+      .toHaveAttribute("aria-invalid", "spelling");
+  });
+
   checkAccessibility(composedStories);
 
   it("SHOULD have the correct accessibility attributes", async () => {

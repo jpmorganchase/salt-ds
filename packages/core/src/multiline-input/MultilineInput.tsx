@@ -244,6 +244,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
         )}
         <div className={withBaseName("wrapper")}>
           <textarea
+            aria-invalid={validationStatus === "error" || undefined}
             aria-describedby={
               clsx(formFieldDescribedBy, textAreaDescribedBy) || undefined
             }

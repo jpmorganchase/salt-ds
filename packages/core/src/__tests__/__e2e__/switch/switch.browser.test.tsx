@@ -1,3 +1,4 @@
+import { FormField, Switch, type SwitchProps } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
 import type { ChangeEvent } from "react";
 import { describe, expect, it, vi } from "vitest";
@@ -60,6 +61,29 @@ async function exerciseKeyboard(Story: typeof Default | typeof Controlled) {
 
 describe("GIVEN a Switch", () => {
   checkAccessibility(composedStories);
+
+  it("updates FormField invalid state on the input and preserves its override", async () => {
+    const field = (
+      status: "error" | "warning" | "success",
+      inputProps?: SwitchProps["inputProps"],
+    ) => (
+      <FormField validationStatus={status}>
+        <Switch label="Accept terms" inputProps={inputProps} />
+      </FormField>
+    );
+    const { rerender } = await renderWithSalt(field("error"));
+    await expect.element(control()).toHaveAttribute("aria-invalid", "true");
+    await control().click();
+    await expect.element(control()).toBeChecked();
+
+    await rerender(field("warning"));
+    await expect.element(control()).not.toHaveAttribute("aria-invalid");
+    await expect.element(control()).toBeChecked();
+    await rerender(field("success"));
+    await expect.element(control()).not.toHaveAttribute("aria-invalid");
+    await rerender(field("error", { "aria-invalid": false }));
+    await expect.element(control()).toHaveAttribute("aria-invalid", "false");
+  });
 
   it("SHOULD support data attribute on inputProps", async () => {
     await renderWithSalt(

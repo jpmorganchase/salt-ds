@@ -359,6 +359,7 @@ export const PillInput = forwardRef(function PillInput(
           )}
         </div>
         <input
+          aria-invalid={validationStatus === "error" || undefined}
           aria-describedby={
             clsx(formFieldDescribedBy, inputDescribedBy) || undefined
           }

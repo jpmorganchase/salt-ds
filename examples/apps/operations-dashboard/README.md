@@ -27,9 +27,10 @@ It has no Storybook, repository-only source alias or MCP prerequisite.
    title or affected service/process. Close and reopen the same record to see
    the retained draft.
 3. Submit an invalid title to inspect validation and focus movement. A valid
-   first save waits 1.5 seconds and fails once per app session; retry saves the
-   record without losing its values. Pending saves prevent duplicate submission
-   and dialog closure.
+   save waits 1.5 seconds. Close or Escape cancels a pending local save and keeps
+   its draft for reopening. The first completed attempt fails once per app
+   session; retry saves the record without losing its values. Pending saves
+   prevent duplicate submission.
 4. Create another incident. Each created record has its own identity and can be
    selected independently. A successful create starts a fresh draft for the
    next record; closing preserves an unfinished draft.
@@ -57,9 +58,14 @@ all drafts.
 
 `RecordForm` accepts `draft`, `onChange`, `onSubmit`, `onCancel`, and a submission
 state of `idle`, `pending`, or `failed` with a message. The `onCancel` callback
-handles the draft-preserving Close action in this example. The host owns the `Dialog`
-and header; the form supplies its content and actions. `formLabel` and
-`submitLabel` distinguish creating from editing.
+handles the draft-preserving Close action in this example. Close and Escape
+abort the simulated save through its `AbortSignal`; cancelled attempts do not
+consume the first-save failure. The host ignores callbacks from an old attempt
+and cancels pending local work when it unmounts. This local cancellation does not
+establish that a real backend request can be cancelled. An adapted application
+must own its request outcome and draft policy. The host owns the `Dialog` and
+header; the form supplies its content and actions. `formLabel` and `submitLabel`
+distinguish creating from editing.
 
 Replace the local adapters with the application's existing data services. Keep
 its provider, routing and state conventions; wire the component callbacks to

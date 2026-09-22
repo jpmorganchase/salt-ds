@@ -383,9 +383,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
           autoComplete="off"
           aria-describedby={inputAriaDescribedBy}
           aria-labelledby={inputAriaLabelledBy}
-          aria-invalid={
-            (!isReadOnly && validationStatus === "error") || undefined
-          }
+          aria-invalid={validationStatus === "error" || undefined}
           aria-label={inputAriaLabel}
           id={inputId}
           className={withBaseName("input")}

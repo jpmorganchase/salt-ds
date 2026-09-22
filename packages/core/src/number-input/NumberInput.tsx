@@ -614,10 +614,10 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
             clsx(formFieldLabelledBy, inputLabelledBy) || undefined
           }
           aria-invalid={
-            !isReadOnly && renderedValue.length
-              ? isOutOfRange(floatValue, min, max) ||
-                validationStatus === "error"
-              : undefined
+            validationStatus === "error" ||
+            (!isReadOnly && renderedValue.length
+              ? isOutOfRange(floatValue, min, max)
+              : undefined)
           }
           className={clsx(
             withBaseName("input"),

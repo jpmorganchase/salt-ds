@@ -13,7 +13,8 @@
     "workflow": "record:guide:operations-dashboard.service-worklist",
     "button": "record:guide:guide.button.loading",
     "buttonAccessibility": "record:guide:guide.button.accessible-name",
-    "contentStatus": "record:guide:guide.content-status"
+    "contentStatus": "record:guide:guide.content-status",
+    "formIntegration": "record:guide:guide.forms.integration"
   },
   "sources": {
     "forms": "site/docs/patterns/forms.mdx",
@@ -24,7 +25,8 @@
     "buttonExamples": "site/docs/components/button/examples.mdx",
     "buttonAccessibility": "site/docs/components/button/accessibility.mdx",
     "recipe": "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json",
-    "contentStatus": "site/docs/patterns/content-status.mdx"
+    "contentStatus": "site/docs/patterns/content-status.mdx",
+    "formIntegration": "site/docs/getting-started/form-integration.mdx"
   },
   "qualifications": {
     "document": "workflow",
@@ -101,7 +103,10 @@
           "source": "forms",
           "fragments": [
             "Keep a form's draft",
-            "application that owns the workflow"
+            "application that owns the workflow",
+            "dialog must still close with Escape",
+            "does not itself cancel a request",
+            "preserve the draft"
           ]
         },
         {
@@ -116,8 +121,7 @@
             "onChange",
             "onSubmit",
             "onCancel",
-            "without clearing the host-owned draft",
-            "reopening restores it",
+            "keeps the host-owned draft for reopening",
             "dashboard owns whether the editor is open"
           ]
         },
@@ -145,7 +149,10 @@
             "announce",
             "error summary",
             "move focus",
-            "first field that needs attention"
+            "first field that needs attention",
+            "dialog must still close with Escape",
+            "does not itself cancel a request",
+            "preserve the draft"
           ]
         }
       ]
@@ -162,7 +169,10 @@
           "fragments": [
             "submission is pending",
             "make progress clear",
-            "avoid accepting another submission or closing"
+            "avoid accepting another submission",
+            "dialog must still close with Escape",
+            "does not itself cancel a request",
+            "preserve the draft"
           ]
         },
         {
@@ -172,7 +182,7 @@
           "fragments": [
             "pending submission",
             "fields read-only",
-            "prevents duplicate submit or dialog closure"
+            "prevents duplicate submit"
           ]
         },
         {
@@ -203,7 +213,13 @@
           "document": "workflow",
           "section": "forms.submission-and-recovery",
           "source": "forms",
-          "fragments": ["fails, retain the draft", "offer a retry"]
+          "fragments": [
+            "fails, retain the draft",
+            "offer a retry",
+            "dialog must still close with Escape",
+            "does not itself cancel a request",
+            "preserve the draft"
+          ]
         },
         {
           "document": "workflow",
@@ -212,7 +228,7 @@
           "fragments": [
             "local record adapter",
             "delays a save",
-            "rejects the first save",
+            "rejects the first completed attempt",
             "once per application session",
             "succeeds on retry",
             "Neither adapter makes a network request",
@@ -251,9 +267,9 @@
           "section": "adaptation",
           "source": "recipe",
           "fragments": [
-            "Close or Escape closes the editor without clearing",
-            "host-owned draft",
-            "reopening restores it",
+            "Close or Escape closes the editor",
+            "aborts any pending local simulated save",
+            "keeps the host-owned draft for reopening",
             "in memory",
             "selection changes",
             "Successful submission clears the corresponding draft",
@@ -497,6 +513,27 @@
             "recommended",
             "if design constraints prevent this",
             "aria-label attribute directly to the Dialog"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "form-native-integration",
+      "scope": "operations-example",
+      "question": "How should a Salt form submit values and reset after a failed save?",
+      "required": [
+        {
+          "document": "formIntegration",
+          "section": "forms.integration.reset",
+          "source": "formIntegration",
+          "fragments": [
+            "type=\"submit\"",
+            "disabled native fields do not",
+            "not a reset contract for every Salt control",
+            "controlled values",
+            "reset the application/form-library state explicitly",
+            "Keep the draft on validation or save failure",
+            "after confirmed success"
           ]
         }
       ]

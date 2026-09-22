@@ -200,6 +200,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
         {...rest}
       >
         <input
+          aria-invalid={validationStatus === "error" || undefined}
           aria-readonly={readOnly || undefined}
           aria-describedby={
             clsx(

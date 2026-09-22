@@ -10,7 +10,7 @@ import {
   Input,
   StackLayout,
 } from "@salt-ds/core";
-import { type FormEvent, useId, useRef, useState } from "react";
+import { type FormEvent, useEffect, useId, useRef, useState } from "react";
 import {
   type RecordDraft,
   type RecordDraftErrors,
@@ -37,6 +37,7 @@ export function RecordForm({
   const formId = useId();
   const titleRef = useRef<HTMLInputElement>(null);
   const serviceRef = useRef<HTMLInputElement>(null);
+  const focusInvalidAfterSubmit = useRef(false);
   const isPending = submission.status === "pending";
 
   const updateDraft = (field: keyof RecordDraft, value: string) => {
@@ -45,10 +46,12 @@ export function RecordForm({
     if (hasSubmitted) setErrors(validateRecordDraft(nextDraft));
   };
 
-  const focusFirstInvalidField = (nextErrors: RecordDraftErrors) => {
-    if (nextErrors.title) titleRef.current?.focus();
-    else if (nextErrors.service) serviceRef.current?.focus();
-  };
+  useEffect(() => {
+    if (!focusInvalidAfterSubmit.current) return;
+    focusInvalidAfterSubmit.current = false;
+    if (errors.title) titleRef.current?.focus();
+    else if (errors.service) serviceRef.current?.focus();
+  }, [errors]);
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -58,7 +61,7 @@ export function RecordForm({
     setHasSubmitted(true);
     setErrors(nextErrors);
     if (hasErrors(nextErrors)) {
-      focusFirstInvalidField(nextErrors);
+      focusInvalidAfterSubmit.current = true;
       return;
     }
     onSubmit(draft);
@@ -105,7 +108,6 @@ export function RecordForm({
               name="title"
               value={draft.title}
               inputProps={{
-                "aria-invalid": Boolean(errors.title),
                 minLength: 5,
                 onChange: (event) =>
                   updateDraft("title", event.currentTarget.value),
@@ -129,7 +131,6 @@ export function RecordForm({
               name="service"
               value={draft.service}
               inputProps={{
-                "aria-invalid": Boolean(errors.service),
                 onChange: (event) =>
                   updateDraft("service", event.currentTarget.value),
                 required: true,
@@ -141,7 +142,7 @@ export function RecordForm({
         </StackLayout>
       </DialogContent>
       <DialogActions className="recordFormActions">
-        <Button appearance="bordered" disabled={isPending} onClick={onCancel}>
+        <Button appearance="bordered" onClick={onCancel}>
           Close
         </Button>
         <Button

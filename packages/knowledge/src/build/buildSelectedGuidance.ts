@@ -22,6 +22,8 @@ const ANALYTICAL_DASHBOARD_DOCUMENT_PATH =
 const NAVIGATION_DOCUMENT_PATH = "site/docs/patterns/navigation.mdx";
 const CONTENT_STATUS_DOCUMENT_PATH = "site/docs/patterns/content-status.mdx";
 const FORMS_DOCUMENT_PATH = "site/docs/patterns/forms.mdx";
+const FORM_INTEGRATION_DOCUMENT_PATH =
+  "site/docs/getting-started/form-integration.mdx";
 const BUTTON_DOCUMENT_PATH = "site/docs/components/button/examples.mdx";
 const BUTTON_ACCESSIBILITY_DOCUMENT_PATH =
   "site/docs/components/button/accessibility.mdx";
@@ -115,6 +117,50 @@ const FORMS_ERROR_SUMMARY_SELECTORS: readonly SelectedMdxSectionSelector[] = [
     heading_path: ["How to build", "Submission and recovery", "Error summary"],
     include_descendants: false,
     semantic_role: "accessibility",
+  },
+];
+
+const FORM_INTEGRATION_SELECTORS: readonly SelectedMdxSectionSelector[] = [
+  {
+    id: "forms.integration.overview",
+    heading_path: [],
+    include_descendants: false,
+  },
+  {
+    id: "forms.integration.validation",
+    heading_path: ["Validation and accessible feedback"],
+    include_descendants: false,
+    semantic_role: "accessibility",
+  },
+  {
+    id: "forms.integration.values",
+    heading_path: ["Bind the value that the user is choosing"],
+    include_descendants: true,
+    semantic_role: "constraint",
+  },
+  {
+    id: "forms.integration.reset",
+    heading_path: ["Submission and reset"],
+    include_descendants: false,
+    semantic_role: "behavior",
+  },
+  {
+    id: "forms.integration.react-actions",
+    heading_path: ["React 19 form Actions"],
+    include_descendants: false,
+    semantic_role: "composition",
+  },
+  {
+    id: "forms.integration.react-hook-form",
+    heading_path: ["React Hook Form"],
+    include_descendants: false,
+    semantic_role: "composition",
+  },
+  {
+    id: "forms.integration.form-libraries",
+    heading_path: ["Formik and TanStack Form"],
+    include_descendants: false,
+    semantic_role: "composition",
   },
 ];
 
@@ -772,6 +818,7 @@ export async function buildSelectedGuidance(
     contentStatus,
     forms,
     formsErrorSummary,
+    formIntegration,
     button,
     buttonAccessibility,
     choosingPrimitive,
@@ -825,6 +872,17 @@ export async function buildSelectedGuidance(
       route: "/salt/patterns/forms",
       selectors: FORMS_ERROR_SUMMARY_SELECTORS,
       fallbackTitle: "Forms",
+    }),
+    parseSelectedDocument({
+      sourceRoot: input.sourceRoot,
+      // This standalone guide is a canonical catalog input, not a source of
+      // the operations-dashboard recipe. Keep its declared source separate.
+      declared: declaredSourcePaths([FORM_INTEGRATION_DOCUMENT_PATH]),
+      sourcePath: FORM_INTEGRATION_DOCUMENT_PATH,
+      documentId: "guide.forms.integration",
+      route: "/salt/getting-started/form-integration",
+      selectors: FORM_INTEGRATION_SELECTORS,
+      fallbackTitle: "Form integration",
     }),
     parseSelectedDocument({
       sourceRoot: input.sourceRoot,
@@ -1054,6 +1112,42 @@ export async function buildSelectedGuidance(
       },
       files: [formsFile],
       limitations: [],
+    },
+    {
+      id: "guide.forms.integration",
+      name: "Form integration",
+      aliases: [
+        "Form integration",
+        "React Hook Form",
+        "React 19 form Actions",
+        "Formik",
+        "TanStack Form",
+      ],
+      summary: summaryFromDocument(
+        formIntegration.document,
+        "Form integration",
+      ),
+      kind: "component-guidance",
+      document: formIntegration.document,
+      recipeManifest: null,
+      sourcePaths: [FORM_INTEGRATION_DOCUMENT_PATH],
+      componentNames: [
+        "Form field",
+        "Input",
+        "Multiline input",
+        "Checkbox",
+        "Dropdown",
+      ],
+      packageNames: ["@salt-ds/core"],
+      attach: {
+        componentNames: [],
+        patternNames: [],
+        pageSourcePaths: [FORM_INTEGRATION_DOCUMENT_PATH],
+      },
+      files: [],
+      limitations: [
+        "The React 19 and form-library recipes require runtime verification in the consuming application.",
+      ],
     },
     {
       id: "guide.button.loading",

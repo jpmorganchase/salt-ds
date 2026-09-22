@@ -20,7 +20,7 @@ describe("Forms error summary", () => {
     await submit.click();
     await expect.element(owner).toHaveFocus();
     await expect.element(project).toHaveValue("Settlement review");
-    await expect.element(project).toHaveAttribute("aria-invalid", "false");
+    await expect.element(project).not.toHaveAttribute("aria-invalid", "true");
     await expect.element(owner).toHaveAttribute("aria-invalid", "true");
     await expect.element(owner).toHaveAccessibleDescription(/Enter the name/);
     await expect
@@ -40,7 +40,7 @@ describe("Forms error summary", () => {
     await expect.element(owner).toHaveFocus();
     await owner.fill("Alex Morgan");
     await expect.element(owner).toHaveFocus();
-    await expect.element(owner).toHaveAttribute("aria-invalid", "false");
+    await expect.element(owner).not.toHaveAttribute("aria-invalid", "true");
     await expect
       .element(summary.getByRole("link", { name: /^Project owner:/ }))
       .not.toBeInTheDocument();

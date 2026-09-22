@@ -123,6 +123,7 @@ export interface FormFieldLegacyProps
 }
 
 export interface useA11yValueValue {
+  "aria-invalid": boolean | undefined;
   "aria-labelledby": A11yValueProps["labelId"];
   "aria-required": A11yValueProps["required"];
   "aria-describedby": A11yValueProps["helperTextId"] | undefined;
@@ -137,16 +138,26 @@ const useA11yValue = ({
   labelId,
   helperTextId,
   renderHelperText,
-}: A11yValueProps) => {
+  validationStatus,
+}: A11yValueProps & Pick<FormFieldLegacyProps, "validationStatus">) => {
   return useMemo(
     () => ({
+      "aria-invalid": validationStatus === "error" || undefined,
       "aria-labelledby": labelId,
       "aria-required": required,
       "aria-describedby": renderHelperText ? helperTextId : undefined,
       disabled,
       readOnly,
     }),
-    [labelId, disabled, readOnly, required, renderHelperText, helperTextId],
+    [
+      labelId,
+      disabled,
+      readOnly,
+      required,
+      renderHelperText,
+      helperTextId,
+      validationStatus,
+    ],
   );
 };
 
@@ -239,6 +250,7 @@ export const FormFieldLegacy = forwardRef(
       labelId,
       helperTextId,
       renderHelperText,
+      validationStatus,
     });
 
     const [states, dispatchers, eventHandlers] = useFormFieldLegacy({
