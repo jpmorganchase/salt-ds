@@ -294,12 +294,14 @@ export function useDrawerResize({
     const doc = element.ownerDocument;
     const targetWindow = doc.defaultView;
     if (!targetWindow) return;
+    // The root rather than the body, so the cursor applies wherever the
+    // pointer lands, including areas the body does not cover.
+    const root = doc.documentElement;
     const coarsePointer = targetWindow.matchMedia("(pointer: coarse)");
 
-    const isOutsideHit = (event: PointerEvent) => {
+    const isWithinHitArea = (event: PointerEvent) => {
       const handle = handleRef.current;
-      // Presses within the Drawer are the handle element's own business.
-      if (!handle || element.contains(event.target as Node)) return false;
+      if (!handle) return false;
 
       const margin = coarsePointer.matches
         ? OUTSIDE_HIT_MARGIN.coarse
@@ -315,7 +317,9 @@ export function useDrawerResize({
 
     const onPointerDown = (event: PointerEvent) => {
       if (event.button !== 0 || event.defaultPrevented) return;
-      if (!isOutsideHit(event)) return;
+      // Presses within the Drawer are the handle element's own business.
+      if (element.contains(event.target as Node)) return;
+      if (!isWithinHitArea(event)) return;
 
       const coordinate = horizontal ? event.clientX : event.clientY;
       if (beginDrag(event.pointerId, coordinate)) {
@@ -325,15 +329,19 @@ export function useDrawerResize({
       }
     };
 
+    // The cursor is applied across the whole hit area, including the part the
+    // handle's own CSS already covers. Keeping it set while the pointer is on
+    // the handle means crossing the Drawer's edge changes nothing, so the
+    // cursor does not flicker back to its default for a frame.
     const onPointerMove = (event: PointerEvent) => {
       if (dragRef.current) return;
-      if (isOutsideHit(event)) {
-        doc.body.style.setProperty(
+      if (isWithinHitArea(event)) {
+        root.style.setProperty(
           "cursor",
           horizontal ? "col-resize" : "row-resize",
         );
       } else {
-        doc.body.style.removeProperty("cursor");
+        root.style.removeProperty("cursor");
       }
     };
 
@@ -342,7 +350,7 @@ export function useDrawerResize({
     return () => {
       doc.removeEventListener("pointerdown", onPointerDown, true);
       doc.removeEventListener("pointermove", onPointerMove, true);
-      doc.body.style.removeProperty("cursor");
+      root.style.removeProperty("cursor");
     };
   }, [enabled, element, horizontal, beginDrag]);
 
