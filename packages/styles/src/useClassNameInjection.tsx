@@ -19,6 +19,11 @@ type SupportedComponent = keyof ComponentPropsMap extends never
   ? "ComponentPropsMap must be augmented to define the components that support useClassNameInjection"
   : keyof ComponentPropsMap;
 
+/**
+ * Inspects a component's declared props and optionally returns a class to inject.
+ * Return `undefined` to opt out and leave the props untouched; return a string
+ * (including `""`) to opt in, merging the class and stripping the declared keys.
+ */
 export type ClassNameInjector<Props, Keys extends keyof Props> = (
   props: Pick<Props, Keys>,
 ) => string | undefined;
@@ -137,6 +142,7 @@ export function useClassNameInjection<Props extends PropsWithClassName>(
  * Register a class injector for a supported component name.
  * - Keys must be valid string keys for that component’s props (as declared in ComponentPropsMap).
  * - Injector receives only the declared keys (Pick<PropsOf<C>, Keys>).
+ * - Returning undefined leaves keys untouched; returning a string (even "") removes them.
  */
 export function registerClassInjector<
   Props extends Record<string, any>,
