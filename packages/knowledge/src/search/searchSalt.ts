@@ -726,6 +726,7 @@ const CONTEXT_QUESTION_WORDS = new Set([
   "is",
   "it",
   "my",
+  "on",
   "please",
   "set",
   "should",
@@ -1516,14 +1517,11 @@ function canonicalContextVariants(
       const omittedDocuments = candidates.documents.filter(
         (document) => !retainedReferences.has(document.reference),
       );
-      for (
-        let count = Math.max(
-          0,
-          ...roleDocuments.map((document) => document.sections.length),
-        );
-        count > 0;
-        count -= 1
-      ) {
+      const maximumSections = Math.max(
+        0,
+        ...roleDocuments.map((document) => document.sections.length),
+      );
+      for (let count = maximumSections; count > 0; count -= 1) {
         const documents = roleDocuments.map((document) => {
           const compact = compactCanonicalDocument(
             document,
@@ -1576,6 +1574,17 @@ function canonicalContextVariants(
           })),
         );
         variants.push({ ...candidates, truncated: true, documents });
+        if (count === maximumSections) {
+          // Preserve the complete task role in leading documents before
+          // shortening every document to the same number of sections.
+          for (let length = documents.length - 1; length > 0; length -= 1) {
+            variants.push({
+              ...candidates,
+              truncated: true,
+              documents: documents.slice(0, length),
+            });
+          }
+        }
         // Try all requested roles together before narrowing to the priority role.
         if (roleSets.length > 1 && requestedRoles === roles) break;
       }

@@ -27,8 +27,13 @@ A `ToggleButtonGroup` allows users to make a single selection from a set of rela
 Switch the same incident records between List and Cards with `ToggleButtonGroup`.
 The filter and selected record belong to the application and survive the switch.
 The view controls stay mounted so keyboard focus remains on the selected control.
-See [view-switching guidance](./usage#view-switching) for component alternatives
-and state ownership.
+See [view-switching guidance](./usage#view-switching) for component alternatives,
+[list and card composition](./usage#list-and-card-composition), and state ownership.
+
+The list uses [`ListBox`](../list-box) to select a record. The cards follow the
+[selectable-card pattern](/salt/patterns/selectable-card), including the title and
+selection indicator. Filtering keeps card column widths stable; the available
+viewport determines how many columns fit.
 
 <LivePreview
   componentName="toggle-button"

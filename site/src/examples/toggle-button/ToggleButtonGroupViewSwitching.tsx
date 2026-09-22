@@ -1,11 +1,14 @@
 import {
-  Card,
   FormField,
   FormFieldLabel,
   GridLayout,
+  H3,
   Input,
-  RadioButton,
-  RadioButtonGroup,
+  InteractableCard,
+  InteractableCardGroup,
+  ListBox,
+  Option,
+  RadioButtonIcon,
   StackLayout,
   Text,
   ToggleButton,
@@ -49,6 +52,12 @@ export const ToggleButtonGroupViewSwitching = () => {
     (incident) => incident.id === selectedId,
   );
 
+  const visibleSelectedId = visibleIncidents.some(
+    (incident) => incident.id === selectedId,
+  )
+    ? selectedId
+    : "";
+
   return (
     <StackLayout gap={2} style={{ width: "100%", maxWidth: 720 }}>
       <FormField>
@@ -71,53 +80,78 @@ export const ToggleButtonGroupViewSwitching = () => {
           <ToggleButton value="cards">Cards</ToggleButton>
         </ToggleButtonGroup>
       </StackLayout>
-      <RadioButtonGroup
-        aria-label="Select an incident"
-        value={selectedId}
-        onChange={(event) => setSelectedId(event.currentTarget.value)}
-      >
-        {visibleIncidents.length ? (
+      {visibleIncidents.length === 0 ? (
+        <Text>No incidents match the filter.</Text>
+      ) : view === "cards" ? (
+        <InteractableCardGroup
+          aria-label="Select an incident"
+          value={visibleSelectedId}
+          onChange={(_event, value) => {
+            if (typeof value === "string") setSelectedId(value);
+          }}
+        >
           <GridLayout
-            as="ul"
-            aria-label="Incidents"
-            columns={
-              view === "cards"
-                ? "repeat(auto-fit, minmax(min(100%, 220px), 1fr))"
-                : 1
-            }
+            columns="repeat(auto-fill, minmax(min(100%, 220px), 1fr))"
             gap={2}
-            style={{ listStyle: "none" }}
+            style={{ width: "100%", gridAutoRows: "1fr" }}
           >
-            {visibleIncidents.map((incident) => {
-              const details = (
+            {visibleIncidents.map((incident) => (
+              <InteractableCard
+                key={incident.id}
+                value={incident.id}
+                aria-labelledby={`${id}-${incident.id}-title`}
+                aria-describedby={`${id}-${incident.id}`}
+              >
                 <StackLayout gap={1}>
-                  <RadioButton
-                    label={incident.service}
-                    value={incident.id}
-                    inputProps={{
-                      "aria-describedby": `${id}-${incident.id}`,
-                    }}
-                  />
-                  <Text id={`${id}-${incident.id}`}>
-                    {incident.team}: {incident.summary}
-                  </Text>
+                  <H3 id={`${id}-${incident.id}-title`} style={{ margin: 0 }}>
+                    {incident.service}
+                  </H3>
+                  <StackLayout direction="row" gap={1}>
+                    <RadioButtonIcon
+                      aria-hidden
+                      checked={selectedId === incident.id}
+                    />
+                    <Text id={`${id}-${incident.id}`}>
+                      {incident.team}: {incident.summary}
+                    </Text>
+                  </StackLayout>
                 </StackLayout>
-              );
-              return (
-                <li key={incident.id}>
-                  {view === "cards" ? (
-                    <Card elevation="flat">{details}</Card>
-                  ) : (
-                    details
-                  )}
-                </li>
-              );
-            })}
+              </InteractableCard>
+            ))}
           </GridLayout>
-        ) : (
-          <Text>No incidents match the filter.</Text>
-        )}
-      </RadioButtonGroup>
+        </InteractableCardGroup>
+      ) : (
+        <ListBox
+          aria-label="Select an incident"
+          selected={selectedId ? [selectedId] : []}
+          onSelectionChange={(_event, selected) =>
+            setSelectedId(selected[0] ?? "")
+          }
+          valueToString={(value) =>
+            incidents.find((incident) => incident.id === value)?.service ??
+            value
+          }
+          style={{ width: "100%" }}
+        >
+          {visibleIncidents.map((incident) => (
+            <Option
+              key={incident.id}
+              value={incident.id}
+              aria-labelledby={`${id}-${incident.id}-title`}
+              aria-describedby={`${id}-${incident.id}`}
+            >
+              <StackLayout gap={0.5}>
+                <Text id={`${id}-${incident.id}-title`}>
+                  {incident.service}
+                </Text>
+                <Text id={`${id}-${incident.id}`} color="inherit">
+                  {incident.team}: {incident.summary}
+                </Text>
+              </StackLayout>
+            </Option>
+          ))}
+        </ListBox>
+      )}
       <Text>Selected incident: {selectedIncident?.service ?? "None"}</Text>
     </StackLayout>
   );

@@ -24,6 +24,8 @@ const CONTENT_STATUS_DOCUMENT_PATH = "site/docs/patterns/content-status.mdx";
 const FORMS_DOCUMENT_PATH = "site/docs/patterns/forms.mdx";
 const FORM_INTEGRATION_DOCUMENT_PATH =
   "site/docs/getting-started/form-integration.mdx";
+const SELECTION_CONTROLS_DOCUMENT_PATH =
+  "site/docs/components/list-box/usage.mdx";
 const VIEW_SWITCHING_DOCUMENT_PATH =
   "site/docs/components/toggle-button/usage.mdx";
 const BUTTON_DOCUMENT_PATH = "site/docs/components/button/examples.mdx";
@@ -166,6 +168,32 @@ const FORM_INTEGRATION_SELECTORS: readonly SelectedMdxSectionSelector[] = [
   },
 ];
 
+const SELECTION_CONTROLS_SELECTORS: readonly SelectedMdxSectionSelector[] = [
+  {
+    id: "selection-controls.choice",
+    heading_path: ["Choosing a selection control"],
+    include_descendants: false,
+    semantic_role: "decision",
+    qualification_group: "selection-controls.choice",
+  },
+  {
+    id: "selection-controls.alternatives",
+    heading_path: ["Choosing a selection control", "Alternatives"],
+    include_descendants: false,
+    semantic_role: "decision",
+    qualification_group: "selection-controls.choice",
+  },
+  {
+    id: "selection-controls.filtering-and-values",
+    heading_path: [
+      "Choosing a selection control",
+      "Filtering and submitted values",
+    ],
+    include_descendants: false,
+    semantic_role: "constraint",
+  },
+];
+
 const VIEW_SWITCHING_SELECTORS: readonly SelectedMdxSectionSelector[] = [
   {
     id: "view-switching.choice",
@@ -180,6 +208,12 @@ const VIEW_SWITCHING_SELECTORS: readonly SelectedMdxSectionSelector[] = [
     include_descendants: false,
     semantic_role: "decision",
     qualification_group: "view-switching.choice",
+  },
+  {
+    id: "view-switching.composition",
+    heading_path: ["View switching", "List and card composition"],
+    include_descendants: false,
+    semantic_role: "composition",
   },
   {
     id: "view-switching.choice.state-and-focus",
@@ -844,6 +878,7 @@ export async function buildSelectedGuidance(
     forms,
     formsErrorSummary,
     formIntegration,
+    selectionControls,
     viewSwitching,
     button,
     buttonAccessibility,
@@ -909,6 +944,15 @@ export async function buildSelectedGuidance(
       route: "/salt/getting-started/form-integration",
       selectors: FORM_INTEGRATION_SELECTORS,
       fallbackTitle: "Form integration",
+    }),
+    parseSelectedDocument({
+      sourceRoot: input.sourceRoot,
+      declared: declaredSourcePaths([SELECTION_CONTROLS_DOCUMENT_PATH]),
+      sourcePath: SELECTION_CONTROLS_DOCUMENT_PATH,
+      documentId: "guide.selection-controls",
+      route: "/salt/components/list-box/usage",
+      selectors: SELECTION_CONTROLS_SELECTORS,
+      fallbackTitle: "Choosing a selection control",
     }),
     parseSelectedDocument({
       sourceRoot: input.sourceRoot,
@@ -1056,6 +1100,7 @@ export async function buildSelectedGuidance(
     );
   }
   const buttonName = `Button ${buttonHeading}`;
+  requireSupportedDocument(selectionControls.document);
   requireSupportedDocument(formsErrorSummary.document);
   requireSupportedDocument(contentStatus.document);
   requireSupportedDocument(buttonAccessibility.document);
@@ -1183,6 +1228,34 @@ export async function buildSelectedGuidance(
       limitations: [
         "The React 19 and form-library recipes require runtime verification in the consuming application.",
       ],
+    },
+    {
+      id: "guide.selection-controls",
+      name: "Choosing a selection control",
+      aliases: ["Selection controls", "Radio buttons or list selection"],
+      summary: summaryFromDocument(
+        selectionControls.document,
+        "Selection controls",
+      ),
+      kind: "component-guidance",
+      document: selectionControls.document,
+      recipeManifest: null,
+      sourcePaths: [SELECTION_CONTROLS_DOCUMENT_PATH],
+      componentNames: [
+        "List box",
+        "Radio button",
+        "Checkbox",
+        "Dropdown",
+        "Combo box",
+      ],
+      packageNames: ["@salt-ds/core"],
+      attach: {
+        componentNames: ["List box"],
+        patternNames: [],
+        pageSourcePaths: [SELECTION_CONTROLS_DOCUMENT_PATH],
+      },
+      files: [],
+      limitations: [],
     },
     {
       id: "guide.view-switching",

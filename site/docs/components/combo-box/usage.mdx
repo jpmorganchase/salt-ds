@@ -12,23 +12,36 @@ data:
 
 ### When to use
 
-- To display and select from a list of 10 or more options that don't need to be permanently visible to the user without selecting from a dropdown menu.
-- When only the selected value from a set of options needs to be visible once the selection is made.
-- If a workflow benefits from having a filter to quickly narrow down the available options.
-- If there are more than 100 options and you would like to prevent performance issues without virtualization.
+- When typing would help users find and select from available choices, and the full list does not need to stay visible.
+- When a workflow benefits from a filter that narrows the available options. The application supplies the filtering logic and rendered options.
+- For single or multiple selection from a popup. Use `multiselect` when multiple values are allowed.
 
 ### When not to use
 
-- To choose one value from a set of five to ten options that does not require filtering. Instead, use [`Dropdown`](../dropdown).
-- To select a single option from fewer than five. Instead, use [`RadioButtonGroup`](../radio-button).
-- To select multiple options from fewer than five. Instead, use [`CheckboxGroup`](../checkbox).
-- To make an instantaneous selection between two binary choices, for example “on” and “off”. Instead, use [`Switch`](../switch).
+- When users can find the options without typing and a popup is appropriate. Instead, use [`Dropdown`](../dropdown).
+- When a small, mutually exclusive set of choices should remain visible together. Instead, use [`RadioButtonGroup`](../radio-button).
+- When multiple independent choices should remain visible together. Instead, use [`CheckboxGroup`](../checkbox).
+- When a selectable list should remain visible. Instead, use [`ListBox`](../list-box).
+- For a popup list of actions such as Edit or Delete. Instead, use [`Menu`](../menu).
+- For an on/off setting that takes effect immediately. Instead, use [`Switch`](../switch).
+
+See [Choosing a selection control](../list-box/usage#choosing-a-selection-control).
+An option count alone does not determine the control, and `ComboBox` does not
+automatically filter or virtualize a large list.
 
 ### Controlled/Uncontrolled
 
-Just like native input elements in React, a combo box can be controlled or uncontrolled. By default a combo box is uncontrolled. Use the `defaultValue` and `defaultSelected` props to control the default value of the combo box.
+By default, a combo box manages its own input text and selection. Use
+`defaultValue` for the initial input text and `defaultSelected` for the initial
+selection.
 
-If you want to control the value of the combo box, use the `value` and `selected` props. The `onSelectionChange` prop is required when using the controlled approach.
+Use `value` with `onChange` to control the input text, and `selected` with
+`onSelectionChange` to control the selection. When controlling the input text, also
+update it from `onSelectionChange`: show the chosen label for single selection or
+clear the search text after multiple selection, as the [examples](./examples)
+demonstrate. These are separate values; see
+[Filtering and submitted values](../list-box/usage#filtering-and-submitted-values)
+before connecting the control to form submission.
 
 ## Import
 

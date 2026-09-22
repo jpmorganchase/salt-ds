@@ -15,7 +15,8 @@
     "buttonAccessibility": "record:guide:guide.button.accessible-name",
     "contentStatus": "record:guide:guide.content-status",
     "formIntegration": "record:guide:guide.forms.integration",
-    "viewSwitching": "record:guide:guide.view-switching"
+    "viewSwitching": "record:guide:guide.view-switching",
+    "selectionControls": "record:guide:guide.selection-controls"
   },
   "sources": {
     "forms": "site/docs/patterns/forms.mdx",
@@ -28,7 +29,8 @@
     "recipe": "examples/apps/operations-dashboard/src/workflows/service-worklist/recipe.json",
     "contentStatus": "site/docs/patterns/content-status.mdx",
     "formIntegration": "site/docs/getting-started/form-integration.mdx",
-    "viewSwitching": "site/docs/components/toggle-button/usage.mdx"
+    "viewSwitching": "site/docs/components/toggle-button/usage.mdx",
+    "selectionControls": "site/docs/components/list-box/usage.mdx"
   },
   "qualifications": {
     "document": "workflow",
@@ -568,6 +570,23 @@
         },
         {
           "document": "viewSwitching",
+          "section": "view-switching.composition",
+          "source": "viewSwitching",
+          "fragments": [
+            "static content",
+            "ListBox",
+            "must not contain interactive controls",
+            "InteractableCardGroup",
+            "selectable-card pattern",
+            "H3",
+            "selection indicator beside the description",
+            "same height",
+            "card column widths stable",
+            "available viewport"
+          ]
+        },
+        {
+          "document": "viewSwitching",
           "section": "view-switching.choice.state-and-focus",
           "source": "viewSwitching",
           "fragments": [
@@ -576,6 +595,56 @@
             "Keep focus on the view control",
             "Inside a toolbar",
             "without changing selection"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "choosing-selection-controls",
+      "scope": "operations-example",
+      "question": "How should users choose one or several form values when options can stay visible or need searching?",
+      "required": [
+        {
+          "document": "selectionControls",
+          "section": "selection-controls.choice",
+          "source": "selectionControls",
+          "fragments": [
+            "mutually exclusive",
+            "RadioButtonGroup",
+            "independent choices",
+            "CheckboxGroup",
+            "always-visible list",
+            "ListBox",
+            "popup when space is limited",
+            "Dropdown",
+            "Type to find",
+            "ComboBox",
+            "option count alone"
+          ]
+        },
+        {
+          "document": "selectionControls",
+          "section": "selection-controls.alternatives",
+          "source": "selectionControls",
+          "fragments": [
+            "Menu",
+            "actions",
+            "NavigationItem",
+            "destinations",
+            "ToggleButtonGroup",
+            "same records"
+          ]
+        },
+        {
+          "document": "selectionControls",
+          "section": "selection-controls.filtering-and-values",
+          "source": "selectionControls",
+          "fragments": [
+            "application owns",
+            "filtering",
+            "not automatically filter or virtualize",
+            "input text",
+            "separate from the selected values"
           ]
         }
       ]
@@ -591,6 +660,7 @@
     ["button.loading", "button.loading.best-practices"],
     ["dialog.focus", "dialog.initial-focus", "dialog.focus-sequence"],
     ["button-bar.layout", "button-bar.dialog-order"],
-    ["view-switching.choice", "view-switching.choice.alternatives"]
+    ["view-switching.choice", "view-switching.choice.alternatives"],
+    ["selection-controls.choice", "selection-controls.alternatives"]
   ]
 }

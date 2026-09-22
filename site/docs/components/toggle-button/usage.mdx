@@ -37,6 +37,20 @@ Cards. This presentation choice is not navigation to different content.
   actions. It does not provide a selected value or selection behavior; use
   `ToggleButtonGroup` for a persistent presentation choice.
 
+### List and card composition
+
+Keep record selection separate from the List/Cards presentation choice. For a
+list of selectable records with static content, use [`ListBox`](../list-box/usage);
+its options must not contain interactive controls. For cards, use
+`InteractableCardGroup` and the [selectable-card pattern](../../patterns/selectable-card).
+In this example, use an `H3` title and put the selection indicator beside the
+description. Keep cards in the group the same height.
+
+When filtering this collection, keep card column widths stable instead of
+stretching the remaining results to fill empty columns. Let the available
+viewport determine how many columns fit, reducing to one column on narrow screens.
+See the [list and card example](./examples#view-switching).
+
 ### State and focus
 
 The application owns the presentation, query, filters, sort and selected record.
