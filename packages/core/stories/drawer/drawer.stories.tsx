@@ -557,3 +557,47 @@ export const HeaderAndFooter: StoryFn<DrawerProps> = (args) => {
     </>
   );
 };
+
+export const Resizable: StoryFn<DrawerProps> = ({ position = "left", ...args }) => {
+  const [open, setOpen] = useState(false);
+
+  const isHorizontal = position === "left" || position === "right";
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open Drawer</Button>
+      <Drawer
+        {...args}
+        resizable
+        position={position}
+        open={open}
+        onOpenChange={setOpen}
+        style={
+          isHorizontal
+            ? { width: 320, minWidth: 200, maxWidth: 640 }
+            : { height: 280, minHeight: 160, maxHeight: 520 }
+        }
+      >
+        <DrawerHeader
+          header={`Resizable ${position} drawer`}
+          description="Drag the handle on the inner edge, or focus it and use the arrow keys."
+          actions={<CloseButton onClick={() => setOpen(false)} />}
+        />
+        <DrawerContent>
+          <StackLayout>
+            <Text>
+              Limits come from the drawer's own CSS:{" "}
+              {isHorizontal
+                ? "min-width 200px, max-width 640px."
+                : "min-height 160px, max-height 520px."}
+            </Text>
+            <Text>{loremText.repeat(4)}</Text>
+          </StackLayout>
+        </DrawerContent>
+        <DrawerFooter>
+          <Button onClick={() => setOpen(false)}>Close</Button>
+        </DrawerFooter>
+      </Drawer>
+    </>
+  );
+};

@@ -1,5 +1,8 @@
 /* Styles applied to Drawer component */
 .saltDrawer {
+  --drawer-padding: var(--salt-spacing-300);
+  --drawer-resizeHandleSize: var(--salt-size-fixed-600);
+
   background: var(--drawer-background);
   display: flex;
   flex-direction: column;
@@ -7,7 +10,7 @@
   max-width: 100%;
   overflow: auto;
   /* Legacy padding for unsectioned drawers only. */
-  padding: var(--salt-spacing-300);
+  padding: var(--drawer-padding);
   box-shadow: var(--salt-overlayable-shadow-modal);
   z-index: var(--salt-zIndex-drawer);
   position: fixed;
@@ -16,13 +19,38 @@
 }
 
 .saltDrawer.saltDrawer-sectioned {
-  padding: 0;
+  --drawer-padding: 0px;
+}
+
+.saltDrawer-resizing {
+  user-select: none;
 }
 
 @supports selector(:has(*)) {
   .saltDrawer:has(> .saltDrawerHeader, > .saltDrawerContent, > .saltDrawerFooter) {
-    padding: 0;
+    --drawer-padding: 0px;
   }
+}
+
+/* The resize handle occupies space inside the Drawer's declared size rather
+   than overlaying content: the Drawer is border-box, so reserving padding on
+   the handle's side shrinks the content box while the Drawer's width or height
+   stays exactly as the consumer set it. The Drawer's own padding is preserved,
+   as the handle's size is added to it. */
+.saltDrawer-resizable.saltDrawer-left {
+  padding-right: calc(var(--drawer-padding) + var(--drawer-resizeHandleSize));
+}
+
+.saltDrawer-resizable.saltDrawer-right {
+  padding-left: calc(var(--drawer-padding) + var(--drawer-resizeHandleSize));
+}
+
+.saltDrawer-resizable.saltDrawer-top {
+  padding-bottom: calc(var(--drawer-padding) + var(--drawer-resizeHandleSize));
+}
+
+.saltDrawer-resizable.saltDrawer-bottom {
+  padding-top: calc(var(--drawer-padding) + var(--drawer-resizeHandleSize));
 }
 
 /* Styles applied when variant = "primary" */

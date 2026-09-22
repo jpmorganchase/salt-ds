@@ -1,0 +1,164 @@
+/* Styles applied to the Drawer's resize handle.
+   Mirrors the Splitter handle (@salt-ds/react-resizable-panels-theme): a
+   transparent strip carrying the same dot thumb and the same hover, drag and
+   focus treatments, so a resizable Drawer matches the documented Splitter.
+
+   The element itself is the pointer target. The Splitter inflates its 6px
+   handle by 5px on each side for a 16px target; a Drawer's outer side is inert
+   while the Drawer is modal, so it cannot receive pointer events and the same
+   total is taken inwards instead. The element is out of flow, so this costs no
+   layout: the Drawer still reserves only --drawerResizeHandle-size, which is
+   the width of the visible strip drawn by ::before. */
+.saltDrawerResizeHandle {
+  --drawerResizeHandle-size: var(--drawer-resizeHandleSize, var(--salt-size-fixed-600));
+  --drawerResizeHandle-hitSize: 16px;
+  --drawerResizeHandle-thumbSize: max(var(--salt-size-icon, 12px), 12px);
+  /* Offset that centres the thumb on the visible strip. */
+  --drawerResizeHandle-thumbInset: calc((var(--drawerResizeHandle-size) - var(--drawerResizeHandle-thumbSize)) / 2);
+  --drawerResizeHandle-background: transparent;
+  --drawerResizeHandle-background-hover: var(--salt-separable-background-hover);
+  --drawerResizeHandle-background-active: var(--salt-separable-background-active);
+  --drawerResizeHandle-dot-background: var(--salt-separable-foreground);
+  --drawerResizeHandle-dot-background-hover: var(--salt-separable-foreground-hover);
+  --drawerResizeHandle-dot-background-active: var(--salt-separable-foreground-active);
+
+  position: absolute;
+  z-index: 1;
+  box-sizing: border-box;
+  background: transparent;
+  touch-action: none;
+}
+
+/* The visible strip */
+.saltDrawerResizeHandle::before {
+  content: "";
+  position: absolute;
+  background: var(--drawerResizeHandle-background);
+}
+
+/* Resize handle thumb */
+.saltDrawerResizeHandle::after {
+  content: "";
+  position: absolute;
+  height: var(--drawerResizeHandle-thumbSize);
+  width: var(--drawerResizeHandle-thumbSize);
+  background: var(--drawerResizeHandle-dot-background);
+  fill: var(--drawerResizeHandle-dot-background);
+  mask-image: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%3E%3Cpath%20d%3D%22M5%2011V9H7V11H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%207L5%205H7L7%207H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%201V3H7V1L5%201Z%22%20%2F%3E%3C%2Fsvg%3E");
+  mask-size: cover;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%3E%3Cpath%20d%3D%22M5%2011V9H7V11H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%207L5%205H7L7%207H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%201V3H7V1L5%201Z%22%20%2F%3E%3C%2Fsvg%3E");
+  -webkit-mask-size: cover;
+}
+
+/* Styles applied when the Drawer's position = "left" */
+.saltDrawerResizeHandle-left {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: var(--drawerResizeHandle-hitSize);
+  cursor: col-resize;
+}
+
+.saltDrawerResizeHandle-left::before {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: var(--drawerResizeHandle-size);
+}
+
+.saltDrawerResizeHandle-left::after {
+  top: 50%;
+  right: var(--drawerResizeHandle-thumbInset);
+  transform: translateY(-50%);
+}
+
+/* Styles applied when the Drawer's position = "right" */
+.saltDrawerResizeHandle-right {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--drawerResizeHandle-hitSize);
+  cursor: col-resize;
+}
+
+.saltDrawerResizeHandle-right::before {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--drawerResizeHandle-size);
+}
+
+.saltDrawerResizeHandle-right::after {
+  top: 50%;
+  left: var(--drawerResizeHandle-thumbInset);
+  transform: translateY(-50%);
+}
+
+/* Styles applied when the Drawer's position = "top" */
+.saltDrawerResizeHandle-top {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--drawerResizeHandle-hitSize);
+  cursor: row-resize;
+}
+
+.saltDrawerResizeHandle-top::before {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--drawerResizeHandle-size);
+}
+
+.saltDrawerResizeHandle-top::after {
+  left: 50%;
+  bottom: var(--drawerResizeHandle-thumbInset);
+  transform: translateX(-50%) rotate(90deg);
+}
+
+/* Styles applied when the Drawer's position = "bottom" */
+.saltDrawerResizeHandle-bottom {
+  left: 0;
+  right: 0;
+  top: 0;
+  height: var(--drawerResizeHandle-hitSize);
+  cursor: row-resize;
+}
+
+.saltDrawerResizeHandle-bottom::before {
+  left: 0;
+  right: 0;
+  top: 0;
+  height: var(--drawerResizeHandle-size);
+}
+
+.saltDrawerResizeHandle-bottom::after {
+  left: 50%;
+  top: var(--drawerResizeHandle-thumbInset);
+  transform: translateX(-50%) rotate(90deg);
+}
+
+/* Hover and drag states, matching the Splitter's treatment */
+.saltDrawerResizeHandle:hover {
+  --drawerResizeHandle-background: var(--drawerResizeHandle-background-hover);
+  --drawerResizeHandle-dot-background: var(--drawerResizeHandle-dot-background-hover);
+}
+
+/* Styles applied while dragging */
+.saltDrawerResizeHandle[data-resizing] {
+  --drawerResizeHandle-background: var(--drawerResizeHandle-background-active);
+  --drawerResizeHandle-dot-background: var(--drawerResizeHandle-dot-background-active);
+}
+
+/* The ring is drawn on the visible strip, and inside it, so the Drawer's
+   overflow cannot clip it. */
+.saltDrawerResizeHandle:focus-visible {
+  outline: none;
+}
+
+.saltDrawerResizeHandle:focus-visible::before {
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
+}
