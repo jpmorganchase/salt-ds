@@ -26,6 +26,7 @@ import {
 import drawerCss from "./Drawer.css";
 import { DrawerContext } from "./DrawerContext";
 import { hasDrawerSection } from "./hasDrawerSection";
+import { DrawerResizeHandle, useDrawerResize } from "./internal";
 
 interface ConditionalScrimWrapperProps extends PropsWithChildren {
   condition: boolean;
@@ -64,6 +65,14 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    * */
   disableScrim?: boolean;
   /**
+   * Allow the user to resize the drawer by dragging its inner edge.
+   * The handle occupies space inside the drawer's declared size rather than overlaying its
+   * content, and does not consume the drawer's padding.
+   * Limits come from the drawer's own CSS: `min-width`/`max-width` for `left` and `right`,
+   * `min-height`/`max-height` for `top` and `bottom`.
+   * */
+  resizable?: boolean;
+  /**
    * Which element to initially focus. Can be either a number (tabbable index as specified by the order) or a ref.
    * Default value is 0 (first tabbable element).
    * */
@@ -85,8 +94,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       variant = "primary",
       disableDismiss,
       disableScrim,
+      resizable = false,
       initialFocus,
       id,
+      style,
       "aria-labelledby": ariaLabelledBy,
       "aria-describedby": ariaDescribedBy,
       ...rest
@@ -121,6 +132,14 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     ]);
 
     const handleRef = useForkRef<HTMLDivElement>(floating, ref);
+
+    const { size, isResizing, separatorProps } = useDrawerResize({
+      enabled: resizable,
+      position,
+      element: elements.floating,
+    });
+    const sizeProperty =
+      position === "left" || position === "right" ? "width" : "height";
 
     useEffect(() => {
       if (open && !showComponent) {
@@ -172,13 +191,28 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 [withBaseName("exitAnimation")]: !open,
                 [withBaseName(variant)]: variant,
                 [withBaseName("sectioned")]: sectioned,
+                [withBaseName("resizable")]: resizable,
+                [withBaseName("resizing")]: isResizing,
               },
               className,
             )}
             {...getFloatingProps()}
             {...rest}
+            style={{
+              ...style,
+              ...(size !== undefined && { [sizeProperty]: size }),
+            }}
           >
             {children}
+            {resizable && (
+              <DrawerResizeHandle
+                position={position}
+                resizing={isResizing}
+                aria-label="Resize drawer"
+                aria-controls={drawerId}
+                {...separatorProps}
+              />
+            )}
           </FloatingComponent>
         </ConditionalScrimWrapper>
       </DrawerContext.Provider>
