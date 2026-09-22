@@ -150,8 +150,7 @@
   --drawerResizeHandle-dot-background: var(--drawerResizeHandle-dot-background-active);
 }
 
-/* The ring is drawn on the visible strip, and inside it, so the Drawer's
-   overflow cannot clip it. */
+/* The ring is drawn on the visible strip, outside it. */
 .saltDrawerResizeHandle:focus-visible {
   outline: none;
 }
@@ -160,5 +159,20 @@
   outline-style: var(--salt-focused-outlineStyle);
   outline-width: var(--salt-focused-outlineWidth);
   outline-color: var(--salt-focused-outlineColor);
-  outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
+  outline-offset: var(--salt-focused-outlineOffset);
+}
+
+/* The strip runs the full length of the Drawer's edge, so the ends of its ring
+   would fall outside the Drawer, and often outside the viewport. Inset the
+   strip while focused, by the width of the ring, so it stays complete. */
+.saltDrawerResizeHandle-left:focus-visible::before,
+.saltDrawerResizeHandle-right:focus-visible::before {
+  top: var(--salt-focused-outlineWidth);
+  bottom: var(--salt-focused-outlineWidth);
+}
+
+.saltDrawerResizeHandle-top:focus-visible::before,
+.saltDrawerResizeHandle-bottom:focus-visible::before {
+  left: var(--salt-focused-outlineWidth);
+  right: var(--salt-focused-outlineWidth);
 }
