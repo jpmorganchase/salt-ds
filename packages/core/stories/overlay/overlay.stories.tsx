@@ -21,11 +21,33 @@ import { type ChangeEvent, useState } from "react";
 import "./overlay.stories.css";
 import { CloseIcon, MicroMenuIcon } from "@salt-ds/icons";
 
+const placementOptions = [
+  "top",
+  "top-start",
+  "top-end",
+  "right",
+  "right-start",
+  "right-end",
+  "bottom",
+  "bottom-start",
+  "bottom-end",
+  "left",
+  "left-start",
+  "left-end",
+] satisfies NonNullable<OverlayProps["placement"]>[];
+
 export default {
   title: "Core/Overlay",
+  component: Overlay,
+  argTypes: {
+    placement: {
+      options: placementOptions,
+      control: { type: "select" },
+    },
+  },
 } as Meta<typeof Overlay>;
 
-export const Default: StoryFn<OverlayProps> = ({ ...args }) => {
+const OverlayTemplate = ({ ...args }: OverlayProps) => {
   const id = useId();
 
   return (
@@ -46,19 +68,21 @@ export const Default: StoryFn<OverlayProps> = ({ ...args }) => {
   );
 };
 
-export const Bottom = Default.bind({});
-Bottom.args = {
-  placement: "bottom",
-};
+export const Default: StoryFn<OverlayProps> = OverlayTemplate;
 
-export const Left = Default.bind({});
-Left.args = {
-  placement: "left",
-};
-
-export const Right = Default.bind({});
-Right.args = {
-  placement: "right",
+export const Placement: StoryFn<OverlayProps> = (args) => (
+  <div
+    style={{
+      display: "grid",
+      minHeight: 300,
+      placeItems: "center",
+    }}
+  >
+    <OverlayTemplate {...args} />
+  </div>
+);
+Placement.args = {
+  placement: "bottom-start",
 };
 
 export const HideArrow = Default.bind({});
