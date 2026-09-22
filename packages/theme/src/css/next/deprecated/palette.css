@@ -71,6 +71,8 @@
   --salt-palette-accent-action-hover: var(--salt-color-blue-600);
   --salt-palette-accent-strong-disabled: var(--salt-color-blue-600-40a);
   --salt-palette-accent-stronger-disabled: var(--salt-color-blue-700-40a);
+  --salt-palette-accent-disabled: var(--salt-color-blue-500-40a);
+  --salt-palette-accent-weaker-disabled: var(--salt-color-blue-200-40a);
 }
 
 .salt-theme.salt-theme-next[data-mode="dark"][data-accent="blue"] {
@@ -78,6 +80,8 @@
   --salt-palette-accent-action-hover: var(--salt-color-blue-600);
   --salt-palette-accent-strong-disabled: var(--salt-color-blue-400-40a);
   --salt-palette-accent-stronger-disabled: var(--salt-color-blue-300-40a);
+  --salt-palette-accent-disabled: var(--salt-color-blue-500-40a);
+  --salt-palette-accent-weaker-disabled: var(--salt-color-blue-800-40a);
 }
 
 .salt-theme.salt-theme-next[data-mode="light"][data-accent="teal"] {
@@ -85,6 +89,8 @@
   --salt-palette-accent-action-hover: var(--salt-color-teal-600);
   --salt-palette-accent-strong-disabled: var(--salt-color-teal-600-40a);
   --salt-palette-accent-stronger-disabled: var(--salt-color-teal-700-40a);
+  --salt-palette-accent-disabled: var(--salt-color-teal-500-40a);
+  --salt-palette-accent-weaker-disabled: var(--salt-color-teal-200-40a);
 }
 
 .salt-theme.salt-theme-next[data-mode="dark"][data-accent="teal"] {
@@ -92,6 +98,8 @@
   --salt-palette-accent-action-hover: var(--salt-color-teal-600);
   --salt-palette-accent-strong-disabled: var(--salt-color-teal-400-40a);
   --salt-palette-accent-stronger-disabled: var(--salt-color-teal-300-40a);
+  --salt-palette-accent-disabled: var(--salt-color-teal-500-40a);
+  --salt-palette-accent-weaker-disabled: var(--salt-color-teal-800-40a);
 }
 
 .salt-theme-next.salt-theme[data-heading-font="Open Sans"] {
@@ -143,4 +151,10 @@
   --salt-palette-text-fontFamily-action: var(--salt-typography-fontFamily-amplitude);
 
   --salt-palette-text-action-fontWeight: var(--salt-typography-fontWeight-medium);
+}
+.salt-theme.salt-theme-next[data-mode="light"] {
+  --salt-palette-foreground-primary-alt-disabled: var(--salt-color-white-40a);
+}
+.salt-theme.salt-theme-next[data-mode="dark"] {
+  --salt-palette-foreground-primary-alt-disabled: var(--salt-color-white-40a);
 }

@@ -8,7 +8,6 @@
   --salt-content-attention-foreground: var(--salt-palette-negative-foreground);
 
   --salt-content-bold-foreground: var(--salt-palette-interact-cta-foreground);
-  --salt-content-bold-foreground-disabled: var(--salt-palette-interact-cta-foreground-disabled);
 
   --salt-content-foreground-visited: var(--salt-palette-navigate-foreground-visited);
 }
