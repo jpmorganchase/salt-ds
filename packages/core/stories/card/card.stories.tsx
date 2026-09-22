@@ -306,7 +306,7 @@ export const CollapsibleCard: StoryFn<typeof Card> = (args) => {
       onOpenChange={(_, isOpen) => setExpanded(isOpen)}
       open={expanded}
     >
-      <Card {...args} style={{ width: "360px" }}>
+      <Card {...args} style={{ maxWidth: "360px" }}>
         <CardHeader>
           <FlexLayout align="start" gap={1} justify="space-between">
             <StackLayout gap={0.5}>
