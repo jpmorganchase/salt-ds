@@ -1,0 +1,119 @@
+{
+  "after": [
+    {
+      "name": "user-badge.svg",
+      "feature": "consistent visible lower rim",
+      "weight": 0.67,
+      "minimumRim": 1.1979166666667007,
+      "maximumRim": 1.1979166666667007,
+      "rimWidths": [
+        1.1979166666667007,
+        1.1979166666667007,
+        1.1979166666667007,
+        1.1979166666667007,
+        1.1979166666667007
+      ]
+    },
+    {
+      "name": "user-badge.svg",
+      "feature": "consistent visible lower rim",
+      "weight": 1,
+      "minimumRim": 1.1979166666667007,
+      "maximumRim": 1.1979166666667007,
+      "rimWidths": [
+        1.1979166666667007,
+        1.1979166666667007,
+        1.1979166666667007,
+        1.1979166666667007,
+        1.1979166666667007
+      ]
+    },
+    {
+      "name": "user-badge.svg",
+      "feature": "consistent visible lower rim",
+      "weight": 1.333333,
+      "minimumRim": 1.1979166666667007,
+      "maximumRim": 1.1979166666667007,
+      "rimWidths": [
+        1.1979166666667007,
+        1.1979166666667007,
+        1.1979166666667007,
+        1.1979166666667007,
+        1.1979166666667007
+      ]
+    },
+    {
+      "name": "user-badge.svg",
+      "feature": "consistent visible lower rim",
+      "weight": 1.5,
+      "minimumRim": 1.1979166666667007,
+      "maximumRim": 1.1979166666667007,
+      "rimWidths": [
+        1.1979166666667007,
+        1.1979166666667007,
+        1.1979166666667007,
+        1.1979166666667007,
+        1.1979166666667007
+      ]
+    }
+  ],
+  "failures": [],
+  "before": [
+    {
+      "name": "user-badge.svg",
+      "feature": "consistent visible lower rim",
+      "weight": 0.67,
+      "minimumRim": 0.281250000000008,
+      "maximumRim": 0.32291666666667584,
+      "rimWidths": [
+        0.281250000000008,
+        0.32291666666667584,
+        0.3020833333333419,
+        0.32291666666667584,
+        0.281250000000008
+      ]
+    },
+    {
+      "name": "user-badge.svg",
+      "feature": "consistent visible lower rim",
+      "weight": 1,
+      "minimumRim": 0.281250000000008,
+      "maximumRim": 0.32291666666667584,
+      "rimWidths": [
+        0.281250000000008,
+        0.32291666666667584,
+        0.3020833333333419,
+        0.32291666666667584,
+        0.281250000000008
+      ]
+    },
+    {
+      "name": "user-badge.svg",
+      "feature": "consistent visible lower rim",
+      "weight": 1.333333,
+      "minimumRim": 0.281250000000008,
+      "maximumRim": 0.32291666666667584,
+      "rimWidths": [
+        0.281250000000008,
+        0.32291666666667584,
+        0.3020833333333419,
+        0.32291666666667584,
+        0.281250000000008
+      ]
+    },
+    {
+      "name": "user-badge.svg",
+      "feature": "consistent visible lower rim",
+      "weight": 1.5,
+      "minimumRim": 0.281250000000008,
+      "maximumRim": 0.32291666666667584,
+      "rimWidths": [
+        0.281250000000008,
+        0.32291666666667584,
+        0.3020833333333419,
+        0.32291666666667584,
+        0.281250000000008
+      ]
+    }
+  ]
+}

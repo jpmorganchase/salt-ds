@@ -1,0 +1,1292 @@
+[
+  {
+    "dpr": 1,
+    "dimensions": [
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      }
+    ]
+  },
+  {
+    "dpr": 2,
+    "dimensions": [
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "mask"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(32, 33, 36)",
+        "color": "rgb(32, 33, 36)",
+        "kind": "component"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 64,
+        "width": 64,
+        "height": 64,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "mask"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "before"
+      },
+      {
+        "expected": 12,
+        "width": 12,
+        "height": 12,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      },
+      {
+        "expected": 16,
+        "width": 16,
+        "height": 16,
+        "fill": "rgb(255, 255, 255)",
+        "color": "rgb(255, 255, 255)",
+        "kind": "component"
+      }
+    ]
+  }
+]
