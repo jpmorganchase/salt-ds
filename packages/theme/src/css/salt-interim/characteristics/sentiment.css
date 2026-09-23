@@ -1,20 +1,20 @@
 .salt-interim.salt-theme {
-  --salt-sentiment-negative-foreground-informative: var(--salt-palette-negative-strong);
-  --salt-sentiment-positive-foreground-informative: var(--salt-palette-positive-strong);
+  --salt-sentiment-negative-foreground-informative: var(--salt-palette-negative-mediumHigh);
+  --salt-sentiment-positive-foreground-informative: var(--salt-palette-positive-mediumHigh);
 
-  --salt-sentiment-negative-foreground-decorative: var(--salt-palette-negative);
-  --salt-sentiment-positive-foreground-decorative: var(--salt-palette-positive);
+  --salt-sentiment-negative-foreground-decorative: var(--salt-palette-negative-medium);
+  --salt-sentiment-positive-foreground-decorative: var(--salt-palette-positive-medium);
 
   --salt-sentiment-neutral-track: var(--salt-palette-alpha-contrast-high);
 
-  --salt-sentiment-caution-dataviz: var(--salt-palette-warning);
-  --salt-sentiment-negative-dataviz: var(--salt-palette-negative);
-  --salt-sentiment-positive-dataviz: var(--salt-palette-positive);
-  --salt-sentiment-neutral-dataviz: var(--salt-palette-neutral);
-  --salt-sentiment-accent-dataviz: var(--salt-palette-accent);
+  --salt-sentiment-caution-dataviz: var(--salt-palette-warning-medium);
+  --salt-sentiment-negative-dataviz: var(--salt-palette-negative-medium);
+  --salt-sentiment-positive-dataviz: var(--salt-palette-positive-medium);
+  --salt-sentiment-neutral-dataviz: var(--salt-palette-neutral-medium);
+  --salt-sentiment-accent-dataviz: var(--salt-palette-accent-medium);
 
-  --salt-sentiment-neutral-background: var(--salt-palette-neutral);
+  --salt-sentiment-neutral-background: var(--salt-palette-neutral-medium);
 
-  --salt-sentiment-accent-background: var(--salt-palette-accent);
-  --salt-sentiment-accent-borderColor: var(--salt-palette-accent);
+  --salt-sentiment-accent-background: var(--salt-palette-accent-medium);
+  --salt-sentiment-accent-borderColor: var(--salt-palette-accent-medium);
 }

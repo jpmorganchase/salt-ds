@@ -1,6 +1,5 @@
-
 .salt-theme.salt-interim {
-  --salt-focused-outlineColor: var(--salt-palette-accent-stronger);
+  --salt-focused-outlineColor: var(--salt-palette-accent-high);
   --salt-focused-onSolid-outlineColor: var(--salt-palette-alpha-light-highest);
   --salt-focused-outlineStyle: var(--salt-borderStyle-solid);
   --salt-focused-outlineWidth: var(--salt-size-fixed-100);

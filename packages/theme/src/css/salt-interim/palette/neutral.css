@@ -1,24 +1,21 @@
-
 .salt-theme.salt-interim[data-mode="light"] {
-  --salt-palette-neutral: var(--salt-color-dove-500);
-  --salt-palette-neutral-disabled: var(--salt-color-dove-500-40a);
-  --salt-palette-neutral-readonly: var(--salt-color-dove-500-10a);
-  --salt-palette-neutral-strong: var(--salt-color-dove-600);
-  --salt-palette-neutral-stronger: var(--salt-color-dove-700);
-  --salt-palette-neutral-strongest: var(--salt-color-dove-800);
-  --salt-palette-neutral-weak: var(--salt-color-dove-400);
-  --salt-palette-neutral-weaker: var(--salt-color-dove-200);
-  --salt-palette-neutral-weakest: var(--salt-color-dove-100);
+  --salt-palette-neutral-medium: var(--salt-color-dove-500);
+  --salt-palette-neutral-medium-disabled: var(--salt-color-dove-500-40a);
+  --salt-palette-neutral-medium-readonly: var(--salt-color-dove-500-10a);
+  --salt-palette-neutral-mediumHigh: var(--salt-color-dove-600);
+  --salt-palette-neutral-high: var(--salt-color-dove-700);
+  --salt-palette-neutral-high-disabled: var(--salt-color-dove-700-40a);
+  --salt-palette-neutral-lower: var(--salt-color-dove-200);
+  --salt-palette-neutral-lowest: var(--salt-color-dove-100);
 }
 
 .salt-theme.salt-interim[data-mode="dark"] {
-  --salt-palette-neutral: var(--salt-color-gray-500);
-  --salt-palette-neutral-disabled: var(--salt-color-gray-500-40a);
-  --salt-palette-neutral-readonly: var(--salt-color-gray-500-10a);
-  --salt-palette-neutral-strong: var(--salt-color-gray-400);
-  --salt-palette-neutral-stronger: var(--salt-color-gray-200);
-  --salt-palette-neutral-strongest: var(--salt-color-gray-100);
-  --salt-palette-neutral-weak: var(--salt-color-gray-600);
-  --salt-palette-neutral-weaker: var(--salt-color-gray-800);
-  --salt-palette-neutral-weakest: var(--salt-color-gray-900);
+  --salt-palette-neutral-medium: var(--salt-color-gray-500);
+  --salt-palette-neutral-medium-disabled: var(--salt-color-gray-500-40a);
+  --salt-palette-neutral-medium-readonly: var(--salt-color-gray-500-10a);
+  --salt-palette-neutral-mediumHigh: var(--salt-color-gray-400);
+  --salt-palette-neutral-high: var(--salt-color-gray-300);
+  --salt-palette-neutral-high-disabled: var(--salt-color-gray-300-40a);
+  --salt-palette-neutral-lower: var(--salt-color-gray-800);
+  --salt-palette-neutral-lowest: var(--salt-color-gray-900);
 }

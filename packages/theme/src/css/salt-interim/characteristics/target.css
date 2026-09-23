@@ -1,5 +1,4 @@
-
 .salt-theme.salt-interim {
-  --salt-target-background-hover: var(--salt-palette-accent-weakest);
-  --salt-target-borderColor-hover: var(--salt-palette-accent);
+  --salt-target-background-hover: var(--salt-palette-accent-lowest);
+  --salt-target-borderColor-hover: var(--salt-palette-accent-medium);
 }
