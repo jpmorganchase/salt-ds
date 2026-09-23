@@ -323,9 +323,10 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       setFocusVisibleState(true);
     }
 
-    // Home and End are deliberately not prevented above. This is an editable
-    // text field, so they also move the caret, and they only take over when
-    // the active option actually changes.
+    // Home and End are deliberately left out of the switch above. In this
+    // editable field they are only taken over when the active option actually
+    // changes, which the shared check below handles. Preventing them
+    // unconditionally would be a behavior change beyond stopping the scroll.
     if (newActive && newActive.data.id !== activeState?.id) {
       event.preventDefault();
       setActive(newActive.data);
