@@ -324,6 +324,12 @@ const CONTENT_STATUS_SELECTORS: readonly SelectedMdxSectionSelector[] = [
     semantic_role: "decision",
   },
   {
+    id: "content-status.empty-results",
+    heading_path: ["How to build", "Empty and no matching results"],
+    include_descendants: false,
+    semantic_role: "decision",
+  },
+  {
     id: "content-status.supporting-messages",
     heading_path: ["How to build", "Supporting messages"],
     include_descendants: false,

@@ -69,6 +69,14 @@ When freshness matters, show when the data was last updated. Retaining content
 does not make stale data safe: disable or revalidate actions that require current
 data until its freshness is established.
 
+### Empty and no matching results
+
+Choose the message according to why no records are displayed:
+
+- **No records in the current scope:** after a successful request, explain that no records are available in this scope. Offer an onward action only when it applies to the task.
+- **No matching results:** explain that no items match the current search or filters. Keep these criteria visible so users can adjust or clear them; do not clear them automatically. A filtered result with no rows does not establish that the whole dataset is empty. Follow the [List filtering guidance](/salt/patterns/list-filtering#no-matches).
+- **Request failed:** describe the failure and offer Retry using the [loading and recovery guidance](#choosing-how-to-communicate-loading-and-recovery). Successful no-match results are not errors and do not need Retry.
+
 ### Anatomy
 
 The content status consists of three functional areas:

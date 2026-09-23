@@ -484,6 +484,30 @@
       ]
     },
     {
+      "id": "empty-filter-results",
+      "scope": "operations-example",
+      "question": "My worklist filter returns no matching rows. Is that an empty state or an error, should I offer Retry, and should I clear the filter?",
+      "required": [
+        {
+          "document": "contentStatus",
+          "section": "content-status.empty-results",
+          "source": "contentStatus",
+          "fragments": [
+            "successful request",
+            "current scope",
+            "no matching results",
+            "criteria visible",
+            "adjust or clear",
+            "do not clear them automatically",
+            "does not establish that the whole dataset is empty",
+            "Request failed",
+            "offer Retry",
+            "not errors and do not need Retry"
+          ]
+        }
+      ]
+    },
+    {
       "id": "repeated-action-labels",
       "scope": "operations-example",
       "question": "How do I label repeated Inspect actions without putting every record name on the button?",
