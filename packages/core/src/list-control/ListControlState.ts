@@ -155,10 +155,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   const setListRef = useForkRef<HTMLDivElement>(listRef, setListElement);
 
   const [focusedState, setFocusedState] = useState(false);
-  const [focusVisibleState, setFocusVisibleStateInternal] = useState(false);
-  const setFocusVisibleState = useCallback((newValue: boolean) => {
-    setFocusVisibleStateInternal(newValue);
-  }, []);
+  const [focusVisibleState, setFocusVisibleState] = useState(false);
 
   useEffect(() => {
     // remove focus when controlling disabled
@@ -166,19 +163,11 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
       setFocusedState(false);
       setFocusVisibleState(false);
     }
-  }, [disabled, focusedState, setFocusVisibleState]);
+  }, [disabled, focusedState]);
 
-  const [activeState, setActiveState] = useState<OptionValue<Item> | undefined>(
+  const [activeState, setActive] = useState<OptionValue<Item> | undefined>(
     undefined,
   );
-
-  const setActive = useCallback((option?: OptionValue<Item>) => {
-    if (option) {
-      setActiveState(option);
-    } else {
-      setActiveState(undefined);
-    }
-  }, []);
 
   const [openState, setOpenState] = useControlled({
     controlled: openProp,
