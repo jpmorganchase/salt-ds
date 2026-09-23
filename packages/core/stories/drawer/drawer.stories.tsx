@@ -558,7 +558,10 @@ export const HeaderAndFooter: StoryFn<DrawerProps> = (args) => {
   );
 };
 
-export const Resizable: StoryFn<DrawerProps> = ({ position = "left", ...args }) => {
+export const Resizable: StoryFn<DrawerProps> = ({
+  position = "left",
+  ...args
+}) => {
   const [open, setOpen] = useState(false);
 
   const isHorizontal = position === "left" || position === "right";

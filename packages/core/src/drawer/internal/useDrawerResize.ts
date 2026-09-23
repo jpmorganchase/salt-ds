@@ -167,25 +167,27 @@ export function useDrawerResize({
   });
 
   /** Starts a drag from a pointer anywhere within the handle's hit area. */
-  const beginDrag = useEventCallback((pointerId: number, coordinate: number) => {
-    const handle = handleRef.current;
-    if (!element || !handle) return false;
+  const beginDrag = useEventCallback(
+    (pointerId: number, coordinate: number) => {
+      const handle = handleRef.current;
+      if (!element || !handle) return false;
 
-    const current = readMetrics();
-    if (!current) return false;
+      const current = readMetrics();
+      if (!current) return false;
 
-    handle.setPointerCapture(pointerId);
-    dragRef.current = {
-      pointerId,
-      origin: coordinate,
-      originSize: current.current,
-      min: current.min,
-      max: current.max,
-    };
-    lockCursor();
-    setIsResizing(true);
-    return true;
-  });
+      handle.setPointerCapture(pointerId);
+      dragRef.current = {
+        pointerId,
+        origin: coordinate,
+        originSize: current.current,
+        min: current.min,
+        max: current.max,
+      };
+      lockCursor();
+      setIsResizing(true);
+      return true;
+    },
+  );
 
   const onPointerDown = useEventCallback(
     (event: ReactPointerEvent<HTMLElement>) => {
