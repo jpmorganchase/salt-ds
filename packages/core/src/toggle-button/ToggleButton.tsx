@@ -141,7 +141,6 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       value: value,
       type: "button",
       disabled: disabled,
-      readOnly: readOnlyProp,
       ...rest,
     };
 

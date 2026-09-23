@@ -7,6 +7,7 @@ import {
   type KeyboardEvent,
   type SyntheticEvent,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -102,6 +103,19 @@ export const ToggleButtonGroup = forwardRef<
   });
   const [focused, setFocused] = useState<Value>(value);
 
+  const [enabledButtons, setEnabledButtons] = useState<HTMLButtonElement[]>([]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: queries the dom when children or disabled changes.
+  useEffect(() => {
+    setEnabledButtons(
+      Array.from(
+        groupRef.current?.querySelectorAll<HTMLButtonElement>(
+          "button:not([disabled])",
+        ) ?? [],
+      ),
+    );
+  }, [children, disabled]);
+
   const select = useCallback(
     (event: SyntheticEvent<HTMLButtonElement>) => {
       const newValue = event.currentTarget.value;
@@ -124,11 +138,20 @@ export const ToggleButtonGroup = forwardRef<
     setFocused(id);
   }, []);
 
+  // Following the ARIA radio group pattern, the group exposes exactly one tab
+  // stop: the selected button when it is enabled, otherwise the first enabled
+  // button. Disabled buttons are never the tab stop, as they cannot be focused.
   const isFocused = useCallback(
     (id: Value) => {
-      return focused === id || !focused;
+      const hasEnabledSelection = enabledButtons.some(
+        (button) => button.value === focused,
+      );
+
+      return hasEnabledSelection
+        ? focused === id
+        : enabledButtons[0]?.value === id;
     },
-    [focused],
+    [focused, enabledButtons],
   );
 
   const contextValue = useMemo(
@@ -167,13 +190,20 @@ export const ToggleButtonGroup = forwardRef<
     switch (event.key) {
       case "ArrowDown":
       case "ArrowRight":
-        elements[(currentIndex + 1) % elements.length]?.focus();
+        if (elements.length > 0) {
+          // The group owns the arrow keys, so stop the page scrolling.
+          event.preventDefault();
+          elements[(currentIndex + 1) % elements.length]?.focus();
+        }
         break;
       case "ArrowUp":
       case "ArrowLeft":
-        elements[
-          (currentIndex - 1 + elements.length) % elements.length
-        ]?.focus();
+        if (elements.length > 0) {
+          event.preventDefault();
+          elements[
+            (currentIndex - 1 + elements.length) % elements.length
+          ]?.focus();
+        }
         break;
     }
 

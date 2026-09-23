@@ -81,7 +81,7 @@ describe("GIVEN an uncontrolled ToggleButtonGroup", () => {
   });
 
   it("respects defaultValue", async () => {
-    await renderWithSalt(<Group defaultValue="home" />);
+    await renderWithSalt(<Group defaultValue="home" disableHome={false} />);
     for (const [name, selected, tabIndex] of [
       ["Alert", "false", "-1"],
       ["Home", "true", "0"],
@@ -121,6 +121,100 @@ describe("GIVEN an uncontrolled ToggleButtonGroup", () => {
     await selected.click();
     expect(onChange).not.toHaveBeenCalled();
     await expect.element(selected).toHaveAttribute("aria-checked", "true");
+  });
+});
+
+describe("GIVEN a ToggleButtonGroup and keyboard navigation", () => {
+  it("is a single tab stop when nothing is selected", async () => {
+    await renderWithSalt(
+      <>
+        <button type="button">Before</button>
+        <Group />
+        <button type="button">After</button>
+      </>,
+    );
+
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "Before" }))
+      .toHaveFocus();
+
+    // Entering the group lands on the first enabled button.
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("radio", { name: "Alert" }))
+      .toHaveFocus();
+
+    // A single further Tab leaves the group entirely.
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "After" }))
+      .toHaveFocus();
+  });
+
+  it("enters the group on the first enabled button when tabbing backwards", async () => {
+    await renderWithSalt(
+      <>
+        <button type="button">Before</button>
+        <Group />
+        <button type="button">After</button>
+      </>,
+    );
+
+    // Focus "After" directly so the group has never been focused, then tab
+    // back into it. The single tab stop is the first enabled button, not the
+    // last one.
+    await page.getByRole("button", { name: "After" }).click();
+    await userEvent.tab({ shift: true });
+    await expect
+      .element(page.getByRole("radio", { name: "Alert" }))
+      .toHaveFocus();
+
+    await userEvent.tab({ shift: true });
+    await expect
+      .element(page.getByRole("button", { name: "Before" }))
+      .toHaveFocus();
+  });
+
+  it("enters the group on the first enabled button when the selected button is disabled", async () => {
+    await renderWithSalt(
+      <>
+        <button type="button">Before</button>
+        <Group defaultValue="home" />
+      </>,
+    );
+
+    await userEvent.tab();
+    await userEvent.tab();
+
+    // Home is selected but disabled, so it cannot be the tab stop.
+    await expect
+      .element(page.getByRole("radio", { name: "Alert" }))
+      .toHaveFocus();
+  });
+
+  it("skips a disabled button when navigating with the arrow keys", async () => {
+    await renderWithSalt(<Group defaultValue="alert" />);
+
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("radio", { name: "Alert" }))
+      .toHaveFocus();
+
+    await userEvent.keyboard("{ArrowRight}");
+    await expect
+      .element(page.getByRole("radio", { name: "Search" }))
+      .toHaveFocus();
+  });
+
+  it("stops the page scrolling when navigating with the arrow keys", async () => {
+    const onKeyDown = vi.fn();
+    await renderWithSalt(<Group defaultValue="alert" onKeyDown={onKeyDown} />);
+
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowRight}");
+
+    expect(onKeyDown.mock.lastCall?.[0].defaultPrevented).toBe(true);
   });
 });
 
