@@ -25,8 +25,8 @@ Interaction with the content in an overlay is typically constrained, as richer i
 
 ### Best practices
 
-1. To allow screen readers to correctly identify overlay's trigger and its corresponding panel, define an `id` and pass the prop `id="YOUR-OVERLAY-ID"` to `Overlay` component.
-2. To allow screen readers to correctly identify `OverlayPanel`'s content title and description respectively, add the prop `id="YOUR-OVERLAY-ID-header"` to your content header or title, and prop `id="YOUR-OVERLAY-ID-content"` to your content description.
+1. Give `OverlayPanel` an accessible name by assigning an `id` to `OverlayHeader` and passing the same value to `OverlayPanel` through `aria-labelledby`.
+2. Keep `OverlayHeader`, `OverlayPanelContent` and `OverlayFooter` as direct children of `OverlayPanel` so their spacing and scrolling behavior apply correctly.
 
 ## Import
 
@@ -37,10 +37,12 @@ To import `Overlay` and related components from the core Salt package, use:
 ```js
 import {
   Overlay,
-  OverlayTrigger,
+  OverlayFooter,
+  OverlayHeader,
   OverlayPanel,
-  OverlayPanelContent,
   OverlayPanelCloseButton,
+  OverlayPanelContent,
+  OverlayTrigger,
 } from "@salt-ds/core";
 ```
 
@@ -54,9 +56,17 @@ import {
 
 <PropsTable packageName="core" componentName="OverlayPanel" />
 
+### `OverlayHeader`
+
+<PropsTable packageName="core" componentName="OverlayHeader" />
+
 ### `OverlayPanelContent`
 
 <PropsTable packageName="core" componentName="OverlayPanelContent" />
+
+### `OverlayFooter`
+
+<PropsTable packageName="core" componentName="OverlayFooter" />
 
 ### `OverlayPanelCloseButton`
 

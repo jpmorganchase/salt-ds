@@ -10,7 +10,6 @@ import {
   useState,
 } from "react";
 import {
-  debounce,
   makePrefixer,
   useForkRef,
   useIsomorphicLayoutEffect,
@@ -45,28 +44,29 @@ export const OverlayPanelContent = forwardRef<
   const [isOverflowing, setIsOverflowing] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
   const containerRef = useForkRef(divRef, ref);
-  const handleScroll = debounce(() => {
+
+  const updateScrollState = useCallback(() => {
     const container = divRef.current;
     if (!container) return;
-    setScrollBarTop(container.scrollTop > 0);
-    setScrollBarBottom(
-      container.scrollHeight - container.scrollTop - container.clientHeight !==
-        0,
-    );
-  });
 
-  const checkOverflow = useCallback(() => {
-    if (!divRef.current) return;
+    const remainingScroll =
+      container.scrollHeight - container.scrollTop - container.clientHeight;
     setIsOverflowing(
-      divRef.current.scrollHeight > divRef.current.offsetHeight + 1, // var(--salt-size-thickness-100)
+      container.scrollHeight > container.offsetHeight + 1, // var(--salt-size-thickness-100)
     );
+    setScrollBarTop(container.scrollTop > 0);
+    setScrollBarBottom(remainingScroll > 1);
   }, []);
 
-  useResizeObserver({ ref: divRef, onResize: checkOverflow });
+  const handleScroll = () => {
+    targetWindow?.requestAnimationFrame(updateScrollState);
+  };
+
+  useResizeObserver({ ref: divRef, onResize: updateScrollState });
 
   useIsomorphicLayoutEffect(() => {
-    checkOverflow();
-  }, [checkOverflow]);
+    updateScrollState();
+  }, [updateScrollState]);
 
   return (
     <div className={clsx(withBaseName(), className)}>

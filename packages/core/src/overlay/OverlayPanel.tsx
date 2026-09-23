@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import { makePrefixer, useFloatingComponent, useForkRef } from "../utils";
+import { hasOverlaySection } from "./hasOverlaySection";
 import { useOverlayContext } from "./OverlayContext";
 import overlayPanelCss from "./OverlayPanel.css";
 
@@ -49,6 +50,8 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
 
     const handleRef = useForkRef<HTMLDivElement>(floating, ref);
 
+    const sectioned = hasOverlaySection(children);
+
     const { top, left, width, height, position } = floatingStyles;
 
     return (
@@ -69,7 +72,14 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
         }}
         aria-labelledby={ariaLabelledby}
       >
-        <div {...rest}> {children} </div>
+        <div
+          className={clsx(withBaseName("content"), {
+            [withBaseName("sectioned")]: sectioned,
+          })}
+          {...rest}
+        >
+          {children}
+        </div>
         {!hideArrow && (
           <FloatingArrow
             {...arrowProps}

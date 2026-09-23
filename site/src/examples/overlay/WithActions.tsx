@@ -4,13 +4,15 @@ import {
   CheckboxGroup,
   Divider,
   Overlay,
+  OverlayFooter,
+  OverlayHeader,
   OverlayPanel,
   OverlayPanelContent,
   OverlayTrigger,
   StackLayout,
   useId,
 } from "@salt-ds/core";
-import { type ChangeEvent, useState } from "react";
+import { type ChangeEvent, type ReactElement, useState } from "react";
 
 const checkboxesData = [
   {
@@ -23,12 +25,10 @@ const checkboxesData = [
   },
 ];
 
-interface WithActionsContentProps {
-  id?: string;
-  onClose: () => void;
-}
+export const WithActions = (): ReactElement => {
+  const [open, setOpen] = useState(false);
+  const id = useId();
 
-const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
   const [controlledValues, setControlledValues] = useState([
     checkboxesData[0].value,
   ]);
@@ -37,6 +37,8 @@ const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
     checked: false,
     indeterminate: true,
   });
+
+  const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const updatedChecked = event.target.checked;
@@ -67,58 +69,13 @@ const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
 
   const handleExport = () => {
     console.log(`${controlledValues.length} file(s) exported`);
-    onClose();
+    setOpen(false);
   };
-
-  return (
-    <>
-      <h3 id={id} style={{ marginBottom: "var(--salt-spacing-100)" }}>
-        Export
-      </h3>
-      <StackLayout gap={1}>
-        <Checkbox
-          indeterminate={indeterminate}
-          checked={!indeterminate}
-          label={`${controlledValues.length} of 2 selected`}
-          onChange={handleChange}
-        />
-        <Divider variant="secondary" />
-        <CheckboxGroup
-          checkedValues={controlledValues}
-          onChange={handleGroupChange}
-        >
-          {checkboxesData.map((data) => (
-            <Checkbox key={data.value} {...data} />
-          ))}
-        </CheckboxGroup>
-        <Divider variant="secondary" />
-        <Button
-          style={{ float: "right", marginRight: 2 }}
-          onClick={handleExport}
-        >
-          Export
-        </Button>
-      </StackLayout>
-    </>
-  );
-};
-
-export const WithActions = () => {
-  const [open, setOpen] = useState(false);
-  const id = useId();
-
-  const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
 
   return (
     <Overlay open={open} onOpenChange={onOpenChange} placement="bottom">
       <OverlayTrigger>
-        <Button
-          onClick={() => {
-            setOpen(true);
-          }}
-        >
-          Show Overlay
-        </Button>
+        <Button>Show Overlay</Button>
       </OverlayTrigger>
       <OverlayPanel
         style={{
@@ -126,14 +83,32 @@ export const WithActions = () => {
         }}
         aria-labelledby={id}
       >
+        <OverlayHeader header="Export" id={id} />
         <OverlayPanelContent>
-          <WithActionsContent
-            id={id}
-            onClose={() => {
-              setOpen(false);
-            }}
-          />
+          <StackLayout gap={1}>
+            <Checkbox
+              indeterminate={indeterminate}
+              checked={!indeterminate}
+              label={`${controlledValues.length} of 2 selected`}
+              onChange={handleChange}
+            />
+            <Divider variant="secondary" />
+            <CheckboxGroup
+              checkedValues={controlledValues}
+              onChange={handleGroupChange}
+            >
+              {checkboxesData.map((data) => (
+                <Checkbox key={data.value} {...data} />
+              ))}
+            </CheckboxGroup>
+            <Divider variant="secondary" />
+          </StackLayout>
         </OverlayPanelContent>
+        <OverlayFooter>
+          <Button onClick={handleExport} style={{ width: "100%" }}>
+            Export
+          </Button>
+        </OverlayFooter>
       </OverlayPanel>
     </Overlay>
   );

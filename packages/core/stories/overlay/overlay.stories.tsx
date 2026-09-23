@@ -3,8 +3,8 @@ import {
   Checkbox,
   CheckboxGroup,
   Divider,
-  H3,
   Overlay,
+  OverlayFooter,
   OverlayHeader,
   OverlayPanel,
   OverlayPanelContent,
@@ -15,11 +15,9 @@ import {
   Tooltip,
   useId,
 } from "@salt-ds/core";
+import { CloseIcon, MicroMenuIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type ChangeEvent, useState } from "react";
-
-import "./overlay.stories.css";
-import { CloseIcon, MicroMenuIcon } from "@salt-ds/icons";
 
 const placementOptions = [
   "top",
@@ -57,11 +55,9 @@ const OverlayTemplate = ({ ...args }: OverlayProps) => {
       </OverlayTrigger>
 
       <OverlayPanel aria-labelledby={id}>
+        <OverlayHeader header="Title" id={id} />
         <OverlayPanelContent>
-          <h3 id={id} className="content-heading">
-            Title
-          </h3>
-          <div>Content of Overlay</div>
+          <Text as="p">Content of Overlay</Text>
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
@@ -112,18 +108,16 @@ const HeaderTemplate: StoryFn = ({ onOpenChange, ...props }: OverlayProps) => {
         <OverlayHeader header="Header block" {...props} />
         <OverlayPanelContent>
           <StackLayout gap={1}>
-            <Text>
+            <Text as="p">
               Content of Overlay. Lorem Ipsum is simply dummy text of the
               printing and typesetting industry. Lorem Ipsum has been the
               industry's standard dummy text ever since the 1500s. When an
               unknown printer took a galley of type and scrambled it to make a
               type specimen book.
             </Text>
-            <div>
-              <Tooltip content={"I'm a tooltip"}>
-                <Button>hover me</Button>
-              </Tooltip>
-            </div>
+            <Tooltip content={"I'm a tooltip"}>
+              <Button>hover me</Button>
+            </Tooltip>
           </StackLayout>
         </OverlayPanelContent>
       </OverlayPanel>
@@ -176,15 +170,58 @@ export const CloseButton = ({ onOpenChange }: OverlayProps) => {
       <OverlayPanel aria-labelledby={id}>
         <OverlayHeader header="Title" actions={closeButton} id={id} />
         <OverlayPanelContent>
-          <StackLayout gap={2}>
-            <Text>Content of Overlay</Text>
-            <div>
-              <Tooltip content={"I'm a tooltip"}>
-                <Button>hover me</Button>
-              </Tooltip>
-            </div>
+          <StackLayout gap={1}>
+            <Text as="p">Content of Overlay</Text>
+            <Tooltip content={"I'm a tooltip"}>
+              <Button>hover me</Button>
+            </Tooltip>
           </StackLayout>
         </OverlayPanelContent>
+      </OverlayPanel>
+    </Overlay>
+  );
+};
+
+export const WithSections = ({ onOpenChange }: OverlayProps) => {
+  const [open, setOpen] = useState(false);
+  const id = useId();
+
+  const onChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+    onOpenChange?.(newOpen);
+  };
+
+  const handleClose = () => setOpen(false);
+
+  return (
+    <Overlay open={open} onOpenChange={onChange}>
+      <OverlayTrigger>
+        <Button>Show Overlay</Button>
+      </OverlayTrigger>
+      <OverlayPanel style={{ width: 320, maxHeight: 200 }} aria-labelledby={id}>
+        <OverlayHeader header="Review changes" id={id} />
+        <OverlayPanelContent>
+          <StackLayout>
+            <Text as="p">
+              Review the account updates before saving. The footer remains
+              available while this content scrolls.
+            </Text>
+            <Text as="p">
+              Contact details, notification preferences, and security settings
+              will be updated when you save.
+            </Text>
+            <Text as="p">
+              You can cancel to close the overlay without applying these
+              changes.
+            </Text>
+          </StackLayout>
+        </OverlayPanelContent>
+        <OverlayFooter>
+          <Button appearance="bordered" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button onClick={handleClose}>Save changes</Button>
+        </OverlayFooter>
       </OverlayPanel>
     </Overlay>
   );
@@ -218,25 +255,26 @@ export const LongContent = () => {
       <OverlayPanel
         style={{
           width: 300,
+          maxHeight: 240,
         }}
       >
         <OverlayHeader header="Title" actions={closeButton} />
-        <OverlayPanelContent style={{ height: 200 }}>
+        <OverlayPanelContent>
           <StackLayout>
-            <div>
+            <Text as="p">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
               type and scrambled it to make a type specimen book.
-            </div>
-            <div>
+            </Text>
+            <Text as="p">
               It has survived not only five centuries, but also the leap into
               electronic typesetting, remaining essentially unchanged. It was
               popularised in the 1960s with the release of Letraset sheets
               containing Lorem Ipsum passages, and more recently with desktop
               publishing software like Aldus PageMaker including versions of
               Lorem Ipsum.
-            </div>
+            </Text>
           </StackLayout>
         </OverlayPanelContent>
       </OverlayPanel>
@@ -255,13 +293,10 @@ const checkboxesData = [
   },
 ];
 
-const WithActionsContent = ({
-  onClose,
-  id,
-}: {
-  onClose: () => void;
-  id: string | undefined;
-}) => {
+export const WithActions = ({ onOpenChange }: OverlayProps) => {
+  const [open, setOpen] = useState(false);
+  const id = useId();
+
   const [controlledValues, setControlledValues] = useState([
     checkboxesData[0].value,
   ]);
@@ -270,6 +305,11 @@ const WithActionsContent = ({
     checked: false,
     indeterminate: true,
   });
+
+  const onChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+    onOpenChange?.(newOpen);
+  };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const updatedChecked = event.target.checked;
@@ -300,42 +340,7 @@ const WithActionsContent = ({
 
   const handleExport = () => {
     console.log(`${controlledValues.length} file(s) exported`);
-    onClose();
-  };
-
-  return (
-    <StackLayout gap={1}>
-      <H3 id={id}>Export</H3>
-      <Checkbox
-        indeterminate={indeterminate}
-        checked={!indeterminate}
-        label={`${controlledValues.length} of 2 selected`}
-        onChange={handleChange}
-      />
-      <Divider variant="secondary" />
-      <CheckboxGroup
-        checkedValues={controlledValues}
-        onChange={handleGroupChange}
-      >
-        {checkboxesData.map((data) => (
-          <Checkbox key={data.value} {...data} />
-        ))}
-      </CheckboxGroup>
-      <Divider variant="secondary" />
-      <Button style={{ float: "right", marginRight: 2 }} onClick={handleExport}>
-        Export
-      </Button>
-    </StackLayout>
-  );
-};
-
-export const WithActions = ({ onOpenChange }: OverlayProps) => {
-  const [open, setOpen] = useState(false);
-  const id = useId();
-
-  const onChange = (newOpen: boolean) => {
-    setOpen(newOpen);
-    onOpenChange?.(newOpen);
+    setOpen(false);
   };
 
   return (
@@ -349,14 +354,32 @@ export const WithActions = ({ onOpenChange }: OverlayProps) => {
         }}
         aria-labelledby={id}
       >
+        <OverlayHeader header="Export" id={id} />
         <OverlayPanelContent>
-          <WithActionsContent
-            onClose={() => {
-              setOpen(false);
-            }}
-            id={id}
-          />
+          <StackLayout gap={1}>
+            <Checkbox
+              indeterminate={indeterminate}
+              checked={!indeterminate}
+              label={`${controlledValues.length} of 2 selected`}
+              onChange={handleChange}
+            />
+            <Divider variant="secondary" />
+            <CheckboxGroup
+              checkedValues={controlledValues}
+              onChange={handleGroupChange}
+            >
+              {checkboxesData.map((data) => (
+                <Checkbox key={data.value} {...data} />
+              ))}
+            </CheckboxGroup>
+            <Divider variant="secondary" />
+          </StackLayout>
         </OverlayPanelContent>
+        <OverlayFooter>
+          <Button onClick={handleExport} style={{ width: "100%" }}>
+            Export
+          </Button>
+        </OverlayFooter>
       </OverlayPanel>
     </Overlay>
   );
@@ -376,11 +399,9 @@ export const WithTooltip: StoryFn<OverlayProps> = ({ ...args }) => {
       </Tooltip>
 
       <OverlayPanel aria-labelledby={id}>
+        <OverlayHeader header="Title" id={id} />
         <OverlayPanelContent>
-          <h3 id={id} className="content-heading">
-            Title
-          </h3>
-          <div>Content of Overlay</div>
+          <Text as="p">Content of Overlay</Text>
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
