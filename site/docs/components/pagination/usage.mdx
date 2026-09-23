@@ -25,6 +25,14 @@ Position the component where it’s most appropriate for your content length. On
 - When there’s no need for users to navigate between, or filter, results. Instead, use infinite scrolling. This allows users to scroll through a large amount of content with no clear end point, adding more content to the page as the user scrolls. For example, a common use case is for news articles or social site feeds, where searching or filtering isn’t an expected behavior and the content has a flat hierarchy.
 - When you want to present content in clearly defined batches without defining the total number of pages. Instead, use lazy loading. A **Load More** button loads the next set of results on the same page—giving the user greater control.
 
+### Data and page ownership
+
+`Pagination` provides page controls. The application or data grid owns the result set, page size, total page count, displayed row range, and data loading. Pass the number of pages as `count`; when controlling the active page, use the one-based `page` value with `onPageChange` to update the displayed results.
+
+When filters, page size, or available records change, recalculate the page count and keep the current page valid for that result set. Synchronize the controls and displayed range with the results actually shown. For an empty result set, show an accurate empty or no-match message rather than a range that implies records exist. Follow [List filtering guidance](/salt/patterns/list-filtering#clearing-and-selection) when filtering affects a selection or unsaved edits.
+
+The component does not fetch remote data or determine its total. If the total number of pages is unknown, do not invent a page count; consider the **Load More** approach described above. For delayed or failed requests, follow [Content status guidance](/salt/patterns/content-status#choosing-how-to-communicate-loading-and-recovery).
+
 ## Import
 
 To import `Pagination` and related components from the core Salt package, use:

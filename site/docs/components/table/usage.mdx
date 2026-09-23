@@ -15,14 +15,16 @@ data:
 
 ## Using the component
 
+`Table` provides semantic HTML table structure and Salt styling. The application supplies its rows and any behavior around them. Ordinary links or buttons in cells, such as **Inspect**, do not require a data grid.
+
 ### When to use
 
 - When you need to present simple data in a structured, tabular format.
-- When the content is best read row by row, without interactive behaviors such as sorting, filtering, editing, selection, or virtualization.
+- When the content is best read row by row, including rows supplied by an application-owned filter or cells containing ordinary links and actions.
 
 ### When not to use
 
-- When you need sorting, filtering, editing, selection, pinned columns, or custom cell renderers, use [Data grid](../ag-grid-theme).
+- When you need integrated sorting, filtering, row selection, cell editing, pinned columns, or virtualization, use [Data grid](../ag-grid-theme). `Table` does not implement these behaviors.
 - When the table is acting as a data-analysis surface rather than a simple presentation surface, use [Data grid](../ag-grid-theme).
 
 ## Content
