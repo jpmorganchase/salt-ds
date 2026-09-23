@@ -121,7 +121,7 @@
 
 /* Styles applied on hover state to InteractableCard */
 @media (hover: hover) {
-  .saltInteractableCard:not(.saltInteractableCard-disabled):hover {
+  .saltInteractableCard:hover {
     cursor: var(--salt-cursor-hover);
     box-shadow: var(--salt-overlayable-shadow-hover);
     border-color: var(--salt-actionable-accented-borderColor-hover);
@@ -143,6 +143,7 @@
 .saltInteractableCard-disabled:focus-visible,
 .saltInteractableCard-disabled:hover,
 .saltInteractableCard-disabled:active {
+  border-color: var(--saltInteractableCard-borderColor, var(--interactableCard-borderColor));
   box-shadow: none;
   cursor: var(--salt-cursor-disabled);
   outline: none;

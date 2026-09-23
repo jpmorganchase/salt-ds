@@ -253,6 +253,24 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 
+  it("skips a disabled card and toggles the next card with the keyboard", async () => {
+    const onChange = vi.fn();
+    await renderWithSalt(
+      <InteractableCardGroup multiSelect onChange={onChange}>
+        <InteractableCard disabled value="one">
+          One
+        </InteractableCard>
+        <InteractableCard value="two">Two</InteractableCard>
+      </InteractableCardGroup>,
+    );
+    await userEvent.tab();
+    await expect.element(card("Two", true)).toHaveFocus();
+    await userEvent.keyboard(" ");
+    await expectChecked("One", true, false);
+    await expectChecked("Two", true, true);
+    expect(onChange).toHaveBeenCalledOnce();
+  });
+
   it("does not toggle with Enter", async () => {
     const onChange = vi.fn();
     await renderWithSalt(<Cards multiSelect onChange={onChange} />);
@@ -301,6 +319,48 @@ describe("GIVEN a single-select InteractableCardGroup", () => {
     await expect.element(card("Two", false)).toHaveFocus();
   });
 
+  it("uses the first enabled card as the tab stop when the selected card is disabled", async () => {
+    await renderWithSalt(
+      <>
+        <button type="button">Before</button>
+        <InteractableCardGroup defaultValue="one">
+          <InteractableCard disabled value="one">
+            One
+          </InteractableCard>
+          <InteractableCard value="two">Two</InteractableCard>
+        </InteractableCardGroup>
+        <button type="button">After</button>
+      </>,
+    );
+
+    await userEvent.tab();
+    await userEvent.tab();
+    await expect.element(card("Two", false)).toHaveFocus();
+    page.getByRole("button", { name: "After" }).element().focus();
+    await userEvent.tab({ shift: true });
+    await expect.element(card("Two", false)).toHaveFocus();
+  });
+
+  it("enters the group on the selected empty-string value", async () => {
+    await renderWithSalt(
+      <>
+        <button type="button">Before</button>
+        <InteractableCardGroup defaultValue="">
+          <InteractableCard value="one">One</InteractableCard>
+          <InteractableCard value="">Empty value</InteractableCard>
+        </InteractableCardGroup>
+        <button type="button">After</button>
+      </>,
+    );
+
+    await userEvent.tab();
+    await userEvent.tab();
+    await expect.element(card("Empty value", false)).toHaveFocus();
+    page.getByRole("button", { name: "After" }).element().focus();
+    await userEvent.tab({ shift: true });
+    await expect.element(card("Empty value", false)).toHaveFocus();
+  });
+
   it("selects and focuses with arrow keys", async () => {
     const onChange = vi.fn();
     await renderWithSalt(<Cards onChange={onChange} />);
@@ -318,6 +378,19 @@ describe("GIVEN a single-select InteractableCardGroup", () => {
     await expect.element(card("One", false)).toHaveFocus();
     await expectChecked("One", false, true);
     expect(onChange).toHaveBeenCalledTimes(4);
+  });
+
+  it("prevents default browser behavior when navigating with arrow keys", async () => {
+    let defaultPrevented = false;
+    const onKeyDown = vi.fn((event) => {
+      defaultPrevented = event.defaultPrevented;
+    });
+    await renderWithSalt(<Cards onKeyDown={onKeyDown} />);
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowDown}");
+
+    expect(onKeyDown).toHaveBeenCalledOnce();
+    expect(defaultPrevented).toBe(true);
   });
 
   it("selects with Space when initially empty", async () => {
@@ -357,6 +430,16 @@ describe("GIVEN a single-select InteractableCardGroup", () => {
     const onChange = vi.fn();
     await renderWithSalt(<Cards disabled onChange={onChange} />);
     await card("One", false).click({ force: true });
+    await expectChecked("One", false, false);
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it("does not select disabled groups with the keyboard", async () => {
+    const onChange = vi.fn();
+    await renderWithSalt(<Cards disabled onChange={onChange} />);
+    const firstCard = card("One", false);
+    firstCard.element().focus();
+    await userEvent.keyboard(" ");
     await expectChecked("One", false, false);
     expect(onChange).not.toHaveBeenCalled();
   });

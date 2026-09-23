@@ -114,7 +114,11 @@ export const InteractableCard = forwardRef<
   const accentValue = accent || accentPlacement;
 
   const handleClick = (event: MouseEvent<HTMLDivElement>) => {
-    if (interactableCardGroup && !disabled) {
+    if (disabled) {
+      return;
+    }
+
+    if (interactableCardGroup) {
       interactableCardGroup.select(event, value);
       setSelected(!selected);
     }
@@ -132,7 +136,7 @@ export const InteractableCard = forwardRef<
     } else {
       // Single select: Only selected or first item (if none are selected) is focusable
       tabIndex = selected ? 0 : -1;
-      if (!interactableCardGroup.value && isFirstChild) {
+      if (!interactableCardGroup.hasEnabledSelection && isFirstChild) {
         tabIndex = 0;
       }
     }

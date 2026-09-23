@@ -94,10 +94,10 @@ export const InteractableCardGroup = forwardRef<
   // biome-ignore lint/correctness/useExhaustiveDependencies: queries the dom when children changes.
   useEffect(() => {
     const childElements: HTMLElement[] = Array.from(
-      groupRef.current?.querySelectorAll(
-        ".saltInteractableCard:not([disabled])",
-      ) ?? [],
-    );
+      groupRef.current?.querySelectorAll(".saltInteractableCard") ?? [],
+    ).filter(
+      (element) => !element.classList.contains("saltInteractableCard-disabled"),
+    ) as HTMLElement[];
     setElements(childElements);
   }, [children]);
 
@@ -144,22 +144,54 @@ export const InteractableCardGroup = forwardRef<
     [elements],
   );
 
+  const hasEnabledSelection =
+    !multiSelect &&
+    typeof value === "string" &&
+    elements.some((element) => element.getAttribute("data-value") === value);
+
   const contextValue = useMemo(
     () => ({
       select,
+      hasEnabledSelection,
       isSelected,
       isFirstChild,
       disabled,
       multiSelect,
       value,
     }),
-    [select, isSelected, disabled, multiSelect, isFirstChild, value],
+    [
+      select,
+      hasEnabledSelection,
+      isSelected,
+      disabled,
+      multiSelect,
+      isFirstChild,
+      value,
+    ],
   );
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (
+      disabled ||
+      (event.target as HTMLElement).closest(".saltInteractableCard-disabled")
+    ) {
+      return;
+    }
+
     const doc = ownerDocument(groupRef.current);
 
-    const currentIndex = elements.indexOf(doc.activeElement as HTMLElement);
+    const currentCard = (doc.activeElement as HTMLElement | null)?.closest(
+      ".saltInteractableCard",
+    );
+    const currentIndex = currentCard
+      ? elements.indexOf(currentCard as HTMLElement)
+      : -1;
+
+    if (currentIndex === -1) {
+      onKeyDown?.(event);
+      return;
+    }
+
     const nextIndex = (currentIndex + 1) % elements.length;
     const prevIndex = (currentIndex - 1 + elements.length) % elements.length;
 
@@ -177,6 +209,7 @@ export const InteractableCardGroup = forwardRef<
       switch (event.key) {
         case "ArrowDown":
         case "ArrowRight":
+          event.preventDefault();
           select(
             event,
             elements[nextIndex].getAttribute(
@@ -187,6 +220,7 @@ export const InteractableCardGroup = forwardRef<
           break;
         case "ArrowUp":
         case "ArrowLeft":
+          event.preventDefault();
           select(
             event,
             elements[prevIndex].getAttribute(
