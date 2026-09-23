@@ -237,6 +237,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
     if (!openState) {
       if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
         setOpen(true, undefined, event.key);
         return;
       }
@@ -249,11 +250,13 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       | undefined;
     switch (event.key) {
       case "ArrowDown":
+        event.preventDefault();
         newActive = activeOption
           ? getOptionAfter(activeOption)
           : getFirstOption();
         break;
       case "ArrowUp":
+        event.preventDefault();
         newActive = activeOption
           ? getOptionBefore(activeOption)
           : getLastOption();
@@ -265,6 +268,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         newActive = getLastOption();
         break;
       case "PageUp":
+        event.preventDefault();
         if (activeOption) {
           newActive = getOptionPageAbove(activeOption);
         } else {
@@ -275,6 +279,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         }
         break;
       case "PageDown":
+        event.preventDefault();
         if (activeOption) {
           newActive = getOptionPageBelow(activeOption);
         } else {
@@ -318,6 +323,9 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       setFocusVisibleState(true);
     }
 
+    // Home and End are deliberately not prevented above. This is an editable
+    // text field, so they also move the caret, and they only take over when
+    // the active option actually changes.
     if (newActive && newActive.data.id !== activeState?.id) {
       event.preventDefault();
       setActive(newActive.data);

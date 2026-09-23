@@ -144,21 +144,27 @@ export const ListBox = forwardRef(function ListBox<Item>(
       | undefined;
     switch (event.key) {
       case "ArrowDown":
+        event.preventDefault();
         newActive = getOptionAfter(activeOption) ?? getLastOption();
         break;
       case "ArrowUp":
+        event.preventDefault();
         newActive = getOptionBefore(activeOption) ?? getFirstOption();
         break;
       case "Home":
+        event.preventDefault();
         newActive = getFirstOption();
         break;
       case "End":
+        event.preventDefault();
         newActive = getLastOption();
         break;
       case "PageUp":
+        event.preventDefault();
         newActive = getOptionPageAbove(activeOption);
         break;
       case "PageDown":
+        event.preventDefault();
         newActive = getOptionPageBelow(activeOption);
         break;
       case "Enter":
@@ -182,7 +188,6 @@ export const ListBox = forwardRef(function ListBox<Item>(
     }
 
     if (newActive && newActive.data.id !== activeState?.id) {
-      event.preventDefault();
       setActive(newActive.data);
       setFocusVisibleState(true);
     }

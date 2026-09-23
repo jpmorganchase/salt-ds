@@ -818,3 +818,39 @@ describe("given a multiselect ComboBox with pills", () => {
       .toHaveFocus();
   });
 });
+
+describe("GIVEN a Combo box and the keys it owns", () => {
+  it("stops the page scrolling when opening the list with an arrow key", async () => {
+    const onKeyDown = vi.fn();
+    await renderWithSalt(
+      <ComboBox onKeyDown={onKeyDown}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </ComboBox>,
+    );
+
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowDown}");
+
+    expect(onKeyDown.mock.lastCall?.[0].defaultPrevented).toBe(true);
+  });
+
+  it("stops the page scrolling when arrowing past the first option", async () => {
+    const onKeyDown = vi.fn();
+    await renderWithSalt(
+      <ComboBox onKeyDown={onKeyDown}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </ComboBox>,
+    );
+
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowDown}");
+    await userEvent.keyboard("{Home}");
+
+    // The active option cannot move, but the combo box still owns the key.
+    await userEvent.keyboard("{ArrowUp}");
+
+    expect(onKeyDown.mock.lastCall?.[0].defaultPrevented).toBe(true);
+  });
+});

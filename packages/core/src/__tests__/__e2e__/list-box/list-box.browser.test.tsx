@@ -1,3 +1,4 @@
+import { ListBox, Option } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
@@ -219,5 +220,43 @@ describe("GIVEN a List box", () => {
     } finally {
       vi.useRealTimers();
     }
+  });
+});
+
+describe("GIVEN a List box at the edge of its options", () => {
+  it("stops the page scrolling when arrowing past the first option", async () => {
+    const onKeyDown = vi.fn();
+    await renderWithSalt(
+      <ListBox onKeyDown={onKeyDown}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </ListBox>,
+    );
+
+    await userEvent.tab();
+    await expectActiveOption("Alabama");
+
+    // The active option cannot move, but the list box still owns the key.
+    await userEvent.keyboard("{ArrowUp}");
+
+    await expectActiveOption("Alabama");
+    expect(onKeyDown.mock.lastCall?.[0].defaultPrevented).toBe(true);
+  });
+
+  it("stops the page scrolling when pressing Home on the first option", async () => {
+    const onKeyDown = vi.fn();
+    await renderWithSalt(
+      <ListBox onKeyDown={onKeyDown}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </ListBox>,
+    );
+
+    await userEvent.tab();
+    await expectActiveOption("Alabama");
+
+    await userEvent.keyboard("{Home}");
+
+    expect(onKeyDown.mock.lastCall?.[0].defaultPrevented).toBe(true);
   });
 });

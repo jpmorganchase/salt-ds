@@ -578,3 +578,24 @@ describe("Given a core Dropdown", () => {
     await expect.element(listbox()).not.toBeInTheDocument();
   });
 });
+
+describe("GIVEN a Dropdown at the edge of its options", () => {
+  it("stops the page scrolling when arrowing past the first option", async () => {
+    const onKeyDown = vi.fn();
+    await renderWithSalt(
+      <Dropdown onKeyDown={onKeyDown}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </Dropdown>,
+    );
+
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowDown}");
+    await userEvent.keyboard("{Home}");
+
+    // The active option cannot move, but the dropdown still owns the key.
+    await userEvent.keyboard("{ArrowUp}");
+
+    expect(onKeyDown.mock.lastCall?.[0].defaultPrevented).toBe(true);
+  });
+});
