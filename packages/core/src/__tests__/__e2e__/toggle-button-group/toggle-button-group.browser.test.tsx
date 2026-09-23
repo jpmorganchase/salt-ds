@@ -227,6 +227,45 @@ describe("GIVEN a ToggleButtonGroup and keyboard navigation", () => {
     expect(tabStops).toHaveLength(1);
   });
 
+  it("keeps the selection announced after choosing a numeric value", async () => {
+    await renderWithSalt(
+      <ToggleButtonGroup defaultValue={2} aria-label="Numeric options">
+        <ToggleButton value={1}>One</ToggleButton>
+        <ToggleButton value={2}>Two</ToggleButton>
+      </ToggleButtonGroup>,
+    );
+
+    const one = page.getByRole("radio", { name: "One" });
+    const two = page.getByRole("radio", { name: "Two" });
+
+    await one.click();
+
+    // A screen reader must announce the chosen button as checked, and the tab
+    // stop must follow it. Otherwise the group reports nothing as selected.
+    await expect.element(one).toHaveAttribute("aria-checked", "true");
+    await expect.element(two).toHaveAttribute("aria-checked", "false");
+    await expect.element(one).toHaveAttribute("tabindex", "0");
+    await expect.element(two).toHaveAttribute("tabindex", "-1");
+  });
+
+  it("does not report a change when the selected numeric value is reselected", async () => {
+    const onChange = vi.fn();
+    await renderWithSalt(
+      <ToggleButtonGroup
+        defaultValue={2}
+        onChange={onChange}
+        aria-label="Numeric options"
+      >
+        <ToggleButton value={1}>One</ToggleButton>
+        <ToggleButton value={2}>Two</ToggleButton>
+      </ToggleButtonGroup>,
+    );
+
+    await page.getByRole("radio", { name: "Two" }).click();
+
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
   it("skips a disabled button when navigating with the arrow keys", async () => {
     await renderWithSalt(<Group defaultValue="alert" />);
 

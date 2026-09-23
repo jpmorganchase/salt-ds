@@ -66,6 +66,15 @@ export interface ToggleButtonGroupProps
 
 const withBaseName = makePrefixer("saltToggleButtonGroup");
 
+// `value` on a DOM button is always a string, so selecting a button whose
+// `value` prop is a number stores a string on the group. Comparing both sides
+// as strings keeps such a button selected, and keeps it as the tab stop.
+function isSameValue(a: Value, b: Value) {
+  if (a === b) return true;
+  if (a == null || b == null) return false;
+  return String(a) === String(b);
+}
+
 export const ToggleButtonGroup = forwardRef<
   HTMLDivElement,
   ToggleButtonGroupProps
@@ -120,7 +129,7 @@ export const ToggleButtonGroup = forwardRef<
     (event: SyntheticEvent<HTMLButtonElement>) => {
       const newValue = event.currentTarget.value;
       setValue(newValue);
-      if (value !== newValue) {
+      if (!isSameValue(value, newValue)) {
         onChange?.(event);
       }
     },
@@ -129,7 +138,7 @@ export const ToggleButtonGroup = forwardRef<
 
   const isSelected = useCallback(
     (id: Value) => {
-      return value === id;
+      return isSameValue(value, id);
     },
     [value],
   );
@@ -143,15 +152,17 @@ export const ToggleButtonGroup = forwardRef<
   // button. Disabled buttons are never the tab stop, as they cannot be focused.
   const isFocused = useCallback(
     (id: Value) => {
-      // `value` on a DOM button is always a string, but the public `value` prop
-      // also accepts numbers, so compare both sides as strings.
-      const hasEnabledSelection = enabledButtons.some(
-        (button) => button.value === String(focused),
+      const hasEnabledSelection = enabledButtons.some((button) =>
+        isSameValue(button.value, focused),
       );
 
-      return hasEnabledSelection
-        ? focused === id
-        : enabledButtons[0]?.value === String(id);
+      if (hasEnabledSelection) {
+        return isSameValue(focused, id);
+      }
+
+      return (
+        enabledButtons.length > 0 && isSameValue(enabledButtons[0].value, id)
+      );
     },
     [focused, enabledButtons],
   );
