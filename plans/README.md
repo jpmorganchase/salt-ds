@@ -56,6 +56,11 @@ at integration checkpoints. Learn about authoring friction from the next genuine
 maintainer change; the artificial threshold exercise is retired. Unit 033/02a
 and the existing promotion/release boundaries remain current.
 
+Component features and fixes found during this content pass are tracked in the
+[current follow-ups](./033-knowledge-gap-report.md#current-follow-ups--2026-09-23)
+and will land separately from `ai-platform`. Continue the canonical guidance and
+Knowledge delivery work here, preserving explicit component limitations.
+
 ## Execution order and status
 
 | Plan                                                               | Title                                                                                                           | Priority | Effort         | Depends on                  | Status                                                        |

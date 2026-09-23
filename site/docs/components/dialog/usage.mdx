@@ -35,6 +35,16 @@ its [cancellation and draft guidance](/salt/patterns/forms#cancellation-and-draf
 to distinguish abandoning edits from pausing work. The [default example](/salt/components/dialog/examples#default)
 shows the header, content, and action composition.
 
+### Destructive actions
+
+When deletion needs confirmation, identify the record and explain the consequence before the user confirms. Opening the confirmation dialog must not execute Delete. Give Cancel initial focus and follow the [Button bar pattern](/salt/patterns/button-bar#dialog) for action order and responsive layout.
+
+The application owns the deletion request and its outcome. While it is pending, show progress and prevent duplicate requests. Keep Escape available: closing the dialog does not cancel a request or prove that deletion succeeded. Keep progress and any later failure or recovery available in the owning view if the dialog closes.
+
+On a confirmed failure, retain the record and show persistent feedback in the affected dialog or view, with Retry when repeating the request is safe. If the outcome is unknown, reconcile the record's state before offering another deletion attempt. A Toast must not be the only place to find essential error details or recovery actions. Follow [Banner accessibility guidance](../banner/accessibility) to announce feedback; visual status alone does not announce it.
+
+On success, update the collection, announce the result, and follow [Returning focus after an action](./accessibility#returning-focus-after-an-action). Choosing the surviving record, focus target, and safe retry behavior belongs to the application; Dialog does not supply a deletion workflow.
+
 ### Action composition
 
 `DialogActions` always follows the [Button bar pattern](/salt/patterns/button-bar#dialog)

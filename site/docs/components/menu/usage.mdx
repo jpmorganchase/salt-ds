@@ -41,6 +41,14 @@ Keep each menu item as one action; do not put additional buttons, links, or form
 
 The examples illustrate composition; connect each command to an application action. The application owns each menu command’s execution, progress feedback, and failure recovery. Closing the menu does not establish that an action succeeded. Keep essential failure details and recovery actions available in the affected content; follow [Forms feedback guidance](/salt/patterns/forms#choosing-feedback) for form actions and [Content status guidance](/salt/patterns/content-status#choosing-how-to-communicate-loading-and-recovery) for loading or refreshing content.
 
+### Opening a dialog
+
+A menu command can open a dialog to collect more information or confirm an action. Keep the dialog outside the menu panel so closing the menu does not unmount it. Activating the command should close the menu and move focus into the dialog; for destructive confirmation, give Cancel initial focus.
+
+The menu item is a temporary focus target. Plan where focus returns on Cancel or Escape and where it moves if the action removes the record. Follow [Dialog return-focus guidance](../dialog/accessibility#returning-focus-after-an-action) and its current API limitation. Verify the menu-to-dialog handoff with both keyboard and pointer activation; rendering the two components together does not establish correct focus behavior.
+
+For deletion, follow [Destructive actions](../dialog/usage#destructive-actions) for pending requests, failure, recovery, and success. Opening the dialog and closing the menu do not execute or complete the deletion.
+
 ## Content
 
 - Always use sentence case for menu item labels.

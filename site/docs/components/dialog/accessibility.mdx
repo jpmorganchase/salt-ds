@@ -16,7 +16,7 @@ Provide an accessible name for dialogs by using the visible `DialogHeader` (reco
 
 ### Focus
 
-The dialog component will trap focus within the dialog when open. This means that the user will not be able to tab out of the dialog and focus will be set to the first focusable element within the dialog. When the dialog is closed, focus will return to the element that triggered the dialog.
+The dialog component will trap focus within the dialog when open. This means that the user will not be able to tab out of the dialog and focus will be set to the first focusable element within the dialog. When the dialog is closed, focus will return to the element that triggered the dialog if it is still available.
 
 ### Initial focus
 
@@ -26,6 +26,14 @@ You can control which element receives focus when the dialog is opened by passin
 
 - For dialogs that prompt for user confirmation, the call to action button takes focus first.
 - For dialogs with destructive interactions, the cancel button takes focus first.
+
+### Returning focus after an action
+
+Choose a return target that lets the user continue their task. When a menu command opens a dialog, the menu item may no longer be mounted when the dialog closes. On Cancel or Escape, return focus to the surviving menu trigger for that record, rather than to the dismissed menu item.
+
+If successful deletion removes the record and its trigger, the application must choose a surviving target. In an ordered worklist, consider the equivalent action on the next record, then the previous record if there is no next record. If the list becomes empty, choose a relevant persistent control or the empty-state heading. These are task-dependent choices, not an automatic selection policy supplied by Dialog. Announce the outcome separately; moving focus is not a success announcement. If the user has already closed the dialog and moved elsewhere, preserve their focus unless the update removes the focused element.
+
+The current Dialog API provides `initialFocus` for opening, but no dedicated return-focus target or after-close callback. Verify these transitions with the current components before adopting a composition that unmounts its trigger. The [WAI-ARIA dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) describes returning focus to a logical workflow target when the invoking element no longer exists.
 
 ### Scrollable content
 
@@ -48,13 +56,13 @@ When content in the dialog is scrollable, it will receive keyboard focus (with a
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Escape">
 
-- If focus is in the dialog, Escape closes the dialog and returns focus to the triggering element.
+- If focus is in the dialog, Escape closes the dialog. Return focus to the triggering element when it remains available; see [Returning focus after an action](#returning-focus-after-an-action) for menu commands and removed triggers.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter / Space">
 
 - If focus is on a button in the dialog button bar, this action activates the button.
-- If focus is on the close button, this action activates the close button, closes the dialog and returns focus to the triggering element.
+- If focus is on the close button, this action activates the close button, closes the dialog and follows the same return-focus guidance.
 
 </KeyboardControl>
 </KeyboardControls>

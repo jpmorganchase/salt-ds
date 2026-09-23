@@ -11,6 +11,82 @@ default 16 KiB context budget. The user subsequently accepted the three content
 decisions below. Independent observation of the authoring process remains
 outstanding.
 
+## Current follow-ups — 2026-09-23
+
+Maintain component findings here while the content work continues. Component
+features and fixes will be scoped and landed separately from `ai-platform`;
+these entries do not authorize implementation or establish new Salt guarantees.
+Keep the symptom, reproduction, evidence limits and acceptance together. Update
+an entry with its issue/PR and outcome when separately taken up; do not create a
+second tracker or add tests merely to enforce this list.
+
+### Dialog return focus after its opener is removed
+
+**Status: confirmed API gap; deferred to a separate component change.**
+[Dialog](../packages/core/src/dialog/Dialog.tsx) exposes `initialFocus`, but no
+supported return-focus target. At `a5507d4eb8c685da57f854726e9b9a8a77a0a7bd`, a
+local three-row list used a Menu per row and one shared Dialog outside the list,
+with initial focus on Cancel. Deleting the middle row, the final-position row,
+or the last remaining row left focus on `BODY` after the dialog closed.
+Enter, Space and pointer opening, and Cancel/Escape return to a surviving menu
+trigger, passed in the same probe.
+
+A separate change should let the application choose a surviving return target
+and verify focus after closing and inert cleanup. Exercise next-row, previous-row
+and empty-state targets, retain ordinary cancellation behavior, and avoid
+reclaiming focus after the user has dismissed the dialog and moved elsewhere
+before an asynchronous result. Forwarding Floating UI's existing `returnFocus`
+boolean/ref option is the smallest candidate to investigate; a separate
+after-close callback has no demonstrated need yet.
+
+### Dialog scrim click with dismissal disabled
+
+**Status: reproduced behavior issue; root cause and fix remain open.** In the
+existing [MandatoryAction example](../site/src/examples/dialog/MandatoryAction.tsx)
+at the same commit, a native pointer click on the scrim kept the dialog open but
+moved focus to `BODY`. Tab returned inside. In a separate repetition, clicking
+the scrim from Cancel and pressing Shift+Tab left focus on `BODY` with no focused
+accessibility-tree element; a second Shift+Tab returned to Cancel. The reverse-tab
+observation was repeated twice. This does not establish a
+particular browser-chrome destination or attribute the cause to Salt versus
+Floating UI.
+
+A separate fix should keep modal focus usable after a real outside click: the
+next single Tab or Shift+Tab follows the internal focus cycle, and Escape still
+closes and restores focus. Use the existing
+[Dialog browser tests](../packages/core/src/__tests__/__e2e__/dialog/dialog.browser.test.tsx)
+with native pointer interaction; a synthetic `pointerdown` alone does not cover
+the observed blur path.
+
+Both findings come from workspace source in desktop Chrome with React 18.3.1
+and Floating UI 0.27.19. They are not screen-reader, mobile or cross-browser
+verification. No workaround or verified deletion workflow has been added.
+
+### Continue here: Menu/Dialog Knowledge delivery
+
+The canonical Menu **Opening a dialog**, Dialog **Destructive actions**, and
+Dialog **Returning focus after an action** sections are authored and source
+review passed. Their new semantic sections are not yet registered or delivered
+by task context, including through omission references. Only the existing
+Dialog focus section's surviving-trigger qualification is currently delivered.
+
+Keep this follow-up in Knowledge: register the source sections without taking
+page ownership away from existing guides or implying that the service-worklist
+implements deletion. The attempted integration exceeded the document limit or
+displaced existing pending-save, Dialog composition/focus and Menu-choice
+evidence. Those attempts were withheld. A smaller follow-up kept all three new
+sections in the existing Menu guide with their original source citations. It
+delivered the frozen deletion question at 16,076 bytes, but still failed the
+pending-save, Dialog composition and Dialog focus checks (104/107 passed). That
+candidate was also withdrawn. The retained documentation-only source passes all
+107 existing focused checks; no test or budget was weakened.
+
+Completion requires the new task evidence and correct source attribution within
+the existing budgets, while retaining the existing evidence questions and
+truthful, resolvable omissions. If that needs a larger packing change, scope it
+explicitly before expanding the implementation. Component API gaps remain
+visible in the canonical guidance until separately resolved.
+
 ## Confirmed composition decision
 
 On 2026-09-20, the user clarified that dialog actions should always follow the
