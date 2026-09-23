@@ -8,7 +8,7 @@
 - Category: direction/content; priority P1; effort M–L (several days, re-estimate after the content pass); risk MED.
 - Parent: `plans/033-deliver-verified-salt-workflows.md`, current Unit `033/02a`.
 - User direction: improve canonical Salt knowledge and deterministic task context; keep infrastructure proportionate to the content problem.
-- Current focus: the live UI review is complete within its recorded scope; use focused checks and answer the repeated-action naming question below.
+- Current focus: the live UI and repeated-action naming follow-ups are complete within their recorded scopes; use the [closeout assessment](./033-knowledge-gap-report.md#branch-closeout-assessment) for deferred delivery and landing work.
 - Content review: the user accepted the six guidance statements presented in the conversation on 2026-09-20: "The guidance looks correct."
 
 Start with **edit one existing record, submit, fail and retry**. Make its design decisions, composition, state ownership, accessibility and limitations available as source-backed evidence. Use the existing service-worklist, Forms, Dialog, Button and Button bar material. This is a test of a better knowledge representation, not another application or workflow family.
@@ -372,20 +372,17 @@ proposed maintainer exercise.
 
 ## Current content follow-up
 
-Answer the user's concrete question: **How do repeated Inspect actions keep a
-short visible label while screen readers announce the relevant record?**
-Add the canonical explanation to Button accessibility, select that section
-through the existing component-guidance path, and add one question to the
-existing evidence fixture. Preserve visible action wording in the accessible name, add the item
-context, and keep icon tooltips supplementary to accessible names. Reuse the
-reviewed worklist as the example; do not change its behavior or add infrastructure.
+The repeated-action naming follow-up is delivered in Button accessibility and
+the selected task evidence: visible action wording remains in the accessible
+name, record context distinguishes repeated actions, and icon tooltips supplement
+the accessible name. No additional naming work is dispatched here.
 
-Use the [short authoring path](../docs/ai/contributing.md#current-workflow-authoring).
-Regenerate changed Knowledge once, run the relevant evidence/extraction tests,
-inspect the authored content, and summarize the result in the commit/review.
-Do not repeat the complete package/site pipeline or add another evidence ledger
-for this ordinary content edit. The parent plan's proportionate iteration rules
-apply; historical pilot results below remain unchanged.
+The [current follow-ups and closeout assessment](./033-knowledge-gap-report.md#current-follow-ups--2026-09-23)
+record the remaining Menu/Dialog Knowledge delivery issue and component changes
+that will land separately. Preserve the authored API limitations and existing
+passing context behavior until the deferred selection repair is qualified.
+Use the [short authoring path](../docs/ai/contributing.md#current-workflow-authoring)
+for routine content changes. Historical pilot results below remain unchanged.
 
 ## Original pilot implementation sequence
 

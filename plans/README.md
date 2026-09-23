@@ -49,10 +49,11 @@ The unit remains in progress with its human gates pending.
 The 2026-09-19 direction prioritizes canonical Salt decisions and task evidence
 over additional AI infrastructure. The [supporting pilot handoff](./033-knowledge-content-pilot.md)
 has delivered the editable-record guidance and task evidence within Unit 033/02a.
-The user accepted the live UI review on 2026-09-21. Continue with one real content
-question at a time, beginning with concise repeated-action labels and accessible
-record context. Use focused checks for routine edits and batch full verification
-at integration checkpoints. Learn about authoring friction from the next genuine
+The user accepted the live UI review on 2026-09-21. The repeated-action label
+follow-up is delivered. The current [closeout assessment](./033-knowledge-gap-report.md#branch-closeout-assessment)
+records the deferred Menu/Dialog Knowledge delivery and remaining landing gates.
+Use focused checks for routine edits and batch full verification at integration
+checkpoints. Learn about authoring friction from the next genuine
 maintainer change; the artificial threshold exercise is retired. Unit 033/02a
 and the existing promotion/release boundaries remain current.
 

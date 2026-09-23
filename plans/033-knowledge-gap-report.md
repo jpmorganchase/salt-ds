@@ -62,7 +62,7 @@ Both findings come from workspace source in desktop Chrome with React 18.3.1
 and Floating UI 0.27.19. They are not screen-reader, mobile or cross-browser
 verification. No workaround or verified deletion workflow has been added.
 
-### Continue here: Menu/Dialog Knowledge delivery
+### Menu/Dialog Knowledge delivery — deferred
 
 The canonical Menu **Opening a dialog**, Dialog **Destructive actions**, and
 Dialog **Returning focus after an action** sections are authored and source
@@ -81,11 +81,70 @@ pending-save, Dialog composition and Dialog focus checks (104/107 passed). That
 candidate was also withdrawn. The retained documentation-only source passes all
 107 existing focused checks; no test or budget was weakened.
 
-Completion requires the new task evidence and correct source attribution within
-the existing budgets, while retaining the existing evidence questions and
-truthful, resolvable omissions. If that needs a larger packing change, scope it
-explicitly before expanding the implementation. Component API gaps remain
-visible in the canonical guidance until separately resolved.
+A bounded selection investigation followed. Trying metadata compaction before
+dropping documents still missed the same three questions. Trying task-role
+variants earlier and retaining the priority of explicitly linked guidance
+recovered pending-save and Dialog focus, but left Dialog composition incomplete
+and regressed filtering, search suggestions and Menu feedback. These temporary
+runtime changes were not retained. An independently constructed test using the
+existing fixture also reproduced avoidable evidence loss at a smaller budget;
+that diagnostic was preserved locally, with no new test committed.
+
+This requires a separately scoped selection repair. Completion requires the new
+task evidence and correct source attribution within the existing budgets, while
+retaining existing evidence questions and truthful, resolvable omissions. Do not
+treat the successful deletion-only packet as completed integration or add more
+topics to mask this gap. Component API gaps remain visible in canonical guidance.
+
+### Branch closeout assessment
+
+The Menu/Dialog canonical documentation and component follow-up list are
+committed at `5a06ad98e`. The new Knowledge delivery remains deferred; no component
+fix, context-selection change, new test, or workflow promotion is included in
+this closeout. Generated artifacts and diagnostic candidates remain uncommitted.
+
+At that checkpoint, comparison with local `origin/main` covers 38 commits and
+903 files, while the unpublished increment over `origin/ai-platform` covers 28
+commits and 167 files. These local references were not refreshed from the network.
+The branch already includes earlier form-control changes and changesets as well
+as platform and documentation work. The instruction to land newly found component
+features separately does not remove those earlier changes; account for them when
+choosing the landing scope. This closeout is not a new source review of all 903
+files.
+
+Two unpublished commits mix component fixes with this platform work:
+
+- `62599008f`: form-control accessibility changes across Core, Lab and Date,
+  component tests and the `quiet-forms-accessibility` changeset, together with
+  form guidance, Knowledge and example changes.
+- `0bb85fcc6`: ToggleButtonGroup arrow-selection behavior, component tests and
+  the `bright-views-select` changeset, together with view-switching guidance,
+  Knowledge and example changes.
+
+If those features should land separately, extract each component change with
+its tests, changeset and necessary behavior documentation into its own PR.
+Whole-commit cherry-picks would also bring platform changes. After those PRs
+land, merge the updated target branch into `ai-platform`; no history rewrite or
+PR creation has been performed by this closeout.
+
+The retained source passed fresh Knowledge/CLI builds and type checks, all 872
+existing tests in 61 files, current plan/contracts, release embargo and
+changed-file quality. The package check passed with Knowledge at 26,105,992
+unpacked bytes against the unchanged 26,214,400-byte limit. The exact local
+tarballs passed 58 offline CLI operations across standalone and hoisted fixtures,
+including all 31 evidence questions and the mixed focus/validation question.
+That local harness needed its older section assumption aligned with the existing
+canonical Error summary guidance; the required focus/validation facts remained
+checked. Dependencies were copied from the local environment, with no package
+installation or network access. This is packaged retrieval evidence, not a new
+installed application, visual review or manual accessibility assessment.
+
+Unit `033/02a` stays in progress and the service-worklist stays `runnable`. The
+accepted live UI review is complete within its recorded scope; formal
+owner/design/accessibility acceptance and independent maintainer observation
+remain outstanding. Publication, deployment and readiness promotion remain
+separate. Stop adding topics at this checkpoint and resolve the landing scope
+and deferred delivery work before claiming the whole unit complete.
 
 ## Confirmed composition decision
 
