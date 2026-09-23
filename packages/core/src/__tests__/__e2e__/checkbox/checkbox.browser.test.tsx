@@ -129,4 +129,16 @@ describe("GIVEN a Checkbox", () => {
 
     expect(getComputedStyle(icon).borderColor).toBe(resting);
   });
+
+  it("does not change appearance when an indeterminate disabled checkbox is hovered", async () => {
+    await renderWithSalt(
+      <Checkbox indeterminate checked disabled label="Disabled" />,
+    );
+    const icon = document.querySelector(".saltCheckboxIcon") as HTMLElement;
+    const resting = getComputedStyle(icon).borderColor;
+
+    await userEvent.hover(page.getByText("Disabled"));
+
+    expect(getComputedStyle(icon).borderColor).toBe(resting);
+  });
 });
