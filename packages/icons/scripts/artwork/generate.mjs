@@ -2,51 +2,19 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { optimize } from "svgo";
-import a from "./a.mjs";
-import architecture from "./architecture.mjs";
-import b from "./b.mjs";
+import { createHash } from "node:crypto";
+import { drawings } from "./drawings.mjs";
 import { brandIconNames } from "./brands.mjs";
-import c from "./c.mjs";
-import cloudActions from "./cloud-actions.mjs";
-import d from "./d.mjs";
-import fileFormats from "./file-formats.mjs";
 import { lineOnlySolidVariants } from "./line-only-variants.mjs";
 import { composeSharedMark } from "./mark-composition.mjs";
-import referenceControls from "./reference-controls.mjs";
-import referenceFrames from "./reference-frames.mjs";
-import referenceSymbols from "./reference-symbols.mjs";
-import { fitViewBoxes, iconAliases } from "./view-box.mjs";
+import { stripJunctionTraces } from "./junction-trace.mjs";
+import { fitViewBoxes } from "./view-box.mjs";
 
 const dir = path.dirname(fileURLToPath(import.meta.url));
 const target = path.resolve(dir, "../../src/SVG");
 const inventory = JSON.parse(
   await fs.readFile(path.join(dir, "inventory.json"), "utf8"),
 );
-const drawings = {};
-// Each meaning has one owning recipe; aliases are assigned separately.
-for (const batch of [
-  a,
-  b,
-  c,
-  d,
-  architecture,
-  referenceSymbols,
-  referenceFrames,
-  referenceControls,
-  cloudActions,
-  fileFormats,
-]) {
-  for (const [name, pair] of Object.entries(batch)) {
-    if (drawings[name]) throw new Error(`Duplicate drawing: ${name}`);
-    drawings[name] = pair;
-  }
-}
-// Deprecated aliases follow their supported replacement. The historic filled
-// step-success badge is retained by its drawing recipe.
-for (const [alias, canonical] of Object.entries(iconAliases)) {
-  if (drawings[alias]) throw new Error(`Duplicate drawing: ${alias}`);
-  drawings[alias] = drawings[canonical];
-}
 const expected = new Set(
   inventory.map((n) => n.replace(/_solid\.svg$|\.svg$/g, "")),
 );
@@ -58,6 +26,7 @@ for (const name of lineOnlySolidVariants) {
 }
 const referenceRecords = [];
 const sharedMarks = new Map();
+const sourceHashes = {};
 for (const file of inventory) {
   const solid = file.endsWith("_solid.svg");
   const name = file.replace(/_solid\.svg$|\.svg$/g, "");
@@ -69,7 +38,12 @@ for (const file of inventory) {
     if (identical !== lineOnlySolidVariants.has(name))
       throw new Error(`Unexpected identical-variant contract: ${name}`);
   }
-  const body = typeof drawing === "string" ? drawing : drawing.body;
+  sourceHashes[file] = createHash("sha256")
+    .update(JSON.stringify(drawing))
+    .digest("hex");
+  const rawBody = typeof drawing === "string" ? drawing : drawing.body;
+  const body =
+    typeof rawBody === "string" ? stripJunctionTraces(rawBody) : rawBody;
   if (typeof body !== "string" || !body.trim())
     throw new Error(`Invalid drawing body: ${file}`);
   const preserveBrandContours = brandIconNames.has(name);
@@ -153,6 +127,10 @@ const composedRecords = records.map(({ name, svg }) => ({
   name,
   svg: composeSharedMark(svg, sharedMarks.get(name)),
 }));
+await fs.writeFile(
+  path.join(dir, "junction-source-hashes.json"),
+  `${JSON.stringify({ schemaVersion: 1, records: sourceHashes }, null, 2)}\n`,
+);
 await fs.writeFile(
   path.join(dir, "view-box-transforms.json"),
   `${JSON.stringify(transforms, null, 2)}\n`,

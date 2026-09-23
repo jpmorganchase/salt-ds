@@ -1,4 +1,4 @@
-// Check the visible gap between the rear monitor and the rounded phone.
+// Check the visible gap between the rear monitor and the sharp-cornered phone.
 // Isolated painted layers avoid counting the stand, header, or phone interior.
 export async function checkCutoutClearance(page, records) {
   const record = records.find(
@@ -25,6 +25,7 @@ export async function checkCutoutClearance(page, records) {
         element,
         bounds: element.getBBox(),
         style: getComputedStyle(element),
+        referenceWidth: Number(element.getAttribute("stroke-width")),
       }));
       // Locate the rear surface by its painted role and region, not path order.
       const monitors = paths.filter(
@@ -130,25 +131,27 @@ export async function checkCutoutClearance(page, records) {
       // control points are used to predict its measured boundary.
       const phoneLeft = 10.5;
       const phoneTop = 17 / 3;
-      const cornerExtent = 2 / 3;
       const probes = [
         { feature: "straight top", point: [12, phoneTop], normal: [0, -1] },
         { feature: "straight left", point: [phoneLeft, 9], normal: [-1, 0] },
-        ...[0.25, 0.5, 0.75].map((t) => {
-          const length = Math.hypot(t, 1 - t);
-          return {
-            feature: `rounded corner t=${t}`,
-            point: [
-              phoneLeft + cornerExtent * (1 - t) ** 2,
-              phoneTop + cornerExtent * t ** 2,
-            ],
-            normal: [-t / length, -(1 - t) / length],
-          };
-        }),
+        ...[22.5, 45, 67.5].map((angle) => ({
+          feature: `sharp exterior corner ${angle} degrees`,
+          point: [phoneLeft, phoneTop],
+          normal: [
+            -Math.sin((angle * Math.PI) / 180),
+            -Math.cos((angle * Math.PI) / 180),
+          ],
+        })),
       ];
       const results = [];
       const failures = [];
-      for (const weight of [0.67]) {
+      for (const weight of [0.67, 1, 4 / 3, 1.5]) {
+        for (const item of paths)
+          if (item.referenceWidth > 0)
+            item.element.setAttribute(
+              "stroke-width",
+              (item.referenceWidth / 0.67) * weight,
+            );
         const rearPixels = await render(monitors);
         const phonePixels = await render(phone);
         for (const { feature, point, normal } of probes) {
@@ -158,7 +161,17 @@ export async function checkCutoutClearance(page, records) {
             phoneEdge === null || rearEdge === null
               ? null
               : rearEdge - phoneEdge;
-          const expected = 1.25 - weight / 2;
+          // The independent design target is a 1.25-unit envelope around a
+          // sharp corner, calibrated at the theme midpoint after the 14/13 fit.
+          // Test its bounded width response, not the obsolete quadratic corner.
+          const inset = 13 / 24;
+          const radius = 17 / 24;
+          const projection = -inset * (normal[0] + normal[1]);
+          const expected = feature.startsWith("straight")
+            ? 1.25 - weight / 2
+            : projection +
+              Math.sqrt(radius ** 2 - 2 * inset ** 2 + projection ** 2) -
+              weight / 2 / Math.max(Math.abs(normal[0]), Math.abs(normal[1]));
           const result = {
             name,
             weight,

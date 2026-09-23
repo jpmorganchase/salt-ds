@@ -24,6 +24,36 @@ export const MusicDisabledSolidIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="m6.706 3.319 7.245-2.07v3.105l-5.985 1.71-1.26-1.26Zm7.245 6.726c0 .52-.244.995-.644 1.36L10.69 8.788a2.64 2.64 0 0 1 1.19-.295c1.415 0 2.07.725 2.07 1.552ZM6.706 11.08c0 1.139-1.172 2.07-2.587 2.07s-2.07-.724-2.07-1.552 1.173-2.07 2.588-2.07 2.07.724 2.07 1.552Z"
         />
+        <path d="M12.631 1.626a1.035 1.035 0 0 1 1.32.995V1.249Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M12.631 1.626a1.035 1.035 0 0 1 1.32.995"
+        />
+        <path d="M13.95 3.573a1.035 1.035 0 0 1-.75.995l.75-.214Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.95 3.573a1.035 1.035 0 0 1-.75.995"
+        />
+        <path d="M8.552 5.896a1.03 1.03 0 0 1-1.017-.263l.431.43Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.552 5.896a1.03 1.03 0 0 1-1.017-.263"
+        />
+        <path d="M7.01 5.107a1.03 1.03 0 0 1-.304-.732v.429Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.01 5.107a1.03 1.03 0 0 1-.304-.732"
+        />
+        <path d="M6.706 4.061a.984.984 0 0 1 .714-.946l-.714.204Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.706 4.061a.984.984 0 0 1 .714-.946"
+        />
         <path
           fillRule="evenodd"
           d="m6.706 3.319 7.245-2.07v3.105l-5.985 1.71-1.26-1.26Zm7.245 6.726c0 .52-.244.995-.644 1.36L10.69 8.788a2.64 2.64 0 0 1 1.19-.295c1.415 0 2.07.725 2.07 1.552M6.707 11.08c0 1.139-1.172 2.07-2.587 2.07s-2.07-.724-2.07-1.552 1.173-2.07 2.588-2.07 2.07.724 2.07 1.552"

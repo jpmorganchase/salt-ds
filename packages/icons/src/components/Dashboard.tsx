@@ -17,13 +17,35 @@ export const DashboardIcon = forwardRef<SVGSVGElement, DashboardIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
-          <g
+          <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          >
-            <path d="M1.938 13.25a7 7 0 1 1 12.124 0Zm.562-4.5H4m-.5-3.5L5 6.75m3-3.5v1.5m5.5 4H12m-3-.167 2.5-2.833" />
-            <path d="M6.5 9.75a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0Z" />
-          </g>
+            d="M1.938 13.25a7 7 0 1 1 12.124 0Z"
+          />
+          <path d="M14.363 12.667a1 1 0 0 1-.909.583h.608a7 7 0 0 0 .301-.583" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M14.363 12.667a1 1 0 0 1-.909.583"
+          />
+          <path d="M2.546 13.25a1 1 0 0 1-.91-.583 7 7 0 0 0 .302.583z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.546 13.25a1 1 0 0 1-.91-.583M3.167 9.75h1.666m-.251-3.418 1.179 1.179M8 4.917v1.666m4.833 3.167h-1.666M8.988 8.621 11.5 5.75m-5 4a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0Z"
+          />
+          <path d="M9.551 7.977a1.1 1.1 0 0 1-1.134.332 1.5 1.5 0 0 1 .57.312Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.551 7.977a1.1 1.1 0 0 1-1.134.332"
+          />
+          <path d="M9.551 7.977a1.1 1.1 0 0 0-.178 1.168 1.5 1.5 0 0 0-.385-.524Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.551 7.977a1.1 1.1 0 0 0-.178 1.168"
+          />
         </g>
       </Icon>
     );

@@ -245,14 +245,6 @@ export function checkCutoutPeople(page, records) {
     ),
     10.5,
   ];
-  const leftSolid = [
-    bisect((x) => feedbackDistance([x, 10.5]), 1.25, 6, 9),
-    10.5,
-  ];
-  const rightSolid = [
-    bisect((x) => feedbackDistance([x, 10.5]), 1.25, 12, 14.5),
-    10.5,
-  ];
   const feedbackExpected = (point, normal, outlined) =>
     Object.fromEntries(
       weights.map((weight) => {
@@ -335,14 +327,14 @@ export function checkCutoutPeople(page, records) {
       foreground: "feedback-person",
       probes: [
         {
-          feature: "right panel stop to filled person",
+          feature: "right panel stop to rim-preserving filled person",
           region: [13, 7.5, 15.5, 11.5],
-          expected: feedbackExpected(rightSolid, [0, 1], false),
+          expected: feedbackExpected(rightOutline, [1, 0], true),
         },
         {
-          feature: "left panel stop to filled person",
+          feature: "left panel stop to rim-preserving filled person",
           region: [5, 9.5, 8.5, 11.5],
-          expected: feedbackExpected(leftSolid, [0, 1], false),
+          expected: feedbackExpected(leftOutline, [0, 1], true),
         },
       ],
     },

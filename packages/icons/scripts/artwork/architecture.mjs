@@ -1,15 +1,24 @@
+import { softenedFrame } from "./contour-profiles.mjs";
+import { circularCrossJunction } from "./junctions.mjs";
 import { box, F, S } from "./primitives.mjs";
 
-const crisp = S;
+const crisp = d => softenedFrame(d, {width:1.125, radius:1.5});
 const roof = "M2.5 8V6.175L12 2.545l9.5 3.63V8Z";
 const plinth = box(2.5, 19, 19, 2.5);
+// Broad circular runouts remain exposed below the primary roof/plinth
+// stroke at W=1.5. Filled interiors prevent thin-weight pinholes between the
+// fillets and the secondary column strokes.
 const column = (x) =>
-  S(
-    `M${x} 9.25v8.5M${x - 1.25} 8Q${x} 8 ${x} 9.25M${x + 1.25} 8Q${x} 8 ${x} 9.25M${x} 17.75Q${x} 19 ${x - 1.25} 19M${x} 17.75Q${x} 19 ${x + 1.25} 19`,
-    1.125,
-  );
-const arc =
-  "M9 17.75V11a3 3 0 0 1 6 0v6.75M9 17.75Q9 19 10.25 19M15 17.75Q15 19 13.75 19";
+  S(`M${x} 8V19`, 1.125) +
+  circularCrossJunction(x, 8, 1.25, 1.125, [
+    [-1, 1],
+    [1, 1],
+  ]) +
+  circularCrossJunction(x, 19, 1.25, 1.125, [
+    [-1, -1],
+    [1, -1],
+  ]);
+const arc = "M9 17.75V11a3 3 0 0 1 6 0v6.75";
 const body = [4, 6.5, 9, 15, 17.5, 20].map(column).join("");
 const spandrels = F("M9 8h6v3a3 3 0 0 0-6 0Z");
 const outline = crisp(roof + plinth) + body + S(arc, 1.125) + spandrels;

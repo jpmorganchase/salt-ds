@@ -23,10 +23,17 @@ export const UrgencyCriticalIcon = forwardRef<
           fillRule="evenodd"
           d="M.625 5.224 8 .922l7.375 4.302v3.688L8 4.61.625 8.912Z"
         />
+        <path d="M8.207 4.73a.41.41 0 0 0-.413 0L8 4.61Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M.625 14.443 8 10.141l7.375 4.302"
+        />
+        <path d="M7.38 10.502a1.23 1.23 0 0 1 1.24 0L8 10.141Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.38 10.502a1.23 1.23 0 0 1 1.24 0"
         />
       </g>
     </Icon>

@@ -20,7 +20,43 @@ export const BatteryIcon = forwardRef<SVGSVGElement, BatteryIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.23 2.615h1.616V1h4.308v1.615h1.615V15H4.231Z"
+            d="M4.23 2.615h.467a1.15 1.15 0 0 0 1.15-1.148V1h4.307v.467a1.15 1.15 0 0 0 1.149 1.148h.466V15H4.231Z"
+          />
+          <path d="M11.77 13.923A1.077 1.077 0 0 1 10.691 15h1.077Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.77 13.923A1.077 1.077 0 0 1 10.691 15"
+          />
+          <path d="M5.308 15a1.077 1.077 0 0 1-1.077-1.077V15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.308 15a1.077 1.077 0 0 1-1.077-1.077"
+          />
+          <path d="M6.887 1a1.04 1.04 0 0 0-1.04 1.041V1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.887 1a1.04 1.04 0 0 0-1.04 1.041"
+          />
+          <path d="M9.113 1a1.04 1.04 0 0 1 1.04 1.041V1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.113 1a1.04 1.04 0 0 1 1.04 1.041"
+          />
+          <path d="M5.272 2.615A1.04 1.04 0 0 0 4.23 3.656v-1.04Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.272 2.615A1.04 1.04 0 0 0 4.23 3.656"
+          />
+          <path d="M10.728 2.615a1.04 1.04 0 0 1 1.041 1.041v-1.04Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.728 2.615a1.04 1.04 0 0 1 1.041 1.041"
           />
         </g>
       </Icon>

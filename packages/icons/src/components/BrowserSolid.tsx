@@ -26,12 +26,55 @@ export const BrowserSolidIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1.012 1.747h13.976v12.506H1.012Z"
+          d="M1.012 1.747h13.976v12.506H1.012Zm0 3.494h13.976"
         />
+        <path d="M13.885 1.747a1.103 1.103 0 0 1 1.103 1.104V1.747Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1.931 5.241h12.138q.92 0 .92.92v7.172q0 .92-.92.92H1.931q-.92 0-.92-.92V6.161q0-.92.92-.92Z"
+          d="M13.885 1.747a1.103 1.103 0 0 1 1.103 1.104"
+        />
+        <path d="M14.988 13.15a1.103 1.103 0 0 1-1.103 1.103h1.103Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M14.988 13.15a1.103 1.103 0 0 1-1.103 1.103"
+        />
+        <path d="M2.115 14.253a1.103 1.103 0 0 1-1.103-1.104v1.104Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.115 14.253a1.103 1.103 0 0 1-1.103-1.104"
+        />
+        <path d="M1.012 2.85a1.103 1.103 0 0 1 1.103-1.103H1.012Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.012 2.85a1.103 1.103 0 0 1 1.103-1.103"
+        />
+        <path d="M14.988 6.345a1.103 1.103 0 0 0-1.103-1.104h1.103Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M14.988 6.345a1.103 1.103 0 0 0-1.103-1.104"
+        />
+        <path d="M13.885 5.241a1.103 1.103 0 0 0 1.103-1.103V5.24Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.885 5.241a1.103 1.103 0 0 0 1.103-1.103"
+        />
+        <path d="M2.115 5.241a1.103 1.103 0 0 0-1.103 1.104V5.24Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.115 5.241a1.103 1.103 0 0 0-1.103 1.104"
+        />
+        <path d="M1.012 4.138A1.103 1.103 0 0 0 2.115 5.24H1.012Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.012 4.138A1.103 1.103 0 0 0 2.115 5.24"
         />
       </g>
     </Icon>

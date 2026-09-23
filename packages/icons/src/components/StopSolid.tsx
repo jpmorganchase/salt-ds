@@ -23,6 +23,30 @@ export const StopSolidIcon = forwardRef<SVGSVGElement, StopSolidIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M1.5 1.5h13v13h-13Z"
           />
+          <path d="M13.2 1.5a1.3 1.3 0 0 1 1.3 1.3V1.5Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.2 1.5a1.3 1.3 0 0 1 1.3 1.3"
+          />
+          <path d="M14.5 13.2a1.3 1.3 0 0 1-1.3 1.3h1.3Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M14.5 13.2a1.3 1.3 0 0 1-1.3 1.3"
+          />
+          <path d="M2.8 14.5a1.3 1.3 0 0 1-1.3-1.3v1.3Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.8 14.5a1.3 1.3 0 0 1-1.3-1.3"
+          />
+          <path d="M1.5 2.8a1.3 1.3 0 0 1 1.3-1.3H1.5Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.5 2.8a1.3 1.3 0 0 1 1.3-1.3"
+          />
         </g>
       </Icon>
     );

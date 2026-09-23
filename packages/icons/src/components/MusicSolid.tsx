@@ -22,10 +22,41 @@ export const MusicSolidIcon = forwardRef<SVGSVGElement, MusicSolidIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M6.706 11.08V3.32l7.245-2.07v8.796M6.706 6.423l7.245-2.07"
           />
+          <path d="M6.706 4.1a1.035 1.035 0 0 1 .751-.996l-.75.215Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M6.706 11.08c0 1.139-1.172 2.07-2.587 2.07s-2.07-.724-2.07-1.552 1.173-2.07 2.588-2.07 2.07.724 2.07 1.552Zm7.245-1.035c0 1.139-1.173 2.07-2.588 2.07s-2.07-.724-2.07-1.552 1.173-2.07 2.588-2.07 2.07.725 2.07 1.552Z"
+            d="M6.706 4.1a1.035 1.035 0 0 1 .751-.996"
+          />
+          <path d="M12.631 1.626a1.035 1.035 0 0 1 1.32.995V1.249Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.631 1.626a1.035 1.035 0 0 1 1.32.995"
+          />
+          <path d="M6.706 5.051a1.035 1.035 0 0 0 1.32.995l-1.32.377Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.706 5.051a1.035 1.035 0 0 0 1.32.995"
+          />
+          <path d="M7.457 6.209a1.035 1.035 0 0 0-.75.995v-.78Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.457 6.209a1.035 1.035 0 0 0-.75.995"
+          />
+          <path d="M13.95 5.726a1.035 1.035 0 0 0-1.319-.996l1.32-.376Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.95 5.726a1.035 1.035 0 0 0-1.319-.996"
+          />
+          <path d="M13.2 4.568a1.035 1.035 0 0 0 .75-.995v.78Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.2 4.568a1.035 1.035 0 0 0 .75-.995M6.706 11.08c0 1.139-1.172 2.07-2.587 2.07s-2.07-.724-2.07-1.552 1.173-2.07 2.588-2.07 2.07.724 2.07 1.552Zm7.245-1.035c0 1.139-1.173 2.07-2.588 2.07s-2.07-.724-2.07-1.552 1.173-2.07 2.588-2.07 2.07.725 2.07 1.552Z"
           />
           <path
             fillRule="evenodd"

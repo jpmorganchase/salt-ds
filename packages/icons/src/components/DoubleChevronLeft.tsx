@@ -24,6 +24,30 @@ export const DoubleChevronLeftIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M15.198.776 7.974 8l7.224 7.224M8.552.776 1.33 8l7.223 7.224"
         />
+        <path d="M8.791 7.183a1.156 1.156 0 0 0 0 1.634L7.974 8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.791 7.183a1.156 1.156 0 0 0 0 1.634"
+        />
+        <path d="M2.146 7.183a1.156 1.156 0 0 0 0 1.634L1.329 8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.146 7.183a1.156 1.156 0 0 0 0 1.634"
+        />
+        <path d="M8.955 7.02a1.387 1.387 0 0 0 0 1.96L7.975 8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.955 7.02a1.387 1.387 0 0 0 0 1.96"
+        />
+        <path d="M2.31 7.02a1.387 1.387 0 0 0 0 1.96L1.328 8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.31 7.02a1.387 1.387 0 0 0 0 1.96"
+        />
       </g>
     </Icon>
   );

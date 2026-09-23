@@ -17,13 +17,27 @@ export const LightbulbIcon = forwardRef<SVGSVGElement, LightbulbIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
-          <g
+          <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          >
-            <path d="M5.455 10.832v-.849c0-1.697-2.037-2.375-2.037-4.412a4.582 4.582 0 0 1 9.164 0c0 2.037-2.037 2.715-2.037 4.412v.849Z" />
-            <path d="M5.455 12.868h5.09M6.982 14.99h2.036M8 10.832V6.759L6.473 5.232M8 6.759l1.527-1.527" />
-          </g>
+            d="M5.455 10.832v-.849c0-1.697-2.037-2.375-2.037-4.412a4.582 4.582 0 0 1 9.164 0c0 2.037-2.037 2.715-2.037 4.412v.849Zm0 2.036h5.09M6.982 14.99h2.036"
+          />
+          <path
+            fillRule="evenodd"
+            d="M6.017 5.688 7.2 6.87a.53.53 0 0 1 .155.374v3.587h1.29V7.245a.53.53 0 0 1 .155-.374l1.183-1.183-.912-.912-.697.697a.53.53 0 0 1-.748 0l-.697-.697Z"
+          />
+          <path d="M6.914 10.832A1.086 1.086 0 0 0 8 9.746v1.086Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.914 10.832A1.086 1.086 0 0 0 8 9.746"
+          />
+          <path d="M9.086 10.832A1.086 1.086 0 0 1 8 9.746v1.086Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.086 10.832A1.086 1.086 0 0 1 8 9.746"
+          />
         </g>
       </Icon>
     );

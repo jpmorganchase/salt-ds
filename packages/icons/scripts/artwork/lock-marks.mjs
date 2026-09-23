@@ -1,5 +1,6 @@
-// Compose this keyhole after host fitting so all four lock variants retain
-// the same circle, stem and anchor. The final 16-unit head diameter is 3
-// and the stem is 1.4 wide (2.25px and 1.05px respectively at 12px).
-// The shoulder is the exact circle intersection at x = 8 +/- 0.7.
-export const lockKeyhole = "M7.3 11.87665A1.5 1.5 0 1 1 8.7 11.87665V13.6H7.3Z";
+// Compose after host fitting: all four lock variants share the same head,
+// 1.4-unit stem and anchor. Circular .3-unit shoulders join the round head to
+// the straight stem without changing its 3-unit diameter or flat lower end.
+// The compact 12px counter retains a 1.05px-wide stem across frame weights.
+export const lockKeyhole =
+  "M7.166667 11.797219A1.5 1.5 0 1 1 8.833333 11.797219A.3 .3 0 0 0 8.7 12.046663V13.6H7.3V12.046663A.3 .3 0 0 0 7.166667 11.797219Z";

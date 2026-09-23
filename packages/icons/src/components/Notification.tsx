@@ -22,7 +22,43 @@ export const NotificationIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M3.943 5.886a4.057 4.057 0 0 1 8.114 0v2.898l2.318 3.477H1.625l2.318-3.477Zm2.318 8.694H9.74M8 1.83V.67"
+          d="M3.943 5.886a4.057 4.057 0 0 1 8.114 0v2.898l2.318 3.477H1.625l2.318-3.477Z"
+        />
+        <path d="M12.057 8.433a1.16 1.16 0 0 0 .195.643l-.195-.292Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M12.057 8.433a1.16 1.16 0 0 0 .195.643"
+        />
+        <path d="M13.216 10.523a1.118 1.118 0 0 1-.93 1.738h2.09Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.216 10.523a1.118 1.118 0 0 1-.93 1.738"
+        />
+        <path d="M3.715 12.261a1.118 1.118 0 0 1-.931-1.738l-1.16 1.738Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M3.715 12.261a1.118 1.118 0 0 1-.931-1.738"
+        />
+        <path d="M3.748 9.076a1.16 1.16 0 0 0 .195-.643v.351Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M3.748 9.076a1.16 1.16 0 0 0 .195-.643m2.318 6.147H9.74M8 1.83V.67"
+        />
+        <path d="M8 .926a1.005 1.005 0 0 1-.805.984A4 4 0 0 1 8 1.83Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8 .926a1.005 1.005 0 0 1-.805.984"
+        />
+        <path d="M8 .926a1.005 1.005 0 0 0 .805.984A4 4 0 0 0 8 1.83Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8 .926a1.005 1.005 0 0 0 .805.984"
         />
       </g>
     </Icon>

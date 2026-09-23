@@ -21,7 +21,49 @@ export const ChartPieSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M6.38.875a7.496 7.496 0 1 0 8.745 8.745H6.38ZM8.878.25v6.872h6.872A8.12 8.12 0 0 0 8.878.25"
+          d="M6.49 1.677a6.714 6.714 0 1 0 7.833 7.833H6.49Zm2.238-.56v6.155h6.154a7.27 7.27 0 0 0-6.154-6.154"
+        />
+        <path d="M6.863 9.51a.373.373 0 0 1-.373-.373v.373z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.49 1.677a6.714 6.714 0 1 0 7.833 7.833H6.49Zm2.238-.56v6.155h6.154a7.27 7.27 0 0 0-6.154-6.154Z"
+        />
+        <path d="M7.609 9.51A1.12 1.12 0 0 1 6.49 8.391V9.51Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.609 9.51A1.12 1.12 0 0 1 6.49 8.391"
+        />
+        <path d="M8.728 6.153a1.12 1.12 0 0 0 1.119 1.119H8.728Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.728 6.153a1.12 1.12 0 0 0 1.119 1.119"
+        />
+        <path d="M13.815 11.1A1.12 1.12 0 0 0 12.8 9.51h1.523a6.7 6.7 0 0 1-.508 1.59" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.815 11.1A1.12 1.12 0 0 0 12.8 9.51"
+        />
+        <path d="M6.49 3.2A1.12 1.12 0 0 0 4.9 2.185a6.7 6.7 0 0 1 1.59-.508z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.49 3.2A1.12 1.12 0 0 0 4.9 2.185"
+        />
+        <path d="M13.446 7.272a1.12 1.12 0 0 0 1.048-1.512 7.3 7.3 0 0 1 .388 1.512z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.446 7.272a1.12 1.12 0 0 0 1.048-1.512"
+        />
+        <path d="M10.24 1.506a1.12 1.12 0 0 0-1.512 1.048V1.118a7.3 7.3 0 0 1 1.512.388" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.24 1.506a1.12 1.12 0 0 0-1.512 1.048"
         />
       </g>
     </Icon>

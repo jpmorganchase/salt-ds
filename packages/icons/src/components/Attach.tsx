@@ -22,6 +22,30 @@ export const AttachIcon = forwardRef<SVGSVGElement, AttachIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="m5.083 11.61 4.959-4.959a1.488 1.488 0 0 0-2.103-2.102l-5.454 5.454a2.975 2.975 0 0 0 4.205 4.205l6.446-6.446a3.969 3.969 0 0 0-5.613-5.613L2.604 7.147"
           />
+          <path d="m10.022 6.67.06-.064-.04.045z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m10.022 6.67.06-.064"
+          />
+          <path d="m7.984 4.508-.064.06.02-.02z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m7.984 4.508-.064.06"
+          />
+          <path d="m2.502 9.987-.037.038.02-.022z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m2.502 9.987-.037.038"
+          />
+          <path d="m6.668 14.228.038-.037-.016.017z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m6.668 14.228.038-.037"
+          />
         </g>
       </Icon>
     );

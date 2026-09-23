@@ -24,6 +24,54 @@ export const DoesNotEqualIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M1.75 5.596h12.5m-12.5 4.808h12.5M10.885 2.23l-5.77 11.538"
         />
+        <path d="M9.796 5.596a.96.96 0 0 0-.86.532l.266-.532Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M9.796 5.596a.96.96 0 0 0-.86.532"
+        />
+        <path d="M8.506 6.988a.962.962 0 0 0-.86-1.392h1.556Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.506 6.988a.962.962 0 0 0-.86-1.392"
+        />
+        <path d="M8.608 5.596a.96.96 0 0 0 .86-.531l-.266.531Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.608 5.596a.96.96 0 0 0 .86-.531"
+        />
+        <path d="M9.898 4.205a.962.962 0 0 0 .86 1.391H9.202Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M9.898 4.205a.962.962 0 0 0 .86 1.391"
+        />
+        <path d="M7.392 10.404a.96.96 0 0 0-.86.531l.266-.531Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.392 10.404a.96.96 0 0 0-.86.531"
+        />
+        <path d="M6.102 11.795a.962.962 0 0 0-.86-1.391h1.556Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.102 11.795a.962.962 0 0 0-.86-1.391"
+        />
+        <path d="M6.204 10.404a.96.96 0 0 0 .86-.532l-.266.532Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.204 10.404a.96.96 0 0 0 .86-.532"
+        />
+        <path d="M7.494 9.012a.962.962 0 0 0 .86 1.392H6.798Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.494 9.012a.962.962 0 0 0 .86 1.392"
+        />
       </g>
     </Icon>
   );

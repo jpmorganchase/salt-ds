@@ -19,13 +19,52 @@ export const HeadphonesDisabledIcon = forwardRef<
       {...props}
     >
       <g strokeWidth="var(--icon-strokeWidth, 1)">
-        <g
+        <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-        >
-          <path d="M1.742 11.24V7.259a6.3 6.3 0 0 1 .23-1.68M4.59 2.01a6.258 6.258 0 0 1 9.667 5.248v3.766" />
-          <path d="M2.197 8.965H4.7q.455 0 .455.455v4.78q0 .455-.455.455H2.197q-.455 0-.455-.455V9.42q0-.455.455-.455Zm9.76 0h1.846q.455 0 .455.455v1.846M1.173 1.569l13.654 13.654" />
-        </g>
+          d="M1.742 11.24V7.259a6.3 6.3 0 0 1 .23-1.68M4.59 2.01a6.258 6.258 0 0 1 9.667 5.248v3.766"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.742 8.965h3.413v5.69H1.742Zm10.215 0h2.301v2.301"
+        />
+        <path d="M4.018 8.965a1.14 1.14 0 0 1 1.137 1.138V8.965Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M4.018 8.965a1.14 1.14 0 0 1 1.137 1.138"
+        />
+        <path d="M5.155 13.516a1.14 1.14 0 0 1-1.137 1.138h1.137Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5.155 13.516a1.14 1.14 0 0 1-1.137 1.138"
+        />
+        <path d="M2.88 14.654a1.14 1.14 0 0 1-1.138-1.138v1.138Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.88 14.654a1.14 1.14 0 0 1-1.138-1.138"
+        />
+        <path d="M1.742 10.103A1.14 1.14 0 0 1 2.88 8.965H1.742Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.742 10.103A1.14 1.14 0 0 1 2.88 8.965"
+        />
+        <path d="M2.956 8.965A1.214 1.214 0 0 1 1.742 7.75v1.214Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.956 8.965A1.214 1.214 0 0 1 1.742 7.75"
+        />
+        <path d="M13.044 8.965a1.214 1.214 0 0 0 1.214-1.214v1.214Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.044 8.965a1.214 1.214 0 0 0 1.214-1.214M1.173 1.569l13.654 13.654"
+        />
       </g>
     </Icon>
   );

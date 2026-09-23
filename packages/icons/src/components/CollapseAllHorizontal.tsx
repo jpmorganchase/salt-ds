@@ -27,6 +27,30 @@ export const CollapseAllHorizontalIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M.756 2.567 6.19 8 .756 13.433M15.244 2.567 9.81 8l5.433 5.433"
         />
+        <path d="M5.335 7.146a1.207 1.207 0 0 1 0 1.708L6.19 8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5.335 7.146a1.207 1.207 0 0 1 0 1.708"
+        />
+        <path d="M10.665 7.146a1.207 1.207 0 0 0 0 1.708L9.81 8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.665 7.146a1.207 1.207 0 0 0 0 1.708"
+        />
+        <path d="M5.165 6.976a1.45 1.45 0 0 1 0 2.048L6.189 8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5.165 6.976a1.45 1.45 0 0 1 0 2.048"
+        />
+        <path d="M10.835 6.976a1.45 1.45 0 0 0 0 2.048L9.811 8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.835 6.976a1.45 1.45 0 0 0 0 2.048"
+        />
       </g>
     </Icon>
   );

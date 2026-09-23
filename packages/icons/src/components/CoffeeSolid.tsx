@@ -24,7 +24,43 @@ export const CoffeeSolidIcon = forwardRef<SVGSVGElement, CoffeeSolidIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M10.63 5.44h2.185a2.185 2.185 0 0 1 0 4.37H10.63M.25 14.727h12.565M3.528.523v2.185M7.898.523v2.185"
+            d="M1.343 4.894h9.287v5.462q0 2.186-2.186 2.186H3.528q-2.185 0-2.185-2.186Z"
+          />
+          <path d="M9.537 4.894a1.093 1.093 0 0 1 1.093 1.092V4.894Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.537 4.894a1.093 1.093 0 0 1 1.093 1.092"
+          />
+          <path d="M1.343 5.986a1.093 1.093 0 0 1 1.092-1.092H1.343Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.343 5.986a1.093 1.093 0 0 1 1.092-1.092m8.195 0h2.185a2.185 2.185 0 0 1 0 4.37H10.63M.25 14.727h12.565M3.528.523v2.185M7.898.523v2.185"
+          />
+          <path d="M9.391 4.894a1.24 1.24 0 0 1 1.239 1.238V4.894Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.391 4.894a1.24 1.24 0 0 1 1.239 1.238"
+          />
+          <path d="M11.868 4.894a1.24 1.24 0 0 0-1.238 1.238V4.894Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.868 4.894a1.24 1.24 0 0 0-1.238 1.238"
+          />
+          <path d="M11.722 9.264A1.093 1.093 0 0 1 10.63 8.17v1.093Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.722 9.264A1.093 1.093 0 0 1 10.63 8.17"
+          />
+          <path d="M11.722 9.264a1.093 1.093 0 0 0-1.092 1.092V9.264Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.722 9.264a1.093 1.093 0 0 0-1.092 1.092"
           />
         </g>
       </Icon>

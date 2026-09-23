@@ -21,7 +21,24 @@ export const BatterySolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M3.827 2.038h1.788V.25h4.77v1.788h1.788V15.75H3.827Zm1.49 1.193h5.366q.298 0 .298.298v.596q0 .298-.298.298H5.317q-.298 0-.298-.298v-.596q0-.298.298-.298"
+          d="M4.23 2.615h.467a1.15 1.15 0 0 0 1.15-1.148V1h4.307v.467a1.15 1.15 0 0 0 1.149 1.148h.466V15H4.231Zm1.347 1.077h4.846q.27 0 .27.27V4.5q0 .27-.27.27H5.577q-.27 0-.27-.27v-.538q0-.27.27-.27"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M4.23 2.615h.467a1.15 1.15 0 0 0 1.15-1.148V1h4.307v.467a1.15 1.15 0 0 0 1.149 1.148h.466V15H4.231Z"
+        />
+        <path d="M11.77 13.923A1.077 1.077 0 0 1 10.691 15h1.077Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M11.77 13.923A1.077 1.077 0 0 1 10.691 15"
+        />
+        <path d="M5.308 15a1.077 1.077 0 0 1-1.077-1.077V15Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5.308 15a1.077 1.077 0 0 1-1.077-1.077"
         />
       </g>
     </Icon>

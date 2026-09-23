@@ -20,7 +20,55 @@ export const MaximizeIcon = forwardRef<SVGSVGElement, MaximizeIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1 1h14v14H1Zm0 3.818h14"
+            d="M1 1h14v14H1Z"
+          />
+          <path d="M13.727 1A1.273 1.273 0 0 1 15 2.273V1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.727 1A1.273 1.273 0 0 1 15 2.273"
+          />
+          <path d="M15 13.727A1.273 1.273 0 0 1 13.727 15H15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M15 13.727A1.273 1.273 0 0 1 13.727 15"
+          />
+          <path d="M2.273 15A1.273 1.273 0 0 1 1 13.727V15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.273 15A1.273 1.273 0 0 1 1 13.727"
+          />
+          <path d="M1 2.273A1.273 1.273 0 0 1 2.273 1H1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1 2.273A1.273 1.273 0 0 1 2.273 1M1 4.818h14"
+          />
+          <path d="M2.315 4.818A1.315 1.315 0 0 1 1 3.503v1.315Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.315 4.818A1.315 1.315 0 0 1 1 3.503"
+          />
+          <path d="M2.315 4.818A1.315 1.315 0 0 0 1 6.133V4.818Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.315 4.818A1.315 1.315 0 0 0 1 6.133"
+          />
+          <path d="M13.685 4.818A1.315 1.315 0 0 0 15 3.503v1.315Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.685 4.818A1.315 1.315 0 0 0 15 3.503"
+          />
+          <path d="M13.685 4.818A1.315 1.315 0 0 1 15 6.133V4.818Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.685 4.818A1.315 1.315 0 0 1 15 6.133"
           />
         </g>
       </Icon>

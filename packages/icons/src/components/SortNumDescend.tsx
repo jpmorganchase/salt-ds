@@ -44,6 +44,36 @@ export const SortNumDescendIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M12.214 1.217v13.33m-3.03-3.03 3.03 3.03 3.03-3.03"
         />
+        <path d="M11.357 13.69a1.21 1.21 0 0 0 1.714 0l-.857.857Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M11.357 13.69a1.21 1.21 0 0 0 1.714 0"
+        />
+        <path d="M10.7 13.032a.887.887 0 0 0 1.514-.628v2.143Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.7 13.032a.887.887 0 0 0 1.514-.628"
+        />
+        <path d="M12.214 12.404a.887.887 0 0 0 1.515.628l-1.515 1.515Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M12.214 12.404a.887.887 0 0 0 1.515.628"
+        />
+        <path d="M12.214 11.719a1.171 1.171 0 0 1-2 .828l2 2Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M12.214 11.719a1.171 1.171 0 0 1-2 .828"
+        />
+        <path d="M12.214 11.719a1.171 1.171 0 0 0 2 .828l-2 2Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M12.214 11.719a1.171 1.171 0 0 0 2 .828"
+        />
       </g>
     </Icon>
   );

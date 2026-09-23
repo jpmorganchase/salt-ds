@@ -22,6 +22,18 @@ export const Replay15Icon = forwardRef<SVGSVGElement, Replay15IconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M2.314 3.917A7 7 0 1 1 1 8m1.314-7v2.917h2.917"
           />
+          <path d="M2.314 1.419a1.05 1.05 0 0 0 1.655.858 7 7 0 0 0-1.655 1.64Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.314 1.419a1.05 1.05 0 0 0 1.655.858"
+          />
+          <path d="M4.991 3.917a1.05 1.05 0 0 1-.53-1.956 7 7 0 0 0-2.147 1.956Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.991 3.917a1.05 1.05 0 0 1-.53-1.956"
+          />
           <path
             fillRule="evenodd"
             d="M6.023 10.417H5.48V6.944q0-.198.002-.34.001-.142.006-.261t.015-.243q-.103.107-.194.182t-.224.186l-.56.45-.292-.38L5.56 5.517h.463Z"

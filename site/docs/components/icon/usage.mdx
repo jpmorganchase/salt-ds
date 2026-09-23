@@ -10,23 +10,23 @@ data:
 
 ## Using icons
 
-### When to use
+Use an icon to support recognition of an action, object or state. Choose a familiar symbol and use it consistently. Add visible text when its meaning may be unfamiliar or depends on the application; icons are not universally understood across languages and contexts.
 
-- To aid recognition and help users make choices by providing context (e.g., an office phone number vs cell phone number in contact information).
+Use the density's default size and weight within controls. Keep related icons consistent in variant, apparent size and spacing. A solid variant can provide emphasis, but does not automatically communicate selection.
 
-### When not to use icons
+An icon is a visual element. For an action, place it inside a [Button](/salt/components/button) or another appropriate interactive component. Give an icon-only control an accessible name that describes the action.
 
-- When you need an interactive icon. Instead, use [`Button`](/salt/components/Button) (call to action, primary or secondary variant).
+Browse the [icon catalogue](/salt/foundations/assets/index), follow the [design guidance](/salt/foundations/assets/icon-design) for custom artwork, and see [accessible use](/salt/components/icon/accessibility) for labels and decorative icons.
 
 ## Import
 
-To import an individual icon from the icons package, use:
+Import individual icons from the package:
 
 ```js
 import { AddDocumentIcon } from "@salt-ds/icons";
 ```
 
-To import the `Icon` component from the icons package for creating custom SVG icons, use:
+Use the `Icon` component to render custom SVG artwork:
 
 ```js
 import { Icon } from "@salt-ds/icons";
@@ -36,6 +36,6 @@ import { Icon } from "@salt-ds/icons";
 
 <PropsTable componentName="Icon" packageName="icons" />
 
-## References
+## Design library
 
-Icons have a complementary icon style library for Figma, including icon design principles and creation guidelines. J.P. Morgan employees can enable the Salt Icons library from the Assets panel. External designers can install the library from the [Salt community page](https://www.figma.com/community/file/1184561977727107234/Salt%3A-Icons).
+J.P. Morgan employees can enable the Salt Icons library in Figma's Assets panel. External designers can use the [Salt Icons community library](https://www.figma.com/community/file/1184561977727107234/Salt%3A-Icons). Apply the same design and native-size review guidance to custom artwork.

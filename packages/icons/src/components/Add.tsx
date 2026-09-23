@@ -24,6 +24,30 @@ export const AddIcon = forwardRef<SVGSVGElement, AddIconProps>(function AddIcon(
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M1.75 8h12.5M8 1.75v12.5"
         />
+        <path d="M6.365 8A1.635 1.635 0 0 0 8 6.365V8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.365 8A1.635 1.635 0 0 0 8 6.365"
+        />
+        <path d="M6.365 8A1.635 1.635 0 0 1 8 9.635V8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.365 8A1.635 1.635 0 0 1 8 9.635"
+        />
+        <path d="M9.635 8A1.635 1.635 0 0 1 8 6.365V8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M9.635 8A1.635 1.635 0 0 1 8 6.365"
+        />
+        <path d="M9.635 8A1.635 1.635 0 0 0 8 9.635V8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M9.635 8A1.635 1.635 0 0 0 8 9.635"
+        />
       </g>
     </Icon>
   );

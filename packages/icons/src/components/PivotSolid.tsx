@@ -19,7 +19,37 @@ export const PivotSolidIcon = forwardRef<SVGSVGElement, PivotSolidIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M.25.25h15.5v15.5H.25Zm7.045 5.654 2.89-2.89 2.891 2.89-1.011 1.012L10.9 5.753v5.546H5.554l1.163 1.163-1.011 1.012-2.89-2.89 2.89-2.891 1.011 1.012-1.163 1.163H9.47V5.753L8.307 6.916Z"
+            d="M1 1h14v14H1Zm6.364 5.107 2.61-2.61 2.611 2.61-.914.914-.63-.63a.246.246 0 0 0-.42.174v4.415H6.384a.246.246 0 0 0-.174.42l.63.63-.913.914-2.611-2.61 2.61-2.611.915.913-.631.63a.246.246 0 0 0 .174.421h2.477a.467.467 0 0 0 .466-.467V6.565a.246.246 0 0 0-.42-.174l-.63.63Z"
+          />
+          <path d="M9.72 3.75a.36.36 0 0 1 .508 0l-.254-.254zm2.611 2.103a.36.36 0 0 1 0 .508l.254-.254zm-.408.916a.356.356 0 0 1-.504 0l.252.252zM10.62 10.62a.36.36 0 0 1-.358.36h.358zm-4.03 1.158a.356.356 0 0 1 0 .504l.252-.252zm-.408.912a.36.36 0 0 1-.508 0l.254.254zM3.57 10.587a.36.36 0 0 1 0-.507l-.253.253zm2.104-2.611a.36.36 0 0 1 .508 0l-.254-.253zm.916.408a.356.356 0 0 1 0 .505l.252-.253zm1.94-1.615a.356.356 0 0 1-.505 0l.252.252zm-.913-.408a.36.36 0 0 1 0-.508l-.253.254z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1 1h14v14H1Z"
+          />
+          <path d="M13.923 1A1.077 1.077 0 0 1 15 2.077V1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.923 1A1.077 1.077 0 0 1 15 2.077"
+          />
+          <path d="M15 13.923A1.077 1.077 0 0 1 13.923 15H15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M15 13.923A1.077 1.077 0 0 1 13.923 15"
+          />
+          <path d="M2.077 15A1.077 1.077 0 0 1 1 13.923V15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.077 15A1.077 1.077 0 0 1 1 13.923"
+          />
+          <path d="M1 2.077A1.077 1.077 0 0 1 2.077 1H1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1 2.077A1.077 1.077 0 0 1 2.077 1"
           />
         </g>
       </Icon>

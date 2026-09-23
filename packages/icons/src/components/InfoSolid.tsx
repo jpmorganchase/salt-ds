@@ -19,7 +19,7 @@ export const InfoSolidIcon = forwardRef<SVGSVGElement, InfoSolidIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M.25.25h15.5v15.5H.25ZM7 3.75a1 1 0 1 0 2 0 1 1 0 1 0-2 0m-.5 3H9v5h1.25V13h-4.5v-1.25H7V8h-.5Z"
+            d="M.25.25h15.5v15.5H.25ZM6.667 4a1.333 1.333 0 1 0 2.666 0 1.333 1.333 0 1 0-2.666 0m0 2.667h2.666v6.666H6.667Z"
           />
         </g>
       </Icon>

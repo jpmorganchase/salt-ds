@@ -23,10 +23,17 @@ export const CloudSuccessSolidIcon = forwardRef<
           fillRule="evenodd"
           d="M4.497 13.411q-1.762 0-3.008-1.246T.243 9.158q0-3.433 3.214-4.131Q5.01 2.569 8 2.569q2.247 0 3.59 1.155L7.593 7.72 5.711 5.838a.683.683 0 0 0-.967 0l-.824.825a.683.683 0 0 0 0 .967l3.19 3.19a.683.683 0 0 0 .966 0l4.941-4.941q.06.161.113.33 2.627.637 2.627 3.533 0 3.67-3.67 3.67z"
         />
+        <path d="M3.258 5.073a.53.53 0 0 0 .31-.217l-.111.17zm9.831 1.009a.25.25 0 0 0 .17.16l-.13-.033z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="m4.815 6.734 2.778 2.778 5.556-5.556"
+        />
+        <path d="M6.842 8.761a1.06 1.06 0 0 0 1.502 0l-.75.75Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.842 8.761a1.06 1.06 0 0 0 1.502 0"
         />
       </g>
     </Icon>

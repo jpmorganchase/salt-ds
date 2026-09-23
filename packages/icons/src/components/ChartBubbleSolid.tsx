@@ -22,11 +22,40 @@ export const ChartBubbleSolidIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1 .25V15h14.75"
+          d="M1 .44V15h14.56"
+        />
+        <path d="M1 13.88A1.12 1.12 0 0 0 2.12 15H1Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1 13.88A1.12 1.12 0 0 0 2.12 15"
         />
         <path
           fillRule="evenodd"
-          d="M3.27 10.462a1.702 1.702 0 1 0 3.403 0 1.702 1.702 0 1 0-3.404 0m5.106-6.241a3.404 3.404 0 1 0 6.808 0 3.404 3.404 0 1 0-6.808 0m3.971 7.375a1.135 1.135 0 1 0 2.27 0 1.135 1.135 0 1 0-2.27 0"
+          d="M3.24 10.52a1.68 1.68 0 1 0 3.36 0 1.68 1.68 0 1 0-3.36 0"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M3.24 10.52a1.68 1.68 0 1 0 3.36 0 1.68 1.68 0 1 0-3.36 0Z"
+        />
+        <path
+          fillRule="evenodd"
+          d="M8.28 4.36a3.36 3.36 0 1 0 6.72 0 3.36 3.36 0 1 0-6.72 0"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.28 4.36a3.36 3.36 0 1 0 6.72 0 3.36 3.36 0 1 0-6.72 0Z"
+        />
+        <path
+          fillRule="evenodd"
+          d="M12.2 11.64a1.12 1.12 0 1 0 2.24 0 1.12 1.12 0 1 0-2.24 0"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M12.2 11.64a1.12 1.12 0 1 0 2.24 0 1.12 1.12 0 1 0-2.24 0Z"
         />
       </g>
     </Icon>

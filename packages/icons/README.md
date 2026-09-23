@@ -1,16 +1,20 @@
-# Icons
+# Salt icons
 
-The catalogue contains 548 SVGs on a 16×16 canvas, including 184 outline/solid pairs: 182 distinct treatments and two legacy line-only Solid aliases (Import and Export). Stroked artwork in Salt SVG masters uses fixed 0.67-unit primary reference strokes and proportional secondary details. For stroked paths, the theme gives generated React icons a 1.333333-unit primary stroke (approximately 4/3) in high and medium densities and 1 unit in low, touch and mobile densities, configurable through `--salt-size-icon-strokeWidth` or the per-icon `--saltIcon-strokeWidth` override. The component falls back to 1 only when neither variable is defined. Shared status ticks, punctuation and ellipsis dots use identical filled contours in positive and inverse form, preserving their geometry and weight when the container's stroke width changes. Brand logos preserve their owners' supplied contours. LinkedIn's outline is a custom Salt presentation of the original “in” letter contours; its solid variant retains the official square mark.
+`@salt-ds/icons` provides SVG icons as React components and CSS masks. The catalogue contains 550 SVG exports, including 185 outline/solid pairs. Two pairs, Import and Export, retain identical line-only variants for compatibility.
 
-Each ordinary export defaults to a centered 15.5-unit longest painted dimension at primary stroke 1.5, leaving 0.25 units at each end of that axis. Reviewed entries in `scripts/artwork/optical-fits.mjs` can use a smaller span or an optical center offset, with a recorded reason and the same clipping checks. The generator preserves aspect ratios and numeric stroke widths and fits ordinary exports independently by default, preserves reviewed shared frames where retained landmarks require them, then composes shared symbols in final 16-unit coordinates. Standalone Checkmark uses a documented smaller optical fit to retain the exact tick contour used by its enclosed and inverse companions. Exact aliases remain identical. The seven brand exports and the three full-canvas solid checkmark surface exports retain their existing 16-unit framing. LinkedIn's letters have the same size and position in both variants.
+## Design and use
 
-## Maintain the artwork
+- [Browse and use icons](../../site/docs/foundations/assets/index.mdx): selection, size, weight, spacing and accessible use.
+- [Icon design](../../site/docs/foundations/assets/icon-design.mdx): meaning, family consistency, softened interiors, modifiers, cutouts and outline/solid relationships.
+- [Creating icons](../../site/docs/foundations/assets/creating-icons.mdx): design, native-size review and contribution workflow.
 
-Edit the owning recipe in `scripts/artwork`. The alphabetical batches and shared family modules are combined with duplicate-registration checks; aliases are assigned separately. Keep the official sources and licenses in `scripts/artwork/brands` and the shared Open Sans letterforms and license alongside the recipes.
+The site guidance is the visual source of truth. Salt icons use a 16 × 16 canvas and must remain recognizable at 12px. Review related icons together, including both variants, supported weights and light/dark backgrounds.
 
-Semantic face details live in `scripts/artwork/face-marks.mjs`. Their filled pupils and mouths retain their weight when the surrounding circle's stroke changes. VerySatisfied preserves its closed eyes and outer lip while using a mouth ring in the outline and a full opening in the solid.
+## Contribute artwork
 
-Artwork generation and validation measure painted bounds in installed Google Chrome using the repository's Playwright dependency. Run from the repository root:
+Make durable artwork changes in the owning recipe under `scripts/artwork`. Generated SVGs, components and CSS masks are outputs; direct edits to them are overwritten by generation.
+
+From the repository root:
 
 ```sh
 yarn workspace @salt-ds/icons generate:icons
@@ -18,12 +22,6 @@ yarn workspace @salt-ds/icons validate:icons
 yarn node packages/icons/skills/salt-icons/scripts/check-integration.mjs --repo . new-name
 ```
 
-Generation updates the tracked SVGs, `scripts/artwork/view-box-transforms.json`, React components, CSS masks, icon lists and site logo assets. Keep those generated outputs with their source changes. Direct edits to `src/SVG` are overwritten by `generate:icons`; use the owning recipe for changes that must survive regeneration. The existing `build:icons` command rebuilds components and masks from the current SVGs only. Final viewBox framing belongs to the generator; do not hand-pad recipes or edit the generated fit manifest.
+See [Maintaining Salt icons](MAINTAINING.md) for recipe ownership, export fitting, shared constructions, search metadata, generation and review records. Its automated checks support visual review; they do not certify recognition or every corner in the catalogue.
 
-Validation checks inventory, rendering, fitted occupancy and the selected default or optical center, painted bounds, line weights and exact aliases. It uses the fit manifest to reverse export framing for existing recipe-geometry regressions and checks the final fitted exports separately. Review changed artwork in the site catalogue and Storybook at 12px and 16px on light and dark backgrounds, plus an enlarged view. Use the existing Icons/Icon stories for catalogue and name-search review, Icon QA for size and CSS-mask coverage, and the relevant component examples for legibility in context. The Storybook toolbar selects density and light/dark mode. Check final gaps at the configured width; automated checks do not establish meaning or visual quality.
-
-## Documentation
-
-The Salt site is the source of truth for [using icons](../../site/docs/foundations/assets/index.mdx), [icon design](../../site/docs/foundations/assets/icon-design.mdx), and [creating and integrating icons](../../site/docs/foundations/assets/creating-icons.mdx). The contribution guide covers recipe ownership, registration, search metadata, generation, tests and visual review.
-
-Use the [Salt Icons skill](skills/salt-icons/SKILL.md) to apply that workflow to repository work. The [brand source notes](scripts/artwork/brands/README.md) record official artwork provenance and export choices.
+The [Salt Icons skill](skills/salt-icons/SKILL.md) is an entry point to that workflow. [Brand source notes](scripts/artwork/brands/README.md) preserve artwork provenance and export choices.

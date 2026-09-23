@@ -22,6 +22,30 @@ export const MaintenanceIcon = forwardRef<SVGSVGElement, MaintenanceIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M5.2 1.178a4.363 4.363 0 0 1 3.527 5.956l5.88 5.88q.797.797 0 1.594t-1.593 0l-5.88-5.88a4.363 4.363 0 0 1-5.956-3.529L4.175 7.02 7.02 4.175Z"
           />
+          <path d="M3.411 6.556a1.14 1.14 0 0 0 1.396-.168l-.632.632Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.411 6.556a1.14 1.14 0 0 0 1.396-.168"
+          />
+          <path d="M6.388 4.807a1.14 1.14 0 0 0 .168-1.396l.464.764Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.388 4.807a1.14 1.14 0 0 0 .168-1.396"
+          />
+          <path d="M8.916 6.548a1.14 1.14 0 0 0 .3 1.075l-.489-.489a4 4 0 0 0 .189-.586" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8.916 6.548a1.14 1.14 0 0 0 .3 1.075"
+          />
+          <path d="M7.623 9.217a1.14 1.14 0 0 0-1.075-.301 4 4 0 0 0 .586-.189z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.623 9.217a1.14 1.14 0 0 0-1.075-.301"
+          />
         </g>
       </Icon>
     );

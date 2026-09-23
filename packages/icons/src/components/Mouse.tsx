@@ -17,16 +17,41 @@ export const MouseIcon = forwardRef<SVGSVGElement, MouseIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
-          <g
+          <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          >
-            <path d="M8 1a4.846 4.846 0 0 1 4.846 4.846v4.308a4.846 4.846 0 0 1-9.692 0V5.846A4.846 4.846 0 0 1 8 1ZM3.154 8h9.692" />
-            <path
-              strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.75)"
-              d="M7.462 3.333h1.076q.539 0 .539.539v1.436q0 .538-.539.538H7.462q-.539 0-.539-.538V3.872q0-.539.539-.539Z"
-            />
-          </g>
+            d="M8 1a4.846 4.846 0 0 1 4.846 4.846v4.308a4.846 4.846 0 0 1-9.692 0V5.846A4.846 4.846 0 0 1 8 1ZM3.154 8h9.692"
+          />
+          <path d="M4.59 8a1.436 1.436 0 0 1-1.436-1.436V8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.59 8a1.436 1.436 0 0 1-1.436-1.436"
+          />
+          <path d="M4.59 8a1.436 1.436 0 0 0-1.436 1.436V8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.59 8a1.436 1.436 0 0 0-1.436 1.436"
+          />
+          <path d="M11.41 8a1.436 1.436 0 0 0 1.436-1.436V8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.41 8a1.436 1.436 0 0 0 1.436-1.436"
+          />
+          <path d="M11.41 8a1.436 1.436 0 0 1 1.436 1.436V8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.41 8a1.436 1.436 0 0 1 1.436 1.436"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.75)"
+            d="M7.462 3.333h1.076q.539 0 .539.539v1.436q0 .538-.539.538H7.462q-.539 0-.539-.538V3.872q0-.539.539-.539Z"
+          />
         </g>
       </Icon>
     );

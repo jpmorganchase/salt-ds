@@ -1,0 +1,1451 @@
+[
+  {
+    "name": "dashboard.svg",
+    "weight": 1,
+    "feature": "separate painted parts",
+    "expected": 6,
+    "actual": 5,
+    "pass": false
+  },
+  {
+    "name": "dashboard.svg",
+    "weight": 1.3333333333333333,
+    "feature": "separate painted parts",
+    "expected": 6,
+    "actual": 4,
+    "pass": false
+  },
+  {
+    "name": "dashboard.svg",
+    "weight": 1.5,
+    "feature": "separate painted parts",
+    "expected": 6,
+    "actual": 4,
+    "pass": false
+  },
+  {
+    "name": "dashboard_solid.svg",
+    "weight": 0.67,
+    "feature": "retained pair silhouette bounds",
+    "drift": 0.4166666666666667,
+    "pass": false
+  },
+  {
+    "name": "dashboard_solid.svg",
+    "weight": 1,
+    "feature": "retained pair silhouette bounds",
+    "drift": 0.25,
+    "pass": false
+  },
+  {
+    "name": "dashboard_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "retained pair silhouette bounds",
+    "drift": 0.10416666666666667,
+    "pass": false
+  },
+  {
+    "name": "dashboard_solid.svg",
+    "weight": 1.5,
+    "feature": "retained pair silhouette bounds",
+    "drift": 0.1875,
+    "pass": false
+  },
+  {
+    "name": "edit_solid.svg",
+    "weight": 0.67,
+    "feature": "separate painted parts",
+    "expected": 1,
+    "actual": 3,
+    "pass": false
+  },
+  {
+    "name": "edit_solid.svg",
+    "weight": 0.67,
+    "feature": "retained pair silhouette bounds",
+    "drift": 0.5625,
+    "pass": false
+  },
+  {
+    "name": "edit_solid.svg",
+    "weight": 1,
+    "feature": "separate painted parts",
+    "expected": 1,
+    "actual": 3,
+    "pass": false
+  },
+  {
+    "name": "edit_solid.svg",
+    "weight": 1,
+    "feature": "retained pair silhouette bounds",
+    "drift": 0.3333333333333333,
+    "pass": false
+  },
+  {
+    "name": "edit_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "separate painted parts",
+    "expected": 1,
+    "actual": 3,
+    "pass": false
+  },
+  {
+    "name": "edit_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "retained pair silhouette bounds",
+    "drift": 0.09375,
+    "pass": false
+  },
+  {
+    "name": "edit_solid.svg",
+    "weight": 1.5,
+    "feature": "separate painted parts",
+    "expected": 1,
+    "actual": 3,
+    "pass": false
+  },
+  {
+    "name": "cloud-upload.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-upload.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-upload.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-upload.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-upload.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-upload.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-upload.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-upload.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-upload_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-upload_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-upload_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-upload_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-upload_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-upload_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-upload_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-upload_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-download.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-download.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-download.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-download.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-download.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-download.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-download.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-download.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-download_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-download_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-download_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-download_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-download_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-download_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-download_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-download_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "cloud-sync_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-left.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-left.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-left.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-left.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-left.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-left.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-left.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-left.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-left_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-left_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-left_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-left_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-left_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-left_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-left_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-left_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-top.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-top.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-top.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-top.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-top.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-top.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-top.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-top.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-top_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-top_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-top_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-top_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-top_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-top_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-top_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-top_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-right.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-right.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-right.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-right.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-right.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-right.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-right.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-right.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-right_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-right_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-right_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-right_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-right_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-right_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-right_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-right_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-bottom.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-bottom.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-bottom.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-bottom.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-bottom.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-bottom.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-bottom.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-bottom.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-bottom_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-bottom_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-bottom_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-bottom_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-bottom_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-bottom_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-bottom_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-open-bottom_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-left.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-left.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-left.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-left.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-left.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-left.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-left.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-left.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-left_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-left_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-left_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-left_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-left_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-left_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-left_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-left_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-top.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-top.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-top.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-top.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-top.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-top.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-top.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-top.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-top_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-top_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-top_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-top_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-top_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-top_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-top_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-top_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-right.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-right.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-right.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-right.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-right.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-right.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-right.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-right.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-right_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-right_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-right_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-right_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-right_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-right_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-right_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-right_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-bottom.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-bottom.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-bottom.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-bottom.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-bottom.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-bottom.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-bottom.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-bottom.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-bottom_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-bottom_solid.svg",
+    "weight": 0.67,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-bottom_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-bottom_solid.svg",
+    "weight": 1,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-bottom_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-bottom_solid.svg",
+    "weight": 1.3333333333333333,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-bottom_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm -1",
+    "alpha": 1,
+    "pass": false
+  },
+  {
+    "name": "panel-close-bottom_solid.svg",
+    "weight": 1.5,
+    "feature": "straight head arm 1",
+    "alpha": 1,
+    "pass": false
+  }
+]

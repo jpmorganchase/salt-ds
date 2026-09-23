@@ -2,6 +2,79 @@
 // final 16-unit viewBox at primary stroke 1.5, not to recipe padding.
 // Record the optical reason; do not infer a target from bounding-box shape alone.
 export const opticalFits = {
+  "edit_solid.svg": {
+    targetSpan: 15.5, center: [8, 8], frameSource: "edit.svg",
+    reason: "Retain the complete pencil silhouette, nib and cap anchors when filling the shared outline.",
+  },
+  "dashboard_solid.svg": {
+    targetSpan: 15.5, center: [8, 8], frameSource: "dashboard.svg",
+    reason: "Keep the dial rim, radial tick anchors and needle hub fixed across variants.",
+  },
+  "crops.svg": {
+    targetSpan: 15.5,
+    center: [8, 8],
+    frameSource: "crops_solid.svg",
+    reason:
+      "Preserve the preferred light solid leaves and common stem; the inset outline uses that frame, with its reviewed painted bounds measured at width 1.5.",
+  },
+  "man_solid.svg": {
+    targetSpan: 15.5,
+    center: [8, 8],
+    frameSource: "man.svg",
+    reason:
+      "Retain the head and body anchors while opening the leg gap through one complete painted silhouette.",
+  },
+  "man-woman_solid.svg": {
+    targetSpan: 15.5,
+    center: [8, 8],
+    frameSource: "man-woman.svg",
+    reason:
+      "Retain the head and body anchors while opening the leg gap through one complete painted silhouette.",
+  },
+  "woman_solid.svg": {
+    targetSpan: 15.5,
+    center: [8, 8],
+    frameSource: "woman.svg",
+    reason:
+      "Retain the head and body anchors while opening the leg gap through one complete painted silhouette.",
+  },
+
+  "cloud_solid.svg": {
+    targetSpan: 15.5,
+    center: [8, 8],
+    frameSource: "cloud.svg",
+    reason:
+      "Preserve the complete cloud rim and the action's exact anchors while subtracting its clearance from one filled silhouette.",
+  },
+  "cloud-upload_solid.svg": {
+    targetSpan: 15.5,
+    center: [8, 8],
+    frameSource: "cloud-upload.svg",
+    reason:
+      "Preserve the complete cloud rim and the action's exact anchors while subtracting its clearance from one filled silhouette.",
+  },
+  "cloud-download_solid.svg": {
+    targetSpan: 15.5,
+    center: [8, 8],
+    frameSource: "cloud-download.svg",
+    reason:
+      "Preserve the complete cloud rim and the action's exact anchors while subtracting its clearance from one filled silhouette.",
+  },
+  "cloud-sync_solid.svg": {
+    targetSpan: 15.5,
+    center: [8, 8],
+    frameSource: "cloud-sync.svg",
+    reason:
+      "Preserve the complete cloud rim and the action's exact anchors while subtracting its clearance from one filled silhouette.",
+  },
+  "cloud-disabled_solid.svg": {
+    targetSpan: 15.5,
+    center: [8, 8],
+    frameSource: "cloud-disabled.svg",
+    reason:
+      "Preserve the complete cloud rim and the action's exact anchors while subtracting its clearance from one filled silhouette.",
+  },
+
   "send_solid.svg": {
     targetSpan: 14.846082,
     center: [7.96749, 7.999998],
@@ -10,11 +83,11 @@ export const opticalFits = {
       "Use the outline painted contour at the midpoint theme weight while preserving the established open tapered seam.",
   },
   "hidden_solid.svg": {
-    targetSpan: 13.984375,
-    center: [7.8828125, 8],
+    targetSpan: 15.5,
+    center: [8, 8],
     frameSource: "hidden.svg",
     reason:
-      "Keep the slash and pupil fragments fixed while filling the eye and preserving its reviewed clearance.",
+      "Preserve the complete eye rim while keeping the slash, pupil and reviewed clearance on the outline frame.",
   },
   "add.svg": {
     targetSpan: 12.5,

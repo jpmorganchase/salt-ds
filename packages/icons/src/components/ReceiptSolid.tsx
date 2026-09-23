@@ -23,10 +23,71 @@ export const ReceiptSolidIcon = forwardRef<
           fillRule="evenodd"
           d="m3.586 1.624 1.471.98 1.472-.98L8 2.604l1.471-.98 1.472.98 1.471-.98v12.752l-1.471-.98-1.472.98L8 13.396l-1.471.98-1.472-.98-1.471.98Zm1.962 3.433h4.904v.981H5.548Zm0 2.453h4.904v.98H5.548Zm0 2.452H8.49v.98H5.548Z"
         />
+        <path d="M4.876 2.484a.33.33 0 0 0 .363 0l-.182.12Zm2.943 0a.33.33 0 0 0 .362 0L8 2.604Zm2.942 0a.33.33 0 0 0 .363 0l-.181.12Zm.363 11.032a.33.33 0 0 0-.363 0l.182-.12Zm-2.943 0a.33.33 0 0 0-.362 0l.181-.12Zm-2.942 0a.33.33 0 0 0-.363 0l.181-.12Zm4.919-8.459a.294.294 0 0 1 .294.294v-.294Zm.294.687a.294.294 0 0 1-.294.294h.294Zm-4.61.294a.294.294 0 0 1-.294-.294v.294Zm-.294-.687a.294.294 0 0 1 .294-.294h-.294Zm4.61 2.159a.294.294 0 0 1 .294.294V7.51Zm.294.686a.294.294 0 0 1-.294.294h.294Zm-4.61.294a.294.294 0 0 1-.294-.294v.294Zm-.294-.686a.294.294 0 0 1 .294-.294h-.294Zm2.648 2.158a.294.294 0 0 1 .294.294v-.294Zm.294.687a.294.294 0 0 1-.294.294h.294Zm-2.648.294a.294.294 0 0 1-.294-.294v.294Zm-.294-.687a.294.294 0 0 1 .294-.294h-.294Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="m3.586 1.624 1.471.98 1.472-.98L8 2.604l1.471-.98 1.472.98 1.471-.98v12.752l-1.471-.98-1.472.98L8 13.396l-1.471.98-1.472-.98-1.471.98Z"
+        />
+        <path d="M4.513 2.242a.98.98 0 0 0 1.088 0l-.544.363Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M4.513 2.242a.98.98 0 0 0 1.088 0"
+        />
+        <path d="M5.984 1.987a.98.98 0 0 1 1.089 0l-.544-.363Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5.984 1.987a.98.98 0 0 1 1.089 0"
+        />
+        <path d="M7.456 2.242a.98.98 0 0 0 1.088 0L8 2.605Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.456 2.242a.98.98 0 0 0 1.088 0"
+        />
+        <path d="M8.927 1.987a.98.98 0 0 1 1.089 0l-.545-.363Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.927 1.987a.98.98 0 0 1 1.089 0"
+        />
+        <path d="M10.399 2.242a.98.98 0 0 0 1.088 0l-.544.363Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.399 2.242a.98.98 0 0 0 1.088 0"
+        />
+        <path d="M11.487 13.758a.98.98 0 0 0-1.088 0l.544-.363Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M11.487 13.758a.98.98 0 0 0-1.088 0"
+        />
+        <path d="M10.016 14.013a.98.98 0 0 1-1.089 0l.544.363Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.016 14.013a.98.98 0 0 1-1.089 0"
+        />
+        <path d="M8.544 13.758a.98.98 0 0 0-1.088 0L8 13.395Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.544 13.758a.98.98 0 0 0-1.088 0"
+        />
+        <path d="M7.073 14.013a.98.98 0 0 1-1.089 0l.545.363Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.073 14.013a.98.98 0 0 1-1.089 0"
+        />
+        <path d="M5.601 13.758a.98.98 0 0 0-1.088 0l.544-.363Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5.601 13.758a.98.98 0 0 0-1.088 0"
         />
       </g>
     </Icon>

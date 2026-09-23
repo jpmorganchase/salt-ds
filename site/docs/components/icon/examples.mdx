@@ -10,8 +10,7 @@ data:
 
 ## Basic icon
 
-You should individually import and use from the `@salt-ds/icons`
-package.
+Import the icons you need from `@salt-ds/icons`.
 
 <LivePreview componentName="icon" exampleName="BasicIcon" />
 
@@ -23,7 +22,7 @@ You can change the size of each icon using the `size` property, which acts as a 
 
 ## Icon types
 
-We provide two icon types: default and solid. Most icons will have both versions, with some exceptions as described in the [icon foundation](/salt/foundations/assets). The outline style is the default icon type. Use the solid icon for additional emphasis or to represent a toggled "on" state.
+Outline and solid variants preserve the same meaning while changing visual emphasis. Availability varies by icon. Use a consistent variant for related controls; use an outline/solid change for selection only when the interface makes that state relationship clear. See [Icon variants](/salt/foundations/assets/index#icon-variants).
 
 <LivePreview componentName="icon" exampleName="IconTypes" />
 
@@ -35,7 +34,7 @@ To override the default color of the icon, use the `color` prop. This allows you
 
 ## Custom icons
 
-If you need a custom SVG icon, use the `Icon` component. `Icon` has the same API as the native `<svg>` element. Whenever you add a custom icon, pass an `aria-label` to `Icon`.
+If you need a custom SVG icon, use the `Icon` component. `Icon` has the same API as the native `<svg>` element. Follow the [icon design guidance](/salt/foundations/assets/icon-design), provide the SVG viewBox, and label the icon when it conveys information on its own. Use `aria-hidden` for decorative artwork or when the containing control already has an accessible name.
 
 <LivePreview componentName="icon" exampleName="CustomIcon" />
 
@@ -47,6 +46,6 @@ If you need to use a color other than "primary" or "secondary", use `color="inhe
 
 ## CSS background image
 
-You can also use icon as background image in CSS from `"@salt-ds/icons/saltIcons.css"`, then specify icon name prefixed with `saltIcons-`, e.g., `saltIcons-AddDocument`.
+Import `@salt-ds/icons/saltIcons.css` and use the icon class, such as `saltIcons-AddDocument`, to display a CSS mask. These assets retain baked stroke widths and do not inherit React stroke settings. Provide any accessible name on the containing element.
 
 <LivePreview componentName="icon" exampleName="CssBackgroundImage" />

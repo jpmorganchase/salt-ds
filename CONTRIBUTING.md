@@ -24,16 +24,9 @@ The repo contains below packages under `/packages`
 
 ### How to add a new icon
 
-1. Add the icon to the `packages/icons/src/SVG` folder. The icon should be named using kebab casing e.g. `icon-name.svg`.
-2. Navigate to `packages/icons` e.g. `cd packages/icons`.
-3. Run `yarn build:icons` to build the icons.
-4. Write a changeset using `yarn changeset`, this should have the format:
+Start with [Icon design](site/docs/foundations/assets/icon-design.mdx) and [Creating icons](site/docs/foundations/assets/creating-icons.mdx). Make durable artwork changes in the owning recipe under `packages/icons/scripts/artwork`; the SVGs and components are generated outputs.
 
-```md
-Added:
-
-- IconName
-```
+Follow [Maintaining Salt icons](packages/icons/MAINTAINING.md) to register the icon and its variants, add catalogue search metadata, generate the package and complete validation. Review the icon beside its family at 12px and 16px on light and dark backgrounds. Include the source, generated outputs and a changeset for consumer-visible additions or artwork changes in the same contribution.
 
 ### Prop deprecation
 

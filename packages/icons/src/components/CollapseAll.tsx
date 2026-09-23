@@ -22,6 +22,30 @@ export const CollapseAllIcon = forwardRef<SVGSVGElement, CollapseAllIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M2.581.775 8 6.194l5.419-5.42M2.58 15.226 8 9.806l5.419 5.42"
           />
+          <path d="M7.149 5.342a1.204 1.204 0 0 0 1.702 0L8 6.194Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.149 5.342a1.204 1.204 0 0 0 1.702 0"
+          />
+          <path d="M7.149 10.658a1.204 1.204 0 0 1 1.702 0L8 9.806Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.149 10.658a1.204 1.204 0 0 1 1.702 0"
+          />
+          <path d="M6.978 5.172a1.445 1.445 0 0 0 2.044 0L8 6.194Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.978 5.172a1.445 1.445 0 0 0 2.044 0"
+          />
+          <path d="M6.978 10.828a1.445 1.445 0 0 1 2.044 0L8 9.806Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.978 10.828a1.445 1.445 0 0 1 2.044 0"
+          />
         </g>
       </Icon>
     );

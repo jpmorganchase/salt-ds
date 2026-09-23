@@ -24,6 +24,30 @@ export const ExpandAllHorizontalIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M5.76 3.52 1.281 8l4.48 4.48m4.479-8.96L14.719 8l-4.48 4.48"
         />
+        <path d="M2.073 7.208a1.12 1.12 0 0 0 0 1.584L1.281 8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.073 7.208a1.12 1.12 0 0 0 0 1.584"
+        />
+        <path d="M13.927 7.208a1.12 1.12 0 0 1 0 1.584L14.719 8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.927 7.208a1.12 1.12 0 0 1 0 1.584"
+        />
+        <path d="M2.231 7.05a1.344 1.344 0 0 0 0 1.9L1.281 8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.231 7.05a1.344 1.344 0 0 0 0 1.9"
+        />
+        <path d="M13.769 7.05a1.344 1.344 0 0 1 0 1.9l.95-.95Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.769 7.05a1.344 1.344 0 0 1 0 1.9"
+        />
       </g>
     </Icon>
   );

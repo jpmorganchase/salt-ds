@@ -7,6 +7,7 @@ export async function checkCutoutSpacingCloud(page, records) {
     "cloud-download_solid.svg",
     "cloud-upload_solid.svg",
     "cloud-disabled.svg",
+    "cloud-disabled_solid.svg",
   ];
   const artwork = names.map((name) => {
     const record = records.find((entry) => entry.name === name);
@@ -25,9 +26,10 @@ export async function checkCutoutSpacingCloud(page, records) {
     const q = Math.SQRT1_2;
     const neutral = 7 / 6;
     const frames = {
-      "cloud-sync_solid.svg": [1.041394, -0.331155, -0.66122],
-      "cloud-download_solid.svg": [1.100478, -0.803828, -1.538278],
-      "cloud-upload_solid.svg": [1.117117, -0.936937, -1.704955],
+      "cloud-disabled_solid.svg": [1.061611, -0.492891, -0.492891],
+      "cloud-sync_solid.svg": [1.022222, -0.177778, -0.245833],
+      "cloud-download_solid.svg": [1.061611, -0.492891, -0.921283],
+      "cloud-upload_solid.svg": [1.061611, -0.492891, -1.030213],
     };
     function alphaAt(pixels, [x, y]) {
       const px = x * ppu - 0.5;
@@ -126,6 +128,7 @@ export async function checkCutoutSpacingCloud(page, records) {
       };
     }
     function solidProbes(pixels, name, weight) {
+      const markRatio = name === "cloud-disabled_solid.svg" ? 1 : .8;
       const [s, tx, ty] = frames[name];
       const point = ([x, y]) => [x * s + tx, y * s + ty];
       const probes = [];
@@ -150,7 +153,7 @@ export async function checkCutoutSpacingCloud(page, records) {
             : [22.5, 45, 67.5]) {
             const r = (degrees * Math.PI) / 180;
             const d = v.map((x, i) => x * Math.cos(r) + n[i] * Math.sin(r));
-            const corner = c.map((x, i) => x + (n[i] * weight) / 2);
+            const corner = c.map((x, i) => x + (n[i] * weight * markRatio) / 2);
             const origin = corner.map((x, i) => x - 0.04 * (v[i] + n[i]));
             probes.push({
               ...ray(
@@ -163,7 +166,20 @@ export async function checkCutoutSpacingCloud(page, records) {
             });
           }
       };
-      if (name === "cloud-sync_solid.svg") {
+      if (name === "cloud-disabled_solid.svg") {
+        for (const position of [6.5, 8.5]) {
+          addSide(
+            `slash lower side at ${position}`,
+            [position, position],
+            [-q, q],
+          );
+          addSide(
+            `slash upper side at ${position}`,
+            [position, position],
+            [q, -q],
+          );
+        }
+      } else if (name === "cloud-sync_solid.svg") {
         addSide("shaft upper side", [9.2, 9], [0, -1]);
         addSide("shaft lower side", [9.2, 9], [0, 1]);
         addSide("upper diagonal side", [6.3, 8.2], [-q, -q]);
@@ -319,7 +335,27 @@ export async function checkCutoutSpacingCloud(page, records) {
           const minGap = finite.length
             ? Math.min(...finite.map((m) => m.gap))
             : null;
+          // Fixed openings use an independently chosen local gap. Equal
+          // spacing alone must not approve an arbitrarily enlarged cutout.
+          // For arrow actions, measure flat terminal centers: butt caps do not
+          // extend along the shaft when stroke weight changes. Side gaps vary
+          // with weight and are checked separately by the spread bounds above.
+          const expectedClearance =
+            name === "cloud-disabled_solid.svg"
+              ? 1.3 + (neutral - weight) / 2
+              : frames[name]
+                ? 0.75
+                : null;
+          const measuredClearance =
+            name === "cloud-disabled_solid.svg"
+              ? gaps.reduce((total, gap) => total + gap, 0) / gaps.length
+              : terminalMean;
+          const clearancePass =
+            expectedClearance === null ||
+            (measuredClearance !== null &&
+              Math.abs(measuredClearance - expectedClearance) <= 0.025);
           const pass =
+            clearancePass &&
             finite.length === measurements.length &&
             spread !== null &&
             spread <= bound &&
@@ -336,6 +372,8 @@ export async function checkCutoutSpacingCloud(page, records) {
             maximumSpread: bound,
             minGap,
             minimumGap: 0.45,
+            expectedClearance,
+            measuredClearance,
             miterResidual,
             maximumMiterResidual: miterBound,
             pass,

@@ -20,7 +20,61 @@ export const MarkerIcon = forwardRef<SVGSVGElement, MarkerIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.898 2.635h8.942l2.98 2.98-2.98 2.981H1.898ZM5.475.25v2.385m0 5.961v7.154"
+            d="M1.898 2.635h8.942l2.98 2.98-2.98 2.981H1.898Z"
+          />
+          <path d="M10.346 2.635a1.2 1.2 0 0 1 .843.349l-.349-.35Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.346 2.635a1.2 1.2 0 0 1 .843.349"
+          />
+          <path d="M12.978 4.772a1.19 1.19 0 0 1 0 1.686l.843-.843Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.978 4.772a1.19 1.19 0 0 1 0 1.686"
+          />
+          <path d="M11.19 8.247a1.2 1.2 0 0 1-.844.35h.494Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.19 8.247a1.2 1.2 0 0 1-.844.35"
+          />
+          <path d="M3.09 8.596a1.19 1.19 0 0 1-1.192-1.192v1.192Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.09 8.596a1.19 1.19 0 0 1-1.192-1.192"
+          />
+          <path d="M1.898 3.827A1.19 1.19 0 0 1 3.09 2.635H1.898Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.898 3.827A1.19 1.19 0 0 1 3.09 2.635M5.475.25v2.385m0 5.961v7.154"
+          />
+          <path d="M4.163 2.635a1.31 1.31 0 0 0 1.312-1.312v1.312Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.163 2.635a1.31 1.31 0 0 0 1.312-1.312"
+          />
+          <path d="M6.786 2.635a1.31 1.31 0 0 1-1.311-1.312v1.312Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.786 2.635a1.31 1.31 0 0 1-1.311-1.312"
+          />
+          <path d="M4.163 8.596a1.31 1.31 0 0 1 1.312 1.312V8.596Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.163 8.596a1.31 1.31 0 0 1 1.312 1.312"
+          />
+          <path d="M6.786 8.596a1.31 1.31 0 0 0-1.311 1.312V8.596Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.786 8.596a1.31 1.31 0 0 0-1.311 1.312"
           />
         </g>
       </Icon>

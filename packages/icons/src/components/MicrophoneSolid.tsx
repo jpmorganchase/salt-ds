@@ -33,6 +33,42 @@ export const MicrophoneSolidIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M3.154 6.923V8a4.846 4.846 0 0 0 9.692 0V6.923M8 12.846V15m-2.692 0h5.384"
         />
+        <path d="M6.923 15A1.077 1.077 0 0 0 8 13.923V15Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.923 15A1.077 1.077 0 0 0 8 13.923"
+        />
+        <path d="M8 13.923A1.077 1.077 0 0 0 9.077 15H8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8 13.923A1.077 1.077 0 0 0 9.077 15"
+        />
+        <path d="M8 13.913a1.185 1.185 0 0 1 .952-1.161 5 5 0 0 1-.952.094Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8 13.913a1.185 1.185 0 0 1 .952-1.161"
+        />
+        <path d="M8 13.913a1.185 1.185 0 0 0-.952-1.161 5 5 0 0 0 .952.094Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8 13.913a1.185 1.185 0 0 0-.952-1.161"
+        />
+        <path d="M6.78 15A1.22 1.22 0 0 0 8 13.78V15Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.78 15A1.22 1.22 0 0 0 8 13.78"
+        />
+        <path d="M9.22 15A1.22 1.22 0 0 1 8 13.78V15Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M9.22 15A1.22 1.22 0 0 1 8 13.78"
+        />
       </g>
     </Icon>
   );

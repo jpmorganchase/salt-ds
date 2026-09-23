@@ -22,6 +22,36 @@ export const SummarizeIcon = forwardRef<SVGSVGElement, SummarizeIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M1.362.25v10.17q0 1.695 1.695 1.695h11.3m-3.108-3.107 3.108 3.107-3.108 3.108M4.752 1.945h9.04m-9.04 3.39h9.04m-9.04 3.39h4.52"
           />
+          <path d="M13.558 11.316a1.13 1.13 0 0 1 0 1.598l.799-.799Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.558 11.316a1.13 1.13 0 0 1 0 1.598"
+          />
+          <path d="M12.803 13.669a.91.91 0 0 0-.643-1.554h2.197Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.803 13.669a.91.91 0 0 0-.643-1.554"
+          />
+          <path d="M12.16 12.115a.91.91 0 0 0 .643-1.554l1.554 1.554Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.16 12.115a.91.91 0 0 0 .643-1.554"
+          />
+          <path d="M11.629 12.115a1.13 1.13 0 0 1 .799 1.93l1.929-1.93Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.629 12.115a1.13 1.13 0 0 1 .799 1.93"
+          />
+          <path d="M11.629 12.115a1.13 1.13 0 0 0 .799-1.929l1.929 1.93Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.629 12.115a1.13 1.13 0 0 0 .799-1.929"
+          />
         </g>
       </Icon>
     );

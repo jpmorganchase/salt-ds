@@ -19,13 +19,23 @@ export const CloudSuccessIcon = forwardRef<
       {...props}
     >
       <g strokeWidth="var(--icon-strokeWidth, 1)">
-        <g
+        <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-        >
-          <path d="M4.497 12.661a3.503 3.503 0 0 1-.57-6.96 4.67 4.67 0 0 1 6.335-1.799m2.874 3.114a2.92 2.92 0 0 1-1.049 5.645h-7.59" />
-          <path d="m4.815 6.734 2.778 2.778 5.556-5.556" />
-        </g>
+          d="M4.497 12.661a3.503 3.503 0 0 1-.57-6.96 4.67 4.67 0 0 1 6.335-1.799m2.874 3.114a2.92 2.92 0 0 1-1.049 5.645h-7.59"
+        />
+        <path d="M3.549 5.784a1.06 1.06 0 0 0 .59-.423 5 5 0 0 0-.211.34 4 4 0 0 0-.38.083" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M3.549 5.784a1.06 1.06 0 0 0 .59-.423m.676 1.373 2.778 2.778 5.556-5.556"
+        />
+        <path d="M6.842 8.761a1.06 1.06 0 0 0 1.502 0l-.75.75Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.842 8.761a1.06 1.06 0 0 0 1.502 0"
+        />
       </g>
     </Icon>
   );

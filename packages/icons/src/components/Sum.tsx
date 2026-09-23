@@ -24,6 +24,36 @@ export const SumIcon = forwardRef<SVGSVGElement, SumIconProps>(function SumIcon(
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M15 4.23V1.088H1.804L7.46 8l-5.656 6.912H15V11.77"
         />
+        <path d="M15 2.345a1.257 1.257 0 0 0-1.257-1.257H15Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M15 2.345a1.257 1.257 0 0 0-1.257-1.257"
+        />
+        <path d="M4.456 1.088a1.257 1.257 0 0 0-.972 2.053l-1.68-2.053Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M4.456 1.088a1.257 1.257 0 0 0-.972 2.053"
+        />
+        <path d="M6.809 7.204a1.26 1.26 0 0 1 0 1.592L7.459 8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.809 7.204a1.26 1.26 0 0 1 0 1.592"
+        />
+        <path d="M3.484 12.86a1.257 1.257 0 0 0 .973 2.052H1.804Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M3.484 12.86a1.257 1.257 0 0 0 .973 2.052"
+        />
+        <path d="M13.743 14.912A1.257 1.257 0 0 0 15 13.655v1.257Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.743 14.912A1.257 1.257 0 0 0 15 13.655"
+        />
       </g>
     </Icon>
   );

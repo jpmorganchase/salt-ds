@@ -22,6 +22,36 @@ export const KeyCapslockIcon = forwardRef<SVGSVGElement, KeyCapslockIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M2.186 7.596 8 2.31l5.814 5.286h-3.171v3.171H5.357V7.596Zm3.171 6.342h5.286"
           />
+          <path d="M7.289 2.956a1.057 1.057 0 0 1 1.422 0L8 2.31Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.289 2.956a1.057 1.057 0 0 1 1.422 0"
+          />
+          <path d="M11.7 7.596a1.057 1.057 0 0 0-1.057 1.057V7.596Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.7 7.596a1.057 1.057 0 0 0-1.057 1.057"
+          />
+          <path d="M10.643 9.71a1.057 1.057 0 0 1-1.057 1.057h1.057Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.643 9.71a1.057 1.057 0 0 1-1.057 1.057"
+          />
+          <path d="M6.414 10.767A1.057 1.057 0 0 1 5.357 9.71v1.057Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.414 10.767A1.057 1.057 0 0 1 5.357 9.71"
+          />
+          <path d="M5.357 8.653A1.057 1.057 0 0 0 4.3 7.596h1.057Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.357 8.653A1.057 1.057 0 0 0 4.3 7.596"
+          />
         </g>
       </Icon>
     );

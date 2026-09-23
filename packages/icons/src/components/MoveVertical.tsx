@@ -24,6 +24,66 @@ export const MoveVerticalIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M8 1.281V14.69m3.094-10.314L8 1.281 4.906 4.375m6.188 7.22L8 14.69l-3.094-3.094"
         />
+        <path d="M8.73 2.01a1.03 1.03 0 0 0-1.46 0L8 1.282Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.73 2.01a1.03 1.03 0 0 0-1.46 0"
+        />
+        <path d="M8.73 13.96a1.03 1.03 0 0 1-1.46 0l.73.73Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.73 13.96a1.03 1.03 0 0 1-1.46 0"
+        />
+        <path d="M8 3.47a.906.906 0 0 0-1.547-.642L8 1.281Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8 3.47a.906.906 0 0 0-1.547-.642"
+        />
+        <path d="M9.547 2.828A.906.906 0 0 0 8 3.47V1.281Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M9.547 2.828A.906.906 0 0 0 8 3.47"
+        />
+        <path d="M6.453 13.142A.906.906 0 0 0 8 12.502v2.187Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.453 13.142A.906.906 0 0 0 8 12.502"
+        />
+        <path d="M8 12.502a.906.906 0 0 0 1.547.64L8 14.69Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8 12.502a.906.906 0 0 0 1.547.64"
+        />
+        <path d="M8 3.937a1.1 1.1 0 0 1 1.878-.778L8 1.281Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8 3.937a1.1 1.1 0 0 1 1.878-.778"
+        />
+        <path d="M8 3.937a1.1 1.1 0 0 0-1.878-.778L8 1.281Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8 3.937a1.1 1.1 0 0 0-1.878-.778"
+        />
+        <path d="M8 12.033a1.1 1.1 0 0 1-1.878.778L8 14.69Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8 12.033a1.1 1.1 0 0 1-1.878.778"
+        />
+        <path d="M8 12.033a1.1 1.1 0 0 0 1.878.778L8 14.69Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8 12.033a1.1 1.1 0 0 0 1.878.778"
+        />
       </g>
     </Icon>
   );

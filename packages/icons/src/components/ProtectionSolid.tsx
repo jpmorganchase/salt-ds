@@ -24,6 +24,30 @@ export const ProtectionSolidIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M8 1.121C5.698 2.538 3.963 2.927 2.156 3.246c0 5.135 1.24 9.527 5.844 11.688 4.604-2.16 5.844-6.553 5.844-11.688-1.806-.319-3.542-.708-5.844-2.125Z"
         />
+        <path d="M3.02 3.084a1.06 1.06 0 0 0-.85 1.074 30 30 0 0 1-.014-.912q.434-.075.864-.162" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M3.02 3.084a1.06 1.06 0 0 0-.85 1.074"
+        />
+        <path d="M7.5 14.683a1.06 1.06 0 0 0 1 0q-.243.13-.5.25a11 11 0 0 1-.5-.25" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.5 14.683a1.06 1.06 0 0 0 1 0"
+        />
+        <path d="M13.83 4.158a1.06 1.06 0 0 0-.85-1.074q.431.086.864.162 0 .46-.014.912" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.83 4.158a1.06 1.06 0 0 0-.85-1.074"
+        />
+        <path d="M8.526 1.433a1.06 1.06 0 0 0-1.052 0A18 18 0 0 0 8 1.12q.268.165.526.312" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.526 1.433a1.06 1.06 0 0 0-1.052 0"
+        />
         <path
           fillRule="evenodd"
           d="M8 1.121c2.302 1.417 4.037 1.806 5.844 2.125 0 5.135-1.24 9.527-5.844 11.688Z"

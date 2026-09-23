@@ -24,6 +24,36 @@ export const MessageReplyAllIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M14.95 15.75V8.94a4.085 4.085 0 0 0-4.086-4.085H6.78M10.864.77 6.78 4.855l4.085 4.086M5.417.77 1.332 4.855l4.085 4.086"
         />
+        <path d="M7.742 3.892a1.36 1.36 0 0 0 0 1.926l-.963-.963Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.742 3.892a1.36 1.36 0 0 0 0 1.926"
+        />
+        <path d="M2.294 3.892a1.36 1.36 0 0 0 0 1.926l-.962-.963Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.294 3.892a1.36 1.36 0 0 0 0 1.926"
+        />
+        <path d="M10.286 4.855a1.453 1.453 0 0 1-1.027-2.48l-2.48 2.48Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.286 4.855a1.453 1.453 0 0 1-1.027-2.48"
+        />
+        <path d="M10.286 4.855a1.453 1.453 0 0 0-1.027 2.48l-2.48-2.48Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.286 4.855a1.453 1.453 0 0 0-1.027 2.48"
+        />
+        <path d="M2.487 3.7a1.634 1.634 0 0 0 0 2.31L1.332 4.856Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.487 3.7a1.634 1.634 0 0 0 0 2.31"
+        />
       </g>
     </Icon>
   );

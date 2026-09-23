@@ -20,7 +20,19 @@ export const RemoveUserIcon = forwardRef<SVGSVGElement, RemoveUserIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M3.868 3.97a2.663 2.663 0 1 0 5.326 0 2.663 2.663 0 1 0-5.326 0ZM1 15.443v-2.459c0-2.663 2.458-3.687 5.531-3.687 2.254 0 4.097.614 4.917 1.844m-.615-3.688h4.917"
+            d="M3.911 3.638a2.638 2.638 0 1 0 5.276 0 2.638 2.638 0 1 0-5.276 0ZM1.07 15v-2.435c0-2.638 2.435-3.652 5.479-3.652s5.478 1.014 5.478 3.652V15Z"
+          />
+          <path d="M12.027 13.783A1.217 1.217 0 0 1 10.81 15h1.217Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.027 13.783A1.217 1.217 0 0 1 10.81 15"
+          />
+          <path d="M2.288 15a1.217 1.217 0 0 1-1.217-1.217V15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.288 15a1.217 1.217 0 0 1-1.217-1.217m9.739-6.696h4.87"
           />
         </g>
       </Icon>

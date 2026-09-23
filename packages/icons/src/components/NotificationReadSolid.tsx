@@ -26,10 +26,29 @@ export const NotificationReadSolidIcon = forwardRef<
           fillRule="evenodd"
           d="M3.217 5.892q0-1.986 1.404-3.39t3.39-1.404 3.39 1.404q.793.794 1.138 1.774l-1.319 1.32-.718-.719a1.033 1.033 0 0 0-1.461 0l-.825.825a1.033 1.033 0 0 0 0 1.462l2.273 2.274a1.033 1.033 0 0 0 1.462 0l.866-.866 2.95 4.425H.255l2.962-4.444z"
         />
+        <path d="M3.152 8.65a.4.4 0 0 0 .065-.213v.116z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M6.278 14.557h3.466M8.01 1.848V.693M9.359 6.02l1.861 1.862 3.723-3.723"
+        />
+        <path d="M10.403 7.065a1.155 1.155 0 0 0 1.634 0l-.817.817Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.403 7.065a1.155 1.155 0 0 0 1.634 0"
+        />
+        <path d="M8.01.947a1 1 0 0 1-.802.982 4 4 0 0 1 .803-.08Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.01.947a1 1 0 0 1-.802.982"
+        />
+        <path d="M8.01.947a1 1 0 0 0 .803.982 4 4 0 0 0-.802-.08Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.01.947a1 1 0 0 0 .803.982"
         />
       </g>
     </Icon>

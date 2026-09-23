@@ -381,7 +381,7 @@ export async function checkSpecificDrawings(page, records) {
       for (const name of ["medical-kit.svg", "medical-kit_solid.svg"]) {
         const alpha = await render(name, weight);
         const paint = regions(alpha, name.endsWith("_solid.svg"));
-        const centerLabel = at(paint.labels, 8, 8);
+        const centerLabel = at(paint.labels, 8, 9.7);
         const cross = paint.components.find(
           (component) => component.id === centerLabel && !component.exterior,
         );
@@ -414,14 +414,15 @@ export async function checkSpecificDrawings(page, records) {
           },
           Math.abs(width - 6) <= 0.063 &&
             Math.abs(height - 6) <= 0.063 &&
-            center.every((value) => Math.abs(value - 8) <= 0.032) &&
-            Math.abs(cross.area - 23.75) <= 0.3,
+            Math.abs(center[0] - 8) <= 0.032 &&
+            Math.abs(center[1] - 9.7) <= 0.032 &&
+            Math.abs(cross.area - (23.75 + (4 - Math.PI) * 0.6 ** 2)) <= 0.3,
         );
         for (const [x, y, axis] of [
-          [8, 5.75, "x"],
-          [8, 10.25, "x"],
-          [5.75, 8, "y"],
-          [10.25, 8, "y"],
+          [8, 7.45, "x"],
+          [8, 11.95, "x"],
+          [5.75, 9.7, "y"],
+          [10.25, 9.7, "y"],
         ]) {
           const stemWidth = runWidth(mask, x, y, axis);
           record(
@@ -435,6 +436,34 @@ export async function checkSpecificDrawings(page, records) {
             },
             Math.abs(stemWidth - 2.5) <= 0.063,
           );
+        }
+        // Probe the four concave fillets independently of recipe paths.
+        // Each fills the sharp corner while retaining an open counter farther
+        // along the diagonal; full rounding or a crisp cross fails this test.
+        for (const horizontal of [-1, 1]) {
+          for (const vertical of [-1, 1]) {
+            const inner = at(
+              mask,
+              8 + horizontal * 1.35,
+              9.7 + vertical * 1.35,
+            );
+            const outer = at(
+              mask,
+              8 + horizontal * 1.75,
+              9.7 + vertical * 1.75,
+            );
+            record(
+              {
+                name,
+                weight,
+                feature: "medical cross curved inner junction",
+                quadrant: [horizontal, vertical],
+                inner,
+                outer,
+              },
+              inner >= 128 && outer < 128,
+            );
+          }
         }
         if (positive) {
           const delta = difference(mask, positive);

@@ -1,0 +1,3101 @@
+{
+  "results": [
+    {
+      "name": "dashboard.svg",
+      "weight": 0.67,
+      "feature": "separate painted parts",
+      "expected": 6,
+      "actual": 6,
+      "pass": true
+    },
+    {
+      "name": "dashboard.svg",
+      "weight": 1,
+      "feature": "separate painted parts",
+      "expected": 6,
+      "actual": 6,
+      "pass": true
+    },
+    {
+      "name": "dashboard.svg",
+      "weight": 1.3333333333333333,
+      "feature": "separate painted parts",
+      "expected": 6,
+      "actual": 6,
+      "pass": true
+    },
+    {
+      "name": "dashboard.svg",
+      "weight": 1.5,
+      "feature": "separate painted parts",
+      "expected": 6,
+      "actual": 6,
+      "pass": true
+    },
+    {
+      "name": "dashboard_solid.svg",
+      "weight": 0.67,
+      "feature": "separate painted parts",
+      "expected": 2,
+      "actual": 2,
+      "pass": true
+    },
+    {
+      "name": "dashboard_solid.svg",
+      "weight": 0.67,
+      "feature": "four ticks and one needle opening",
+      "expected": 5,
+      "actual": 5,
+      "pass": true
+    },
+    {
+      "name": "dashboard_solid.svg",
+      "weight": 0.67,
+      "feature": "retained pair silhouette bounds",
+      "drift": 0,
+      "pass": true
+    },
+    {
+      "name": "dashboard_solid.svg",
+      "weight": 1,
+      "feature": "separate painted parts",
+      "expected": 2,
+      "actual": 2,
+      "pass": true
+    },
+    {
+      "name": "dashboard_solid.svg",
+      "weight": 1,
+      "feature": "four ticks and one needle opening",
+      "expected": 5,
+      "actual": 5,
+      "pass": true
+    },
+    {
+      "name": "dashboard_solid.svg",
+      "weight": 1,
+      "feature": "retained pair silhouette bounds",
+      "drift": 0,
+      "pass": true
+    },
+    {
+      "name": "dashboard_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "separate painted parts",
+      "expected": 2,
+      "actual": 2,
+      "pass": true
+    },
+    {
+      "name": "dashboard_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "four ticks and one needle opening",
+      "expected": 5,
+      "actual": 5,
+      "pass": true
+    },
+    {
+      "name": "dashboard_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "retained pair silhouette bounds",
+      "drift": 0,
+      "pass": true
+    },
+    {
+      "name": "dashboard_solid.svg",
+      "weight": 1.5,
+      "feature": "separate painted parts",
+      "expected": 2,
+      "actual": 2,
+      "pass": true
+    },
+    {
+      "name": "dashboard_solid.svg",
+      "weight": 1.5,
+      "feature": "four ticks and one needle opening",
+      "expected": 5,
+      "actual": 5,
+      "pass": true
+    },
+    {
+      "name": "dashboard_solid.svg",
+      "weight": 1.5,
+      "feature": "retained pair silhouette bounds",
+      "drift": 0,
+      "pass": true
+    },
+    {
+      "name": "edit.svg",
+      "weight": 0.67,
+      "feature": "separate painted parts",
+      "expected": 1,
+      "actual": 1,
+      "pass": true
+    },
+    {
+      "name": "edit.svg",
+      "weight": 1,
+      "feature": "separate painted parts",
+      "expected": 1,
+      "actual": 1,
+      "pass": true
+    },
+    {
+      "name": "edit.svg",
+      "weight": 1.3333333333333333,
+      "feature": "separate painted parts",
+      "expected": 1,
+      "actual": 1,
+      "pass": true
+    },
+    {
+      "name": "edit.svg",
+      "weight": 1.5,
+      "feature": "separate painted parts",
+      "expected": 1,
+      "actual": 1,
+      "pass": true
+    },
+    {
+      "name": "edit_solid.svg",
+      "weight": 0.67,
+      "feature": "separate painted parts",
+      "expected": 1,
+      "actual": 1,
+      "pass": true
+    },
+    {
+      "name": "edit_solid.svg",
+      "weight": 0.67,
+      "feature": "retained pair silhouette bounds",
+      "drift": 0,
+      "pass": true
+    },
+    {
+      "name": "edit_solid.svg",
+      "weight": 1,
+      "feature": "separate painted parts",
+      "expected": 1,
+      "actual": 1,
+      "pass": true
+    },
+    {
+      "name": "edit_solid.svg",
+      "weight": 1,
+      "feature": "retained pair silhouette bounds",
+      "drift": 0,
+      "pass": true
+    },
+    {
+      "name": "edit_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "separate painted parts",
+      "expected": 1,
+      "actual": 1,
+      "pass": true
+    },
+    {
+      "name": "edit_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "retained pair silhouette bounds",
+      "drift": 0,
+      "pass": true
+    },
+    {
+      "name": "edit_solid.svg",
+      "weight": 1.5,
+      "feature": "separate painted parts",
+      "expected": 1,
+      "actual": 1,
+      "pass": true
+    },
+    {
+      "name": "edit_solid.svg",
+      "weight": 1.5,
+      "feature": "retained pair silhouette bounds",
+      "drift": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9719422805830773,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9719422805830773,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.7590096578557137,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.7590096578557137,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.5439262005553467,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.5439262005553467,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.43638447190516305,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.43638447190516305,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9719422805830773,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9719422805830773,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.7590096578557137,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.7590096578557137,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.5439262005553467,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.5439262005553467,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.43638447190516305,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-upload_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.43638447190516305,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-download.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-download.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9034417913266473,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-download.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-download.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9034417913266473,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-download.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-download.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.6905091685992839,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-download.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-download.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.6905091685992839,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-download.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-download.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.47542571129891686,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-download.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-download.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.47542571129891686,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-download.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-download.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.367883982648733,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-download.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-download.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.367883982648733,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-download_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-download_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9034417913266473,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-download_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-download_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9034417913266473,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-download_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-download_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.6905091685992839,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-download_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-download_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.6905091685992839,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-download_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-download_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.47542571129891686,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-download_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-download_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.47542571129891686,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-download_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-download_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.367883982648733,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-download_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-download_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.367883982648733,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.787922133307414,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.787922133307414,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.5749895105800507,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.5749895105800507,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.3599060532796836,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.3599060532796836,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.25236432462949976,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.25236432462949976,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.787922133307414,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.787922133307414,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.5749895105800507,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.5749895105800507,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.3599060532796836,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.3599060532796836,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.25236432462949976,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.25236432462949976,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.787922133307414,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.787922133307414,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.5749895105800507,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.5749895105800507,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.3599060532796836,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.3599060532796836,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.25236432462949976,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.25236432462949976,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.787922133307414,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.787922133307414,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.5749895105800507,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.5749895105800507,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.3599060532796836,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.3599060532796836,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.25236432462949976,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.25236432462949976,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld -1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "weight": 0.67,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "weight": 0.67,
+      "feature": "visible inner weld 1",
+      "exposed": 0.9429366309776741,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld -1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "weight": 1,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "weight": 1,
+      "feature": "visible inner weld 1",
+      "exposed": 0.6767708525684699,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld -1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "visible inner weld 1",
+      "exposed": 0.40791653094301106,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm -1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld -1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "weight": 1.5,
+      "feature": "straight head arm 1",
+      "alpha": 0,
+      "pass": true
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "weight": 1.5,
+      "feature": "visible inner weld 1",
+      "exposed": 0.27348937013028185,
+      "alpha": 1,
+      "pass": true
+    }
+  ],
+  "failures": []
+}

@@ -24,6 +24,54 @@ export const XlsIcon = forwardRef<SVGSVGElement, XlsIconProps>(function XlsIcon(
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M1.898 8.212V1h7.766l4.438 4.438v2.774M9.664 1v4.438h4.438"
         />
+        <path d="M1.898 2.11A1.11 1.11 0 0 1 3.008 1h-1.11Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.898 2.11A1.11 1.11 0 0 1 3.008 1"
+        />
+        <path d="M9.205 1a1.1 1.1 0 0 1 .784.325L9.664 1Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M9.205 1a1.1 1.1 0 0 1 .784.325"
+        />
+        <path d="M13.777 5.113a1.1 1.1 0 0 1 .325.785v-.46Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.777 5.113a1.1 1.1 0 0 1 .325.785"
+        />
+        <path d="M9.664 4.329a1.11 1.11 0 0 0 1.11 1.11h-1.11Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M9.664 4.329a1.11 1.11 0 0 0 1.11 1.11"
+        />
+        <path d="M11.233 2.57a.92.92 0 0 0-1.569.649V1Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M11.233 2.57a.92.92 0 0 0-1.569.649"
+        />
+        <path d="M9.664 2.11A1.11 1.11 0 0 0 8.554 1h1.11Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M9.664 2.11A1.11 1.11 0 0 0 8.554 1"
+        />
+        <path d="M14.102 6.548a1.11 1.11 0 0 0-1.11-1.11h1.11Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M14.102 6.548a1.11 1.11 0 0 0-1.11-1.11"
+        />
+        <path d="M11.883 5.438a.92.92 0 0 0 .65-1.569l1.57 1.57Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M11.883 5.438a.92.92 0 0 0 .65-1.569"
+        />
         <path
           fillRule="evenodd"
           d="M5.646 15.535h-.674l-1.379-2.248-1.4 2.248h-.632l1.7-2.66L1.68 10.43h.66l1.274 2.035 1.281-2.035h.629l-1.578 2.433Z"

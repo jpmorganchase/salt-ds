@@ -22,6 +22,42 @@ export const DatasetIcon = forwardRef<SVGSVGElement, DatasetIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M1.583 3.917c0-3.89 12.834-3.89 12.834 0s-12.834 3.889-12.834 0Zm0 0v8.166c0 3.89 12.834 3.89 12.834 0V3.917M1.583 8c0 3.889 12.834 3.889 12.834 0"
           />
+          <path
+            fillRule="evenodd"
+            d="M1.583 7.339q0-2.207 1.59-1.42c-.969-.48-1.59-1.147-1.59-2.002Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.583 7.339q0-2.207 1.59-1.42"
+          />
+          <path
+            fillRule="evenodd"
+            d="M14.417 7.339q0-2.207-1.59-1.42c.969-.48 1.59-1.147 1.59-2.002Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M14.417 7.339q0-2.207-1.59-1.42"
+          />
+          <path
+            fillRule="evenodd"
+            d="M1.583 11.422q0-2.206 1.59-1.42c-.969-.48-1.59-1.146-1.59-2.002Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.583 11.422q0-2.206 1.59-1.42"
+          />
+          <path
+            fillRule="evenodd"
+            d="M14.417 11.422q0-2.206-1.59-1.42c.969-.48 1.59-1.146 1.59-2.002Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M14.417 11.422q0-2.206-1.59-1.42"
+          />
         </g>
       </Icon>
     );

@@ -1,3 +1,53 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" stroke-width="0.67" viewBox="0 0 16 16">
   <path fill="none" stroke="currentColor" stroke-width="0.67" d="M1 5.751201h3.76923l8.076923-3.230769v9.692307L4.769231 8.98197H1Zm3.76923 0V8.98197m-2.153845 0v4.846154h2.692307L4.769231 8.98197m10.230768-3.76923v4.307692"/>
+  <path fill="currentColor" d="M4.561815 5.751201a1.0769 1.0769 0 0 0 .39997-.077l-.192554.077Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M4.561815 5.751201a1.0769 1.0769 0 0 0 .39997-.077"/>
+  <path fill="currentColor" d="M11.36926 3.111232a1.076923 1.076923 0 0 1 1.476893.999815V2.520432Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M11.36926 3.111232a1.076923 1.076923 0 0 1 1.476893.999815"/>
+  <path fill="currentColor" d="M12.846153 10.622124a1.076923 1.076923 0 0 1-1.476892.999815l1.476892.5908Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M12.846153 10.622124a1.076923 1.076923 0 0 1-1.476892.999815"/>
+  <path fill="currentColor" d="M4.961784 9.05897a1.0769 1.0769 0 0 0-.399969-.077h.207416Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M4.961784 9.05897a1.0769 1.0769 0 0 0-.399969-.077"/>
+  <path fill="currentColor" d="M2.076923 8.98197A1.076923 1.076923 0 0 1 1 7.905047V8.98197Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M2.076923 8.98197A1.076923 1.076923 0 0 1 1 7.905047"/>
+  <path fill="currentColor" d="M1 6.828124a1.076923 1.076923 0 0 1 1.076923-1.076923H1Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M1 6.828124a1.076923 1.076923 0 0 1 1.076923-1.076923"/>
+  <path fill="currentColor" d="M2.615385 12.7512a1.076923 1.076923 0 0 0 1.076923 1.076923H2.615384Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M2.615385 12.7512a1.076923 1.076923 0 0 0 1.076923 1.076923"/>
+  <path fill="currentColor" d="M4.104446 13.828124a1.076923 1.076923 0 0 0 1.070461-1.195816l.132785 1.195816Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M4.104446 13.828124a1.076923 1.076923 0 0 0 1.070461-1.195816"/>
+  <path fill="currentColor" d="M4.76923 6.828124a1.076923 1.076923 0 0 0-1.076922-1.076923H4.76923Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M4.76923 6.828124a1.076923 1.076923 0 0 0-1.076922-1.076923"/>
+  <path fill="currentColor" d="M4.561815 5.751201a1.0769 1.0769 0 0 0 .39997-.077l-.192554.077Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M4.561815 5.751201a1.0769 1.0769 0 0 0 .39997-.077"/>
+  <path fill="currentColor" d="M5.446184 5.480463a1.07692 1.07692 0 0 0-.676953.999815V5.7512Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M5.446184 5.480463a1.07692 1.07692 0 0 0-.676953.999815"/>
+  <path fill="currentColor" d="M6.43803 9.649447a1.076923 1.076923 0 0 0-1.470323 1.118923l-.198476-1.7864Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M6.43803 9.649447a1.076923 1.076923 0 0 0-1.470323 1.118923"/>
+  <path fill="currentColor" d="M4.87563 9.94a1.076923 1.076923 0 0 0-1.070246-.95803h.963847Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M4.87563 9.94a1.076923 1.076923 0 0 0-1.070246-.95803"/>
+  <path fill="currentColor" d="M3.692308 8.98197A1.076923 1.076923 0 0 0 4.76923 7.905047V8.98197Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M3.692308 8.98197A1.076923 1.076923 0 0 0 4.76923 7.905047"/>
+  <path fill="currentColor" d="M4.76923 8.252893a1.07692 1.07692 0 0 0 .676954.999815l-.676953-.270738Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M4.76923 8.252893a1.07692 1.07692 0 0 0 .676954.999815"/>
+  <path fill="currentColor" d="M3.692308 8.98197a1.076923 1.076923 0 0 0-1.076923 1.076923V8.98197Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M3.692308 8.98197a1.076923 1.076923 0 0 0-1.076923 1.076923"/>
+  <path fill="currentColor" d="M2.615385 9.789662a.80769.80769 0 0 0-.807693-.807692h.807693Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M2.615385 9.789662a.80769.80769 0 0 0-.807693-.807692"/>
+  <path fill="currentColor" d="M1.538462 8.98197a1.076923 1.076923 0 0 1 1.076923 1.076923V8.98197Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M1.538462 8.98197a1.076923 1.076923 0 0 1 1.076923 1.076923"/>
+  <path fill="currentColor" d="M3.692308 8.98197a1.076923 1.076923 0 0 0-1.076923 1.076923V8.98197Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M3.692308 8.98197a1.076923 1.076923 0 0 0-1.076923 1.076923"/>
+  <path fill="currentColor" d="M3.805384 8.98197A1.076923 1.076923 0 0 1 4.87563 9.94l-.1064-.95803Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M3.805384 8.98197A1.076923 1.076923 0 0 1 4.87563 9.94"/>
+  <path fill="currentColor" d="M4.967707 10.768262A1.076923 1.076923 0 0 1 6.43803 9.649447l-1.6688-.667477Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M4.967707 10.768262A1.076923 1.076923 0 0 1 6.43803 9.649447"/>
+  <path fill="currentColor" d="M3.692308 5.751201A1.076923 1.076923 0 0 1 4.76923 6.828124V5.751201Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M3.692308 5.751201A1.076923 1.076923 0 0 1 4.76923 6.828124"/>
+  <path fill="currentColor" d="M4.76923 6.480278a1.07692 1.07692 0 0 1 .676954-.999815l-.676953.270738Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M4.76923 6.480278a1.07692 1.07692 0 0 1 .676954-.999815"/>
+  <path fill="currentColor" d="M4.76923 8.252893a1.07692 1.07692 0 0 0 .676954.999815l-.676953-.270738Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M4.76923 8.252893a1.07692 1.07692 0 0 0 .676954.999815"/>
+  <path fill="currentColor" d="M3.692308 8.98197A1.076923 1.076923 0 0 0 4.76923 7.905047V8.98197Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M3.692308 8.98197A1.076923 1.076923 0 0 0 4.76923 7.905047"/>
 </svg>

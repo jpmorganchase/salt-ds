@@ -29,15 +29,15 @@ export async function checkPairFeatures(page, records, fittedRecords) {
     "step-success.svg": successProbes,
     "info_solid.svg": [
       { feature: "inverse i stem", point: [8, 9.8], normal: [1, 0] },
-      ...dotProbes([8, 3.75]),
+      ...dotProbes([8, 4]),
     ],
     "error_solid.svg": [
       { feature: "inverse error stem", point: [8, 6.375], normal: [1, 0] },
-      ...dotProbes([8, 10.375]),
+      ...dotProbes([8, 12]),
     ],
     "warning_solid.svg": [
       { feature: "inverse warning stem", point: [8, 8], normal: [1, 0] },
-      ...dotProbes([8, 12]),
+      ...dotProbes([8, 12.375]),
     ],
     "chatting_solid.svg": [4, 8, 12].flatMap((x, index) =>
       dotProbes([x, 6.5], `inverse chat dot ${index + 1}`).map((probe) => ({

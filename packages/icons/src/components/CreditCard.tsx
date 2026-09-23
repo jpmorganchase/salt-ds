@@ -20,7 +20,55 @@ export const CreditCardIcon = forwardRef<SVGSVGElement, CreditCardIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1 3.154h14v9.692H1Zm0 3.231h14M3.154 10.154h3.23"
+            d="M1 3.154h14v9.692H1Z"
+          />
+          <path d="M13.923 3.154A1.077 1.077 0 0 1 15 4.23V3.154Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.923 3.154A1.077 1.077 0 0 1 15 4.23"
+          />
+          <path d="M15 11.77a1.077 1.077 0 0 1-1.077 1.076H15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M15 11.77a1.077 1.077 0 0 1-1.077 1.076"
+          />
+          <path d="M2.077 12.846A1.077 1.077 0 0 1 1 11.77v1.077Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.077 12.846A1.077 1.077 0 0 1 1 11.77"
+          />
+          <path d="M1 4.23a1.077 1.077 0 0 1 1.077-1.076H1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1 4.23a1.077 1.077 0 0 1 1.077-1.076M1 6.385h14M3.154 10.154h3.23"
+          />
+          <path d="M2.292 6.385A1.29 1.29 0 0 1 1 5.092v1.293Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.292 6.385A1.29 1.29 0 0 1 1 5.092"
+          />
+          <path d="M2.292 6.385A1.29 1.29 0 0 0 1 7.677V6.385Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.292 6.385A1.29 1.29 0 0 0 1 7.677"
+          />
+          <path d="M13.708 6.385A1.29 1.29 0 0 0 15 5.092v1.293Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.708 6.385A1.29 1.29 0 0 0 15 5.092"
+          />
+          <path d="M13.708 6.385A1.29 1.29 0 0 1 15 7.677V6.385Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.708 6.385A1.29 1.29 0 0 1 15 7.677"
           />
         </g>
       </Icon>

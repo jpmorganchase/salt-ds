@@ -5,20 +5,37 @@ export async function checkCutoutContours(page, records) {
   const cases = [
     {
       name: "cloud-sync_solid.svg",
+      // The upper arrow's two diagonal offsets are measured from its final
+      // centerlines, independently of the subtracted SVG contour. Midpoint
+      // secondary arrow paint is .8 * 7/6 wide, with a 0.75-unit normal clearance.
       probes: [
-        ["upper diagonal before shaft", 7.39917, 4.867723],
-        ["upper diagonal at shaft corner", 7.472067, 4.794826],
-        ["upper diagonal below shaft corner", 7.565793, 4.7011],
-        ["upper diagonal after shaft", 7.69076, 4.576133],
-        ["lower diagonal at shaft corner", 9.877687, 4.721928],
-        ["lower diagonal below shaft corner", 9.960999, 4.80524],
-      ].map(([feature, y, expectedX]) => ({
+        ...[7.45, 7.65, 7.85, 8.05].map((y) => ({
+          feature: `upper diagonal at y${y}`,
+          y,
+          expectedX:
+            14.5 * 1.022222 -
+            0.177778 -
+            0.245833 -
+            Math.SQRT2 * (.8 * 7 / 12 + 0.75) -
+            y,
+        })),
+        ...[9.6, 9.85, 10.1].map((y) => ({
+          feature: `lower diagonal at y${y}`,
+          y,
+          expectedX:
+            y -
+            (3.5 * 1.022222 -
+              0.245833 +
+              0.177778 +
+              Math.SQRT2 * (.8 * 7 / 12 + 0.75)),
+        })),
+      ].map(({ feature, y, expectedX }) => ({
         feature,
-        origin: [4.35, y],
+        origin: [3.7, y],
         direction: [1, 0],
-        length: 0.85,
+        length: expectedX - 3.7 + 0.3,
         transition: "exit",
-        expectedDistance: expectedX - 4.35,
+        expectedDistance: expectedX - 3.7,
         tolerance: 0.02,
       })),
     },

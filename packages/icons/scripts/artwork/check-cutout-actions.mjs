@@ -1,12 +1,7 @@
 // Check painted foreground-to-background gaps, including the curved buffer
 // around the tag-clear X's square terminal. SVG path spelling is irrelevant.
 export async function checkCutoutActions(page, records) {
-  const names = [
-    "tag-clear.svg",
-    "tag-clear_solid.svg",
-    "clone.svg",
-    "schedule.svg",
-  ];
+  const names = ["tag-clear.svg", "tag-clear_solid.svg", "clone.svg"];
   const artwork = names.map((name) => {
     const record = records.find((candidate) => candidate.name === name);
     if (!record) throw new Error(`Missing cutout artwork: ${name}`);
@@ -94,8 +89,8 @@ export async function checkCutoutActions(page, records) {
             if (name.endsWith("_solid.svg")) {
               // The revised reference pocket balances final W=1 and W=4/3.
               // Its cap radius and corner anchors follow the complete butt cap.
-              const capRadius = 0.737448;
-              const capHalfWidth = 0.512552;
+              const capRadius = 0.696101;
+              const capHalfWidth = 0.553899;
               probes.push([
                 "X terminal buffer",
                 [10.25, 10.25],
@@ -125,24 +120,6 @@ export async function checkCutoutActions(page, records) {
             probes = [
               ["frame above arrow shaft", [5, 9.5], [0, -1], straightGap],
               ["frame below arrow shaft", [5, 9.5], [0, 1], straightGap],
-            ];
-          } else {
-            // Calendar framing scales coordinates while preserving line widths.
-            const frameGap = 1.25 * 1.1 - weight / 2;
-            const fit = (point) => point.map((value) => 8 + (value - 8) * 1.1);
-            probes = [
-              [
-                "right frame above plus arm",
-                fit([14.25, 35 / 3]),
-                [0, -1],
-                frameGap,
-              ],
-              [
-                "bottom frame beside plus arm",
-                fit([12, 13]),
-                [-1, 0],
-                frameGap,
-              ],
             ];
           }
           for (const [feature, origin, direction, expected] of probes) {

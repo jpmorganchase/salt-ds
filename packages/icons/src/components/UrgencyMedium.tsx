@@ -22,7 +22,19 @@ export const UrgencyMediumIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M.625 8.104 8 3.802l7.375 4.302M.625 12.407 8 8.104l7.375 4.303"
+          d="M.625 8.104 8 3.802l7.375 4.302"
+        />
+        <path d="M7.38 4.164a1.23 1.23 0 0 1 1.24 0L8 3.802Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.38 4.164a1.23 1.23 0 0 1 1.24 0M.625 12.407 8 8.104l7.375 4.303"
+        />
+        <path d="M7.38 8.466a1.23 1.23 0 0 1 1.24 0L8 8.104Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.38 8.466a1.23 1.23 0 0 1 1.24 0"
         />
       </g>
     </Icon>

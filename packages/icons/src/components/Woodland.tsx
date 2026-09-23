@@ -20,7 +20,35 @@ export const WoodlandIcon = forwardRef<SVGSVGElement, WoodlandIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.468 12.837A3.532 3.532 0 0 1 3.46 5.942a4.54 4.54 0 0 1 9.082 0 3.532 3.532 0 0 1-1.01 6.895ZM8 4.765v10.594m0-6.558 3.027-2.018M8 11.323 5.982 9.305"
+            d="M4.468 12.837A3.532 3.532 0 0 1 3.46 5.942a4.54 4.54 0 0 1 9.082 0 3.532 3.532 0 0 1-1.01 6.895Z"
+          />
+          <path d="M2.947 6.151a1.01 1.01 0 0 0 .548-.776 5 5 0 0 0-.036.567 3.5 3.5 0 0 0-.512.209" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.947 6.151a1.01 1.01 0 0 0 .548-.776"
+          />
+          <path d="M12.505 5.375a1.01 1.01 0 0 0 .548.776 3.5 3.5 0 0 0-.512-.21 5 5 0 0 0-.036-.566" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.505 5.375a1.01 1.01 0 0 0 .548.776M8 12.837v2.522"
+          />
+          <path d="M6.89 12.837A1.11 1.11 0 0 1 8 13.947v-1.11Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.89 12.837A1.11 1.11 0 0 1 8 13.947"
+          />
+          <path d="M9.11 12.837A1.11 1.11 0 0 0 8 13.947v-1.11Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.11 12.837A1.11 1.11 0 0 0 8 13.947"
+          />
+          <path
+            fillRule="evenodd"
+            d="M7.395 4.765h1.21v2.15a.404.404 0 0 0 .628.336l1.458-.972.672 1.007-2.578 1.719a.4.4 0 0 0-.18.336v3.496h-1.21V11.74a.4.4 0 0 0-.119-.285L5.554 9.733l.856-.856.296.296a.404.404 0 0 0 .689-.286Z"
           />
         </g>
       </Icon>

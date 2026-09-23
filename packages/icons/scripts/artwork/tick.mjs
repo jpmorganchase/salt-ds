@@ -1,3 +1,4 @@
+import { concaveMark } from "./b-junctions.mjs";
 // Keep inverse ticks on the same three-point gesture as their stroked partner.
 // The contour uses the same flat caps and mitered elbow as the stroke helper.
 export const tickPaths = (points, counterWidth = 1.5) => {
@@ -29,5 +30,5 @@ export const tickPaths = (points, counterWidth = 1.5) => {
     vertices
       .map((point) => point.map((value) => Number(value.toFixed(5))).join(" "))
       .join("L");
-  return { line: path(points), counter: `${path(contour)}Z` };
+  return { line: path(points), counter: concaveMark(contour, [0, 0, 0, 0, counterWidth * .3, 0]) };
 };

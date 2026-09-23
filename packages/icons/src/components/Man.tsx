@@ -22,7 +22,31 @@ export const ManIcon = forwardRef<SVGSVGElement, ManIconProps>(function ManIcon(
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M6.385 2.615a1.615 1.615 0 1 0 3.23 0 1.615 1.615 0 1 0-3.23 0Zm-1.077 3.77h5.384v4.307h-.538V15H5.846v-4.308h-.538ZM8 10.692V15"
+          d="M6.385 2.615a1.615 1.615 0 1 0 3.23 0 1.615 1.615 0 1 0-3.23 0Zm-1.077 3.77h5.384v4.307h-.538V15H5.846v-4.308h-.538Z"
+        />
+        <path d="M9.615 6.385a1.077 1.077 0 0 1 1.077 1.077V6.385Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M9.615 6.385a1.077 1.077 0 0 1 1.077 1.077"
+        />
+        <path d="M10.154 13.923A1.077 1.077 0 0 1 9.077 15h1.077Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.154 13.923A1.077 1.077 0 0 1 9.077 15"
+        />
+        <path d="M6.923 15a1.077 1.077 0 0 1-1.077-1.077V15Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.923 15a1.077 1.077 0 0 1-1.077-1.077"
+        />
+        <path d="M5.308 7.462a1.077 1.077 0 0 1 1.077-1.077H5.308Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M5.308 7.462a1.077 1.077 0 0 1 1.077-1.077M8 10.692V15"
         />
       </g>
     </Icon>

@@ -21,12 +21,48 @@ export const CloudDownloadSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M4.368 10.66q-1.657 0-2.828-1.171T.368 6.66q0-3.31 3.178-3.917Q5.042.24 8 .24q3.95 0 4.994 3.713 2.638.523 2.638 3.314 0 3.395-3.395 3.395H9.376V6.165q0-.078-.016-.155t-.045-.148-.073-.137-.098-.12-.12-.099-.137-.073-.149-.045-.155-.015H7.417q-.078 0-.155.015-.076.015-.148.045-.073.03-.137.073-.065.044-.12.099-.056.055-.1.12t-.072.137-.045.148q-.016.077-.016.155v4.496z"
+          d="M4.497 11.241q-1.762 0-3.008-1.246T.243 6.988q0-3.326 3.015-4.085a.53.53 0 0 0 .31-.217Q5.118.399 8 .399q3.985 0 5.127 3.633a7 7 0 0 0-.084-.253.53.53 0 0 0 .347.33q2.367.714 2.367 3.463 0 3.67-3.67 3.67h-2.87V6.51q0-.037-.004-.073-.004-.037-.01-.073t-.019-.072-.024-.07-.032-.066-.038-.063-.044-.059-.049-.054-.055-.05-.059-.044-.063-.037-.066-.032-.07-.025-.071-.018-.073-.01q-.036-.004-.073-.004h-.934q-.037 0-.073.004-.037.003-.073.01t-.071.018-.07.025-.066.032-.063.037-.06.044-.054.05-.05.054-.043.06-.038.062-.032.067-.024.07-.018.07-.011.074-.004.073v4.731Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M8 6.165v8.529m-2.201-2.201L8 14.693l2.201-2.2"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.8)"
+          d="M8 6.51v8.227m-2.123-2.123L8 14.737l2.123-2.123"
+        />
+        <path d="M7.4 14.137a.85.85 0 0 0 1.2 0l-.6.6Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.8)"
+          d="M7.4 14.137a.85.85 0 0 0 1.2 0"
+        />
+        <path d="M6.938 13.676A.622.622 0 0 0 8 13.236v1.501Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.8)"
+          d="M6.938 13.676A.622.622 0 0 0 8 13.236"
+        />
+        <path d="M8 13.236a.622.622 0 0 0 1.062.44L8 14.737Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.8)"
+          d="M8 13.236a.622.622 0 0 0 1.062.44"
+        />
+        <path d="M8 12.738a.828.828 0 0 1-1.414.586L8 14.737Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.8)"
+          d="M8 12.738a.828.828 0 0 1-1.414.586"
+        />
+        <path d="M8 12.738a.828.828 0 0 0 1.414.586L8 14.737Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.8)"
+          d="M8 12.738a.828.828 0 0 0 1.414.586"
         />
       </g>
     </Icon>

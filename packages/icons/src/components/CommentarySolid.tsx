@@ -21,7 +21,31 @@ export const CommentarySolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M.25.573h15.5v11.625H5.417l-3.875 3.23v-3.23H.25Zm3.23 2.583h9.04v1.292H3.48Zm0 2.584h9.04v1.29H3.48Zm0 2.583h5.812v1.292H3.479Z"
+          d="M1.136 1h13.728v10.296H6.246q-.534 0-.954.351l-3.012 2.51v-1.793a1.07 1.07 0 0 0-1.068-1.068h-.076Zm2.86 2.288h8.008v1.144H3.996Zm0 2.288h8.008V6.72H3.996Zm0 2.288h5.148v1.144H3.996Z"
+        />
+        <path d="M11.623 3.288a.38.38 0 0 1 .381.381v-.381zm.381.762a.38.38 0 0 1-.381.382h.381zm-7.627.382a.38.38 0 0 1-.381-.381v.381zm-.381-.762a.38.38 0 0 1 .381-.382h-.381zm7.627 1.906a.38.38 0 0 1 .381.381v-.38zm.381.763a.38.38 0 0 1-.381.381h.381zm-7.627.381a.38.38 0 0 1-.381-.381v.381zm-.381-.763a.38.38 0 0 1 .381-.38h-.381zm4.767 1.907a.38.38 0 0 1 .381.381v-.38zm.381.763a.38.38 0 0 1-.381.381h.381zm-4.767.381a.38.38 0 0 1-.381-.381v.381zm-.381-.763a.38.38 0 0 1 .381-.38h-.381z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.136 1h13.728v10.296H6.246q-.534 0-.954.351l-3.012 2.51v-1.793a1.07 1.07 0 0 0-1.068-1.068h-.076Z"
+        />
+        <path d="M13.72 1a1.144 1.144 0 0 1 1.144 1.144V1Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.72 1a1.144 1.144 0 0 1 1.144 1.144"
+        />
+        <path d="M14.864 10.152a1.144 1.144 0 0 1-1.144 1.144h1.144Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M14.864 10.152a1.144 1.144 0 0 1-1.144 1.144"
+        />
+        <path d="M1.136 2.144A1.144 1.144 0 0 1 2.28 1H1.136Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.136 2.144A1.144 1.144 0 0 1 2.28 1"
         />
       </g>
     </Icon>

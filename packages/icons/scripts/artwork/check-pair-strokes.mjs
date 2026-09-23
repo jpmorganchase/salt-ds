@@ -18,7 +18,8 @@ export async function checkPairStrokes(page, records) {
     },
     {
       name: "building",
-      feature: "doorway baseline",
+      feature: "open doorway at ground",
+      open: true,
       point: [8, 14.5],
       axis: "y",
       span: 1,
@@ -150,11 +151,15 @@ export async function checkPairStrokes(page, records) {
       artwork,
       span = 1.125,
       factor = 1,
+      open = false,
     } of samples) {
-      for (const weight of [0.67]) {
+      for (const weight of open ? [0.67, 1, 4 / 3, 1.5] : [0.67]) {
         const measurements = [];
         for (const svg of artwork) {
-          const markup = svg.replace("<svg ", '<svg style="color:black" ');
+          const markup = svg.replace("<svg ", '<svg style="color:black" ').replace(
+            /stroke-width="([\d.]+)"/g,
+            (_, width) => `stroke-width="${Number(width) * weight / .67}"`,
+          );
           const url = URL.createObjectURL(
             new Blob([markup], { type: "image/svg+xml" }),
           );
@@ -197,6 +202,12 @@ export async function checkPairStrokes(page, records) {
         const result = { name, feature, weight, point, axis, outline, solid };
         results.push(result);
         const tolerance = 2 / scale;
+        if (open) {
+          // The accepted doorway is open to the ground in both variants.
+          // Repainting the former baseline is a regression, not a rim to match.
+          if (measurements.some((m) => m.width > tolerance)) failures.push(result);
+          continue;
+        }
         if (
           measurements.some(
             (m) => Math.abs(m.width - weight * factor) > tolerance,

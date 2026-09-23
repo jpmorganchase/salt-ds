@@ -24,6 +24,30 @@ export const UrgencyOntimeIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M1.531 8 8 3.522 14.469 8 8 12.478Z"
         />
+        <path d="M7.434 3.914a.995.995 0 0 1 1.132 0L8 3.522Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.434 3.914a.995.995 0 0 1 1.132 0"
+        />
+        <path d="M13.287 7.182a.995.995 0 0 1 0 1.636L14.469 8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.287 7.182a.995.995 0 0 1 0 1.636"
+        />
+        <path d="M8.566 12.086a.995.995 0 0 1-1.132 0l.566.392Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.566 12.086a.995.995 0 0 1-1.132 0"
+        />
+        <path d="M2.713 8.818a.995.995 0 0 1 0-1.636L1.531 8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.713 8.818a.995.995 0 0 1 0-1.636"
+        />
       </g>
     </Icon>
   );

@@ -20,16 +20,19 @@ export const ChartLineIcon = forwardRef<SVGSVGElement, ChartLineIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1 .25V15h14.75"
+            d="M1 .531V14.72h14.187"
+          />
+          <path d="M1 13.627a1.09 1.09 0 0 0 1.091 1.092H1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1 13.627a1.09 1.09 0 0 0 1.091 1.092m2.606-4.182 1.7-2.55m1.514-.302 1.457.972m1.534-.289 2.568-3.669"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M3.837 11.596 7.24 7.058l3.404 2.269 3.971-5.673"
-          />
-          <path
-            fillRule="evenodd"
-            d="M2.702 11.596a1.135 1.135 0 1 0 2.27 0 1.135 1.135 0 1 0-2.27 0m3.404-4.538a1.135 1.135 0 1 0 2.269 0 1.135 1.135 0 1 0-2.27 0M9.51 9.327a1.135 1.135 0 1 0 2.269 0 1.135 1.135 0 1 0-2.27 0m3.971-5.673a1.135 1.135 0 1 0 2.27 0 1.135 1.135 0 1 0-2.27 0"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.75)"
+            d="M3 11.445a1.091 1.091 0 1 0 2.183 0 1.091 1.091 0 1 0-2.182 0ZM5.911 7.08a1.091 1.091 0 1 0 2.183 0 1.091 1.091 0 1 0-2.183 0Zm3.274 2.182a1.091 1.091 0 1 0 2.183 0 1.091 1.091 0 1 0-2.183 0Zm3.82-5.457a1.091 1.091 0 1 0 2.182 0 1.091 1.091 0 1 0-2.182 0Z"
           />
         </g>
       </Icon>

@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 1,
+  "reviews": {
+    "announcement.svg": {
+      "fingerprint": "f6b043f26869a906c0ae7374023a3136facb6bbfeac523b1da5f55d3a923050b",
+      "reviewer": "Codex",
+      "rationale": "Megaphone, handle and separate sound bar remain distinct at native size. Both rear cavity roots, horn opening and handle turns have exposed curved interiors; silhouette points and terminals remain sharp.",
+      "evidence": [
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/catalogue-01.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/components-light.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/components-dark.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/masks-light.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/masks-dark.png"
+      ],
+      "checks": {
+        "native12": true,
+        "native16": true,
+        "light": true,
+        "dark": true,
+        "referenceWeight": true,
+        "lightWeight": true,
+        "standardWeight": true,
+        "heavyWeight": true,
+        "completeDrawing": true,
+        "components": true,
+        "masks": true
+      },
+      "decisions": {}
+    },
+    "app-switcher.svg": {
+      "fingerprint": "8c76eca4017eff0effe882fc34d2d2c0bfe990ae24727b00af278b916fa67368",
+      "reviewer": "Codex",
+      "rationale": "Nine distinct tiles retain sharp outside corners and consistently softened apertures. The matrix remains legible at 12px across all four weights; no aperture closes.",
+      "evidence": [
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/catalogue-01.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/components-light.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/components-dark.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/masks-light.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/masks-dark.png"
+      ],
+      "checks": {
+        "native12": true,
+        "native16": true,
+        "light": true,
+        "dark": true,
+        "referenceWeight": true,
+        "lightWeight": true,
+        "standardWeight": true,
+        "heavyWeight": true,
+        "completeDrawing": true,
+        "components": true,
+        "masks": true
+      },
+      "decisions": {}
+    },
+    "bank.svg": {
+      "fingerprint": "41be94644a3a8483330dfc9a7433d00f3be08e639c6283189aadf612ba50f1c8",
+      "reviewer": "Codex",
+      "rationale": "Roof and plinth openings are softened. Six equal-weight columns meet the rails with circular roots that meet without cusps; four narrow channels and the central arch remain open at every weight. Native samples retain the bank reading.",
+      "evidence": [
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/catalogue-01.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/components-light.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/components-dark.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/masks-light.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/masks-dark.png"
+      ],
+      "checks": {
+        "native12": true,
+        "native16": true,
+        "light": true,
+        "dark": true,
+        "referenceWeight": true,
+        "lightWeight": true,
+        "standardWeight": true,
+        "heavyWeight": true,
+        "completeDrawing": true,
+        "components": true,
+        "masks": true
+      },
+      "decisions": {}
+    },
+    "battery_solid.svg": {
+      "fingerprint": "fda8e7c3140c7d4f8791097954fde257d48aba04246b3238171b8ca98afd0b0a",
+      "reviewer": "Codex",
+      "rationale": "The terminal shoulders are visibly eased and the negative charge stripe has softened corners. The uninterrupted filled body has no hidden frame corners to expose. Terminal and charge stripe remain distinct at 12px.",
+      "evidence": [
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/catalogue-02.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/components-light.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/components-dark.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/masks-light.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/masks-dark.png"
+      ],
+      "checks": {
+        "native12": true,
+        "native16": true,
+        "light": true,
+        "dark": true,
+        "referenceWeight": true,
+        "lightWeight": true,
+        "standardWeight": true,
+        "heavyWeight": true,
+        "completeDrawing": true,
+        "components": true,
+        "masks": true
+      },
+      "decisions": {}
+    },
+    "browser.svg": {
+      "fingerprint": "3657e4f2367db78a19e3acf90c708130b698132bb95d8e3b88bbca2e9febeea4",
+      "reviewer": "Codex",
+      "rationale": "Outer window corners remain sharp; frame opening and shared divider roots are visibly softened. Three circular controls retain separation and the window remains clear at 12px.",
+      "evidence": [
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/catalogue-02.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/components-light.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/components-dark.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/masks-light.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/masks-dark.png"
+      ],
+      "checks": {
+        "native12": true,
+        "native16": true,
+        "light": true,
+        "dark": true,
+        "referenceWeight": true,
+        "lightWeight": true,
+        "standardWeight": true,
+        "heavyWeight": true,
+        "completeDrawing": true,
+        "components": true,
+        "masks": true
+      },
+      "decisions": {}
+    },
+    "browser_solid.svg": {
+      "fingerprint": "37d83c5531729d0d8aaa415aefa56552927c87f14279bd2e7cb5516cb160a53c",
+      "reviewer": "Codex",
+      "rationale": "Shared outer frame and lower opening match the outline. The filled header hides its internal frame joins; control holes remain round and clear. No extra divider is painted into the opening.",
+      "evidence": [
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/catalogue-02.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/components-light.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/components-dark.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/masks-light.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/masks-dark.png"
+      ],
+      "checks": {
+        "native12": true,
+        "native16": true,
+        "light": true,
+        "dark": true,
+        "referenceWeight": true,
+        "lightWeight": true,
+        "standardWeight": true,
+        "heavyWeight": true,
+        "completeDrawing": true,
+        "components": true,
+        "masks": true
+      },
+      "decisions": {}
+    },
+    "warning.svg": {
+      "fingerprint": "04653dba10ed8976fa9347905be0b8ab29c93bcee7d6cc6510a4fb32c2ae5d7a",
+      "reviewer": "Codex",
+      "rationale": "All three triangular aperture corners are softened while the three exterior points remain sharp. The exclamation keeps flat positive terminals and a distinct dot with open surrounding space at 12px.",
+      "evidence": [
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/catalogue-27.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/components-light.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/components-dark.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/masks-light.png",
+        "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/evidence/masks-dark.png"
+      ],
+      "checks": {
+        "native12": true,
+        "native16": true,
+        "light": true,
+        "dark": true,
+        "referenceWeight": true,
+        "lightWeight": true,
+        "standardWeight": true,
+        "heavyWeight": true,
+        "completeDrawing": true,
+        "components": true,
+        "masks": true
+      },
+      "decisions": {}
+    }
+  },
+  "comparisonBaseline": "packages/icons/scripts/artwork/reviews/corner-consistency-2026-09-23/before.json"
+}

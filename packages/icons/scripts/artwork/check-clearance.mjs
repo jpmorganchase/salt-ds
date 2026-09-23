@@ -41,7 +41,7 @@ export async function checkClearance(page, records) {
     ["tag-clear_solid.svg", 2],
     ["user.svg", 2], // head and shoulders
     ["user-group.svg", 4],
-    ["user-admin.svg", 2],
+    ["user-admin.svg", 3], // shield, head and shoulders remain distinct
     ["unlocked.svg", 2], // housing/shackle and the keyhole
     ["locked.svg", 2],
     ["man.svg", 2],
@@ -118,8 +118,11 @@ export async function checkClearance(page, records) {
       return { components, enclosed };
     }
     for (const { name, svg, expected } of samples) {
-      for (const weight of [0.67]) {
-        const markup = svg.replace("<svg ", '<svg style="color:black" ');
+      for (const weight of name === "user-admin.svg" ? [0.67, 1, 4 / 3, 1.5] : [0.67]) {
+        const markup = svg.replace("<svg ", '<svg style="color:black" ').replace(
+          /stroke-width="([\d.]+)"/g,
+          (_, width) => `stroke-width="${Number(width) * weight / .67}"`,
+        );
         const url = URL.createObjectURL(
           new Blob([markup], { type: "image/svg+xml" }),
         );

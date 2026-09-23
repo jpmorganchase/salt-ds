@@ -19,7 +19,13 @@ export const ManSolidIcon = forwardRef<SVGSVGElement, ManSolidIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M6.212 2.038a1.788 1.788 0 1 0 3.576 0 1.788 1.788 0 1 0-3.576 0M5.019 6.212h5.962v4.769h-.596v4.769h-4.77v-4.77H5.02Zm2.385 4.769h1.192v4.769H7.404Z"
+            d="M6.385 2.615a1.615 1.615 0 1 0 3.23 0 1.615 1.615 0 1 0-3.23 0m-1.827 3.02h6.884v5.807h-.538v4.308H8.538v-5.058H7.462v5.058H5.096v-4.308h-.538Z"
+          />
+          <path d="M11.12 11.442a.215.215 0 0 0-.216.216v-.216zm-2.582-.391a.36.36 0 0 0-.358-.359h.358zm-.718-.359a.36.36 0 0 0-.358.36v-.36zm-2.724.966a.215.215 0 0 0-.215-.216h.215z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.385 2.615a1.615 1.615 0 1 0 3.23 0 1.615 1.615 0 1 0-3.23 0Z"
           />
         </g>
       </Icon>

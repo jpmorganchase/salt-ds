@@ -24,6 +24,30 @@ export const DoubleChevronUpIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M15.214 15.194 8 7.979.786 15.194m14.428-6.637L8 1.343.786 8.557"
         />
+        <path d="M8.816 8.796a1.154 1.154 0 0 0-1.632 0L8 7.979Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.816 8.796a1.154 1.154 0 0 0-1.632 0"
+        />
+        <path d="M8.816 2.159a1.154 1.154 0 0 0-1.632 0L8 1.343Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.816 2.159a1.154 1.154 0 0 0-1.632 0"
+        />
+        <path d="M8.98 8.959a1.385 1.385 0 0 0-1.96 0l.98-.98Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.98 8.959a1.385 1.385 0 0 0-1.96 0"
+        />
+        <path d="M8.98 2.322a1.385 1.385 0 0 0-1.96 0l.98-.98Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.98 2.322a1.385 1.385 0 0 0-1.96 0"
+        />
       </g>
     </Icon>
   );

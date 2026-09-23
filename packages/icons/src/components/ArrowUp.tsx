@@ -22,6 +22,36 @@ export const ArrowUpIcon = forwardRef<SVGSVGElement, ArrowUpIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M8 15.75V1.281m-5.46 5.46L8 1.281l5.46 5.46"
           />
+          <path d="M7.228 2.053a1.09 1.09 0 0 1 1.544 0L8 1.281Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.228 2.053a1.09 1.09 0 0 1 1.544 0"
+          />
+          <path d="M9.864 3.145A1.092 1.092 0 0 0 8 3.918V1.28Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.864 3.145A1.092 1.092 0 0 0 8 3.918"
+          />
+          <path d="M8 3.918a1.092 1.092 0 0 0-1.864-.773L8 1.281Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8 3.918a1.092 1.092 0 0 0-1.864-.773"
+          />
+          <path d="M8 4.445a1.31 1.31 0 0 1 2.237-.927L8 1.281Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8 4.445a1.31 1.31 0 0 1 2.237-.927"
+          />
+          <path d="M8 4.445a1.31 1.31 0 0 0-2.237-.927L8 1.281Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8 4.445a1.31 1.31 0 0 0-2.237-.927"
+          />
         </g>
       </Icon>
     );

@@ -27,9 +27,9 @@
     "groupKey": "add-document_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "add-to-grid.svg": {
     "groupKey": "add-to-grid.svg",
@@ -51,9 +51,9 @@
     "groupKey": "add-user.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.229167,
-    "translateX": -2.072917,
-    "translateY": -1.765625
+    "scale": 1.217391,
+    "translateX": -1.972826,
+    "translateY": -2.043478
   },
   "add.svg": {
     "groupKey": "add.svg",
@@ -152,9 +152,9 @@
     "groupKey": "bank.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.103448,
-    "translateX": -0.827586,
-    "translateY": -0.827586
+    "scale": 1.133005,
+    "translateX": -1.064039,
+    "translateY": -1.070274
   },
   "bank_solid.svg": {
     "groupKey": "bank_solid.svg",
@@ -184,9 +184,9 @@
     "groupKey": "battery_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "bookmark.svg": {
     "groupKey": "bookmark.svg",
@@ -200,9 +200,9 @@
     "groupKey": "bookmark_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.019231,
+    "translateX": -0.153846,
+    "translateY": -0.528846
   },
   "boolean.svg": {
     "groupKey": "boolean.svg",
@@ -264,9 +264,9 @@
     "groupKey": "building_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.134615,
-    "translateX": -1.076923,
-    "translateY": -1.451923
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "buildings.svg": {
     "groupKey": "buildings.svg",
@@ -280,9 +280,9 @@
     "groupKey": "buildings_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.134615,
-    "translateX": -1.076923,
-    "translateY": -1.451923
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "calculator.svg": {
     "groupKey": "calculator.svg",
@@ -296,9 +296,9 @@
     "groupKey": "calculator_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "calendar.svg": {
     "groupKey": "calendar.svg",
@@ -328,9 +328,9 @@
     "groupKey": "call_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.203883,
-    "translateX": -1.706311,
-    "translateY": -1.555825
+    "scale": 1.060827,
+    "translateX": -0.723844,
+    "translateY": -0.249392
   },
   "cart.svg": {
     "groupKey": "cart.svg",
@@ -384,9 +384,9 @@
     "groupKey": "chart-bubble_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.134615,
-    "translateX": -0.701923,
-    "translateY": -1.451923
+    "scale": 1.12,
+    "translateX": -0.68,
+    "translateY": -1.24
   },
   "chart-bullet.svg": {
     "groupKey": "chart-bullet.svg",
@@ -432,17 +432,17 @@
     "groupKey": "chart-line.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.134615,
-    "translateX": -0.701923,
-    "translateY": -1.451923
+    "scale": 1.091346,
+    "translateX": -0.637019,
+    "translateY": -1.105769
   },
   "chart-line_solid.svg": {
     "groupKey": "chart-line_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.105386,
-    "translateX": -0.65808,
-    "translateY": -1.218091
+    "scale": 1.091346,
+    "translateX": -0.637019,
+    "translateY": -1.105769
   },
   "chart-pie.svg": {
     "groupKey": "chart-pie.svg",
@@ -456,9 +456,9 @@
     "groupKey": "chart-pie_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.24937,
-    "translateX": -2.365869,
-    "translateY": -1.624055
+    "scale": 1.118987,
+    "translateX": -1.34288,
+    "translateY": -0.560918
   },
   "chart-scatter.svg": {
     "groupKey": "chart-scatter.svg",
@@ -520,9 +520,9 @@
     "groupKey": "chat_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.291667,
-    "translateX": -2.333333,
-    "translateY": -2.65625
+    "scale": 1.144022,
+    "translateX": -1.152174,
+    "translateY": -1.860054
   },
   "chatting.svg": {
     "groupKey": "chatting.svg",
@@ -536,9 +536,9 @@
     "groupKey": "chatting_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.291667,
-    "translateX": -2.333333,
-    "translateY": -2.65625
+    "scale": 1.144022,
+    "translateX": -1.152174,
+    "translateY": -1.860054
   },
   "checkmark.svg": {
     "groupKey": "checkmark.svg",
@@ -606,9 +606,9 @@
     "groupKey": "clock_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "clone.svg": {
     "groupKey": "clone.svg",
@@ -683,9 +683,15 @@
     "groupKey": "cloud-disabled_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.117117,
-    "translateX": -0.936937,
-    "translateY": -0.936937
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Preserve the complete cloud rim and the action's exact anchors while subtracting its clearance from one filled silhouette.",
+    "frameSource": "cloud-disabled.svg",
+    "scale": 1.061611,
+    "translateX": -0.492891,
+    "translateY": -0.492891
   },
   "cloud-download.svg": {
     "groupKey": "cloud-download.svg",
@@ -693,15 +699,21 @@
     "targetSpan": 15.5,
     "scale": 1.061611,
     "translateX": -0.492891,
-    "translateY": -1.028732
+    "translateY": -0.921283
   },
   "cloud-download_solid.svg": {
     "groupKey": "cloud-download_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.100478,
-    "translateX": -0.803828,
-    "translateY": -1.538278
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Preserve the complete cloud rim and the action's exact anchors while subtracting its clearance from one filled silhouette.",
+    "frameSource": "cloud-download.svg",
+    "scale": 1.061611,
+    "translateX": -0.492891,
+    "translateY": -0.921283
   },
   "cloud-success.svg": {
     "groupKey": "cloud-success.svg",
@@ -729,17 +741,23 @@
     "groupKey": "cloud-sync.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.013393,
-    "translateX": -0.107143,
-    "translateY": -0.235073
+    "scale": 1.022222,
+    "translateX": -0.177778,
+    "translateY": -0.245833
   },
   "cloud-sync_solid.svg": {
     "groupKey": "cloud-sync_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.041394,
-    "translateX": -0.331155,
-    "translateY": -0.66122
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Preserve the complete cloud rim and the action's exact anchors while subtracting its clearance from one filled silhouette.",
+    "frameSource": "cloud-sync.svg",
+    "scale": 1.022222,
+    "translateX": -0.177778,
+    "translateY": -0.245833
   },
   "cloud-upload.svg": {
     "groupKey": "cloud-upload.svg",
@@ -753,9 +771,15 @@
     "groupKey": "cloud-upload_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.117117,
-    "translateX": -0.936937,
-    "translateY": -1.704955
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Preserve the complete cloud rim and the action's exact anchors while subtracting its clearance from one filled silhouette.",
+    "frameSource": "cloud-upload.svg",
+    "scale": 1.061611,
+    "translateX": -0.492891,
+    "translateY": -1.030213
   },
   "cloud.svg": {
     "groupKey": "cloud.svg",
@@ -769,9 +793,15 @@
     "groupKey": "cloud_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.117117,
-    "translateX": -0.936937,
-    "translateY": -0.779842
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Preserve the complete cloud rim and the action's exact anchors while subtracting its clearance from one filled silhouette.",
+    "frameSource": "cloud.svg",
+    "scale": 1.061611,
+    "translateX": -0.492891,
+    "translateY": -0.343602
   },
   "coffee.svg": {
     "groupKey": "coffee.svg",
@@ -841,9 +871,9 @@
     "groupKey": "commentary_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.291667,
-    "translateX": -2.333333,
-    "translateY": -2.65625
+    "scale": 1.144022,
+    "translateX": -1.152174,
+    "translateY": -1.860054
   },
   "compare.svg": {
     "groupKey": "compare.svg",
@@ -889,9 +919,9 @@
     "groupKey": "cookie_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "copy.svg": {
     "groupKey": "copy.svg",
@@ -929,9 +959,15 @@
     "groupKey": "crops.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.092593,
-    "translateX": -0.467593,
-    "translateY": -0.638889
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Preserve the preferred light solid leaves and common stem; the inset outline uses that frame, with its reviewed painted bounds measured at width 1.5.",
+    "frameSource": "crops_solid.svg",
+    "scale": 1.148148,
+    "translateX": -0.898148,
+    "translateY": -1.472222
   },
   "crops_solid.svg": {
     "groupKey": "crops_solid.svg",
@@ -1017,9 +1053,15 @@
     "groupKey": "dashboard_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.107143,
-    "translateX": -0.857143,
-    "translateY": -0.026786
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Keep the dial rim, radial tick anchors and needle hub fixed across variants.",
+    "frameSource": "dashboard.svg",
+    "scale": 1,
+    "translateX": 0,
+    "translateY": 0.75
   },
   "database.svg": {
     "groupKey": "database.svg",
@@ -1033,9 +1075,9 @@
     "groupKey": "database_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "dataset-manager.svg": {
     "groupKey": "dataset-manager.svg",
@@ -1049,9 +1091,9 @@
     "groupKey": "dataset-manager_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.148148,
-    "translateX": -1.185185,
-    "translateY": -1.472222
+    "scale": 1.037037,
+    "translateX": -0.296296,
+    "translateY": -0.555556
   },
   "dataset.svg": {
     "groupKey": "dataset.svg",
@@ -1073,9 +1115,9 @@
     "groupKey": "delete_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.134615,
-    "translateX": -1.076923,
-    "translateY": -0.701923
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "devices.svg": {
     "groupKey": "devices.svg",
@@ -1089,9 +1131,9 @@
     "groupKey": "devices_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.105386,
-    "translateX": -1.028103,
-    "translateY": -1.40808
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.985577
   },
   "diamond.svg": {
     "groupKey": "diamond.svg",
@@ -1107,15 +1149,15 @@
     "targetSpan": 15.5,
     "scale": 1.103448,
     "translateX": -0.827586,
-    "translateY": -1.017241
+    "translateY": -1
   },
   "display_solid.svg": {
     "groupKey": "display_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.164319,
-    "translateX": -1.314554,
-    "translateY": -1.689554
+    "scale": 1.103448,
+    "translateX": -0.827586,
+    "translateY": -1
   },
   "divide.svg": {
     "groupKey": "divide.svg",
@@ -1243,9 +1285,15 @@
     "groupKey": "edit_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.409091,
-    "translateX": -3.272727,
-    "translateY": -3.272727
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Retain the complete pencil silhouette, nib and cap anchors when filling the shared outline.",
+    "frameSource": "edit.svg",
+    "scale": 1.233618,
+    "translateX": -1.935096,
+    "translateY": -1.802796
   },
   "equal.svg": {
     "groupKey": "equal.svg",
@@ -1272,9 +1320,9 @@
     "groupKey": "error.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.132002,
-    "translateX": -1.056015,
-    "translateY": -1.056015
+    "scale": 1.136386,
+    "translateX": -1.091089,
+    "translateY": -1.091089
   },
   "error_solid.svg": {
     "groupKey": "error_solid.svg",
@@ -1388,7 +1436,7 @@
     "targetSpan": 15.5,
     "scale": 1.12,
     "translateX": -1.24,
-    "translateY": -0.5775
+    "translateY": -0.96
   },
   "figma.svg": {
     "groupKey": "figma.svg",
@@ -1462,7 +1510,7 @@
     "fitted": true,
     "targetSpan": 15.5,
     "scale": 1.192308,
-    "translateX": -2.46274,
+    "translateX": -2.43149,
     "translateY": -1.538462
   },
   "flag_solid.svg": {
@@ -1470,7 +1518,7 @@
     "fitted": true,
     "targetSpan": 15.5,
     "scale": 1.192308,
-    "translateX": -2.46274,
+    "translateX": -2.43149,
     "translateY": -1.538462
   },
   "folder-closed.svg": {
@@ -1608,17 +1656,17 @@
     "groupKey": "group.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.132002,
-    "translateX": -1.056015,
-    "translateY": -1.056015
+    "scale": 1.136386,
+    "translateX": -1.091089,
+    "translateY": -1.091089
   },
   "group_solid.svg": {
     "groupKey": "group_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.132002,
-    "translateX": -1.056015,
-    "translateY": -1.056015
+    "scale": 1.136386,
+    "translateX": -1.091089,
+    "translateY": -1.091089
   },
   "growth.svg": {
     "groupKey": "growth.svg",
@@ -1648,17 +1696,17 @@
     "groupKey": "guide-open.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.137056,
-    "translateX": -1.096447,
-    "translateY": -1.673303
+    "scale": 1.136386,
+    "translateX": -1.091089,
+    "translateY": -1.652174
   },
   "guide-open_solid.svg": {
     "groupKey": "guide-open_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.258883,
-    "translateX": -2.071066,
-    "translateY": -2.366117
+    "scale": 1.136386,
+    "translateX": -1.091089,
+    "translateY": -1.652174
   },
   "handshake.svg": {
     "groupKey": "handshake.svg",
@@ -1751,12 +1799,12 @@
   "hidden_solid.svg": {
     "groupKey": "hidden_solid.svg",
     "fitted": true,
-    "targetSpan": 13.984375,
+    "targetSpan": 15.5,
     "opticalCenter": [
-      7.8828125,
+      8,
       8
     ],
-    "opticalReason": "Keep the slash and pupil fragments fixed while filling the eye and preserving its reviewed clearance.",
+    "opticalReason": "Preserve the complete eye rim while keeping the slash, pupil and reviewed clearance on the outline frame.",
     "frameSource": "hidden.svg",
     "scale": 1.076372,
     "translateX": -0.734785,
@@ -1798,9 +1846,9 @@
     "groupKey": "holiday_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.165432,
-    "translateX": -1.232407,
-    "translateY": -1.316049
+    "scale": 1.156863,
+    "translateX": -1.304534,
+    "translateY": -1.250306
   },
   "home.svg": {
     "groupKey": "home.svg",
@@ -1814,25 +1862,25 @@
     "groupKey": "home_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.291667,
-    "translateX": -2.333333,
-    "translateY": -2.333333
+    "scale": 1.176768,
+    "translateX": -1.414141,
+    "translateY": -0.997711
   },
   "hospital.svg": {
     "groupKey": "hospital.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.132002,
-    "translateX": -1.056015,
-    "translateY": -1.056015
+    "scale": 1.134177,
+    "translateX": -1.073418,
+    "translateY": -1.091139
   },
   "hospital_solid.svg": {
     "groupKey": "hospital_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192915,
-    "translateX": -1.543316,
-    "translateY": -1.918316
+    "scale": 1.134177,
+    "translateX": -1.073418,
+    "translateY": -1.091139
   },
   "icon-figma.svg": {
     "groupKey": "figma.svg",
@@ -2015,9 +2063,9 @@
     "groupKey": "key_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.322667,
-    "translateX": -2.767333,
-    "translateY": -2.767333
+    "scale": 1.194667,
+    "translateX": -1.725333,
+    "translateY": -1.725333
   },
   "laptop.svg": {
     "groupKey": "laptop.svg",
@@ -2089,17 +2137,17 @@
     "groupKey": "light.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.159643,
-    "translateX": -1.277146,
-    "translateY": -1.277146
+    "scale": 1.13242,
+    "translateX": -1.059361,
+    "translateY": -1.059361
   },
   "light_solid.svg": {
     "groupKey": "light_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.159643,
-    "translateX": -1.277146,
-    "translateY": -1.277146
+    "scale": 1.13242,
+    "translateX": -1.059361,
+    "translateY": -1.059361
   },
   "lightbulb.svg": {
     "groupKey": "lightbulb.svg",
@@ -2113,9 +2161,9 @@
     "groupKey": "lightbulb_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.072727,
-    "translateX": -0.581818,
-    "translateY": -1.191477
+    "scale": 1.018182,
+    "translateX": -0.145455,
+    "translateY": -0.368182
   },
   "like.svg": {
     "groupKey": "like.svg",
@@ -2137,17 +2185,17 @@
     "groupKey": "chart-line.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.134615,
-    "translateX": -0.701923,
-    "translateY": -1.451923
+    "scale": 1.091346,
+    "translateX": -0.637019,
+    "translateY": -1.105769
   },
   "line-chart_solid.svg": {
     "groupKey": "chart-line_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.105386,
-    "translateX": -0.65808,
-    "translateY": -1.218091
+    "scale": 1.091346,
+    "translateX": -0.637019,
+    "translateY": -1.105769
   },
   "linked.svg": {
     "groupKey": "linked.svg",
@@ -2223,9 +2271,9 @@
     "groupKey": "locked_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.18,
-    "translateX": -1.44,
-    "translateY": -0.77
+    "scale": 1.12,
+    "translateX": -0.96,
+    "translateY": -0.68
   },
   "magic-wand.svg": {
     "groupKey": "magic-wand.svg",
@@ -2256,16 +2304,22 @@
     "fitted": true,
     "targetSpan": 15.5,
     "scale": 1.076923,
-    "translateX": -0.856971,
+    "translateX": -0.840144,
     "translateY": -0.615385
   },
   "man-woman_solid.svg": {
     "groupKey": "man-woman_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.631611,
-    "translateY": -1.538462
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Retain the head and body anchors while opening the leg gap through one complete painted silhouette.",
+    "frameSource": "man-woman.svg",
+    "scale": 1.076923,
+    "translateX": -0.840144,
+    "translateY": -0.615385
   },
   "man.svg": {
     "groupKey": "man.svg",
@@ -2279,9 +2333,15 @@
     "groupKey": "man_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Retain the head and body anchors while opening the leg gap through one complete painted silhouette.",
+    "frameSource": "man.svg",
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "map.svg": {
     "groupKey": "map.svg",
@@ -2335,17 +2395,17 @@
     "groupKey": "medical-kit.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.137056,
-    "translateX": -1.096447,
-    "translateY": -1.096447
+    "scale": 1.136386,
+    "translateX": -1.091089,
+    "translateY": -1.091089
   },
   "medical-kit_solid.svg": {
     "groupKey": "medical-kit_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.133046,
-    "translateX": -1.064365,
-    "translateY": -1.064365
+    "scale": 1.136386,
+    "translateX": -1.091089,
+    "translateY": -1.091089
   },
   "menu.svg": {
     "groupKey": "menu.svg",
@@ -2476,9 +2536,9 @@
     "groupKey": "mouse_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "move-all.svg": {
     "groupKey": "move-all.svg",
@@ -2785,9 +2845,9 @@
     "groupKey": "paste_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.134615,
-    "translateX": -1.076923,
-    "translateY": -0.701923
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "pause.svg": {
     "groupKey": "pause.svg",
@@ -2889,9 +2949,9 @@
     "groupKey": "pivot_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "place-in.svg": {
     "groupKey": "place-in.svg",
@@ -3111,6 +3171,22 @@
     "translateX": -0.672414,
     "translateY": -0.827586
   },
+  "remove-bookmark.svg": {
+    "groupKey": "remove-bookmark.svg",
+    "fitted": true,
+    "targetSpan": 15.5,
+    "scale": 1.019231,
+    "translateX": -0.153846,
+    "translateY": -0.528846
+  },
+  "remove-bookmark_solid.svg": {
+    "groupKey": "remove-bookmark_solid.svg",
+    "fitted": true,
+    "targetSpan": 15.5,
+    "scale": 1.019231,
+    "translateX": -0.153846,
+    "translateY": -0.528846
+  },
   "remove-document.svg": {
     "groupKey": "remove-document.svg",
     "fitted": true,
@@ -3123,17 +3199,17 @@
     "groupKey": "remove-document_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "remove-user.svg": {
     "groupKey": "remove-user.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.229167,
-    "translateX": -2.072917,
-    "translateY": -1.765625
+    "scale": 1.217391,
+    "translateX": -1.972826,
+    "translateY": -2.043478
   },
   "remove.svg": {
     "groupKey": "remove.svg",
@@ -3216,9 +3292,9 @@
     "groupKey": "salt-shaker_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.209756,
-    "translateX": -1.470122,
-    "translateY": -2.169512
+    "scale": 1.15122,
+    "translateX": -1.38689,
+    "translateY": -1.302439
   },
   "save.svg": {
     "groupKey": "save.svg",
@@ -3232,9 +3308,9 @@
     "groupKey": "save_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.409091,
-    "translateX": -3.272727,
-    "translateY": -3.272727
+    "scale": 1.272727,
+    "translateX": -2.181818,
+    "translateY": -2.181818
   },
   "scales.svg": {
     "groupKey": "scales.svg",
@@ -3248,9 +3324,9 @@
     "groupKey": "scales_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.265416,
-    "translateX": -2.123324,
-    "translateY": -1.965818
+    "scale": 1.201072,
+    "translateX": -1.608579,
+    "translateY": -1.815013
   },
   "schedule-time.svg": {
     "groupKey": "schedule-time.svg",
@@ -3264,9 +3340,9 @@
     "groupKey": "schedule-time_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "schedule.svg": {
     "groupKey": "schedule.svg",
@@ -3274,7 +3350,7 @@
     "targetSpan": 15.5,
     "scale": 1.004484,
     "translateX": -0.035874,
-    "translateY": -0.20852
+    "translateY": -0.034193
   },
   "school.svg": {
     "groupKey": "school.svg",
@@ -3304,9 +3380,9 @@
     "groupKey": "search_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.064588,
-    "translateX": -1.080735,
-    "translateY": -1.080735
+    "scale": 1.053364,
+    "translateX": -0.909223,
+    "translateY": -0.909223
   },
   "semantic-dissatisfied.svg": {
     "groupKey": "semantic-dissatisfied.svg",
@@ -3422,9 +3498,9 @@
     "groupKey": "settings_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.038647,
+    "translateX": -0.309179,
+    "translateY": -0.309179
   },
   "share.svg": {
     "groupKey": "share.svg",
@@ -3438,9 +3514,9 @@
     "groupKey": "share_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.012245,
-    "translateX": -0.097959,
-    "translateY": -0.097959
+    "scale": 0.978166,
+    "translateX": 0.174672,
+    "translateY": 0.174672
   },
   "signal.svg": {
     "groupKey": "signal.svg",
@@ -3655,9 +3731,9 @@
     "groupKey": "stethoscope_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.282609,
-    "translateX": -2.206522,
-    "translateY": -2.315217
+    "scale": 1.217391,
+    "translateX": -2.043478,
+    "translateY": -1.809783
   },
   "stop.svg": {
     "groupKey": "stop.svg",
@@ -3697,9 +3773,9 @@
     "groupKey": "storage_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "storefront.svg": {
     "groupKey": "storefront.svg",
@@ -3713,9 +3789,9 @@
     "groupKey": "storefront_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.107143,
-    "translateX": -0.857143,
-    "translateY": -1.232143
+    "scale": 1.05314,
+    "translateX": -0.425121,
+    "translateY": -0.425121
   },
   "string-number.svg": {
     "groupKey": "string-number.svg",
@@ -3867,9 +3943,9 @@
     "groupKey": "tag-clear_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.138095,
-    "translateX": -1.457143,
-    "translateY": -1.457143
+    "scale": 1.05314,
+    "translateX": -0.284496,
+    "translateY": -0.57971
   },
   "tag.svg": {
     "groupKey": "tag.svg",
@@ -3883,9 +3959,9 @@
     "groupKey": "tag_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.05314,
+    "translateX": -0.284496,
+    "translateY": -0.57971
   },
   "tails.svg": {
     "groupKey": "tails.svg",
@@ -4059,9 +4135,9 @@
     "groupKey": "tote_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.229167,
-    "translateX": -1.833333,
-    "translateY": -0.84375
+    "scale": 1.166667,
+    "translateX": -1.333333,
+    "translateY": -0.75
   },
   "travel.svg": {
     "groupKey": "travel.svg",
@@ -4171,9 +4247,9 @@
     "groupKey": "ungroup_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "universal-access.svg": {
     "groupKey": "universal-access.svg",
@@ -4211,9 +4287,9 @@
     "groupKey": "unlocked_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.18,
-    "translateX": -1.44,
-    "translateY": -0.77
+    "scale": 1.12,
+    "translateX": -0.96,
+    "translateY": -0.68
   },
   "upload.svg": {
     "groupKey": "upload.svg",
@@ -4307,9 +4383,9 @@
     "groupKey": "user-group_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.107143,
-    "translateX": -0.857143,
-    "translateY": -1.185826
+    "scale": 1,
+    "translateX": 0,
+    "translateY": -0.296875
   },
   "user-search.svg": {
     "groupKey": "user-search.svg",
@@ -4331,9 +4407,9 @@
     "groupKey": "user_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.358904,
-    "translateX": -2.871233,
-    "translateY": -3.274658
+    "scale": 1.227397,
+    "translateX": -1.819178,
+    "translateY": -2.183562
   },
   "utensils.svg": {
     "groupKey": "utensils.svg",
@@ -4371,9 +4447,9 @@
     "groupKey": "video_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "visible.svg": {
     "groupKey": "visible.svg",
@@ -4429,17 +4505,17 @@
     "groupKey": "warning.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1,
-    "translateX": 0,
-    "translateY": 0.40625
+    "scale": 1.088542,
+    "translateX": -0.708333,
+    "translateY": -0.256592
   },
   "warning_solid.svg": {
     "groupKey": "warning_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.557091
+    "scale": 1.291667,
+    "translateX": -2.333333,
+    "translateY": -2.353516
   },
   "watch.svg": {
     "groupKey": "watch.svg",
@@ -4453,9 +4529,9 @@
     "groupKey": "watch_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "scale": 1.076923,
+    "translateX": -0.615385,
+    "translateY": -0.615385
   },
   "waveform.svg": {
     "groupKey": "waveform.svg",
@@ -4477,9 +4553,9 @@
     "groupKey": "weight_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.134615,
-    "translateX": -1.076923,
-    "translateY": -0.701923
+    "scale": 1.043689,
+    "translateX": -0.349515,
+    "translateY": -0.349515
   },
   "wifi-disabled.svg": {
     "groupKey": "wifi-disabled.svg",
@@ -4501,17 +4577,23 @@
     "groupKey": "woman.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.076923,
-    "translateX": -0.615385,
-    "translateY": -0.615385
+    "scale": 1.077626,
+    "translateX": -0.621005,
+    "translateY": -0.616438
   },
   "woman_solid.svg": {
     "groupKey": "woman_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.538462,
-    "translateY": -1.538462
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Retain the head and body anchors while opening the leg gap through one complete painted silhouette.",
+    "frameSource": "woman.svg",
+    "scale": 1.077626,
+    "translateX": -0.621005,
+    "translateY": -0.616438
   },
   "woodland.svg": {
     "groupKey": "woodland.svg",
@@ -4541,9 +4623,9 @@
     "groupKey": "workflow_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.045652,
-    "translateX": -0.740217,
-    "translateY": -0.795652
+    "scale": 0.993478,
+    "translateX": 0.052174,
+    "translateY": 0.006522
   },
   "xls.svg": {
     "groupKey": "xls.svg",

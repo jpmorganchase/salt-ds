@@ -19,16 +19,47 @@ export const TagIcon = forwardRef<SVGSVGElement, TagIconProps>(function TagIcon(
       {...props}
     >
       <g strokeWidth="var(--icon-strokeWidth, 1)">
-        <g
+        <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-        >
-          <path d="M1.295 8.899 9.194 1h5.792v5.792l-7.899 7.899Z" />
-          <path
-            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.7)"
-            d="M10.773 4.16a1.053 1.053 0 1 0 2.107 0 1.053 1.053 0 1 0-2.107 0Z"
-          />
-        </g>
+          d="M1.295 8.899 9.194 1h5.792v5.792l-7.899 7.899Z"
+        />
+        <path d="M8.885 1.308A1.05 1.05 0 0 1 9.63 1h-.436Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.885 1.308A1.05 1.05 0 0 1 9.63 1"
+        />
+        <path d="M13.933 1a1.053 1.053 0 0 1 1.053 1.053V1Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.933 1a1.053 1.053 0 0 1 1.053 1.053"
+        />
+        <path d="M14.986 6.356a1.05 1.05 0 0 1-.308.745l.308-.309Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M14.986 6.356a1.05 1.05 0 0 1-.308.745"
+        />
+        <path d="M7.832 13.946a1.053 1.053 0 0 1-1.49 0l.745.745Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.832 13.946a1.053 1.053 0 0 1-1.49 0"
+        />
+        <path d="M2.04 9.643a1.053 1.053 0 0 1 0-1.49l-.745.746Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.04 9.643a1.053 1.053 0 0 1 0-1.49"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.7)"
+          d="M10.773 4.16a1.053 1.053 0 1 0 2.107 0 1.053 1.053 0 1 0-2.107 0Z"
+        />
       </g>
     </Icon>
   );

@@ -22,6 +22,18 @@ export const KeyOptionIcon = forwardRef<SVGSVGElement, KeyOptionIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M.25 2.833h4.52l6.46 10.334h4.52M9.938 2.833h5.812"
           />
+          <path d="M4.055 2.833a1.29 1.29 0 0 1 1.095.607l-.38-.607Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.055 2.833a1.29 1.29 0 0 1 1.095.607"
+          />
+          <path d="M10.85 12.56a1.29 1.29 0 0 0 1.095.607h-.716Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.85 12.56a1.29 1.29 0 0 0 1.095.607"
+          />
         </g>
       </Icon>
     );

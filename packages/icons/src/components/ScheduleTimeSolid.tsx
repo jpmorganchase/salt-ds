@@ -21,13 +21,56 @@ export const ScheduleTimeSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M1.442.25h9.539l3.577 3.577V15.75H1.442Zm9.936.994v1.788q0 .398.398.398h1.788ZM4.423 9.59a3.577 3.577 0 1 0 7.154 0 3.577 3.577 0 1 0-7.154 0"
+          d="M2.077 1h8.615l3.231 3.23V15H2.077Zm8.974.897v1.616q0 .359.36.359h1.615ZM4.77 9.436a3.23 3.23 0 1 0 6.462 0 3.23 3.23 0 1 0-6.462 0"
+        />
+        <path d="M12.38 3.872a.268.268 0 0 0 .189-.457l.457.457zm-.872-1.518a.268.268 0 0 0-.457.19v-.647z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.077 1h8.615l3.231 3.23V15H2.077Z"
+        />
+        <path d="M10.246 1a1.08 1.08 0 0 1 .762.315L10.692 1Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.246 1a1.08 1.08 0 0 1 .762.315"
+        />
+        <path d="M13.608 3.915a1.08 1.08 0 0 1 .315.762V4.23Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.608 3.915a1.08 1.08 0 0 1 .315.762"
+        />
+        <path d="M13.923 13.923A1.077 1.077 0 0 1 12.846 15h1.077Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.923 13.923A1.077 1.077 0 0 1 12.846 15"
+        />
+        <path d="M3.154 15a1.077 1.077 0 0 1-1.077-1.077V15Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M3.154 15a1.077 1.077 0 0 1-1.077-1.077"
+        />
+        <path d="M2.077 2.077A1.077 1.077 0 0 1 3.154 1H2.077Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.077 2.077A1.077 1.077 0 0 1 3.154 1"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.72)"
-          d="M8 7.642V9.59l1.298.865"
+          d="M8 7.677v1.759l1.173.782"
+        />
+        <path d="M8 9.02a.78.78 0 0 0 .345.646L8 9.436Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.72)"
+          d="M8 9.02a.78.78 0 0 0 .345.646"
         />
       </g>
     </Icon>

@@ -5,165 +5,177 @@ sidebar:
   priority: 2
 ---
 
-Salt icons use simple shapes, open space and restrained detail to communicate a single action, object or concept. Consistent proportions and construction make related icons recognizable as a family.
+Salt icons combine crisp outer corners, flat line endings and softened interiors. Simple silhouettes and open space keep them recognizable at **12px**, the smallest supported interface size.
 
-Use this guidance to understand the style of Salt icons and judge their visual consistency. Browse [Icons](/salt/foundations/assets/index) to find a symbol and learn how to use it in an interface. For artwork creation and maintenance instructions, see [Creating icons](/salt/foundations/assets/creating-icons).
+Use this guide when designing or reviewing artwork. [Icons](/salt/foundations/assets/index) covers choosing and using icons; [Creating icons](/salt/foundations/assets/creating-icons) explains the contribution workflow.
 
 ## Meaning and family
 
-Start with the meaning an icon needs to communicate and the context in which it appears. Compare the actual drawings in the catalogue, including closely related objects, actions and states. An existing icon may already express the intended meaning.
+Start with one action, object or concept. Check the catalogue before drawing: an existing icon may already communicate the intended meaning. Choose by the drawing and its established use, as some names have legacy meanings. For example, Bank check depicts a cheque, and School depicts a graduation cap.
 
-Keep the features that distinguish the subject. A generic laptop has a plain screen; adding a chart would suggest a more specific use. Similarly, a sun and a brightness control can share a visual language without every detail being interchangeable. Check an icon's established meaning before using its name as a design brief: `bank-check` represents a cheque, `scales` a weighing scale, and `school` a graduation cap.
-
-Some public names retain legacy meanings: `database` depicts server infrastructure, `dataset` uses a database cylinder for stored data, and `build-report` depicts a briefcase. Choose these icons by their drawings and intended use, and label product-specific actions. Preserve the existing export names when maintaining the artwork.
+Keep the features that distinguish the subject. A laptop with a plain screen has a broader meaning than one containing a chart. Simplify secondary detail until each remaining feature contributes to recognition. Larger brand illustrations inform proportions and character; their level of detail may be unsuitable for system icons.
 
 <IconDesignExamples example="family" />
 
-Related icons should share visible landmarks: the contour of a cloud, the proportions of a page, the geometry of a person's head and shoulders, or the positions of a panel's rails. Reuse those relationships when adding a state or action. Leave deliberate space for an action mark and preserve its direction without distorting the base object.
+Related icons share visible landmarks: a cloud's lobes, a page's fold, a bookmark's notch or a person's head and shoulders. Preserve the base object's proportions, apparent size and position when adding a state or action. Compare the final drawings together; fitting them separately can make an unchanged object appear to move.
 
-Keep a repeated object's apparent size and anchor stable across states. Compare the final exports together: independently fitting the same source contour can make the object grow or move when a wave, badge or other modifier is added. Use a reviewed family framing adjustment when needed, preserving the object's natural proportions and leaving room for each state.
+Review meaning with the name hidden first, then in its intended interface. If the silhouette suggests the wrong object, correct it before refining details. When replacing established artwork, compare against the previous icon at 12px, especially for status. Keep states distinguishable without relying on color. An expert visual review is useful, but does not replace recognition feedback from users.
 
-Simplify detail until each remaining feature helps identify the subject or distinguish it from its neighbors. Check meaning in the intended interface as well as in isolation.
+## Action and state modifiers
 
-For recognition review, first describe the object or action you see with the name hidden, then compare that reading with the intended meaning. A familiar filename can make an ambiguous drawing seem convincing. Look for the relationships that establish the subject: a handshake needs two opposing wrists and a visible clasp, not just finger-like detail. If the silhouette suggests a different object, rebuild that relationship before polishing gaps or adding detail. Established abstract controls can depend on their interface context; record that distinction instead of treating an unlabelled visual review as user testing.
+Choose the meaning before the mark. A plus, minus, slash and X communicate different actions or states. A cutout is a way to separate shapes; it does not add meaning by itself.
+
+| Meaning                      | Usual treatment                             | Distinction to preserve                                                                                                                                         |
+| ---------------------------- | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Add or create                | Base object with a plus                     | Keep the object's identifying silhouette.                                                                                                                       |
+| Remove an item or membership | Base object with a minus                    | Remove bookmark differs from an unselected or disabled bookmark.                                                                                                |
+| Delete the underlying object | Established delete or trash symbol          | Deletion differs from removing an item from a collection.                                                                                                       |
+| Off or unavailable           | The family's negation mark, usually a slash | Preserve familiar exceptions, such as the speaker and X for Volume off. A disabled control can keep its ordinary icon and use the component's disabled styling. |
+| Clear a value or selection   | The established clear action, often an X    | Clear, close and error need distinct labels and context.                                                                                                        |
+| Selected or unselected       | The product's established state treatment   | Outline and solid do not imply selection by themselves.                                                                                                         |
+
+Preserve established meanings when extending a family. Schedule is the calendar-plus action; Schedule time is a document with a clock. Search synonyms help discovery but do not make these meanings interchangeable.
+
+### Decide where the modifier belongs
+
+1. Start with the complete base object and its nearest action siblings.
+2. Prefer an internal mark when there is a useful empty field. Replace secondary contents, such as date dots or text lines, before compressing the mark.
+3. Use an adjacent or overlapping mark when an internal mark would hide a defining feature. Keep placement and apparent scale consistent across that family's actions.
+4. Add transparent clearance where shapes overlap or would visually merge. Preserve enough of the base silhouette to identify it at 12px.
+5. If the result is crowded, simplify contents or change placement before reducing the mark's size or weight.
+
+Schedule keeps Calendar's frame, header and bindings, and places the plus in the date field. Cloud upload's arrow crosses the cloud's lower edge, so it needs clearance around the arrow. Add user and Remove user keep the complete person beside a separate mark; a nearby modifier alone is no reason to cut the person.
+
+Remove bookmark places a minus within the ribbon. The outline paints the minus; the solid reveals it as a transparent opening. This preserves the same action and placement without requiring an overlapping badge.
+
+### Junctions within a modifier
+
+A modifier can be separate from its base and still contain joined parts. A plus has four inner corners around its crossing; soften those while preserving flat ends and clear arms. Keep the plus separate from the calendar or page. Likewise, soften an arrow's inner shaft-to-head joins while preserving its pointed tip and straight arms.
 
 ## Canvas and optical size
 
-Salt icons use a **16 × 16 canvas**. The entire visible shape must fit inside that frame, including the outer tips of joins and line endings.
+Draw on a **16 × 16 canvas** and preserve natural proportions. The complete painted shape, including line endings and pointed joins, must fit inside it. Narrow icons retain space along their shorter axis; do not stretch them to fill a square.
 
-The generator normally scales and centers each icon export so its longest painted dimension targets **15.5 units at a primary stroke width of 1.5**, leaving **0.25 units** at each end of that axis. Reviewed optical exceptions may use a smaller span or an offset center while remaining inside the canvas. It preserves the drawing's aspect ratio: a narrow arrow or a broad calendar retains space along its shorter axis. This shared framing applies to both outline and solid exports, which are fitted separately unless a reviewed shared frame preserves their retained features.
-
-Author recognizable geometry and useful internal spacing in the owning recipe; the generator supplies the final framing. Do not add recipe-specific padding or stretch a drawing to fill both axes. Record a justified framing adjustment in the optical-fit configuration described in [Creating icons](/salt/foundations/assets/creating-icons#fit-every-export-to-the-viewbox). Thinner strokes occupy slightly less of the frame, especially at acute joins. Official brand marks retain their existing 16-unit framing. The full-canvas solid checkmark and its solid aliases also retain their 16-unit control surface. The standalone Checkmark and its aliases use a smaller documented optical fit so their tick matches the ticks inside those surfaces and circular status icons. CloseSmall also has a smaller optical target than Close, preserving its compact dismissal role. Exponentiation keeps a compact, raised frame so its caret retains the position of a power operator.
+Ordinary exports target a longest painted span of **15.5 units at stroke width 1.5**. Optical adjustments can use a smaller span or an offset center. Related states and outline/solid pairs may need a shared frame to keep unchanged features aligned. See [export fitting](/salt/foundations/assets/creating-icons#fit-every-export-to-the-viewbox) for the contribution workflow.
 
 <IconDesignExamples example="scale" />
 
-Judge icons at their intended interface size. Salt's default icon size follows the interface density and has a **12px minimum**. See [Scaling icons](/salt/foundations/assets/index#scaling-icons) for the density scale.
-
-Use enlarged views to inspect geometry, then return to native **12px and 16px** views to judge recognition, balance and useful detail.
+Judge recognition at actual **12px and 16px**, then enlarge the drawing to inspect construction. Align important horizontal and vertical edges to the pixel grid where useful, checking the final size and stroke weight. Snapping every coordinate to an integer does not guarantee a sharp result.
 
 ### Judge apparent size and balance
 
-Equal painted bounds are a starting point, not a guarantee of equal apparent size. Compare circles, broad filled shapes and diagonals beside related icons and text. A filled shape can need a slightly smaller span than its outline; a play triangle can need a small shift toward its point to balance its heavier flat side. Preserve natural proportions and use local comparisons rather than assigning one correction to every shape.
+Equal bounds do not guarantee equal apparent size. Compare circles, diagonals and filled shapes beside related icons and text. A broad solid shape may need a smaller span; an asymmetric shape may need an optical offset. Preserve common landmarks when making these adjustments.
 
-Judge an interior mark separately from its container. A tick can sit low inside a mathematically centered circle because of its lower elbow. Move the mark within the shared container when that improves the surrounding space; do not center asymmetric ink by its centroid alone. Compare positive marks and transparent counters together.
-
-Distinguish primary symbols from compact modifiers and embedded details. A completion tick is the subject of a status icon; a tick on a cloud qualifies another subject. Share the gesture and construction, then choose the size and weight for that role. Review modifiers beside their peers and primary symbols beside theirs. Keep consistent dimensions within a reviewed role without requiring every appearance of a tick, cross or dot to have one absolute size.
-
-## Brand logos
-
-Brand logos are an exception to Salt's icon drawing style. Use the brand owner's current official artwork, preserving its supplied contours and aspect ratio. Do not restyle a logo to match Salt geometry or stroke weight, add an outline, or invent variants. Follow the owner's usage guidance.
-
-The existing LinkedIn outline is a specific Salt presentation exception: it shows the original “in” letter contours without the square, at the same size and position as the letters in the solid variant. The solid variant retains the official mark; the outline is not an owner-supplied variant. Keep this exception scoped to LinkedIn.
-
-For GitHub, use the current Invertocat from the [GitHub logo guidance](https://brand.github.com/foundations/logo). Use black or white by default, with sufficient contrast; grey and green are limited uses governed by GitHub's guidance. Keep clear space of at least **25% of the logo's width** around the mark. Provide that space in the surrounding layout; it is not mandatory padding inside the SVG viewBox.
+Judge a mark within its container separately. A mathematically centered tick can look low because of its lower elbow. Balance the surrounding space and compare the positive and inverse forms. A primary status tick and a small tick qualifying another object can share a gesture without sharing one absolute size.
 
 ## Stroke weight
 
-Generated React icons use the theme's primary width of **1.333333 units (approximately 4/3) in high and medium densities**, and **1 unit in low, touch and mobile densities** on the 16-unit canvas. The [size foundation token](/salt/foundations/size#stroke-width) `--salt-size-icon-strokeWidth` adjusts the weight across an application or subtree; `--saltIcon-strokeWidth` overrides it for an individual icon. If neither variable is defined, the component falls back to 1. Stroke and geometry scale together: `W × P / 16` gives the rendered primary width in pixels. High and medium density icons use 1.333333 units at 12px, producing an **approximately 1 CSS-pixel** primary stroke.
+Use the primary line weight for the silhouette and the marks that carry the icon's meaning. A lighter secondary line is appropriate only when it creates a useful hierarchy and remains clear at 12px. Keep comparable features equally weighted across the family and across outline/solid pairs.
 
-Numeric SVG masters retain a **0.67-unit reference width**, which renders at 0.5025px at 12px. Standalone SVG images and CSS masks use the baked widths and do not inherit the host's stroke variables. Filled contours and official brand logos keep their supplied shapes. Shared status ticks, punctuation and ellipsis dots are filled contours in both positive and inverse form; changing the container's stroke width preserves these symbols' geometry and weight. Resizing the icon still scales the entire drawing.
+**Solve crowding through spacing, placement or simplification before reducing an identifying mark's weight.** Thin lines can look tidy when enlarged yet disappear or feel weak at interface size. Judge the visible band, including any adjoining fill, rather than the stroke value alone.
 
 <IconDesignExamples example="stroke" />
 
-Secondary details can use a lighter line to avoid competing with the main shape. The hands in Schedule time, for example, have less weight than the surrounding clock. Preserve those ratios when the primary width changes, and judge the resulting balance at interface size.
+Dashboard's four scale ticks are separate from the rim, but remain at the same primary weight as the rim and needle. Their clearance comes from placement. In the solid variant, the tick openings match the needle opening's width. Being detached, short or inside another shape does not make a mark secondary.
 
-At small sizes, crowded intersections can look heavier than isolated lines of the same width. Simplify redundant detail, open counters or reduce the weight of secondary lines locally before changing the whole set. Keep the silhouette and the features that carry meaning. A detail that is attractive enlarged still needs to contribute at 12px.
+<IconDesignExamples example="gauge" />
+
+React icons use a primary width of **4/3 units in high and medium density** and **1 unit in low, touch and mobile density**. At 12px, a 4/3-unit stroke renders at approximately 1 CSS pixel. Secondary strokes retain their proportions. Standalone SVGs and CSS masks retain the artwork's **0.67-unit reference width**; they do not inherit React stroke settings. Filled marks retain their contours when surrounding strokes change. See [stroke settings](/salt/foundations/assets/index#stroke-weight).
 
 ## Geometry
 
-Build recognizable forms from straight runs, deliberate angles, broad curves and open shapes. Keep crisp exterior corners where they define the silhouette. Introduce small curved junctions where the object or the connection between features calls for them.
-
-Salt's standard line endings are **flat** and stop at their endpoints. Keep sharp joins where they define the shape. Inspect acute corners and arrowheads closely, since their tips can crowd nearby details or extend beyond the canvas.
+**Soften exposed inner joins and interior negative-space corners. Keep outward-facing corners, points and flat terminals sharp. Preserve natural curves.** Apply this rule to the finished painted boundary, including details inside the icon.
 
 <IconDesignExamples example="geometry" />
 
-Use curved junctions deliberately. Bank columns meet the roof and plinth with eased attachments, the calendar has locally eased junctions, and the globe's curves meet as parts of one sphere. Keep these transitions consistent with the object's shape and the rhythm of its repeated features.
+“Interior” describes the boundary, not the feature's position on the canvas. An outline square can have sharp outside corners and softened corners around its opening. A filled square has no opening. The concave roots of a plus are inner joins even though they sit on the mark's outermost contour.
 
-There is no universal corner radius for the family. A softly curved housing and a sharp structural corner can belong to the same icon. Follow the object and the nearest related construction, then check the result at native size.
+| Visible relationship                            | Treatment                                                                           |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Connected members forming an exposed inner join | Ease every visible inner sector where the members meet.                             |
+| A corner around an interior opening             | Soften it, including angled and triangular openings.                                |
+| An outward-facing corner, tip or flat terminal  | Keep it sharp.                                                                      |
+| An already smooth curve or tangent transition   | Preserve it; no extra rounding is needed.                                           |
+| Separate objects                                | Keep clear separation; do not weld them together.                                   |
+| A join covered by a filled surface              | Assess the remaining visible boundary; do not add a line to expose the hidden join. |
+
+### Welding and softened corners
+
+**Welding** is the curved inner transition where connected parts meet, such as a column attaching to a rail. Softening the corner of an isolated opening follows the same visual language but is not a connection between separate parts.
+
+Review the whole boundary, including internal supports, holes, notches and curve-to-line transitions. In Add to grid, the outline tile openings need softened corners, while the plus has its own welded crossing. The empty gaps between the tiles are not joins. In Add document, preserve the outward page-fold point while inspecting the inside fold elbow.
+
+The larger references vary in their corner treatment. They do not establish a reliable triangle-versus-rectangle or object-role rule. Use the system standard above consistently, with a specific small-size comparison for any retained sharp interior corner.
+
+### Calibrate the amount of welding
+
+There is **no universal corner radius**. Compare the visible transition with the local painted band and the nearest related construction. A compact plus, a column attachment and a curved globe intersection have different space available.
+
+A successful transition is visible at the supported weights, leaves useful straight lengths and keeps neighboring openings clear. A curve hidden beneath a wider stroke does not produce a visible weld. Excessive softening can close a counter, turn a plus into a sparkle or consume an arrow's arms.
+
+For compact arrows, check both arms and the point at 12px. Reduce the local radius or simplify surrounding detail before weakening the arrow. A secondary arrow can use a lighter family treatment when its role supports it; small size alone is not a reason to thin it.
+
+Use the same treatment for equivalent repeated geometry. First reduce local softening or remove nonessential detail if space is tight. Retain a sharp interior corner only when comparison shows that softening obscures a distinguishing feature or closes a required opening. Record the exact feature and reason with the artwork. A status role, a shape name or an old reference alone is not an exemption.
 
 ## Outline and solid variants
 
-Outline and solid variants express the same meaning through different use of filled surfaces. Keep the same object contour, proportions, dividers, action positions and directional relationships in the final exports. Filling a surface must not remove its outer rim and make it shrink beside an unchanged handle, pole, binding or frame. Independent fitting is the default, but retained features must keep their apparent size and anchors. Use a reviewed shared frame when separate fits move an unchanged feature; shared source coordinates alone do not establish a consistent pair.
+Both variants express the same meaning and preserve the subject's proportions, defining silhouette, direction and feature positions. Introduce fill on meaningful surfaces while retaining the lines that describe the object. A solid variant need not fill every available area.
 
 <IconDesignExamples example="variants" />
 
-Choose a surface that can fill while keeping the icon's defining features clear. The solid calendar fills its date field and retains an open header. In `panel-open-left`, the rail fills while the frame and arrow remain shared line features. A file-format icon can fill its folded corner while keeping the page and label open.
+Keep common lines equally weighted and common landmarks stable in the final exports. Filling to the middle of an outline can remove half its rim and make the object shrink. Preserve the visible boundary, or design an inset outline from the preferred solid silhouette. Either variant can lead the design.
 
-Import and Export are open-line symbols with no enclosed object surface to fill. Their legacy `Solid` exports retain the identical open-arrow drawing for compatibility. Do not invent a filled arrowhead or widen a bracket solely to make these variants different. This exception is limited to the two recorded aliases; a new solid variant still needs a meaningful filled surface.
+Compare pairs side by side and by switching them in the same position. Calendar retains its bindings and header; Edit retains its complete pencil, cap and pointed nib while the barrel fills. Filling one part must not move an unchanged handle, frame or modifier. Small optical adjustments to openings are acceptable when they improve balance while preserving these relationships.
 
-Keep shared line features equally weighted in both variants. Export fitting preserves the authored stroke widths and their lighter secondary ratios, even when an outline and its solid variant need different geometry scales. Filled surfaces provide the difference in emphasis. Inspect the final fitted pair as well as the recipes: independent fitting can move internal landmarks. For the shared status symbols, use the exact same final contour in positive and inverse form. Compare their weight and placement on their different backgrounds.
+Shared status symbols use the same contour and placement in positive and inverse form within a pair. Judge their emphasis at 12px. Different containers can require different optical proportions; an exclamation mark in a triangle need not have the same dimensions as one in an octagon.
 
-Judge the complete painted shape where a fill overlaps a retained stroke. Matching `stroke-width` values does not guarantee equal visible bands: an adjoining fill can widen a line. Compare the painted edges at both themed widths before accepting the solid treatment.
+### Text lines and inverse openings
 
-The tick in Checkmark, SuccessCircle, StepSuccess and ProgressComplete is one shared contour, including its aliases and available solid variants. Its arms are 2 units thick on the final 16-unit canvas, giving 1.5 CSS pixels at 12px. Info, Error, Warning, Help and Chatting use shared dots with a 2-unit diameter on that canvas. Container fitting must preserve these marks' dimensions and declared anchors. Different containers may place the same glyph differently: Error's exclamation sits higher in its octagon than Warning's in its triangle, with the same shape and dimensions. Each outline/solid pair uses identical placement; the shared ticks retain the same anchors across their family. [Creating icons](/salt/foundations/assets/creating-icons#share-symbols-on-the-final-canvas) describes their composition after fitting.
+An isolated **painted text bar** has outward-facing corners and flat ends. The equivalent **transparent slot** in a solid surface has interior corners, so it can have restrained softening. This difference follows the boundary rule; it is not a separate rounded style for solid icons.
 
-MicroMenu and OverflowMenu reuse the same round two-unit dots as Chatting, with wider spacing for standalone ellipses. CloudSuccess and NotificationRead use compact action ticks, retaining the cloud's base and the bell's skirt. Their marks share the flat-cap, diagonal construction while using a scale appropriate to the secondary action. CloudSuccessSolid and NotificationReadSolid subtract their tick clearance from complete filled silhouettes and share their respective outline frames, preserving the ticks without borders painted back over the cutouts. Review the outline and solid together for stable placement, stroke weight and clearance.
+Keep line count, lengths, spacing, alignment and apparent weight consistent across the pair. Preserve a flat section at each end of a softened slot; avoid turning short text lines into pills. Check at 12px that the lines still read as the same content. These bars are independent marks, so they need no invented welding at their ends.
 
-Within the progress family, balance the completion tick, cancellation X, rejection bar, closure square and pause bars together. Their containers have the same role, so the primary marks should have comparable visual emphasis. A clock hand remains a secondary detail; equal numeric widths are not required for unlike roles or shapes.
-
-MedicalKit uses a stronger filled medical cross with a fixed 2.5-unit stem (1.875 CSS pixels at 12px) in both positive and inverse form. Its lighter case straps leave the medical symbol visually prominent.
-
-Semantic faces share their facial geometry after the surrounding circles are fitted. Open eyes reuse the same 2-unit pupils as the shared dots; VeryDissatisfied keeps visible pupils beneath its brows. Line-like mouths use filled contours with a fixed thickness of 1.5 units, retaining their weight when the circle's stroke changes. VerySatisfied preserves the same closed eyes and outer lip in both variants: its outline mouth is a ring, while its solid variant uses the full opening. Preserve that expression and intentional surface change.
-
-Use transparent counters where a filled surface needs an opening. Small filled details can also appear in an outline variant; the distinction is the treatment of meaningful surfaces. Add a solid companion when it offers a coherent treatment, and compare the pair at the same size and weight.
-
-Compare the variants in the same position as well as side by side. A temporary overlay or a switch between variants can reveal movement in retained features that is easy to miss in a catalogue grid. Filling one surface should not accidentally move an unchanged bench, pole, clasp or action mark. Preserve the original outer boundary while filling its interior. If that boundary meets a cutout, subtract the clearance from the complete painted silhouette; adding the entire original stroke over a clipped fill can close the opening. A different container fit value is not itself a defect: judge the visible relationships and apparent weight. For shared symbols, compare the exact final positive and inverse contours, including the standalone tick, and verify that changing the outline width does not change the symbol.
-
-## Lettering and numerals
-
-Salt's letters and numerals use the family's Open Sans letter shapes. Preserve their natural proportions and spacing. Avoid stretching letters to equal widths or simplifying them so far that their characteristic shapes and counters disappear.
-
-<IconDesignExamples example="lettering" />
-
-Keep regular lettering restrained in weight. The bold control uses a heavier filled letter, and the italic control uses the family's barred I. Preserve these recognizable differences while balancing them with neighboring controls.
-
-Center the visible contours, not the number of characters. Rounded digits can extend slightly beyond a flat alignment line to appear the same height; retain that optical adjustment when centering numerals. Forward and replay timers share their circle geometry and center the actual numeral shapes. File-format labels share a page shape and an external baseline.
-
-Keep letter proportions consistent throughout the family. Check counters, letter spacing and short numeric sequences at 12px and 16px.
+<IconDesignExamples example="text-lines" />
 
 ## Transparency and cutouts
 
-An action mark or overlapping object must remain distinguishable from the shape behind it. The open space around it should follow the foreground's actual contour. Openings must work on light and dark backgrounds and reveal the surface behind the icon.
-
-Preserve enough of the base silhouette to identify the object at native size. If a modifier requires removing a defining lobe, skirt or other landmark, revisit the modifier's scale and placement. A clean gap around a dominant mark does not establish a successful composition.
+Use true transparency so openings reveal any background. Distinguish an **inverse mark**, such as a minus cut into a filled bookmark, from **clearance around a foreground object**, such as the space between an upload arrow and a cloud.
 
 <IconDesignExamples example="cutouts" />
 
-Use true transparency for openings. A patch colored to match one background will become visible when the background changes.
+Clearance follows the foreground's actual painted outline, including curves, sharp tips and flat cap corners. Measure space between visible edges, not between centerlines or bounding boxes. Curved relief around a sharp foreground corner can maintain even separation while the foreground stays crisp.
 
-Judge the gap between **visible edges** at the configured stroke width. Wider strokes occupy more space while filled cutout contours remain fixed. Keep the separation visually even around straight sides, curves, line endings and corners. An enlarged outline around an object's bounding box can still leave uneven space around the shape itself.
+Check the complete opening at both themed stroke widths. Wider strokes consume more room while fixed cutouts stay unchanged. Rebuild clearance when the foreground contour changes; a cutout made for an unwelded arrow may no longer fit its softened roots. Preserve the mark and adjust the surrounding opening before reducing its weight.
 
-Fixed cutouts need to balance the two themed stroke widths. Preserve the foreground mark and adjust the surrounding opening; do not shrink a tick or arrow to repair its clearance. A flat terminal stays in place as its sides grow, and a miter tip grows faster than a straight edge, so perfect equality at every configurable width is not possible with one fixed opening. Review the residual difference at native size and keep it small at both defaults. Curved relief around a square terminal or sharp tip can follow its painted contour while leaving the foreground itself crisp.
+Keep retained contours continuous. An opening reaching the outside, such as Home's doorway or Printer's paper exit, must leave no line across its mouth. Inspect where borders end beside a cutout for stray steps, slivers and seams. Preserve intentional attachments and intrinsic openings, such as handles and eyelets.
 
-SendSolid uses the outline’s complete painted contour at the midpoint of the two themed widths, with its established tapered seam subtracted afterward. Its shared frame preserves the plane’s proportions and the final seam coordinates. A fixed filled contour has small optical edge differences as the outline width changes; keep those bounded at both defaults instead of introducing stroke-cap steps at the seam mouth.
+## Lettering and numerals
 
-Inspect where a cutout meets the outer silhouette. A retained border must not paint back across the opening or stop partway along it, leaving a step. Likewise, a line entering a filled surface must meet its visible edge cleanly; inspect the band-to-cup joins in Headphones and the beam-to-stem joins in MusicDisabled.
+Use the family's Open Sans vector letter shapes. Preserve natural proportions, spacing and readable counters. Center the visible shapes rather than the character count, and retain optical adjustments for rounded digits.
 
-The devices cutout follows the phone's curved corner. The tag-clear cutout buffers the full painted X while preserving its flat terminals. In cloud-sync, overlapping cutouts remove unusable slivers without changing the action's meaning.
+<IconDesignExamples example="lettering" />
 
-Keep intentional attachments and intrinsic openings intact. A connected handle, a letter counter and a tag eyelet each have their own purpose; a small opening is not automatically a separation defect.
+Keep file labels, timer numerals and text controls consistent within their families. Bold and italic controls retain their recognizable differences. Check letters and short number sequences at 12px and 16px; do not compress them until they lose their identifying features.
+
+## Brand logos
+
+Preserve official logo contours and aspect ratios, and follow the owner's usage guidance. Do not apply Salt welding, substitute lettering or invent variants. Provide required clear space in the surrounding layout. Keep source artwork and provenance with the contribution.
+
+The existing LinkedIn outline is a specific Salt presentation of the original letters without the square. Its letters align with the official solid mark; it is not an owner-supplied outline variant or a precedent for restyling other logos.
 
 ## Design review
 
-Compare the whole affected semantic family in the [catalogue](/salt/foundations/assets/index#all-icons) and in its intended interface, including related controls assigned to other categories. For example, judge arithmetic and comparison symbols together. Check both recognition and consistency with the surrounding controls.
+Review the complete affected family at native **12px and 16px**, on **light and dark backgrounds**, at the supported stroke weights. Use an enlarged view to diagnose geometry, then return to native size. Include the intended component context and compare both React icons and baked SVG or CSS-mask artwork when contributing changes.
 
-Maintain an overview of recurring objects, primary marks, compact modifiers, dots, cuts and outline/solid treatments. When one changes, inspect its other appearances and its nearest peers together. Record deliberate role or compatibility exceptions so later changes preserve them. Treat the rules themselves as reviewable when the final drawings reveal a poor balance.
+Before accepting a design, check:
 
-Inspect each variant at actual **12px and 16px** on **light and dark** backgrounds. Start with the density's themed width: **1.333333 for high/medium** and **1 for low/touch/mobile**. Compare the **0.67** reference when reviewing its SVG master. Use the existing Storybook **Icons/Icon** catalogue and search stories, **Icon QA** size and CSS-mask stories, and relevant component examples. Select density and light/dark mode through the Storybook toolbar. For exact sizes, stroke overrides and temporary view-box outlines, follow [Creating icons](/salt/foundations/assets/creating-icons#use-the-existing-review-surfaces). Check final gaps and clipping at every chosen width; the framing target reserves space through width 1.5.
+- **Meaning:** the object, action, direction and state remain recognizable, including without color.
+- **Family:** apparent size, weight, landmarks and modifier placement agree with related icons.
+- **Boundaries:** every exposed inner join and opening follows the corner rule; outer points and flat ends stay clear.
+- **Pairs:** filling preserves the subject, common features and positive/inverse marks.
+- **Space:** cutouts follow the foreground; counters stay open; no seams, fragments or clipped tips appear.
+- **Detail:** text, numerals and small marks remain useful at 12px.
 
-Include an enlarged view for contours, joins, overlaps and cutouts, then return to actual size to judge readability.
-
-Before accepting a design, check that:
-
-- Its meaning, direction and state are clear in context.
-- Its apparent size, visual weight and feature positions fit related icons.
-- Outline and solid variants retain coherent feature positions and line weights in the final fitted exports.
-- Lettering has readable counters and spacing.
-- Cutouts follow the foreground and reveal the background.
-- Each ordinary export meets the default framing or its documented optical target at width 1.5, preserves its aspect ratio and stays inside the 16-unit frame.
-- There are no unintended mergers, fragments, clipped tips or collapsed openings.
-- Details remain useful at native size, and enlarged inspection reveals no malformed geometry.
-
-Judge a narrow detail by whether it remains useful in context. A larger, cleaner-looking shape is only an improvement if it preserves the icon's meaning and balance with its family.
+Record deliberate exceptions and unresolved decisions with the artwork. Automated checks can find construction defects, but do not establish recognition or complete visual approval. [Creating icons](/salt/foundations/assets/creating-icons#use-the-existing-review-surfaces) explains how to prepare the comparison and contribution.
 
 :fragment{src="../fragments/feedback.mdx"}

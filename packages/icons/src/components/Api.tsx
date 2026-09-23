@@ -24,6 +24,18 @@ export const ApiIcon = forwardRef<SVGSVGElement, ApiIconProps>(function ApiIcon(
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M4.856 3.284 1.188 8l3.668 4.716m6.288-9.432L14.813 8l-3.669 4.716M9.572 2.236 6.428 13.764"
         />
+        <path d="M1.688 7.356a1.05 1.05 0 0 0 0 1.288L1.188 8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.688 7.356a1.05 1.05 0 0 0 0 1.288"
+        />
+        <path d="M14.312 7.356a1.05 1.05 0 0 1 0 1.288l.5-.644Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M14.312 7.356a1.05 1.05 0 0 1 0 1.288"
+        />
       </g>
     </Icon>
   );

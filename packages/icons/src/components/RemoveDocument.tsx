@@ -22,7 +22,55 @@ export const RemoveDocumentIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2.077 1h8.615l3.231 3.23V15H2.077Zm8.615 0v2.692q0 .539.539.539h2.692M5.308 9.615h5.384"
+          d="M2.077 1h8.615l3.231 3.23V15H2.077Zm8.615 0v3.23h3.231"
+        />
+        <path d="M10.246 1a1.08 1.08 0 0 1 .762.315L10.692 1Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.246 1a1.08 1.08 0 0 1 .762.315"
+        />
+        <path d="M13.608 3.915a1.08 1.08 0 0 1 .315.762V4.23Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.608 3.915a1.08 1.08 0 0 1 .315.762"
+        />
+        <path d="M13.923 13.923A1.077 1.077 0 0 1 12.846 15h1.077Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.923 13.923A1.077 1.077 0 0 1 12.846 15"
+        />
+        <path d="M3.154 15a1.077 1.077 0 0 1-1.077-1.077V15Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M3.154 15a1.077 1.077 0 0 1-1.077-1.077"
+        />
+        <path d="M2.077 2.077A1.077 1.077 0 0 1 3.154 1H2.077Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.077 2.077A1.077 1.077 0 0 1 3.154 1"
+        />
+        <path d="M10.692 3.154A1.077 1.077 0 0 0 11.77 4.23h-1.077Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.692 3.154A1.077 1.077 0 0 0 11.77 4.23"
+        />
+        <path d="M10.692 2.077A1.077 1.077 0 0 0 9.615 1h1.077Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.692 2.077A1.077 1.077 0 0 0 9.615 1"
+        />
+        <path d="M13.923 5.308a1.077 1.077 0 0 0-1.077-1.077h1.077Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.923 5.308a1.077 1.077 0 0 0-1.077-1.077M5.308 9.615h5.384"
         />
       </g>
     </Icon>

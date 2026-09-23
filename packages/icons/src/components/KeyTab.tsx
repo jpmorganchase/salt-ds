@@ -22,6 +22,36 @@ export const KeyTabIcon = forwardRef<SVGSVGElement, KeyTabIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M.25 8h11.677M7.01 3.083 11.927 8 7.01 12.917M15 1.854v12.292"
           />
+          <path d="M11.058 7.13a1.23 1.23 0 0 1 0 1.74l.87-.87Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.058 7.13a1.23 1.23 0 0 1 0 1.74"
+          />
+          <path d="M9.829 10.098A1.23 1.23 0 0 0 8.959 8h2.968Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.829 10.098A1.23 1.23 0 0 0 8.959 8"
+          />
+          <path d="M8.96 8a1.23 1.23 0 0 0 .869-2.098L11.927 8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8.96 8a1.23 1.23 0 0 0 .869-2.098"
+          />
+          <path d="M8.762 8a1.311 1.311 0 0 1 .927 2.238L11.927 8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8.762 8a1.311 1.311 0 0 1 .927 2.238"
+          />
+          <path d="M8.762 8a1.311 1.311 0 0 0 .927-2.238L11.927 8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8.762 8a1.311 1.311 0 0 0 .927-2.238"
+          />
         </g>
       </Icon>
     );

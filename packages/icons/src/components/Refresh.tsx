@@ -22,6 +22,24 @@ export const RefreshIcon = forwardRef<SVGSVGElement, RefreshIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M14.408 5.057c-1.103-2.5-3.31-4.045-6.253-4.045a6.988 6.988 0 1 0 6.731 8.827M9.994 5.057h4.414V1.012"
           />
+          <path d="M13.305 5.057a1.103 1.103 0 0 0 1.103-1.103v1.103Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.305 5.057a1.103 1.103 0 0 0 1.103-1.103"
+          />
+          <path d="M11.76 5.057q3.909 0 .701-2.601c.825.67 1.484 1.551 1.947 2.601Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.76 5.057q3.909 0 .701-2.601"
+          />
+          <path d="M14.408 2.41q0 1.625-1.947.046c.825.67 1.484 1.551 1.947 2.601Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M14.408 2.41q0 1.625-1.947.046"
+          />
         </g>
       </Icon>
     );

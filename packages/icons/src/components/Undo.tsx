@@ -22,6 +22,24 @@ export const UndoIcon = forwardRef<SVGSVGElement, UndoIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M1.239.364v5.09h5.09m-5.09 0A7 7 0 1 1 7.602 15"
           />
+          <path d="M1.239 4.182A1.273 1.273 0 0 0 2.51 5.455H1.24Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.239 4.182A1.273 1.273 0 0 0 2.51 5.455"
+          />
+          <path d="M1.239 2.4q0 2.383 1.315.92a7 7 0 0 0-1.315 2.135Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.239 2.4q0 2.383 1.315.92"
+          />
+          <path d="M4.293 5.455q-3.658 0-1.74-2.134A7 7 0 0 0 1.24 5.455Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.293 5.455q-3.658 0-1.74-2.134"
+          />
         </g>
       </Icon>
     );

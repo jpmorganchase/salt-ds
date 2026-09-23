@@ -19,12 +19,25 @@ export const SearchSolidIcon = forwardRef<SVGSVGElement, SearchSolidIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M.25 6.238a5.988 5.988 0 1 0 11.977 0 5.988 5.988 0 1 0-11.977 0m5.988-3.593a3.593 3.593 0 0 1 3.593 3.593h1.198a4.79 4.79 0 0 0-4.79-4.79Z"
+            d="M1 6.333a5.333 5.333 0 1 0 10.665 0A5.333 5.333 0 1 0 1 6.333m5.333-3.555a3.555 3.555 0 0 1 3.555 3.555h1.185a4.74 4.74 0 0 0-4.74-4.74Z"
           />
+          <path d="M9.87 5.977a.395.395 0 0 0 .393.356h-.375a4 4 0 0 0-.018-.356m.79.356a.395.395 0 0 0 .393-.431 5 5 0 0 1 .02.43zM6.763 1.612a.395.395 0 0 0-.43.394v-.413a5 5 0 0 1 .43.02m-.43.789a.395.395 0 0 0 .355.393 4 4 0 0 0-.355-.017z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m10.07 10.07 5.15 5.15"
+            d="M1 6.333a5.333 5.333 0 1 0 10.665 0A5.333 5.333 0 1 0 1 6.333Zm9.125 3.792 5.095 5.095"
+          />
+          <path d="M11.002 11.002a1.42 1.42 0 0 1-.19-1.777 5.3 5.3 0 0 1-.709.878Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.002 11.002a1.42 1.42 0 0 1-.19-1.777"
+          />
+          <path d="M11.002 11.002a1.42 1.42 0 0 0-1.777-.19 5.3 5.3 0 0 0 .878-.709Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.002 11.002a1.42 1.42 0 0 0-1.777-.19"
           />
         </g>
       </Icon>

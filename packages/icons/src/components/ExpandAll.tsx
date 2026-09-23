@@ -22,6 +22,30 @@ export const ExpandAllIcon = forwardRef<SVGSVGElement, ExpandAllIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M3.529 5.752 8 1.282l4.471 4.47M3.53 10.224 8 14.694l4.471-4.47"
           />
+          <path d="M7.21 2.072a1.12 1.12 0 0 1 1.58 0L8 1.282Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.21 2.072a1.12 1.12 0 0 1 1.58 0"
+          />
+          <path d="M7.21 13.904a1.12 1.12 0 0 0 1.58 0l-.79.79Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.21 13.904a1.12 1.12 0 0 0 1.58 0"
+          />
+          <path d="M7.052 2.23a1.34 1.34 0 0 1 1.896 0L8 1.28Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.052 2.23a1.34 1.34 0 0 1 1.896 0"
+          />
+          <path d="M7.052 13.746a1.34 1.34 0 0 0 1.896 0L8 14.695Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.052 13.746a1.34 1.34 0 0 0 1.896 0"
+          />
         </g>
       </Icon>
     );

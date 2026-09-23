@@ -5,8 +5,12 @@ import {
   CloudSyncIcon,
   CloudSyncSolidIcon,
   CsvIcon,
+  DashboardIcon,
+  DashboardSolidIcon,
   DevicesIcon,
   DevicesSolidIcon,
+  DocumentIcon,
+  DocumentSolidIcon,
   Forward10Icon,
   GlobeIcon,
   type IconProps,
@@ -31,6 +35,8 @@ export type IconDesignExample =
   | "family"
   | "scale"
   | "stroke"
+  | "gauge"
+  | "text-lines"
   | "geometry"
   | "variants"
   | "lettering"
@@ -114,6 +120,30 @@ const figures: Record<IconDesignExample, Figure> = {
     caption:
       "These React icons inherit the density's primary stroke: 1.333333 units (approximately 4/3) in high/medium, and 1 unit in low/touch/mobile. Secondary details keep their proportions. The 64px views use the configured weight; filled contours retain their geometry.",
   },
+  gauge: {
+    groups: [12, 16, 64].map((pixels) => ({
+      label: `${pixels}px${pixels === 64 ? " · enlarged" : " · native"}`,
+      samples: [
+        { Icon: DashboardIcon, label: "Outline" },
+        { Icon: DashboardSolidIcon, label: "Solid" },
+      ],
+      pixels,
+    })),
+    caption:
+      "Dashboard keeps its ticks separate from the rim without thinning them. Compare the tick and needle weight in both variants at native size.",
+  },
+  "text-lines": {
+    groups: [12, 16, 64].map((pixels) => ({
+      label: `${pixels}px${pixels === 64 ? " · enlarged" : " · native"}`,
+      samples: [
+        { Icon: DocumentIcon, label: "Painted bars" },
+        { Icon: DocumentSolidIcon, label: "Transparent slots" },
+      ],
+      pixels,
+    })),
+    caption:
+      "Document preserves the line count and rhythm. Painted bars have flat ends; transparent slots can soften their interior corners while retaining a flat end section.",
+  },
   geometry: {
     groups: [
       {
@@ -121,10 +151,10 @@ const figures: Record<IconDesignExample, Figure> = {
         samples: [{ Icon: BankIcon, label: "Bank" }],
         pixels: 80,
         description:
-          "A sharp roof and plinth with locally eased column attachments.",
+          "Sharp outer roof and plinth corners surround softened openings and column attachments.",
       },
       {
-        label: "Selective junctions",
+        label: "Inner joins",
         samples: [{ Icon: CalendarIcon, label: "Calendar" }],
         pixels: 80,
         description:
@@ -139,7 +169,7 @@ const figures: Record<IconDesignExample, Figure> = {
       },
     ],
     caption:
-      "Enlarged to 80px at the standard line weight. Use crisp terminals, deliberate angles, and selective curves according to the object; a single corner radius does not define the family.",
+      "Enlarged to 80px at the themed line weight. Soften exposed inner joins and opening corners, retain sharp outer corners and flat ends, and preserve natural curves. The visible result determines the local radius.",
   },
   variants: {
     groups: [
@@ -204,7 +234,7 @@ const figures: Record<IconDesignExample, Figure> = {
           { Icon: DevicesSolidIcon, label: "Solid" },
         ],
         description:
-          "The display leaves space around the phone's curved outline.",
+          "The display's clearance follows the phone's painted edges and sharp outer corners.",
       },
       {
         label: "Tag clear",

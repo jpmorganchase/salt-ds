@@ -1,8 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" stroke-width="0.67" viewBox="0 0 16 16">
-  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M1 .25v14.749994h14.749994"/>
-  <path fill="none" stroke="currentColor" stroke-width="0.67" d="m3.836537 11.59615 3.403845-4.53846 3.403845 2.26923 3.971152-5.673075"/>
-  <path fill="currentColor" fill-rule="evenodd" d="M2.701922 11.59615a1.134615 1.134615 0 1 0 2.26923 0 1.134615 1.134615 0 1 0-2.26923 0"/>
-  <path fill="currentColor" fill-rule="evenodd" d="M6.105767 7.05769a1.134615 1.134615 0 1 0 2.26923 0 1.134615 1.134615 0 1 0-2.26923 0"/>
-  <path fill="currentColor" fill-rule="evenodd" d="M9.509612 9.32692a1.134615 1.134615 0 1 0 2.26923 0 1.134615 1.134615 0 1 0-2.26923 0"/>
-  <path fill="currentColor" fill-rule="evenodd" d="M13.480764 3.653845a1.134615 1.134615 0 1 0 2.26923 0 1.134615 1.134615 0 1 0-2.26923 0"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M1 .53125v14.187498h14.187498"/>
+  <path fill="currentColor" d="M1 13.627402a1.091346 1.091346 0 0 0 1.091346 1.091346H1Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M1 13.627402a1.091346 1.091346 0 0 0 1.091346 1.091346"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="m4.69748 10.53671 1.699553-2.549384m1.513479-.30263 1.45782.971952m1.533996-.28866 2.567937-3.66867"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.5025" d="M3.000765 11.44471a1.091346 1.091346 0 1 0 2.182692 0 1.091346 1.091346 0 1 0-2.182692 0Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.5025" d="M5.911057 7.079326a1.091346 1.091346 0 1 0 2.182692 0 1.091346 1.091346 0 1 0-2.182692 0Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.5025" d="M9.185095 9.262018a1.091346 1.091346 0 1 0 2.182692 0 1.091346 1.091346 0 1 0-2.182692 0Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.5025" d="M13.004806 3.805288a1.091346 1.091346 0 1 0 2.182692 0 1.091346 1.091346 0 1 0-2.182692 0Z"/>
 </svg>

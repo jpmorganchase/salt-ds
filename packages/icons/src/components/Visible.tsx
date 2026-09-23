@@ -17,13 +17,23 @@ export const VisibleIcon = forwardRef<SVGSVGElement, VisibleIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
-          <g
+          <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          >
-            <path d="M1.127 8Q8-3.103 14.873 8 8 19.103 1.127 8Z" />
-            <path d="M5.885 8a2.115 2.115 0 1 0 4.23 0 2.115 2.115 0 1 0-4.23 0Z" />
-          </g>
+            d="M1.127 8Q8-3.103 14.873 8 8 19.103 1.127 8Z"
+          />
+          <path d="M14.505 7.421a1.06 1.06 0 0 1 0 1.158A28 28 0 0 0 14.873 8a28 28 0 0 0-.368-.579" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M14.505 7.421a1.06 1.06 0 0 1 0 1.158"
+          />
+          <path d="M1.495 8.579a1.06 1.06 0 0 1 0-1.158A28 28 0 0 0 1.127 8q.184.297.368.579" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.495 8.579a1.06 1.06 0 0 1 0-1.158M5.885 8a2.115 2.115 0 1 0 4.23 0 2.115 2.115 0 1 0-4.23 0Z"
+          />
         </g>
       </Icon>
     );

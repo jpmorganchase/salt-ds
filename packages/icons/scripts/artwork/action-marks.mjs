@@ -1,4 +1,5 @@
-import { F, group, S } from "./primitives.mjs";
+import { group } from "./primitives.mjs";
+import { softenedFill as F, softenedStroke as S } from "./contour-profiles.mjs";
 import { tickPaths } from "./tick.mjs";
 
 // A tick is a secondary action here, so it follows the primary stroke rather

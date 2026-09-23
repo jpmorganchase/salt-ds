@@ -167,7 +167,9 @@ export async function checkCutoutSpacingD(page, records) {
         spreads: [0.09, 0.055, 0.055, 0.075],
       },
       "tag-clear_solid.svg": {
-        mean: 0.839286,
+        // Same 1.875-unit envelope, recalibrated circular pocket and family
+        // frame: preserve the prior absolute gap/spread tolerance envelope.
+        mean: 0.733092,
         slope: 0.25,
         radius: 0.16,
         spreads: [0.28, 0.105, 0.105, 0.19],
@@ -196,52 +198,62 @@ export async function checkCutoutSpacingD(page, records) {
           const pixels = context.getImageData(0, 0, side, side).data;
           let lensEdges;
           if (name === "user-search.svg") {
-            // Retain the exported lens and handle themselves, including their
-            // complete arc joins; do not replace their paint with an ideal circle.
-            const document = new DOMParser().parseFromString(
-              source,
-              "image/svg+xml",
-            );
-            [...document.querySelectorAll("path")].forEach((path, index) => {
-              if (index !== 2 && index !== 3) path.remove();
-            });
-            const lensUrl = URL.createObjectURL(
-              new Blob([new XMLSerializer().serializeToString(document)], {
-                type: "image/svg+xml",
-              }),
-            );
-            try {
-              const lensImage = new Image();
-              await new Promise((resolve, reject) => {
-                lensImage.onload = resolve;
-                lensImage.onerror = reject;
-                lensImage.src = lensUrl;
-              });
-              context.clearRect(0, 0, side, side);
-              context.drawImage(lensImage, 0, 0, side, side);
-              const lensPixels = context.getImageData(0, 0, side, side).data;
-              const painted = (x, y) =>
-                lensPixels[(y * side + x) * 4 + 3] >= 128;
-              lensEdges = [];
-              for (let y = 1; y < side - 1; y++)
-                for (let x = 1; x < side - 1; x++)
-                  if (
-                    painted(x, y) &&
-                    !(
-                      painted(x - 1, y) &&
-                      painted(x + 1, y) &&
-                      painted(x, y - 1) &&
-                      painted(x, y + 1)
-                    )
-                  )
-                    lensEdges.push([(x + 0.5) / scale, (y + 0.5) / scale]);
-            } finally {
-              URL.revokeObjectURL(lensUrl);
+            // Isolate the connected magnifier paint, including its welded
+            // handle, from a seed in the lens region. Path indices change when
+            // another family contour gains a fillet; paint connectivity does not.
+            const component = new Uint8Array(side * side);
+            const queue = new Uint32Array(side * side);
+            let tail = 0;
+            for (let y = Math.ceil(7 * scale); y < 10 * scale && !tail; y++)
+              for (let x = Math.ceil(9 * scale); x < 14 * scale; x++) {
+                const index = y * side + x;
+                if (pixels[index * 4 + 3] < 128) continue;
+                component[index] = 1;
+                queue[tail++] = index;
+                break;
+              }
+            if (!tail) throw new Error("User search magnifier seed is missing");
+            for (let head = 0; head < tail; head++) {
+              const index = queue[head];
+              const x = index % side;
+              const y = Math.floor(index / side);
+              for (const next of [
+                x > 0 ? index - 1 : -1,
+                x + 1 < side ? index + 1 : -1,
+                y > 0 ? index - side : -1,
+                y + 1 < side ? index + side : -1,
+              ]) {
+                if (next < 0 || component[next] || pixels[next * 4 + 3] < 128)
+                  continue;
+                component[next] = 1;
+                queue[tail++] = next;
+              }
+            }
+            lensEdges = [];
+            for (let i = 0; i < tail; i++) {
+              const index = queue[i];
+              const x = index % side;
+              const y = Math.floor(index / side);
+              if (
+                x > 0 &&
+                x + 1 < side &&
+                y > 0 &&
+                y + 1 < side &&
+                !(
+                  component[index - 1] &&
+                  component[index + 1] &&
+                  component[index - side] &&
+                  component[index + side]
+                )
+              )
+                lensEdges.push([(x + 0.5) / scale, (y + 0.5) / scale]);
             }
           }
           const samples = [];
           if (name === "tag-clear_solid.svg") {
-            const cap = [9.923807, 9.923807];
+            // The Tag/TagClear family retains one fitted outer perimeter. The
+            // X's top-left cap follows that frame; it is not on y = x.
+            const cap = [10.246904, 9.95169];
             const u = [q, q];
             const v = [q, -q];
             for (const sign of [-1, 1])

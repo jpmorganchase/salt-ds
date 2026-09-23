@@ -22,6 +22,36 @@ export const SortDescendIcon = forwardRef<SVGSVGElement, SortDescendIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M.25 2.283h6.92M.25 7.473h4.614M.25 12.665h2.307M12.362 1.13v12.688m-2.884-2.884 2.884 2.884 2.883-2.884"
           />
+          <path d="M11.546 13.002a1.153 1.153 0 0 0 1.631 0l-.815.816Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.546 13.002a1.153 1.153 0 0 0 1.631 0"
+          />
+          <path d="M10.92 12.376a.845.845 0 0 0 1.442-.597v2.039Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.92 12.376a.845.845 0 0 0 1.442-.597"
+          />
+          <path d="M12.362 11.779a.845.845 0 0 0 1.441.597l-1.441 1.442Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.362 11.779a.845.845 0 0 0 1.441.597"
+          />
+          <path d="M12.362 11.126a1.115 1.115 0 0 1-1.904.788l1.904 1.904Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.362 11.126a1.115 1.115 0 0 1-1.904.788"
+          />
+          <path d="M12.362 11.126a1.115 1.115 0 0 0 1.903.788l-1.903 1.904Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.362 11.126a1.115 1.115 0 0 0 1.903.788"
+          />
         </g>
       </Icon>
     );

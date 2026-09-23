@@ -1,6 +1,6 @@
 import {
-  BankIcon,
-  BankSolidIcon,
+  CalendarIcon,
+  CalendarSolidIcon,
   GithubIcon,
   Icon,
   ScheduleTimeIcon,
@@ -16,6 +16,7 @@ import * as iconStories from "~stories/icon.stories";
 const composedStories = composeStories(iconStories);
 const { SaltIcon } = composedStories;
 
+// Calendar exercises primary strokes; Bank deliberately uses a lighter family ratio.
 const getIconPath = (testId: string) => {
   const path = page.getByTestId(testId).element().querySelector("path");
   if (!path) throw new Error(`Expected a generated path in ${testId}`);
@@ -72,8 +73,8 @@ describe("Given an icon", () => {
     async (strokeWidth) => {
       await renderWithSalt(
         <>
-          <BankIcon data-testid="outline" strokeWidth={strokeWidth} />
-          <BankSolidIcon data-testid="solid" strokeWidth={strokeWidth} />
+          <CalendarIcon data-testid="outline" strokeWidth={strokeWidth} />
+          <CalendarSolidIcon data-testid="solid" strokeWidth={strokeWidth} />
         </>,
       );
 
@@ -95,8 +96,8 @@ describe("Given an icon", () => {
     async (strokeWidth) => {
       await renderWithSalt(
         <div style={{ "--saltIcon-strokeWidth": strokeWidth } as CSSProperties}>
-          <BankIcon data-testid="outline" />
-          <BankSolidIcon data-testid="solid" />
+          <CalendarIcon data-testid="outline" />
+          <CalendarSolidIcon data-testid="solid" />
           <ScheduleTimeIcon data-testid="schedule" />
           <GithubIcon data-testid="brand" />
         </div>,
@@ -123,8 +124,8 @@ describe("Given an icon", () => {
         data-testid="scope"
         style={{ "--salt-size-icon-strokeWidth": 1.25 } as CSSProperties}
       >
-        <BankIcon data-testid="inherited" />
-        <BankIcon
+        <CalendarIcon data-testid="inherited" />
+        <CalendarIcon
           data-testid="local"
           style={{ "--saltIcon-strokeWidth": 0.8 } as CSSProperties}
         />
@@ -161,8 +162,8 @@ describe("Given an icon", () => {
             } as CSSProperties
           }
         >
-          <BankIcon data-testid="outline" color={color} />
-          <BankSolidIcon data-testid="solid" color={color} />
+          <CalendarIcon data-testid="outline" color={color} />
+          <CalendarSolidIcon data-testid="solid" color={color} />
         </div>,
       );
 
@@ -181,8 +182,8 @@ describe("Given an icon", () => {
           } as CSSProperties
         }
       >
-        <BankIcon data-testid="outline" />
-        <BankSolidIcon data-testid="solid" />
+        <CalendarIcon data-testid="outline" />
+        <CalendarSolidIcon data-testid="solid" />
       </div>,
     );
 

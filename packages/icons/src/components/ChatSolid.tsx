@@ -19,7 +19,30 @@ export const ChatSolidIcon = forwardRef<SVGSVGElement, ChatSolidIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M.25.573h15.5v11.625H5.417l-3.875 3.23v-3.23H.25Z"
+            d="M1.136 1h13.728v10.296H6.246q-.534 0-.954.351l-3.012 2.51v-1.793a1.07 1.07 0 0 0-1.068-1.068h-.076Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.136 1h13.728v10.296H6.246q-.534 0-.954.351l-3.012 2.51v-1.793a1.07 1.07 0 0 0-1.068-1.068h-.076Z"
+          />
+          <path d="M13.72 1a1.144 1.144 0 0 1 1.144 1.144V1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.72 1a1.144 1.144 0 0 1 1.144 1.144"
+          />
+          <path d="M14.864 10.152a1.144 1.144 0 0 1-1.144 1.144h1.144Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M14.864 10.152a1.144 1.144 0 0 1-1.144 1.144"
+          />
+          <path d="M1.136 2.144A1.144 1.144 0 0 1 2.28 1H1.136Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.136 2.144A1.144 1.144 0 0 1 2.28 1"
           />
         </g>
       </Icon>

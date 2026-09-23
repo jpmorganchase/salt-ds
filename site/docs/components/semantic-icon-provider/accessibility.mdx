@@ -8,4 +8,10 @@ data:
   $ref: ./#/data
 ---
 
-This component has no accessibility guidance.
+## Accessible replacements
+
+Keep each replacement's meaning consistent with the role it serves. A success symbol must remain distinguishable from warning and error without relying on color alone.
+
+Custom icon components should forward accessibility props such as `aria-hidden` and `aria-label`, along with sizing and styling props, so the consuming control can preserve its accessible treatment. Review the replacement in that control; configuring a provider does not supply an accessible name for it.
+
+Follow [Icon accessibility](/salt/components/icon/accessibility) for decorative icons, standalone information and icon-only actions.
