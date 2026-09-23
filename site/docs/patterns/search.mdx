@@ -24,6 +24,7 @@ The search pattern delivers a robust and versatile search experience, supporting
 ## When to use
 
 Use this pattern to help users
+
 - Locate information in applications with large amounts of data.
 - Look through a catalog of items, like a product catalog or a library.
 - Navigate to a page or resource.
@@ -35,6 +36,16 @@ Use this pattern to help users
 - When the scope is a small, fixed set of options, use a Combo box or Select control instead of Search.
 
 ## How to build
+
+### Choosing and submitting a result
+
+Choosing a suggestion and submitting a free-text query are separate actions:
+
+- When the suggestion list is open and an enabled suggestion is active, **Enter** chooses that active suggestion. It does not always choose the first result. Users can change the active suggestion with the arrow keys or choose a result directly.
+- If free-text search is supported and no suggestion is active, **Enter** can submit the typed query to a results page. A dedicated **Search** button can also explicitly submit that query.
+- The host application owns navigation and query submission. Selecting a suggestion must not also submit the text query or trigger a second navigation.
+
+Use [`ComboBox`](/salt/components/combo-box) selection callbacks for choosing a suggestion, and keep query submission separate. Follow [List filtering](/salt/patterns/list-filtering#focus-and-result-updates) for focus, asynchronous updates, and result feedback.
 
 ### Anatomy
 
@@ -56,6 +67,7 @@ A search pattern can be present in an application as a global or focused search,
 />
 
 ### Layout
+
 - Use [`Combo box`](/salt/components/combo-box) to display the search field.
 - Use Option Group to group the search results.
 - Use Option to display a search result.
@@ -67,12 +79,12 @@ A search pattern can be present in an application as a global or focused search,
   border
 />
 
-
 ## Basic menu-driven search
 
 ### 1. Initial interaction
 
 Search field displays with "Search" text, inviting the user to begin their search.
+
 <Diagram
   src="/img/patterns/search/search-pattern-4.png"
   srcDark="/img/patterns/search/search-pattern-4-dark.png"
@@ -146,7 +158,7 @@ As the user types, a close button appears for easy clearing of the input. The dr
 
 ### 4. Direct to the results
 
-Once the user submits a search, they are directed to the results page. The search field remains visible, showing the entered query, ready for new searches.
+Choosing a suggestion takes the user to that result. Where free-text search is supported, submitting the query takes the user to a results page. Keep the entered query available for refinement; follow [choosing and submitting a result](#choosing-and-submitting-a-result).
 
 <Diagrams>
 
@@ -158,7 +170,8 @@ Once the user submits a search, they are directed to the results page. The searc
 >
 
 ### Direct submission
-Pressing "Enter" after entering a search query will lead the user to the page of the first result in the dropdown.
+
+With the suggestion list open, pressing **Enter** chooses the active suggestion, which may be a different result after using the arrow keys. See [choosing and submitting a result](#choosing-and-submitting-a-result).
 
 </Diagram>
 
@@ -170,6 +183,7 @@ Pressing "Enter" after entering a search query will lead the user to the page of
 >
 
 ### Selecting suggestion
+
 Choosing a suggestion from the dropdown takes the user directly to the page of the selected result.
 
 </Diagram>
@@ -190,7 +204,8 @@ In addition to returning matching results in the menu, use free text search capa
 >
 
 ### Direct submission
-Pressing the "Enter" key initiates the search based on the user's input. 
+
+When no suggestion is active, pressing **Enter** submits the typed query if the application supports free-text search. If a suggestion is active, Enter chooses it instead.
 
 </Diagram>
 
@@ -202,7 +217,8 @@ Pressing the "Enter" key initiates the search based on the user's input.
 >
 
 ### Selecting suggestion
-Users can navigate through the menu using arrow keys or click on a result to select from the dropdown. 
+
+Users can move through suggestions with the arrow keys and press **Enter** to choose the active result, or click a result directly. Choosing a suggestion does not also submit a free-text query.
 
 </Diagram>
 
@@ -220,6 +236,7 @@ A search button can also be added as an optional element, providing a clear call
 />
 
 ## Search result item types
+
 The search pattern currently supports basic search result items that comprise non-focusable elements: text, icons, country symbols, and avatars.
 The following are examples of the types of results items you can create.
 
@@ -230,13 +247,12 @@ The following are examples of the types of results items you can create.
   border
 />
 
-
 1. **Basic search result:** Displays only the primary search result value, ideal for straightforward results where no additional context is needed.
 
 2. **Search result with icon:** Combines a descriptive icon with the primary search result value, useful for visually differentiating results by category or type.
 
 3. **Basic secondary descriptions:** Adds a secondary label to the search result value, offering additional details or context to clarify the result.
-A secondary label can be used to indicate the category the item falls into (ie “Publication”), to tell the type of result the item is (ie “Recent Search”), to give more information about the item (ie “by Author Name”) or some other useful identifiable information.  
+   A secondary label can be used to indicate the category the item falls into (ie “Publication”), to tell the type of result the item is (ie “Recent Search”), to give more information about the item (ie “by Author Name”) or some other useful identifiable information.
 
 4. **Search result with avatar and country symbol:** Displays either an avatar or a country symbol alongside the primary search result value. An avatar is best for person-related results, such as contacts or profiles, providing a visual representation of the individual. A country symbol is ideal for results related to geographical locations or entities associated with specific countries, offering a quick visual cue to identify the country associated with the search result.
 
@@ -277,15 +293,18 @@ This section provides guidelines for organizing and prioritizing search results 
 4. **Data source priority:** If results are pulled from multiple data sources, consider prioritizing sources based on user behavior or business goals. For example, prioritize internal data over external sources if it aligns with user needs.
 
 <Callout title="Large data sets in search results">
-The Combo Box has limitations in efficiently handling large numbers of search results. For large data sets, consider methods like limiting the results or directing users to a separate search results page to enhance the user experience. 
-This behavior is not currently supported. Contact the Salt team through the
-[support and contributions](/salt/support-and-contributions) page if it is
-important to your workflow.
+  The Combo Box has limitations in efficiently handling large numbers of search
+  results. For large data sets, consider methods like limiting the results or
+  directing users to a separate search results page to enhance the user
+  experience. This behavior is not currently supported. Contact the Salt team
+  through the [support and contributions](/salt/support-and-contributions) page
+  if it is important to your workflow.
 </Callout>
 
 ## Search placement
 
 Search is typically located in three key areas for easy access.
+
 <br></br>
 **Header:** Accessible from any page, ideal for global search.
 
