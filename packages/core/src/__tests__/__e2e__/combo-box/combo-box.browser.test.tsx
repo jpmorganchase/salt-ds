@@ -3,6 +3,7 @@ import { composeStories } from "@storybook/react-vite";
 import { type KeyboardEventHandler, useRef, useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
+import { trackDefaultPrevented } from "~browser-test-utils/interactions";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as comboBoxStories from "~stories/combo-box/combo-box.stories";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
@@ -821,9 +822,9 @@ describe("given a multiselect ComboBox with pills", () => {
 
 describe("GIVEN a Combo box and the keys it owns", () => {
   it("stops the page scrolling when opening the list with an arrow key", async () => {
-    const onKeyDown = vi.fn();
+    const keyDown = trackDefaultPrevented();
     await renderWithSalt(
-      <ComboBox onKeyDown={onKeyDown}>
+      <ComboBox onKeyDown={keyDown.handler}>
         <Option value="Alabama" />
         <Option value="Alaska" />
       </ComboBox>,
@@ -832,13 +833,13 @@ describe("GIVEN a Combo box and the keys it owns", () => {
     await userEvent.tab();
     await userEvent.keyboard("{ArrowDown}");
 
-    expect(onKeyDown.mock.lastCall?.[0].defaultPrevented).toBe(true);
+    expect(keyDown.lastDefaultPrevented()).toBe(true);
   });
 
   it("stops the page scrolling when arrowing past the first option", async () => {
-    const onKeyDown = vi.fn();
+    const keyDown = trackDefaultPrevented();
     await renderWithSalt(
-      <ComboBox onKeyDown={onKeyDown}>
+      <ComboBox onKeyDown={keyDown.handler}>
         <Option value="Alabama" />
         <Option value="Alaska" />
       </ComboBox>,
@@ -851,6 +852,6 @@ describe("GIVEN a Combo box and the keys it owns", () => {
     // The active option cannot move, but the combo box still owns the key.
     await userEvent.keyboard("{ArrowUp}");
 
-    expect(onKeyDown.mock.lastCall?.[0].defaultPrevented).toBe(true);
+    expect(keyDown.lastDefaultPrevented()).toBe(true);
   });
 });

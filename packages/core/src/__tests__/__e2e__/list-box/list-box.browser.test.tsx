@@ -2,6 +2,7 @@ import { ListBox, Option } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
+import { trackDefaultPrevented } from "~browser-test-utils/interactions";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as listBoxStories from "~stories/list-box/list-box.stories";
 
@@ -225,9 +226,9 @@ describe("GIVEN a List box", () => {
 
 describe("GIVEN a List box at the edge of its options", () => {
   it("stops the page scrolling when arrowing past the first option", async () => {
-    const onKeyDown = vi.fn();
+    const keyDown = trackDefaultPrevented();
     await renderWithSalt(
-      <ListBox onKeyDown={onKeyDown}>
+      <ListBox onKeyDown={keyDown.handler}>
         <Option value="Alabama" />
         <Option value="Alaska" />
       </ListBox>,
@@ -240,13 +241,13 @@ describe("GIVEN a List box at the edge of its options", () => {
     await userEvent.keyboard("{ArrowUp}");
 
     await expectActiveOption("Alabama");
-    expect(onKeyDown.mock.lastCall?.[0].defaultPrevented).toBe(true);
+    expect(keyDown.lastDefaultPrevented()).toBe(true);
   });
 
   it("stops the page scrolling when pressing Home on the first option", async () => {
-    const onKeyDown = vi.fn();
+    const keyDown = trackDefaultPrevented();
     await renderWithSalt(
-      <ListBox onKeyDown={onKeyDown}>
+      <ListBox onKeyDown={keyDown.handler}>
         <Option value="Alabama" />
         <Option value="Alaska" />
       </ListBox>,
@@ -257,6 +258,6 @@ describe("GIVEN a List box at the edge of its options", () => {
 
     await userEvent.keyboard("{Home}");
 
-    expect(onKeyDown.mock.lastCall?.[0].defaultPrevented).toBe(true);
+    expect(keyDown.lastDefaultPrevented()).toBe(true);
   });
 });

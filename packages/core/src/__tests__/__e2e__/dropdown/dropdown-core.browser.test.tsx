@@ -3,6 +3,7 @@ import { composeStories } from "@storybook/react-vite";
 import { type KeyboardEventHandler, useRef, useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
+import { trackDefaultPrevented } from "~browser-test-utils/interactions";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as dropdownStories from "~stories/dropdown/dropdown.stories";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
@@ -581,9 +582,9 @@ describe("Given a core Dropdown", () => {
 
 describe("GIVEN a Dropdown at the edge of its options", () => {
   it("stops the page scrolling when arrowing past the first option", async () => {
-    const onKeyDown = vi.fn();
+    const keyDown = trackDefaultPrevented();
     await renderWithSalt(
-      <Dropdown onKeyDown={onKeyDown}>
+      <Dropdown onKeyDown={keyDown.handler}>
         <Option value="Alabama" />
         <Option value="Alaska" />
       </Dropdown>,
@@ -596,6 +597,6 @@ describe("GIVEN a Dropdown at the edge of its options", () => {
     // The active option cannot move, but the dropdown still owns the key.
     await userEvent.keyboard("{ArrowUp}");
 
-    expect(onKeyDown.mock.lastCall?.[0].defaultPrevented).toBe(true);
+    expect(keyDown.lastDefaultPrevented()).toBe(true);
   });
 });
