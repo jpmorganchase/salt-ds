@@ -143,13 +143,15 @@ export const ToggleButtonGroup = forwardRef<
   // button. Disabled buttons are never the tab stop, as they cannot be focused.
   const isFocused = useCallback(
     (id: Value) => {
+      // `value` on a DOM button is always a string, but the public `value` prop
+      // also accepts numbers, so compare both sides as strings.
       const hasEnabledSelection = enabledButtons.some(
-        (button) => button.value === focused,
+        (button) => button.value === String(focused),
       );
 
       return hasEnabledSelection
         ? focused === id
-        : enabledButtons[0]?.value === id;
+        : enabledButtons[0]?.value === String(id);
     },
     [focused, enabledButtons],
   );

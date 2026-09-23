@@ -192,6 +192,39 @@ describe("GIVEN a ToggleButtonGroup and keyboard navigation", () => {
     await expect
       .element(page.getByRole("radio", { name: "Alert" }))
       .toHaveFocus();
+
+    // A screen reader user must still perceive Home as selected but disabled,
+    // and it must be out of the tab order.
+    const home = page.getByRole("radio", { name: "Home" });
+    await expect.element(home).toHaveAttribute("aria-checked", "true");
+    await expect.element(home).toHaveAttribute("aria-disabled", "true");
+    await expect.element(home).toHaveAttribute("tabindex", "-1");
+
+    // Exactly one button in the group is a tab stop.
+    const tabStops = (await page.getByRole("radio").elements()).filter(
+      (radio) => radio.getAttribute("tabindex") === "0",
+    );
+    expect(tabStops).toHaveLength(1);
+    expect(tabStops[0]).toHaveAccessibleName("Alert");
+  });
+
+  it("is a single tab stop when the buttons use numeric values", async () => {
+    await renderWithSalt(
+      <ToggleButtonGroup defaultValue={2} aria-label="Numeric options">
+        <ToggleButton value={1}>One</ToggleButton>
+        <ToggleButton value={2}>Two</ToggleButton>
+      </ToggleButtonGroup>,
+    );
+
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("radio", { name: "Two" }))
+      .toHaveFocus();
+
+    const tabStops = (await page.getByRole("radio").elements()).filter(
+      (radio) => radio.getAttribute("tabindex") === "0",
+    );
+    expect(tabStops).toHaveLength(1);
   });
 
   it("skips a disabled button when navigating with the arrow keys", async () => {
