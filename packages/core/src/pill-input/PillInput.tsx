@@ -338,14 +338,17 @@ export const PillInput = forwardRef(function PillInput(
                 onFocus={() => setFocusedPillIndex(index)}
                 onKeyDown={handlePillKeyDown}
                 onClick={handlePillClick}
-                // Before any pill is focused the first pill is the only tab
-                // stop, so the pill list is a single stop overall.
+                // The pill list is a single tab stop. It falls back to the
+                // first pill before any pill is focused, and also when the
+                // remembered pill has gone, which happens when the focused
+                // pill is removed with the mouse. Without the fallback the
+                // list would be left with no tab stop at all.
                 tabIndex={
-                  (
-                    focusedPillIndex === -1
-                      ? index === 0
-                      : focusedPillIndex === index
-                  )
+                  index ===
+                  (focusedPillIndex >= 0 &&
+                  focusedPillIndex < visiblePills.length
+                    ? focusedPillIndex
+                    : 0)
                     ? 0
                     : -1
                 }
