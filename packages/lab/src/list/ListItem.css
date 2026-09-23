@@ -58,7 +58,8 @@
 }
 
 .saltListItem.saltDisabled {
-  --list-item-text-color: var(--salt-content-primary-foreground-disabled);
+  opacity: 0.4;
+  --list-item-text-color: var(--salt-content-primary-foreground);
   cursor: var(--salt-cursor-disabled);
 }
 

@@ -8,11 +8,6 @@
   background-color: var(--salt-container-secondary-background);
 }
 
-.loadingItem.loading {
-  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-secondary-borderColor-disabled);
-  color: var(--salt-content-secondary-foreground);
-  background-color: initial;
-}
 .loadingGrid {
   min-width: 300px;
   min-height: 200px;

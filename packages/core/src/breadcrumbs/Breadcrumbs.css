@@ -105,8 +105,9 @@
 
 .saltBreadcrumbs-disclosureItem[aria-disabled="true"],
 .saltBreadcrumbs-disclosureItem[aria-disabled="true"]:active {
-  background: var(--salt-selectable-background-disabled);
-  color: var(--salt-content-primary-foreground-disabled);
+  opacity: 0.4;
+  background: var(--salt-selectable-background);
+  color: var(--salt-content-primary-foreground);
   cursor: var(--salt-cursor-disabled);
   box-shadow: none;
 }
