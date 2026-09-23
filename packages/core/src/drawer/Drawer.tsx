@@ -27,6 +27,7 @@ import drawerCss from "./Drawer.css";
 import { DrawerContext } from "./DrawerContext";
 import { hasDrawerSection } from "./hasDrawerSection";
 import { DrawerResizeHandle, useDrawerResize } from "./internal";
+import type { DrawerResizeHandleBorder } from "./internal/DrawerResizeHandle";
 
 interface ConditionalScrimWrapperProps extends PropsWithChildren {
   condition: boolean;
@@ -73,6 +74,12 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    * */
   resizable?: boolean;
   /**
+   * Sides of the resize handle to render a border on. No borders are rendered by default.
+   * `left` and `right` apply to a `left` or `right` drawer, `top` and `bottom` to a `top`
+   * or `bottom` drawer; a side that does not run along the handle is ignored.
+   * */
+  resizeHandleBorders?: DrawerResizeHandleBorder[];
+  /**
    * Which element to initially focus. Can be either a number (tabbable index as specified by the order) or a ref.
    * Default value is 0 (first tabbable element).
    * */
@@ -95,6 +102,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       disableDismiss,
       disableScrim,
       resizable = false,
+      resizeHandleBorders,
       initialFocus,
       id,
       style,
@@ -208,6 +216,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
               <DrawerResizeHandle
                 position={position}
                 resizing={isResizing}
+                borders={resizeHandleBorders?.filter((side) =>
+                  sizeProperty === "width"
+                    ? side === "left" || side === "right"
+                    : side === "top" || side === "bottom",
+                )}
                 aria-label="Resize drawer"
                 aria-controls={drawerId}
                 {...separatorProps}
