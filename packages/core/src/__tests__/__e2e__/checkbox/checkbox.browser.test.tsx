@@ -99,4 +99,34 @@ describe("GIVEN a Checkbox", () => {
       .element(page.getByRole("checkbox"))
       .toHaveAttribute("name", "accept");
   });
+
+  it("changes appearance when an enabled checkbox is hovered", async () => {
+    await renderWithSalt(<Checkbox label="Enabled" />);
+    const icon = document.querySelector(".saltCheckboxIcon") as HTMLElement;
+    const resting = getComputedStyle(icon).borderColor;
+
+    await userEvent.hover(page.getByText("Enabled"));
+
+    expect(getComputedStyle(icon).borderColor).not.toBe(resting);
+  });
+
+  it("does not change appearance when a disabled checkbox is hovered", async () => {
+    await renderWithSalt(<Checkbox disabled label="Disabled" />);
+    const icon = document.querySelector(".saltCheckboxIcon") as HTMLElement;
+    const resting = getComputedStyle(icon).borderColor;
+
+    await userEvent.hover(page.getByText("Disabled"));
+
+    expect(getComputedStyle(icon).borderColor).toBe(resting);
+  });
+
+  it("does not change appearance when a checked disabled checkbox is hovered", async () => {
+    await renderWithSalt(<Checkbox checked disabled label="Disabled" />);
+    const icon = document.querySelector(".saltCheckboxIcon") as HTMLElement;
+    const resting = getComputedStyle(icon).borderColor;
+
+    await userEvent.hover(page.getByText("Disabled"));
+
+    expect(getComputedStyle(icon).borderColor).toBe(resting);
+  });
 });

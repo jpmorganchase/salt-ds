@@ -50,4 +50,34 @@ describe("GIVEN a RadioButton component", () => {
     await radio.click({ force: true });
     expect(onChange).not.toHaveBeenCalled();
   });
+
+  it("changes appearance when an enabled radio button is hovered", async () => {
+    await renderWithSalt(<RadioButton label="Enabled" />);
+    const icon = document.querySelector(".saltRadioButtonIcon") as HTMLElement;
+    const resting = getComputedStyle(icon).borderColor;
+
+    await userEvent.hover(page.getByText("Enabled"));
+
+    expect(getComputedStyle(icon).borderColor).not.toBe(resting);
+  });
+
+  it("does not change appearance when a disabled radio button is hovered", async () => {
+    await renderWithSalt(<RadioButton disabled label="Disabled" />);
+    const icon = document.querySelector(".saltRadioButtonIcon") as HTMLElement;
+    const resting = getComputedStyle(icon).borderColor;
+
+    await userEvent.hover(page.getByText("Disabled"));
+
+    expect(getComputedStyle(icon).borderColor).toBe(resting);
+  });
+
+  it("does not change appearance when a checked disabled radio button is hovered", async () => {
+    await renderWithSalt(<RadioButton checked disabled label="Disabled" />);
+    const icon = document.querySelector(".saltRadioButtonIcon") as HTMLElement;
+    const resting = getComputedStyle(icon).borderColor;
+
+    await userEvent.hover(page.getByText("Disabled"));
+
+    expect(getComputedStyle(icon).borderColor).toBe(resting);
+  });
 });

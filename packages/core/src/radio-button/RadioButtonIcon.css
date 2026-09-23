@@ -28,6 +28,18 @@
   color: var(--salt-selectable-foreground-selected);
 }
 
+/* A disabled radio button must not respond to hover. These restore the
+   resting appearance, which the hover rules above would otherwise win over. */
+.saltRadioButton-disabled:hover .saltRadioButtonIcon {
+  border-color: var(--salt-selectable-borderColor);
+  color: var(--salt-selectable-foreground);
+}
+
+.saltRadioButton-disabled:hover .saltRadioButtonIcon-checked {
+  border-color: var(--salt-selectable-borderColor-selected);
+  color: var(--salt-selectable-foreground-selected);
+}
+
 .saltRadioButtonIcon-disabled,
 .saltRadioButton:hover .saltRadioButtonIcon-disabled {
   opacity: 0.4;
