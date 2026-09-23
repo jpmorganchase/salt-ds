@@ -1,12 +1,11 @@
-
 .salt-theme.salt-interim[data-mode="light"] {
-  --salt-palette-info: var(--salt-color-blue-500);
-  --salt-palette-info-strong: var(--salt-color-blue-600);
-  --salt-palette-info-weakest: var(--salt-color-blue-100);
+  --salt-palette-info-medium: var(--salt-color-blue-500);
+  --salt-palette-info-mediumHigh: var(--salt-color-blue-600);
+  --salt-palette-info-lowest: var(--salt-color-blue-100);
 }
 
 .salt-theme.salt-interim[data-mode="dark"] {
-  --salt-palette-info: var(--salt-color-blue-500);
-  --salt-palette-info-strong: var(--salt-color-blue-400);
-  --salt-palette-info-weakest: var(--salt-color-blue-900);
+  --salt-palette-info-medium: var(--salt-color-blue-500);
+  --salt-palette-info-mediumHigh: var(--salt-color-blue-400);
+  --salt-palette-info-lowest: var(--salt-color-blue-900);
 }

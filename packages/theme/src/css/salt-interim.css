@@ -10,8 +10,8 @@
 @import url(salt-interim/palette/background.css);
 @import url(salt-interim/palette/categorical.css);
 @import url(salt-interim/palette/corner.css);
-@import url(salt-interim/palette/foreground.css);
 @import url(salt-interim/palette/info.css);
+@import url(salt-interim/palette/monochrome.css);
 @import url(salt-interim/palette/negative.css);
 @import url(salt-interim/palette/neutral.css);
 @import url(salt-interim/palette/positive.css);

@@ -1,14 +1,13 @@
-
 .salt-theme.salt-interim {
-  --salt-selectable-borderColor: var(--salt-palette-neutral);
-  --salt-selectable-borderColor-hover: var(--salt-palette-accent);
-  --salt-selectable-borderColor-selected: var(--salt-palette-accent);
-  --salt-selectable-borderColor-readonly: var(--salt-palette-neutral);
+  --salt-selectable-borderColor: var(--salt-palette-neutral-medium);
+  --salt-selectable-borderColor-hover: var(--salt-palette-accent-medium);
+  --salt-selectable-borderColor-selected: var(--salt-palette-accent-medium);
+  --salt-selectable-borderColor-readonly: var(--salt-palette-neutral-medium);
 
-  --salt-selectable-foreground: var(--salt-palette-neutral-strong);
-  --salt-selectable-foreground-hover: var(--salt-palette-accent);
-  --salt-selectable-foreground-selected: var(--salt-palette-accent);
+  --salt-selectable-foreground: var(--salt-palette-neutral-mediumHigh);
+  --salt-selectable-foreground-hover: var(--salt-palette-accent-medium);
+  --salt-selectable-foreground-selected: var(--salt-palette-accent-medium);
   --salt-selectable-background: var(--salt-color-transparent);
-  --salt-selectable-background-hover: var(--salt-palette-accent-weakest);
-  --salt-selectable-background-selected: var(--salt-palette-accent-weaker);
+  --salt-selectable-background-hover: var(--salt-palette-accent-lowest);
+  --salt-selectable-background-selected: var(--salt-palette-accent-lower);
 }
