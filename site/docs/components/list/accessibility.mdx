@@ -11,8 +11,8 @@ data:
 ## Best practices
 
 - Give icon-only secondary controls an accessible name that includes the row context, such as “Download quarterly report”.
-- When several trailing controls form a named set, wrap them in an element with `role="group"` and `aria-label` or `aria-labelledby`.
-- Keep `ListItemTrigger` and each trailing control, or its semantic group, as siblings within `ListItem`. Never nest a control inside `ListItemTrigger`.
+- Put secondary controls directly in `ListItemActions`. When several controls form a named set, add `role="group"` and `aria-label` or `aria-labelledby`.
+- Keep `ListItemTrigger` and `ListItemActions` as siblings within `ListItem`. Never nest a control inside `ListItemTrigger`.
 - Use a labelled `nav` landmark around lists whose primary purpose is navigation.
 - When an action removes its focused row, move focus to the next logical row, previous row, or a stable surrounding control.
 
@@ -35,16 +35,6 @@ data:
   <KeyboardControl keyOrCombos="Enter">
 
     - Activates a focused link using native browser behavior.
-
-  </KeyboardControl>
-  <KeyboardControl keyOrCombos="Arrow keys">
-
-    - Have no list-specific behavior and do not move focus between rows.
-
-  </KeyboardControl>
-  <KeyboardControl keyOrCombos="Escape">
-
-    - Has no list-specific behavior. A containing Dialog or Overlay owns dismissal and focus return.
 
   </KeyboardControl>
 </KeyboardControls>

@@ -1,13 +1,14 @@
 import {
   List,
   ListItem,
+  ListItemActions,
   ListItemContent,
   ListItemTrigger,
 } from "@salt-ds/core";
 import { createRef } from "react";
 
 const unorderedListRef = createRef<HTMLUListElement>();
-const renderedListRef = createRef<HTMLUListElement>();
+const actionsRef = createRef<HTMLDivElement>();
 const buttonRef = createRef<HTMLButtonElement>();
 const linkRef = createRef<HTMLAnchorElement>();
 
@@ -17,13 +18,19 @@ const linkRef = createRef<HTMLAnchorElement>();
   </ListItem>
 </List>;
 
-<List ref={renderedListRef} render={<ol reversed start={3} />}>
+<List render={<ol reversed start={3} />}>
   <ListItem>
     <ListItemContent>Third report</ListItemContent>
   </ListItem>
 </List>;
 
 <List render={(props) => <ol {...props} data-custom-list />} />;
+
+<ListItemActions
+  aria-label="Quarterly report actions"
+  ref={actionsRef}
+  role="group"
+/>;
 
 <ListItemTrigger
   onClick={(event) => {

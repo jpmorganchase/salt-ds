@@ -3,9 +3,9 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
-  Link,
   List,
   ListItem,
+  ListItemActions,
   ListItemContent,
   ListItemTrigger,
   Overlay,
@@ -57,30 +57,36 @@ export const WithSecondaryActions: StoryFn = () => (
         <DocumentIcon aria-hidden />
         Quarterly report
       </ListItemContent>
-      <Button appearance="transparent" aria-label="Download quarterly report">
-        <DownloadIcon aria-hidden />
-      </Button>
+      <ListItemActions>
+        <Button appearance="transparent" aria-label="Download quarterly report">
+          <DownloadIcon aria-hidden />
+        </Button>
+      </ListItemActions>
     </ListItem>
     <ListItem>
       <ListItemContent>
         <DocumentIcon aria-hidden />
         Annual report
       </ListItemContent>
-      <Button appearance="transparent" aria-label="Download annual report">
-        <DownloadIcon aria-hidden />
-      </Button>
+      <ListItemActions>
+        <Button appearance="transparent" aria-label="Download annual report">
+          <DownloadIcon aria-hidden />
+        </Button>
+      </ListItemActions>
     </ListItem>
     <ListItem>
       <ListItemContent>
         <DocumentIcon aria-hidden />
         Monthly performance report
       </ListItemContent>
-      <Button
-        appearance="transparent"
-        aria-label="Download monthly performance report"
-      >
-        <DownloadIcon aria-hidden />
-      </Button>
+      <ListItemActions>
+        <Button
+          appearance="transparent"
+          aria-label="Download monthly performance report"
+        >
+          <DownloadIcon aria-hidden />
+        </Button>
+      </ListItemActions>
     </ListItem>
   </List>
 );
@@ -138,9 +144,11 @@ export const MultilineContent: StoryFn = () => (
           </span>
         </span>
       </ListItemContent>
-      <Button appearance="transparent" aria-label="Download quarterly report">
-        <DownloadIcon aria-hidden />
-      </Button>
+      <ListItemActions>
+        <Button appearance="transparent" aria-label="Download quarterly report">
+          <DownloadIcon aria-hidden />
+        </Button>
+      </ListItemActions>
     </ListItem>
   </List>
 );
@@ -167,8 +175,10 @@ export const RoutingLibraries: StoryFn = () => (
         </ListItem>
         <ListItem>
           <ListItemTrigger
+            aria-label="External report, opens in a new tab"
             href="https://example.com/report"
-            render={<Link rel="noopener" target="_blank" />}
+            rel="noopener"
+            target="_blank"
           >
             <ListItemContent>External report</ListItemContent>
           </ListItemTrigger>

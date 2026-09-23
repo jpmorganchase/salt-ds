@@ -1,5 +1,4 @@
 import {
-  Link,
   List,
   ListItem,
   ListItemContent,
@@ -30,8 +29,10 @@ export const RoutingLibraries = (): ReactElement => (
         </ListItem>
         <ListItem>
           <ListItemTrigger
+            aria-label="External reports, opens in a new tab"
             href="https://example.com/reports"
-            render={<Link rel="noopener" target="_blank" />}
+            rel="noopener"
+            target="_blank"
           >
             <ListItemContent>External reports</ListItemContent>
           </ListItemTrigger>

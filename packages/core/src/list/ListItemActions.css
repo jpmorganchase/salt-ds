@@ -1,0 +1,12 @@
+.saltListItemActions {
+  align-items: center;
+  align-self: start;
+  box-sizing: border-box;
+  display: flex;
+  gap: var(--salt-spacing-100);
+  grid-column: 2;
+  grid-row: 1;
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  padding-block: var(--salt-spacing-50);
+  padding-inline-end: var(--salt-spacing-100);
+}
