@@ -237,7 +237,8 @@ describe("GIVEN a List box at the edge of its options", () => {
     await userEvent.tab();
     await expectActiveOption("Alabama");
 
-    // The active option cannot move, but the list box still owns the key.
+    // The active option cannot move, but the list box still owns the key, so
+    // the browser must not act on it and scroll the nearest scroll container.
     await userEvent.keyboard("{ArrowUp}");
 
     await expectActiveOption("Alabama");
@@ -258,6 +259,42 @@ describe("GIVEN a List box at the edge of its options", () => {
 
     await userEvent.keyboard("{Home}");
 
+    expect(keyDown.lastDefaultPrevented()).toBe(true);
+  });
+
+  it("stops the page scrolling when arrowing past the last option", async () => {
+    const keyDown = trackDefaultPrevented();
+    await renderWithSalt(
+      <ListBox onKeyDown={keyDown.handler}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </ListBox>,
+    );
+
+    await userEvent.tab();
+    await userEvent.keyboard("{End}");
+    await expectActiveOption("Alaska");
+
+    await userEvent.keyboard("{ArrowDown}");
+
+    await expectActiveOption("Alaska");
+    expect(keyDown.lastDefaultPrevented()).toBe(true);
+  });
+
+  it("stops the page scrolling when paging past the edges", async () => {
+    const keyDown = trackDefaultPrevented();
+    await renderWithSalt(
+      <ListBox onKeyDown={keyDown.handler}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </ListBox>,
+    );
+
+    await userEvent.tab();
+    await userEvent.keyboard("{PageUp}");
+    expect(keyDown.lastDefaultPrevented()).toBe(true);
+
+    await userEvent.keyboard("{PageDown}");
     expect(keyDown.lastDefaultPrevented()).toBe(true);
   });
 });
