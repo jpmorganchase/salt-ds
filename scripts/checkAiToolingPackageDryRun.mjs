@@ -333,7 +333,7 @@ const preAgentKnowledgePackage = {
   maxUnpackedBytes: 25 * 1024 * 1024,
   maxGeneratedBytes: 0,
   maxSourceMapBytes: 0,
-  maxEntryCount: 640,
+  // Report file count without a ceiling so canonical guidance can grow.
 };
 
 const cliPackage = {

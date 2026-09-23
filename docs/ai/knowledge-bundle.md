@@ -64,6 +64,10 @@ release verification.
 | ordinary content artifact | 64 KiB unless allowlisted |
 | npm compressed/unpacked   |           10 MiB / 25 MiB |
 
+The npm package file count is reported for visibility. Package growth is checked
+against byte budgets and the verified artifact inventory, without a separate
+file-count budget.
+
 The generation receipt inside the bundle is digest-neutral and must not contain
 the final manifest hash, bundle digest, release identity, or its own hash.
 
