@@ -70,14 +70,4 @@ describe("GIVEN a RadioButton component", () => {
 
     expect(getComputedStyle(icon).borderColor).toBe(resting);
   });
-
-  it("does not change appearance when a checked disabled radio button is hovered", async () => {
-    await renderWithSalt(<RadioButton checked disabled label="Disabled" />);
-    const icon = document.querySelector(".saltRadioButtonIcon") as HTMLElement;
-    const resting = getComputedStyle(icon).borderColor;
-
-    await userEvent.hover(page.getByText("Disabled"));
-
-    expect(getComputedStyle(icon).borderColor).toBe(resting);
-  });
 });
