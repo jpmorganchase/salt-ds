@@ -1,15 +1,15 @@
 .salt-theme.salt-interim[data-mode="light"] {
+  --salt-palette-accent-lowest: var(--salt-color-topaz-100);
+  --salt-palette-accent-lower: var(--salt-color-topaz-200);
   --salt-palette-accent-medium: var(--salt-color-topaz-500);
   --salt-palette-accent-mediumHigh: var(--salt-color-topaz-600);
   --salt-palette-accent-high: var(--salt-color-topaz-700);
-  --salt-palette-accent-lower: var(--salt-color-topaz-200);
-  --salt-palette-accent-lowest: var(--salt-color-topaz-100);
 }
 
 .salt-theme.salt-interim[data-mode="dark"] {
+  --salt-palette-accent-lowest: var(--salt-color-topaz-900);
+  --salt-palette-accent-lower: var(--salt-color-topaz-800);
   --salt-palette-accent-medium: var(--salt-color-topaz-500);
   --salt-palette-accent-mediumHigh: var(--salt-color-topaz-400);
   --salt-palette-accent-high: var(--salt-color-topaz-300);
-  --salt-palette-accent-lower: var(--salt-color-topaz-800);
-  --salt-palette-accent-lowest: var(--salt-color-topaz-900);
 }
