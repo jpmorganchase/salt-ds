@@ -16,3 +16,12 @@ Added a `resizable` prop to `Drawer`. When enabled, a resize handle is rendered 
 ```
 
 The handle matches the Splitter (`@salt-ds/react-resizable-panels-theme`): a transparent strip with the same dot thumb, and the same hover, drag and focus treatments.
+
+Borders are opt-in per side, as they are on the Splitter's handle, using `resizeHandleBorders`. Use `left` and `right` for a `left` or `right` drawer, and `top` and `bottom` for a `top` or `bottom` drawer; a side that does not run along the handle is ignored.
+
+```tsx
+<Drawer resizable position="left" resizeHandleBorders={["left"]}>
+  <DrawerHeader header="Resizable drawer" />
+  <DrawerContent>Content</DrawerContent>
+</Drawer>
+```

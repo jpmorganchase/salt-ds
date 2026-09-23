@@ -21,6 +21,9 @@
   --drawerResizeHandle-dot-background: var(--salt-separable-foreground);
   --drawerResizeHandle-dot-background-hover: var(--salt-separable-foreground-hover);
   --drawerResizeHandle-dot-background-active: var(--salt-separable-foreground-active);
+  --drawerResizeHandle-borderWidth: var(--salt-size-fixed-100);
+  --drawerResizeHandle-borderColor: var(--salt-separable-secondary-borderColor);
+  --drawerResizeHandle-borderStyle: var(--salt-borderStyle-solid);
 
   position: absolute;
   z-index: 1;
@@ -29,10 +32,13 @@
   touch-action: none;
 }
 
-/* The visible strip */
+/* The visible strip. Borders are drawn here rather than on the handle itself,
+   which is the wider pointer target, and are inside the strip so it stays
+   exactly --drawerResizeHandle-size. */
 .saltDrawerResizeHandle::before {
   content: "";
   position: absolute;
+  box-sizing: border-box;
   background: var(--drawerResizeHandle-background);
 }
 
@@ -136,6 +142,33 @@
   left: 50%;
   top: var(--drawerResizeHandle-thumbInset);
   transform: translateX(-50%) rotate(90deg);
+}
+
+/* Borders are opt-in per side, as in the Splitter theme. Only the two sides
+   perpendicular to the resize axis are offered: for a left or right Drawer
+   that is left and right, for a top or bottom Drawer it is top and bottom. */
+.saltDrawerResizeHandle-borderTop::before {
+  border-top-width: var(--drawerResizeHandle-borderWidth);
+  border-top-color: var(--drawerResizeHandle-borderColor);
+  border-top-style: var(--drawerResizeHandle-borderStyle);
+}
+
+.saltDrawerResizeHandle-borderBottom::before {
+  border-bottom-width: var(--drawerResizeHandle-borderWidth);
+  border-bottom-color: var(--drawerResizeHandle-borderColor);
+  border-bottom-style: var(--drawerResizeHandle-borderStyle);
+}
+
+.saltDrawerResizeHandle-borderLeft::before {
+  border-left-width: var(--drawerResizeHandle-borderWidth);
+  border-left-color: var(--drawerResizeHandle-borderColor);
+  border-left-style: var(--drawerResizeHandle-borderStyle);
+}
+
+.saltDrawerResizeHandle-borderRight::before {
+  border-right-width: var(--drawerResizeHandle-borderWidth);
+  border-right-color: var(--drawerResizeHandle-borderColor);
+  border-right-style: var(--drawerResizeHandle-borderStyle);
 }
 
 /* Hover and drag states, matching the Splitter's treatment */
