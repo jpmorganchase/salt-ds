@@ -20,11 +20,11 @@ export const DivideIcon = forwardRef<SVGSVGElement, DivideIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.75 8h12.5"
+            d="M1.75 8.667h12.5"
           />
           <path
             fillRule="evenodd"
-            d="M6.864 2.886a1.136 1.136 0 1 0 2.272 0 1.136 1.136 0 1 0-2.272 0m0 10.228a1.136 1.136 0 1 0 2.272 0 1.136 1.136 0 1 0-2.272 0"
+            d="M6.864 3.553a1.136 1.136 0 1 0 2.272 0 1.136 1.136 0 1 0-2.272 0m0 10.227a1.136 1.136 0 1 0 2.272 0 1.136 1.136 0 1 0-2.272 0"
           />
         </g>
       </Icon>

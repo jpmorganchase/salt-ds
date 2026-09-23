@@ -22,67 +22,67 @@ export const MoveHorizontalIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1.281 8H14.72M4.382 4.899 1.282 8l3.1 3.101m7.236-6.202L14.718 8l-3.1 3.101"
+          d="M1.297 8.667h13.406M4.39 5.573 1.297 8.667l3.094 3.093m7.218-6.187 3.094 3.094-3.094 3.093"
         />
-        <path d="M2.012 7.27a1.034 1.034 0 0 0 0 1.46L1.282 8Z" />
+        <path d="M2.027 7.938a1.03 1.03 0 0 0 0 1.458l-.73-.73Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2.012 7.27a1.034 1.034 0 0 0 0 1.46"
+          d="M2.027 7.938a1.03 1.03 0 0 0 0 1.458"
         />
-        <path d="M13.988 7.27a1.034 1.034 0 0 1 0 1.46l.73-.73Z" />
+        <path d="M13.973 7.938a1.03 1.03 0 0 1 0 1.458l.73-.73Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M13.988 7.27a1.034 1.034 0 0 1 0 1.46"
+          d="M13.973 7.938a1.03 1.03 0 0 1 0 1.458"
         />
-        <path d="M3.474 8a.908.908 0 0 0-.642 1.55L1.282 8Z" />
+        <path d="M3.485 8.667a.906.906 0 0 0-.64 1.546L1.296 8.667Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M3.474 8a.908.908 0 0 0-.642 1.55"
+          d="M3.485 8.667a.906.906 0 0 0-.64 1.546"
         />
-        <path d="M2.832 6.45A.908.908 0 0 0 3.474 8H1.28Z" />
+        <path d="M2.844 7.12a.906.906 0 0 0 .64 1.547H1.298Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M2.832 6.45A.908.908 0 0 0 3.474 8"
+          d="M2.844 7.12a.906.906 0 0 0 .64 1.547"
         />
-        <path d="M13.168 9.55A.908.908 0 0 0 12.526 8h2.193Z" />
+        <path d="M13.156 10.213a.906.906 0 0 0-.64-1.546h2.187Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M13.168 9.55A.908.908 0 0 0 12.526 8"
+          d="M13.156 10.213a.906.906 0 0 0-.64-1.546"
         />
-        <path d="M12.526 8a.908.908 0 0 0 .642-1.55L14.718 8Z" />
+        <path d="M12.515 8.667a.906.906 0 0 0 .64-1.547l1.548 1.547Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M12.526 8a.908.908 0 0 0 .642-1.55"
+          d="M12.515 8.667a.906.906 0 0 0 .64-1.547"
         />
-        <path d="M3.943 8a1.103 1.103 0 0 1-.78-1.882L1.281 8Z" />
+        <path d="M3.953 8.667a1.1 1.1 0 0 1-.778-1.878L1.297 8.667Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M3.943 8a1.103 1.103 0 0 1-.78-1.882"
+          d="M3.953 8.667a1.1 1.1 0 0 1-.778-1.878"
         />
-        <path d="M3.943 8a1.103 1.103 0 0 0-.78 1.882L1.281 8Z" />
+        <path d="M3.953 8.667a1.1 1.1 0 0 0-.778 1.877L1.297 8.667Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M3.943 8a1.103 1.103 0 0 0-.78 1.882"
+          d="M3.953 8.667a1.1 1.1 0 0 0-.778 1.877"
         />
-        <path d="M12.057 8a1.103 1.103 0 0 1 .78 1.882L14.719 8Z" />
+        <path d="M12.047 8.667a1.1 1.1 0 0 1 .778 1.877l1.878-1.877Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M12.057 8a1.103 1.103 0 0 1 .78 1.882"
+          d="M12.047 8.667a1.1 1.1 0 0 1 .778 1.877"
         />
-        <path d="M12.057 8a1.103 1.103 0 0 0 .78-1.882L14.719 8Z" />
+        <path d="M12.047 8.667a1.1 1.1 0 0 0 .778-1.878l1.878 1.878Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M12.057 8a1.103 1.103 0 0 0 .78-1.882"
+          d="M12.047 8.667a1.1 1.1 0 0 0 .778-1.878"
         />
       </g>
     </Icon>

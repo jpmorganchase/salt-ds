@@ -20,37 +20,37 @@ export const ArrowDownIcon = forwardRef<SVGSVGElement, ArrowDownIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8 .25v14.443m5.45-5.45L8 14.693l-5.45-5.45"
+            d="M8.667.25v14.439m5.448-5.449-5.448 5.45-5.449-5.45"
           />
-          <path d="M8.77 13.922a1.09 1.09 0 0 1-1.54 0l.77.771Z" />
+          <path d="M9.437 13.918a1.09 1.09 0 0 1-1.54 0l.77.77Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8.77 13.922a1.09 1.09 0 0 1-1.54 0"
+            d="M9.437 13.918a1.09 1.09 0 0 1-1.54 0"
           />
-          <path d="M6.14 12.832a1.09 1.09 0 0 0 1.86-.77v2.631Z" />
+          <path d="M6.806 12.829a1.09 1.09 0 0 0 1.86-.77v2.63Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M6.14 12.832a1.09 1.09 0 0 0 1.86-.77"
+            d="M6.806 12.829a1.09 1.09 0 0 0 1.86-.77"
           />
-          <path d="M8 12.062a1.09 1.09 0 0 0 1.86.77L8 14.693Z" />
+          <path d="M8.667 12.058a1.09 1.09 0 0 0 1.86.77l-1.86 1.86Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8 12.062a1.09 1.09 0 0 0 1.86.77"
+            d="M8.667 12.058a1.09 1.09 0 0 0 1.86.77"
           />
-          <path d="M8 11.535a1.308 1.308 0 0 1-2.233.925L8 14.693Z" />
+          <path d="M8.667 11.532a1.308 1.308 0 0 1-2.233.925l2.233 2.232Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8 11.535a1.308 1.308 0 0 1-2.233.925"
+            d="M8.667 11.532a1.308 1.308 0 0 1-2.233.925"
           />
-          <path d="M8 11.535a1.308 1.308 0 0 0 2.233.925L8 14.693Z" />
+          <path d="M8.667 11.532a1.308 1.308 0 0 0 2.232.925l-2.232 2.232Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8 11.535a1.308 1.308 0 0 0 2.233.925"
+            d="M8.667 11.532a1.308 1.308 0 0 0 2.232.925"
           />
         </g>
       </Icon>

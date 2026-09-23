@@ -20,19 +20,19 @@ export const ChevronLeftIcon = forwardRef<SVGSVGElement, ChevronLeftIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M11.875 15.224 4.651 8 11.875.776"
+            d="M11.375 14.219 5.156 8l6.219-6.219"
           />
-          <path d="M5.469 8.817a1.156 1.156 0 0 1 0-1.634L4.65 8Z" />
+          <path d="M5.86 8.704a.995.995 0 0 1 0-1.408L5.156 8Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M5.469 8.817a1.156 1.156 0 0 1 0-1.634"
+            d="M5.86 8.704a.995.995 0 0 1 0-1.408"
           />
-          <path d="M5.741 9.09a1.54 1.54 0 0 1 0-2.18L4.651 8Z" />
+          <path d="M6.094 8.938a1.327 1.327 0 0 1 0-1.876L5.156 8Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M5.741 9.09a1.54 1.54 0 0 1 0-2.18"
+            d="M6.094 8.938a1.327 1.327 0 0 1 0-1.876"
           />
         </g>
       </Icon>

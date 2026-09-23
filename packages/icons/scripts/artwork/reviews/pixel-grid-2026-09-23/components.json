@@ -1,0 +1,406 @@
+[
+  {
+    "dpr": 1,
+    "errors": [],
+    "sections": [
+      {
+        "mode": "light",
+        "density": "medium",
+        "background": "rgb(255, 255, 255)",
+        "icons": [
+          {
+            "name": "before",
+            "width": 12,
+            "x": 32,
+            "y": 92,
+            "stroke": "calc(1.33333px)"
+          },
+          {
+            "name": "before",
+            "width": 12,
+            "x": 157.21875,
+            "y": 92,
+            "stroke": "calc(1.33333px)"
+          },
+          {
+            "name": "before",
+            "width": 12,
+            "x": 201.21875,
+            "y": 92,
+            "stroke": "calc(1.33333px)"
+          },
+          {
+            "name": "PrintIcon",
+            "width": 12,
+            "x": 416,
+            "y": 92,
+            "stroke": "1.33333px"
+          },
+          {
+            "name": "ChevronRightIcon",
+            "width": 12,
+            "x": 541.21875,
+            "y": 92,
+            "stroke": "1.33333px"
+          },
+          {
+            "name": "PrintIcon",
+            "width": 12,
+            "x": 585.21875,
+            "y": 92,
+            "stroke": "1.33333px"
+          }
+        ]
+      },
+      {
+        "mode": "light",
+        "density": "touch",
+        "background": "rgb(255, 255, 255)",
+        "icons": [
+          {
+            "name": "before",
+            "width": 16,
+            "x": 40,
+            "y": 306,
+            "stroke": "calc(1px)"
+          },
+          {
+            "name": "before",
+            "width": 16,
+            "x": 215.8125,
+            "y": 306,
+            "stroke": "calc(1px)"
+          },
+          {
+            "name": "before",
+            "width": 16,
+            "x": 279.8125,
+            "y": 306,
+            "stroke": "calc(1px)"
+          },
+          {
+            "name": "PrintIcon",
+            "width": 16,
+            "x": 424,
+            "y": 306,
+            "stroke": "1px"
+          },
+          {
+            "name": "ChevronRightIcon",
+            "width": 16,
+            "x": 599.8125,
+            "y": 306,
+            "stroke": "1px"
+          },
+          {
+            "name": "PrintIcon",
+            "width": 16,
+            "x": 663.8125,
+            "y": 306,
+            "stroke": "1px"
+          }
+        ]
+      },
+      {
+        "mode": "dark",
+        "density": "medium",
+        "background": "rgb(16, 24, 32)",
+        "icons": [
+          {
+            "name": "before",
+            "width": 12,
+            "x": 32,
+            "y": 524,
+            "stroke": "calc(1.33333px)"
+          },
+          {
+            "name": "before",
+            "width": 12,
+            "x": 157.21875,
+            "y": 524,
+            "stroke": "calc(1.33333px)"
+          },
+          {
+            "name": "before",
+            "width": 12,
+            "x": 201.21875,
+            "y": 524,
+            "stroke": "calc(1.33333px)"
+          },
+          {
+            "name": "PrintIcon",
+            "width": 12,
+            "x": 416,
+            "y": 524,
+            "stroke": "1.33333px"
+          },
+          {
+            "name": "ChevronRightIcon",
+            "width": 12,
+            "x": 541.21875,
+            "y": 524,
+            "stroke": "1.33333px"
+          },
+          {
+            "name": "PrintIcon",
+            "width": 12,
+            "x": 585.21875,
+            "y": 524,
+            "stroke": "1.33333px"
+          }
+        ]
+      },
+      {
+        "mode": "dark",
+        "density": "touch",
+        "background": "rgb(16, 24, 32)",
+        "icons": [
+          {
+            "name": "before",
+            "width": 16,
+            "x": 40,
+            "y": 738,
+            "stroke": "calc(1px)"
+          },
+          {
+            "name": "before",
+            "width": 16,
+            "x": 215.8125,
+            "y": 738,
+            "stroke": "calc(1px)"
+          },
+          {
+            "name": "before",
+            "width": 16,
+            "x": 279.8125,
+            "y": 738,
+            "stroke": "calc(1px)"
+          },
+          {
+            "name": "PrintIcon",
+            "width": 16,
+            "x": 424,
+            "y": 738,
+            "stroke": "1px"
+          },
+          {
+            "name": "ChevronRightIcon",
+            "width": 16,
+            "x": 599.8125,
+            "y": 738,
+            "stroke": "1px"
+          },
+          {
+            "name": "PrintIcon",
+            "width": 16,
+            "x": 663.8125,
+            "y": 738,
+            "stroke": "1px"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "dpr": 2,
+    "errors": [],
+    "sections": [
+      {
+        "mode": "light",
+        "density": "medium",
+        "background": "rgb(255, 255, 255)",
+        "icons": [
+          {
+            "name": "before",
+            "width": 12,
+            "x": 32,
+            "y": 92,
+            "stroke": "calc(1.33333px)"
+          },
+          {
+            "name": "before",
+            "width": 12,
+            "x": 157.21875,
+            "y": 92,
+            "stroke": "calc(1.33333px)"
+          },
+          {
+            "name": "before",
+            "width": 12,
+            "x": 201.21875,
+            "y": 92,
+            "stroke": "calc(1.33333px)"
+          },
+          {
+            "name": "PrintIcon",
+            "width": 12,
+            "x": 416,
+            "y": 92,
+            "stroke": "1.33333px"
+          },
+          {
+            "name": "ChevronRightIcon",
+            "width": 12,
+            "x": 541.21875,
+            "y": 92,
+            "stroke": "1.33333px"
+          },
+          {
+            "name": "PrintIcon",
+            "width": 12,
+            "x": 585.21875,
+            "y": 92,
+            "stroke": "1.33333px"
+          }
+        ]
+      },
+      {
+        "mode": "light",
+        "density": "touch",
+        "background": "rgb(255, 255, 255)",
+        "icons": [
+          {
+            "name": "before",
+            "width": 16,
+            "x": 40,
+            "y": 306,
+            "stroke": "calc(1px)"
+          },
+          {
+            "name": "before",
+            "width": 16,
+            "x": 215.8125,
+            "y": 306,
+            "stroke": "calc(1px)"
+          },
+          {
+            "name": "before",
+            "width": 16,
+            "x": 279.8125,
+            "y": 306,
+            "stroke": "calc(1px)"
+          },
+          {
+            "name": "PrintIcon",
+            "width": 16,
+            "x": 424,
+            "y": 306,
+            "stroke": "1px"
+          },
+          {
+            "name": "ChevronRightIcon",
+            "width": 16,
+            "x": 599.8125,
+            "y": 306,
+            "stroke": "1px"
+          },
+          {
+            "name": "PrintIcon",
+            "width": 16,
+            "x": 663.8125,
+            "y": 306,
+            "stroke": "1px"
+          }
+        ]
+      },
+      {
+        "mode": "dark",
+        "density": "medium",
+        "background": "rgb(16, 24, 32)",
+        "icons": [
+          {
+            "name": "before",
+            "width": 12,
+            "x": 32,
+            "y": 524,
+            "stroke": "calc(1.33333px)"
+          },
+          {
+            "name": "before",
+            "width": 12,
+            "x": 157.21875,
+            "y": 524,
+            "stroke": "calc(1.33333px)"
+          },
+          {
+            "name": "before",
+            "width": 12,
+            "x": 201.21875,
+            "y": 524,
+            "stroke": "calc(1.33333px)"
+          },
+          {
+            "name": "PrintIcon",
+            "width": 12,
+            "x": 416,
+            "y": 524,
+            "stroke": "1.33333px"
+          },
+          {
+            "name": "ChevronRightIcon",
+            "width": 12,
+            "x": 541.21875,
+            "y": 524,
+            "stroke": "1.33333px"
+          },
+          {
+            "name": "PrintIcon",
+            "width": 12,
+            "x": 585.21875,
+            "y": 524,
+            "stroke": "1.33333px"
+          }
+        ]
+      },
+      {
+        "mode": "dark",
+        "density": "touch",
+        "background": "rgb(16, 24, 32)",
+        "icons": [
+          {
+            "name": "before",
+            "width": 16,
+            "x": 40,
+            "y": 738,
+            "stroke": "calc(1px)"
+          },
+          {
+            "name": "before",
+            "width": 16,
+            "x": 215.8125,
+            "y": 738,
+            "stroke": "calc(1px)"
+          },
+          {
+            "name": "before",
+            "width": 16,
+            "x": 279.8125,
+            "y": 738,
+            "stroke": "calc(1px)"
+          },
+          {
+            "name": "PrintIcon",
+            "width": 16,
+            "x": 424,
+            "y": 738,
+            "stroke": "1px"
+          },
+          {
+            "name": "ChevronRightIcon",
+            "width": 16,
+            "x": 599.8125,
+            "y": 738,
+            "stroke": "1px"
+          },
+          {
+            "name": "PrintIcon",
+            "width": 16,
+            "x": 663.8125,
+            "y": 738,
+            "stroke": "1px"
+          }
+        ]
+      }
+    ]
+  }
+]

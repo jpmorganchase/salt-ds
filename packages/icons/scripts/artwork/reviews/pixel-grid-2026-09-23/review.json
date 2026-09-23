@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No concrete correctness, integration, security, or regression defect is evident in the bounded change. The audit\u2019s scoring matches its documented integer-origin/DPR1 assumptions, remains advisory, excludes brand artwork only from prioritization, and tests the reviewed straight-edge cases without claiming coverage of chevrons, curves, or diagonals. The optical-fit entries preserve the intended paired and directional-family relationships, the printer checks track its revised geometry, and the documentation and changeset accurately describe the 19-export scope and its limitations.",
+  "overall_confidence": 0.91
+}

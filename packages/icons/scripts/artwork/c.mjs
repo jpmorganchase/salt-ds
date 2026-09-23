@@ -360,20 +360,21 @@ put(
       )
       .join(""),
 );
-// The broad housing and two open sheets carry the printer at small sizes.
-const printTop = SF("M6.75 8.25v-6h10.5v6");
-const printOutput = R(6.75, 14.25, 10.5, 7.5);
-const printHousing = SF("M6.75 17.25H3v-9h18v9h-3.75");
-const printJoins = [6.75, 17.25].map((x) =>
-  circularCrossJunction(x, 8.25, 1.6, undefined, [[-1, -1], [1, -1]]) +
-  circularCrossJunction(x, 17.25, 1.6, undefined,
-    x === 6.75 ? [[-1, -1], [-1, 1]] : [[1, -1], [1, 1]]),
+// Straight landmarks sit on the 12px primary-stroke grid after normalization.
+// The optical profile preserves this authored frame instead of enlarging it.
+const printTop = SF("M7 9V3H17V9");
+const printOutput = R(7, 15, 10, 6);
+const printHousing = SF("M7 17H3V9H21V17H17");
+const printJoins = [7, 17].map((x) =>
+  circularCrossJunction(x, 9, 1.6, undefined, [[-1, -1], [1, -1]]) +
+  circularCrossJunction(x, 17, 1.6, undefined,
+    x === 7 ? [[-1, -1], [-1, 1]] : [[1, -1], [1, 1]]),
 ).join("");
 const printOutline = printHousing + printTop + printOutput + printJoins;
 // The output sheet opens through the housing as one notch. A closed hole
 // ending exactly on the housing's bottom edge can leave a raster seam across
 // the paper. Retain the same housing rim and both paper contours in the pair.
-const printSurface = "M3 8.25H21V17.25H17.25V14.25H6.75V17.25H3Z";
+const printSurface = "M3 9H21V17H17V15H7V17H3Z";
 put("print", printOutline, F(printSurface) + printOutline);
 
 const progressDisk = (holes) => F(circ(12, 12, 9.75) + holes);

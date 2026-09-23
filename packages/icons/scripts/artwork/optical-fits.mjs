@@ -2,6 +2,70 @@
 // final 16-unit viewBox at primary stroke 1.5, not to recipe padding.
 // Record the optical reason; do not infer a target from bounding-box shape alone.
 export const opticalFits = {
+  "print.svg": {
+    targetSpan: 13.5, center: [8, 8],
+    reason: "Preserve the authored 12px pixel grid for the housing and paper edges; a larger automatic fit blurs these landmarks.",
+  },
+  "print_solid.svg": {
+    targetSpan: 13.5, center: [8, 8], frameSource: "print.svg",
+    reason: "Retain the same pixel-aligned paper and housing landmarks as the outline.",
+  },
+  "arrow-left.svg": {
+    targetSpan: 15.5, center: [8, 8.666667],
+    reason: "Place the primary shaft on a pixel center at 12px without changing its weight or the arrow gesture.",
+  },
+  "arrow-right.svg": {
+    targetSpan: 15.5, center: [8, 8.666667],
+    reason: "Place the primary shaft on a pixel center at 12px without changing its weight or the arrow gesture.",
+  },
+  "arrow-up.svg": {
+    targetSpan: 15.5, center: [8.666667, 8],
+    reason: "Place the primary shaft on a pixel center at 12px without changing its weight or the arrow gesture.",
+  },
+  "arrow-down.svg": {
+    targetSpan: 15.5, center: [8.666667, 8],
+    reason: "Place the primary shaft on a pixel center at 12px without changing its weight or the arrow gesture.",
+  },
+  "move-horizontal.svg": {
+    targetSpan: 15.5, center: [8, 8.666667],
+    reason: "Match the navigation arrows: align the primary shaft at 12px while retaining both arrowheads.",
+  },
+  "move-vertical.svg": {
+    targetSpan: 15.5, center: [8.666667, 8],
+    reason: "Match the navigation arrows: align the primary shaft at 12px while retaining both arrowheads.",
+  },
+  "chevron-left.svg": {
+    targetSpan: 13.5, center: [8, 8],
+    reason: "Keep the navigation chevron compact beside button text while retaining primary stroke weight, 45-degree arms and its inner weld.",
+  },
+  "chevron-right.svg": {
+    targetSpan: 13.5, center: [8, 8],
+    reason: "Keep the navigation chevron compact beside button text while retaining primary stroke weight, 45-degree arms and its inner weld.",
+  },
+  "chevron-up.svg": {
+    targetSpan: 13.5, center: [8, 8],
+    reason: "Keep the navigation chevron compact beside button text while retaining primary stroke weight, 45-degree arms and its inner weld.",
+  },
+  "chevron-down.svg": {
+    targetSpan: 13.5, center: [8, 8],
+    reason: "Keep the navigation chevron compact beside button text while retaining primary stroke weight, 45-degree arms and its inner weld.",
+  },
+  "double-chevron-left.svg": {
+    targetSpan: 13.5, center: [8, 8],
+    reason: "Keep the navigation chevron compact beside button text while retaining primary stroke weight, 45-degree arms and its inner weld.",
+  },
+  "double-chevron-right.svg": {
+    targetSpan: 13.5, center: [8, 8],
+    reason: "Keep the navigation chevron compact beside button text while retaining primary stroke weight, 45-degree arms and its inner weld.",
+  },
+  "double-chevron-up.svg": {
+    targetSpan: 13.5, center: [8, 8],
+    reason: "Keep the navigation chevron compact beside button text while retaining primary stroke weight, 45-degree arms and its inner weld.",
+  },
+  "double-chevron-down.svg": {
+    targetSpan: 13.5, center: [8, 8],
+    reason: "Keep the navigation chevron compact beside button text while retaining primary stroke weight, 45-degree arms and its inner weld.",
+  },
   "edit_solid.svg": {
     targetSpan: 15.5, center: [8, 8], frameSource: "edit.svg",
     reason: "Retain the complete pencil silhouette, nib and cap anchors when filling the shared outline.",
@@ -91,15 +155,15 @@ export const opticalFits = {
   },
   "add.svg": {
     targetSpan: 12.5,
-    center: [8, 8],
+    center: [8.666667, 8.666667],
     reason:
-      "Balance the arithmetic operator beside compact comparison symbols while preserving its primary stroke and gesture.",
+      "Align the primary operator strokes at 12px while retaining the compact arithmetic family span and weight.",
   },
   "remove.svg": {
     targetSpan: 12.5,
-    center: [8, 8],
+    center: [8, 8.666667],
     reason:
-      "Balance the arithmetic operator beside compact comparison symbols while preserving its primary stroke and gesture.",
+      "Align the primary operator strokes at 12px while retaining the compact arithmetic family span and weight.",
   },
   "multiply.svg": {
     targetSpan: 12.5,
@@ -109,9 +173,9 @@ export const opticalFits = {
   },
   "divide.svg": {
     targetSpan: 12.5,
-    center: [8, 8],
+    center: [8, 8.666667],
     reason:
-      "Balance the arithmetic operator beside compact comparison symbols while preserving its primary stroke and gesture.",
+      "Align the primary operator strokes at 12px while retaining the compact arithmetic family span and weight.",
   },
   "equal.svg": {
     targetSpan: 12.5,
