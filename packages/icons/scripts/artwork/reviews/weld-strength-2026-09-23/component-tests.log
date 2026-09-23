@@ -1,0 +1,12 @@
+(node:12356) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///D:/Work/salt-ds/tooling/css-inline-plugin/src/index.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to D:\Work\salt-ds\tooling\css-inline-plugin\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ RUN  v4.1.11 D:/Work/salt-ds
+
+
+ Test Files  1 passed (1)
+      Tests  18 passed (18)
+   Start at  16:14:59
+   Duration  18.13s (transform 0ms, setup 6.27s, import 1.29s, tests 8.52s, environment 0ms)

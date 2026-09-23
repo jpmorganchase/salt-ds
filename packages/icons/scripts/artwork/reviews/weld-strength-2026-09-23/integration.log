@@ -1,0 +1,20 @@
+Checked close: 1 registered variant(s).
+Checked close_small: 1 registered variant(s).
+Checked collapse: 1 registered variant(s).
+Checked expand: 1 registered variant(s).
+Checked filter-clear: 2 registered variant(s).
+Checked key-backspace: 1 registered variant(s).
+Checked like: 2 registered variant(s).
+Checked multiply: 1 registered variant(s).
+Checked signature: 1 registered variant(s).
+Checked tag-clear: 2 registered variant(s).
+Checked volume-off: 1 registered variant(s).
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 46 (collapse): synonym term 6 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 74 (expand): synonym term 6 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 221 (tag-clear): synonym term 2 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 255 (volume-off): synonym term 2 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 255 (volume-off): synonym term 5 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+
+PASS: 11 requested meaning(s), 14 registered variant(s), 0 error(s), 5 warning(s).
+Limits: registration checks only; no visual/semantic relevance, generated-geometry equivalence, or recipe execution checks. generate:icons and validate:icons own effective recipe and geometry validation.
+Search normalization: the query is lowercased and whitespace is removed; stored synonym terms are not normalized. Hyphens are removed only when matching metadata iconName to component names; optional Solid and case-insensitive matching follow IconPreview.tsx.

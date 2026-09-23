@@ -8,7 +8,7 @@ import { circularCrossJunction } from "./junctions.mjs";
 import { traceJunctions } from "./junction-trace.mjs";
 import { arrowRoot } from "./internal-arrow-junctions.mjs";
 import { standaloneMark, withSharedMark } from "./mark-composition.mjs";
-import { box, C, circ, dot, group, R as crispRect } from "./primitives.mjs";
+import { box, C, circ, dot, group, R as crispRect, S as stroke } from "./primitives.mjs";
 import {
   angledJunction,
   radialCircleJunction,
@@ -552,8 +552,9 @@ put(
   ) + arrowRoot(15.75, 14.25, [-1, 0], 1.55),
 );
 // Keep the compact dismissal smaller without losing its native-size presence.
-put("close", weldedCross(12, 12, 8.625, 8.625, 2.05));
-put("close_small", weldedCross(12, 12, 6.9375, 6.9375, 2.05));
+// Keep the four roots visible without swelling the center of a simple X.
+put("close", weldedCross(12, 12, 8.625, 8.625, 1.15));
+put("close_small", weldedCross(12, 12, 6.9375, 6.9375, 1.15));
 // Both surfaces retain the same frame and letter anchors after fitting.
 const captionEdge = (0.75 * 19.5) / 14;
 put(
@@ -621,13 +622,13 @@ put(
 );
 put(
   "collapse",
-  S(
+  stroke(
     "M3 3L9 9M3 9H9V3M21 3L15 9M15 3V9H21M3 21L9 15M3 15H9V21M21 21L15 15M15 21V15H21",
   ) +
-    arrowRoot(9, 9, [-1, -1], 1.6) +
-    arrowRoot(15, 9, [1, -1], 1.6) +
-    arrowRoot(9, 15, [-1, 1], 1.6) +
-    arrowRoot(15, 15, [1, 1], 1.6),
+    arrowRoot(9, 9, [-1, -1], 1.15) +
+    arrowRoot(15, 9, [1, -1], 1.15) +
+    arrowRoot(9, 15, [-1, 1], 1.15) +
+    arrowRoot(15, 15, [1, 1], 1.15),
 );
 const columnChooserRows =
   "M5.25 10.5H9M5.25 14.25H9M5.25 18H9M15 10.5H18.75M15 14.25H18.75M15 18H18.75";

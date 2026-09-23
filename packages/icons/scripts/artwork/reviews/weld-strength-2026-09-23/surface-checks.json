@@ -1,0 +1,7333 @@
+[
+  {
+    "surface": "components",
+    "dpr": 1,
+    "mode": "light",
+    "ids": [
+      "CloseIcon",
+      "CloseSmallIcon",
+      "CollapseIcon",
+      "ExpandIcon",
+      "FilterClearIcon",
+      "FilterClearSolidIcon",
+      "KeyBackspaceIcon",
+      "LikeIcon",
+      "LikeSolidIcon",
+      "MultiplyIcon",
+      "SignatureIcon",
+      "TagClearIcon",
+      "TagClearSolidIcon",
+      "VolumeOffIcon",
+      "AddIcon",
+      "RemoveIcon"
+    ],
+    "dimensions": [
+      {
+        "id": "CloseIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      }
+    ]
+  },
+  {
+    "surface": "components",
+    "dpr": 1,
+    "mode": "light",
+    "ids": [
+      "ArrowLeftIcon",
+      "ArrowRightIcon",
+      "ArrowUpIcon",
+      "ArrowDownIcon",
+      "MoveAllIcon",
+      "MoveHorizontalIcon",
+      "MoveVerticalIcon",
+      "ChevronLeftIcon",
+      "ChevronRightIcon",
+      "ExpandAllIcon",
+      "CollapseAllIcon",
+      "ExpandAllHorizontalIcon",
+      "CollapseAllHorizontalIcon",
+      "ProgressCancelledIcon",
+      "FilterIcon",
+      "FilterSolidIcon"
+    ],
+    "dimensions": [
+      {
+        "id": "ArrowLeftIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      }
+    ]
+  },
+  {
+    "surface": "components",
+    "dpr": 1,
+    "mode": "light",
+    "ids": [
+      "TagIcon",
+      "TagSolidIcon",
+      "VolumeUpIcon",
+      "VolumeDownIcon"
+    ],
+    "dimensions": [
+      {
+        "id": "TagIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      }
+    ]
+  },
+  {
+    "surface": "components",
+    "dpr": 1,
+    "mode": "dark",
+    "ids": [
+      "CloseIcon",
+      "CloseSmallIcon",
+      "CollapseIcon",
+      "ExpandIcon",
+      "FilterClearIcon",
+      "FilterClearSolidIcon",
+      "KeyBackspaceIcon",
+      "LikeIcon",
+      "LikeSolidIcon",
+      "MultiplyIcon",
+      "SignatureIcon",
+      "TagClearIcon",
+      "TagClearSolidIcon",
+      "VolumeOffIcon",
+      "AddIcon",
+      "RemoveIcon"
+    ],
+    "dimensions": [
+      {
+        "id": "CloseIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      }
+    ]
+  },
+  {
+    "surface": "components",
+    "dpr": 1,
+    "mode": "dark",
+    "ids": [
+      "ArrowLeftIcon",
+      "ArrowRightIcon",
+      "ArrowUpIcon",
+      "ArrowDownIcon",
+      "MoveAllIcon",
+      "MoveHorizontalIcon",
+      "MoveVerticalIcon",
+      "ChevronLeftIcon",
+      "ChevronRightIcon",
+      "ExpandAllIcon",
+      "CollapseAllIcon",
+      "ExpandAllHorizontalIcon",
+      "CollapseAllHorizontalIcon",
+      "ProgressCancelledIcon",
+      "FilterIcon",
+      "FilterSolidIcon"
+    ],
+    "dimensions": [
+      {
+        "id": "ArrowLeftIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      }
+    ]
+  },
+  {
+    "surface": "components",
+    "dpr": 1,
+    "mode": "dark",
+    "ids": [
+      "TagIcon",
+      "TagSolidIcon",
+      "VolumeUpIcon",
+      "VolumeDownIcon"
+    ],
+    "dimensions": [
+      {
+        "id": "TagIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      }
+    ]
+  },
+  {
+    "surface": "masks",
+    "dpr": 1,
+    "mode": "light",
+    "dimensions": [
+      {
+        "name": "saltIcons-Close",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Close",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Close",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-CloseSmall",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-CloseSmall",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-CloseSmall",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Collapse",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Collapse",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Collapse",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Expand",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Expand",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Expand",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-FilterClear",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-FilterClear",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-FilterClear",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-FilterClearSolid",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-FilterClearSolid",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-FilterClearSolid",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-KeyBackspace",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-KeyBackspace",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-KeyBackspace",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Like",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Like",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Like",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-LikeSolid",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-LikeSolid",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-LikeSolid",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Multiply",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Multiply",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Multiply",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Signature",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Signature",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Signature",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-TagClear",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-TagClear",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-TagClear",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-TagClearSolid",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-TagClearSolid",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-TagClearSolid",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-VolumeOff",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-VolumeOff",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-VolumeOff",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Add",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Add",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Add",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Remove",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Remove",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Remove",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowLeft",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowLeft",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowLeft",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowRight",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowRight",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowRight",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowUp",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowUp",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowUp",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowDown",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowDown",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowDown",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-MoveAll",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-MoveAll",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-MoveAll",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-MoveHorizontal",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-MoveHorizontal",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-MoveHorizontal",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-MoveVertical",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-MoveVertical",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-MoveVertical",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ChevronLeft",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ChevronLeft",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ChevronLeft",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ChevronRight",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ChevronRight",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ChevronRight",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ExpandAll",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ExpandAll",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ExpandAll",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-CollapseAll",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-CollapseAll",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-CollapseAll",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ExpandAllHorizontal",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ExpandAllHorizontal",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ExpandAllHorizontal",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-CollapseAllHorizontal",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-CollapseAllHorizontal",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-CollapseAllHorizontal",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ProgressCancelled",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ProgressCancelled",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ProgressCancelled",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Filter",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Filter",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Filter",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-FilterSolid",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-FilterSolid",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-FilterSolid",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Tag",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Tag",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Tag",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-TagSolid",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-TagSolid",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-TagSolid",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-VolumeUp",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-VolumeUp",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-VolumeUp",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-VolumeDown",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-VolumeDown",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-VolumeDown",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      }
+    ]
+  },
+  {
+    "surface": "masks",
+    "dpr": 1,
+    "mode": "dark",
+    "dimensions": [
+      {
+        "name": "saltIcons-Close",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Close",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Close",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-CloseSmall",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-CloseSmall",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-CloseSmall",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Collapse",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Collapse",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Collapse",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Expand",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Expand",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Expand",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-FilterClear",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-FilterClear",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-FilterClear",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-FilterClearSolid",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-FilterClearSolid",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-FilterClearSolid",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-KeyBackspace",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-KeyBackspace",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-KeyBackspace",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Like",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Like",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Like",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-LikeSolid",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-LikeSolid",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-LikeSolid",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Multiply",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Multiply",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Multiply",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Signature",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Signature",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Signature",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-TagClear",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-TagClear",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-TagClear",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-TagClearSolid",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-TagClearSolid",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-TagClearSolid",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-VolumeOff",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-VolumeOff",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-VolumeOff",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Add",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Add",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Add",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Remove",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Remove",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Remove",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowLeft",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowLeft",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowLeft",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowRight",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowRight",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowRight",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowUp",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowUp",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowUp",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowDown",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowDown",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ArrowDown",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-MoveAll",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-MoveAll",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-MoveAll",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-MoveHorizontal",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-MoveHorizontal",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-MoveHorizontal",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-MoveVertical",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-MoveVertical",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-MoveVertical",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ChevronLeft",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ChevronLeft",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ChevronLeft",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ChevronRight",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ChevronRight",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ChevronRight",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ExpandAll",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ExpandAll",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ExpandAll",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-CollapseAll",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-CollapseAll",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-CollapseAll",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ExpandAllHorizontal",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ExpandAllHorizontal",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ExpandAllHorizontal",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-CollapseAllHorizontal",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-CollapseAllHorizontal",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-CollapseAllHorizontal",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ProgressCancelled",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ProgressCancelled",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-ProgressCancelled",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Filter",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Filter",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Filter",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-FilterSolid",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-FilterSolid",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-FilterSolid",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Tag",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Tag",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-Tag",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-TagSolid",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-TagSolid",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-TagSolid",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-VolumeUp",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-VolumeUp",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-VolumeUp",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-VolumeDown",
+        "size": 12,
+        "expected": 12,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-VolumeDown",
+        "size": 16,
+        "expected": 16,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      },
+      {
+        "name": "saltIcons-VolumeDown",
+        "size": 64,
+        "expected": 64,
+        "mask": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%"
+      }
+    ]
+  },
+  {
+    "surface": "components",
+    "dpr": 2,
+    "mode": "light",
+    "ids": [
+      "CloseIcon",
+      "CloseSmallIcon",
+      "CollapseIcon",
+      "ExpandIcon",
+      "FilterClearIcon",
+      "FilterClearSolidIcon",
+      "KeyBackspaceIcon",
+      "LikeIcon",
+      "LikeSolidIcon",
+      "MultiplyIcon",
+      "SignatureIcon",
+      "TagClearIcon",
+      "TagClearSolidIcon",
+      "VolumeOffIcon",
+      "AddIcon",
+      "RemoveIcon"
+    ],
+    "dimensions": [
+      {
+        "id": "CloseIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CloseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CloseSmallIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "KeyBackspaceIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "LikeIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "LikeSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MultiplyIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "SignatureIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagClearIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagClearSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeOffIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "AddIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "RemoveIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      }
+    ]
+  },
+  {
+    "surface": "components",
+    "dpr": 2,
+    "mode": "light",
+    "ids": [
+      "ArrowLeftIcon",
+      "ArrowRightIcon",
+      "ArrowUpIcon",
+      "ArrowDownIcon",
+      "MoveAllIcon",
+      "MoveHorizontalIcon",
+      "MoveVerticalIcon",
+      "ChevronLeftIcon",
+      "ChevronRightIcon",
+      "ExpandAllIcon",
+      "CollapseAllIcon",
+      "ExpandAllHorizontalIcon",
+      "CollapseAllHorizontalIcon",
+      "ProgressCancelledIcon",
+      "FilterIcon",
+      "FilterSolidIcon"
+    ],
+    "dimensions": [
+      {
+        "id": "ArrowLeftIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ArrowDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "MoveVerticalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ChevronLeftIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ChevronRightIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseAllIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ExpandAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "CollapseAllHorizontalIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "ProgressCancelledIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "FilterSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      }
+    ]
+  },
+  {
+    "surface": "components",
+    "dpr": 2,
+    "mode": "light",
+    "ids": [
+      "TagIcon",
+      "TagSolidIcon",
+      "VolumeUpIcon",
+      "VolumeDownIcon"
+    ],
+    "dimensions": [
+      {
+        "id": "TagIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "TagSolidIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeUpIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 64,
+        "expected": 64,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "0.67px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 12,
+        "expected": 12,
+        "weight": "1.5px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "0.67px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.33333px"
+      },
+      {
+        "id": "VolumeDownIcon",
+        "size": 16,
+        "expected": 16,
+        "weight": "1.5px"
+      }
+    ]
+  }
+]

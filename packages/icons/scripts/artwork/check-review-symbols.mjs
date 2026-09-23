@@ -1,5 +1,5 @@
 // Inspect the painted silhouettes in final exports. These checks protect the
-// sun's visible ray lengths and retained pair perimeters, rather than locking
+// sun's visible ray lengths, the heart tip and retained pair perimeters, rather than locking
 // the recipe to particular path commands or constructor coordinates.
 export async function checkReviewSymbols(page, records) {
   const names = [
@@ -7,6 +7,8 @@ export async function checkReviewSymbols(page, records) {
     "globe_solid.svg",
     "light.svg",
     "light_solid.svg",
+    "like.svg",
+    "like_solid.svg",
   ];
   const artwork = names.map((name) => {
     const record = records.find((candidate) => candidate.name === name);
@@ -94,7 +96,7 @@ export async function checkReviewSymbols(page, records) {
       const paint = new Map();
       for (const { name, svg } of artwork)
         paint.set(name, await render(svg, weight));
-      for (const base of ["globe", "light"]) {
+      for (const base of ["globe", "light", "like"]) {
         const angles = Array.from(
           { length: 128 },
           (_, i) => (i * Math.PI) / 64,
@@ -119,6 +121,30 @@ export async function checkReviewSymbols(page, records) {
           outline.every(Number.isFinite) &&
             solid.every(Number.isFinite) &&
             difference <= 0.025,
+        );
+      }
+      // The heart tip is a shared symmetric cusp, including at thin weights.
+      // This catches asymmetric closure miters without depending on SVG commands.
+      for (const name of ["like.svg", "like_solid.svg"]) {
+        const pixels = paint.get(name);
+        const offsets = [0.015, 0.03, 0.06, 0.12, 0.2];
+        const difference = Math.max(
+          ...offsets.map((offset) =>
+            Math.abs(
+              outsideRadius(pixels, Math.PI / 2 - offset) -
+                outsideRadius(pixels, Math.PI / 2 + offset),
+            ),
+          ),
+        );
+        check(
+          {
+            name,
+            feature: "symmetric joined heart tip",
+            weight,
+            maximumDifference: difference,
+            limit: 0.025,
+          },
+          difference <= 0.025,
         );
       }
       for (const name of ["light.svg", "light_solid.svg"]) {

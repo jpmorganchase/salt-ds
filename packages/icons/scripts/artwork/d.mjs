@@ -255,13 +255,13 @@ put(
   "tag-clear",
   tagClearPerimeter +
     S(circ(17.25, 6.75, 1.5), 1.05) +
-    weldedCross(18.5, 18.5, 3.5, 3.5, 1.7),
+    weldedCross(18.5, 18.5, 3.5, 3.5, 1.3),
   F(
     "M2.25 13.5L13.5 2.25H21.75V10.5L17.450825 14.799175L16.325825 13.674175A1.044151 1.044151 0 0 0 14.849172 13.674175L13.674175 14.849172A1.044151 1.044151 0 0 0 13.674175 16.325825L14.799175 17.450825L10.5 21.75Z" +
       circ(17.25, 6.75, 1.5),
   ) +
     tagClearPerimeter +
-    weldedCross(18.5, 18.5, 3.5, 3.5, 1.7),
+    weldedCross(18.5, 18.5, 3.5, 3.5, 1.3),
 );
 // Tails represents the catalogue's fox. Retain the earlier curved forehead,
 // hollow ears and pointed muzzle, with small eyes instead of an owl's eye rings.
@@ -707,7 +707,7 @@ put(
   "volume-up",
   speaker + S("M16.5 8.25q3.75 3.75 0 7.5M19.5 5.25q6.75 6.75 0 13.5"),
 );
-put("volume-off", speaker + weldedCross(19.5, 12, 3, 3.75, 1.7));
+put("volume-off", speaker + weldedCross(19.5, 12, 3, 3.75, 1.3));
 // A 1:1 triangle uses the full fitted height and leaves room for the status
 // mark. The former wider triangle lost vertical room when its width was fit.
 const warning = "M12 3L21 21H3Z";

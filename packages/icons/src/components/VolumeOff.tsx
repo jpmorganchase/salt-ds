@@ -27,29 +27,29 @@ export const VolumeOffIcon = forwardRef<SVGSVGElement, VolumeOffIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="m10.445 5.317 4.293 5.366m0-5.366-4.293 5.366"
           />
-          <path d="M13.542 9.187a1.216 1.216 0 0 0-1.9 0L12.592 8Z" />
+          <path d="M13.318 8.908a.93.93 0 0 0-1.453 0L12.592 8Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M13.542 9.187a1.216 1.216 0 0 0-1.9 0"
+            d="M13.318 8.908a.93.93 0 0 0-1.453 0"
           />
-          <path d="M11.984 8.76a1.216 1.216 0 0 0 0-1.52l.608.76Z" />
+          <path d="M12.127 8.581a.93.93 0 0 0 0-1.162l.465.581Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M11.984 8.76a1.216 1.216 0 0 0 0-1.52"
+            d="M12.127 8.581a.93.93 0 0 0 0-1.162"
           />
-          <path d="M11.642 6.813a1.216 1.216 0 0 0 1.9 0L12.592 8Z" />
+          <path d="M11.865 7.092a.93.93 0 0 0 1.453 0L12.592 8Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M11.642 6.813a1.216 1.216 0 0 0 1.9 0"
+            d="M11.865 7.092a.93.93 0 0 0 1.453 0"
           />
-          <path d="M13.2 7.24a1.216 1.216 0 0 0 0 1.52L12.592 8Z" />
+          <path d="M13.057 7.419a.93.93 0 0 0 0 1.162L12.592 8Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M13.2 7.24a1.216 1.216 0 0 0 0 1.52"
+            d="M13.057 7.419a.93.93 0 0 0 0 1.162"
           />
         </g>
       </Icon>

@@ -2,6 +2,10 @@
 // final 16-unit viewBox at primary stroke 1.5, not to recipe padding.
 // Record the optical reason; do not infer a target from bounding-box shape alone.
 export const opticalFits = {
+  "like_solid.svg": {
+    targetSpan: 15.5, center: [8, 8], frameSource: "like.svg",
+    reason: "Keep the heart lobes, cleft and pointed tip on the outline frame when filling its surface.",
+  },
   "print.svg": {
     targetSpan: 13.5, center: [8, 8],
     reason: "Preserve the authored 12px pixel grid for the housing and paper edges; a larger automatic fit blurs these landmarks.",

@@ -23,33 +23,33 @@ export const SignatureIcon = forwardRef<SVGSVGElement, SignatureIconProps>(
             strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.7)"
             d="m.59 8.514 2.772 2.771m0-2.771L.59 11.285"
           />
-          <path d="M2.551 10.474a.813.813 0 0 0-1.15 0l.575-.574Z" />
+          <path d="M2.447 10.37a.665.665 0 0 0-.941 0l.47-.47Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.7)"
-            d="M2.551 10.474a.813.813 0 0 0-1.15 0"
+            d="M2.447 10.37a.665.665 0 0 0-.941 0"
           />
-          <path d="M1.401 10.474a.813.813 0 0 0 0-1.15l.575.576Z" />
+          <path d="M1.506 10.37a.665.665 0 0 0 0-.94l.47.47Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.7)"
-            d="M1.401 10.474a.813.813 0 0 0 0-1.15"
+            d="M1.506 10.37a.665.665 0 0 0 0-.94"
           />
-          <path d="M1.401 9.325a.813.813 0 0 0 1.15 0l-.575.575Z" />
+          <path d="M1.506 9.43a.665.665 0 0 0 .94 0l-.47.47Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.7)"
-            d="M1.401 9.325a.813.813 0 0 0 1.15 0"
+            d="M1.506 9.43a.665.665 0 0 0 .94 0"
           />
-          <path d="M2.551 9.325a.813.813 0 0 0 0 1.15L1.976 9.9Z" />
+          <path d="M2.447 9.43a.665.665 0 0 0 0 .94l-.47-.47Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.7)"
-            d="M2.551 9.325a.813.813 0 0 0 0 1.15"
+            d="M2.447 9.43a.665.665 0 0 0 0 .94"
           />
           <path
             fill="none"
