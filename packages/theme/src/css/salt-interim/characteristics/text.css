@@ -1,4 +1,4 @@
-/* Generated from the commercial Figma token exports. */
+
 .salt-theme.salt-interim {
   /* Misc */
   --salt-text-letterSpacing: 0;
@@ -25,7 +25,6 @@
 
   /* Code */
   --salt-text-code-fontFamily: var(--salt-typography-fontFamily-ptMono);
-  --salt-text-code-fontWeight: var(--salt-typography-fontWeight-regular);
 
   /* Action */
   --salt-text-action-letterSpacing: 4%;
