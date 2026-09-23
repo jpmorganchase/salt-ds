@@ -21,7 +21,10 @@ export const Placement = (): ReactElement => {
     >
       <SystemStatus>
         <SystemStatusContent>
-          <Text color="inherit">New feature updates are available.</Text>
+          <Text color="inherit">
+            All users will sign in through the company portal on their next
+            visit.
+          </Text>
         </SystemStatusContent>
       </SystemStatus>
       <StackLayout

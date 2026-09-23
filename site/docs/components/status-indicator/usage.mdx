@@ -12,12 +12,14 @@ data:
 
 Where possible, we recommend using a Salt component that uses `StatusIndicator`, such as [`Banner`](/salt/components/banner), [`Toast`](/salt/components/toast) or [`Tooltip`](/salt/components/tooltip), instead of using `StatusIndicator` directly.
 
+For an individual service's current condition, place `StatusIndicator` beside descriptive text, such as “Operational” or “Degraded”, in the service row or card. Choose an indicator whose meaning matches that condition; do not rely on color alone. This is an ongoing status display. Use [SystemStatus](/salt/components/system-status/usage) for essential platform-wide notices, and [Toast](/salt/components/toast/usage) for nonblocking event notifications.
+
 ### When to use
 
 - Use the info indicator when you need to highlight general information.
 - Use the error indicator when communicating a critical issue preventing the user from continuing or completing an action.
 - Use the warning indicator to inform users of an issue or potential issue related to their current task. Use this for issues that don't prevent the user from continuing or completing their task.
-- Use the success indicator to confirm that a user's action is successful.
+- Use the success indicator to confirm a successful action or show a healthy condition when that meaning is clear from the accompanying text.
 
 ## Import
 

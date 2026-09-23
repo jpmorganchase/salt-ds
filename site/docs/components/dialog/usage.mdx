@@ -19,7 +19,7 @@ Dialogs are interruptive by nature and should be used sparingly. Use dialogs to 
 
 ### When not to use
 
-- When you don't need to interrupt the user's flow. If the information is part of an event that’s occurred in a peripheral application or workflow, use [`Toast`](../toast) instead. If the information is related to the current workflow, use [`Banner`](../banner) instead.
+- When you don't need to interrupt the user's flow. If feedback needs to remain visible in the current workflow, use [`Banner`](../banner) in the affected content area. For a nonblocking confirmation or update, including an event in a peripheral application or workflow, consider [`Toast`](../toast/usage). Keep essential error details and recovery actions available in the owning view.
 - To launch a dialog from another dialog. Users may struggle to dismiss the two dialogs and may not understand which dialog is higher priority. Consider an alternative solution, such as progressively disclosing information in the first dialog.
 
 ### Status

@@ -10,22 +10,25 @@ data:
 
 ## Using the component
 
-Always position the banner component in the main content area or in the related container component. It should sit directly below the navigation and span the page or container horizontally.
+Position the banner in the area its message concerns. Place page-wide feedback below the page navigation. For feedback about a form, dialog, or section, place it within that container near the affected content. Span the available content width.
 
-Configure it to close when:
+Keep a banner available while its information or recovery actions are needed; do not dismiss it automatically on a timer. Configure it to close when:
 
-- The user performs an action that fixes an issue, such as correcting a validation error.
+- The user resolves the issues described in the message, such as correcting all errors in a validation summary.
 - The system status that triggered the notification is resolved, such as restoring a server connection.
 
 ### When to use
 
-- To show a notification that applies to the user’s current task or workflow.
+- To keep feedback visible alongside the task or content it concerns, especially when the user needs to understand or resolve an issue.
+- To explain a failed save within the affected form or dialog. Preserve entered values and provide appropriate recovery, such as retrying. A service or network failure does not make valid fields invalid. See [submission and recovery](/salt/patterns/forms#submission-and-recovery).
+- To summarize form validation errors while retaining specific feedback at each affected field. See the [error summary pattern](/salt/patterns/forms#error-summary).
 - To explain a failed refresh while keeping previously loaded content visible in the related container. See [choosing how to communicate loading and recovery](/salt/patterns/content-status#choosing-how-to-communicate-loading-and-recovery) for the distinction between Banner, Content status, and local loading feedback.
 
 ### When not to use
 
-- To notify users of an event that has occurred in a peripheral application or workflow. Instead, use [`Toast`](../toast).
-- When a low priority event not requiring user feedback causes the notification. Instead, use [`Toast`](../toast).
+- For essential platform-wide notices, such as maintenance or an outage affecting the application, use [`SystemStatus`](../system-status/usage).
+- For a brief, nonblocking confirmation or peripheral update that does not need to remain beside the affected content. Consider [`Toast`](../toast), provided it is not the only place to find essential information or recovery actions.
+- As a replacement for feedback associated with an invalid field. Use [`FormField`](../form-field) feedback; a banner summary can supplement it.
 
 ## Content
 

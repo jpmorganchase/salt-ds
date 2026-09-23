@@ -74,6 +74,16 @@ const FORMS_SELECTORS: readonly SelectedMdxSectionSelector[] = [
     include_descendants: false,
   },
   {
+    id: "forms.choosing-feedback",
+    heading_path: [
+      "How to build",
+      "Submission and recovery",
+      "Choosing feedback",
+    ],
+    include_descendants: false,
+    semantic_role: "decision",
+  },
+  {
     id: "forms.cancellation-and-drafts",
     heading_path: ["How to build", "Cancellation and drafts"],
     include_descendants: true,

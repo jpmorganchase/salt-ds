@@ -10,23 +10,25 @@ data:
 
 ## Using the component
 
-The primary purpose of the system status is to provide information and, if necessary, prompt further action.
+Use system status for essential information that affects the application or platform as a whole, such as maintenance, outages, or service disruption. Position it at the top of the application, spanning its width, and explain the impact and any necessary action.
+
+The host application controls the message lifecycle. Keep information about an ongoing condition accessible, and update or clear the message when the condition changes or resolves. Do not remove essential ongoing information on a timer.
 
 We advise against embedding excessive content into the system status due to potential color contrast issues. If you need to include additional components within the system status, it will be the responsibility of the application team to ensure accessibility compliance.
 
 ### When to use
 
 - To inform users about critical system-wide issues, security updates or vulnerabilities that require immediate attention.
-- To notify users about new system-wide features or enhancements.
+- To explain important platform-wide changes that affect how users access or use the application.
 - To alert users about planned maintenance schedules and potential service disruptions affecting the entire platform.
 
 ### When not to use
 
-- For general updates or information that requires immediate user action.
-- For inline messaging. Instead, use [`Banner`](../banner).
-- To show a notification that applies to the user’s current task or workflow. Use [`Banner`](../banner) instead.
-- To communicate when content is loading, instead use the Content Status pattern.
-- When the notification requires immediate action and relates to the user’s current task. Instead, use [`Dialog`](../dialog) to interrupt the user's workflow.
+- For an issue limited to a page, form, or content region with useful content still available. Use [`Banner`](../banner) within the affected area.
+- For a brief, nonblocking event update or confirmation that does not need to stay visible. Consider [`Toast`](../toast), with essential information and recovery actions available elsewhere.
+- For loading, empty, or failure states within a bounded content region when no useful previous content is available. Use the [Content status pattern](/salt/patterns/content-status).
+- For the current health of an individual service or item. Use [`StatusIndicator`](../status-indicator) with explanatory text in the relevant view.
+- When the user must make a decision before continuing. Consider [`Dialog`](../dialog) only when interrupting the workflow is necessary; a routine failure does not automatically require a dialog.
 
 ## Content
 

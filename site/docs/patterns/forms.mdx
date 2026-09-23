@@ -76,6 +76,23 @@ and handle its outcome. If a save fails, retain the draft and offer a retry.
 
 For a form presented in a dialog, follow the [dialog focus guidance](/salt/components/dialog/accessibility#focus). Use the [button bar pattern](/salt/patterns/button-bar#dialog) for action placement and its [stacked layout guidance](/salt/patterns/button-bar#stacked-button-bar) for narrow views.
 
+#### Choosing feedback
+
+Distinguish field validation from a failure to save. If the server rejects a
+specific value, show feedback alongside that field. If valid values could not be
+saved because the service is unavailable, show a persistent [Banner](/salt/components/banner/usage)
+within the affected form or dialog. Do not mark valid fields invalid or open
+another dialog merely to report the failure. Explain how to recover and offer
+Retry when retrying can help.
+
+A [Toast](/salt/components/toast/usage) can provide a nonblocking confirmation
+when additional feedback is useful. It must not be the only place to find
+essential error details or recovery actions; keep those available in the owning
+form or view. Avoid repeating the same feedback in both a Banner and a Toast.
+
+Follow [Banner accessibility guidance](/salt/components/banner/accessibility)
+for announcements. Its visual status alone does not announce the message.
+
 #### Error summary
 
 For a larger form, use a [Banner](/salt/components/banner) above the fields to list

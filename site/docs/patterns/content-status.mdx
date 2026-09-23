@@ -39,9 +39,11 @@ Use this pattern in a container component when the state belongs to the content 
 
 ## When not to use
 
+- For essential platform-wide maintenance or outage notices, use [SystemStatus](/salt/components/system-status/usage).
+- For an individual service's current condition, show [StatusIndicator with descriptive text](/salt/components/status-indicator/usage) alongside that service. A service being degraded is different from the interface failing to load or refresh its data.
 - When a refresh fails and previously loaded content remains visible, use [Banner](/salt/components/banner/usage) in the related container. Use a page-level Banner when the issue affects the whole page.
-- When the message concerns an event in a peripheral application or workflow, use [Toast](/salt/components/toast/usage).
-- When the state requires a full workflow interruption or a decision, use Dialog or the owning form pattern instead.
+- For a nonblocking notification that does not need to remain in the content area, consider [Toast](/salt/components/toast/usage). Essential error details and recovery actions must remain available in the owning view.
+- For field validation or a failed save, follow the [Forms feedback guidance](/salt/patterns/forms#choosing-feedback). Use [Dialog](/salt/components/dialog/usage) only when the user must make a decision that requires interrupting the workflow.
 - When the state is not tied to a container, use inline text or another component instead.
 
 ## How to build
@@ -55,6 +57,7 @@ which part of the task is affected:
 - **Refreshing existing content:** retain the content and show a local loading indication, such as a [loading Refresh button](/salt/components/button/examples#loading).
 - **Refresh failed, previous content remains:** show a [Banner](/salt/components/banner/usage) in the related container, explain that the data was not updated, and offer Retry. For example: “Couldn't refresh. Showing previously loaded data.”
 - **The whole page is affected:** use a page-level Banner.
+- **An essential platform-wide condition:** use [SystemStatus](/salt/components/system-status/usage) for a maintenance notice or outage affecting the application. A failed request in one region does not by itself establish a platform-wide outage.
 
 Choose severity according to whether users can safely continue or their task is
 blocked, rather than treating every failed request as the same severity.
@@ -151,7 +154,7 @@ Use this variant to communicate useful information. For example, if there’s no
 
 ## Warning message
 
-Use the warning status to inform users of an issue or potential issue related to their current task. Use this for issues that don't prevent the user from continuing or completing their task. This could include a system status that may cause issues at a later point.
+Use the warning status to inform users of an issue or potential issue related to their current task. Use this for issues that don't prevent the user from continuing or completing their task. For example, warn about a limitation affecting the content in this region. For essential platform-wide notices, use [SystemStatus](/salt/components/system-status/usage).
 
 <Diagram
   src="/img/patterns/content-status/content-status-warning.png"

@@ -93,7 +93,10 @@
             "Toast",
             "current workflow",
             "Banner",
-            "dialog from another dialog"
+            "dialog from another dialog",
+            "needs to remain visible",
+            "nonblocking confirmation or update",
+            "essential error details and recovery actions available in the owning view"
           ]
         }
       ]
@@ -239,6 +242,30 @@
             "succeeds on retry",
             "Neither adapter makes a network request",
             "sends a notification"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "feedback-placement",
+      "scope": "operations-example",
+      "question": "Should I use field errors, a Banner or a Toast for invalid form values, a failed save and a nonblocking confirmation?",
+      "required": [
+        {
+          "document": "workflow",
+          "section": "forms.choosing-feedback",
+          "source": "forms",
+          "fragments": [
+            "server rejects a specific value",
+            "feedback alongside that field",
+            "persistent Banner",
+            "within the affected form or dialog",
+            "Do not mark valid fields invalid",
+            "nonblocking confirmation",
+            "must not be the only place",
+            "essential error details or recovery actions",
+            "available in the owning form or view",
+            "visual status alone does not announce"
           ]
         }
       ]
@@ -479,6 +506,30 @@
             "do not present them as matching the new request",
             "does not make stale data safe",
             "disable or revalidate actions"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-status-scope",
+      "scope": "operations-example",
+      "question": "Which feedback should I use for a platform-wide outage versus a failed worklist refresh with previous data still visible?",
+      "required": [
+        {
+          "document": "contentStatus",
+          "section": "content-status.loading-and-recovery",
+          "source": "contentStatus",
+          "fragments": [
+            "Refresh failed, previous content remains",
+            "Banner",
+            "related container",
+            "data was not updated",
+            "whole page is affected",
+            "page-level Banner",
+            "essential platform-wide condition",
+            "SystemStatus",
+            "outage affecting the application",
+            "failed request in one region does not by itself establish a platform-wide outage"
           ]
         }
       ]

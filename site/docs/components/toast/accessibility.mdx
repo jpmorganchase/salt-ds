@@ -10,7 +10,11 @@ data:
 
 ## Best practices
 
-You must check and test any focusable elements inside the toast content accordingly.
+`Toast` defaults to `role="alert"`. For routine, nonurgent updates, override this with `role="status"` to request a polite announcement. Its visual `status` does not change the announcement role or determine urgency. Describe the outcome in text rather than relying on color or the status icon.
+
+Avoid announcing the same message through both a toast and another live region. Test announcements with the browsers and screen readers you support; an announcement role does not move focus to the toast or its actions.
+
+Check keyboard access to every action and dismiss control. Keep actionable toasts available while the user reads or interacts with them, and ensure dismissal leaves a sensible focus position. The host application owns timing and dismissal; follow the [persistence and dismissal guidance](./usage#persistence-and-dismissal) and keep essential information and recovery actions accessible elsewhere.
 
 ## Keyboard interactions
 

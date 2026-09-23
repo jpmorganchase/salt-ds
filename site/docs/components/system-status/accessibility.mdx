@@ -8,9 +8,11 @@ data:
   $ref: ./#/data
 ---
 
-By default, the `SystemStatus` component has the role `"status"`. This means a screen reader will announce the message at the next available opportunity.
+`SystemStatus` defaults to `role="status"`, which requests a polite announcement of updates. You can override the role. The component does not move focus automatically, and its visual `status` does not determine announcement urgency.
 
 ## Best practices
 
-- If the status is critical and requires immediate attention, apply `role="alert"` to ensure the message is announced immediately.
-- If the status is not critical, consider applying `role="region"`.
+- Use `role="alert"` only when immediate announcement is justified. Keep `role="status"` for nonurgent updates; changing to `role="region"` does not provide a polite live announcement.
+- Describe the impact and any necessary action in text rather than relying on color or the status icon.
+- Announce meaningful changes, not each polling response. Avoid repeating an unchanged message or announcing the same issue through multiple live regions.
+- Test announcements and keyboard access to actions with the browsers and screen readers you support. A role does not guarantee an announcement or focus its actions.

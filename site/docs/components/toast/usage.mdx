@@ -12,15 +12,20 @@ data:
 
 ### When to use
 
-- To notify users of an event that’s occurred in a peripheral application or workflow. The user should notice the toasts without disrupting their experience or requiring immediate action.
-- To communicate low-priority information caused by events. Toasts usually don’t require feedback from the user.
-- To communicate information from a workflow external to the user’s current task or view. Toasts are in an un-intrusive location on an interface.
-- To show system-generated alerts, independent of the user’s actions. These toasts are persistent and must allow the user to either take action or dismiss them. Toasts can contain customizable content, such as actionable buttons.
+- To communicate a nonblocking update from a peripheral application or workflow without interrupting the user's current task.
+- To briefly confirm a user action, such as completing an operation, when the result remains visible or available elsewhere.
+- To offer an optional action related to an update, provided essential information and recovery actions remain accessible elsewhere.
 
 ### When not to use
 
-- To show a notification that applies to the user’s current task. Instead, use [`Banner`](../banner). `Banner` sits either on the top of a page or component or inline and usually addresses issues inside the user’s current content area.
-- When the notification requires immediate action and relates to the user’s current task. Instead, use [`Dialog`](../dialog) to interrupt the user's workflow.
+- As the only indication of an ongoing platform-wide condition. Use [`SystemStatus`](../system-status/usage) for essential maintenance or outage information that must remain available.
+- As the only feedback for invalid form fields. Use feedback associated with each field and, where useful, an [error summary](/salt/patterns/forms#error-summary).
+- As the only place to explain a failed save or provide essential recovery. Use [`Banner`](../banner) within the affected form or dialog so the message remains with the entered values and recovery actions. See [choosing feedback](/salt/patterns/forms#choosing-feedback).
+- When the user must make a decision before continuing. Consider [`Dialog`](../dialog) only when interrupting the workflow is necessary; a routine save failure can be handled in the existing form or dialog.
+
+### Persistence and dismissal
+
+The host application controls when a toast appears and disappears; `Toast` does not provide a dismissal timer. Only dismiss a toast automatically when its message is nonessential or the information remains available elsewhere. Keep toasts containing actions available until the user acts or dismisses them. Dismissing a toast must not remove the only way to recover from a problem.
 
 ### Positioning
 
