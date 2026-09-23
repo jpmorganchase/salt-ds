@@ -21,6 +21,8 @@ const ANALYTICAL_DASHBOARD_DOCUMENT_PATH =
   "site/docs/patterns/analytical-dashboard.mdx";
 const NAVIGATION_DOCUMENT_PATH = "site/docs/patterns/navigation.mdx";
 const CONTENT_STATUS_DOCUMENT_PATH = "site/docs/patterns/content-status.mdx";
+const LIST_FILTERING_DOCUMENT_PATH = "site/docs/patterns/list-filtering.mdx";
+const SEARCH_DOCUMENT_PATH = "site/docs/patterns/search.mdx";
 const FORMS_DOCUMENT_PATH = "site/docs/patterns/forms.mdx";
 const FORM_INTEGRATION_DOCUMENT_PATH =
   "site/docs/getting-started/form-integration.mdx";
@@ -300,6 +302,53 @@ const NAVIGATION_SELECTORS: readonly SelectedMdxSectionSelector[] = [
     id: "navigation.anatomy",
     heading_path: ["How to build", "Anatomy"],
     include_descendants: false,
+  },
+];
+
+const LIST_FILTERING_SELECTORS: readonly SelectedMdxSectionSelector[] = [
+  { id: "filtering.overview", heading_path: [], include_descendants: false },
+  {
+    id: "filtering.when-to-use",
+    heading_path: ["When to use"],
+    include_descendants: false,
+  },
+  {
+    id: "filtering.when-not-to-use",
+    heading_path: ["When not to use"],
+    include_descendants: false,
+  },
+  {
+    id: "filtering.when-to-apply",
+    heading_path: ["When to apply filtering"],
+    include_descendants: false,
+    semantic_role: "decision",
+  },
+  {
+    id: "filtering.clearing-and-selection",
+    heading_path: ["Clearing and selection"],
+    include_descendants: false,
+    semantic_role: "behavior",
+  },
+  {
+    id: "filtering.no-matches",
+    heading_path: ["No matches"],
+    include_descendants: false,
+    semantic_role: "behavior",
+  },
+  {
+    id: "filtering.focus-and-updates",
+    heading_path: ["Focus and result updates"],
+    include_descendants: false,
+    semantic_role: "accessibility",
+  },
+];
+
+const SEARCH_SELECTORS: readonly SelectedMdxSectionSelector[] = [
+  {
+    id: "search.choosing-and-submitting",
+    heading_path: ["How to build", "Choosing and submitting a result"],
+    include_descendants: false,
+    semantic_role: "behavior",
   },
 ];
 
@@ -908,6 +957,8 @@ export async function buildSelectedGuidance(
     analyticalDashboard,
     navigation,
     contentStatus,
+    listFiltering,
+    search,
     forms,
     formsErrorSummary,
     formIntegration,
@@ -948,6 +999,24 @@ export async function buildSelectedGuidance(
       route: "/salt/patterns/content-status",
       selectors: CONTENT_STATUS_SELECTORS,
       fallbackTitle: "Content status",
+    }),
+    parseSelectedDocument({
+      sourceRoot: input.sourceRoot,
+      declared: declaredSourcePaths([LIST_FILTERING_DOCUMENT_PATH]),
+      sourcePath: LIST_FILTERING_DOCUMENT_PATH,
+      documentId: "guide.list-filtering",
+      route: "/salt/patterns/list-filtering",
+      selectors: LIST_FILTERING_SELECTORS,
+      fallbackTitle: "List filtering",
+    }),
+    parseSelectedDocument({
+      sourceRoot: input.sourceRoot,
+      declared: declaredSourcePaths([SEARCH_DOCUMENT_PATH]),
+      sourcePath: SEARCH_DOCUMENT_PATH,
+      documentId: "guide.search",
+      route: "/salt/patterns/search",
+      selectors: SEARCH_SELECTORS,
+      fallbackTitle: "Search",
     }),
     parseSelectedDocument({
       sourceRoot: input.sourceRoot,
@@ -1359,6 +1428,44 @@ export async function buildSelectedGuidance(
       },
       files: [buttonFile],
       limitations: buttonLimitations,
+    },
+    {
+      id: "guide.list-filtering",
+      name: listFiltering.title,
+      aliases: [listFiltering.title],
+      summary: summaryFromDocument(listFiltering.document, listFiltering.title),
+      kind: "component-guidance",
+      document: listFiltering.document,
+      recipeManifest: null,
+      sourcePaths: [LIST_FILTERING_DOCUMENT_PATH],
+      componentNames: ["Input", "Combo box"],
+      packageNames: ["@salt-ds/core"],
+      attach: {
+        componentNames: [],
+        patternNames: [listFiltering.title],
+        pageSourcePaths: [LIST_FILTERING_DOCUMENT_PATH],
+      },
+      files: [],
+      limitations: [],
+    },
+    {
+      id: "guide.search",
+      name: search.title,
+      aliases: [search.title],
+      summary: summaryFromDocument(search.document, search.title),
+      kind: "component-guidance",
+      document: search.document,
+      recipeManifest: null,
+      sourcePaths: [SEARCH_DOCUMENT_PATH],
+      componentNames: ["Combo box"],
+      packageNames: ["@salt-ds/core"],
+      attach: {
+        componentNames: [],
+        patternNames: [search.title],
+        pageSourcePaths: [SEARCH_DOCUMENT_PATH],
+      },
+      files: [],
+      limitations: [],
     },
     {
       id: "guide.content-status",

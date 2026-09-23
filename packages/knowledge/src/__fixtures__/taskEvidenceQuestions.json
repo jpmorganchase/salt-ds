@@ -17,7 +17,9 @@
     "formIntegration": "record:guide:guide.forms.integration",
     "viewSwitching": "record:guide:guide.view-switching",
     "selectionControls": "record:guide:guide.selection-controls",
-    "navigation": "record:guide:guide.navigation"
+    "navigation": "record:guide:guide.navigation",
+    "listFiltering": "record:guide:guide.list-filtering",
+    "search": "record:guide:guide.search"
   },
   "sources": {
     "forms": "site/docs/patterns/forms.mdx",
@@ -32,7 +34,9 @@
     "formIntegration": "site/docs/getting-started/form-integration.mdx",
     "viewSwitching": "site/docs/components/toggle-button/usage.mdx",
     "selectionControls": "site/docs/components/list-box/usage.mdx",
-    "navigation": "site/docs/patterns/navigation.mdx"
+    "navigation": "site/docs/patterns/navigation.mdx",
+    "listFiltering": "site/docs/patterns/list-filtering.mdx",
+    "search": "site/docs/patterns/search.mdx"
   },
   "qualifications": {
     "document": "workflow",
@@ -881,6 +885,92 @@
             "sequential workflow",
             "Stepper",
             "button bar"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "filter-application-timing",
+      "scope": "operations-example",
+      "question": "Should filters update results while typing or wait for Apply, and how do I show which criteria and data are being filtered?",
+      "required": [
+        {
+          "document": "listFiltering",
+          "section": "filtering.when-to-apply",
+          "source": "listFiltering",
+          "fragments": [
+            "fast local filters",
+            "costly remote queries",
+            "several criteria intended to work together",
+            "explicit Apply or Search action",
+            "distinguish edited criteria",
+            "currently applied",
+            "unapplied changes",
+            "loaded page",
+            "whole collection",
+            "application owns filtering"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "filter-selection-and-no-matches",
+      "scope": "operations-example",
+      "question": "How should a worklist handle filtering that hides the selected record or finds no matches, and where should keyboard focus stay?",
+      "required": [
+        {
+          "document": "listFiltering",
+          "section": "filtering.clearing-and-selection",
+          "source": "listFiltering",
+          "fragments": [
+            "must not silently discard selected records or unsaved edits",
+            "selection is retained",
+            "reveal it or clear",
+            "single-select ComboBox",
+            "clearing the input also clears its selection"
+          ]
+        },
+        {
+          "document": "listFiltering",
+          "section": "filtering.no-matches",
+          "source": "listFiltering",
+          "fragments": [
+            "completes successfully",
+            "Keep the active criteria visible",
+            "does not need Retry",
+            "failed request is not a no-match result"
+          ]
+        },
+        {
+          "document": "listFiltering",
+          "section": "filtering.focus-and-updates",
+          "source": "listFiltering",
+          "fragments": [
+            "Keep keyboard focus in the filter control",
+            "return focus to that input",
+            "announce a useful result count or no-match message politely",
+            "after updates settle",
+            "older query must not replace results for a newer query"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "search-active-suggestion",
+      "scope": "operations-example",
+      "question": "In search with suggestions, should Enter choose the first result, the active suggestion, or submit the typed query?",
+      "required": [
+        {
+          "document": "search",
+          "section": "search.choosing-and-submitting",
+          "source": "search",
+          "fragments": [
+            "enabled suggestion is active",
+            "Enter chooses that active suggestion",
+            "does not always choose the first result",
+            "free-text search is supported and no suggestion is active",
+            "host application owns navigation and query submission",
+            "must not also submit the text query"
           ]
         }
       ]

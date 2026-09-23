@@ -65,6 +65,8 @@ const semanticSourcePaths = [
 const trackedSourcePaths = [
   ...semanticSourcePaths,
   formIntegrationPath,
+  "site/docs/patterns/list-filtering.mdx",
+  "site/docs/patterns/search.mdx",
   "site/docs/components/toggle-button/usage.mdx",
   "site/docs/components/list-box/usage.mdx",
   formsPreviewPath,

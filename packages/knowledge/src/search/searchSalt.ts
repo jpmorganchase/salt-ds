@@ -681,6 +681,7 @@ type CanonicalContextIntent = "general" | "workflow" | "adaptation";
 interface CanonicalContextCandidates {
   documents: KnowledgeContextCanonicalDocument[];
   section_priorities: ReadonlyMap<string, number>;
+  section_coverage: ReadonlyMap<string, number>;
   source_examples: KnowledgeContextSourceExample[];
   had_canonical_document: boolean;
   had_incompatible_canonical_document: boolean;
@@ -1201,12 +1202,18 @@ function canonicalContextCandidates(
   const guides = new Set<string>();
   const documents: KnowledgeContextCanonicalDocument[] = [];
   const sectionPriorities = new Map<string, number>();
+  const sectionCoverageByReference = new Map<string, number>();
   const addDocument = (
     document: CanonicalDocumentSelection,
     sections: readonly CanonicalDocumentSection[],
   ) => {
     // Compute priority before the public projection removes search-only evidence.
+    const topicWords = topicWordsForDocument(document, queryWords);
     for (const section of sections) {
+      sectionCoverageByReference.set(
+        section.reference,
+        sectionCoverage(section, topicWords),
+      );
       sectionPriorities.set(
         section.reference,
         contextSectionPriority(section, intent, queryWords),
@@ -1295,6 +1302,7 @@ function canonicalContextCandidates(
   return {
     documents,
     section_priorities: sectionPriorities,
+    section_coverage: sectionCoverageByReference,
     source_examples: sourceExamples,
     had_canonical_document: hadCanonicalDocument,
     had_incompatible_canonical_document: hadIncompatibleCanonicalDocument,
@@ -1465,12 +1473,48 @@ function canonicalContextVariants(
   // (and its matches/files) to compact. Try intact prefixes first, then
   // shrink sections while retaining their qualification groups.
   const variants = [candidates];
-  for (let count = candidates.documents.length - 1; count > 0; count -= 1) {
-    variants.push({
-      ...candidates,
-      documents: candidates.documents.slice(0, count),
-      truncated: true,
-    });
+  const prefixDocuments = [...candidates.documents].sort(
+    (left, right) =>
+      Math.max(
+        ...right.sections.map(
+          (s) => candidates.section_coverage.get(s.reference) ?? 0,
+        ),
+      ) -
+      Math.max(
+        ...left.sections.map(
+          (s) => candidates.section_coverage.get(s.reference) ?? 0,
+        ),
+      ),
+  );
+  // If the original prefixes do not fit, retain complete focused guidance
+  // before narrowing sections by their authored role or workflow purpose.
+  for (const documents of [candidates.documents, prefixDocuments]) {
+    for (let count = documents.length - 1; count > 0; count -= 1) {
+      variants.push({
+        ...candidates,
+        documents: documents.slice(0, count),
+        truncated: true,
+      });
+      // Preserve complete mixed guidance by trimming file/omission metadata
+      // before dropping another guide. Single-guide compaction remains below,
+      // after the complete evidence in alternative guides has been considered.
+      if (documents === prefixDocuments && count > 1) {
+        variants.push({
+          ...candidates,
+          documents: documents
+            .slice(0, count)
+            .map((document) =>
+              compactCanonicalDocument(
+                document,
+                document.sections.length,
+                sectionPriority,
+                candidates.query_words,
+              ),
+            ),
+          truncated: true,
+        });
+      }
+    }
   }
   const roles =
     candidates.intent === "general" ? taskRoles(candidates.query_words) : [];
