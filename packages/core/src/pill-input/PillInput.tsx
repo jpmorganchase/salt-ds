@@ -324,7 +324,7 @@ export const PillInput = forwardRef(function PillInput(
             <div role="listitem" key={pill}>
               <Pill
                 data-index={index}
-                disabled={disabled}
+                disabled={isDisabled}
                 aria-label={hidePillClose ? pill : `Remove ${pill}`}
                 ref={(element) => {
                   if (element) {
@@ -338,8 +338,16 @@ export const PillInput = forwardRef(function PillInput(
                 onFocus={() => setFocusedPillIndex(index)}
                 onKeyDown={handlePillKeyDown}
                 onClick={handlePillClick}
+                // Before any pill is focused the first pill is the only tab
+                // stop, so the pill list is a single stop overall.
                 tabIndex={
-                  focusedPillIndex === -1 || focusedPillIndex === index ? 0 : -1
+                  (
+                    focusedPillIndex === -1
+                      ? index === 0
+                      : focusedPillIndex === index
+                  )
+                    ? 0
+                    : -1
                 }
               >
                 {pill}

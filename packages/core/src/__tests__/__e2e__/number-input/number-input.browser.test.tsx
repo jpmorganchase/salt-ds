@@ -665,6 +665,30 @@ describe("Number Input", () => {
     },
   );
 
+  it("disables its spinner buttons inside a disabled FormField", async () => {
+    await renderWithSalt(
+      <FormField disabled>
+        <FormFieldLabel>Disabled form field</FormFieldLabel>
+        <NumberInput defaultValue={5} />
+      </FormField>,
+    );
+
+    expect(document.querySelector(".saltNumberInput-increment")).toBeDisabled();
+    expect(document.querySelector(".saltNumberInput-decrement")).toBeDisabled();
+  });
+
+  it("enables its spinner buttons inside an enabled FormField", async () => {
+    await renderWithSalt(
+      <FormField>
+        <FormFieldLabel>Enabled form field</FormFieldLabel>
+        <NumberInput defaultValue={5} />
+      </FormField>,
+    );
+
+    expect(document.querySelector(".saltNumberInput-increment")).toBeEnabled();
+    expect(document.querySelector(".saltNumberInput-decrement")).toBeEnabled();
+  });
+
   it("applies name with inputProps taking precedence", async () => {
     await renderWithSalt(<Default name="quantity" />);
     await expect.element(input()).toHaveAttribute("name", "quantity");

@@ -738,3 +738,29 @@ describe("Given a ComboBox", () => {
     await expect.element(page.getByRole("textbox")).toHaveValue(value);
   });
 });
+
+describe("given a multiselect ComboBox with pills", () => {
+  it("treats the pill list as a single tab stop when reached backwards", async () => {
+    await renderWithSalt(
+      <>
+        <ComboBox multiselect defaultSelected={["Alabama", "Alaska"]}>
+          <Option value="Alabama" />
+          <Option value="Alaska" />
+        </ComboBox>
+        <button type="button">After</button>
+      </>,
+    );
+
+    await userEvent.click(page.getByRole("button", { name: "After" }));
+    await userEvent.tab({ shift: true });
+    await expect.element(input()).toHaveFocus();
+
+    await userEvent.tab({ shift: true });
+
+    const pills = document.querySelectorAll<HTMLElement>(
+      ".saltPillInput-pillList [role='listitem'] button",
+    );
+    expect(pills).toHaveLength(2);
+    expect(document.activeElement).toBe(pills[0]);
+  });
+});
