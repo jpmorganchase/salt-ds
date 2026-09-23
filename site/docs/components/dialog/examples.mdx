@@ -90,9 +90,9 @@ A success icon displays alongside a header and supporting message.
 
 ## Mandatory action
 
-Use the `disableDismiss` prop to prevent a click away dismissing the dialog.
+Use `disableDismiss` to prevent accidental dismissal by clicking outside the dialog. Escape still closes the dialog and returns focus to its trigger; this prop does not require the user to confirm the action.
 
-This forces a user to action something within the dialog.
+In this destructive example, `initialFocus` points to Cancel so the [documented focus order](./accessibility#focus-sequence) is preserved when the actions stack.
 
 <LivePreview componentName="dialog" exampleName="MandatoryAction" />
 
