@@ -8,6 +8,7 @@ import {
 import { type ComponentProps, type SyntheticEvent, useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
+import { trackDefaultPrevented } from "~browser-test-utils/interactions";
 import { renderWithSalt } from "~browser-test-utils/render";
 
 type GroupProps = ComponentProps<typeof ToggleButtonGroup> & {
@@ -208,13 +209,15 @@ describe("GIVEN a ToggleButtonGroup and keyboard navigation", () => {
   });
 
   it("stops the page scrolling when navigating with the arrow keys", async () => {
-    const onKeyDown = vi.fn();
-    await renderWithSalt(<Group defaultValue="alert" onKeyDown={onKeyDown} />);
+    const keyDown = trackDefaultPrevented();
+    await renderWithSalt(
+      <Group defaultValue="alert" onKeyDown={keyDown.handler} />,
+    );
 
     await userEvent.tab();
     await userEvent.keyboard("{ArrowRight}");
 
-    expect(onKeyDown.mock.lastCall?.[0].defaultPrevented).toBe(true);
+    expect(keyDown.lastDefaultPrevented()).toBe(true);
   });
 });
 
