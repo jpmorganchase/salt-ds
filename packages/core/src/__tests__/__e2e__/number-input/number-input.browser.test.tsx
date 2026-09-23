@@ -673,10 +673,7 @@ describe("Number Input", () => {
       </FormField>,
     );
 
-    const increment = page.elementLocator(
-      document.querySelector<HTMLElement>(".saltNumberInput-increment")!,
-    );
-    await increment.click({ force: true });
+    await button("increment").click({ force: true });
 
     await expect.element(input()).toHaveValue("5");
   });
@@ -689,10 +686,7 @@ describe("Number Input", () => {
       </FormField>,
     );
 
-    const increment = page.elementLocator(
-      document.querySelector<HTMLElement>(".saltNumberInput-increment")!,
-    );
-    await increment.click();
+    await button("increment").click();
 
     await expect.element(input()).toHaveValue("6");
   });
