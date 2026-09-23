@@ -39,15 +39,9 @@
 
 /* Style applied to disabled items */
 .saltListItemNext[aria-disabled="true"] {
-  --listNext-item-text-color: var(--salt-content-primary-foreground-disabled);
+  opacity: 0.4;
   cursor: var(--salt-cursor-disabled);
 }
 .saltListItemNext[aria-disabled="true"] .saltText {
   color: var(--listNext-item-text-color);
-}
-
-/* disabled list item when selected */
-.saltListItemNext[aria-disabled="true"][aria-selected="true"] {
-  outline: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selectedDisabled);
-  --listNext-item-background: var(--salt-selectable-background-selectedDisabled);
 }

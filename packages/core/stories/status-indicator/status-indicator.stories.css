@@ -1,0 +1,7 @@
+.status-indicator-with-text {
+  margin-top: calc((var(--salt-text-label-lineHeight) - max(var(--salt-size-icon), 12px)) / 2);
+}
+
+.status-indicator-with-text-label {
+  font-style: var(--salt-typography-textDecoration-italic);
+}

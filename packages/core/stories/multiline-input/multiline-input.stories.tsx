@@ -7,6 +7,7 @@ import {
   Label,
   MultilineInput,
   Text,
+  useAriaAnnouncer,
 } from "@salt-ds/core";
 import {
   BookmarkSolidIcon,
@@ -155,27 +156,43 @@ export const Disabled: StoryFn<typeof MultilineInput> = (args) => {
 };
 
 export const CharacterCount: StoryFn<typeof MultilineInput> = (args) => {
+  const { announce } = useAriaAnnouncer({ debounce: 500 });
   const [value, setValue] = useState<string>("Value");
   const [isError, setIsError] = useState<boolean>(false);
   const MAX_CHARS = 10;
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const newVal = event.target.value;
     setValue(newVal);
-    setIsError(newVal.length > MAX_CHARS);
+    if (newVal.length > MAX_CHARS) {
+      setIsError(true);
+      announce(
+        `Character limit reached. ${newVal.length} of ${MAX_CHARS} characters used.`,
+        { ariaLive: "assertive" },
+      );
+    } else {
+      setIsError(false);
+      if (newVal.length > 0) {
+        announce(`${newVal.length} of ${MAX_CHARS} characters used.`);
+      }
+    }
   };
 
   return (
     <MultilineInput
       {...args}
       endAdornment={
-        <Label variant={!isError ? "secondary" : "primary"}>
+        <Label aria-hidden color={!isError ? "secondary" : "primary"}>
           {!isError && `${value.length}/${MAX_CHARS}`}
           {isError && <strong>{`${value.length}/${MAX_CHARS}`}</strong>}
         </Label>
       }
       style={{ width: "266px" }}
-      onChange={handleChange}
+      textAreaProps={{
+        "aria-description": `You can enter up to ${MAX_CHARS} characters.`,
+        "aria-invalid": isError,
+        onChange: handleChange,
+      }}
       value={value}
       validationStatus={isError ? "error" : undefined}
     />
