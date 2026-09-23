@@ -478,3 +478,38 @@ describe("GIVEN a single-select InteractableCardGroup", () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 });
+
+describe("GIVEN an InteractableCardGroup whose disabled state changes", () => {
+  // The children are created once, so the group only re-renders because its
+  // own `disabled` prop changed. This is what a consumer gets when the cards
+  // are hoisted or memoized.
+  const stableChildren = (
+    <>
+      <InteractableCard value="one">One</InteractableCard>
+      <InteractableCard value="two">Two</InteractableCard>
+    </>
+  );
+
+  function Example() {
+    const [disabled, setDisabled] = useState(true);
+    return (
+      <>
+        <button type="button" onClick={() => setDisabled(false)}>
+          Enable
+        </button>
+        <InteractableCardGroup disabled={disabled}>
+          {stableChildren}
+        </InteractableCardGroup>
+      </>
+    );
+  }
+
+  it("can be reached with Tab once it is enabled", async () => {
+    await renderWithSalt(<Example />);
+
+    await userEvent.click(page.getByRole("button", { name: "Enable" }));
+    await userEvent.tab();
+
+    await expect.element(page.getByRole("radio", { name: "One" })).toHaveFocus();
+  });
+});

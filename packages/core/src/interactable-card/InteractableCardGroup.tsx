@@ -91,7 +91,7 @@ export const InteractableCardGroup = forwardRef<
 
   const [elements, setElements] = useState<HTMLElement[]>([]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: queries the dom when children changes.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: queries the dom when children or disabled changes.
   useEffect(() => {
     const childElements: HTMLElement[] = Array.from(
       groupRef.current?.querySelectorAll(".saltInteractableCard") ?? [],
@@ -99,7 +99,7 @@ export const InteractableCardGroup = forwardRef<
       (element) => !element.classList.contains("saltInteractableCard-disabled"),
     ) as HTMLElement[];
     setElements(childElements);
-  }, [children]);
+  }, [children, disabled]);
 
   const select = useCallback(
     (
