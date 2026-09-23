@@ -253,7 +253,6 @@ const ANALYTICAL_DASHBOARD_SELECTORS: readonly SelectedMdxSectionSelector[] = [
 ];
 
 const NAVIGATION_SELECTORS: readonly SelectedMdxSectionSelector[] = [
-  { id: "navigation.overview", heading_path: [], include_descendants: false },
   {
     id: "navigation.when-to-use",
     heading_path: ["When to use"],
@@ -268,6 +267,24 @@ const NAVIGATION_SELECTORS: readonly SelectedMdxSectionSelector[] = [
     id: "navigation.how-to-build",
     heading_path: ["How to build"],
     include_descendants: false,
+  },
+  {
+    id: "navigation.mega-menus",
+    heading_path: ["How to build", "Mega menus"],
+    include_descendants: false,
+    semantic_role: "decision",
+  },
+  {
+    id: "navigation.links-and-cards",
+    heading_path: ["How to build", "Links and cards"],
+    include_descendants: false,
+    semantic_role: "decision",
+  },
+  {
+    id: "navigation.supporting-navigation",
+    heading_path: ["How to build", "Supporting navigation"],
+    include_descendants: false,
+    semantic_role: "decision",
   },
   {
     id: "navigation.anatomy",
@@ -902,7 +919,7 @@ export async function buildSelectedGuidance(
       sourceRoot: input.sourceRoot,
       declared,
       sourcePath: assertDeclared(declared, NAVIGATION_DOCUMENT_PATH),
-      documentId: recipe.id,
+      documentId: "guide.navigation",
       route: "/salt/patterns/navigation",
       selectors: NAVIGATION_SELECTORS,
       fallbackTitle: "Navigation",
@@ -1103,10 +1120,10 @@ export async function buildSelectedGuidance(
   requireSupportedDocument(selectionControls.document);
   requireSupportedDocument(formsErrorSummary.document);
   requireSupportedDocument(contentStatus.document);
+  requireSupportedDocument(navigation.document);
   requireSupportedDocument(buttonAccessibility.document);
   const workflowDocuments = [
     analyticalDashboard,
-    navigation,
     forms,
     choosingPrimitive,
     compositionPitfalls,
@@ -1160,16 +1177,44 @@ export async function buildSelectedGuidance(
       packageNames: packages,
       attach: {
         componentNames: [],
-        patternNames: [
-          analyticalDashboard.title,
-          navigation.title,
-          forms.title,
-          "Metric",
-        ],
+        patternNames: [analyticalDashboard.title, forms.title, "Metric"],
         pageSourcePaths: workflowGuidancePaths,
       },
       files: [formsFile],
       limitations: workflowLimitations,
+    },
+    {
+      id: "guide.navigation",
+      name: navigation.title,
+      aliases: ["Navigation", "Choosing navigation components"],
+      summary: summaryFromDocument(navigation.document, navigation.title),
+      kind: "component-guidance",
+      document: navigation.document,
+      recipeManifest: null,
+      sourcePaths: [NAVIGATION_DOCUMENT_PATH],
+      componentNames: [
+        "Navigation item",
+        "Vertical navigation",
+        "Mega menu",
+        "Link",
+        "Link button",
+        "Card",
+        "Breadcrumbs",
+        "Skip link",
+        "Pagination",
+        "Button",
+        "Stepper",
+        "Tabs",
+        "Toggle button",
+      ],
+      packageNames: ["@salt-ds/core"],
+      attach: {
+        componentNames: ["Navigation item", "Vertical navigation"],
+        patternNames: [navigation.title],
+        pageSourcePaths: [NAVIGATION_DOCUMENT_PATH],
+      },
+      files: [],
+      limitations: [],
     },
     {
       id: "guide.forms.error-summary",

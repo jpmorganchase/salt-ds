@@ -16,7 +16,8 @@
     "contentStatus": "record:guide:guide.content-status",
     "formIntegration": "record:guide:guide.forms.integration",
     "viewSwitching": "record:guide:guide.view-switching",
-    "selectionControls": "record:guide:guide.selection-controls"
+    "selectionControls": "record:guide:guide.selection-controls",
+    "navigation": "record:guide:guide.navigation"
   },
   "sources": {
     "forms": "site/docs/patterns/forms.mdx",
@@ -30,7 +31,8 @@
     "contentStatus": "site/docs/patterns/content-status.mdx",
     "formIntegration": "site/docs/getting-started/form-integration.mdx",
     "viewSwitching": "site/docs/components/toggle-button/usage.mdx",
-    "selectionControls": "site/docs/components/list-box/usage.mdx"
+    "selectionControls": "site/docs/components/list-box/usage.mdx",
+    "navigation": "site/docs/patterns/navigation.mdx"
   },
   "qualifications": {
     "document": "workflow",
@@ -648,6 +650,165 @@
           ]
         }
       ]
+    },
+    {
+      "id": "new-vertical-navigation",
+      "scope": "operations-example",
+      "question": "Which components should I use for new vertical navigation, and must I replace an existing NavigationItem implementation?",
+      "required": [
+        {
+          "document": "navigation",
+          "section": "navigation.how-to-build",
+          "source": "navigation",
+          "fragments": [
+            "NavigationItem",
+            "horizontal group of destination links",
+            "labelled navigation region",
+            "new vertical navigation",
+            "VerticalNavigation",
+            "accessible name",
+            "Existing vertical NavigationItem",
+            "can remain during migration"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "navigation-panels-or-presentation",
+      "scope": "operations-example",
+      "question": "Should my control navigate to another destination, switch Details and History panels, or change the same records between List and Cards?",
+      "required": [
+        {
+          "document": "navigation",
+          "section": "navigation.when-to-use",
+          "source": "navigation",
+          "fragments": [
+            "destinations",
+            "pages",
+            "resources",
+            "sections within a page"
+          ]
+        },
+        {
+          "document": "navigation",
+          "section": "navigation.when-not-to-use",
+          "source": "navigation",
+          "fragments": [
+            "distinct content panels",
+            "Tabs",
+            "same underlying records",
+            "List and Cards",
+            "ToggleButtonGroup",
+            "presentation rather than the navigation destination"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "navigation-links-or-cards",
+      "scope": "operations-example",
+      "question": "When should I use a text link, a prominent View report control, or make the whole card navigate? How is selecting a card different?",
+      "required": [
+        {
+          "document": "navigation",
+          "section": "navigation.links-and-cards",
+          "source": "navigation",
+          "fragments": [
+            "Link",
+            "text link",
+            "section on the same page",
+            "LinkButton",
+            "button-like prominence",
+            "Button",
+            "on-page actions",
+            "LinkCard",
+            "one destination",
+            "don't nest buttons or other links",
+            "static Card",
+            "separate links or buttons",
+            "InteractableCardGroup",
+            "selection"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "navigation-grouped-destinations",
+      "scope": "operations-example",
+      "question": "Our app has many destination links grouped by category. Should we use a mega menu, and how should this change on small screens?",
+      "required": [
+        {
+          "document": "navigation",
+          "section": "navigation.mega-menus",
+          "source": "navigation",
+          "fragments": [
+            "MegaMenu",
+            "related destinations",
+            "groups",
+            "all top-level items",
+            "that navigation system",
+            "simple structures or small screens",
+            "simpler navigation pattern",
+            "difficult to use on mobile"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "preferences-section-navigation",
+      "scope": "operations-example",
+      "question": "Should a preferences dialog use tabs or vertical navigation when its category list opens a settings section with Back on mobile?",
+      "required": [
+        {
+          "document": "navigation",
+          "section": "navigation.when-to-use",
+          "source": "navigation",
+          "fragments": [
+            "settings section navigation",
+            "preferences dialog pattern",
+            "VerticalNavigation",
+            "narrow layout",
+            "Back to return to categories"
+          ]
+        },
+        {
+          "document": "navigation",
+          "section": "navigation.when-not-to-use",
+          "source": "navigation",
+          "fragments": [
+            "flat set of distinct content panels",
+            "Details and History",
+            "Tabs",
+            "settings categories",
+            "Back to return",
+            "preferences dialog pattern"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "navigation-location-and-results",
+      "scope": "operations-example",
+      "question": "How do I show the current location in the hierarchy, let users skip repeated navigation, and move through pages of search results?",
+      "required": [
+        {
+          "document": "navigation",
+          "section": "navigation.supporting-navigation",
+          "source": "navigation",
+          "fragments": [
+            "Breadcrumbs",
+            "current location",
+            "complement the main navigation",
+            "SkipLink",
+            "bypass repeated headers or navigation",
+            "Pagination",
+            "pages of search results or data",
+            "sequential workflow",
+            "Stepper",
+            "button bar"
+          ]
+        }
+      ]
     }
   ],
   "qualified_units": [
@@ -661,6 +822,7 @@
     ["dialog.focus", "dialog.initial-focus", "dialog.focus-sequence"],
     ["button-bar.layout", "button-bar.dialog-order"],
     ["view-switching.choice", "view-switching.choice.alternatives"],
-    ["selection-controls.choice", "selection-controls.alternatives"]
+    ["selection-controls.choice", "selection-controls.alternatives"],
+    ["navigation.when-to-use", "navigation.when-not-to-use"]
   ]
 }

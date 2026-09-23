@@ -1,3 +1,9 @@
+// Load this declaration before generic CSS declarations; wildcard suffixes do not set precedence.
+declare module "*.module.css" {
+  const classes: Record<string, string>;
+  export default classes;
+}
+
 declare module "*.css" {
   const content: string;
   export default content;

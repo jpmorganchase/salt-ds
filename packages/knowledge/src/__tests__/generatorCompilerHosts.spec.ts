@@ -44,6 +44,7 @@ afterEach(async () => {
 });
 
 describe.sequential("sealed TypeScript compiler hosts", () => {
+  // Two full docgen passes verify correctness, not a five-second performance limit.
   it("extracts workspace source props regardless of built declarations", async () => {
     const repoRoot = await fs.mkdtemp(
       path.join(os.tmpdir(), "salt-docgen-source-"),
@@ -106,7 +107,7 @@ describe.sequential("sealed TypeScript compiler hosts", () => {
         expect.objectContaining({ name: "sourceLabel" }),
       ]),
     );
-  });
+  }, 20_000);
 
   it("uses captured workspace links, hides ambient dependencies, and fails on topology drift", async () => {
     const repoRoot = await fs.mkdtemp(

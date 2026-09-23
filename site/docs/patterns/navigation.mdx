@@ -7,12 +7,23 @@ tags:
 aliases:
   - /salt/patterns/navigation
 data:
-  resources:
+  resources: []
+  components:
     [
+      "Navigation item",
+      "Vertical navigation",
+      "Mega menu",
+      "Link",
+      "Link button",
+      "Card",
+      "Breadcrumbs",
+      "Skip link",
+      "Pagination",
     ]
-  components: ["Navigation item"]
   relatedPatterns: ["Vertical navigation"]
 ---
+
+The example below retains vertical `NavigationItem` usage for existing implementations. For new vertical navigation, use the [`VerticalNavigation` examples](/salt/components/vertical-navigation/examples).
 
 <LivePreview componentName="patterns/navigation" exampleName="Navigation" />
 
@@ -24,28 +35,53 @@ data:
 
 ## When to use
 
-Use the pattern to indicate the structure and hierarchy of your site or application content. When deciding on your application’s navigation, it’s important to:
+Use navigation to reach destinations such as pages, resources or sections within a page. Navigation controls can appear in the main navigation or within page content. Choose them according to the destination and the user’s task. When deciding on your application’s main navigation, it’s important to:
 
 - Display navigation in websites or applications with two or more pages to indicate content hierarchy and help users orient themselves.
 - Simplify your hierarchy to help users locate the information they want in the fewest clicks, to reduce the user's cognitive load.
-- Label effectively with clear and concise label descriptions or visual cues, such as descriptive icons, to specify the information a navigation item or tab directs users to.
+- Label effectively with clear and concise label descriptions or visual cues, such as descriptive icons, to specify the destination a navigation item directs users to.
+
+For responsive settings section navigation, use the [preferences dialog pattern](./preferences-dialog) with `VerticalNavigation`. Its narrow layout moves from categories to settings and provides Back to return to categories.
 
 ## When not to use
 
 - When the task is primarily about completing a workflow, use Forms, Wizard, or Dialog instead of site navigation.
-- When users only need a local control for moving through content on a single page, use Tabs or segmented controls instead.
+- When users switch between a flat set of distinct content panels on the same page, such as Details and History, use [`Tabs`](/salt/components/tabs). For settings categories that lead to a section and offer Back to return, follow the [preferences dialog pattern](./preferences-dialog).
+- When users switch the same underlying records between List and Cards, use [`ToggleButtonGroup`](/salt/components/toggle-button/usage#view-switching). This changes presentation rather than the navigation destination.
 - When you need to present task actions rather than wayfinding, use a Button bar or toolbar instead.
 
 ## How to build
 
-Navigation item components are navigational landmarks often used in the top or left areas of the user’s screen. The navigation item component comes in two orientations: horizontal and vertical. Use the orientation that aligns best to your use case.
+Use [`NavigationItem`](/salt/components/navigation-item) for a simple horizontal group of destination links. Group the items in a labelled navigation region. For grouped destinations, see [Mega menus](#mega-menus).
+
+For new vertical navigation, use [`VerticalNavigation`](/salt/components/vertical-navigation), which provides the navigation region and item list. Give the region an accessible name. Existing vertical `NavigationItem` implementations can remain during migration, but prefer `VerticalNavigation` for new work.
+
+### Links and cards
+
+- Use [`Link`](/salt/components/link) for a text link to another page, a resource such as a document, or a section on the same page.
+- Use [`LinkButton`](/salt/components/link-button) when a destination needs button-like prominence, such as a primary call to action in a banner or empty state. Use [`Button`](/salt/components/button) for on-page actions such as submitting a form or opening a dialog.
+- Use [`LinkCard`](/salt/components/card/examples#link-card) when the whole card leads to one destination. Keep its contents static; don't nest buttons or other links inside it.
+- Use a static [`Card`](/salt/components/card/usage#interactable-elements) when its content contains separate links or buttons. Each control then has its own destination or action.
+- Use [`InteractableCard`](/salt/components/card/examples#interactable-card) for an action, or within `InteractableCardGroup` for selection. Follow the [selectable-card pattern](/salt/patterns/selectable-card) for that selection. For whole-card navigation, use `LinkCard`.
+
+### Mega menus
+
+Use [`MegaMenu`](/salt/components/mega-menu) to organize many related destinations into groups in the main navigation. It suits complex site structures where users benefit from seeing groups of links together.
+
+If any top-level item needs a mega menu, use the same mega menu pattern for all top-level items in that navigation system. For simple structures or small screens, consider a simpler navigation pattern; mega menus can be difficult to use on mobile. See the [mega menu guidance](/salt/components/mega-menu/usage#when-not-to-use) for alternatives and composition details.
+
+### Supporting navigation
+
+- Use [`Breadcrumbs`](/salt/components/breadcrumbs) to show the current location within a hierarchy and provide a path back to earlier levels. Breadcrumbs complement the main navigation.
+- Use [`SkipLink`](/salt/components/skip-link) to let keyboard and screen reader users bypass repeated headers or navigation and reach the main content.
+- Use [`Pagination`](/salt/components/pagination) to move between pages of search results or data. For a sequential workflow, use [`Stepper`](/salt/components/stepper) to communicate progress and the [button bar pattern](/salt/patterns/button-bar) to move between steps.
 
 ### Anatomy
 
-Navigation consists of horizontal and vertical variants. You can use them on their own or combined together depending on your navigation structure:
+Main navigation has horizontal and vertical layouts. You can use them on their own or combined together depending on your navigation structure:
 
-1. **Horizontal navigation**: Consists of navigation items arranged in a horizontal layout, that link the user to a different section of a website or application.
-2. **Vertical navigation**: Consists of navigation items and parent navigation items arranged in a vertical layout. Parent navigation items do not direct the user anywhere and, instead, reveals nested navigation items inside it. 
+1. **Horizontal navigation**: Uses a horizontal group of `NavigationItem` links for simple destinations, or `MegaMenu` triggers for grouped destinations.
+2. **Vertical navigation**: Uses the `VerticalNavigation` component family to arrange destinations and expandable groups in a vertical layout. An expansion trigger reveals nested items. If the parent has a single trigger, place any overview destination as the first nested item.
 
 <Diagram
   src="/img/patterns/navigation/navigation_anatomy.png"
@@ -55,7 +91,7 @@ Navigation consists of horizontal and vertical variants. You can use them on the
 
 ### Layout
 
-Horizontal navigation uses `StackLayout` with `gap={0}` to display navigation items in a row formation.
+A simple horizontal group uses `StackLayout` with `gap={0}` to display `NavigationItem` links in a row. For mega menu composition, follow the [mega menu structure guidance](/salt/components/mega-menu/usage#structure).
 
 <Diagram
   src="/img/patterns/navigation/nav_layout.png"
@@ -80,8 +116,9 @@ You would normally use a horizontal navigation within an application header, at 
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  Use horizontal navigation when you have fewer than eight items. Otherwise,
-  consider a vertical group of items.
+  Use a simple horizontal group of `NavigationItem` links when you have fewer
+  than eight items. Otherwise, consider a vertical group. For destinations
+  organized into groups, see the [mega menu guidance](#mega-menus).
 </GuidanceCallout>
 
 ### Default
@@ -162,11 +199,10 @@ Use the underlying layout grid to set a minimum width for your navigation pane a
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-- Use a layout grid for the full width of your app’s resolution if it isn't
-  responsive, or just for the content area if it is. 
-- Use [Salt
-  breakpoints](/salt/foundations/responsiveness#breakpoints) to determine how
-  the navigation displays at various viewport sizes.
+
+- Use a layout grid for the full width of your app’s resolution if it isn't responsive, or just for the content area if it is.
+- Use [Salt breakpoints](/salt/foundations/responsiveness#breakpoints) to determine how the navigation displays at various viewport sizes.
+
 </GuidanceCallout>
 
 ## Combined navigation

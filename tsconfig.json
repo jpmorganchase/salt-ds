@@ -40,6 +40,7 @@
     }
   },
   "include": [
+    "./declarations.d.ts",
     "packages",
     "site/src/examples/patterns",
     "integration/toolkit",
@@ -47,7 +48,6 @@
     "docs",
     "tooling",
     "test/browser",
-    "vitest.browser.config.mts",
-    "./declarations.d.ts"
+    "vitest.browser.config.mts"
   ]
 }

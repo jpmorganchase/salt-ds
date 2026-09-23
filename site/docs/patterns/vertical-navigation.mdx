@@ -7,14 +7,15 @@ tags:
 aliases:
   - /salt/patterns/vertical-navigation
 data:
-  resources:
-    [
-    ]
+  resources: []
   components: ["Vertical navigation"]
   relatedPatterns: ["Navigation"]
 ---
 
-<LivePreview componentName="patterns/vertical-navigation" exampleName="SingleLevel" />
+<LivePreview
+  componentName="patterns/vertical-navigation"
+  exampleName="SingleLevel"
+/>
 
 <Diagram
   src="/img/patterns/vertical-navigation/vertical-navigation-hero-shot.png"
@@ -24,7 +25,7 @@ data:
 
 ## When to use
 
-Use vertical navigation when the page needs a persistent navigation pane that organizes multiple sections of an application into a vertical hierarchy.
+Use vertical navigation to organize multiple sections of an application into a vertical hierarchy. The navigation pane can remain alongside the content when space allows.
 
 Use it when:
 
@@ -32,22 +33,24 @@ Use it when:
 - the information architecture is complex enough that a horizontal nav would be crowded
 - the navigation should remain visible as the user moves through nested content
 - clear labels or icons can help users scan the hierarchy quickly
+- grouped preferences need categories that lead into settings with a Back action on narrow layouts, as in the [preferences dialog pattern](./preferences-dialog)
 
 ## When not to use
 
 - When the page only needs a small number of top-level destinations, use a simpler horizontal navigation or app header.
-- When the navigation is secondary or page-local, use an anchor-style table of contents instead of a full navigation pane.
-- When the content is primarily modal or task-oriented, use a dialog or drawer structure instead of a persistent sidebar.
+- For a flat set of distinct content panels on the same page, such as Details and History, use [`Tabs`](/salt/components/tabs).
+- For headings within one continuous page, use an anchor-style table of contents; see [secondary navigation](#secondary-navigation).
+- For a single focused task that does not need section navigation, use a dialog or drawer. Grouped preferences can use the [preferences dialog pattern](./preferences-dialog).
 
 ## How to build
 
 ### Anatomy
 
-A vertical navigation uses the `VerticalNavigation` component family in a persistent navigation pane:
+A vertical navigation uses the `VerticalNavigation` component family in a navigation pane:
 
 1. [`VerticalNavigation`](/salt/components/vertical-navigation): Labels the navigation region and owns the item list.
 2. [`VerticalNavigationItem`](/salt/components/vertical-navigation/examples): Represents a destination or expandable group. Only one destination should be active at a time.
-3. [`VerticalNavigationSubMenu`](/salt/components/vertical-navigation/examples#collapsible-submenu): Contains nested items revealed by an expandable parent trigger. The parent expands the group rather than navigating.
+3. [`VerticalNavigationSubMenu`](/salt/components/vertical-navigation/examples#submenus-collapsible): Contains nested items revealed by an expandable parent trigger. The expansion trigger opens the group rather than navigating.
 
 You will typically use vertical navigation in a sidebar, on the left side of the screen, within a [drawer](/salt/components/drawer), or a [parent-child layout](/salt/components/layouts/parent-child-layout).
 
@@ -58,7 +61,9 @@ You will typically use vertical navigation in a sidebar, on the left side of the
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  You can use left-aligned icons to effectively signify the navigation item’s purpose, whether it’s related to a product’s identity, a specific tool, a function or a configuration setting.
+  You can use left-aligned icons to effectively signify the navigation item’s
+  purpose, whether it’s related to a product’s identity, a specific tool, a
+  function or a configuration setting.
 </GuidanceCallout>
 
 ### Layout
@@ -96,8 +101,10 @@ Top-level hierarchy items labels use a strong font weight, and nested items use 
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
+
 - Surface the hierarchy of your application’s information architecture to as few levels as possible. Maintain a wide and flat hierarchy instead of one that is deep and overwhelming.
-- Clicking a parent item does not navigate the user but expands the group. If an overview page is necessary, make it the first item in the group. Overview pages do not include a chevron on the right-hand side.
+- When a parent has a single expansion trigger, activating it expands the group rather than navigating. Put any overview destination first in the group, without a chevron. A parent can instead have a destination link and a separate expansion control.
+
 </GuidanceCallout>
 
 ### Blur active state
@@ -124,7 +131,7 @@ When a parent item is collapsed but contains the currently active page, the pare
 You can use `VerticalNavigationItem` triggers as anchor links within an application view, allowing users to navigate swiftly between various sections on a page. Typically, it functions as a top-level table of contents for the application.
 
 We recommend using a density that is one size smaller than the main navigation. This is particularly applicable when:
- 
+
 - It isn't the primary means of navigation for the entire application and doesn't need the same level of prominence as, for instance, the left-hand navigation.
 - A smaller density helps visually signify its hierarchy within the page.
 
@@ -137,7 +144,7 @@ We recommend using a density that is one size smaller than the main navigation. 
 
 ## Within modals
 
-Modals such as preferences dialogs can contain a vertical navigation to allow users to navigate between distinct panels of content within the dialog.
+Preferences dialogs can use `VerticalNavigation` to move between grouped settings sections. On wide layouts the categories remain alongside the content; on narrow layouts users open a section and use Back to return to its category. Use [`Tabs`](/salt/components/tabs) for a flat set of local panels such as Details and History.
 
 Refer to the [preferences dialog](./preferences-dialog) pattern for further guidance on how to manage navigation within application preferences modals.
 

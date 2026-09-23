@@ -1511,6 +1511,13 @@ function canonicalContextVariants(
         );
         return sections.length > 0 ? [{ ...document, sections }] : [];
       });
+      // A compact prefix must retain the strongest authored evidence, not
+      // whichever broad document happened to rank first in record search.
+      const strongestSection = (document: KnowledgeContextCanonicalDocument) =>
+        Math.max(...document.sections.map(sectionPriority));
+      roleDocuments.sort(
+        (left, right) => strongestSection(right) - strongestSection(left),
+      );
       const retainedReferences = new Set(
         roleDocuments.map((document) => document.reference),
       );
@@ -1703,9 +1710,22 @@ function canonicalContextVariants(
     (variant) => variant.documents.length === 0,
   );
   // Preserve canonical evidence before retaining optional example summaries.
-  // Try the same guidance without examples before shrinking the documents.
+  // Retain a fitting prefix of examples before dropping them or shrinking guidance.
   return [
-    ...withDocuments.flatMap((variant) => [variant, withoutExamples(variant)]),
+    ...withDocuments.flatMap((variant) => [
+      variant,
+      ...Array.from(
+        { length: variant.source_examples.length },
+        (_, omitted) => ({
+          ...variant,
+          source_examples: variant.source_examples.slice(
+            0,
+            variant.source_examples.length - omitted - 1,
+          ),
+          truncated: true,
+        }),
+      ),
+    ]),
     ...omittedDocuments.flatMap((variant) =>
       candidates.intent !== "general"
         ? [withoutExamples(variant), variant]

@@ -28,15 +28,16 @@ If your app uses a routing library such as [React Router](https://reactrouter.co
 
 ### When to use
 
-- When you have multiple levels of navigation in your application or website.
-- We suggest first considering a horizontal group of navigation items for distinct webpages or applications. If you have multiple (more than eight) services to navigate to at a platform level, or have navigation across distinct apps, consider using a vertical group instead.
+- When users navigate to distinct pages or applications through a horizontal group of destination links.
+- If a horizontal group cannot comfortably fit your destinations or you need a nested hierarchy, use [`VerticalNavigation`](/salt/components/vertical-navigation).
 - If you need your items to remain visible on scroll, we recommend displaying navigation items in a fixed app header (or header area).
 
 ### When not to use
 
 - When you are creating new vertical navigation. Use [`VerticalNavigation`](/salt/components/vertical-navigation) instead.
-- When you need to show different views of content within the same page. Instead, use [`Tabs`](/salt/components/tabs/).
-- When your content is very specific. In this case, a minimalistic or single-page design may be more appropriate than a complex navigation structure. Instead, use [`InteractableCard`](../card), or [`Link`](../link) within the body of the page.
+- When users switch between a flat set of distinct content panels on the same page, such as Details and History. Use [`Tabs`](/salt/components/tabs/). For responsive settings section navigation, use `VerticalNavigation` with the [preferences dialog pattern](/salt/patterns/preferences-dialog).
+- When users switch the same underlying records between List and Cards. Use [`ToggleButtonGroup`](../toggle-button/usage#view-switching) for that presentation choice.
+- When your content is very specific. In this case, a minimalistic or single-page design may be more appropriate than a complex navigation structure. Use [`LinkCard`](../card/examples#link-card) or [`Link`](../link) for destinations within the body of the page.
 
 ## Content
 

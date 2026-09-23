@@ -1,7 +1,8 @@
 import type {
   ComponentProps,
-  ElementType as ReactElementType,
   ReactElement,
+  ElementType as ReactElementType,
+  RefCallback,
 } from "react";
 
 type StoryFn<T = void> = T extends ReactElementType
@@ -36,22 +37,22 @@ import {
   VerticalNavigationItemLabel,
   VerticalNavigationItemTrigger,
 } from "@salt-ds/core";
-import { useState } from "react";
-
-
+import { useCallback, useRef, useState } from "react";
 
 function PreferencesNavigation({
   items,
   location,
   onChange,
+  currentItemRef,
 }: {
   items: string[];
   location: string;
   onChange: (location: string) => void;
+  currentItemRef: RefCallback<HTMLElement>;
 }) {
   return (
     <VerticalNavigation
-      aria-label="Basic indicator sidebar"
+      aria-label="Preferences sections"
       appearance="indicator"
       style={{ minWidth: "30ch" }}
     >
@@ -59,6 +60,7 @@ function PreferencesNavigation({
         <VerticalNavigationItem key={item} active={location === item}>
           <VerticalNavigationItemContent>
             <VerticalNavigationItemTrigger
+              ref={location === item ? currentItemRef : undefined}
               onClick={() => onChange(item)}
               render={<button type="button" />}
             >
@@ -71,7 +73,13 @@ function PreferencesNavigation({
   );
 }
 
-function PreferencesContent({ currentSection }: { currentSection: string }) {
+function PreferencesContent({
+  currentSection,
+  headingRef,
+}: {
+  currentSection: string;
+  headingRef: RefCallback<HTMLHeadingElement>;
+}) {
   let content: ReactElement | undefined;
 
   if (currentSection === "Account") {
@@ -212,7 +220,9 @@ function PreferencesContent({ currentSection }: { currentSection: string }) {
 
   return (
     <StackLayout>
-      <H2 styleAs="h3">{currentSection}</H2>
+      <H2 ref={headingRef} styleAs="h3" tabIndex={-1}>
+        {currentSection}
+      </H2>
       <div>{content}</div>
     </StackLayout>
   );
@@ -220,59 +230,106 @@ function PreferencesContent({ currentSection }: { currentSection: string }) {
 
 const PreferencesDialogTemplate: StoryFn = () => {
   const sections = ["Account", "General", "Grid", "Export"];
+  const [open, setOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState(sections[0]);
   const [collapsed, setCollapsed] = useState(false);
   const [view, setView] = useState<"parent" | "child">("parent");
+  const pendingFocus = useRef<"settings" | "category" | null>(null);
+
+  // Only move focus for an explicit collapsed-view navigation action, after
+  // its destination mounts. Ordinary renders and resizing do not request focus.
+  const focusSettings = useCallback((node: HTMLHeadingElement | null) => {
+    if (node && pendingFocus.current === "settings") {
+      node.focus();
+      pendingFocus.current = null;
+    }
+  }, []);
+  const focusCategory = useCallback((node: HTMLElement | null) => {
+    if (node && pendingFocus.current === "category") {
+      node.focus();
+      pendingFocus.current = null;
+    }
+  }, []);
 
   const handleSectionChange = (section: string) => {
+    pendingFocus.current = collapsed ? "settings" : null;
     setView("child");
     setCurrentSection(section);
   };
 
+  const handleBack = () => {
+    pendingFocus.current = "category";
+    setView("parent");
+  };
+
   return (
-    <Dialog style={{ minHeight: "60%" }} open>
-      <DialogHeader header="Preferences" />
-      <DialogContent>
-        <ParentChildLayout
-          gap={3}
-          onCollapseChange={(newCollapsed) => setCollapsed(newCollapsed)}
-          visibleView={view}
-          parent={
-            <PreferencesNavigation
-              items={sections}
-              location={currentSection}
-              onChange={handleSectionChange}
-            />
-          }
-          child={<PreferencesContent currentSection={currentSection} />}
-        />
-      </DialogContent>
-      <DialogActions>
-        <SplitLayout
-          startItem={
-            collapsed && view === "child" ? (
-              <Button
-                sentiment="accented"
-                appearance="transparent"
-                onClick={() => setView("parent")}
-              >
-                Back
-              </Button>
-            ) : undefined
-          }
-          endItem={
-            <StackLayout direction="row" gap={1}>
-              <Button sentiment="accented" appearance="bordered">
-                Cancel
-              </Button>
-              <Button sentiment="accented" appearance="solid">
-                Save
-              </Button>
-            </StackLayout>
-          }
-        />
-      </DialogActions>
-    </Dialog>
+    <>
+      <Button
+        onClick={() => {
+          setView("parent");
+          setOpen(true);
+        }}
+      >
+        Open preferences
+      </Button>
+      <Dialog style={{ minHeight: "60%" }} open={open} onOpenChange={setOpen}>
+        <DialogHeader header="Preferences" />
+        <DialogContent>
+          <ParentChildLayout
+            gap={3}
+            onCollapseChange={(newCollapsed) => setCollapsed(newCollapsed)}
+            visibleView={view}
+            parent={
+              <PreferencesNavigation
+                items={sections}
+                location={currentSection}
+                onChange={handleSectionChange}
+                currentItemRef={focusCategory}
+              />
+            }
+            child={
+              <PreferencesContent
+                currentSection={currentSection}
+                headingRef={focusSettings}
+              />
+            }
+          />
+        </DialogContent>
+        <DialogActions>
+          <SplitLayout
+            startItem={
+              collapsed && view === "child" ? (
+                <Button
+                  sentiment="accented"
+                  appearance="transparent"
+                  onClick={handleBack}
+                >
+                  Back
+                </Button>
+              ) : undefined
+            }
+            endItem={
+              <StackLayout direction="row" gap={1}>
+                <Button
+                  sentiment="accented"
+                  appearance="bordered"
+                  onClick={() => setOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  sentiment="accented"
+                  appearance="solid"
+                  onClick={() => setOpen(false)}
+                >
+                  Save
+                </Button>
+              </StackLayout>
+            }
+          />
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 

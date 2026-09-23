@@ -7,28 +7,35 @@ tags:
 aliases:
   - /salt/patterns/preferences-dialog
 data:
-  components: ["Dialog", "Navigation item", "Parent-child layout"]
+  components: ["Dialog", "Vertical navigation", "Parent-child layout"]
   relatedPatterns: ["Button bar", "Navigation", "Vertical navigation"]
   resources:
     [
-      { href: "https://www.figma.com/file/N6cSYycc4z6XkCjVvc1kIA/Preferences-Dialog-Pattern?type=design&node-id=157-40560&mode=design&t=eq3OapLjaquXm3UP-0", label: "Preferences dialog stickersheet", internal: true },
+      {
+        href: "https://www.figma.com/file/N6cSYycc4z6XkCjVvc1kIA/Preferences-Dialog-Pattern?type=design&node-id=157-40560&mode=design&t=eq3OapLjaquXm3UP-0",
+        label: "Preferences dialog stickersheet",
+        internal: true,
+      },
     ]
 ---
 
-<LivePreview componentName="patterns/preferences-dialog" exampleName="PreferencesDialog" />
- 
-  <Diagram
-    src="/img/patterns/preferences-dialog/preferences-dialog.png"
-    srcDark="/img/patterns/preferences-dialog/preferences-dialog-dark.png"
-    alt="Preferences dialog example"
-    border
-  />
+<LivePreview
+  componentName="patterns/preferences-dialog"
+  exampleName="PreferencesDialog"
+/>
+
+<Diagram
+  src="/img/patterns/preferences-dialog/preferences-dialog.png"
+  srcDark="/img/patterns/preferences-dialog/preferences-dialog-dark.png"
+  alt="Preferences dialog example"
+  border
+/>
 
 ## When to use
 
 Use a preferences dialog to centralize application or window settings in a single modal workflow.
 
-- Use it when users need to navigate between related settings panels with a persistent navigation pane.
+- Use it when users need to navigate between related settings sections, with a navigation pane alongside the content on wide layouts and a flow from categories into settings on narrow layouts.
 - Use it when a specific window or widget should open directly to the relevant settings panel.
 - Use it when preference changes may require confirmation or a consistent apply/cancel action area.
 
@@ -46,65 +53,67 @@ We also recommend implementing consistent behavior around applying preferences, 
 
 A preferences dialog comprises three key features:
 
-1. **Navigation pane**: a list of links that allows users to navigate between distinct panels of preferences.
+1. **Navigation pane**: category controls that allow users to move between sections of preferences.
 2. **Settings content area**: the panel that opens over the application content and focuses the user’s attention on one preference set.
 3. **Action area**: buttons for confirming or dismissing preference changes. See the [applying preferences](#applying-preferences) section to learn more.
-  
-  <Diagram
-    src="/img/patterns/preferences-dialog/preferences-dialog-anatomy.png"
-    srcDark="/img/patterns/preferences-dialog/preferences-dialog-anatomy-dark.png"
-    alt="Preferences Dialog navigation and content."
-    border
-  />
+
+<Diagram
+  src="/img/patterns/preferences-dialog/preferences-dialog-anatomy.png"
+  srcDark="/img/patterns/preferences-dialog/preferences-dialog-anatomy-dark.png"
+  alt="Preferences Dialog navigation and content."
+  border
+/>
 
 ### Layout
 
 - Use the [dialog](/salt/components/dialog) components as the base structure of the preferences dialog.
-- Use a [navigation item](/salt/components/navigation-item) component to display the left-hand [vertical navigation](./vertical-navigation).
+- Use [`VerticalNavigation`](/salt/components/vertical-navigation) and its item components to display the settings categories, following the [vertical navigation pattern](./vertical-navigation).
 - Use a [button bar](./button-bar) to display any actions at the bottom of the dialog. See the button bar pattern to understand how to implement actionable interactions within dialogs across your applications.
-- Use a [parent-child layout](/salt/components/layouts/parent-child-layout) component to position the navigation and content within a preferences dialog. 
+- Use a [parent-child layout](/salt/components/layouts/parent-child-layout) component to position the navigation and content within a preferences dialog.
 
 <Diagram
-    src="/img/patterns/preferences-dialog/preferences-dialog-spacing.png"
-    srcDark="/img/patterns/preferences-dialog/preferences-dialog-spacing-dark.png"
-    alt="Example showing a preferences dialog's layout construction."
-    border
-  />
+  src="/img/patterns/preferences-dialog/preferences-dialog-spacing.png"
+  srcDark="/img/patterns/preferences-dialog/preferences-dialog-spacing-dark.png"
+  alt="Example showing a preferences dialog's layout construction."
+  border
+/>
 
+<Callout status="success" title="Best practices">
 
-<Callout
-  status="success"
-  title="Best practices"
->
- - In the parent-child layout, the parent container (containing the navigation) typically remains fixed in width when the user resizes the browser. You can apply an independent layout grid to align the content with the child container. This enables it to adapt responsively based on the viewport size.
- - Limit nesting to no more than two levels, if possible. A deep hierarchy can make it difficult for users to discover or locate specific preferences.
+- In the parent-child layout, the parent container (containing the navigation) typically remains fixed in width when the user resizes the browser. You can apply an independent layout grid to align the content with the child container. This enables it to adapt responsively based on the viewport size.
+- Limit nesting to no more than two levels, if possible. A deep hierarchy can make it difficult for users to discover or locate specific preferences.
 
- To implement a responsive experience for preferences dialogs, refer to the layout guidance in the [navigation pattern](./navigation).
+To implement a responsive experience for preferences dialogs, refer to the layout guidance in the [navigation pattern](./navigation).
+
 </Callout>
+
+For a flat set of local content panels such as Details and History, use [`Tabs`](/salt/components/tabs). This preferences pattern uses section navigation because the narrow layout becomes categories, settings, then Back to categories.
+
+Use links when categories have real URL destinations, including page fragments. When a category only changes the dialog's local state, omit `href` from `VerticalNavigationItemTrigger` so it renders as a button. Do not fabricate URLs for local sections.
 
 ## Content area scrolling
 
 We recommend that scrolling affordance should only take effect if content in the parent-child layout exceeds the visible content area.
 
-This is visually indicated by two separator lines above and below the parent-child layout. Apply the shadow-scroll token for the container shadow. 
+This is visually indicated by two separator lines above and below the parent-child layout. Apply the shadow-scroll token for the container shadow.
 
-  <Diagram
-    src="/img/patterns/preferences-dialog/preferences-dialog-scrolling.png"
-    srcDark="/img/patterns/preferences-dialog/preferences-dialog-scrolling-dark.png"
-    alt="Example of content section scrolling."
-    caption="A preferences dialog with scrolling content area."
-    border
-  />
+<Diagram
+  src="/img/patterns/preferences-dialog/preferences-dialog-scrolling.png"
+  srcDark="/img/patterns/preferences-dialog/preferences-dialog-scrolling-dark.png"
+  alt="Example of content section scrolling."
+  caption="A preferences dialog with scrolling content area."
+  border
+/>
 
 Display scrolling affordance when the content or navigation (or both) exceeds the visible area of the parent-child layout.
 
-  <Diagram
-    src="/img/patterns/preferences-dialog/preferences-dialog-scrolling-overflow.png"
-    srcDark="/img/patterns/preferences-dialog/preferences-dialog-scrolling-overflow-dark.png"
-    alt="Example of scrolling affordance."
-    caption="A preferences dialog with scrollable navigation and content area."
-    border
-  />
+<Diagram
+  src="/img/patterns/preferences-dialog/preferences-dialog-scrolling-overflow.png"
+  srcDark="/img/patterns/preferences-dialog/preferences-dialog-scrolling-overflow-dark.png"
+  alt="Example of scrolling affordance."
+  caption="A preferences dialog with scrollable navigation and content area."
+  border
+/>
 
 ## Applying preferences
 
@@ -127,11 +136,10 @@ Display either a button bar at the bottom of the dialog, or a close button in th
   border
 />
 
-<Callout
-  status="success"
-  title="Best practices"
->
-  Display core actions to the right of a dialog. Refer to the [button bar pattern](./button-bar) for further guidance on how to display user actions within dialogs. 
+<Callout status="success" title="Best practices">
+  Display core actions to the right of a dialog. Refer to the [button bar
+  pattern](./button-bar) for further guidance on how to display user actions
+  within dialogs.
 </Callout>
 
 ### Close button
@@ -160,42 +168,46 @@ We recommend configuring the button bar to display secondary actions to the left
 
 ## Responsive behavior
 
-The preferences dialog is responsive to the width of the application viewport and responds dynamically to the Salt breakpoints. 
+The preferences dialog is responsive to the width of the application viewport and responds dynamically to the Salt breakpoints.
 
-Once a preference dialog hits a certain breakpoint, you can configure the layout to either: 
+Once a preference dialog hits a certain breakpoint, you can configure the layout to either:
 
 1. Collapse to allow more room for content.
 2. Change the orientation to stack the button bar.
 
 ### Collapsed navigation
 
-When the navigation collapses, the preferences content spans the entire width of the dialog. To select and view alternative preference types, users should use the back chevron button to navigate back to the vertical navigation. The vertical navigation view also spans the dialog width. A collapsed layout ensures improved usability of dialog content in smaller screen sizes or application resolutions.
+When the navigation collapses, selecting a category opens its settings across the dialog width. A Back button returns to the category list, which also spans the dialog width.
 
-  <Diagram
-    src="/img/patterns/preferences-dialog/preferences-dialog-collapsed-navigation.png"
-    srcDark="/img/patterns/preferences-dialog/preferences-dialog-collapsed-navigation-dark.png"
-    alt="Collapsed navigation."
-    caption="A preferences dialog with a collapsed navigation."
-    border
-  />
+- On entering a settings section in the collapsed layout, move focus to that section's heading so users can identify the content now shown.
+- On Back, restore focus to the category that opened the section.
+- In the wide layout, keep focus on the category control when its settings change; users can move into the content themselves. Move focus for the collapsed navigation actions, without resetting it on every render or update to the wide layout.
+
+Keep the [Dialog keyboard behavior](/salt/components/dialog/accessibility#keyboard-interactions): Escape dismisses the dialog, and focus returns to the control that opened it.
+
+<Diagram
+  src="/img/patterns/preferences-dialog/preferences-dialog-collapsed-navigation.png"
+  srcDark="/img/patterns/preferences-dialog/preferences-dialog-collapsed-navigation-dark.png"
+  alt="Collapsed navigation."
+  caption="A preferences dialog with a collapsed navigation."
+  border
+/>
 
 ### Stacked button bar
 
 For smaller viewports (i.e. devices with limited screen sizes), it's preferable to configure buttons to stack horizontally at the [XS breakpoint](../foundations/responsiveness#breakpoints). This ensures longer button labels accommodate mobile devices that may not fit within the horizontal layout. They also remain an adequate size for touch interactions.
 
-<Callout
-  status="success"
-  title="Best practices"
->
-  View the [stacked button bar](./button-bar#stacked-button-bar-layout) guidance to understand how to order and build a stacked button bar. 
+<Callout status="success" title="Best practices">
+  View the [stacked button bar](./button-bar#stacked-button-bar-layout) guidance
+  to understand how to order and build a stacked button bar.
 </Callout>
 
-  <Diagram
-    src="/img/patterns/preferences-dialog/preferences-dialog-stacked-button-bar.png"
-    srcDark="/img/patterns/preferences-dialog/preferences-dialog-stacked-button-bar-dark.png"
-    alt="Stacked button bar."
-    caption="A preferences dialog with a stacked button bar."
-    border
-  />
+<Diagram
+  src="/img/patterns/preferences-dialog/preferences-dialog-stacked-button-bar.png"
+  srcDark="/img/patterns/preferences-dialog/preferences-dialog-stacked-button-bar-dark.png"
+  alt="Stacked button bar."
+  caption="A preferences dialog with a stacked button bar."
+  border
+/>
 
 :fragment{src="./fragments/feedback.mdx"}

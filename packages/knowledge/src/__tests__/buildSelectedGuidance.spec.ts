@@ -152,6 +152,7 @@ describe("buildSelectedGuidance", () => {
         "operations-dashboard.service-worklist",
         "guide.button.loading",
         "guide.content-status",
+        "guide.navigation",
         "guide.button.accessible-name",
       ]),
     );
@@ -186,7 +187,6 @@ describe("buildSelectedGuidance", () => {
     expect(workflow.sourcePaths).toEqual(
       expect.arrayContaining([
         analyticalDashboardPath,
-        navigationPath,
         choosingPrimitivePath,
         compositionPitfallsPath,
         formsPath,
@@ -201,10 +201,9 @@ describe("buildSelectedGuidance", () => {
     );
     expect(workflow.attach).toEqual({
       componentNames: [],
-      patternNames: ["Analytical dashboard", "Navigation", "Forms", "Metric"],
+      patternNames: ["Analytical dashboard", "Forms", "Metric"],
       pageSourcePaths: [
         analyticalDashboardPath,
-        navigationPath,
         formsPath,
         choosingPrimitivePath,
         compositionPitfallsPath,
@@ -225,7 +224,6 @@ describe("buildSelectedGuidance", () => {
       ),
     ).toMatchObject({
       "dashboard.overview": { source_path: analyticalDashboardPath },
-      "navigation.overview": { source_path: navigationPath },
       "forms.overview": { source_path: formsPath },
       "primitive.overview": { source_path: choosingPrimitivePath },
       "composition.overview": { source_path: compositionPitfallsPath },
@@ -256,6 +254,17 @@ describe("buildSelectedGuidance", () => {
         await readFile(path.join(repoRoot, formsPreviewPath), "utf8"),
       ),
     });
+
+    const navigation = guides.find((guide) => guide.id === "guide.navigation");
+    expect(navigation?.recipeManifest).toBeNull();
+    expect(navigation?.sourcePaths).toEqual([navigationPath]);
+    expect(navigation?.document.source).toMatchObject({
+      document_id: "guide.navigation",
+      source_path: navigationPath,
+    });
+    expect(
+      navigation?.document.sections.map((section) => section.id),
+    ).toContain("navigation.how-to-build");
 
     const errorSummary = guides.find(
       (guide) => guide.id === "guide.forms.error-summary",
