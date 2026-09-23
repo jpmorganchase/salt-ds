@@ -58,29 +58,29 @@ export const FilterClearIcon = forwardRef<SVGSVGElement, FilterClearIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M3.369 3.974a.988.988 0 0 1 .739-1.645m7.189 6.425 3.953 3.954m0-3.954-3.953 3.954"
           />
-          <path d="M14.112 11.57a1.186 1.186 0 0 0-1.677 0l.839-.84Z" />
+          <path d="M13.903 11.36a.89.89 0 0 0-1.259 0l.63-.63Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M14.112 11.57a1.186 1.186 0 0 0-1.677 0"
+            d="M13.903 11.36a.89.89 0 0 0-1.259 0"
           />
-          <path d="M12.435 11.57a1.186 1.186 0 0 0 0-1.678l.839.839Z" />
+          <path d="M12.644 11.36a.89.89 0 0 0 0-1.258l.63.629Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M12.435 11.57a1.186 1.186 0 0 0 0-1.678"
+            d="M12.644 11.36a.89.89 0 0 0 0-1.258"
           />
-          <path d="M12.435 9.892a1.186 1.186 0 0 0 1.677 0l-.838.839Z" />
+          <path d="M12.644 10.102a.89.89 0 0 0 1.259 0l-.63.629Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M12.435 9.892a1.186 1.186 0 0 0 1.677 0"
+            d="M12.644 10.102a.89.89 0 0 0 1.259 0"
           />
-          <path d="M14.112 9.892a1.186 1.186 0 0 0 0 1.678l-.838-.84Z" />
+          <path d="M13.903 10.102a.89.89 0 0 0 0 1.258l-.63-.63Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M14.112 9.892a1.186 1.186 0 0 0 0 1.678"
+            d="M13.903 10.102a.89.89 0 0 0 0 1.258"
           />
         </g>
       </Icon>

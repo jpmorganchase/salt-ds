@@ -20,7 +20,7 @@ For changes to an existing icon, preserve its public name and meaning unless a r
 
 Start from the nearest approved family. Reuse its base silhouette, proportions, landmarks and repeated marks. Build editable vector geometry on Salt's 16 × 16 output canvas, and compare it at 12px throughout the process. A larger reference or generated concept can help explore a direction, but is not a production system icon.
 
-Apply the design standard to the final paint: softened inner joins and opening corners, sharp outer corners and flat ends, with natural curves preserved. Use shared constructions for recurring frames and marks so new family members inherit the same treatment. There is no need to change the design rules or add a special validator for every new icon.
+Apply the design standard to the final paint: softened inner joins and opening corners, sharp outward-facing corners and flat ends, with natural curves preserved. Use shared constructions for recurring frames and marks so new family members inherit the same treatment. There is no need to change the design rules or add a special validator for every new icon.
 
 Keep identifying marks at an appropriate family weight. Improve spacing, placement and detail before thinning them to make them fit. See [Stroke weight](/salt/foundations/assets/icon-design#stroke-weight) and [Calibrate the amount of welding](/salt/foundations/assets/icon-design#calibrate-the-amount-of-welding).
 
@@ -80,7 +80,7 @@ Hide names for the first recognition pass, then inspect the intended interface c
 
 ### Check corners and exceptions
 
-Inspect the complete unmarked drawing as well as any annotated review map. Account for exposed inner joins, isolated opening corners, already smooth transitions, outward corners and hidden contacts. Review repeated features consistently. A detector result can suggest where to inspect; an empty result does not establish approval.
+Inspect the complete unmarked drawing as well as any annotated review map. Use the [geometry rule](/salt/foundations/assets/icon-design#geometry) to classify exposed inner joins, isolated opening corners, already smooth transitions, outward corners and hidden contacts. An unenclosed cross still has inner joins. Then [calibrate the amount of softening](/salt/foundations/assets/icon-design#calibrate-the-amount-of-welding) against local band width, straight length, clearance and native-size recognition. Review equivalent repeated features consistently. A detector result can suggest where to inspect; it does not decide whether a weld is too strong, and an empty result does not establish approval.
 
 For any retained sharp interior corner, save a 12px and 16px comparison showing why softening would obscure a feature or close a necessary opening. Record the feature and reason beside the artwork. Unresolved decisions stay unresolved. The [maintenance guide](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/MAINTAINING.md#reuse-the-interior-contour-profile) explains review records, evidence and checks that detect stale approvals.
 

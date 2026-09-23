@@ -19,7 +19,7 @@ import {
 import { lockKeyhole } from "./lock-marks.mjs";
 import { withSharedMark } from "./mark-composition.mjs";
 import { numberedTimer } from "./numbered-timer.mjs";
-import { box, C, circ, dot, group } from "./primitives.mjs";
+import { box, C, circ, dot, group, S as stroke } from "./primitives.mjs";
 import { angledJunction } from "./structural-junctions.mjs";
 
 // Newly drawn pictograms. The master grid is 24 units; the publishing step
@@ -84,13 +84,13 @@ add(
 );
 add(
   "expand",
-  S(
+  stroke(
     "M3.75 9V3.75H9M3.75 3.75L9.75 9.75M15 3.75H20.25V9M20.25 3.75L14.25 9.75M20.25 15V20.25H15M20.25 20.25L14.25 14.25M9 20.25H3.75V15M3.75 20.25L9.75 14.25",
   ) +
-    arrowRoot(3.75, 3.75, [1, 1]) +
-    arrowRoot(20.25, 3.75, [-1, 1]) +
-    arrowRoot(20.25, 20.25, [-1, -1]) +
-    arrowRoot(3.75, 20.25, [1, -1]),
+    arrowRoot(3.75, 3.75, [1, 1], 1.15) +
+    arrowRoot(20.25, 3.75, [-1, 1], 1.15) +
+    arrowRoot(20.25, 20.25, [-1, -1], 1.15) +
+    arrowRoot(3.75, 20.25, [1, -1], 1.15),
 );
 add("exponentiation", S("M6.75 11.25L12 3.75L17.25 11.25"));
 const exportShaft = "M7.5 12H21.75";
@@ -143,7 +143,7 @@ const funnel = "M2.25 4.5H18.75L12.75 11.25V18.75L8.25 21V11.25Z";
 add("filter", S(funnel), F(funnel) + S(funnel));
 // Keep the full funnel recognizable, with a separate clear mark beside its stem.
 const clearFunnel = funnel;
-const filterClearMark = weldedCross(19.5, 17.25, 3, 3, 1.8);
+const filterClearMark = weldedCross(19.5, 17.25, 3, 3, 1.35);
 add(
   "filter-clear",
   S(clearFunnel) + filterClearMark,
@@ -577,7 +577,7 @@ const puzzle =
 add("jigsaw", SF(puzzle), F(puzzle));
 add(
   "key-backspace",
-  SF("M9 5.25H21V18.75H9L2.25 12Z") + weldedCross(15, 12, 3, 3, 1.7),
+  SF("M9 5.25H21V18.75H9L2.25 12Z") + weldedCross(15, 12, 3, 3, 1.3),
 );
 add(
   "key-capslock",

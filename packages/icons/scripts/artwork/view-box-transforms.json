@@ -2237,9 +2237,15 @@
     "groupKey": "like_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.221675,
-    "translateX": -1.773399,
-    "translateY": -1.773399
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Keep the heart lobes, cleft and pointed tip on the outline frame when filling its surface.",
+    "frameSource": "like.svg",
+    "scale": 1.103448,
+    "translateX": -0.827586,
+    "translateY": -0.904095
   },
   "line-chart.svg": {
     "groupKey": "chart-line.svg",

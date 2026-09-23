@@ -54,29 +54,29 @@ export const KeyBackspaceIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M5.899 3.383a1.1 1.1 0 0 1 .776-.322m1.74 2.744 4.39 4.39m0-4.39-4.39 4.39"
         />
-        <path d="M11.49 8.88a1.244 1.244 0 0 0-1.76 0l.88-.88Z" />
+        <path d="M11.283 8.673a.95.95 0 0 0-1.346 0L10.61 8Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M11.49 8.88a1.244 1.244 0 0 0-1.76 0"
+          d="M11.283 8.673a.95.95 0 0 0-1.346 0"
         />
-        <path d="M9.73 8.88a1.244 1.244 0 0 0 0-1.76l.88.88Z" />
+        <path d="M9.937 8.673a.95.95 0 0 0 0-1.346L10.61 8Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M9.73 8.88a1.244 1.244 0 0 0 0-1.76"
+          d="M9.937 8.673a.95.95 0 0 0 0-1.346"
         />
-        <path d="M9.73 7.12a1.244 1.244 0 0 0 1.76 0l-.88.88Z" />
+        <path d="M9.937 7.327a.95.95 0 0 0 1.346 0L10.61 8Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M9.73 7.12a1.244 1.244 0 0 0 1.76 0"
+          d="M9.937 7.327a.95.95 0 0 0 1.346 0"
         />
-        <path d="M11.49 7.12a1.244 1.244 0 0 0 0 1.76L10.61 8Z" />
+        <path d="M11.283 7.327a.95.95 0 0 0 0 1.346L10.61 8Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M11.49 7.12a1.244 1.244 0 0 0 0 1.76"
+          d="M11.283 7.327a.95.95 0 0 0 0 1.346"
         />
       </g>
     </Icon>

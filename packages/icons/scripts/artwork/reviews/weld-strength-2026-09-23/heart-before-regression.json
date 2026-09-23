@@ -1,0 +1,30 @@
+[
+  {
+    "name": "like_solid.svg",
+    "feature": "retained outer painted perimeter",
+    "weight": 0.67,
+    "maximumDifference": 0.4807001749674207,
+    "limit": 0.025
+  },
+  {
+    "name": "like_solid.svg",
+    "feature": "retained outer painted perimeter",
+    "weight": 1,
+    "maximumDifference": 0.6700859069824405,
+    "limit": 0.025
+  },
+  {
+    "name": "like_solid.svg",
+    "feature": "retained outer painted perimeter",
+    "weight": 1.333333,
+    "maximumDifference": 1.221096038818394,
+    "limit": 0.025
+  },
+  {
+    "name": "like_solid.svg",
+    "feature": "retained outer painted perimeter",
+    "weight": 1.5,
+    "maximumDifference": 1.308179219563839,
+    "limit": 0.025
+  }
+]

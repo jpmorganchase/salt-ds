@@ -80,6 +80,8 @@ const pair = [outline, solid];
 
 ### Reuse the interior contour profile
 
+Classify the finished painted boundary using the design guide's [geometry rule](../../site/docs/foundations/assets/icon-design.mdx#geometry) before selecting a helper. Enclosure is not the test: an exposed concave recess can belong to an outer contour. Calibrate the visible result using [the welding guidance](../../site/docs/foundations/assets/icon-design.mdx#calibrate-the-amount-of-welding), including a subtler transition where short members need it; neither a helper default nor a clear detector report establishes appropriate strength.
+
 Use `softenedStroke`, `softenedFrame`, `softenedRect` and `softenedFill` from `scripts/artwork/contour-profiles.mjs` in the owning recipe. The line helpers retain the original path and add tangent inner paint. They handle straight turns at every angle, exact curve-to-line tangents and actual straight contacts across subpaths. A move alone never creates a connection. `softenedFill` classifies negative sectors of even-odd contours; it does not round outward polygon vertices.
 
 The circular construction radius starts at 1.5 construction units for primary linework, the local width for secondary linework, and 0.5 for filled negative corners. These are starting profiles, not universal final-pixel radii. Straight fillets use at most half each adjoining run so neighboring curves cannot overlap. Curved joins use a bounded tangent solver. Insufficient runs, failed tangent solutions, contacts between separate elements and compound clearances still require review: a skipped or hidden construction is not an approved sharp corner. `keep` and `at` are construction controls, not exceptions.

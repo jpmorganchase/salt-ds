@@ -5,7 +5,7 @@ sidebar:
   priority: 2
 ---
 
-Salt icons combine crisp outer corners, flat line endings and softened interiors. Simple silhouettes and open space keep them recognizable at **12px**, the smallest supported interface size.
+Salt icons combine crisp outward-facing corners, flat line endings and softened inner corners. Simple silhouettes and open space keep them recognizable at **12px**, the smallest supported interface size.
 
 Use this guide when designing or reviewing artwork. [Icons](/salt/foundations/assets/index) covers choosing and using icons; [Creating icons](/salt/foundations/assets/creating-icons) explains the contribution workflow.
 
@@ -98,7 +98,9 @@ React icons use a primary width of **4/3 units in high and medium density** and 
 
 <IconDesignExamples example="geometry" />
 
-“Interior” describes the boundary, not the feature's position on the canvas. An outline square can have sharp outside corners and softened corners around its opening. A filled square has no opening. The concave roots of a plus are inner joins even though they sit on the mark's outermost contour.
+“Inner” describes an inward-facing (concave) corner in the finished painted boundary; it does not require an enclosed hole or a position inside the icon. A plus (+) and a diagonal cross (×) each have four concave recesses where their arms meet. Soften those joins while keeping their outward-facing corners and flat ends sharp. An outer contour can contain both kinds of corner.
+
+An outline square has sharp outward-facing corners and softened corners around its opening. A filled square has no opening. Classify the visible boundary before choosing its treatment; the number of source paths or overlapping lines does not decide whether a corner needs softening.
 
 | Visible relationship                            | Treatment                                                                           |
 | ----------------------------------------------- | ----------------------------------------------------------------------------------- |
@@ -119,7 +121,9 @@ The larger references vary in their corner treatment. They do not establish a re
 
 ### Calibrate the amount of welding
 
-There is **no universal corner radius**. Compare the visible transition with the local painted band and the nearest related construction. A compact plus, a column attachment and a curved globe intersection have different space available.
+There is **no universal corner radius**. Compare the visible transition with the local painted band, available straight length, neighboring clearance and the nearest related construction. A compact plus, a column attachment and a curved globe intersection have different space available.
+
+Simple marks with short arms, such as a close cross or compact arrow, often need a quieter transition to preserve their direction and proportions. Reduce the amount of softening at equivalent joins together; do not leave arbitrary joins sharp. Choose the smallest transition that remains visible across the supported weights without making the center look swollen or interrupting the straight arms. Judge it first at 12px on a standard-density screen, then at 16px and higher densities. Complexity, icon role and outline or solid styling do not define separate radius rules.
 
 A successful transition is visible at the supported weights, leaves useful straight lengths and keeps neighboring openings clear. A curve hidden beneath a wider stroke does not produce a visible weld. Excessive softening can close a counter, turn a plus into a sparkle or consume an arrow's arms.
 

@@ -169,7 +169,7 @@ const figures: Record<IconDesignExample, Figure> = {
       },
     ],
     caption:
-      "Enlarged to 80px at the themed line weight. Soften exposed inner joins and opening corners, retain sharp outer corners and flat ends, and preserve natural curves. The visible result determines the local radius.",
+      "Enlarged to 80px at the themed line weight. Soften exposed inner joins and opening corners, retain sharp outward-facing corners and flat ends, and preserve natural curves. The visible result determines the local radius.",
   },
   variants: {
     groups: [

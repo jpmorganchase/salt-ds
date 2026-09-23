@@ -1,0 +1,4436 @@
+{
+  "scope": "Visual weld strength and legibility review; does not replace individual corner decisions.",
+  "sizes": [
+    12,
+    16
+  ],
+  "weights": [
+    0.67,
+    1,
+    1.3333333333333333,
+    1.5
+  ],
+  "backgrounds": [
+    "light",
+    "dark"
+  ],
+  "initialDpr": 1,
+  "changed": [
+    "close.svg",
+    "close_small.svg",
+    "collapse.svg",
+    "expand.svg",
+    "filter-clear.svg",
+    "filter-clear_solid.svg",
+    "key-backspace.svg",
+    "like.svg",
+    "like_solid.svg",
+    "multiply.svg",
+    "signature.svg",
+    "tag-clear.svg",
+    "tag-clear_solid.svg",
+    "volume-off.svg"
+  ],
+  "exports": [
+    {
+      "name": "accessible.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 1,
+      "svgSha256": "4f4f1c9651f4d2d3a8b5fb6be6b4b3fb87373ddffdaf5554ebfa6feed02ba7e8"
+    },
+    {
+      "name": "accessible_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 2,
+      "svgSha256": "171e1f6e5a323554a2115715990a70a85c1632defd5e12305249659d67fd0b24"
+    },
+    {
+      "name": "add-document.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 3,
+      "svgSha256": "0c9dd0e2539d42021ff276099e82f1dadb8871bd71fed78f6b41945930482da8"
+    },
+    {
+      "name": "add-document_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 4,
+      "svgSha256": "052128fc4f7f59527ed95ef190608512ce2a42be8e6bf4574344af7bb0e698f8"
+    },
+    {
+      "name": "add-to-grid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 5,
+      "svgSha256": "8d381f9346e2812b3685653ba811793a4a0e9a4250da7f8e2e93d3f6da4744e4"
+    },
+    {
+      "name": "add-to-grid_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 6,
+      "svgSha256": "25839bc6eea5048936809f9e316209e1a3057d4df7eb152b2f0b21bc6723f44d"
+    },
+    {
+      "name": "add-user.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 7,
+      "svgSha256": "e8d04be067c00316fad41c44d30b0393a1b0371a2608b1c900036ab12e75a5d6"
+    },
+    {
+      "name": "add.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 8,
+      "svgSha256": "ca4cb577e0bb1c0785af90add7e2b3dde454cc07d228d1f20b185cd80a3efabc"
+    },
+    {
+      "name": "announcement.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 9,
+      "svgSha256": "17ce91ead089c053991838a4623c110f8221040df38ec15df6f47a7cc53a0185"
+    },
+    {
+      "name": "api.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 10,
+      "svgSha256": "a30633e8d9289552c58c46431e5ffd47d3f69f59c18f5959ead46def7b981572"
+    },
+    {
+      "name": "app-switcher.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 11,
+      "svgSha256": "6c187202d739a1bbadba3606af857a99fbab65dea59aac540bbf944e170a405b"
+    },
+    {
+      "name": "arrow-down.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 12,
+      "svgSha256": "e6fca532a07d814f7aa6657bf74c63c04586b845d353e13f6b294b44118ccfdb"
+    },
+    {
+      "name": "arrow-left.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 13,
+      "svgSha256": "363d81ccbf22f25c28e150afdb924b81dec859900e86d3a8e47e0fb1c7d797d6"
+    },
+    {
+      "name": "arrow-right.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 14,
+      "svgSha256": "077ab4d1bd3da18e2344856acc5a5148650dac933f980a6e4b710e571892278b"
+    },
+    {
+      "name": "arrow-up.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 15,
+      "svgSha256": "23dd7cc789d041e687b418d9955cffac1ecc5857fc0d82808d70fbd12cdd0119"
+    },
+    {
+      "name": "attach.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 16,
+      "svgSha256": "64e53ef3d956931bcb1c5292a4f2354b9b81edeeb7d31e2e4ab7aab3c25f8a64"
+    },
+    {
+      "name": "bank-check.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 17,
+      "svgSha256": "de65e4cb1b27f6f91374db632d24fd0d44715218eb379f18c7678fcf760329c0"
+    },
+    {
+      "name": "bank-check_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 18,
+      "svgSha256": "fa4cda181dd949c3778c2ca9e8721848ff10b46270c8c71c828b49d4608b2fe5"
+    },
+    {
+      "name": "bank.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 19,
+      "svgSha256": "6568b259eafb8e75d5280b2298bb14e2a55adda69d4ec35a5d8f4066d96e7934"
+    },
+    {
+      "name": "bank_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 20,
+      "svgSha256": "d544fa24002dff2e79c942230f6f0248544000c6b2f1e5a2b7b1251ff8826bca"
+    },
+    {
+      "name": "bar-chart.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 21,
+      "svgSha256": "f4217a26eeb15c9dbd50113537fe9175d6111c7a9f1eaeae4631f4bf44c1d477"
+    },
+    {
+      "name": "battery.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 22,
+      "svgSha256": "355234c04b4ecbdccebbc96fef889e3624c0e4eea7e00776485faae314b86878"
+    },
+    {
+      "name": "battery_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 23,
+      "svgSha256": "53c66309b5af57877b873114471c7a4e67776b8d27e031cfd3b908c1c9f22cc5"
+    },
+    {
+      "name": "bookmark.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 24,
+      "svgSha256": "6228ad57340d9de9361a49fa13cf907fe00520a02f261e42abf38aa4901818ce"
+    },
+    {
+      "name": "bookmark_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-01.png",
+      "card": 25,
+      "svgSha256": "7ad66b0b22737d7bace947e3edc75c5bae5a2a8851c153395ba1a27a090bbccd"
+    },
+    {
+      "name": "boolean.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 26,
+      "svgSha256": "481fc59a979f1b86986b24cd4769baa7232ed7d9ba814e7d6d1037c45baf2d72"
+    },
+    {
+      "name": "boolean_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 27,
+      "svgSha256": "214e72c78a64ba02308bdd91cf7336f3f570173a8cce5827eafa804583363551"
+    },
+    {
+      "name": "browser.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 28,
+      "svgSha256": "eb4ae2019d7622db032e25f6539a17770a1ef0c92894a3068561d1492560dea3"
+    },
+    {
+      "name": "browser_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 29,
+      "svgSha256": "b3a727a5fbd210645f2aad757f21ad2b8a61fe69fb10cc1691ff5fbd5cd63340"
+    },
+    {
+      "name": "build-report.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 30,
+      "svgSha256": "3f2f606dd9769cde4089b15ba24aed76681390d08955cb708cb100d6bdf7bb59"
+    },
+    {
+      "name": "build-report_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 31,
+      "svgSha256": "0c49770512f8c8c8784664be6d1e911a593b85e696e23d3a91cddc84f4bd1d45"
+    },
+    {
+      "name": "building.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 32,
+      "svgSha256": "7ae0d9db8df302ae15e3854cbc12a7f5de604fdf22a2d93290eaea1642f874c7"
+    },
+    {
+      "name": "building_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 33,
+      "svgSha256": "0736169d59dd91633dd966600f0b8c203aeec2840a2ee74b536c5b50cb7ce2c2"
+    },
+    {
+      "name": "buildings.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 34,
+      "svgSha256": "77a19eaf45ff23b6d45b83ec4a0f038e64c533c20220307f05f6197292c41950"
+    },
+    {
+      "name": "buildings_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 35,
+      "svgSha256": "3adc89432ebbb887f6fada293ec114a70988a0741c1580f884241da056e1753d"
+    },
+    {
+      "name": "calculator.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 36,
+      "svgSha256": "a4ade84b16f5146834bfd9622ad8291b6a10fdd64c54782731bc8f8d20485d03"
+    },
+    {
+      "name": "calculator_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 37,
+      "svgSha256": "e5e44db90f752cbb87452f29a88d312837b9ed66e4ca0da0f52471e6a73e9ef4"
+    },
+    {
+      "name": "calendar.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 38,
+      "svgSha256": "94566790a8d300ce8a985012f14aaf2783c20dc7fe7567add346b5f3e33b12f2"
+    },
+    {
+      "name": "calendar_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 39,
+      "svgSha256": "3c8d859f4fc6b0e24c402c99c8a9fbf0e814878c44ae189460197aad5e00376d"
+    },
+    {
+      "name": "call.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 40,
+      "svgSha256": "4f9fc211c3efccb6b20972c88048fd5055dd6394c5d7b8472031af4a2ad6d970"
+    },
+    {
+      "name": "call_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 41,
+      "svgSha256": "a5065f2498c771142b160dfd474414b5e58a7e46c72fff1835b4472af42411a4"
+    },
+    {
+      "name": "cart.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 42,
+      "svgSha256": "80e82594d5d46bef9a6899c40d012f080b13dfbdf48e06808bd8843f12d42da1"
+    },
+    {
+      "name": "cart_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 43,
+      "svgSha256": "f46202478d2c12f508f3b605614c1a23c11e8d139919657f8675b0d2874abf88"
+    },
+    {
+      "name": "chart-area.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 44,
+      "svgSha256": "2dcb855dc1c27d7b883a0f5bc0f682f3fb939f41363c59b7cf9ddacc30df3893"
+    },
+    {
+      "name": "chart-bar.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 45,
+      "svgSha256": "f4217a26eeb15c9dbd50113537fe9175d6111c7a9f1eaeae4631f4bf44c1d477"
+    },
+    {
+      "name": "chart-box-plot.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 46,
+      "svgSha256": "59b506978fae1e324b09b05255674f0ded3cebd1d4ec94473c2bbccdbe11041a"
+    },
+    {
+      "name": "chart-bubble.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 47,
+      "svgSha256": "d267fed0c308098ad4ed6726f0b7c5d71646d77787f831c38b94da54657b196f"
+    },
+    {
+      "name": "chart-bubble_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 48,
+      "svgSha256": "e82e6c2a78a19ab1ea5fa34a00eecb29f9da4c9ee46f99d50f423d6b916e20e5"
+    },
+    {
+      "name": "chart-bullet.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 49,
+      "svgSha256": "cd1012cacf69caf65581890a4efdeaed5ad765704a5232c5b82ee7c27b43ba14"
+    },
+    {
+      "name": "chart-candlestick.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-02.png",
+      "card": 50,
+      "svgSha256": "36826ab9aa313c523c20a01eab3da046ef4543143db2fe53a11cb31687b99fc5"
+    },
+    {
+      "name": "chart-candlestick_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 51,
+      "svgSha256": "99b9610f8a4bff3b5fd027aa5ac1cc7b4d11456a46cdbd7a24acaf1e495a75c2"
+    },
+    {
+      "name": "chart-column.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 52,
+      "svgSha256": "1a68d3f75eeafd59e9d9a80abf9c39f86b59d2b11878c895151008a62e13a590"
+    },
+    {
+      "name": "chart-donut.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 53,
+      "svgSha256": "c08b5cd8ddbdd17b7e2ad90486a17f2a919df0f49353c453a1d6ef421a2f67b4"
+    },
+    {
+      "name": "chart-line.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 54,
+      "svgSha256": "3aeb3f7caa9816183e9cf04c7068e4c1b84b4fb89d628d6fd86227bbd5a7aa76"
+    },
+    {
+      "name": "chart-line_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 55,
+      "svgSha256": "19ecd411dae12d795afbae4a8c269546b904594d7ccdac934897700c94ca38fe"
+    },
+    {
+      "name": "chart-pie.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 56,
+      "svgSha256": "4cfc5acc315e956e26798030d04f6e90bd40e89bd6671e44d8cd68676cf0e027"
+    },
+    {
+      "name": "chart-pie_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 57,
+      "svgSha256": "0a7dbbb118aa1afe4adc27dd24ca1b8643b5b13a8404abfd866f659a6b252d0e"
+    },
+    {
+      "name": "chart-scatter.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 58,
+      "svgSha256": "f58c30c1bdacb5cd1e086e4f08e15b8b8f96b96d51bea6dfef80870e259c47ed"
+    },
+    {
+      "name": "chart-scatter_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 59,
+      "svgSha256": "153fe40b65c3f4bf3091ff374b6dbb97a5b5a181c761add0252c51f655021b11"
+    },
+    {
+      "name": "chart-stacked-bar.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 60,
+      "svgSha256": "2a17b96c3bea8db025fee12a0b8e1de457bbcaba8973c54da67d42d689a91c00"
+    },
+    {
+      "name": "chart-waterfall.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 61,
+      "svgSha256": "bdfef8a081095fada7a68750a25d6d204bef012f23e101f19c7cf0bd80e6cc2a"
+    },
+    {
+      "name": "chat-group.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 62,
+      "svgSha256": "dc91edb338307c23a19e4534a348f0ea2f0d33a867db92d3d5b81e0ee49c2562"
+    },
+    {
+      "name": "chat-group_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 63,
+      "svgSha256": "b83ca8cec2e888d927349ac45023284399a63a191555c0dd9efc7a903089a1f1"
+    },
+    {
+      "name": "chat.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 64,
+      "svgSha256": "bcbd4689c1024ab9d4acb43e192db177b686462f83061d656d63b59274b7d485"
+    },
+    {
+      "name": "chat_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 65,
+      "svgSha256": "cc7bc6267d1564cff0ee2cc5d676e9fc1c1f3078c99b7253353a4f3c763de131"
+    },
+    {
+      "name": "chatting.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 66,
+      "svgSha256": "dc00009b25a28c231b5ad4f7df7f74c9eee69e6b6f969d9fb522e77766cbfaa8"
+    },
+    {
+      "name": "chatting_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 67,
+      "svgSha256": "e66c35c6333c5d0db48196ceb73897cb554c2f4dbe864764bd2618a29d3e7e2d"
+    },
+    {
+      "name": "checkmark.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 68,
+      "svgSha256": "4195eb1acaa2be91d59f847fed795110f4b267ce9d48b3d1f5f662273b8e7e05"
+    },
+    {
+      "name": "checkmark_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 69,
+      "svgSha256": "e6bd9119d8eebb28c521a989cadc80ac57d83e9ea61c8ecfc20e91fbca70d45b"
+    },
+    {
+      "name": "chevron-down.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 70,
+      "svgSha256": "94d2a06f277d4aecdea6fdd768d187ea948f8469d6abf01501204261c7ba1f38"
+    },
+    {
+      "name": "chevron-left.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 71,
+      "svgSha256": "e67c431f5d37244d55061a5f426475bb9aef675db5ebbe78a506ea118c81af27"
+    },
+    {
+      "name": "chevron-right.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 72,
+      "svgSha256": "28acb2d383cf73c298ed30ec47dd3455235ac5c9ace5ea1fea08cae55a4a1796"
+    },
+    {
+      "name": "chevron-up.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 73,
+      "svgSha256": "4e78d7aafce26aa1818b24211b257aa81c15e386174aa0a08f49c28f5ed4bd45"
+    },
+    {
+      "name": "clock.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 74,
+      "svgSha256": "fadd215780a4fed0d7c21f294747e5a22087a04acf8f55c1d38a20cbb5e8da00"
+    },
+    {
+      "name": "clock_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-03.png",
+      "card": 75,
+      "svgSha256": "7ef1a85564867059c7b697ae21c21b49a5e893841615a38934377fb1630f30c4"
+    },
+    {
+      "name": "clone.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 76,
+      "svgSha256": "100415c5489ecacb9c277e7a0c2d208b529d705571f1f30a5f12d27c435aeda1"
+    },
+    {
+      "name": "close.svg",
+      "result": "corrected",
+      "finding": "cross-strength",
+      "sheet": "evidence/before-04.png",
+      "card": 77,
+      "svgSha256": "37a1e1589e7d688946883c961e0b8573d769b3effa52112977c5fe1aa0db0e92"
+    },
+    {
+      "name": "close_small.svg",
+      "result": "corrected",
+      "finding": "cross-strength",
+      "sheet": "evidence/before-04.png",
+      "card": 78,
+      "svgSha256": "ea53d68d5df7330895ddaacaa800933571a1c2e48c5777b1a28a1c3a238bb96e"
+    },
+    {
+      "name": "closedcaption-disabled.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 79,
+      "svgSha256": "feb2d66dc6d6f7849599a9c29eb09905b4d911eea60f418c1b1245c898d26944"
+    },
+    {
+      "name": "closedcaption-disabled_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 80,
+      "svgSha256": "bd90c7a0c46f0567fcbca420490a52535e157de54f68b37b2986a2e4a6f25019"
+    },
+    {
+      "name": "closedcaption.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 81,
+      "svgSha256": "7cb344d7747cd8746f48e3eb07686bc585c3af52b9e8767f61dab4f310adb688"
+    },
+    {
+      "name": "closedcaption_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 82,
+      "svgSha256": "7c1ca9f129e303a9dfd9b48c45dba40a3c380d0127708409f8763d09ac46940f"
+    },
+    {
+      "name": "cloud-disabled.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 83,
+      "svgSha256": "4055a31413824b3f85816e982aaff614930114847744473d3e4db27b03eb2e9b"
+    },
+    {
+      "name": "cloud-disabled_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 84,
+      "svgSha256": "0463fe270c003f4e1204457f93a969e5b83cfe39e6f22a8d0a04ddf436384055"
+    },
+    {
+      "name": "cloud-download.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 85,
+      "svgSha256": "9865a8518f3740657756b3fd00e047857dec7dae3d59d2243b17362632986278"
+    },
+    {
+      "name": "cloud-download_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 86,
+      "svgSha256": "a6469ee118dbd89dcba7e5d8ba11da6f519a346a7bdf2052a8ca41de5f85f827"
+    },
+    {
+      "name": "cloud-success.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 87,
+      "svgSha256": "524aa6bcf2b07dab65d721facd72a7e5365f703b369014ace3750a34712dfb26"
+    },
+    {
+      "name": "cloud-success_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 88,
+      "svgSha256": "d7dbdf2ed53f71db4aadb6b65c11867e949de5b073cc01262e58deebe92e71ba"
+    },
+    {
+      "name": "cloud-sync.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 89,
+      "svgSha256": "73fdf61060a7302f0e97d30e3355238a8d7fb8153040d76689364086970807a7"
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 90,
+      "svgSha256": "15861feb81516ef0a53c28154f09bcb0c5b3854855c1fa9ded99045f95816df2"
+    },
+    {
+      "name": "cloud-upload.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 91,
+      "svgSha256": "35ac9035bd67532e2cac1fb00aeb55cd5756bdbf515ac003fd576470655f46a0"
+    },
+    {
+      "name": "cloud-upload_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 92,
+      "svgSha256": "ca8351fb7a3832b5c73e3f33829c1cc0e3478641e9117d62269a0511d0147278"
+    },
+    {
+      "name": "cloud.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 93,
+      "svgSha256": "54b233a3da57f49400a125ff540bb8106e622e4dba51da74350a30d5a8e67932"
+    },
+    {
+      "name": "cloud_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 94,
+      "svgSha256": "59033266c8ca0c9b1765a591743cb2aaa6273e543f31079baf54d5fb345216e0"
+    },
+    {
+      "name": "coffee.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 95,
+      "svgSha256": "3de8435e78825027f3d7e3d3549af4bc82151db28b0383802845c8df9c315f04"
+    },
+    {
+      "name": "coffee_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 96,
+      "svgSha256": "3be8f794849c7fe18dd6d3ccae6d7cd120074a35e171580939fdd5740dfa5847"
+    },
+    {
+      "name": "collapse-all-horizontal.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 97,
+      "svgSha256": "ed6a18e6bc5bb0fdb26db68c9bfc961fe3884a5b085c20d509d5aeabe5077d89"
+    },
+    {
+      "name": "collapse-all.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 98,
+      "svgSha256": "3da476f6be9d7b404b2ceffdf807992de364bac05861f37b6b96496eaf8d7c12"
+    },
+    {
+      "name": "collapse.svg",
+      "result": "corrected",
+      "finding": "compact-arrow",
+      "sheet": "evidence/before-04.png",
+      "card": 99,
+      "svgSha256": "a77457e3a725401bff04ade50cdbb9bb8e588f3d6c19f8eb672fec5c0605e595"
+    },
+    {
+      "name": "column-chooser.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-04.png",
+      "card": 100,
+      "svgSha256": "dc00afa7ecfdc799f79b25a3aeb7cb4d6faa517eae3415485e9c01f471afa63a"
+    },
+    {
+      "name": "column-chooser_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 101,
+      "svgSha256": "04d99060c95a38f2edf0ae89c6c2e1534b204f4756daab05bd82c93bc1af0ce0"
+    },
+    {
+      "name": "commentary.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 102,
+      "svgSha256": "488795f89b7b3b178b98dd9b0af96f1f981dc4f397fea33ee9e2ea113f03c00a"
+    },
+    {
+      "name": "commentary_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 103,
+      "svgSha256": "0cebfad93ce085853913080b958fd09d7a0221ae959f94923322326e9e715f93"
+    },
+    {
+      "name": "compare.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 104,
+      "svgSha256": "909e811a62f45a94c6b818116daf5d0533eeab1e49a83deb78c7797deef86d3a"
+    },
+    {
+      "name": "compare_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 105,
+      "svgSha256": "7b5958b69061f4c364de106eeddd933893601a6e61fb466e0ab09f6d5648b6fb"
+    },
+    {
+      "name": "compass.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 106,
+      "svgSha256": "ff71bb0ab0efb6b29220ca3b1d3500da7c65ce72a3af440459618da33b7b2630"
+    },
+    {
+      "name": "compass_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 107,
+      "svgSha256": "f8e15fdb4297efcff1f922222d270b100f8b67041e40741daaa10b40cb07761f"
+    },
+    {
+      "name": "cookie.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 108,
+      "svgSha256": "aebe00bfb45e891529a5efb10e6192ba547bdb2626dd40d1848b1149e5e94d1a"
+    },
+    {
+      "name": "cookie_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 109,
+      "svgSha256": "ceca36ba0538742ab20dbcbd53678d7f3dae348f422a31eb503d343e03d958cc"
+    },
+    {
+      "name": "copy.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 110,
+      "svgSha256": "e990ee992292fec3d0fa9e959b9e7189b56fb300633cf7204f4c77de6f662c85"
+    },
+    {
+      "name": "copy_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 111,
+      "svgSha256": "0db1f85589ec14e7320028c96ca9380252ea388e990198465d4b384000c338a8"
+    },
+    {
+      "name": "credit-card.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 112,
+      "svgSha256": "896892945c3fc7c4de21f58d861bf0f2870ff4b5aee3fe5f2d967374335ad38e"
+    },
+    {
+      "name": "credit-card_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 113,
+      "svgSha256": "ee2362b207c6fce86a2862c25a202803075540e66994650059d78b5bfb1a05c0"
+    },
+    {
+      "name": "crops.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 114,
+      "svgSha256": "d1b9c66148fdf1637bc94e1608bf6758b3b018f8d253bc807e775befb3d1bddc"
+    },
+    {
+      "name": "crops_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 115,
+      "svgSha256": "c8eff8f868ac71484cd107f80f08511e6b9fc2d715c635e6b4b6b1b531961acd"
+    },
+    {
+      "name": "csv.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 116,
+      "svgSha256": "3620fcf143f1f18e7d014d4e318653d1d8a2d388d330f319052631d19acb1f45"
+    },
+    {
+      "name": "csv_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 117,
+      "svgSha256": "62fd52ad01cc54d1b3e6593f7fec5e9fc16d0327d2bcfec5725996ff95aeaf7a"
+    },
+    {
+      "name": "currency-exchange.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 118,
+      "svgSha256": "e661df7c172d372f7a67caad63911b438442047e831a030a6ecf3101c8a36db3"
+    },
+    {
+      "name": "currency.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 119,
+      "svgSha256": "47e164530df776bb6deb10d88476524120673e453cfd27da8daba12019d0eb4f"
+    },
+    {
+      "name": "currency_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 120,
+      "svgSha256": "0d85af7d27a7a01559faa8383ed85a1eb432f48d552b5e5607229d8773f40320"
+    },
+    {
+      "name": "cut.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 121,
+      "svgSha256": "5425a396b1a910aa17ad75f13f557262776e430d1020c06bcf1e2e65a6427ede"
+    },
+    {
+      "name": "dark.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 122,
+      "svgSha256": "04af641123b641608de457d7bdf57b805c8308db01aeac645a909aeae8252e07"
+    },
+    {
+      "name": "dark_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 123,
+      "svgSha256": "8a08b06dafc60620a80bf2eadf7eeb7aabb5ae91a4937799d8079bb249e31b68"
+    },
+    {
+      "name": "dashboard.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 124,
+      "svgSha256": "85626db5022eaa858b262caebcb4f57f6fba5f506945da195f07bb019bcdf60b"
+    },
+    {
+      "name": "dashboard_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-05.png",
+      "card": 125,
+      "svgSha256": "eda94f4518f474a8d47d0ea029336071e524a60c772b625d441fd51167cb6444"
+    },
+    {
+      "name": "database.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 126,
+      "svgSha256": "b5009315abb0f9aab99275b8173613b5b33367bd936275d5835bc2ddd6a1f898"
+    },
+    {
+      "name": "database_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 127,
+      "svgSha256": "05d418278772755fbca6cfa87e692827729f7a639b7d5b9436d40d9224c22f5c"
+    },
+    {
+      "name": "dataset-manager.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 128,
+      "svgSha256": "615a133cf19d8c5bb9fa2ab026d3534deb53a0db16acb588406b0747e12caa7f"
+    },
+    {
+      "name": "dataset-manager_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 129,
+      "svgSha256": "3386ca54bb98a3ae6154aad876fe0436c3fe4dd52f0b75ed2df204a0d7c02897"
+    },
+    {
+      "name": "dataset.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 130,
+      "svgSha256": "6839f60d22fbe30cf10012f1f815663e15cde0ba6c65e3f5c8c40a69e77c5543"
+    },
+    {
+      "name": "delete.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 131,
+      "svgSha256": "ce43d7956732d150e75a6ffe23b2fffc15cd14a6c1547f745e5027611d147825"
+    },
+    {
+      "name": "delete_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 132,
+      "svgSha256": "8c125b6860751ef1f871b43ec2eadc6866a3634888e1616af28616346b43dae6"
+    },
+    {
+      "name": "devices.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 133,
+      "svgSha256": "883e71dde4aea441b2a3934fd1f5138fcf22626a5527ab335efda20dab29ab63"
+    },
+    {
+      "name": "devices_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 134,
+      "svgSha256": "772a161daf4f40f057c9b4fdbaa075cc0bcb88289576633dcc9b25fa3c131cc9"
+    },
+    {
+      "name": "diamond.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 135,
+      "svgSha256": "88bc2dd1a73dfbb7a4631c7b077008b2a603e8998db710c77f95ae6ce79b18c8"
+    },
+    {
+      "name": "display.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 136,
+      "svgSha256": "3f04e825672dda613bc07d83cc5a76bd2fbf0cc931329ecb7ae192b68361a0bb"
+    },
+    {
+      "name": "display_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 137,
+      "svgSha256": "35a800b8b444839022aba5fbaef05e75920c6848034dc059a293f42796f22db6"
+    },
+    {
+      "name": "divide.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 138,
+      "svgSha256": "d506b1202f8018e9686fb82e7629697982723406a2920fd5d2c108a9d5641842"
+    },
+    {
+      "name": "document-draft.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 139,
+      "svgSha256": "199a9fe9759f440f2ee03220e5b7294bb461d6a1dbb727fb6fe1a6e07c6c4ffc"
+    },
+    {
+      "name": "document-edit.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 140,
+      "svgSha256": "3f81a47716364b632216d722afb994ad22372c4a3a04063f4c963d632f93ee7f"
+    },
+    {
+      "name": "document-search.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 141,
+      "svgSha256": "edbb1db766dc36a72b9f8f50fdbfe05c7ee883a153bc3a6978983d2fe515c8da"
+    },
+    {
+      "name": "document.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 142,
+      "svgSha256": "8e106ab647f7dae67585db0f9f7f66f4898053f510126a3693b2f0656dd189df"
+    },
+    {
+      "name": "document_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 143,
+      "svgSha256": "279f23504133de30cdb48317d95b7d7afc9f38a2e2448c34e889fe0425e29ce7"
+    },
+    {
+      "name": "does-not-equal.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 144,
+      "svgSha256": "448acd4765fe5e824014d33c2ade8f547b14bd720c7f4422a161d1d72f147eb5"
+    },
+    {
+      "name": "double-chevron-down.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 145,
+      "svgSha256": "61b699e3950c8386e6231cb8fa8a5ad906652fa673d333814aeecee58eef8ebf"
+    },
+    {
+      "name": "double-chevron-left.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 146,
+      "svgSha256": "cbd9a4720f0aeb8b56536295f3b529ef2108569e6268ac7a1990b2ba70588f8d"
+    },
+    {
+      "name": "double-chevron-right.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 147,
+      "svgSha256": "6ef71dcbf83e1ca2edde05b8baca42807473517acbb492b383b7644d21a40952"
+    },
+    {
+      "name": "double-chevron-up.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 148,
+      "svgSha256": "ed3f72a6551cef43c519c70a7bbf14b116fb31bdd834da7589e302038fec3c30"
+    },
+    {
+      "name": "download.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 149,
+      "svgSha256": "5f91ce5dbf08a6903290198d675b03047035aa0c3952edf3394b6fcd543cb412"
+    },
+    {
+      "name": "drag-row.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-06.png",
+      "card": 150,
+      "svgSha256": "944eea6db294b4e6d7b4aef344014f4802091413ae949abfec0afdf7eb98c941"
+    },
+    {
+      "name": "edit.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 151,
+      "svgSha256": "f9cdff860ef2d9ccb7024f4cbd09acbf5e4ce83ba16c3b19110657a2e099a3ea"
+    },
+    {
+      "name": "edit_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 152,
+      "svgSha256": "16c6ebf3ceef92b69668c0ad6afbf2aaaa571b70d4035225854e3bb049eec7f8"
+    },
+    {
+      "name": "equal.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 153,
+      "svgSha256": "3d5fb5f87636a053426977549f98fb1993b92c0a01ffa14f059bb5a472932f14"
+    },
+    {
+      "name": "error-execute.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 154,
+      "svgSha256": "6bb41e74dc7a961959c7280158ba731aff3cd512d172cae421285451c391ca83"
+    },
+    {
+      "name": "error.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 155,
+      "svgSha256": "4287ae9857961c7f41b4d9910c3fde2e1adc2afaf75d5c4aa9f0990bcddf918d"
+    },
+    {
+      "name": "error_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 156,
+      "svgSha256": "487ae4832c1966c691a3c49d87660260c4373d939766d4f36c816202f6354855"
+    },
+    {
+      "name": "expand-all-horizontal.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 157,
+      "svgSha256": "e482b6056083d435b7826089dc977e8e2bf4be9d81f0ca98fb5d0716d87a64a1"
+    },
+    {
+      "name": "expand-all.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 158,
+      "svgSha256": "9037942fa69592484e4e1a0fa465f1e716f941db90a5e0ae86a057a138190c22"
+    },
+    {
+      "name": "expand.svg",
+      "result": "corrected",
+      "finding": "compact-arrow",
+      "sheet": "evidence/before-07.png",
+      "card": 159,
+      "svgSha256": "7f3b7eb2f5c9ee3f90bc018b810ec1bcb2be53214ed953c02e00cc9d9adbf318"
+    },
+    {
+      "name": "exponentiation.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 160,
+      "svgSha256": "27e5ca10e7271e5910a8e7599c86383b1ee29ef919728964804edb50e775b911"
+    },
+    {
+      "name": "export.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 161,
+      "svgSha256": "5bbab5a869210dbc28e2aa90ca0806c89cede5910d3120f41a8f7497ec677421"
+    },
+    {
+      "name": "export_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 162,
+      "svgSha256": "5bbab5a869210dbc28e2aa90ca0806c89cede5910d3120f41a8f7497ec677421"
+    },
+    {
+      "name": "favorite-half.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 163,
+      "svgSha256": "f961e68c5fca2db6ba82f9683f3ccdab5829e486f5e84cc2c8c2443f6ce6b8b5"
+    },
+    {
+      "name": "favorite.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 164,
+      "svgSha256": "4dbee77a0f42c696e44af7da6b5586e3831b04db70e7ce67bf5593506d19b7d9"
+    },
+    {
+      "name": "favorite_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 165,
+      "svgSha256": "e4794fab9cbb40292d272ecb88c1c21b8addc8386840e3917bb12266b4747249"
+    },
+    {
+      "name": "favorite_strong.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 166,
+      "svgSha256": "6042d69aaa5eafa862c2945372e2a9adb482926e871ee6c1ce5cce1006aa3494"
+    },
+    {
+      "name": "feedback.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 167,
+      "svgSha256": "aa81d1a6ca7711a759671bd4819d31552b366414d716829d711f73d5856f4611"
+    },
+    {
+      "name": "feedback_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 168,
+      "svgSha256": "6cc710c21cd7f0db760e800964a91e14301c023eb05243e4e0f0fa1f91b179b2"
+    },
+    {
+      "name": "figma.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 169,
+      "svgSha256": "99dd1d58d0e4467f4a15bddad699156546e5b3696f6de8ecb1032d83f71e8368"
+    },
+    {
+      "name": "filter-clear.svg",
+      "result": "corrected",
+      "finding": "cross-strength",
+      "sheet": "evidence/before-07.png",
+      "card": 170,
+      "svgSha256": "5f3f566fa188d0774d0e1a3b89a8db560855e06e581be59ea83885c0b7ff2ca1"
+    },
+    {
+      "name": "filter-clear_solid.svg",
+      "result": "corrected",
+      "finding": "cross-strength",
+      "sheet": "evidence/before-07.png",
+      "card": 171,
+      "svgSha256": "dc1b53aa3098ab72b73b8d388ea5f5fc58838690a9cecd634de749dbc67f6793"
+    },
+    {
+      "name": "filter.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 172,
+      "svgSha256": "0a1210227b79b2fce6cc1c6eb9bd7b24f8e18def075f103c77b7096102ce2edf"
+    },
+    {
+      "name": "filter_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 173,
+      "svgSha256": "45b6e2cf5a9fc28fc5b19925f5c0236e3a69c33d2d073206d4dbe9ab60fa7d6d"
+    },
+    {
+      "name": "first.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 174,
+      "svgSha256": "15efb99a9f204fa087d47a87f7fb1e81ddbbf53d503488e233ee039c321e13cd"
+    },
+    {
+      "name": "flag.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-07.png",
+      "card": 175,
+      "svgSha256": "6e8fe4db59789a201ee72d783289ce5e51f61a0763b9eec37b1b36c2201fca1f"
+    },
+    {
+      "name": "flag_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 176,
+      "svgSha256": "c2c6c46c39948d903194d06633a966377e4e5bb8f5760337363ae3d6f168e899"
+    },
+    {
+      "name": "folder-closed.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 177,
+      "svgSha256": "d1f601548e8cd0fd544331b7007a8c271caad70f370184c85cb98ffb055e0ee8"
+    },
+    {
+      "name": "folder-closed_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 178,
+      "svgSha256": "45b530dfedbb1603f0cce1c305b3c47e95ed1bfec0ef66739f678130fab786fa"
+    },
+    {
+      "name": "folder-open.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 179,
+      "svgSha256": "981b40032878ac36137dae015970c6c12613b46c34191529ef07d0bb3bf6e332"
+    },
+    {
+      "name": "folder-open_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 180,
+      "svgSha256": "9dca58f271846cf898972c11dedfa01f43c538fa4e61e1dc4b6980e5afce7202"
+    },
+    {
+      "name": "forward-10.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 181,
+      "svgSha256": "4937dcd700a4540664473e49055eff64db26cf03d5a2a1003429627248810cb9"
+    },
+    {
+      "name": "forward-15.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 182,
+      "svgSha256": "0112b1641f544b3a0575f4e36d2e8e754c6227ee65cd283be1af2d710b5a9087"
+    },
+    {
+      "name": "forward-30.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 183,
+      "svgSha256": "ef52d5d34da5ae974051fba958084eca74af434c69e8d246482a8478d8f91995"
+    },
+    {
+      "name": "forward-5.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 184,
+      "svgSha256": "2bade36a65b29aae932d28e97ab76012360199ba4bac536d5557dcd53b9436e2"
+    },
+    {
+      "name": "github.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 185,
+      "svgSha256": "fc42fd63ed6d6c8f65e758d839d427e7f883115010cf95983e600c55a3a76009"
+    },
+    {
+      "name": "globe.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 186,
+      "svgSha256": "165e15c37479cd7cd6c7c9c55fc6ccee31ada8d48ed2f35c5075496ab569b526"
+    },
+    {
+      "name": "globe_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 187,
+      "svgSha256": "d8bbe267215c26709d998845888502f55c761811f81713ad39911dca887c6048"
+    },
+    {
+      "name": "greater-than-equal-to.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 188,
+      "svgSha256": "58e15e14cc3d477c31363d13e104d6216768943bcf6525c5e87a8bbd20a83aca"
+    },
+    {
+      "name": "greater-than.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 189,
+      "svgSha256": "2038bf92205dba99936ae9cf3114753847387c08aa756be3668896678014e328"
+    },
+    {
+      "name": "grid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 190,
+      "svgSha256": "e5794b16857241f478ffd0443668f9fab7be213863c998680de3d45473ed0f25"
+    },
+    {
+      "name": "grid_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 191,
+      "svgSha256": "e6aae3ff6a60efe5c34d04481dd300d99e2468eab3fb73208813999dd719de92"
+    },
+    {
+      "name": "group.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 192,
+      "svgSha256": "674d53f4c70db26c1d196870795fa77a2833346baf19d71f646f37a8bf6f0a67"
+    },
+    {
+      "name": "group_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 193,
+      "svgSha256": "4dc7566c363c3653f3ff4b333780a35a6884da253d4fe8806eaf729ccdc70d9f"
+    },
+    {
+      "name": "growth.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 194,
+      "svgSha256": "52ef030847f9ddecac33436ca4e9151130f2c44863929453919d12b97cd526b7"
+    },
+    {
+      "name": "guide-closed.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 195,
+      "svgSha256": "ed6bd27ca1a767d0e180da1926129aeb559b9026316826cef3b229fdcde665af"
+    },
+    {
+      "name": "guide-closed_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 196,
+      "svgSha256": "04b522ad26bcce0b4b271fea46e68e7c8bcd5edd84609845c505336c378b75e1"
+    },
+    {
+      "name": "guide-open.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 197,
+      "svgSha256": "e95fa769c8032335b9d1d53bc82f36f19a7dbc1d033d362f22e5b4ab5d8de945"
+    },
+    {
+      "name": "guide-open_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 198,
+      "svgSha256": "660221818685ecf71221d7f12d6255ceab706fe628acefc69586d53e94a9c235"
+    },
+    {
+      "name": "handshake.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 199,
+      "svgSha256": "d4415e59c83287058e02780162c70c4c6f18b494c8de724e576c7cb71ba42b92"
+    },
+    {
+      "name": "handshake_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-08.png",
+      "card": 200,
+      "svgSha256": "2aaf89ea57b67120c3f88cb8198c3b3b3d07b5e416eb4ab37fdd0fb9ccbc2c95"
+    },
+    {
+      "name": "headphones-disabled.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 201,
+      "svgSha256": "ae85b7a9c7de298151e694f8882139e4bd1f106eba48c64b47acb94117221b2e"
+    },
+    {
+      "name": "headphones-disabled_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 202,
+      "svgSha256": "d6b3d8d905ca253d73156783e63743a7b3bec299d19903076f298382b082005a"
+    },
+    {
+      "name": "headphones.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 203,
+      "svgSha256": "e83751d15349e82ee7a2a4805b49edf7e47f0793614e2e4b98ac4648dd6225a3"
+    },
+    {
+      "name": "headphones_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 204,
+      "svgSha256": "0eabc7c0ba4d56cede86715716e96d12ff669d24b711f831594e8176f34d913f"
+    },
+    {
+      "name": "help-circle.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 205,
+      "svgSha256": "bf0592bf5630db9fd4ec8e0071aa9573903f45a682639fb8f9f83074a56207de"
+    },
+    {
+      "name": "help-circle_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 206,
+      "svgSha256": "98ade527d9dfe827861e240a9398de9570fc1b5e27eed570c75256d36538b049"
+    },
+    {
+      "name": "help.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 207,
+      "svgSha256": "bf0592bf5630db9fd4ec8e0071aa9573903f45a682639fb8f9f83074a56207de"
+    },
+    {
+      "name": "help_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 208,
+      "svgSha256": "98ade527d9dfe827861e240a9398de9570fc1b5e27eed570c75256d36538b049"
+    },
+    {
+      "name": "hidden.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 209,
+      "svgSha256": "87ba8e684260b2b9f2cbfd13f523cefb4d43d924ca43a50c108fed1f35d72102"
+    },
+    {
+      "name": "hidden_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 210,
+      "svgSha256": "b6befa608ab48037e97b49a34820da004e778c3c91cb51b889352adb91e8b0cd"
+    },
+    {
+      "name": "hierarchy.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 211,
+      "svgSha256": "cf4eae07d95157ab9e83fc6975ed1cdeb2fa0631fd943232bdd6c9d17fcff62e"
+    },
+    {
+      "name": "hierarchy_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 212,
+      "svgSha256": "58826724a8e9368bc137e7ec8c701324ebdb1d80e8c7eb9f5d76aeb94188c555"
+    },
+    {
+      "name": "history.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 213,
+      "svgSha256": "7654286f5bd972adea96ab90a79441e5deeff57fd90e20836af931d53686c19c"
+    },
+    {
+      "name": "holiday.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 214,
+      "svgSha256": "7f293c1d979129c4b2ae9e8f9f48c210edb24c9e10dd08cdc9c3512e38a5e5dc"
+    },
+    {
+      "name": "holiday_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 215,
+      "svgSha256": "8e46cc6e97aad1283c6f56fb7d3b0dfe3e9443eef5af55d39a3dbe81f7a83e51"
+    },
+    {
+      "name": "home.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 216,
+      "svgSha256": "4f7822cb6efb51db31b0178bd79227185025c26dc77a348ebd43e1a451e42376"
+    },
+    {
+      "name": "home_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 217,
+      "svgSha256": "d54367d394cfc5c1c4696303662691c4071be0f0cc474c29da6a7ca359916de3"
+    },
+    {
+      "name": "hospital.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 218,
+      "svgSha256": "92f0a29b5b4680eb92826e04b2e4e28ea656c6f49e70e578a97d2017e2562949"
+    },
+    {
+      "name": "hospital_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 219,
+      "svgSha256": "cad92f443914d2770c5d5ae389da2c5a041e71f33d0bfa5016f5f129e0c26322"
+    },
+    {
+      "name": "icon-figma.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 220,
+      "svgSha256": "99dd1d58d0e4467f4a15bddad699156546e5b3696f6de8ecb1032d83f71e8368"
+    },
+    {
+      "name": "image.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 221,
+      "svgSha256": "f762731af50fe443f44a577c3e45fcce618c61e56355ffaf6d8fa36836523be2"
+    },
+    {
+      "name": "image_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 222,
+      "svgSha256": "e8d488cb9d032d71f4b4e0813b5cc5c6b628d73e109ed48b2bc0e7081ea2bd42"
+    },
+    {
+      "name": "import.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 223,
+      "svgSha256": "cfcfdc8f9a97a5aa9f03624785209e83a6349ea0451dea126e23c14c2d26a4aa"
+    },
+    {
+      "name": "import_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 224,
+      "svgSha256": "cfcfdc8f9a97a5aa9f03624785209e83a6349ea0451dea126e23c14c2d26a4aa"
+    },
+    {
+      "name": "inbox.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-09.png",
+      "card": 225,
+      "svgSha256": "469e034368eeb5ca2903933c418b1507f5463d2115703b67dae8abe7443e5c00"
+    },
+    {
+      "name": "inbox_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 226,
+      "svgSha256": "0ed8f6534538a94291b2f0a9d8a9e17032ef1e50e0a2a6c93de4d0a1eab0d2ef"
+    },
+    {
+      "name": "indent.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 227,
+      "svgSha256": "6de9ea2ba5509f11a798839c70740662a791086f70da715b5b81a9edec8a0a8f"
+    },
+    {
+      "name": "infinite.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 228,
+      "svgSha256": "6b1a4b3da7a73cb35c1a09ba5144f3b90bc21be46bf362d91ba03ee9859d511b"
+    },
+    {
+      "name": "info.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 229,
+      "svgSha256": "8eb0d3e02953d246bcc96d0ffedf97836278bb0ce781e921a01b6d0bada5c3f7"
+    },
+    {
+      "name": "info_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 230,
+      "svgSha256": "c9dab6f5af4d48aee66380ae9fdaa32a8f263547f4119ad9873d90f320e3443c"
+    },
+    {
+      "name": "jigsaw.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 231,
+      "svgSha256": "4cc4ed33df3e83005cfc35e614636faf88b60a6af3a0342310c2da4c82634ea2"
+    },
+    {
+      "name": "jigsaw_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 232,
+      "svgSha256": "abef912246a8cd6323707be2a70b9dcc17ed09d9870b1ff47c042cfce4158afa"
+    },
+    {
+      "name": "key-backspace.svg",
+      "result": "corrected",
+      "finding": "cross-strength",
+      "sheet": "evidence/before-10.png",
+      "card": 233,
+      "svgSha256": "dc7ef24847ed49a7a3e63ff68749b5261af0a63462b7b2dc24d38148bdf69448"
+    },
+    {
+      "name": "key-capslock.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 234,
+      "svgSha256": "29e33c88a72e1764049244af82b489a7784d91bc0bd4810f57b4be28c8bb9794"
+    },
+    {
+      "name": "key-command.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 235,
+      "svgSha256": "7b9b6760b1ff7739d48f800dc833345248da890c02e8ad514b6fbb649ee37373"
+    },
+    {
+      "name": "key-control.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 236,
+      "svgSha256": "f8d9e06ed4da9e6acbd5b20f726b3e3791d2f3efc20b6271a28739c923ba1ac2"
+    },
+    {
+      "name": "key-enter.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 237,
+      "svgSha256": "0f56f273da4e3dd58ae72f1720651587aa4bceebac547080daf3ed4b2d683176"
+    },
+    {
+      "name": "key-option.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 238,
+      "svgSha256": "f2aadd374c36bf24e90ad4a8387418241e93e4198264a60dade235753a197649"
+    },
+    {
+      "name": "key-shift.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 239,
+      "svgSha256": "60bb32b0957f20356733713f917bea708cbd43b4d0f68a9c927b4abd10879c69"
+    },
+    {
+      "name": "key-tab.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 240,
+      "svgSha256": "596ab0891b585dd1981afbbffbde7e5ee2b3604ad56bf20066021637cda611f9"
+    },
+    {
+      "name": "key.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 241,
+      "svgSha256": "701b4219917951f3c5b33a949668534398e53e149277f027bcf1bb10f550663f"
+    },
+    {
+      "name": "key_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 242,
+      "svgSha256": "d2b79de9bf5174937e5e51daf9adc9a48bb7a1386ab8c4914d1a2f0ae88aef84"
+    },
+    {
+      "name": "laptop.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 243,
+      "svgSha256": "1919de03f74f7d149510d24b335900d18faddfe09a29d8a0fe7d459782a96a29"
+    },
+    {
+      "name": "laptop_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 244,
+      "svgSha256": "0757b56dbe1ea3a7b2e039af8b277c58d771fea11448e9827980ea5d0d843048"
+    },
+    {
+      "name": "last.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 245,
+      "svgSha256": "821ecff4a4d7b33f552775f8e568636f9b0e1c884f58457f026ca152e66ed481"
+    },
+    {
+      "name": "layers.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 246,
+      "svgSha256": "37ce5c2bd95d7d0d908542637d3600fe12ce1d1e1c34ffeb921d5d262a93d7ab"
+    },
+    {
+      "name": "layers_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 247,
+      "svgSha256": "9c536e8b08bdd46ac9568038619e8d41948c5625b16ec275906bd3f2c5f8cc0c"
+    },
+    {
+      "name": "less-than-equal-to.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 248,
+      "svgSha256": "1ba2f8766f5024e5c754f2e9037897c5192fef36868dfa9e536a9b42f8a18ab3"
+    },
+    {
+      "name": "less-than.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 249,
+      "svgSha256": "5a3d6e5ebd82c4e1775c42fa6884d40b5cdff757e9b71ed0107223433474e74c"
+    },
+    {
+      "name": "light.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-10.png",
+      "card": 250,
+      "svgSha256": "b42254bba04356a981839d256e1c07e0dd24ccbf8503b624b7f1b762d44a4093"
+    },
+    {
+      "name": "light_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 251,
+      "svgSha256": "957b76aaaff7474b13d5da351636faeaa9cd6d2bb8e5089506625f8997d6376e"
+    },
+    {
+      "name": "lightbulb.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 252,
+      "svgSha256": "d9f38256709f701b160b3ca77acef1a89adcc8262ab372aa81f92b10554e69ea"
+    },
+    {
+      "name": "lightbulb_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 253,
+      "svgSha256": "222a89f4b5cd19e83321ab06068879a909b5b317b8783f2e299d75db596bfa79"
+    },
+    {
+      "name": "like.svg",
+      "result": "corrected",
+      "finding": "heart-perimeter",
+      "sheet": "evidence/before-11.png",
+      "card": 254,
+      "svgSha256": "c7863019187f311b3ef51024a773c22f052d97128418359510dfdb48f3b22432"
+    },
+    {
+      "name": "like_solid.svg",
+      "result": "corrected",
+      "finding": "heart-perimeter",
+      "sheet": "evidence/before-11.png",
+      "card": 255,
+      "svgSha256": "7f6af8b440070f017b450f19491c86d14c0ae943c432d31c58c43580da40d589"
+    },
+    {
+      "name": "line-chart.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 256,
+      "svgSha256": "3aeb3f7caa9816183e9cf04c7068e4c1b84b4fb89d628d6fd86227bbd5a7aa76"
+    },
+    {
+      "name": "line-chart_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 257,
+      "svgSha256": "19ecd411dae12d795afbae4a8c269546b904594d7ccdac934897700c94ca38fe"
+    },
+    {
+      "name": "linked.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 258,
+      "svgSha256": "d7f895caca701a95d264aed0aecd048cca77cc6259650e770a27a3cda84bc001"
+    },
+    {
+      "name": "linkedin.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 259,
+      "svgSha256": "92d8230362bf14076b92119796793f2ada43b535f4cca58286f2c970d1439467"
+    },
+    {
+      "name": "linkedin_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 260,
+      "svgSha256": "c7f162fe181833ffcd2a6d1a3aaa1b7f64d0acaed525fe0a56f63760b88972d1"
+    },
+    {
+      "name": "list.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 261,
+      "svgSha256": "39ac00b3f7e5ec31038501dff5d9266edc2ad869ea2fd5d5e28ad0c5fb49dd4c"
+    },
+    {
+      "name": "loader.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 262,
+      "svgSha256": "d3235f0c9e9a9af53edeb140200bed72c44a8edc6832491b40915d9c0b52029b"
+    },
+    {
+      "name": "location.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 263,
+      "svgSha256": "0ff3a230d86d409f572ff36ca72bf38be4c2f11d30341a29a4044cb66ba57987"
+    },
+    {
+      "name": "location_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 264,
+      "svgSha256": "f110469f1114c8b84d7bda4473ae81368027f9c6d1382e156ec58e812a0456c7"
+    },
+    {
+      "name": "locked.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 265,
+      "svgSha256": "7789b1fd3e4cf8d3e068fc5ba72c8d6a71df3f2d98ab80f7830eb094fb4d4aa4"
+    },
+    {
+      "name": "locked_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 266,
+      "svgSha256": "0a396917606ae19ac927288f2b05dcc309e1339e30ef034a9c744c9aad091827"
+    },
+    {
+      "name": "magic-wand.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 267,
+      "svgSha256": "6390048d11d29e198caf1a74dba248db4873592295f45799cd04623b086dcafd"
+    },
+    {
+      "name": "maintenance.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 268,
+      "svgSha256": "79851f9c07f226ff53176132120cddab734ad93ba8733258061f9469c3814349"
+    },
+    {
+      "name": "maintenance_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 269,
+      "svgSha256": "3eab27abc7022879c9727a9e8b86d3d76b3d087905ee7cf8487a5f9da6c1b810"
+    },
+    {
+      "name": "man-woman.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 270,
+      "svgSha256": "213fbd33260adfa7b5a017cf036be9bee131cc95967afe884ff83821f75feef7"
+    },
+    {
+      "name": "man-woman_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 271,
+      "svgSha256": "3284bb76467c7116bf0b6c53a183fd38fd5cb19ff401492c91e2af08b37e325d"
+    },
+    {
+      "name": "man.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 272,
+      "svgSha256": "5d5058d3f6e9bc1710a6b502796c2de180532d1c2a4926d2d86c11d4dec1919f"
+    },
+    {
+      "name": "man_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 273,
+      "svgSha256": "db48394f0de3b8f7f2086087ad750294924d9d897662abe2027d582fb0d0c98d"
+    },
+    {
+      "name": "map.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 274,
+      "svgSha256": "46ebb754f089b17be56d43635e23fe7b6fbff6906cceb24cad1abcec1a668a8f"
+    },
+    {
+      "name": "map_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-11.png",
+      "card": 275,
+      "svgSha256": "7dd62d7f00d47f54bb0c828aed72ae4cb6166cb03cab8f49e1b8897050121bec"
+    },
+    {
+      "name": "marker.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 276,
+      "svgSha256": "f35ab3d5484522cfbd9d6d76afa37288dd56a5d6657fc61f76606de058d81380"
+    },
+    {
+      "name": "marker_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 277,
+      "svgSha256": "05bfae530750801d92505cb19e3d65f198cd55b02683f3bfbb0d0332964d68c7"
+    },
+    {
+      "name": "maximize.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 278,
+      "svgSha256": "883dcf13cfe280313b29dda042fc1feb40020e241e22780608c679e1e80be515"
+    },
+    {
+      "name": "maximize_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 279,
+      "svgSha256": "45128eb1dc8a11ac097b793ebc0ca58f36e98bbb07d8ebb6f10a906933611cba"
+    },
+    {
+      "name": "medical-kit.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 280,
+      "svgSha256": "67f0e45a2e5dc6cb557b8f9960ff0ff605a09b02a0702e81912d01a0e0dbd4fe"
+    },
+    {
+      "name": "medical-kit_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 281,
+      "svgSha256": "c70a69ef6770c1a1a7ce57c60aa26e71dcdede0037f1a96a06ea07b4a6f3173d"
+    },
+    {
+      "name": "menu.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 282,
+      "svgSha256": "400f1a503b326a0e8dddfcb38cc764b8c0fd5ba201eaa2d7f2eedf570b9d3992"
+    },
+    {
+      "name": "message-forward.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 283,
+      "svgSha256": "f0b2a008719944acb0f3251a9824b5c9d3be28c4b3431aa66eb23eb1427802b1"
+    },
+    {
+      "name": "message-reply-all.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 284,
+      "svgSha256": "3696934d31510e795dfef457cc1d1e1f7dd4dace33527d93c3e721351b8a8008"
+    },
+    {
+      "name": "message-reply.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 285,
+      "svgSha256": "c383b979b7a9e7f7211966b08538c966a83082195665f34732c05301f0c44871"
+    },
+    {
+      "name": "message.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 286,
+      "svgSha256": "69b22bd24916edb6a126e9b5ee7ffc3040e1e77d92178c2b3324e23093d217c1"
+    },
+    {
+      "name": "message_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 287,
+      "svgSha256": "90874428453a2f1e4deb8bbea11a4dd61d5e94af4ab66280c0f52fd5b3f2649d"
+    },
+    {
+      "name": "micro-menu.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 288,
+      "svgSha256": "2940b4991f68a15638c7b20aeb54878cd6a1d3f58db8ee195230330f1b05bdcd"
+    },
+    {
+      "name": "microphone-disabled.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 289,
+      "svgSha256": "f951b0005ef93b8dbebb41e3e18b2884090266b532491af56f2c61a1eea31f52"
+    },
+    {
+      "name": "microphone-disabled_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 290,
+      "svgSha256": "aea2e032722dc42b94d252077d297d0b98245ec66a0cb7356f73450aacd23bee"
+    },
+    {
+      "name": "microphone.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 291,
+      "svgSha256": "3df7c89242b7d4668f65259d8f21b739177eac3d035d8b6cadb5ea3b4fa3b2bc"
+    },
+    {
+      "name": "microphone_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 292,
+      "svgSha256": "df8a786e4a66ccafeb147437a7cfc61b51efb68b63b97c3dccc0f5a187765942"
+    },
+    {
+      "name": "minimize.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 293,
+      "svgSha256": "6c4fb9507011c85827f261059089a982081ba9d33bb80e96d312b4ac0eb59d56"
+    },
+    {
+      "name": "mobile.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 294,
+      "svgSha256": "d5a18dbce6dce4684f2e058aa0cdf7f26ca63a5dbb3e7c73732f5584fc42b836"
+    },
+    {
+      "name": "mobile_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 295,
+      "svgSha256": "637b6f2f81f21d4823f534b7868cc61b82172a0ed1ad36927e5bb41c4e87236f"
+    },
+    {
+      "name": "mouse.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 296,
+      "svgSha256": "4a17eb04957365282b1b7f1a73a531d11aff446105bf74f93f14d0537bcf78df"
+    },
+    {
+      "name": "mouse_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 297,
+      "svgSha256": "3951b0efe495001f346537eeaa95998927597faefebf3268848d2b3fc39535b2"
+    },
+    {
+      "name": "move-all.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 298,
+      "svgSha256": "42854a7e6b50fe9d2e0687381b5d5d5e6b043eefb9714f16ef09a6511ae0ee13"
+    },
+    {
+      "name": "move-horizontal.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 299,
+      "svgSha256": "554841b8eaaae1fcfa0efff3387a80c9547b6e120c8306b81fffd671675f00de"
+    },
+    {
+      "name": "move-vertical.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-12.png",
+      "card": 300,
+      "svgSha256": "60eef195e79ee2cb1e27b387f26ef6c7f43b10cc505266d0a1e080f23d176f7f"
+    },
+    {
+      "name": "multiply.svg",
+      "result": "corrected",
+      "finding": "cross-strength",
+      "sheet": "evidence/before-13.png",
+      "card": 301,
+      "svgSha256": "826689a0bb876a34db778787c9dbf5cfd6df65effd75e3b34c25d9242cc9218a"
+    },
+    {
+      "name": "music-disabled.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 302,
+      "svgSha256": "516a08d7fb27f983ff71f8c7f40b5b6b2134909ca301194766200ca976c40ae0"
+    },
+    {
+      "name": "music-disabled_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 303,
+      "svgSha256": "babcd5c7cf8770a6a3494cd4f06881e13ecb80c05624ab69d1ddca7b09c92e71"
+    },
+    {
+      "name": "music.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 304,
+      "svgSha256": "03cf6c59e6461e14507bf8bf79ef383d2db05f11aba4c8d14e5bd3d478d639e2"
+    },
+    {
+      "name": "music_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 305,
+      "svgSha256": "0a5ee885d747e65c3998e28fd205f7a0d88a8c94bd3bc0fb4bcff489c22a6f0c"
+    },
+    {
+      "name": "not-allowed.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 306,
+      "svgSha256": "6bb41e74dc7a961959c7280158ba731aff3cd512d172cae421285451c391ca83"
+    },
+    {
+      "name": "note.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 307,
+      "svgSha256": "29c6ba6cf3119bb0e9e2c785cdc7bd34db9885bc96a11cfdfa5c0afde90b639e"
+    },
+    {
+      "name": "note_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 308,
+      "svgSha256": "72f62ef694ab8f69ab09fbe85a74927a411a41985bbd8bd69b712bb75ad77ca9"
+    },
+    {
+      "name": "notification-read.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 309,
+      "svgSha256": "8e80ad118c1092c873617556aa69819870d6bbb612357add44e3b0c00780cb27"
+    },
+    {
+      "name": "notification-read_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 310,
+      "svgSha256": "d38c19eace78c58e8a233abf9069589dcb6d7dacdc059007a0eaeae273eb09f4"
+    },
+    {
+      "name": "notification.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 311,
+      "svgSha256": "6290ee952d3458071472a2b77e2bf2f83e5d3a98e391ef7f320328ffec93fc34"
+    },
+    {
+      "name": "notification_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 312,
+      "svgSha256": "908d729e333734066dc173a98d689e8fc79f02d4367aad7d24810fb944b77223"
+    },
+    {
+      "name": "outdent.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 313,
+      "svgSha256": "539dbe2acd0a5225868395037ef0f84945d537cca7f1c1201cf52fdb9acd6635"
+    },
+    {
+      "name": "overflow-menu.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 314,
+      "svgSha256": "70159556de4cfa8715db17e9f8fe81070a0ce557ec26884fbc03c555ad6815d8"
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 315,
+      "svgSha256": "cd04a840572937c9b7145c1212fff8562fda2b6d6d3d702e5ded56f190c2d5bb"
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 316,
+      "svgSha256": "1c5ca9ec5b25a48b65a157cb8105ebd9dc629d1c3d1242a6a7416fb95f5a76f8"
+    },
+    {
+      "name": "panel-close-left.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 317,
+      "svgSha256": "5a2a063956039ee4a89ce8f5ff5ffd111556bc9baadba4ced4937aacf537c023"
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 318,
+      "svgSha256": "97ae77564c24afd3f2496ee5bd9295571c70c734e2b01dcab8bdab8396a34c51"
+    },
+    {
+      "name": "panel-close-right.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 319,
+      "svgSha256": "d3e0953a5a1018dbdb14084ef35035777cae0bcff2eb703b06a9e4f44804c55a"
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 320,
+      "svgSha256": "e5723090d7d57981ade9b64b84ec28498947b649d9519bec4bfb5e65f49721b6"
+    },
+    {
+      "name": "panel-close-top.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 321,
+      "svgSha256": "f6ffd9e76f152108791ad4b166cf130689c932a4ae967176a0987fd2df3c5f6d"
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 322,
+      "svgSha256": "39c5960e63f6feac36f594ab92965e33d5b7c9f0bc411aaaec8a9ba450afcd63"
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 323,
+      "svgSha256": "d56b06ab3f64dbcd33d4e4621835a254403841aea48ae64677cd9b439cac4674"
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 324,
+      "svgSha256": "9707cd8096f342e8a1dffddb7435c69d0d7093b3621d785621867e4a95cfdff6"
+    },
+    {
+      "name": "panel-open-left.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-13.png",
+      "card": 325,
+      "svgSha256": "94c130901eb584fddc482abf2d5ab6c534cfef957cfda50e9703d539c2950257"
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 326,
+      "svgSha256": "c485ab11c677bfae5135de9f1f5035a1a769be17048c6032d0eabe2ca736ceba"
+    },
+    {
+      "name": "panel-open-right.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 327,
+      "svgSha256": "2463dc47a4ae3d8d24825067871c32d89412f70af5edd08ff51e22704df716c1"
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 328,
+      "svgSha256": "d824e6e96d0accc4b07f1bd25f094bc0cf63057b0d1adc27924e567d1acaa3a2"
+    },
+    {
+      "name": "panel-open-top.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 329,
+      "svgSha256": "13cfacd68eee220de832a37dffaa0a87f31c74754f8c02fb7f0d413b0884872f"
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 330,
+      "svgSha256": "9ce21cc6f35a501c179a97fba0eb7caf512376b78f6fff1216923203e8a9edc4"
+    },
+    {
+      "name": "paste.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 331,
+      "svgSha256": "c218bc008893fb3fcaaef6dbab033bf9da0e2f9b077bb19231d2186fc9ca7f34"
+    },
+    {
+      "name": "paste_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 332,
+      "svgSha256": "ff00d2c455cf1c77bd33fa1510d45e4ce2fda310b51449a403e1ee88e395d6ea"
+    },
+    {
+      "name": "pause.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 333,
+      "svgSha256": "da7dec259b99ff1990eaa58992c9dbbfd3cc4f51b3ff6a1db94aac0801e6cb97"
+    },
+    {
+      "name": "pause_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 334,
+      "svgSha256": "d64c230764199585a4e06907985396df2f2c6273d63b6b13c297bd28f55a5c13"
+    },
+    {
+      "name": "pdf.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 335,
+      "svgSha256": "ea0f1f929b5acfa042c8a96afd9123541711071c046f3d0508e86f0a78b62791"
+    },
+    {
+      "name": "pdf_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 336,
+      "svgSha256": "aa48513919040eb44811635e15a4e728b8c551d81856e5b9e428a648a3217130"
+    },
+    {
+      "name": "percentage.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 337,
+      "svgSha256": "54bb1601f55fdd6c2dfea17ec2b8289409911717ba01286ef8a090749ea727c0"
+    },
+    {
+      "name": "pi.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 338,
+      "svgSha256": "852068bcc8575f5056300626656049e863fd6aaf71bedded49add3756f107020"
+    },
+    {
+      "name": "picnic.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 339,
+      "svgSha256": "130cde1a623ba17e62cfd04bf7ef769fa116ed45d3fd91bdb682c03d4a1fa0c7"
+    },
+    {
+      "name": "picnic_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 340,
+      "svgSha256": "411c37dc84845d300514f8fb02bcf49d8d40e9d92e4c4d630a8cb9c9720fc3c9"
+    },
+    {
+      "name": "pie-chart.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 341,
+      "svgSha256": "4cfc5acc315e956e26798030d04f6e90bd40e89bd6671e44d8cd68676cf0e027"
+    },
+    {
+      "name": "pin.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 342,
+      "svgSha256": "96f24bbf5c03be823b66262fc9b254f7c12707222d1c4715fee580258902d0cc"
+    },
+    {
+      "name": "pin_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 343,
+      "svgSha256": "ab0fa6255e365be58cacd1bba9161cc3510671f1eb7e83f811d5350138f119ae"
+    },
+    {
+      "name": "pivot.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 344,
+      "svgSha256": "42b0cdb26ceb97c68a885993d310d42f975a5e77e2a11ad411d76c0fde7d6e69"
+    },
+    {
+      "name": "pivot_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 345,
+      "svgSha256": "764932ab33038dcc0332ac0777c9e590f8b20a308fb9a3496713d4d3d93bbf06"
+    },
+    {
+      "name": "place-in.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 346,
+      "svgSha256": "8741062b5def00d0335c2c692238ec23709697c53bdef9f4b091ea3833112f00"
+    },
+    {
+      "name": "play.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 347,
+      "svgSha256": "e1a00865fdfe4bf3915b3732edaa76853947ec9cf2d538cf7f234a7cb2a6ebf5"
+    },
+    {
+      "name": "play_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 348,
+      "svgSha256": "f6e85d9cf24587221978f691027d9376b6e6bca4c48ac707b7ae4112cfefa8d0"
+    },
+    {
+      "name": "policy.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 349,
+      "svgSha256": "4962235d264723775b60b86d97b75ae1122d0f9e1d26768d1b11a7b57bf1adaa"
+    },
+    {
+      "name": "pot-food.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-14.png",
+      "card": 350,
+      "svgSha256": "60d59660ab87c454aa2f016616cb4f059b837e73ec2f29ddacd8c2f52773989f"
+    },
+    {
+      "name": "pot-food_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 351,
+      "svgSha256": "c7e6f74fe6e94af48e095795c9e96c7754dbda306522e6b1f060275d2c77e09f"
+    },
+    {
+      "name": "presentation.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 352,
+      "svgSha256": "0b3bee4462308081e5c52070b8e3ab4605dbb6714dff43cd75a4ac960232d701"
+    },
+    {
+      "name": "presentation_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 353,
+      "svgSha256": "09d8b0e5358514415803af0748a0159020d33c37bd4e9984ea1422efb919f051"
+    },
+    {
+      "name": "price-ladder.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 354,
+      "svgSha256": "f2db3631995d8532f8d360ad2ff98d1a5cbb14b153b716ebf2cfdfd0f1651f04"
+    },
+    {
+      "name": "print.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 355,
+      "svgSha256": "5499aca470cd91108f1c57a72a708844840757e29821034899fb2685e701ce4b"
+    },
+    {
+      "name": "print_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 356,
+      "svgSha256": "20f6bfae3ecf3a53b6922bdcc2d36fbbe37e016bcbccd10a68e2c5c3e780052d"
+    },
+    {
+      "name": "progress-cancelled.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 357,
+      "svgSha256": "9550331d38f0ad03d882835c6d8a811c355cd71f69f371328812145cee6a2129"
+    },
+    {
+      "name": "progress-closed.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 358,
+      "svgSha256": "5f8f360606c92c0655220003494e970aeeaa5f7577103298a9ff6c5bf6e61ead"
+    },
+    {
+      "name": "progress-complete.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 359,
+      "svgSha256": "a833e49ead70a51f5677f820a5eeb7a832aa3a91fe3c637af9069a6ba858ac0d"
+    },
+    {
+      "name": "progress-draft.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 360,
+      "svgSha256": "f4f076a2d65463b4bb9f56af52b0523b9086e7b71baf8f5cc075ee8582b2eb37"
+    },
+    {
+      "name": "progress-inprogress.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 361,
+      "svgSha256": "52d5d08d1fcd9ba5d94b5964aa34ff65fd7c4f0b0fedf7e813e8594843bc22bc"
+    },
+    {
+      "name": "progress-onhold.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 362,
+      "svgSha256": "ba501fef733107dd0b7246ab1e53c185063c05c31c54369a09ef232d21462ab7"
+    },
+    {
+      "name": "progress-pending.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 363,
+      "svgSha256": "71a76139ccb2ac5608dcc6ce07d537209e4c190bac73ec79dc73d1cd114aa768"
+    },
+    {
+      "name": "progress-rejected.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 364,
+      "svgSha256": "8eb5c2f684ee2a45735b6d062d6bb7405edec55717e2ec7de88d3c102d8b749f"
+    },
+    {
+      "name": "progress-todo.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 365,
+      "svgSha256": "0c7e1036d028532aee561b85d2efb06eeeb9385310859d04d2bb5b41cddb8afb"
+    },
+    {
+      "name": "protection.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 366,
+      "svgSha256": "76989f8cc88dfdf4eb78c931212cc39a8900bf3f17e6aa04a66b015fc74d45ac"
+    },
+    {
+      "name": "protection_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 367,
+      "svgSha256": "70d3a68b1b3a9746618109eecda59f5b3e126a6261cdc75e81ceb0e75bbecf07"
+    },
+    {
+      "name": "receipt.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 368,
+      "svgSha256": "a2725d38af88307ce7fb4885f2129726890d14a3a13b0948c109ea1fcc6bcd2c"
+    },
+    {
+      "name": "receipt_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 369,
+      "svgSha256": "592cbb20fb51415f2279ea2222c771aec99960b71947dd84edd7a96fa44afe2e"
+    },
+    {
+      "name": "redo.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 370,
+      "svgSha256": "30f5f6a27b84eb65c7aedfcaa6d295e62bf6b426193a26b247b269d94be4f0b3"
+    },
+    {
+      "name": "refresh.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 371,
+      "svgSha256": "92c9dccb2bae2b50ef3f57192ff0c3fd0c64793027cfefe006e4cf8996c39a88"
+    },
+    {
+      "name": "remove-bookmark.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 372,
+      "svgSha256": "4626859bed0595e6f60b0385c7ab66a22138dc97c0fb179dbcae9e4da1a4a64a"
+    },
+    {
+      "name": "remove-bookmark_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 373,
+      "svgSha256": "5ddb1431a7a559b9bd72027f7573d20eab6634c395dac0291788212f37f0fb36"
+    },
+    {
+      "name": "remove-document.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 374,
+      "svgSha256": "b16dba8b0fdaf22738898401469366bb67094d5ae024e2d54ff3eeac624135fd"
+    },
+    {
+      "name": "remove-document_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-15.png",
+      "card": 375,
+      "svgSha256": "21ddc7906cd832c60447e10c47d92f14776941c454086b14f37f43aaf1bcd041"
+    },
+    {
+      "name": "remove-user.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 376,
+      "svgSha256": "3a46a2e6831919d6f9160b22275ab890c5dade580e5e6f79b4596d9fc2c379bb"
+    },
+    {
+      "name": "remove.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 377,
+      "svgSha256": "0d0e68390b7ca26cf654f9d0d51830a609553a835ac3bdc80b65ee1122549ff0"
+    },
+    {
+      "name": "replay-10.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 378,
+      "svgSha256": "2cc20d0de5675356574bbbf48a4d8fb1565bb541ac5ee98d0c2383b09aa999ec"
+    },
+    {
+      "name": "replay-15.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 379,
+      "svgSha256": "8941d7002375da24459ae0a41b49f020a14087b4a6d6fd830a3bc2a6c0e1f28c"
+    },
+    {
+      "name": "replay-30.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 380,
+      "svgSha256": "4303a90080b9b9f67b6d119572b970d57b5266045fa5e96498a940ac1bf46a17"
+    },
+    {
+      "name": "replay-5.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 381,
+      "svgSha256": "1681cf093ab2eb6966b8a1d7c50a50e7ef0ecee00d6b46a68d00bb596dbe8abd"
+    },
+    {
+      "name": "restore.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 382,
+      "svgSha256": "bb57a0f312766d54b45bf1cbc98ccb71f1b9ca5787244bf30e645762f6a0c263"
+    },
+    {
+      "name": "run-report.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 383,
+      "svgSha256": "9714d5e86f32c5074438fcc8dcbfb0ddf7d5986a4f7000cbf4b2500cf21e0402"
+    },
+    {
+      "name": "run-report_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 384,
+      "svgSha256": "d72774a4acfdbddfde8fdfe3d4286e6a157557bdd38c1aa77b26f216e9f7395d"
+    },
+    {
+      "name": "salt-shaker.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 385,
+      "svgSha256": "219f54fe776db36518df4fc3fcf9312c707691475212d44d5c8336cbb117e085"
+    },
+    {
+      "name": "salt-shaker_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 386,
+      "svgSha256": "323673f2e33dc52b4660922bbf473734cbedbd811d0e06267dedf8c41fd6ffd7"
+    },
+    {
+      "name": "save.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 387,
+      "svgSha256": "afd4669568214b6fa66203f3657455b6a43cbc214a5fe55c119f6ee86b0e61f0"
+    },
+    {
+      "name": "save_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 388,
+      "svgSha256": "bb380aed6ee67b6ee240f64f6a1bae9ba849756f36db090d4f29ad75fffcaa83"
+    },
+    {
+      "name": "scales.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 389,
+      "svgSha256": "5d767a911ffc7118ff79b67d25d809ae372023731e9d3977ea6777d402e86a8a"
+    },
+    {
+      "name": "scales_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 390,
+      "svgSha256": "a01a51dfd691d6d000c064fa41e11b577614254ab42fc670c14aed210ec76e95"
+    },
+    {
+      "name": "schedule-time.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 391,
+      "svgSha256": "44dc96afb9d24437f88bb0a5c41bebf41546b1f8cfc062e550cfdc43ff0b9036"
+    },
+    {
+      "name": "schedule-time_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 392,
+      "svgSha256": "02cff89f9c2ccaf487d28248267c2859f842e3c2b0f39835838808deb2ff370d"
+    },
+    {
+      "name": "schedule.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 393,
+      "svgSha256": "a5259c769fced5d91be1855819652edd6343fe3dbb7081c0b0ba74f94c689ea2"
+    },
+    {
+      "name": "school.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 394,
+      "svgSha256": "3a3b3f17abe11f2c9c66d04c64a76b3e908b8072d962a6f9e02838328dd7a4bb"
+    },
+    {
+      "name": "school_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 395,
+      "svgSha256": "9c3607e141e8abcf67aef16575d72a100b833eea2e50a4293dee72eb977e6034"
+    },
+    {
+      "name": "search.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 396,
+      "svgSha256": "887b134fef6c168e42f7228c683a85ecfcf030661e49064b5e148524de393872"
+    },
+    {
+      "name": "search_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 397,
+      "svgSha256": "1e8f3d563b025738f2675e074e64ce0b16f7c0e8daa2b6c05dd56d7426a72bc1"
+    },
+    {
+      "name": "semantic-dissatisfied.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 398,
+      "svgSha256": "a59a3c31ff974977fffe7c25190a584e13e16da5b2061444845da293532b6718"
+    },
+    {
+      "name": "semantic-dissatisfied_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 399,
+      "svgSha256": "87d3bef7d5270917d686bdad33a5ab86e7b2050e324edef6ae146b85ecad5bb0"
+    },
+    {
+      "name": "semantic-neutral.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-16.png",
+      "card": 400,
+      "svgSha256": "e6e4708a17761d12d12eb7981cf42bcc56702d05d487bb274e855e740fb09fd3"
+    },
+    {
+      "name": "semantic-neutral_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 401,
+      "svgSha256": "b3cb5825abe97a445f3de5396fca7cae80ee0a5143588e83906f8f993371cba0"
+    },
+    {
+      "name": "semantic-satisfied.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 402,
+      "svgSha256": "a79d17f01d840dd4107701dbaee254e77f1ebc6df7db0733c218a4ab9fa4e55b"
+    },
+    {
+      "name": "semantic-satisfied_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 403,
+      "svgSha256": "8e40f79eb4fe30d38fd61af9c2f64960bd699e1411936c7c202e3259d58aa2a1"
+    },
+    {
+      "name": "semantic-very-dissatisfied.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 404,
+      "svgSha256": "c2c540948a3e7e779cfa9eb6cf0049dc91019fe4dadc9628eba6db496c97c37e"
+    },
+    {
+      "name": "semantic-very-dissatisfied_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 405,
+      "svgSha256": "fecbb29695195eacdee3500293b634de5308e840fce17f078628f0709bcf288f"
+    },
+    {
+      "name": "semantic-very-satisfied.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 406,
+      "svgSha256": "afcb5050352b84ba368c8e47d5bc63b79a5e912b93fa23c945a792143422fa93"
+    },
+    {
+      "name": "semantic-very-satisfied_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 407,
+      "svgSha256": "2e7f85f5da6be53a6f2a0cc4d7b6a7dc55f31bbf3468f4b3964842c5aae3f367"
+    },
+    {
+      "name": "send.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 408,
+      "svgSha256": "b1ce5369ba8f9e007a965aa536df0e83d035b0cfadc5e86b0a257488fe99551d"
+    },
+    {
+      "name": "send_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 409,
+      "svgSha256": "33a4cf091da0d1e3b4d0ba68dff93e4fbeaa8faaa651679c78cc6f98f4329282"
+    },
+    {
+      "name": "settings.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 410,
+      "svgSha256": "c1874cb068ed649b9379df486b0cdecc4c282a96c108005b18cb27489d92ad61"
+    },
+    {
+      "name": "settings_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 411,
+      "svgSha256": "4fb2d6174753714f031261ccef896ecbe3356e4352363ecd7414d514b0e964c1"
+    },
+    {
+      "name": "share.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 412,
+      "svgSha256": "0f39a8aa519af16a076c6f95500d7bc584aefd6b5e2165d2b5fc5d7cd4d36b47"
+    },
+    {
+      "name": "share_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 413,
+      "svgSha256": "bccfe650afa7ac77f99c51944f6e1c2629de79d6cfc28374e8ae4c0a47156208"
+    },
+    {
+      "name": "signal.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 414,
+      "svgSha256": "f881535f84d538a2e94dec9b86f47246a29424d68f63474f698c4688ad9ef8b6"
+    },
+    {
+      "name": "signature.svg",
+      "result": "corrected",
+      "finding": "cross-strength",
+      "sheet": "evidence/before-17.png",
+      "card": 415,
+      "svgSha256": "c685abfbd480dd4077507e26e9289ae5c9179a261ae9a8e7edf1490698dd802a"
+    },
+    {
+      "name": "signpost.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 416,
+      "svgSha256": "26df6c4fc94cefa1de5cb90a431ad0d7ce293395300c6ec1a0328f32f13da700"
+    },
+    {
+      "name": "signpost_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 417,
+      "svgSha256": "1bc970a2f97a4be298c5d18d7284476c1d80fc9c1ef41286f7994d83671d669d"
+    },
+    {
+      "name": "slide.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 418,
+      "svgSha256": "e313dd239bf206b61d339921cf613f482fb6b920fa94809da30b857be3ac99d5"
+    },
+    {
+      "name": "slide_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 419,
+      "svgSha256": "62e2962dd7f20b3840fc1a3c982bd2e124b71eebbf4389db471014a46b83156a"
+    },
+    {
+      "name": "sort-alpha-ascend.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 420,
+      "svgSha256": "20c0ed35b33ab571c5edd00bb71d24df88a318ab7c612dd3bfada679a7d955c9"
+    },
+    {
+      "name": "sort-alpha-descend.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 421,
+      "svgSha256": "cdd81af19e5ef1ffbc05a9b09ac93beb837a307e4e10a3a837d817e920b13a5c"
+    },
+    {
+      "name": "sort-ascend.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 422,
+      "svgSha256": "9b6446df051fd59a34895d5a4869d2a6caaf6133013b08fa067d82f55a0fb62e"
+    },
+    {
+      "name": "sort-descend.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 423,
+      "svgSha256": "7cf4c4ebb01c3beab23b877e2e8899a9ef918ad3749cc4cda81d080471535616"
+    },
+    {
+      "name": "sort-num-ascend.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 424,
+      "svgSha256": "f38fef7c3f8b7370ace6452b2d5eb66d39a31d15a3b37bd0fc5f8f9e153c8296"
+    },
+    {
+      "name": "sort-num-descend.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-17.png",
+      "card": 425,
+      "svgSha256": "c0c50df2befa5a213e66c8b94b1c3686a46d9cd083a7cf5e9d7faa8516a41d80"
+    },
+    {
+      "name": "sort.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 426,
+      "svgSha256": "a6769eb62189c38990d2ab5400abb83a8defd963a79c00926789ebe381e8f31d"
+    },
+    {
+      "name": "sortable-alpha.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 427,
+      "svgSha256": "9ac33c2be6ebbfc774d364f1e0356ca1637a7ce9e388fd104d40c9bab323dc2f"
+    },
+    {
+      "name": "sortable-num.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 428,
+      "svgSha256": "6692e180be7dfcc408913a5def661a92ea8eb3d7ccbfdf989754a680d1eba28e"
+    },
+    {
+      "name": "sparkle-refresh.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 429,
+      "svgSha256": "594328f724f435178b014f8586be084a214435f3a4df0a66806bd2eded3a94ea"
+    },
+    {
+      "name": "sparkle-refresh_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 430,
+      "svgSha256": "3f265ce1210e3078d1b2343f1628118b18ba536f9d70b0c5975508be40abb673"
+    },
+    {
+      "name": "sparkle.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 431,
+      "svgSha256": "6d684fad11b7dec16c57c4b7dadb47cfc09d001f0a251faae5559410bc2b76f8"
+    },
+    {
+      "name": "sparkle_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 432,
+      "svgSha256": "4c84a2c9a2b34fa00d3691a89d44564f487f086c058f616c463875789e3ae401"
+    },
+    {
+      "name": "split-view.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 433,
+      "svgSha256": "e81afad307a2738c4d046e0eed303f83c1ed34868c628278c46d015e3fb3fa87"
+    },
+    {
+      "name": "square-root.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 434,
+      "svgSha256": "349257a472ac25f64aeca89ae6f6de2d18f834b0e227ea1c828cfd23cac6b253"
+    },
+    {
+      "name": "stackoverflow.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 435,
+      "svgSha256": "e3b693394c98297dfe7b36684b3b0096229d3474d630bf44191d7593e51cacc8"
+    },
+    {
+      "name": "step-active.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 436,
+      "svgSha256": "c96af3893c779104316bfeb397ef1a1466708d6da831534d43b8c38b422e4bee"
+    },
+    {
+      "name": "step-default.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 437,
+      "svgSha256": "f4f076a2d65463b4bb9f56af52b0523b9086e7b71baf8f5cc075ee8582b2eb37"
+    },
+    {
+      "name": "step-success.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 438,
+      "svgSha256": "a833e49ead70a51f5677f820a5eeb7a832aa3a91fe3c637af9069a6ba858ac0d"
+    },
+    {
+      "name": "stethoscope.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 439,
+      "svgSha256": "5c52ddc8281aed1a79ca08f86c97217cb259c8be20f9c866b16ecd66ae264fc2"
+    },
+    {
+      "name": "stethoscope_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 440,
+      "svgSha256": "754ae104f92af6e4e5879a0003c1f6747b80089ba10affed96cf08492cddc5bd"
+    },
+    {
+      "name": "stop.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 441,
+      "svgSha256": "2163acdd6ab69193eb6079e4b65f38c0c267711b05b1b972ee5586db45a2697f"
+    },
+    {
+      "name": "stop_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 442,
+      "svgSha256": "1864eba168df7ae48d73e0fa4fcb9e74166ace9c6d4aa935c73733926568c4b7"
+    },
+    {
+      "name": "storage.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 443,
+      "svgSha256": "e9db674b78a632559407942c1dfa6c829c35fe5e42ce3f84d100c08442dafa8f"
+    },
+    {
+      "name": "storage_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 444,
+      "svgSha256": "8a680ce38856d07aab529e94a0d93e4bc36185c98f9e9a7cbdfe354b5f386ccd"
+    },
+    {
+      "name": "storefront.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 445,
+      "svgSha256": "899377a8c16a3ad8784666cf5a2778b36f6c75ace154600451804d8933506b59"
+    },
+    {
+      "name": "storefront_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 446,
+      "svgSha256": "122df1c687a68648c84458ce44fbf713f83a6e47d408d2f7ce19f1394d540641"
+    },
+    {
+      "name": "string-number.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 447,
+      "svgSha256": "306404d1bf2c6f966a170728a3d69944360b08a7cf568b4ee2fdf0e70480da2f"
+    },
+    {
+      "name": "string-text.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 448,
+      "svgSha256": "e0fa902ed4db80a4115fe8eba402172576920eb49fc90494274124a21c51e627"
+    },
+    {
+      "name": "success-circle.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 449,
+      "svgSha256": "6f522fdcb55964b31a01cb8a693f12c4cb40e1107e1b510d5c9387a01a97f0fe"
+    },
+    {
+      "name": "success-circle_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-18.png",
+      "card": 450,
+      "svgSha256": "a833e49ead70a51f5677f820a5eeb7a832aa3a91fe3c637af9069a6ba858ac0d"
+    },
+    {
+      "name": "success-tick.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 451,
+      "svgSha256": "4195eb1acaa2be91d59f847fed795110f4b267ce9d48b3d1f5f662273b8e7e05"
+    },
+    {
+      "name": "success.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 452,
+      "svgSha256": "4195eb1acaa2be91d59f847fed795110f4b267ce9d48b3d1f5f662273b8e7e05"
+    },
+    {
+      "name": "success_small.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 453,
+      "svgSha256": "4195eb1acaa2be91d59f847fed795110f4b267ce9d48b3d1f5f662273b8e7e05"
+    },
+    {
+      "name": "success_small_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 454,
+      "svgSha256": "e6bd9119d8eebb28c521a989cadc80ac57d83e9ea61c8ecfc20e91fbca70d45b"
+    },
+    {
+      "name": "success_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 455,
+      "svgSha256": "e6bd9119d8eebb28c521a989cadc80ac57d83e9ea61c8ecfc20e91fbca70d45b"
+    },
+    {
+      "name": "sum.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 456,
+      "svgSha256": "d8da2ce808b5438f31b1a577f2700235810da7748c4d24d77044d423aae3d73a"
+    },
+    {
+      "name": "sum_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 457,
+      "svgSha256": "ea88b37328697b9ca68a0280b8d7b2d252b80157eb866a536b142cc2cd4866a5"
+    },
+    {
+      "name": "summarize.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 458,
+      "svgSha256": "3351c586643c2da782d6511b9d2717bc85571152e50da75dd4ed71944136b48b"
+    },
+    {
+      "name": "swap.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 459,
+      "svgSha256": "eb7433ebec6f95335a1ec38ac618aa8ee593a70406b8f451811c26c1acfa7677"
+    },
+    {
+      "name": "symphony.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 460,
+      "svgSha256": "806c3d97d4318e90acdd63105bc13428a0847f03041ef9e02eb430db4c631f6a"
+    },
+    {
+      "name": "sync.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 461,
+      "svgSha256": "8ab084e2074b9eeb4a163ca42413c01f4b7275f18350314b685468b9f892a43b"
+    },
+    {
+      "name": "tag-clear.svg",
+      "result": "corrected",
+      "finding": "cross-strength",
+      "sheet": "evidence/before-19.png",
+      "card": 462,
+      "svgSha256": "d74ec22060e7c6cdaad67ec421bca86ad1fdb688ccb44dcaebe267408cf3ff15"
+    },
+    {
+      "name": "tag-clear_solid.svg",
+      "result": "corrected",
+      "finding": "cross-strength",
+      "sheet": "evidence/before-19.png",
+      "card": 463,
+      "svgSha256": "b72485b42d9bea6fa13b4f1e1853d95b1f4f9d81b7aa3663a5df013b89dbcae4"
+    },
+    {
+      "name": "tag.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 464,
+      "svgSha256": "153bc15b96534de382367181fe56857074fad5eda0fc454a6c54db1f77d127db"
+    },
+    {
+      "name": "tag_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 465,
+      "svgSha256": "4ae55cd3339abee549e0c2ebb3ddfc9289403116789e5b16715f03411960dd82"
+    },
+    {
+      "name": "tails.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 466,
+      "svgSha256": "f29af8856d5cda9ed49769046852b7bb5ca971b26f2fa1c4685f508b04ca4ebd"
+    },
+    {
+      "name": "tails_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 467,
+      "svgSha256": "73621f4ad32b32639946ded6eb931496d8a1e30b8f4cb9eee43c6bdd8026f711"
+    },
+    {
+      "name": "target.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 468,
+      "svgSha256": "13846818469e84c203a6a98e70f7241e181895d995cd1358e851f5717973f707"
+    },
+    {
+      "name": "tear-out.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 469,
+      "svgSha256": "4752a741c3dd6db485e20561c9758cbc2f55df3ee2981e5b0b8ea9c03eb10103"
+    },
+    {
+      "name": "text-align-center.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 470,
+      "svgSha256": "1b3b33a0d35ffa8df054f2323189da641cb387d1292271e24028b784bd1e42f7"
+    },
+    {
+      "name": "text-align-justify.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 471,
+      "svgSha256": "40728e51d2df455339c091a3666add0216eb4e189c9c4e53cbe385d79ca8990f"
+    },
+    {
+      "name": "text-align-left.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 472,
+      "svgSha256": "5882d9d75f85c31965fdb10c2cf73688d00c61e4db77f6adfa328c3e51957c13"
+    },
+    {
+      "name": "text-align-right.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 473,
+      "svgSha256": "302d0058db5f25dc8491dff71a83aeb14b0c4e6c8059897e255513272132b952"
+    },
+    {
+      "name": "text-bold.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 474,
+      "svgSha256": "a8595e8c4c89246a51c2cf0efd90318fbf0bf0ee62b75af94e1191cd14715a24"
+    },
+    {
+      "name": "text-color.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-19.png",
+      "card": 475,
+      "svgSha256": "1c2ef3e54b1f69d89634b0087704cda9406017319021e84f7b4812b5eb976a6e"
+    },
+    {
+      "name": "text-highlight.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 476,
+      "svgSha256": "3637af3f76d93939112fab777031cc328314526030fa5596d91d577e68a356c8"
+    },
+    {
+      "name": "text-italics.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 477,
+      "svgSha256": "25f3b69b1d5b6f074003a04802928d213517475bcad22a683a02ea5152d835a0"
+    },
+    {
+      "name": "text-ordered-list.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 478,
+      "svgSha256": "0c5b8bf3c67ddff284298193b4b3dddacf675173c68cfcd9944f136473728e60"
+    },
+    {
+      "name": "text-strikethrough.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 479,
+      "svgSha256": "b8c0e298cb5a2aee7887ce5c021f4c6d63a0958bad8dd3c0fdf3f3c8293c95e2"
+    },
+    {
+      "name": "text-underline.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 480,
+      "svgSha256": "e941e852172420f945cdafdddcdb84141ce5b1321437aacf6caa1f64ba9130f5"
+    },
+    {
+      "name": "text-unordered-list.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 481,
+      "svgSha256": "29859e131309d7d9227fd0887ad0c9135244586546e1307c8ba198d8b557fa5a"
+    },
+    {
+      "name": "thumbs-down.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 482,
+      "svgSha256": "cb406977c27b6459f66d472bdc92cb2d1e57837a79b29e0fb34e099caab54444"
+    },
+    {
+      "name": "thumbs-down_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 483,
+      "svgSha256": "e4f7cf4c882e20c08e6d3b768d459e3291c25c24a6cc8f58e95a05ba2cf405a2"
+    },
+    {
+      "name": "thumbs-up.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 484,
+      "svgSha256": "eff443f3573c8ed63ac2e3dba9e72c57435986fb577398a8d2568b3fac0b7498"
+    },
+    {
+      "name": "thumbs-up_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 485,
+      "svgSha256": "435c4cf524bfb2189048844ca1e97177f3434da0e40df06f82c953efd75dfc10"
+    },
+    {
+      "name": "tote.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 486,
+      "svgSha256": "d66ee0baa8d9d3b01ab37e0d5405a59f224d743857de0847e9d3b7d7b356c8c9"
+    },
+    {
+      "name": "tote_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 487,
+      "svgSha256": "1ac9ff3e034a9634d24dec70865973d034839ed15c478f734a31296fe1c99084"
+    },
+    {
+      "name": "travel.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 488,
+      "svgSha256": "24f0b933f1df7301996dd47c548cca2d9ef489b0410f5e1cef855408d40b5ee3"
+    },
+    {
+      "name": "travel_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 489,
+      "svgSha256": "c5d8ff73bb81804ac1c73880bcad6bfdb175ecb29c10ef87034cb52b2cd9b28c"
+    },
+    {
+      "name": "tree.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 490,
+      "svgSha256": "ed2aeaa17ac116cb50aee9a1efc3e0101d07ec2f71207874f9da2b1e0e7461eb"
+    },
+    {
+      "name": "tree_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 491,
+      "svgSha256": "1b622212e8124ff2780d18979ef4ee998dd4a47b1c5293a72f45edb16121f676"
+    },
+    {
+      "name": "triangle-down.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 492,
+      "svgSha256": "65939c09b9f5ac1cac41b647cacf57ad310465562d851a9d3f38aa99ad4e3836"
+    },
+    {
+      "name": "triangle-left.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 493,
+      "svgSha256": "c0f18aca4d676464f95bddfec84d709ce9793d19f11dcc879229671dd60f579f"
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 494,
+      "svgSha256": "55b3a63fd67dbc8e986cc5b7697e33a3e8312ba1bde21ac0e18c56892ea1c943"
+    },
+    {
+      "name": "triangle-right.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 495,
+      "svgSha256": "9fae94c03d9f184afa67883a59eda5c2cd6b010c1c0f4bc0d66dc12fb2432768"
+    },
+    {
+      "name": "triangle-up.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 496,
+      "svgSha256": "0f6a632c4b914d5d5991dd17e9d32ab6716d8ed2395743d4ec9e2c77c701ebcc"
+    },
+    {
+      "name": "type.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 497,
+      "svgSha256": "be2949382944b62e7e486471e2adc258d6c22da39db5a3e88a602c764a003986"
+    },
+    {
+      "name": "type_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 498,
+      "svgSha256": "389c427fe42320af6ba08842b87b8160a694feaabb050ae8277eca346e461618"
+    },
+    {
+      "name": "undo.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 499,
+      "svgSha256": "a50fd60cbe918b27611888f09f58f2e7cb1c5276f1b78f52319067bd3c5255ab"
+    },
+    {
+      "name": "ungroup.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-20.png",
+      "card": 500,
+      "svgSha256": "22369def27e03a905b50129b65d468f1a2305ae330c1db73f726482dcd77b9e6"
+    },
+    {
+      "name": "ungroup_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 501,
+      "svgSha256": "fcb9d1257bc7e483db8aa7f5532c1f986dc35c2e8cc2e11b52c5aed547ec3a00"
+    },
+    {
+      "name": "universal-access.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 502,
+      "svgSha256": "5eca57cf75917e9bc9122ae7db97055d5337e9133035854c0512b77731f59fa5"
+    },
+    {
+      "name": "universal-access_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 503,
+      "svgSha256": "22c5f2d96f273dc0ea022af1ca3435f74e169a58cb2a28086acda90602b820b0"
+    },
+    {
+      "name": "unlinked.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 504,
+      "svgSha256": "1491bf2479a788a0927d6fe2755948e268d9eeb1785a9f48f8228c5fcdc8eba3"
+    },
+    {
+      "name": "unlocked.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 505,
+      "svgSha256": "1f1514ca530e2bc6c51b294a0e6fe6806c58576a89c1e011676423e417dd9e4b"
+    },
+    {
+      "name": "unlocked_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 506,
+      "svgSha256": "e06989af5776321b66b22c547f2d30794c7a567561ec54901721d21dddff5a20"
+    },
+    {
+      "name": "upload.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 507,
+      "svgSha256": "0c413a792c4e9f4c59dd0a0737399c4ed8ba6621f3ae2920a45ac33bb0b81011"
+    },
+    {
+      "name": "urgency-critical.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 508,
+      "svgSha256": "de3dc445c498ed10f32056bb108db485633c3985366e84088522f1461b4c7009"
+    },
+    {
+      "name": "urgency-high.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 509,
+      "svgSha256": "29b439a53ccf673701610854b8040d71b454da5e370ab6ea0193a8da8d73cb80"
+    },
+    {
+      "name": "urgency-low.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 510,
+      "svgSha256": "7075200873e30352ea68080be29f5e222ad6d93a261993a1885ede60bf138545"
+    },
+    {
+      "name": "urgency-medium.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 511,
+      "svgSha256": "69fa1db74c467d514a8495de580f1cc6231fcf29030e2b77df7cc9c2212fe22b"
+    },
+    {
+      "name": "urgency-none.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 512,
+      "svgSha256": "8ce4ae8d136875491f4c4ad5323fe431dd76e2a19a5c6f9190a6b9595a6870d5"
+    },
+    {
+      "name": "urgency-ontime.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 513,
+      "svgSha256": "7da193d5f6d1904ea45b2a0c6a46a8359ef1e88d38b3db93ab0e7de191743863"
+    },
+    {
+      "name": "user-admin.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 514,
+      "svgSha256": "210a98b7a8908683cf8d68746799c507eb8202bc4260a99c845bb988f01b8a54"
+    },
+    {
+      "name": "user-admin_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 515,
+      "svgSha256": "74caf42b112818a4a80e97098ce5589a1417f3383ace45a28df59fb0d99f914c"
+    },
+    {
+      "name": "user-badge.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 516,
+      "svgSha256": "3d065ac52a47de4acdd6829154169f6629a952177cc35b52789ece5aa7e45a22"
+    },
+    {
+      "name": "user-group.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 517,
+      "svgSha256": "18191cb9609d0594e0037ffb7c2ed93e71590a5c1fcf00e0ec50245c7700e833"
+    },
+    {
+      "name": "user-group_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 518,
+      "svgSha256": "bc4a6fda90216ce897a6ca3ffcc093901bf7898410f4a8d5561a1e5900a3ade1"
+    },
+    {
+      "name": "user-search.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 519,
+      "svgSha256": "7155a1e5b2733438075831726a8583f3f7816add4777bf008d5e89ba5b6d1032"
+    },
+    {
+      "name": "user.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 520,
+      "svgSha256": "81635f5c3638fc2c542954593a5f13159e3e650a8172563bc5554482b0e0e8e7"
+    },
+    {
+      "name": "user_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 521,
+      "svgSha256": "4d96401cc49d845ee773172fb1a209857d8d74b0b15b33d9cb8d93ea728e77a9"
+    },
+    {
+      "name": "utensils.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 522,
+      "svgSha256": "58885b7f9ba11c064dd6895b60cb77dab09fa9fd9d78189290ba6755d7a9892e"
+    },
+    {
+      "name": "utensils_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 523,
+      "svgSha256": "5566612f169f8784048353d16e36a8118167450e9cd6ef18baab9e905535159b"
+    },
+    {
+      "name": "video-disabled.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 524,
+      "svgSha256": "3b72795e79fe2931cd2483346f4a86683fe4e98f24912c9928d09690bb24d9a7"
+    },
+    {
+      "name": "video.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-21.png",
+      "card": 525,
+      "svgSha256": "d55acbcd8627c27753fdd0dbebd6052850b395360da11dc2ba51cd40ed1d03ee"
+    },
+    {
+      "name": "video_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 526,
+      "svgSha256": "c57e9eb42be7d70d372da055fc0b129f5d9212705ce8224f1617642d868942a9"
+    },
+    {
+      "name": "visible.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 527,
+      "svgSha256": "047ca66ea90d91c8d8b9db16e0cf3ace528558774e22278acd81212051ce3c54"
+    },
+    {
+      "name": "visible_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 528,
+      "svgSha256": "67f9bd03919d90851ebb2ada9d317988c2c927a1bcb10e128d032221ac4dc76d"
+    },
+    {
+      "name": "volume-down.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 529,
+      "svgSha256": "89932522702b935f22b64c487355925d11aa48f0276382908d4be901c198af65"
+    },
+    {
+      "name": "volume-off.svg",
+      "result": "corrected",
+      "finding": "cross-strength",
+      "sheet": "evidence/before-22.png",
+      "card": 530,
+      "svgSha256": "6c94b28c97af02c4aa71cfff2a6110647ac53ad9199cb5aab2230ae01046832b"
+    },
+    {
+      "name": "volume-up.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 531,
+      "svgSha256": "de4ebc39c5ee39842cfd1f8ce5781fd64e44a3ef4ebb1985ec83d7655e1a2bd0"
+    },
+    {
+      "name": "warning.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 532,
+      "svgSha256": "548a001dd692127df50dc01ad5349cc189c0bc8050475320669d31a10bb8ef37"
+    },
+    {
+      "name": "warning_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 533,
+      "svgSha256": "8146488ef527937122974f6546bccad23847803f892b4f0417a3690067a59204"
+    },
+    {
+      "name": "watch.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 534,
+      "svgSha256": "e395e6ab773d19636d712033ddb284e07de06c3a7795cbfd2bf30f2d961db1dc"
+    },
+    {
+      "name": "watch_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 535,
+      "svgSha256": "8906b914589aef29797999f9123352fc8ad3670174e384154531fa7d387092c3"
+    },
+    {
+      "name": "waveform.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 536,
+      "svgSha256": "01ac0835b41c1438633d6735fad958218bf0b01021f0c15b32c28940853f6189"
+    },
+    {
+      "name": "weight.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 537,
+      "svgSha256": "e56b990a2282248fe6a93f1a25da19a69610565a75a7f1fd320f4acff23423c1"
+    },
+    {
+      "name": "weight_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 538,
+      "svgSha256": "9c15b9e36e92df19946fd1ee77787a43fc2280fbefeb31b7537cc2724920ac10"
+    },
+    {
+      "name": "wifi-disabled.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 539,
+      "svgSha256": "e7c9181baf17e9bdc28ff6032b4cf312888de10cc205ba7ff82a6a7619e2e981"
+    },
+    {
+      "name": "wifi.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 540,
+      "svgSha256": "2b1ff1d3f682f32a797dd940459053c7c2304e4695c24515dee9966766a1f514"
+    },
+    {
+      "name": "woman.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 541,
+      "svgSha256": "ba423c75c2e515e2703694c1ace42a5231f4e2f928cb84f7e4737d432a4b3887"
+    },
+    {
+      "name": "woman_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 542,
+      "svgSha256": "1b77c194c40bc95cf3e0b3f4c398e7ddf407c5bbc37eeb30fa6b3e90ad471f65"
+    },
+    {
+      "name": "woodland.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 543,
+      "svgSha256": "4b8c783e4fd0a6d742e34fc70c6081bb81a0515dfb4833744066e7bf2233aad5"
+    },
+    {
+      "name": "woodland_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 544,
+      "svgSha256": "5114b694d2b12280c1d3f6c13591aa9e52d605d509f5d4e1c91cbbac7a65e89a"
+    },
+    {
+      "name": "workflow.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 545,
+      "svgSha256": "d7c069e13fe4a4421d535595d7f8efa76bdac7065733b961af00058e5ac70231"
+    },
+    {
+      "name": "workflow_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 546,
+      "svgSha256": "0a0bbe4420e45cdfb91ba8dde5f186c16af2d5cfa7d7622a744b7a833fef466a"
+    },
+    {
+      "name": "xls.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 547,
+      "svgSha256": "483b888dc55b03999208aa56652cb29ddbb1f52e5f0c79c7531cbf3932aaffe1"
+    },
+    {
+      "name": "xls_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 548,
+      "svgSha256": "0aa8830c465de76512bf5423cdab073f5b9d90fb407e32dd0681d5263accb3bf"
+    },
+    {
+      "name": "zip.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 549,
+      "svgSha256": "960b14489b789d2384ad4fb7869605f9042cc7d1963364e2a08f29a1c7f0ed23"
+    },
+    {
+      "name": "zip_solid.svg",
+      "result": "retained",
+      "finding": "No disproportionate weld identified in this visual strength pass; preserve the existing construction.",
+      "sheet": "evidence/before-22.png",
+      "card": 550,
+      "svgSha256": "b2f9bf76192fe0a998dd76af1260af00e5fcab4ee9143d46c2b758c5628241fa"
+    }
+  ]
+}

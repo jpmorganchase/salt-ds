@@ -2,12 +2,14 @@
 
 These measurements record local design comparisons used during the September 2026 redraw. They are implementation evidence, not global radius or spacing tokens, and must be remeasured when the referenced artwork changes. Follow [Icon design](../../../../site/docs/foundations/assets/icon-design.mdx) for the current visual standard and [Maintaining Salt icons](../../MAINTAINING.md) for construction and review.
 
-The supplied references contain different proportions even for separate crosses:
+The supplied references contain different proportions even for isolated plus-shaped marks:
 
-| Supplied reference                  | Local painted width W |      Inside radius R |              R / W |
-| ----------------------------------- | --------------------: | -------------------: | -----------------: |
-| `AI-01.svg`, isolated plus          |  approximately 1.4301 | approximately 0.9535 | approximately 0.67 |
-| `Blockchain-02.svg`, separate cross |  approximately 1.4301 | approximately 1.4302 | approximately 1.00 |
+| Supplied reference                 | Local painted width W |      Inside radius R |              R / W |
+| ---------------------------------- | --------------------: | -------------------: | -----------------: |
+| `AI-01.svg`, isolated plus         |  approximately 1.4301 | approximately 0.9535 | approximately 0.67 |
+| `Blockchain-02.svg`, separate plus |  approximately 1.4301 | approximately 1.4302 | approximately 1.00 |
+
+These are direct examples of plus-shaped crossings, not standalone diagonal close symbols. Applying the same concave-corner treatment to a diagonal cross follows the system geometry rule; its weld strength still needs a native-size comparison.
 
 Other measured structural anchors keep the comparison local:
 
@@ -50,4 +52,10 @@ Medical crosses have stronger bands and restrained inner fillets to preserve the
 
 For every revised family, record the reference used, the final visible proportion or transition shape, the supported widths inspected, and any compact-size adjustment. If a curve disappears beneath a thick stroke, strengthen or reconstruct the junction. If it closes a counter, crowds a neighbor or makes a plus read as a sparkle, shorten the transition or simplify the surrounding geometry. Do not apply Schedule’s dimensions to unrelated junctions.
 
-There is no universal corner radius for the family. A softly curved housing and a sharp structural corner can belong to the same icon. Follow the object and the nearest related construction, then check the result at native size.
+There is no universal corner radius for the family. Natural curves, sharp outward-facing corners and softened concave joins can belong to the same icon. Classify the boundary, compare the nearest related construction and adjust to the available straight length and clearance, then check recognition at native size. A retained sharp interior corner requires the comparison evidence described in the design guide.
+
+## Compact crosses and four-way arrows
+
+The [23 September strength review](reviews/weld-strength-2026-09-23/README.md) retained the exposed concave sectors while reducing their local radii. At W = 4/3, the final visible radius is approximately 0.28–0.31 units in Close, Close small and Multiply, and 0.22–0.29 units in the compact Filter clear, Tag clear, Key backspace and Volume off marks. Signature's narrower local band is approximately 0.93 units with a visible radius of approximately 0.20. These are measured outcomes for these drawings, not new global tokens.
+
+Expand and Collapse use smaller explicit shaft/head transitions with longer straight arms; their final visible radii at W = 4/3 are approximately 0.31 and 0.26 units respectively. The 0.67 reference, 1, 4/3 and 1.5 widths were compared at both native sizes. Do not infer a sharp-corner exemption from the subtler appearance at heavier weights.

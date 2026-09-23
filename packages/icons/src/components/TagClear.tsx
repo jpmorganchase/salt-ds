@@ -63,29 +63,29 @@ export const TagClearIcon = forwardRef<SVGSVGElement, TagClearIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="m10.247 9.952 4.915 4.914m0-4.914-4.915 4.914"
           />
-          <path d="M13.548 13.253a1.194 1.194 0 0 0-1.688 0l.844-.844Z" />
+          <path d="M13.35 13.054a.913.913 0 0 0-1.291 0l.645-.645Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M13.548 13.253a1.194 1.194 0 0 0-1.688 0"
+            d="M13.35 13.054a.913.913 0 0 0-1.291 0"
           />
-          <path d="M11.86 13.253a1.194 1.194 0 0 0 0-1.688l.844.844Z" />
+          <path d="M12.059 13.054a.913.913 0 0 0 0-1.29l.645.645Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M11.86 13.253a1.194 1.194 0 0 0 0-1.688"
+            d="M12.059 13.054a.913.913 0 0 0 0-1.29"
           />
-          <path d="M11.86 11.565a1.194 1.194 0 0 0 1.688 0l-.844.844Z" />
+          <path d="M12.059 11.764a.913.913 0 0 0 1.29 0l-.645.645Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M11.86 11.565a1.194 1.194 0 0 0 1.688 0"
+            d="M12.059 11.764a.913.913 0 0 0 1.29 0"
           />
-          <path d="M13.548 11.565a1.194 1.194 0 0 0 0 1.688l-.844-.844Z" />
+          <path d="M13.35 11.764a.913.913 0 0 0 0 1.29l-.646-.645Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M13.548 11.565a1.194 1.194 0 0 0 0 1.688"
+            d="M13.35 11.764a.913.913 0 0 0 0 1.29"
           />
         </g>
       </Icon>

@@ -23,10 +23,6 @@ const icons = {};
 const put = (name, outline, solid) => {
   icons[name] = [outline, solid];
 };
-const cross = (x = 12, y = 12, r = 3) =>
-  S(
-    `M${x - r} ${y - r}l${2 * r} ${2 * r}M${x + r} ${y - r}l${-2 * r} ${2 * r}`,
-  );
 // Filled seams follow the outline centerlines, stopping short of the shell corners.
 const envelope = "M3.75 5.25h16.5v13.5H3.75Z";
 put(
@@ -126,8 +122,7 @@ put(
 );
 put(
   "multiply",
-  cross(12, 12, 6.75) +
-    group(circularCrossJunction(12, 12, 2.05), "rotate(45 12 12)"),
+  weldedCross(12, 12, 6.75, 6.75, 1.15),
 );
 
 const musicStems = S("M9.75 16.5V5.25l10.5-3v12.75M9.75 9.75l10.5-3");
@@ -641,7 +636,7 @@ put(
 );
 put(
   "signature",
-  weldedCross(3.75, 15, 1.875, 1.875, 1.1, 1.05) +
+  weldedCross(3.75, 15, 1.875, 1.875, 0.9, 1.05) +
     S(
       "M7.5 17.25C10.5 15 15.5 6.5 14 4.25C12.5 1.75 9.25 9.5 9.25 14.75C9.25 18.5 12 18.5 13.5 15.5L15 12.75C14.25 16.5 15.75 17 17.25 15L18.5 13.5C17.75 17 19.25 17 21.75 15",
     ) +
