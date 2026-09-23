@@ -665,7 +665,7 @@ describe("Number Input", () => {
     },
   );
 
-  it("disables its spinner buttons inside a disabled FormField", async () => {
+  it("does not change value when the spinner buttons are used inside a disabled FormField", async () => {
     await renderWithSalt(
       <FormField disabled>
         <FormFieldLabel>Disabled form field</FormFieldLabel>
@@ -673,11 +673,15 @@ describe("Number Input", () => {
       </FormField>,
     );
 
-    expect(document.querySelector(".saltNumberInput-increment")).toBeDisabled();
-    expect(document.querySelector(".saltNumberInput-decrement")).toBeDisabled();
+    const increment = page.elementLocator(
+      document.querySelector<HTMLElement>(".saltNumberInput-increment")!,
+    );
+    await increment.click({ force: true });
+
+    await expect.element(input()).toHaveValue("5");
   });
 
-  it("enables its spinner buttons inside an enabled FormField", async () => {
+  it("still changes value when the spinner buttons are used inside an enabled FormField", async () => {
     await renderWithSalt(
       <FormField>
         <FormFieldLabel>Enabled form field</FormFieldLabel>
@@ -685,8 +689,12 @@ describe("Number Input", () => {
       </FormField>,
     );
 
-    expect(document.querySelector(".saltNumberInput-increment")).toBeEnabled();
-    expect(document.querySelector(".saltNumberInput-decrement")).toBeEnabled();
+    const increment = page.elementLocator(
+      document.querySelector<HTMLElement>(".saltNumberInput-increment")!,
+    );
+    await increment.click();
+
+    await expect.element(input()).toHaveValue("6");
   });
 
   it("applies name with inputProps taking precedence", async () => {

@@ -740,7 +740,7 @@ describe("Given a ComboBox", () => {
 });
 
 describe("given a multiselect ComboBox with pills", () => {
-  it("treats the pill list as a single tab stop when reached backwards", async () => {
+  it("lets keyboard users reach and remove every pill through one tab stop", async () => {
     await renderWithSalt(
       <>
         <ComboBox multiselect defaultSelected={["Alabama", "Alaska"]}>
@@ -751,16 +751,34 @@ describe("given a multiselect ComboBox with pills", () => {
       </>,
     );
 
+    const alabama = page.getByRole("button", { name: "Remove Alabama" });
+    const alaska = page.getByRole("button", { name: "Remove Alaska" });
+
+    // Shift-tabbing back past the input enters the pill list at its start,
+    // rather than treating each pill as its own tab stop and landing on the
+    // last one.
     await userEvent.click(page.getByRole("button", { name: "After" }));
     await userEvent.tab({ shift: true });
     await expect.element(input()).toHaveFocus();
-
     await userEvent.tab({ shift: true });
+    await expect.element(alabama).toHaveFocus();
 
-    const pills = document.querySelectorAll<HTMLElement>(
-      ".saltPillInput-pillList [role='listitem'] button",
-    );
-    expect(pills).toHaveLength(2);
-    expect(document.activeElement).toBe(pills[0]);
+    // Every pill is still reachable from that single stop, and a screen
+    // reader announces which pill removing will affect.
+    await userEvent.keyboard("{ArrowRight}");
+    await expect.element(alaska).toHaveFocus();
+    await userEvent.keyboard("{ArrowLeft}");
+    await expect.element(alabama).toHaveFocus();
+
+    // Tab leaves the whole list rather than stepping to the next pill.
+    await userEvent.tab();
+    await expect.element(input()).toHaveFocus();
+
+    // The pill can still be removed from the keyboard.
+    await userEvent.tab({ shift: true });
+    await expect.element(alabama).toHaveFocus();
+    await userEvent.keyboard("{Delete}");
+    await expect.element(alabama.query()).not.toBeInTheDocument();
+    await expect.element(alaska).toBeInTheDocument();
   });
 });
