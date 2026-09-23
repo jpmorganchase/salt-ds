@@ -510,6 +510,8 @@ describe("GIVEN an InteractableCardGroup whose disabled state changes", () => {
     await userEvent.click(page.getByRole("button", { name: "Enable" }));
     await userEvent.tab();
 
-    await expect.element(page.getByRole("radio", { name: "One" })).toHaveFocus();
+    await expect
+      .element(page.getByRole("radio", { name: "One" }))
+      .toHaveFocus();
   });
 });
