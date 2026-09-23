@@ -297,6 +297,8 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
 
     if (!openState) {
       if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        // The dropdown owns the arrow keys, so stop the page scrolling.
+        event.preventDefault();
         setOpen(true, undefined, event.key);
         return;
       }

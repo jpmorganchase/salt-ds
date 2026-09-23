@@ -581,6 +581,22 @@ describe("Given a core Dropdown", () => {
 });
 
 describe("GIVEN a Dropdown at the edge of its options", () => {
+  it("stops the page scrolling when opening the list with an arrow key", async () => {
+    const keyDown = trackDefaultPrevented();
+    await renderWithSalt(
+      <Dropdown onKeyDown={keyDown.handler}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </Dropdown>,
+    );
+
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowDown}");
+
+    await expect.element(listbox()).toBeInTheDocument();
+    expect(keyDown.lastDefaultPrevented()).toBe(true);
+  });
+
   it("stops the page scrolling when arrowing past the first option", async () => {
     const keyDown = trackDefaultPrevented();
     await renderWithSalt(
