@@ -62,6 +62,16 @@ Ordinary exports target a longest painted span of **15.5 units at stroke width 1
 
 Judge recognition at actual **12px and 16px**, then enlarge the drawing to inspect construction. Align important horizontal and vertical edges to the pixel grid where useful, checking the final size and stroke weight. Snapping every coordinate to an integer does not guarantee a sharp result.
 
+### Align important edges to the pixel grid
+
+Prioritize long horizontal and vertical painted edges at the default 12px size. With the default 4/3-unit primary stroke, these lines render about 1 CSS pixel wide: their centers should land on half-pixel positions so both visible edges land on pixel boundaries. For filled bars, align the visible boundaries directly. Judge the final export after scaling and fitting, not only the construction coordinates.
+
+Keep repeated lines evenly spaced, preserve shared landmarks between variants, and move connected shapes together. Adjust the optical frame or the owning geometry when automatic fitting would undo useful alignment. An icon does not need to occupy the maximum available span if a slightly smaller frame produces a clearer drawing. Printer uses this approach for its housing and sheets.
+
+Check the result at 16px too. A single drawing cannot put every edge exactly on the pixel grid at both sizes, stroke settings and display scales. Prefer recognition and consistent apparent weight over mechanically snapping every point. Preserve diagonal angles, natural curves and welded transitions; the chevrons are judged by their proportions and visible weight, not by a horizontal/vertical grid score.
+
+Make **12px on a standard-density screen (device pixel ratio 1) at 100% browser zoom** the primary clarity check. Review in an actual component as well as in an icon sheet, then confirm 16px and higher-density screens. Fractional layout positions, browser zoom and display pixel density can change the raster result. Keep normal antialiasing (`shape-rendering: auto`); forcing `crispEdges` across the set can roughen diagonals and curved welds. These checks improve the artwork's starting alignment, but do not guarantee identical pixels in every context.
+
 ### Judge apparent size and balance
 
 Equal bounds do not guarantee equal apparent size. Compare circles, diagonals and filled shapes beside related icons and text. A broad solid shape may need a smaller span; an asymmetric shape may need an optical offset. Preserve common landmarks when making these adjustments.

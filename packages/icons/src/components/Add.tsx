@@ -22,31 +22,31 @@ export const AddIcon = forwardRef<SVGSVGElement, AddIconProps>(function AddIcon(
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1.75 8h12.5M8 1.75v12.5"
+          d="M2.417 8.667h12.5m-6.25-6.25v12.5"
         />
-        <path d="M6.365 8A1.635 1.635 0 0 0 8 6.365V8Z" />
+        <path d="M7.032 8.667a1.635 1.635 0 0 0 1.635-1.635v1.635Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M6.365 8A1.635 1.635 0 0 0 8 6.365"
+          d="M7.032 8.667a1.635 1.635 0 0 0 1.635-1.635"
         />
-        <path d="M6.365 8A1.635 1.635 0 0 1 8 9.635V8Z" />
+        <path d="M7.032 8.667A1.635 1.635 0 0 1 8.667 10.3V8.667Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M6.365 8A1.635 1.635 0 0 1 8 9.635"
+          d="M7.032 8.667A1.635 1.635 0 0 1 8.667 10.3"
         />
-        <path d="M9.635 8A1.635 1.635 0 0 1 8 6.365V8Z" />
+        <path d="M10.301 8.667a1.635 1.635 0 0 1-1.634-1.635v1.635Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M9.635 8A1.635 1.635 0 0 1 8 6.365"
+          d="M10.301 8.667a1.635 1.635 0 0 1-1.634-1.635"
         />
-        <path d="M9.635 8A1.635 1.635 0 0 0 8 9.635V8Z" />
+        <path d="M10.301 8.667A1.635 1.635 0 0 0 8.667 10.3V8.667Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M9.635 8A1.635 1.635 0 0 0 8 9.635"
+          d="M10.301 8.667A1.635 1.635 0 0 0 8.667 10.3"
         />
       </g>
     </Icon>

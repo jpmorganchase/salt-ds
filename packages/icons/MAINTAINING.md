@@ -170,6 +170,14 @@ The framing transform moves and scales the container's paths, counters and cutou
 
 Generation writes [view-box-transforms.json](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/scripts/artwork/view-box-transforms.json) beside the artwork scripts. Keep this generated manifest with the exported SVGs. The validator uses it to reverse only the framing transform for existing recipe-geometry regression checks, and separately checks the actual fitted exports for painted occupancy, centering and clipping. Make framing changes in the generator; do not hand-pad individual recipes or edit the manifest.
 
+## Check final pixel alignment
+
+Follow the [design guidance for pixel alignment](../../site/docs/foundations/assets/icon-design.mdx#align-important-edges-to-the-pixel-grid). At 12px with a 4/3-unit primary stroke, horizontal and vertical stroke centers on the 16-unit master land on `2/3 + 4n/3`; their painted edges then align at an integer CSS origin. Filled boundaries use a different phase. This is a review target for important straight runs, not a snapping rule for every coordinate or a promise at fractional layout positions.
+
+Run `yarn workspace @salt-ds/icons audit:pixel-grid`. The report in `dist/icon-pixel-grid/report.json` covers every export at 12px/W4/3, 16px/W1 and 16px/W4/3. It samples whether long straight candidate boundaries remain exposed in the union of the final SVG paint, then measures their distance from the pixel grid. The review queue excludes brand artwork. Short details, curves and diagonals need visual judgment; a low score or an empty result is not visual approval. The score assumes 100% zoom, DPR 1 and an integer CSS origin. Review light/dark, higher pixel densities and fractional placement separately.
+
+Use the owning recipe for structural changes and `optical-fits.mjs` for reviewed whole-icon span or placement changes. Preserve one frame for pairs with retained landmarks. Printer's 13.5-unit painted span keeps its authored grid at scale 1; enlarging it to 15.5 would undo the alignment. The pixel-grid tests protect the reviewed printer and primary-control edges against that regression. The catalogue audit remains advisory because many valid drawings trade alignment against geometry and recognition.
+
 ## Construct transparent cutouts
 
 Follow the visual separation described in [Icon design](../../site/docs/foundations/assets/icon-design.mdx#transparency-and-cutouts). Calculate clearances from the actual configured stroke widths, then inspect the resulting geometry at native size.

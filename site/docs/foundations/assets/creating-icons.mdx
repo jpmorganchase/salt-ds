@@ -48,6 +48,8 @@ Contributors should use the repository's shared mark composition so fitting a co
 
 Check the complete painted shape, not just the path centerlines. Preserve aspect ratio, keep paint inside the 16-unit frame and compare apparent size against neighboring icons. The ordinary fit targets a **15.5-unit longest painted dimension at width 1.5**; optical exceptions and shared family frames preserve balance and common landmarks.
 
+Check important straight edges on the final 12px pixel grid, then compare 16px and actual component placement. Retain an optical frame that preserves useful alignment instead of enlarging every drawing to the maximum span. See [pixel alignment](/salt/foundations/assets/icon-design#align-important-edges-to-the-pixel-grid).
+
 Judge the exported pair after fitting. Two identical source features can end up at different positions if their full drawings fit differently. Record a justified optical adjustment in the shared fit configuration rather than adding arbitrary padding or stretching an icon. Official brand marks and the existing full-canvas checkmark surfaces retain their designated frames.
 
 The [export-fitting instructions](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/MAINTAINING.md#fit-every-export-to-the-viewbox) explain construction units, shared frames, optical targets and the generated fit manifest.
@@ -70,7 +72,7 @@ Start from the owner's official vector source and usage guidance. Preserve its c
 
 Compare the complete affected family in the site's [Icons catalogue](/salt/foundations/assets/index#all-icons), the existing Storybook **Icons/Icon** stories and the relevant component examples. **Icon QA** provides size and CSS-mask examples. Follow the [repository setup and review instructions](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/MAINTAINING.md#use-the-existing-review-surfaces) to run them.
 
-Review both variants at actual **12px and 16px**, on **light and dark backgrounds**, plus an enlarged view. Start with the themed widths: **4/3 for high/medium density** and **1 for low/touch/mobile**. Also inspect the **0.67** SVG reference and the **1.5** fitting width. Confirm actual rendered dimensions: the component's `size` prop is a density-based multiplier, not a pixel value.
+Review both variants at actual **12px and 16px**, on **light and dark backgrounds**, plus an enlarged view. Use 12px at **device pixel ratio 1 and 100% browser zoom** as the primary clarity check, then confirm higher-density screens. Display pixel density is separate from the Salt density setting. Start with the themed widths: **4/3 for high/medium density** and **1 for low/touch/mobile**. Also inspect the **0.67** SVG reference and the **1.5** fitting width. Confirm actual rendered dimensions: the component's `size` prop is a density-based multiplier, not a pixel value.
 
 For a whole-scale review, cover multipliers 1–4 at every density using the [published size table](/salt/foundations/assets/index#scaling-icons). Review generated components and CSS masks separately, since masks keep baked stroke widths.
 

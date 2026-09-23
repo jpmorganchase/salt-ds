@@ -60,13 +60,13 @@
     "fitted": true,
     "targetSpan": 12.5,
     "opticalCenter": [
-      8,
-      8
+      8.666667,
+      8.666667
     ],
-    "opticalReason": "Balance the arithmetic operator beside compact comparison symbols while preserving its primary stroke and gesture.",
+    "opticalReason": "Align the primary operator strokes at 12px while retaining the compact arithmetic family span and weight.",
     "scale": 0.961538,
-    "translateX": 0.307692,
-    "translateY": 0.307692
+    "translateX": 0.974359,
+    "translateY": 0.974359
   },
   "announcement.svg": {
     "groupKey": "announcement.svg",
@@ -96,33 +96,53 @@
     "groupKey": "arrow-down.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.090047,
-    "translateX": -0.720379,
-    "translateY": -0.840047
+    "opticalCenter": [
+      8.666667,
+      8
+    ],
+    "opticalReason": "Place the primary shaft on a pixel center at 12px without changing its weight or the arrow gesture.",
+    "scale": 1.089728,
+    "translateX": -0.051161,
+    "translateY": -0.839728
   },
   "arrow-left.svg": {
     "groupKey": "arrow-left.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.091981,
-    "translateX": -0.629717,
-    "translateY": -0.735849
+    "opticalCenter": [
+      8,
+      8.666667
+    ],
+    "opticalReason": "Place the primary shaft on a pixel center at 12px without changing its weight or the arrow gesture.",
+    "scale": 1.090695,
+    "translateX": -0.610424,
+    "translateY": -0.058892
   },
   "arrow-right.svg": {
     "groupKey": "arrow-right.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.091981,
-    "translateX": -0.841981,
-    "translateY": -0.735849
+    "opticalCenter": [
+      8,
+      8.666667
+    ],
+    "opticalReason": "Place the primary shaft on a pixel center at 12px without changing its weight or the arrow gesture.",
+    "scale": 1.090695,
+    "translateX": -0.840695,
+    "translateY": -0.058892
   },
   "arrow-up.svg": {
     "groupKey": "arrow-up.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.091981,
-    "translateX": -0.735849,
-    "translateY": -0.629717
+    "opticalCenter": [
+      8.666667,
+      8
+    ],
+    "opticalReason": "Place the primary shaft on a pixel center at 12px without changing its weight or the arrow gesture.",
+    "scale": 1.090695,
+    "translateX": -0.058892,
+    "translateY": -0.610424
   },
   "attach.svg": {
     "groupKey": "attach.svg",
@@ -565,34 +585,54 @@
   "chevron-down.svg": {
     "groupKey": "chevron-down.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.159204,
-    "translateX": -1.273632,
-    "translateY": -1.391869
+    "targetSpan": 13.5,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Keep the navigation chevron compact beside button text while retaining primary stroke weight, 45-degree arms and its inner weld.",
+    "scale": 0.9975,
+    "translateX": 0.02,
+    "translateY": -0.120918
   },
   "chevron-left.svg": {
     "groupKey": "chevron-left.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.155779,
-    "translateX": -1.127513,
-    "translateY": -1.246231
+    "targetSpan": 13.5,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Keep the navigation chevron compact beside button text while retaining primary stroke weight, 45-degree arms and its inner weld.",
+    "scale": 0.994975,
+    "translateX": 0.181415,
+    "translateY": 0.040201
   },
   "chevron-right.svg": {
     "groupKey": "chevron-right.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.155779,
-    "translateX": -1.36495,
-    "translateY": -1.246231
+    "targetSpan": 13.5,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Keep the navigation chevron compact beside button text while retaining primary stroke weight, 45-degree arms and its inner weld.",
+    "scale": 0.994975,
+    "translateX": -0.101013,
+    "translateY": 0.040201
   },
   "chevron-up.svg": {
     "groupKey": "chevron-up.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.159204,
-    "translateX": -1.273632,
-    "translateY": -1.166045
+    "targetSpan": 13.5,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Keep the navigation chevron compact beside button text while retaining primary stroke weight, 45-degree arms and its inner weld.",
+    "scale": 0.9975,
+    "translateX": 0.02,
+    "translateY": 0.153066
   },
   "clock.svg": {
     "groupKey": "clock.svg",
@@ -1165,12 +1205,12 @@
     "targetSpan": 12.5,
     "opticalCenter": [
       8,
-      8
+      8.666667
     ],
-    "opticalReason": "Balance the arithmetic operator beside compact comparison symbols while preserving its primary stroke and gesture.",
+    "opticalReason": "Align the primary operator strokes at 12px while retaining the compact arithmetic family span and weight.",
     "scale": 1.136364,
     "translateX": -1.090909,
-    "translateY": -1.090909
+    "translateY": -0.424242
   },
   "document-draft.svg": {
     "groupKey": "document-draft.svg",
@@ -1228,34 +1268,54 @@
   "double-chevron-down.svg": {
     "groupKey": "double-chevron-down.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.159204,
-    "translateX": -1.273632,
-    "translateY": -1.246968
+    "targetSpan": 13.5,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Keep the navigation chevron compact beside button text while retaining primary stroke weight, 45-degree arms and its inner weld.",
+    "scale": 0.992157,
+    "translateX": 0.062745,
+    "translateY": 0.045221
   },
   "double-chevron-left.svg": {
     "groupKey": "double-chevron-left.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.155779,
-    "translateX": -1.271985,
-    "translateY": -1.246231
+    "targetSpan": 13.5,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Keep the navigation chevron compact beside button text while retaining primary stroke weight, 45-degree arms and its inner weld.",
+    "scale": 0.994798,
+    "translateX": 0.058497,
+    "translateY": 0.041612
   },
   "double-chevron-right.svg": {
     "groupKey": "double-chevron-right.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.155779,
-    "translateX": -1.220477,
-    "translateY": -1.246231
+    "targetSpan": 13.5,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Keep the navigation chevron compact beside button text while retaining primary stroke weight, 45-degree arms and its inner weld.",
+    "scale": 0.994798,
+    "translateX": 0.024728,
+    "translateY": 0.041612
   },
   "double-chevron-up.svg": {
     "groupKey": "double-chevron-up.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.15425,
-    "translateX": -1.234,
-    "translateY": -1.254527
+    "targetSpan": 13.5,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Keep the navigation chevron compact beside button text while retaining primary stroke weight, 45-degree arms and its inner weld.",
+    "scale": 0.993481,
+    "translateX": 0.052151,
+    "translateY": 0.061441
   },
   "download.svg": {
     "groupKey": "download.svg",
@@ -2552,17 +2612,27 @@
     "groupKey": "move-horizontal.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.033654,
-    "translateX": -0.269231,
-    "translateY": -0.269231
+    "opticalCenter": [
+      8,
+      8.666667
+    ],
+    "opticalReason": "Match the navigation arrows: align the primary shaft at 12px while retaining both arrowheads.",
+    "scale": 1.031175,
+    "translateX": -0.2494,
+    "translateY": 0.417267
   },
   "move-vertical.svg": {
     "groupKey": "move-vertical.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.031401,
-    "translateX": -0.251208,
-    "translateY": -0.265851
+    "opticalCenter": [
+      8.666667,
+      8
+    ],
+    "opticalReason": "Match the navigation arrows: align the primary shaft at 12px while retaining both arrowheads.",
+    "scale": 1.030048,
+    "translateX": 0.426282,
+    "translateY": -0.247728
   },
   "multiply.svg": {
     "groupKey": "multiply.svg",
@@ -3038,18 +3108,29 @@
   "print.svg": {
     "groupKey": "print.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.076923,
-    "translateX": -0.615385,
-    "translateY": -0.615385
+    "targetSpan": 13.5,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Preserve the authored 12px pixel grid for the housing and paper edges; a larger automatic fit blurs these landmarks.",
+    "scale": 1,
+    "translateX": 0,
+    "translateY": 0
   },
   "print_solid.svg": {
     "groupKey": "print_solid.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.076923,
-    "translateX": -0.615385,
-    "translateY": -0.615385
+    "targetSpan": 13.5,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Retain the same pixel-aligned paper and housing landmarks as the outline.",
+    "frameSource": "print.svg",
+    "scale": 1,
+    "translateX": 0,
+    "translateY": 0
   },
   "progress-cancelled.svg": {
     "groupKey": "progress-cancelled.svg",
@@ -3217,12 +3298,12 @@
     "targetSpan": 12.5,
     "opticalCenter": [
       8,
-      8
+      8.666667
     ],
-    "opticalReason": "Balance the arithmetic operator beside compact comparison symbols while preserving its primary stroke and gesture.",
+    "opticalReason": "Align the primary operator strokes at 12px while retaining the compact arithmetic family span and weight.",
     "scale": 0.961538,
     "translateX": 0.307692,
-    "translateY": 0.307692
+    "translateY": 0.974359
   },
   "replay-10.svg": {
     "groupKey": "replay-10.svg",

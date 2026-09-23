@@ -34,9 +34,10 @@
     "validate:icons": "yarn node ./scripts/artwork/validate.mjs && yarn node ./scripts/artwork/check-new-icon-reviews.mjs",
     "audit:icons": "yarn node ./scripts/artwork/audit-junctions.mjs",
     "check:icon-reviews": "yarn node ./scripts/artwork/audit-junctions.mjs --complete",
-    "test:artwork": "yarn node --test ./scripts/artwork/junction-trace.test.mjs ./scripts/artwork/junction-discovery.test.mjs ./scripts/artwork/junction-paint.test.mjs ./scripts/artwork/junction-review-state.test.mjs ./scripts/artwork/junction-review-page.test.mjs ./scripts/artwork/contour-profiles.test.mjs ./scripts/artwork/path-segments.test.mjs ./scripts/artwork/painted-corners.test.mjs ./scripts/artwork/corner-review-state.test.mjs",
+    "test:artwork": "yarn node --test ./scripts/artwork/junction-trace.test.mjs ./scripts/artwork/junction-discovery.test.mjs ./scripts/artwork/junction-paint.test.mjs ./scripts/artwork/junction-review-state.test.mjs ./scripts/artwork/junction-review-page.test.mjs ./scripts/artwork/contour-profiles.test.mjs ./scripts/artwork/path-segments.test.mjs ./scripts/artwork/painted-corners.test.mjs ./scripts/artwork/corner-review-state.test.mjs ./scripts/artwork/pixel-grid.test.mjs",
     "audit:corners": "yarn node ./scripts/artwork/audit-corners.mjs",
-    "check:corner-reviews": "yarn node ./scripts/artwork/audit-corners.mjs --complete"
+    "check:corner-reviews": "yarn node ./scripts/artwork/audit-corners.mjs --complete",
+    "audit:pixel-grid": "yarn node ./scripts/artwork/audit-pixel-grid.mjs"
   },
   "dependencies": {
     "@salt-ds/styles": "workspace:*",

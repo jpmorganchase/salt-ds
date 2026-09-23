@@ -20,7 +20,7 @@ export const RemoveIcon = forwardRef<SVGSVGElement, RemoveIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.75 8h12.5"
+            d="M1.75 8.667h12.5"
           />
         </g>
       </Icon>

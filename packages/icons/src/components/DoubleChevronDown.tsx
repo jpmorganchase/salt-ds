@@ -22,31 +22,31 @@ export const DoubleChevronDownIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M.755.782 8 8.027 15.245.782M.755 7.447 8 14.692l7.245-7.245"
+          d="M1.799 1.781 8 7.982l6.201-6.2M1.799 7.485 8 13.687l6.201-6.2"
         />
-        <path d="M7.18 7.207a1.16 1.16 0 0 0 1.64 0l-.82.82Z" />
+        <path d="M7.298 7.28a.99.99 0 0 0 1.404 0L8 7.983Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M7.18 7.207a1.16 1.16 0 0 0 1.64 0"
+          d="M7.298 7.28a.99.99 0 0 0 1.404 0"
         />
-        <path d="M7.18 13.872a1.16 1.16 0 0 0 1.64 0l-.82.82Z" />
+        <path d="M7.298 12.986a.99.99 0 0 0 1.404 0L8 13.687Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M7.18 13.872a1.16 1.16 0 0 0 1.64 0"
+          d="M7.298 12.986a.99.99 0 0 0 1.404 0"
         />
-        <path d="M7.016 7.043a1.39 1.39 0 0 0 1.968 0L8 8.027Z" />
+        <path d="M7.158 7.14a1.19 1.19 0 0 0 1.684 0L8 7.983Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M7.016 7.043a1.39 1.39 0 0 0 1.968 0"
+          d="M7.158 7.14a1.19 1.19 0 0 0 1.684 0"
         />
-        <path d="M7.016 13.709a1.39 1.39 0 0 0 1.968 0L8 14.692Z" />
+        <path d="M7.158 12.846a1.19 1.19 0 0 0 1.684 0L8 13.687Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M7.016 13.709a1.39 1.39 0 0 0 1.968 0"
+          d="M7.158 12.846a1.19 1.19 0 0 0 1.684 0"
         />
       </g>
     </Icon>

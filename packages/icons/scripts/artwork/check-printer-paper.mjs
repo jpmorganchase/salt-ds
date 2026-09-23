@@ -43,13 +43,13 @@ export async function checkPrinterPaper(page, records) {
           let maximumAlpha = 0,
             paintedSamples = 0;
           for (
-            let y = Math.ceil(10.5 * scale);
-            y < Math.floor(14.1 * scale);
+            let y = Math.ceil(10.9 * scale);
+            y < Math.floor(13.1 * scale);
             y++
           )
             for (
-              let x = Math.ceil(5.1 * scale);
-              x < Math.floor(10.9 * scale);
+              let x = Math.ceil(5.6 * scale);
+              x < Math.floor(10.4 * scale);
               x++
             ) {
               const a = pixels[4 * (y * side + x) + 3];
@@ -91,7 +91,7 @@ export async function checkPrinterPaper(page, records) {
               phaseContext.drawImage(phaseImage, 0, phase, 256, 256);
               const rgba = phaseContext.getImageData(0, 0, 256, 256).data;
               let maximumAlpha = 0;
-              for (let y = 176; y < 220; y++)
+              for (let y = 176; y < 208; y++)
                 for (let x = 96; x < 160; x++)
                   maximumAlpha = Math.max(
                     maximumAlpha,

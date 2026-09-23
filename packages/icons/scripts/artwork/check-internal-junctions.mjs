@@ -127,7 +127,7 @@ export async function checkInternalJunctions(page, records) {
     ...paired("print", [
       {
         feature: "upper sheet left root",
-        box: [3.08, 4.02, 4.21, 5.28],
+        box: [3.52, 4.71, 4.65, 5.97],
         minimumRadius: 0.15,
       },
     ]),
