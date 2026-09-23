@@ -1,6 +1,6 @@
 // Inspect the painted silhouettes in final exports. These checks protect the
-// sun's visible ray lengths, the heart tip and retained pair perimeters, rather than locking
-// the recipe to particular path commands or constructor coordinates.
+// sun's rays, heart tip, retained pair perimeters and User badge rim without
+// locking recipes to particular path commands or constructor coordinates.
 export async function checkReviewSymbols(page, records) {
   const names = [
     "globe.svg",
@@ -9,6 +9,7 @@ export async function checkReviewSymbols(page, records) {
     "light_solid.svg",
     "like.svg",
     "like_solid.svg",
+    "user-badge.svg",
   ];
   const artwork = names.map((name) => {
     const record = records.find((candidate) => candidate.name === name);
@@ -123,6 +124,40 @@ export async function checkReviewSymbols(page, records) {
             difference <= 0.025,
         );
       }
+      // Measure the complete lower painted band, not the SVG stroke attribute:
+      // the badge is a filled silhouette and must retain its rim at every width.
+      const badgePixels = paint.get("user-badge.svg");
+      const rimWidths = [55, 70, 90, 110, 125].map((degrees) => {
+        const angle = (degrees * Math.PI) / 180;
+        const outside = outsideRadius(badgePixels, angle);
+        let inside = outside - 1 / scale;
+        while (
+          inside > 0 &&
+          alpha(
+            badgePixels,
+            8 + Math.cos(angle) * inside,
+            8 + Math.sin(angle) * inside,
+          ) >= 127.5
+        )
+          inside -= 1 / scale;
+        return outside - inside;
+      });
+      const minimumRim = Math.min(...rimWidths);
+      const maximumRim = Math.max(...rimWidths);
+      check(
+        {
+          name: "user-badge.svg",
+          feature: "consistent visible lower rim",
+          weight,
+          minimumRim,
+          maximumRim,
+          rimWidths,
+        },
+        rimWidths.every(Number.isFinite) &&
+          minimumRim >= 1 &&
+          maximumRim <= 1.4 &&
+          maximumRim - minimumRim <= 0.08,
+      );
       // The heart tip is a shared symmetric cusp, including at thin weights.
       // This catches asymmetric closure miters without depending on SVG commands.
       for (const name of ["like.svg", "like_solid.svg"]) {

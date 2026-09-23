@@ -609,7 +609,10 @@ put(
   F(
     circ(12, 12, 9.75) +
       circ(12, 8.25, 3) +
-      "M5.25 18.75Q5.25 13.5 12 13.5Q18.75 13.5 18.75 18.75Q12 24 5.25 18.75Z",
+      // Trim the original shoulders where they meet the concentric R8.25
+      // opening. Its circular base retains a 1.5-unit rim (1.19 after fitting)
+      // instead of tapering to a hairline beneath the person.
+      "M12 13.5Q17.540856 13.5 18.533403 17.037573A8.25 8.25 0 0 1 5.466597 17.037573Q6.459144 13.5 12 13.5Z",
   ),
 );
 // The rear person's cutout follows the foreground shoulder's true normal offset.
