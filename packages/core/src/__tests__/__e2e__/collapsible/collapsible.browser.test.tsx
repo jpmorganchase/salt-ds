@@ -1,3 +1,9 @@
+import {
+  Button,
+  Collapsible,
+  CollapsiblePanel,
+  CollapsibleTrigger,
+} from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
@@ -56,5 +62,30 @@ describe("Given a Collapsible", () => {
     await userEvent.keyboard(" ");
     await expect.element(content).not.toBeVisible();
     expect(onOpenChange).toHaveBeenLastCalledWith(expect.anything(), false);
+  });
+
+  it("supports customizing the panel root with render", async () => {
+    await renderWithSalt(
+      <Collapsible defaultOpen>
+        <CollapsibleTrigger>
+          <Button>Toggle</Button>
+        </CollapsibleTrigger>
+        <CollapsiblePanel
+          data-testid="custom-panel"
+          render={<section aria-label="Details" />}
+        >
+          Content
+        </CollapsiblePanel>
+      </Collapsible>,
+    );
+
+    const panel = page.getByTestId("custom-panel");
+    await expect.element(panel).toHaveClass("saltCollapsiblePanel");
+    await expect.element(panel).toHaveAttribute("data-open");
+    await expect.element(panel).not.toHaveAttribute("data-closed");
+    expect(panel.element().tagName).toBe("SECTION");
+    await expect
+      .element(page.getByRole("button", { name: "Toggle" }))
+      .toHaveAttribute("aria-controls", panel.element().id);
   });
 });

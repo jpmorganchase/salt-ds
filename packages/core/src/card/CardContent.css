@@ -3,6 +3,21 @@
   box-sizing: border-box;
 }
 
+.saltCardContent[data-open],
+.saltCardContent[data-closed] {
+  transition:
+    grid-template-rows var(--salt-duration-perceptible) ease-in-out,
+    opacity var(--salt-duration-perceptible) ease-in-out,
+    visibility var(--salt-duration-perceptible) ease-in-out,
+    padding-top var(--salt-duration-perceptible) ease-in-out,
+    padding-bottom var(--salt-duration-perceptible) ease-in-out;
+}
+
+.saltCardContent[data-closed] {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .saltCard-sectioned > .saltCardHeader + .saltCardContent,
 .saltCard-sectioned > .saltCardContent + .saltCardContent,
 .saltLinkCard-sectioned > .saltCardHeader + .saltCardContent,
