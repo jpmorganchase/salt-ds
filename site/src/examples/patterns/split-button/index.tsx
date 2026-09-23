@@ -17,8 +17,6 @@ import {
   ShareIcon,
 } from "@salt-ds/icons";
 
-
-
 export const Primary = () => {
   return (
     <SegmentedButtonGroup>
@@ -28,7 +26,7 @@ export const Primary = () => {
       </Button>
       <Menu placement="bottom-end">
         <MenuTrigger>
-          <Button aria-label="Open Menu">
+          <Button aria-label="More message actions">
             <ChevronDownIcon aria-hidden />
           </Button>
         </MenuTrigger>
@@ -61,7 +59,7 @@ export const Secondary = () => {
       <Button appearance="transparent">Action</Button>
       <Menu placement="bottom-end">
         <MenuTrigger>
-          <Button appearance="transparent" aria-label="Open Menu">
+          <Button appearance="transparent" aria-label="More actions">
             <ChevronDownIcon aria-hidden />
           </Button>
         </MenuTrigger>
@@ -82,7 +80,7 @@ export const CTA = () => {
       <Button sentiment="accented">Action</Button>
       <Menu placement="bottom-end">
         <MenuTrigger>
-          <Button sentiment="accented" aria-label="Open Menu">
+          <Button sentiment="accented" aria-label="More actions">
             <ChevronDownIcon aria-hidden />
           </Button>
         </MenuTrigger>
@@ -104,7 +102,7 @@ export const MultipleActions = () => {
       <Button>Paste</Button>
       <Menu placement="bottom-end">
         <MenuTrigger>
-          <Button aria-label="Open Menu">
+          <Button aria-label="More clipboard actions">
             <ChevronDownIcon aria-hidden />
           </Button>
         </MenuTrigger>
@@ -129,7 +127,7 @@ export const IconOnly = () => {
       </Tooltip>
       <Menu placement="bottom-end">
         <MenuTrigger>
-          <Button aria-label="Open Menu">
+          <Button aria-label="Previous options">
             <ChevronDownIcon aria-hidden />
           </Button>
         </MenuTrigger>

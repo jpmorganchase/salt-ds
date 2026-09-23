@@ -16,13 +16,11 @@ import {
   SettingsIcon,
 } from "@salt-ds/icons";
 
-
-
 export const MenuButton = () => {
   return (
     <Menu>
       <MenuTrigger>
-        <Button aria-label="Open Menu">
+        <Button>
           Create
           <ChevronDownIcon aria-hidden />
         </Button>
@@ -42,7 +40,7 @@ export const WithIcons = () => {
   return (
     <Menu>
       <MenuTrigger>
-        <Button aria-label="Open Menu">
+        <Button>
           Actions
           <ChevronDownIcon aria-hidden />
         </Button>
@@ -74,7 +72,7 @@ export const Placement = () => {
     <StackLayout direction="row">
       <Menu placement="bottom-start">
         <MenuTrigger>
-          <Button aria-label="Open Menu">
+          <Button>
             Bottom Start (default)
             <ChevronDownIcon aria-hidden />
           </Button>
@@ -90,7 +88,7 @@ export const Placement = () => {
 
       <Menu placement="bottom-end">
         <MenuTrigger>
-          <Button aria-label="Open Menu">
+          <Button>
             Bottom end
             <ChevronDownIcon aria-hidden />
           </Button>
@@ -105,7 +103,7 @@ export const Placement = () => {
       </Menu>
       <Menu placement="top-start">
         <MenuTrigger>
-          <Button aria-label="Open Menu">
+          <Button>
             Top start
             <ChevronDownIcon aria-hidden />
           </Button>
@@ -120,7 +118,7 @@ export const Placement = () => {
       </Menu>
       <Menu placement="top-end">
         <MenuTrigger>
-          <Button aria-label="Open Menu">
+          <Button>
             Top end
             <ChevronDownIcon aria-hidden />
           </Button>
@@ -141,7 +139,7 @@ export const OverflowMenu = () => {
   return (
     <Menu>
       <MenuTrigger>
-        <Button appearance="transparent" aria-label="Open Menu">
+        <Button appearance="transparent" aria-label="More actions">
           <MicroMenuIcon aria-hidden />
         </Button>
       </MenuTrigger>
@@ -158,7 +156,7 @@ export const IconOnly = () => {
   return (
     <Menu>
       <MenuTrigger>
-        <Button aria-label="Open Menu">
+        <Button aria-label="Settings">
           <SettingsIcon aria-hidden />
         </Button>
       </MenuTrigger>
@@ -178,7 +176,7 @@ export const Heading = () => {
       <Display2>Attribution</Display2>
       <Menu>
         <MenuTrigger>
-          <Button aria-label="Open Menu" appearance="transparent">
+          <Button aria-label="Attribution actions" appearance="transparent">
             <ChevronDownIcon aria-hidden />
           </Button>
         </MenuTrigger>

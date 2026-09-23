@@ -14,13 +14,32 @@ data:
 
 ### When to use
 
-- When you need to display a list of actions or options.
-- When you have limited space and need to display overflow action in a list.
-- When you need to display secondary or less important information and actions inside a trigger element.
+- When you need a popup list of commands related to the trigger or its content.
+- When space is limited and secondary actions can be collected in an overflow menu.
+- When actions need grouping or submenus to make related commands easier to find.
 
 ### When not to use
 
-- Inside a form. Instead, use [`ComboBox`](../combo-box) or [`Dropdown`](../dropdown).
+- When the user is choosing a form value. Use a selection control such as [`Dropdown`](../dropdown), [`ComboBox`](../combo-box), or [`ListBox`](../list-box); see [choosing a selection control](../list-box/usage#choosing-a-selection-control). A menu may still expose actions alongside form fields.
+- For persistent presentation choices such as List and Cards, follow [view switching](../toggle-button/usage#view-switching). `Menu` does not provide selected-value behavior.
+- For application destinations, follow the [Navigation pattern](/salt/patterns/navigation) and its link and navigation component choices.
+
+### Choosing an action control
+
+- Use [`Button`](../button) for an action the user can invoke directly.
+- Keep important actions visible in a [Button bar](/salt/patterns/button-bar) or [`Toolbar`](../toolbar) when users need frequent access to them.
+- Use a [Menu button](/salt/patterns/menu-button) when its trigger only opens a list of commands; it does not execute a separate default action.
+- Use a [Split button](/salt/patterns/split-button) when a default action and a menu trigger should be independently operable.
+
+### Composition and labels
+
+Compose `Menu` with a `MenuTrigger` containing a `Button`, and a `MenuPanel` containing `MenuItem` actions. Use `MenuGroup` to label or separate related commands. For a submenu, nest a `Menu` whose `MenuTrigger` contains the parent `MenuItem`; see the [multilevel example](./examples#multilevel).
+
+Keep each menu item as one action; do not put additional buttons, links, or form controls inside it. Visible trigger and item labels should remain in their accessible names. Give repeated icon-only triggers a contextual name identifying the row or content, such as “Actions for Order Gateway”, so users can distinguish them. Follow the [keyboard guidance](./accessibility#keyboard-interactions).
+
+### Action outcomes
+
+The examples illustrate composition; connect each command to an application action. The application owns each menu command’s execution, progress feedback, and failure recovery. Closing the menu does not establish that an action succeeded. Keep essential failure details and recovery actions available in the affected content; follow [Forms feedback guidance](/salt/patterns/forms#choosing-feedback) for form actions and [Content status guidance](/salt/patterns/content-status#choosing-how-to-communicate-loading-and-recovery) for loading or refreshing content.
 
 ## Content
 

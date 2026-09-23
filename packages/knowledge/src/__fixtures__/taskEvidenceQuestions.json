@@ -19,7 +19,8 @@
     "selectionControls": "record:guide:guide.selection-controls",
     "navigation": "record:guide:guide.navigation",
     "listFiltering": "record:guide:guide.list-filtering",
-    "search": "record:guide:guide.search"
+    "search": "record:guide:guide.search",
+    "menu": "record:guide:guide.menu"
   },
   "sources": {
     "forms": "site/docs/patterns/forms.mdx",
@@ -36,7 +37,8 @@
     "selectionControls": "site/docs/components/list-box/usage.mdx",
     "navigation": "site/docs/patterns/navigation.mdx",
     "listFiltering": "site/docs/patterns/list-filtering.mdx",
-    "search": "site/docs/patterns/search.mdx"
+    "search": "site/docs/patterns/search.mdx",
+    "menu": "site/docs/components/menu/usage.mdx"
   },
   "qualifications": {
     "document": "workflow",
@@ -500,6 +502,7 @@
             "data was not updated",
             "offer Retry",
             "whole page is affected",
+            "with useful content still available",
             "page-level Banner",
             "whether users can safely continue",
             "task is blocked",
@@ -529,6 +532,7 @@
             "related container",
             "data was not updated",
             "whole page is affected",
+            "with useful content still available",
             "page-level Banner",
             "essential platform-wide condition",
             "SystemStatus",
@@ -974,6 +978,98 @@
           ]
         }
       ]
+    },
+    {
+      "id": "menu-action-control-choice",
+      "scope": "operations-example",
+      "question": "Should Export run immediately, open a menu, or use a split button when there are related commands?",
+      "required": [
+        {
+          "document": "menu",
+          "section": "menu.action-control",
+          "source": "menu",
+          "fragments": [
+            "Button",
+            "action the user can invoke directly",
+            "Keep important actions visible",
+            "Button bar",
+            "Toolbar",
+            "trigger only opens a list of commands",
+            "does not execute a separate default action",
+            "Split button",
+            "default action and a menu trigger",
+            "independently operable"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-actions-versus-values",
+      "scope": "operations-example",
+      "question": "Can a form use a menu for actions, or should a menu choose the field value or switch between List and Cards?",
+      "required": [
+        {
+          "document": "menu",
+          "section": "menu.when-to-use",
+          "source": "menu",
+          "fragments": [
+            "commands related to the trigger or its content",
+            "secondary actions",
+            "overflow menu"
+          ]
+        },
+        {
+          "document": "menu",
+          "section": "menu.when-not-to-use",
+          "source": "menu",
+          "fragments": [
+            "choosing a form value",
+            "selection control",
+            "Dropdown",
+            "ComboBox",
+            "ListBox",
+            "menu may still expose actions alongside form fields",
+            "persistent presentation choices",
+            "List and Cards",
+            "view switching",
+            "does not provide selected-value behavior",
+            "application destinations",
+            "Navigation pattern"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-action-feedback",
+      "scope": "operations-example",
+      "question": "How should a row's actions menu be labelled, and does closing the menu mean a pending command has succeeded?",
+      "required": [
+        {
+          "document": "menu",
+          "section": "menu.composition-and-labels",
+          "source": "menu",
+          "fragments": [
+            "each menu item as one action",
+            "do not put additional buttons, links, or form controls inside it",
+            "Visible trigger and item labels should remain in their accessible names",
+            "repeated icon-only triggers",
+            "contextual name"
+          ]
+        },
+        {
+          "document": "menu",
+          "section": "menu.action-outcomes",
+          "source": "menu",
+          "fragments": [
+            "application owns each menu command’s execution",
+            "progress feedback",
+            "failure recovery",
+            "Closing the menu does not establish that an action succeeded",
+            "essential failure details and recovery actions",
+            "affected content"
+          ]
+        }
+      ]
     }
   ],
   "qualified_units": [
@@ -988,6 +1084,7 @@
     ["button-bar.layout", "button-bar.dialog-order"],
     ["view-switching.choice", "view-switching.choice.alternatives"],
     ["selection-controls.choice", "selection-controls.alternatives"],
-    ["navigation.when-to-use", "navigation.when-not-to-use"]
+    ["navigation.when-to-use", "navigation.when-not-to-use"],
+    ["menu.when-to-use", "menu.when-not-to-use"]
   ]
 }

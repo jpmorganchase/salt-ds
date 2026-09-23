@@ -23,6 +23,7 @@ const NAVIGATION_DOCUMENT_PATH = "site/docs/patterns/navigation.mdx";
 const CONTENT_STATUS_DOCUMENT_PATH = "site/docs/patterns/content-status.mdx";
 const LIST_FILTERING_DOCUMENT_PATH = "site/docs/patterns/list-filtering.mdx";
 const SEARCH_DOCUMENT_PATH = "site/docs/patterns/search.mdx";
+const MENU_DOCUMENT_PATH = "site/docs/components/menu/usage.mdx";
 const FORMS_DOCUMENT_PATH = "site/docs/patterns/forms.mdx";
 const FORM_INTEGRATION_DOCUMENT_PATH =
   "site/docs/getting-started/form-integration.mdx";
@@ -340,6 +341,37 @@ const LIST_FILTERING_SELECTORS: readonly SelectedMdxSectionSelector[] = [
     heading_path: ["Focus and result updates"],
     include_descendants: false,
     semantic_role: "accessibility",
+  },
+];
+
+const MENU_SELECTORS: readonly SelectedMdxSectionSelector[] = [
+  {
+    id: "menu.when-to-use",
+    heading_path: ["Using the component", "When to use"],
+    include_descendants: false,
+  },
+  {
+    id: "menu.when-not-to-use",
+    heading_path: ["Using the component", "When not to use"],
+    include_descendants: false,
+  },
+  {
+    id: "menu.action-control",
+    heading_path: ["Using the component", "Choosing an action control"],
+    include_descendants: false,
+    semantic_role: "decision",
+  },
+  {
+    id: "menu.composition-and-labels",
+    heading_path: ["Using the component", "Composition and labels"],
+    include_descendants: false,
+    semantic_role: "composition",
+  },
+  {
+    id: "menu.action-outcomes",
+    heading_path: ["Using the component", "Action outcomes"],
+    include_descendants: false,
+    semantic_role: "behavior",
   },
 ];
 
@@ -959,6 +991,7 @@ export async function buildSelectedGuidance(
     contentStatus,
     listFiltering,
     search,
+    menu,
     forms,
     formsErrorSummary,
     formIntegration,
@@ -1017,6 +1050,15 @@ export async function buildSelectedGuidance(
       route: "/salt/patterns/search",
       selectors: SEARCH_SELECTORS,
       fallbackTitle: "Search",
+    }),
+    parseSelectedDocument({
+      sourceRoot: input.sourceRoot,
+      declared: declaredSourcePaths([MENU_DOCUMENT_PATH]),
+      sourcePath: MENU_DOCUMENT_PATH,
+      documentId: "guide.menu",
+      route: "/salt/components/menu/usage",
+      selectors: MENU_SELECTORS,
+      fallbackTitle: "Menu actions",
     }),
     parseSelectedDocument({
       sourceRoot: input.sourceRoot,
@@ -1444,6 +1486,25 @@ export async function buildSelectedGuidance(
         componentNames: [],
         patternNames: [listFiltering.title],
         pageSourcePaths: [LIST_FILTERING_DOCUMENT_PATH],
+      },
+      files: [],
+      limitations: [],
+    },
+    {
+      id: "guide.menu",
+      name: menu.title,
+      aliases: [menu.title],
+      summary: summaryFromDocument(menu.document, menu.title),
+      kind: "component-guidance",
+      document: menu.document,
+      recipeManifest: null,
+      sourcePaths: [MENU_DOCUMENT_PATH],
+      componentNames: ["Menu"],
+      packageNames: ["@salt-ds/core"],
+      attach: {
+        componentNames: ["Menu"],
+        patternNames: [],
+        pageSourcePaths: [MENU_DOCUMENT_PATH],
       },
       files: [],
       limitations: [],
