@@ -147,7 +147,7 @@ export function useDrawerResize({
     const body = element?.ownerDocument?.body;
     if (!body) return;
     const previous = body.style.cursor;
-    body.style.cursor = horizontal ? "col-resize" : "row-resize";
+    body.style.cursor = horizontal ? "ew-resize" : "ns-resize";
     restoreCursorRef.current = () => {
       body.style.cursor = previous;
       restoreCursorRef.current = null;
@@ -340,7 +340,7 @@ export function useDrawerResize({
       if (isWithinHitArea(event)) {
         root.style.setProperty(
           "cursor",
-          horizontal ? "col-resize" : "row-resize",
+          horizontal ? "ew-resize" : "ns-resize",
         );
       } else {
         root.style.removeProperty("cursor");
