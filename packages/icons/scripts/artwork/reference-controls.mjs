@@ -1,4 +1,7 @@
-import { box, circ, F, S } from "./primitives.mjs";
+import { softenedStroke as S, softenedFill as F } from "./contour-profiles.mjs";
+import { softenedFrame as SF } from "./contour-profiles.mjs";
+import { circularCrossJunction } from "./junctions.mjs";
+import { box, circ } from "./primitives.mjs";
 
 // These controls are drawn on the normal 24-unit construction canvas. The
 // comments describe painted clearances after normalization to a 16px icon.
@@ -7,7 +10,7 @@ import { box, circ, F, S } from "./primitives.mjs";
 
 // A bank check is a cheque: payee, amount and signature fields.
 // Two evenly spaced field rows avoid a cramped header band at native sizes.
-const chequeFrame = S(box(2.25, 5.25, 19.5, 13.5));
+const chequeFrame = SF(box(2.25, 5.25, 19.5, 13.5));
 const chequeFields = S("M4.875 9.75H12M15.375 9.75H19.125M4.875 14.25H16.5");
 const chequeSolid = F(
   box(1.75, 4.75, 20.5, 14.5) +
@@ -36,69 +39,60 @@ const togglesSolid = F(
 // outline leaves .915px of painted separation at those flat-ended stops.
 const phoneX = 15.75;
 const phoneY = 8.5;
-const phoneRadius = 1;
+const phoneRadius = 0;
 // A 1.25px envelope leaves a .915px gap around the fixed .67px phone stroke.
 const phoneEnvelope = 1.875;
 const cutLeft = phoneX - phoneEnvelope;
 const cutTop = phoneY - phoneEnvelope;
 
-// Offset the actual quadratic phone corner along its normal. Four cubic
-// segments follow the offset to within .002px; enlarging a rounded box
-// would widen the diagonal gap instead of following the foreground shape.
-function phoneCornerCut() {
-  const sample = (t) => {
-    const length = Math.hypot(t, 1 - t);
-    const turn = (2 * t - 1) / length ** 3;
-    return {
-      x: phoneX + phoneRadius * (1 - t) ** 2 - (phoneEnvelope * t) / length,
-      y: phoneY + phoneRadius * t ** 2 - (phoneEnvelope * (1 - t)) / length,
-      dx: -2 * phoneRadius * (1 - t) - phoneEnvelope * (1 / length - t * turn),
-      dy: 2 * phoneRadius * t + phoneEnvelope * (1 / length + (1 - t) * turn),
-    };
-  };
-  const parts = [];
-  for (let i = 0; i < 4; i++) {
-    const start = sample(i / 4);
-    const end = sample((i + 1) / 4);
-    parts.push(
-      "C" +
-        [
-          start.x + start.dx / 12,
-          start.y + start.dy / 12,
-          end.x - end.dx / 12,
-          end.y - end.dy / 12,
-          end.x,
-          end.y,
-        ]
-          .map((value) => Number(value.toFixed(6)))
-          .join(" "),
-    );
-  }
-  return parts.join("");
-}
+// Offset the sharp painted corner at the midpoint theme width W=7/6.
+// The shared 14/13 export fit puts that half-width at .8125 construction
+// units. A circular relief follows that miter's outside corner; the phone
+// itself remains sharp. Keep the original top/left envelope landmarks.
+const phoneCornerPaintHalf = .8125;
+const phoneCutRadius = phoneEnvelope - phoneCornerPaintHalf;
+const phoneCornerCut = () =>
+  `A${phoneCutRadius} ${phoneCutRadius} 0 0 0 ${cutLeft} ${phoneY - phoneCornerPaintHalf}`;
 
-const monitorFrame = S(`M${cutLeft} 16H2.25V3.5H18.75V${cutTop}`);
-const monitorStand = S("M10.5 16V20.5M7.125 20.5H13.875");
+const monitorFrame = SF(`M${cutLeft} 16H2.25V3.5H18.75V${cutTop}`);
+// Keep flat foot ends; ease joined screen/stem and stem/foot roots.
+const monitorStand =
+  S("M10.5 16V20.5M7.125 20.5H13.875") +
+  circularCrossJunction(10.5, 16, 1.7, undefined, [
+    [-1, 1],
+    [1, 1],
+  ]) +
+  circularCrossJunction(10.5, 20.5, 1.7, undefined, [
+    [-1, -1],
+    [1, -1],
+  ]);
 const phoneFrame = box(phoneX, phoneY, 6, 13, phoneRadius);
 // The phone header's centerlines are 2px apart, leaving a 1.33px cavity
 // with the fixed .67px stroke. Curved junctions follow the housing reference.
-const phoneHeader = S(
-  "M15.75 10.75q0 .75 .75 .75H21q.75 0 .75-.75" +
-    "M15.75 12.25q0-.75 .75-.75H21q.75 0 .75 .75",
-);
+const phoneHeader =
+  S("M15.75 11.5H21.75") +
+  circularCrossJunction(15.75, 11.5, 1.5, undefined, [
+    [1, -1],
+    [1, 1],
+  ]) +
+  circularCrossJunction(21.75, 11.5, 1.5, undefined, [
+    [-1, -1],
+    [-1, 1],
+  ]);
 const phoneHome = circ(18.75, 18.75, 0.75);
 const devicesOutline =
-  monitorFrame + monitorStand + S(phoneFrame) + phoneHeader + F(phoneHome);
+  monitorFrame + monitorStand + SF(phoneFrame) + phoneHeader + F(phoneHome);
 const devicesSolid =
   F(
-    `M1.75 3H19.25V${cutTop}H${phoneX + phoneRadius}${phoneCornerCut()}V16.5H1.75Z`,
+    `M2.25 3.5H18.75V${cutTop}H${phoneX - phoneCornerPaintHalf}${phoneCornerCut()}V16H2.25Z`,
   ) +
-  S("M10.5 16.5V20.5M7.125 20.5H13.875") +
+  monitorFrame +
+  monitorStand +
   // The exposed header shares the outline phone's housing and separator.
   F(
-    `M15.75 11.5H21.75V20.5Q21.75 21.5 20.75 21.5H16.75Q15.75 21.5 15.75 20.5Z${phoneHome}`,
+    `M15.75 11.5H21.75V21.5H15.75Z${phoneHome}`,
   ) +
-  S(phoneFrame) +
+  SF(phoneFrame) +
   phoneHeader;
 
 export default {

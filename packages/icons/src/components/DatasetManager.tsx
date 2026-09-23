@@ -22,7 +22,37 @@ export const DatasetManagerIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1.26 3.074c0-2.765 11.407-2.765 11.407 0q-.002.29-.16.539M6.68 5.146c-2.754-.045-5.42-.735-5.42-2.072m0 0v7.778q0 2.358 3.217 2.571m-3.217-6.2q0 2.073 3.63 2.073h1.587M8.26 7.481a2.333 2.333 0 1 0 4.666 0 2.333 2.333 0 1 0-4.667 0ZM6.444 15v-1.556q0-1.555 4.149-1.555t4.148 1.555V15Z"
+          d="M1.26 3.074c0-2.765 11.407-2.765 11.407 0q-.002.29-.16.539M6.68 5.146c-2.754-.045-5.42-.735-5.42-2.072m0 0v7.778q0 2.358 3.217 2.571m-3.217-6.2q0 2.073 3.63 2.073h1.587"
+        />
+        <path
+          fillRule="evenodd"
+          d="M1.26 5.84q0-1.901 1.413-1.342c-.862-.34-1.414-.815-1.414-1.424Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.26 5.84q0-1.901 1.413-1.342"
+        />
+        <path
+          fillRule="evenodd"
+          d="M1.26 10.16q0-1.797 1.097-1.284Q1.26 8.363 1.26 7.222Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.26 10.16q0-1.797 1.097-1.284M8.26 7.481a2.333 2.333 0 1 0 4.666 0 2.333 2.333 0 1 0-4.667 0ZM6.443 15v-1.556q0-1.555 4.149-1.555t4.148 1.555V15Z"
+        />
+        <path d="M14.74 14.222a.78.78 0 0 1-.777.778h.778Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M14.74 14.222a.78.78 0 0 1-.777.778"
+        />
+        <path d="M7.222 15a.78.78 0 0 1-.778-.778V15Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.222 15a.78.78 0 0 1-.778-.778"
         />
       </g>
     </Icon>

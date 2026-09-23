@@ -17,13 +17,41 @@ export const MessageIcon = forwardRef<SVGSVGElement, MessageIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
-          <g
+          <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          >
-            <path d="M1 2.273h14v11.454H1Z" />
-            <path d="m1 3.545 7 5.091 7-5.09M1 13.726l4.455-4.454m5.09 0L15 13.727" />
-          </g>
+            d="M1 2.273h14v11.454H1Z"
+          />
+          <path d="M13.727 2.273A1.273 1.273 0 0 1 15 3.545V2.273Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.727 2.273A1.273 1.273 0 0 1 15 3.545"
+          />
+          <path d="M15 12.455a1.273 1.273 0 0 1-1.273 1.272H15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M15 12.455a1.273 1.273 0 0 1-1.273 1.272"
+          />
+          <path d="M2.273 13.727A1.273 1.273 0 0 1 1 12.455v1.272Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.273 13.727A1.273 1.273 0 0 1 1 12.455"
+          />
+          <path d="M1 3.545a1.273 1.273 0 0 1 1.273-1.272H1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1 3.545a1.273 1.273 0 0 1 1.273-1.272M1 3.545l7 5.091 7-5.09M1 13.726l4.455-4.454m5.09 0L15 13.727"
+          />
+          <path d="M7.251 8.092a1.27 1.27 0 0 0 1.498 0L8 8.636Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.251 8.092a1.27 1.27 0 0 0 1.498 0"
+          />
         </g>
       </Icon>
     );

@@ -1,5 +1,6 @@
 // Measure the filled numeral paths from exported SVGs, independently of the
-// lettering helpers. Stroke-only timer rings and numeral outlines are excluded.
+// lettering helpers. The central label field excludes the ring and the filled
+// arrow-root patches; missing or displaced numeral contours still fail.
 export async function checkNumberCentering(page, records) {
   const names = ["forward", "replay"].flatMap((direction) =>
     [5, 10, 15, 30].map((seconds) => `${direction}-${seconds}.svg`),
@@ -36,9 +37,9 @@ export async function checkNumberCentering(page, records) {
         const bounds = [...artwork.querySelectorAll("path")]
           .filter((path) => getComputedStyle(path).fill !== "none")
           .map((path) => path.getBBox())
-          .filter((box) => box.width > 0 && box.height > 0);
-        if (!bounds.length)
-          throw new Error(`Missing filled timer numerals: ${name}`);
+          .filter((box) => box.width > 0 && box.height > 0 && box.y >= 6 && box.y + box.height <= 11);
+        if (bounds.length !== name.match(/-(\d+)\.svg$/)[1].length)
+          throw new Error(`Missing or displaced filled timer numerals: ${name}`);
         const left = Math.min(...bounds.map((box) => box.x));
         const top = Math.min(...bounds.map((box) => box.y));
         const right = Math.max(...bounds.map((box) => box.x + box.width));

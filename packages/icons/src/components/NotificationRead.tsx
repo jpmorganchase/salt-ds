@@ -22,7 +22,43 @@ export const NotificationReadIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M3.967 5.892a4.044 4.044 0 0 1 7.78-1.55m.79 5.163 1.828 2.741H1.656L3.967 8.78V5.892m2.311 8.665h3.466M8.01 1.848V.693M9.359 6.02l1.861 1.862 3.723-3.723"
+          d="M3.967 5.892a4.044 4.044 0 0 1 7.78-1.55m.79 5.163 1.828 2.741H1.656L3.967 8.78V5.892"
+        />
+        <path d="M13.452 10.876a.882.882 0 0 1-.734 1.37h1.647Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.452 10.876a.882.882 0 0 1-.734 1.37"
+        />
+        <path d="M3.74 12.246a1.115 1.115 0 0 1-.928-1.733l-1.156 1.733Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M3.74 12.246a1.115 1.115 0 0 1-.928-1.733"
+        />
+        <path d="M3.773 9.072a1.16 1.16 0 0 0 .194-.641v.35Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M3.773 9.072a1.16 1.16 0 0 0 .194-.641m2.311 6.126h3.466M8.01 1.848V.693M9.359 6.02l1.861 1.862 3.723-3.723"
+        />
+        <path d="M10.403 7.065a1.155 1.155 0 0 0 1.634 0l-.817.817Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.403 7.065a1.155 1.155 0 0 0 1.634 0"
+        />
+        <path d="M8.01.947a1 1 0 0 1-.802.982 4 4 0 0 1 .803-.08Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.01.947a1 1 0 0 1-.802.982"
+        />
+        <path d="M8.01.947a1 1 0 0 0 .803.982 4 4 0 0 0-.802-.08Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.01.947a1 1 0 0 0 .803.982"
         />
       </g>
     </Icon>

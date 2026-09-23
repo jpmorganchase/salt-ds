@@ -19,7 +19,13 @@ export const ClockSolidIcon = forwardRef<SVGSVGElement, ClockSolidIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M.25 8a7.75 7.75 0 1 0 15.5 0A7.75 7.75 0 1 0 .25 8m7.154-5.365h1.192v5.047l3.458 2.226-.716.954-3.934-2.544Z"
+            d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8m6.462-4.846h1.076v4.558l2.992 1.994-.598.896-3.47-2.314Z"
+          />
+          <path d="M8.18 3.154a.36.36 0 0 1 .358.359v-.36zm3.05 6.353a.36.36 0 0 1 .1.497l.2-.298zm-.099.796a.36.36 0 0 1-.498.1l.3.199zm-3.51-1.908a.36.36 0 0 1-.16-.299v.192zm-.159-4.882a.36.36 0 0 1 .358-.36h-.358z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Z"
           />
         </g>
       </Icon>

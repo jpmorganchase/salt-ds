@@ -22,6 +22,18 @@ export const SquareRootIcon = forwardRef<SVGSVGElement, SquareRootIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="m.848 8.818 3.44 4.585 5.73-11.463h5.732"
           />
+          <path d="M3.174 11.92a1.146 1.146 0 0 0 1.943-.176l-.83 1.66Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.174 11.92a1.146 1.146 0 0 0 1.943-.176"
+          />
+          <path d="M9.702 2.574a1.15 1.15 0 0 1 1.025-.634h-.708Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.702 2.574a1.15 1.15 0 0 1 1.025-.634"
+          />
         </g>
       </Icon>
     );

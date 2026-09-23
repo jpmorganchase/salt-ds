@@ -22,6 +22,36 @@ export const BookmarkIcon = forwardRef<SVGSVGElement, BookmarkIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M3.923 1h8.154v13.25L8 11.192 3.923 14.25Z"
           />
+          <path d="M11.058 1a1.02 1.02 0 0 1 1.019 1.02V1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.058 1a1.02 1.02 0 0 1 1.019 1.02"
+          />
+          <path d="M12.077 12.212a1.02 1.02 0 0 1-1.63.815l1.63 1.223Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.077 12.212a1.02 1.02 0 0 1-1.63.815"
+          />
+          <path d="M8.612 11.651a1.02 1.02 0 0 0-1.224 0L8 11.192Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8.612 11.651a1.02 1.02 0 0 0-1.224 0"
+          />
+          <path d="M5.554 13.027a1.02 1.02 0 0 1-1.63-.815v2.038Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.554 13.027a1.02 1.02 0 0 1-1.63-.815"
+          />
+          <path d="M3.923 2.02A1.02 1.02 0 0 1 4.943 1h-1.02Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.923 2.02A1.02 1.02 0 0 1 4.943 1"
+          />
         </g>
       </Icon>
     );

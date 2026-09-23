@@ -6,16 +6,26 @@ import { tickPaths } from "./tick.mjs";
 // Container fitting must not rescale their weight or proportions.
 // Optical placement may differ between containers; paired variants share it.
 export const enclosedDot = (x, y) => circ(x, y, 1);
+// Primary status punctuation needs more presence than eyes and ellipsis dots.
+// Its 8/3-unit diameter is 2 CSS pixels in a 12px icon.
+const statusDot = (x, y) => circ(x, y, 4 / 3);
 const tickPoints = [
   [3.5, 7.75],
   [6.5, 10.75],
   [12.5, 4.75],
 ];
 export const enclosedTick = tickPaths(tickPoints, 2).counter;
-// Only vertical placement varies: Error centers the same mark in its octagon.
-export const enclosedExclamation = (y = 6.25) =>
-  box(7, y, 2, 3.75) + enclosedDot(8, y + 5.75);
-export const enclosedInfo = `${enclosedDot(8, 3.75)}M6.5 6.75H9V11.75H10.25V13H5.75V11.75H7V8H6.5Z`;
+// Share the gesture, then fit its proportions to the available interior.
+// Error retains the established 2 x 5px stem at 12px. Warning uses a shorter
+// 1.6875 x 2.5125px stem to preserve separation inside the tapered triangle.
+const exclamation = (top, height, dotY) =>
+  box(20 / 3, top, 8 / 3, height) + statusDot(8, dotY);
+export const enclosedError = exclamation(8 / 3, 20 / 3, 12);
+// The locally narrower stem opens the upper triangular counter through W1.5,
+// while preserving its baseline, the punctuation dot and the pair contour.
+export const enclosedWarning = box(6.875, 7, 2.25, 3.35) + statusDot(8, 12.375);
+export const enclosedInfo =
+  statusDot(8, 4) + box(20 / 3, 20 / 3, 8 / 3, 20 / 3);
 export const enclosedEllipsis = [4, 8, 12]
   .map((x) => enclosedDot(x, 6.5))
   .join("");

@@ -23,10 +23,17 @@ export const HiddenIcon = forwardRef<SVGSVGElement, HiddenIconProps>(
             strokeLinejoin="bevel"
             d="M2.947 5.154Q1.914 6.33.88 8q4.812 7.774 9.624 4.854"
           />
+          <path d="M1.255 7.41a1.08 1.08 0 0 0 0 1.18A28 28 0 0 1 .88 8q.187-.303.375-.59" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M5.248 3.146Q10.06.226 14.873 8q-1.034 1.67-2.068 2.846"
+            d="M1.255 7.41a1.08 1.08 0 0 0 0 1.18m3.993-5.444Q10.06.226 14.873 8q-1.034 1.67-2.068 2.846"
+          />
+          <path d="M14.498 7.41a1.08 1.08 0 0 1 0 1.18q.187-.288.375-.59a28 28 0 0 0-.375-.59" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M14.498 7.41a1.08 1.08 0 0 1 0 1.18"
           />
           <path
             fillRule="evenodd"

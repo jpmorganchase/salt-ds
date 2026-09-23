@@ -17,13 +17,47 @@ export const NoteIcon = forwardRef<SVGSVGElement, NoteIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
-          <g
+          <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          >
-            <path d="M1 1h14v8.91L9.91 15H1Z" />
-            <path d="M9.91 15V9.91H15M3.545 4.817h8.91m-8.91 2.546h5.091" />
-          </g>
+            d="M1 1h14v8.91L9.91 15H1Z"
+          />
+          <path d="M13.727 1A1.273 1.273 0 0 1 15 2.273V1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.727 1A1.273 1.273 0 0 1 15 2.273"
+          />
+          <path d="M15 9.382a1.27 1.27 0 0 1-.373.9L15 9.909Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M15 9.382a1.27 1.27 0 0 1-.373.9"
+          />
+          <path d="M10.282 14.627a1.27 1.27 0 0 1-.9.373h.527Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.282 14.627a1.27 1.27 0 0 1-.9.373"
+          />
+          <path d="M2.273 15A1.273 1.273 0 0 1 1 13.727V15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.273 15A1.273 1.273 0 0 1 1 13.727"
+          />
+          <path d="M1 2.273A1.273 1.273 0 0 1 2.273 1H1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1 2.273A1.273 1.273 0 0 1 2.273 1M9.91 15V9.91H15M3.545 4.817h8.91m-8.91 2.546h5.091"
+          />
+          <path d="M9.91 11.182a1.273 1.273 0 0 1 1.272-1.273H9.909Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.91 11.182a1.273 1.273 0 0 1 1.272-1.273"
+          />
         </g>
       </Icon>
     );

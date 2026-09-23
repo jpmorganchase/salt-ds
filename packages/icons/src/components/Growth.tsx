@@ -22,6 +22,48 @@ export const GrowthIcon = forwardRef<SVGSVGElement, GrowthIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="m.756 12.86 4.748-4.748L8.47 11.08 15 3.364m-5.342 0H15v5.342"
           />
+          <path d="M4.665 8.952a1.187 1.187 0 0 1 1.678 0l-.84-.84Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.665 8.952a1.187 1.187 0 0 1 1.678 0"
+          />
+          <path d="M7.56 10.168a1.187 1.187 0 0 0 1.745-.073l-.834.985Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.56 10.168a1.187 1.187 0 0 0 1.745-.073"
+          />
+          <path d="M13.813 3.364A1.187 1.187 0 0 1 15 4.551V3.364Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.813 3.364A1.187 1.187 0 0 1 15 4.551"
+          />
+          <path d="M15 6.035a.978.978 0 0 0-1.725-.632L15 3.364Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M15 6.035a.978.978 0 0 0-1.725-.632"
+          />
+          <path d="M13.347 5.318a1.187 1.187 0 0 0-.906-1.954H15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.347 5.318a1.187 1.187 0 0 0-.906-1.954"
+          />
+          <path d="M13.237 5.448a1.266 1.266 0 0 0-.967-2.084H15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.237 5.448a1.266 1.266 0 0 0-.967-2.084"
+          />
+          <path d="M12.767 6.003A1.266 1.266 0 0 1 15 6.821V3.364Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.767 6.003A1.266 1.266 0 0 1 15 6.821"
+          />
         </g>
       </Icon>
     );

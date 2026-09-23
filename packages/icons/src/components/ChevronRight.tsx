@@ -24,6 +24,18 @@ export const ChevronRightIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M4.125.776 11.349 8l-7.224 7.224"
         />
+        <path d="M10.531 7.183a1.156 1.156 0 0 1 0 1.634L11.35 8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.531 7.183a1.156 1.156 0 0 1 0 1.634"
+        />
+        <path d="M10.259 6.91a1.54 1.54 0 0 1 0 2.18L11.349 8Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.259 6.91a1.54 1.54 0 0 1 0 2.18"
+        />
       </g>
     </Icon>
   );

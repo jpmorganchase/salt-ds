@@ -24,6 +24,12 @@ export const ChartScatterSolidIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M1 .435v14.38h14.38"
         />
+        <path d="M1 13.709a1.106 1.106 0 0 0 1.106 1.106H1Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1 13.709a1.106 1.106 0 0 0 1.106 1.106"
+        />
         <path
           fillRule="evenodd"
           d="M3.304 10.944a1.29 1.29 0 1 0 2.582 0 1.29 1.29 0 1 0-2.582 0"

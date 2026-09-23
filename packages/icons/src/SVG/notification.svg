@@ -1,6 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" stroke-width="0.67" viewBox="0 0 16 16">
-  <g fill="none" stroke="currentColor" stroke-width="0.67">
-    <path d="M3.943083 5.886321a4.056917 4.056917 0 0 1 8.113832 0v2.897798l2.318238 3.477357H1.624845l2.318238-3.477357Z"/>
-    <path d="M6.26132 14.579714h3.477357M8 1.829403V.670287"/>
-  </g>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M3.943083 5.886321a4.056917 4.056917 0 0 1 8.113832 0v2.897798l2.318238 3.477357H1.624845l2.318238-3.477357Z"/>
+  <path fill="currentColor" d="M12.056916 8.433137a1.1591 1.1591 0 0 0 .194731.642964l-.194731-.291982Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M12.056916 8.433137a1.1591 1.1591 0 0 0 .194731.642964"/>
+  <path fill="currentColor" d="M13.216035 10.522797a1.118318 1.118318 0 0 1-.930541 1.738679h2.08966Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M13.216035 10.522797a1.118318 1.118318 0 0 1-.930541 1.738679"/>
+  <path fill="currentColor" d="M3.714504 12.261476a1.118318 1.118318 0 0 1-.93054-1.738679l-1.15912 1.738679Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M3.714504 12.261476a1.118318 1.118318 0 0 1-.93054-1.738679"/>
+  <path fill="currentColor" d="M3.74835 9.076216a1.1591 1.1591 0 0 0 .194732-.643079v.350981Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M3.74835 9.076216a1.1591 1.1591 0 0 0 .194732-.643079"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M6.26132 14.579714h3.477357M8 1.829403V.670287"/>
+  <path fill="currentColor" d="M7.999999.925524a1.004956 1.004956 0 0 1-.80524.984555 4.057 4.057 0 0 1 .80524-.080674Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M7.999999.925524a1.004956 1.004956 0 0 1-.80524.984555"/>
+  <path fill="currentColor" d="M7.999999.925524a1.004956 1.004956 0 0 0 .80524.984555 4.057 4.057 0 0 0-.80524-.080674Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M7.999999.925524a1.004956 1.004956 0 0 0 .80524.984555"/>
 </svg>

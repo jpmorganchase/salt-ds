@@ -21,7 +21,7 @@ export const WarningSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="m8 .828 7.75 14.307H.25ZM7 6.25h2V10H7ZM7 12a1 1 0 1 0 2 0 1 1 0 1 0-2 0"
+          d="m8 .23 7.75 15.5H.25ZM6.875 7h2.25v3.35h-2.25Zm-.208 5.375a1.333 1.333 0 1 0 2.666 0 1.333 1.333 0 1 0-2.666 0"
         />
       </g>
     </Icon>

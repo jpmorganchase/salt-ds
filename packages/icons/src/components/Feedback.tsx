@@ -17,13 +17,23 @@ export const FeedbackIcon = forwardRef<SVGSVGElement, FeedbackIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
-          <g
+          <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          >
-            <path d="M3.8 10.8 1 13.04V1.28h14v9.15m-9.566.37H3.8m-.56-6.72h4.48M3.24 6.32h2.8m-2.8 2.24h1.68" />
-            <path d="M8.728 7.44a1.792 1.792 0 1 0 3.584 0 1.792 1.792 0 1 0-3.584 0ZM6.6 14.72v-1.307c0-1.194 1.493-1.866 3.92-1.866s3.92.672 3.92 1.866v1.307Z" />
-          </g>
+            d="M5.434 10.8H4.36q-.56 0-.997.35L1 13.04V1.28h14v9.15"
+          />
+          <path d="M1 2.4a1.12 1.12 0 0 1 1.12-1.12H1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1 2.4a1.12 1.12 0 0 1 1.12-1.12"
+          />
+          <path d="M13.88 1.28A1.12 1.12 0 0 1 15 2.4V1.28Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.88 1.28A1.12 1.12 0 0 1 15 2.4M3.24 4.08h4.48M3.24 6.32h2.8m-2.8 2.24h1.68m3.808-1.12a1.792 1.792 0 1 0 3.584 0 1.792 1.792 0 1 0-3.584 0ZM6.6 14.72v-1.307c0-1.194 1.493-1.866 3.92-1.866s3.92.672 3.92 1.866v1.307Z"
+          />
         </g>
       </Icon>
     );

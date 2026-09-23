@@ -20,7 +20,23 @@ export const AddUserIcon = forwardRef<SVGSVGElement, AddUserIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M3.868 3.97a2.663 2.663 0 1 0 5.326 0 2.663 2.663 0 1 0-5.326 0ZM1 15.443v-2.459c0-2.663 2.458-3.687 5.531-3.687 2.254 0 4.097.614 4.917 1.844m-.615-3.688h4.917m-2.458-2.458V9.91"
+            d="M3.911 3.638a2.638 2.638 0 1 0 5.276 0 2.638 2.638 0 1 0-5.276 0ZM1.07 15v-2.435c0-2.638 2.435-3.652 5.479-3.652s5.478 1.014 5.478 3.652V15Z"
+          />
+          <path d="M12.027 13.783A1.217 1.217 0 0 1 10.81 15h1.217Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.027 13.783A1.217 1.217 0 0 1 10.81 15"
+          />
+          <path d="M2.288 15a1.217 1.217 0 0 1-1.217-1.217V15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.288 15a1.217 1.217 0 0 1-1.217-1.217"
+          />
+          <path
+            fillRule="evenodd"
+            d="M12.578 4.652h1.333V5.82a.6.6 0 0 0 .6.6h1.168v1.334h-1.168a.6.6 0 0 0-.6.6v1.168h-1.333V8.354a.6.6 0 0 0-.6-.6H10.81V6.42h1.168a.6.6 0 0 0 .6-.6Z"
           />
         </g>
       </Icon>

@@ -1,0 +1,3912 @@
+{
+  "date": "2026-09-23",
+  "scope": "All 550 SVG exports; visual contact-sheet inspection is not detailed corner approval.",
+  "coverage": {
+    "svgNativeSizes": [
+      12,
+      16
+    ],
+    "weights": [
+      0.67,
+      1,
+      1.3333333333333333,
+      1.5
+    ],
+    "backgrounds": [
+      "light",
+      "dark"
+    ],
+    "enlargedPixels": 128,
+    "reviewer": "Codex",
+    "sheetsInspected": 28,
+    "detailedCornerApproval": false,
+    "componentAndMaskSpotChecks": [
+      "accessible",
+      "announcement",
+      "app-switcher",
+      "bank",
+      "battery",
+      "browser",
+      "checkmark",
+      "cloud-upload",
+      "crops",
+      "globe",
+      "remove-document",
+      "warning",
+      "schedule",
+      "print",
+      "chart-line",
+      "send"
+    ],
+    "componentWeight": 1.3333333333333333,
+    "maskWeight": "baked 0.67",
+    "surfaceNativeSizes": [
+      12,
+      16
+    ],
+    "surfaceBackgrounds": [
+      "light",
+      "dark"
+    ]
+  },
+  "summary": {
+    "exports": 550,
+    "computed": 0,
+    "changed": 361,
+    "approved": 7,
+    "inner": 3120,
+    "warnings": []
+  },
+  "exports": [
+    {
+      "name": "accessible.svg",
+      "fingerprint": "4874b728a1714691642ff1eaecaec8c66dd0cea7853fbd1504cb95ccc3430e1a",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "accessible_solid.svg",
+      "fingerprint": "dd86a76a0fa56f6d01e624db05ce3ecf5276cb971fa17a1e0498acedc07b29e1",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "add-document.svg",
+      "fingerprint": "cb4c82ee37e9897b22ea105739978012c0422f569dc932d8e932e9b21e4571ba",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "add-document_solid.svg",
+      "fingerprint": "08cff1ca1ae89fec8132082e6cb20eb877de1cb339f85d7a2e8fbf4138b156e0",
+      "changed": true,
+      "innerObservations": 32,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "add-to-grid.svg",
+      "fingerprint": "54f1a816e515a97d4495a8a801b08bda68261705cb77be5ceb7111ddc223488f",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "add-to-grid_solid.svg",
+      "fingerprint": "5c8107679b099477ca0e4f938ec355d574c78210eb003675526f7fba9dbd4d21",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "add-user.svg",
+      "fingerprint": "633fb0b89ec51ef767a8089edc7cacac2732c37a4249a4ab7a98dc3cb8553f5e",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "add.svg",
+      "fingerprint": "7c3b1d97d1accd2a20da97c044a3f3d8cabdc156688772449a144b4095fdb4e5",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "announcement.svg",
+      "fingerprint": "f8d9a421fad0ffec268418a519422b1ad8fe80b517d507bcce860f932821e7c4",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "approved"
+    },
+    {
+      "name": "api.svg",
+      "fingerprint": "81874005953e82e75d3455962bdc87f5e7470da7cb6facbf107f5049b177c1d4",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "app-switcher.svg",
+      "fingerprint": "f640e5501e38362c53e44da929d90c9ed4da8e0b04a3b6041435154696757c48",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "approved"
+    },
+    {
+      "name": "arrow-down.svg",
+      "fingerprint": "c856be12cb1838a3f684ada19064e38db8bb1d141c0ee90679be9e198f3cf3c5",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "arrow-left.svg",
+      "fingerprint": "7518c7e0ab4f4251c4b80f44bf3a7cdb8071399054e57987ebec15031c06aa57",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "arrow-right.svg",
+      "fingerprint": "1b60e6b598e532e75d2b666b4f7df7b01a8d601c3228c78c82506c73377ad254",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "arrow-up.svg",
+      "fingerprint": "8175126cdd53cecd65ca6e9d936a79570ae5a29cb51fbb5712c8dd3a2ff0630c",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "attach.svg",
+      "fingerprint": "1b379b77885e3c79328cba3546d56009264ac4581a2e48d60447d0cc073fd6bd",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "bank-check.svg",
+      "fingerprint": "509693b73d96e78ea7ff0fd5b6f178da86f361b6a873cb3cb59cf2c58282bf59",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "bank-check_solid.svg",
+      "fingerprint": "d3142ad0ac3953df70fb3f96fbef512138e6dddd6160e1340e2d16b3e1e448bd",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "bank.svg",
+      "fingerprint": "49584b6572cbc2b4a9974922599e4fcd56d11c0131f6d6d2c4ef05b580e779e6",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "approved"
+    },
+    {
+      "name": "bank_solid.svg",
+      "fingerprint": "fb88fb16459adfd693d0eafbc339c5c106715f268c0625a17fa0ce3ca60bf33c",
+      "changed": false,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "bar-chart.svg",
+      "fingerprint": "f56cbb7b7e88aed47c97a328745ab17f799b65cc48a6caf75ab8f9a43b50ffad",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "battery.svg",
+      "fingerprint": "1706494d754ee529c10b3345af5ea3359353686f18bafb63ec1be59cbc079bb3",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "battery_solid.svg",
+      "fingerprint": "6d3eca2021e3ed1b1b2f70628deb658a51850635d7faeea26d74b0396f841fdc",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "approved"
+    },
+    {
+      "name": "bookmark.svg",
+      "fingerprint": "ccf1c06e1751e17a44f28a398909e638b3ca991042e2f6dde850e55699a32c32",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "bookmark_solid.svg",
+      "fingerprint": "f39877cafbd6f6addeca1ff12f458aecc3a6670bb1ab2ad2edc28faaefad0109",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "boolean.svg",
+      "fingerprint": "02b344d568deae52e39c8c464e1b65222c80ebd58fc782733861e8729324946c",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "boolean_solid.svg",
+      "fingerprint": "56ecb760c3ac81861a2fde83c80b0a2844febee0a1fbae5a9d8e297fea839a14",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "browser.svg",
+      "fingerprint": "12a285123d3ed83700e927e35119f0de19d6e8dd219d3124854cfa2a9797a9ad",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "approved"
+    },
+    {
+      "name": "browser_solid.svg",
+      "fingerprint": "d0481c5060411f2aa85f3bbcddc12348bfca584190de69f9ad10997c40ed6452",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "approved"
+    },
+    {
+      "name": "build-report.svg",
+      "fingerprint": "da1e0e993cfdd33ace95e3cff6df22d0755e2606788885eb4007946517d7ed25",
+      "changed": true,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "build-report_solid.svg",
+      "fingerprint": "e9b4a9f0e54784d97fdc8292df182fa7cbb51c4be6e2e2129fb0afdcd5df4371",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "building.svg",
+      "fingerprint": "4e7a345880705d6672c573db14d96c6d1364107f85bb0709063195d0f232a921",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "building_solid.svg",
+      "fingerprint": "d6f876f4aec0696f19c40923568f7482aa54d77aebdbc927d77262e55bddb1c4",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "buildings.svg",
+      "fingerprint": "6fd2157c7a9876b1f9966af80fd48619b81fa69d2d9585708f9832a379b6cdfe",
+      "changed": false,
+      "innerObservations": 9,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "buildings_solid.svg",
+      "fingerprint": "3b0efa5911697c5cc6819a05fff1160e57f591d8d3bc7b1cbc909ac6e7e02565",
+      "changed": true,
+      "innerObservations": 9,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "calculator.svg",
+      "fingerprint": "dccddfe0b294ee982dc60153dd89c0292ed44824349ae3704277c87e9f75385e",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "calculator_solid.svg",
+      "fingerprint": "1151e657c2cddb29ba7e862140acb963d401d94c494f29a57df1df470059356c",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "calendar.svg",
+      "fingerprint": "a66cdafa3b74714cfb6240570d4238bacd23946bdf1cda026cc82c4efe20897b",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "calendar_solid.svg",
+      "fingerprint": "8c02b53523a88c0e1ec1af061bd96ba68b45d65825a85c06c0421ba84f642c24",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "call.svg",
+      "fingerprint": "454eb088c0b8f5dc685545463eec773a6a205f0487eba98bb9be04e402473fbe",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "call_solid.svg",
+      "fingerprint": "0f0d262692940dafffafad6df83c67ff1a339375e579dd019144693325666d94",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "cart.svg",
+      "fingerprint": "b20ecc948dd7e4e9ed5c43748549a03f8a5eeaa9ac56790acbd746b1b1e47bb1",
+      "changed": true,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "cart_solid.svg",
+      "fingerprint": "de5c77956c72f60eedffd6085dfe73ab11e2b91c5e4f7ddd93e5ff60043e02dc",
+      "changed": true,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chart-area.svg",
+      "fingerprint": "b3ca7547135f14f280bb2c4e870e366ff9c28500628f88d818244b6cd575528e",
+      "changed": true,
+      "innerObservations": 1,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chart-bar.svg",
+      "fingerprint": "f56cbb7b7e88aed47c97a328745ab17f799b65cc48a6caf75ab8f9a43b50ffad",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chart-box-plot.svg",
+      "fingerprint": "e329a2d0ed67b87575ef3a1542e3ba236183674678641687a06b14de2279c438",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chart-bubble.svg",
+      "fingerprint": "5db681e2786ebb7f100d07a7f9849b58b24e100a8b535bcc6ecfd2e65ce5779c",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chart-bubble_solid.svg",
+      "fingerprint": "4f210bc91577ea143c1a3fa51ca69f70edeb9dcfbde96d2e6c9eafdd11624426",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chart-bullet.svg",
+      "fingerprint": "fb4a56d67b637dbb8cc60e6c5c2d144bd60cd75e2d81a50ef60e0931f25fd329",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chart-candlestick.svg",
+      "fingerprint": "2329777e94a242441bca0c436dd6a8a8d77100aee9fd14f025ddb983a0454b3f",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chart-candlestick_solid.svg",
+      "fingerprint": "b89ac12be63388caa83a54388cfbaf0c3bb3238ff09b32b67e10e8565d928ea7",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chart-column.svg",
+      "fingerprint": "8558f54c1a04de826d2fc38fba4b7b1b73aa71f67a7041b09d7e3083e0307685",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chart-donut.svg",
+      "fingerprint": "8b4d5e52a7c2ed138a3b1127241093b30b8f83104590aab0a670477d3db19ecd",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chart-line.svg",
+      "fingerprint": "d96fa7cd67431351f63ab1b3a9142b0b25a205c6776ef9eaa550cf579ba94dcc",
+      "changed": true,
+      "innerObservations": 48,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chart-line_solid.svg",
+      "fingerprint": "82de61df586eb7b80394348e5c33c7ff187e1fed59599b20b3ac34c940bfa865",
+      "changed": true,
+      "innerObservations": 48,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chart-pie.svg",
+      "fingerprint": "f6034d089ebd39546a72b7717a21250c40c74146a92f82f385ccc7be25694114",
+      "changed": true,
+      "innerObservations": 3,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chart-pie_solid.svg",
+      "fingerprint": "9437b16a3ea835fd5163b8b60637aded2b11815844a94de214c7c4a5225e483e",
+      "changed": true,
+      "innerObservations": 3,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chart-scatter.svg",
+      "fingerprint": "28f6952d54cedd10b4c60c64aea58948d7ca473e95edaa68edf7f42c075a3837",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chart-scatter_solid.svg",
+      "fingerprint": "185e52e1d275b4beb896e50c1cbba3a4759cf022cc83d89442d37c9bec536177",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chart-stacked-bar.svg",
+      "fingerprint": "c41b6e8b25042936d4658b2fb765428ff377c1fee6ceaa4c4fee9b07bbec42e1",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chart-waterfall.svg",
+      "fingerprint": "6a4439409c034a9e1148f16836667bea7cd06601afa0c0a363c9ca27f24071e0",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chat-group.svg",
+      "fingerprint": "8dd5343d106583b149de6dd0c544e80091e0824efddab222814d794eaebb017a",
+      "changed": false,
+      "innerObservations": 12,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chat-group_solid.svg",
+      "fingerprint": "7864354d7314260fa663119d9d0c547e9ff90589861987b8568bb7def196ebbb",
+      "changed": false,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chat.svg",
+      "fingerprint": "d38eeeb34870ce39e44d7d4886ca367d12c9b9757a5f3bec314c059d962f7614",
+      "changed": false,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chat_solid.svg",
+      "fingerprint": "8338dc2543723f5139649f04f4056791ad2acda1fa238d20e6733b31ca4c0b20",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chatting.svg",
+      "fingerprint": "cbc353ab5fbe346c3e48cddec9a87b18b2af5ef1451032421f8c15014c3589d8",
+      "changed": false,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chatting_solid.svg",
+      "fingerprint": "78fcbb8f50efb795abf2076074b84fb95972dc6bb6127e0408b2d2e0516c3cb3",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "checkmark.svg",
+      "fingerprint": "b61cb34bc365aeefdab2a02c94d315da3fe9bd7cfbc6c86e0d8e83653438e3b1",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "checkmark_solid.svg",
+      "fingerprint": "339bf62f777486f8885c375d095938faae66551b1fc0cde74505b51064587774",
+      "changed": true,
+      "innerObservations": 20,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chevron-down.svg",
+      "fingerprint": "19d26af44f9913d1c6223427c28176dd3e0902d0bd20e51184efc99395168519",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chevron-left.svg",
+      "fingerprint": "3b5a4575742bc254fbf5c2b2d3fb08e287e41bc1bf5c8d91a644b608927c1150",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chevron-right.svg",
+      "fingerprint": "1207e799a47aa993c116fd668aa7ff704c0d847147fe81795f306fe85ea8b0a7",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "chevron-up.svg",
+      "fingerprint": "5e83a47396fdcbd75cec5a7ac0deadef09df9919838aeef66eca3c8046a8a81c",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "clock.svg",
+      "fingerprint": "d672a268c036bce767d51984666a17a2a3f2ff1318f5b3122bcc595753c4a17c",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "clock_solid.svg",
+      "fingerprint": "fc269b4c3a1f0d19afe5c0aff761085fd0dd8b5b793e5f75e9acdce4e5b80587",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "clone.svg",
+      "fingerprint": "05bc6934d3332e61aeecbb28c000a32391c831d7bd761c765806a95aac24e37b",
+      "changed": true,
+      "innerObservations": 1,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "close.svg",
+      "fingerprint": "41de04f3a2fbe07707ed4673ffdddebaa71b20af91e06daa3238c70f0ed89fe3",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "close_small.svg",
+      "fingerprint": "4647cbb8f3c7e1630ee261d6435956672f29203652cf2c6ac2d4d723c76b2ca3",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "closedcaption-disabled.svg",
+      "fingerprint": "914903782c6c6261ef78261cb7537309c046d77f6d5b76b4359d7d2939965c15",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "closedcaption-disabled_solid.svg",
+      "fingerprint": "2bfa89147f858d5da474dde72ce4fed2fdcba46af5ca3d8c0b79e3667180cfa4",
+      "changed": true,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "closedcaption.svg",
+      "fingerprint": "c953d640dee76f9d8f7f4b43cf223f017d2f01ee5e2985b80eb0810bee96e1b1",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "closedcaption_solid.svg",
+      "fingerprint": "e46cc2b54c1b3c6afeeb835a01b5de971f3db9e799fdc4eae876c401dc10d5f3",
+      "changed": true,
+      "innerObservations": 24,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "cloud-disabled.svg",
+      "fingerprint": "9967073eeffb59b4cb3b0c0471471d53e6d2b27fa474d5b1447daecd90bd785e",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "cloud-disabled_solid.svg",
+      "fingerprint": "59e0a1317cbc156b68c5e0ba70f2b53e4b94aa224411b494686c0772aca2d335",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "cloud-download.svg",
+      "fingerprint": "deb6b1ca5dca5bc740dfc150ab6ff720387064865484cdb494c51c3439905446",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "cloud-download_solid.svg",
+      "fingerprint": "092500dfd9c9879e565c65cb7efa0cdd1099a563e1b2d2b968a6ec93bb04e47c",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "cloud-success.svg",
+      "fingerprint": "3b0f43627f6a5fb79d2380bfaf8a03f27e8fced75c986f2bc63125f128e67b11",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "cloud-success_solid.svg",
+      "fingerprint": "f3b58e64e2521e478b54c3ed0864f8fca0e86410714316eb136805f683207b8b",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "cloud-sync.svg",
+      "fingerprint": "9f93156d33f91ffbb888b2b8acc49b2627efa753c55e7d05d65e122d42ff182a",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "cloud-sync_solid.svg",
+      "fingerprint": "7db0428386b9a560387cedbf0ed4c5135b9346dfd9a56620c2b617b1ad0e7ad8",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "cloud-upload.svg",
+      "fingerprint": "05bf2ed095c6d6cc3bfb08abb04d2f946e95862c79b25dad40e95494e4d78d03",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "cloud-upload_solid.svg",
+      "fingerprint": "e6cc27d8f1ab221f8828c996dd37113c74e53e625f98e386900016f615ca55cc",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "cloud.svg",
+      "fingerprint": "5bcb02b3e02051de8d211189b1e1f0b20525d9874822043ebbbbe7532d1ff81c",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "cloud_solid.svg",
+      "fingerprint": "6ca5aad729ddfdc9c3c70df61d1a4ac96d77f5d49bd5d14337a440c894557384",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "coffee.svg",
+      "fingerprint": "19e85b2993c985f269a024d57610d6061c7ac0eb4e452ad24ad6f8e2ee1bf611",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "coffee_solid.svg",
+      "fingerprint": "d81f491e607d6825e165f2e72f6deb26569222aed1f594a9a250a36eccf15b6a",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "collapse-all-horizontal.svg",
+      "fingerprint": "a14cb34bef03886024793a603ea2de551a54286e1d8b4aac26b8544a67ef2e6b",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "collapse-all.svg",
+      "fingerprint": "f994b7f622f23e2a92d5e559bbe41d43c9264956e6c44ff9d8d9fd3273d13d4f",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "collapse.svg",
+      "fingerprint": "9e1e749473a1949ff55256fa67f96e49e9b84d2f5289fbc942ecbfa0abc90bed",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "column-chooser.svg",
+      "fingerprint": "126053bd6ad8ae89874d5daec692e746332314a19f02317cc1c968f025ef4c32",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "column-chooser_solid.svg",
+      "fingerprint": "c433352ccb8768cd464450dcb80232c2765eba8ba60eefacdcbf1f60b8c0d855",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "commentary.svg",
+      "fingerprint": "a2cc8954634d75316f8c6a115597762b3b9eb67d648a6934b5d5a0c4f7c29fe9",
+      "changed": false,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "commentary_solid.svg",
+      "fingerprint": "9cd79db37214b1bfd49351463aa39af10578f444744a962c7dd2dbc65d5625e8",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "compare.svg",
+      "fingerprint": "60e054c2d7785617c63c59ee5b88db958ce95a04ddb3a445e6e9a4dd7dc1c092",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "compare_solid.svg",
+      "fingerprint": "6829ca8b2df6122bdaaccaaacab9d87d46c021784105f79d625ee4f841333cd8",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "compass.svg",
+      "fingerprint": "96508a9a1f407d0f199e799807c6eb794768b28a696396f34acf3d84b6e51089",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "compass_solid.svg",
+      "fingerprint": "70dfa26d030a0eee112fbc6c0bf8c6b2dca209a4ffed16122d6b5706259d667f",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "cookie.svg",
+      "fingerprint": "45f675b1725cdaa3da1057e378499e5ee02c3e0da6b23dc7480aeb15aff0eb44",
+      "changed": true,
+      "innerObservations": 2,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "cookie_solid.svg",
+      "fingerprint": "118b34051395dd868fe0e1b58c340109441340a1d36e019c2fb1299e935c1657",
+      "changed": true,
+      "innerObservations": 2,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "copy.svg",
+      "fingerprint": "38b00433bd2cc80e7ddb2a25ff98565077d1bce3e0e340cbc37bea5f0eb55d0f",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "copy_solid.svg",
+      "fingerprint": "7610863a74befab06f93aa9494d31d428f1fcf1df607e52411fc67bca214ce99",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "credit-card.svg",
+      "fingerprint": "8090e8bdc22656dff530da70ebe7cf25e1a9f0657ba7a9f3820de320c8e0b699",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "credit-card_solid.svg",
+      "fingerprint": "34c2e4f36bda32e3b788d9c6ae1cfa28161824a6b50fda12647b8abf8fc96cd7",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "crops.svg",
+      "fingerprint": "93ade2e1543941e2cfa263ec651f2299dc97fc1b18a2c1341ffbd8f11d2ebba0",
+      "changed": false,
+      "innerObservations": 86,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "crops_solid.svg",
+      "fingerprint": "3957041bf09ca53f063b85a89a0e992c6cab3c69110f14575d45b687f4e6aa28",
+      "changed": false,
+      "innerObservations": 40,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "csv.svg",
+      "fingerprint": "f4fcf9f6ded422a4f1e820b2f6755d9138d66cf8efbfe9a7dbd04a114f27e680",
+      "changed": true,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "csv_solid.svg",
+      "fingerprint": "41b16fed3adcc8708f44fb12844f165b59c70d308f67e5e8ae4c16cfcf8d0f76",
+      "changed": true,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "currency-exchange.svg",
+      "fingerprint": "19862d22e2e345b68a1878b8463550932c4bf46fd92a4c935da38c3a9a4be9e8",
+      "changed": true,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "currency.svg",
+      "fingerprint": "44b3f81a1d75c3c162dd4f4e72fcb6e337e7c60ae6d29354ee3eb09ec6639640",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "currency_solid.svg",
+      "fingerprint": "f3a954580d992e4a65502722a35e2b1de472d114468f11c52c7e6743b8fba564",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "cut.svg",
+      "fingerprint": "9434207af5f881595b4d0f760be9920e430b62ab26835b092a5409576a09ab56",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "dark.svg",
+      "fingerprint": "7043c66c2eccee0c915de382e2b66e965f75da0ad95fd535279393e6e2cafdb1",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "dark_solid.svg",
+      "fingerprint": "41cda7ee0a35abf82548b3b0a0700b5c30987bad29ccb6fa46a14ef176523931",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "dashboard.svg",
+      "fingerprint": "4f6918ef71e5d3f35d431df7cd59529fbc65eb88096732c69a28ecaaeb2daee3",
+      "changed": true,
+      "innerObservations": 10,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "dashboard_solid.svg",
+      "fingerprint": "9a0aa3e3b3e26c33cf14b0529a0655003605216a12b6c0ea8e58b21c2806562c",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "database.svg",
+      "fingerprint": "a747b5a9202391589fa5e647841ebec924ecf13674e958ff6b5283ca2d31c119",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "database_solid.svg",
+      "fingerprint": "f4223fd64c1ba11a7e86ba1f23c2837549665845589b8c1add3f4796dedb3d9c",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "dataset-manager.svg",
+      "fingerprint": "e616fa75080936c0a631b2c3a6c7e0baf98ed10e30738a068cb3532f1d66afd4",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "dataset-manager_solid.svg",
+      "fingerprint": "0c65f46c63906535cc61390869da2a66aa4d08075c4fe69e04b0d0500d588049",
+      "changed": true,
+      "innerObservations": 5,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "dataset.svg",
+      "fingerprint": "1fbb8fd57cc370adb1524444ad540429ff87ebc0d0c8a0c94b0607a790935a5b",
+      "changed": false,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "delete.svg",
+      "fingerprint": "b511a3a0f6550281613b754351649044fdd8155bac7a0fff38e255e101361945",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "delete_solid.svg",
+      "fingerprint": "265895e392a64ed928b4f11fd2ee10ebab028167f4783391284b493cb273f216",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "devices.svg",
+      "fingerprint": "f0a77a0d139e74daf4baf192d892ee7dfea1c8eaec2af319b8175ccc02bd1192",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "devices_solid.svg",
+      "fingerprint": "406cf67efbb2141fa8bcf5e13c47e640dc9a92016a8c6302e83d19f04e7b0b79",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "diamond.svg",
+      "fingerprint": "84415c0406068d3d12a16dffaedff5011f0817e14feed05099211a1e7e6b4a12",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "display.svg",
+      "fingerprint": "6f88871f4ec67e1f5099fee4727da39313ff4c49cc75022d31e78303dfd567c7",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "display_solid.svg",
+      "fingerprint": "61f4c6bd54d866624e8090ffdbdbf7ee8fc4ad9a6cf3b5d815e9148687773348",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "divide.svg",
+      "fingerprint": "6fcf82b7b7957b078a9c0d7574ab63722bf3859221090e2fd8f13d54f2e0fd14",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "document-draft.svg",
+      "fingerprint": "63278f6e7ab47c1b3c1dde8c61c2b890b6cdc07e1cb3cb816d6f5e100f73af29",
+      "changed": true,
+      "innerObservations": 18,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "document-edit.svg",
+      "fingerprint": "5b449e9a8671c11c06adec14a1f3292663f196e5b91c8c23305e8402e359118b",
+      "changed": true,
+      "innerObservations": 18,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "document-search.svg",
+      "fingerprint": "987959500ad3c9cb7c41285ff2e0c65e51ae184e50a8fc329c647454c1c186e6",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "document.svg",
+      "fingerprint": "2fe51d863ab3ccc2dd1950feac12f9e145a22606f79604dcb89f8fe0477dd53a",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "document_solid.svg",
+      "fingerprint": "3ef9f25421ac6d63c2aa2d4f08e22864ff6493205d25f6756ba3954f2012d294",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "does-not-equal.svg",
+      "fingerprint": "b15a9dd5440045c5738d6858f1159305d109cbfb6f721253ef16f7f72f5eccfb",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "double-chevron-down.svg",
+      "fingerprint": "1871e3bfaa400ca60e7b07eaa6369655f4fb78bd32cb692a5ab5efaa138f8dc2",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "double-chevron-left.svg",
+      "fingerprint": "7ac155fa5fbf4364fe214129c4e2cff62a023706e6c6d603bd4946d0d5f55acd",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "double-chevron-right.svg",
+      "fingerprint": "c191ed69720285ce824f0e2b55574cd6b85898da5b0026d9d2d5b6bb5ce3dcfd",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "double-chevron-up.svg",
+      "fingerprint": "4d8f270b985a36b7df27b1113529ae8be69d39c997f598d2746361b20b8d7c79",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "download.svg",
+      "fingerprint": "3d69a33ecdc5bdc17ae67d5397cea4f1130c156a7df4d60cc3435906e5870396",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "drag-row.svg",
+      "fingerprint": "b2bcef261fde3f6ed7c0d461d355f17861f7bfa2f8d478b29fb5027a3067f5ed",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "edit.svg",
+      "fingerprint": "8a27cc2f1b7fab9784c5c028dfc298921682011c4045f73b249a9bc9f56ebb29",
+      "changed": true,
+      "innerObservations": 32,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "edit_solid.svg",
+      "fingerprint": "9aa9599ddaf5216d5bf61052ba7cd7e68fdcb275094501a52696dc4609687250",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "equal.svg",
+      "fingerprint": "df565bfce015ad53322692cbe2a79a171a1a6738f1323090847eb314b1da02dd",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "error-execute.svg",
+      "fingerprint": "6f5300028f8c513db7c1873000a6eadab449b0860cd3449ed0f6662c3322b6d3",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "error.svg",
+      "fingerprint": "20bf4ca7d34ec273d073924f0d5387d41a75e19f8d8c0bf99e26f7fcc25b0a7c",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "error_solid.svg",
+      "fingerprint": "1bd55531aafeecc9da002f7e8ca1bd5a81af31c016c122403764abcac1d3dd91",
+      "changed": false,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "expand-all-horizontal.svg",
+      "fingerprint": "b0ac9a7f71e244e6399d6335713246e82e2641f0d6de016a20c5b560d0ec9bf8",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "expand-all.svg",
+      "fingerprint": "907d8c2e50f59d206936ba469433e26c35e4625ae02afd082c3bc358395cb77b",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "expand.svg",
+      "fingerprint": "a34f7d545b84c5890ce820d0af27bee0824470766024b06bf490fc06326c2495",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "exponentiation.svg",
+      "fingerprint": "1b95aead743dd08c794a7c71b4d742e5f386bc401734239499a0423d9bec89bf",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "export.svg",
+      "fingerprint": "84c7e277a0fd59321138fec6b7db6269b495807a46a47ba61c7799abe138849c",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "export_solid.svg",
+      "fingerprint": "84c7e277a0fd59321138fec6b7db6269b495807a46a47ba61c7799abe138849c",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "favorite-half.svg",
+      "fingerprint": "f08d72df663dc757cb88c6f15d8ab25c5ef2ced987eba141d02c0c8df3a237f6",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "favorite.svg",
+      "fingerprint": "98f7e68490030c2da05f7f43d2335bc43adc998fcf023b87fce3a080885e0986",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "favorite_solid.svg",
+      "fingerprint": "87c59c79068d576018eb6a32cdee2b027d7b62aa9b1f7438c2b39a82b4e830b4",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "favorite_strong.svg",
+      "fingerprint": "c8c8a3c43e65c2ea6fe1697888d3c1b8605fce48f0a9c300fb0262ecaa729d73",
+      "changed": true,
+      "innerObservations": 20,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "feedback.svg",
+      "fingerprint": "3a819de67d131e7195d88cf1770714802b42f371cb2ca8f2337010a32cd6cdd1",
+      "changed": false,
+      "innerObservations": 12,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "feedback_solid.svg",
+      "fingerprint": "b601ccbfac8d98a078361e8f64f70e8644d1cedc3576cdee57ebea7af5ef3ae5",
+      "changed": false,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "figma.svg",
+      "fingerprint": "2c2b345e09b56d55e3bc6b7f0a2cf4c10bc9d8f3723ca5bdd4bfa6b1c0087acb",
+      "changed": false,
+      "innerObservations": 44,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "filter-clear.svg",
+      "fingerprint": "b349f251ba37e0aaa8d6212b24074237568331a2285989fc2a88e96c4ca6931d",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "filter-clear_solid.svg",
+      "fingerprint": "4397b77f432c1da2407fc9c258a1824bab26265fc52bdca084e325357a90a5fb",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "filter.svg",
+      "fingerprint": "bb3f4fc32377141aba443a9083f5afc855a7e5765d02a7480ac52048b7e57497",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "filter_solid.svg",
+      "fingerprint": "a328de693ec2237e3095aeb8ac65d9d76815c29e50a846fe23e53cef395d4b63",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "first.svg",
+      "fingerprint": "744a8a2111d6a9cb4be42a7b4e2a800d1f322886934d22ce76497559282ba250",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "flag.svg",
+      "fingerprint": "7093896f7802ee26c2cf699f69acb713d1b33ffea77736cf2b1ebbf88fdb83d3",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "flag_solid.svg",
+      "fingerprint": "ffc6d24c91e97061436c793b07d3619a4a059167d8ce093533ffaca0d19b11a7",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "folder-closed.svg",
+      "fingerprint": "899fd36f47117499c9822b48ea7cc2b5a6fc6e7b97bb03814881d9bcbf69099d",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "folder-closed_solid.svg",
+      "fingerprint": "a7c3daa8e5148a0265ffc39ff97badd9a930322893b72a4b61392baca55567d9",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "folder-open.svg",
+      "fingerprint": "d5c3bcda49c08caa0c7a2aa29e2508cdbabb5e4de67f44bafd2b508c127b90b7",
+      "changed": true,
+      "innerObservations": 12,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "folder-open_solid.svg",
+      "fingerprint": "5c1a4d5010cf3499de50ca1265d53f417100ad47f9a2e0160c478ffec8f31c10",
+      "changed": true,
+      "innerObservations": 12,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "forward-10.svg",
+      "fingerprint": "d03f7ae32b5dc77142f733b4f75e40f2bb2cf925704a2998f50fbe34778d2ac4",
+      "changed": false,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "forward-15.svg",
+      "fingerprint": "e43a2b7eaf2078f09903482e0ab4d99f0f85ee97a5d32350a62d3809040fde5c",
+      "changed": false,
+      "innerObservations": 12,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "forward-30.svg",
+      "fingerprint": "7887ead13877466bab6aad7e63ad82561311eaf5852823c8046d419077ddae3a",
+      "changed": false,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "forward-5.svg",
+      "fingerprint": "342b5833dde572a957b05863878df16ba0218420f0ded7ef69a5ac1d71ec2de6",
+      "changed": false,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "github.svg",
+      "fingerprint": "1d84daf8b4c30ae78328b24e397d1f95366f1d78131726dae7e60c1f4aa25f31",
+      "changed": false,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "globe.svg",
+      "fingerprint": "d60fe6bc16eb658850dfdab0ac7a5e3f6d57ab288914d396e61f86502eed5cad",
+      "changed": true,
+      "innerObservations": 64,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "globe_solid.svg",
+      "fingerprint": "a3c540baac906c101c06e5ee63d52782c93dbc9771fd0061d42300ae19d42cb0",
+      "changed": false,
+      "innerObservations": 60,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "greater-than-equal-to.svg",
+      "fingerprint": "9e0a7a99c24b9c8b617ef0d0fd05eac5dd0a5d4d9ee2842170ac72aa69a88f59",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "greater-than.svg",
+      "fingerprint": "ebfe2e28db59357b8af372f0e999da669d6a522ee6956b37635946853dc25bc3",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "grid.svg",
+      "fingerprint": "375c1defd642055f6e111e87cc64346cd6ad374c89f9234b350790c4125b6657",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "grid_solid.svg",
+      "fingerprint": "0d359fa2b292ed462ec49a62fd3fed2624d948e22474875df58c7f4dcd2bbbd3",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "group.svg",
+      "fingerprint": "630201ea6bc46f218804f74d40dc8b418c4be9a963598734d8d0e5d06b43a630",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "group_solid.svg",
+      "fingerprint": "3aba021a5dda8e9349c7102c4b5fd7696748d69360affd529cbe00bb2aeabdf2",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "growth.svg",
+      "fingerprint": "58716a6665f43abb7b1cb143e6b6a45930950a43d3ce554c238384d4930e1ffb",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "guide-closed.svg",
+      "fingerprint": "a6dbafde07c44945b9473049132d0dd4bbb4f40028feed61fe72110eb25313e4",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "guide-closed_solid.svg",
+      "fingerprint": "ddb3177dcf95bbf3f79af5a08b70aeba8fd870c284af865f7b8b68470d822f1d",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "guide-open.svg",
+      "fingerprint": "474d739cd64f75e7e20c25eb2185cdd8ec498909cf7a5147a114c67e236be924",
+      "changed": true,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "guide-open_solid.svg",
+      "fingerprint": "41b2f4d13e00073a481fbb31c55fefe8e59456d5b8dc0a5f7d0984dd8b30440b",
+      "changed": true,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "handshake.svg",
+      "fingerprint": "abbd982bebc683cf9b6dc0447342c229a3222d04a24da44808a258ccb0de1c65",
+      "changed": true,
+      "innerObservations": 56,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "handshake_solid.svg",
+      "fingerprint": "2664b8412681b42465b1623c44824528458a5257d52e9c82be6f89b51d6b2a08",
+      "changed": true,
+      "innerObservations": 56,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "headphones-disabled.svg",
+      "fingerprint": "d2c244ce4f7b1ff2ee38ca6473113c32c88b34dfbdf5ffb8cc54adccffbabb52",
+      "changed": false,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "headphones-disabled_solid.svg",
+      "fingerprint": "0eca168b6e0ab94f45b7fc698968ad4dba1832d3a886346f2c865a73bb0fbe94",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "headphones.svg",
+      "fingerprint": "b80292871668780de77bae5002b6d4c7416fd2927a9b5547c43921ec3777ec60",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "headphones_solid.svg",
+      "fingerprint": "d8f9c49fc823a27dc010fcf36caee4dd20bb20d394907fe98e837a2e53369d8d",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "help-circle.svg",
+      "fingerprint": "5f7c2cd148347f6193482ea80c1941d0af4e2eb79cda75509ae55c9dd204be06",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "help-circle_solid.svg",
+      "fingerprint": "c045013d91008b8846c1bd7651024b1e26e95560f97c703b64782809df27b400",
+      "changed": false,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "help.svg",
+      "fingerprint": "5f7c2cd148347f6193482ea80c1941d0af4e2eb79cda75509ae55c9dd204be06",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "help_solid.svg",
+      "fingerprint": "c045013d91008b8846c1bd7651024b1e26e95560f97c703b64782809df27b400",
+      "changed": false,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "hidden.svg",
+      "fingerprint": "43e9ce8d6e46bb35ade723770e15065d7d33dde966524b302a29929c2835856c",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "hidden_solid.svg",
+      "fingerprint": "70106613160a776cc58c7933be74f5d81660bc641ca04663c94b287f81eacde7",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "hierarchy.svg",
+      "fingerprint": "f91403ec07887dea661cc5a306fb465ec95e036b93b89c1df5eb0e9b843d65f3",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "hierarchy_solid.svg",
+      "fingerprint": "2617c09084f6dce4b8bc4d68fbb49f274d53fad6993cfc0c64eb0d9cbecc7011",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "history.svg",
+      "fingerprint": "108c3e34fe5c5826f751525603518e8ceb6bc713cd730aeaeaadc06953f8bfdb",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "holiday.svg",
+      "fingerprint": "e17bfbfa33a63dce675c83516a937ac40c73c8da362f848203585232b79d0861",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "holiday_solid.svg",
+      "fingerprint": "cfe89d957cafcb4a116393d8bd5353d3bffe64344ec36d38e818615001de0861",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "home.svg",
+      "fingerprint": "9f8265e9783e0b2dc35a2f75dbb969fd9121d55c91494c0b54fbbc9cbd9d9562",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "home_solid.svg",
+      "fingerprint": "ebf43ca8ddb5416580c4e747e30f592383fcd2dbc9e2981c9deee357c1133908",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "hospital.svg",
+      "fingerprint": "b8fc234fc775a708817f8f9b83d2b4cf2cd48dea68a3541fc23eae733c6cd89b",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "hospital_solid.svg",
+      "fingerprint": "683dce01150750008dfbbd58bd19333c872d432a6ac3448d8d7eb47e25ee8535",
+      "changed": true,
+      "innerObservations": 40,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "icon-figma.svg",
+      "fingerprint": "2c2b345e09b56d55e3bc6b7f0a2cf4c10bc9d8f3723ca5bdd4bfa6b1c0087acb",
+      "changed": false,
+      "innerObservations": 44,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "image.svg",
+      "fingerprint": "524dc901f48cd9da8635e076acdf1233a1ac2a946a1834af61c4909c2772b11b",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "image_solid.svg",
+      "fingerprint": "6c2b1e06425d7728887483d527f715522f99bd037c83f71662628e5fc639a34b",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "import.svg",
+      "fingerprint": "3c8a70aff75378506a54b74842cc3f1469fc43169a89cb531bd58de3554db881",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "import_solid.svg",
+      "fingerprint": "3c8a70aff75378506a54b74842cc3f1469fc43169a89cb531bd58de3554db881",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "inbox.svg",
+      "fingerprint": "7b106d8725e5180e3e383007b31fc80eab1b6a7c3e205e7eda85d9578934d690",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "inbox_solid.svg",
+      "fingerprint": "61d7f7c6432fe97516c037f8d9638c5c4bebad179bfe90f5bdb28a37a24f1607",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "indent.svg",
+      "fingerprint": "839018373c4fceec500026725de337e4578a18e51028834e3ed2cec157c9b501",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "infinite.svg",
+      "fingerprint": "cbccab7359c518ff02a60fe51104899db9570be0c8d9633bd372ad6bc4d0a381",
+      "changed": false,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "info.svg",
+      "fingerprint": "003d1423b811e1bc7ebdebc5c6dabd5c15900489da888a8dae7aad40947ef321",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "info_solid.svg",
+      "fingerprint": "302e5619ee0c67d92683c16d2797ea5fbae555fe9bc177b8e887cc572e4d56a4",
+      "changed": false,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "jigsaw.svg",
+      "fingerprint": "fb7dd13efb898a9b75757e74590095a3840b17483971ef2580ee9b81a3cadf81",
+      "changed": true,
+      "innerObservations": 32,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "jigsaw_solid.svg",
+      "fingerprint": "c921fbdee2a26a078db8c01efad7ddb869c5367c60b12777c810af0582348819",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "key-backspace.svg",
+      "fingerprint": "783c7ccf6656bc035a5e0783bdcb2246d65b25a5bae822b373f11448a29cf599",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "key-capslock.svg",
+      "fingerprint": "ab18442bc28bb603e3ee058b872ba8ec48a0f73588736c2b030cf4101722bb31",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "key-command.svg",
+      "fingerprint": "b8b1c18332a0bf371711da0288324c5b5b3da7fab8061cd83f1b98d34dc18958",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "key-control.svg",
+      "fingerprint": "e1cfbdacc29eb6c6eb23eea3e33cd8320ea0a07a3f9e66758f8c9e6016af6b12",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "key-enter.svg",
+      "fingerprint": "6e0549200ba84817d29e862a68f91af249f8aec8c3925250fe577f3d1e2a5e3a",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "key-option.svg",
+      "fingerprint": "aa900a0ddd19e54a7248442ee5bd0f339f138b2c2f175ddd8f83d2a0409b741a",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "key-shift.svg",
+      "fingerprint": "7cccb13247a796c3d76231e87ef21a59f52bb7250e97745cbe7181e061e12151",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "key-tab.svg",
+      "fingerprint": "bee1d5e4806ab7661f9b3090979ca7349a94ffc49c0cde6a013e424a73d87012",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "key.svg",
+      "fingerprint": "72a79f3a2314ffda728d6d88a0cb02443f14c16818f8391c6aabf42d312db360",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "key_solid.svg",
+      "fingerprint": "e82a6a348406ea871a4e0d293b2463d4811a0dc704c81f2c5c6a244061022b17",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "laptop.svg",
+      "fingerprint": "305e62849cabf120e315a6b03de607fec6418499a3e5dc48a220061a5cf31d07",
+      "changed": false,
+      "innerObservations": 22,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "laptop_solid.svg",
+      "fingerprint": "ed5e6658e97face8710225714b856347ab49f0cf4242df8333eb95ffd8eb7485",
+      "changed": false,
+      "innerObservations": 22,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "last.svg",
+      "fingerprint": "cbf3e4ea909c0d78d06e820f4768e4035491aa65ebb259cbf66e19c73b5b733f",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "layers.svg",
+      "fingerprint": "917de705b65014e5076f1bb5836fca34bb51576a0b6e7fe74ed051cf1d6d721f",
+      "changed": true,
+      "innerObservations": 1,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "layers_solid.svg",
+      "fingerprint": "3bc2016469d0a62653e4acae09ac05258ce5b83b53ef96c616f341bc18295e0c",
+      "changed": true,
+      "innerObservations": 1,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "less-than-equal-to.svg",
+      "fingerprint": "814cf50f26d4974b772c49a1b0e9a96ca01f789e14c4633b459973408da08e2c",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "less-than.svg",
+      "fingerprint": "be9391ea05c2b0e817113bcc549982e980d7f901d7c00d164f56e1fe1de6eecc",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "light.svg",
+      "fingerprint": "a3591dd3884422c6ef3243ef2d9e823a941f827546e5dff9b1aac74a3526fb34",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "light_solid.svg",
+      "fingerprint": "543b128c27b5fdabb0228b57c63dfc27a5fd68646f2e69c06381caebdf223654",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "lightbulb.svg",
+      "fingerprint": "1624fc214a5b35cc62a12855ae494833623d089ce9ad1a8934dcb9686357372c",
+      "changed": false,
+      "innerObservations": 12,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "lightbulb_solid.svg",
+      "fingerprint": "a0a32ffb75ffca5840bb2835a49bad3958b8932e898da44b68cea28ee256360d",
+      "changed": true,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "like.svg",
+      "fingerprint": "f6624f172a02cce1ecd6731f029a63f0cc30128393018fb99a21de51b8968c6e",
+      "changed": true,
+      "innerObservations": 12,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "like_solid.svg",
+      "fingerprint": "b721cb4228db0cafafcb748c7e6a54069bc671ecbb0b966b068a15e6f781c341",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "line-chart.svg",
+      "fingerprint": "d96fa7cd67431351f63ab1b3a9142b0b25a205c6776ef9eaa550cf579ba94dcc",
+      "changed": true,
+      "innerObservations": 48,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "line-chart_solid.svg",
+      "fingerprint": "82de61df586eb7b80394348e5c33c7ff187e1fed59599b20b3ac34c940bfa865",
+      "changed": true,
+      "innerObservations": 48,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "linked.svg",
+      "fingerprint": "26da84fcb372edabac59b3a37ebe037b0aaa806d779cb606070795b60d9fc5a7",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "linkedin.svg",
+      "fingerprint": "a51bf0ca06eb90d0deb17b9e6ccbaf9d56ae886fd0dce78876676609a202e19a",
+      "changed": false,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "linkedin_solid.svg",
+      "fingerprint": "cee816156aacf7d2e472030925867915f5ca3e6b2fa3b33bd0c6c8d76b668f19",
+      "changed": false,
+      "innerObservations": 40,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "list.svg",
+      "fingerprint": "ccff1ba443fcd269f3feccd190484dc656ccc83d081a5ba573fde953fd6bb062",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "loader.svg",
+      "fingerprint": "62d591e2df7cae880a1a3c0ecccab624d7e05f2d0b6788a764d444f2d4c96b43",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "location.svg",
+      "fingerprint": "8bc451da618103a1c83034a43b1c89d2ded2039fcc0da2695809c2055e716f6f",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "location_solid.svg",
+      "fingerprint": "cb078669b8d589cfafb35eeaf4f0a6759bd219e0608de1f0f95c035fed02849f",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "locked.svg",
+      "fingerprint": "cc2aa394eee9ca3f53e20b67e6f004d1b1fd9f1a55dd6d5772721fcb28dabece",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "locked_solid.svg",
+      "fingerprint": "25bb10e74203cdca91c066be8ddd25e5178e8cbd1b032607cf81de38fcf5b52a",
+      "changed": false,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "magic-wand.svg",
+      "fingerprint": "e972c46a3394f1b5b8677e69f917a1ac47defed2319613fc9a820312a28734f4",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "maintenance.svg",
+      "fingerprint": "87ffe2e9183487420b37119097bb25201fbec1a7a8a9d35975f730967fe2468d",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "maintenance_solid.svg",
+      "fingerprint": "b1be2caf096b0802ebbdad6a713c98621f5a3dcfcb1eec82623c5ed5465f82ba",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "man-woman.svg",
+      "fingerprint": "34328ca90e2cf7d6b06a9d71e71e43399c646b99b8dcfc827578cea41858a794",
+      "changed": true,
+      "innerObservations": 48,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "man-woman_solid.svg",
+      "fingerprint": "166cc3cb46275fa81807f632125be70b35c8b57fda4f9ed92d4e646cec730d81",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "man.svg",
+      "fingerprint": "0a9f3c360c3e82532a394a87c96c8f8cea3e5204260edbaac19759f65e0a4dfa",
+      "changed": false,
+      "innerObservations": 24,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "man_solid.svg",
+      "fingerprint": "297d6fdb2b3510f24024607206be5a6fb59455dc7f34f19c81a916bc361172ef",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "map.svg",
+      "fingerprint": "58c689fdc28ad7318ea482206db51d810c639e110508e2d8fd6b11c46a2cdfb0",
+      "changed": true,
+      "innerObservations": 32,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "map_solid.svg",
+      "fingerprint": "e4da57e73a779484dcb611e08617666b990fdc2b5c88405a36fcdee7b2f4368b",
+      "changed": true,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "marker.svg",
+      "fingerprint": "a93df94791635e56cac341d4b0b18527e53ece96810e6fe6ca46f6cc1cd6619d",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "marker_solid.svg",
+      "fingerprint": "f5300321d8be78f0f3294a56ab19d9052bef7a9cdd47f965586d410bdd61e48a",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "maximize.svg",
+      "fingerprint": "3549808add2d1f3a7c8c96e81ec6fa54b135fe67aa34160da37884d7e0c63b8f",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "maximize_solid.svg",
+      "fingerprint": "7a46f8c47f1df64bb63c7582a09fb962d5e4c04e8161f7a82ca97be5d18bbfd0",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "medical-kit.svg",
+      "fingerprint": "95435c38b3b6421107e66c2fb68b2f392a0b5661d7a1019a38d9403103ecab1f",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "medical-kit_solid.svg",
+      "fingerprint": "7ffe8d54e0d6513e8869dc23608e319713f5dbf31529382ccd37b7dc7fc79424",
+      "changed": true,
+      "innerObservations": 32,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "menu.svg",
+      "fingerprint": "529c0c817d1bc380d34b57718cf93cb05928c00edde19ee793595f9c1aa32e5d",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "message-forward.svg",
+      "fingerprint": "5c15dd42ffcc3ec61e9fa14b9b02d8aeafd606d6a98ae031b18a5aabbe20b683",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "message-reply-all.svg",
+      "fingerprint": "4c0c2caa88e19f582367b43c7dcc639b6135f1ee890cc7a9f9b5a4c127489e3f",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "message-reply.svg",
+      "fingerprint": "af70d375f66ec66a78ae39a277399557ced67a3b91b8e5a22bbf2d9218ee8563",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "message.svg",
+      "fingerprint": "464b38f7590779858391167fb446197cea6f79da64ba2388eaa24c4c1f1915f1",
+      "changed": true,
+      "innerObservations": 32,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "message_solid.svg",
+      "fingerprint": "e2b79c69111f12548409875dd2a1170a8960b2216bc86d83fec54bb474e5b1aa",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "micro-menu.svg",
+      "fingerprint": "8ddaec2ae0529a5415cf83362e470c9d652a14a5f87ea4f1f1a222046295da8e",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "microphone-disabled.svg",
+      "fingerprint": "2161dcc447164c81e4493e54fdcd3d6616be375e549416f340de5a4c3bbc266f",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "microphone-disabled_solid.svg",
+      "fingerprint": "3773fa9b1db3315bab2180cadc7823c75a68ec07dbbeda1d27debf1d2b3ebc6d",
+      "changed": true,
+      "innerObservations": 17,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "microphone.svg",
+      "fingerprint": "69cd756c539c27f3b577e12812d75b52608cfbc25b75af60b69b84bf5d1f87ba",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "microphone_solid.svg",
+      "fingerprint": "916c05c9193dc0ac5eea49e00e073651f1b150f6e29c735ce320adeb6e2b3cc1",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "minimize.svg",
+      "fingerprint": "ae1234140b5c61e0deec5c820f723c6256f760556c8151614b2ad0d9f62b7627",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "mobile.svg",
+      "fingerprint": "e63d208eec9a411f7f3870029482bca1f2b1c61d9319c3dce2b52ddc8bee64ff",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "mobile_solid.svg",
+      "fingerprint": "7ce11e1c4ca4070260d374a0e47b608aefa4342cd2b7769678dba5b6f4617161",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "mouse.svg",
+      "fingerprint": "37e6b522d701c895e53e73d410a0a068a82c726247ec757e529dd5051f803a0d",
+      "changed": false,
+      "innerObservations": 12,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "mouse_solid.svg",
+      "fingerprint": "033f4ea7c766117dbb2de9d2e9778c509b8e18d4939a28a713b12081ea1eb10f",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "move-all.svg",
+      "fingerprint": "ebc63d94a9e1dd4063c722db74b2c578a362952a3509568f373f831a776e81d0",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "move-horizontal.svg",
+      "fingerprint": "140323583529a84bf54d2e89a6e1cddee616020a321085e83a20dfe2725c238e",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "move-vertical.svg",
+      "fingerprint": "e0a39d3c4e79fcc90d5d6fdb448a5f7eaa0a73d4fd7a445316853ee4f76fd1df",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "multiply.svg",
+      "fingerprint": "06bb4718e89d584d47c78963869787cbf109a7310b731b7caed6f300d957205d",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "music-disabled.svg",
+      "fingerprint": "52c6745beaa14a92693b1f2387b335227a01d97c913ee0dd6dfb1c3c4176a5f6",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "music-disabled_solid.svg",
+      "fingerprint": "9b278c80e8399f8f77eaa35d33e1e3f4b779b6507da34cd38465fe9a45546a49",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "music.svg",
+      "fingerprint": "27b54315cfd9e8d25ba4c563a5f1a27b7541ae7c4366d50d3cdeb3ad1ecaba34",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "music_solid.svg",
+      "fingerprint": "0450bcd79aebc380f72fbb9db30d80a2739123664b65948b79848fcd4c65ea14",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "not-allowed.svg",
+      "fingerprint": "6f5300028f8c513db7c1873000a6eadab449b0860cd3449ed0f6662c3322b6d3",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "note.svg",
+      "fingerprint": "29e6d6da04395112c1cbd9aa8d6e5b1aa9da1b0454d0c5d203d2c7ab4dbd8805",
+      "changed": true,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "note_solid.svg",
+      "fingerprint": "da8bb03a5a4f82974746a421fd91284256dca464dd94562951f114b3eb3dabee",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "notification-read.svg",
+      "fingerprint": "da38004d0d908d7cc950479c2791e51e826ac792d96c675511cc2a408d60f6c1",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "notification-read_solid.svg",
+      "fingerprint": "e778823f6b6622aec826884def1e8e729e90451ed547a7341a593d96f229806f",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "notification.svg",
+      "fingerprint": "14ddb1752b1a494b74992e91450c35c640e432ab277ecae040ffe48e3388bcae",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "notification_solid.svg",
+      "fingerprint": "1ef25e9dec7e71d0fce24b43d1983ed95406ee73c10de0e46629c863a343d840",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "outdent.svg",
+      "fingerprint": "c5670e5374fe2f59b5d096af9dcff14a148089364b09d1bb93265ee28a2915ae",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "overflow-menu.svg",
+      "fingerprint": "8fda9fe42e10867fa9e4363e772f911f2e10fd1f946e283eddc3fa61835fb3bb",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "fingerprint": "c70dd4dcee0a5ad1223dbf4d7af25a37626811039fcbf3992a158636a5fb6b17",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "fingerprint": "03f555995531c194005b0ffaecdabdc9a4fddd0f6a4972b4f24160bf32477911",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "panel-close-left.svg",
+      "fingerprint": "95b9353ae46778916271e7746e17e1d51e8cdac17533831574f862746604924d",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "fingerprint": "59313b9ba4ab366a36a897d841181b7a345b65082bceb9b1b2640469f71b8904",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "panel-close-right.svg",
+      "fingerprint": "748ecc7b5d31e8e7cd253da65db7774867fb1d72d3971dea4feb4dfead0f0a30",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "fingerprint": "908f9c1d530614415f6ecf4d054eaa4dd6eb991cca89519540076e3f0941a247",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "panel-close-top.svg",
+      "fingerprint": "d27dd88b4b0e6cdb4de96a9fa5aff41891dcdafe9c1b6d4bceb32ba6b146663d",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "fingerprint": "7c00a523a4e7d11f5ada696299e2c16b6a191dfaea046e1cfbe5c5692d8492a5",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "fingerprint": "4ccc53585382ad978cfa70d27943f19c0f2079f5825b6bc6c4d8798c254a23f9",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "fingerprint": "b1f13a02fac653af208d6ab9a769095f0d83859f3e3c598e367a7d174cd5dc60",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "panel-open-left.svg",
+      "fingerprint": "01c3c5a96532d05c7614042111958ddebddd48d170885a23ffc1e0b1e67af120",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "fingerprint": "3c160ad2682833b659f5b8b6d8dfbec7c0ab0f7d991f7af00d16ec3c40ad8bc1",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "panel-open-right.svg",
+      "fingerprint": "f43c1696c11503d192a59c0315e2f02934ec9d1c433e376211603fb3c862a1cd",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "fingerprint": "e3d0ebdd6db4ad44f2dcaada51d3b70c32f2e41205011aab44228bdc50c46e2d",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "panel-open-top.svg",
+      "fingerprint": "d5e64454b7461bc1dd3cca3b2b43e0dc320700dec8f59f5b33aca1a75dbec17c",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "fingerprint": "68fdbfe79d938f64ce9a2b77d347e4d3e5553464c41d5cb1004fd7f3543331d9",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "paste.svg",
+      "fingerprint": "c12134258b5dd617a7d308b7ce7e2776db7130c8b8b6bf6e2f3bf878e50f283b",
+      "changed": false,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "paste_solid.svg",
+      "fingerprint": "af6f6020703655e6eca903841aa983f58bd0ace9996a908db13cd43f7550dc7c",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "pause.svg",
+      "fingerprint": "ebdaaa52d68b0ddfee36f78780886b0597ec430bcd2326e513c73e248329fafb",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "pause_solid.svg",
+      "fingerprint": "daf28ea7a7cd936515933fe27656f0bf9f4ce396b2b988e4ce335267597e2cb6",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "pdf.svg",
+      "fingerprint": "b655d67c341cfa378361f119a4168e371ba2663e3008c56d00e2ead8c7f09548",
+      "changed": true,
+      "innerObservations": 32,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "pdf_solid.svg",
+      "fingerprint": "d57385319b6f484046cc05ac14afbb3f7b1885a28104783a5fa2115dad3a04f8",
+      "changed": true,
+      "innerObservations": 32,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "percentage.svg",
+      "fingerprint": "e6455f77b5447fca78f5b0c47299fc5a672446366a38a94daf8ed12f32210cd3",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "pi.svg",
+      "fingerprint": "39dc94ec26f5afc2d34265fbb109ee5169091357197671fc6cc4e03264ffc085",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "picnic.svg",
+      "fingerprint": "9499114c3a0fa42c0f897b508c489cfb7415a87ebbb4d8494074d56e99d48e2b",
+      "changed": true,
+      "innerObservations": 1,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "picnic_solid.svg",
+      "fingerprint": "4a16f3bf4fbd48d79c447dce10bdfb61b5b1c8ded3503301ee09e7520f5ca1c3",
+      "changed": true,
+      "innerObservations": 1,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "pie-chart.svg",
+      "fingerprint": "f6034d089ebd39546a72b7717a21250c40c74146a92f82f385ccc7be25694114",
+      "changed": true,
+      "innerObservations": 3,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "pin.svg",
+      "fingerprint": "3fe96e4014bf85f570d521c4311af56c06359de5a926f2d424e4e788ac9c4717",
+      "changed": true,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "pin_solid.svg",
+      "fingerprint": "85064461f7ca02b678d3f1c21eedc71f10dbaef1fdc481e69af31428bdd17099",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "pivot.svg",
+      "fingerprint": "70fbf2168e52d8bb7757942c79faf0dd04c16ec0e1f457e1d553a79a3a73537f",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "pivot_solid.svg",
+      "fingerprint": "4111f9cc3d47e027b761040acba27707100b881f9b4e6cf352a2dd9def3a9c74",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "place-in.svg",
+      "fingerprint": "3cef2fe9d85bbb1b35b5dcfb481ac5124ebde351ada72d64ace75e0d0f24035c",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "play.svg",
+      "fingerprint": "419cb96e8ba00b549f86d000fefd44e76b57f2126fb452f403cf30b856f123dd",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "play_solid.svg",
+      "fingerprint": "f02a9fc42cfe8f796a9df006c281bc65bb5d84f23fcf995c7183e16dc7d0fa4b",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "policy.svg",
+      "fingerprint": "d6eac4d360a374f4cebc1c431301ac67be1faedefcc061294ad60d9a92e87c6a",
+      "changed": true,
+      "innerObservations": 28,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "pot-food.svg",
+      "fingerprint": "62121f9dae23cd19f6adfa671cea75b96c6ce04cbc81ef760d01b9f61a6a3d0c",
+      "changed": true,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "pot-food_solid.svg",
+      "fingerprint": "25351b96971a6b05fe4da8273c5935ef707285975b2965cbfcc2e7c9ba28ca7f",
+      "changed": true,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "presentation.svg",
+      "fingerprint": "64c94712c6e3d342c73857eb4f8b5eea7c55c1006f5a97469e2882b54fc0ad41",
+      "changed": true,
+      "innerObservations": 6,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "presentation_solid.svg",
+      "fingerprint": "100b157fcb420384ce60a3a00ab7ddac44176f86ab4b34180cc121ca7e71df34",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "price-ladder.svg",
+      "fingerprint": "e77aecd94190eee7668adc1b35dbf3667f531bd16e7b25aecb9751987bf552eb",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "print.svg",
+      "fingerprint": "9dc92131834d5ade54edbd2c75f8f1b6ac37e6eb527f64e1f51824c939b7cc2a",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "print_solid.svg",
+      "fingerprint": "9749e1c372da4504807f22fddc3688cb786cfb1941d1c860295690e84da0dfb3",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "progress-cancelled.svg",
+      "fingerprint": "bc144e8f1149b72f401ac7ef5289b8d522091883919e770c771c1ef779279d0e",
+      "changed": false,
+      "innerObservations": 32,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "progress-closed.svg",
+      "fingerprint": "7635930b6316a3976cf9162b88defc40f207ba027ae4c77f4001b37014d32216",
+      "changed": false,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "progress-complete.svg",
+      "fingerprint": "eff475fee40fe72ab84e9d5b1c8babb41463d75d48a81733935dc5fed3f820f1",
+      "changed": true,
+      "innerObservations": 20,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "progress-draft.svg",
+      "fingerprint": "f8538d48c372b1c86363663e1df6d6784b220655f5c540105f803e4f4d3dd9fe",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "progress-inprogress.svg",
+      "fingerprint": "20d2bdb0ad31f29746a566e8a314a9e984ffb81e21f1a73a12c6faee1a8ebaff",
+      "changed": false,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "progress-onhold.svg",
+      "fingerprint": "66fb0c17b2f023ef4d97b3bf0b891f6a199f0c1db652009ff13057cbd90126ad",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "progress-pending.svg",
+      "fingerprint": "845fe683f171ed8cb5ab7e7a40e4a78461afe1120a46db9e1ca629f22b0ca826",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "progress-rejected.svg",
+      "fingerprint": "a4e40c581faf784dba65929b5d37d2dfd663eecd5f0a75e1b8ecb13035f3dda9",
+      "changed": false,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "progress-todo.svg",
+      "fingerprint": "7e2a3d3aa83627ce682cfc105d002c62721fe3dd35f305adb51fecd4ede89ab1",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "protection.svg",
+      "fingerprint": "845d01a9be9b4c1a4d553e831c0aba00a7c2b1a2625c9ae565ea5f9b5188466d",
+      "changed": true,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "protection_solid.svg",
+      "fingerprint": "f6415c620c7c95d09a072fcf155b0725bdc87388c4c3b2b345b7f249b24e9ad2",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "receipt.svg",
+      "fingerprint": "0580d362072ffe87aa16f94023f29251beb8041cc9873add8bda32485bda8554",
+      "changed": true,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "receipt_solid.svg",
+      "fingerprint": "54fa9fb250fcfef51a622c3fda1fa33c5751d6a4b9769a59535b4c422e1db9ff",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "redo.svg",
+      "fingerprint": "2028bc4a7f57d6075209658879ef77e89233b935dfac4dd12e3d84670eddb03c",
+      "changed": true,
+      "innerObservations": 7,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "refresh.svg",
+      "fingerprint": "0c36274ef8d976ee9d26e3da5f39737ccecdc1889598a42f6676bdf8eb417032",
+      "changed": true,
+      "innerObservations": 6,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "remove-bookmark.svg",
+      "fingerprint": "0df7295392765c4bd3de3f1869f22c838419cc50bbac72b2326b0bbc96ea6add",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "remove-bookmark_solid.svg",
+      "fingerprint": "da34fb3c1396c25de751483146ffea64cb894624f8b39ad99b2b91cb3ee3de40",
+      "changed": true,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "remove-document.svg",
+      "fingerprint": "03db479fae6c9a0869b022382d49fdbfdd96fdf5146537d346a65d9d84a48605",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "remove-document_solid.svg",
+      "fingerprint": "53e6838626aedc6cc5bfe45f59e0d678c94cc2138af56ff2ed09235ee224037f",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "remove-user.svg",
+      "fingerprint": "3d85c0b45d0c2e321c239f47078f73dd4feda3e8c9d89ff3ca5262e83e405b5e",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "remove.svg",
+      "fingerprint": "b4cd476f7ceb5e1add251b75f46d789cc1014dd49622a163683d222414aa47b2",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "replay-10.svg",
+      "fingerprint": "7ee4995277926662d40cccbf159c508fd9de4c204ae3c26e6674ae59e865c795",
+      "changed": false,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "replay-15.svg",
+      "fingerprint": "bffd44d05d176fb027bfbbf2a10375965afc7ec47f92b870020bebcf69622d85",
+      "changed": false,
+      "innerObservations": 12,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "replay-30.svg",
+      "fingerprint": "0344cb5f96fbd8104161af8fee0ca8adb495b3dffa39dcecfcb947c70f6f4fd9",
+      "changed": false,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "replay-5.svg",
+      "fingerprint": "e17aaafe5dc0d6ff34a40b59a015686154fe669d1151fc1d67d4b6dd7ab8bdfc",
+      "changed": false,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "restore.svg",
+      "fingerprint": "287af89da0d344d18829b5f926c6476e9baf5c2e5eb75f1ddc0746fe96ddeb93",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "run-report.svg",
+      "fingerprint": "aacf2d8ce2f8655d0abdbf5b8b75ba2137a67058ea1f452352ee7efce63fe741",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "run-report_solid.svg",
+      "fingerprint": "94f0f7df57e31d2b809fa77f61747bd8f9f30df402a8d223d9e4cf552fec3f0c",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "salt-shaker.svg",
+      "fingerprint": "6ab5f8061a97d6874d3d93424407b6fe5276a622512fd9f3fadcc0f5300f576f",
+      "changed": false,
+      "innerObservations": 26,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "salt-shaker_solid.svg",
+      "fingerprint": "d1d6252b4e36148d65f725ed452a9b6985dd95098cbdc22b9e444f10a8ed6fa9",
+      "changed": true,
+      "innerObservations": 12,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "save.svg",
+      "fingerprint": "2437b78efe3bc921342a3ac69861e539965a9b6eed821542608fda4d210ea46b",
+      "changed": true,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "save_solid.svg",
+      "fingerprint": "e98b7a20f01e54eae4eed788b536fa6a8fd5d71026a1b1ac00a00b90a6a17650",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "scales.svg",
+      "fingerprint": "ef04ccdc1a5d039342af7a03a867f48f54404c471f840eb50e651c4e9fb9d5a1",
+      "changed": true,
+      "innerObservations": 19,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "scales_solid.svg",
+      "fingerprint": "448066196cde5120974420dfd0900acb06f571281a5729cb896da068f4e208c2",
+      "changed": true,
+      "innerObservations": 11,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "schedule-time.svg",
+      "fingerprint": "3c6da96d1bb4a4749840203a774ac5fd1e5870d819d8d115a1ccaee3d3da319c",
+      "changed": true,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "schedule-time_solid.svg",
+      "fingerprint": "00e28880df5e79b804a11ba3330b2cf16801207e793b8e6663828e29cbcdd67d",
+      "changed": true,
+      "innerObservations": 6,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "schedule.svg",
+      "fingerprint": "58e7803e843a293c50799a8202b51c59936bf7485e39c2079d000bc170c33f8d",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "school.svg",
+      "fingerprint": "2f1783e00071612432f1248c061ec799418b612467f275ede7b61b11a6a55421",
+      "changed": true,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "school_solid.svg",
+      "fingerprint": "af8c55bfcbdef84cfee6cb27bbd69af08a3a4d3dddb56ac1b9c806d38df0166b",
+      "changed": true,
+      "innerObservations": 12,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "search.svg",
+      "fingerprint": "d09c3972f46ad20b0123fa0b579bce55c952987b0eaaf12f5f09ecb6becaac67",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "search_solid.svg",
+      "fingerprint": "1eba9d06d55facdfee0cff116c18345c5ba7c02f39ef4493cb710177f397d044",
+      "changed": true,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "semantic-dissatisfied.svg",
+      "fingerprint": "252cba928f1c9aa4ff7e6939e44641e32714b77462913482cf2f73997baec33c",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "semantic-dissatisfied_solid.svg",
+      "fingerprint": "35610fea91b960e651e4e82ac26c6d36697be3c2b8069c7cb4b2fc534e77c907",
+      "changed": false,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "semantic-neutral.svg",
+      "fingerprint": "5933e91191d61f919cdb0cf394cf507a180fe0e488cea2abd435738f21258816",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "semantic-neutral_solid.svg",
+      "fingerprint": "0d1b44fea9cf8cc7ded139b54570a4f36a4c95fdd248832c57657ca5b5f2ef9d",
+      "changed": false,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "semantic-satisfied.svg",
+      "fingerprint": "0e227bcf2a0d2fa961a6195a946664d667fa16da056f506959f01ec9184d19a8",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "semantic-satisfied_solid.svg",
+      "fingerprint": "4db0075acc16f6d3491756a785f813ae478cce363a2ef4f934a1f55f8172e59a",
+      "changed": false,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "semantic-very-dissatisfied.svg",
+      "fingerprint": "64e3a83f8f41db7421b3b39e184ce240353014a51e5970658da6be33abfdd474",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "semantic-very-dissatisfied_solid.svg",
+      "fingerprint": "3388113a270364731912447c5422d3433b862f9bd9b7f2091feceb7a580fe057",
+      "changed": false,
+      "innerObservations": 48,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "semantic-very-satisfied.svg",
+      "fingerprint": "88a5f968be55a64d9d37fd8dd403c3cd860f2be508df08bc15c3f42b34cd3417",
+      "changed": false,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "semantic-very-satisfied_solid.svg",
+      "fingerprint": "33da23a3acab293ddff5b8423b8c549b14c96baf0994230ce9f15c3650323799",
+      "changed": false,
+      "innerObservations": 40,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "send.svg",
+      "fingerprint": "5c769cd8cbb1d0c5c54da45c8a3b90e070d5cdf918048daae4674a9508dd6944",
+      "changed": true,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "send_solid.svg",
+      "fingerprint": "19d3e93022610c812ea61bdcc933b4faf21d7e169db538ee83a0ceb61156f018",
+      "changed": false,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "settings.svg",
+      "fingerprint": "2f415b1c412fd5548bcec588e74246a5516894870dc87287a9700bfe0e28c3e1",
+      "changed": true,
+      "innerObservations": 36,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "settings_solid.svg",
+      "fingerprint": "bcffd2cd89500ddb3fc03934d7eeec93d338e7cbd9b4c24522064d459e5187c4",
+      "changed": true,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "share.svg",
+      "fingerprint": "671e5f549ea848c0e5ca202c747e636ecc53411c4cb27b25701e3717a8c09fe6",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "share_solid.svg",
+      "fingerprint": "c5e864eef0e29147a754460d4f47a818d21a08d64c08c14104c6f8e4d9f4cff1",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "signal.svg",
+      "fingerprint": "0be01e332b80d9b7dd42a3dcb1a912aa30c21992dd7de59cdf25684bd6cd48df",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "signature.svg",
+      "fingerprint": "525c7fceaecb2147a0d8bef722c7d1e8c4d1b7e3eb3e559ebaee5691498ea75c",
+      "changed": true,
+      "innerObservations": 33,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "signpost.svg",
+      "fingerprint": "6e45be93282177a9a1ccfe525a1586a2efd9324f3352a447527706bb1807e883",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "signpost_solid.svg",
+      "fingerprint": "590db8c741fc18d4a17ea959e20ff5d06dcc185e336fb9e71ff87e73f19c2f4f",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "slide.svg",
+      "fingerprint": "4e5e126435b0a5491d5ecdea7098cd80ae7a132455613a199a58b335087ab2f2",
+      "changed": false,
+      "innerObservations": 32,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "slide_solid.svg",
+      "fingerprint": "d3222ad788002fe54d85942836ff0093e91c691d7847ee25de2b6d1277159810",
+      "changed": false,
+      "innerObservations": 32,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "sort-alpha-ascend.svg",
+      "fingerprint": "d19833c9cc2c5ade3ecda74a8fc78e7d6a82362cd6384b53001e5f5e8c4ec572",
+      "changed": true,
+      "innerObservations": 28,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "sort-alpha-descend.svg",
+      "fingerprint": "ff4c376840198b141559d869338851535306620aa649d0100048e1adc8e9b2f7",
+      "changed": true,
+      "innerObservations": 28,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "sort-ascend.svg",
+      "fingerprint": "f475e497a3ee291b02c818cf68e1e60fb26221563e0337981bcd4770291c4312",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "sort-descend.svg",
+      "fingerprint": "a3da88680bb0f0e99ed8cf9e13d1670f88f9d7163c97bf93bca5ea7a459c7596",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "sort-num-ascend.svg",
+      "fingerprint": "d0513188549e42b6d489eec4ca453488023d8c4d7bab571e96c37ab734ab5338",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "sort-num-descend.svg",
+      "fingerprint": "78fad5b9307a8352435a936bc1408cf493f43c6fe93dac1c0c505198f065c488",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "sort.svg",
+      "fingerprint": "966f81dc0a7206800d864ca90c08ef778e30aa2535a16d83a0aabd54df02602d",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "sortable-alpha.svg",
+      "fingerprint": "8053a074016ac2795bbe92be23026fc2aeba943769434701f7af9cbde3d78e1b",
+      "changed": true,
+      "innerObservations": 28,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "sortable-num.svg",
+      "fingerprint": "119ba93758f5b1e2b4466f2e0fddcfee8baa8040f94478d080f78cffaa082f25",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "sparkle-refresh.svg",
+      "fingerprint": "77766130b1ebe3888e7f9c34c94eceb6b994b25987402517d59bcab859df92a2",
+      "changed": true,
+      "innerObservations": 6,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "sparkle-refresh_solid.svg",
+      "fingerprint": "4757f0717ee79e383878a8987e6d6969d2cd513d63ed1faa75437971fca78da0",
+      "changed": true,
+      "innerObservations": 6,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "sparkle.svg",
+      "fingerprint": "df011196ba60c5fc58f32cc6d6434743b07127630396e8786ed48538cb98bcdc",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "sparkle_solid.svg",
+      "fingerprint": "55fe869d6ff50202bc1e5ef275ce7001fdc5ba12fc1998e13d5e326bfb86a809",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "split-view.svg",
+      "fingerprint": "c18b2a00bb2c541f3c25a8f80865e41f0ef8e62243d2dfa5d1bf5f003c310d6e",
+      "changed": false,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "square-root.svg",
+      "fingerprint": "d660371e8e19941e3656469d38d6a3566aa1ae0fef8b41260b80dec2c367efd1",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "stackoverflow.svg",
+      "fingerprint": "eca06d07ac36dbd80fd51a3a6f86e49ad14eb42205910f36b9276a684dc4b735",
+      "changed": false,
+      "innerObservations": 24,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "step-active.svg",
+      "fingerprint": "825084c587d7a90c58b1055fa770b303c23187b24c3495d341021e2d7af6dc6e",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "step-default.svg",
+      "fingerprint": "f8538d48c372b1c86363663e1df6d6784b220655f5c540105f803e4f4d3dd9fe",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "step-success.svg",
+      "fingerprint": "eff475fee40fe72ab84e9d5b1c8babb41463d75d48a81733935dc5fed3f820f1",
+      "changed": true,
+      "innerObservations": 20,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "stethoscope.svg",
+      "fingerprint": "e9de5efdcaae40028e93937aa47fc916141022b7e4d064153051fb5224ca5453",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "stethoscope_solid.svg",
+      "fingerprint": "94715d80c0611893a50fdaf3b00caafe8ea58b44ce542bc0fc4f31419f5dd650",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "stop.svg",
+      "fingerprint": "c34c387236f0fda3464dcdb606f1075cdfec3e3d0dce954366a7027abe9b70b7",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "stop_solid.svg",
+      "fingerprint": "746da6f27025d69fc140229f10505171a784d873c2bcf56d80b5acdedf8a947e",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "storage.svg",
+      "fingerprint": "f98038d7b8fc40837f1860892072d467cea8dbbaabb912bfb3d356132500f8e2",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "storage_solid.svg",
+      "fingerprint": "84fa6f2fe65c0b82a1812dfba5ad5f2f408abccd0ba49f452f10a9d3a1cdfd2c",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "storefront.svg",
+      "fingerprint": "17032a5d305c922c7bebecc8931d0b2ea22e75697e776ebc3031bc7f98c4fcd6",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "storefront_solid.svg",
+      "fingerprint": "867ce89ff8cf191064ea6792b8488b7bd97ee41548912096828b4eab0981220d",
+      "changed": true,
+      "innerObservations": 13,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "string-number.svg",
+      "fingerprint": "9ce671d0278785c5739f23e1fd5c59ea706602fb04ec857c36618b9eebc34cf8",
+      "changed": false,
+      "innerObservations": 12,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "string-text.svg",
+      "fingerprint": "17055386bf02ebebf23f2a38b0b20a722ec6cd7fe5db71750dd067a5673869a0",
+      "changed": false,
+      "innerObservations": 20,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "success-circle.svg",
+      "fingerprint": "9e73857b5c1cd6fa5654cd67592d1d0b38cfd17052db605ddf8fdce5c3fda612",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "success-circle_solid.svg",
+      "fingerprint": "eff475fee40fe72ab84e9d5b1c8babb41463d75d48a81733935dc5fed3f820f1",
+      "changed": true,
+      "innerObservations": 20,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "success-tick.svg",
+      "fingerprint": "b61cb34bc365aeefdab2a02c94d315da3fe9bd7cfbc6c86e0d8e83653438e3b1",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "success.svg",
+      "fingerprint": "b61cb34bc365aeefdab2a02c94d315da3fe9bd7cfbc6c86e0d8e83653438e3b1",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "success_small.svg",
+      "fingerprint": "b61cb34bc365aeefdab2a02c94d315da3fe9bd7cfbc6c86e0d8e83653438e3b1",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "success_small_solid.svg",
+      "fingerprint": "339bf62f777486f8885c375d095938faae66551b1fc0cde74505b51064587774",
+      "changed": true,
+      "innerObservations": 20,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "success_solid.svg",
+      "fingerprint": "339bf62f777486f8885c375d095938faae66551b1fc0cde74505b51064587774",
+      "changed": true,
+      "innerObservations": 20,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "sum.svg",
+      "fingerprint": "2531766d5c43a03c20a35c09ae29c09aa5e55644ddd030234213e41a793378db",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "sum_solid.svg",
+      "fingerprint": "7b80ed33b6f7eefa779dc70b16bc7f9d7772632d7c2ef88d643d57ce551e518e",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "summarize.svg",
+      "fingerprint": "60643ae832d997f4bbc295ff72b815322b4a6d56b4085eede759c0c9f461bc9e",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "swap.svg",
+      "fingerprint": "3973db80a1b58b91fc16c1e9d89d9121c4526044149cbb67d0b9228bba6e734e",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "symphony.svg",
+      "fingerprint": "34c37bf863d6807a259ee4cd83d1479a4f63b456a27ab6d7dc387f1eec5b7feb",
+      "changed": false,
+      "innerObservations": 20,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "sync.svg",
+      "fingerprint": "84335b34e52aae085798424a1db75dda98e0619a5d97adfa527a0368e2596f32",
+      "changed": true,
+      "innerObservations": 12,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "tag-clear.svg",
+      "fingerprint": "2c8ebc67ca0562dd07c3f3d0897f141be844eba899aa2ac6e6234e4ccc751594",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "tag-clear_solid.svg",
+      "fingerprint": "6429509e9d0eb37400086011a7efaac0c6c08d32cff2ed9c76fe2a8875df79eb",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "tag.svg",
+      "fingerprint": "5003a7f446e031912995630302556ccd0d798aa692af194ca3af8daf3075c42a",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "tag_solid.svg",
+      "fingerprint": "d695df18651094e9020f0a2cd07d2d1629e64aaa3d6d02efd6088d690e55d8f9",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "tails.svg",
+      "fingerprint": "a5d22f11fd463acbe0f82cf8515ae2daa0eb806ff98162cd2f90d910aa3c4ec6",
+      "changed": true,
+      "innerObservations": 24,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "tails_solid.svg",
+      "fingerprint": "ae61d577d7e7e8fab9b97ad403e9074f84d51761aefc5151af492a4de0de2a13",
+      "changed": true,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "target.svg",
+      "fingerprint": "9f7d7e875eba1b5da9373706bda3531a82489fb7acc143b207af9be616fa45d3",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "tear-out.svg",
+      "fingerprint": "ffd064f482306853efdf0f32b3054b41da4a2c5f77cddfcf26fe9d97cda07b0e",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "text-align-center.svg",
+      "fingerprint": "70cd00a682cb0cb1f3a83f46b6dd79e1329d5cf6b08e1a42c3151749bfb537c7",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "text-align-justify.svg",
+      "fingerprint": "03796ab9aaffbd761d88fb32867510ea71722ecb4c72c04d22118695bef1e45e",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "text-align-left.svg",
+      "fingerprint": "b8c78b2d32f9c1d035ea7c208aa79355df217599f6598f67227fbf9a29c33f4a",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "text-align-right.svg",
+      "fingerprint": "78097e311dd4b2e1636530e62a129073a7345ae0870bc3504caa245d42128366",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "text-bold.svg",
+      "fingerprint": "19594d525718ef0c7b80e254f5d226dc2bef3768911a6eeb2c98e9a0b6aae7f9",
+      "changed": false,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "text-color.svg",
+      "fingerprint": "714b1a282f2b67b903fe635ac22f80891bdf5386a955b9431aa0de62f5c2b2bd",
+      "changed": false,
+      "innerObservations": 20,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "text-highlight.svg",
+      "fingerprint": "2d53a43ec0629665a7435c784ff01d3aeea766d2b31c39fcba6ed5a40889908c",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "text-italics.svg",
+      "fingerprint": "1512ad0bb4d3661fb587549999f5e9302aff97e934daa8333440bbef21278dfc",
+      "changed": false,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "text-ordered-list.svg",
+      "fingerprint": "9b7e93fbef8d2b549c412a51ee01eaa0520dbacc3ec1d53fac8540dee315d0bc",
+      "changed": false,
+      "innerObservations": 12,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "text-strikethrough.svg",
+      "fingerprint": "bc9b265e710fdf92740cea825a8ba0cbcb8d6351a72b561f43fb6116f622fc88",
+      "changed": false,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "text-underline.svg",
+      "fingerprint": "4fa1b641ae50c1bafccd25e75aa8e5dfb05f39066e52a5c1ffca2dd9e435d7c4",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "text-unordered-list.svg",
+      "fingerprint": "4e476242ba82e5f1ea09a89cce285278c51e8faec8ba682c865e0dd550aa22a4",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "thumbs-down.svg",
+      "fingerprint": "e432deeb9a3067e094fa0d2cd34372d958c5c44d1b6da75a7a29764cb604a357",
+      "changed": true,
+      "innerObservations": 1,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "thumbs-down_solid.svg",
+      "fingerprint": "6678b6d84e3c3090bacabccd2abf41c81f01376ce54bd0e36c87e15c0969929d",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "thumbs-up.svg",
+      "fingerprint": "8319269db1762c7a72334e3f34ac49e444ecfc8be85743d44a23dec87ee9b44e",
+      "changed": true,
+      "innerObservations": 1,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "thumbs-up_solid.svg",
+      "fingerprint": "6cf8940bfe93e435359160851a09554836bcd3807a2f943fa97c52f6f9c62c2f",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "tote.svg",
+      "fingerprint": "9ff5e1001189834da400826ef5b91d7fdfcd3858e7a1b851ec595d21b592e31a",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "tote_solid.svg",
+      "fingerprint": "4b5db500b02537c63b4feced546c494b95d30f1ddc88848c5dae17d81bbc5e00",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "travel.svg",
+      "fingerprint": "1be2be8d0420a3b7737e471f45e6c7515adf019fdda6ef39e348ab2ca7b4c4bf",
+      "changed": true,
+      "innerObservations": 1,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "travel_solid.svg",
+      "fingerprint": "827bc755fd65ea16acb9e10341f11e9e58836d766176050997f2b7b1bbf5c217",
+      "changed": true,
+      "innerObservations": 1,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "tree.svg",
+      "fingerprint": "9e9aa4aaa03c9a85cf3bd9713257b8181a8a24c33eeeaf88c96bc601c4d3aa7e",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "tree_solid.svg",
+      "fingerprint": "4f53c2fe7aa0fa290a92ecdf4c1356036f2b8e85e6fdab3f51acacc6ef9c17fb",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "triangle-down.svg",
+      "fingerprint": "ddb68d0376baad13d7a0ad2ba63d84b585a8fc726401b3dd208ebfe8f771f206",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "triangle-left.svg",
+      "fingerprint": "26b106302f063ea0fbe260d04287e20a4cb1a61815234f4a7e371d5f9d9be73e",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "fingerprint": "231990b6e6250ffe743dda177fc637b52bc500c7b9b5292f55d3cb21d993d36e",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "triangle-right.svg",
+      "fingerprint": "07c496b6cbc492b88b37f9af0282e8bf807afde3e6e8130e941d27b49105ec92",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "triangle-up.svg",
+      "fingerprint": "fd632e974e962514137ddfff37ab94b1b770180a6ec3b3e91a1e7ddbcf87361c",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "type.svg",
+      "fingerprint": "4abb92f5697ef8a5070e8c96bbe873d0daa032e79f14ce3afbe4381732a842b3",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "type_solid.svg",
+      "fingerprint": "563f02d58032822ccfe14d8321eee052823b52505434a939fdc07321dfb38b1b",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "undo.svg",
+      "fingerprint": "02f6bebd26569d4381da185860905bb314b93502661ad0c829b8910e9aba8c65",
+      "changed": true,
+      "innerObservations": 6,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "ungroup.svg",
+      "fingerprint": "bcf87494f0f7cb57d7a4f410bba7dac4e39e7fd7a8c4479811ad6ba893350d3a",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "ungroup_solid.svg",
+      "fingerprint": "b8bbd91af050bf573c724227b9a521db6a3caa8622d4f7ae3d3576ebd8b1e6f5",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "universal-access.svg",
+      "fingerprint": "e7bdce5ad4d64ab572ff0c590f42d1129fc118839b8f1f3faaef321c16e5484a",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "universal-access_solid.svg",
+      "fingerprint": "26a89e32f290c669b517d7d147b7b710f1117cc5fc49d6465a7676b2b13b6f72",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "unlinked.svg",
+      "fingerprint": "4d29008e158cc7770292cb44ce1503839a0d7ca2cd6dd4aa11192e180ce84177",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "unlocked.svg",
+      "fingerprint": "64d65a81358ea44f6d57b148ca851ceb8f757bc4843fa6a4d9022775e26d82e2",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "unlocked_solid.svg",
+      "fingerprint": "8736dad679bf85d6f0b1b2b804f4d93816ee2551c335a1538e645440b9793fcc",
+      "changed": false,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "upload.svg",
+      "fingerprint": "c352804d7ab64967f74a0661cb01d2eeff2a5433c1c0e4208f5d5b29d22f4d2f",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "urgency-critical.svg",
+      "fingerprint": "8110b92b52a1fe662867bb2b5e9eb7d0e5d8a4915bd497a9017802af4445e75d",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "urgency-high.svg",
+      "fingerprint": "e76114a735e97ff050808ed63cf5fc96186cf5ba33379c1651ae8ada8b1e0927",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "urgency-low.svg",
+      "fingerprint": "e471f12af02f2daf4096a04d070c001acf3689118ceaaffef2c2dbad6c51ca4b",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "urgency-medium.svg",
+      "fingerprint": "1a64e4e850005a3554c93a491d6026267086a85f13895fd7955fa2f3c84497fc",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "urgency-none.svg",
+      "fingerprint": "884da656b436055f5ae13fd0b59e05b5690c92901d2b576c0afcf7ef24334abe",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "urgency-ontime.svg",
+      "fingerprint": "584ea5e3aff991b9337fbd3e86b538f3775daee43778e8d11bdd6e99130f1fef",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "user-admin.svg",
+      "fingerprint": "17a4a6980b11996af2955bc1e875c859528d359dc1a3c6af38552aa758371c90",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "user-admin_solid.svg",
+      "fingerprint": "06bd4403e7893afe3e4f0dc25050fff9bc93ef98a6a89ed719fef26dc50cbd44",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "user-badge.svg",
+      "fingerprint": "8758afb853da3f93d03cfd3b8e494e9805970810ee4a4344da61b6b22df5331c",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "user-group.svg",
+      "fingerprint": "2df660bd179239baad2450dd766abc0fa5de10e539f3d61afb864900422eabfd",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "user-group_solid.svg",
+      "fingerprint": "5e27f00666c52050aa7855f103a0e71e13705a1a40d061a41969c5cdfd0e141c",
+      "changed": true,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "user-search.svg",
+      "fingerprint": "9b4d220bb18ca153194ba9a1527f8fa7256deb5f5eae93b392f8b5253f73c217",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "user.svg",
+      "fingerprint": "ca162ac2ca68022852287e9a00beda567733c638c769057c0dc70c2ed923e7af",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "user_solid.svg",
+      "fingerprint": "898288f011607e50bdd208b39a72cd6b1e5458cfda8b071270329bd98b526a91",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "utensils.svg",
+      "fingerprint": "35c545adbedb640217e15784a3b2f049dc5917674f3ee820468af83f48a8429b",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "utensils_solid.svg",
+      "fingerprint": "9e278558a987e2ba329d297d0c090d32fe566367579a37df4ebe8351e48f0f55",
+      "changed": true,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "video-disabled.svg",
+      "fingerprint": "3c30cd3f5719ec7c792fca98bcfd354d6b7325c1540f02ffeca90a7eb3bbc8f3",
+      "changed": true,
+      "innerObservations": 4,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "video.svg",
+      "fingerprint": "79e41245d19a45c1852ccc4ff7fb4554eb60090d64c5474f54000a426c0feba8",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "video_solid.svg",
+      "fingerprint": "3fa16e5279c6ef13bf715463a2696296e308104552d57be5cad358d2d1036576",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "visible.svg",
+      "fingerprint": "6702395fa0b7497c7b9757e936f0576f331c865963f6fd23470f2089cffcd3d4",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "visible_solid.svg",
+      "fingerprint": "911238bf4286d10d8fb02deb98666d40f2bdc0e60583abaebb171148001fe43d",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "volume-down.svg",
+      "fingerprint": "629676a380f88c9d99a403c0e1ee75a424558da5c7745c5316403293e6d2fd2f",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "volume-off.svg",
+      "fingerprint": "362d396a83ebff300747b6f4ccae5bcf061dc285799f2b99ef7bc54e818d5458",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "volume-up.svg",
+      "fingerprint": "3f70c0734855ae6cc9182ec621bc89241895e54ab50c0debd935f7f81544d100",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "warning.svg",
+      "fingerprint": "0e027dc8d31201f55da88cdcae583a2077878b28b9d8948b7c6a71897521163f",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "approved"
+    },
+    {
+      "name": "warning_solid.svg",
+      "fingerprint": "8849036f88e08ad9b1a65c2dbf3ae1c1ba4fb2bc4399be61d5d0ab6bd0801395",
+      "changed": false,
+      "innerObservations": 16,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "watch.svg",
+      "fingerprint": "bef5255f8895072cf473fcb7321e04ad1b963393d828db1afdf8b7b800807186",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "watch_solid.svg",
+      "fingerprint": "fc6e65cc5556c32493bf2833fa8298bd5f2484a342124257647bc30e442945fe",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "waveform.svg",
+      "fingerprint": "29f940e43b917ec75c8db3744e3e61af3f1b7babb986262335ea657a6757ebc7",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "weight.svg",
+      "fingerprint": "b2b46358e6ce49afaadd9b73b8eed0076e2e25737254e4841dd518cc28687235",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "weight_solid.svg",
+      "fingerprint": "9ecd29500c50e953bd30b30c0fd0744a9d59a0a7cfec881cf3242ca9d99b7c98",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "wifi-disabled.svg",
+      "fingerprint": "82714daab2903795deccb0cefa27c941fc5e9b72379e69f6b61255a573d79f15",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "wifi.svg",
+      "fingerprint": "e598c68dde03575ed83eecfb39032421aa42a3cbed893e3f95bbaa1f297c8b9d",
+      "changed": false,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "woman.svg",
+      "fingerprint": "69c764cf045146adbac3a22fd8ad6b30bef1a56c8a239e1f7aad02463bd8d1e7",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "woman_solid.svg",
+      "fingerprint": "13c810e75790ed40729cde1d0bacb66a88f68e503054ea3fc2bbe8253c37ba11",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "woodland.svg",
+      "fingerprint": "ac6f7dbc29e50a53306ac9daacfee87a7a0eab274495a6aa34d39cbc247032e2",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "woodland_solid.svg",
+      "fingerprint": "c679034832f926d6352107c61f3dba683b55db731ef876a6e4fe4c7bd4aa8ef4",
+      "changed": true,
+      "innerObservations": 8,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "workflow.svg",
+      "fingerprint": "953f742e21d27b786d2c926a1d7e6f47c454082741c63c2c31eefdaadcdf726b",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "workflow_solid.svg",
+      "fingerprint": "972874b54611b9437096df4133f3af028f3aacfa3f094f0ba7f324ec1d6e7ddd",
+      "changed": true,
+      "innerObservations": 0,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "xls.svg",
+      "fingerprint": "66c92c20ed04f292ef67fd4e7a2f4053362b808e517eea7ffef3b3d63997426c",
+      "changed": true,
+      "innerObservations": 20,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "xls_solid.svg",
+      "fingerprint": "055218e5e2e1a3fd5240eec0b242601df323808ffc034ed06b63dd2a4fb8aa3a",
+      "changed": true,
+      "innerObservations": 20,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "zip.svg",
+      "fingerprint": "efbf3460c4bd3317111afa48038065ddf1b7ccd835cafbaff67e874e7e20a383",
+      "changed": true,
+      "innerObservations": 20,
+      "reviewStatus": "pending"
+    },
+    {
+      "name": "zip_solid.svg",
+      "fingerprint": "800457de1287b7064c5b4cb022767835faa6ddd4a941f8897ff07ea1517fd04c",
+      "changed": true,
+      "innerObservations": 20,
+      "reviewStatus": "pending"
+    }
+  ]
+}

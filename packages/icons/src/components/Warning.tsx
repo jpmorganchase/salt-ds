@@ -20,11 +20,29 @@ export const WarningIcon = forwardRef<SVGSVGElement, WarningIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m8 2.406 6.5 12h-13Z"
+            d="m8 1.92 6.531 13.063H1.47Z"
+          />
+          <path d="M13.744 13.408a1.09 1.09 0 0 1-.974 1.575h1.761Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.744 13.408a1.09 1.09 0 0 1-.974 1.575"
+          />
+          <path d="M3.23 14.983a1.09 1.09 0 0 1-.974-1.575l-.787 1.575Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.23 14.983a1.09 1.09 0 0 1-.974-1.575"
+          />
+          <path d="M7.026 3.868a1.089 1.089 0 0 1 1.948 0L8 1.92Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.026 3.868a1.089 1.089 0 0 1 1.948 0"
           />
           <path
             fillRule="evenodd"
-            d="M7 6.25h2V10H7ZM7 12a1 1 0 1 0 2 0 1 1 0 1 0-2 0"
+            d="M6.875 7h2.25v3.35h-2.25Zm-.208 5.375a1.333 1.333 0 1 0 2.666 0 1.333 1.333 0 1 0-2.666 0"
           />
         </g>
       </Icon>

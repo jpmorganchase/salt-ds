@@ -22,6 +22,18 @@ export const LastIcon = forwardRef<SVGSVGElement, LastIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M13.668.767v14.466M2.096.767 9.329 8l-7.233 7.233"
           />
+          <path d="M8.306 6.977a1.447 1.447 0 0 1 0 2.046L9.329 8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8.306 6.977a1.447 1.447 0 0 1 0 2.046"
+          />
+          <path d="M7.965 6.636a1.93 1.93 0 0 1 0 2.728L9.329 8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.965 6.636a1.93 1.93 0 0 1 0 2.728"
+          />
         </g>
       </Icon>
     );

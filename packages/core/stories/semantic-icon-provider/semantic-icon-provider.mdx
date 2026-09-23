@@ -1,102 +1,52 @@
 import { Meta } from "@storybook/addon-docs/blocks";
-import { Banner, BannerContent } from "@salt-ds/core";
 
 <Meta title="Documentation/Core/Semantic Icon Provider" />
 
-# Semantic Icon Provider
+# Semantic icon provider
 
-The SemanticIconProvider introduces a centralized approach to managing and customizing icons in Salt’s ecosystem. This provider allows for flexible configuration of icon components and ensures consistent icon usage across your application.
+`SemanticIconProvider` lets an application replace icons for shared roles, such as success, close or expand. It affects Salt components that use the semantic mapping; directly imported icons are unchanged. Salt supplies defaults, so the provider is only needed when customizing them.
 
-It extends the existing icon management framework by offering a context-based solution for overriding and customizing icons as needed.
+## Choose a replacement
 
-# Usage
+Preserve the role's meaning, direction and visual emphasis. Compare related states together at 12px, including light and dark backgrounds and the actual component context. Success, warning and error must remain distinguishable without relying on color alone.
 
-To use the SemanticIconProvider, replace any existing icon management setup with this provider and provide any custom icon mappings as required.
+Custom icon components should forward sizing, styling and accessibility props so the consuming control can retain its intended appearance and accessible name. Follow the [icon design guidance](https://www.saltdesignsystem.com/salt/foundations/assets/icon-design) for custom artwork.
 
-```js static
-import {
-  ChevronDownIcon,
-  SuccessTickIcon,
-  ErrorSolidIcon,
-} from "@salt-ds/icons";
+## Override selected roles
+
+Supply a partial `iconMap`. Unspecified roles retain Salt's defaults. This example uses an outline success icon while preserving the success meaning:
+
+```tsx
+import { SuccessCircleIcon } from "@salt-ds/icons";
 import { SemanticIconProvider } from "@salt-ds/core";
 
 const customIconMap = {
-  ExpandIcon: ChevronDownIcon,
-  SuccessIcon: SuccessTickIcon,
-  ErrorIcon: ErrorSolidIcon,
+  SuccessIcon: SuccessCircleIcon,
 };
 
 const App = () => (
   <SemanticIconProvider iconMap={customIconMap}>
-    {/* Your application components */}
+    {/* Application components */}
   </SemanticIconProvider>
 );
 ```
 
-## Icon Mapping
+The [SemanticIconMap interface and default mapping](https://github.com/jpmorganchase/salt-ds/blob/main/packages/core/src/semantic-icon-provider/SemanticIconProvider.tsx) list the available roles and their current defaults.
 
-The SemanticIconProvider allows you to specify an iconMap to manage which icon components are used for various icon names. This provides flexibility to customize the icon set used in your application.
+## Use the mapping in a custom component
 
-### Default Icon Map
-
-The default icon map includes the following icons:
+Use `useIcon` to obtain the component for a role. The containing control supplies its accessible name; its icon can be decorative.
 
 ```tsx
-const defaultIconMap = {
-  LevelSeparatorIcon: ChevronRightIcon,
-  ExpandIcon: ChevronDownIcon;
-  CollapseIcon: ChevronUpIcon;
-  ExpandGroupIcon: ChevronRightIcon;
-  CollapseGroupIcon: ChevronDownIcon;
-  NextIcon: ChevronRightIcon;
-  PreviousIcon: ChevronLeftIcon;
-  IncreaseIcon: TriangleUpIcon;
-  DecreaseIcon: TriangleDownIcon;
-  UploadIcon;
-  ErrorIcon: ErrorSolidIcon;
-  SuccessIcon: SuccessTickIcon;
-  InfoIcon: InfoSolidIcon;
-  WarningIcon: WarningSolidIcon;
-  OverflowIcon: OverflowMenuIcon;
-  UserIcon: UserSolidIcon;
-  CalendarIcon: CalendarIcon;
-  CloseIcon: CloseIcon;
-  ExternalIcon: TearOutIcon;
-  PendingIcon: StepDefaultIcon;
-  ActiveIcon: StepActiveIcon;
-  CompletedIcon: StepSuccessIcon;
-};
-```
+import { Button, useIcon } from "@salt-ds/core";
 
-### Customizing Icons
-
-To customize the icons, provide a partial SemanticIconMap to the SemanticIconProvider. This allows you to override specific icons while retaining others.
-
-```tsx
-import { CustomIcon } from "@my-icons/custom-icons";
-
-const customIconMap = {
-  ExpandIcon: CustomIcon,
-};
-
-const App = () => (
-  <SemanticIconProvider iconMap={customIconMap}>
-    {/* Your application components */}
-  </SemanticIconProvider>
-);
-```
-
-### Using Icons
-
-To use an icon within your components, utilize the useIcon hook provided by the SemanticIconProvider. This hook provides access to the current icon map, allowing you to retrieve the appropriate icon component.
-
-```tsx
-import { useIcon } from "@salt-ds/core";
-
-const MyComponent = () => {
+const ExpandButton = () => {
   const { ExpandIcon } = useIcon();
 
-  return <ExpandIcon />;
+  return (
+    <Button aria-label="Expand">
+      <ExpandIcon aria-hidden />
+    </Button>
+  );
 };
 ```

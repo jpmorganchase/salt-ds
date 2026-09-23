@@ -22,6 +22,30 @@ export const UnlinkedIcon = forwardRef<SVGSVGElement, UnlinkedIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="m5.945 3.376 1.541-1.541a3.083 3.083 0 0 1 4.357 4.357l-1.541 1.54m-.247 4.892-1.541 1.541a3.083 3.083 0 0 1-4.357-4.357l1.541-1.54M1.321 5.43h2.055m0-4.11v2.055m9.248 9.248v2.055m0-4.11h2.055"
           />
+          <path d="m7.472 1.849.032-.03-.018.016z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m7.472 1.849.032-.03"
+          />
+          <path d="m11.86 6.174-.031.032.014-.014z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m11.86 6.174-.031.032"
+          />
+          <path d="m8.528 14.151-.032.03.018-.016z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m8.528 14.151-.032.03"
+          />
+          <path d="m4.14 9.826.031-.032-.014.014z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m4.14 9.826.031-.032"
+          />
         </g>
       </Icon>
     );

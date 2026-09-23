@@ -17,13 +17,39 @@ export const PivotIcon = forwardRef<SVGSVGElement, PivotIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
-          <g
+          <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          >
-            <path d="M1 1h14v14H1Z" />
-            <path d="M4.23 10.333h5.744V4.41M7.82 6.564 9.974 4.41l2.154 2.154M6.385 8.18 4.23 10.333l2.154 2.154" />
-          </g>
+            d="M1 1h14v14H1Z"
+          />
+          <path d="M13.923 1A1.077 1.077 0 0 1 15 2.077V1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.923 1A1.077 1.077 0 0 1 15 2.077"
+          />
+          <path d="M15 13.923A1.077 1.077 0 0 1 13.923 15H15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M15 13.923A1.077 1.077 0 0 1 13.923 15"
+          />
+          <path d="M2.077 15A1.077 1.077 0 0 1 1 13.923V15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.077 15A1.077 1.077 0 0 1 1 13.923"
+          />
+          <path d="M1 2.077A1.077 1.077 0 0 1 2.077 1H1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1 2.077A1.077 1.077 0 0 1 2.077 1"
+          />
+          <path
+            fillRule="evenodd"
+            d="m7.364 6.107 2.61-2.61 2.611 2.61-.914.914-.63-.63a.246.246 0 0 0-.42.174v4.415H6.384a.246.246 0 0 0-.174.42l.63.63-.913.914-2.611-2.61 2.61-2.611.915.913-.631.63a.246.246 0 0 0 .174.421h2.477a.467.467 0 0 0 .466-.467V6.565a.246.246 0 0 0-.42-.174l-.63.63Z"
+          />
         </g>
       </Icon>
     );

@@ -22,6 +22,18 @@ export const OutdentIcon = forwardRef<SVGSVGElement, OutdentIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M1.281 1.368H15.75M1.281 14.632H15.75m-7.837-8.44h7.837M7.913 9.808h7.837M4.296 4.986 1.28 8l3.015 3.014"
           />
+          <path d="M2.134 7.147a1.206 1.206 0 0 0 0 1.706L1.28 8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.134 7.147a1.206 1.206 0 0 0 0 1.706"
+          />
+          <path d="M2.418 6.863a1.61 1.61 0 0 0 0 2.274L1.281 8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.418 6.863a1.61 1.61 0 0 0 0 2.274"
+          />
         </g>
       </Icon>
     );

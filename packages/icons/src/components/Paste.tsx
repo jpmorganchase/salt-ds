@@ -17,13 +17,59 @@ export const PasteIcon = forwardRef<SVGSVGElement, PasteIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
-          <g
+          <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          >
-            <path d="M4.77 2.077H2.076V15h11.846V2.077H11.23" />
-            <path d="M4.77 1h6.46v3.23H4.77Zm0 6.462h6.46m-6.46 3.23h6.46" />
-          </g>
+            d="M4.77 2.077H2.076V15h11.846V2.077H11.23"
+          />
+          <path d="M3.154 2.077a1.077 1.077 0 0 0-1.077 1.077V2.077Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.154 2.077a1.077 1.077 0 0 0-1.077 1.077"
+          />
+          <path d="M2.077 13.923A1.077 1.077 0 0 0 3.154 15H2.077Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.077 13.923A1.077 1.077 0 0 0 3.154 15"
+          />
+          <path d="M12.846 15a1.077 1.077 0 0 0 1.077-1.077V15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.846 15a1.077 1.077 0 0 0 1.077-1.077"
+          />
+          <path d="M13.923 3.154a1.077 1.077 0 0 0-1.077-1.077h1.077Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.923 3.154a1.077 1.077 0 0 0-1.077-1.077M4.77 1h6.46v3.23H4.77Z"
+          />
+          <path d="M10.154 1a1.077 1.077 0 0 1 1.077 1.077V1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.154 1a1.077 1.077 0 0 1 1.077 1.077"
+          />
+          <path d="M11.23 3.154a1.077 1.077 0 0 1-1.076 1.077h1.077Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.23 3.154a1.077 1.077 0 0 1-1.076 1.077"
+          />
+          <path d="M5.846 4.23A1.077 1.077 0 0 1 4.77 3.155V4.23Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.846 4.23A1.077 1.077 0 0 1 4.77 3.155"
+          />
+          <path d="M4.77 2.077A1.077 1.077 0 0 1 5.845 1H4.77Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.77 2.077A1.077 1.077 0 0 1 5.845 1M4.77 7.462h6.46m-6.46 3.23h6.46"
+          />
         </g>
       </Icon>
     );

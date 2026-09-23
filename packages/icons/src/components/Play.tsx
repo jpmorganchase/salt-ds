@@ -22,6 +22,24 @@ export const PlayIcon = forwardRef<SVGSVGElement, PlayIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M2.76 1.58 13.266 8 2.76 14.42Z"
           />
+          <path d="M11.635 7.004a1.167 1.167 0 0 1 0 1.992L13.265 8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.635 7.004a1.167 1.167 0 0 1 0 1.992"
+          />
+          <path d="M4.536 13.334a1.167 1.167 0 0 1-1.775-.996v2.081Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.536 13.334a1.167 1.167 0 0 1-1.775-.996"
+          />
+          <path d="M2.76 3.662a1.167 1.167 0 0 1 1.776-.996L2.761 1.58Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.76 3.662a1.167 1.167 0 0 1 1.776-.996"
+          />
         </g>
       </Icon>
     );

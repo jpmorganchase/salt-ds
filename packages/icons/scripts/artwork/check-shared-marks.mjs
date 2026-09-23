@@ -43,12 +43,51 @@ export async function checkSharedMarks(page, records) {
     "success-circle.svg",
   ])
     add(name, "tick", false, 1, [], name !== "success-circle.svg");
-  for (const [name, family, dots, offsetY = 0] of [
-    // Error sits higher in its octagon. Only this declared translation may
-    // differ from Warning; the complete glyph and positive/inverse pair agree.
-    ["error", "exclamation", [[8, 10.375]], 1.625],
-    ["warning", "exclamation", [[8, 12]]],
-    ["info", "information", [[8, 3.75]]],
+  // These lower bounds are review criteria for readable status punctuation,
+  // independent of the source constructors. Pair equality alone would also
+  // pass two identically weakened marks.
+  const statusStemProbes = (
+    centerY,
+    minimumHeight,
+    span,
+    minimumStemWidth = 2.6,
+  ) => [
+    {
+      feature: "strong status stem width",
+      point: [8, centerY],
+      normal: [1, 0],
+      span: 4,
+      minimumWidth: minimumStemWidth,
+    },
+    {
+      feature: "legible status stem height",
+      point: [8, centerY],
+      normal: [0, 1],
+      span,
+      minimumWidth: minimumHeight,
+    },
+  ];
+  for (const [name, family, dots, features = {}] of [
+    // Their containers need different stem lengths. Each positive/inverse
+    // pair retains exact geometry; their status dots still match each other.
+    [
+      "error",
+      "error-exclamation",
+      [[8, 12]],
+      { dotRole: "status", probes: statusStemProbes(6, 6.55, 8) },
+    ],
+    [
+      "warning",
+      "warning-exclamation",
+      [[8, 12.375]],
+      { dotRole: "status", probes: statusStemProbes(8.675, 3.25, 4.6, 2.2) },
+    ],
+    [
+      "info",
+      "information",
+      [[8, 4]],
+      { dotRole: "status", probes: statusStemProbes(10, 6.55, 8) },
+    ],
     ["help-circle", "question", [[8, 12]]],
     ["help", "question", [[8, 12]]],
     [
@@ -68,7 +107,8 @@ export async function checkSharedMarks(page, records) {
       family === "ellipsis" ? 3 : 2,
       dots,
       false,
-      offsetY,
+      0,
+      features,
     );
     add(
       `${name}_solid.svg`,
@@ -77,7 +117,8 @@ export async function checkSharedMarks(page, records) {
       family === "ellipsis" ? 3 : 2,
       dots,
       false,
-      offsetY,
+      0,
+      features,
     );
   }
 
@@ -100,6 +141,36 @@ export async function checkSharedMarks(page, records) {
     ],
   ])
     add(name, name, false, 3, points, true);
+
+  // A removal modifier must remain a distinct horizontal mark in either
+  // polarity, independent of the surrounding bookmark's configurable stroke.
+  for (const inverse of [false, true])
+    add(
+      `remove-bookmark${inverse ? "_solid" : ""}.svg`,
+      "bookmark-removal",
+      inverse,
+      1,
+      [],
+      false,
+      0,
+      {
+        probes: [
+          {
+            feature: "legible removal mark thickness",
+            point: [8, 6.75],
+            normal: [0, 1],
+            minimumWidth: 1.45,
+          },
+          {
+            feature: "horizontal removal gesture",
+            point: [8, 6.75],
+            normal: [1, 0],
+            span: 6,
+            minimumWidth: 4.9,
+          },
+        ],
+      },
+    );
 
   // Compact action ticks are validated with their own role-specific geometry.
 
@@ -336,13 +407,14 @@ export async function checkSharedMarks(page, records) {
     const baseline = new Map();
     for (const weight of weights) {
       const families = new Map();
-      let firstDot;
+      const firstDots = new Map();
       let errorMask;
       for (const specimen of specimens) {
         const {
           name,
           family,
           dots,
+          dotRole = "detail",
           count,
           offsetY,
           comparisonRegion,
@@ -467,6 +539,11 @@ export async function checkSharedMarks(page, records) {
           );
         }
 
+        // Status dots are primary symbols. Help, chat, menu and eye dots keep
+        // their existing two-unit role and all of its previous tolerances.
+        const expectedDiameter = dotRole === "status" ? 8 / 3 : 2;
+        const expectedVariance = expectedDiameter ** 2 / 16;
+        const dotAreaBounds = dotRole === "status" ? [5.4, 5.8] : [3, 3.3];
         for (const [dotIndex, center] of dots.entries()) {
           const component = components.find(
             ({ left, right, top, bottom }) =>
@@ -519,7 +596,9 @@ export async function checkSharedMarks(page, records) {
             {
               name,
               weight,
-              feature: "round two-unit shared dot",
+              feature: "round shared dot within role",
+              dotRole,
+              expectedDiameter,
               dotIndex,
               center,
               centroid,
@@ -528,16 +607,21 @@ export async function checkSharedMarks(page, records) {
               variance,
               covariance,
             },
-            area >= 3 &&
-              area <= 3.3 &&
-              diameter.every((value) => Math.abs(value - 2) <= 0.0625) &&
+            area >= dotAreaBounds[0] &&
+              area <= dotAreaBounds[1] &&
+              diameter.every(
+                (value) => Math.abs(value - expectedDiameter) <= 0.0625,
+              ) &&
               centroid.every(
                 (value, axis) => Math.abs(value - center[axis]) <= 0.04,
               ) &&
-              variance.every((value) => Math.abs(value - 0.25) <= 0.025) &&
+              variance.every(
+                (value) =>
+                  Math.abs(value - expectedVariance) <= expectedVariance * 0.1,
+              ) &&
               Math.abs(covariance) <= 0.02,
           );
-          // Translation is allowed between semantic dot positions; scaling,
+          // Translation is allowed within a reviewed dot role; scaling,
           // unequal diameters and different positive/inverse contours are not.
           const patchSize = 3 * scale;
           const patch = new Uint8Array(patchSize * patchSize);
@@ -552,6 +636,7 @@ export async function checkSharedMarks(page, records) {
                 patch[y * patchSize + x] = mask[index];
             }
           }
+          const firstDot = firstDots.get(dotRole);
           if (firstDot)
             compare(
               patch,
@@ -561,11 +646,12 @@ export async function checkSharedMarks(page, records) {
                 weight,
                 dotIndex,
                 reference: firstDot.name,
-                feature: "shared translated dot contour",
+                feature: "shared translated dot contour within role",
+                dotRole,
               },
               0.025,
             );
-          else firstDot = { name, patch };
+          else firstDots.set(dotRole, { name, patch });
         }
       }
     }

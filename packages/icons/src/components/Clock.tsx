@@ -17,13 +17,22 @@ export const ClockIcon = forwardRef<SVGSVGElement, ClockIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
-          <g
+          <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          >
-            <path d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Z" />
-            <path d="M8 3.154V8l3.23 2.154" />
-          </g>
+            d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8 3.154V8l3.23 2.154"
+          />
+          <path d="M8 7.424a1.08 1.08 0 0 0 .48.896L8 8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8 7.424a1.08 1.08 0 0 0 .48.896"
+          />
         </g>
       </Icon>
     );

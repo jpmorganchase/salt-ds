@@ -26,10 +26,41 @@ export const LayersSolidIcon = forwardRef<SVGSVGElement, LayersSolidIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="m8 1.865 6.135 3.15L8 8.165l-6.135-3.15Z"
           />
+          <path d="M12.412 4.13a.995.995 0 0 1 0 1.77l1.723-.885Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.865 8 8 11.15 14.135 8m-12.27 2.985L8 14.135l6.135-3.15"
+            d="M12.412 4.13a.995.995 0 0 1 0 1.77"
+          />
+          <path d="M8.454 7.932a1 1 0 0 1-.908 0L8 8.166Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8.454 7.932a1 1 0 0 1-.908 0"
+          />
+          <path d="M3.588 5.9a.995.995 0 0 1 0-1.77l-1.723.885Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.588 5.9a.995.995 0 0 1 0-1.77"
+          />
+          <path d="M7.546 2.098a1 1 0 0 1 .908 0L8 1.865Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.546 2.098a1 1 0 0 1 .908 0M1.865 8 8 11.15 14.135 8m-12.27 2.985L8 14.135l6.135-3.15"
+          />
+          <path d="M7.546 10.917a1 1 0 0 0 .908 0L8 11.151Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.546 10.917a1 1 0 0 0 .908 0"
+          />
+          <path d="M7.546 13.902a1 1 0 0 0 .908 0L8 14.135Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.546 13.902a1 1 0 0 0 .908 0"
           />
         </g>
       </Icon>

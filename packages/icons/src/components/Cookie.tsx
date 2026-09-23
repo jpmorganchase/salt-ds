@@ -22,6 +22,24 @@ export const CookieIcon = forwardRef<SVGSVGElement, CookieIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M8 1a2.692 2.692 0 0 0 3.77 3.23A2.692 2.692 0 0 0 15 8a7 7 0 1 1-7-7Z"
           />
+          <path d="M10.626 4.515a.84.84 0 0 1 .859.859 2.7 2.7 0 0 1 .284-1.143 2.7 2.7 0 0 1-1.143.284" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.626 4.515a.84.84 0 0 1 .859.859"
+          />
+          <path d="M13.91 8.116a1.077 1.077 0 0 1 .948 1.287A7 7 0 0 0 15 8a2.7 2.7 0 0 1-1.09.116" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.91 8.116a1.077 1.077 0 0 1 .948 1.287"
+          />
+          <path d="M6.597 1.142a1.077 1.077 0 0 1 1.287.948A2.7 2.7 0 0 1 8 1a7 7 0 0 0-1.403.142" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.597 1.142a1.077 1.077 0 0 1 1.287.948"
+          />
           <path
             fillRule="evenodd"
             d="M4.051 5.308a.718.718 0 1 0 1.436 0 .718.718 0 1 0-1.436 0m-.538 4.307a.718.718 0 1 0 1.436 0 .718.718 0 1 0-1.436 0M7.282 8a.718.718 0 1 0 1.436 0 .718.718 0 1 0-1.436 0m0 4.308a.718.718 0 1 0 1.436 0 .718.718 0 1 0-1.436 0m3.769-1.616a.718.718 0 1 0 1.436 0 .718.718 0 1 0-1.436 0"

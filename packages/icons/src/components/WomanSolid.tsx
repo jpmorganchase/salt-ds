@@ -19,8 +19,18 @@ export const WomanSolidIcon = forwardRef<SVGSVGElement, WomanSolidIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M6.212 2.038a1.788 1.788 0 1 0 3.576 0 1.788 1.788 0 1 0-3.576 0m.596 4.174h2.384l1.988 5.961H4.82Zm-1.193 5.961h4.77v3.577H8.596v-3.577H7.404v3.577H5.615Z"
+            d="M6.384 2.616a1.616 1.616 0 1 0 3.232 0 1.616 1.616 0 1 0-3.232 0"
           />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.384 2.616a1.616 1.616 0 1 0 3.232 0 1.616 1.616 0 1 0-3.232 0Z"
+          />
+          <path
+            fillRule="evenodd"
+            d="M9.619 5.638H6.38l-2.296 6.889h.722a.287.287 0 0 1 .287.287v2.946H7.46v-3.984h1.08v3.984h2.367v-2.946a.287.287 0 0 1 .287-.287h.722Z"
+          />
+          <path d="M7.461 12.135a.36.36 0 0 1 .36-.359h-.36zm.719-.359a.36.36 0 0 1 .359.36v-.36z" />
         </g>
       </Icon>
     );

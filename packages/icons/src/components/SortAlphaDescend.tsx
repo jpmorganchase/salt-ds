@@ -24,6 +24,36 @@ export const SortAlphaDescendIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M12.342 1.452v12.775m2.903-2.903-2.903 2.903-2.904-2.903"
         />
+        <path d="M13.163 13.406a1.16 1.16 0 0 1-1.643 0l.822.821Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.163 13.406a1.16 1.16 0 0 1-1.643 0"
+        />
+        <path d="M10.89 12.776a.85.85 0 0 0 1.452-.602v2.053Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.89 12.776a.85.85 0 0 0 1.452-.602"
+        />
+        <path d="M12.342 12.174a.85.85 0 0 0 1.451.602l-1.451 1.451Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M12.342 12.174a.85.85 0 0 0 1.451.602"
+        />
+        <path d="M12.342 11.517a1.123 1.123 0 0 1-1.917.794l1.917 1.916Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M12.342 11.517a1.123 1.123 0 0 1-1.917.794"
+        />
+        <path d="M12.342 11.517a1.123 1.123 0 0 0 1.916.794l-1.916 1.916Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M12.342 11.517a1.123 1.123 0 0 0 1.916.794"
+        />
         <path
           fillRule="evenodd"
           d="M4.41 5.904H.917v-.44l2.708-4.07H1.01V.873h3.33v.44L1.625 5.381H4.41Z"

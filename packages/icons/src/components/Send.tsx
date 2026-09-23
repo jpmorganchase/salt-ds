@@ -20,7 +20,31 @@ export const SendIcon = forwardRef<SVGSVGElement, SendIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.563 2.472 13.958 8 1.563 13.528 3.573 8ZM3.573 8h10.385"
+            d="M1.563 2.472 13.958 8 1.563 13.528 3.573 8Z"
+          />
+          <path d="M11.9 7.082a1.005 1.005 0 0 1 0 1.836L13.958 8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.9 7.082a1.005 1.005 0 0 1 0 1.836"
+          />
+          <path d="M3.726 12.563a1.005 1.005 0 0 1-1.354-1.261l-.81 2.226Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.726 12.563a1.005 1.005 0 0 1-1.354-1.261"
+          />
+          <path d="M3.448 8.343a1 1 0 0 0 0-.686L3.573 8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.448 8.343a1 1 0 0 0 0-.686"
+          />
+          <path d="M2.372 4.698a1.005 1.005 0 0 1 1.354-1.261l-2.163-.965Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.372 4.698a1.005 1.005 0 0 1 1.354-1.261M3.573 8h10.385"
           />
         </g>
       </Icon>

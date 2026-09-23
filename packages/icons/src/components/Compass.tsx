@@ -17,13 +17,40 @@ export const CompassIcon = forwardRef<SVGSVGElement, CompassIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
-          <g
+          <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          >
-            <path d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Z" />
-            <path d="M10.692 5.308 9.615 9.615l-4.307 1.077 1.077-4.307Z" />
-          </g>
+            d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.692 5.308 9.615 9.615l-4.307 1.077 1.077-4.307Z"
+          />
+          <path d="M9.772 8.989a1.08 1.08 0 0 1-.783.783l.626-.157Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.772 8.989a1.08 1.08 0 0 1-.783.783"
+          />
+          <path d="M7.049 10.257a1.077 1.077 0 0 1-1.306-1.306l-.435 1.741Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.049 10.257a1.077 1.077 0 0 1-1.306-1.306"
+          />
+          <path d="M6.228 7.011a1.08 1.08 0 0 1 .783-.783l-.626.157Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.228 7.011a1.08 1.08 0 0 1 .783-.783"
+          />
+          <path d="M8.951 5.743a1.077 1.077 0 0 1 1.306 1.306l.435-1.741Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8.951 5.743a1.077 1.077 0 0 1 1.306 1.306"
+          />
         </g>
       </Icon>
     );

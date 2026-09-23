@@ -17,16 +17,41 @@ export const UserAdminIcon = forwardRef<SVGSVGElement, UserAdminIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
-          <g
+          <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          >
-            <path d="m8 1.033 6.403 2.135q0 8.537-6.403 11.738-6.403-3.201-6.403-11.738Z" />
-            <path
-              strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.8)"
-              d="M6.506 5.48a1.494 1.494 0 1 0 2.988 0 1.494 1.494 0 1 0-2.988 0Zm-1.707 6.225q0-2.668 3.201-2.668t3.201 2.668"
-            />
-          </g>
+            d="m8 1.033 6.403 2.135q0 8.537-6.403 11.738-6.403-3.201-6.403-11.738Z"
+          />
+          <path d="M7.663 1.146a1.07 1.07 0 0 1 .674 0L8 1.033Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.663 1.146a1.07 1.07 0 0 1 .674 0"
+          />
+          <path d="M13.66 2.92a1.07 1.07 0 0 1 .728 1.052q.015-.396.015-.804z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.66 2.92a1.07 1.07 0 0 1 .728 1.052"
+          />
+          <path d="M8.52 14.632a1.07 1.07 0 0 1-1.04 0q.255.142.52.274.265-.132.52-.274" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8.52 14.632a1.07 1.07 0 0 1-1.04 0"
+          />
+          <path d="M1.612 3.972A1.07 1.07 0 0 1 2.34 2.92l-.744.248q0 .408.015.804" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.612 3.972A1.07 1.07 0 0 1 2.34 2.92"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.8)"
+            d="M6.506 5.48a1.494 1.494 0 1 0 2.988 0 1.494 1.494 0 1 0-2.988 0Zm-.64 5.513q0-1.956 2.134-1.956t2.134 1.956"
+          />
         </g>
       </Icon>
     );

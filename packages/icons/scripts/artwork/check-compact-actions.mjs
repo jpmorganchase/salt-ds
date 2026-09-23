@@ -128,6 +128,7 @@ export async function checkCompactActions(page, records) {
         probe: [6.2041, 8.1228],
         // Native final arm lengths, distinct from a standalone/status tick.
         shortArm: 3.9285,
+        cornerRadius: 1.061613,
         points: [
           [4.81516, 6.7338],
           [7.59305, 9.51169],
@@ -145,6 +146,7 @@ export async function checkCompactActions(page, records) {
         region: [8.5, 3.5, 15.6, 9],
         probe: [10.2894, 6.951],
         shortArm: 2.6325,
+        cornerRadius: 1.155366,
         points: [
           [9.3587, 6.02032],
           [11.22012, 7.88175],
@@ -254,6 +256,18 @@ export async function checkCompactActions(page, records) {
           if (i === 0) context.moveTo(x, y);
           else context.lineTo(x, y);
         });
+        context.stroke();
+        // The square terminals and outward elbow remain exact. Add the
+        // independently specified circular inner shoulder of the new profile.
+        const [ex, ey] = spec.points[1];
+        const r = spec.cornerRadius;
+        context.beginPath();
+        context.arc(ex, ey - Math.SQRT2 * r, r, 3 * Math.PI / 4, Math.PI / 4, true);
+        context.lineTo(ex, ey);
+        context.closePath();
+        context.fill();
+        context.beginPath();
+        context.arc(ex, ey - Math.SQRT2 * r, r, 3 * Math.PI / 4, Math.PI / 4, true);
         context.stroke();
         context.restore();
         const expected = context.getImageData(0, 0, size, size).data;

@@ -22,6 +22,36 @@ export const KeyShiftIcon = forwardRef<SVGSVGElement, KeyShiftIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M2.186 7.596 8 2.31l5.814 5.286h-3.171v6.342H5.357V7.596Z"
           />
+          <path d="M7.289 2.956a1.057 1.057 0 0 1 1.422 0L8 2.31Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.289 2.956a1.057 1.057 0 0 1 1.422 0"
+          />
+          <path d="M11.7 7.596a1.057 1.057 0 0 0-1.057 1.057V7.596Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.7 7.596a1.057 1.057 0 0 0-1.057 1.057"
+          />
+          <path d="M10.643 12.881a1.057 1.057 0 0 1-1.057 1.057h1.057Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.643 12.881a1.057 1.057 0 0 1-1.057 1.057"
+          />
+          <path d="M6.414 13.938a1.057 1.057 0 0 1-1.057-1.057v1.057Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.414 13.938a1.057 1.057 0 0 1-1.057-1.057"
+          />
+          <path d="M5.357 8.653A1.057 1.057 0 0 0 4.3 7.596h1.057Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.357 8.653A1.057 1.057 0 0 0 4.3 7.596"
+          />
         </g>
       </Icon>
     );

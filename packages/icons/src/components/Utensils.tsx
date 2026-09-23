@@ -20,7 +20,30 @@ export const UtensilsIcon = forwardRef<SVGSVGElement, UtensilsIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.587.359v4.489q0 1.924 2.565 1.924t2.565-1.924V.358m-2.565 0V15.75M14.413 1c-1.603 0-3.206 1.924-3.206 4.49v3.206h3.206Zm0 7.696v7.054"
+            d="M1.587.359v4.489q0 1.924 2.565 1.924t2.565-1.924V.358m-2.565 0V15.75"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.152 5.233q0 1.901-1.481 1.303m1.481-1.303q0 1.901 1.482 1.303M4.152 8.311q0-1.177-1.481-1.775m1.481 1.775q0-1.177 1.482-1.775M14.413 1c-1.603 0-3.206 1.924-3.206 4.49v3.206h3.206Z"
+          />
+          <path d="M11.207 7.413a1.283 1.283 0 0 0 1.282 1.283h-1.282Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.207 7.413a1.283 1.283 0 0 0 1.282 1.283"
+          />
+          <path d="M13.13 8.696a1.283 1.283 0 0 0 1.283-1.283v1.283Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.13 8.696a1.283 1.283 0 0 0 1.283-1.283m0 1.283v7.054"
+          />
+          <path d="M13.045 8.696a1.37 1.37 0 0 1 1.368 1.368V8.696Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.045 8.696a1.37 1.37 0 0 1 1.368 1.368"
           />
         </g>
       </Icon>

@@ -20,7 +20,25 @@ export const UserSearchIcon = forwardRef<SVGSVGElement, UserSearchIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M3.367 4.348a2.264 2.264 0 1 0 4.53 0 2.264 2.264 0 1 0-4.53 0ZM7.03 8.725q-.65-.054-1.398-.054Q1 8.671 1 11.76v2.059h7.083m.637-3.604a2.573 2.573 0 1 0 5.146 0 2.573 2.573 0 1 0-5.146 0Zm4.46 1.887 2.058 2.059"
+            d="M3.367 4.348a2.264 2.264 0 1 0 4.53 0 2.264 2.264 0 1 0-4.53 0ZM7.03 8.725q-.65-.054-1.398-.054Q1 8.671 1 11.76v2.059h7.083"
+          />
+          <path d="M1 12.788a1.03 1.03 0 0 0 1.03 1.03H1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1 12.788a1.03 1.03 0 0 0 1.03 1.03m6.69-3.603a2.573 2.573 0 1 0 5.146 0 2.573 2.573 0 1 0-5.146 0Zm4.46 1.887 2.058 2.059"
+          />
+          <path d="M13.788 12.71a1.13 1.13 0 0 1-.207-1.318 2.6 2.6 0 0 1-.469.643Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.788 12.71a1.13 1.13 0 0 1-.207-1.318"
+          />
+          <path d="M13.788 12.71a1.13 1.13 0 0 0-1.319-.206 2.6 2.6 0 0 0 .643-.47Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.788 12.71a1.13 1.13 0 0 0-1.319-.206"
           />
         </g>
       </Icon>

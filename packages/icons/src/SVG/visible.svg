@@ -1,6 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" stroke-width="0.67" viewBox="0 0 16 16">
-  <g fill="none" stroke="currentColor" stroke-width="0.67">
-    <path d="M1.126794 7.999998q6.873204-11.102868 13.746408 0-6.873204 11.102868-13.746408 0Z"/>
-    <path d="M5.885166 7.999998a2.114832 2.114832 0 1 0 4.229664 0 2.114832 2.114832 0 1 0-4.229664 0Z"/>
-  </g>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M1.126794 7.999998q6.873204-11.102868 13.746408 0-6.873204 11.102868-13.746408 0Z"/>
+  <path fill="currentColor" d="M14.50501 7.421168a1.05742 1.05742 0 0 1 0 1.15766 27.5 27.5 0 0 0 .368192-.57883 27.5 27.5 0 0 0-.368192-.57883"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M14.50501 7.421168a1.05742 1.05742 0 0 1 0 1.15766"/>
+  <path fill="currentColor" d="M1.494986 8.578828a1.05742 1.05742 0 0 1 0-1.15766 27.5 27.5 0 0 0-.368192.57883q.18399.297451.368192.57883"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M1.494986 8.578828a1.05742 1.05742 0 0 1 0-1.15766"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M5.885166 7.999998a2.114832 2.114832 0 1 0 4.229664 0 2.114832 2.114832 0 1 0-4.229664 0Z"/>
 </svg>

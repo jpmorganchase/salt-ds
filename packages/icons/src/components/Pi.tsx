@@ -24,6 +24,30 @@ export const PiIcon = forwardRef<SVGSVGElement, PiIconProps>(function PiIcon(
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M.25 1.542h15.5m-10.98 0v9.687q0 3.23-3.228 3.23m9.687-12.917V12.52q0 1.937 1.938 1.937h2.583"
         />
+        <path d="M6.063 1.542A1.29 1.29 0 0 0 4.77 2.833V1.542Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.063 1.542A1.29 1.29 0 0 0 4.77 2.833"
+        />
+        <path d="M4.77 2.833a1.29 1.29 0 0 0-1.29-1.291h1.29Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M4.77 2.833a1.29 1.29 0 0 0-1.29-1.291"
+        />
+        <path d="M12.52 1.542a1.29 1.29 0 0 0-1.29 1.291V1.542Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M12.52 1.542a1.29 1.29 0 0 0-1.29 1.291"
+        />
+        <path d="M11.23 2.833a1.29 1.29 0 0 0-1.292-1.291h1.291Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M11.23 2.833a1.29 1.29 0 0 0-1.292-1.291"
+        />
       </g>
     </Icon>
   );

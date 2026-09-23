@@ -23,7 +23,31 @@ export const ErrorExecuteIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Zm2.061-4.939 9.878 9.878"
+          d="M1 8a7 7 0 1 0 14 0A7 7 0 1 0 1 8Zm2.05-4.95 9.9 9.9"
+        />
+        <path d="M12.041 12.041a1.167 1.167 0 0 0 1.799-.181 7 7 0 0 1-.89 1.09Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M12.041 12.041a1.167 1.167 0 0 0 1.799-.181"
+        />
+        <path d="M12.041 12.041a1.167 1.167 0 0 1-.181 1.799 7 7 0 0 0 1.09-.89Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M12.041 12.041a1.167 1.167 0 0 1-.181 1.799"
+        />
+        <path d="M3.959 3.959a1.167 1.167 0 0 0-1.799.181 7 7 0 0 1 .89-1.09Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M3.959 3.959a1.167 1.167 0 0 0-1.799.181"
+        />
+        <path d="M3.959 3.959A1.167 1.167 0 0 1 4.14 2.16a7 7 0 0 0-1.09.89Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M3.959 3.959A1.167 1.167 0 0 1 4.14 2.16"
         />
       </g>
     </Icon>

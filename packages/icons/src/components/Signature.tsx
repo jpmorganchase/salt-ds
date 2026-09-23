@@ -23,10 +23,56 @@ export const SignatureIcon = forwardRef<SVGSVGElement, SignatureIconProps>(
             strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.7)"
             d="m.59 8.514 2.772 2.771m0-2.771L.59 11.285"
           />
+          <path d="M2.551 10.474a.813.813 0 0 0-1.15 0l.575-.574Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.7)"
+            d="M2.551 10.474a.813.813 0 0 0-1.15 0"
+          />
+          <path d="M1.401 10.474a.813.813 0 0 0 0-1.15l.575.576Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.7)"
+            d="M1.401 10.474a.813.813 0 0 0 0-1.15"
+          />
+          <path d="M1.401 9.325a.813.813 0 0 0 1.15 0l-.575.575Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.7)"
+            d="M1.401 9.325a.813.813 0 0 0 1.15 0"
+          />
+          <path d="M2.551 9.325a.813.813 0 0 0 0 1.15L1.976 9.9Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.7)"
+            d="M2.551 9.325a.813.813 0 0 0 0 1.15"
+          />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M4.748 11.563c2.218-1.663 5.913-7.946 4.805-9.61C8.443.106 6.042 5.834 6.042 9.715c0 2.772 2.032 2.772 3.141.554l1.109-2.033c-.554 2.772.554 3.142 1.663 1.664l.924-1.11c-.554 2.588.554 2.588 2.402 1.11"
+          />
+          <path d="m9.56 1.964-.014-.022.007.011z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m9.56 1.964-.014-.022"
+          />
+          <path d="m9.175 10.284.017-.031-.009.016z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m9.175 10.284.017-.031"
+          />
+          <path d="m11.94 9.919.032-.04-.017.02z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="m11.94 9.919.032-.04"
           />
           <path
             fillRule="evenodd"

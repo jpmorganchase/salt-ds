@@ -22,6 +22,18 @@ export const ChevronDownIcon = forwardRef<SVGSVGElement, ChevronDownIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M15.245 4.114 8 11.36.755 4.114"
           />
+          <path d="M8.82 10.54a1.16 1.16 0 0 1-1.64 0l.82.82Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8.82 10.54a1.16 1.16 0 0 1-1.64 0"
+          />
+          <path d="M9.093 10.266a1.546 1.546 0 0 1-2.186 0L8 11.36Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.093 10.266a1.546 1.546 0 0 1-2.186 0"
+          />
         </g>
       </Icon>
     );

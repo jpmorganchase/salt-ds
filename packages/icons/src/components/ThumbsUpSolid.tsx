@@ -21,7 +21,7 @@ export const ThumbsUpSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M.25 6.51h2.385v8.346H.25Zm4.77 8.346V6.51L8 1.144h1.788v4.77h4.174q1.788 0 1.788 1.788l-1.788 7.154Z"
+          d="M.25 6.51h2.385v8.346H.25Zm4.77 8.346V6.51L8 1.144h1.788v3.498a1.27 1.27 0 0 0 1.272 1.271h2.902q1.788 0 1.788 1.789l-1.788 7.154Z"
         />
       </g>
     </Icon>

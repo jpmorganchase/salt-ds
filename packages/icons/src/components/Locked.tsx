@@ -17,16 +17,67 @@ export const LockedIcon = forwardRef<SVGSVGElement, LockedIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
-          <g
+          <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          >
-            <path d="M4.08 7.16V4.92a3.92 3.92 0 0 1 7.84 0v2.24" />
-            <path d="M2.288 7.16h11.424q.448 0 .448.448v6.944q0 .448-.448.448H2.288q-.448 0-.448-.448V7.608q0-.448.448-.448Z" />
-          </g>
+            d="M4.08 7.16V4.92a3.92 3.92 0 0 1 7.84 0v2.24"
+          />
+          <path d="M2.848 7.16A1.23 1.23 0 0 0 4.08 5.928V7.16Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.848 7.16A1.23 1.23 0 0 0 4.08 5.928"
+          />
+          <path d="M5.312 7.16A1.23 1.23 0 0 1 4.08 5.928V7.16Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.312 7.16A1.23 1.23 0 0 1 4.08 5.928"
+          />
+          <path d="M10.688 7.16a1.23 1.23 0 0 0 1.232-1.232V7.16Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.688 7.16a1.23 1.23 0 0 0 1.232-1.232"
+          />
+          <path d="M13.152 7.16a1.23 1.23 0 0 1-1.232-1.232V7.16Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.152 7.16a1.23 1.23 0 0 1-1.232-1.232"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.84 7.16h12.32V15H1.84Z"
+          />
+          <path d="M13.04 7.16a1.12 1.12 0 0 1 1.12 1.12V7.16Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.04 7.16a1.12 1.12 0 0 1 1.12 1.12"
+          />
+          <path d="M14.16 13.88A1.12 1.12 0 0 1 13.04 15h1.12Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M14.16 13.88A1.12 1.12 0 0 1 13.04 15"
+          />
+          <path d="M2.96 15a1.12 1.12 0 0 1-1.12-1.12V15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.96 15a1.12 1.12 0 0 1-1.12-1.12"
+          />
+          <path d="M1.84 8.28a1.12 1.12 0 0 1 1.12-1.12H1.84Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.84 8.28a1.12 1.12 0 0 1 1.12-1.12"
+          />
           <path
             fillRule="evenodd"
-            d="M7.3 11.877a1.5 1.5 0 1 1 1.4 0V13.6H7.3Z"
+            d="M7.167 11.797a1.5 1.5 0 1 1 1.666 0 .3.3 0 0 0-.133.25V13.6H7.3v-1.553a.3.3 0 0 0-.133-.25"
           />
         </g>
       </Icon>

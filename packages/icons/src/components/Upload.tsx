@@ -20,7 +20,49 @@ export const UploadIcon = forwardRef<SVGSVGElement, UploadIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8 11.834V1.281M3.779 5.502 8 1.282l4.221 4.22M2.196 12.89V15h11.608v-2.11"
+            d="M8 11.834V1.281M3.779 5.502 8 1.282l4.221 4.22"
+          />
+          <path d="M7.254 2.027a1.055 1.055 0 0 1 1.492 0L8 1.281Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.254 2.027a1.055 1.055 0 0 1 1.492 0"
+          />
+          <path d="M9.801 3.083A1.055 1.055 0 0 0 8 3.829V1.28Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.801 3.083A1.055 1.055 0 0 0 8 3.829"
+          />
+          <path d="M8 3.829a1.055 1.055 0 0 0-1.801-.746L8 1.28Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8 3.829a1.055 1.055 0 0 0-1.801-.746M2.196 12.89V15h11.608v-2.11"
+          />
+          <path d="M2.196 13.945A1.055 1.055 0 0 0 3.25 15H2.196Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.196 13.945A1.055 1.055 0 0 0 3.25 15"
+          />
+          <path d="M12.749 15a1.055 1.055 0 0 0 1.055-1.055V15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.749 15a1.055 1.055 0 0 0 1.055-1.055"
+          />
+          <path d="M8 3.999a1.126 1.126 0 0 1 1.922-.796L8 1.28Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8 3.999a1.126 1.126 0 0 1 1.922-.796"
+          />
+          <path d="M8 3.999a1.126 1.126 0 0 0-1.922-.796L8 1.28Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8 3.999a1.126 1.126 0 0 0-1.922-.796"
           />
         </g>
       </Icon>

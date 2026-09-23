@@ -22,6 +22,12 @@ export const UrgencyLowIcon = forwardRef<SVGSVGElement, UrgencyLowIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M.625 10.256 8 5.953l7.375 4.303"
           />
+          <path d="M7.38 6.315a1.23 1.23 0 0 1 1.24 0L8 5.953Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.38 6.315a1.23 1.23 0 0 1 1.24 0"
+          />
         </g>
       </Icon>
     );

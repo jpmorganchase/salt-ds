@@ -1,3 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" stroke-width="0.67" viewBox="0 0 16 16">
   <path fill="none" stroke="currentColor" stroke-width="0.67" d="M15.197866.776382 7.974247 8.000001l7.223619 7.223619M8.552136.776382 1.328518 8.000001l7.223618 7.223619"/>
+  <path fill="currentColor" d="M8.791498 7.18275a1.15578 1.15578 0 0 0 0 1.634502l-.817251-.817251Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M8.791498 7.18275a1.15578 1.15578 0 0 0 0 1.634502"/>
+  <path fill="currentColor" d="M2.14577 7.18275a1.15578 1.15578 0 0 0 0 1.634502l-.817252-.817251Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M2.14577 7.18275a1.15578 1.15578 0 0 0 0 1.634502"/>
+  <path fill="currentColor" d="M8.954925 7.019323a1.386935 1.386935 0 0 0 0 1.961356l-.980678-.980678Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M8.954925 7.019323a1.386935 1.386935 0 0 0 0 1.961356"/>
+  <path fill="currentColor" d="M2.309196 7.019323a1.386935 1.386935 0 0 0 0 1.961356l-.980678-.980678Z"/>
+  <path fill="none" stroke="currentColor" stroke-width="0.67" d="M2.309196 7.019323a1.386935 1.386935 0 0 0 0 1.961356"/>
 </svg>

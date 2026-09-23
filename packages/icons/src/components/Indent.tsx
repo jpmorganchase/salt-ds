@@ -22,6 +22,18 @@ export const IndentIcon = forwardRef<SVGSVGElement, IndentIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M.364 1h15.272M.364 15h15.272M7.364 6.09h8.272M7.364 9.91h8.272M1 4.817 4.182 8 1 11.182"
           />
+          <path d="M3.282 7.1a1.273 1.273 0 0 1 0 1.8l.9-.9Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.282 7.1a1.273 1.273 0 0 1 0 1.8"
+          />
+          <path d="M2.982 6.8a1.697 1.697 0 0 1 0 2.4l1.2-1.2Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.982 6.8a1.697 1.697 0 0 1 0 2.4"
+          />
         </g>
       </Icon>
     );

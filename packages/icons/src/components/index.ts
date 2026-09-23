@@ -372,6 +372,8 @@ export * from "./ReceiptSolid";
 export * from "./Redo";
 export * from "./Refresh";
 export * from "./Remove";
+export * from "./RemoveBookmark";
+export * from "./RemoveBookmarkSolid";
 export * from "./RemoveDocument";
 export * from "./RemoveDocumentSolid";
 export * from "./RemoveUser";

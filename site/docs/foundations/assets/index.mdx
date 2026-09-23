@@ -13,7 +13,7 @@ Browse the catalogue below to choose an icon. The [icon design guidelines](/salt
 
 ## Icon variants
 
-Icons are available as **outline** and **solid** variants. Each icon has an outline version; selected icons also have a solid version. Both variants preserve the same meaning and defining features. Each export is fitted to its own painted bounds so outline and solid icons use a consistent frame.
+Icons are available as **outline** and **solid** variants. Available variants depend on the icon. Both preserve the same meaning and defining features. Choose a consistent treatment for related controls; solid does not imply a selected state unless that relationship is established in the interface.
 
 Outline icons use open space to keep their visual weight light. Solid variants introduce filled surfaces to provide greater emphasis, while retaining the open lines needed to describe the shape or action. Choose the variant that fits the surrounding interface and use it consistently.
 
@@ -27,9 +27,9 @@ Outline icons use open space to keep their visual weight light. Solid variants i
 
 Icon size will vary based on use case and system requirements. Standard sizing ensures components maintain a consistent spatial relationship with surrounding elements.
 
-Each ordinary icon defaults to a centered fit in its 16×16 viewBox, with a **15.5-unit longest painted dimension at stroke width 1.5**. Reviewed optical exceptions can use a smaller span or an offset center. Its aspect ratio is preserved, so narrow icons retain space along their shorter axis. Outline and solid exports are fitted independently. Official brand marks and full-canvas solid checkmark control surfaces retain their 16-unit framing. See [Canvas and optical size](/salt/foundations/assets/icon-design#canvas-and-optical-size) for the design rules.
+Icons share a 16 × 16 canvas and preserve their natural proportions. Judge their apparent size beside surrounding text and controls. See [Canvas and optical size](/salt/foundations/assets/icon-design#canvas-and-optical-size) when designing new artwork.
 
-We recommend using a size multiplier for icons when its purpose needs to be emphasized; typically standalone and not paired with text.
+Use the density's default size for icons within controls. A size multiplier can give a standalone icon more emphasis; check that its weight and spacing remain balanced with the surrounding content.
 
 <IconDesignExamples example="scale" />
 
@@ -48,7 +48,7 @@ We recommend using a size multiplier for icons when its purpose needs to be emph
 - Match the icon glyph size to the text font-size.
 
 When an icon is paired with **display** or **heading** text styles, the icon size (i.e., the glyph) is aligned with the text size, and the icon’s container is aligned with text line height.
-This approach ensures the icon and text remain visually balanced and that the icon stays perfectly aligned with the text block, even in multi-line layouts.
+Check the visual alignment with the first line when the text wraps.
 
 <Diagram
   src="/img/foundations/iconography-icon-heading-size.png"
@@ -62,11 +62,13 @@ for icon sizing and spacing."
 
 ## Stroke weight
 
-Generated React icons follow the theme's primary stroke width: **1.333333 units (approximately 4/3) in high and medium densities**, and **1 unit in low, touch and mobile densities**. Adjust `--salt-size-icon-strokeWidth` for an application or subtree, or use `--saltIcon-strokeWidth` for an individual icon. When neither variable is defined, the component falls back to 1. Secondary details retain their lighter proportions, and all strokes scale with the icon. See [Icon stroke width](/salt/foundations/size#stroke-width) for the density defaults and examples.
+Use the density's default stroke weight so icons fit surrounding text and controls. Generated React icons use **4/3 units in high and medium density** and **1 unit in low, touch and mobile density**. At the default 12px size in high and medium density, the primary stroke is approximately 1 CSS pixel.
 
 <IconDesignExamples example="stroke" />
 
-At the default 12px icon size in high and medium densities, the 1.333333-unit primary stroke renders at **approximately 1 CSS pixel**. An explicit 1-unit width at the same size renders at 0.75px. The viewBox fit reserves space for widths up to 1.5; thinner strokes occupy slightly less of the frame, especially at sharp joins. Numeric SVG masters retain a 0.67-unit reference stroke, which renders at 0.5025px at 12px. Standalone SVG images and the CSS mask classes in `saltIcons.css` use those baked widths and do not inherit stroke variables from their host element. Filled contours and official brand logos retain their supplied shapes.
+Use `--salt-size-icon-strokeWidth` for an application or subtree, or `--saltIcon-strokeWidth` for an individual icon. The fallback is 1 when neither variable is defined. Secondary strokes keep their proportions; filled contours keep their geometry. Review any override at the intended size, including internal gaps and sharp tips. See [Icon stroke width](/salt/foundations/size#stroke-width) for settings and examples.
+
+Standalone SVGs and the CSS masks in `saltIcons.css` retain their baked 0.67-unit reference strokes and do not inherit these variables. Check the chosen rendering format in context. For artwork decisions, follow [Stroke weight](/salt/foundations/assets/icon-design#stroke-weight).
 
 ## Accessible use
 
@@ -78,7 +80,7 @@ Spacing between an icon and its paired text varies by context. The sub-sections 
 
 ### When to use spacing-50
 
-Apply `--salt-spacing-50` — the icon is used within small, primitive components to describe the interaction or label. This applies to:
+Use `--salt-spacing-50` between an icon and text within compact controls, including:
 
 - [Button](/salt/components/button)
 - [Toggle button](/salt/components/toggle-button)
@@ -111,7 +113,7 @@ Apply `--salt-spacing-50` — the icon is used within small, primitive compon
 
 ### When to use spacing-75
 
-Apply `--salt-spacing-75` — the icon describes a heading or statement; often used within ‘messaging’ type components or where the icon is part of a sentence; it isn’t constrained within a small component. This applies to:
+Use `--salt-spacing-75` when an icon accompanies a message or statement outside a compact control, including:
 
 - [Banner](/salt/components/banner)
 - [Toast](/salt/components/toast)
@@ -146,7 +148,7 @@ Apply `--salt-spacing-75` — the icon describes a heading or statement; often
 
 ### When to use spacing-100
 
-Apply `--salt-spacing-100` — the icon describes the title or label of ‘stackable’ (i.e., those with a slightly larger height, designed to accommodated nested controls, such as buttons) or repeated elements (where clean vertical alignment is required); also applies to radio/checkbox controls. This applies to:
+Use `--salt-spacing-100` for icons beside labels in repeated or stacked elements, including controls with nested content. This also applies to checkbox and radio labels:
 
 - [Accordion](/salt/components/accordion)
 - [Vertical navigation](/salt/components/vertical-navigation)
@@ -184,16 +186,13 @@ Apply `--salt-spacing-100` — the icon describes the title or label of ‘sta
 ### Spacing between icon and heading/display text
 
 <Callout status="info">
-  This spacing update is experimental. We welcome your feedback to help us
-  refine and optimize this guideline. The goal is to apply these updated rules
-  to existing components, including Dialog (currently using --spacing-75, see
-  above). Please [reach out to the team](/salt/support-and-contributions/index)
-  with any thoughts or suggestions on this new spacing rule.
+  Heading spacing is experimental. Existing components may retain their own
+  spacing, including Dialog. Follow the component guidance when using those
+  components, and [share feedback](/salt/support-and-contributions/index) on
+  this heading treatment.
 </Callout>
 
-To ensure visual balance and readability, spacing between icons and Heading/Display text is tailored according to the size of the text. This approach helps maintain a harmonious and comfortable layout across different heading and display levels.
-
-This is the recommended spacing in editorial/marketing layouts and where headings are used within components.
+For editorial and marketing layouts, use the following spacing with heading and display text. Check the icon size and text alignment together. Within an existing component, follow its spacing guidance.
 
 | Heading/Display text | Spacing between Icon & Text |
 | -------------------- | --------------------------- |

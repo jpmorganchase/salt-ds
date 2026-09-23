@@ -22,7 +22,37 @@ export const VideoDisabledIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M6.2 3.154h3.954q.538 0 .538.538v3.954m-.892 5.2H1.538q-.538 0-.538-.538V4.046m9.692 1.8L15 4.231v7.538l-.027-.01m-4.28-4.113v-1.8M1.538 1.538l12.924 12.924"
+          d="M6.2 3.154h4.492v4.492m-.892 5.2H1v-8.8"
+        />
+        <path d="M9.615 3.154a1.077 1.077 0 0 1 1.077 1.077V3.154Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M9.615 3.154a1.077 1.077 0 0 1 1.077 1.077"
+        />
+        <path d="M2.077 12.846A1.077 1.077 0 0 1 1 11.77v1.077Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M2.077 12.846A1.077 1.077 0 0 1 1 11.77m9.692-5.924L15 4.231v7.538l-.027-.01m-4.28-4.113v-1.8"
+        />
+        <path d="M13.545 4.776A1.077 1.077 0 0 1 15 5.785V4.23Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.545 4.776A1.077 1.077 0 0 1 15 5.785"
+        />
+        <path d="M10.692 4.448a.97.97 0 0 0 1.31.907l-1.31.491Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.692 4.448a.97.97 0 0 0 1.31.907"
+        />
+        <path d="M10.692 6.518a.97.97 0 0 1 .63-.908l-.63.236Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.692 6.518a.97.97 0 0 1 .63-.908M1.538 1.538l12.924 12.924"
         />
       </g>
     </Icon>

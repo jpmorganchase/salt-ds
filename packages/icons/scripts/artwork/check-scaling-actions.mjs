@@ -79,6 +79,7 @@ export async function checkScalingActions(page, records) {
             parts.push({
               path,
               closed: /z/i.test(d),
+              curved: /[ACQST]/i.test(d),
               bounds: [box.x, box.y, box.width, box.height],
               length,
               points: Array.from({ length: 25 }, (_, i) =>
@@ -144,7 +145,14 @@ export async function checkScalingActions(page, records) {
         },
         bendDelta < 0.015,
       );
-      const heads = replyAll.slice(1);
+      // Keep the two original straight chevron gestures distinct from their
+      // new curved root patches. Select by final geometry, not path position.
+      const chevrons = (parts) => parts.filter((part) =>
+        !part.closed && !part.curved && part.bounds[2] > 1 &&
+        Math.abs(part.bounds[3] - 2 * part.bounds[2]) < .03,
+      ).sort((a, b) => b.bounds[0] - a.bounds[0]);
+      const heads = chevrons(replyAll);
+      const replyHead = chevrons(reply)[0];
       // A smooth bend can still crowd the rear chevron. Measure the final
       // straight shaft against its horizontal arm span, without prescribing
       // the recipe's radius or reversing the exported fit.
@@ -166,16 +174,14 @@ export async function checkScalingActions(page, records) {
         },
         straightRun >= rearHeadSpan * 0.98,
       );
-      const headDelta = pointDelta(heads.at(-1).points, reply.at(-1).points);
+      const headDelta = pointDelta(heads.at(-1).points, replyHead.points);
       const sameGesture = heads.every((part) => {
         const delta = part.points.map((point) =>
           point.map((v, j) => v - part.points[12][j]),
         );
-        const peer = reply
-          .at(-1)
-          .points.map((point) =>
-            point.map((v, j) => v - reply.at(-1).points[12][j]),
-          );
+        const peer = replyHead.points.map((point) =>
+          point.map((v, j) => v - replyHead.points[12][j]),
+        );
         return pointDelta(delta, peer) < 0.015;
       });
       report(

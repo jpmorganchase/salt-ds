@@ -24,9 +24,27 @@ export const SparkleRefreshSolidIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M12.908 3.15a6.941 6.941 0 1 0 2.033 4.909M10.016 3.15h2.892V.259"
         />
+        <path d="M11.751 3.15a1.157 1.157 0 0 0 1.157-1.156V3.15Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M11.751 3.15a1.157 1.157 0 0 0 1.157-1.156"
+        />
         <path
           fillRule="evenodd"
           d="M8 4.233c.67 2.774 1.052 3.156 3.825 3.826C9.052 8.729 8.67 9.11 8 11.884 7.33 9.111 6.948 8.728 4.175 8.06 6.948 7.389 7.33 7.007 8 4.233"
+        />
+        <path d="M10.672 3.15q2.9 0 .566-1.23a7 7 0 0 1 1.67 1.23Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.672 3.15q2.9 0 .566-1.23"
+        />
+        <path d="M12.908.914q0 1.886-1.67 1.005a7 7 0 0 1 1.67 1.232Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M12.908.914q0 1.886-1.67 1.005"
         />
       </g>
     </Icon>

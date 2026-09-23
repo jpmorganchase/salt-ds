@@ -22,10 +22,35 @@ export const SparkleIcon = forwardRef<SVGSVGElement, SparkleIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M6.586 2.322c1.077 4.458 1.691 5.073 6.15 6.149-4.459 1.076-5.073 1.69-6.15 6.149C5.51 10.162 4.896 9.547.438 8.47 4.896 7.396 5.51 6.78 6.586 2.323Z"
           />
+          <path d="M9.9 7.623a.92.92 0 0 1 0 1.695c.725-.304 1.642-.56 2.836-.847-1.194-.288-2.111-.543-2.837-.848" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.9 7.623a.92.92 0 0 1 0 1.695"
+          />
+          <path d="M7.434 11.784a.92.92 0 0 1-1.695 0c.305.725.56 1.643.847 2.836.288-1.193.544-2.111.848-2.836" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.434 11.784a.92.92 0 0 1-1.695 0"
+          />
+          <path d="M3.274 9.318a.92.92 0 0 1 0-1.695c-.726.305-1.643.56-2.836.848 1.193.288 2.11.543 2.836.847" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.274 9.318a.92.92 0 0 1 0-1.695"
+          />
+          <path d="M5.74 5.158a.92.92 0 0 1 1.694 0c-.304-.725-.56-1.643-.848-2.836-.288 1.193-.542 2.11-.847 2.836" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.74 5.158a.92.92 0 0 1 1.694 0"
+          />
           <path
             fillRule="evenodd"
             d="m13.504 1.169.615 1.69 1.691.616-1.69.614-.616 1.692-.615-1.692-1.69-.614 1.69-.615Z"
           />
+          <path d="M14.058 2.691a.38.38 0 0 0 .23.23l-.169-.061Zm.23 1.337a.38.38 0 0 0-.23.23l.061-.169Zm-1.338.23a.38.38 0 0 0-.23-.23l.17.061Zm-.23-1.337a.38.38 0 0 0 .23-.23l-.06.169Z" />
         </g>
       </Icon>
     );

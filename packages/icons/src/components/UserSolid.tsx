@@ -19,7 +19,24 @@ export const UserSolidIcon = forwardRef<SVGSVGElement, UserSolidIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M5.01 3.248a2.99 2.99 0 1 0 5.98 0 2.99 2.99 0 1 0-5.98 0M.526 15.75v-2.718Q.526 8.955 8 8.955t7.474 4.077v2.718Z"
+            d="M5.3 3.708a2.7 2.7 0 1 0 5.4 0 2.7 2.7 0 1 0-5.4 0M1.25 15v-2.455q0-3.682 6.75-3.682t6.75 3.682V15Z"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.3 3.708a2.7 2.7 0 1 0 5.4 0 2.7 2.7 0 1 0-5.4 0ZM1.25 15v-2.455q0-3.682 6.75-3.682t6.75 3.682V15Z"
+          />
+          <path d="M14.75 13.773A1.227 1.227 0 0 1 13.524 15h1.228Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M14.75 13.773A1.227 1.227 0 0 1 13.524 15"
+          />
+          <path d="M2.477 15a1.227 1.227 0 0 1-1.228-1.227V15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.477 15a1.227 1.227 0 0 1-1.228-1.227"
           />
         </g>
       </Icon>

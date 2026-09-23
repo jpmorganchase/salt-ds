@@ -19,7 +19,42 @@ export const TagSolidIcon = forwardRef<SVGSVGElement, TagSolidIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M.25 9.192 9.192.25h6.558v6.558L6.808 15.75Zm10.73-5.365a1.192 1.192 0 1 0 2.385 0 1.192 1.192 0 1 0-2.384 0"
+            d="M1.295 8.899 9.194 1h5.792v5.792l-7.899 7.899Zm9.478-4.74a1.053 1.053 0 1 0 2.107 0 1.053 1.053 0 1 0-2.107 0"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.295 8.899 9.194 1h5.792v5.792l-7.899 7.899Z"
+          />
+          <path d="M8.885 1.308A1.05 1.05 0 0 1 9.63 1h-.436Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8.885 1.308A1.05 1.05 0 0 1 9.63 1"
+          />
+          <path d="M13.933 1a1.053 1.053 0 0 1 1.053 1.053V1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.933 1a1.053 1.053 0 0 1 1.053 1.053"
+          />
+          <path d="M14.986 6.356a1.05 1.05 0 0 1-.308.745l.308-.309Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M14.986 6.356a1.05 1.05 0 0 1-.308.745"
+          />
+          <path d="M7.832 13.946a1.053 1.053 0 0 1-1.49 0l.745.745Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.832 13.946a1.053 1.053 0 0 1-1.49 0"
+          />
+          <path d="M2.04 9.643a1.053 1.053 0 0 1 0-1.49l-.745.746Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.04 9.643a1.053 1.053 0 0 1 0-1.49"
           />
         </g>
       </Icon>

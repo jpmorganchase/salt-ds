@@ -22,6 +22,18 @@ export const SearchIcon = forwardRef<SVGSVGElement, SearchIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M1 6.333a5.333 5.333 0 1 0 10.665 0A5.333 5.333 0 1 0 1 6.333Zm9.125 3.792 5.095 5.095"
           />
+          <path d="M11.002 11.002a1.42 1.42 0 0 1-.19-1.777 5.3 5.3 0 0 1-.709.878Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.002 11.002a1.42 1.42 0 0 1-.19-1.777"
+          />
+          <path d="M11.002 11.002a1.42 1.42 0 0 0-1.777-.19 5.3 5.3 0 0 0 .878-.709Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.002 11.002a1.42 1.42 0 0 0-1.777-.19"
+          />
         </g>
       </Icon>
     );

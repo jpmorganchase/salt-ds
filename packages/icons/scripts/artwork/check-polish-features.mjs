@@ -1,19 +1,15 @@
+import { checkChartPairs } from "./check-chart-pairs.mjs";
+
 // Review the shipped compact dismissal and simplified chart details as paint.
 // Bounds and connected regions are measured independently of recipe strings.
 export async function checkPolishFeatures(page, records) {
-  const names = [
-    "close.svg",
-    "close_small.svg",
-    "chart-bullet.svg",
-    "chart-line.svg",
-    "chart-line_solid.svg",
-  ];
+  const names = ["close.svg", "close_small.svg", "chart-bullet.svg"];
   const samples = names.map((name) => {
     const sample = records.find((record) => record.name === name);
     if (!sample) throw new Error(`Missing polish feature specimen: ${name}`);
     return sample;
   });
-  return page.evaluate(async (samples) => {
+  const polish = await page.evaluate(async (samples) => {
     const results = [];
     const failures = [];
     const record = (details, pass) => {
@@ -240,55 +236,11 @@ export async function checkPolishFeatures(page, records) {
         combined.length === 7,
       );
     }
-    const lineNodes = [];
-    for (const name of ["chart-line.svg", "chart-line_solid.svg"]) {
-      const svg = byName(name);
-      const nodes = components(await render(svg, 0.67, "fill")).sort(
-        (a, b) => a.left - b.left,
-      );
-      lineNodes.push({ name, nodes });
-      record(
-        { name, check: "filled-line-chart-vertices", nodes },
-        nodes.length === 4 &&
-          nodes.every(
-            (node) =>
-              Math.abs(node.width - node.height) < 0.025 &&
-              node.area / (node.width * node.height) > 0.77,
-          ),
-      );
-      for (const weight of [0.67, 1, 1.333333, 1.5]) {
-        const strokeParts = components(await render(svg, weight, "stroke"));
-        const axis = strokeParts.find(
-          (part) => part.height > 12 && part.width > 12,
-        );
-        const gaps = nodes.map((node) =>
-          axis
-            ? Math.min(
-                node.left - axis.left - weight,
-                axis.bottom - weight - node.bottom,
-              )
-            : -1,
-        );
-        record(
-          { name, check: "line-nodes-clear-of-axes", weight, gaps },
-          Boolean(axis) && gaps.every((gap) => gap > 0.35),
-        );
-      }
-    }
-    const [outlineNodes, solidNodes] = lineNodes.map((sample) => sample.nodes);
-    const ratios = solidNodes.map(
-      (node, index) =>
-        node.width / (outlineNodes[index]?.width || Number.POSITIVE_INFINITY),
-    );
-    record(
-      {
-        name: "chart-line_solid.svg",
-        check: "solid-node-optical-emphasis",
-        ratios,
-      },
-      ratios.length === 4 &&
-        ratios.every((ratio) => ratio > 1.28 && ratio < 1.38),
-    );
     return { results, failures };
   }, samples);
+  const charts = await checkChartPairs(page, records);
+  return {
+    results: [...polish.results, ...charts.results],
+    failures: [...polish.failures, ...charts.failures],
+  };
 }

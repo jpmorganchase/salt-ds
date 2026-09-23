@@ -19,10 +19,13 @@ export const FolderClosedSolidIcon = forwardRef<
       {...props}
     >
       <g strokeWidth="var(--icon-strokeWidth, 1)">
-        <path
-          fillRule="evenodd"
-          d="M.25 15.398V.602h5.636L8.705 3.42h7.045v11.978Zm2.114-9.864h11.272v1.41H2.364Z"
-        />
+        <g>
+          <path
+            fillRule="evenodd"
+            d="M.25 15.398V.602h5.636L8.705 3.42h7.045v11.978Zm2.114-9.864h11.272v1.41H2.364Z"
+          />
+          <path d="M8.567 3.283a.47.47 0 0 0 .332.137h-.194Zm4.647 2.251a.423.423 0 0 1 .422.423v-.423Zm.422.986a.423.423 0 0 1-.422.423h.422Zm-10.85.423a.423.423 0 0 1-.422-.423v.423Zm-.422-.986a.423.423 0 0 1 .422-.423h-.422Z" />
+        </g>
       </g>
     </Icon>
   );

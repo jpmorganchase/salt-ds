@@ -22,7 +22,7 @@ export const SuccessSmallIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M2.793 8.457 6.5 12.164l6.707-6.707-1.414-1.414L6.5 9.336 4.207 7.043Z"
+          d="M2.793 8.457 6.5 12.164l6.707-6.707-1.414-1.414-4.869 4.869a.6.6 0 0 1-.848 0l-1.869-1.87Z"
         />
       </g>
     </Icon>

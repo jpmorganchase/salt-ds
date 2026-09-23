@@ -24,7 +24,19 @@ export const LaptopSolidIcon = forwardRef<SVGSVGElement, LaptopSolidIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.747 2.85h12.506v7.725q0 .735-.736.735H2.483q-.736 0-.736-.735Zm-.735 8.46h13.976v1.104q0 .735-.735.735H1.747q-.735 0-.735-.735Z"
+            d="M1.747 2.85h12.506v7.725q0 .735-.736.735H2.483q-.736 0-.736-.735Z"
+          />
+          <path d="M13.15 2.85a1.103 1.103 0 0 1 1.103 1.104V2.851Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.15 2.85a1.103 1.103 0 0 1 1.103 1.104"
+          />
+          <path d="M1.747 3.954a1.103 1.103 0 0 1 1.104-1.103H1.747Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.747 3.954a1.103 1.103 0 0 1 1.104-1.103M1.012 11.31h13.976v1.104q0 .735-.735.735H1.747q-.735 0-.735-.735Zm.735-1.47q0 1.47 1.471 1.47m11.035-1.47q0 1.47-1.471 1.47"
           />
         </g>
       </Icon>

@@ -1,0 +1,19 @@
+Checked dashboard: 2 registered variant(s).
+Checked edit: 2 registered variant(s).
+Checked cloud-upload: 2 registered variant(s).
+Checked cloud-download: 2 registered variant(s).
+Checked cloud-sync: 2 registered variant(s).
+Checked panel-open-left: 2 registered variant(s).
+Checked panel-open-top: 2 registered variant(s).
+Checked panel-open-right: 2 registered variant(s).
+Checked panel-open-bottom: 2 registered variant(s).
+Checked panel-close-left: 2 registered variant(s).
+Checked panel-close-top: 2 registered variant(s).
+Checked panel-close-right: 2 registered variant(s).
+Checked panel-close-bottom: 2 registered variant(s).
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 58 (dashboard): synonym term 1 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 58 (dashboard): synonym term 4 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+
+PASS: 13 requested meaning(s), 26 registered variant(s), 0 error(s), 2 warning(s).
+Limits: registration checks only; no visual/semantic relevance, generated-geometry equivalence, or recipe execution checks. generate:icons and validate:icons own effective recipe and geometry validation.
+Search normalization: the query is lowercased and whitespace is removed; stored synonym terms are not normalized. Hyphens are removed only when matching metadata iconName to component names; optional Solid and case-insensitive matching follow IconPreview.tsx.

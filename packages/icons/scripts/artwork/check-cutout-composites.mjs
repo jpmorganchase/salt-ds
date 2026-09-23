@@ -11,6 +11,7 @@ export async function checkCutoutComposites(page, records) {
     "document-search.svg",
     "filter-clear.svg",
     "filter-clear_solid.svg",
+    "storefront.svg",
     "storefront_solid.svg",
   ];
   const artwork = names.map((name) => {
@@ -211,9 +212,11 @@ export async function checkCutoutComposites(page, records) {
           element,
           Number(element.getAttribute("stroke-width")),
         ]);
-        for (const weight of name.startsWith("filter-clear")
-          ? [0.67, 1, 1.5]
-          : [0.67]) {
+        for (const weight of name.startsWith("storefront")
+          ? [0.67, 1, 4 / 3, 1.5]
+          : name.startsWith("filter-clear")
+            ? [0.67, 1, 1.5]
+            : [0.67]) {
           for (const [element, referenceWidth] of referenceWidths)
             element.setAttribute(
               "stroke-width",
@@ -221,6 +224,11 @@ export async function checkCutoutComposites(page, records) {
             );
           const normalProbes = [];
           if (name === "storefront_solid.svg") {
+            // The reviewed final gap is .65 at W=4/3 with the retained
+            // canopy rim. These records reverse the fit but keep stroke
+            // widths, so the independent reference normal-buffer distance
+            // is (.65 + (4/3)/2) / 1.05314, not a universal .75 gap.
+            const normalBuffer = (0.65 + 2 / 3) / 1.05314;
             const segments = [
               [
                 [21.75, 9.75],
@@ -249,50 +257,19 @@ export async function checkCutoutComposites(page, records) {
                   (n, j) => 2 * (1 - t) * (b[j] - n) + 2 * t * (c[j] - b[j]),
                 );
                 const normal = unit([tangent[1], -tangent[0]]);
-                const targetX = p[0] + 1.125 * normal[0];
-                if (targetX < 3.8 || targetX > 20.2) continue;
+                const targetX = (p[0] * 2) / 3 + normalBuffer * normal[0];
+                // Exclude only rays that leave the actual side-wall extent.
+                if (targetX < 1.96 || targetX > 14.04) continue;
                 normalProbes.push({
                   feature: `awning scallop ${segment + 1}`,
                   t,
                   point: native(p),
                   normal,
-                  expected: 0.75,
+                  expected: normalBuffer - weight / 2,
                   seed: 0.2,
                 });
               }
             });
-          } else if (name === "dataset-manager_solid.svg") {
-            for (let degrees = 180; degrees <= 300; degrees += 5) {
-              const angle = (degrees * Math.PI) / 180;
-              const normal = [Math.cos(angle), Math.sin(angle)];
-              normalProbes.push({
-                feature: "head contour",
-                degrees,
-                point: native([
-                  15.75 + 3.375 * normal[0],
-                  11.625 + 3.375 * normal[1],
-                ]),
-                normal,
-                expected: 0.75,
-                seed: 0.2,
-              });
-            }
-            for (let i = 1; i <= 19; i++) {
-              const t = i / 20;
-              const point = native([
-                9.75 + 6 * t * t,
-                20.25 - 4.5 * t + 2.25 * t * t,
-              ]);
-              const normal = unit([-4.5 + 4.5 * t, -12 * t]);
-              normalProbes.push({
-                feature: "shoulder contour",
-                t,
-                point,
-                normal,
-                expected: 0.75,
-                seed: 0.2,
-              });
-            }
           }
           if (normalProbes.length) {
             const pixels = await render(null);
@@ -307,12 +284,78 @@ export async function checkCutoutComposites(page, records) {
                 gap !== null && Math.abs(gap - probe.expected) <= tolerance,
               );
             }
-            continue;
+            // Also check the complete painted valleys and clipped side
+            // ends below; normal rays alone can miss those transitions.
           }
           let foreground;
           let rear;
           let probes;
-          if (name === "dataset-manager.svg") {
+          if (name.startsWith("storefront")) {
+            foreground = paths
+              .filter(({ bounds: b }) => b.y < 3)
+              .map((p) => p.index);
+            rear = paths
+              .filter(({ bounds: b }) => b.y >= 3)
+              .map((p) => p.index);
+            if (name === "storefront_solid.svg") {
+              const expected = (0.65 + 2 / 3) / 1.05314 - weight / 2;
+              probes = [
+                {
+                  feature: "left offset-to-wall end",
+                  rect: [1.94, 7.8, 2.8, 9.1],
+                  expected,
+                },
+                {
+                  feature: "first scallop valley",
+                  rect: [4.9, 7.75, 6.1, 8.9],
+                  expected,
+                },
+                {
+                  feature: "second scallop valley",
+                  rect: [9.9, 7.75, 11.1, 8.9],
+                  expected,
+                },
+                {
+                  feature: "right offset-to-wall end",
+                  rect: [13.2, 7.8, 14.06, 9.1],
+                  expected,
+                },
+              ];
+            } else {
+              // The fixed reviewed cap plane is independent of the parsed
+              // artwork. Find distance from its complete inner flat-cap
+              // corner to the original quadratic, then remove canopy paint.
+              const corner = [2.5 + weight / 2, 8.71960043];
+              const distance = (t) =>
+                Math.hypot(
+                  1.5 + 4 * t - corner[0],
+                  6.5 + 4 * t * (1 - t) - corner[1],
+                );
+              let lo = 0,
+                hi = 1;
+              for (let i = 0; i < 50; i++) {
+                const a = (2 * lo + hi) / 3,
+                  b = (lo + 2 * hi) / 3;
+                if (distance(a) < distance(b)) hi = b;
+                else lo = a;
+              }
+              const expected = distance((lo + hi) / 2) - weight / 2;
+              probes = [
+                {
+                  feature: "complete left wall cap",
+                  rect: [1.74, 8.55, 3.26, 9.1],
+                  expected,
+                },
+                {
+                  feature: "complete right wall cap",
+                  rect: [12.74, 8.55, 14.26, 9.1],
+                  expected,
+                },
+              ];
+            }
+          } else if (name.startsWith("dataset-manager")) {
+            // Both variants now preserve one open rear cylinder and the same
+            // foreground painted rim; inspect both actual separated caps.
             foreground = paths
               .filter(({ bounds: b }) => b.y >= 5.4)
               .map((p) => p.index);
@@ -336,11 +379,10 @@ export async function checkCutoutComposites(page, records) {
             // Include flat-cap corners, and inspect the entire rear silhouette.
             foreground = paths
               .filter(
-                ({ bounds: b, closed, stroke }) =>
-                  !closed &&
-                  stroke !== "none" &&
-                  b.width > 0.5 &&
-                  Math.abs(b.width - b.height) < 0.015,
+                // Include the X's complete painted union: its two strokes,
+                // interior fillet arcs and filled junction wedges. The mark
+                // occupies its own lower-right field in reference geometry.
+                ({ bounds: b }) => b.x >= 10.9 && b.y >= 9.4,
               )
               .map((p) => p.index);
             rear = paths

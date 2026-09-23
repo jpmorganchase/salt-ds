@@ -19,17 +19,36 @@ export const MobileSolidIcon = forwardRef<SVGSVGElement, MobileSolidIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M3.586 3.218h8.828v11.035q0 .735-.736.735H4.322q-.736 0-.736-.735Zm3.862 9.748a.552.552 0 1 0 1.104 0 .552.552 0 1 0-1.104 0"
+            d="M3.586 3.402h8.828v11.586H3.586Zm3.862 9.564a.552.552 0 1 0 1.104 0 .552.552 0 1 0-1.104 0"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.322 1.012h7.356q.736 0 .736.735v12.506q0 .735-.736.735H4.322q-.736 0-.736-.735V1.747q0-.735.736-.735Z"
+            d="M3.586 1.012h8.828v13.976H3.586Z"
           />
+          <path d="M11.31 1.012a1.103 1.103 0 0 1 1.104 1.103V1.012Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M3.586 2.667q0 .551.552.551h7.724q.552 0 .552-.551M3.586 3.77q0-.552.552-.552h7.724q.552 0 .552.552"
+            d="M11.31 1.012a1.103 1.103 0 0 1 1.104 1.103"
+          />
+          <path d="M12.414 13.885a1.103 1.103 0 0 1-1.104 1.103h1.104Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.414 13.885a1.103 1.103 0 0 1-1.104 1.103"
+          />
+          <path d="M4.69 14.988a1.103 1.103 0 0 1-1.104-1.103v1.103Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.69 14.988a1.103 1.103 0 0 1-1.104-1.103"
+          />
+          <path d="M3.586 2.115A1.103 1.103 0 0 1 4.69 1.012H3.586Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.586 2.115A1.103 1.103 0 0 1 4.69 1.012M3.586 2.115q0 1.287 1.288 1.287h6.252q1.288 0 1.288-1.287M3.586 4.69q0-1.288 1.288-1.288h6.252q1.288 0 1.288 1.288"
           />
         </g>
       </Icon>

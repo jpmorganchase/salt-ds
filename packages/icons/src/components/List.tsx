@@ -6,6 +6,7 @@ import { Icon, type IconProps } from "../icon";
 
 export type ListIconProps = IconProps;
 
+/** @deprecated since 1.15.0. Use `TextUnorderedListIcon` instead. */
 export const ListIcon = forwardRef<SVGSVGElement, ListIconProps>(
   function ListIcon(props: ListIconProps, ref) {
     return (

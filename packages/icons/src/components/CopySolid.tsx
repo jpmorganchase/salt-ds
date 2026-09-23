@@ -22,11 +22,41 @@ export const CopySolidIcon = forwardRef<SVGSVGElement, CopySolidIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M5.308 1h8.615v10.77"
           />
+          <path d="M12.846 1a1.077 1.077 0 0 1 1.077 1.077V1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.846 1a1.077 1.077 0 0 1 1.077 1.077"
+          />
           <path fillRule="evenodd" d="M2.077 4.23h8.615V15H2.077Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M2.077 4.23h8.615V15H2.077Z"
+          />
+          <path d="M9.615 4.23a1.077 1.077 0 0 1 1.077 1.078V4.23Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.615 4.23a1.077 1.077 0 0 1 1.077 1.078"
+          />
+          <path d="M10.692 13.923A1.077 1.077 0 0 1 9.615 15h1.077Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.692 13.923A1.077 1.077 0 0 1 9.615 15"
+          />
+          <path d="M3.154 15a1.077 1.077 0 0 1-1.077-1.077V15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.154 15a1.077 1.077 0 0 1-1.077-1.077"
+          />
+          <path d="M2.077 5.308A1.077 1.077 0 0 1 3.154 4.23H2.077Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.077 5.308A1.077 1.077 0 0 1 3.154 4.23"
           />
         </g>
       </Icon>

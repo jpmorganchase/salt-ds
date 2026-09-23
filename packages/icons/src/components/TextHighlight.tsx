@@ -24,6 +24,30 @@ export const TextHighlightIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="m3.938 8.805 7.524-7.524 2.894 2.894-7.524 7.524Z"
         />
+        <path d="M10.643 2.1a1.16 1.16 0 0 1 1.637 0l-.818-.819Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M10.643 2.1a1.16 1.16 0 0 1 1.637 0"
+        />
+        <path d="M13.537 3.357a1.16 1.16 0 0 1 0 1.636l.819-.818Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.537 3.357a1.16 1.16 0 0 1 0 1.636"
+        />
+        <path d="M7.65 10.88a1.16 1.16 0 0 1-1.637 0l.819.819Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.65 10.88a1.16 1.16 0 0 1-1.637 0"
+        />
+        <path d="M4.757 9.623a1.16 1.16 0 0 1 0-1.636l-.819.818Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M4.757 9.623a1.16 1.16 0 0 1 0-1.636"
+        />
         <path
           fillRule="evenodd"
           d="m3.938 8.805 2.894 2.894-1.736 1.736H1.623v-1.157ZM.466 14.593h15.047v1.157H.466Z"

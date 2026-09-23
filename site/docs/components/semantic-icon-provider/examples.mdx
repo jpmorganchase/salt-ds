@@ -10,12 +10,12 @@ data:
 
 ## Default
 
-Use the `SemanticIconProvider` to replace any existing icon management setup with this provider and provide any custom icon mappings as required.
+Salt components use their default semantic icons without configuration. Wrap the relevant application or section in `SemanticIconProvider` when you need to customize those roles.
 
-    <LivePreview componentName="semantic-icon-provider" exampleName="Default"  />
+<LivePreview componentName="semantic-icon-provider" exampleName="Default" />
 
 ## Icon map
 
-The `SemanticIconProvider` allows you to specify an `iconMap` to manage which icon components are used for various icon names. This provides flexibility to customize the icon set used in your application.
+Pass a partial `iconMap` to replace selected roles. Unspecified roles retain the Salt defaults. Choose replacements with the same meaning and review them beside related states.
 
-    <LivePreview componentName="semantic-icon-provider" exampleName="WithIconMap"  />
+<LivePreview componentName="semantic-icon-provider" exampleName="WithIconMap" />

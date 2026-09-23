@@ -26,7 +26,43 @@ export const AccessibleSolidIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M4.326 2.728a1.728 1.728 0 1 0 3.455 0 1.728 1.728 0 1 0-3.455 0Zm1.728 2.879v4.03h4.606l2.304 4.607h2.303M6.054 6.758h4.606m-6.91.576a4.03 4.03 0 1 0 5.183 5.759"
+          d="M4.326 2.728a1.728 1.728 0 1 0 3.455 0 1.728 1.728 0 1 0-3.455 0Zm1.728 2.879v4.03h4.606l2.304 4.607h2.303M6.054 6.758h4.606"
+        />
+        <path d="M6.054 8.486a1.15 1.15 0 0 0 1.151 1.152H6.054Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.054 8.486a1.15 1.15 0 0 0 1.151 1.152"
+        />
+        <path d="M9.949 9.638a1.15 1.15 0 0 1 1.03.636l-.319-.636Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M9.949 9.638a1.15 1.15 0 0 1 1.03.636"
+        />
+        <path d="M12.645 13.608a1.15 1.15 0 0 0 1.03.636h-.711Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M12.645 13.608a1.15 1.15 0 0 0 1.03.636"
+        />
+        <path d="M7.205 6.758A1.15 1.15 0 0 0 6.054 7.91V6.758Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.205 6.758A1.15 1.15 0 0 0 6.054 7.91"
+        />
+        <path d="M7.282 6.758A1.23 1.23 0 0 1 6.054 5.53v1.228Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.282 6.758A1.23 1.23 0 0 1 6.054 5.53"
+        />
+        <path d="M7.282 6.758a1.23 1.23 0 0 0-1.228 1.229V6.758Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M7.282 6.758a1.23 1.23 0 0 0-1.228 1.229M3.75 7.334a4.03 4.03 0 1 0 5.183 5.759"
         />
       </g>
     </Icon>

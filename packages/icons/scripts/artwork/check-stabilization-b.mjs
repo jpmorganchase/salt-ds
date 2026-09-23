@@ -164,8 +164,9 @@ export async function checkStabilizationB(page, records) {
             const bounds = path.getBBox();
             return (
               getComputedStyle(path).fill !== "none" &&
-              bounds.width < 8 &&
-              bounds.height < 8
+              bounds.x >= 5 && bounds.y >= 5 &&
+              bounds.x + bounds.width <= 11 &&
+              bounds.y + bounds.height <= 11
             );
           });
           boundaries[name] = samplesFor(pupils);

@@ -17,13 +17,35 @@ export const ChatGroupIcon = forwardRef<SVGSVGElement, ChatGroupIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
-          <g
+          <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          >
-            <path d="M4.77 1.117H15v8.615l-2.692-2.154H11.23" />
-            <path d="M1 3.27h10.23v8.077H5.309L2.077 14.04v-2.693H1Z" />
-          </g>
+            d="M4.77 1.117H15v8.615l-1.938-1.55"
+          />
+          <path d="M13.923 1.117A1.077 1.077 0 0 1 15 2.194V1.117Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.923 1.117A1.077 1.077 0 0 1 15 2.194M1 3.27h10.23v8.077H5.81q-.502 0-.897.33L2.077 14.04v-1.688a1.005 1.005 0 0 0-1.005-1.005H1Z"
+          />
+          <path d="M10.154 3.27a1.077 1.077 0 0 1 1.077 1.077V3.27Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.154 3.27a1.077 1.077 0 0 1 1.077 1.077"
+          />
+          <path d="M11.23 10.27a1.077 1.077 0 0 1-1.076 1.077h1.077Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.23 10.27a1.077 1.077 0 0 1-1.076 1.077"
+          />
+          <path d="M1 4.347A1.077 1.077 0 0 1 2.077 3.27H1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1 4.347A1.077 1.077 0 0 1 2.077 3.27"
+          />
         </g>
       </Icon>
     );

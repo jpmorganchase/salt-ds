@@ -8,9 +8,15 @@ data:
   $ref: ./#/data
 ---
 
-## Import
+## Choosing a shared icon treatment
 
-To import `SemanticIconProvider` from the core Salt package, use:
+Use `SemanticIconProvider` when Salt components in an application or section need a consistent replacement for a semantic role, such as success, expand or close. Supply only the roles you want to replace; other roles retain Salt's defaults. The provider affects components that use its icon mapping, not every directly imported icon.
+
+Choose replacements that preserve the role's meaning, direction and emphasis. Review related states together, especially success, warning, error and progress. Check the replacement at 12px in the actual component, including both backgrounds and any disabled or selected states.
+
+Custom artwork should follow the [icon design guidance](/salt/foundations/assets/icon-design). A different icon alone should not change the behavior or meaning of a control.
+
+## Import
 
 ```js
 import { SemanticIconProvider } from "@salt-ds/core";

@@ -22,10 +22,93 @@ export const MagicWandIcon = forwardRef<SVGSVGElement, MagicWandIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="m1.498 12.89 8.451-8.452 1.811 1.811L3.31 14.7Zm6.64-6.641L9.95 8.06"
           />
+          <path d="M9.096 5.292a1.207 1.207 0 0 1 1.707 0l-.854-.854Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.096 5.292a1.207 1.207 0 0 1 1.707 0"
+          />
+          <path d="M10.907 5.395a1.207 1.207 0 0 1 0 1.708l.853-.854Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.907 5.395a1.207 1.207 0 0 1 0 1.708"
+          />
+          <path d="M4.163 13.847a1.207 1.207 0 0 1-1.708 0l.854.853Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.163 13.847a1.207 1.207 0 0 1-1.708 0"
+          />
+          <path d="M2.352 13.743a1.207 1.207 0 0 1 0-1.707l-.854.853Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.352 13.743a1.207 1.207 0 0 1 0-1.707"
+          />
+          <path d="M8.992 7.103a1.207 1.207 0 0 0-1.707 0l.853-.854Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8.992 7.103a1.207 1.207 0 0 0-1.707 0"
+          />
+          <path d="M8.992 5.395a1.207 1.207 0 0 0 0 1.708l-.854-.854Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8.992 5.395a1.207 1.207 0 0 0 0 1.708"
+          />
+          <path d="M9.096 8.914a1.207 1.207 0 0 0 0-1.708l.853.854Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.096 8.914a1.207 1.207 0 0 0 0-1.708"
+          />
+          <path d="M9.096 7.206a1.207 1.207 0 0 0 1.707 0l-.854.854Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.096 7.206a1.207 1.207 0 0 0 1.707 0"
+          />
+          <path d="M8.992 5.395a1.207 1.207 0 0 0 0 1.708l-.854-.854Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M8.992 5.395a1.207 1.207 0 0 0 0 1.708"
+          />
+          <path d="M7.285 7.103a1.207 1.207 0 0 1 1.707 0l-.854-.854Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.285 7.103a1.207 1.207 0 0 1 1.707 0"
+          />
+          <path d="M10.803 7.206a1.207 1.207 0 0 1-1.707 0l.853.854Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.803 7.206a1.207 1.207 0 0 1-1.707 0"
+          />
+          <path d="M9.096 8.914a1.207 1.207 0 0 0 0-1.708l.853.854Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M9.096 8.914a1.207 1.207 0 0 0 0-1.708"
+          />
           <path
             fillRule="evenodd"
-            d="m3.309 1.42.507 1.304 1.304.507-1.304.507-.507 1.304-.507-1.304-1.304-.507 1.304-.507ZM12.968.212l.507 1.304 1.304.507-1.304.507-.507 1.304-.507-1.304-1.304-.507 1.304-.507Zm1.207 10.061.395 1.015 1.014.394-1.014.395-.395 1.014-.394-1.014-1.015-.395 1.015-.394Z"
+            d="m3.309 1.42.507 1.304 1.304.507-1.304.507-.507 1.304-.507-1.304-1.304-.507 1.304-.507Z"
           />
+          <path d="M3.752 2.559a.4.4 0 0 0 .23.229l-.166-.064Zm.229 1.114a.4.4 0 0 0-.23.23l.065-.165Zm-1.115.23a.4.4 0 0 0-.23-.23l.166.065Zm-.229-1.115a.4.4 0 0 0 .23-.23l-.065.166Z" />
+          <path
+            fillRule="evenodd"
+            d="m12.968.212.507 1.304 1.304.507-1.304.507-.507 1.304-.507-1.304-1.304-.507 1.304-.507Z"
+          />
+          <path d="M13.41 1.351a.4.4 0 0 0 .23.23l-.165-.065Zm.23 1.115a.4.4 0 0 0-.23.23l.065-.166Zm-1.115.229a.4.4 0 0 0-.23-.229l.166.064Zm-.229-1.115a.4.4 0 0 0 .229-.229l-.064.165Z" />
+          <path
+            fillRule="evenodd"
+            d="m14.175 10.273.395 1.015 1.014.394-1.014.395-.395 1.014-.394-1.014-1.015-.395 1.015-.394Z"
+          />
+          <path d="M14.505 11.123a.4.4 0 0 0 .23.229l-.165-.064Zm.23.889a.4.4 0 0 0-.23.23l.065-.165Zm-.89.23a.4.4 0 0 0-.23-.23l.166.065Zm-.229-.89a.4.4 0 0 0 .229-.23l-.064.166Z" />
         </g>
       </Icon>
     );

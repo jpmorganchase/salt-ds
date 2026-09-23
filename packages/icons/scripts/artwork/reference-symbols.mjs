@@ -1,9 +1,12 @@
-import { box, circ, F, group, S } from "./primitives.mjs";
+import { softenedStroke as S, softenedFill as F } from "./contour-profiles.mjs";
+import { softenedFrame as SF } from "./contour-profiles.mjs";
+import { circularCrossJunction, ellipseJunction } from "./junctions.mjs";
+import { box, circ, group } from "./primitives.mjs";
 
 // Shared constructions retain the initial design language while omitting
 // details that would change each symbol's intended meaning.
 const C = (x, y, r) => S(circ(x, y, r));
-const squareStroke = S;
+const squareStroke = SF;
 
 // Keep the reference sphere's central meridian, curved meridians and two
 // latitudes. Secondary grid lines preserve open cells at the default 12px size.
@@ -11,13 +14,52 @@ const globeRim = circ(12, 12, 9.5);
 const globeMeridian = "M12 2.5V21.5M12 2.5a5 9.5 0 1 0 0 19a5 9.5 0 1 0 0-19Z";
 const globeLatitudes =
   "M3.1682391336721523 8.5H20.831760866327848M3.1682391336721523 15.5H20.831760866327848";
-const globeOutline = S(globeRim) + S(globeMeridian + globeLatitudes, 1.08);
+const globeJoins = [8.5, 15.5]
+  .map(
+    (y) =>
+      // At the final fit, reach is ~.956 and the themed grid width is .96:
+      // exposed circular radius / local width is ~.50, as in globe.svg.
+      circularCrossJunction(12, y, 1.3, 1.08) +
+      [-1, 1]
+        .map(
+          (side) =>
+            ellipseJunction({
+              cx: 12,
+              cy: 12,
+              rx: 5,
+              ry: 9.5,
+              y,
+              side,
+              reach: 1.6,
+              width: 1.08,
+            }) +
+            ellipseJunction({
+              cx: 12,
+              cy: 12,
+              rx: 9.5,
+              ry: 9.5,
+              y,
+              side,
+              reach: 1.5,
+              directions: [-side],
+              width: 1.08,
+            }),
+        )
+        .join(""),
+  )
+  .join("");
+const globeOutline =
+  S(globeRim) + S(globeMeridian + globeLatitudes, 1.08) + globeJoins;
 // The solid uses the same grid as transparent channels through a filled sphere.
 // Latitude gaps are 1.5 construction units; the curved gaps use a true .75-unit
 // normal offset of the shared curved meridian. The three central cells are
 // split at x11.25/x12.75, retaining a 1.5-unit vertical channel and twelve cells.
+// Curved meridian/rim junctions use local quadratic blends. The eight central
+// orthogonal corners instead use circular .75-unit fillets beside the 1.5-unit
+// channels (R/W=.5), matching the supplied globe reference's central grid.
+// Neither treatment moves the polar landmarks or the channel centerlines.
 const globeCells =
-  "M11.25 3.398566C11.059764 3.474609 10.866921 3.581279 10.67099 3.72184C10.21317 4.05028 9.74958 4.56868 9.33913 5.25552C8.92868 5.94235 8.5721 6.79441 8.30532 7.75L11.25 7.75ZM12.75 3.398566C12.940236 3.474609 13.133079 3.581279 13.32901 3.72184C13.78683 4.05028 14.25042 4.56868 14.66087 5.25552C15.07132 5.94235 15.4279 6.79441 15.69468 7.75L12.75 7.75ZM9.32892 2.88324L9.32892 2.88324C8.7378 3.42288 8.2228 4.12698 7.79058 4.9526C7.35836 5.77822 7.00931 6.72655 6.75402 7.75L3.50368 7.75A9.5 9.5 0 0 1 9.32892 2.88324ZM14.67108 2.88324L14.67108 2.88324A9.5 9.5 0 0 1 20.49632 7.75L17.24598 7.75C16.99069 6.72655 16.64164 5.77822 16.20942 4.9526C15.7772 4.12698 15.2622 3.42288 14.67108 2.88324ZM11.25 9.25L7.97397 9.25C7.82619 10.13481 7.75 11.06734 7.75 12C7.75 12.93266 7.82619 13.86519 7.97397 14.75L11.25 14.75ZM12.75 9.25L16.02603 9.25C16.17381 10.13481 16.25 11.06734 16.25 12C16.25 12.93266 16.17381 13.86519 16.02603 14.75L12.75 14.75ZM2.90673 9.25L6.45505 9.25C6.319 10.14452 6.25 11.07221 6.25 12C6.25 12.92779 6.319 13.85548 6.45505 14.75L2.90673 14.75A9.5 9.5 0 0 1 2.90673 9.25ZM17.54495 9.25L21.09327 9.25A9.5 9.5 0 0 1 21.09327 14.75L17.54495 14.75C17.681 13.85548 17.75 12.92779 17.75 12C17.75 11.07221 17.681 10.14452 17.54495 9.25ZM11.25 20.601434C11.059764 20.525391 10.866921 20.418721 10.67099 20.27816C10.21317 19.94972 9.74958 19.43132 9.33913 18.74448C8.92868 18.05765 8.5721 17.20559 8.30532 16.25L11.25 16.25ZM12.75 20.601434C12.940236 20.525391 13.133079 20.418721 13.32901 20.27816C13.78683 19.94972 14.25042 19.43132 14.66087 18.74448C15.07132 18.05765 15.4279 17.20559 15.69468 16.25L12.75 16.25ZM3.50368 16.25L6.75402 16.25C7.00931 17.27345 7.35836 18.22178 7.79058 19.0474C8.2228 19.87302 8.7378 20.57712 9.32892 21.11676L9.32892 21.11676A9.5 9.5 0 0 1 3.50368 16.25ZM17.24598 16.25L20.49632 16.25A9.5 9.5 0 0 1 14.67108 21.11676L14.67108 21.11676C15.2622 20.57712 15.7772 19.87302 16.20942 19.0474C16.64164 18.22178 16.99069 17.27345 17.24598 16.25Z";
+  "M11.25 3.398566C11.059764 3.474609 10.866921 3.581279 10.67099 3.72184C10.21317 4.05028 9.74958 4.56868 9.33913 5.25552C9.019937 5.789645 8.733322 6.423696 8.496184 7.128654Q8.287172 7.75 8.95532 7.75L10.5 7.75A.75 .75 0 0 0 11.25 7L11.25 3.398566ZM12.75 3.398566C12.940236 3.474609 13.133079 3.581279 13.32901 3.72184C13.78683 4.05028 14.25042 4.56868 14.66087 5.25552C14.980063 5.789645 15.266678 6.423696 15.503816 7.128654Q15.712828 7.75 15.04468 7.75L13.5 7.75A.75 .75 0 0 1 12.75 7L12.75 3.398566ZM9.32892 2.88324C8.7378 3.42288 8.2228 4.12698 7.79058 4.9526C7.448066 5.606865 7.157781 6.338189 6.924996 7.12289Q6.738961 7.75 6.10402 7.75L4.15368 7.75Q3.47787 7.75 3.814185 7.17896A9.5 9.5 0 0 1 9.32892 2.883239ZM14.67108 2.883239A9.5 9.5 0 0 1 20.185815 7.17896Q20.52213 7.75 19.84632 7.75L17.89598 7.75Q17.261039 7.75 17.075004 7.12289C16.842219 6.338189 16.551934 5.606865 16.20942 4.9526C15.7772 4.12698 15.2622 3.42288 14.67108 2.88324ZM10.5 9.25L8.62397 9.25Q7.960664 9.25 7.880184 9.893198C7.794069 10.581434 7.75 11.290679 7.75 12C7.75 12.709321 7.794069 13.418566 7.880184 14.106802Q7.960664 14.75 8.62397 14.75L10.5 14.75A.75 .75 0 0 0 11.25 14L11.25 10A.75 .75 0 0 0 10.5 9.25ZM13.5 9.25L15.37603 9.25Q16.039336 9.25 16.119816 9.893198C16.205931 10.581434 16.25 11.290679 16.25 12C16.25 12.709321 16.205931 13.418566 16.119816 14.106802Q16.039336 14.75 15.37603 14.75L13.5 14.75A.75 .75 0 0 1 12.75 14L12.75 10A.75 .75 0 0 1 13.5 9.25ZM3.55673 9.25L5.80505 9.25Q6.443044 9.25 6.36928 9.894316C6.290048 10.586404 6.25 11.293173 6.25 12C6.25 12.706827 6.290048 13.413596 6.36928 14.105684Q6.443044 14.75 5.80505 14.75L3.55673 14.75Q2.88392 14.75 2.73997 14.121755A9.5 9.5 0 0 1 2.73997 9.878245Q2.88392 9.25 3.55673 9.25ZM18.19495 9.25L20.44327 9.25Q21.11608 9.25 21.26003 9.878245A9.5 9.5 0 0 1 21.26003 14.121755Q21.11608 14.75 20.44327 14.75L18.19495 14.75Q17.556956 14.75 17.63072 14.105684C17.709952 13.413596 17.75 12.706827 17.75 12C17.75 11.293173 17.709952 10.586404 17.63072 9.894316Q17.556956 9.25 18.19495 9.25ZM11.25 20.601434C11.059764 20.525391 10.866921 20.418721 10.67099 20.27816C10.21317 19.94972 9.74958 19.43132 9.33913 18.74448C9.019937 18.210355 8.733322 17.576304 8.496184 16.871346Q8.287172 16.25 8.95532 16.25L10.5 16.25A.75 .75 0 0 1 11.25 17L11.25 20.601434ZM12.75 20.601434C12.940236 20.525391 13.133079 20.418721 13.32901 20.27816C13.78683 19.94972 14.25042 19.43132 14.66087 18.74448C14.980063 18.210355 15.266678 17.576304 15.503816 16.871346Q15.712828 16.25 15.04468 16.25L13.5 16.25A.75 .75 0 0 0 12.75 17L12.75 20.601434ZM4.15368 16.25L6.10402 16.25Q6.738961 16.25 6.924996 16.87711C7.157781 17.661811 7.448066 18.393135 7.79058 19.0474C8.2228 19.87302 8.7378 20.57712 9.32892 21.11676A9.5 9.5 0 0 1 3.814185 16.82104Q3.47787 16.25 4.15368 16.25ZM17.89598 16.25L19.84632 16.25Q20.52213 16.25 20.185815 16.82104A9.5 9.5 0 0 1 14.67108 21.116761C15.2622 20.57712 15.7772 19.87302 16.20942 19.0474C16.551934 18.393135 16.842219 17.661811 17.075004 16.87711Q17.261039 16.25 17.89598 16.25Z";
 const globeSolid = F(globeCells) + S(globeRim);
 
 // Explicit straight segments form the pointed upper cleft in both variants.
@@ -42,41 +84,83 @@ const exchange =
   // reusing Currency's contour instead of introducing a second glyph.
   group(F(dollarSymbol), "translate(6 1.75) scale(.5)");
 
-// The initial sun design attaches short cardinal rays and long diagonal rays
-// to a large circular field. Its lightning bolt is omitted from "light".
-const sunRays = S(
-  "M12 2V4.5M12 19.5V22M2 12H4.5M19.5 12H22M3.5 3.5L6.7 6.7M17.3 17.3L20.5 20.5M3.5 20.5L6.7 17.3M17.3 6.7L20.5 3.5",
+// A smaller circular field leaves eight long, equal radial rays, preserving
+// the sun reading at 12px beside Settings' short teeth. The roots remain welded
+// and both variants retain the same circle rim and flat-ended rays.
+const sunRadius = 5.75;
+const sunTipRadius = 10.25;
+const sunAngles = Array.from(
+  { length: 8 },
+  (_, index) => (index * Math.PI) / 4,
 );
-const sunOutline = C(12, 12, 7.5) + sunRays;
+const sunPoint = (angle, x, y = 0) =>
+  `${12 + x * Math.cos(angle) - y * Math.sin(angle)} ${12 + x * Math.sin(angle) + y * Math.cos(angle)}`;
+const sunRays = S(
+  sunAngles
+    .map(
+      (angle) =>
+        `M${sunPoint(angle, sunRadius)}L${sunPoint(angle, sunTipRadius)}`,
+    )
+    .join(""),
+);
+// A circle tangent to both the radial line and the circular field constructs
+// each root without exposed helper caps. The painted concave radius is the
+// fitted 1.8-unit construction radius minus half the configured stroke width.
+const sunRootRadius = 1.8;
+const sunRootX = Math.sqrt(sunRadius ** 2 + 2 * sunRadius * sunRootRadius);
+const sunTangentX = (sunRootX * sunRadius) / (sunRadius + sunRootRadius);
+const sunTangentY = (sunRootRadius * sunRadius) / (sunRadius + sunRootRadius);
+const sunRoots = S(
+  sunAngles
+    .flatMap((angle) =>
+      [-1, 1].map(
+        (side) =>
+          `M${sunPoint(angle, sunRootX)}A${sunRootRadius} ${sunRootRadius} 0 0 ${side === 1 ? 0 : 1} ${sunPoint(angle, sunTangentX, side * sunTangentY)}`,
+      ),
+    )
+    .join(""),
+);
+const sunOutline = C(12, 12, sunRadius) + sunRays + sunRoots;
 
 // A broad, shallow screen and a separate base retain the initial housing
 // construction. Its graph decoration is omitted for the laptop meaning.
 const laptopScreen =
   "M3.5 5H20.5V15.5Q20.5 16.5 19.5 16.5H4.5Q3.5 16.5 3.5 15.5Z";
 const laptopBase = "M2.5 16.5H21.5V18Q21.5 19 20.5 19H3.5Q2.5 19 2.5 18Z";
-const laptopOutline = squareStroke(laptopScreen) + squareStroke(laptopBase);
+const laptopRoots = S(
+  "M3.5 14.5Q3.5 16.5 5.5 16.5M20.5 14.5Q20.5 16.5 18.5 16.5",
+);
+const laptopOutline =
+  squareStroke(laptopScreen) + squareStroke(laptopBase) + laptopRoots;
 const laptopSolid = F(laptopScreen) + laptopOutline;
 // Related housings use the same broad proportions. The display pedestal
 // retains an open stem and filleted foot.
 const displayFrame = "M2.5 3.5H21.5V17.5H2.5Z";
 const displayAperture =
   "M3.75 3.5H20.25Q21.5 3.5 21.5 4.75V16.25Q21.5 17.5 20.25 17.5H3.75Q2.5 17.5 2.5 16.25V4.75Q2.5 3.5 3.75 3.5Z";
-const pedestal = S(
-  "M4 21H20M4 21H10Q10.5 21 10.5 20.5V18Q10.5 17.5 10 17.5M14 17.5Q13.5 17.5 13.5 18V20.5Q13.5 21 14 21H20",
-);
-const displayOutline = S(displayFrame) + S(displayAperture) + pedestal;
-const displaySolid = F(box(2, 3, 20, 15)) + pedestal;
+// Outer roots follow the screen-stand reference; tighter inner roots retain
+// the narrow opening between stems at the heavier interface width.
+const pedestal =
+  S("M4 21H20M10.5 17.5V21M13.5 17.5V21") +
+  [17.5, 21]
+    .map((y) => {
+      const side = y === 17.5 ? 1 : -1;
+      return (
+        circularCrossJunction(10.5, y, 1.7, undefined, [[-1, side]]) +
+        circularCrossJunction(10.5, y, 1.3, undefined, [[1, side]]) +
+        circularCrossJunction(13.5, y, 1.3, undefined, [[-1, side]]) +
+        circularCrossJunction(13.5, y, 1.7, undefined, [[1, side]])
+      );
+    })
+    .join("");
+const displayOutline = SF(displayFrame) + SF(displayAperture) + pedestal;
+const displaySolid = F(displayFrame) + displayOutline;
 
 const browserFrame = "M2.5 3.5H21.5V20.5H2.5Z";
-const browserContent =
-  "M3.75 8.25H20.25Q21.5 8.25 21.5 9.5V19.25Q21.5 20.5 20.25 20.5H3.75Q2.5 20.5 2.5 19.25V9.5Q2.5 8.25 3.75 8.25Z";
+const browserStructure = SF(browserFrame + "M2.5 8.25H21.5");
 const browserButtons = F(circ(5, 5.875, 0.5) + circ(7.5, 5.875, 0.5));
-const browserOutline = S(browserFrame) + S(browserContent) + browserButtons;
-// Fill only the header, keeping the shared stroked frame around the content.
-const browserSolid =
-  F(box(2.5, 3.5, 19, 4.75) + circ(5, 5.875, 0.5) + circ(7.5, 5.875, 0.5)) +
-  S(browserFrame) +
-  S(browserContent);
+const browserOutline = browserStructure + browserButtons;
+const browserSolid = F(box(2.5, 3.5, 19, 4.75) + circ(5, 5.875, 0.5) + circ(7.5, 5.875, 0.5)) + browserStructure;
 const referenceSymbols = {
   globe: [globeOutline, globeSolid],
   like: [S(heart), F(heart)],
@@ -85,7 +169,7 @@ const referenceSymbols = {
     F(circ(12, 12, 10.25) + dollarSymbol),
   ],
   "currency-exchange": [exchange],
-  light: [sunOutline, F(circ(12, 12, 8)) + sunRays],
+  light: [sunOutline, F(circ(12, 12, sunRadius)) + sunOutline],
   laptop: [laptopOutline, laptopSolid],
   display: [displayOutline, displaySolid],
   browser: [browserOutline, browserSolid],

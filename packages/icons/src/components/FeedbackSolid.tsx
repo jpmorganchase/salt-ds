@@ -22,11 +22,28 @@ export const FeedbackSolidIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M3.8 11.183 1 13.423V1.662h14v9.52h-.942m-7.076 0H3.8m-.56-6.719h4.48m-4.48 2.24h2.8m-2.8 2.24h1.68"
+          d="M5.434 10.8H4.36q-.56 0-.997.35L1 13.04V1.28h14v9.15"
+        />
+        <path d="M1 2.4a1.12 1.12 0 0 1 1.12-1.12H1Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1 2.4a1.12 1.12 0 0 1 1.12-1.12"
+        />
+        <path d="M13.88 1.28A1.12 1.12 0 0 1 15 2.4V1.28Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.88 1.28A1.12 1.12 0 0 1 15 2.4M3.24 4.08h4.48M3.24 6.32h2.8m-2.8 2.24h1.68"
         />
         <path
           fillRule="evenodd"
-          d="M8.728 7.823a1.792 1.792 0 1 0 3.584 0 1.792 1.792 0 1 0-3.584 0M6.6 15.103v-1.307c0-1.195 1.493-1.867 3.92-1.867s3.92.672 3.92 1.867v1.306Z"
+          d="M8.728 7.44a1.792 1.792 0 1 0 3.584 0 1.792 1.792 0 1 0-3.584 0M6.6 14.72v-1.307c0-1.194 1.493-1.866 3.92-1.866s3.92.672 3.92 1.866v1.307Z"
+        />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8.728 7.44a1.792 1.792 0 1 0 3.584 0 1.792 1.792 0 1 0-3.584 0ZM6.6 14.72v-1.307c0-1.194 1.493-1.866 3.92-1.866s3.92.672 3.92 1.866v1.307Z"
         />
       </g>
     </Icon>

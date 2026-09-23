@@ -24,6 +24,12 @@ export const LessThanEqualToIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M12.416 1.889 4.709 6.293l7.707 4.404M4.709 14h7.707"
         />
+        <path d="M6.382 5.337a1.101 1.101 0 0 0 0 1.912l-1.673-.956Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M6.382 5.337a1.101 1.101 0 0 0 0 1.912"
+        />
       </g>
     </Icon>
   );

@@ -20,7 +20,31 @@ export const BankCheckIcon = forwardRef<SVGSVGElement, BankCheckIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1 3.154h14v9.692H1Zm1.885 3.231H8m2.423 0h2.692m-10.23 3.23h8.346"
+            d="M1 3.154h14v9.692H1Z"
+          />
+          <path d="M13.923 3.154A1.077 1.077 0 0 1 15 4.23V3.154Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.923 3.154A1.077 1.077 0 0 1 15 4.23"
+          />
+          <path d="M15 11.77a1.077 1.077 0 0 1-1.077 1.076H15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M15 11.77a1.077 1.077 0 0 1-1.077 1.076"
+          />
+          <path d="M2.077 12.846A1.077 1.077 0 0 1 1 11.77v1.077Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.077 12.846A1.077 1.077 0 0 1 1 11.77"
+          />
+          <path d="M1 4.23a1.077 1.077 0 0 1 1.077-1.076H1Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1 4.23a1.077 1.077 0 0 1 1.077-1.076m.808 3.231H8m2.423 0h2.692m-10.23 3.23h8.346"
           />
         </g>
       </Icon>

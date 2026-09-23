@@ -24,6 +24,54 @@ export const ZipIcon = forwardRef<SVGSVGElement, ZipIconProps>(function ZipIcon(
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M1.868 8.246V1h7.804l4.46 4.46v2.786M9.672 1v4.46h4.46"
         />
+        <path d="M1.868 2.115A1.115 1.115 0 0 1 2.983 1H1.868Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1.868 2.115A1.115 1.115 0 0 1 2.983 1"
+        />
+        <path d="M9.21 1a1.12 1.12 0 0 1 .789.327L9.672 1Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M9.21 1a1.12 1.12 0 0 1 .789.327"
+        />
+        <path d="M13.805 5.133a1.12 1.12 0 0 1 .327.788V5.46Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.805 5.133a1.12 1.12 0 0 1 .327.788"
+        />
+        <path d="M9.672 4.345a1.115 1.115 0 0 0 1.115 1.114H9.672Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M9.672 4.345a1.115 1.115 0 0 0 1.115 1.114"
+        />
+        <path d="M11.249 2.577a.924.924 0 0 0-1.577.653V1Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M11.249 2.577a.924.924 0 0 0-1.577.653"
+        />
+        <path d="M9.672 2.115A1.115 1.115 0 0 0 8.557 1h1.115Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M9.672 2.115A1.115 1.115 0 0 0 8.557 1"
+        />
+        <path d="M14.132 6.574a1.115 1.115 0 0 0-1.115-1.115h1.115Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M14.132 6.574a1.115 1.115 0 0 0-1.115-1.115"
+        />
+        <path d="M11.902 5.46a.924.924 0 0 0 .653-1.577l1.577 1.576Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M11.902 5.46a.924.924 0 0 0 .653-1.577"
+        />
         <path
           fillRule="evenodd"
           d="M5.93 15.604H2.37v-.449l2.761-4.146H2.465v-.533h3.392v.45L3.093 15.07h2.838Z"

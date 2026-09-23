@@ -3,6 +3,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 import { brandIconNames } from "./brands.mjs";
+import { checkDetailRecognition } from "./check-detail-recognition.mjs";
+import { checkCloudPairs } from "./check-cloud-pairs.mjs";
 import { checkClearance } from "./check-clearance.mjs";
 import { checkCompactActions } from "./check-compact-actions.mjs";
 import { checkCutoutActions } from "./check-cutout-actions.mjs";
@@ -15,7 +17,9 @@ import { checkCutoutSpacingAbc } from "./check-cutout-spacing-abc.mjs";
 import { checkCutoutSpacingActions } from "./check-cutout-spacing-actions.mjs";
 import { checkCutoutSpacingCloud } from "./check-cutout-spacing-cloud.mjs";
 import { checkCutoutSpacingD } from "./check-cutout-spacing-d.mjs";
+import { checkFeedbackHome } from "./check-feedback-home.mjs";
 import { checkFamilyFeatures } from "./check-family-features.mjs";
+import { checkInternalJunctions } from "./check-internal-junctions.mjs";
 import { checkFeatureAlignment } from "./check-feature-alignment.mjs";
 import { checkFilterGuidePairs } from "./check-filter-guide-pairs.mjs";
 import { checkNumberCentering } from "./check-number-centering.mjs";
@@ -24,7 +28,15 @@ import { checkPaintedBounds } from "./check-painted-bounds.mjs";
 import { checkPairFeatures } from "./check-pair-features.mjs";
 import { checkPairStrokes } from "./check-pair-strokes.mjs";
 import { checkPairedSurfaceExteriors } from "./check-paired-surface-exteriors.mjs";
+import { checkPrinterPaper } from "./check-printer-paper.mjs";
+import { checkOpenApertureSeams } from "./check-open-aperture-seams.mjs";
 import { checkPolishFeatures } from "./check-polish-features.mjs";
+import { checkReviewAb } from "./check-review-ab.mjs";
+import { checkReviewCd } from "./check-review-cd.mjs";
+import { checkReviewABank } from "./check-review-a-bank.mjs";
+import { checkReviewBRetained } from "./check-review-b-retained.mjs";
+import { checkReviewClipboardDocumentShaker } from "./check-review-clipboard-document-shaker.mjs";
+import { checkReviewSymbols } from "./check-review-symbols.mjs";
 import { checkScalingActions } from "./check-scaling-actions.mjs";
 import { checkScalingControls } from "./check-scaling-controls.mjs";
 import { checkScalingMedia } from "./check-scaling-media.mjs";
@@ -37,6 +49,7 @@ import { checkStabilizationA } from "./check-stabilization-a.mjs";
 import { checkStabilizationB } from "./check-stabilization-b.mjs";
 import { checkStabilizationCd } from "./check-stabilization-cd.mjs";
 import { checkSumWeight } from "./check-sum-weight.mjs";
+import { checkStructuralFamilies } from "./check-structural-families.mjs";
 import { checkTransferWeight } from "./check-transfer-weight.mjs";
 import {
   checkViewBoxFit,
@@ -197,6 +210,9 @@ try {
     result.scalingFailures.push(...scaling.failures);
   }
   result.scalingSamples = scalingMeasurements.length;
+  const structuralFamilies = await checkStructuralFamilies(page, records);
+  result.structuralFamilyFailures = structuralFamilies.failures;
+  result.structuralFamilySamples = structuralFamilies.results.length;
   const familyFeatures = await checkFamilyFeatures(page, records);
   result.familyFeatureFailures = familyFeatures.failures;
   result.familyFeatureSamples = familyFeatures.results.length;
@@ -218,12 +234,28 @@ try {
     checkFilterGuidePairs,
     checkPairedSurfaceExteriors,
     checkSendSurface,
+    checkCloudPairs,
+    checkPrinterPaper,
+    checkOpenApertureSeams,
+    checkFeedbackHome,
+    checkReviewAb,
+    checkReviewCd,
+    checkReviewABank,
+    checkReviewBRetained,
+    checkReviewClipboardDocumentShaker,
+    checkReviewSymbols,
   ]) {
     const checked = await check(page, records);
     stabilizationMeasurements.push(...checked.results);
     result.stabilizationFailures.push(...checked.failures);
   }
   result.stabilizationSamples = stabilizationMeasurements.length;
+  const details = await checkDetailRecognition(page, records, transforms);
+  result.detailRecognitionFailures = details.failures;
+  result.detailRecognitionSamples = details.results.length;
+  const internalJunctions = await checkInternalJunctions(page, records);
+  result.internalJunctionFailures = internalJunctions.failures;
+  result.internalJunctionSamples = internalJunctions.results.length;
   const pairStrokes = await checkPairStrokes(page, referenceRecords);
   result.pairStrokeFailures = pairStrokes.failures;
   result.pairStrokeSamples = pairStrokes.results.length;
@@ -272,6 +304,10 @@ try {
     `${JSON.stringify({ icons: files.length, errors, ...result }, null, 2)}\n`,
   );
   await fs.writeFile(
+    path.join(out, "internal-junctions.json"),
+    `${JSON.stringify(internalJunctions.results, null, 2)}\n`,
+  );
+  await fs.writeFile(
     path.join(out, "stabilization.json"),
     `${JSON.stringify(stabilizationMeasurements, null, 2)}\n`,
   );
@@ -292,9 +328,12 @@ try {
     result.cutoutSpacingFailures.length ||
     result.scalingFailures.length ||
     result.stabilizationFailures.length ||
+    result.structuralFamilyFailures.length ||
     result.familyFeatureFailures.length ||
     result.polishFeatureFailures.length ||
     result.opticalDetailFailures.length ||
+    result.detailRecognitionFailures.length ||
+    result.internalJunctionFailures.length ||
     result.pairStrokeFailures.length ||
     result.featureAlignmentFailures.length ||
     result.clearanceFailures.length ||

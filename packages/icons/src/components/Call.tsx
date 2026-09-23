@@ -20,7 +20,37 @@ export const CallIcon = forwardRef<SVGSVGElement, CallIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m2.989 1.342 3.183 3.713L4.05 7.176q1.414 3.36 4.774 4.774l2.121-2.122 3.713 3.183-1.591 1.591q-.53.53-1.591.354-7.78-1.238-10.432-10.432-.177-1.06.354-1.59Z"
+            d="m2.989 1.342 3.183 3.713-1.484 1.484a1.27 1.27 0 0 0-.222 1.502 8.56 8.56 0 0 0 3.493 3.493 1.27 1.27 0 0 0 1.502-.222l1.484-1.484 3.713 3.183-1.591 1.591q-.53.53-1.591.354-7.78-1.238-10.432-10.432-.177-1.06.354-1.59Z"
+          />
+          <path d="M5.532 4.309a1.06 1.06 0 0 1-.055 1.44l.695-.694Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.532 4.309a1.06 1.06 0 0 1-.055 1.44"
+          />
+          <path d="M10.25 10.523a1.06 1.06 0 0 1 1.441-.055l-.746-.64Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.25 10.523a1.06 1.06 0 0 1 1.441-.055"
+          />
+          <path d="M13.804 12.279a1.04 1.04 0 0 1 .059 1.528l.795-.796Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.804 12.279a1.04 1.04 0 0 1 .059 1.528"
+          />
+          <path d="M2.193 2.137a1.04 1.04 0 0 1 1.528.06l-.732-.855Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.193 2.137a1.04 1.04 0 0 1 1.528.06"
+          />
+          <path d="M1.063 4.59a1 1 0 0 1-.031-.145l.012.08z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M1.063 4.59a1 1 0 0 1-.031-.145"
           />
         </g>
       </Icon>

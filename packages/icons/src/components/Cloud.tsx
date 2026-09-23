@@ -22,6 +22,18 @@ export const CloudIcon = forwardRef<SVGSVGElement, CloudIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M4.497 12.661a3.503 3.503 0 0 1-.57-6.96 4.673 4.673 0 0 1 8.605 1.156 2.92 2.92 0 0 1-.445 5.804z"
           />
+          <path d="M3.549 5.784a1.06 1.06 0 0 0 .59-.423 5 5 0 0 0-.211.34 4 4 0 0 0-.38.083" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.549 5.784a1.06 1.06 0 0 0 .59-.423"
+          />
+          <path d="M12.373 6.345a1.06 1.06 0 0 0 .653.631 3 3 0 0 0-.494-.12 5 5 0 0 0-.159-.511" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.373 6.345a1.06 1.06 0 0 0 .653.631"
+          />
         </g>
       </Icon>
     );

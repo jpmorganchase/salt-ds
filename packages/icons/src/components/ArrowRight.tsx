@@ -22,6 +22,36 @@ export const ArrowRightIcon = forwardRef<SVGSVGElement, ArrowRightIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M.25 8h14.469m-5.46-5.46L14.719 8l-5.46 5.46"
           />
+          <path d="M13.947 7.228a1.09 1.09 0 0 1 0 1.544L14.719 8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M13.947 7.228a1.09 1.09 0 0 1 0 1.544"
+          />
+          <path d="M12.855 9.864A1.092 1.092 0 0 0 12.082 8h2.637Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.855 9.864A1.092 1.092 0 0 0 12.082 8"
+          />
+          <path d="M12.082 8a1.092 1.092 0 0 0 .773-1.864L14.719 8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.082 8a1.092 1.092 0 0 0 .773-1.864"
+          />
+          <path d="M11.555 8a1.31 1.31 0 0 1 .927 2.237L14.719 8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.555 8a1.31 1.31 0 0 1 .927 2.237"
+          />
+          <path d="M11.555 8a1.31 1.31 0 0 0 .927-2.237L14.719 8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M11.555 8a1.31 1.31 0 0 0 .927-2.237"
+          />
         </g>
       </Icon>
     );

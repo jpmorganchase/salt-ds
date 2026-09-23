@@ -168,6 +168,12 @@ const DEPRECATED_ICONS = [
   { componentName: "PieChart", replacement: "ChartPie", since: "1.16.0" },
   { componentName: "LineChart", replacement: "ChartLine", since: "1.16.0" },
   {
+    componentName: "LineChartSolid",
+    replacement: "ChartLineSolid",
+    since: "1.16.0",
+  },
+  { componentName: "List", replacement: "TextUnorderedList", since: "1.15.0" },
+  {
     componentName: "ErrorExecute",
     replacement: "NotAllowed",
     since: "1.17.0",

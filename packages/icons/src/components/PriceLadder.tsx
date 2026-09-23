@@ -22,6 +22,150 @@ export const PriceLadderIcon = forwardRef<SVGSVGElement, PriceLadderIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M3.827.25v15.5M12.173.25v15.5M3.827 3.827h8.346M3.827 8h8.346m-8.346 4.173h8.346"
           />
+          <path d="M5.02 3.827a1.19 1.19 0 0 0-1.193 1.192V3.827Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.02 3.827a1.19 1.19 0 0 0-1.193 1.192"
+          />
+          <path d="M3.827 2.635a1.19 1.19 0 0 0 1.192 1.192H3.827Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.827 2.635a1.19 1.19 0 0 0 1.192 1.192"
+          />
+          <path d="M5.02 8a1.19 1.19 0 0 0-1.193 1.192V8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.02 8a1.19 1.19 0 0 0-1.193 1.192"
+          />
+          <path d="M3.827 6.808A1.19 1.19 0 0 0 5.019 8H3.827Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.827 6.808A1.19 1.19 0 0 0 5.019 8"
+          />
+          <path d="M5.02 12.173a1.19 1.19 0 0 0-1.193 1.192v-1.192Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.02 12.173a1.19 1.19 0 0 0-1.193 1.192"
+          />
+          <path d="M3.827 10.98a1.19 1.19 0 0 0 1.192 1.193H3.827Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.827 10.98a1.19 1.19 0 0 0 1.192 1.193"
+          />
+          <path d="M12.173 5.02a1.19 1.19 0 0 0-1.192-1.193h1.192Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.173 5.02a1.19 1.19 0 0 0-1.192-1.193"
+          />
+          <path d="M10.98 3.827a1.19 1.19 0 0 0 1.193-1.192v1.192Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.98 3.827a1.19 1.19 0 0 0 1.193-1.192"
+          />
+          <path d="M12.173 9.192A1.19 1.19 0 0 0 10.981 8h1.192Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.173 9.192A1.19 1.19 0 0 0 10.981 8"
+          />
+          <path d="M10.98 8a1.19 1.19 0 0 0 1.193-1.192V8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.98 8a1.19 1.19 0 0 0 1.193-1.192"
+          />
+          <path d="M12.173 13.365a1.19 1.19 0 0 0-1.192-1.192h1.192Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.173 13.365a1.19 1.19 0 0 0-1.192-1.192"
+          />
+          <path d="M10.98 12.173a1.19 1.19 0 0 0 1.193-1.192v1.192Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.98 12.173a1.19 1.19 0 0 0 1.193-1.192"
+          />
+          <path d="M5.417 3.827a1.59 1.59 0 0 1-1.59-1.59v1.59Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.417 3.827a1.59 1.59 0 0 1-1.59-1.59"
+          />
+          <path d="M5.417 3.827a1.59 1.59 0 0 0-1.59 1.59v-1.59Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.417 3.827a1.59 1.59 0 0 0-1.59 1.59"
+          />
+          <path d="M10.583 3.827a1.59 1.59 0 0 0 1.59-1.59v1.59Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.583 3.827a1.59 1.59 0 0 0 1.59-1.59"
+          />
+          <path d="M10.583 3.827a1.59 1.59 0 0 1 1.59 1.59v-1.59Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.583 3.827a1.59 1.59 0 0 1 1.59 1.59"
+          />
+          <path d="M5.417 8a1.59 1.59 0 0 1-1.59-1.59V8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.417 8a1.59 1.59 0 0 1-1.59-1.59"
+          />
+          <path d="M5.417 8a1.59 1.59 0 0 0-1.59 1.59V8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.417 8a1.59 1.59 0 0 0-1.59 1.59"
+          />
+          <path d="M10.583 8a1.59 1.59 0 0 0 1.59-1.59V8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.583 8a1.59 1.59 0 0 0 1.59-1.59"
+          />
+          <path d="M10.583 8a1.59 1.59 0 0 1 1.59 1.59V8Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.583 8a1.59 1.59 0 0 1 1.59 1.59"
+          />
+          <path d="M5.417 12.173a1.59 1.59 0 0 1-1.59-1.59v1.59Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.417 12.173a1.59 1.59 0 0 1-1.59-1.59"
+          />
+          <path d="M5.417 12.173a1.59 1.59 0 0 0-1.59 1.59v-1.59Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M5.417 12.173a1.59 1.59 0 0 0-1.59 1.59"
+          />
+          <path d="M10.583 12.173a1.59 1.59 0 0 0 1.59-1.59v1.59Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.583 12.173a1.59 1.59 0 0 0 1.59-1.59"
+          />
+          <path d="M10.583 12.173a1.59 1.59 0 0 1 1.59 1.59v-1.59Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.583 12.173a1.59 1.59 0 0 1 1.59 1.59"
+          />
         </g>
       </Icon>
     );

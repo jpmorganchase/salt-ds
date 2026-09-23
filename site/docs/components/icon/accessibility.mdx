@@ -8,6 +8,20 @@ data:
   $ref: ./#/data
 ---
 
-## Best practices
+## Accessible use
 
-Exclude decorative icons (icons that repeat the information already expressed by the accompanied text) from screen reader access to avoid repetition. If you're adding an icon for decorative purposes, pass `aria-hidden=”true”` to exclude its label from the screen reader.
+Choose the accessible treatment from the icon's purpose:
+
+- **Decorative or repeated meaning:** use `aria-hidden` when adjacent text already conveys the information.
+- **Information conveyed by the icon alone:** provide an `aria-label` describing its meaning in context. A generated filename label may be too generic for the application.
+- **Icon-only action:** give the button or other interactive control an accessible name and hide the icon from assistive technology to avoid repetition.
+
+```tsx
+<Button aria-label="Add document">
+  <AddDocumentIcon aria-hidden />
+</Button>
+```
+
+Use visible labels when meaning is unfamiliar. Keep status and state distinguishable through shape or text as well as color. An accessible name does not resolve an ambiguous visual symbol for sighted users.
+
+CSS background icons do not provide their own accessible names. Put any required name or text on the containing element, using an appropriate interactive component for actions.

@@ -22,6 +22,42 @@ export const KeyEnterIcon = forwardRef<SVGSVGElement, KeyEnterIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M15 1.814v7.483H1.281m4.365-4.365L1.281 9.297l4.365 4.365"
           />
+          <path d="M15 8.05a1.247 1.247 0 0 1-1.247 1.247H15Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M15 8.05a1.247 1.247 0 0 1-1.247 1.247"
+          />
+          <path d="M2.163 8.415a1.247 1.247 0 0 0 0 1.764l-.882-.882Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M2.163 8.415a1.247 1.247 0 0 0 0 1.764"
+          />
+          <path d="M4.292 9.297a1.247 1.247 0 0 0-.882 2.13l-2.129-2.13Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.292 9.297a1.247 1.247 0 0 0-.882 2.13"
+          />
+          <path d="M3.41 7.168a1.247 1.247 0 0 0 .882 2.13h-3.01Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.41 7.168a1.247 1.247 0 0 0 .882 2.13"
+          />
+          <path d="M4.493 9.297a1.33 1.33 0 0 1-.94-2.27L1.28 9.296Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.493 9.297a1.33 1.33 0 0 1-.94-2.27"
+          />
+          <path d="M4.493 9.297a1.33 1.33 0 0 0-.94 2.271L1.28 9.298Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.493 9.297a1.33 1.33 0 0 0-.94 2.271"
+          />
         </g>
       </Icon>
     );

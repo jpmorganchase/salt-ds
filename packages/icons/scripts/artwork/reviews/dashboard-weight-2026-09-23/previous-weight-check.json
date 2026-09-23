@@ -1,0 +1,34 @@
+[
+  {
+    "name": "dashboard.svg",
+    "weight": 0.67,
+    "feature": "primary-weight gauge ticks",
+    "measured": 0.3958333333333333,
+    "expected": 0.67,
+    "pass": false
+  },
+  {
+    "name": "dashboard.svg",
+    "weight": 1,
+    "feature": "primary-weight gauge ticks",
+    "measured": 0.6041666666666666,
+    "expected": 1,
+    "pass": false
+  },
+  {
+    "name": "dashboard.svg",
+    "weight": 1.3333333333333333,
+    "feature": "primary-weight gauge ticks",
+    "measured": 0.7916666666666666,
+    "expected": 1.3333333333333333,
+    "pass": false
+  },
+  {
+    "name": "dashboard.svg",
+    "weight": 1.5,
+    "feature": "primary-weight gauge ticks",
+    "measured": 0.8958333333333334,
+    "expected": 1.5,
+    "pass": false
+  }
+]

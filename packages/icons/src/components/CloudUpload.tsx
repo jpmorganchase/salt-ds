@@ -17,13 +17,64 @@ export const CloudUploadIcon = forwardRef<SVGSVGElement, CloudUploadIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
-          <g
+          <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          >
-            <path d="M4.497 11.975a3.503 3.503 0 0 1-.57-6.961 4.673 4.673 0 0 1 8.605 1.156 2.92 2.92 0 0 1-.445 5.805h-1.964m-4.246 0h-1.38" />
-            <path d="M8 14.098V6.666m-2.389 2.39L8 6.665l2.389 2.39" />
-          </g>
+            d="M4.497 11.975a3.503 3.503 0 0 1-.57-6.961 4.673 4.673 0 0 1 8.605 1.156 2.92 2.92 0 0 1-.445 5.805h-1.964m-4.246 0h-1.38"
+          />
+          <path d="M3.549 5.098a1.06 1.06 0 0 0 .59-.424 5 5 0 0 0-.211.34 4 4 0 0 0-.38.084" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M3.549 5.098a1.06 1.06 0 0 0 .59-.424"
+          />
+          <path d="M12.373 5.658a1.06 1.06 0 0 0 .653.632 3 3 0 0 0-.494-.12 5 5 0 0 0-.159-.512" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.373 5.658a1.06 1.06 0 0 0 .653.632"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.8)"
+            d="M8 14.098V6.666m-2.389 2.39L8 6.665l2.389 2.39"
+          />
+          <path d="M7.4 7.267a.85.85 0 0 1 1.2 0l-.6-.6Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.8)"
+            d="M7.4 7.267a.85.85 0 0 1 1.2 0"
+          />
+          <path d="M9.194 7.86A.7.7 0 0 0 8 8.356v-1.69Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.8)"
+            d="M9.194 7.86A.7.7 0 0 0 8 8.356"
+          />
+          <path d="M8 8.355a.7.7 0 0 0-1.194-.494L8 6.666Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.8)"
+            d="M8 8.355a.7.7 0 0 0-1.194-.494"
+          />
+          <path d="M8 8.768a.87.87 0 0 1 1.486-.615L8 6.666Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.8)"
+            d="M8 8.768a.87.87 0 0 1 1.486-.615"
+          />
+          <path d="M8 8.768a.87.87 0 0 0-1.486-.615L8 6.666Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.8)"
+            d="M8 8.768a.87.87 0 0 0-1.486-.615"
+          />
         </g>
       </Icon>
     );

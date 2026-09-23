@@ -25,6 +25,41 @@ export const FavoriteStrongIcon = forwardRef<
           strokeWidth="calc(var(--icon-strokeWidth, 1) * 1.5)"
           d="m8 3.166 1.615 3.372 3.712.51-2.692 2.606.652 3.712L8 11.638l-3.287 1.728.652-3.712-2.692-2.606 3.712-.51Z"
         />
+        <path d="M9.262 5.801a1.52 1.52 0 0 0 1.162.848l-.809-.111Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 1.5)"
+          d="M9.262 5.801a1.52 1.52 0 0 0 1.162.848"
+        />
+        <path d="M11.213 9.094a1.52 1.52 0 0 0-.439 1.353l-.139-.793Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 1.5)"
+          d="M11.213 9.094a1.52 1.52 0 0 0-.439 1.353"
+        />
+        <path d="M8.706 12.01a1.52 1.52 0 0 0-1.412 0L8 11.637Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 1.5)"
+          d="M8.706 12.01a1.52 1.52 0 0 0-1.412 0"
+        />
+        <path d="M5.226 10.447a1.52 1.52 0 0 0-.44-1.353l.579.56Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 1.5)"
+          d="M5.226 10.447a1.52 1.52 0 0 0-.44-1.353"
+        />
+        <path d="M5.576 6.649A1.52 1.52 0 0 0 6.738 5.8l-.353.737Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeWidth="calc(var(--icon-strokeWidth, 1) * 1.5)"
+          d="M5.576 6.649A1.52 1.52 0 0 0 6.738 5.8"
+        />
       </g>
     </Icon>
   );
