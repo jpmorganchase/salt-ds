@@ -1,15 +1,15 @@
 .salt-theme.salt-interim[data-mode="light"] {
-  --salt-palette-negative-high: var(--salt-color-red-700);
-  --salt-palette-negative-mediumHigh: var(--salt-color-red-600);
-  --salt-palette-negative-medium: var(--salt-color-red-500);
-  --salt-palette-negative-lower: var(--salt-color-red-200);
   --salt-palette-negative-lowest: var(--salt-color-red-100);
+  --salt-palette-negative-lower: var(--salt-color-red-200);
+  --salt-palette-negative-medium: var(--salt-color-red-500);
+  --salt-palette-negative-mediumHigh: var(--salt-color-red-600);
+  --salt-palette-negative-high: var(--salt-color-red-700);
 }
 
 .salt-theme.salt-interim[data-mode="dark"] {
-  --salt-palette-negative-high: var(--salt-color-red-300);
-  --salt-palette-negative-mediumHigh: var(--salt-color-red-400);
-  --salt-palette-negative-medium: var(--salt-color-red-500);
-  --salt-palette-negative-lower: var(--salt-color-red-800);
   --salt-palette-negative-lowest: var(--salt-color-red-900);
+  --salt-palette-negative-lower: var(--salt-color-red-800);
+  --salt-palette-negative-medium: var(--salt-color-red-500);
+  --salt-palette-negative-mediumHigh: var(--salt-color-red-400);
+  --salt-palette-negative-high: var(--salt-color-red-300);
 }
