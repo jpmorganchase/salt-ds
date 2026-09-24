@@ -54,6 +54,7 @@
 
   /* Display */
   --salt-text-display-fontFamily: var(--salt-typography-fontFamily-openSans);
+  --salt-text-display-letterSpacing: 0;
   --salt-text-display-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-text-display-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-display-fontWeight-strong: var(--salt-typography-fontWeight-bold);
@@ -68,6 +69,7 @@
 
   /* Display */
   --salt-text-display-fontFamily: var(--salt-typography-fontFamily-amplitude);
+  --salt-text-display-letterSpacing: 0;
   --salt-text-display-fontWeight: var(--salt-typography-fontWeight-medium);
   --salt-text-display-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-display-fontWeight-strong: var(--salt-typography-fontWeight-bold);
