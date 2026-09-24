@@ -324,7 +324,7 @@ export const PillInput = forwardRef(function PillInput(
             <div role="listitem" key={pill}>
               <Pill
                 data-index={index}
-                disabled={disabled}
+                disabled={isDisabled}
                 aria-label={hidePillClose ? pill : `Remove ${pill}`}
                 ref={(element) => {
                   if (element) {
@@ -338,8 +338,19 @@ export const PillInput = forwardRef(function PillInput(
                 onFocus={() => setFocusedPillIndex(index)}
                 onKeyDown={handlePillKeyDown}
                 onClick={handlePillClick}
+                // The pill list is a single tab stop. It falls back to the
+                // first pill before any pill is focused, and also when the
+                // remembered pill has gone, which happens when the focused
+                // pill is removed with the mouse. Without the fallback the
+                // list would be left with no tab stop at all.
                 tabIndex={
-                  focusedPillIndex === -1 || focusedPillIndex === index ? 0 : -1
+                  index ===
+                  (focusedPillIndex >= 0 &&
+                  focusedPillIndex < visiblePills.length
+                    ? focusedPillIndex
+                    : 0)
+                    ? 0
+                    : -1
                 }
               >
                 {pill}

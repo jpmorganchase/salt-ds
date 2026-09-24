@@ -665,6 +665,32 @@ describe("Number Input", () => {
     },
   );
 
+  it("does not change value when the spinner buttons are used inside a disabled FormField", async () => {
+    await renderWithSalt(
+      <FormField disabled>
+        <FormFieldLabel>Disabled form field</FormFieldLabel>
+        <NumberInput defaultValue={5} />
+      </FormField>,
+    );
+
+    await button("increment").click({ force: true });
+
+    await expect.element(input()).toHaveValue("5");
+  });
+
+  it("still changes value when the spinner buttons are used inside an enabled FormField", async () => {
+    await renderWithSalt(
+      <FormField>
+        <FormFieldLabel>Enabled form field</FormFieldLabel>
+        <NumberInput defaultValue={5} />
+      </FormField>,
+    );
+
+    await button("increment").click();
+
+    await expect.element(input()).toHaveValue("6");
+  });
+
   it("applies name with inputProps taking precedence", async () => {
     await renderWithSalt(<Default name="quantity" />);
     await expect.element(input()).toHaveAttribute("name", "quantity");

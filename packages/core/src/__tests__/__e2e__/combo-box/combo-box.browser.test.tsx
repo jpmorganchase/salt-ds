@@ -738,3 +738,83 @@ describe("Given a ComboBox", () => {
     await expect.element(page.getByRole("textbox")).toHaveValue(value);
   });
 });
+
+describe("given a multiselect ComboBox with pills", () => {
+  it("lets keyboard users reach and remove every pill through one tab stop", async () => {
+    await renderWithSalt(
+      <>
+        <ComboBox multiselect defaultSelected={["Alabama", "Alaska"]}>
+          <Option value="Alabama" />
+          <Option value="Alaska" />
+        </ComboBox>
+        <button type="button">After</button>
+      </>,
+    );
+
+    const alabama = page.getByRole("button", { name: "Remove Alabama" });
+    const alaska = page.getByRole("button", { name: "Remove Alaska" });
+
+    // Shift-tabbing back past the input enters the pill list at its start,
+    // rather than treating each pill as its own tab stop and landing on the
+    // last one.
+    await userEvent.click(page.getByRole("button", { name: "After" }));
+    await userEvent.tab({ shift: true });
+    await expect.element(input()).toHaveFocus();
+    await userEvent.tab({ shift: true });
+    await expect.element(alabama).toHaveFocus();
+
+    // Every pill is still reachable from that single stop, and a screen
+    // reader announces which pill removing will affect.
+    await userEvent.keyboard("{ArrowRight}");
+    await expect.element(alaska).toHaveFocus();
+    await userEvent.keyboard("{ArrowLeft}");
+    await expect.element(alabama).toHaveFocus();
+
+    // Tab leaves the whole list rather than stepping to the next pill.
+    await userEvent.tab();
+    await expect.element(input()).toHaveFocus();
+
+    // The pill can still be removed from the keyboard.
+    await userEvent.tab({ shift: true });
+    await expect.element(alabama).toHaveFocus();
+    await userEvent.keyboard("{Delete}");
+    await expect.element(alabama.query()).not.toBeInTheDocument();
+    await expect.element(alaska).toBeInTheDocument();
+  });
+
+  it("keeps the pill list reachable after the focused pill is removed by mouse", async () => {
+    await renderWithSalt(
+      <>
+        <ComboBox
+          multiselect
+          defaultSelected={["Alabama", "Alaska", "Arizona"]}
+        >
+          <Option value="Alabama" />
+          <Option value="Alaska" />
+          <Option value="Arizona" />
+        </ComboBox>
+        <button type="button">After</button>
+      </>,
+    );
+
+    // Reach the last pill with the keyboard, then remove it with the mouse.
+    await userEvent.click(page.getByRole("button", { name: "After" }));
+    await userEvent.tab({ shift: true });
+    await userEvent.tab({ shift: true });
+    await userEvent.keyboard("{ArrowRight}{ArrowRight}");
+
+    const arizona = page.getByRole("button", { name: "Remove Arizona" });
+    await expect.element(arizona).toHaveFocus();
+    await arizona.click();
+    await expect.element(arizona.query()).not.toBeInTheDocument();
+
+    // The list remembered a pill that no longer exists. It must still offer a
+    // tab stop, otherwise the remaining pills can never be reached again.
+    await userEvent.click(page.getByRole("button", { name: "After" }));
+    await userEvent.tab({ shift: true });
+    await userEvent.tab({ shift: true });
+    await expect
+      .element(page.getByRole("button", { name: "Remove Alabama" }))
+      .toHaveFocus();
+  });
+});
