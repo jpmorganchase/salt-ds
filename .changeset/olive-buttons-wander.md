@@ -2,10 +2,8 @@
 "@salt-ds/core": patch
 ---
 
-Fixed keyboard navigation in `ToggleButtonGroup`.
+Fixed `ToggleButtonGroup` keyboard navigation so arrow keys no longer scroll the page.
 
-- Arrow keys no longer scroll the page while moving between buttons.
+Fixed selection when `ToggleButton` components use numeric `value` props. The selected button is now correctly conveyed to assistive technologies, and selecting it again no longer triggers `onChange`.
 
-Fixed selection in a `ToggleButtonGroup` whose buttons use numeric `value` props. Choosing a button left every button in the group reporting `aria-checked="false"`, so a screen reader announced nothing as selected. The group also reported a change when the already selected button was chosen again.
-
-Removed the invalid `readOnly` attribute that `ToggleButton` rendered onto its `button` element. Read-only state is still exposed through `aria-readonly`.
+`ToggleButton` no longer adds an unsupported `readOnly` attribute to its underlying button. Read-only state remains available to assistive technologies.
