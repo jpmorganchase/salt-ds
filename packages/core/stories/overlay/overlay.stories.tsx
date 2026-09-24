@@ -13,7 +13,6 @@ import {
   StackLayout,
   Text,
   Tooltip,
-  useId,
 } from "@salt-ds/core";
 import { CloseIcon, MicroMenuIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
@@ -46,16 +45,14 @@ export default {
 } as Meta<typeof Overlay>;
 
 const OverlayTemplate = ({ ...args }: OverlayProps) => {
-  const id = useId();
-
   return (
     <Overlay {...args}>
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
 
-      <OverlayPanel aria-labelledby={id}>
-        <OverlayHeader header="Title" id={id} />
+      <OverlayPanel>
+        <OverlayHeader header="Title" />
         <OverlayPanelContent>
           <Text as="p">Content of Overlay</Text>
         </OverlayPanelContent>
@@ -142,7 +139,6 @@ LongHeader.args = {
 
 export const CloseButton = ({ onOpenChange }: OverlayProps) => {
   const [open, setOpen] = useState(false);
-  const id = useId();
 
   const onChange = (newOpen: boolean) => {
     setOpen(newOpen);
@@ -167,8 +163,8 @@ export const CloseButton = ({ onOpenChange }: OverlayProps) => {
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
-      <OverlayPanel aria-labelledby={id}>
-        <OverlayHeader header="Title" actions={closeButton} id={id} />
+      <OverlayPanel>
+        <OverlayHeader header="Title" actions={closeButton} />
         <OverlayPanelContent>
           <StackLayout gap={1}>
             <Text as="p">Content of Overlay</Text>
@@ -184,7 +180,6 @@ export const CloseButton = ({ onOpenChange }: OverlayProps) => {
 
 export const WithSections = ({ onOpenChange }: OverlayProps) => {
   const [open, setOpen] = useState(false);
-  const id = useId();
 
   const onChange = (newOpen: boolean) => {
     setOpen(newOpen);
@@ -198,8 +193,11 @@ export const WithSections = ({ onOpenChange }: OverlayProps) => {
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
-      <OverlayPanel style={{ width: 320, maxHeight: 200 }} aria-labelledby={id}>
-        <OverlayHeader header="Review changes" id={id} />
+      <OverlayPanel style={{ width: 320, maxHeight: 200 }}>
+        <OverlayHeader
+          header="Review changes"
+          description="Account updates are pending"
+        />
         <OverlayPanelContent>
           <StackLayout>
             <Text as="p">
@@ -217,10 +215,16 @@ export const WithSections = ({ onOpenChange }: OverlayProps) => {
           </StackLayout>
         </OverlayPanelContent>
         <OverlayFooter>
-          <Button appearance="bordered" onClick={handleClose}>
+          <Button
+            sentiment="accented"
+            appearance="bordered"
+            onClick={handleClose}
+          >
             Cancel
           </Button>
-          <Button onClick={handleClose}>Save changes</Button>
+          <Button sentiment="accented" onClick={handleClose}>
+            Save changes
+          </Button>
         </OverlayFooter>
       </OverlayPanel>
     </Overlay>
@@ -295,7 +299,6 @@ const checkboxesData = [
 
 export const WithActions = ({ onOpenChange }: OverlayProps) => {
   const [open, setOpen] = useState(false);
-  const id = useId();
 
   const [controlledValues, setControlledValues] = useState([
     checkboxesData[0].value,
@@ -352,9 +355,8 @@ export const WithActions = ({ onOpenChange }: OverlayProps) => {
         style={{
           width: 246,
         }}
-        aria-labelledby={id}
       >
-        <OverlayHeader header="Export" id={id} />
+        <OverlayHeader header="Export" />
         <OverlayPanelContent>
           <StackLayout gap={1}>
             <Checkbox
@@ -376,7 +378,11 @@ export const WithActions = ({ onOpenChange }: OverlayProps) => {
           </StackLayout>
         </OverlayPanelContent>
         <OverlayFooter>
-          <Button onClick={handleExport} style={{ width: "100%" }}>
+          <Button
+            sentiment="accented"
+            onClick={handleExport}
+            style={{ width: "100%" }}
+          >
             Export
           </Button>
         </OverlayFooter>
@@ -386,8 +392,6 @@ export const WithActions = ({ onOpenChange }: OverlayProps) => {
 };
 
 export const WithTooltip: StoryFn<OverlayProps> = ({ ...args }) => {
-  const id = useId();
-
   return (
     <Overlay {...args}>
       <Tooltip content="Show content">
@@ -398,8 +402,8 @@ export const WithTooltip: StoryFn<OverlayProps> = ({ ...args }) => {
         </OverlayTrigger>
       </Tooltip>
 
-      <OverlayPanel aria-labelledby={id}>
-        <OverlayHeader header="Title" id={id} />
+      <OverlayPanel>
+        <OverlayHeader header="Title" />
         <OverlayPanelContent>
           <Text as="p">Content of Overlay</Text>
         </OverlayPanelContent>

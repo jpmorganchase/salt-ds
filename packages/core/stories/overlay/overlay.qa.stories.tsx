@@ -138,8 +138,10 @@ export const WithSections: StoryFn<QAContainerProps> = (props) => {
               </StackLayout>
             </OverlayPanelContent>
             <OverlayFooter>
-              <Button appearance="bordered">Cancel</Button>
-              <Button>Save changes</Button>
+              <Button sentiment="accented" appearance="bordered">
+                Cancel
+              </Button>
+              <Button sentiment="accented">Save changes</Button>
             </OverlayFooter>
           </OverlayPanel>
         </Overlay>

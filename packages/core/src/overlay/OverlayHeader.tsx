@@ -7,8 +7,8 @@ import {
   type ReactNode,
 } from "react";
 import { H2, Text } from "../text";
-import { makePrefixer } from "../utils";
-
+import { makePrefixer, useId, useIsomorphicLayoutEffect } from "../utils";
+import { useOverlayContext } from "./OverlayContext";
 import overlayHeaderCss from "./OverlayHeader.css";
 
 const withBaseName = makePrefixer("saltOverlayHeader");
@@ -44,15 +44,44 @@ export const OverlayHeader = forwardRef<HTMLDivElement, OverlayHeaderProps>(
     const { className, description, header, actions, preheader, ...rest } =
       props;
 
+    const { setHeaderId, setDescriptionId } = useOverlayContext();
+
+    const headingId = useId();
+    const descriptionId = useId();
+    const hasHeading = Boolean(header || preheader);
+    const hasDescription = Boolean(description);
+
+    useIsomorphicLayoutEffect(() => {
+      setHeaderId?.(hasHeading ? headingId : undefined);
+
+      return () => {
+        setHeaderId?.(undefined);
+      };
+    }, [hasHeading, headingId, setHeaderId]);
+
+    useIsomorphicLayoutEffect(() => {
+      setDescriptionId?.(hasDescription ? descriptionId : undefined);
+
+      return () => {
+        setDescriptionId?.(undefined);
+      };
+    }, [hasDescription, descriptionId, setDescriptionId]);
+
     return (
       <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
         <div className={withBaseName("container")}>
-          <H2 styleAs="h4" className={withBaseName("header")}>
-            {preheader && <Text color="primary">{preheader}</Text>}
-            {header}
-          </H2>
+          {hasHeading && (
+            <H2 id={headingId} styleAs="h4" className={withBaseName("header")}>
+              {preheader && <Text color="primary">{preheader}</Text>}
+              {header}
+            </H2>
+          )}
           {description && (
-            <Text color="secondary" className={withBaseName("description")}>
+            <Text
+              id={descriptionId}
+              color="secondary"
+              className={withBaseName("description")}
+            >
               {description}
             </Text>
           )}

@@ -9,21 +9,19 @@ import {
   StackLayout,
   Text,
   Tooltip,
-  useId,
 } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const OverlayTemplate = (props: OverlayProps): ReactElement => {
   const { placement, ...rest } = props;
-  const id = useId();
 
   return (
     <Overlay placement={placement} {...rest}>
       <OverlayTrigger>
         <Button>{placement}</Button>
       </OverlayTrigger>
-      <OverlayPanel aria-labelledby={id}>
-        <OverlayHeader header="Title" id={id} />
+      <OverlayPanel>
+        <OverlayHeader header="Title" />
         <OverlayPanelContent>
           <StackLayout gap={1}>
             <Text as="p">Content of Overlay</Text>
