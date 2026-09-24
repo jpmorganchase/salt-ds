@@ -52,9 +52,7 @@ describe("GIVEN a RadioButton component", () => {
   });
 });
 
-// The icon carries the control's visual state and has no accessible role of
-// its own, so it is located by class within the labelled control.
-function iconFor(name: string) {
+function appearanceOf(name: string) {
   const icon = page
     .getByRole("radio", { name })
     .element()
@@ -63,13 +61,7 @@ function iconFor(name: string) {
   if (!(icon instanceof HTMLElement)) {
     throw new Error(`Expected the "${name}" radio button to render an icon`);
   }
-  return icon;
-}
-
-// Comparing appearances to each other, rather than to expected token values,
-// keeps these tests about what the user sees instead of how it is themed.
-function appearanceOf(name: string) {
-  const { borderTopColor, color } = getComputedStyle(iconFor(name));
+  const { borderTopColor, color } = getComputedStyle(icon);
   return { borderTopColor, color };
 }
 
@@ -107,9 +99,6 @@ describe("GIVEN a RadioButton the user cannot change", () => {
         <RadioButton label="Unselected" disabled />
       </>,
     );
-
-    // Suppressing the hover styling must not flatten the selected option into
-    // looking the same as the unselected one, before or during a hover.
     expect(appearanceOf("Selected")).not.toEqual(appearanceOf("Unselected"));
 
     await userEvent.hover(page.getByText("Selected"));
