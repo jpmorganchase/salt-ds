@@ -14,17 +14,6 @@ export function isListControlNavigationKey(key: string): boolean {
   return LIST_CONTROL_NAVIGATION_KEYS.has(key);
 }
 
-/**
- * Home/End are excluded: in an editable field they should only take over
- * when the active option actually changes, so they're handled separately.
- */
-export const LIST_CONTROL_EDITABLE_NAVIGATION_KEYS: ReadonlySet<string> =
-  new Set(["ArrowDown", "ArrowUp", "PageUp", "PageDown"]);
-
-export function isListControlEditableNavigationKey(key: string): boolean {
-  return LIST_CONTROL_EDITABLE_NAVIGATION_KEYS.has(key);
-}
-
 export interface OptionAndElement<Item> {
   data: OptionValue<Item>;
   element: HTMLElement;

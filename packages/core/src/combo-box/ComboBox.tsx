@@ -28,7 +28,6 @@ import { Button } from "../button";
 import { useFormFieldProps } from "../form-field-context";
 import {
   getComboBoxNavigationTarget,
-  isListControlEditableNavigationKey,
   type OptionAndElement,
 } from "../list-control/ListControlNavigationKeys";
 import { ListControlProvider } from "../list-control/ListControlProvider";
@@ -241,7 +240,6 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
     if (!openState) {
       if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-        event.preventDefault();
         setOpen(true, undefined, event.key);
         return;
       }
@@ -249,8 +247,8 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
     const activeOption = activeState;
 
-    // Home/End preventDefault is handled below only if the active option changes.
-    if (isListControlEditableNavigationKey(event.key)) {
+    // Unlike arrow keys, PageUp/PageDown scroll the nearest scroll container.
+    if (event.key === "PageUp" || event.key === "PageDown") {
       event.preventDefault();
     }
 
@@ -299,7 +297,6 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       setFocusVisibleState(true);
     }
 
-    // Home/End: only prevent default when the active option actually changes.
     if (newActive && newActive.data.id !== activeState?.id) {
       event.preventDefault();
       setActive(newActive.data);

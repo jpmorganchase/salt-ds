@@ -3,7 +3,6 @@ import { composeStories } from "@storybook/react-vite";
 import { type KeyboardEventHandler, useRef, useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { trackDefaultPrevented } from "~browser-test-utils/interactions";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as comboBoxStories from "~stories/combo-box/combo-box.stories";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
@@ -820,38 +819,52 @@ describe("given a multiselect ComboBox with pills", () => {
   });
 });
 
-describe("GIVEN a Combo box and the keys it owns", () => {
-  it("stops the page scrolling when opening the list with an arrow key", async () => {
-    const keyDown = trackDefaultPrevented();
-    await renderWithSalt(
-      <ComboBox onKeyDown={keyDown.handler}>
-        <Option value="Alabama" />
-        <Option value="Alaska" />
-      </ComboBox>,
+describe("GIVEN a Combo box in a scroll container", () => {
+  function ScrollFixture() {
+    return (
+      <div
+        data-testid="scroll-container"
+        style={{ height: 100, overflow: "auto" }}
+      >
+        <div style={{ height: 300 }} />
+        <ComboBox>
+          <Option value="Alabama" />
+          <Option value="Alaska" />
+        </ComboBox>
+        <div style={{ height: 300 }} />
+      </div>
     );
+  }
 
-    await userEvent.tab();
-    await userEvent.keyboard("{ArrowDown}");
+  it.each([
+    ["{PageUp}", "Alabama"],
+    ["{PageDown}", "Alaska"],
+  ] as const)(
+    "does not scroll its container when %s cannot move past the options",
+    async (key, activeOption) => {
+      await renderWithSalt(<ScrollFixture />);
+      input().element().focus();
+      await userEvent.keyboard("{ArrowDown}");
+      if (activeOption === "Alaska") {
+        await userEvent.keyboard("{End}");
+      }
+      await expectActive(activeOption);
 
-    expect(keyDown.lastDefaultPrevented()).toBe(true);
-  });
+      const scrollContainer = page
+        .getByTestId("scroll-container")
+        .element() as HTMLElement;
+      scrollContainer.scrollTop = 280;
+      await new Promise<void>((resolve) =>
+        requestAnimationFrame(() => resolve()),
+      );
+      const initialScrollTop = scrollContainer.scrollTop;
 
-  it("stops the page scrolling when arrowing past the first option", async () => {
-    const keyDown = trackDefaultPrevented();
-    await renderWithSalt(
-      <ComboBox onKeyDown={keyDown.handler}>
-        <Option value="Alabama" />
-        <Option value="Alaska" />
-      </ComboBox>,
-    );
+      await userEvent.keyboard(key);
+      await new Promise<void>((resolve) =>
+        requestAnimationFrame(() => resolve()),
+      );
 
-    await userEvent.tab();
-    await userEvent.keyboard("{ArrowDown}");
-    await userEvent.keyboard("{Home}");
-
-    // The active option cannot move, but the combo box still owns the key.
-    await userEvent.keyboard("{ArrowUp}");
-
-    expect(keyDown.lastDefaultPrevented()).toBe(true);
-  });
+      expect(scrollContainer.scrollTop).toBe(initialScrollTop);
+    },
+  );
 });
