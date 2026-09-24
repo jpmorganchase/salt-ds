@@ -1,3 +1,6 @@
+// Storefront opening alignment is checked by checkStorefrontPair on the
+// complete transparent contours at four weights. A reference-space mass
+// center scan can mix a neighboring wall into an outlined opening.
 // Import/Export positive bracket and arrow relationships are covered by
 // checkStabilizationB on the final exports; they no longer use inverse panels.
 // Measure painted landmarks in the exported artwork. These checks compare
@@ -8,8 +11,6 @@ export async function checkFeatureAlignment(page, records) {
     "group_solid.svg",
     "stethoscope.svg",
     "stethoscope_solid.svg",
-    "storefront.svg",
-    "storefront_solid.svg",
     "presentation_solid.svg",
     "document-draft.svg",
     "document-search.svg",
@@ -107,36 +108,6 @@ export async function checkFeatureAlignment(page, records) {
                 tube.center !== null &&
                 Math.abs(chest.center - tube.center) <= tolerance,
             );
-          } else if (name.startsWith("storefront")) {
-            for (const [feature, y, from, to] of [
-              ["window", 10.5, 3.5, 8.5],
-              ["door", 11.5, 8.4, 12.6],
-            ]) {
-              const m = measure(
-                pixels,
-                "x",
-                y,
-                from,
-                to,
-                name.endsWith("_solid.svg"),
-              );
-              samples[`${name}:${weight}:${feature}`] = m;
-              if (name.endsWith("_solid.svg")) {
-                const outline = samples[`storefront.svg:${weight}:${feature}`];
-                check(
-                  {
-                    name,
-                    weight,
-                    feature: `${feature} center`,
-                    outline,
-                    solidCounter: m,
-                  },
-                  m.center !== null &&
-                    outline.center !== null &&
-                    Math.abs(m.center - outline.center) <= tolerance,
-                );
-              }
-            }
           } else if (
             name.startsWith("watch") ||
             name === "history.svg" ||

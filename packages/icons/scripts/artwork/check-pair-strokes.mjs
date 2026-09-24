@@ -31,6 +31,18 @@ export async function checkPairStrokes(page, records) {
       axis: "y",
       span: 1,
     },
+    ...[
+      ["buildings", [5.25, 14.5]],
+      ["hospital", [8, 14.166667]],
+      ["storefront", [10.25, 13.5]],
+    ].map(([name, point]) => ({
+      name,
+      point,
+      feature: "open entrance threshold",
+      open: true,
+      axis: "y",
+      span: 0.7,
+    })),
     { name: "accessible", feature: "arm", point: [10, 6.5], axis: "y" },
     { name: "accessible", feature: "foot", point: [14, 13], axis: "y" },
     { name: "map", feature: "left perimeter", point: [2, 8], axis: "x" },
@@ -156,10 +168,12 @@ export async function checkPairStrokes(page, records) {
       for (const weight of open ? [0.67, 1, 4 / 3, 1.5] : [0.67]) {
         const measurements = [];
         for (const svg of artwork) {
-          const markup = svg.replace("<svg ", '<svg style="color:black" ').replace(
-            /stroke-width="([\d.]+)"/g,
-            (_, width) => `stroke-width="${Number(width) * weight / .67}"`,
-          );
+          const markup = svg
+            .replace("<svg ", '<svg style="color:black" ')
+            .replace(
+              /stroke-width="([\d.]+)"/g,
+              (_, width) => `stroke-width="${(Number(width) * weight) / 0.67}"`,
+            );
           const url = URL.createObjectURL(
             new Blob([markup], { type: "image/svg+xml" }),
           );
@@ -205,7 +219,8 @@ export async function checkPairStrokes(page, records) {
         if (open) {
           // The accepted doorway is open to the ground in both variants.
           // Repainting the former baseline is a regression, not a rim to match.
-          if (measurements.some((m) => m.width > tolerance)) failures.push(result);
+          if (measurements.some((m) => m.width > tolerance))
+            failures.push(result);
           continue;
         }
         if (

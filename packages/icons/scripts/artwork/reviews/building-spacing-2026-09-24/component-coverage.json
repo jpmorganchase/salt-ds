@@ -1,0 +1,26 @@
+[
+  {
+    "dpr": 1,
+    "mode": "light",
+    "samples": 100,
+    "pass": true
+  },
+  {
+    "dpr": 1,
+    "mode": "dark",
+    "samples": 100,
+    "pass": true
+  },
+  {
+    "dpr": 2,
+    "mode": "light",
+    "samples": 100,
+    "pass": true
+  },
+  {
+    "dpr": 2,
+    "mode": "dark",
+    "samples": 100,
+    "pass": true
+  }
+]

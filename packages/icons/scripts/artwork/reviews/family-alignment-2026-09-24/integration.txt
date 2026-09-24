@@ -1,0 +1,2 @@
+PASS: ten requested meanings; twenty registered variants; zero errors or warnings.
+Checked dark, calculator, man, woman, man-woman, building, buildings, hospital, storefront and cloud-sync with the Salt skill integration checker. Metadata unchanged.

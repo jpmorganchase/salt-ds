@@ -1,44 +1,62 @@
-// Check the finished painted doorway, independently of its recipe paths.
-// The closed aperture needs a flat threshold without notches or stray joins.
+// Inspect the actual doorway throat through the ground line. A closed floor
+// or a stray threshold seam must fail even when the opening above it is clear.
 export async function checkStorefrontDoor(page, records) {
-  const record = records.find(({name}) => name === "storefront_solid.svg");
-  if (!record) throw new Error("Missing storefront doorway artwork");
-  return page.evaluate(async ({svg}) => {
-    const results = [], failures = [], scale = 128;
+  const selected = ["storefront.svg", "storefront_solid.svg"].map((name) => {
+    const r = records.find((r) => r.name === name);
+    if (!r) throw Error("Missing " + name);
+    return r;
+  });
+  return page.evaluate(async (selected) => {
+    const scale = 128,
+      side = 16 * scale,
+      results = [],
+      failures = [];
     const canvas = document.createElement("canvas");
-    canvas.width = canvas.height = 16 * scale;
-    const ctx = canvas.getContext("2d", {willReadFrequently: true});
-    for (const weight of [0.67, 1, 4/3, 1.5]) {
-      const source = svg.replace(/stroke-width="([\d.]+)"/g,
-        (_, v) => 'stroke-width="' + Number(v)*weight/0.67 + '"');
-      const url = URL.createObjectURL(new Blob([source], {type:"image/svg+xml"}));
-      try {
-        const image = new Image(); image.src = url; await image.decode();
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        ctx.drawImage(image,0,0,canvas.width,canvas.height);
-        const pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
-        const bottoms = [];
-        const open = [];
-        for (let x = Math.floor(9.5*scale); x < Math.ceil(12.5*scale); x++)
-          if (pixels[(Math.floor(11.5*scale)*canvas.width+x)*4+3] < 128) open.push(x/scale);
-        const left = Math.min(...open), right = Math.max(...open);
-        const center = (left+right)/2, halfSpan = (right-left)/8;
-        // Scan the central flat part, excluding the intentionally soft corners.
-        for (let x = center-halfSpan; x <= center+halfSpan; x += 0.025) {
-          let bottom = null;
-          for (let y = Math.floor(11.8*scale); y < Math.ceil(13.5*scale); y++)
-            if (pixels[(y*canvas.width + Math.floor(x*scale))*4+3] < 128)
-              bottom = (y+1)/scale;
-          bottoms.push(bottom);
+    canvas.width = canvas.height = side;
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    for (const { name, svg } of selected)
+      for (const weight of [0.67, 1, 4 / 3, 1.5]) {
+        const source = svg.replace(
+          /stroke-width="([\d.]+)"/g,
+          (_, v) => 'stroke-width="' + (Number(v) * weight) / 0.67 + '"',
+        );
+        const url = URL.createObjectURL(
+          new Blob([source], { type: "image/svg+xml" }),
+        );
+        try {
+          const im = new Image();
+          im.src = url;
+          await im.decode();
+          ctx.clearRect(0, 0, side, side);
+          ctx.drawImage(im, 0, 0, side, side);
+          const pixels = ctx.getImageData(0, 0, side, side).data;
+          let maximumAlpha = 0;
+          for (
+            let y = Math.floor(11.8 * scale);
+            y < Math.ceil(14.7 * scale);
+            y++
+          )
+            for (
+              let x = Math.floor(10.15 * scale);
+              x < Math.ceil(10.59 * scale);
+              x++
+            )
+              maximumAlpha = Math.max(
+                maximumAlpha,
+                pixels[(y * side + x) * 4 + 3],
+              );
+          const r = {
+            name,
+            weight,
+            feature: "continuous open entrance through ground",
+            maximumAlpha,
+          };
+          results.push(r);
+          if (maximumAlpha > 4) failures.push(r);
+        } finally {
+          URL.revokeObjectURL(url);
         }
-        const spread = Math.max(...bottoms)-Math.min(...bottoms);
-        const result = {name:"storefront_solid.svg", weight,
-          feature:"continuous flat threshold beneath the door aperture", spread};
-        results.push(result);
-        if (!open.length || !bottoms.length || bottoms.includes(null) || Math.min(...bottoms)<12.5 ||
-            Math.max(...bottoms)>13.5 || spread > 2/scale) failures.push(result);
-      } finally { URL.revokeObjectURL(url); }
-    }
-    return {results, failures};
-  }, record);
+      }
+    return { results, failures };
+  }, selected);
 }

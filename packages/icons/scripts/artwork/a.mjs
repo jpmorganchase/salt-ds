@@ -1,3 +1,4 @@
+import { openEntrance } from "./open-entrance.mjs";
 import { captionHole, disabledCaptionHole } from "./caption-letterforms.mjs";
 import { softenedStroke as S, softenedFill as F } from "./contour-profiles.mjs";
 import { softenedRect as R, softenedFrame as SF } from "./contour-profiles.mjs";
@@ -219,67 +220,82 @@ put(
 );
 const windowHoles = (x, y) =>
   [0, 7.5]
-    .flatMap((dx) => [0, 6].map((dy) => box(x + dx, y + dy, 2.25, 3, 0.5)))
+    .flatMap((dx) => [0, 5.25].map((dy) => box(x + dx, y + dy, 2.25, 3, 0.5)))
     .join("");
-// One continuous silhouette keeps the doorway open to the ground. The lower
-// jambs turn into their ground segments with locally eased inner attachments.
+const buildingEntrance = openEntrance(9, 16.5, 15, 21.75);
 const buildingShape =
-  "M3.75 21.75V2.25H20.25V21.75H14.25V18.85A1.6 1.6 0 0 0 12.65 17.25H11.35A1.6 1.6 0 0 0 9.75 18.85V21.75Z";
-const buildingFrame =
-  SF(buildingShape) +
-  circularCrossJunction(9.75, 21.75, 1.5, undefined, [[-1, -1]]) +
-  circularCrossJunction(14.25, 21.75, 1.5, undefined, [[1, -1]]);
+  "M3.75 21.75V2.25H20.25V21.75" + buildingEntrance.notch + "Z";
+const buildingFrame = buildingEntrance.frame(buildingShape);
+// The visible outline frame needs a narrower opening than the solid counter.
+const buildingOutlineEntrance = openEntrance(9.75, 16.5, 14.25, 21.75);
+const buildingOutlineShape =
+  "M3.75 21.75V2.25H20.25V21.75" + buildingOutlineEntrance.notch + "Z";
 put(
   "building",
-  buildingFrame + F(windowHoles(7.125, 5.25)),
+  buildingOutlineEntrance.frame(buildingOutlineShape) + F(windowHoles(7.125, 5.25)),
   F(buildingShape + windowHoles(7.125, 5.25)) + buildingFrame,
 );
 const officeWindows = [4.5, 9]
-  .flatMap((x) => [5.25, 9.75, 14.25].map((y) => box(x, y, 2.25, 2.25, 0.375)))
+  .flatMap((x) => [4.5, 7.875, 11.25].map((y) => box(x, y, 2.25, 2.25, 0.375)))
   .join("");
-// Inspect each exposed side of the shared ground rail, including the
-// interior wall feet that remain visible only in the outline variant.
+const buildingsEntrance = openEntrance(5.25, 16.5, 10.5, 21.75);
+const buildingsShape =
+  "M2.25 21.75V2.25H13.5V21.75" + buildingsEntrance.notch + "Z";
 const buildingsGroundRoots = [
   [2.25, [[1, -1]]],
-  [13.5, [[-1, -1], [1, -1]]],
-  [16.5, [[-1, -1], [1, -1]]],
+  [
+    13.5,
+    [
+      [-1, -1],
+      [1, -1],
+    ],
+  ],
+  [
+    16.5,
+    [
+      [-1, -1],
+      [1, -1],
+    ],
+  ],
   [21.75, [[-1, -1]]],
-].map(([x, sectors]) => circularCrossJunction(x, 21.75, 1.7, undefined, sectors)).join("");
+]
+  .map(([x, sectors]) =>
+    circularCrossJunction(x, 21.75, 1.7, undefined, sectors),
+  )
+  .join("");
+const buildingsFrame =
+  buildingsEntrance.frame(buildingsShape) +
+  R(16.5, 8.25, 5.25, 13.5) +
+  buildingsEntrance.ground(2.25, 21.75) +
+  buildingsGroundRoots;
+const buildingsOutlineEntrance = openEntrance(5.625, 16.5, 10.125, 21.75);
+const buildingsOutlineShape =
+  "M2.25 21.75V2.25H13.5V21.75" + buildingsOutlineEntrance.notch + "Z";
+const buildingsOutlineFrame =
+  buildingsOutlineEntrance.frame(buildingsOutlineShape) +
+  R(16.5, 8.25, 5.25, 13.5) +
+  buildingsOutlineEntrance.ground(2.25, 21.75) +
+  buildingsGroundRoots;
 put(
   "buildings",
-  R(2.25, 2.25, 11.25, 19.5) +
-    R(16.5, 8.25, 5.25, 13.5) +
-    S("M2.25 21.75H21.75") +
-    F(officeWindows + box(6.75, 18.75, 2.25, 3)) +
-    buildingsGroundRoots,
-  F(box(2.25, 2.25, 11.25, 19.5) + officeWindows + box(6.75, 18.75, 2.25, 3)) +
+  buildingsOutlineFrame + F(officeWindows),
+  F(buildingsShape + officeWindows) +
     F(box(16.5, 8.25, 5.25, 13.5)) +
-    R(2.25, 2.25, 11.25, 19.5) +
-    R(16.5, 8.25, 5.25, 13.5) +
-    S("M2.25 21.75H21.75") +
-    buildingsGroundRoots,
+    buildingsFrame,
 );
-const calculatorKeys = [7.5, 12, 16.5]
-  .flatMap((x) => [12.75, 17.25].map((y) => box(x - 0.75, y - 0.75, 1.5, 1.5)))
+// Larger repeated keys retain near-identical pixel phase at default 12px.
+// Both variants keep the same display aperture and keypad rhythm.
+const calculatorKeys = [8.25, 12, 15.75]
+  .flatMap((x) => [14, 18].map((y) => box(x - 1.125, y - 1.125, 2.25, 2.25)))
   .join("");
+const calculatorFrame = R(4.5, 2.25, 15, 19.5);
+const calculatorDisplay = box(7.125, 5.25, 9.75, 5.25);
+const calculatorRims = calculatorFrame + SF(calculatorDisplay, { radius: 1.2 });
 put(
   "calculator",
-  R(4.5, 2.25, 15, 19.5) +
-    R(7.5, 5.25, 9, 3) +
-    // Ease only the small display counter; keep its outside rectangle crisp.
-    [
-      [7.5, 5.25, 1, 1],
-      [16.5, 5.25, -1, 1],
-      [7.5, 8.25, 1, -1],
-      [16.5, 8.25, -1, -1],
-    ]
-      .map(([x, y, dx, dy]) =>
-        circularCrossJunction(x, y, 1.35, undefined, [[dx, dy]]),
-      )
-      .join("") +
-    F(calculatorKeys),
-  F(box(4.5, 2.25, 15, 19.5) + box(7.5, 5.25, 9, 3, 0.5) + calculatorKeys) +
-    R(4.5, 2.25, 15, 19.5),
+  calculatorRims + F(calculatorKeys),
+  F(box(4.5, 2.25, 15, 19.5) + calculatorDisplay + calculatorKeys) +
+    calculatorRims,
 );
 // Radius-1.8 receiver roots are tangent to the shared inner bowl, rather
 // than short quadratics that become sharp under the themed stroke. Both
@@ -758,8 +774,11 @@ put(
       `M${6 + scissorContact} ${6 + scissorContact}L12 12M${6 + scissorContact} ${18 - scissorContact}L20.25 3.75M14.25 14.25L20.25 20.25`,
     ),
 );
-const moon = "M14.25 2.25A9.75 9.75 0 1 0 21.75 15.75A9 9 0 0 1 14.25 2.25Z";
-put("dark", S(moon), F(moon));
+// Equal-direction circular tips avoid the flattened-looking upper horn.
+// Both variants retain the same contour, natural arcs and primary rim.
+const moon = "M8.188569327215841,3.846902660549177A9 9 0 1 0 20.153097339450824,15.811430672784159A8.75 8.75 0 0 1 8.188569327215841,3.846902660549177Z";
+const moonRim = SF(moon, { radius: 1.15 });
+put("dark", moonRim, F(moon) + moonRim);
 const gaugeAngle = Math.atan2(-6, 5.25);
 const gaugeLength = Math.hypot(5.25, 6);
 const gaugePoint = (x, y) =>

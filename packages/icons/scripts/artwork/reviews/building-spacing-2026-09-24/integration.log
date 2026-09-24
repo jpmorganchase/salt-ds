@@ -1,0 +1,9 @@
+Checked building: 2 registered variant(s).
+Checked buildings: 2 registered variant(s).
+Checked hospital: 2 registered variant(s).
+Checked storefront: 2 registered variant(s).
+Checked dark: 2 registered variant(s).
+
+PASS: 5 requested meaning(s), 10 registered variant(s), 0 error(s), 0 warning(s).
+Limits: registration checks only; no visual/semantic relevance, generated-geometry equivalence, or recipe execution checks. generate:icons and validate:icons own effective recipe and geometry validation.
+Search normalization: the query is lowercased and whitespace is removed; stored synonym terms are not normalized. Hyphens are removed only when matching metadata iconName to component names; optional Solid and case-insensitive matching follow IconPreview.tsx.

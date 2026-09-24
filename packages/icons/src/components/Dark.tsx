@@ -20,19 +20,19 @@ export const DarkIcon = forwardRef<SVGSVGElement, DarkIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M9.142 1.067a7 7 0 1 0 5.384 9.693 6.462 6.462 0 0 1-5.384-9.693Z"
+            d="M4.95 1.94a6.852 6.852 0 1 0 9.11 9.11 6.662 6.662 0 0 1-9.11-9.11Z"
           />
-          <path d="M13.658 12.242a1.077 1.077 0 0 0-.58-1.695 6.5 6.5 0 0 0 1.448.213 7 7 0 0 1-.868 1.482" />
+          <path d="M12.193 13.45a.876.876 0 0 0-.663-1.547 6.7 6.7 0 0 0 2.53-.853 6.85 6.85 0 0 1-1.867 2.4" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M13.658 12.242a1.077 1.077 0 0 0-.58-1.695"
+            d="M12.193 13.45a.876.876 0 0 0-.663-1.547"
           />
-          <path d="M8.558 2.409a1.077 1.077 0 0 0-1.134-1.387 7 7 0 0 1 1.718.045 6.5 6.5 0 0 0-.584 1.342" />
+          <path d="M4.097 4.47a.876.876 0 0 0-1.547-.663 6.85 6.85 0 0 1 2.4-1.867 6.7 6.7 0 0 0-.853 2.53" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8.558 2.409a1.077 1.077 0 0 0-1.134-1.387"
+            d="M4.097 4.47a.876.876 0 0 0-1.547-.663"
           />
         </g>
       </Icon>

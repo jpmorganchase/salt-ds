@@ -19,7 +19,24 @@ export const DarkSolidIcon = forwardRef<SVGSVGElement, DarkSolidIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="M9.472.325a7.75 7.75 0 1 0 5.961 10.73A7.154 7.154 0 0 1 9.472.325"
+            d="M4.95 1.94a6.852 6.852 0 1 0 9.11 9.11 6.662 6.662 0 0 1-9.11-9.11"
+          />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.95 1.94a6.852 6.852 0 1 0 9.11 9.11 6.662 6.662 0 0 1-9.11-9.11Z"
+          />
+          <path d="M12.193 13.45a.876.876 0 0 0-.663-1.547 6.7 6.7 0 0 0 2.53-.853 6.85 6.85 0 0 1-1.867 2.4" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M12.193 13.45a.876.876 0 0 0-.663-1.547"
+          />
+          <path d="M4.097 4.47a.876.876 0 0 0-1.547-.663 6.85 6.85 0 0 1 2.4-1.867 6.7 6.7 0 0 0-.853 2.53" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.097 4.47a.876.876 0 0 0-1.547-.663"
           />
         </g>
       </Icon>

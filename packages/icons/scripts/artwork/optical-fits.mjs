@@ -2,6 +2,32 @@
 // final 16-unit viewBox at primary stroke 1.5, not to recipe padding.
 // Record the optical reason; do not infer a target from bounding-box shape alone.
 export const opticalFits = {
+  "cloud-sync.svg": {
+    targetSpan: 14.993333,
+    center: [8, 8],
+    reason:
+      "Retain the cloud width while raising and compacting the paired arrows.",
+  },
+  "man-woman.svg": {
+    targetSpan: 15.5,
+    center: [8.22, 8],
+    frameSource: "woman.svg",
+    reason:
+      "The combined figures retain the standalone head grid and height; the wider dress shifts the painted bounding-box center slightly right.",
+  },
+  "man.svg": {
+    targetSpan: 15.5,
+    center: [8, 8],
+    frameSource: "woman.svg",
+    reason: "Standing figures share head, shoulder and foot alignment.",
+  },
+  "dark_solid.svg": {
+    targetSpan: 15.5,
+    center: [8, 8],
+    frameSource: "dark.svg",
+    reason:
+      "Fill the shared crescent without enlarging its rim or moving the tips.",
+  },
   "undo.svg": {
     targetSpan: 15.5, center: [8.657184, 8], frameSource: "refresh.svg",
     reason: "Retain the circular-action centre and head size when the return arc ends at the bottom; do not recenter its asymmetric painted bounds.",
@@ -133,14 +159,14 @@ export const opticalFits = {
   "man_solid.svg": {
     targetSpan: 15.5,
     center: [8, 8],
-    frameSource: "man.svg",
+    frameSource: "woman.svg",
     reason:
       "Retain the head and body anchors while opening the leg gap through one complete painted silhouette.",
   },
   "man-woman_solid.svg": {
     targetSpan: 15.5,
-    center: [8, 8],
-    frameSource: "man-woman.svg",
+    center: [8.22, 8],
+    frameSource: "woman.svg",
     reason:
       "Retain the head and body anchors while opening the leg gap through one complete painted silhouette.",
   },
@@ -174,7 +200,7 @@ export const opticalFits = {
       "Preserve the complete cloud rim and the action's exact anchors while subtracting its clearance from one filled silhouette.",
   },
   "cloud-sync_solid.svg": {
-    targetSpan: 15.5,
+    targetSpan: 14.993333,
     center: [8, 8],
     frameSource: "cloud-sync.svg",
     reason:

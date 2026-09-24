@@ -1,3 +1,5 @@
+import { openEntrance } from "./open-entrance.mjs";
+import { standingPerson } from "./standing-person.mjs";
 import { circularArrow } from "./circular-arrow.mjs";
 import { retainedSurface } from "./retained-surface.mjs";
 import { softenedStroke as S, softenedFill as F } from "./contour-profiles.mjs";
@@ -166,34 +168,39 @@ for (let x = storefrontWallLeft; x < storefrontWallRight; x += 0.5) {
     [next, canopyLowerOffset(next)],
   );
 }
-// One set of window, door and wall landmarks for both variants. Painting the
-// same rims over the solid cutouts keeps their openings identical at every
-// supported stroke width; filling the wall never resizes its features.
-const storefrontWindow = box(6.75, 14.25, 4.5, 3.75);
-const storefrontDoorBounds = { left: 13.5, right: 17.25, top: 14.25, bottom: 20.25 };
-const { left: doorLeft, right: doorRight, top: doorTop, bottom: doorBottom } = storefrontDoorBounds;
-const storefrontDoor = box(doorLeft, doorTop, doorRight-doorLeft, doorBottom-doorTop);
+// Shared window and wall landmarks. The outline door is optically narrower,
+// anchored at its right jamb to preserve space beside the framed window.
+// The solid keeps its wider clear entrance; neither variant thins the frame.
+const storefrontWindow = box(6, 14.25, 4.5, 3.75);
+const storefrontEntrance = openEntrance(12.75, 14.25, 18, 20.25);
 const storefrontWall =
-  canopyOffsetPoints.map(([x, y], index) =>
-    `${index ? "L" : "M"}${Number(x.toFixed(6))} ${Number(y.toFixed(6))}`,
-  ).join("") + `V20.25H${storefrontWallLeft}Z`;
+  canopyOffsetPoints
+    .map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(6)} ${y.toFixed(6)}`)
+    .join("") +
+  "V20.25" +
+  storefrontEntrance.notch +
+  `H${storefrontWallLeft}Z`;
 const storefrontGroundJoins = [3.75, 20.25]
-  .map((x) => circularCrossJunction(x, 20.25, 1.65, undefined,
-    [[-1, -1], [1, -1]],
-  )).join("");
-const storefrontDoorJoins = [doorLeft, doorRight]
-  .map((x) => circularCrossJunction(x, 20.25, 1.35, undefined,
-    [[-1, -1], [1, -1]],
-  )).join("");
-const storefrontStructure =
+  .map((x) =>
+    circularCrossJunction(x, 20.25, 1.65, undefined, [
+      [-1, -1],
+      [1, -1],
+    ]),
+  )
+  .join("");
+const storefrontOutlineEntrance = openEntrance(13.875, 14.25, 18, 20.25);
+const storefrontStructure = (entrance) =>
   S(awning) +
-  S(`M3.75 ${storefrontWallCap}V20.25H20.25V${storefrontWallCap}M1.5 20.25h21`) +
-  S(storefrontWindow, 0.9) +
-  S(`M${doorLeft} ${doorBottom}V${doorTop}H${doorRight}V${doorBottom}`) +
-  storefrontGroundJoins + storefrontDoorJoins;
-put("storefront", storefrontStructure,
-  F(awning) + F(storefrontWall + storefrontWindow + storefrontDoor) +
-  storefrontStructure,
+  entrance.frame(
+    `M3.75 ${storefrontWallCap}V20.25${entrance.reverseNotch}H20.25V${storefrontWallCap}`,
+  ) +
+  SF(storefrontWindow, { radius: 1.2 }) +
+  entrance.ground(1.5, 22.5) +
+  storefrontGroundJoins;
+put(
+  "storefront",
+  storefrontStructure(storefrontOutlineEntrance),
+  F(awning) + F(storefrontWall + storefrontWindow) + storefrontStructure(storefrontEntrance),
 );
 
 put(
@@ -759,28 +766,7 @@ put(
     dot(12, 19.5, 1.35) +
     slash(),
 );
-const womanHead = circ(12, 4.5, 2.25);
-const dress = "M10.5 9.75h3L16 17.25H8Z";
-// Like Man, the filled body preserves the complete W=1.5 exterior in the
-// outline frame. Its leg opening reaches the exterior as one notch.
-const womanSolidBody = concavePolygon([
-  [14.252936, 8.7053566], [9.7470636, 8.7053566], [6.5506353, 18.294643],
-  [7.9553571, 18.294643], [7.9553571, 22.794643], [11.25, 22.794643],
-  [11.25, 17.25], [12.75, 17.25], [12.75, 22.794643],
-  [16.044643, 22.794643], [16.044643, 18.294643], [17.449364, 18.294643],
-], .4, new Set([3, 10]));
-// Two flat-ended legs keep an open gap at 12px. The former boxed legs
-// supplied three crowded rails and a bottom divider instead of two limbs.
-// Flat caps stop at the retained solid baseline (the old painted edge), so
-// the shared outline-led fit does not enlarge or clip the solid companion.
-const womanLegJoins = [9.75, 14.25].map((x) =>
-  circularCrossJunction(x, 17.25, 1.5, undefined, [[-1, 1], [1, 1]]),
-).join("");
-put(
-  "woman",
-  S(womanHead) + S(dress) + S("M9.75 17.25V22.794643M14.25 17.25V22.794643") + womanLegJoins,
-  F(womanHead) + S(womanHead) + F(womanSolidBody),
-);
+put("woman", ...standingPerson(12, "dress"));
 const treeCrown =
   "M6.75 18.75a5.25 5.25 0 0 1-1.5-10.25a6.75 6.75 0 0 1 13.5 0a5.25 5.25 0 0 1-1.5 10.25Z";
 // The same closed branch contour supplies positive paint and the inverse

@@ -785,24 +785,29 @@
   "cloud-sync.svg": {
     "groupKey": "cloud-sync.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.022222,
-    "translateX": -0.177778,
-    "translateY": -0.245833
+    "targetSpan": 14.993333,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Retain the cloud width while raising and compacting the paired arrows.",
+    "scale": 1.023191,
+    "translateX": -0.185529,
+    "translateY": 0.538091
   },
   "cloud-sync_solid.svg": {
     "groupKey": "cloud-sync_solid.svg",
     "fitted": true,
-    "targetSpan": 15.5,
+    "targetSpan": 14.993333,
     "opticalCenter": [
       8,
       8
     ],
     "opticalReason": "Preserve the complete cloud rim and the action's exact anchors while subtracting its clearance from one filled silhouette.",
     "frameSource": "cloud-sync.svg",
-    "scale": 1.022222,
-    "translateX": -0.177778,
-    "translateY": -0.245833
+    "scale": 1.023191,
+    "translateX": -0.185529,
+    "translateY": 0.538091
   },
   "cloud-upload.svg": {
     "groupKey": "cloud-upload.svg",
@@ -1074,17 +1079,23 @@
     "groupKey": "dark.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.076923,
-    "translateX": -1.088942,
-    "translateY": -0.548077
+    "scale": 1.142077,
+    "translateX": -1.284153,
+    "translateY": -0.989071
   },
   "dark_solid.svg": {
     "groupKey": "dark_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.192308,
-    "translateX": -1.855168,
-    "translateY": -1.463942
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Fill the shared crescent without enlarging its rim or moving the tips.",
+    "frameSource": "dark.svg",
+    "scale": 1.142077,
+    "translateX": -1.284153,
+    "translateY": -0.989071
   },
   "dashboard.svg": {
     "groupKey": "dashboard.svg",
@@ -2390,31 +2401,43 @@
     "groupKey": "man-woman.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.076923,
-    "translateX": -0.840144,
-    "translateY": -0.615385
+    "opticalCenter": [
+      8.22,
+      8
+    ],
+    "opticalReason": "The combined figures retain the standalone head grid and height; the wider dress shifts the painted bounding-box center slightly right.",
+    "frameSource": "woman.svg",
+    "scale": 1.077626,
+    "translateX": -0.621005,
+    "translateY": -0.616438
   },
   "man-woman_solid.svg": {
     "groupKey": "man-woman_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
     "opticalCenter": [
-      8,
+      8.22,
       8
     ],
     "opticalReason": "Retain the head and body anchors while opening the leg gap through one complete painted silhouette.",
-    "frameSource": "man-woman.svg",
-    "scale": 1.076923,
-    "translateX": -0.840144,
-    "translateY": -0.615385
+    "frameSource": "woman.svg",
+    "scale": 1.077626,
+    "translateX": -0.621005,
+    "translateY": -0.616438
   },
   "man.svg": {
     "groupKey": "man.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.076923,
-    "translateX": -0.615385,
-    "translateY": -0.615385
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Standing figures share head, shoulder and foot alignment.",
+    "frameSource": "woman.svg",
+    "scale": 1.077626,
+    "translateX": -0.621005,
+    "translateY": -0.616438
   },
   "man_solid.svg": {
     "groupKey": "man_solid.svg",
@@ -2425,10 +2448,10 @@
       8
     ],
     "opticalReason": "Retain the head and body anchors while opening the leg gap through one complete painted silhouette.",
-    "frameSource": "man.svg",
-    "scale": 1.076923,
-    "translateX": -0.615385,
-    "translateY": -0.615385
+    "frameSource": "woman.svg",
+    "scale": 1.077626,
+    "translateX": -0.621005,
+    "translateY": -0.616438
   },
   "map.svg": {
     "groupKey": "map.svg",

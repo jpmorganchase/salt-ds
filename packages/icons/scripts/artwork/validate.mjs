@@ -1,3 +1,4 @@
+import { checkStandingFamily } from "./check-standing-family.mjs";
 import { checkStorefrontPair } from "./check-storefront-pair.mjs";
 import { checkStorefrontDoor } from "./check-storefront-door.mjs";
 import fs from "node:fs/promises";
@@ -245,6 +246,7 @@ try {
     checkPrinterPaper,
     checkStorefrontDoor,
     checkStorefrontPair,
+    checkStandingFamily,
     checkOpenApertureSeams,
     checkFeedbackHome,
     checkReviewAb,

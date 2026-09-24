@@ -2,6 +2,13 @@
 // path order and SVG optimization. These checks complement native visual review.
 export async function checkSpecificDrawings(page, records) {
   const names = [
+    ...[
+      "building",
+      "buildings",
+      "hospital",
+      "storefront",
+      "calculator",
+    ].flatMap((name) => [name + ".svg", name + "_solid.svg"]),
     "globe.svg",
     "globe_solid.svg",
     "currency-exchange.svg",
@@ -182,7 +189,111 @@ export async function checkSpecificDrawings(page, records) {
       return delta / Math.max(union, 1);
     };
 
+    // A clear opening needs useful area after the rim is painted. These final
+    // canvas probes guard the small entrances and display at every weight.
+    const entrances = [
+      { name: "building", door: [8, 13.5], window: [5.3, 8.5], axis: "y" },
+      { name: "buildings", door: [5.04, 13.5], window: [3.42, 8.3], axis: "y" },
+      { name: "hospital", door: [8, 13.8], window: [6.3, 9.12], axis: "y" },
+      { name: "storefront", door: [10.37, 12], window: [5.8, 11], axis: "x" },
+    ];
+    const clearEdge = (alpha, point, axis, direction) => {
+      if (at(alpha, ...point) >= 128) return null;
+      for (let step = 1; step < side; step++) {
+        const q = [...point];
+        q[axis === "x" ? 0 : 1] += (direction * step) / scale;
+        if (q.some((v) => v < 0 || v >= 16)) return null;
+        if (at(alpha, ...q) >= 128) return q[axis === "x" ? 0 : 1];
+      }
+      return null;
+    };
+    // Measure visible outline separation independently of solid counters.
+    // A framed window contributes two bands that a filled window does not.
+    const outsideBand = (alpha, point, axis, direction) => {
+      let foundPaint = at(alpha, ...point) >= 128;
+      for (let step = 1; step < side; step++) {
+        const q = [...point];
+        q[axis === "x" ? 0 : 1] += direction * step / scale;
+        if (q.some((v) => v < 0 || v >= 16)) return null;
+        const painted = at(alpha, ...q) >= 128;
+        if (foundPaint && !painted) return q[axis === "x" ? 0 : 1];
+        if (painted) foundPaint = true;
+      }
+      return null;
+    };
     for (const weight of [0.67, 1, 1.333333, 1.5]) {
+      const gaps = [], outlineGaps = [];
+      for (const feature of entrances) {
+        for (const suffix of [".svg", "_solid.svg"]) {
+          const name = feature.name + suffix,
+            alpha = await render(name, weight);
+          const width = runWidth(alpha, ...feature.door, "x", true);
+          record(
+            {
+              name,
+              weight,
+              feature: "readable clear doorway",
+              width,
+              minimumWidth: suffix === ".svg" ? 1.35 : 2,
+            },
+            width >= (suffix === ".svg" ? 1.35 : 2),
+          );
+          if (suffix === ".svg") {
+            const windowEdge = outsideBand(alpha, feature.window, feature.axis, 1);
+            const doorEdge = outsideBand(alpha, feature.door, feature.axis, -1);
+            const gap = windowEdge !== null && doorEdge !== null ? doorEdge - windowEdge : null;
+            outlineGaps.push(gap);
+            record({ name, weight, feature: "visible outline window-to-door gap", gap },
+              gap !== null && gap >= 0.7 && gap <= 2.5);
+            record({ name, weight, feature: "restrained outline doorway frame", outerWidth: width + 2 * weight },
+              width + 2 * weight <= 5);
+            continue;
+          }
+          const windowEdge = clearEdge(alpha, feature.window, feature.axis, 1);
+          const doorEdge = clearEdge(alpha, feature.door, feature.axis, -1);
+          const gap =
+            windowEdge !== null && doorEdge !== null
+              ? doorEdge - windowEdge
+              : null;
+          gaps.push(gap);
+          record(
+            { name, weight, feature: "window-to-door aperture spacing", gap },
+            gap !== null && gap >= 2.1 && gap <= 3.35,
+          );
+        }
+      }
+      const outlineSpread = outlineGaps.every((g) => g !== null)
+        ? Math.max(...outlineGaps) - Math.min(...outlineGaps) : Infinity;
+      record({ name: "architectural outline family", weight, feature: "consistent visible frame spacing", spread: outlineSpread },
+        outlineSpread <= 0.7);
+      const spread = gaps.every((g) => g !== null)
+        ? Math.max(...gaps) - Math.min(...gaps)
+        : Infinity;
+      record(
+        {
+          name: "architectural family",
+          weight,
+          feature: "consistent aperture spacing",
+          spread,
+          maximumSpread: 0.4,
+        },
+        spread <= 0.4,
+      );
+      for (const name of ["calculator.svg", "calculator_solid.svg"]) {
+        const alpha = await render(name, weight);
+        const width = runWidth(alpha, 8, 5.05, "x", true),
+          height = runWidth(alpha, 8, 5.05, "y", true);
+        record(
+          {
+            name,
+            weight,
+            feature: "readable clear calculator display",
+            width,
+            height,
+          },
+          width >= 5 && height >= 2.2,
+        );
+      }
       for (const name of ["globe.svg", "globe_solid.svg"]) {
         const alpha = await render(name, weight);
         const painted = regions(alpha);

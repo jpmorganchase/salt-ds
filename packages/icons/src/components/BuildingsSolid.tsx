@@ -21,14 +21,20 @@ export const BuildingsSolidIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="M1 1h8.077v14H1Zm1.885 2.154h1.077q.269 0 .269.27V4.5q0 .27-.27.27H2.886q-.27 0-.27-.27V3.423q0-.27.27-.27m0 3.232h1.077q.269 0 .269.269V7.73Q4.23 8 3.96 8H2.886q-.27 0-.27-.27V6.655q0-.27.27-.27m0 3.231h1.077q.269 0 .269.27v1.077q0 .269-.27.269H2.886q-.27 0-.27-.27V9.886q0-.27.27-.27m3.23-6.461h1.077q.27 0 .27.27V4.5q0 .27-.27.27H6.115q-.269 0-.269-.27V3.423q0-.27.27-.27m0 3.232h1.076q.27 0 .27.269V7.73q0 .269-.27.269H6.115q-.269 0-.269-.27V6.655q0-.27.27-.27m0 3.231h1.076q.27 0 .27.27v1.077q0 .269-.27.269H6.115q-.269 0-.269-.27V9.886q0-.27.27-.27m-1.886 3.23h1.615V15H4.231Z"
+          d="M1 15V1h8.077v14H6.923v-3.77h-3.77V15ZM2.885 2.615h1.077q.269 0 .269.27v1.077q0 .269-.27.269H2.886q-.27 0-.27-.27V2.886q0-.27.27-.27m0 2.423h1.077q.269 0 .269.27v1.077q0 .269-.27.269H2.886q-.27 0-.27-.27V5.309q0-.27.27-.27m0 2.424h1.077q.269 0 .269.269v1.077q0 .269-.27.269H2.886q-.27 0-.27-.27V7.732q0-.27.27-.27m3.23-4.846h1.077q.27 0 .27.27v1.077q0 .269-.27.269H6.115q-.269 0-.269-.27V2.886q0-.27.27-.27m0 2.423h1.076q.27 0 .27.27v1.077q0 .269-.27.269H6.115q-.269 0-.269-.27V5.309q0-.27.27-.27m0 2.424h1.076q.27 0 .27.269v1.077q0 .269-.27.269H6.115q-.269 0-.269-.27V7.732q0-.27.27-.27"
         />
-        <path d="M5.487 12.846a.36.36 0 0 1 .36.36v-.36zm.359 1.795a.36.36 0 0 1-.359.359h.36zM4.59 15a.36.36 0 0 1-.36-.359V15zm-.36-1.795a.36.36 0 0 1 .36-.359h-.36z" />
+        <path d="M6.923 11.59a.36.36 0 0 0-.359-.36h.36zm-3.41-.36a.36.36 0 0 0-.36.36v-.36z" />
         <path fillRule="evenodd" d="M11.23 5.308H15V15h-3.77Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1 1h8.077v14H1Z"
+          d="M1 15V1h8.077v14H6.923v-3.77h-3.77V15Z"
+        />
+        <path d="M1 2.077A1.077 1.077 0 0 1 2.077 1H1Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M1 2.077A1.077 1.077 0 0 1 2.077 1"
         />
         <path d="M8 1a1.077 1.077 0 0 1 1.077 1.077V1Z" />
         <path
@@ -42,17 +48,35 @@ export const BuildingsSolidIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M9.077 13.923A1.077 1.077 0 0 1 8 15"
         />
+        <path d="M8 15a1.077 1.077 0 0 1-1.077-1.077V15Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M8 15a1.077 1.077 0 0 1-1.077-1.077"
+        />
+        <path d="M3.154 13.923A1.077 1.077 0 0 1 2.077 15h1.077Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M3.154 13.923A1.077 1.077 0 0 1 2.077 15"
+        />
         <path d="M2.077 15A1.077 1.077 0 0 1 1 13.923V15Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M2.077 15A1.077 1.077 0 0 1 1 13.923"
         />
-        <path d="M1 2.077A1.077 1.077 0 0 1 2.077 1H1Z" />
+        <path d="M6.923 12.092a.86.86 0 0 0-.861-.861h.861Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1 2.077A1.077 1.077 0 0 1 2.077 1m9.153 4.308H15V15h-3.77Z"
+          d="M6.923 12.092a.86.86 0 0 0-.861-.861"
+        />
+        <path d="M4.015 11.23a.86.86 0 0 0-.861.862v-.861Z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M4.015 11.23a.86.86 0 0 0-.861.862m8.076-6.784H15V15h-3.77Z"
         />
         <path d="M13.923 5.308A1.077 1.077 0 0 1 15 6.385V5.308Z" />
         <path
@@ -76,7 +100,7 @@ export const BuildingsSolidIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M11.23 6.385a1.077 1.077 0 0 1 1.078-1.077M1 15h14"
+          d="M11.23 6.385a1.077 1.077 0 0 1 1.078-1.077M1 15h2.154m3.77 0H15"
         />
         <path d="M2.22 15A1.22 1.22 0 0 1 1 13.78V15Z" />
         <path

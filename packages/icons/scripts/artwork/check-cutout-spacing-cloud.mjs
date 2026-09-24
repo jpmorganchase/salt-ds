@@ -27,7 +27,7 @@ export async function checkCutoutSpacingCloud(page, records) {
     const neutral = 7 / 6;
     const frames = {
       "cloud-disabled_solid.svg": [1.061611, -0.492891, -0.492891],
-      "cloud-sync_solid.svg": [1.022222, -0.177778, -0.245833],
+      "cloud-sync_solid.svg": [1.023191, -0.185529, 0.538091],
       "cloud-download_solid.svg": [1.061611, -0.492891, -0.921283],
       "cloud-upload_solid.svg": [1.061611, -0.492891, -1.030213],
     };
@@ -128,7 +128,7 @@ export async function checkCutoutSpacingCloud(page, records) {
       };
     }
     function solidProbes(pixels, name, weight) {
-      const markRatio = name === "cloud-disabled_solid.svg" ? 1 : .8;
+      const markRatio = name === "cloud-disabled_solid.svg" ? 1 : 0.8;
       const [s, tx, ty] = frames[name];
       const point = ([x, y]) => [x * s + tx, y * s + ty];
       const probes = [];
@@ -180,22 +180,22 @@ export async function checkCutoutSpacingCloud(page, records) {
           );
         }
       } else if (name === "cloud-sync_solid.svg") {
-        addSide("shaft upper side", [9.2, 9], [0, -1]);
-        addSide("shaft lower side", [9.2, 9], [0, 1]);
-        addSide("upper diagonal side", [6.3, 8.2], [-q, -q]);
-        addSide("lower diagonal side", [5.6, 9.1], [-q, q]);
+        addSide("shaft upper side", [9.2, 8.6], [0, -1]);
+        // The lower shaft pocket now opens outside; there is no opposing cloud boundary.
+        addSide("upper diagonal side", [6.3, 7.8], [-q, -q]);
+        addSide("lower diagonal side", [5.6, 8.7], [-q, q]);
         cap(
           "shaft right cap",
-          [10.5, 9],
+          [10.5, 8.6],
           [1, 0],
           [
             [0, -1],
             [0, 1],
           ],
         );
-        cap("upper head cap", [7.25, 7.25], [q, -q], [[-q, -q]]);
+        cap("upper head cap", [7, 7.1], [q, -q], [[-q, -q]]);
         probes.push({
-          ...ray(pixels, "left miter apex", point([5.5, 9]), [-1, 0]),
+          ...ray(pixels, "left miter apex", point([5.5, 8.6]), [-1, 0]),
           type: "miter",
         });
       } else if (name === "cloud-download_solid.svg") {
@@ -305,14 +305,14 @@ export async function checkCutoutSpacingCloud(page, records) {
               shortestPair(
                 pixels,
                 "left curved cap to arrow miter",
-                [2.65, 8.4, 3.9, 10.35],
-                [4.1, 8.1, 5.25, 9.7],
+                [3.4, 10.5, 4.5, 11.5],
+                [4.65, 8.8, 5.65, 9.7],
               ),
               shortestPair(
                 pixels,
                 "right flat cap to shaft end",
-                [10.25, 8.1, 10.55, 9.66],
-                [11.48, 9.0, 12.2, 10.75],
+                [10.2, 8.7, 10.7, 10.0],
+                [11.4, 10.0, 12.3, 11.6],
               ),
             ];
           }

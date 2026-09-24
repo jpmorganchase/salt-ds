@@ -20,7 +20,13 @@ export const HospitalIcon = forwardRef<SVGSVGElement, HospitalIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.03.988h7.94v13.988H4.03Z"
+            d="M4.03 14.976V.988h7.94v13.988H9.7v-3.024H6.3v3.024Z"
+          />
+          <path d="M4.03 2.122A1.134 1.134 0 0 1 5.165.988H4.03Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M4.03 2.122A1.134 1.134 0 0 1 5.165.988"
           />
           <path d="M10.835.988a1.134 1.134 0 0 1 1.135 1.134V.988Z" />
           <path
@@ -34,17 +40,35 @@ export const HospitalIcon = forwardRef<SVGSVGElement, HospitalIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M11.97 13.842a1.134 1.134 0 0 1-1.135 1.134"
           />
+          <path d="M10.835 14.976a1.134 1.134 0 0 1-1.134-1.134v1.134Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M10.835 14.976a1.134 1.134 0 0 1-1.134-1.134"
+          />
+          <path d="M6.299 13.842a1.134 1.134 0 0 1-1.134 1.134h1.134Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M6.299 13.842a1.134 1.134 0 0 1-1.134 1.134"
+          />
           <path d="M5.165 14.976a1.134 1.134 0 0 1-1.135-1.134v1.134Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M5.165 14.976a1.134 1.134 0 0 1-1.135-1.134"
           />
-          <path d="M4.03 2.122A1.134 1.134 0 0 1 5.165.988H4.03Z" />
+          <path d="M9.701 12.86a.907.907 0 0 0-.907-.908H9.7Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.03 2.122A1.134 1.134 0 0 1 5.165.988m-3.97 13.988h13.61"
+            d="M9.701 12.86a.907.907 0 0 0-.907-.908"
+          />
+          <path d="M7.206 11.952a.907.907 0 0 0-.907.907v-.907Z" />
+          <path
+            fill="none"
+            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+            d="M7.206 11.952a.907.907 0 0 0-.907.907m-5.104 2.117h4.82m3.97 0h4.82"
           />
           <path d="M2.745 14.976a1.285 1.285 0 0 0 1.285-1.285v1.285Z" />
           <path
@@ -68,31 +92,7 @@ export const HospitalIcon = forwardRef<SVGSVGElement, HospitalIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M13.255 14.976a1.285 1.285 0 0 1-1.285-1.285M5.732 9.684h1.134m2.268 0h1.134m-3.402 5.292V12.52h2.268v2.457"
-          />
-          <path d="M6.866 13.653A1.134 1.134 0 0 1 8 12.52H6.866Z" />
-          <path
-            fill="none"
-            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M6.866 13.653A1.134 1.134 0 0 1 8 12.52"
-          />
-          <path d="M8 12.519a1.134 1.134 0 0 1 1.134 1.134V12.52Z" />
-          <path
-            fill="none"
-            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8 12.519a1.134 1.134 0 0 1 1.134 1.134"
-          />
-          <path d="M5.807 14.976a1.06 1.06 0 0 0 1.059-1.058v1.058Z" />
-          <path
-            fill="none"
-            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M5.807 14.976a1.06 1.06 0 0 0 1.059-1.058"
-          />
-          <path d="M10.193 14.976a1.06 1.06 0 0 1-1.059-1.058v1.058Z" />
-          <path
-            fill="none"
-            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M10.193 14.976a1.06 1.06 0 0 1-1.059-1.058"
+            d="M13.255 14.976a1.285 1.285 0 0 1-1.285-1.285M5.732 9.116h1.134m2.268 0h1.134"
           />
           <path
             fillRule="evenodd"
