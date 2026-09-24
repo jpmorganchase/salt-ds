@@ -2,9 +2,10 @@
 "@salt-ds/core": patch
 ---
 
-Fixed `InteractableCard` disabled states so disabled cards no longer respond to pointer or keyboard interactions or display hover and pressed styles.
+Fixed disabled `InteractableCard` components responding to pointer or keyboard interactions and displaying hover or pressed styles.
 
-Improved `InteractableCardGroup` keyboard navigation to follow the ARIA radio pattern: arrow keys no longer trigger browser scrolling, disabled cards are skipped, and an unselected group or a group whose selected card is disabled focuses the first enabled card.
+Improved `InteractableCardGroup` keyboard navigation. Arrow keys no longer scroll the page, disabled cards are skipped, and focus moves to the first enabled card when no enabled card is selected.
 
-Fixed an `InteractableCardGroup` that is re-enabled after being disabled being unreachable with Tab when its cards are hoisted or memoized.
-Preserved the selected border on disabled cards, including cards with `borderColor="none"`, while keeping disabled hover and pressed effects suppressed.
+Fixed an `InteractableCardGroup` becoming unreachable with Tab after it is re-enabled.
+
+Disabled cards now retain their selected border without displaying hover or pressed effects.
