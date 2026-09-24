@@ -74,6 +74,40 @@
   --salt-text-textDecoration: var(--salt-typography-textDecoration-none);
   --salt-text-textTransform: none;
 
+  /* Text */
+  --salt-text-h1-fontFamily: var(--salt-text-heading-fontFamily);
+  --salt-text-h1-fontWeight: var(--salt-text-heading-fontWeight);
+  --salt-text-h1-fontWeight-small: var(--salt-text-heading-fontWeight-small);
+  --salt-text-h1-fontWeight-strong: var(--salt-text-heading-fontWeight-strong);
+  --salt-text-h2-fontFamily: var(--salt-text-heading-fontFamily);
+  --salt-text-h2-fontWeight: var(--salt-text-heading-fontWeight);
+  --salt-text-h2-fontWeight-small: var(--salt-text-heading-fontWeight-small);
+  --salt-text-h2-fontWeight-strong: var(--salt-text-heading-fontWeight-strong);
+  --salt-text-h3-fontFamily: var(--salt-text-heading-fontFamily);
+  --salt-text-h3-fontWeight: var(--salt-text-heading-fontWeight);
+  --salt-text-h3-fontWeight-small: var(--salt-text-heading-fontWeight-small);
+  --salt-text-h3-fontWeight-strong: var(--salt-text-heading-fontWeight-strong);
+  --salt-text-h4-fontFamily: var(--salt-text-heading-fontFamily);
+  --salt-text-h4-fontWeight: var(--salt-text-heading-fontWeight);
+  --salt-text-h4-fontWeight-small: var(--salt-text-heading-fontWeight-small);
+  --salt-text-h4-fontWeight-strong: var(--salt-text-heading-fontWeight-strong);
+  --salt-text-display1-fontFamily: var(--salt-text-display-fontFamily);
+  --salt-text-display1-fontWeight: var(--salt-text-display-fontWeight);
+  --salt-text-display1-fontWeight-small: var(--salt-text-display-fontWeight-small);
+  --salt-text-display1-fontWeight-strong: var(--salt-text-display-fontWeight-strong);
+  --salt-text-display2-fontFamily: var(--salt-text-display-fontFamily);
+  --salt-text-display2-fontWeight: var(--salt-text-display-fontWeight);
+  --salt-text-display2-fontWeight-small: var(--salt-text-display-fontWeight-small);
+  --salt-text-display2-fontWeight-strong: var(--salt-text-display-fontWeight-strong);
+  --salt-text-display3-fontFamily: var(--salt-text-display-fontFamily);
+  --salt-text-display3-fontWeight: var(--salt-text-display-fontWeight);
+  --salt-text-display3-fontWeight-small: var(--salt-text-display-fontWeight-small);
+  --salt-text-display3-fontWeight-strong: var(--salt-text-display-fontWeight-strong);
+  --salt-text-display4-fontFamily: var(--salt-text-display-fontFamily);
+  --salt-text-display4-fontWeight: var(--salt-text-display-fontWeight);
+  --salt-text-display4-fontWeight-small: var(--salt-text-display-fontWeight-small);
+  --salt-text-display4-fontWeight-strong: var(--salt-text-display-fontWeight-strong);
+
   /* Navigable */
   --salt-navigable-cursor-active: pointer;
   --salt-navigable-cursor-hover: pointer;

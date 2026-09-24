@@ -23,7 +23,7 @@
 
 /* Styles applied to status title */
 .saltContentStatus-title.saltText {
-  font-weight: var(--salt-text-display1-fontWeight);
+  font-weight: var(--salt-text-display-fontWeight);
   /* TODO: Use correct token */
 }
 

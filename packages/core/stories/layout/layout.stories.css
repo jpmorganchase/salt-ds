@@ -20,7 +20,7 @@
 .footer-column p:first-child {
   color: var(--salt-content-secondary-foreground);
   font-size: var(--salt-text-h3-fontSize);
-  font-weight: var(--salt-text-h3-fontWeight-strong);
+  font-weight: var(--salt-text-heading-fontWeight-strong);
   line-height: var(--salt-text-h3-lineHeight);
   letter-spacing: var(--salt-text-letterSpacing);
 }
