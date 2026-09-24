@@ -20,43 +20,31 @@ export const SyncIcon = forwardRef<SVGSVGElement, SyncIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.111 8a6.889 6.889 0 0 1 11.76-4.871m-2.87 0h2.87V.259M14.89 8a6.889 6.889 0 0 1-11.76 4.871m2.87 0H3.13v2.87"
+            d="M1 8a7 7 0 0 1 12.686-4.083m-2.917 0h2.917V1M15 8a7 7 0 0 1-12.686 4.083m2.917 0H2.314V15"
           />
-          <path d="M11.723 3.129a1.15 1.15 0 0 0 1.148-1.148v1.148Z" />
+          <path d="M11.535 3.917a.894.894 0 0 0 .518-1.624 7 7 0 0 1 1.633 1.624Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M11.723 3.129a1.15 1.15 0 0 0 1.148-1.148"
+            d="M11.535 3.917a.894.894 0 0 0 .518-1.624"
           />
-          <path d="M4.277 12.871a1.15 1.15 0 0 0-1.148 1.148v-1.148Z" />
+          <path d="M13.686 1.726a.894.894 0 0 1-1.438.71 7 7 0 0 1 1.438 1.48Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M4.277 12.871a1.15 1.15 0 0 0-1.148 1.148"
+            d="M13.686 1.726a.894.894 0 0 1-1.438.71"
           />
-          <path d="M10.651 3.129q2.88 0 .563-1.222a6.9 6.9 0 0 1 1.657 1.222Z" />
+          <path d="M4.465 12.083a.894.894 0 0 0-.518 1.624 7 7 0 0 1-1.633-1.624Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M10.651 3.129q2.88 0 .563-1.222"
+            d="M4.465 12.083a.894.894 0 0 0-.518 1.624"
           />
-          <path d="M12.871.909q0 1.872-1.657.998a6.9 6.9 0 0 1 1.657 1.222Z" />
+          <path d="M2.314 14.274a.894.894 0 0 1 1.438-.71 7 7 0 0 1-1.438-1.48Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M12.871.909q0 1.872-1.657.998"
-          />
-          <path d="M5.349 12.871q-2.88 0-.563 1.222a6.9 6.9 0 0 1-1.657-1.222Z" />
-          <path
-            fill="none"
-            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M5.349 12.871q-2.88 0-.563 1.222"
-          />
-          <path d="M3.129 15.091q0-1.872 1.657-.998a6.9 6.9 0 0 1-1.657-1.222Z" />
-          <path
-            fill="none"
-            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M3.129 15.091q0-1.872 1.657-.998"
+            d="M2.314 14.274a.894.894 0 0 1 1.438-.71"
           />
         </g>
       </Icon>

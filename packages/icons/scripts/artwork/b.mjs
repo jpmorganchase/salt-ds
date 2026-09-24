@@ -1,3 +1,4 @@
+import { retainedSurface } from "./retained-surface.mjs";
 import { softenedStroke as S, softenedFill as F } from "./contour-profiles.mjs";
 import { softenedRect as R, softenedFrame as SF } from "./contour-profiles.mjs";
 import { weldedPlusContour } from "./additions-marks.mjs";
@@ -109,7 +110,7 @@ add(
   "favorite-half",
   S(star) + F("M12 2.75V17.7L6.2 20.75L7.35 14.2L2.6 9.6L9.15 8.7Z"),
 );
-add("favorite", S(star), F(star));
+add("favorite", ...retainedSurface(star));
 // Inset the bold star so its stroke and sharp tips stay inside the canvas.
 add(
   "favorite_strong",
@@ -149,11 +150,12 @@ add(
   S(clearFunnel) + filterClearMark,
   F(clearFunnel) + S(clearFunnel) + filterClearMark,
 );
-add(
-  "first",
-  S("M4.5 4.5V19.5M16.5 4.5L9 12L16.5 19.5") +
-    angledJunction(9, 12, [1, -1], [1, 1], 2),
-);
+// A compact, nearly square pagination control. At its reviewed optical fit,
+// the boundary bar and diagonal caps approach the original 12px pixel grid.
+const firstPage =
+  S("M5 4V20M19.292894 4.707106L12 12L19.292894 19.292894") +
+  angledJunction(12, 12, [1, -1], [1, 1], 2);
+add("first", firstPage);
 const flag =
   "M5.25 4.5H11.25L14.25 7.5H20.25L17.25 12L20.25 16.5H12.75L9.75 13.5H5.25Z";
 const flagRoots = [4.5, 13.5]
@@ -409,7 +411,8 @@ add(
 );
 add(
   "history",
-  S("M3.75 8.25A9 9 0 1 1 12 21M3.75 2.75V8.25H9.25M12 6V12L16 14.66667") +
+  stroke("M3.75 8.25A9 9 0 1 1 12 21M3.75 2.75V8.25H9.25") +
+    S("M12 6V12L16 14.66667") +
     historyArrowRoots(),
 );
 const umbrella = "M10 11.25Q13.5 5.75 18 8.75Q21.75 11 21 14.25Z";
@@ -612,11 +615,7 @@ add(
   S(key) + F(circ(8.65, 8.65, 1.5)),
   F(key + circ(8.65, 8.65, 1.5)) + S(key),
 );
-add(
-  "last",
-  S("M19.5 4.5V19.5M7.5 4.5L15 12L7.5 19.5") +
-    angledJunction(15, 12, [-1, -1], [-1, 1], 2),
-);
+add("last", turn(firstPage, 180));
 const topLayer = "M12 2.75L21.25 7.5L12 12.25L2.75 7.5Z";
 const otherLayers = S(
   "M2.75 12L12 16.75L21.25 12M2.75 16.5L12 21.25L21.25 16.5",

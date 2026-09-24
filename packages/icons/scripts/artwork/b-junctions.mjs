@@ -1,4 +1,5 @@
 import { S } from "./primitives.mjs";
+import { tangentCircularHeadJoins } from "./cd-junctions.mjs";
 import { circularCrossJunction } from "./junctions.mjs";
 import { radialCircleJunction } from "./structural-junctions.mjs";
 const n = (value) => Number(value.toFixed(6));
@@ -77,32 +78,13 @@ export function insideBoxCorners(x, y, width, height, radius = 1.5) {
 export function historyArrowRoots() {
   const tip = [3.75, 8.25],
     end = [12, 21],
-    radius = 9,
-    reach = 1.6;
+    radius = 9;
   const dx = end[0] - tip[0],
     dy = end[1] - tip[1],
     chord = Math.hypot(dx, dy);
   const offset = Math.sqrt(radius * radius - (chord * chord) / 4);
   const cx = (tip[0] + end[0]) / 2 + (dy / chord) * offset;
   const cy = (tip[1] + end[1]) / 2 - (dx / chord) * offset;
-  const outsideX = tip[0] + reach;
-  const outsideY = cy - Math.sqrt((radius + reach) ** 2 - (outsideX - cx) ** 2);
-  const outsideTouch = [
-    cx + ((outsideX - cx) * radius) / (radius + reach),
-    cy + ((outsideY - cy) * radius) / (radius + reach),
-  ];
-  const insideY = tip[1] - reach;
-  const insideX = cx - Math.sqrt((radius - reach) ** 2 - (insideY - cy) ** 2);
-  const insideTouch = [
-    cx + ((insideX - cx) * radius) / (radius - reach),
-    cy + ((insideY - cy) * radius) / (radius - reach),
-  ];
-  const outerArc = `M${p(tip[0], outsideY)}A${reach} ${reach} 0 0 0 ${p(...outsideTouch)}`;
-  const innerArc = `M${p(...insideTouch)}A${reach} ${reach} 0 0 0 ${p(insideX, tip[1])}`;
-  return (
-    `<path d="${outerArc}A9 9 0 0 0 ${p(...tip)}Z" fill="currentColor"/>` +
-    S(outerArc) +
-    `<path d="${innerArc}L${p(...tip)}A9 9 0 0 1 ${p(...insideTouch)}Z" fill="currentColor"/>` +
-    S(innerArc)
-  );
+  return tangentCircularHeadJoins(cx, cy, radius, tip, 1,
+    [[0, -5.5], [5.5, 0]], 1.25);
 }

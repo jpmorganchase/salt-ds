@@ -1,0 +1,18 @@
+Checked key-control: 1 registered variant(s).
+Checked close: 1 registered variant(s).
+Checked close_small: 1 registered variant(s).
+Checked first: 1 registered variant(s).
+Checked last: 1 registered variant(s).
+Checked triangle-up: 1 registered variant(s).
+Checked triangle-down: 1 registered variant(s).
+Checked triangle-left: 1 registered variant(s).
+Checked triangle-right: 1 registered variant(s).
+Checked triangle-right-down: 1 registered variant(s).
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 233 (triangle-up): synonym term 6 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 229 (triangle-down): synonym term 7 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 230 (triangle-left): synonym term 6 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 231 (triangle-right): synonym term 5 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+
+PASS: 10 requested meaning(s), 10 registered variant(s), 0 error(s), 4 warning(s).
+Limits: registration checks only; no visual/semantic relevance, generated-geometry equivalence, or recipe execution checks. generate:icons and validate:icons own effective recipe and geometry validation.
+Search normalization: the query is lowercased and whitespace is removed; stored synonym terms are not normalized. Hyphens are removed only when matching metadata iconName to component names; optional Solid and case-insensitive matching follow IconPreview.tsx.

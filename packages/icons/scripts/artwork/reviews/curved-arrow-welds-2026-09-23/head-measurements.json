@@ -1,0 +1,1874 @@
+[
+  {
+    "name": "replay-5.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.64,
+    "extraPaintArea": 0.4919
+  },
+  {
+    "name": "replay-5.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.44,
+    "extraPaintArea": 0.8999
+  },
+  {
+    "name": "replay-5.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.62,
+    "extraPaintArea": 0.2807
+  },
+  {
+    "name": "replay-5.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.42,
+    "extraPaintArea": 0.5661
+  },
+  {
+    "name": "replay-5.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.58,
+    "extraPaintArea": 0.1315
+  },
+  {
+    "name": "replay-5.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.38,
+    "extraPaintArea": 0.2934
+  },
+  {
+    "name": "replay-5.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.56,
+    "extraPaintArea": 0.0791
+  },
+  {
+    "name": "replay-5.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.36,
+    "extraPaintArea": 0.1863
+  },
+  {
+    "name": "replay-5.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.3212
+  },
+  {
+    "name": "replay-5.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.94,
+    "extraPaintArea": 0.4799
+  },
+  {
+    "name": "replay-5.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.9,
+    "extraPaintArea": 0.1525
+  },
+  {
+    "name": "replay-5.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.2534
+  },
+  {
+    "name": "replay-5.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.0489
+  },
+  {
+    "name": "replay-5.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.88,
+    "extraPaintArea": 0.0903
+  },
+  {
+    "name": "replay-5.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.82,
+    "extraPaintArea": 0.0191
+  },
+  {
+    "name": "replay-5.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.0382
+  },
+  {
+    "name": "replay-10.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.64,
+    "extraPaintArea": 0.4919
+  },
+  {
+    "name": "replay-10.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.44,
+    "extraPaintArea": 0.8999
+  },
+  {
+    "name": "replay-10.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.62,
+    "extraPaintArea": 0.2807
+  },
+  {
+    "name": "replay-10.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.42,
+    "extraPaintArea": 0.5661
+  },
+  {
+    "name": "replay-10.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.58,
+    "extraPaintArea": 0.1315
+  },
+  {
+    "name": "replay-10.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.38,
+    "extraPaintArea": 0.2934
+  },
+  {
+    "name": "replay-10.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.56,
+    "extraPaintArea": 0.0791
+  },
+  {
+    "name": "replay-10.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.36,
+    "extraPaintArea": 0.1863
+  },
+  {
+    "name": "replay-10.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.3212
+  },
+  {
+    "name": "replay-10.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.94,
+    "extraPaintArea": 0.4799
+  },
+  {
+    "name": "replay-10.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.9,
+    "extraPaintArea": 0.1525
+  },
+  {
+    "name": "replay-10.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.2534
+  },
+  {
+    "name": "replay-10.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.0489
+  },
+  {
+    "name": "replay-10.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.88,
+    "extraPaintArea": 0.0903
+  },
+  {
+    "name": "replay-10.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.82,
+    "extraPaintArea": 0.0191
+  },
+  {
+    "name": "replay-10.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.0382
+  },
+  {
+    "name": "replay-15.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.64,
+    "extraPaintArea": 0.4919
+  },
+  {
+    "name": "replay-15.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.44,
+    "extraPaintArea": 0.8999
+  },
+  {
+    "name": "replay-15.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.62,
+    "extraPaintArea": 0.2807
+  },
+  {
+    "name": "replay-15.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.42,
+    "extraPaintArea": 0.5661
+  },
+  {
+    "name": "replay-15.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.58,
+    "extraPaintArea": 0.1315
+  },
+  {
+    "name": "replay-15.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.38,
+    "extraPaintArea": 0.2934
+  },
+  {
+    "name": "replay-15.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.56,
+    "extraPaintArea": 0.0791
+  },
+  {
+    "name": "replay-15.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.36,
+    "extraPaintArea": 0.1863
+  },
+  {
+    "name": "replay-15.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.3212
+  },
+  {
+    "name": "replay-15.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.94,
+    "extraPaintArea": 0.4799
+  },
+  {
+    "name": "replay-15.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.9,
+    "extraPaintArea": 0.1525
+  },
+  {
+    "name": "replay-15.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.2534
+  },
+  {
+    "name": "replay-15.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.0489
+  },
+  {
+    "name": "replay-15.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.88,
+    "extraPaintArea": 0.0903
+  },
+  {
+    "name": "replay-15.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.82,
+    "extraPaintArea": 0.0191
+  },
+  {
+    "name": "replay-15.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.0382
+  },
+  {
+    "name": "replay-30.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.64,
+    "extraPaintArea": 0.4919
+  },
+  {
+    "name": "replay-30.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.44,
+    "extraPaintArea": 0.8999
+  },
+  {
+    "name": "replay-30.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.62,
+    "extraPaintArea": 0.2807
+  },
+  {
+    "name": "replay-30.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.42,
+    "extraPaintArea": 0.5661
+  },
+  {
+    "name": "replay-30.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.58,
+    "extraPaintArea": 0.1315
+  },
+  {
+    "name": "replay-30.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.38,
+    "extraPaintArea": 0.2934
+  },
+  {
+    "name": "replay-30.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.56,
+    "extraPaintArea": 0.0791
+  },
+  {
+    "name": "replay-30.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.36,
+    "extraPaintArea": 0.1863
+  },
+  {
+    "name": "replay-30.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.3212
+  },
+  {
+    "name": "replay-30.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.94,
+    "extraPaintArea": 0.4799
+  },
+  {
+    "name": "replay-30.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.9,
+    "extraPaintArea": 0.1525
+  },
+  {
+    "name": "replay-30.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.2534
+  },
+  {
+    "name": "replay-30.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.0489
+  },
+  {
+    "name": "replay-30.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.88,
+    "extraPaintArea": 0.0903
+  },
+  {
+    "name": "replay-30.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.82,
+    "extraPaintArea": 0.0191
+  },
+  {
+    "name": "replay-30.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.0382
+  },
+  {
+    "name": "forward-5.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.64,
+    "extraPaintArea": 0.4921
+  },
+  {
+    "name": "forward-5.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.44,
+    "extraPaintArea": 0.8999
+  },
+  {
+    "name": "forward-5.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.62,
+    "extraPaintArea": 0.2809
+  },
+  {
+    "name": "forward-5.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.42,
+    "extraPaintArea": 0.5661
+  },
+  {
+    "name": "forward-5.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.58,
+    "extraPaintArea": 0.1316
+  },
+  {
+    "name": "forward-5.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.38,
+    "extraPaintArea": 0.2934
+  },
+  {
+    "name": "forward-5.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.56,
+    "extraPaintArea": 0.0792
+  },
+  {
+    "name": "forward-5.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.36,
+    "extraPaintArea": 0.1863
+  },
+  {
+    "name": "forward-5.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.3214
+  },
+  {
+    "name": "forward-5.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.94,
+    "extraPaintArea": 0.4798
+  },
+  {
+    "name": "forward-5.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.9,
+    "extraPaintArea": 0.1527
+  },
+  {
+    "name": "forward-5.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.2534
+  },
+  {
+    "name": "forward-5.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.049
+  },
+  {
+    "name": "forward-5.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.88,
+    "extraPaintArea": 0.0903
+  },
+  {
+    "name": "forward-5.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.82,
+    "extraPaintArea": 0.0191
+  },
+  {
+    "name": "forward-5.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.0382
+  },
+  {
+    "name": "forward-10.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.64,
+    "extraPaintArea": 0.4921
+  },
+  {
+    "name": "forward-10.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.44,
+    "extraPaintArea": 0.8999
+  },
+  {
+    "name": "forward-10.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.62,
+    "extraPaintArea": 0.2809
+  },
+  {
+    "name": "forward-10.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.42,
+    "extraPaintArea": 0.5661
+  },
+  {
+    "name": "forward-10.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.58,
+    "extraPaintArea": 0.1316
+  },
+  {
+    "name": "forward-10.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.38,
+    "extraPaintArea": 0.2934
+  },
+  {
+    "name": "forward-10.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.56,
+    "extraPaintArea": 0.0792
+  },
+  {
+    "name": "forward-10.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.36,
+    "extraPaintArea": 0.1863
+  },
+  {
+    "name": "forward-10.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.3214
+  },
+  {
+    "name": "forward-10.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.94,
+    "extraPaintArea": 0.4798
+  },
+  {
+    "name": "forward-10.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.9,
+    "extraPaintArea": 0.1527
+  },
+  {
+    "name": "forward-10.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.2534
+  },
+  {
+    "name": "forward-10.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.049
+  },
+  {
+    "name": "forward-10.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.88,
+    "extraPaintArea": 0.0903
+  },
+  {
+    "name": "forward-10.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.82,
+    "extraPaintArea": 0.0191
+  },
+  {
+    "name": "forward-10.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.0382
+  },
+  {
+    "name": "forward-15.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.64,
+    "extraPaintArea": 0.4921
+  },
+  {
+    "name": "forward-15.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.44,
+    "extraPaintArea": 0.8999
+  },
+  {
+    "name": "forward-15.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.62,
+    "extraPaintArea": 0.2809
+  },
+  {
+    "name": "forward-15.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.42,
+    "extraPaintArea": 0.5661
+  },
+  {
+    "name": "forward-15.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.58,
+    "extraPaintArea": 0.1316
+  },
+  {
+    "name": "forward-15.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.38,
+    "extraPaintArea": 0.2934
+  },
+  {
+    "name": "forward-15.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.56,
+    "extraPaintArea": 0.0792
+  },
+  {
+    "name": "forward-15.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.36,
+    "extraPaintArea": 0.1863
+  },
+  {
+    "name": "forward-15.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.3214
+  },
+  {
+    "name": "forward-15.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.94,
+    "extraPaintArea": 0.4798
+  },
+  {
+    "name": "forward-15.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.9,
+    "extraPaintArea": 0.1527
+  },
+  {
+    "name": "forward-15.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.2534
+  },
+  {
+    "name": "forward-15.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.049
+  },
+  {
+    "name": "forward-15.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.88,
+    "extraPaintArea": 0.0903
+  },
+  {
+    "name": "forward-15.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.82,
+    "extraPaintArea": 0.0191
+  },
+  {
+    "name": "forward-15.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.0382
+  },
+  {
+    "name": "forward-30.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.64,
+    "extraPaintArea": 0.4921
+  },
+  {
+    "name": "forward-30.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.44,
+    "extraPaintArea": 0.8999
+  },
+  {
+    "name": "forward-30.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.62,
+    "extraPaintArea": 0.2809
+  },
+  {
+    "name": "forward-30.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.42,
+    "extraPaintArea": 0.5661
+  },
+  {
+    "name": "forward-30.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.58,
+    "extraPaintArea": 0.1316
+  },
+  {
+    "name": "forward-30.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.38,
+    "extraPaintArea": 0.2934
+  },
+  {
+    "name": "forward-30.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.56,
+    "extraPaintArea": 0.0792
+  },
+  {
+    "name": "forward-30.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.36,
+    "extraPaintArea": 0.1863
+  },
+  {
+    "name": "forward-30.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.3214
+  },
+  {
+    "name": "forward-30.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.94,
+    "extraPaintArea": 0.4798
+  },
+  {
+    "name": "forward-30.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.9,
+    "extraPaintArea": 0.1527
+  },
+  {
+    "name": "forward-30.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.2534
+  },
+  {
+    "name": "forward-30.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.049
+  },
+  {
+    "name": "forward-30.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.88,
+    "extraPaintArea": 0.0903
+  },
+  {
+    "name": "forward-30.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.82,
+    "extraPaintArea": 0.0191
+  },
+  {
+    "name": "forward-30.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.0382
+  },
+  {
+    "name": "history.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.98,
+    "extraPaintArea": 0.8476
+  },
+  {
+    "name": "history.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 2.12,
+    "extraPaintArea": 0.9633
+  },
+  {
+    "name": "history.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.96,
+    "extraPaintArea": 0.5741
+  },
+  {
+    "name": "history.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 2.1,
+    "extraPaintArea": 0.6326
+  },
+  {
+    "name": "history.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.3492
+  },
+  {
+    "name": "history.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 2.08,
+    "extraPaintArea": 0.3789
+  },
+  {
+    "name": "history.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.256
+  },
+  {
+    "name": "history.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 2.06,
+    "extraPaintArea": 0.2776
+  },
+  {
+    "name": "history.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 1.52,
+    "extraPaintArea": 0.5024
+  },
+  {
+    "name": "history.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 2.72,
+    "extraPaintArea": 0.39
+  },
+  {
+    "name": "history.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 1.5,
+    "extraPaintArea": 0.2785
+  },
+  {
+    "name": "history.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 2.68,
+    "extraPaintArea": 0.205
+  },
+  {
+    "name": "history.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 1.46,
+    "extraPaintArea": 0.1132
+  },
+  {
+    "name": "history.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 2.64,
+    "extraPaintArea": 0.0883
+  },
+  {
+    "name": "history.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 1.44,
+    "extraPaintArea": 0.0587
+  },
+  {
+    "name": "history.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 2.62,
+    "extraPaintArea": 0.0474
+  },
+  {
+    "name": "sync.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 1.46,
+    "extraPaintArea": 0.043
+  },
+  {
+    "name": "sync.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 1.12,
+    "extraPaintArea": 0.27
+  },
+  {
+    "name": "sync.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 1.38,
+    "extraPaintArea": 0.0077
+  },
+  {
+    "name": "sync.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 1.1,
+    "extraPaintArea": 0.1419
+  },
+  {
+    "name": "sync.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.74,
+    "extraPaintArea": 0.0003
+  },
+  {
+    "name": "sync.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 1.1,
+    "extraPaintArea": 0.0569
+  },
+  {
+    "name": "sync.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.36,
+    "extraPaintArea": 0
+  },
+  {
+    "name": "sync.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 1.08,
+    "extraPaintArea": 0.0328
+  },
+  {
+    "name": "sync.svg",
+    "stage": "before",
+    "head": 2,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 1.46,
+    "extraPaintArea": 0.0432
+  },
+  {
+    "name": "sync.svg",
+    "stage": "before",
+    "head": 2,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 1.12,
+    "extraPaintArea": 0.2712
+  },
+  {
+    "name": "sync.svg",
+    "stage": "before",
+    "head": 2,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 1.38,
+    "extraPaintArea": 0.0089
+  },
+  {
+    "name": "sync.svg",
+    "stage": "before",
+    "head": 2,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 1.1,
+    "extraPaintArea": 0.1413
+  },
+  {
+    "name": "sync.svg",
+    "stage": "before",
+    "head": 2,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.74,
+    "extraPaintArea": 0.0004
+  },
+  {
+    "name": "sync.svg",
+    "stage": "before",
+    "head": 2,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 1.1,
+    "extraPaintArea": 0.0569
+  },
+  {
+    "name": "sync.svg",
+    "stage": "before",
+    "head": 2,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.36,
+    "extraPaintArea": 0
+  },
+  {
+    "name": "sync.svg",
+    "stage": "before",
+    "head": 2,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 1.08,
+    "extraPaintArea": 0.0327
+  },
+  {
+    "name": "sync.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.94,
+    "extraPaintArea": 0.477
+  },
+  {
+    "name": "sync.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.3239
+  },
+  {
+    "name": "sync.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.2496
+  },
+  {
+    "name": "sync.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.9,
+    "extraPaintArea": 0.1551
+  },
+  {
+    "name": "sync.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.88,
+    "extraPaintArea": 0.0884
+  },
+  {
+    "name": "sync.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.0507
+  },
+  {
+    "name": "sync.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.0367
+  },
+  {
+    "name": "sync.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.82,
+    "extraPaintArea": 0.02
+  },
+  {
+    "name": "sync.svg",
+    "stage": "after",
+    "head": 2,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.98,
+    "extraPaintArea": 0.478
+  },
+  {
+    "name": "sync.svg",
+    "stage": "after",
+    "head": 2,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.3226
+  },
+  {
+    "name": "sync.svg",
+    "stage": "after",
+    "head": 2,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.2503
+  },
+  {
+    "name": "sync.svg",
+    "stage": "after",
+    "head": 2,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.9,
+    "extraPaintArea": 0.1553
+  },
+  {
+    "name": "sync.svg",
+    "stage": "after",
+    "head": 2,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.88,
+    "extraPaintArea": 0.0886
+  },
+  {
+    "name": "sync.svg",
+    "stage": "after",
+    "head": 2,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.0509
+  },
+  {
+    "name": "sync.svg",
+    "stage": "after",
+    "head": 2,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.0368
+  },
+  {
+    "name": "sync.svg",
+    "stage": "after",
+    "head": 2,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.82,
+    "extraPaintArea": 0.0201
+  },
+  {
+    "name": "sparkle-refresh.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 1.48,
+    "extraPaintArea": 0.0442
+  },
+  {
+    "name": "sparkle-refresh.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 1.1,
+    "extraPaintArea": 0.2726
+  },
+  {
+    "name": "sparkle-refresh.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 1.4,
+    "extraPaintArea": 0.0103
+  },
+  {
+    "name": "sparkle-refresh.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 1.1,
+    "extraPaintArea": 0.1427
+  },
+  {
+    "name": "sparkle-refresh.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.76,
+    "extraPaintArea": 0.0005
+  },
+  {
+    "name": "sparkle-refresh.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 1.08,
+    "extraPaintArea": 0.058
+  },
+  {
+    "name": "sparkle-refresh.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.4,
+    "extraPaintArea": 0
+  },
+  {
+    "name": "sparkle-refresh.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 1.08,
+    "extraPaintArea": 0.0332
+  },
+  {
+    "name": "sparkle-refresh.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.94,
+    "extraPaintArea": 0.4798
+  },
+  {
+    "name": "sparkle-refresh.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.3214
+  },
+  {
+    "name": "sparkle-refresh.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.2534
+  },
+  {
+    "name": "sparkle-refresh.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.9,
+    "extraPaintArea": 0.1527
+  },
+  {
+    "name": "sparkle-refresh.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.88,
+    "extraPaintArea": 0.0903
+  },
+  {
+    "name": "sparkle-refresh.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.049
+  },
+  {
+    "name": "sparkle-refresh.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.0382
+  },
+  {
+    "name": "sparkle-refresh.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.82,
+    "extraPaintArea": 0.0191
+  },
+  {
+    "name": "sparkle-refresh_solid.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 1.48,
+    "extraPaintArea": 0.0442
+  },
+  {
+    "name": "sparkle-refresh_solid.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 1.1,
+    "extraPaintArea": 0.2726
+  },
+  {
+    "name": "sparkle-refresh_solid.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 1.4,
+    "extraPaintArea": 0.0103
+  },
+  {
+    "name": "sparkle-refresh_solid.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 1.1,
+    "extraPaintArea": 0.1427
+  },
+  {
+    "name": "sparkle-refresh_solid.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.76,
+    "extraPaintArea": 0.0005
+  },
+  {
+    "name": "sparkle-refresh_solid.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 1.08,
+    "extraPaintArea": 0.058
+  },
+  {
+    "name": "sparkle-refresh_solid.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.4,
+    "extraPaintArea": 0
+  },
+  {
+    "name": "sparkle-refresh_solid.svg",
+    "stage": "before",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 1.08,
+    "extraPaintArea": 0.0332
+  },
+  {
+    "name": "sparkle-refresh_solid.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 1,
+    "clearLength": 0.94,
+    "extraPaintArea": 0.4798
+  },
+  {
+    "name": "sparkle-refresh_solid.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 0.67,
+    "arm": 2,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.3214
+  },
+  {
+    "name": "sparkle-refresh_solid.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 1,
+    "clearLength": 0.92,
+    "extraPaintArea": 0.2534
+  },
+  {
+    "name": "sparkle-refresh_solid.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1,
+    "arm": 2,
+    "clearLength": 0.9,
+    "extraPaintArea": 0.1527
+  },
+  {
+    "name": "sparkle-refresh_solid.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 1,
+    "clearLength": 0.88,
+    "extraPaintArea": 0.0903
+  },
+  {
+    "name": "sparkle-refresh_solid.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.3333333333333333,
+    "arm": 2,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.049
+  },
+  {
+    "name": "sparkle-refresh_solid.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 1,
+    "clearLength": 0.84,
+    "extraPaintArea": 0.0382
+  },
+  {
+    "name": "sparkle-refresh_solid.svg",
+    "stage": "after",
+    "head": 1,
+    "weight": 1.5,
+    "arm": 2,
+    "clearLength": 0.82,
+    "extraPaintArea": 0.0191
+  }
+]

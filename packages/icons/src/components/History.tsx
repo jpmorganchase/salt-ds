@@ -20,13 +20,12 @@ export const HistoryIcon = forwardRef<SVGSVGElement, HistoryIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.328 5.083A7 7 0 1 1 7.745 15M1.328.806v4.277h4.278m2.139-1.75V8l3.11 2.074"
+            d="M1.328 5.083A7 7 0 1 1 7.745 15M1.328.806v4.277h4.278"
           />
-          <path d="M1.328 3.917a1.167 1.167 0 0 0 1.167 1.166H1.328Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.328 3.917a1.167 1.167 0 0 0 1.167 1.166"
+            d="M7.745 3.333V8l3.11 2.074"
           />
           <path d="M7.745 7.376a1.17 1.17 0 0 0 .52.97L7.744 8Z" />
           <path
@@ -34,17 +33,17 @@ export const HistoryIcon = forwardRef<SVGSVGElement, HistoryIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M7.745 7.376a1.17 1.17 0 0 0 .52.97"
           />
-          <path d="M1.328 1.537a1.244 1.244 0 0 0 2.017.976 7 7 0 0 0-2.017 2.57Z" />
+          <path d="M1.328 2.127a.972.972 0 0 0 1.63.716 7 7 0 0 0-1.63 2.24Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1.328 1.537a1.244 1.244 0 0 0 2.017.976"
+            d="M1.328 2.127a.972.972 0 0 0 1.63.716"
           />
-          <path d="M2.856 2.94a1.244 1.244 0 0 0 .86 2.143H1.327A7 7 0 0 1 2.856 2.94" />
+          <path d="M3.086 5.083a.972.972 0 0 1-.743-1.6 7 7 0 0 0-1.015 1.6Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.856 2.94a1.244 1.244 0 0 0 .86 2.143"
+            d="M3.086 5.083a.972.972 0 0 1-.743-1.6"
           />
         </g>
       </Icon>

@@ -1,0 +1,706 @@
+{
+  "pixelsPerUnit": 32,
+  "before": {
+    "results": [
+      {
+        "name": "export",
+        "status": "pass",
+        "contract": {
+          "mode": "identical-paint",
+          "reason": "Established open-line Solid compatibility export."
+        },
+        "samples": [
+          {
+            "weight": 0.67,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": true
+          },
+          {
+            "weight": 1,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": true
+          },
+          {
+            "weight": 1.3333333333333333,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": true
+          },
+          {
+            "weight": 1.5,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": true
+          }
+        ]
+      },
+      {
+        "name": "favorite",
+        "status": "fail",
+        "contract": {
+          "mode": "component-exteriors",
+          "reason": "Fill the star without changing its five points or recessed shoulders."
+        },
+        "samples": [
+          {
+            "weight": 0.67,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0.759803295135498,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0.34375,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.3333333333333333,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0.1196383461356163,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.5,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0.28347086906433105,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          }
+        ]
+      },
+      {
+        "name": "import",
+        "status": "pass",
+        "contract": {
+          "mode": "identical-paint",
+          "reason": "Established open-line Solid compatibility export."
+        },
+        "samples": [
+          {
+            "weight": 0.67,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": true
+          },
+          {
+            "weight": 1,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": true
+          },
+          {
+            "weight": 1.3333333333333333,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": true
+          },
+          {
+            "weight": 1.5,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": true
+          }
+        ]
+      },
+      {
+        "name": "like",
+        "status": "pass",
+        "contract": {
+          "mode": "component-exteriors",
+          "reason": "Fill the heart while retaining its lobes, cleft and point."
+        },
+        "samples": [
+          {
+            "weight": 0.67,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.3333333333333333,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.5,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          }
+        ]
+      },
+      {
+        "name": "sparkle",
+        "status": "fail",
+        "contract": {
+          "mode": "component-exteriors",
+          "reason": "Retain both sparkle silhouettes and their relative placement."
+        },
+        "samples": [
+          {
+            "weight": 0.67,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0.5410533547401428,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0.7231916785240173,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.3333333333333333,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0.9021891355514526,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.5,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0.9937183260917664,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          }
+        ]
+      },
+      {
+        "name": "sparkle-refresh",
+        "status": "fail",
+        "contract": {
+          "mode": "component-exteriors",
+          "reason": "Retain the internal sparkle and complete circular arrow."
+        },
+        "samples": [
+          {
+            "weight": 0.67,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0.2392767071723938,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0.34597083926200867,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.3333333333333333,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0.458026647567749,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.5,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0.5151649713516235,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          }
+        ]
+      }
+    ],
+    "failures": [
+      {
+        "name": "favorite",
+        "status": "fail",
+        "contract": {
+          "mode": "component-exteriors",
+          "reason": "Fill the star without changing its five points or recessed shoulders."
+        },
+        "samples": [
+          {
+            "weight": 0.67,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0.759803295135498,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0.34375,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.3333333333333333,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0.1196383461356163,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.5,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0.28347086906433105,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          }
+        ]
+      },
+      {
+        "name": "sparkle",
+        "status": "fail",
+        "contract": {
+          "mode": "component-exteriors",
+          "reason": "Retain both sparkle silhouettes and their relative placement."
+        },
+        "samples": [
+          {
+            "weight": 0.67,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0.5410533547401428,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0.7231916785240173,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.3333333333333333,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0.9021891355514526,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.5,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0.9937183260917664,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          }
+        ]
+      },
+      {
+        "name": "sparkle-refresh",
+        "status": "fail",
+        "contract": {
+          "mode": "component-exteriors",
+          "reason": "Retain the internal sparkle and complete circular arrow."
+        },
+        "samples": [
+          {
+            "weight": 0.67,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0.2392767071723938,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0.34597083926200867,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.3333333333333333,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0.458026647567749,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.5,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0.5151649713516235,
+            "tolerance": 0.05,
+            "matches": false,
+            "identicalPaint": false
+          }
+        ]
+      }
+    ],
+    "needsReview": []
+  },
+  "after": {
+    "results": [
+      {
+        "name": "export",
+        "status": "pass",
+        "contract": {
+          "mode": "identical-paint",
+          "reason": "Established open-line Solid compatibility export."
+        },
+        "samples": [
+          {
+            "weight": 0.67,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": true
+          },
+          {
+            "weight": 1,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": true
+          },
+          {
+            "weight": 1.3333333333333333,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": true
+          },
+          {
+            "weight": 1.5,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": true
+          }
+        ]
+      },
+      {
+        "name": "favorite",
+        "status": "pass",
+        "contract": {
+          "mode": "component-exteriors",
+          "reason": "Fill the star without changing its five points or recessed shoulders."
+        },
+        "samples": [
+          {
+            "weight": 0.67,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.3333333333333333,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.5,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          }
+        ]
+      },
+      {
+        "name": "import",
+        "status": "pass",
+        "contract": {
+          "mode": "identical-paint",
+          "reason": "Established open-line Solid compatibility export."
+        },
+        "samples": [
+          {
+            "weight": 0.67,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": true
+          },
+          {
+            "weight": 1,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": true
+          },
+          {
+            "weight": 1.3333333333333333,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": true
+          },
+          {
+            "weight": 1.5,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": true
+          }
+        ]
+      },
+      {
+        "name": "like",
+        "status": "pass",
+        "contract": {
+          "mode": "component-exteriors",
+          "reason": "Fill the heart while retaining its lobes, cleft and point."
+        },
+        "samples": [
+          {
+            "weight": 0.67,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.3333333333333333,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.5,
+            "outlineComponents": 1,
+            "solidComponents": 1,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          }
+        ]
+      },
+      {
+        "name": "sparkle",
+        "status": "pass",
+        "contract": {
+          "mode": "component-exteriors",
+          "reason": "Retain both sparkle silhouettes and their relative placement."
+        },
+        "samples": [
+          {
+            "weight": 0.67,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.3333333333333333,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.5,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          }
+        ]
+      },
+      {
+        "name": "sparkle-refresh",
+        "status": "pass",
+        "contract": {
+          "mode": "component-exteriors",
+          "reason": "Retain the internal sparkle and complete circular arrow."
+        },
+        "samples": [
+          {
+            "weight": 0.67,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.3333333333333333,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          },
+          {
+            "weight": 1.5,
+            "outlineComponents": 2,
+            "solidComponents": 2,
+            "maximumDelta": 0,
+            "tolerance": 0.05,
+            "matches": true,
+            "identicalPaint": false
+          }
+        ]
+      }
+    ],
+    "failures": [],
+    "needsReview": []
+  }
+}

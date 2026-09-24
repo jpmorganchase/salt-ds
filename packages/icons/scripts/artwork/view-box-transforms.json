@@ -661,23 +661,28 @@
   "close.svg": {
     "groupKey": "close.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.256831,
-    "translateX": -2.054645,
-    "translateY": -2.054645
-  },
-  "close_small.svg": {
-    "groupKey": "close_small.svg",
-    "fitted": true,
     "targetSpan": 12.5,
     "opticalCenter": [
       8,
       8
     ],
+    "opticalReason": "Restore the original dismissal scale while keeping primary line weight and subtle inner joins.",
+    "scale": 0.994536,
+    "translateX": 0.043716,
+    "translateY": 0.043716
+  },
+  "close_small.svg": {
+    "groupKey": "close_small.svg",
+    "fitted": true,
+    "targetSpan": 10.5,
+    "opticalCenter": [
+      8,
+      8
+    ],
     "opticalReason": "Preserve the compact dismissal size beside Close without reducing its primary stroke.",
-    "scale": 1.238095,
-    "translateX": -1.904762,
-    "translateY": -1.904762
+    "scale": 1.020408,
+    "translateX": -0.163265,
+    "translateY": -0.163265
   },
   "closedcaption-disabled.svg": {
     "groupKey": "closedcaption-disabled.svg",
@@ -1464,15 +1469,16 @@
   "favorite_solid.svg": {
     "groupKey": "favorite_solid.svg",
     "fitted": true,
-    "targetSpan": 15,
+    "targetSpan": 15.5,
     "opticalCenter": [
       8,
       8
     ],
-    "opticalReason": "Reduce the filled star's apparent size beside its outline.",
-    "scale": 1.2,
-    "translateX": -1.6,
-    "translateY": -1.403125
+    "opticalReason": "Fill the shared surface without moving its painted silhouette or retained marks.",
+    "frameSource": "favorite.svg",
+    "scale": 0.9801,
+    "translateX": 0.159204,
+    "translateY": 0.500777
   },
   "favorite_strong.svg": {
     "groupKey": "favorite_strong.svg",
@@ -1560,10 +1566,15 @@
   "first.svg": {
     "groupKey": "first.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.446541,
-    "translateX": -2.007763,
-    "translateY": -3.572327
+    "targetSpan": 10.8125,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Restore the compact pagination footprint and keep the boundary bar close to the 12px pixel grid.",
+    "scale": 1,
+    "translateX": 0.015625,
+    "translateY": 0
   },
   "flag.svg": {
     "groupKey": "flag.svg",
@@ -2074,10 +2085,15 @@
   "key-control.svg": {
     "groupKey": "key-control.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.606897,
-    "translateX": -4.855172,
-    "translateY": -3.390517
+    "targetSpan": 9.125,
+    "opticalCenter": [
+      8,
+      4.1
+    ],
+    "opticalReason": "Restore the compact raised Control-key caret beside the other keyboard symbols; it must not fill the navigation-chevron frame.",
+    "scale": 0.899306,
+    "translateX": 0.805556,
+    "translateY": -2.164513
   },
   "key-enter.svg": {
     "groupKey": "key-enter.svg",
@@ -2146,10 +2162,15 @@
   "last.svg": {
     "groupKey": "last.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.446541,
-    "translateX": -5.136891,
-    "translateY": -3.572327
+    "targetSpan": 10.8125,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Mirror First at the same compact pagination scale and preserve its bar-to-chevron spacing.",
+    "scale": 1,
+    "translateX": -0.015625,
+    "translateY": 0
   },
   "layers.svg": {
     "groupKey": "layers.svg",
@@ -3729,33 +3750,45 @@
     "groupKey": "sparkle-refresh.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.156863,
-    "translateX": -1.254902,
-    "translateY": -1.196078
+    "scale": 1.166667,
+    "translateX": -1.333333,
+    "translateY": -1.333333
   },
   "sparkle-refresh_solid.svg": {
     "groupKey": "sparkle-refresh_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.156863,
-    "translateX": -1.254902,
-    "translateY": -1.196078
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Fill the shared surface without moving its painted silhouette or retained marks.",
+    "frameSource": "sparkle-refresh.svg",
+    "scale": 1.166667,
+    "translateX": -1.333333,
+    "translateY": -1.333333
   },
   "sparkle.svg": {
     "groupKey": "sparkle.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.152941,
-    "translateX": -1.868382,
-    "translateY": 0.015809
+    "scale": 0.860097,
+    "translateX": 1.679217,
+    "translateY": 1.692732
   },
   "sparkle_solid.svg": {
     "groupKey": "sparkle_solid.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.169811,
-    "translateX": -2.157429,
-    "translateY": -0.003243
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Fill the shared surface without moving its painted silhouette or retained marks.",
+    "frameSource": "sparkle.svg",
+    "scale": 0.860097,
+    "translateX": 1.679217,
+    "translateY": 1.692732
   },
   "split-view.svg": {
     "groupKey": "split-view.svg",
@@ -4014,9 +4047,9 @@
     "groupKey": "sync.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.148148,
-    "translateX": -1.185185,
-    "translateY": -1.185185
+    "scale": 1.166667,
+    "translateX": -1.333333,
+    "translateY": -1.333333
   },
   "tag-clear.svg": {
     "groupKey": "tag-clear.svg",
@@ -4261,42 +4294,67 @@
   "triangle-down.svg": {
     "groupKey": "triangle-down.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.55,
-    "translateX": -4.4,
-    "translateY": -4.375781
+    "targetSpan": 13.333333333333334,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Keep directional triangles at their original compact 2:1 proportions and shared scale, independently of status and playback triangles.",
+    "scale": 1.333333,
+    "translateX": -2.666667,
+    "translateY": -2.666667
   },
   "triangle-left.svg": {
     "groupKey": "triangle-left.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.55,
-    "translateX": -4.424219,
-    "translateY": -4.4
+    "targetSpan": 13.333333333333334,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Keep directional triangles at their original compact 2:1 proportions and shared scale, independently of status and playback triangles.",
+    "scale": 1.333333,
+    "translateX": -2.666667,
+    "translateY": -2.666667
   },
   "triangle-right-down.svg": {
     "groupKey": "triangle-right-down.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.9375,
-    "translateX": -7.5,
-    "translateY": -7.5
+    "targetSpan": 9.333333333333334,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Restore the compact diagonal corner indicator instead of enlarging it to the status-icon frame.",
+    "scale": 1.166667,
+    "translateX": -1.333333,
+    "translateY": -1.333333
   },
   "triangle-right.svg": {
     "groupKey": "triangle-right.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.55,
-    "translateX": -4.375781,
-    "translateY": -4.4
+    "targetSpan": 13.333333333333334,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Keep directional triangles at their original compact 2:1 proportions and shared scale, independently of status and playback triangles.",
+    "scale": 1.333333,
+    "translateX": -2.666667,
+    "translateY": -2.666667
   },
   "triangle-up.svg": {
     "groupKey": "triangle-up.svg",
     "fitted": true,
-    "targetSpan": 15.5,
-    "scale": 1.55,
-    "translateX": -4.4,
-    "translateY": -4.424219
+    "targetSpan": 13.333333333333334,
+    "opticalCenter": [
+      8,
+      8
+    ],
+    "opticalReason": "Keep directional triangles at their original compact 2:1 proportions and shared scale, independently of status and playback triangles.",
+    "scale": 1.333333,
+    "translateX": -2.666667,
+    "translateY": -2.666667
   },
   "type.svg": {
     "groupKey": "type.svg",

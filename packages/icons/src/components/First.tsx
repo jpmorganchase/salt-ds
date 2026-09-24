@@ -20,19 +20,19 @@ export const FirstIcon = forwardRef<SVGSVGElement, FirstIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M2.332.767v14.466M13.904.767 6.671 8l7.233 7.233"
+            d="M3.349 2.667v10.666m9.529-10.195L8.016 8l4.862 4.862"
           />
-          <path d="M7.694 6.977a1.447 1.447 0 0 0 0 2.046L6.671 8Z" />
+          <path d="M8.723 7.293a1 1 0 0 0 0 1.414L8.016 8Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M7.694 6.977a1.447 1.447 0 0 0 0 2.046"
+            d="M8.723 7.293a1 1 0 0 0 0 1.414"
           />
-          <path d="M8.035 6.636a1.93 1.93 0 0 0 0 2.728L6.671 8Z" />
+          <path d="M8.958 7.057a1.333 1.333 0 0 0 0 1.886L8.016 8Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8.035 6.636a1.93 1.93 0 0 0 0 2.728"
+            d="M8.958 7.057a1.333 1.333 0 0 0 0 1.886"
           />
         </g>
       </Icon>

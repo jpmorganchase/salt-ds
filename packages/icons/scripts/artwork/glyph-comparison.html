@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  /><title>Salt — actual glyph sizes</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: #f5f6f8;
+      color: #152439;
+      font: 15px/1.5 system-ui;
+    }
+    main {
+      max-width: 1400px;
+      margin: auto;
+      padding: 28px;
+    }
+    h1 {
+      font-size: 30px;
+      letter-spacing: -0.04em;
+      margin: 8px 0;
+    }
+    p {
+      max-width: 900px;
+    }
+    .eyebrow {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #52657c;
+    }
+    header {
+      margin-bottom: 24px;
+    }
+    .controls {
+      position: sticky;
+      top: 0;
+      background: #e6ebf3;
+      z-index: 2;
+      padding: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      border-radius: 12px;
+    }
+    label {
+      font-size: 12px;
+      display: grid;
+      gap: 3px;
+    }
+    input,
+    select,
+    button {
+      padding: 9px;
+      border: 1px solid #9daabd;
+      border-radius: 6px;
+      background: white;
+      color: #152439;
+      font: inherit;
+    }
+    input {
+      min-width: 190px;
+    }
+    .summary {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 22px 0;
+    }
+    .stat {
+      background: white;
+      border: 1px solid #d5dce5;
+      border-radius: 10px;
+      padding: 14px;
+      min-width: 170px;
+    }
+    .stat strong {
+      font-size: 24px;
+      display: block;
+    }
+    .legend {
+      font-size: 12px;
+      color: #52657c;
+    }
+    .old {
+      color: #08798b;
+    }
+    .new {
+      color: #b02d8b;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      background: white;
+      border: 1px solid #d5dce5;
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .card h2 {
+      font-size: 16px;
+      margin: 0 0 12px;
+    }
+    .samples {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .sample {
+      text-align: center;
+    }
+    .sample small {
+      display: block;
+      font-size: 11px;
+      color: #52657c;
+      margin-top: 5px;
+    }
+    .box {
+      min-width: 54px;
+      min-height: 54px;
+      display: grid;
+      place-items: center;
+    }
+    .glyph {
+      line-height: 0;
+      display: inline-block;
+      outline: 1px solid #cdd5e055;
+    }
+    .glyph svg {
+      display: block;
+    }
+    .overlay {
+      width: 80px;
+      height: 80px;
+      position: relative;
+      background: #f1f4f8;
+    }
+    .overlay svg {
+      position: absolute;
+      inset: 0;
+      width: 80px;
+      height: 80px;
+      opacity: 0.65;
+      mix-blend-mode: multiply;
+    }
+    .numbers {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+      font-size: 12px;
+    }
+    .delta {
+      font-weight: 650;
+    }
+    .dark {
+      background: #182332;
+      color: #f5f7fb;
+    }
+    .dark .card,
+    .dark .stat {
+      background: #233247;
+      border-color: #435572;
+    }
+    .dark .controls {
+      background: #33465e;
+    }
+    .dark small,
+    .dark .legend,
+    .dark .eyebrow {
+      color: #b2c1d6;
+    }
+    .dark .overlay {
+      background: #182332;
+    }
+    .dark .overlay svg {
+      mix-blend-mode: screen;
+    }
+    .dark .old {
+      color: #49d6e6;
+    }
+    .dark .new {
+      color: #f98ed6;
+    }
+    #more {
+      display: block;
+      margin: 24px auto;
+    }
+    .footer {
+      margin-top: 30px;
+      font-size: 12px;
+      color: #52657c;
+    }
+    @media (max-width: 600px) {
+      main {
+        padding: 14px;
+      }
+      h1 {
+        font-size: 25px;
+      }
+      .cards {
+        grid-template-columns: 1fr;
+      }
+      .controls {
+        position: static;
+      }
+    }
+  #more[hidden] { display: none; }
+</style>
+  <main>
+    <header>
+      <div class="eyebrow">Salt / design review</div>
+      <h1>How much of the icon box does the glyph fill?</h1>
+      <p>
+        Original and redrawn icons occupy the <b>same display box</b>.
+        Measurements follow the painted glyph, including strokes and points. The
+        original viewBox and original fixed line weight are preserved. Enlarged
+        overlays reveal changes in extent and position.
+      </p>
+      <p class="legend">
+        This measures geometry, not perceived size or recognition. No artwork
+        has been resized by this report. Default comparison: 12px at the
+        high/medium stroke; select 16px for the touch/mobile stroke.
+      </p>
+    </header>
+    <div class="controls">
+      <label
+        >Find an icon<input
+          id="search"
+          type="search"
+          placeholder="Search names"
+      /></label>
+      <label
+        >Display size<select id="size">
+          <option>12</option>
+          <option>16</option>
+          <option>14</option>
+          <option>20</option>
+          <option>24</option>
+          <option>28</option>
+          <option>30</option>
+          <option>32</option>
+          <option>36</option>
+          <option>40</option>
+          <option>42</option>
+          <option>48</option>
+          <option>56</option>
+          <option>64</option>
+        </select></label
+      >
+      <label
+        >Redraw stroke<select id="weight">
+          <option value="2">4/3 · high / medium</option>
+          <option value="1">1 · low / touch / mobile</option>
+          <option value="0">0.67 · SVG / CSS mask</option>
+          <option value="3">1.5 · fitting maximum</option>
+        </select></label
+      >
+      <label
+        >Order<select id="order">
+          <option value="change">Largest extent change</option>
+          <option value="shrink">Smaller first</option>
+          <option value="grow">Larger first</option>
+          <option value="name">Name</option>
+          <option value="center">Center shift</option>
+        </select></label
+      >
+      <label
+        >Variants<select id="variant">
+          <option value="all">All</option>
+          <option value="outline">Outline / single</option>
+          <option value="solid">Solid</option>
+          <option value="new">New only</option>
+        </select></label
+      >
+      <label
+        >Background<select id="theme">
+          <option value="">Light</option>
+          <option value="dark">Dark</option>
+        </select></label
+      >
+    </div>
+    <div id="summary" class="summary"></div>
+    <p class="legend">
+      <span class="old">Cyan = original</span> ·
+      <span class="new">Magenta = redraw</span> in the enlarged overlay. Width ×
+      height is the painted extent in CSS pixels. Ink area measures coverage
+      separately; it is not a size score.
+    </p>
+    <div class="cards" id="cards"></div>
+    <button id="more">Show more</button>
+    <p class="footer" id="footer"></p>
+  </main>
+  <script type="application/json" id="data">
+    __COMPARISON_DATA__
+  </script>
+  <script>
+    const report = JSON.parse(document.getElementById("data").textContent),
+      el = (id) => document.getElementById(id);
+    let limit = 60;
+    const num = (n) => n.toFixed(2),
+      signed = (n) => (n >= 0 ? "+" : "") + n.toFixed(1) + "%";
+    function svg(source, size, weight, color) {
+      if (!source) return "";
+      let s = source.replace(/<svg\b[^>]*>/, (tag) =>
+        tag
+          .replace(/\s(?:width|height|style)="[^"]*"/g, "")
+          .replace(
+            ">",
+            ' width="' +
+              size +
+              '" height="' +
+              size +
+              '" style="color:' +
+              color +
+              ';fill:currentColor">',
+          ),
+      );
+      if (weight !== null)
+        s = s.replace(
+          /stroke-width="([\d.]+)"/g,
+          (_, w) => 'stroke-width="' + (Number(w) * weight) / 0.67 + '"',
+        );
+      return s;
+    }
+    function render() {
+      const size = +el("size").value,
+        index = +el("weight").value,
+        weight = report.weights[index],
+        factor = size / 16,
+        term = el("search").value.toLowerCase(),
+        variant = el("variant").value,
+        dark = el("theme").value;
+      document.body.className = dark;
+      const originalColor = dark ? "#49d6e6" : "#08798b",
+        newColor = dark ? "#f98ed6" : "#b02d8b",
+        ink = dark ? "#f5f7fb" : "#152439";
+      let rows = report.records
+        .filter(
+          (r) =>
+            r.name.includes(term) &&
+            (variant === "all" ||
+              (variant === "solid"
+                ? r.name.endsWith("_solid.svg")
+                : variant === "new"
+                  ? !r.original
+                  : !r.name.endsWith("_solid.svg"))),
+        )
+        .map((r) => {
+          const a = r.metrics.original,
+            b = r.metrics.current[index];
+          return {
+            ...r,
+            a,
+            b,
+            change: a
+              ? (Math.max(b.width, b.height) / Math.max(a.width, a.height) -
+                  1) *
+                100
+              : 0,
+            shift: a
+              ? Math.hypot(b.center[0] - a.center[0], b.center[1] - a.center[1])
+              : 0,
+          };
+        });
+      const order = el("order").value;
+      rows.sort((a, b) =>
+        order === "name"
+          ? a.name.localeCompare(b.name)
+          : order === "shrink"
+            ? a.change - b.change
+            : order === "grow"
+              ? b.change - a.change
+              : order === "center"
+                ? b.shift - a.shift
+                : Math.abs(b.change) - Math.abs(a.change),
+      );
+      const matched = rows.filter((r) => r.a),
+        changes = matched.map((r) => r.change).sort((a, b) => a - b),
+        median = changes.length ? changes[Math.floor(changes.length / 2)] : 0;
+      el("summary").innerHTML =
+        '<div class="stat"><strong>' +
+        matched.length +
+        '</strong>matched glyphs shown</div><div class="stat"><strong>' +
+        signed(median) +
+        '</strong>median longest-span change</div><div class="stat"><strong>' +
+        changes.filter((n) => n < -10).length +
+        '</strong>over 10% smaller</div><div class="stat"><strong>' +
+        changes.filter((n) => n > 10).length +
+        "</strong>over 10% larger</div>";
+      el("cards").innerHTML = rows
+        .slice(0, limit)
+        .map((r) => {
+          const dimensions = (m) =>
+            num(m.width * factor) + " × " + num(m.height * factor) + "px";
+          return (
+            '<article class="card"><h2>' +
+            r.name.replace(".svg", "").replace("_solid", " · solid") +
+            '</h2><div class="samples"><div class="sample"><div class="box"><span class="glyph">' +
+            svg(r.original, size, null, ink) +
+            "</span></div><small>Original · " +
+            size +
+            'px</small></div><div class="sample"><div class="box"><span class="glyph">' +
+            svg(r.current, size, weight, ink) +
+            "</span></div><small>Redraw · " +
+            size +
+            'px</small></div><div class="sample"><div class="overlay">' +
+            svg(r.original, 80, null, originalColor) +
+            svg(r.current, 80, weight, newColor) +
+            '</div><small>Enlarged overlay</small></div></div><div class="numbers"><span>Original extent</span><b>' +
+            (r.a ? dimensions(r.a) : "New icon") +
+            "</b><span>Redraw extent</span><b>" +
+            dimensions(r.b) +
+            '</b><span>Longest-span change</span><span class="delta">' +
+            (r.a ? signed(r.change) : "—") +
+            "</span><span>Center shift</span><b>" +
+            (r.a ? num(r.shift * factor) + "px" : "—") +
+            "</b><span>Ink area · old → new</span><b>" +
+            (r.a ? num(r.a.inkArea * factor * factor) + " → " : "") +
+            num(r.b.inkArea * factor * factor) +
+            "px²</b></div></article>"
+          );
+        })
+        .join("");
+      el("more").hidden = rows.length <= limit;
+      el("footer").textContent =
+        "Baseline " +
+        report.baseline.slice(0, 9) +
+        " (before the redraw). " +
+        report.counts.matched +
+        " matched exports; " +
+        report.counts.new +
+        " new exports; " +
+        report.removed.length +
+        " originals absent. Bounds sampled at 64 pixels per normalized display unit, alpha threshold 50%. Stroke selections reproduce generated SVG geometry; this is not a component interaction test. " +
+        Math.min(limit, rows.length) +
+        " of " +
+        rows.length +
+        " results shown.";
+    }
+    for (const id of ["search", "size", "weight", "order", "variant", "theme"])
+      el(id).addEventListener("input", () => {
+        limit = 60;
+        render();
+      });
+    el("size").addEventListener("change", () => {
+      if (el("size").value === "16") el("weight").value = "1";
+      if (el("size").value === "12") el("weight").value = "2";
+      render();
+    });
+    el("more").onclick = () => {
+      limit += 60;
+      render();
+    };
+    render();
+  </script>
+</html>

@@ -22,17 +22,17 @@ export const Forward15Icon = forwardRef<SVGSVGElement, Forward15IconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M13.686 3.917A7 7 0 1 0 15 8m-1.314-7v2.917h-2.917"
           />
-          <path d="M13.686 1.419a1.05 1.05 0 0 1-1.655.858 7 7 0 0 1 1.655 1.64Z" />
+          <path d="M13.686 1.726a.894.894 0 0 1-1.438.71 7 7 0 0 1 1.438 1.48Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M13.686 1.419a1.05 1.05 0 0 1-1.655.858"
+            d="M13.686 1.726a.894.894 0 0 1-1.438.71"
           />
-          <path d="M11.009 3.917a1.05 1.05 0 0 0 .53-1.956 7 7 0 0 1 2.147 1.956Z" />
+          <path d="M11.535 3.917a.894.894 0 0 0 .518-1.624 7 7 0 0 1 1.633 1.624Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M11.009 3.917a1.05 1.05 0 0 0 .53-1.956"
+            d="M11.535 3.917a.894.894 0 0 0 .518-1.624"
           />
           <path
             fillRule="evenodd"
