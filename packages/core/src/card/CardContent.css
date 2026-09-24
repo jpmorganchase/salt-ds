@@ -18,6 +18,13 @@
   padding-bottom: 0;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .saltCardContent[data-open],
+  .saltCardContent[data-closed] {
+    transition: none;
+  }
+}
+
 .saltCard-sectioned > .saltCardHeader + .saltCardContent,
 .saltCard-sectioned > .saltCardContent + .saltCardContent,
 .saltLinkCard-sectioned > .saltCardHeader + .saltCardContent,
