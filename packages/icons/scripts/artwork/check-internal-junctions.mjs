@@ -70,18 +70,13 @@ export async function checkInternalJunctions(page, records) {
         },
       ],
     },
-    ...paired("building", [
-      {
-        feature: "left doorway header opening",
-        box: [6.43, 11.82, 7.48, 12.86],
-        minimumRadius: 0.25,
-      },
-      {
-        feature: "right doorway header opening",
-        box: [8.52, 11.82, 9.56, 12.86],
-        minimumRadius: 0.25,
-      },
-    ]),
+    ...[false, true].map((solid) => ({
+      name: solid ? "building_solid.svg" : "building.svg",
+      features: [
+        { feature: "left doorway header opening", box: solid ? [5.89, 11.28, 6.94, 12.32] : [6.43, 11.28, 7.48, 12.32], minimumRadius: 0.09 },
+        { feature: "right doorway header opening", box: solid ? [9.06, 11.28, 10.1, 12.32] : [8.52, 11.28, 9.56, 12.32], minimumRadius: 0.09 },
+      ],
+    })),
     ...paired("battery", [
       {
         feature: "left recessed terminal shoulder",

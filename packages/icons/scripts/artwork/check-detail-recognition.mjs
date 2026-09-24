@@ -12,8 +12,8 @@ export async function checkDetailRecognition(page, records, transforms) {
   for (const [name, tip, direction, arm, radius] of [
     ["cloud-upload", [8, 7.25], [0, 1], 2.25 * Math.SQRT2, 0.82],
     ["cloud-download", [8, 14.75], [0, -1], 2 * Math.SQRT2, 0.78],
-    ["cloud-sync", [5.5, 9], [1, 0], 1.75 * Math.SQRT2, 0.74],
-    ["cloud-sync", [10.5, 13.5], [-1, 0], 1.75 * Math.SQRT2, 0.74],
+    ["cloud-sync", [5.5, 8.6], [1, 0], 1.5 * Math.SQRT2, 0.62],
+    ["cloud-sync", [10.5, 12.2], [-1, 0], 1.5 * Math.SQRT2, 0.62],
   ])
     for (const suffix of [".svg", "_solid.svg"])
       samples.push({
@@ -128,17 +128,30 @@ export async function checkDetailRecognition(page, records, transforms) {
         URL.revokeObjectURL(url);
         const pixels = ctx.getImageData(0, 0, side, side).data;
         if (item.topology) {
-        if (item.name === "dashboard.svg") {
-          // Read the complete painted top tick across its middle. It must
-          // retain primary weight; separation alone cannot approve a weak tick.
-          const {scale, translateX, translateY} = item.frame;
-          const cx = 8 * scale + translateX, cy = 5 * scale + translateY;
-          let painted = 0;
-          for (let x = cx - 1; x <= cx + 1; x += 1 / ppu)
-            if (pixels[(Math.floor(cy * ppu) * side + Math.floor(x * ppu)) * 4 + 3] >= 128) painted++;
-          const measured = painted / ppu;
-          record({name:item.name, weight, feature:"primary-weight gauge ticks", measured, expected:weight, pass:Math.abs(measured-weight)<.025});
-        }
+          if (item.name === "dashboard.svg") {
+            // Read the complete painted top tick across its middle. It must
+            // retain primary weight; separation alone cannot approve a weak tick.
+            const { scale, translateX, translateY } = item.frame;
+            const cx = 8 * scale + translateX,
+              cy = 5 * scale + translateY;
+            let painted = 0;
+            for (let x = cx - 1; x <= cx + 1; x += 1 / ppu)
+              if (
+                pixels[
+                  (Math.floor(cy * ppu) * side + Math.floor(x * ppu)) * 4 + 3
+                ] >= 128
+              )
+                painted++;
+            const measured = painted / ppu;
+            record({
+              name: item.name,
+              weight,
+              feature: "primary-weight gauge ticks",
+              measured,
+              expected: weight,
+              pass: Math.abs(measured - weight) < 0.025,
+            });
+          }
 
           const solid = item.name.includes("_solid");
           const expected = item.name.startsWith("edit") ? 1 : solid ? 2 : 6;

@@ -1,0 +1,30 @@
+[
+  {
+    "dpr": 1,
+    "mode": "light",
+    "samples": 240,
+    "dimensionsVerified": true,
+    "masksVerified": true
+  },
+  {
+    "dpr": 1,
+    "mode": "dark",
+    "samples": 240,
+    "dimensionsVerified": true,
+    "masksVerified": true
+  },
+  {
+    "dpr": 2,
+    "mode": "light",
+    "samples": 240,
+    "dimensionsVerified": true,
+    "masksVerified": true
+  },
+  {
+    "dpr": 2,
+    "mode": "dark",
+    "samples": 240,
+    "dimensionsVerified": true,
+    "masksVerified": true
+  }
+]

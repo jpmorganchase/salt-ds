@@ -1,0 +1,4785 @@
+{
+  "features": {
+    "results": [
+      {
+        "name": "building.svg",
+        "weight": 0.67,
+        "feature": "readable clear doorway",
+        "width": 2.5625,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "building.svg",
+        "weight": 0.67,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.78125
+      },
+      {
+        "name": "building.svg",
+        "weight": 0.67,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 3.9025
+      },
+      {
+        "name": "building_solid.svg",
+        "weight": 0.67,
+        "feature": "readable clear doorway",
+        "width": 3.625,
+        "minimumWidth": 2
+      },
+      {
+        "name": "building_solid.svg",
+        "weight": 0.67,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.46875
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 0.67,
+        "feature": "readable clear doorway",
+        "width": 2.5625,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 0.67,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.7624999999999993
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 0.67,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 3.9025
+      },
+      {
+        "name": "buildings_solid.svg",
+        "weight": 0.67,
+        "feature": "readable clear doorway",
+        "width": 3.09375,
+        "minimumWidth": 2
+      },
+      {
+        "name": "buildings_solid.svg",
+        "weight": 0.67,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.4499999999999993
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 0.67,
+        "feature": "readable clear doorway",
+        "width": 2.75,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 0.67,
+        "feature": "visible outline window-to-door gap",
+        "gap": 2.1175000000000015
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 0.67,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 4.09
+      },
+      {
+        "name": "hospital_solid.svg",
+        "weight": 0.67,
+        "feature": "readable clear doorway",
+        "width": 3.3125,
+        "minimumWidth": 2
+      },
+      {
+        "name": "hospital_solid.svg",
+        "weight": 0.67,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.5550000000000015
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 0.67,
+        "feature": "readable clear doorway",
+        "width": 2.21875,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 0.67,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.6637499999999994
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 0.67,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 3.55875
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 0.67,
+        "feature": "readable clear doorway",
+        "width": 3,
+        "minimumWidth": 2
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 0.67,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.2262499999999994
+      },
+      {
+        "name": "architectural outline family",
+        "weight": 0.67,
+        "feature": "consistent visible frame spacing",
+        "spread": 0.4537500000000021
+      },
+      {
+        "name": "architectural family",
+        "weight": 0.67,
+        "feature": "consistent aperture spacing",
+        "spread": 0.3287500000000021,
+        "maximumSpread": 0.4
+      },
+      {
+        "name": "calculator.svg",
+        "weight": 0.67,
+        "feature": "readable clear calculator display",
+        "width": 6.3125,
+        "height": 3.09375
+      },
+      {
+        "name": "calculator_solid.svg",
+        "weight": 0.67,
+        "feature": "readable clear calculator display",
+        "width": 6.3125,
+        "height": 3.09375
+      },
+      {
+        "name": "globe.svg",
+        "weight": 0.67,
+        "feature": "twelve globe grid cells",
+        "count": 12,
+        "expected": 12
+      },
+      {
+        "name": "globe.svg",
+        "weight": 0.67,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          3.8135000000000003
+        ],
+        "width": 0.5
+      },
+      {
+        "name": "globe.svg",
+        "weight": 0.67,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          8
+        ],
+        "width": 0.5
+      },
+      {
+        "name": "globe.svg",
+        "weight": 0.67,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          12.186499999999999
+        ],
+        "width": 0.5
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 0.67,
+        "feature": "twelve globe grid cells",
+        "count": 12,
+        "expected": 12
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 0.67,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          3.8135000000000003
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 0.67,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          8
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 0.67,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          12.186499999999999
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "building.svg",
+        "weight": 1,
+        "feature": "readable clear doorway",
+        "width": 2.25,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "building.svg",
+        "weight": 1,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.59375
+      },
+      {
+        "name": "building.svg",
+        "weight": 1,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 4.25
+      },
+      {
+        "name": "building_solid.svg",
+        "weight": 1,
+        "feature": "readable clear doorway",
+        "width": 3.3125,
+        "minimumWidth": 2
+      },
+      {
+        "name": "building_solid.svg",
+        "weight": 1,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.65625
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1,
+        "feature": "readable clear doorway",
+        "width": 2.21875,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.5749999999999993
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 4.21875
+      },
+      {
+        "name": "buildings_solid.svg",
+        "weight": 1,
+        "feature": "readable clear doorway",
+        "width": 2.78125,
+        "minimumWidth": 2
+      },
+      {
+        "name": "buildings_solid.svg",
+        "weight": 1,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.6374999999999993
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1,
+        "feature": "readable clear doorway",
+        "width": 2.375,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.7737500000000015
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 4.375
+      },
+      {
+        "name": "hospital_solid.svg",
+        "weight": 1,
+        "feature": "readable clear doorway",
+        "width": 3,
+        "minimumWidth": 2
+      },
+      {
+        "name": "hospital_solid.svg",
+        "weight": 1,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.7425000000000015
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1,
+        "feature": "readable clear doorway",
+        "width": 1.90625,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.3512499999999994
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 3.90625
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1,
+        "feature": "readable clear doorway",
+        "width": 2.6875,
+        "minimumWidth": 2
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.5699999999999994
+      },
+      {
+        "name": "architectural outline family",
+        "weight": 1,
+        "feature": "consistent visible frame spacing",
+        "spread": 0.4225000000000021
+      },
+      {
+        "name": "architectural family",
+        "weight": 1,
+        "feature": "consistent aperture spacing",
+        "spread": 0.1725000000000021,
+        "maximumSpread": 0.4
+      },
+      {
+        "name": "calculator.svg",
+        "weight": 1,
+        "feature": "readable clear calculator display",
+        "width": 6,
+        "height": 2.75
+      },
+      {
+        "name": "calculator_solid.svg",
+        "weight": 1,
+        "feature": "readable clear calculator display",
+        "width": 6,
+        "height": 2.75
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1,
+        "feature": "twelve globe grid cells",
+        "count": 12,
+        "expected": 12
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          3.8
+        ],
+        "width": 0.75
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          8
+        ],
+        "width": 0.75
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          12.2
+        ],
+        "width": 0.75
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1,
+        "feature": "twelve globe grid cells",
+        "count": 12,
+        "expected": 12
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          3.8
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          8
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          12.2
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "building.svg",
+        "weight": 1.333333,
+        "feature": "readable clear doorway",
+        "width": 1.875,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "building.svg",
+        "weight": 1.333333,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.4375
+      },
+      {
+        "name": "building.svg",
+        "weight": 1.333333,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 4.541666
+      },
+      {
+        "name": "building_solid.svg",
+        "weight": 1.333333,
+        "feature": "readable clear doorway",
+        "width": 3,
+        "minimumWidth": 2
+      },
+      {
+        "name": "building_solid.svg",
+        "weight": 1.333333,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.8125
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1.333333,
+        "feature": "readable clear doorway",
+        "width": 1.90625,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1.333333,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.4187499999999993
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1.333333,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 4.572916
+      },
+      {
+        "name": "buildings_solid.svg",
+        "weight": 1.333333,
+        "feature": "readable clear doorway",
+        "width": 2.4375,
+        "minimumWidth": 2
+      },
+      {
+        "name": "buildings_solid.svg",
+        "weight": 1.333333,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.7937499999999993
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1.333333,
+        "feature": "readable clear doorway",
+        "width": 2.0625,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1.333333,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.4612500000000015
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1.333333,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 4.729166
+      },
+      {
+        "name": "hospital_solid.svg",
+        "weight": 1.333333,
+        "feature": "readable clear doorway",
+        "width": 2.625,
+        "minimumWidth": 2
+      },
+      {
+        "name": "hospital_solid.svg",
+        "weight": 1.333333,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.8987500000000015
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.333333,
+        "feature": "readable clear doorway",
+        "width": 1.5625,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.333333,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.0074999999999994
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.333333,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 4.229166
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.333333,
+        "feature": "readable clear doorway",
+        "width": 2.34375,
+        "minimumWidth": 2
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.333333,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.8824999999999994
+      },
+      {
+        "name": "architectural outline family",
+        "weight": 1.333333,
+        "feature": "consistent visible frame spacing",
+        "spread": 0.4537500000000021
+      },
+      {
+        "name": "architectural family",
+        "weight": 1.333333,
+        "feature": "consistent aperture spacing",
+        "spread": 0.1050000000000022,
+        "maximumSpread": 0.4
+      },
+      {
+        "name": "calculator.svg",
+        "weight": 1.333333,
+        "feature": "readable clear calculator display",
+        "width": 5.6875,
+        "height": 2.4375
+      },
+      {
+        "name": "calculator_solid.svg",
+        "weight": 1.333333,
+        "feature": "readable clear calculator display",
+        "width": 5.6875,
+        "height": 2.4375
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1.333333,
+        "feature": "twelve globe grid cells",
+        "count": 12,
+        "expected": 12
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1.333333,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          3.8062499
+        ],
+        "width": 0.9375
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1.333333,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          8
+        ],
+        "width": 0.9375
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1.333333,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          12.193750099999999
+        ],
+        "width": 0.9375
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1.333333,
+        "feature": "twelve globe grid cells",
+        "count": 12,
+        "expected": 12
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1.333333,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          3.8062499
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1.333333,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          8
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1.333333,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          12.193750099999999
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "building.svg",
+        "weight": 1.5,
+        "feature": "readable clear doorway",
+        "width": 1.75,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "building.svg",
+        "weight": 1.5,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.34375
+      },
+      {
+        "name": "building.svg",
+        "weight": 1.5,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 4.75
+      },
+      {
+        "name": "building_solid.svg",
+        "weight": 1.5,
+        "feature": "readable clear doorway",
+        "width": 2.8125,
+        "minimumWidth": 2
+      },
+      {
+        "name": "building_solid.svg",
+        "weight": 1.5,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.90625
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1.5,
+        "feature": "readable clear doorway",
+        "width": 1.71875,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1.5,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.3249999999999993
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1.5,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 4.71875
+      },
+      {
+        "name": "buildings_solid.svg",
+        "weight": 1.5,
+        "feature": "readable clear doorway",
+        "width": 2.28125,
+        "minimumWidth": 2
+      },
+      {
+        "name": "buildings_solid.svg",
+        "weight": 1.5,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.8874999999999993
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1.5,
+        "feature": "readable clear doorway",
+        "width": 1.875,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1.5,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.2737500000000015
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1.5,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 4.875
+      },
+      {
+        "name": "hospital_solid.svg",
+        "weight": 1.5,
+        "feature": "readable clear doorway",
+        "width": 2.5,
+        "minimumWidth": 2
+      },
+      {
+        "name": "hospital_solid.svg",
+        "weight": 1.5,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.9925000000000015
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.5,
+        "feature": "readable clear doorway",
+        "width": 1.40625,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.5,
+        "feature": "visible outline window-to-door gap",
+        "gap": 0.8512499999999994
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.5,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 4.40625
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.5,
+        "feature": "readable clear doorway",
+        "width": 2.1875,
+        "minimumWidth": 2
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.5,
+        "feature": "window-to-door aperture spacing",
+        "gap": 3.0699999999999994
+      },
+      {
+        "name": "architectural outline family",
+        "weight": 1.5,
+        "feature": "consistent visible frame spacing",
+        "spread": 0.4925000000000006
+      },
+      {
+        "name": "architectural family",
+        "weight": 1.5,
+        "feature": "consistent aperture spacing",
+        "spread": 0.1825000000000001,
+        "maximumSpread": 0.4
+      },
+      {
+        "name": "calculator.svg",
+        "weight": 1.5,
+        "feature": "readable clear calculator display",
+        "width": 5.5,
+        "height": 2.25
+      },
+      {
+        "name": "calculator_solid.svg",
+        "weight": 1.5,
+        "feature": "readable clear calculator display",
+        "width": 5.5,
+        "height": 2.25
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1.5,
+        "feature": "twelve globe grid cells",
+        "count": 12,
+        "expected": 12
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1.5,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          3.8
+        ],
+        "width": 1.0625
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1.5,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          8
+        ],
+        "width": 1.0625
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1.5,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          12.2
+        ],
+        "width": 1.0625
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1.5,
+        "feature": "twelve globe grid cells",
+        "count": 12,
+        "expected": 12
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1.5,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          3.8
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1.5,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          8
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1.5,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          12.2
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "three enclosed coin interiors",
+        "count": 3,
+        "expected": 3
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "circular coin rim",
+        "coin": 0,
+        "center": [
+          8.015625,
+          4.8125
+        ],
+        "width": 6.59375,
+        "height": 6.5625,
+        "circularProbes": 24
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "one separate substantial currency glyph per coin",
+        "coin": 0,
+        "count": 1
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "circular coin rim",
+        "coin": 1,
+        "center": [
+          4.328125,
+          11.1875
+        ],
+        "width": 6.59375,
+        "height": 6.5625,
+        "circularProbes": 24
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "one separate substantial currency glyph per coin",
+        "coin": 1,
+        "count": 1
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "circular coin rim",
+        "coin": 2,
+        "center": [
+          11.703125,
+          11.1875
+        ],
+        "width": 6.59375,
+        "height": 6.5625,
+        "circularProbes": 24
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "one separate substantial currency glyph per coin",
+        "coin": 2,
+        "count": 1
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "one upper coin and two balanced lower coins",
+        "centers": [
+          [
+            8.015625,
+            4.8125
+          ],
+          [
+            4.328125,
+            11.1875
+          ],
+          [
+            11.703125,
+            11.1875
+          ]
+        ]
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "distinct currency glyph contours",
+        "coins": [
+          0,
+          1
+        ],
+        "difference": 0.6825280980878704
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "distinct currency glyph contours",
+        "coins": [
+          0,
+          2
+        ],
+        "difference": 0.43835196814213506
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "distinct currency glyph contours",
+        "coins": [
+          1,
+          2
+        ],
+        "difference": 0.7032699619771863
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "upper coin retains Currency dollar contour",
+        "difference": 0.019882179675994108
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "separate central medical cross",
+        "present": true
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "balanced six-unit medical cross",
+        "width": 6,
+        "height": 6.03125,
+        "center": [
+          8,
+          9.703125
+        ],
+        "area": 24.216796875
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          7.45
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          11.95
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          5.75,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.53125
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          10.25,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.53125
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "separate central medical cross",
+        "present": true
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "balanced six-unit medical cross",
+        "width": 6,
+        "height": 5.96875,
+        "center": [
+          8,
+          9.703125
+        ],
+        "area": 23.916015625
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          7.45
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          11.95
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          5.75,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.46875
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          10.25,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.46875
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "identical positive/inverse medical cross",
+        "difference": 0.00005967654358551951
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "separate central medical cross",
+        "present": true
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "balanced six-unit medical cross",
+        "width": 6,
+        "height": 6.03125,
+        "center": [
+          8,
+          9.703125
+        ],
+        "area": 24.216796875
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          7.45
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          11.95
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          5.75,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.53125
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          10.25,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.53125
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "medical cross independent of case stroke",
+        "difference": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "separate central medical cross",
+        "present": true
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "balanced six-unit medical cross",
+        "width": 6,
+        "height": 5.96875,
+        "center": [
+          8,
+          9.703125
+        ],
+        "area": 23.916015625
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          7.45
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          11.95
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          5.75,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.46875
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          10.25,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.46875
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "identical positive/inverse medical cross",
+        "difference": 0.00005967654358551951
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "medical cross independent of case stroke",
+        "difference": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "separate central medical cross",
+        "present": true
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "balanced six-unit medical cross",
+        "width": 6,
+        "height": 6.03125,
+        "center": [
+          8,
+          9.703125
+        ],
+        "area": 24.216796875
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          7.45
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          11.95
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          5.75,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.53125
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          10.25,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.53125
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "medical cross independent of case stroke",
+        "difference": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "separate central medical cross",
+        "present": true
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "balanced six-unit medical cross",
+        "width": 6,
+        "height": 5.96875,
+        "center": [
+          8,
+          9.703125
+        ],
+        "area": 23.916015625
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          7.45
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          11.95
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          5.75,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.46875
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          10.25,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.46875
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "identical positive/inverse medical cross",
+        "difference": 0.00005967654358551951
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "medical cross independent of case stroke",
+        "difference": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "separate central medical cross",
+        "present": true
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "balanced six-unit medical cross",
+        "width": 6,
+        "height": 6.03125,
+        "center": [
+          8,
+          9.703125
+        ],
+        "area": 24.216796875
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          7.45
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          11.95
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          5.75,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.53125
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          10.25,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.53125
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "medical cross independent of case stroke",
+        "difference": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "separate central medical cross",
+        "present": true
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "balanced six-unit medical cross",
+        "width": 6,
+        "height": 5.96875,
+        "center": [
+          8,
+          9.703125
+        ],
+        "area": 23.916015625
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          7.45
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          11.95
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          5.75,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.46875
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          10.25,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.46875
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "identical positive/inverse medical cross",
+        "difference": 0.00005967654358551951
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "medical cross independent of case stroke",
+        "difference": 0
+      }
+    ],
+    "failures": []
+  },
+  "junctions": {
+    "results": [
+      {
+        "name": "call.svg",
+        "feature": "upper receiver inner root",
+        "weight": 1.5,
+        "curveSamples": 54,
+        "exposedSamples": 54,
+        "exposedRadius": 0.5195327337533258,
+        "minimumRadius": 0.25,
+        "minimumSamples": 5
+      },
+      {
+        "name": "call.svg",
+        "feature": "lower receiver inner root",
+        "weight": 1.5,
+        "curveSamples": 54,
+        "exposedSamples": 54,
+        "exposedRadius": 0.5194772250950033,
+        "minimumRadius": 0.25,
+        "minimumSamples": 5
+      },
+      {
+        "name": "call_solid.svg",
+        "feature": "upper receiver inner root",
+        "weight": 1.5,
+        "curveSamples": 54,
+        "exposedSamples": 54,
+        "exposedRadius": 0.5195327337533258,
+        "minimumRadius": 0.25,
+        "minimumSamples": 5
+      },
+      {
+        "name": "call_solid.svg",
+        "feature": "lower receiver inner root",
+        "weight": 1.5,
+        "curveSamples": 54,
+        "exposedSamples": 54,
+        "exposedRadius": 0.5194772250950033,
+        "minimumRadius": 0.25,
+        "minimumSamples": 5
+      },
+      {
+        "name": "pin.svg",
+        "feature": "upper head to neck root",
+        "weight": 1.5,
+        "curveSamples": 47,
+        "exposedSamples": 47,
+        "exposedRadius": 0.3824158934590478,
+        "minimumRadius": 0.2,
+        "minimumSamples": 5
+      },
+      {
+        "name": "pin.svg",
+        "feature": "right head to neck root",
+        "weight": 1.5,
+        "curveSamples": 46,
+        "exposedSamples": 46,
+        "exposedRadius": 0.3825107780749335,
+        "minimumRadius": 0.2,
+        "minimumSamples": 5
+      },
+      {
+        "name": "pin.svg",
+        "feature": "upper flange to neck root",
+        "weight": 1.5,
+        "curveSamples": 17,
+        "exposedSamples": 17,
+        "exposedRadius": 0.5530442161984646,
+        "minimumRadius": 0.3,
+        "minimumSamples": 5
+      },
+      {
+        "name": "pin.svg",
+        "feature": "right flange to neck root",
+        "weight": 1.5,
+        "curveSamples": 17,
+        "exposedSamples": 17,
+        "exposedRadius": 0.5532049475149761,
+        "minimumRadius": 0.3,
+        "minimumSamples": 5
+      },
+      {
+        "name": "pin_solid.svg",
+        "feature": "upper head to neck root",
+        "weight": 1.5,
+        "curveSamples": 47,
+        "exposedSamples": 47,
+        "exposedRadius": 0.3824158934590478,
+        "minimumRadius": 0.2,
+        "minimumSamples": 5
+      },
+      {
+        "name": "pin_solid.svg",
+        "feature": "right head to neck root",
+        "weight": 1.5,
+        "curveSamples": 46,
+        "exposedSamples": 46,
+        "exposedRadius": 0.3825107780749335,
+        "minimumRadius": 0.2,
+        "minimumSamples": 5
+      },
+      {
+        "name": "pin_solid.svg",
+        "feature": "upper flange to neck root",
+        "weight": 1.5,
+        "curveSamples": 17,
+        "exposedSamples": 17,
+        "exposedRadius": 0.5530442161984646,
+        "minimumRadius": 0.3,
+        "minimumSamples": 5
+      },
+      {
+        "name": "pin_solid.svg",
+        "feature": "right flange to neck root",
+        "weight": 1.5,
+        "curveSamples": 17,
+        "exposedSamples": 17,
+        "exposedRadius": 0.5532049475149761,
+        "minimumRadius": 0.3,
+        "minimumSamples": 5
+      },
+      {
+        "name": "buildings.svg",
+        "feature": "tall building left inner foot",
+        "weight": 1.5,
+        "curveSamples": 55,
+        "exposedSamples": 31,
+        "exposedRadius": 0.3296830180161434,
+        "minimumRadius": 0.3,
+        "minimumSamples": 5
+      },
+      {
+        "name": "buildings.svg",
+        "feature": "tall building right inner foot",
+        "weight": 1.5,
+        "curveSamples": 56,
+        "exposedSamples": 31,
+        "exposedRadius": 0.3296940605517691,
+        "minimumRadius": 0.3,
+        "minimumSamples": 5
+      },
+      {
+        "name": "buildings.svg",
+        "feature": "short building left inner foot",
+        "weight": 1.5,
+        "curveSamples": 55,
+        "exposedSamples": 31,
+        "exposedRadius": 0.32968403595598206,
+        "minimumRadius": 0.3,
+        "minimumSamples": 5
+      },
+      {
+        "name": "buildings.svg",
+        "feature": "short building right inner foot",
+        "weight": 1.5,
+        "curveSamples": 55,
+        "exposedSamples": 31,
+        "exposedRadius": 0.3298645252021597,
+        "minimumRadius": 0.3,
+        "minimumSamples": 5
+      },
+      {
+        "name": "building.svg",
+        "feature": "left doorway header opening",
+        "weight": 1.5,
+        "curveSamples": 18,
+        "exposedSamples": 18,
+        "exposedRadius": 0.11087319502861437,
+        "minimumRadius": 0.09,
+        "minimumSamples": 5
+      },
+      {
+        "name": "building.svg",
+        "feature": "right doorway header opening",
+        "weight": 1.5,
+        "curveSamples": 17,
+        "exposedSamples": 17,
+        "exposedRadius": 0.11165017325308524,
+        "minimumRadius": 0.09,
+        "minimumSamples": 5
+      },
+      {
+        "name": "building_solid.svg",
+        "feature": "left doorway header opening",
+        "weight": 1.5,
+        "curveSamples": 18,
+        "exposedSamples": 18,
+        "exposedRadius": 0.11085461064313629,
+        "minimumRadius": 0.09,
+        "minimumSamples": 5
+      },
+      {
+        "name": "building_solid.svg",
+        "feature": "right doorway header opening",
+        "weight": 1.5,
+        "curveSamples": 17,
+        "exposedSamples": 17,
+        "exposedRadius": 0.11165017325308524,
+        "minimumRadius": 0.09,
+        "minimumSamples": 5
+      },
+      {
+        "name": "battery.svg",
+        "feature": "left recessed terminal shoulder",
+        "weight": 1.5,
+        "curveSamples": 30,
+        "exposedSamples": 30,
+        "exposedRadius": 0.3955942877705758,
+        "minimumRadius": 0.25,
+        "minimumSamples": 5
+      },
+      {
+        "name": "battery.svg",
+        "feature": "right recessed terminal shoulder",
+        "weight": 1.5,
+        "curveSamples": 30,
+        "exposedSamples": 30,
+        "exposedRadius": 0.39501995143140967,
+        "minimumRadius": 0.25,
+        "minimumSamples": 5
+      },
+      {
+        "name": "battery_solid.svg",
+        "feature": "left recessed terminal shoulder",
+        "weight": 1.5,
+        "curveSamples": 30,
+        "exposedSamples": 30,
+        "exposedRadius": 0.3955942877705758,
+        "minimumRadius": 0.25,
+        "minimumSamples": 5
+      },
+      {
+        "name": "battery_solid.svg",
+        "feature": "right recessed terminal shoulder",
+        "weight": 1.5,
+        "curveSamples": 30,
+        "exposedSamples": 30,
+        "exposedRadius": 0.39501995143140967,
+        "minimumRadius": 0.25,
+        "minimumSamples": 5
+      },
+      {
+        "name": "chat.svg",
+        "feature": "left tail attachment",
+        "weight": 1.5,
+        "curveSamples": 25,
+        "exposedSamples": 25,
+        "exposedRadius": 0.3160572330922333,
+        "minimumRadius": 0.16,
+        "minimumSamples": 5
+      },
+      {
+        "name": "chat_solid.svg",
+        "feature": "left tail attachment",
+        "weight": 1.5,
+        "curveSamples": 25,
+        "exposedSamples": 25,
+        "exposedRadius": 0.3160572330922333,
+        "minimumRadius": 0.16,
+        "minimumSamples": 5
+      },
+      {
+        "name": "chatting.svg",
+        "feature": "left tail attachment",
+        "weight": 1.5,
+        "curveSamples": 25,
+        "exposedSamples": 25,
+        "exposedRadius": 0.3160572330922333,
+        "minimumRadius": 0.16,
+        "minimumSamples": 5
+      },
+      {
+        "name": "chatting_solid.svg",
+        "feature": "left tail attachment",
+        "weight": 1.5,
+        "curveSamples": 25,
+        "exposedSamples": 25,
+        "exposedRadius": 0.3160572330922333,
+        "minimumRadius": 0.16,
+        "minimumSamples": 5
+      },
+      {
+        "name": "commentary.svg",
+        "feature": "left tail attachment",
+        "weight": 1.5,
+        "curveSamples": 25,
+        "exposedSamples": 25,
+        "exposedRadius": 0.3160572330922333,
+        "minimumRadius": 0.16,
+        "minimumSamples": 5
+      },
+      {
+        "name": "commentary_solid.svg",
+        "feature": "left tail attachment",
+        "weight": 1.5,
+        "curveSamples": 25,
+        "exposedSamples": 25,
+        "exposedRadius": 0.3160572330922333,
+        "minimumRadius": 0.16,
+        "minimumSamples": 5
+      },
+      {
+        "name": "chat-group.svg",
+        "feature": "foreground left tail attachment",
+        "weight": 1.5,
+        "curveSamples": 23,
+        "exposedSamples": 23,
+        "exposedRadius": 0.253411325059973,
+        "minimumRadius": 0.16,
+        "minimumSamples": 5
+      },
+      {
+        "name": "chat-group_solid.svg",
+        "feature": "foreground left tail attachment",
+        "weight": 1.5,
+        "curveSamples": 23,
+        "exposedSamples": 23,
+        "exposedRadius": 0.253411325059973,
+        "minimumRadius": 0.16,
+        "minimumSamples": 5
+      },
+      {
+        "name": "settings.svg",
+        "feature": "left gear valley",
+        "weight": 1.5,
+        "curveSamples": 76,
+        "exposedSamples": 76,
+        "exposedRadius": 0.35621998811628397,
+        "minimumRadius": 0.2,
+        "minimumSamples": 5
+      },
+      {
+        "name": "settings.svg",
+        "feature": "right gear valley",
+        "weight": 1.5,
+        "curveSamples": 75,
+        "exposedSamples": 75,
+        "exposedRadius": 0.35619340703608415,
+        "minimumRadius": 0.2,
+        "minimumSamples": 5
+      },
+      {
+        "name": "settings_solid.svg",
+        "feature": "left gear valley",
+        "weight": 1.5,
+        "curveSamples": 76,
+        "exposedSamples": 76,
+        "exposedRadius": 0.35621998811628397,
+        "minimumRadius": 0.2,
+        "minimumSamples": 5
+      },
+      {
+        "name": "settings_solid.svg",
+        "feature": "right gear valley",
+        "weight": 1.5,
+        "curveSamples": 75,
+        "exposedSamples": 75,
+        "exposedRadius": 0.35619340703608415,
+        "minimumRadius": 0.2,
+        "minimumSamples": 5
+      },
+      {
+        "name": "thumbs-up.svg",
+        "feature": "thumb web",
+        "weight": 1.5,
+        "curveSamples": 63,
+        "exposedSamples": 63,
+        "exposedRadius": 0.3917513622955795,
+        "minimumRadius": 0.2,
+        "minimumSamples": 5
+      },
+      {
+        "name": "thumbs-up_solid.svg",
+        "feature": "thumb web",
+        "weight": 1.5,
+        "curveSamples": 68,
+        "exposedSamples": 68,
+        "exposedRadius": 1.2641427800764087,
+        "minimumRadius": 0.2,
+        "minimumSamples": 5
+      },
+      {
+        "name": "thumbs-down.svg",
+        "feature": "thumb web",
+        "weight": 1.5,
+        "curveSamples": 63,
+        "exposedSamples": 63,
+        "exposedRadius": 0.39165541687912153,
+        "minimumRadius": 0.2,
+        "minimumSamples": 5
+      },
+      {
+        "name": "thumbs-down_solid.svg",
+        "feature": "thumb web",
+        "weight": 1.5,
+        "curveSamples": 68,
+        "exposedSamples": 68,
+        "exposedRadius": 1.2641172837185195,
+        "minimumRadius": 0.2,
+        "minimumSamples": 5
+      },
+      {
+        "name": "print.svg",
+        "feature": "upper sheet left root",
+        "weight": 1.5,
+        "curveSamples": 33,
+        "exposedSamples": 33,
+        "exposedRadius": 0.3105490695852866,
+        "minimumRadius": 0.15,
+        "minimumSamples": 5
+      },
+      {
+        "name": "print_solid.svg",
+        "feature": "upper sheet left root",
+        "weight": 1.5,
+        "curveSamples": 33,
+        "exposedSamples": 33,
+        "exposedRadius": 0.3105490695852866,
+        "minimumRadius": 0.15,
+        "minimumSamples": 5
+      },
+      {
+        "name": "type.svg",
+        "feature": "upper-left handle to top rail",
+        "weight": 1.5,
+        "curveSamples": 27,
+        "exposedSamples": 27,
+        "exposedRadius": 0.1794857229608423,
+        "minimumRadius": 0.12,
+        "minimumSamples": 5
+      },
+      {
+        "name": "type_solid.svg",
+        "feature": "upper-left handle to top rail",
+        "weight": 1.5,
+        "curveSamples": 27,
+        "exposedSamples": 27,
+        "exposedRadius": 0.1794857229608423,
+        "minimumRadius": 0.12,
+        "minimumSamples": 5
+      },
+      {
+        "name": "grid.svg",
+        "feature": "upper-left tile inner corner",
+        "weight": 1.5,
+        "curveSamples": 30,
+        "exposedSamples": 30,
+        "exposedRadius": 0.5206889161846293,
+        "minimumRadius": 0.2,
+        "minimumSamples": 5
+      },
+      {
+        "name": "storage.svg",
+        "feature": "left lid to body exterior root",
+        "weight": 1.5,
+        "curveSamples": 25,
+        "exposedSamples": 25,
+        "exposedRadius": 0.21695296931938268,
+        "minimumRadius": 0.12,
+        "minimumSamples": 5
+      },
+      {
+        "name": "storage_solid.svg",
+        "feature": "left lid to body exterior root",
+        "weight": 1.5,
+        "curveSamples": 25,
+        "exposedSamples": 25,
+        "exposedRadius": 0.21695296931938268,
+        "minimumRadius": 0.12,
+        "minimumSamples": 5
+      }
+    ],
+    "failures": []
+  },
+  "pair": {
+    "results": [
+      {
+        "name": "storefront",
+        "feature": "window aperture",
+        "weight": 0.67,
+        "mismatch": 0,
+        "outlinePixels": 19035,
+        "solidPixels": 19035
+      },
+      {
+        "name": "storefront",
+        "feature": "door aperture",
+        "weight": 0.67,
+        "mismatch": 0.26636271310961773,
+        "outlinePixels": 33952,
+        "solidPixels": 46279,
+        "outlineOutsideSolid": 0,
+        "outlineToSolidArea": 0.7336372868903822
+      },
+      {
+        "name": "storefront",
+        "feature": "shared wall/ground silhouette",
+        "weight": 0.67,
+        "y": 10,
+        "extents": [
+          [
+            120,
+            903
+          ],
+          [
+            120,
+            903
+          ]
+        ]
+      },
+      {
+        "name": "storefront",
+        "feature": "shared wall/ground silhouette",
+        "weight": 0.67,
+        "y": 11,
+        "extents": [
+          [
+            120,
+            903
+          ],
+          [
+            120,
+            903
+          ]
+        ]
+      },
+      {
+        "name": "storefront",
+        "feature": "shared wall/ground silhouette",
+        "weight": 0.67,
+        "y": 12,
+        "extents": [
+          [
+            120,
+            903
+          ],
+          [
+            120,
+            903
+          ]
+        ]
+      },
+      {
+        "name": "storefront",
+        "feature": "shared wall/ground silhouette",
+        "weight": 0.67,
+        "y": 13.5,
+        "extents": [
+          [
+            40,
+            983
+          ],
+          [
+            40,
+            983
+          ]
+        ]
+      },
+      {
+        "name": "storefront",
+        "feature": "window aperture",
+        "weight": 1,
+        "mismatch": 0,
+        "outlinePixels": 14025,
+        "solidPixels": 14025
+      },
+      {
+        "name": "storefront",
+        "feature": "door aperture",
+        "weight": 1,
+        "mismatch": 0.2926429831191736,
+        "outlinePixels": 28075,
+        "solidPixels": 39690,
+        "outlineOutsideSolid": 0,
+        "outlineToSolidArea": 0.7073570168808264
+      },
+      {
+        "name": "storefront",
+        "feature": "shared wall/ground silhouette",
+        "weight": 1,
+        "y": 10,
+        "extents": [
+          [
+            109,
+            914
+          ],
+          [
+            109,
+            914
+          ]
+        ]
+      },
+      {
+        "name": "storefront",
+        "feature": "shared wall/ground silhouette",
+        "weight": 1,
+        "y": 11,
+        "extents": [
+          [
+            109,
+            914
+          ],
+          [
+            109,
+            914
+          ]
+        ]
+      },
+      {
+        "name": "storefront",
+        "feature": "shared wall/ground silhouette",
+        "weight": 1,
+        "y": 12,
+        "extents": [
+          [
+            109,
+            914
+          ],
+          [
+            109,
+            914
+          ]
+        ]
+      },
+      {
+        "name": "storefront",
+        "feature": "shared wall/ground silhouette",
+        "weight": 1,
+        "y": 13.5,
+        "extents": [
+          [
+            40,
+            983
+          ],
+          [
+            40,
+            983
+          ]
+        ]
+      },
+      {
+        "name": "storefront",
+        "feature": "window aperture",
+        "weight": 1.3333333333333333,
+        "mismatch": 0,
+        "outlinePixels": 9607,
+        "solidPixels": 9607
+      },
+      {
+        "name": "storefront",
+        "feature": "door aperture",
+        "weight": 1.3333333333333333,
+        "mismatch": 0.3380759417679724,
+        "outlinePixels": 22052,
+        "solidPixels": 33315,
+        "outlineOutsideSolid": 0,
+        "outlineToSolidArea": 0.6619240582320276
+      },
+      {
+        "name": "storefront",
+        "feature": "shared wall/ground silhouette",
+        "weight": 1.3333333333333333,
+        "y": 10,
+        "extents": [
+          [
+            99,
+            924
+          ],
+          [
+            99,
+            924
+          ]
+        ]
+      },
+      {
+        "name": "storefront",
+        "feature": "shared wall/ground silhouette",
+        "weight": 1.3333333333333333,
+        "y": 11,
+        "extents": [
+          [
+            99,
+            924
+          ],
+          [
+            99,
+            924
+          ]
+        ]
+      },
+      {
+        "name": "storefront",
+        "feature": "shared wall/ground silhouette",
+        "weight": 1.3333333333333333,
+        "y": 12,
+        "extents": [
+          [
+            99,
+            924
+          ],
+          [
+            99,
+            924
+          ]
+        ]
+      },
+      {
+        "name": "storefront",
+        "feature": "shared wall/ground silhouette",
+        "weight": 1.3333333333333333,
+        "y": 13.5,
+        "extents": [
+          [
+            40,
+            983
+          ],
+          [
+            40,
+            983
+          ]
+        ]
+      },
+      {
+        "name": "storefront",
+        "feature": "window aperture",
+        "weight": 1.5,
+        "mismatch": 0,
+        "outlinePixels": 7664,
+        "solidPixels": 7664
+      },
+      {
+        "name": "storefront",
+        "feature": "door aperture",
+        "weight": 1.5,
+        "mismatch": 0.35754707614918757,
+        "outlinePixels": 19413,
+        "solidPixels": 30217,
+        "outlineOutsideSolid": 0,
+        "outlineToSolidArea": 0.6424529238508124
+      },
+      {
+        "name": "storefront",
+        "feature": "shared wall/ground silhouette",
+        "weight": 1.5,
+        "y": 10,
+        "extents": [
+          [
+            93,
+            930
+          ],
+          [
+            93,
+            930
+          ]
+        ]
+      },
+      {
+        "name": "storefront",
+        "feature": "shared wall/ground silhouette",
+        "weight": 1.5,
+        "y": 11,
+        "extents": [
+          [
+            93,
+            930
+          ],
+          [
+            93,
+            930
+          ]
+        ]
+      },
+      {
+        "name": "storefront",
+        "feature": "shared wall/ground silhouette",
+        "weight": 1.5,
+        "y": 12,
+        "extents": [
+          [
+            93,
+            930
+          ],
+          [
+            93,
+            930
+          ]
+        ]
+      },
+      {
+        "name": "storefront",
+        "feature": "shared wall/ground silhouette",
+        "weight": 1.5,
+        "y": 13.5,
+        "extents": [
+          [
+            40,
+            983
+          ],
+          [
+            40,
+            983
+          ]
+        ]
+      }
+    ],
+    "failures": []
+  },
+  "before": {
+    "results": [
+      {
+        "name": "building.svg",
+        "weight": 0.67,
+        "feature": "readable clear doorway",
+        "width": 3.625,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "building.svg",
+        "weight": 0.67,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.78125
+      },
+      {
+        "name": "building.svg",
+        "weight": 0.67,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 4.965
+      },
+      {
+        "name": "building_solid.svg",
+        "weight": 0.67,
+        "feature": "readable clear doorway",
+        "width": 3.625,
+        "minimumWidth": 2
+      },
+      {
+        "name": "building_solid.svg",
+        "weight": 0.67,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.46875
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 0.67,
+        "feature": "readable clear doorway",
+        "width": 3.09375,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 0.67,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.7624999999999993
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 0.67,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 4.43375
+      },
+      {
+        "name": "buildings_solid.svg",
+        "weight": 0.67,
+        "feature": "readable clear doorway",
+        "width": 3.09375,
+        "minimumWidth": 2
+      },
+      {
+        "name": "buildings_solid.svg",
+        "weight": 0.67,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.4499999999999993
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 0.67,
+        "feature": "readable clear doorway",
+        "width": 3.3125,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 0.67,
+        "feature": "visible outline window-to-door gap",
+        "gap": 2.1175000000000015
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 0.67,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 4.6525
+      },
+      {
+        "name": "hospital_solid.svg",
+        "weight": 0.67,
+        "feature": "readable clear doorway",
+        "width": 3.3125,
+        "minimumWidth": 2
+      },
+      {
+        "name": "hospital_solid.svg",
+        "weight": 0.67,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.5550000000000015
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 0.67,
+        "feature": "readable clear doorway",
+        "width": 3,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 0.67,
+        "feature": "visible outline window-to-door gap",
+        "gap": 0.8824999999999994
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 0.67,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 4.34
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 0.67,
+        "feature": "readable clear doorway",
+        "width": 3,
+        "minimumWidth": 2
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 0.67,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.2262499999999994
+      },
+      {
+        "name": "architectural outline family",
+        "weight": 0.67,
+        "feature": "consistent visible frame spacing",
+        "spread": 1.235000000000002
+      },
+      {
+        "name": "architectural family",
+        "weight": 0.67,
+        "feature": "consistent aperture spacing",
+        "spread": 0.3287500000000021,
+        "maximumSpread": 0.4
+      },
+      {
+        "name": "calculator.svg",
+        "weight": 0.67,
+        "feature": "readable clear calculator display",
+        "width": 6.3125,
+        "height": 3.09375
+      },
+      {
+        "name": "calculator_solid.svg",
+        "weight": 0.67,
+        "feature": "readable clear calculator display",
+        "width": 6.3125,
+        "height": 3.09375
+      },
+      {
+        "name": "globe.svg",
+        "weight": 0.67,
+        "feature": "twelve globe grid cells",
+        "count": 12,
+        "expected": 12
+      },
+      {
+        "name": "globe.svg",
+        "weight": 0.67,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          3.8135000000000003
+        ],
+        "width": 0.5
+      },
+      {
+        "name": "globe.svg",
+        "weight": 0.67,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          8
+        ],
+        "width": 0.5
+      },
+      {
+        "name": "globe.svg",
+        "weight": 0.67,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          12.186499999999999
+        ],
+        "width": 0.5
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 0.67,
+        "feature": "twelve globe grid cells",
+        "count": 12,
+        "expected": 12
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 0.67,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          3.8135000000000003
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 0.67,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          8
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 0.67,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          12.186499999999999
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "building.svg",
+        "weight": 1,
+        "feature": "readable clear doorway",
+        "width": 3.3125,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "building.svg",
+        "weight": 1,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.59375
+      },
+      {
+        "name": "building.svg",
+        "weight": 1,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5.3125
+      },
+      {
+        "name": "building_solid.svg",
+        "weight": 1,
+        "feature": "readable clear doorway",
+        "width": 3.3125,
+        "minimumWidth": 2
+      },
+      {
+        "name": "building_solid.svg",
+        "weight": 1,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.65625
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1,
+        "feature": "readable clear doorway",
+        "width": 2.78125,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.5749999999999993
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 4.78125
+      },
+      {
+        "name": "buildings_solid.svg",
+        "weight": 1,
+        "feature": "readable clear doorway",
+        "width": 2.78125,
+        "minimumWidth": 2
+      },
+      {
+        "name": "buildings_solid.svg",
+        "weight": 1,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.6374999999999993
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1,
+        "feature": "readable clear doorway",
+        "width": 3,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.7737500000000015
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5
+      },
+      {
+        "name": "hospital_solid.svg",
+        "weight": 1,
+        "feature": "readable clear doorway",
+        "width": 3,
+        "minimumWidth": 2
+      },
+      {
+        "name": "hospital_solid.svg",
+        "weight": 1,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.7425000000000015
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1,
+        "feature": "readable clear doorway",
+        "width": 2.6875,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1,
+        "feature": "visible outline window-to-door gap",
+        "gap": 0.5699999999999994
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 4.6875
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1,
+        "feature": "readable clear doorway",
+        "width": 2.6875,
+        "minimumWidth": 2
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.5699999999999994
+      },
+      {
+        "name": "architectural outline family",
+        "weight": 1,
+        "feature": "consistent visible frame spacing",
+        "spread": 1.203750000000002
+      },
+      {
+        "name": "architectural family",
+        "weight": 1,
+        "feature": "consistent aperture spacing",
+        "spread": 0.1725000000000021,
+        "maximumSpread": 0.4
+      },
+      {
+        "name": "calculator.svg",
+        "weight": 1,
+        "feature": "readable clear calculator display",
+        "width": 6,
+        "height": 2.75
+      },
+      {
+        "name": "calculator_solid.svg",
+        "weight": 1,
+        "feature": "readable clear calculator display",
+        "width": 6,
+        "height": 2.75
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1,
+        "feature": "twelve globe grid cells",
+        "count": 12,
+        "expected": 12
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          3.8
+        ],
+        "width": 0.75
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          8
+        ],
+        "width": 0.75
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          12.2
+        ],
+        "width": 0.75
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1,
+        "feature": "twelve globe grid cells",
+        "count": 12,
+        "expected": 12
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          3.8
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          8
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          12.2
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "building.svg",
+        "weight": 1.333333,
+        "feature": "readable clear doorway",
+        "width": 3,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "building.svg",
+        "weight": 1.333333,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.4375
+      },
+      {
+        "name": "building.svg",
+        "weight": 1.333333,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5.666666
+      },
+      {
+        "name": "building_solid.svg",
+        "weight": 1.333333,
+        "feature": "readable clear doorway",
+        "width": 3,
+        "minimumWidth": 2
+      },
+      {
+        "name": "building_solid.svg",
+        "weight": 1.333333,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.8125
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1.333333,
+        "feature": "readable clear doorway",
+        "width": 2.4375,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1.333333,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.4187499999999993
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1.333333,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5.104166
+      },
+      {
+        "name": "buildings_solid.svg",
+        "weight": 1.333333,
+        "feature": "readable clear doorway",
+        "width": 2.4375,
+        "minimumWidth": 2
+      },
+      {
+        "name": "buildings_solid.svg",
+        "weight": 1.333333,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.7937499999999993
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1.333333,
+        "feature": "readable clear doorway",
+        "width": 2.625,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1.333333,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.4612500000000015
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1.333333,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5.291666
+      },
+      {
+        "name": "hospital_solid.svg",
+        "weight": 1.333333,
+        "feature": "readable clear doorway",
+        "width": 2.625,
+        "minimumWidth": 2
+      },
+      {
+        "name": "hospital_solid.svg",
+        "weight": 1.333333,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.8987500000000015
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.333333,
+        "feature": "readable clear doorway",
+        "width": 2.34375,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.333333,
+        "feature": "visible outline window-to-door gap",
+        "gap": 0.2262499999999994
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.333333,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5.010416
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.333333,
+        "feature": "readable clear doorway",
+        "width": 2.34375,
+        "minimumWidth": 2
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.333333,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.8824999999999994
+      },
+      {
+        "name": "architectural outline family",
+        "weight": 1.333333,
+        "feature": "consistent visible frame spacing",
+        "spread": 1.235000000000002
+      },
+      {
+        "name": "architectural family",
+        "weight": 1.333333,
+        "feature": "consistent aperture spacing",
+        "spread": 0.1050000000000022,
+        "maximumSpread": 0.4
+      },
+      {
+        "name": "calculator.svg",
+        "weight": 1.333333,
+        "feature": "readable clear calculator display",
+        "width": 5.6875,
+        "height": 2.4375
+      },
+      {
+        "name": "calculator_solid.svg",
+        "weight": 1.333333,
+        "feature": "readable clear calculator display",
+        "width": 5.6875,
+        "height": 2.4375
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1.333333,
+        "feature": "twelve globe grid cells",
+        "count": 12,
+        "expected": 12
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1.333333,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          3.8062499
+        ],
+        "width": 0.9375
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1.333333,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          8
+        ],
+        "width": 0.9375
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1.333333,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          12.193750099999999
+        ],
+        "width": 0.9375
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1.333333,
+        "feature": "twelve globe grid cells",
+        "count": 12,
+        "expected": 12
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1.333333,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          3.8062499
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1.333333,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          8
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1.333333,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          12.193750099999999
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "building.svg",
+        "weight": 1.5,
+        "feature": "readable clear doorway",
+        "width": 2.8125,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "building.svg",
+        "weight": 1.5,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.34375
+      },
+      {
+        "name": "building.svg",
+        "weight": 1.5,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5.8125
+      },
+      {
+        "name": "building_solid.svg",
+        "weight": 1.5,
+        "feature": "readable clear doorway",
+        "width": 2.8125,
+        "minimumWidth": 2
+      },
+      {
+        "name": "building_solid.svg",
+        "weight": 1.5,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.90625
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1.5,
+        "feature": "readable clear doorway",
+        "width": 2.28125,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1.5,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.3249999999999993
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1.5,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5.28125
+      },
+      {
+        "name": "buildings_solid.svg",
+        "weight": 1.5,
+        "feature": "readable clear doorway",
+        "width": 2.28125,
+        "minimumWidth": 2
+      },
+      {
+        "name": "buildings_solid.svg",
+        "weight": 1.5,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.8874999999999993
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1.5,
+        "feature": "readable clear doorway",
+        "width": 2.5,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1.5,
+        "feature": "visible outline window-to-door gap",
+        "gap": 1.2737500000000015
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1.5,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5.5
+      },
+      {
+        "name": "hospital_solid.svg",
+        "weight": 1.5,
+        "feature": "readable clear doorway",
+        "width": 2.5,
+        "minimumWidth": 2
+      },
+      {
+        "name": "hospital_solid.svg",
+        "weight": 1.5,
+        "feature": "window-to-door aperture spacing",
+        "gap": 2.9925000000000015
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.5,
+        "feature": "readable clear doorway",
+        "width": 2.1875,
+        "minimumWidth": 1.35
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.5,
+        "feature": "visible outline window-to-door gap",
+        "gap": 0.0699999999999994
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.5,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5.1875
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.5,
+        "feature": "readable clear doorway",
+        "width": 2.1875,
+        "minimumWidth": 2
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.5,
+        "feature": "window-to-door aperture spacing",
+        "gap": 3.0699999999999994
+      },
+      {
+        "name": "architectural outline family",
+        "weight": 1.5,
+        "feature": "consistent visible frame spacing",
+        "spread": 1.2737500000000006
+      },
+      {
+        "name": "architectural family",
+        "weight": 1.5,
+        "feature": "consistent aperture spacing",
+        "spread": 0.1825000000000001,
+        "maximumSpread": 0.4
+      },
+      {
+        "name": "calculator.svg",
+        "weight": 1.5,
+        "feature": "readable clear calculator display",
+        "width": 5.5,
+        "height": 2.25
+      },
+      {
+        "name": "calculator_solid.svg",
+        "weight": 1.5,
+        "feature": "readable clear calculator display",
+        "width": 5.5,
+        "height": 2.25
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1.5,
+        "feature": "twelve globe grid cells",
+        "count": 12,
+        "expected": 12
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1.5,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          3.8
+        ],
+        "width": 1.0625
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1.5,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          8
+        ],
+        "width": 1.0625
+      },
+      {
+        "name": "globe.svg",
+        "weight": 1.5,
+        "feature": "continuous positive central meridian",
+        "point": [
+          8,
+          12.2
+        ],
+        "width": 1.0625
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1.5,
+        "feature": "twelve globe grid cells",
+        "count": 12,
+        "expected": 12
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1.5,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          3.8
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1.5,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          8
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "globe_solid.svg",
+        "weight": 1.5,
+        "feature": "continuous inverse central meridian",
+        "point": [
+          8,
+          12.2
+        ],
+        "width": 1.125
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "three enclosed coin interiors",
+        "count": 3,
+        "expected": 3
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "circular coin rim",
+        "coin": 0,
+        "center": [
+          8.015625,
+          4.8125
+        ],
+        "width": 6.59375,
+        "height": 6.5625,
+        "circularProbes": 24
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "one separate substantial currency glyph per coin",
+        "coin": 0,
+        "count": 1
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "circular coin rim",
+        "coin": 1,
+        "center": [
+          4.328125,
+          11.1875
+        ],
+        "width": 6.59375,
+        "height": 6.5625,
+        "circularProbes": 24
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "one separate substantial currency glyph per coin",
+        "coin": 1,
+        "count": 1
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "circular coin rim",
+        "coin": 2,
+        "center": [
+          11.703125,
+          11.1875
+        ],
+        "width": 6.59375,
+        "height": 6.5625,
+        "circularProbes": 24
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "one separate substantial currency glyph per coin",
+        "coin": 2,
+        "count": 1
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "one upper coin and two balanced lower coins",
+        "centers": [
+          [
+            8.015625,
+            4.8125
+          ],
+          [
+            4.328125,
+            11.1875
+          ],
+          [
+            11.703125,
+            11.1875
+          ]
+        ]
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "distinct currency glyph contours",
+        "coins": [
+          0,
+          1
+        ],
+        "difference": 0.6825280980878704
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "distinct currency glyph contours",
+        "coins": [
+          0,
+          2
+        ],
+        "difference": 0.43835196814213506
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "distinct currency glyph contours",
+        "coins": [
+          1,
+          2
+        ],
+        "difference": 0.7032699619771863
+      },
+      {
+        "name": "currency-exchange.svg",
+        "feature": "upper coin retains Currency dollar contour",
+        "difference": 0.019882179675994108
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "separate central medical cross",
+        "present": true
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "balanced six-unit medical cross",
+        "width": 6,
+        "height": 6.03125,
+        "center": [
+          8,
+          9.703125
+        ],
+        "area": 24.216796875
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          7.45
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          11.95
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          5.75,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.53125
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          10.25,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.53125
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 0.67,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "separate central medical cross",
+        "present": true
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "balanced six-unit medical cross",
+        "width": 6,
+        "height": 5.96875,
+        "center": [
+          8,
+          9.703125
+        ],
+        "area": 23.916015625
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          7.45
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          11.95
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          5.75,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.46875
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          10.25,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.46875
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 0.67,
+        "feature": "identical positive/inverse medical cross",
+        "difference": 0.00005967654358551951
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "separate central medical cross",
+        "present": true
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "balanced six-unit medical cross",
+        "width": 6,
+        "height": 6.03125,
+        "center": [
+          8,
+          9.703125
+        ],
+        "area": 24.216796875
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          7.45
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          11.95
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          5.75,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.53125
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          10.25,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.53125
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1,
+        "feature": "medical cross independent of case stroke",
+        "difference": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "separate central medical cross",
+        "present": true
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "balanced six-unit medical cross",
+        "width": 6,
+        "height": 5.96875,
+        "center": [
+          8,
+          9.703125
+        ],
+        "area": 23.916015625
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          7.45
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          11.95
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          5.75,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.46875
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          10.25,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.46875
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "identical positive/inverse medical cross",
+        "difference": 0.00005967654358551951
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1,
+        "feature": "medical cross independent of case stroke",
+        "difference": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "separate central medical cross",
+        "present": true
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "balanced six-unit medical cross",
+        "width": 6,
+        "height": 6.03125,
+        "center": [
+          8,
+          9.703125
+        ],
+        "area": 24.216796875
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          7.45
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          11.95
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          5.75,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.53125
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          10.25,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.53125
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.333333,
+        "feature": "medical cross independent of case stroke",
+        "difference": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "separate central medical cross",
+        "present": true
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "balanced six-unit medical cross",
+        "width": 6,
+        "height": 5.96875,
+        "center": [
+          8,
+          9.703125
+        ],
+        "area": 23.916015625
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          7.45
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          11.95
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          5.75,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.46875
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          10.25,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.46875
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "identical positive/inverse medical cross",
+        "difference": 0.00005967654358551951
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.333333,
+        "feature": "medical cross independent of case stroke",
+        "difference": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "separate central medical cross",
+        "present": true
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "balanced six-unit medical cross",
+        "width": 6,
+        "height": 6.03125,
+        "center": [
+          8,
+          9.703125
+        ],
+        "area": 24.216796875
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          7.45
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          11.95
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          5.75,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.53125
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          10.25,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.53125
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit.svg",
+        "weight": 1.5,
+        "feature": "medical cross independent of case stroke",
+        "difference": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "separate central medical cross",
+        "present": true
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "balanced six-unit medical cross",
+        "width": 6,
+        "height": 5.96875,
+        "center": [
+          8,
+          9.703125
+        ],
+        "area": 23.916015625
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          7.45
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          8,
+          11.95
+        ],
+        "axis": "x",
+        "width": 2.5
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          5.75,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.46875
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "fixed 2.5-unit medical cross stem",
+        "point": [
+          10.25,
+          9.7
+        ],
+        "axis": "y",
+        "width": 2.46875
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          -1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          -1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "medical cross curved inner junction",
+        "quadrant": [
+          1,
+          1
+        ],
+        "inner": 255,
+        "outer": 0
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "identical positive/inverse medical cross",
+        "difference": 0.00005967654358551951
+      },
+      {
+        "name": "medical-kit_solid.svg",
+        "weight": 1.5,
+        "feature": "medical cross independent of case stroke",
+        "difference": 0
+      }
+    ],
+    "failures": [
+      {
+        "name": "architectural outline family",
+        "weight": 0.67,
+        "feature": "consistent visible frame spacing",
+        "spread": 1.235000000000002
+      },
+      {
+        "name": "building.svg",
+        "weight": 1,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5.3125
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1,
+        "feature": "visible outline window-to-door gap",
+        "gap": 0.5699999999999994
+      },
+      {
+        "name": "architectural outline family",
+        "weight": 1,
+        "feature": "consistent visible frame spacing",
+        "spread": 1.203750000000002
+      },
+      {
+        "name": "building.svg",
+        "weight": 1.333333,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5.666666
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1.333333,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5.104166
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1.333333,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5.291666
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.333333,
+        "feature": "visible outline window-to-door gap",
+        "gap": 0.2262499999999994
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.333333,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5.010416
+      },
+      {
+        "name": "architectural outline family",
+        "weight": 1.333333,
+        "feature": "consistent visible frame spacing",
+        "spread": 1.235000000000002
+      },
+      {
+        "name": "building.svg",
+        "weight": 1.5,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5.8125
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1.5,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5.28125
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1.5,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5.5
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.5,
+        "feature": "visible outline window-to-door gap",
+        "gap": 0.0699999999999994
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.5,
+        "feature": "restrained outline doorway frame",
+        "outerWidth": 5.1875
+      },
+      {
+        "name": "architectural outline family",
+        "weight": 1.5,
+        "feature": "consistent visible frame spacing",
+        "spread": 1.2737500000000006
+      }
+    ]
+  }
+}

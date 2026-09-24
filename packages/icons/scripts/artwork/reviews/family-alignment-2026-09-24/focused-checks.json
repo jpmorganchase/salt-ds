@@ -1,0 +1,5277 @@
+{
+  "standing-family": {
+    "failures": [],
+    "results": [
+      {
+        "name": "man.svg",
+        "kind": "man",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "man_solid.svg",
+        "kind": "man",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "woman.svg",
+        "kind": "woman",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "woman_solid.svg",
+        "kind": "woman",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 0.67,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.0013896253496919054
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 0.67,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.0036034639750469805
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 0.67,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.0004904217627159357
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 0.67,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.001270627506931919
+      },
+      {
+        "name": "man.svg",
+        "kind": "man",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "man_solid.svg",
+        "kind": "man",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "woman.svg",
+        "kind": "woman",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "woman_solid.svg",
+        "kind": "woman",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.015625
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 1,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.00881004933377519
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.015625
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 1,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.008463839638097891
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.015625
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 1,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.004722062549232505
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.015625
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 1,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.004161796722814254
+      },
+      {
+        "name": "man.svg",
+        "kind": "man",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "man_solid.svg",
+        "kind": "man",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "woman.svg",
+        "kind": "woman",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "woman_solid.svg",
+        "kind": "woman",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 1.3333333333333333,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.0006246721663249249
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.015625
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 1.3333333333333333,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.0018207545734413276
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 1.3333333333333333,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.0003363033974034421
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.015625
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 1.3333333333333333,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.0009368222987625973
+      },
+      {
+        "name": "man.svg",
+        "kind": "man",
+        "weight": 1.5,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "man_solid.svg",
+        "kind": "man",
+        "weight": 1.5,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "woman.svg",
+        "kind": "woman",
+        "weight": 1.5,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "woman_solid.svg",
+        "kind": "woman",
+        "weight": 1.5,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 1.5,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.015625
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 1.5,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.006079595940700557
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 1.5,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.015625
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 1.5,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.005758383129249239
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 1.5,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.015625
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 1.5,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.0040179651062359645
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 1.5,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.015625
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 1.5,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.0037703934696188997
+      }
+    ]
+  },
+  "storefront-pair": {
+    "failures": [],
+    "results": []
+  },
+  "storefront-door": {
+    "failures": [],
+    "results": [
+      {
+        "name": "storefront.svg",
+        "weight": 0.67,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 0
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 0
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.3333333333333333,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 0
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.5,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 0
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 0.67,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 0
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 0
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.3333333333333333,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 0
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.5,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 0
+      }
+    ]
+  },
+  "cutout-contours": {
+    "failures": [],
+    "results": [
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 0.67,
+        "feature": "upper diagonal at y7.45",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          7.45
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 2.208928599112732,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.9089285991127323,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.9071691663931112,
+              "point": [
+                5.607169166393112,
+                7.45
+              ]
+            }
+          ],
+          "distance": 1.9071691663931112,
+          "point": [
+            5.607169166393112,
+            7.45
+          ],
+          "signedError": -0.0017594327196210902,
+          "absoluteError": 0.0017594327196210902,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 0.67,
+        "feature": "upper diagonal at y7.65",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          7.65
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 2.008928599112732,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.708928599112732,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.7070386352126938,
+              "point": [
+                5.407038635212694,
+                7.65
+              ]
+            }
+          ],
+          "distance": 1.7070386352126938,
+          "point": [
+            5.407038635212694,
+            7.65
+          ],
+          "signedError": -0.0018899639000382606,
+          "absoluteError": 0.0018899639000382606,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 0.67,
+        "feature": "upper diagonal at y7.85",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          7.85
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.8089285991127328,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.5089285991127328,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.5085374922092445,
+              "point": [
+                5.208537492209245,
+                7.85
+              ]
+            }
+          ],
+          "distance": 1.5085374922092445,
+          "point": [
+            5.208537492209245,
+            7.85
+          ],
+          "signedError": -0.0003911069034883141,
+          "absoluteError": 0.0003911069034883141,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 0.67,
+        "feature": "upper diagonal at y8.05",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          8.05
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.6089285991127318,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.3089285991127317,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.3079099937603986,
+              "point": [
+                5.007909993760399,
+                8.05
+              ]
+            }
+          ],
+          "distance": 1.3079099937603986,
+          "point": [
+            5.007909993760399,
+            8.05
+          ],
+          "signedError": -0.0010186053523331129,
+          "absoluteError": 0.0010186053523331129,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 0.67,
+        "feature": "lower diagonal at y10.3",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          10.3
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.283861399112735,
+        "expectedTransition": "exit",
+        "expectedDistance": 0.983861399112735,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 0.9814088983050849,
+              "point": [
+                4.681408898305085,
+                10.3
+              ]
+            }
+          ],
+          "distance": 0.9814088983050849,
+          "point": [
+            4.681408898305085,
+            10.3
+          ],
+          "signedError": -0.0024525008076500265,
+          "absoluteError": 0.0024525008076500265,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 0.67,
+        "feature": "lower diagonal at y10.55",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          10.55
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.533861399112735,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.233861399112735,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.2318218427835055,
+              "point": [
+                4.931821842783505,
+                10.55
+              ]
+            }
+          ],
+          "distance": 1.2318218427835055,
+          "point": [
+            4.931821842783505,
+            10.55
+          ],
+          "signedError": -0.002039556329229475,
+          "absoluteError": 0.002039556329229475,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 0.67,
+        "feature": "lower diagonal at y10.8",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          10.8
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.783861399112735,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.483861399112735,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.4818303266073873,
+              "point": [
+                5.181830326607388,
+                10.8
+              ]
+            }
+          ],
+          "distance": 1.4818303266073873,
+          "point": [
+            5.181830326607388,
+            10.8
+          ],
+          "signedError": -0.0020310725053476197,
+          "absoluteError": 0.0020310725053476197,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1,
+        "feature": "upper diagonal at y7.45",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          7.45
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 2.208928599112732,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.9089285991127323,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.9071691663931112,
+              "point": [
+                5.607169166393112,
+                7.45
+              ]
+            }
+          ],
+          "distance": 1.9071691663931112,
+          "point": [
+            5.607169166393112,
+            7.45
+          ],
+          "signedError": -0.0017594327196210902,
+          "absoluteError": 0.0017594327196210902,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1,
+        "feature": "upper diagonal at y7.65",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          7.65
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 2.008928599112732,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.708928599112732,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.7070386352126938,
+              "point": [
+                5.407038635212694,
+                7.65
+              ]
+            }
+          ],
+          "distance": 1.7070386352126938,
+          "point": [
+            5.407038635212694,
+            7.65
+          ],
+          "signedError": -0.0018899639000382606,
+          "absoluteError": 0.0018899639000382606,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1,
+        "feature": "upper diagonal at y7.85",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          7.85
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.8089285991127328,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.5089285991127328,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.5085374922092445,
+              "point": [
+                5.208537492209245,
+                7.85
+              ]
+            }
+          ],
+          "distance": 1.5085374922092445,
+          "point": [
+            5.208537492209245,
+            7.85
+          ],
+          "signedError": -0.0003911069034883141,
+          "absoluteError": 0.0003911069034883141,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1,
+        "feature": "upper diagonal at y8.05",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          8.05
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.6089285991127318,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.3089285991127317,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.3079099937603986,
+              "point": [
+                5.007909993760399,
+                8.05
+              ]
+            }
+          ],
+          "distance": 1.3079099937603986,
+          "point": [
+            5.007909993760399,
+            8.05
+          ],
+          "signedError": -0.0010186053523331129,
+          "absoluteError": 0.0010186053523331129,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1,
+        "feature": "lower diagonal at y10.3",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          10.3
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.283861399112735,
+        "expectedTransition": "exit",
+        "expectedDistance": 0.983861399112735,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 0.9814088983050849,
+              "point": [
+                4.681408898305085,
+                10.3
+              ]
+            }
+          ],
+          "distance": 0.9814088983050849,
+          "point": [
+            4.681408898305085,
+            10.3
+          ],
+          "signedError": -0.0024525008076500265,
+          "absoluteError": 0.0024525008076500265,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1,
+        "feature": "lower diagonal at y10.55",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          10.55
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.533861399112735,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.233861399112735,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.2318218427835055,
+              "point": [
+                4.931821842783505,
+                10.55
+              ]
+            }
+          ],
+          "distance": 1.2318218427835055,
+          "point": [
+            4.931821842783505,
+            10.55
+          ],
+          "signedError": -0.002039556329229475,
+          "absoluteError": 0.002039556329229475,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1,
+        "feature": "lower diagonal at y10.8",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          10.8
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.783861399112735,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.483861399112735,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.4818303266073873,
+              "point": [
+                5.181830326607388,
+                10.8
+              ]
+            }
+          ],
+          "distance": 1.4818303266073873,
+          "point": [
+            5.181830326607388,
+            10.8
+          ],
+          "signedError": -0.0020310725053476197,
+          "absoluteError": 0.0020310725053476197,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.333333,
+        "feature": "upper diagonal at y7.45",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          7.45
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 2.208928599112732,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.9089285991127323,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.9071691663931112,
+              "point": [
+                5.607169166393112,
+                7.45
+              ]
+            }
+          ],
+          "distance": 1.9071691663931112,
+          "point": [
+            5.607169166393112,
+            7.45
+          ],
+          "signedError": -0.0017594327196210902,
+          "absoluteError": 0.0017594327196210902,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.333333,
+        "feature": "upper diagonal at y7.65",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          7.65
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 2.008928599112732,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.708928599112732,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.7070386352126938,
+              "point": [
+                5.407038635212694,
+                7.65
+              ]
+            }
+          ],
+          "distance": 1.7070386352126938,
+          "point": [
+            5.407038635212694,
+            7.65
+          ],
+          "signedError": -0.0018899639000382606,
+          "absoluteError": 0.0018899639000382606,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.333333,
+        "feature": "upper diagonal at y7.85",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          7.85
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.8089285991127328,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.5089285991127328,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.5085374922092445,
+              "point": [
+                5.208537492209245,
+                7.85
+              ]
+            }
+          ],
+          "distance": 1.5085374922092445,
+          "point": [
+            5.208537492209245,
+            7.85
+          ],
+          "signedError": -0.0003911069034883141,
+          "absoluteError": 0.0003911069034883141,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.333333,
+        "feature": "upper diagonal at y8.05",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          8.05
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.6089285991127318,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.3089285991127317,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.3079099937603986,
+              "point": [
+                5.007909993760399,
+                8.05
+              ]
+            }
+          ],
+          "distance": 1.3079099937603986,
+          "point": [
+            5.007909993760399,
+            8.05
+          ],
+          "signedError": -0.0010186053523331129,
+          "absoluteError": 0.0010186053523331129,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.333333,
+        "feature": "lower diagonal at y10.3",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          10.3
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.283861399112735,
+        "expectedTransition": "exit",
+        "expectedDistance": 0.983861399112735,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 0.9814088983050849,
+              "point": [
+                4.681408898305085,
+                10.3
+              ]
+            }
+          ],
+          "distance": 0.9814088983050849,
+          "point": [
+            4.681408898305085,
+            10.3
+          ],
+          "signedError": -0.0024525008076500265,
+          "absoluteError": 0.0024525008076500265,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.333333,
+        "feature": "lower diagonal at y10.55",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          10.55
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.533861399112735,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.233861399112735,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.2318218427835055,
+              "point": [
+                4.931821842783505,
+                10.55
+              ]
+            }
+          ],
+          "distance": 1.2318218427835055,
+          "point": [
+            4.931821842783505,
+            10.55
+          ],
+          "signedError": -0.002039556329229475,
+          "absoluteError": 0.002039556329229475,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.333333,
+        "feature": "lower diagonal at y10.8",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          10.8
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.783861399112735,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.483861399112735,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.4818303266073873,
+              "point": [
+                5.181830326607388,
+                10.8
+              ]
+            }
+          ],
+          "distance": 1.4818303266073873,
+          "point": [
+            5.181830326607388,
+            10.8
+          ],
+          "signedError": -0.0020310725053476197,
+          "absoluteError": 0.0020310725053476197,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.5,
+        "feature": "upper diagonal at y7.45",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          7.45
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 2.208928599112732,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.9089285991127323,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.9071691663931112,
+              "point": [
+                5.607169166393112,
+                7.45
+              ]
+            }
+          ],
+          "distance": 1.9071691663931112,
+          "point": [
+            5.607169166393112,
+            7.45
+          ],
+          "signedError": -0.0017594327196210902,
+          "absoluteError": 0.0017594327196210902,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.5,
+        "feature": "upper diagonal at y7.65",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          7.65
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 2.008928599112732,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.708928599112732,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.7070386352126938,
+              "point": [
+                5.407038635212694,
+                7.65
+              ]
+            }
+          ],
+          "distance": 1.7070386352126938,
+          "point": [
+            5.407038635212694,
+            7.65
+          ],
+          "signedError": -0.0018899639000382606,
+          "absoluteError": 0.0018899639000382606,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.5,
+        "feature": "upper diagonal at y7.85",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          7.85
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.8089285991127328,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.5089285991127328,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.5085374922092445,
+              "point": [
+                5.208537492209245,
+                7.85
+              ]
+            }
+          ],
+          "distance": 1.5085374922092445,
+          "point": [
+            5.208537492209245,
+            7.85
+          ],
+          "signedError": -0.0003911069034883141,
+          "absoluteError": 0.0003911069034883141,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.5,
+        "feature": "upper diagonal at y8.05",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          8.05
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.6089285991127318,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.3089285991127317,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.3079099937603986,
+              "point": [
+                5.007909993760399,
+                8.05
+              ]
+            }
+          ],
+          "distance": 1.3079099937603986,
+          "point": [
+            5.007909993760399,
+            8.05
+          ],
+          "signedError": -0.0010186053523331129,
+          "absoluteError": 0.0010186053523331129,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.5,
+        "feature": "lower diagonal at y10.3",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          10.3
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.283861399112735,
+        "expectedTransition": "exit",
+        "expectedDistance": 0.983861399112735,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 0.9814088983050849,
+              "point": [
+                4.681408898305085,
+                10.3
+              ]
+            }
+          ],
+          "distance": 0.9814088983050849,
+          "point": [
+            4.681408898305085,
+            10.3
+          ],
+          "signedError": -0.0024525008076500265,
+          "absoluteError": 0.0024525008076500265,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.5,
+        "feature": "lower diagonal at y10.55",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          10.55
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.533861399112735,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.233861399112735,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.2318218427835055,
+              "point": [
+                4.931821842783505,
+                10.55
+              ]
+            }
+          ],
+          "distance": 1.2318218427835055,
+          "point": [
+            4.931821842783505,
+            10.55
+          ],
+          "signedError": -0.002039556329229475,
+          "absoluteError": 0.002039556329229475,
+          "pass": true
+        }
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.5,
+        "feature": "lower diagonal at y10.8",
+        "coordinateSpace": "final-16-unit-canvas",
+        "origin": [
+          3.7,
+          10.8
+        ],
+        "direction": [
+          1,
+          0
+        ],
+        "length": 1.783861399112735,
+        "expectedTransition": "exit",
+        "expectedDistance": 1.483861399112735,
+        "weightFactor": 0,
+        "tolerance": 0.02,
+        "pixelsPerUnit": 128,
+        "measured": {
+          "direction": [
+            1,
+            0
+          ],
+          "startAlpha": 1,
+          "endAlpha": 0,
+          "transitions": [
+            {
+              "transition": "exit",
+              "distance": 1.4818303266073873,
+              "point": [
+                5.181830326607388,
+                10.8
+              ]
+            }
+          ],
+          "distance": 1.4818303266073873,
+          "point": [
+            5.181830326607388,
+            10.8
+          ],
+          "signedError": -0.0020310725053476197,
+          "absoluteError": 0.0020310725053476197,
+          "pass": true
+        }
+      }
+    ]
+  },
+  "cutout-spacing-cloud": {
+    "failures": [],
+    "results": [
+      {
+        "name": "cloud-sync.svg",
+        "weight": 0.67,
+        "kind": "opposing cloud/arrow cap clearance",
+        "coordinateSpace": "final-16-unit-canvas",
+        "pixelsPerUnit": 128,
+        "measurements": [
+          {
+            "feature": "left curved cap to arrow miter",
+            "origin": [
+              4.310905522580151,
+              10.525206570208443
+            ],
+            "direction": [
+              0.7041909139949838,
+              -0.7100106736147771
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.03540086396310647,
+                "point": [
+                  4.3358344893305425,
+                  10.500071578939453
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.3705278253686022,
+                "point": [
+                  5.276018764582024,
+                  9.552117185710687
+                ]
+              }
+            ],
+            "gap": 1.3351269614054957,
+            "regions": [
+              [
+                3.4,
+                10.5,
+                4.5,
+                11.5
+              ],
+              [
+                4.65,
+                8.8,
+                5.65,
+                9.7
+              ]
+            ],
+            "sampledDistance": 1.3424093966749675
+          },
+          {
+            "feature": "right flat cap to shaft end",
+            "origin": [
+              10.52847310663384,
+              9.58541016730942
+            ],
+            "direction": [
+              0.7436047788719926,
+              0.6686194230193547
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.029618788693090505,
+                "point": [
+                  10.55049777945042,
+                  9.605213864715926
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.279178294875327,
+                "point": [
+                  11.47967619973246,
+                  10.440693620767842
+                ]
+              }
+            ],
+            "gap": 1.2495595061822364,
+            "regions": [
+              [
+                10.2,
+                8.7,
+                10.7,
+                10
+              ],
+              [
+                11.4,
+                10,
+                12.3,
+                11.6
+              ]
+            ],
+            "sampledDistance": 1.2502441167877978
+          }
+        ],
+        "spread": 0.08556745522325926,
+        "maximumSpread": 0.5,
+        "minGap": 1.2495595061822364,
+        "minimumGap": 0.45,
+        "expectedClearance": null,
+        "measuredClearance": null,
+        "miterResidual": 0,
+        "maximumMiterResidual": 0.3631963679893186,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1,
+        "kind": "opposing cloud/arrow cap clearance",
+        "coordinateSpace": "final-16-unit-canvas",
+        "pixelsPerUnit": 128,
+        "measurements": [
+          {
+            "feature": "left curved cap to arrow miter",
+            "origin": [
+              4.310915130644323,
+              10.525216095221325
+            ],
+            "direction": [
+              0.7038706451892168,
+              -0.7103281740441638
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.035403483682357045,
+                "point": [
+                  4.33583460354577,
+                  10.500068003302433
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.2390465403180957,
+                "point": [
+                  5.183043618397488,
+                  9.645086428681433
+                ]
+              }
+            ],
+            "gap": 1.2036430566357386,
+            "regions": [
+              [
+                3.4,
+                10.5,
+                4.5,
+                11.5
+              ],
+              [
+                4.65,
+                8.8,
+                5.65,
+                9.7
+              ]
+            ],
+            "sampledDistance": 1.2098281208631456
+          },
+          {
+            "feature": "right flat cap to shaft end",
+            "origin": [
+              10.524828421489717,
+              9.723232971283954
+            ],
+            "direction": [
+              0.8650942836761122,
+              0.5016092905348887
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.029436698303882063,
+                "point": [
+                  10.550293940922703,
+                  9.737998692635854
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.103505715718736,
+                "point": [
+                  11.479464908161912,
+                  10.276761690446824
+                ]
+              }
+            ],
+            "gap": 1.074069017414854,
+            "regions": [
+              [
+                10.2,
+                8.7,
+                10.7,
+                10
+              ],
+              [
+                11.4,
+                10,
+                12.3,
+                11.6
+              ]
+            ],
+            "sampledDistance": 1.0746661000340991
+          }
+        ],
+        "spread": 0.12957403922088462,
+        "maximumSpread": 0.175,
+        "minGap": 1.074069017414854,
+        "minimumGap": 0.45,
+        "expectedClearance": null,
+        "measuredClearance": null,
+        "miterResidual": 0,
+        "maximumMiterResidual": 0.12985113019775796,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.333333,
+        "kind": "opposing cloud/arrow cap clearance",
+        "coordinateSpace": "final-16-unit-canvas",
+        "pixelsPerUnit": 128,
+        "measurements": [
+          {
+            "feature": "left curved cap to arrow miter",
+            "origin": [
+              4.3120464605236855,
+              10.52628052517457
+            ],
+            "direction": [
+              0.6661596492104954,
+              -0.7458091724856634
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.0357478818313329,
+                "point": [
+                  4.335860256944464,
+                  10.49961942700783
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.1068744294922175,
+                "point": [
+                  5.049401542194288,
+                  9.70076342286944
+                ]
+              }
+            ],
+            "gap": 1.0711265476608847,
+            "regions": [
+              [
+                3.4,
+                10.5,
+                4.5,
+                11.5
+              ],
+              [
+                4.65,
+                8.8,
+                5.65,
+                9.7
+              ]
+            ],
+            "sampledDistance": 1.0789455663546006
+          },
+          {
+            "feature": "right flat cap to shaft end",
+            "origin": [
+              10.521750142813064,
+              9.86353102459836
+            ],
+            "direction": [
+              0.9677035728978883,
+              0.2520908467212986
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.028989931759916335,
+                "point": [
+                  10.5498038033552,
+                  9.870839121042112
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.9895126933114717,
+                "point": [
+                  11.479305111558388,
+                  10.112978117296722
+                ]
+              }
+            ],
+            "gap": 0.9605227615515554,
+            "regions": [
+              [
+                10.2,
+                8.7,
+                10.7,
+                10
+              ],
+              [
+                11.4,
+                10,
+                12.3,
+                11.6
+              ]
+            ],
+            "sampledDistance": 0.9607151673688201
+          }
+        ],
+        "spread": 0.1106037861093293,
+        "maximumSpread": 0.175,
+        "minGap": 0.9605227615515554,
+        "minimumGap": 0.45,
+        "expectedClearance": null,
+        "measuredClearance": null,
+        "miterResidual": 0,
+        "maximumMiterResidual": 0.12985089449549755,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.5,
+        "kind": "opposing cloud/arrow cap clearance",
+        "coordinateSpace": "final-16-unit-canvas",
+        "pixelsPerUnit": 128,
+        "measurements": [
+          {
+            "feature": "left curved cap to arrow miter",
+            "origin": [
+              4.313628960817312,
+              10.52759919732271
+            ],
+            "direction": [
+              0.613409639422925,
+              -0.7897649107570159
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.03629596791188075,
+                "point": [
+                  4.335893257406645,
+                  10.498933915463944
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.0464576787523185,
+                "point": [
+                  4.955536188212124,
+                  9.70114364205189
+                ]
+              }
+            ],
+            "gap": 1.0101617108404377,
+            "regions": [
+              [
+                3.4,
+                10.5,
+                4.5,
+                11.5
+              ],
+              [
+                4.65,
+                8.8,
+                5.65,
+                9.7
+              ]
+            ],
+            "sampledDistance": 1.0188949762641142
+          },
+          {
+            "feature": "right flat cap to shaft end",
+            "origin": [
+              10.520932628077228,
+              9.930583804932157
+            ],
+            "direction": [
+              0.9949540640923916,
+              0.10033150226141764
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.03630827866327409,
+                "point": [
+                  10.557057697493452,
+                  9.934226669074969
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.9632210968480089,
+                "point": [
+                  11.479293373005685,
+                  10.027225224588808
+                ]
+              }
+            ],
+            "gap": 0.9269128181847348,
+            "regions": [
+              [
+                10.2,
+                8.7,
+                10.7,
+                10
+              ],
+              [
+                11.4,
+                10,
+                12.3,
+                11.6
+              ]
+            ],
+            "sampledDistance": 0.9344024347979034
+          }
+        ],
+        "spread": 0.0832488926557029,
+        "maximumSpread": 0.5,
+        "minGap": 0.9269128181847348,
+        "minimumGap": 0.45,
+        "expectedClearance": null,
+        "measuredClearance": null,
+        "miterResidual": 0,
+        "maximumMiterResidual": 0.2477022603955158,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 0.67,
+        "kind": "solid side / terminal / cap-corner spacing",
+        "coordinateSpace": "final-16-unit-canvas",
+        "pixelsPerUnit": 128,
+        "measurements": [
+          {
+            "feature": "shaft upper side",
+            "origin": [
+              9.227828199999998,
+              9.337533599999999
+            ],
+            "direction": [
+              0,
+              -1
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.26722109999999866,
+                "point": [
+                  9.227828199999998,
+                  9.0703125
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.2190371994764384,
+                "point": [
+                  9.227828199999998,
+                  8.11849640052356
+                ]
+              }
+            ],
+            "gap": 0.9518160994764397,
+            "type": "side"
+          },
+          {
+            "feature": "upper diagonal side",
+            "origin": [
+              6.2605743,
+              8.5189808
+            ],
+            "direction": [
+              -0.7071067811865475,
+              -0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.26810073774737403,
+                "point": [
+                  6.070998450297716,
+                  8.329404950297715
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.2180988457716002,
+                "point": [
+                  5.399248345999395,
+                  7.657654845999395
+                ]
+              }
+            ],
+            "gap": 0.9499981080242261,
+            "type": "side"
+          },
+          {
+            "feature": "lower diagonal side",
+            "origin": [
+              5.5443406,
+              9.4398527
+            ],
+            "direction": [
+              -0.7071067811865475,
+              0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.2688401998725558,
+                "point": [
+                  5.354241871614569,
+                  9.62995142838543
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.2185921710404206,
+                "point": [
+                  4.682665812356482,
+                  10.301527487643519
+                ]
+              },
+              {
+                "kind": "exit",
+                "distance": 2.7697404352072517,
+                "point": [
+                  3.585838356138373,
+                  11.398354943861627
+                ]
+              }
+            ],
+            "gap": 0.9497519711678648,
+            "type": "side"
+          },
+          {
+            "feature": "shaft right cap terminal center",
+            "origin": [
+              10.5179765,
+              9.337533599999999
+            ],
+            "direction": [
+              1,
+              0
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.03955938209673264,
+                "point": [
+                  10.557535882096733,
+                  9.337533599999999
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7907657871586169,
+                "point": [
+                  11.308742287158616,
+                  9.337533599999999
+                ]
+              }
+            ],
+            "gap": 0.7512064050618843,
+            "type": "terminal"
+          },
+          {
+            "feature": "shaft right cap corner 0,-1 at 22.5deg",
+            "origin": [
+              10.5179765,
+              9.109533599999997
+            ],
+            "direction": [
+              0.9238795325112867,
+              -0.3826834323650898
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.04279249813902908,
+                "point": [
+                  10.557511613175675,
+                  9.093157619932677
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.850713575656957,
+                "point": [
+                  11.303933360578954,
+                  8.783979608908014
+                ]
+              }
+            ],
+            "gap": 0.807921077517928,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,-1 at 45deg",
+            "origin": [
+              10.5179765,
+              9.109533599999997
+            ],
+            "direction": [
+              0.7071067811865476,
+              -0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.05286867389257893,
+                "point": [
+                  10.555360297821782,
+                  9.072149802178215
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.9351752657327498,
+                "point": [
+                  11.179245271997559,
+                  8.448264828002438
+                ]
+              }
+            ],
+            "gap": 0.8823065918401709,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,-1 at 67.5deg",
+            "origin": [
+              10.5179765,
+              9.109533599999997
+            ],
+            "direction": [
+              0.38268343236508984,
+              -0.9238795325112867
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.042452612726885185,
+                "point": [
+                  10.53422241155119,
+                  9.0703125
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.9829939065673323,
+                "point": [
+                  10.894151982159155,
+                  8.201365649139127
+                ]
+              }
+            ],
+            "gap": 0.9405412938404472,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,1 at 22.5deg",
+            "origin": [
+              10.5179765,
+              9.5655336
+            ],
+            "direction": [
+              0.9238795325112867,
+              0.3826834323650898
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.04279249813902908,
+                "point": [
+                  10.557511613175675,
+                  9.58190958006732
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.8508156986305158,
+                "point": [
+                  11.304027709904025,
+                  9.891126671862027
+                ]
+              },
+              {
+                "kind": "exit",
+                "distance": 3.852047645211505,
+                "point": [
+                  14.076804477669208,
+                  11.0396484145034
+                ]
+              }
+            ],
+            "gap": 0.8080232004914867,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,1 at 45deg",
+            "origin": [
+              10.5179765,
+              9.5655336
+            ],
+            "direction": [
+              0.7071067811865476,
+              0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.05205052520216763,
+                "point": [
+                  10.554781779334773,
+                  9.602338879334773
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.9351757845555503,
+                "point": [
+                  11.17924563886068,
+                  10.22680273886068
+                ]
+              },
+              {
+                "kind": "exit",
+                "distance": 2.7363884471122737,
+                "point": [
+                  12.452895326913614,
+                  11.500452426913615
+                ]
+              }
+            ],
+            "gap": 0.8831252593533827,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,1 at 67.5deg",
+            "origin": [
+              10.5179765,
+              9.5655336
+            ],
+            "direction": [
+              0.38268343236508984,
+              0.9238795325112867
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.043256668890085934,
+                "point": [
+                  10.534530110523537,
+                  9.605497551032169
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.9852480428289209,
+                "point": [
+                  10.895014602760758,
+                  10.475784101216444
+                ]
+              },
+              {
+                "kind": "exit",
+                "distance": 2.1178325667636173,
+                "point": [
+                  11.328435935823668,
+                  11.52215576171875
+                ]
+              }
+            ],
+            "gap": 0.9419913739388349,
+            "type": "corner"
+          },
+          {
+            "feature": "upper head cap terminal center",
+            "origin": [
+              6.948523728752538,
+              7.831031371247461
+            ],
+            "direction": [
+              0.7071067811865475,
+              -0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.039818148774010256,
+                "point": [
+                  6.976679411764936,
+                  7.802875688235063
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7909491589877292,
+                "point": [
+                  7.507809242646558,
+                  7.271745857353441
+                ]
+              }
+            ],
+            "gap": 0.751131010213719,
+            "type": "terminal"
+          },
+          {
+            "feature": "upper head cap corner -0.7071067811865476,-0.7071067811865476 at 22.5deg",
+            "origin": [
+              6.787303382642006,
+              7.669811025136928
+            ],
+            "direction": [
+              0.3826834323650898,
+              -0.9238795325112867
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.043463418596713356,
+                "point": [
+                  6.8039361128529166,
+                  7.6296560622824545
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.85046962968521,
+                "point": [
+                  7.112764019652209,
+                  6.884079541248309
+                ]
+              }
+            ],
+            "gap": 0.8070062110884967,
+            "type": "corner"
+          },
+          {
+            "feature": "upper head cap corner -0.7071067811865476,-0.7071067811865476 at 45deg",
+            "origin": [
+              6.787303382642006,
+              7.669811025136928
+            ],
+            "direction": [
+              1.1102230246251565e-16,
+              -1
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.05299854086546791,
+                "point": [
+                  6.787303382642006,
+                  7.616812484271461
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.9350092509021417,
+                "point": [
+                  6.787303382642006,
+                  6.7348017742347865
+                ]
+              }
+            ],
+            "gap": 0.8820107100366738,
+            "type": "corner"
+          },
+          {
+            "feature": "upper head cap corner -0.7071067811865476,-0.7071067811865476 at 67.5deg",
+            "origin": [
+              6.787303382642006,
+              7.669811025136928
+            ],
+            "direction": [
+              -0.3826834323650896,
+              -0.9238795325112866
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.042630189238183416,
+                "point": [
+                  6.770989515501965,
+                  7.630425865832688
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.9854710517267193,
+                "point": [
+                  6.41017993807079,
+                  6.759354490564241
+                ]
+              }
+            ],
+            "gap": 0.9428408624885359,
+            "type": "corner"
+          },
+          {
+            "feature": "left miter apex",
+            "origin": [
+              5.4420215,
+              9.337533599999999
+            ],
+            "direction": [
+              -1,
+              0
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.3757572271138812,
+                "point": [
+                  5.0662642728861185,
+                  9.337533599999999
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.4110349760337932,
+                "point": [
+                  4.030986523966207,
+                  9.337533599999999
+                ]
+              }
+            ],
+            "gap": 1.035277748919912,
+            "type": "miter"
+          }
+        ],
+        "spread": 0.20068508926272077,
+        "maximumSpread": 0.25933333333333336,
+        "minGap": 0.751131010213719,
+        "minimumGap": 0.45,
+        "expectedClearance": 0.75,
+        "measuredClearance": 0.7511687076378016,
+        "miterResidual": 0.28410904128211045,
+        "maximumMiterResidual": 0.3631963679893186,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1,
+        "kind": "solid side / terminal / cap-corner spacing",
+        "coordinateSpace": "final-16-unit-canvas",
+        "pixelsPerUnit": 128,
+        "measurements": [
+          {
+            "feature": "shaft upper side",
+            "origin": [
+              9.227828199999998,
+              9.337533599999999
+            ],
+            "direction": [
+              0,
+              -1
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.40003359999999866,
+                "point": [
+                  9.227828199999998,
+                  8.9375
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.2190371994764384,
+                "point": [
+                  9.227828199999998,
+                  8.11849640052356
+                ]
+              }
+            ],
+            "gap": 0.8190035994764397,
+            "type": "side"
+          },
+          {
+            "feature": "upper diagonal side",
+            "origin": [
+              6.2605743,
+              8.5189808
+            ],
+            "direction": [
+              -0.7071067811865475,
+              -0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.40044820830218214,
+                "point": [
+                  5.977414656395524,
+                  8.235821156395524
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.2180988457716002,
+                "point": [
+                  5.399248345999395,
+                  7.657654845999395
+                ]
+              }
+            ],
+            "gap": 0.8176506374694181,
+            "type": "side"
+          },
+          {
+            "feature": "lower diagonal side",
+            "origin": [
+              5.5443406,
+              9.4398527
+            ],
+            "direction": [
+              -0.7071067811865475,
+              0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.40049877926935773,
+                "point": [
+                  5.261145197321703,
+                  9.723048102678296
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.2185921710404206,
+                "point": [
+                  4.682665812356482,
+                  10.301527487643519
+                ]
+              },
+              {
+                "kind": "exit",
+                "distance": 2.7697404352072517,
+                "point": [
+                  3.585838356138373,
+                  11.398354943861627
+                ]
+              }
+            ],
+            "gap": 0.8180933917710629,
+            "type": "side"
+          },
+          {
+            "feature": "shaft right cap terminal center",
+            "origin": [
+              10.5179765,
+              9.337533599999999
+            ],
+            "direction": [
+              1,
+              0
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.03955938209673264,
+                "point": [
+                  10.557535882096733,
+                  9.337533599999999
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7907657871586169,
+                "point": [
+                  11.308742287158616,
+                  9.337533599999999
+                ]
+              }
+            ],
+            "gap": 0.7512064050618843,
+            "type": "terminal"
+          },
+          {
+            "feature": "shaft right cap corner 0,-1 at 22.5deg",
+            "origin": [
+              10.5179765,
+              8.977533599999997
+            ],
+            "direction": [
+              0.9238795325112867,
+              -0.3826834323650898
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.04279249813902908,
+                "point": [
+                  10.557511613175675,
+                  8.961157619932678
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.8245039136766328,
+                "point": [
+                  11.279718790321294,
+                  8.662009612315774
+                ]
+              }
+            ],
+            "gap": 0.7817114155376037,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,-1 at 45deg",
+            "origin": [
+              10.5179765,
+              8.977533599999997
+            ],
+            "direction": [
+              0.7071067811865476,
+              -0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.05345147323831979,
+                "point": [
+                  10.555772399191227,
+                  8.93973770080877
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.852744565042184,
+                "point": [
+                  11.1209579645613,
+                  8.374552135438696
+                ]
+              }
+            ],
+            "gap": 0.7992930918038642,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,-1 at 67.5deg",
+            "origin": [
+              10.5179765,
+              8.977533599999997
+            ],
+            "direction": [
+              0.38268343236508984,
+              -0.9238795325112867
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.043332056389623036,
+                "point": [
+                  10.534558960070617,
+                  8.9375
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.8638704938790956,
+                "point": [
+                  10.848565425716577,
+                  8.179421331964685
+                ]
+              }
+            ],
+            "gap": 0.8205384374894726,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,1 at 22.5deg",
+            "origin": [
+              10.5179765,
+              9.6975336
+            ],
+            "direction": [
+              0.9238795325112867,
+              0.3826834323650898
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.04279249813902908,
+                "point": [
+                  10.557511613175675,
+                  9.71390958006732
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.8245570230453713,
+                "point": [
+                  11.279767856980055,
+                  10.013077911759742
+                ]
+              },
+              {
+                "kind": "exit",
+                "distance": 3.7038501001542845,
+                "point": [
+                  13.939887799022422,
+                  11.114935669292823
+                ]
+              }
+            ],
+            "gap": 0.7817645249063422,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,1 at 45deg",
+            "origin": [
+              10.5179765,
+              9.6975336
+            ],
+            "direction": [
+              0.7071067811865476,
+              0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.05258569149773605,
+                "point": [
+                  10.555160199051432,
+                  9.734717299051432
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.8534200601923217,
+                "point": [
+                  11.121435611762623,
+                  10.300992711762621
+                ]
+              },
+              {
+                "kind": "exit",
+                "distance": 2.5617358287038208,
+                "point": [
+                  12.329397276085011,
+                  11.508954376085011
+                ]
+              }
+            ],
+            "gap": 0.8008343686945857,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,1 at 67.5deg",
+            "origin": [
+              10.5179765,
+              9.6975336
+            ],
+            "direction": [
+              0.38268343236508984,
+              0.9238795325112867
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.044131736800358354,
+                "point": [
+                  10.534864984514993,
+                  9.738306008364026
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.8651010498204867,
+                "point": [
+                  10.849036339087945,
+                  10.496782753483174
+                ]
+              },
+              {
+                "kind": "exit",
+                "distance": 1.974956796325022,
+                "point": [
+                  11.273759745590421,
+                  11.52215576171875
+                ]
+              }
+            ],
+            "gap": 0.8209693130201284,
+            "type": "corner"
+          },
+          {
+            "feature": "upper head cap terminal center",
+            "origin": [
+              6.948523728752538,
+              7.831031371247461
+            ],
+            "direction": [
+              0.7071067811865475,
+              -0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.039818148774010256,
+                "point": [
+                  6.976679411764936,
+                  7.802875688235063
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7909491589877292,
+                "point": [
+                  7.507809242646558,
+                  7.271745857353441
+                ]
+              }
+            ],
+            "gap": 0.751131010213719,
+            "type": "terminal"
+          },
+          {
+            "feature": "upper head cap corner -0.7071067811865476,-0.7071067811865476 at 22.5deg",
+            "origin": [
+              6.693965287525381,
+              7.576472930020303
+            ],
+            "direction": [
+              0.3826834323650898,
+              -0.9238795325112867
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.043685479324423196,
+                "point": [
+                  6.7106829966977655,
+                  7.536112809804524
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.8239654767085834,
+                "point": [
+                  7.009283224302559,
+                  6.815228090593338
+                ]
+              }
+            ],
+            "gap": 0.7802799973841602,
+            "type": "corner"
+          },
+          {
+            "feature": "upper head cap corner -0.7071067811865476,-0.7071067811865476 at 45deg",
+            "origin": [
+              6.693965287525381,
+              7.576472930020303
+            ],
+            "direction": [
+              1.1102230246251565e-16,
+              -1
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.053298826747352486,
+                "point": [
+                  6.693965287525381,
+                  7.523174103272951
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.8519739442772714,
+                "point": [
+                  6.693965287525381,
+                  6.724498985743032
+                ]
+              }
+            ],
+            "gap": 0.7986751175299188,
+            "type": "corner"
+          },
+          {
+            "feature": "upper head cap corner -0.7071067811865476,-0.7071067811865476 at 67.5deg",
+            "origin": [
+              6.693965287525381,
+              7.576472930020303
+            ],
+            "direction": [
+              -0.3826834323650896,
+              -0.9238795325112866
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.04297898055912818,
+                "point": [
+                  6.677517943725461,
+                  7.5367655295535245
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.8643807947392145,
+                "point": [
+                  6.363181078124114,
+                  6.777889205464904
+                ]
+              }
+            ],
+            "gap": 0.8214018141800863,
+            "type": "corner"
+          },
+          {
+            "feature": "left miter apex",
+            "origin": [
+              5.4420215,
+              9.337533599999999
+            ],
+            "direction": [
+              -1,
+              0
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.5618834156340943,
+                "point": [
+                  4.880138084365906,
+                  9.337533599999999
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.4110349760337932,
+                "point": [
+                  4.030986523966207,
+                  9.337533599999999
+                ]
+              }
+            ],
+            "gap": 0.849151560399699,
+            "type": "miter"
+          }
+        ],
+        "spread": 0.07027080396636731,
+        "maximumSpread": 0.09433333333333337,
+        "minGap": 0.751131010213719,
+        "minimumGap": 0.45,
+        "expectedClearance": 0.75,
+        "measuredClearance": 0.7511687076378016,
+        "miterResidual": 0.09798285276189733,
+        "maximumMiterResidual": 0.12985113019775796,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.333333,
+        "kind": "solid side / terminal / cap-corner spacing",
+        "coordinateSpace": "final-16-unit-canvas",
+        "pixelsPerUnit": 128,
+        "measurements": [
+          {
+            "feature": "shaft upper side",
+            "origin": [
+              9.227828199999998,
+              9.337533599999999
+            ],
+            "direction": [
+              0,
+              -1
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.5328460999999987,
+                "point": [
+                  9.227828199999998,
+                  8.8046875
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.2190371994764384,
+                "point": [
+                  9.227828199999998,
+                  8.11849640052356
+                ]
+              }
+            ],
+            "gap": 0.6861910994764397,
+            "type": "side"
+          },
+          {
+            "feature": "upper diagonal side",
+            "origin": [
+              6.2605743,
+              8.5189808
+            ],
+            "direction": [
+              -0.7071067811865475,
+              -0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.5334081012980689,
+                "point": [
+                  5.8833978144322945,
+                  8.141804314432294
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.2180988457716002,
+                "point": [
+                  5.399248345999395,
+                  7.657654845999395
+                ]
+              }
+            ],
+            "gap": 0.6846907444735313,
+            "type": "side"
+          },
+          {
+            "feature": "lower diagonal side",
+            "origin": [
+              5.5443406,
+              9.4398527
+            ],
+            "direction": [
+              -0.7071067811865475,
+              0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.5342118411464133,
+                "point": [
+                  5.166595784535221,
+                  9.81759751546478
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.2185921710404206,
+                "point": [
+                  4.682665812356482,
+                  10.301527487643519
+                ]
+              },
+              {
+                "kind": "exit",
+                "distance": 2.7697404352072517,
+                "point": [
+                  3.585838356138373,
+                  11.398354943861627
+                ]
+              }
+            ],
+            "gap": 0.6843803298940073,
+            "type": "side"
+          },
+          {
+            "feature": "shaft right cap terminal center",
+            "origin": [
+              10.5179765,
+              9.337533599999999
+            ],
+            "direction": [
+              1,
+              0
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.03955938209673264,
+                "point": [
+                  10.557535882096733,
+                  9.337533599999999
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7907657871586169,
+                "point": [
+                  11.308742287158616,
+                  9.337533599999999
+                ]
+              }
+            ],
+            "gap": 0.7512064050618843,
+            "type": "terminal"
+          },
+          {
+            "feature": "shaft right cap corner 0,-1 at 22.5deg",
+            "origin": [
+              10.5179765,
+              8.844200399999998
+            ],
+            "direction": [
+              0.9238795325112867,
+              -0.3826834323650898
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.04279249813902908,
+                "point": [
+                  10.557511613175675,
+                  8.827824419932679
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7757922148951222,
+                "point": [
+                  11.234715048823201,
+                  8.547317572401818
+                ]
+              }
+            ],
+            "gap": 0.7329997167560931,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,-1 at 45deg",
+            "origin": [
+              10.5179765,
+              8.844200399999998
+            ],
+            "direction": [
+              0.7071067811865476,
+              -0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.05310924469002894,
+                "point": [
+                  10.555530407064015,
+                  8.806646492935982
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7585006394270541,
+                "point": [
+                  11.054317445673203,
+                  8.307859454326795
+                ]
+              }
+            ],
+            "gap": 0.7053913947370252,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,-1 at 67.5deg",
+            "origin": [
+              10.5179765,
+              8.844200399999998
+            ],
+            "direction": [
+              0.38268343236508984,
+              -0.9238795325112867
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.042768454770931746,
+                "point": [
+                  10.534343279068692,
+                  8.8046875
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7394280102006305,
+                "point": [
+                  10.800943348930465,
+                  8.161057995610088
+                ]
+              }
+            ],
+            "gap": 0.6966595554296988,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,1 at 22.5deg",
+            "origin": [
+              10.5179765,
+              9.830866799999999
+            ],
+            "direction": [
+              0.9238795325112867,
+              0.3826834323650898
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.04279249813902908,
+                "point": [
+                  10.557511613175675,
+                  9.847242780067319
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7759017006450429,
+                "point": [
+                  11.234816200466653,
+                  10.127791525980754
+                ]
+              },
+              {
+                "kind": "exit",
+                "distance": 3.5414565870169916,
+                "point": [
+                  13.789855756022275,
+                  11.186123562291618
+                ]
+              }
+            ],
+            "gap": 0.7331092025060139,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,1 at 45deg",
+            "origin": [
+              10.5179765,
+              9.830866799999999
+            ],
+            "direction": [
+              0.7071067811865476,
+              0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.052247709903281106,
+                "point": [
+                  10.554921209974077,
+                  9.867811509974077
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7588452402033042,
+                "point": [
+                  11.05456111521889,
+                  10.36745141521889
+                ]
+              },
+              {
+                "kind": "exit",
+                "distance": 2.3825144310482687,
+                "point": [
+                  12.20266861046904,
+                  11.51555891046904
+                ]
+              }
+            ],
+            "gap": 0.7065975303000231,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,1 at 67.5deg",
+            "origin": [
+              10.5179765,
+              9.830866799999999
+            ],
+            "direction": [
+              0.38268343236508984,
+              0.9238795325112867
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.04357058478021122,
+                "point": [
+                  10.534650240933845,
+                  9.871120771497983
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7407908981805591,
+                "point": [
+                  10.801464903580554,
+                  10.51526834869967
+                ]
+              },
+              {
+                "kind": "exit",
+                "distance": 1.8306379806049977,
+                "point": [
+                  11.218531325835817,
+                  11.52215576171875
+                ]
+              }
+            ],
+            "gap": 0.6972203134003478,
+            "type": "corner"
+          },
+          {
+            "feature": "upper head cap terminal center",
+            "origin": [
+              6.948523728752538,
+              7.831031371247461
+            ],
+            "direction": [
+              0.7071067811865475,
+              -0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.03983739244435333,
+                "point": [
+                  6.97669301909473,
+                  7.8028620809052684
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7909491589877292,
+                "point": [
+                  7.507809242646558,
+                  7.271745857353441
+                ]
+              }
+            ],
+            "gap": 0.7511117665433759,
+            "type": "terminal"
+          },
+          {
+            "feature": "upper head cap corner -0.7071067811865476,-0.7071067811865476 at 22.5deg",
+            "origin": [
+              6.599684477648079,
+              7.482192120143002
+            ],
+            "direction": [
+              0.3826834323650898,
+              -0.9238795325112867
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.043543661583176164,
+                "point": [
+                  6.616347915520473,
+                  7.441963022435707
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7761696335768652,
+                "point": [
+                  6.896711737122828,
+                  6.76510488192455
+                ]
+              }
+            ],
+            "gap": 0.7326259719936891,
+            "type": "corner"
+          },
+          {
+            "feature": "upper head cap corner -0.7071067811865476,-0.7071067811865476 at 45deg",
+            "origin": [
+              6.599684477648079,
+              7.482192120143002
+            ],
+            "direction": [
+              1.1102230246251565e-16,
+              -1
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.05292517654577328,
+                "point": [
+                  6.599684477648079,
+                  7.429266943597228
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7576110507553675,
+                "point": [
+                  6.599684477648079,
+                  6.724581069387634
+                ]
+              }
+            ],
+            "gap": 0.7046858742095943,
+            "type": "corner"
+          },
+          {
+            "feature": "upper head cap corner -0.7071067811865476,-0.7071067811865476 at 67.5deg",
+            "origin": [
+              6.599684477648079,
+              7.482192120143002
+            ],
+            "direction": [
+              -0.3826834323650896,
+              -0.9238795325112866
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.04242362473634671,
+                "point": [
+                  6.583449659320605,
+                  7.442997801554151
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7400555194900172,
+                "point": [
+                  6.31647749130891,
+                  6.798469972764167
+                ]
+              }
+            ],
+            "gap": 0.6976318947536705,
+            "type": "corner"
+          },
+          {
+            "feature": "left miter apex",
+            "origin": [
+              5.4420215,
+              9.337533599999999
+            ],
+            "direction": [
+              -1,
+              0
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.751060164001873,
+                "point": [
+                  4.690961335998127,
+                  9.337533599999999
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.4110349760337932,
+                "point": [
+                  4.030986523966207,
+                  9.337533599999999
+                ]
+              }
+            ],
+            "gap": 0.6599748120319202,
+            "type": "miter"
+          }
+        ],
+        "spread": 0.06682607516787697,
+        "maximumSpread": 0.09433316666666668,
+        "minGap": 0.6599748120319202,
+        "minimumGap": 0.45,
+        "expectedClearance": 0.75,
+        "measuredClearance": 0.75115908580263,
+        "miterResidual": 0.09118427377070981,
+        "maximumMiterResidual": 0.12985089449549755,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.5,
+        "kind": "solid side / terminal / cap-corner spacing",
+        "coordinateSpace": "final-16-unit-canvas",
+        "pixelsPerUnit": 128,
+        "measurements": [
+          {
+            "feature": "shaft upper side",
+            "origin": [
+              9.227828199999998,
+              9.337533599999999
+            ],
+            "direction": [
+              0,
+              -1
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.5992755672313396,
+                "point": [
+                  9.227828199999998,
+                  8.738258032768659
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.2190371994764384,
+                "point": [
+                  9.227828199999998,
+                  8.11849640052356
+                ]
+              }
+            ],
+            "gap": 0.6197616322450988,
+            "type": "side"
+          },
+          {
+            "feature": "upper diagonal side",
+            "origin": [
+              6.2605743,
+              8.5189808
+            ],
+            "direction": [
+              -0.7071067811865475,
+              -0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.5999155048412494,
+                "point": [
+                  5.836369978387801,
+                  8.094776478387802
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.2180988457716002,
+                "point": [
+                  5.399248345999395,
+                  7.657654845999395
+                ]
+              }
+            ],
+            "gap": 0.6181833409303508,
+            "type": "side"
+          },
+          {
+            "feature": "lower diagonal side",
+            "origin": [
+              5.5443406,
+              9.4398527
+            ],
+            "direction": [
+              -0.7071067811865475,
+              0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.6008686471002554,
+                "point": [
+                  5.119462305033023,
+                  9.864730994966976
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.2185921710404206,
+                "point": [
+                  4.682665812356482,
+                  10.301527487643519
+                ]
+              },
+              {
+                "kind": "exit",
+                "distance": 2.7697404352072517,
+                "point": [
+                  3.585838356138373,
+                  11.398354943861627
+                ]
+              }
+            ],
+            "gap": 0.6177235239401652,
+            "type": "side"
+          },
+          {
+            "feature": "shaft right cap terminal center",
+            "origin": [
+              10.5179765,
+              9.337533599999999
+            ],
+            "direction": [
+              1,
+              0
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.03955938209673264,
+                "point": [
+                  10.557535882096733,
+                  9.337533599999999
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7907657871586169,
+                "point": [
+                  11.308742287158616,
+                  9.337533599999999
+                ]
+              }
+            ],
+            "gap": 0.7512064050618843,
+            "type": "terminal"
+          },
+          {
+            "feature": "shaft right cap corner 0,-1 at 22.5deg",
+            "origin": [
+              10.5179765,
+              8.777533599999998
+            ],
+            "direction": [
+              0.9238795325112867,
+              -0.3826834323650898
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.04279249813902908,
+                "point": [
+                  10.557511613175675,
+                  8.761157619932678
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7446176262439683,
+                "point": [
+                  11.20591348443394,
+                  8.492580770989411
+                ]
+              }
+            ],
+            "gap": 0.7018251281049392,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,-1 at 45deg",
+            "origin": [
+              10.5179765,
+              8.777533599999998
+            ],
+            "direction": [
+              0.7071067811865476,
+              -0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.051545843566992974,
+                "point": [
+                  10.554424915528202,
+                  8.741085184471796
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7061285631622791,
+                "point": [
+                  11.01728479540156,
+                  8.278225304598438
+                ]
+              }
+            ],
+            "gap": 0.6545827195952861,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,-1 at 67.5deg",
+            "origin": [
+              10.5179765,
+              8.777533599999998
+            ],
+            "direction": [
+              0.38268343236508984,
+              -0.9238795325112867
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.042516371641241515,
+                "point": [
+                  10.53424681103138,
+                  8.738253594444013
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.6761935470233825,
+                "point": [
+                  10.776744567518032,
+                  8.152812221888887
+                ]
+              }
+            ],
+            "gap": 0.633677175382141,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,1 at 22.5deg",
+            "origin": [
+              10.5179765,
+              9.8975336
+            ],
+            "direction": [
+              0.9238795325112867,
+              0.3826834323650898
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.04279249813902908,
+                "point": [
+                  10.557511613175675,
+                  9.913909580067319
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7441661648500572,
+                "point": [
+                  11.205496388492387,
+                  10.182313662214785
+                ]
+              },
+              {
+                "kind": "exit",
+                "distance": 3.454074114118628,
+                "point": [
+                  13.709124877811256,
+                  11.219350537634323
+                ]
+              }
+            ],
+            "gap": 0.7013736667110281,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,1 at 45deg",
+            "origin": [
+              10.5179765,
+              9.8975336
+            ],
+            "direction": [
+              0.7071067811865476,
+              0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.05345499779237055,
+                "point": [
+                  10.555774891427296,
+                  9.935331991427296
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7073852681334788,
+                "point": [
+                  11.018173420008647,
+                  10.397730520008647
+                ]
+              },
+              {
+                "kind": "exit",
+                "distance": 2.290686247295916,
+                "point": [
+                  12.137736279033707,
+                  11.517293379033706
+                ]
+              }
+            ],
+            "gap": 0.6539302703411083,
+            "type": "corner"
+          },
+          {
+            "feature": "shaft right cap corner 0,1 at 67.5deg",
+            "origin": [
+              10.5179765,
+              9.8975336
+            ],
+            "direction": [
+              0.38268343236508984,
+              0.9238795325112867
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.043259319633767064,
+                "point": [
+                  10.534531124919228,
+                  9.9375
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.6772373463816539,
+                "point": [
+                  10.777144012239155,
+                  10.523219322974265
+                ]
+              },
+              {
+                "kind": "exit",
+                "distance": 1.758478356266545,
+                "point": [
+                  11.190917033115802,
+                  11.52215576171875
+                ]
+              }
+            ],
+            "gap": 0.6339780267478868,
+            "type": "corner"
+          },
+          {
+            "feature": "upper head cap terminal center",
+            "origin": [
+              6.948523728752538,
+              7.831031371247461
+            ],
+            "direction": [
+              0.7071067811865475,
+              -0.7071067811865475
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.03983739244435333,
+                "point": [
+                  6.97669301909473,
+                  7.8028620809052684
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7909491589877292,
+                "point": [
+                  7.507809242646558,
+                  7.271745857353441
+                ]
+              }
+            ],
+            "gap": 0.7511117665433759,
+            "type": "terminal"
+          },
+          {
+            "feature": "upper head cap corner -0.7071067811865476,-0.7071067811865476 at 22.5deg",
+            "origin": [
+              6.5525439312880716,
+              7.435051573782994
+            ],
+            "direction": [
+              0.3826834323650898,
+              -0.9238795325112867
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.043465052305884364,
+                "point": [
+                  6.569177286692415,
+                  7.394895101578055
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7448125275783588,
+                "point": [
+                  6.837571345810276,
+                  6.74693452399535
+                ]
+              }
+            ],
+            "gap": 0.7013474752724744,
+            "type": "corner"
+          },
+          {
+            "feature": "upper head cap corner -0.7071067811865476,-0.7071067811865476 at 45deg",
+            "origin": [
+              6.5525439312880716,
+              7.435051573782994
+            ],
+            "direction": [
+              1.1102230246251565e-16,
+              -1
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.052815648839246214,
+                "point": [
+                  6.5525439312880716,
+                  7.382235924943748
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.7083832185379606,
+                "point": [
+                  6.5525439312880716,
+                  6.7266683552450335
+                ]
+              }
+            ],
+            "gap": 0.6555675696987144,
+            "type": "corner"
+          },
+          {
+            "feature": "upper head cap corner -0.7071067811865476,-0.7071067811865476 at 67.5deg",
+            "origin": [
+              6.5525439312880716,
+              7.435051573782994
+            ],
+            "direction": [
+              -0.3826834323650896,
+              -0.9238795325112866
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.04210236083619054,
+                "point": [
+                  6.536432055332605,
+                  7.396154064336033
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 0.6757597891139784,
+                "point": [
+                  6.293941855735625,
+                  6.810730935726446
+                ]
+              }
+            ],
+            "gap": 0.6336574282777878,
+            "type": "corner"
+          },
+          {
+            "feature": "left miter apex",
+            "origin": [
+              5.4420215,
+              9.337533599999999
+            ],
+            "direction": [
+              -1,
+              0
+            ],
+            "startsPainted": true,
+            "transitions": [
+              {
+                "kind": "exit",
+                "distance": 0.8456192409650616,
+                "point": [
+                  4.596402259034939,
+                  9.337533599999999
+                ]
+              },
+              {
+                "kind": "entry",
+                "distance": 1.4110349760337932,
+                "point": [
+                  4.030986523966207,
+                  9.337533599999999
+                ]
+              }
+            ],
+            "gap": 0.5654157350687317,
+            "type": "miter"
+          }
+        ],
+        "spread": 0.13348288112171913,
+        "maximumSpread": 0.17766666666666664,
+        "minGap": 0.5654157350687317,
+        "minimumGap": 0.45,
+        "expectedClearance": 0.75,
+        "measuredClearance": 0.75115908580263,
+        "miterResidual": 0.18574335073389836,
+        "maximumMiterResidual": 0.2477022603955158,
+        "pass": true
+      }
+    ]
+  },
+  "detail-recognition": {
+    "failures": [],
+    "results": [
+      {
+        "name": "cloud-sync.svg",
+        "weight": 0.67,
+        "feature": "straight head arm -1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 0.67,
+        "feature": "visible inner weld -1",
+        "exposed": 0.5910145294038447,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 0.67,
+        "feature": "straight head arm 1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 0.67,
+        "feature": "visible inner weld 1",
+        "exposed": 0.5910145294038447,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1,
+        "feature": "straight head arm -1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1,
+        "feature": "visible inner weld -1",
+        "exposed": 0.37808190667648134,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1,
+        "feature": "straight head arm 1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1,
+        "feature": "visible inner weld 1",
+        "exposed": 0.37808190667648134,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.3333333333333333,
+        "feature": "straight head arm -1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.3333333333333333,
+        "feature": "visible inner weld -1",
+        "exposed": 0.1629984493761143,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.3333333333333333,
+        "feature": "straight head arm 1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.3333333333333333,
+        "feature": "visible inner weld 1",
+        "exposed": 0.1629984493761143,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.5,
+        "feature": "straight head arm -1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.5,
+        "feature": "visible inner weld -1",
+        "exposed": 0.05545672072593044,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.5,
+        "feature": "straight head arm 1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.5,
+        "feature": "visible inner weld 1",
+        "exposed": 0.05545672072593044,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 0.67,
+        "feature": "straight head arm -1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 0.67,
+        "feature": "visible inner weld -1",
+        "exposed": 0.5910145294038447,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 0.67,
+        "feature": "straight head arm 1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 0.67,
+        "feature": "visible inner weld 1",
+        "exposed": 0.5910145294038447,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1,
+        "feature": "straight head arm -1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1,
+        "feature": "visible inner weld -1",
+        "exposed": 0.37808190667648134,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1,
+        "feature": "straight head arm 1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1,
+        "feature": "visible inner weld 1",
+        "exposed": 0.37808190667648134,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.3333333333333333,
+        "feature": "straight head arm -1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.3333333333333333,
+        "feature": "visible inner weld -1",
+        "exposed": 0.1629984493761143,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.3333333333333333,
+        "feature": "straight head arm 1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.3333333333333333,
+        "feature": "visible inner weld 1",
+        "exposed": 0.1629984493761143,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.5,
+        "feature": "straight head arm -1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.5,
+        "feature": "visible inner weld -1",
+        "exposed": 0.05545672072593044,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.5,
+        "feature": "straight head arm 1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.5,
+        "feature": "visible inner weld 1",
+        "exposed": 0.05545672072593044,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 0.67,
+        "feature": "straight head arm -1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 0.67,
+        "feature": "visible inner weld -1",
+        "exposed": 0.5910145294038447,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 0.67,
+        "feature": "straight head arm 1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 0.67,
+        "feature": "visible inner weld 1",
+        "exposed": 0.5910145294038447,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1,
+        "feature": "straight head arm -1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1,
+        "feature": "visible inner weld -1",
+        "exposed": 0.37808190667648134,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1,
+        "feature": "straight head arm 1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1,
+        "feature": "visible inner weld 1",
+        "exposed": 0.37808190667648134,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.3333333333333333,
+        "feature": "straight head arm -1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.3333333333333333,
+        "feature": "visible inner weld -1",
+        "exposed": 0.1629984493761143,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.3333333333333333,
+        "feature": "straight head arm 1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.3333333333333333,
+        "feature": "visible inner weld 1",
+        "exposed": 0.1629984493761143,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.5,
+        "feature": "straight head arm -1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.5,
+        "feature": "visible inner weld -1",
+        "exposed": 0.05545672072593044,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.5,
+        "feature": "straight head arm 1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.5,
+        "feature": "visible inner weld 1",
+        "exposed": 0.05545672072593044,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 0.67,
+        "feature": "straight head arm -1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 0.67,
+        "feature": "visible inner weld -1",
+        "exposed": 0.5910145294038447,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 0.67,
+        "feature": "straight head arm 1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 0.67,
+        "feature": "visible inner weld 1",
+        "exposed": 0.5910145294038447,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1,
+        "feature": "straight head arm -1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1,
+        "feature": "visible inner weld -1",
+        "exposed": 0.37808190667648134,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1,
+        "feature": "straight head arm 1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1,
+        "feature": "visible inner weld 1",
+        "exposed": 0.37808190667648134,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.3333333333333333,
+        "feature": "straight head arm -1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.3333333333333333,
+        "feature": "visible inner weld -1",
+        "exposed": 0.1629984493761143,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.3333333333333333,
+        "feature": "straight head arm 1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.3333333333333333,
+        "feature": "visible inner weld 1",
+        "exposed": 0.1629984493761143,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.5,
+        "feature": "straight head arm -1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.5,
+        "feature": "visible inner weld -1",
+        "exposed": 0.05545672072593044,
+        "alpha": 1,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.5,
+        "feature": "straight head arm 1",
+        "alpha": 0,
+        "pass": true
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.5,
+        "feature": "visible inner weld 1",
+        "exposed": 0.05545672072593044,
+        "alpha": 1,
+        "pass": true
+      }
+    ]
+  },
+  "internal-junctions": {
+    "failures": [],
+    "results": [
+      {
+        "name": "buildings.svg",
+        "feature": "tall building left inner foot",
+        "weight": 1.5,
+        "curveSamples": 55,
+        "exposedSamples": 31,
+        "exposedRadius": 0.3296830180161434,
+        "minimumRadius": 0.3,
+        "minimumSamples": 5
+      },
+      {
+        "name": "buildings.svg",
+        "feature": "tall building right inner foot",
+        "weight": 1.5,
+        "curveSamples": 56,
+        "exposedSamples": 31,
+        "exposedRadius": 0.3296940605517691,
+        "minimumRadius": 0.3,
+        "minimumSamples": 5
+      },
+      {
+        "name": "buildings.svg",
+        "feature": "short building left inner foot",
+        "weight": 1.5,
+        "curveSamples": 55,
+        "exposedSamples": 31,
+        "exposedRadius": 0.32968403595598206,
+        "minimumRadius": 0.3,
+        "minimumSamples": 5
+      },
+      {
+        "name": "buildings.svg",
+        "feature": "short building right inner foot",
+        "weight": 1.5,
+        "curveSamples": 55,
+        "exposedSamples": 31,
+        "exposedRadius": 0.3298645252021597,
+        "minimumRadius": 0.3,
+        "minimumSamples": 5
+      },
+      {
+        "name": "building.svg",
+        "feature": "left doorway header opening",
+        "weight": 1.5,
+        "curveSamples": 18,
+        "exposedSamples": 18,
+        "exposedRadius": 0.11080073199175766,
+        "minimumRadius": 0.09,
+        "minimumSamples": 5
+      },
+      {
+        "name": "building.svg",
+        "feature": "right doorway header opening",
+        "weight": 1.5,
+        "curveSamples": 17,
+        "exposedSamples": 17,
+        "exposedRadius": 0.11165017325308524,
+        "minimumRadius": 0.09,
+        "minimumSamples": 5
+      },
+      {
+        "name": "building_solid.svg",
+        "feature": "left doorway header opening",
+        "weight": 1.5,
+        "curveSamples": 18,
+        "exposedSamples": 18,
+        "exposedRadius": 0.11080073199175766,
+        "minimumRadius": 0.09,
+        "minimumSamples": 5
+      },
+      {
+        "name": "building_solid.svg",
+        "feature": "right doorway header opening",
+        "weight": 1.5,
+        "curveSamples": 17,
+        "exposedSamples": 17,
+        "exposedRadius": 0.11165017325308524,
+        "minimumRadius": 0.09,
+        "minimumSamples": 5
+      }
+    ]
+  },
+  "review-b-retained": {
+    "failures": [],
+    "results": []
+  },
+  "view-box-fit": {
+    "failures": [],
+    "results": [
+      {
+        "name": "building.svg",
+        "weight": 1.5,
+        "targetSpan": 15.5,
+        "targetCenter": [
+          8,
+          8
+        ],
+        "bounds": [
+          1.3125,
+          0.25,
+          14.6875,
+          15.75
+        ],
+        "center": [
+          8,
+          8
+        ],
+        "span": 15.5,
+        "paintedPixels": 103653,
+        "tolerance": 0.1
+      },
+      {
+        "name": "buildings.svg",
+        "weight": 1.5,
+        "targetSpan": 15.5,
+        "targetCenter": [
+          8,
+          8
+        ],
+        "bounds": [
+          0.25,
+          0.25,
+          15.75,
+          15.75
+        ],
+        "center": [
+          8,
+          8
+        ],
+        "span": 15.5,
+        "paintedPixels": 134583,
+        "tolerance": 0.1
+      },
+      {
+        "name": "buildings_solid.svg",
+        "weight": 1.5,
+        "targetSpan": 15.5,
+        "targetCenter": [
+          8,
+          8
+        ],
+        "bounds": [
+          0.25,
+          0.25,
+          15.75,
+          15.75
+        ],
+        "center": [
+          8,
+          8
+        ],
+        "span": 15.5,
+        "paintedPixels": 194546,
+        "tolerance": 0.1
+      },
+      {
+        "name": "building_solid.svg",
+        "weight": 1.5,
+        "targetSpan": 15.5,
+        "targetCenter": [
+          8,
+          8
+        ],
+        "bounds": [
+          1.3125,
+          0.25,
+          14.6875,
+          15.75
+        ],
+        "center": [
+          8,
+          8
+        ],
+        "span": 15.5,
+        "paintedPixels": 192571,
+        "tolerance": 0.1
+      },
+      {
+        "name": "calculator.svg",
+        "weight": 1.5,
+        "targetSpan": 15.5,
+        "targetCenter": [
+          8,
+          8
+        ],
+        "bounds": [
+          1.875,
+          0.25,
+          14.125,
+          15.75
+        ],
+        "center": [
+          8,
+          8
+        ],
+        "span": 15.5,
+        "paintedPixels": 120396,
+        "tolerance": 0.1
+      },
+      {
+        "name": "calculator_solid.svg",
+        "weight": 1.5,
+        "targetSpan": 15.5,
+        "targetCenter": [
+          8,
+          8
+        ],
+        "bounds": [
+          1.875,
+          0.25,
+          14.125,
+          15.75
+        ],
+        "center": [
+          8,
+          8
+        ],
+        "span": 15.5,
+        "paintedPixels": 172969,
+        "tolerance": 0.1
+      },
+      {
+        "name": "cloud-sync.svg",
+        "weight": 1.5,
+        "targetSpan": 14.993333,
+        "targetCenter": [
+          8,
+          8
+        ],
+        "bounds": [
+          0.5,
+          1.03125,
+          15.5,
+          14.96875
+        ],
+        "center": [
+          8,
+          8
+        ],
+        "span": 15,
+        "paintedPixels": 65628,
+        "tolerance": 0.1
+      },
+      {
+        "name": "cloud-sync_solid.svg",
+        "weight": 1.5,
+        "targetSpan": 14.993333,
+        "targetCenter": [
+          8,
+          8
+        ],
+        "bounds": [
+          0.5,
+          1.03125,
+          15.5,
+          14.96875
+        ],
+        "center": [
+          8,
+          8
+        ],
+        "span": 15,
+        "paintedPixels": 122535,
+        "tolerance": 0.1
+      },
+      {
+        "name": "dark.svg",
+        "weight": 1.5,
+        "targetSpan": 15.5,
+        "targetCenter": [
+          8,
+          8
+        ],
+        "bounds": [
+          0.25,
+          0.5,
+          15.75,
+          15.5
+        ],
+        "center": [
+          8,
+          8
+        ],
+        "span": 15.5,
+        "paintedPixels": 66055,
+        "tolerance": 0.1
+      },
+      {
+        "name": "dark_solid.svg",
+        "weight": 1.5,
+        "targetSpan": 15.5,
+        "targetCenter": [
+          8,
+          8
+        ],
+        "bounds": [
+          0.25,
+          0.5,
+          15.75,
+          15.5
+        ],
+        "center": [
+          8,
+          8
+        ],
+        "span": 15.5,
+        "paintedPixels": 88458,
+        "tolerance": 0.1
+      },
+      {
+        "name": "hospital.svg",
+        "weight": 1.5,
+        "targetSpan": 15.5,
+        "targetCenter": [
+          8,
+          8
+        ],
+        "bounds": [
+          1.1875,
+          0.21875,
+          14.8125,
+          15.75
+        ],
+        "center": [
+          8,
+          7.984375
+        ],
+        "span": 15.53125,
+        "paintedPixels": 97945,
+        "tolerance": 0.1
+      },
+      {
+        "name": "hospital_solid.svg",
+        "weight": 1.5,
+        "targetSpan": 15.5,
+        "targetCenter": [
+          8,
+          8
+        ],
+        "bounds": [
+          1.1875,
+          0.21875,
+          14.8125,
+          15.75
+        ],
+        "center": [
+          8,
+          7.984375
+        ],
+        "span": 15.53125,
+        "paintedPixels": 139691,
+        "tolerance": 0.1
+      },
+      {
+        "name": "man-woman.svg",
+        "weight": 1.5,
+        "targetSpan": 15.5,
+        "targetCenter": [
+          8.22,
+          8
+        ],
+        "bounds": [
+          0.59375,
+          0.25,
+          15.84375,
+          15.75
+        ],
+        "center": [
+          8.21875,
+          8
+        ],
+        "span": 15.5,
+        "paintedPixels": 114148,
+        "tolerance": 0.1
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "weight": 1.5,
+        "targetSpan": 15.5,
+        "targetCenter": [
+          8.22,
+          8
+        ],
+        "bounds": [
+          0.59375,
+          0.25,
+          15.84375,
+          15.75
+        ],
+        "center": [
+          8.21875,
+          8
+        ],
+        "span": 15.5,
+        "paintedPixels": 139482,
+        "tolerance": 0.1
+      },
+      {
+        "name": "man.svg",
+        "weight": 1.5,
+        "targetSpan": 15.5,
+        "targetCenter": [
+          8,
+          8
+        ],
+        "bounds": [
+          4.5625,
+          0.25,
+          11.4375,
+          15.75
+        ],
+        "center": [
+          8,
+          8
+        ],
+        "span": 15.5,
+        "paintedPixels": 58790,
+        "tolerance": 0.1
+      },
+      {
+        "name": "man_solid.svg",
+        "weight": 1.5,
+        "targetSpan": 15.5,
+        "targetCenter": [
+          8,
+          8
+        ],
+        "bounds": [
+          4.5625,
+          0.25,
+          11.4375,
+          15.75
+        ],
+        "center": [
+          8,
+          8
+        ],
+        "span": 15.5,
+        "paintedPixels": 72227,
+        "tolerance": 0.1
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.5,
+        "targetSpan": 15.5,
+        "targetCenter": [
+          8,
+          8
+        ],
+        "bounds": [
+          0.25,
+          1.46875,
+          15.75,
+          14.5625
+        ],
+        "center": [
+          8,
+          8.015625
+        ],
+        "span": 15.5,
+        "paintedPixels": 119691,
+        "tolerance": 0.1
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.5,
+        "targetSpan": 15.5,
+        "targetCenter": [
+          8,
+          8
+        ],
+        "bounds": [
+          0.25,
+          1.46875,
+          15.75,
+          14.5625
+        ],
+        "center": [
+          8,
+          8.015625
+        ],
+        "span": 15.5,
+        "paintedPixels": 163150,
+        "tolerance": 0.1
+      },
+      {
+        "name": "woman.svg",
+        "weight": 1.5,
+        "targetSpan": 15.5,
+        "targetCenter": [
+          8,
+          8
+        ],
+        "bounds": [
+          4.09375,
+          0.25,
+          11.90625,
+          15.75
+        ],
+        "center": [
+          8,
+          8
+        ],
+        "span": 15.5,
+        "paintedPixels": 55158,
+        "tolerance": 0.1
+      },
+      {
+        "name": "woman_solid.svg",
+        "weight": 1.5,
+        "targetSpan": 15.5,
+        "targetCenter": [
+          8,
+          8
+        ],
+        "bounds": [
+          4.09375,
+          0.25,
+          11.90625,
+          15.75
+        ],
+        "center": [
+          8,
+          8
+        ],
+        "span": 15.5,
+        "paintedPixels": 67009,
+        "tolerance": 0.1
+      }
+    ]
+  }
+}

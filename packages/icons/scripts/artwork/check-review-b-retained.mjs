@@ -87,13 +87,13 @@ export async function checkReviewBRetained(page, records) {
       {
         name: "man-woman",
         feature: "left head",
-        center: [3.80966, 2.615384],
+        center: [4.048707, 2.61644],
         roi: [1.2, 0, 6.4, 5.2],
       },
       {
         name: "man-woman",
         feature: "right head",
-        center: [11.707167, 2.615384],
+        center: [11.951298, 2.61644],
         roi: [9.1, 0, 14.3, 5.2],
       },
       ...[4.399286, 11.600714].flatMap((x, column) =>

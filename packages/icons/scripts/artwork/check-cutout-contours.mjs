@@ -13,21 +13,21 @@ export async function checkCutoutContours(page, records) {
           feature: `upper diagonal at y${y}`,
           y,
           expectedX:
-            14.5 * 1.022222 -
-            0.177778 -
-            0.245833 -
-            Math.SQRT2 * (.8 * 7 / 12 + 0.75) -
+            14.1 * 1.023191 -
+            0.185529 +
+            0.538091 -
+            Math.SQRT2 * ((0.8 * 7) / 12 + 0.75) -
             y,
         })),
-        ...[9.6, 9.85, 10.1].map((y) => ({
+        ...[10.3, 10.55, 10.8].map((y) => ({
           feature: `lower diagonal at y${y}`,
           y,
           expectedX:
             y -
-            (3.5 * 1.022222 -
-              0.245833 +
-              0.177778 +
-              Math.SQRT2 * (.8 * 7 / 12 + 0.75)),
+            (3.1 * 1.023191 +
+              0.538091 +
+              0.185529 +
+              Math.SQRT2 * ((0.8 * 7) / 12 + 0.75)),
         })),
       ].map(({ feature, y, expectedX }) => ({
         feature,

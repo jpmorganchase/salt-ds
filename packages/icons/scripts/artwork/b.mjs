@@ -1,3 +1,5 @@
+import { openEntrance } from "./open-entrance.mjs";
+import { standingPerson } from "./standing-person.mjs";
 import { circularArrow } from "./circular-arrow.mjs";
 import { retainedSurface } from "./retained-surface.mjs";
 import { softenedStroke as S, softenedFill as F } from "./contour-profiles.mjs";
@@ -477,9 +479,12 @@ add("home", homeOutline, F(homeSurface) + homeOutline);
 // Health crosses retain a stronger, compact medical gesture. Their shorter
 // arms use shallower fillets than an addition modifier; both polarities share
 // exactly the same positive/inverse contour and the same building rim.
-const hospitalFrame = R(6.75, 2.75, 10.5, 18.5);
+const hospitalEntrance = openEntrance(9.375, 17.25, 14.625, 21.25);
+const hospitalShell =
+  "M6.75 21.25V2.75H17.25V21.25" + hospitalEntrance.notch + "Z";
+const hospitalFrame = hospitalEntrance.frame(hospitalShell);
 const hospitalGround =
-  S("M3 21.25H21") +
+  hospitalEntrance.ground(3, 21) +
   [6.75, 17.25]
     .map((x) =>
       circularCrossJunction(x, 21.25, 1.7, undefined, [
@@ -488,24 +493,19 @@ const hospitalGround =
       ]),
     )
     .join("");
+const hospitalOutlineEntrance = openEntrance(9.75, 17.25, 14.25, 21.25);
+const hospitalOutlineShell =
+  "M6.75 21.25V2.75H17.25V21.25" + hospitalOutlineEntrance.notch + "Z";
+const hospitalOutlineFrame = hospitalOutlineEntrance.frame(hospitalOutlineShell);
 const hospitalCross = weldedPlusContour(8, 5.17, 2.264, 1.6, 0.4);
 add(
   "hospital",
   withSharedMark(
-    hospitalFrame +
-      hospitalGround +
-      S("M9 14.25H10.5M13.5 14.25H15M10.5 21.25V18H13.5V21.25") +
-      circularCrossJunction(10.5, 21.25, 1.4, undefined, [[-1, -1]]) +
-      circularCrossJunction(13.5, 21.25, 1.4, undefined, [[1, -1]]),
+    hospitalOutlineFrame + hospitalGround + S("M9 13.5H10.5M13.5 13.5H15"),
     hospitalCross,
   ),
   withSharedMark(
-    F(
-      box(6.75, 2.75, 10.5, 18.5) +
-        box(9, 13.5, 1.5, 1.5) +
-        box(13.5, 13.5, 1.5, 1.5) +
-        box(10.5, 18, 3, 3.25),
-    ) +
+    F(hospitalShell + box(9, 12.75, 1.5, 1.5) + box(13.5, 12.75, 1.5, 1.5)) +
       hospitalFrame +
       hospitalGround,
     hospitalCross,
@@ -716,35 +716,10 @@ add(
 const wrench =
   "M8.1 2.8A5.75 5.75 0 0 1 12.75 10.65L20.5 18.4Q21.55 19.45 20.5 20.5Q19.45 21.55 18.4 20.5L10.65 12.75A5.75 5.75 0 0 1 2.8 8.1L6.75 10.5L10.5 6.75Z";
 add("maintenance", S(wrench), F(wrench));
-const manHead = (x) => circ(x, 4.5, 2.25);
-const manBody = (x) =>
-  `M${x - 3.75} 9.75H${x + 3.75}V15.75H${x + 3}V21.75H${x - 3}V15.75H${x - 3.75}Z`;
-const manLines = (x) => S(`M${x} 15.75V21.75`);
-const womanBody = "M16 9.75H19L21.5 17.25H20.5V21.75H14.5V17.25H13.5Z";
-// Solid bodies include the complete outer rim at fit width W=1.5 in the
-// unchanged outline frame. Each leg aperture is one exterior notch; separate
-// touching even-odd rectangles left a phase-dependent line across the feet.
-const manBodySolid = (x) =>
-  `M${x - 4.7946429} 8.7053571H${x + 4.7946429}V16.7946429H${x + 4.0446429}V22.7946429H${x + 0.75}V15.75H${x - 0.75}V22.7946429H${x - 4.0446429}V16.7946429H${x - 4.7946429}Z`;
-const womanBodySolid =
-  "M15.247064 8.7053566L19.752935 8.7053566L22.949364 18.294643L21.544643 18.294643L21.544643 22.794643L18.25 22.794643L18.25 17.25L16.75 17.25L16.75 22.794643L13.455357 22.794643L13.455357 18.294643L12.050635 18.294643L15.247064 8.7053566Z";
-add(
-  "man-woman",
-  S(manHead(6.5)) +
-    SF(manBody(6.5)) +
-    manLines(6.5) +
-    S(manHead(17.5)) +
-    S(womanBody) +
-    S("M17.5 17.25V21.75"),
-  F(manHead(6.5) + manBodySolid(6.5) + manHead(17.5) + womanBodySolid) +
-    S(manHead(6.5)) +
-    S(manHead(17.5)),
-);
-add(
-  "man",
-  S(manHead(12)) + SF(manBody(12)) + manLines(12),
-  F(manHead(12) + manBodySolid(12)) + S(manHead(12)),
-);
+const manPair = standingPerson(6.5);
+const womanPair = standingPerson(17.5, "dress");
+add("man-woman", manPair[0] + womanPair[0], manPair[1] + womanPair[1]);
+add("man", ...standingPerson(12));
 const map = "M3 5.25L9 2.75L15 5.25L21 2.75V18.75L15 21.25L9 18.75L3 21.25Z";
 add(
   "map",

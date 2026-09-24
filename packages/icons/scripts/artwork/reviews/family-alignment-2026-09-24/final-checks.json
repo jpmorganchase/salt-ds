@@ -1,0 +1,1494 @@
+{
+  "oldStanding": {
+    "results": [
+      {
+        "name": "man.svg",
+        "kind": "man",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.421875
+      },
+      {
+        "name": "man_solid.svg",
+        "kind": "man",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.421875
+      },
+      {
+        "name": "woman.svg",
+        "kind": "woman",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "woman_solid.svg",
+        "kind": "woman",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.40625
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.421875
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 0.67,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.005209392152876601
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.421875
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 0.67,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.3948819550118271
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.421875
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 0.67,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.0019979849963920543
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.421875
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 0.67,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.004907739765498175
+      },
+      {
+        "name": "man.svg",
+        "kind": "man",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.265625
+      },
+      {
+        "name": "man_solid.svg",
+        "kind": "man",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.265625
+      },
+      {
+        "name": "woman.svg",
+        "kind": "woman",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "woman_solid.svg",
+        "kind": "woman",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.25
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.265625
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 1,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.008166901347739878
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.265625
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 1,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.31172826086956523
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.265625
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 1,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.0047342044621692825
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.265625
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 1,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.004862390340878002
+      },
+      {
+        "name": "man.svg",
+        "kind": "man",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.09375
+      },
+      {
+        "name": "man_solid.svg",
+        "kind": "man",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.09375
+      },
+      {
+        "name": "woman.svg",
+        "kind": "woman",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "woman_solid.svg",
+        "kind": "woman",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.078125
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.09375
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 1.3333333333333333,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.00217950394490214
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.09375
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 1.3333333333333333,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.24881908006229594
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.09375
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 1.3333333333333333,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.0021414511858125654
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.09375
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 1.3333333333333333,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.005734809979344815
+      },
+      {
+        "name": "man.svg",
+        "kind": "man",
+        "weight": 1.5,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.015625
+      },
+      {
+        "name": "man_solid.svg",
+        "kind": "man",
+        "weight": 1.5,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.015625
+      },
+      {
+        "name": "woman.svg",
+        "kind": "woman",
+        "weight": 1.5,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "woman_solid.svg",
+        "kind": "woman",
+        "weight": 1.5,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 1.5,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.015625
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 1.5,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.006730821423863398
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 1.5,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.015625
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 1.5,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.22162932171922983
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 1.5,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.015625
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 1.5,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.004805101915423904
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 1.5,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.015625
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 1.5,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.0046580783347369955
+      }
+    ],
+    "failures": [
+      {
+        "name": "man.svg",
+        "kind": "man",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.421875
+      },
+      {
+        "name": "man_solid.svg",
+        "kind": "man",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.421875
+      },
+      {
+        "name": "woman_solid.svg",
+        "kind": "woman",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.40625
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.421875
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.421875
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 0.67,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.3948819550118271
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.421875
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 0.67,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.421875
+      },
+      {
+        "name": "man.svg",
+        "kind": "man",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.265625
+      },
+      {
+        "name": "man_solid.svg",
+        "kind": "man",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.265625
+      },
+      {
+        "name": "woman_solid.svg",
+        "kind": "woman",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.25
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.265625
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.265625
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 1,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.31172826086956523
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.265625
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 1,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.265625
+      },
+      {
+        "name": "man.svg",
+        "kind": "man",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.09375
+      },
+      {
+        "name": "man_solid.svg",
+        "kind": "man",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.09375
+      },
+      {
+        "name": "woman_solid.svg",
+        "kind": "woman",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.078125
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "man",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.09375
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.09375
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 1.3333333333333333,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.24881908006229594
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "man",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.09375
+      },
+      {
+        "name": "man-woman_solid.svg",
+        "kind": "woman",
+        "weight": 1.3333333333333333,
+        "feature": "head, shoulder and foot alignment",
+        "maximumDelta": 0.09375
+      },
+      {
+        "name": "man-woman.svg",
+        "kind": "woman",
+        "weight": 1.5,
+        "feature": "same complete figure after translation",
+        "mismatch": 0.22162932171922983
+      }
+    ]
+  },
+  "oldDoor": {
+    "results": [
+      {
+        "name": "storefront.svg",
+        "weight": 0.67,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 255
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 255
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.3333333333333333,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 255
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.5,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 255
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 0.67,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 255
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 255
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.3333333333333333,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 255
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.5,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 255
+      }
+    ],
+    "failures": [
+      {
+        "name": "storefront.svg",
+        "weight": 0.67,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 255
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 255
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.3333333333333333,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 255
+      },
+      {
+        "name": "storefront.svg",
+        "weight": 1.5,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 255
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 0.67,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 255
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 255
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.3333333333333333,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 255
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.5,
+        "feature": "continuous open entrance through ground",
+        "maximumAlpha": 255
+      }
+    ]
+  },
+  "thresholds": {
+    "results": [
+      {
+        "name": "group",
+        "feature": "exposed rear square",
+        "weight": 0.67,
+        "point": [
+          4.5,
+          6
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.6700367647058824,
+          "center": 4.499969278692272
+        },
+        "solid": {
+          "width": 0.6700367647058824,
+          "center": 4.499969278692272
+        }
+      },
+      {
+        "name": "devices",
+        "feature": "phone header rim",
+        "weight": 0.67,
+        "point": [
+          12.5,
+          5.666666666666667
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0.6680147058823529,
+          "center": 5.665958654375344
+        },
+        "solid": {
+          "width": 0.6680147058823529,
+          "center": 5.665958654375344
+        }
+      },
+      {
+        "name": "building",
+        "feature": "open doorway at ground",
+        "weight": 0.67,
+        "point": [
+          8,
+          14.5
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0,
+          "center": null
+        },
+        "solid": {
+          "width": 0,
+          "center": null
+        }
+      },
+      {
+        "name": "building",
+        "feature": "open doorway at ground",
+        "weight": 1,
+        "point": [
+          8,
+          14.5
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0,
+          "center": null
+        },
+        "solid": {
+          "width": 0,
+          "center": null
+        }
+      },
+      {
+        "name": "building",
+        "feature": "open doorway at ground",
+        "weight": 1.3333333333333333,
+        "point": [
+          8,
+          14.5
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0,
+          "center": null
+        },
+        "solid": {
+          "width": 0,
+          "center": null
+        }
+      },
+      {
+        "name": "building",
+        "feature": "open doorway at ground",
+        "weight": 1.5,
+        "point": [
+          8,
+          14.5
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0,
+          "center": null
+        },
+        "solid": {
+          "width": 0,
+          "center": null
+        }
+      },
+      {
+        "name": "buildings",
+        "feature": "ground between buildings",
+        "weight": 0.67,
+        "point": [
+          10,
+          14.5
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0.6871323529411765,
+          "center": 14.492769919297306
+        },
+        "solid": {
+          "width": 0.6871323529411765,
+          "center": 14.492769919297306
+        }
+      },
+      {
+        "name": "buildings",
+        "feature": "open entrance threshold",
+        "weight": 0.67,
+        "point": [
+          5.25,
+          14.5
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0,
+          "center": null
+        },
+        "solid": {
+          "width": 0,
+          "center": null
+        }
+      },
+      {
+        "name": "buildings",
+        "feature": "open entrance threshold",
+        "weight": 1,
+        "point": [
+          5.25,
+          14.5
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0,
+          "center": null
+        },
+        "solid": {
+          "width": 0,
+          "center": null
+        }
+      },
+      {
+        "name": "buildings",
+        "feature": "open entrance threshold",
+        "weight": 1.3333333333333333,
+        "point": [
+          5.25,
+          14.5
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0,
+          "center": null
+        },
+        "solid": {
+          "width": 0,
+          "center": null
+        }
+      },
+      {
+        "name": "buildings",
+        "feature": "open entrance threshold",
+        "weight": 1.5,
+        "point": [
+          5.25,
+          14.5
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0,
+          "center": null
+        },
+        "solid": {
+          "width": 0,
+          "center": null
+        }
+      },
+      {
+        "name": "hospital",
+        "feature": "open entrance threshold",
+        "weight": 0.67,
+        "point": [
+          8,
+          14.166667
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0,
+          "center": null
+        },
+        "solid": {
+          "width": 0,
+          "center": null
+        }
+      },
+      {
+        "name": "hospital",
+        "feature": "open entrance threshold",
+        "weight": 1,
+        "point": [
+          8,
+          14.166667
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0,
+          "center": null
+        },
+        "solid": {
+          "width": 0,
+          "center": null
+        }
+      },
+      {
+        "name": "hospital",
+        "feature": "open entrance threshold",
+        "weight": 1.3333333333333333,
+        "point": [
+          8,
+          14.166667
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0,
+          "center": null
+        },
+        "solid": {
+          "width": 0,
+          "center": null
+        }
+      },
+      {
+        "name": "hospital",
+        "feature": "open entrance threshold",
+        "weight": 1.5,
+        "point": [
+          8,
+          14.166667
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0,
+          "center": null
+        },
+        "solid": {
+          "width": 0,
+          "center": null
+        }
+      },
+      {
+        "name": "storefront",
+        "feature": "open entrance threshold",
+        "weight": 0.67,
+        "point": [
+          10.25,
+          13.5
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0,
+          "center": null
+        },
+        "solid": {
+          "width": 0,
+          "center": null
+        }
+      },
+      {
+        "name": "storefront",
+        "feature": "open entrance threshold",
+        "weight": 1,
+        "point": [
+          10.25,
+          13.5
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0,
+          "center": null
+        },
+        "solid": {
+          "width": 0,
+          "center": null
+        }
+      },
+      {
+        "name": "storefront",
+        "feature": "open entrance threshold",
+        "weight": 1.3333333333333333,
+        "point": [
+          10.25,
+          13.5
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0,
+          "center": null
+        },
+        "solid": {
+          "width": 0,
+          "center": null
+        }
+      },
+      {
+        "name": "storefront",
+        "feature": "open entrance threshold",
+        "weight": 1.5,
+        "point": [
+          10.25,
+          13.5
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0,
+          "center": null
+        },
+        "solid": {
+          "width": 0,
+          "center": null
+        }
+      },
+      {
+        "name": "accessible",
+        "feature": "arm",
+        "weight": 0.67,
+        "point": [
+          10,
+          6.5
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0.6719362745098039,
+          "center": 6.500000000000001
+        },
+        "solid": {
+          "width": 0.6719362745098039,
+          "center": 6.500000000000001
+        }
+      },
+      {
+        "name": "accessible",
+        "feature": "foot",
+        "weight": 0.67,
+        "point": [
+          14,
+          13
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0.6719362745098039,
+          "center": 13.000000000000002
+        },
+        "solid": {
+          "width": 0.6719362745098039,
+          "center": 13.000000000000002
+        }
+      },
+      {
+        "name": "map",
+        "feature": "left perimeter",
+        "weight": 0.67,
+        "point": [
+          2,
+          8
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.6700367647058824,
+          "center": 1.9999692786922727
+        },
+        "solid": {
+          "width": 0.6700367647058824,
+          "center": 1.9999692786922727
+        }
+      },
+      {
+        "name": "utensils",
+        "feature": "fork handle",
+        "weight": 0.67,
+        "point": [
+          5,
+          12
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.6700367647058824,
+          "center": 4.999969278692273
+        },
+        "solid": {
+          "width": 0.6700367647058824,
+          "center": 4.999969278692273
+        }
+      },
+      {
+        "name": "utensils",
+        "feature": "knife handle",
+        "weight": 0.67,
+        "point": [
+          13,
+          12
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.6700367647058824,
+          "center": 12.999969278692273
+        },
+        "solid": {
+          "width": 0.6700367647058824,
+          "center": 12.999969278692273
+        }
+      },
+      {
+        "name": "column-chooser",
+        "feature": "left perimeter",
+        "weight": 0.67,
+        "point": [
+          1.5,
+          8
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.6700367647058824,
+          "center": 1.4999692786922725
+        },
+        "solid": {
+          "width": 0.6700367647058824,
+          "center": 1.4999692786922725
+        }
+      },
+      {
+        "name": "column-chooser",
+        "feature": "center rule",
+        "weight": 0.67,
+        "point": [
+          8,
+          8
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.6700367647058824,
+          "center": 7.999969278692273
+        },
+        "solid": {
+          "width": 0.6700367647058824,
+          "center": 7.999969278692273
+        }
+      },
+      {
+        "name": "maximize",
+        "feature": "top header rim",
+        "weight": 0.67,
+        "point": [
+          8,
+          2.5
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0.6719362745098039,
+          "center": 2.5000000000000004
+        },
+        "solid": {
+          "width": 0.6719362745098039,
+          "center": 2.5000000000000004
+        }
+      },
+      {
+        "name": "calendar",
+        "feature": "top header rim",
+        "weight": 0.67,
+        "point": [
+          8,
+          3.2333333333333325
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0.6680147058823529,
+          "center": 3.232402884791781
+        },
+        "solid": {
+          "width": 0.6680147058823529,
+          "center": 3.232402884791781
+        }
+      },
+      {
+        "name": "mobile",
+        "feature": "top header rim",
+        "weight": 0.67,
+        "point": [
+          8,
+          1.6666666666666667
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0.6680147058823529,
+          "center": 1.665958654375344
+        },
+        "solid": {
+          "width": 0.6680147058823529,
+          "center": 1.665958654375344
+        }
+      },
+      {
+        "name": "inbox",
+        "feature": "upper tray extension",
+        "weight": 0.67,
+        "point": [
+          2.5,
+          7.75
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.6700367647058824,
+          "center": 2.4999692786922725
+        },
+        "solid": {
+          "width": 0.6700367647058824,
+          "center": 2.4999692786922725
+        }
+      },
+      {
+        "name": "csv",
+        "feature": "open page frame",
+        "weight": 0.67,
+        "point": [
+          2.5,
+          4.5
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.6700367647058824,
+          "center": 2.4999692786922725
+        },
+        "solid": {
+          "width": 0.6700367647058824,
+          "center": 2.4999692786922725
+        }
+      },
+      {
+        "name": "pdf",
+        "feature": "open page frame",
+        "weight": 0.67,
+        "point": [
+          2.5,
+          4.5
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.6700367647058824,
+          "center": 2.4999692786922725
+        },
+        "solid": {
+          "width": 0.6700367647058824,
+          "center": 2.4999692786922725
+        }
+      },
+      {
+        "name": "xls",
+        "feature": "open page frame",
+        "weight": 0.67,
+        "point": [
+          2.5,
+          4.5
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.6700367647058824,
+          "center": 2.4999692786922725
+        },
+        "solid": {
+          "width": 0.6700367647058824,
+          "center": 2.4999692786922725
+        }
+      },
+      {
+        "name": "zip",
+        "feature": "open page frame",
+        "weight": 0.67,
+        "point": [
+          2.5,
+          4.5
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.6700367647058824,
+          "center": 2.4999692786922725
+        },
+        "solid": {
+          "width": 0.6700367647058824,
+          "center": 2.4999692786922725
+        }
+      },
+      {
+        "name": "panel-open-left",
+        "feature": "exposed perimeter",
+        "weight": 0.67,
+        "point": [
+          9,
+          1.6666666666666667
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0.6680147058823529,
+          "center": 1.665958654375344
+        },
+        "solid": {
+          "width": 0.6680147058823529,
+          "center": 1.665958654375344
+        }
+      },
+      {
+        "name": "panel-open-top",
+        "feature": "exposed perimeter",
+        "weight": 0.67,
+        "point": [
+          14.333333333333334,
+          9
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.6700367647058824,
+          "center": 14.333316901005942
+        },
+        "solid": {
+          "width": 0.6700367647058824,
+          "center": 14.333316901005942
+        }
+      },
+      {
+        "name": "panel-open-right",
+        "feature": "exposed perimeter",
+        "weight": 0.67,
+        "point": [
+          7,
+          14.333333333333334
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0.6680147058823529,
+          "center": 14.334041345624657
+        },
+        "solid": {
+          "width": 0.6680147058823529,
+          "center": 14.334041345624657
+        }
+      },
+      {
+        "name": "panel-open-bottom",
+        "feature": "exposed perimeter",
+        "weight": 0.67,
+        "point": [
+          1.6666666666666667,
+          7
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.6700367647058825,
+          "center": 1.6666216563786007
+        },
+        "solid": {
+          "width": 0.6700367647058825,
+          "center": 1.6666216563786007
+        }
+      },
+      {
+        "name": "panel-close-left",
+        "feature": "exposed perimeter",
+        "weight": 0.67,
+        "point": [
+          9,
+          1.6666666666666667
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0.6680147058823529,
+          "center": 1.665958654375344
+        },
+        "solid": {
+          "width": 0.6680147058823529,
+          "center": 1.665958654375344
+        }
+      },
+      {
+        "name": "panel-close-top",
+        "feature": "exposed perimeter",
+        "weight": 0.67,
+        "point": [
+          14.333333333333334,
+          9
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.6700367647058824,
+          "center": 14.333316901005942
+        },
+        "solid": {
+          "width": 0.6700367647058824,
+          "center": 14.333316901005942
+        }
+      },
+      {
+        "name": "panel-close-right",
+        "feature": "exposed perimeter",
+        "weight": 0.67,
+        "point": [
+          7,
+          14.333333333333334
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0.6680147058823529,
+          "center": 14.334041345624657
+        },
+        "solid": {
+          "width": 0.6680147058823529,
+          "center": 14.334041345624657
+        }
+      },
+      {
+        "name": "panel-close-bottom",
+        "feature": "exposed perimeter",
+        "weight": 0.67,
+        "point": [
+          1.6666666666666667,
+          7
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.6700367647058825,
+          "center": 1.6666216563786007
+        },
+        "solid": {
+          "width": 0.6700367647058825,
+          "center": 1.6666216563786007
+        }
+      },
+      {
+        "name": "music",
+        "feature": "left note stem",
+        "weight": 0.67,
+        "point": [
+          6.5,
+          7.5
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.6700367647058824,
+          "center": 6.499969278692272
+        },
+        "solid": {
+          "width": 0.6700367647058824,
+          "center": 6.499969278692272
+        }
+      },
+      {
+        "name": "music-disabled",
+        "feature": "right note stem",
+        "weight": 0.67,
+        "point": [
+          13.5,
+          6.5
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.6700367647058824,
+          "center": 13.499969278692273
+        },
+        "solid": {
+          "width": 0.6700367647058824,
+          "center": 13.499969278692273
+        }
+      },
+      {
+        "name": "search",
+        "feature": "handle",
+        "weight": 0.67,
+        "point": [
+          13,
+          13
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0.9492647058823529,
+          "center": 13.00778325103279
+        },
+        "solid": {
+          "width": 0.9492647058823529,
+          "center": 13.00778325103279
+        }
+      },
+      {
+        "name": "browser",
+        "feature": "left content frame",
+        "weight": 0.67,
+        "point": [
+          1.6666666666666667,
+          8.666666666666666
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.6700367647058825,
+          "center": 1.6666216563786007
+        },
+        "solid": {
+          "width": 0.6700367647058825,
+          "center": 1.6666216563786007
+        }
+      },
+      {
+        "name": "laptop",
+        "feature": "base bottom",
+        "weight": 0.67,
+        "point": [
+          8,
+          12.666666666666666
+        ],
+        "axis": "y",
+        "outline": {
+          "width": 0.6680147058823529,
+          "center": 12.665958654375343
+        },
+        "solid": {
+          "width": 0.6680147058823529,
+          "center": 12.665958654375343
+        }
+      },
+      {
+        "name": "globe",
+        "feature": "right rim beside upper latitude",
+        "weight": 0.67,
+        "point": [
+          13.728971208787064,
+          5.3
+        ],
+        "axis": "x",
+        "outline": {
+          "width": 0.7433823529411765,
+          "center": 13.725975210187931
+        },
+        "solid": {
+          "width": 0.7394607843137255,
+          "center": 13.727953057673183
+        }
+      }
+    ],
+    "failures": []
+  },
+  "mobile": {
+    "viewport": 390,
+    "scroll": 390
+  }
+}

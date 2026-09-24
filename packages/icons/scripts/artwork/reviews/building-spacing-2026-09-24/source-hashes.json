@@ -1,0 +1,42 @@
+{
+  "building.svg": {
+    "sha256": "533f1a91c5924fa86f266d1aef6c90fca252789f4b17d21b84384f07a0602c39",
+    "unchanged": false
+  },
+  "building_solid.svg": {
+    "sha256": "363762fadfc7b943e9b0bb3123ca98971d97a4c9d2bcedcbec68b1e8d50a7337",
+    "unchanged": true
+  },
+  "buildings.svg": {
+    "sha256": "339083c8af0d999f7369e95dbaf7e8fb93e100cd14d83355c585ba08380e0c15",
+    "unchanged": false
+  },
+  "buildings_solid.svg": {
+    "sha256": "c6c0300ebc74fda232de67b15be37997e61bbc8e59c5f09866d2377c85526d93",
+    "unchanged": true
+  },
+  "hospital.svg": {
+    "sha256": "414ac11c6d80272b8860149bba9f254a87dbe1b7dfeb46bffdc4ac5d6d5e4fce",
+    "unchanged": false
+  },
+  "hospital_solid.svg": {
+    "sha256": "5e16170c4e7e20e966d60bd99ee4e73243bed0a166dfde79a9278d502b0e6829",
+    "unchanged": true
+  },
+  "storefront.svg": {
+    "sha256": "42b8ce067f35058813b228bb153a35060930541aade65f666c3b3627749dedf5",
+    "unchanged": false
+  },
+  "storefront_solid.svg": {
+    "sha256": "570966fe8a93416af2d7a831edcb078df8201f7d9d780ade5181b44dea310fc2",
+    "unchanged": true
+  },
+  "dark.svg": {
+    "sha256": "dcabe5bc7f292c25226b02dc32039b6beb1f97d84420a654d243c7bab3c3483e",
+    "unchanged": false
+  },
+  "dark_solid.svg": {
+    "sha256": "6790aae8ac13c59f765e800897151603e5d003db135b2228ab114597d1e6ffbe",
+    "unchanged": false
+  }
+}

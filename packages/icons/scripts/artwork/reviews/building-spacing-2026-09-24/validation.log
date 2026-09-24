@@ -1,0 +1,71 @@
+{
+  "icons": 550,
+  "errors": [],
+  "bounds": [],
+  "empty": [],
+  "strokeElements": 4407,
+  "viewBoxFitFailures": [],
+  "viewBoxFitSamples": 550,
+  "numberCenteringFailures": [],
+  "numberCenteringSamples": 8,
+  "pairFeatureFailures": [],
+  "pairFeatureSamples": 28,
+  "sharedMarkFailures": [],
+  "sharedMarkSamples": 791,
+  "specificDrawingFailures": [],
+  "specificDrawingSamples": 230,
+  "compactActionFailures": [],
+  "compactActionSamples": 108,
+  "cutoutContourFailures": [],
+  "cutoutContourSamples": 204,
+  "cutoutSpacingFailures": [],
+  "cutoutSpacingSamples": 96,
+  "scalingFailures": [],
+  "scalingSamples": 58,
+  "structuralFamilyFailures": [],
+  "structuralFamilySamples": 58,
+  "familyFeatureFailures": [],
+  "familyFeatureSamples": 69,
+  "opticalDetailFailures": [],
+  "opticalDetailSamples": 63,
+  "polishFeatureFailures": [],
+  "polishFeatureSamples": 53,
+  "stabilizationFailures": [],
+  "stabilizationSamples": 1147,
+  "curvedArrowAlignmentFailures": [],
+  "curvedArrowAlignmentSamples": 16,
+  "circularArrowProportionFailures": [],
+  "pairContourFailures": [],
+  "pairContourCoverage": {
+    "total": 185,
+    "passed": 6,
+    "needsReview": 179
+  },
+  "detailRecognitionFailures": [],
+  "detailRecognitionSamples": 416,
+  "internalJunctionFailures": [],
+  "internalJunctionSamples": 47,
+  "pairStrokeFailures": [],
+  "pairStrokeSamples": 48,
+  "featureAlignmentFailures": [],
+  "featureAlignmentSamples": 33,
+  "clearanceFailures": [],
+  "clearanceSamples": 66,
+  "cutoutClearanceFailures": [],
+  "cutoutClearanceSamples": 429,
+  "paintedBoundsFailures": [],
+  "paintedBoundsSamples": 1650
+}
+No new icon exports require an intersection-review decision.
+Inspected 50 / 550
+Inspected 100 / 550
+Inspected 150 / 550
+Inspected 200 / 550
+Inspected 250 / 550
+Inspected 300 / 550
+Inspected 350 / 550
+Inspected 400 / 550
+Inspected 450 / 550
+Inspected 500 / 550
+Inspected 550 / 550
+{"exports":550,"computed":6,"changed":409,"approved":7,"inner":2940,"warnings":[]}
