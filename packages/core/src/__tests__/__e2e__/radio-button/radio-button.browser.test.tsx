@@ -79,11 +79,14 @@ describe("GIVEN a RadioButton the user cannot change", () => {
     expect(appearanceOf("Enabled")).not.toEqual(resting);
   });
 
-  it.each([false, true])(
-    "keeps its resting appearance on hover when disabled and checked is %s",
-    async (checked) => {
+  it.each([
+    ["unselected", {}],
+    ["selected", { checked: true }],
+  ] as const)(
+    "keeps its resting appearance on hover when disabled and %s",
+    async (_, props) => {
       await renderWithSalt(
-        <RadioButton label="Disabled" checked={checked} disabled />,
+        <RadioButton label="Disabled" disabled {...props} />,
       );
       const resting = appearanceOf("Disabled");
 
