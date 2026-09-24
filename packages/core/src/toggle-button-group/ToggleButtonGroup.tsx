@@ -114,16 +114,36 @@ export const ToggleButtonGroup = forwardRef<
 
   const [enabledButtons, setEnabledButtons] = useState<HTMLButtonElement[]>([]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: queries the dom when children or disabled changes.
   useEffect(() => {
-    setEnabledButtons(
-      Array.from(
-        groupRef.current?.querySelectorAll<HTMLButtonElement>(
-          "button:not([disabled])",
-        ) ?? [],
-      ),
-    );
-  }, [children, disabled]);
+    const group = groupRef.current;
+    if (!group) {
+      return;
+    }
+
+    const updateEnabledButtons = () => {
+      const buttons = Array.from(
+        group.querySelectorAll<HTMLButtonElement>("button:not([disabled])"),
+      );
+      setEnabledButtons((previous) =>
+        previous.length === buttons.length &&
+        previous.every((button, index) => button === buttons[index])
+          ? previous
+          : buttons,
+      );
+    };
+
+    // Descendants can change independently of this group's props.
+    const observer = new MutationObserver(updateEnabledButtons);
+    observer.observe(group, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["disabled"],
+    });
+    updateEnabledButtons();
+
+    return () => observer.disconnect();
+  }, []);
 
   const select = useCallback(
     (event: SyntheticEvent<HTMLButtonElement>) => {

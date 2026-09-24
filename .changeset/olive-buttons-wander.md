@@ -11,3 +11,4 @@ Fixed keyboard navigation in `ToggleButtonGroup`.
 Fixed selection in a `ToggleButtonGroup` whose buttons use numeric `value` props. Choosing a button left every button in the group reporting `aria-checked="false"`, so a screen reader announced nothing as selected and the group lost its tab stop. The group also reported a change when the already selected button was chosen again.
 
 Removed the invalid `readOnly` attribute that `ToggleButton` rendered onto its `button` element. Read-only state is still exposed through `aria-readonly`.
+Kept the group tab stop current when toggle buttons mount, unmount, reorder, or change disabled state without a group rerender.
