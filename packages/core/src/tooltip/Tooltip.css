@@ -23,6 +23,7 @@
   font-size: var(--saltTooltip-fontSize, var(--salt-text-fontSize));
   font-weight: var(--saltTooltip-fontWeight, var(--salt-text-fontWeight));
   line-height: var(--saltTooltip-lineHeight, var(--salt-text-lineHeight));
+  letter-spacing: var(--salt-text-letterSpacing);
   max-width: var(--saltTooltip-maxWidth, 60ch);
   padding: var(--saltTooltip-padding, var(--tooltip-padding));
   position: relative;

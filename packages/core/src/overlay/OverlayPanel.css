@@ -5,6 +5,7 @@
   font-size: var(--saltOverlay-fontSize, var(--salt-text-fontSize));
   font-weight: var(--saltOverlay-fontWeight, var(--salt-text-fontWeight));
   line-height: var(--saltOverlay-lineHeight, var(--salt-text-lineHeight));
+  letter-spacing: var(--salt-text-letterSpacing);
 
   border-color: var(--overlay-borderColor);
   border-style: var(--saltOverlay-borderStyle, var(--salt-borderStyle-solid));

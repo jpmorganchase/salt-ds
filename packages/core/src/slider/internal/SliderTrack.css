@@ -155,6 +155,7 @@
   font-weight: var(--salt-text-label-fontWeight);
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
   overflow: hidden;
   position: absolute;
   text-overflow: ellipsis;

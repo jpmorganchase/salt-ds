@@ -20,7 +20,7 @@
   cursor: var(--saltTabs-tab-cursor, var(--tabs-tab-cursor));
   display: var(--tabs-tabstrip-display);
   height: var(--saltTabs-tab-height, var(--tabs-tabstrip-height));
-  letter-spacing: var(--saltTabs-tab-letterSpacing, var(--tabs-tab-letterSpacing, 0));
+  letter-spacing: var(--saltTabs-tab-letterSpacing, var(--tabs-tab-letterSpacing, var(--salt-text-letterSpacing)));
   min-width: var(--saltTabs-tab-minWidth, 40px);
   outline: none;
   position: var(--saltTabs-tab-position, var(--tabs-tab-position));

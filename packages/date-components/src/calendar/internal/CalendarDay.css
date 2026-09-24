@@ -18,6 +18,7 @@
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
   font-size: var(--salt-text-fontSize);
+  letter-spacing: var(--salt-text-letterSpacing);
   width: var(--salt-size-base);
   height: var(--salt-size-base);
   color: var(--salt-content-primary-foreground);

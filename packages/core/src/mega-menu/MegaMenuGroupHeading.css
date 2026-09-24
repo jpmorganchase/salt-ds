@@ -9,5 +9,6 @@
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-fontWeight-strong);
   line-height: var(--salt-text-label-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
   color: var(--salt-content-secondary-foreground);
 }

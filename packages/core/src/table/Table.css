@@ -54,6 +54,7 @@ table.saltTable {
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   line-height: var(--salt-text-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
   width: 100%;
 }
 

@@ -216,7 +216,7 @@
   display: block;
   font: inherit;
   height: 100%;
-  letter-spacing: var(--saltDateInput-letterSpacing, 0);
+  letter-spacing: var(--saltDateInput-letterSpacing, var(--salt-text-letterSpacing));
   margin: 0;
   min-width: 0;
   overflow: hidden;

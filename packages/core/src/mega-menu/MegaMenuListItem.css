@@ -35,6 +35,7 @@
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
 }
 
 .saltMegaMenuListItem-wrapper:focus-visible {

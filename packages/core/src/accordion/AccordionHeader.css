@@ -11,6 +11,7 @@
   font-family: var(--salt-text-fontFamily);
   color: var(--salt-content-primary-foreground);
   font-weight: var(--salt-text-fontWeight-strong);
+  letter-spacing: var(--salt-text-letterSpacing);
   text-align: left;
   cursor: var(--salt-cursor-hover);
   box-sizing: border-box;

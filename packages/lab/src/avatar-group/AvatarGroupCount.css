@@ -6,6 +6,7 @@
   font-size: calc(var(--salt-text-notation-fontSize) * var(--avatarGroup-size-multiplier, 1));
   font-weight: var(--salt-text-notation-fontWeight);
   line-height: var(--salt-text-notation-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
   width: var(--avatarGroupCount-size);
   min-width: var(--avatarGroupCount-size);
   height: var(--avatarGroupCount-size);
