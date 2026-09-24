@@ -2,6 +2,6 @@
 "@salt-ds/core": patch
 ---
 
-Fixed `NumberInput` increment and decrement buttons staying enabled when the surrounding `FormField` was disabled. They now respect the inherited disabled state, matching the input itself.
+Fixed `NumberInput` increment and decrement buttons remaining enabled inside a disabled `FormField`. The buttons now inherit the disabled state from the field.
 
-Fixed a multiselect `ComboBox` initially exposing each pill as a separate tab stop. The pill list now has a single entry tab stop, so Tab moves past the whole list and the arrow keys move between pills, matching the behavior described in the documentation.
+Fixed keyboard navigation in a multiselect `ComboBox` so its selected pills form a single tab stop. Use the arrow keys to move between pills and Tab to leave the pill list.
