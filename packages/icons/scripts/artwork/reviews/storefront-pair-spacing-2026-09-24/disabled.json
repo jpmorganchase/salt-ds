@@ -1,0 +1,45 @@
+{
+  "results": [
+    {
+      "name": "closedcaption-disabled.svg",
+      "weight": 0.67,
+      "feature": "positive caption letters parallel to slash",
+      "gap": 0.602170958516973,
+      "expected": 0.5983333333333332,
+      "tolerance": 0.03
+    },
+    {
+      "name": "video-disabled.svg",
+      "weight": 0.67,
+      "feature": "camera upper outline stop",
+      "gap": 1.4363106492851747,
+      "expected": 1.4281192283025066,
+      "tolerance": 0.03
+    },
+    {
+      "name": "video-disabled.svg",
+      "weight": 0.67,
+      "feature": "camera lower outline stop",
+      "gap": 1.4363106492851747,
+      "expected": 1.4281192283025066,
+      "tolerance": 0.03
+    },
+    {
+      "name": "video-disabled.svg",
+      "weight": 0.67,
+      "feature": "camera right outline stop",
+      "gap": 1.4363106492851747,
+      "expected": 1.4281192283025066,
+      "tolerance": 0.03
+    },
+    {
+      "name": "video-disabled.svg",
+      "weight": 0.67,
+      "feature": "lens lower diagonal stop",
+      "gap": 1.4805048231093338,
+      "expected": 1.4701262400637736,
+      "tolerance": 0.03
+    }
+  ],
+  "failures": []
+}

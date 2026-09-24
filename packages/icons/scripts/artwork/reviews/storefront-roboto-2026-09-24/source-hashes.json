@@ -1,0 +1,146 @@
+{
+  "closedcaption-disabled.svg": {
+    "before": "96d4d2eda9f05ac1509ce1bc1737a64d4fc939f605394d104851e4fd143bcaef",
+    "after": "822df11af83b9a6fd5862d39b0cd8d637266b0e795c082a9390ee09492be9e52"
+  },
+  "closedcaption-disabled_solid.svg": {
+    "before": "ac30b78f36981dce8317c1e78fd158a6385d934b443479085e6b866bfb382316",
+    "after": "6396593e8ee16dec4278d2861b373f0f2ac091c335373f91c707adf8566d30d5"
+  },
+  "closedcaption.svg": {
+    "before": "ec366e1163d580a6c611d8602396f698e4e5de577e1adfdfa7f72e3a4cc6ee20",
+    "after": "0503920f41c1ebc9776bb552e0fe78a8a20315c27e7e26e7e6ece328cb4dabbb"
+  },
+  "closedcaption_solid.svg": {
+    "before": "045917259b07b993fd99f5b74388073368e562dc731bc8de9058778c3776a1fd",
+    "after": "ec22d0b1e7bfafdc23b163e4c87d1de660caaff1a4d651a0b913226f871006ed"
+  },
+  "csv.svg": {
+    "before": "073354d4350efb51bd71c4f3fcb38a206f3f51a2931f17b97a0749962d038a55",
+    "after": "cda8fd67d51b6e69c54478bc21b27ef4787d3657b7cbc72c0ce1a133a8968dec"
+  },
+  "csv_solid.svg": {
+    "before": "7dfbf2501b63e7148f9c3a10e5538465ccb988775ab0abacceaa45bc38503418",
+    "after": "77e7e4fbbea60f1a49544ac6b6fd36612083adb9c6d895be3b61600b36e7fec3"
+  },
+  "forward-10.svg": {
+    "before": "9e6d75c9330be26fac3e4c2d8cb53755c3a60e22f92a603a2a506cdd26ffc834",
+    "after": "5177605cf07fd6d894791954a4f0be4e42dc58e9eb275f7c0701d0e163642a55"
+  },
+  "forward-15.svg": {
+    "before": "8c42726271e8463f84a44965ea4854850b91de084e92ca4d8d0b6cf7984a34a8",
+    "after": "ef6a3453f09e7ab904d259f6bbdbbccbaee331abcc206d2e9783b66856888cd4"
+  },
+  "forward-30.svg": {
+    "before": "36ed5c2ce6c35447c27f501d34f2b3371ca5a6668b10e8562c16f3a517599463",
+    "after": "68add2d6a4db811b3d3dbd33cc05c9d4918305bb89428268aca91c09e4587a0d"
+  },
+  "forward-5.svg": {
+    "before": "92af9bd5f39fc7ecf4dc734b3be886109c22ac529e97cc8b3a0d4d8bde27451b",
+    "after": "87ad2afb22992846e37fdf25c2ecec86e71888e39078d91b4f9abd5a03e595d3"
+  },
+  "pdf.svg": {
+    "before": "69fbce9582a5c373078b2655ceeb52603155c6cd9775a161559c51eaf841c7a1",
+    "after": "30c71c36f0f1d52e5c4f5431efd531d2577fcc2d1d63aae25c3b581afad76b42"
+  },
+  "pdf_solid.svg": {
+    "before": "bc9ce30c01f4a405755fe1c7da9edc49609a4130989aacd94584fb9d88271d23",
+    "after": "c0199e5883b7d7c0d3ec2d89b6fca07e8b55999ad6ebe7ff70c33d3ea1b49ea0"
+  },
+  "replay-10.svg": {
+    "before": "a20ec6c2a23afcffb88644a67b678c0b73ee92b5872d811941368794794559d2",
+    "after": "4f470cd344f2e6fb17e4eb7c09337a997fa7c42951c6fadec8bd5dbd408b2fb5"
+  },
+  "replay-15.svg": {
+    "before": "50a19601d1464a9695c84cb19a9f48ee05d1bd1b975b13f0cf13716f72cf4ac6",
+    "after": "0ca258f2e9ce950ceb73e95e408d6d4f50930a7e6ed455e18ae9210c0c01ac99"
+  },
+  "replay-30.svg": {
+    "before": "8ea0954a1745946e125a37ce467a2761055c6d2b51d1d6e4bca7df849187b0b4",
+    "after": "88f9ff062498315ff8514c95a4e9528091a1752574417c09ec8e2672286dcc3f"
+  },
+  "replay-5.svg": {
+    "before": "25505b4826241d671899764db5fa82c58cda832a4d35b51874cae87518a393da",
+    "after": "9db5163044216a9ad08e8aa5ef2815908be5af8be310bba3abc3695093593006"
+  },
+  "sort-alpha-ascend.svg": {
+    "before": "ea45fa79a33bce82ca397b199b3985023da4ce9020d4ca7aedb4a18a2d4e2e07",
+    "after": "1954efca8c8fe5135753fce70b0bcdeaeef242e37ee4811aedf43619fce8dddd"
+  },
+  "sort-alpha-descend.svg": {
+    "before": "0c864e00e0e1d15cc7f89469658793fa4f05e1dfd239e4da621ca3612a7d5dba",
+    "after": "352f17cb0266b6ce558d344b506e81bcc11a3db3fb59890ffc7edf73b022d11c"
+  },
+  "sort-num-ascend.svg": {
+    "before": "7fe82c24b4a2727bd383c4dd410cc85c7200a0453ed0be0aab1ab97ad423fb11",
+    "after": "afcfb6ba95c0364f94f597ddb9dd3a4ef2c943755ec7887ff4e874247974c6dc"
+  },
+  "sort-num-descend.svg": {
+    "before": "abe40286a1722c06b08d100f952bd608d189988fd6970f990e4ef86acc64af48",
+    "after": "6230e50139aaa28dabf8d8525c4862dd2a0a9621158adfd19456e50883c549e2"
+  },
+  "sortable-alpha.svg": {
+    "before": "d4352253e7df345883c784110e6006513427fda366b17ff288089f4bd6dcf2a7",
+    "after": "e2ceccfe3d44a78b0a0d8fc4b2e2750cda4aa82c79f39ac75f4860f1eab6f0e4"
+  },
+  "sortable-num.svg": {
+    "before": "004195f92d88fe1776d6cbc3f0c85f44bddfe323b77a40aec7a4eb57c287505a",
+    "after": "dcc7063f7be740140a3a889cf58b3ef9b66fd70ad2045ed5bcba36ea5d80b84f"
+  },
+  "storefront_solid.svg": {
+    "before": "bed0e639111a6072fc2df5dfc922ef8aa2f09ca6a666b122af2286e000d2c0c7",
+    "after": "8e7227c7b15832570884863d858e9168d8e58c53eb2ad230d1c519e537ff5068"
+  },
+  "string-number.svg": {
+    "before": "cd7763e6ed9bd64a888d5783b4487a0b413667f75dfbd5bb3bf82af2c8c35111",
+    "after": "e34e2c395c3bb247c01cccd5eb8c0af06d83692821767bd7ddb11cee3d0fe63d"
+  },
+  "string-text.svg": {
+    "before": "7e8342e4182949965b38d3cb8bc14bce9cad51668303db4fdfebcc7277125332",
+    "after": "965668f8657db7fb7425875f3d6cd0445957a0e1c9d70eb427e1addd9f86938c"
+  },
+  "text-bold.svg": {
+    "before": "645cb6a265f744b57da22b7bd8a21c768333295ae4744ac21f787b8862548f62",
+    "after": "4e2f3e7a72f9ae10eaf0fea8516a288d037c9ea3569462fe1303001512bd7cb5"
+  },
+  "text-color.svg": {
+    "before": "31b5f1ae965a1d85bf9fdcc79403b4e780e496414b5a3ad14e4289a1af04873b",
+    "after": "6313de3fb077535a001341461334a52c5341fffe80f8fa08be842f7d13195d24"
+  },
+  "text-ordered-list.svg": {
+    "before": "496755c42dbdfd37de4ff865e8c796b752ecb34af006bc89edbd5a141fb0357f",
+    "after": "23423dc0c6ac325bf04e1557db7ead5d3d9e8250b4bfbb1c2f178988b9e5e16a"
+  },
+  "text-strikethrough.svg": {
+    "before": "b7fa5101e8f026f2dc6bd2bb560629f2acdca14a83e5f372a7f2fb2effa974e4",
+    "after": "77079a0db5054f1152174c2d287e0713fa1db6ece3f43808f714264c7e3a4ca9"
+  },
+  "text-underline.svg": {
+    "before": "89d997068951a122c433f90fb02a20fa4a8649cdd65d85fcda7e1931c08465a5",
+    "after": "963e6306ec63d1050283062ad67f0cce9ebc030c6f5a31554dab3fd9974f52a1"
+  },
+  "type.svg": {
+    "before": "f5229e346e50974cb9910ed523eec61798f01017850f03caadba616743db30d6",
+    "after": "40bb3aba2bba59a7d808f41a8f8fb0f2ea1babac04b9e04f14c922de4c3e9b58"
+  },
+  "type_solid.svg": {
+    "before": "5dd821bfd3f7cfcb990cc21c65540b97d6cdf23e624606b8faf1a66995007c28",
+    "after": "9e5b43a9a4fe31acd0c7a2ccf314e88022c3b3f359235cc74bbe29b0fb5fbeb6"
+  },
+  "xls.svg": {
+    "before": "7b7efcd53fdfeea5a11a82780de57831095ee1479efbd805d14c671fac981f61",
+    "after": "e301f861639e0511796bcf362cae59f354cf3aa321732f1ac5df0c0e09223d7b"
+  },
+  "xls_solid.svg": {
+    "before": "5923121af696ad103ddf669e4eca6e604d8e633da6e06106c21446dbbbf51536",
+    "after": "957c93b412018f4bac0d902416c10f35b98bc0824028f69293cbaf6545d16d78"
+  },
+  "zip.svg": {
+    "before": "aa88b1629dfce735d98cbc32de535c8386c96e8b2d901bcb99649a1c4f7a21a9",
+    "after": "f2f37f6a307538d8d458b24b69bfa879083f2657384a9a4512e9ae01665b2222"
+  },
+  "zip_solid.svg": {
+    "before": "e91f3c17e8e2ee5c29b73aa43bbd460bef1aa2eeb5fd24ca8a496d2c07d9118f",
+    "after": "e175ff231b35a7a156bcc7ecf141170b3b5487bd0e0d27a62b192a663b6c7b03"
+  }
+}

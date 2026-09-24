@@ -1,4 +1,10 @@
+import { checkStorefrontPair } from "./check-storefront-pair.mjs";
+import { checkStorefrontDoor } from "./check-storefront-door.mjs";
 import fs from "node:fs/promises";
+import {
+  checkCurvedArrowAlignment,
+  checkCircularArrowProportions,
+} from "./arrow-alignment.mjs";
 import { checkPairContours } from "./check-pair-contours.mjs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -237,6 +243,8 @@ try {
     checkSendSurface,
     checkCloudPairs,
     checkPrinterPaper,
+    checkStorefrontDoor,
+    checkStorefrontPair,
     checkOpenApertureSeams,
     checkFeedbackHome,
     checkReviewAb,
@@ -251,6 +259,14 @@ try {
     result.stabilizationFailures.push(...checked.failures);
   }
   result.stabilizationSamples = stabilizationMeasurements.length;
+  const arrowAlignment = checkCurvedArrowAlignment(records);
+  result.curvedArrowAlignmentFailures = arrowAlignment.failures;
+  result.curvedArrowAlignmentSamples = arrowAlignment.results.reduce(
+    (n, r) => n + r.heads.length,
+    0,
+  );
+  result.circularArrowProportionFailures =
+    checkCircularArrowProportions(records).failures;
   const pairContours = await checkPairContours(page, records);
   result.pairContourFailures = pairContours.failures;
   result.pairContourCoverage = {
@@ -348,6 +364,8 @@ try {
     result.internalJunctionFailures.length ||
     result.pairStrokeFailures.length ||
     result.pairContourFailures.length ||
+    result.curvedArrowAlignmentFailures.length ||
+    result.circularArrowProportionFailures.length ||
     result.featureAlignmentFailures.length ||
     result.clearanceFailures.length ||
     result.cutoutClearanceFailures.length ||

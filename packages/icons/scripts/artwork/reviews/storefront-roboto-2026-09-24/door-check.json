@@ -1,0 +1,85 @@
+{
+  "before": {
+    "results": [
+      {
+        "name": "storefront_solid.svg",
+        "weight": 0.67,
+        "feature": "continuous flat threshold beneath the door aperture",
+        "spread": 0.1796875
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1,
+        "feature": "continuous flat threshold beneath the door aperture",
+        "spread": 0.3515625
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.3333333333333333,
+        "feature": "continuous flat threshold beneath the door aperture",
+        "spread": 0.28125
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.5,
+        "feature": "continuous flat threshold beneath the door aperture",
+        "spread": 0.1953125
+      }
+    ],
+    "failures": [
+      {
+        "name": "storefront_solid.svg",
+        "weight": 0.67,
+        "feature": "continuous flat threshold beneath the door aperture",
+        "spread": 0.1796875
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1,
+        "feature": "continuous flat threshold beneath the door aperture",
+        "spread": 0.3515625
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.3333333333333333,
+        "feature": "continuous flat threshold beneath the door aperture",
+        "spread": 0.28125
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.5,
+        "feature": "continuous flat threshold beneath the door aperture",
+        "spread": 0.1953125
+      }
+    ]
+  },
+  "after": {
+    "results": [
+      {
+        "name": "storefront_solid.svg",
+        "weight": 0.67,
+        "feature": "continuous flat threshold beneath the door aperture",
+        "spread": 0
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1,
+        "feature": "continuous flat threshold beneath the door aperture",
+        "spread": 0
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.3333333333333333,
+        "feature": "continuous flat threshold beneath the door aperture",
+        "spread": 0
+      },
+      {
+        "name": "storefront_solid.svg",
+        "weight": 1.5,
+        "feature": "continuous flat threshold beneath the door aperture",
+        "spread": 0
+      }
+    ],
+    "failures": []
+  }
+}

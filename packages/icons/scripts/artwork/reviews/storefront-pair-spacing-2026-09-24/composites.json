@@ -1,0 +1,6441 @@
+{
+  "results": [
+    {
+      "name": "dataset-manager.svg",
+      "weight": 0.67,
+      "feature": "head-facing middle cylinder stop",
+      "rect": [
+        6.2,
+        9,
+        7.2,
+        10
+      ],
+      "minimum": 0.49,
+      "maximum": 1.85,
+      "gap": 1.6255232415213965,
+      "paintedPixels": 3698,
+      "tolerance": 0.035
+    },
+    {
+      "name": "dataset-manager.svg",
+      "weight": 0.67,
+      "feature": "shoulder-facing lower cylinder stop",
+      "rect": [
+        4.1,
+        12.9,
+        5,
+        14.1
+      ],
+      "minimum": 0.49,
+      "maximum": 1.85,
+      "gap": 1.5525375834147765,
+      "paintedPixels": 5605,
+      "tolerance": 0.035
+    },
+    {
+      "name": "dataset-manager_solid.svg",
+      "weight": 0.67,
+      "feature": "head-facing middle cylinder stop",
+      "rect": [
+        6.2,
+        9,
+        7.2,
+        10
+      ],
+      "minimum": 0.49,
+      "maximum": 1.85,
+      "gap": 1.6255232415213965,
+      "paintedPixels": 3698,
+      "tolerance": 0.035
+    },
+    {
+      "name": "dataset-manager_solid.svg",
+      "weight": 0.67,
+      "feature": "shoulder-facing lower cylinder stop",
+      "rect": [
+        4.1,
+        12.9,
+        5,
+        14.1
+      ],
+      "minimum": 0.49,
+      "maximum": 1.85,
+      "gap": 1.5525375834147765,
+      "paintedPixels": 5605,
+      "tolerance": 0.035
+    },
+    {
+      "name": "document-draft.svg",
+      "weight": 0.67,
+      "feature": "top page stop at pencil",
+      "rect": [
+        8.6,
+        1,
+        10.1,
+        2.2
+      ],
+      "expected": 1.2281192283025066,
+      "gap": 1.2296243670764582,
+      "paintedPixels": 9460,
+      "tolerance": 0.035
+    },
+    {
+      "name": "document-draft.svg",
+      "weight": 0.67,
+      "feature": "right page stop at pencil",
+      "rect": [
+        12.7,
+        6,
+        14.2,
+        7.5
+      ],
+      "expected": 1.2281192283025066,
+      "gap": 1.2296243670764582,
+      "paintedPixels": 10578,
+      "tolerance": 0.035
+    },
+    {
+      "name": "document-edit.svg",
+      "weight": 0.67,
+      "feature": "top page stop at pencil",
+      "rect": [
+        8.6,
+        1,
+        10.1,
+        2.2
+      ],
+      "expected": 1.2281192283025066,
+      "gap": 1.2296243670764582,
+      "paintedPixels": 9460,
+      "tolerance": 0.035
+    },
+    {
+      "name": "document-edit.svg",
+      "weight": 0.67,
+      "feature": "right page stop at pencil",
+      "rect": [
+        12.7,
+        6,
+        14.2,
+        7.5
+      ],
+      "expected": 1.2281192283025066,
+      "gap": 1.2296243670764582,
+      "paintedPixels": 10578,
+      "tolerance": 0.035
+    },
+    {
+      "name": "document-search.svg",
+      "weight": 0.67,
+      "feature": "lower page stop at lens",
+      "rect": [
+        7.2,
+        13.6,
+        8.1,
+        15.1
+      ],
+      "expected": 1.240175186756361,
+      "gap": 1.240672910532498,
+      "paintedPixels": 6192,
+      "tolerance": 0.035
+    },
+    {
+      "name": "document-search.svg",
+      "weight": 0.67,
+      "feature": "right page stop at lens",
+      "rect": [
+        12.7,
+        6.3,
+        14.2,
+        7.5
+      ],
+      "expected": 1.1485521452873837,
+      "gap": 1.1468792286796723,
+      "paintedPixels": 6620,
+      "tolerance": 0.035
+    },
+    {
+      "name": "filter-clear.svg",
+      "weight": 0.67,
+      "feature": "complete funnel to separate clear mark",
+      "rect": [
+        0,
+        0,
+        15.99,
+        15.99
+      ],
+      "expected": 1.9281192283025066,
+      "gap": 1.9296875,
+      "paintedPixels": 437264,
+      "tolerance": 0.035
+    },
+    {
+      "name": "filter-clear.svg",
+      "weight": 1,
+      "feature": "complete funnel to separate clear mark",
+      "rect": [
+        0,
+        0,
+        15.99,
+        15.99
+      ],
+      "expected": 1.6464466094067263,
+      "gap": 1.6484375,
+      "paintedPixels": 632565,
+      "tolerance": 0.035
+    },
+    {
+      "name": "filter-clear.svg",
+      "weight": 1.5,
+      "feature": "complete funnel to separate clear mark",
+      "rect": [
+        0,
+        0,
+        15.99,
+        15.99
+      ],
+      "expected": 1.2196699141100895,
+      "gap": 1.2265625,
+      "paintedPixels": 933782,
+      "tolerance": 0.035
+    },
+    {
+      "name": "filter-clear_solid.svg",
+      "weight": 0.67,
+      "feature": "complete funnel to separate clear mark",
+      "rect": [
+        0,
+        0,
+        15.99,
+        15.99
+      ],
+      "expected": 1.9281192283025066,
+      "gap": 1.9296875,
+      "paintedPixels": 1018187,
+      "tolerance": 0.035
+    },
+    {
+      "name": "filter-clear_solid.svg",
+      "weight": 1,
+      "feature": "complete funnel to separate clear mark",
+      "rect": [
+        0,
+        0,
+        15.99,
+        15.99
+      ],
+      "expected": 1.6464466094067263,
+      "gap": 1.6484375,
+      "paintedPixels": 1133604,
+      "tolerance": 0.035
+    },
+    {
+      "name": "filter-clear_solid.svg",
+      "weight": 1.5,
+      "feature": "complete funnel to separate clear mark",
+      "rect": [
+        0,
+        0,
+        15.99,
+        15.99
+      ],
+      "expected": 1.2196699141100895,
+      "gap": 1.2265625,
+      "paintedPixels": 1318625,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront.svg",
+      "weight": 0.67,
+      "feature": "complete left wall cap",
+      "rect": [
+        1.74,
+        8.55,
+        3.26,
+        9.1
+      ],
+      "expected": 0.9521347379540899,
+      "gap": 0.9498164587602549,
+      "paintedPixels": 4300,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront.svg",
+      "weight": 0.67,
+      "feature": "complete right wall cap",
+      "rect": [
+        12.74,
+        8.55,
+        14.26,
+        9.1
+      ],
+      "expected": 0.9521347379540899,
+      "gap": 0.9498164587602549,
+      "paintedPixels": 4300,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront.svg",
+      "weight": 1,
+      "feature": "complete left wall cap",
+      "rect": [
+        1.74,
+        8.55,
+        3.26,
+        9.1
+      ],
+      "expected": 0.7580538839253157,
+      "gap": 0.7552572154421737,
+      "paintedPixels": 6400,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront.svg",
+      "weight": 1,
+      "feature": "complete right wall cap",
+      "rect": [
+        12.74,
+        8.55,
+        14.26,
+        9.1
+      ],
+      "expected": 0.7580538839253157,
+      "gap": 0.7552572154421737,
+      "paintedPixels": 6400,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront.svg",
+      "weight": 1.3333333333333333,
+      "feature": "complete left wall cap",
+      "rect": [
+        1.74,
+        8.55,
+        3.26,
+        9.1
+      ],
+      "expected": 0.5701149557896564,
+      "gap": 0.5678261568683952,
+      "paintedPixels": 8500,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront.svg",
+      "weight": 1.3333333333333333,
+      "feature": "complete right wall cap",
+      "rect": [
+        12.74,
+        8.55,
+        14.26,
+        9.1
+      ],
+      "expected": 0.5701149557896564,
+      "gap": 0.5678261568683952,
+      "paintedPixels": 8500,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront.svg",
+      "weight": 1.5,
+      "feature": "complete left wall cap",
+      "rect": [
+        1.74,
+        8.55,
+        3.26,
+        9.1
+      ],
+      "expected": 0.47928301619787717,
+      "gap": 0.4765625,
+      "paintedPixels": 9600,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront.svg",
+      "weight": 1.5,
+      "feature": "complete right wall cap",
+      "rect": [
+        12.74,
+        8.55,
+        14.26,
+        9.1
+      ],
+      "expected": 0.47928301619787717,
+      "gap": 0.4765625,
+      "paintedPixels": 9600,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.36,
+      "point": [
+        13.06,
+        7.421600000000001
+      ],
+      "normal": [
+        0.2696299255199708,
+        0.9629640197141817
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9155555492590451,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.38,
+      "point": [
+        12.980000000000002,
+        7.4424
+      ],
+      "normal": [
+        0.2333729524753241,
+        0.9723873019805175
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9146799625743736,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.4,
+      "point": [
+        12.899999999999999,
+        7.46
+      ],
+      "normal": [
+        0.1961161351381839,
+        0.9805806756909202
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9153380108182931,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.42,
+      "point": [
+        12.820000000000002,
+        7.4744
+      ],
+      "normal": [
+        0.15799050110667293,
+        0.9874406319167053
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.914813566213396,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.44,
+      "point": [
+        12.740000000000002,
+        7.485600000000001
+      ],
+      "normal": [
+        0.11914522061843069,
+        0.9928768384869221
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9140499941186022,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.46,
+      "point": [
+        12.660000000000002,
+        7.493600000000001
+      ],
+      "normal": [
+        0.07974522228289,
+        0.996815278536125
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9144527747176127,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.48,
+      "point": [
+        12.579999999999998,
+        7.4984
+      ],
+      "normal": [
+        0.03996803834887161,
+        0.9992009587217893
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9155171433669692,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.5,
+      "point": [
+        12.5,
+        7.5
+      ],
+      "normal": [
+        0,
+        1
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9140624999999993,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.52,
+      "point": [
+        12.42,
+        7.4984
+      ],
+      "normal": [
+        -0.03996803834887161,
+        0.9992009587217893
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9155318549911,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.54,
+      "point": [
+        12.339999999999998,
+        7.4936
+      ],
+      "normal": [
+        -0.07974522228289006,
+        0.996815278536125
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.914437766042301,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.56,
+      "point": [
+        12.259999999999998,
+        7.485600000000001
+      ],
+      "normal": [
+        -0.11914522061843076,
+        0.9928768384869221
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9140311085318729,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.58,
+      "point": [
+        12.18,
+        7.4744
+      ],
+      "normal": [
+        -0.15799050110667273,
+        0.9874406319167056
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.914842623068668,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.6,
+      "point": [
+        12.1,
+        7.460000000000001
+      ],
+      "normal": [
+        -0.1961161351381839,
+        0.9805806756909202
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9153380108182935,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.62,
+      "point": [
+        12.020000000000001,
+        7.4424
+      ],
+      "normal": [
+        -0.2333729524753241,
+        0.9723873019805175
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9146909510559357,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.64,
+      "point": [
+        11.94,
+        7.421600000000001
+      ],
+      "normal": [
+        -0.2696299255199708,
+        0.9629640197141817
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9155687966927505,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.66,
+      "point": [
+        11.86,
+        7.3976
+      ],
+      "normal": [
+        -0.30477572710378376,
+        0.9524241471993242
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9157159594819534,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.68,
+      "point": [
+        11.780000000000001,
+        7.3704
+      ],
+      "normal": [
+        -0.3387194682727417,
+        0.9408874118687269
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9152482478549939,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.7,
+      "point": [
+        11.700000000000001,
+        7.34
+      ],
+      "normal": [
+        -0.3713906763541036,
+        0.9284766908852594
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9158589227398644,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.72,
+      "point": [
+        11.62,
+        7.3064
+      ],
+      "normal": [
+        -0.40273861426601687,
+        0.9153150324227656
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9153437416721264,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.74,
+      "point": [
+        11.540000000000001,
+        7.2696000000000005
+      ],
+      "normal": [
+        -0.4327310675847712,
+        0.9015230574682735
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9151730118633494,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.76,
+      "point": [
+        11.46,
+        7.2296000000000005
+      ],
+      "normal": [
+        -0.4613527366419895,
+        0.8872168012345951
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9152772424825122,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.78,
+      "point": [
+        11.38,
+        7.186399999999999
+      ],
+      "normal": [
+        -0.4886033689318432,
+        0.87250601594972
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9152367251963369,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.8,
+      "point": [
+        11.299999999999999,
+        7.140000000000001
+      ],
+      "normal": [
+        -0.5144957554275266,
+        0.8574929257125441
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9155439000108861,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 1",
+      "t": 0.82,
+      "point": [
+        11.219999999999999,
+        7.0904
+      ],
+      "normal": [
+        -0.5390536964233673,
+        0.8422714006615114
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9146950336629796,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.18,
+      "point": [
+        9.600000000000001,
+        7.0904
+      ],
+      "normal": [
+        0.45573827843301223,
+        0.890113825064477
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9154955207830535,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.2,
+      "point": [
+        9.500000000000002,
+        7.1400000000000015
+      ],
+      "normal": [
+        0.4327310675847713,
+        0.9015230574682734
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9148721651911826,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.22,
+      "point": [
+        9.4,
+        7.1864
+      ],
+      "normal": [
+        0.40884626561692694,
+        0.912603271466355
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9145278518594862,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.24,
+      "point": [
+        9.3,
+        7.2296000000000005
+      ],
+      "normal": [
+        0.38409084709277896,
+        0.9232953055114878
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9145479700747218,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.26,
+      "point": [
+        9.200000000000001,
+        7.2696000000000005
+      ],
+      "normal": [
+        0.35847857436889446,
+        0.9335379540856628
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9149112395025524,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.28,
+      "point": [
+        9.1,
+        7.3064
+      ],
+      "normal": [
+        0.33203055782167573,
+        0.9432686301752151
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9139332212670634,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.3,
+      "point": [
+        9,
+        7.339999999999999
+      ],
+      "normal": [
+        0.30477572710378364,
+        0.9524241471993241
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9147730861807502,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.32,
+      "point": [
+        8.899999999999999,
+        7.370399999999999
+      ],
+      "normal": [
+        0.27675118430301215,
+        0.9609416121632366
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9137417442663773,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.34,
+      "point": [
+        8.799999999999999,
+        7.3976
+      ],
+      "normal": [
+        0.24800241028513745,
+        0.9687594151763184
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9146166831559411,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.36,
+      "point": [
+        8.700000000000001,
+        7.421600000000001
+      ],
+      "normal": [
+        0.21858329774597873,
+        0.9758182935088339
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9149477463820774,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.38,
+      "point": [
+        8.6,
+        7.4424
+      ],
+      "normal": [
+        0.18855598877693572,
+        0.9820624415465405
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9146024710383314,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.4,
+      "point": [
+        8.5,
+        7.46
+      ],
+      "normal": [
+        0.15799050110667276,
+        0.9874406319167053
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9150151789193726,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.42,
+      "point": [
+        8.4,
+        7.4744
+      ],
+      "normal": [
+        0.12696413546540491,
+        0.9919073083234755
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9145451276149145,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.44,
+      "point": [
+        8.300000000000002,
+        7.485600000000001
+      ],
+      "normal": [
+        0.09556066635268959,
+        0.9954236078405162
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9139008070744532,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.46,
+      "point": [
+        8.200000000000001,
+        7.493600000000001
+      ],
+      "normal": [
+        0.06386932928370218,
+        0.9979582700578468
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9155677313325051,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.48,
+      "point": [
+        8.1,
+        7.4984
+      ],
+      "normal": [
+        0.031983628572184224,
+        0.9994883928807562
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9164661595941921,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.5,
+      "point": [
+        8,
+        7.5
+      ],
+      "normal": [
+        0,
+        1
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9140624999999993,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.52,
+      "point": [
+        7.8999999999999995,
+        7.4984
+      ],
+      "normal": [
+        -0.031983628572184224,
+        0.9994883928807562
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9164661595941921,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.54,
+      "point": [
+        7.8,
+        7.4936
+      ],
+      "normal": [
+        -0.06386932928370224,
+        0.9979582700578468
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9155504191086367,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.56,
+      "point": [
+        7.7,
+        7.485600000000001
+      ],
+      "normal": [
+        -0.09556066635268964,
+        0.9954236078405162
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9138830341494112,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.58,
+      "point": [
+        7.6000000000000005,
+        7.4744
+      ],
+      "normal": [
+        -0.12696413546540475,
+        0.9919073083234755
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9145451276149146,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.6,
+      "point": [
+        7.5,
+        7.460000000000001
+      ],
+      "normal": [
+        -0.15799050110667276,
+        0.9874406319167053
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9150165157225848,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.62,
+      "point": [
+        7.3999999999999995,
+        7.4424
+      ],
+      "normal": [
+        -0.18855598877693572,
+        0.9820624415465405
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9145859684330199,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.64,
+      "point": [
+        7.3,
+        7.421600000000001
+      ],
+      "normal": [
+        -0.21858329774597873,
+        0.9758182935088339
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.914919137688508,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.66,
+      "point": [
+        7.2,
+        7.3976
+      ],
+      "normal": [
+        -0.2480024102851375,
+        0.9687594151763184
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9145979440538125,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.68,
+      "point": [
+        7.099999999999999,
+        7.3704
+      ],
+      "normal": [
+        -0.27675118430301215,
+        0.9609416121632366
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9137136185218835,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.7,
+      "point": [
+        7,
+        7.34
+      ],
+      "normal": [
+        -0.3047757271037836,
+        0.9524241471993241
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.914829121382946,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.72,
+      "point": [
+        6.8999999999999995,
+        7.3064
+      ],
+      "normal": [
+        -0.33203055782167573,
+        0.9432686301752151
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9139726642498663,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.74,
+      "point": [
+        6.8,
+        7.2696000000000005
+      ],
+      "normal": [
+        -0.35847857436889446,
+        0.9335379540856628
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.914896198423434,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.76,
+      "point": [
+        6.7,
+        7.2296000000000005
+      ],
+      "normal": [
+        -0.38409084709277896,
+        0.9232953055114878
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9145224682890822,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.78,
+      "point": [
+        6.599999999999999,
+        7.186399999999999
+      ],
+      "normal": [
+        -0.408846265616927,
+        0.912603271466355
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9145296422955611,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.8,
+      "point": [
+        6.5,
+        7.140000000000001
+      ],
+      "normal": [
+        -0.43273106758477137,
+        0.9015230574682734
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9148766304565092,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 2",
+      "t": 0.82,
+      "point": [
+        6.3999999999999995,
+        7.0904
+      ],
+      "normal": [
+        -0.45573827843301223,
+        0.890113825064477
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9154866494230787,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.18,
+      "point": [
+        4.78,
+        7.0904
+      ],
+      "normal": [
+        0.5390536964233673,
+        0.8422714006615114
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9147526766410433,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.2,
+      "point": [
+        4.700000000000001,
+        7.1400000000000015
+      ],
+      "normal": [
+        0.5144957554275266,
+        0.8574929257125443
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9155484697033425,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.22,
+      "point": [
+        4.62,
+        7.1864
+      ],
+      "normal": [
+        0.48860336893184314,
+        0.87250601594972
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9152213188325923,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.24,
+      "point": [
+        4.54,
+        7.2296000000000005
+      ],
+      "normal": [
+        0.4613527366419895,
+        0.8872168012345951
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9153156427013214,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.26,
+      "point": [
+        4.46,
+        7.2696000000000005
+      ],
+      "normal": [
+        0.4327310675847712,
+        0.9015230574682735
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9150880346258209,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.28,
+      "point": [
+        4.38,
+        7.3064
+      ],
+      "normal": [
+        0.40273861426601687,
+        0.9153150324227656
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9153727543291322,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.3,
+      "point": [
+        4.3,
+        7.339999999999999
+      ],
+      "normal": [
+        0.3713906763541037,
+        0.9284766908852593
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9159111711668589,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.32,
+      "point": [
+        4.22,
+        7.370399999999999
+      ],
+      "normal": [
+        0.3387194682727417,
+        0.9408874118687269
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9152732817749715,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.34,
+      "point": [
+        4.14,
+        7.3976
+      ],
+      "normal": [
+        0.30477572710378364,
+        0.9524241471993242
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9156656603661445,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.36,
+      "point": [
+        4.06,
+        7.421600000000001
+      ],
+      "normal": [
+        0.2696299255199708,
+        0.9629640197141817
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9155555492590453,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.38,
+      "point": [
+        3.9800000000000004,
+        7.4424
+      ],
+      "normal": [
+        0.2333729524753241,
+        0.9723873019805175
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9146799625743737,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.4,
+      "point": [
+        3.9000000000000004,
+        7.46
+      ],
+      "normal": [
+        0.1961161351381839,
+        0.9805806756909202
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9153380108182932,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.42,
+      "point": [
+        3.8200000000000003,
+        7.4744
+      ],
+      "normal": [
+        0.15799050110667293,
+        0.9874406319167053
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.914813566213396,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.44,
+      "point": [
+        3.74,
+        7.485600000000001
+      ],
+      "normal": [
+        0.11914522061843069,
+        0.9928768384869221
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9140499941186021,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.46,
+      "point": [
+        3.6600000000000006,
+        7.493600000000001
+      ],
+      "normal": [
+        0.07974522228289,
+        0.996815278536125
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9144527747176127,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.48,
+      "point": [
+        3.58,
+        7.4984
+      ],
+      "normal": [
+        0.03996803834887161,
+        0.9992009587217893
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9155171433669691,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.5,
+      "point": [
+        3.5,
+        7.5
+      ],
+      "normal": [
+        0,
+        1
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9140624999999993,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.52,
+      "point": [
+        3.4200000000000004,
+        7.4984
+      ],
+      "normal": [
+        -0.03996803834887161,
+        0.9992009587217893
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9155318549910999,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.54,
+      "point": [
+        3.34,
+        7.4936
+      ],
+      "normal": [
+        -0.07974522228289006,
+        0.996815278536125
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9144377660423009,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.56,
+      "point": [
+        3.26,
+        7.485600000000001
+      ],
+      "normal": [
+        -0.11914522061843076,
+        0.9928768384869221
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9140311085318729,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.58,
+      "point": [
+        3.18,
+        7.4744
+      ],
+      "normal": [
+        -0.15799050110667273,
+        0.9874406319167056
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9148426230686679,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.6,
+      "point": [
+        3.1,
+        7.460000000000001
+      ],
+      "normal": [
+        -0.1961161351381839,
+        0.9805806756909202
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9153380108182935,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.62,
+      "point": [
+        3.02,
+        7.4424
+      ],
+      "normal": [
+        -0.2333729524753241,
+        0.9723873019805175
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9146909510559359,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "awning scallop 3",
+      "t": 0.64,
+      "point": [
+        2.94,
+        7.421600000000001
+      ],
+      "normal": [
+        -0.2696299255199708,
+        0.9629640197141817
+      ],
+      "expected": 0.9152294724981167,
+      "seed": 0.2,
+      "gap": 0.9155687966927506,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "left offset-to-wall end",
+      "rect": [
+        1.94,
+        7.8,
+        2.8,
+        9.1
+      ],
+      "expected": 0.9152294724981167,
+      "gap": 0.9089170492162615,
+      "paintedPixels": 4563,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "first scallop valley",
+      "rect": [
+        4.9,
+        7.75,
+        6.1,
+        8.9
+      ],
+      "expected": 0.9152294724981167,
+      "gap": 0.9075844959292252,
+      "paintedPixels": 13380,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "second scallop valley",
+      "rect": [
+        9.9,
+        7.75,
+        11.1,
+        8.9
+      ],
+      "expected": 0.9152294724981167,
+      "gap": 0.9075844959292252,
+      "paintedPixels": 13367,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 0.67,
+      "feature": "right offset-to-wall end",
+      "rect": [
+        13.2,
+        7.8,
+        14.06,
+        9.1
+      ],
+      "expected": 0.9152294724981167,
+      "gap": 0.9089170492162615,
+      "paintedPixels": 4508,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.36,
+      "point": [
+        13.06,
+        7.421600000000001
+      ],
+      "normal": [
+        0.2696299255199708,
+        0.9629640197141817
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7496890880484726,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.38,
+      "point": [
+        12.980000000000002,
+        7.4424
+      ],
+      "normal": [
+        0.2333729524753241,
+        0.9723873019805175
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7489929050716773,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.4,
+      "point": [
+        12.899999999999999,
+        7.46
+      ],
+      "normal": [
+        0.1961161351381839,
+        0.9805806756909202
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7502320621599359,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.42,
+      "point": [
+        12.820000000000002,
+        7.4744
+      ],
+      "normal": [
+        0.15799050110667293,
+        0.9874406319167053
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7497611193214202,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.44,
+      "point": [
+        12.740000000000002,
+        7.485600000000001
+      ],
+      "normal": [
+        0.11914522061843069,
+        0.9928768384869221
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7487019933307562,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.46,
+      "point": [
+        12.660000000000002,
+        7.493600000000001
+      ],
+      "normal": [
+        0.07974522228289,
+        0.996815278536125
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7492547727433836,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.48,
+      "point": [
+        12.579999999999998,
+        7.4984
+      ],
+      "normal": [
+        0.03996803834887161,
+        0.9992009587217893
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7500881821441677,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.5,
+      "point": [
+        12.5,
+        7.5
+      ],
+      "normal": [
+        0,
+        1
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7499999999999999,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.52,
+      "point": [
+        12.42,
+        7.4984
+      ],
+      "normal": [
+        -0.03996803834887161,
+        0.9992009587217893
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7500981602094141,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.54,
+      "point": [
+        12.339999999999998,
+        7.4936
+      ],
+      "normal": [
+        -0.07974522228289006,
+        0.996815278536125
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7492539705094026,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.56,
+      "point": [
+        12.259999999999998,
+        7.485600000000001
+      ],
+      "normal": [
+        -0.11914522061843076,
+        0.9928768384869221
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7486753728812789,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.58,
+      "point": [
+        12.18,
+        7.4744
+      ],
+      "normal": [
+        -0.15799050110667273,
+        0.9874406319167056
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7497801699489361,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.6,
+      "point": [
+        12.1,
+        7.460000000000001
+      ],
+      "normal": [
+        -0.1961161351381839,
+        0.9805806756909202
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7502320621599367,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.62,
+      "point": [
+        12.020000000000001,
+        7.4424
+      ],
+      "normal": [
+        -0.2333729524753241,
+        0.9723873019805175
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7490057035564673,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.64,
+      "point": [
+        11.94,
+        7.421600000000001
+      ],
+      "normal": [
+        -0.2696299255199708,
+        0.9629640197141817
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7497023354821779,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.66,
+      "point": [
+        11.86,
+        7.3976
+      ],
+      "normal": [
+        -0.30477572710378376,
+        0.9524241471993242
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7504702468044256,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.68,
+      "point": [
+        11.780000000000001,
+        7.3704
+      ],
+      "normal": [
+        -0.3387194682727417,
+        0.9408874118687269
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7498978038817058,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.7,
+      "point": [
+        11.700000000000001,
+        7.34
+      ],
+      "normal": [
+        -0.3713906763541036,
+        0.9284766908852594
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7500024780745339,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.72,
+      "point": [
+        11.62,
+        7.3064
+      ],
+      "normal": [
+        -0.40273861426601687,
+        0.9153150324227656
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7497698004116875,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.74,
+      "point": [
+        11.540000000000001,
+        7.2696000000000005
+      ],
+      "normal": [
+        -0.4327310675847712,
+        0.9015230574682735
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7502605600465767,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.76,
+      "point": [
+        11.46,
+        7.2296000000000005
+      ],
+      "normal": [
+        -0.4613527366419895,
+        0.8872168012345951
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7496676264757078,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.78,
+      "point": [
+        11.38,
+        7.186399999999999
+      ],
+      "normal": [
+        -0.4886033689318432,
+        0.87250601594972
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7493219257971184,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.8,
+      "point": [
+        11.299999999999999,
+        7.140000000000001
+      ],
+      "normal": [
+        -0.5144957554275266,
+        0.8574929257125441
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7500082974998314,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 1",
+      "t": 0.82,
+      "point": [
+        11.219999999999999,
+        7.0904
+      ],
+      "normal": [
+        -0.5390536964233673,
+        0.8422714006615114
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.749888688360346,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.18,
+      "point": [
+        9.600000000000001,
+        7.0904
+      ],
+      "normal": [
+        0.45573827843301223,
+        0.890113825064477
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7507791212261916,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.2,
+      "point": [
+        9.500000000000002,
+        7.1400000000000015
+      ],
+      "normal": [
+        0.4327310675847713,
+        0.9015230574682734
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.749396627395887,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.22,
+      "point": [
+        9.4,
+        7.1864
+      ],
+      "normal": [
+        0.40884626561692694,
+        0.912603271466355
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7501478153957816,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.24,
+      "point": [
+        9.3,
+        7.2296000000000005
+      ],
+      "normal": [
+        0.38409084709277896,
+        0.9232953055114878
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7500698341396385,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.26,
+      "point": [
+        9.200000000000001,
+        7.2696000000000005
+      ],
+      "normal": [
+        0.35847857436889446,
+        0.9335379540856628
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7501721190317728,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.28,
+      "point": [
+        9.1,
+        7.3064
+      ],
+      "normal": [
+        0.33203055782167573,
+        0.9432686301752151
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7490540926921793,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.3,
+      "point": [
+        9,
+        7.339999999999999
+      ],
+      "normal": [
+        0.30477572710378364,
+        0.9524241471993241
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7496791316668816,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.32,
+      "point": [
+        8.899999999999999,
+        7.370399999999999
+      ],
+      "normal": [
+        0.27675118430301215,
+        0.9609416121632366
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7490965110495381,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.34,
+      "point": [
+        8.799999999999999,
+        7.3976
+      ],
+      "normal": [
+        0.24800241028513745,
+        0.9687594151763184
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7495940537220118,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.36,
+      "point": [
+        8.700000000000001,
+        7.421600000000001
+      ],
+      "normal": [
+        0.21858329774597873,
+        0.9758182935088339
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7499721351085544,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.38,
+      "point": [
+        8.6,
+        7.4424
+      ],
+      "normal": [
+        0.18855598877693572,
+        0.9820624415465405
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7493226393852388,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.4,
+      "point": [
+        8.5,
+        7.46
+      ],
+      "normal": [
+        0.15799050110667276,
+        0.9874406319167053
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7501309948674454,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.42,
+      "point": [
+        8.4,
+        7.4744
+      ],
+      "normal": [
+        0.12696413546540491,
+        0.9919073083234755
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7496794720842542,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.44,
+      "point": [
+        8.300000000000002,
+        7.485600000000001
+      ],
+      "normal": [
+        0.09556066635268959,
+        0.9954236078405162
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7491686832347139,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.46,
+      "point": [
+        8.200000000000001,
+        7.493600000000001
+      ],
+      "normal": [
+        0.06386932928370218,
+        0.9979582700578468
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7506338875331781,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.48,
+      "point": [
+        8.1,
+        7.4984
+      ],
+      "normal": [
+        0.031983628572184224,
+        0.9994883928807562
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7510921173336316,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.5,
+      "point": [
+        8,
+        7.5
+      ],
+      "normal": [
+        0,
+        1
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7499999999999999,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.52,
+      "point": [
+        7.8999999999999995,
+        7.4984
+      ],
+      "normal": [
+        -0.031983628572184224,
+        0.9994883928807562
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.751082899811072,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.54,
+      "point": [
+        7.8,
+        7.4936
+      ],
+      "normal": [
+        -0.06386932928370224,
+        0.9979582700578468
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7506338875331792,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.56,
+      "point": [
+        7.7,
+        7.485600000000001
+      ],
+      "normal": [
+        -0.09556066635268964,
+        0.9954236078405162
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7491683506593955,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.58,
+      "point": [
+        7.6000000000000005,
+        7.4744
+      ],
+      "normal": [
+        -0.12696413546540475,
+        0.9919073083234755
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7496630944786691,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.6,
+      "point": [
+        7.5,
+        7.460000000000001
+      ],
+      "normal": [
+        -0.15799050110667276,
+        0.9874406319167053
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7501443369269991,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.62,
+      "point": [
+        7.3999999999999995,
+        7.4424
+      ],
+      "normal": [
+        -0.18855598877693572,
+        0.9820624415465405
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7493224814000249,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.64,
+      "point": [
+        7.3,
+        7.421600000000001
+      ],
+      "normal": [
+        -0.21858329774597873,
+        0.9758182935088339
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7499478687798083,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.66,
+      "point": [
+        7.2,
+        7.3976
+      ],
+      "normal": [
+        -0.2480024102851375,
+        0.9687594151763184
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7495846999410339,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.68,
+      "point": [
+        7.099999999999999,
+        7.3704
+      ],
+      "normal": [
+        -0.27675118430301215,
+        0.9609416121632366
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7490815903746303,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.7,
+      "point": [
+        7,
+        7.34
+      ],
+      "normal": [
+        -0.3047757271037836,
+        0.9524241471993241
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7497519374834083,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.72,
+      "point": [
+        6.8999999999999995,
+        7.3064
+      ],
+      "normal": [
+        -0.33203055782167573,
+        0.9432686301752151
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7490500565255528,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.74,
+      "point": [
+        6.8,
+        7.2696000000000005
+      ],
+      "normal": [
+        -0.35847857436889446,
+        0.9335379540856628
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7501823290478308,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.76,
+      "point": [
+        6.7,
+        7.2296000000000005
+      ],
+      "normal": [
+        -0.38409084709277896,
+        0.9232953055114878
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7500226463012657,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.78,
+      "point": [
+        6.599999999999999,
+        7.186399999999999
+      ],
+      "normal": [
+        -0.408846265616927,
+        0.912603271466355
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7501238835043703,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.8,
+      "point": [
+        6.5,
+        7.140000000000001
+      ],
+      "normal": [
+        -0.43273106758477137,
+        0.9015230574682734
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7493824881752762,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 2",
+      "t": 0.82,
+      "point": [
+        6.3999999999999995,
+        7.0904
+      ],
+      "normal": [
+        -0.45573827843301223,
+        0.890113825064477
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7507940402640904,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.18,
+      "point": [
+        4.78,
+        7.0904
+      ],
+      "normal": [
+        0.5390536964233673,
+        0.8422714006615114
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.749985778683682,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.2,
+      "point": [
+        4.700000000000001,
+        7.1400000000000015
+      ],
+      "normal": [
+        0.5144957554275266,
+        0.8574929257125443
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7499600635653545,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.22,
+      "point": [
+        4.62,
+        7.1864
+      ],
+      "normal": [
+        0.48860336893184314,
+        0.87250601594972
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7493721417229577,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.24,
+      "point": [
+        4.54,
+        7.2296000000000005
+      ],
+      "normal": [
+        0.4613527366419895,
+        0.8872168012345951
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7497005527476507,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.26,
+      "point": [
+        4.46,
+        7.2696000000000005
+      ],
+      "normal": [
+        0.4327310675847712,
+        0.9015230574682735
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7501420483764158,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.28,
+      "point": [
+        4.38,
+        7.3064
+      ],
+      "normal": [
+        0.40273861426601687,
+        0.9153150324227656
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.749760398968337,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.3,
+      "point": [
+        4.3,
+        7.339999999999999
+      ],
+      "normal": [
+        0.3713906763541037,
+        0.9284766908852593
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7500077050219485,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.32,
+      "point": [
+        4.22,
+        7.370399999999999
+      ],
+      "normal": [
+        0.3387194682727417,
+        0.9408874118687269
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7499272771747537,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.34,
+      "point": [
+        4.14,
+        7.3976
+      ],
+      "normal": [
+        0.30477572710378364,
+        0.9524241471993242
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7504387736382299,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.36,
+      "point": [
+        4.06,
+        7.421600000000001
+      ],
+      "normal": [
+        0.2696299255199708,
+        0.9629640197141817
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7496890880484725,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.38,
+      "point": [
+        3.9800000000000004,
+        7.4424
+      ],
+      "normal": [
+        0.2333729524753241,
+        0.9723873019805175
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7489929050716775,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.4,
+      "point": [
+        3.9000000000000004,
+        7.46
+      ],
+      "normal": [
+        0.1961161351381839,
+        0.9805806756909202
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7502320621599363,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.42,
+      "point": [
+        3.8200000000000003,
+        7.4744
+      ],
+      "normal": [
+        0.15799050110667293,
+        0.9874406319167053
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7497611193214202,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.44,
+      "point": [
+        3.74,
+        7.485600000000001
+      ],
+      "normal": [
+        0.11914522061843069,
+        0.9928768384869221
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7487019933307562,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.46,
+      "point": [
+        3.6600000000000006,
+        7.493600000000001
+      ],
+      "normal": [
+        0.07974522228289,
+        0.996815278536125
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7492547727433836,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.48,
+      "point": [
+        3.58,
+        7.4984
+      ],
+      "normal": [
+        0.03996803834887161,
+        0.9992009587217893
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7500881821441676,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.5,
+      "point": [
+        3.5,
+        7.5
+      ],
+      "normal": [
+        0,
+        1
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7499999999999999,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.52,
+      "point": [
+        3.4200000000000004,
+        7.4984
+      ],
+      "normal": [
+        -0.03996803834887161,
+        0.9992009587217893
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7500981602094141,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.54,
+      "point": [
+        3.34,
+        7.4936
+      ],
+      "normal": [
+        -0.07974522228289006,
+        0.996815278536125
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7492539705094025,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.56,
+      "point": [
+        3.26,
+        7.485600000000001
+      ],
+      "normal": [
+        -0.11914522061843076,
+        0.9928768384869221
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7486753728812787,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.58,
+      "point": [
+        3.18,
+        7.4744
+      ],
+      "normal": [
+        -0.15799050110667273,
+        0.9874406319167056
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.749780169948936,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.6,
+      "point": [
+        3.1,
+        7.460000000000001
+      ],
+      "normal": [
+        -0.1961161351381839,
+        0.9805806756909202
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7502320621599368,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.62,
+      "point": [
+        3.02,
+        7.4424
+      ],
+      "normal": [
+        -0.2333729524753241,
+        0.9723873019805175
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7490057035564676,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "awning scallop 3",
+      "t": 0.64,
+      "point": [
+        2.94,
+        7.421600000000001
+      ],
+      "normal": [
+        -0.2696299255199708,
+        0.9629640197141817
+      ],
+      "expected": 0.7502294724981167,
+      "seed": 0.2,
+      "gap": 0.7497023354821778,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "left offset-to-wall end",
+      "rect": [
+        1.94,
+        7.8,
+        2.8,
+        9.1
+      ],
+      "expected": 0.7502294724981167,
+      "gap": 0.7425536215741619,
+      "paintedPixels": 5613,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "first scallop valley",
+      "rect": [
+        4.9,
+        7.75,
+        6.1,
+        8.9
+      ],
+      "expected": 0.7502294724981167,
+      "gap": 0.7433665861913356,
+      "paintedPixels": 13380,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "second scallop valley",
+      "rect": [
+        9.9,
+        7.75,
+        11.1,
+        8.9
+      ],
+      "expected": 0.7502294724981167,
+      "gap": 0.7433665861913356,
+      "paintedPixels": 13367,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1,
+      "feature": "right offset-to-wall end",
+      "rect": [
+        13.2,
+        7.8,
+        14.06,
+        9.1
+      ],
+      "expected": 0.7502294724981167,
+      "gap": 0.7425536215741619,
+      "paintedPixels": 5558,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.36,
+      "point": [
+        13.06,
+        7.421600000000001
+      ],
+      "normal": [
+        0.2696299255199708,
+        0.9629640197141817
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5845477841436704,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.38,
+      "point": [
+        12.980000000000002,
+        7.4424
+      ],
+      "normal": [
+        0.2333729524753241,
+        0.9723873019805175
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5822781621083453,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.4,
+      "point": [
+        12.899999999999999,
+        7.46
+      ],
+      "normal": [
+        0.1961161351381839,
+        0.9805806756909202
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5843613788039631,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.42,
+      "point": [
+        12.820000000000002,
+        7.4744
+      ],
+      "normal": [
+        0.15799050110667293,
+        0.9874406319167053
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5837972292209916,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.44,
+      "point": [
+        12.740000000000002,
+        7.485600000000001
+      ],
+      "normal": [
+        0.11914522061843069,
+        0.9928768384869221
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5754133005861736,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.46,
+      "point": [
+        12.660000000000002,
+        7.493600000000001
+      ],
+      "normal": [
+        0.07974522228289,
+        0.996815278536125
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5839735671790802,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.48,
+      "point": [
+        12.579999999999998,
+        7.4984
+      ],
+      "normal": [
+        0.03996803834887161,
+        0.9992009587217893
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5843259960241892,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.5,
+      "point": [
+        12.5,
+        7.5
+      ],
+      "normal": [
+        0,
+        1
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5845727734822451,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.52,
+      "point": [
+        12.42,
+        7.4984
+      ],
+      "normal": [
+        -0.03996803834887161,
+        0.9992009587217893
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5843554878330787,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.54,
+      "point": [
+        12.339999999999998,
+        7.4936
+      ],
+      "normal": [
+        -0.07974522228289006,
+        0.996815278536125
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5839540966614721,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.56,
+      "point": [
+        12.259999999999998,
+        7.485600000000001
+      ],
+      "normal": [
+        -0.11914522061843076,
+        0.9928768384869221
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5824917758232228,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.58,
+      "point": [
+        12.18,
+        7.4744
+      ],
+      "normal": [
+        -0.15799050110667273,
+        0.9874406319167056
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5838238790852586,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.6,
+      "point": [
+        12.1,
+        7.460000000000001
+      ],
+      "normal": [
+        -0.1961161351381839,
+        0.9805806756909202
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5843395994433518,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.62,
+      "point": [
+        12.020000000000001,
+        7.4424
+      ],
+      "normal": [
+        -0.2333729524753241,
+        0.9723873019805175
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5822288424354897,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.64,
+      "point": [
+        11.94,
+        7.421600000000001
+      ],
+      "normal": [
+        -0.2696299255199708,
+        0.9629640197141817
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5845413791839351,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.66,
+      "point": [
+        11.86,
+        7.3976
+      ],
+      "normal": [
+        -0.30477572710378376,
+        0.9524241471993242
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5848269691199575,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.68,
+      "point": [
+        11.780000000000001,
+        7.3704
+      ],
+      "normal": [
+        -0.3387194682727417,
+        0.9408874118687269
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5825015451778365,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.7,
+      "point": [
+        11.700000000000001,
+        7.34
+      ],
+      "normal": [
+        -0.3713906763541036,
+        0.9284766908852594
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5835500299201789,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.72,
+      "point": [
+        11.62,
+        7.3064
+      ],
+      "normal": [
+        -0.40273861426601687,
+        0.9153150324227656
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5844603049947523,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.74,
+      "point": [
+        11.540000000000001,
+        7.2696000000000005
+      ],
+      "normal": [
+        -0.4327310675847712,
+        0.9015230574682735
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.583648079143152,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.76,
+      "point": [
+        11.46,
+        7.2296000000000005
+      ],
+      "normal": [
+        -0.4613527366419895,
+        0.8872168012345951
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.58376824682256,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.78,
+      "point": [
+        11.38,
+        7.186399999999999
+      ],
+      "normal": [
+        -0.4886033689318432,
+        0.87250601594972
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5842363425829998,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.8,
+      "point": [
+        11.299999999999999,
+        7.140000000000001
+      ],
+      "normal": [
+        -0.5144957554275266,
+        0.8574929257125441
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5848224856148768,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 1",
+      "t": 0.82,
+      "point": [
+        11.219999999999999,
+        7.0904
+      ],
+      "normal": [
+        -0.5390536964233673,
+        0.8422714006615114
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5842509629581523,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.18,
+      "point": [
+        9.600000000000001,
+        7.0904
+      ],
+      "normal": [
+        0.45573827843301223,
+        0.890113825064477
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.583194336344708,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.2,
+      "point": [
+        9.500000000000002,
+        7.1400000000000015
+      ],
+      "normal": [
+        0.4327310675847713,
+        0.9015230574682734
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5819869614192403,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.22,
+      "point": [
+        9.4,
+        7.1864
+      ],
+      "normal": [
+        0.40884626561692694,
+        0.912603271466355
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5815927075596028,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.24,
+      "point": [
+        9.3,
+        7.2296000000000005
+      ],
+      "normal": [
+        0.38409084709277896,
+        0.9232953055114878
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5832846654053144,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.26,
+      "point": [
+        9.200000000000001,
+        7.2696000000000005
+      ],
+      "normal": [
+        0.35847857436889446,
+        0.9335379540856628
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5832696296435179,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.28,
+      "point": [
+        9.1,
+        7.3064
+      ],
+      "normal": [
+        0.33203055782167573,
+        0.9432686301752151
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5809564319611036,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.3,
+      "point": [
+        9,
+        7.339999999999999
+      ],
+      "normal": [
+        0.30477572710378364,
+        0.9524241471993241
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5817521697393923,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.32,
+      "point": [
+        8.899999999999999,
+        7.370399999999999
+      ],
+      "normal": [
+        0.27675118430301215,
+        0.9609416121632366
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5807569529552824,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.34,
+      "point": [
+        8.799999999999999,
+        7.3976
+      ],
+      "normal": [
+        0.24800241028513745,
+        0.9687594151763184
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5813644221638047,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.36,
+      "point": [
+        8.700000000000001,
+        7.421600000000001
+      ],
+      "normal": [
+        0.21858329774597873,
+        0.9758182935088339
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5833937015304027,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.38,
+      "point": [
+        8.6,
+        7.4424
+      ],
+      "normal": [
+        0.18855598877693572,
+        0.9820624415465405
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5820158416097743,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.4,
+      "point": [
+        8.5,
+        7.46
+      ],
+      "normal": [
+        0.15799050110667276,
+        0.9874406319167053
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5835805134773843,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.42,
+      "point": [
+        8.4,
+        7.4744
+      ],
+      "normal": [
+        0.12696413546540491,
+        0.9919073083234755
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5833312324088438,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.44,
+      "point": [
+        8.300000000000002,
+        7.485600000000001
+      ],
+      "normal": [
+        0.09556066635268959,
+        0.9954236078405162
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5828802169371056,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.46,
+      "point": [
+        8.200000000000001,
+        7.493600000000001
+      ],
+      "normal": [
+        0.06386932928370218,
+        0.9979582700578468
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5833142343272423,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.48,
+      "point": [
+        8.1,
+        7.4984
+      ],
+      "normal": [
+        0.031983628572184224,
+        0.9994883928807562
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5844596823198466,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.5,
+      "point": [
+        8,
+        7.5
+      ],
+      "normal": [
+        0,
+        1
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5845133463541667,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.52,
+      "point": [
+        7.8999999999999995,
+        7.4984
+      ],
+      "normal": [
+        -0.031983628572184224,
+        0.9994883928807562
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5844596823198467,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.54,
+      "point": [
+        7.8,
+        7.4936
+      ],
+      "normal": [
+        -0.06386932928370224,
+        0.9979582700578468
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5832869246947959,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.56,
+      "point": [
+        7.7,
+        7.485600000000001
+      ],
+      "normal": [
+        -0.09556066635268964,
+        0.9954236078405162
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5828782145293795,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.58,
+      "point": [
+        7.6000000000000005,
+        7.4744
+      ],
+      "normal": [
+        -0.12696413546540475,
+        0.9919073083234755
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5832954704266472,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.6,
+      "point": [
+        7.5,
+        7.460000000000001
+      ],
+      "normal": [
+        -0.15799050110667276,
+        0.9874406319167053
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5836024103419254,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.62,
+      "point": [
+        7.3999999999999995,
+        7.4424
+      ],
+      "normal": [
+        -0.18855598877693572,
+        0.9820624415465405
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5820277622825645,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.64,
+      "point": [
+        7.3,
+        7.421600000000001
+      ],
+      "normal": [
+        -0.21858329774597873,
+        0.9758182935088339
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5833679103442896,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.66,
+      "point": [
+        7.2,
+        7.3976
+      ],
+      "normal": [
+        -0.2480024102851375,
+        0.9687594151763184
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5813324941373172,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.68,
+      "point": [
+        7.099999999999999,
+        7.3704
+      ],
+      "normal": [
+        -0.27675118430301215,
+        0.9609416121632366
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5807092724368279,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.7,
+      "point": [
+        7,
+        7.34
+      ],
+      "normal": [
+        -0.3047757271037836,
+        0.9524241471993241
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5818071952864262,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.72,
+      "point": [
+        6.8999999999999995,
+        7.3064
+      ],
+      "normal": [
+        -0.33203055782167573,
+        0.9432686301752151
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5809450835612613,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.74,
+      "point": [
+        6.8,
+        7.2696000000000005
+      ],
+      "normal": [
+        -0.35847857436889446,
+        0.9335379540856628
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5830883026668371,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.76,
+      "point": [
+        6.7,
+        7.2296000000000005
+      ],
+      "normal": [
+        -0.38409084709277896,
+        0.9232953055114878
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5832646669515293,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.78,
+      "point": [
+        6.599999999999999,
+        7.186399999999999
+      ],
+      "normal": [
+        -0.408846265616927,
+        0.912603271466355
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5815438109383312,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.8,
+      "point": [
+        6.5,
+        7.140000000000001
+      ],
+      "normal": [
+        -0.43273106758477137,
+        0.9015230574682734
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5819347331787257,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 2",
+      "t": 0.82,
+      "point": [
+        6.3999999999999995,
+        7.0904
+      ],
+      "normal": [
+        -0.45573827843301223,
+        0.890113825064477
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5831298036151538,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.18,
+      "point": [
+        4.78,
+        7.0904
+      ],
+      "normal": [
+        0.5390536964233673,
+        0.8422714006615114
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5842691345240659,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.2,
+      "point": [
+        4.700000000000001,
+        7.1400000000000015
+      ],
+      "normal": [
+        0.5144957554275266,
+        0.8574929257125443
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5848008842746484,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.22,
+      "point": [
+        4.62,
+        7.1864
+      ],
+      "normal": [
+        0.48860336893184314,
+        0.87250601594972
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5842567823073961,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.24,
+      "point": [
+        4.54,
+        7.2296000000000005
+      ],
+      "normal": [
+        0.4613527366419895,
+        0.8872168012345951
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5838134100974427,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.26,
+      "point": [
+        4.46,
+        7.2696000000000005
+      ],
+      "normal": [
+        0.4327310675847712,
+        0.9015230574682735
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5835606294017982,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.28,
+      "point": [
+        4.38,
+        7.3064
+      ],
+      "normal": [
+        0.40273861426601687,
+        0.9153150324227656
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5844299783722074,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.3,
+      "point": [
+        4.3,
+        7.339999999999999
+      ],
+      "normal": [
+        0.3713906763541037,
+        0.9284766908852593
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.583585002533428,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.32,
+      "point": [
+        4.22,
+        7.370399999999999
+      ],
+      "normal": [
+        0.3387194682727417,
+        0.9408874118687269
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5825500263588189,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.34,
+      "point": [
+        4.14,
+        7.3976
+      ],
+      "normal": [
+        0.30477572710378364,
+        0.9524241471993242
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5848019541803953,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.36,
+      "point": [
+        4.06,
+        7.421600000000001
+      ],
+      "normal": [
+        0.2696299255199708,
+        0.9629640197141817
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5845477841436704,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.38,
+      "point": [
+        3.9800000000000004,
+        7.4424
+      ],
+      "normal": [
+        0.2333729524753241,
+        0.9723873019805175
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5822781621083455,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.4,
+      "point": [
+        3.9000000000000004,
+        7.46
+      ],
+      "normal": [
+        0.1961161351381839,
+        0.9805806756909202
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5843613788039633,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.42,
+      "point": [
+        3.8200000000000003,
+        7.4744
+      ],
+      "normal": [
+        0.15799050110667293,
+        0.9874406319167053
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5837972292209916,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.44,
+      "point": [
+        3.74,
+        7.485600000000001
+      ],
+      "normal": [
+        0.11914522061843069,
+        0.9928768384869221
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5825051924502247,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.46,
+      "point": [
+        3.6600000000000006,
+        7.493600000000001
+      ],
+      "normal": [
+        0.07974522228289,
+        0.996815278536125
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5839735671790802,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.48,
+      "point": [
+        3.58,
+        7.4984
+      ],
+      "normal": [
+        0.03996803834887161,
+        0.9992009587217893
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.584325996024189,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.5,
+      "point": [
+        3.5,
+        7.5
+      ],
+      "normal": [
+        0,
+        1
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5845727734822451,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.52,
+      "point": [
+        3.4200000000000004,
+        7.4984
+      ],
+      "normal": [
+        -0.03996803834887161,
+        0.9992009587217893
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5843554878330787,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.54,
+      "point": [
+        3.34,
+        7.4936
+      ],
+      "normal": [
+        -0.07974522228289006,
+        0.996815278536125
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.583954096661472,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.56,
+      "point": [
+        3.26,
+        7.485600000000001
+      ],
+      "normal": [
+        -0.11914522061843076,
+        0.9928768384869221
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5753998839591714,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.58,
+      "point": [
+        3.18,
+        7.4744
+      ],
+      "normal": [
+        -0.15799050110667273,
+        0.9874406319167056
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5838238790852586,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.6,
+      "point": [
+        3.1,
+        7.460000000000001
+      ],
+      "normal": [
+        -0.1961161351381839,
+        0.9805806756909202
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5843395994433516,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.62,
+      "point": [
+        3.02,
+        7.4424
+      ],
+      "normal": [
+        -0.2333729524753241,
+        0.9723873019805175
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.582228842435491,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "awning scallop 3",
+      "t": 0.64,
+      "point": [
+        2.94,
+        7.421600000000001
+      ],
+      "normal": [
+        -0.2696299255199708,
+        0.9629640197141817
+      ],
+      "expected": 0.58356280583145,
+      "seed": 0.2,
+      "gap": 0.5845413791839351,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "left offset-to-wall end",
+      "rect": [
+        1.94,
+        7.8,
+        2.8,
+        9.1
+      ],
+      "expected": 0.58356280583145,
+      "gap": 0.5759856778834189,
+      "paintedPixels": 6013,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "first scallop valley",
+      "rect": [
+        4.9,
+        7.75,
+        6.1,
+        8.9
+      ],
+      "expected": 0.58356280583145,
+      "gap": 0.5756719484324325,
+      "paintedPixels": 13380,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "second scallop valley",
+      "rect": [
+        9.9,
+        7.75,
+        11.1,
+        8.9
+      ],
+      "expected": 0.58356280583145,
+      "gap": 0.5756719484324325,
+      "paintedPixels": 13367,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.3333333333333333,
+      "feature": "right offset-to-wall end",
+      "rect": [
+        13.2,
+        7.8,
+        14.06,
+        9.1
+      ],
+      "expected": 0.58356280583145,
+      "gap": 0.5759856778834189,
+      "paintedPixels": 6008,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.36,
+      "point": [
+        13.06,
+        7.421600000000001
+      ],
+      "normal": [
+        0.2696299255199708,
+        0.9629640197141817
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4986930962296289,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.38,
+      "point": [
+        12.980000000000002,
+        7.4424
+      ],
+      "normal": [
+        0.2333729524753241,
+        0.9723873019805175
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4986443218826948,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.4,
+      "point": [
+        12.899999999999999,
+        7.46
+      ],
+      "normal": [
+        0.1961161351381839,
+        0.9805806756909202
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49989696893708635,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.42,
+      "point": [
+        12.820000000000002,
+        7.4744
+      ],
+      "normal": [
+        0.15799050110667293,
+        0.9874406319167053
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4981068158516738,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.44,
+      "point": [
+        12.740000000000002,
+        7.485600000000001
+      ],
+      "normal": [
+        0.11914522061843069,
+        0.9928768384869221
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49055368565945634,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.46,
+      "point": [
+        12.660000000000002,
+        7.493600000000001
+      ],
+      "normal": [
+        0.07974522228289,
+        0.996815278536125
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4786238318998366,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.48,
+      "point": [
+        12.579999999999998,
+        7.4984
+      ],
+      "normal": [
+        0.03996803834887161,
+        0.9992009587217893
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49991914098147316,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.5,
+      "point": [
+        12.5,
+        7.5
+      ],
+      "normal": [
+        0,
+        1
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4999999999999999,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.52,
+      "point": [
+        12.42,
+        7.4984
+      ],
+      "normal": [
+        -0.03996803834887161,
+        0.9992009587217893
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4999486327903626,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.54,
+      "point": [
+        12.339999999999998,
+        7.4936
+      ],
+      "normal": [
+        -0.07974522228289006,
+        0.996815278536125
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49884427268919995,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.56,
+      "point": [
+        12.259999999999998,
+        7.485600000000001
+      ],
+      "normal": [
+        -0.11914522061843076,
+        0.9928768384869221
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49760899119454005,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.58,
+      "point": [
+        12.18,
+        7.4744
+      ],
+      "normal": [
+        -0.15799050110667273,
+        0.9874406319167056
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49813587270694604,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.6,
+      "point": [
+        12.1,
+        7.460000000000001
+      ],
+      "normal": [
+        -0.1961161351381839,
+        0.9805806756909202
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49988224061894504,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.62,
+      "point": [
+        12.020000000000001,
+        7.4424
+      ],
+      "normal": [
+        -0.2333729524753241,
+        0.9723873019805175
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4986428237259162,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.64,
+      "point": [
+        11.94,
+        7.421600000000001
+      ],
+      "normal": [
+        -0.2696299255199708,
+        0.9629640197141817
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49866995718354545,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.66,
+      "point": [
+        11.86,
+        7.3976
+      ],
+      "normal": [
+        -0.30477572710378376,
+        0.9524241471993242
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4997771708152423,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.68,
+      "point": [
+        11.780000000000001,
+        7.3704
+      ],
+      "normal": [
+        -0.3387194682727417,
+        0.9408874118687269
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4986177395722413,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.7,
+      "point": [
+        11.700000000000001,
+        7.34
+      ],
+      "normal": [
+        -0.3713906763541036,
+        0.9284766908852594
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49887703686335183,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.72,
+      "point": [
+        11.62,
+        7.3064
+      ],
+      "normal": [
+        -0.40273861426601687,
+        0.9153150324227656
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4996477991030538,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.74,
+      "point": [
+        11.540000000000001,
+        7.2696000000000005
+      ],
+      "normal": [
+        -0.4327310675847712,
+        0.9015230574682735
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49892205054456007,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.76,
+      "point": [
+        11.46,
+        7.2296000000000005
+      ],
+      "normal": [
+        -0.4613527366419895,
+        0.8872168012345951
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49821876557202716,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.78,
+      "point": [
+        11.38,
+        7.186399999999999
+      ],
+      "normal": [
+        -0.4886033689318432,
+        0.87250601594972
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49875725391523995,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.8,
+      "point": [
+        11.299999999999999,
+        7.140000000000001
+      ],
+      "normal": [
+        -0.5144957554275266,
+        0.8574929257125441
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49988929444542407,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 1",
+      "t": 0.82,
+      "point": [
+        11.219999999999999,
+        7.0904
+      ],
+      "normal": [
+        -0.5390536964233673,
+        0.8422714006615114
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49907980260745,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.18,
+      "point": [
+        9.600000000000001,
+        7.0904
+      ],
+      "normal": [
+        0.45573827843301223,
+        0.890113825064477
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.5005320878949957,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.2,
+      "point": [
+        9.500000000000002,
+        7.1400000000000015
+      ],
+      "normal": [
+        0.4327310675847713,
+        0.9015230574682734
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4994210617133281,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.22,
+      "point": [
+        9.4,
+        7.1864
+      ],
+      "normal": [
+        0.40884626561692694,
+        0.912603271466355
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49954684205447497,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.24,
+      "point": [
+        9.3,
+        7.2296000000000005
+      ],
+      "normal": [
+        0.38409084709277896,
+        0.9232953055114878
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4998031886217569,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.26,
+      "point": [
+        9.200000000000001,
+        7.2696000000000005
+      ],
+      "normal": [
+        0.35847857436889446,
+        0.9335379540856628
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.5002385075107744,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.28,
+      "point": [
+        9.1,
+        7.3064
+      ],
+      "normal": [
+        0.33203055782167573,
+        0.9432686301752151
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.498922107894767,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.3,
+      "point": [
+        9,
+        7.339999999999999
+      ],
+      "normal": [
+        0.30477572710378364,
+        0.9524241471993241
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4993577280438921,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.32,
+      "point": [
+        8.899999999999999,
+        7.370399999999999
+      ],
+      "normal": [
+        0.27675118430301215,
+        0.9609416121632366
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49848824261425817,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.34,
+      "point": [
+        8.799999999999999,
+        7.3976
+      ],
+      "normal": [
+        0.24800241028513745,
+        0.9687594151763184
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4994759377459588,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.36,
+      "point": [
+        8.700000000000001,
+        7.421600000000001
+      ],
+      "normal": [
+        0.21858329774597873,
+        0.9758182935088339
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.499825870720936,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.38,
+      "point": [
+        8.6,
+        7.4424
+      ],
+      "normal": [
+        0.18855598877693572,
+        0.9820624415465405
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4988289190819518,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.4,
+      "point": [
+        8.5,
+        7.46
+      ],
+      "normal": [
+        0.15799050110667276,
+        0.9874406319167053
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4996073993140425,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.42,
+      "point": [
+        8.4,
+        7.4744
+      ],
+      "normal": [
+        0.12696413546540491,
+        0.9919073083234755
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4992645512568299,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.44,
+      "point": [
+        8.300000000000002,
+        7.485600000000001
+      ],
+      "normal": [
+        0.09556066635268959,
+        0.9954236078405162
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49884003783427644,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.46,
+      "point": [
+        8.200000000000001,
+        7.493600000000001
+      ],
+      "normal": [
+        0.06386932928370218,
+        0.9979582700578468
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.5004007587142641,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.48,
+      "point": [
+        8.1,
+        7.4984
+      ],
+      "normal": [
+        0.031983628572184224,
+        0.9994883928807562
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.5009964641944635,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.5,
+      "point": [
+        8,
+        7.5
+      ],
+      "normal": [
+        0,
+        1
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4999999999999999,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.52,
+      "point": [
+        7.8999999999999995,
+        7.4984
+      ],
+      "normal": [
+        -0.031983628572184224,
+        0.9994883928807562
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.5009790619743438,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.54,
+      "point": [
+        7.8,
+        7.4936
+      ],
+      "normal": [
+        -0.06386932928370224,
+        0.9979582700578468
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.5004007587142646,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.56,
+      "point": [
+        7.7,
+        7.485600000000001
+      ],
+      "normal": [
+        -0.09556066635268964,
+        0.9954236078405162
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49884003783427633,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.58,
+      "point": [
+        7.6000000000000005,
+        7.4744
+      ],
+      "normal": [
+        -0.12696413546540475,
+        0.9919073083234755
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49924937651585455,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.6,
+      "point": [
+        7.5,
+        7.460000000000001
+      ],
+      "normal": [
+        -0.15799050110667276,
+        0.9874406319167053
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49961946615327835,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.62,
+      "point": [
+        7.3999999999999995,
+        7.4424
+      ],
+      "normal": [
+        -0.18855598877693572,
+        0.9820624415465405
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49882376412093454,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.64,
+      "point": [
+        7.3,
+        7.421600000000001
+      ],
+      "normal": [
+        -0.21858329774597873,
+        0.9758182935088339
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4997982990127775,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.66,
+      "point": [
+        7.2,
+        7.3976
+      ],
+      "normal": [
+        -0.2480024102851375,
+        0.9687594151763184
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.499486838600284,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.68,
+      "point": [
+        7.099999999999999,
+        7.3704
+      ],
+      "normal": [
+        -0.27675118430301215,
+        0.9609416121632366
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4984607827407942,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.7,
+      "point": [
+        7,
+        7.34
+      ],
+      "normal": [
+        -0.3047757271037836,
+        0.9524241471993241
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49944579684029966,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.72,
+      "point": [
+        6.8999999999999995,
+        7.3064
+      ],
+      "normal": [
+        -0.33203055782167573,
+        0.9432686301752151
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4988930539247324,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.74,
+      "point": [
+        6.8,
+        7.2696000000000005
+      ],
+      "normal": [
+        -0.35847857436889446,
+        0.9335379540856628
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.5002405366331438,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.76,
+      "point": [
+        6.7,
+        7.2296000000000005
+      ],
+      "normal": [
+        -0.38409084709277896,
+        0.9232953055114878
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4997732857135271,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.78,
+      "point": [
+        6.599999999999999,
+        7.186399999999999
+      ],
+      "normal": [
+        -0.408846265616927,
+        0.912603271466355
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4994860630989626,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.8,
+      "point": [
+        6.5,
+        7.140000000000001
+      ],
+      "normal": [
+        -0.43273106758477137,
+        0.9015230574682734
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4994177128709335,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 2",
+      "t": 0.82,
+      "point": [
+        6.3999999999999995,
+        7.0904
+      ],
+      "normal": [
+        -0.45573827843301223,
+        0.890113825064477
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.5005184610301284,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.18,
+      "point": [
+        4.78,
+        7.0904
+      ],
+      "normal": [
+        0.5390536964233673,
+        0.8422714006615114
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49910738070458593,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.2,
+      "point": [
+        4.700000000000001,
+        7.1400000000000015
+      ],
+      "normal": [
+        0.5144957554275266,
+        0.8574929257125443
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49991468858830257,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.22,
+      "point": [
+        4.62,
+        7.1864
+      ],
+      "normal": [
+        0.48860336893184314,
+        0.87250601594972
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49876600549662575,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.24,
+      "point": [
+        4.54,
+        7.2296000000000005
+      ],
+      "normal": [
+        0.4613527366419895,
+        0.8872168012345951
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49826229137946854,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.26,
+      "point": [
+        4.46,
+        7.2696000000000005
+      ],
+      "normal": [
+        0.4327310675847712,
+        0.9015230574682735
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4989453031409429,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.28,
+      "point": [
+        4.38,
+        7.3064
+      ],
+      "normal": [
+        0.40273861426601687,
+        0.9153150324227656
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4996245688840675,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.3,
+      "point": [
+        4.3,
+        7.339999999999999
+      ],
+      "normal": [
+        0.3713906763541037,
+        0.9284766908852593
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.498914283786829,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.32,
+      "point": [
+        4.22,
+        7.370399999999999
+      ],
+      "normal": [
+        0.3387194682727417,
+        0.9408874118687269
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4986541355468873,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.34,
+      "point": [
+        4.14,
+        7.3976
+      ],
+      "normal": [
+        0.30477572710378364,
+        0.9524241471993242
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4997347184067439,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.36,
+      "point": [
+        4.06,
+        7.421600000000001
+      ],
+      "normal": [
+        0.2696299255199708,
+        0.9629640197141817
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4986930962296291,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.38,
+      "point": [
+        3.9800000000000004,
+        7.4424
+      ],
+      "normal": [
+        0.2333729524753241,
+        0.9723873019805175
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4986443218826949,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.4,
+      "point": [
+        3.9000000000000004,
+        7.46
+      ],
+      "normal": [
+        0.1961161351381839,
+        0.9805806756909202
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49989696893708646,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.42,
+      "point": [
+        3.8200000000000003,
+        7.4744
+      ],
+      "normal": [
+        0.15799050110667293,
+        0.9874406319167053
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4981068158516736,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.44,
+      "point": [
+        3.74,
+        7.485600000000001
+      ],
+      "normal": [
+        0.11914522061843069,
+        0.9928768384869221
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49764557752350735,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.46,
+      "point": [
+        3.6600000000000006,
+        7.493600000000001
+      ],
+      "normal": [
+        0.07974522228289,
+        0.996815278536125
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4988557141158406,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.48,
+      "point": [
+        3.58,
+        7.4984
+      ],
+      "normal": [
+        0.03996803834887161,
+        0.9992009587217893
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49991914098147294,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.5,
+      "point": [
+        3.5,
+        7.5
+      ],
+      "normal": [
+        0,
+        1
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4999999999999999,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.52,
+      "point": [
+        3.4200000000000004,
+        7.4984
+      ],
+      "normal": [
+        -0.03996803834887161,
+        0.9992009587217893
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4999486327903626,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.54,
+      "point": [
+        3.34,
+        7.4936
+      ],
+      "normal": [
+        -0.07974522228289006,
+        0.996815278536125
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4786123904731957,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.56,
+      "point": [
+        3.26,
+        7.485600000000001
+      ],
+      "normal": [
+        -0.11914522061843076,
+        0.9928768384869221
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4905170993304887,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.58,
+      "point": [
+        3.18,
+        7.4744
+      ],
+      "normal": [
+        -0.15799050110667273,
+        0.9874406319167056
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4981358727069457,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.6,
+      "point": [
+        3.1,
+        7.460000000000001
+      ],
+      "normal": [
+        -0.1961161351381839,
+        0.9805806756909202
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49988224061894504,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.62,
+      "point": [
+        3.02,
+        7.4424
+      ],
+      "normal": [
+        -0.2333729524753241,
+        0.9723873019805175
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.4986428237259163,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "awning scallop 3",
+      "t": 0.64,
+      "point": [
+        2.94,
+        7.421600000000001
+      ],
+      "normal": [
+        -0.2696299255199708,
+        0.9629640197141817
+      ],
+      "expected": 0.5002294724981167,
+      "seed": 0.2,
+      "gap": 0.49866995718354556,
+      "tolerance": 0.03
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "left offset-to-wall end",
+      "rect": [
+        1.94,
+        7.8,
+        2.8,
+        9.1
+      ],
+      "expected": 0.5002294724981167,
+      "gap": 0.49133227640510274,
+      "paintedPixels": 6013,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "first scallop valley",
+      "rect": [
+        4.9,
+        7.75,
+        6.1,
+        8.9
+      ],
+      "expected": 0.5002294724981167,
+      "gap": 0.4918211548537338,
+      "paintedPixels": 13380,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "second scallop valley",
+      "rect": [
+        9.9,
+        7.75,
+        11.1,
+        8.9
+      ],
+      "expected": 0.5002294724981167,
+      "gap": 0.4918211548537338,
+      "paintedPixels": 13367,
+      "tolerance": 0.035
+    },
+    {
+      "name": "storefront_solid.svg",
+      "weight": 1.5,
+      "feature": "right offset-to-wall end",
+      "rect": [
+        13.2,
+        7.8,
+        14.06,
+        9.1
+      ],
+      "expected": 0.5002294724981167,
+      "gap": 0.49133227640510274,
+      "paintedPixels": 6008,
+      "tolerance": 0.035
+    }
+  ],
+  "failures": []
+}

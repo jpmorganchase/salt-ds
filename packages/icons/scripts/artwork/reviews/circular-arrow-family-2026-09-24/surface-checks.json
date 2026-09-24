@@ -1,0 +1,5402 @@
+[
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 1,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 1,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "light",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "history",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "refresh",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "undo",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "redo",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sync",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "sparkle-refresh_solid",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-5",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-10",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-15",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "replay-30",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-5",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-10",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-15",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 1,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 1.3333333333333333,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 1.5,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "React",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 12,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  },
+  {
+    "name": "forward-30",
+    "size": 16,
+    "weight": 0.67,
+    "dpr": 2,
+    "mode": "dark",
+    "surface": "mask",
+    "pass": true
+  }
+]

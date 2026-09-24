@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The change consistently shares Storefront geometry between outline and solid variants, preserves the solid cutouts behind the shared rims, updates the relevant validation coverage, and derives caption spacing from the same exported tracking value used by the label helper. No actionable defect is evident in the provided bundle.",
+  "overall_confidence": 0.91
+}

@@ -1,0 +1,11 @@
+Checked storefront: 2 registered variant(s).
+Checked closedcaption: 2 registered variant(s).
+Checked closedcaption-disabled: 2 registered variant(s).
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 37 (closedcaption): synonym term 4 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 37 (closedcaption): synonym term 6 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 37 (closedcaption): synonym term 7 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 38 (closedcaption-disabled): synonym term 4 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+
+PASS: 3 requested meaning(s), 6 registered variant(s), 0 error(s), 4 warning(s).
+Limits: registration checks only; no visual/semantic relevance, generated-geometry equivalence, or recipe execution checks. generate:icons and validate:icons own effective recipe and geometry validation.
+Search normalization: the query is lowercased and whitespace is removed; stored synonym terms are not normalized. Hyphens are removed only when matching metadata iconName to component names; optional Solid and case-insensitive matching follow IconPreview.tsx.

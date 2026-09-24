@@ -1,5 +1,4 @@
 import { S } from "./primitives.mjs";
-import { tangentCircularHeadJoins } from "./cd-junctions.mjs";
 import { circularCrossJunction } from "./junctions.mjs";
 import { radialCircleJunction } from "./structural-junctions.mjs";
 const n = (value) => Number(value.toFixed(6));
@@ -70,21 +69,4 @@ export function insideBoxCorners(x, y, width, height, radius = 1.5) {
       circularCrossJunction(cx, cy, radius, undefined, [[h, v]], "softened-opening"),
     )
     .join("");
-}
-
-// History's arrow joins an actual circular shaft. Derive both tangent fillets
-// against that circle, rather than extending a straight-shaft patch over it.
-// The source A9 arc and the head's original endpoints stay unchanged.
-export function historyArrowRoots() {
-  const tip = [3.75, 8.25],
-    end = [12, 21],
-    radius = 9;
-  const dx = end[0] - tip[0],
-    dy = end[1] - tip[1],
-    chord = Math.hypot(dx, dy);
-  const offset = Math.sqrt(radius * radius - (chord * chord) / 4);
-  const cx = (tip[0] + end[0]) / 2 + (dy / chord) * offset;
-  const cy = (tip[1] + end[1]) / 2 - (dx / chord) * offset;
-  return tangentCircularHeadJoins(cx, cy, radius, tip, 1,
-    [[0, -5.5], [5.5, 0]], 1.25);
 }

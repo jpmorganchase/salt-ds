@@ -2,6 +2,14 @@
 // final 16-unit viewBox at primary stroke 1.5, not to recipe padding.
 // Record the optical reason; do not infer a target from bounding-box shape alone.
 export const opticalFits = {
+  "undo.svg": {
+    targetSpan: 15.5, center: [8.657184, 8], frameSource: "refresh.svg",
+    reason: "Retain the circular-action centre and head size when the return arc ends at the bottom; do not recenter its asymmetric painted bounds.",
+  },
+  "redo.svg": {
+    targetSpan: 15.5, center: [7.342816, 8], frameSource: "refresh.svg",
+    reason: "Mirror Undo on the shared circular-action frame, preserving its circle centre and head size.",
+  },
   "key-control.svg": {
     targetSpan: 9.125, center: [8, 4.1],
     reason: "Restore the compact raised Control-key caret beside the other keyboard symbols; it must not fill the navigation-chevron frame.",

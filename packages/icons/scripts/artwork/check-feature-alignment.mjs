@@ -110,7 +110,7 @@ export async function checkFeatureAlignment(page, records) {
           } else if (name.startsWith("storefront")) {
             for (const [feature, y, from, to] of [
               ["window", 10.5, 3.5, 8.5],
-              ["door", 11.5, 8.75, 12.25],
+              ["door", 11.5, 8.4, 12.6],
             ]) {
               const m = measure(
                 pixels,

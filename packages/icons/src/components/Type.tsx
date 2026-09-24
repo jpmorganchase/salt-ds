@@ -115,13 +115,13 @@ export const TypeIcon = forwardRef<SVGSVGElement, TypeIconProps>(
           />
           <path
             fillRule="evenodd"
-            d="M8.446 11.77h-.882V5.003H5.192V4.23h5.616v.773H8.446Z"
+            d="M10.912 4.23v.819H8.49v6.72h-.983V5.05H5.088v-.82Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.3)"
-            d="M8.446 11.77h-.882V5.003H5.192V4.23h5.616v.773H8.446Z"
+            d="M10.912 4.23v.819H8.49v6.72h-.983V5.05H5.088v-.82Z"
           />
           <path
             fill="none"

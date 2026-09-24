@@ -20,25 +20,19 @@ export const RedoIcon = forwardRef<SVGSVGElement, RedoIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M14.761.364v5.09h-5.09m5.09 0A7 7 0 1 0 8.398 15"
+            d="M13.686 3.917C12.769 3 11.83 1.999 10.629 1.512A7 7 0 1 0 8 15m5.686-14v2.917h-2.917"
           />
-          <path d="M14.761 4.182a1.273 1.273 0 0 1-1.272 1.273h1.272Z" />
+          <path d="M13.686 1.828a.894.894 0 0 1-1.47.684c.517.436.996.931 1.47 1.405z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M14.761 4.182a1.273 1.273 0 0 1-1.272 1.273"
+            d="M13.686 1.828a.894.894 0 0 1-1.47.684"
           />
-          <path d="M14.761 2.4q0 2.383-1.315.92a7 7 0 0 1 1.315 2.135Z" />
+          <path d="M11.425 3.917a.894.894 0 0 0 .552-1.599c.61.479 1.164 1.054 1.709 1.599z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M14.761 2.4q0 2.383-1.315.92"
-          />
-          <path d="M11.707 5.455q3.658 0 1.74-2.134a7 7 0 0 1 1.314 2.134Z" />
-          <path
-            fill="none"
-            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M11.707 5.455q3.658 0 1.74-2.134"
+            d="M11.425 3.917a.894.894 0 0 0 .552-1.599"
           />
         </g>
       </Icon>

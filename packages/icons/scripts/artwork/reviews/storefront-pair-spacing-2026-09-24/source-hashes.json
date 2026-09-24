@@ -1,0 +1,26 @@
+{
+  "closedcaption-disabled.svg": {
+    "before": "9691564da882c0104a5c8a4774cc5707c12de929a6fe20edf6d5cb5dd0cd32b6",
+    "after": "816e6e2fa87477c3a87ae6647f13f88f38bc73aee61a9db9fbb10e685740f50d"
+  },
+  "closedcaption-disabled_solid.svg": {
+    "before": "40b32c24776c02a7ca0d25b0a94b63fc6773f339b33f6fc9f23284bd958bbc4c",
+    "after": "8214bb9160c80db70d33106716d771666399c3b7c3fe3dab96a7db83ba3949e1"
+  },
+  "closedcaption.svg": {
+    "before": "e4ab8e69128dc466c02d68674c92544a207c841c8c41834eb509471c7253264d",
+    "after": "46f414a4b2d819141f908e1000c5ea795792767e62a29650032d7c6df369b359"
+  },
+  "closedcaption_solid.svg": {
+    "before": "a3d918cc5988b523a9455bd2a4e00e64b58cb3fbdff152f39cd8810b18be3bc9",
+    "after": "327058ff4a91221739b6b5aca58545585cbf2c0f50561682ffec9677dd2cc3d4"
+  },
+  "storefront.svg": {
+    "before": "899377a8c16a3ad8784666cf5a2778b36f6c75ace154600451804d8933506b59",
+    "after": "cd89aca3582715cc2afe607769302f587881a78d4331df858ff982555ae609ab"
+  },
+  "storefront_solid.svg": {
+    "before": "b7eacb1a57203b54734cd90af36343b29ab5a09272f5413e7c5c3958f5fcd590",
+    "after": "79b1270da1dae91e6247f2e5234c7045e85f440f6cb38291e280b1e62fdd0d7a"
+  }
+}

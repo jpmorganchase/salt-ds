@@ -19,15 +19,15 @@ export const TextColorIcon = forwardRef<SVGSVGElement, TextColorIconProps>(
         <g strokeWidth="var(--icon-strokeWidth, 1)">
           <path
             fillRule="evenodd"
-            d="m11.704 12.116-1.417-3.653H5.674l-1.41 3.653H2.912L7.414.56h1.204l4.471 11.556ZM9.885 7.275 8.54 3.645l-.153-.464q-.106-.323-.217-.669-.11-.347-.18-.559-.08.323-.17.642-.09.318-.177.59t-.15.46l-1.37 3.63Z"
+            d="m11.507 12.107-1.102-3.02H5.579l-1.093 3.02H2.925L7.322.569h1.34l4.413 11.538ZM9.953 7.836 7.996 2.455l-1.957 5.38Z"
           />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.4071)"
-            d="m11.704 12.116-1.417-3.653H5.674l-1.41 3.653H2.912L7.414.56h1.204l4.471 11.556ZM9.885 7.275 8.54 3.645l-.153-.464q-.106-.323-.217-.669-.11-.347-.18-.559-.08.323-.17.642-.09.318-.177.59t-.15.46l-1.37 3.63Z"
+            d="m11.507 12.107-1.102-3.02H5.579l-1.093 3.02H2.925L7.322.569h1.34l4.413 11.538ZM9.953 7.836 7.996 2.455l-1.957 5.38Z"
           />
-          <path fillRule="evenodd" d="M.731 14.539H15.27v1.211H.73Z" />
+          <path fillRule="evenodd" d="M.713 14.536h14.574v1.214H.713Z" />
         </g>
       </Icon>
     );

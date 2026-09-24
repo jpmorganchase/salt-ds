@@ -1,8 +1,9 @@
+import { circularArrow } from "./circular-arrow.mjs";
 import { F as retainedFill } from "./primitives.mjs";
 import { softenedStroke as S, softenedFill as F } from "./contour-profiles.mjs";
 import { softenedRect as R, softenedFrame as SF } from "./contour-profiles.mjs";
 import { arrowRoot } from "./internal-arrow-junctions.mjs";
-import { concavePolygon, innerRadialJoin, circularHeadJoins, cubicHeadJoins } from "./cd-junctions.mjs";
+import { concavePolygon, innerRadialJoin } from "./cd-junctions.mjs";
 import { actionPerson } from "./user-actions.mjs";
 import { notificationRead } from "./action-marks.mjs";
 import { weldedCross, weldedXContour } from "./cross-marks.mjs";
@@ -427,11 +428,8 @@ put(
   ) + S(receipt),
 );
 // Redo mirrors the circular undo arrow; refresh retains one circular arrow.
-put("redo", S("M20.25 3.75v6h-6M20.25 9.75a8.25 8.25 0 1 0-7.5 11.25"));
-put(
-  "refresh",
-  S("M20.5 8C19 4.6 16 2.5 12 2.5A9.5 9.5 0 1 0 21.15 14.5M14.5 8H20.5V2.5"),
-);
+put("redo", circularArrow("clockwise", "return"));
+put("refresh", circularArrow());
 put("remove", S("M2.25 12h19.5"));
 const removeDocumentPage = "M3.75 2.25H15.75L20.25 6.75V21.75H3.75Z";
 put(
@@ -690,20 +688,6 @@ put(
     textLabel("A", 5.5, 14.5, 6.5, { align: "center" }),
 );
 put("sort-ascend", sortArrow + S("M2.25 5.25h3M2.25 12h6M2.25 18.75h9"));
-
-// Exact center of the retained SVG redo arc. The curved head bridges
-// are tangent to that arc rather than projecting straight caps beside it.
-const redoCenter = (() => {
-  const dx = 3.75, dy = -5.625;
-  const factor = Math.sqrt((8.25 ** 2 - dx ** 2 - dy ** 2) / (dx ** 2 + dy ** 2));
-  return [16.5 + factor * dy, 15.375 - factor * dx];
-})();
-const redoJoins = circularHeadJoins(...redoCenter, 8.25,
-  Math.atan2(9.75 - redoCenter[1], 20.25 - redoCenter[0]), -1,
-  [[0, -3.6], [-3.6, 0]], .36);
-icons.redo[0] += redoJoins;
-icons.refresh[0] += cubicHeadJoins([[20.5, 8], [19, 4.6], [16, 2.5], [12, 2.5]],
-  [[-3.6, 0], [0, -3.6]], .42);
 
 // Arrow roots retain their welds; B frame turns are styled by their owning contours.
 const straightHeadJoins = {

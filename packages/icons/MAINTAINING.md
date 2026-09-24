@@ -47,7 +47,11 @@ Generated React icons map these reference widths to the configured primary width
 
 Construction groups may translate, rotate or scale reusable geometry. Bake every transform into the exported coordinates and widths. When adapting geometry already drawn on a 16-unit canvas, lift it consistently to the construction canvas before export; avoid applying normalization twice.
 
-Use shared primitives and the Open Sans vector letterforms for repeated geometry, labels and numerals. The glyph data uses a seven-unit capital-height metric, natural advances and explicit tracking. Let the helper calculate visible bounds instead of centering by character count. Preserve the font attribution and license. Labels load no font at runtime. If a needed character is absent, extend the shared glyph data consistently instead of silently substituting a different character.
+Use shared primitives and the Roboto vector letterforms for repeated geometry, labels and numerals. The glyph data uses a seven-unit capital-height metric, proportional lining numerals, natural advances and explicit tracking. Let the helper calculate visible bounds instead of centering by character count. Preserve the font attribution and license. Labels load no font at runtime. If a needed character is absent, extend the shared glyph data consistently instead of silently substituting a different character.
+
+`generate-letterforms.py` reproduces the regular 400 and bold 700 outlines from the SHA-256-pinned Roboto v3.015 variable font at width 100. For this occasional authoring operation, use Python with `fonttools==4.61.1` and `skia-pathops==0.9.2`, then pass the downloaded source font path shown in that script. Normal icon generation consumes the checked-in vector data and does not need Python or a font download. Regeneration unions overlapping variable-font contours before SVG filling or stroking, and applies the font's `pnum` substitutions to glyphs and advances. It also derives the positive/inverse caption C and its disabled slash clearance from the same font. `letterTracking` is emitted with the glyph data and used by both the label helper and the caption generator: CC uses the font advance plus tracking, then centers the complete label, rather than using independent fixed letter anchors. Preserve `ROBOTO-LICENSE.txt`. The conventional barred italic I remains a purpose-drawn command symbol.
+
+Review the whole lettering family after extending or replacing glyphs: timers, file labels, sort controls, string labels, captions and text commands. Inspect contours as well as spacing; an overlapping font contour can become an unintended hole under even-odd fill. Keep timer labels at a common capital height, center their visible bounds and inspect clear space to the arrow at both themed widths.
 
 Regular vector lettering combines a filled core with a small proportional stroke. The bold control uses a filled bold glyph, and the italic control uses the family’s barred I.
 
@@ -85,6 +89,10 @@ Classify the finished painted boundary using the design guide's [geometry rule](
 Use `softenedStroke`, `softenedFrame`, `softenedRect` and `softenedFill` from `scripts/artwork/contour-profiles.mjs` in the owning recipe. The line helpers retain the original path and add tangent inner paint. They handle straight turns at every angle, exact curve-to-line tangents and actual straight contacts across subpaths. A move alone never creates a connection. `softenedFill` classifies negative sectors of even-odd contours; it does not round outward polygon vertices.
 
 The circular construction radius starts at 1.5 construction units for primary linework, the local width for secondary linework, and 0.5 for filled negative corners. These are starting profiles, not universal final-pixel radii. Straight fillets use at most half each adjoining run so neighboring curves cannot overlap. Curved joins use a bounded tangent solver. Insufficient runs, failed tangent solutions, contacts between separate elements and compound clearances still require review: a skipped or hidden construction is not an approved sharp corner. `keep` and `at` are construction controls, not exceptions.
+
+The circular action family uses `circular-arrow.mjs` above the local tangent helper. Its 24-unit construction has circle centre [12, 12], radius 9, equal 3.75-unit head arms and a head 5.25 units above the centre. Full loop exports fit to centre [8, 8], radius 7 and 35/12-unit head arms. Numbered timers translate the complete construction together to retain their existing reference-space numeral anchor; this does not change the final frame. History shares the counterclockwise loop and centres shorter clock hands within it. Sync uses two opposing half arcs. Undo and Redo end at the bottom and inherit Refresh's fitting transform, so their asymmetric painted bounds do not recenter the circle. Their optical-fit centres describe those painted bounds, not the circle centre.
+
+`checkCircularArrowProportions` in `arrow-alignment.mjs` recovers circle geometry, arm lengths, head positions and tail endpoints from the final paths. It checks all registered circular family exports alongside the tangent check and fails normal artwork validation on drift. Review spacing, head clarity and any proposed different arc opening at native sizes before changing this family contract. Keep new family members in the shared construction and export membership list; do not add a separate detector for each icon.
 
 Use shared owners for recurring frames, controls and marks. Keep compound geometry together where it is genuinely connected; preserve distinct objects and their clearances. Do not weld separate objects merely to satisfy the detector. Check the finished paint at all supported widths: neighboring curves can intersect and create a new cusp even when each individual curve is valid.
 
@@ -448,6 +456,14 @@ Also verify real website search behavior: a metadata/schema check alone cannot e
 - [ ] Website synonym entries match the generated names; intended queries and variant filters find the icons in the appropriate website category.
 - [ ] README counts reflect inventory changes, and consumer-visible changes have a changeset.
 - [ ] Relevant generation, validation, and integration checks pass; the final generated diff matches the intended scope.
+
+### Preserve curved-arrow alignment
+
+Use `alignedCurvedArrow` in `scripts/artwork/curved-arrow.mjs` for the reviewed curved-arrow families. Author an open shaft starting at its head tip, followed by its two outward arm vectors. The helper replaces only the nearby approach, retains the head and distant curve, and derives the local inner fillets from the corrected curve. Keep the head arms, circle or other body, numerals and additional marks consistent within the family.
+
+Normal artwork validation checks the final exported curves independently: it discovers the two straight head arms at a curved shaft endpoint, compares their bisector with the arriving tangent, and requires the expected number of heads. The 0.1-degree tolerance accommodates export rounding; it is not a general perceptual threshold. Add a new family to this relationship check rather than copying per-icon coordinates. Existing constructor tests also exercise circular, cubic and mirrored approaches.
+
+Passing alignment does not approve weld strength, curvature, clear arms, visible weight or small-size recognition. Inspect the native 12px/16px before/after family, actual components and CSS masks as usual. A tangent approach should look natural rather than introducing an abrupt flat or bump into the curve.
 
 ### Compare painted pair contours
 

@@ -1,0 +1,582 @@
+{
+  "results": [
+    {
+      "name": "storefront",
+      "feature": "window aperture",
+      "weight": 0.67,
+      "mismatch": 0.40918062010568534,
+      "outlinePixels": 18560,
+      "solidPixels": 31414
+    },
+    {
+      "name": "storefront",
+      "feature": "door aperture",
+      "weight": 0.67,
+      "mismatch": 0.5658391156372846,
+      "outlinePixels": 19126,
+      "solidPixels": 37903
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 0.67,
+      "y": 10,
+      "extents": [
+        [
+          120,
+          903
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 0.67,
+      "y": 11,
+      "extents": [
+        [
+          120,
+          903
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 0.67,
+      "y": 12,
+      "extents": [
+        [
+          120,
+          903
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 0.67,
+      "y": 13.5,
+      "extents": [
+        [
+          40,
+          983
+        ],
+        [
+          40,
+          983
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "window aperture",
+      "weight": 1,
+      "mismatch": 0.5073215763672249,
+      "outlinePixels": 15477,
+      "solidPixels": 31414
+    },
+    {
+      "name": "storefront",
+      "feature": "door aperture",
+      "weight": 1,
+      "mismatch": 0.6639843811835475,
+      "outlinePixels": 13682,
+      "solidPixels": 37903
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1,
+      "y": 10,
+      "extents": [
+        [
+          109,
+          914
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1,
+      "y": 11,
+      "extents": [
+        [
+          109,
+          914
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1,
+      "y": 12,
+      "extents": [
+        [
+          109,
+          914
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1,
+      "y": 13.5,
+      "extents": [
+        [
+          40,
+          983
+        ],
+        [
+          40,
+          983
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "window aperture",
+      "weight": 1.3333333333333333,
+      "mismatch": 0.6067676831985739,
+      "outlinePixels": 12353,
+      "solidPixels": 31414
+    },
+    {
+      "name": "storefront",
+      "feature": "door aperture",
+      "weight": 1.3333333333333333,
+      "mismatch": 0.771917790148537,
+      "outlinePixels": 8645,
+      "solidPixels": 37903
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1.3333333333333333,
+      "y": 10,
+      "extents": [
+        [
+          99,
+          924
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1.3333333333333333,
+      "y": 11,
+      "extents": [
+        [
+          99,
+          924
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1.3333333333333333,
+      "y": 12,
+      "extents": [
+        [
+          99,
+          924
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1.3333333333333333,
+      "y": 13.5,
+      "extents": [
+        [
+          40,
+          983
+        ],
+        [
+          40,
+          983
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "window aperture",
+      "weight": 1.5,
+      "mismatch": 0.6502514802317438,
+      "outlinePixels": 10987,
+      "solidPixels": 31414
+    },
+    {
+      "name": "storefront",
+      "feature": "door aperture",
+      "weight": 1.5,
+      "mismatch": 0.8240387200860446,
+      "outlinePixels": 6544,
+      "solidPixels": 37190
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1.5,
+      "y": 10,
+      "extents": [
+        [
+          93,
+          930
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1.5,
+      "y": 11,
+      "extents": [
+        [
+          93,
+          930
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1.5,
+      "y": 12,
+      "extents": [
+        [
+          93,
+          930
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1.5,
+      "y": 13.5,
+      "extents": [
+        [
+          40,
+          983
+        ],
+        [
+          40,
+          983
+        ]
+      ]
+    }
+  ],
+  "failures": [
+    {
+      "name": "storefront",
+      "feature": "window aperture",
+      "weight": 0.67,
+      "mismatch": 0.40918062010568534,
+      "outlinePixels": 18560,
+      "solidPixels": 31414
+    },
+    {
+      "name": "storefront",
+      "feature": "door aperture",
+      "weight": 0.67,
+      "mismatch": 0.5658391156372846,
+      "outlinePixels": 19126,
+      "solidPixels": 37903
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 0.67,
+      "y": 10,
+      "extents": [
+        [
+          120,
+          903
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 0.67,
+      "y": 11,
+      "extents": [
+        [
+          120,
+          903
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 0.67,
+      "y": 12,
+      "extents": [
+        [
+          120,
+          903
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "window aperture",
+      "weight": 1,
+      "mismatch": 0.5073215763672249,
+      "outlinePixels": 15477,
+      "solidPixels": 31414
+    },
+    {
+      "name": "storefront",
+      "feature": "door aperture",
+      "weight": 1,
+      "mismatch": 0.6639843811835475,
+      "outlinePixels": 13682,
+      "solidPixels": 37903
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1,
+      "y": 10,
+      "extents": [
+        [
+          109,
+          914
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1,
+      "y": 11,
+      "extents": [
+        [
+          109,
+          914
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1,
+      "y": 12,
+      "extents": [
+        [
+          109,
+          914
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "window aperture",
+      "weight": 1.3333333333333333,
+      "mismatch": 0.6067676831985739,
+      "outlinePixels": 12353,
+      "solidPixels": 31414
+    },
+    {
+      "name": "storefront",
+      "feature": "door aperture",
+      "weight": 1.3333333333333333,
+      "mismatch": 0.771917790148537,
+      "outlinePixels": 8645,
+      "solidPixels": 37903
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1.3333333333333333,
+      "y": 10,
+      "extents": [
+        [
+          99,
+          924
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1.3333333333333333,
+      "y": 11,
+      "extents": [
+        [
+          99,
+          924
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1.3333333333333333,
+      "y": 12,
+      "extents": [
+        [
+          99,
+          924
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "window aperture",
+      "weight": 1.5,
+      "mismatch": 0.6502514802317438,
+      "outlinePixels": 10987,
+      "solidPixels": 31414
+    },
+    {
+      "name": "storefront",
+      "feature": "door aperture",
+      "weight": 1.5,
+      "mismatch": 0.8240387200860446,
+      "outlinePixels": 6544,
+      "solidPixels": 37190
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1.5,
+      "y": 10,
+      "extents": [
+        [
+          93,
+          930
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1.5,
+      "y": 11,
+      "extents": [
+        [
+          93,
+          930
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    },
+    {
+      "name": "storefront",
+      "feature": "shared wall/ground silhouette",
+      "weight": 1.5,
+      "y": 12,
+      "extents": [
+        [
+          93,
+          930
+        ],
+        [
+          104,
+          919
+        ]
+      ]
+    }
+  ]
+}
