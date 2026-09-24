@@ -26,7 +26,11 @@ import {
 } from "react";
 import { Button } from "../button";
 import { useFormFieldProps } from "../form-field-context";
-import type { OptionValue } from "../list-control/ListControlContext";
+import {
+  getComboBoxNavigationTarget,
+  isListControlEditableNavigationKey,
+  type OptionAndElement,
+} from "../list-control/ListControlNavigationKeys";
 import { ListControlProvider } from "../list-control/ListControlProvider";
 import { defaultValueToString } from "../list-control/ListControlState";
 import { OptionList } from "../option/OptionList";
@@ -245,50 +249,22 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
     const activeOption = activeState;
 
-    let newActive:
-      | { data: OptionValue<Item>; element: HTMLElement }
-      | undefined;
+    // Home/End preventDefault is handled below only if the active option changes.
+    if (isListControlEditableNavigationKey(event.key)) {
+      event.preventDefault();
+    }
+
+    const newActive: OptionAndElement<Item> | undefined =
+      getComboBoxNavigationTarget(event.key, activeOption, {
+        getFirstOption,
+        getLastOption,
+        getOptionAfter,
+        getOptionBefore,
+        getOptionPageAbove,
+        getOptionPageBelow,
+      });
+
     switch (event.key) {
-      case "ArrowDown":
-        event.preventDefault();
-        newActive = activeOption
-          ? getOptionAfter(activeOption)
-          : getFirstOption();
-        break;
-      case "ArrowUp":
-        event.preventDefault();
-        newActive = activeOption
-          ? getOptionBefore(activeOption)
-          : getLastOption();
-        break;
-      case "Home":
-        newActive = getFirstOption();
-        break;
-      case "End":
-        newActive = getLastOption();
-        break;
-      case "PageUp":
-        event.preventDefault();
-        if (activeOption) {
-          newActive = getOptionPageAbove(activeOption);
-        } else {
-          const lastOption = getLastOption();
-          if (lastOption) {
-            newActive = getOptionPageAbove(lastOption?.data);
-          }
-        }
-        break;
-      case "PageDown":
-        event.preventDefault();
-        if (activeOption) {
-          newActive = getOptionPageBelow(activeOption);
-        } else {
-          const firstOption = getFirstOption();
-          if (firstOption) {
-            newActive = getOptionPageBelow(firstOption.data);
-          }
-        }
-        break;
       case "Enter":
         if (openState && activeState?.disabled) {
           event.preventDefault();
@@ -323,10 +299,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       setFocusVisibleState(true);
     }
 
-    // Home and End are deliberately left out of the switch above. In this
-    // editable field they are only taken over when the active option actually
-    // changes, which the shared check below handles. Preventing them
-    // unconditionally would be a behavior change beyond stopping the scroll.
+    // Home/End: only prevent default when the active option actually changes.
     if (newActive && newActive.data.id !== activeState?.id) {
       event.preventDefault();
       setActive(newActive.data);

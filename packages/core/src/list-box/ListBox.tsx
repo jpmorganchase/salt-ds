@@ -11,7 +11,11 @@ import {
   type Ref,
   useRef,
 } from "react";
-import type { OptionValue } from "../list-control/ListControlContext";
+import {
+  getListControlNavigationTarget,
+  isListControlNavigationKey,
+  type OptionAndElement,
+} from "../list-control/ListControlNavigationKeys";
 import { ListControlProvider } from "../list-control/ListControlProvider";
 import {
   defaultValueToString,
@@ -139,34 +143,23 @@ export const ListBox = forwardRef(function ListBox<Item>(
       return;
     }
 
-    let newActive:
-      | { data: OptionValue<Item>; element: HTMLElement }
-      | undefined;
+    const isNavigationKey = isListControlNavigationKey(event.key);
+    if (isNavigationKey) {
+      event.preventDefault();
+    }
+
+    const newActive: OptionAndElement<Item> | undefined = isNavigationKey
+      ? getListControlNavigationTarget(event.key, activeOption, {
+          getFirstOption,
+          getLastOption,
+          getOptionAfter,
+          getOptionBefore,
+          getOptionPageAbove,
+          getOptionPageBelow,
+        })
+      : undefined;
+
     switch (event.key) {
-      case "ArrowDown":
-        event.preventDefault();
-        newActive = getOptionAfter(activeOption) ?? getLastOption();
-        break;
-      case "ArrowUp":
-        event.preventDefault();
-        newActive = getOptionBefore(activeOption) ?? getFirstOption();
-        break;
-      case "Home":
-        event.preventDefault();
-        newActive = getFirstOption();
-        break;
-      case "End":
-        event.preventDefault();
-        newActive = getLastOption();
-        break;
-      case "PageUp":
-        event.preventDefault();
-        newActive = getOptionPageAbove(activeOption);
-        break;
-      case "PageDown":
-        event.preventDefault();
-        newActive = getOptionPageBelow(activeOption);
-        break;
       case "Enter":
       case " ":
         if (
