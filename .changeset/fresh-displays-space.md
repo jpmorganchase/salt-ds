@@ -2,4 +2,4 @@
 "@salt-ds/theme": minor
 ---
 
-Added a display typography letter spacing token.
+Added display typography letter spacing and text transform tokens.
