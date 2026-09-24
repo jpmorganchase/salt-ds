@@ -98,7 +98,7 @@ export const StorefrontIcon = forwardRef<SVGSVGElement, StorefrontIconProps>(
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.6)"
-            d="M4.314 9.58h3.16v2.106h-3.16Z"
+            d="M4.314 9.58h3.16v2.633h-3.16Z"
           />
           <path d="M6.842 9.58a.63.63 0 0 1 .631.632V9.58Z" />
           <path
@@ -107,19 +107,19 @@ export const StorefrontIcon = forwardRef<SVGSVGElement, StorefrontIconProps>(
             strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.6)"
             d="M6.842 9.58a.63.63 0 0 1 .631.632"
           />
-          <path d="M7.473 11.054a.63.63 0 0 1-.631.632h.631Z" />
+          <path d="M7.473 11.58a.63.63 0 0 1-.631.633h.631Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.6)"
-            d="M7.473 11.054a.63.63 0 0 1-.631.632"
+            d="M7.473 11.58a.63.63 0 0 1-.631.633"
           />
-          <path d="M4.946 11.686a.63.63 0 0 1-.632-.632v.632Z" />
+          <path d="M4.946 12.213a.63.63 0 0 1-.632-.632v.632Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.6)"
-            d="M4.946 11.686a.63.63 0 0 1-.632-.632"
+            d="M4.946 12.213a.63.63 0 0 1-.632-.632"
           />
           <path d="M4.314 10.212a.63.63 0 0 1 .632-.632h-.632Z" />
           <path
@@ -131,13 +131,13 @@ export const StorefrontIcon = forwardRef<SVGSVGElement, StorefrontIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M9.58 13.792V9.58h2.106v4.212"
+            d="M9.053 13.792V9.58h2.633v4.212"
           />
-          <path d="M9.58 10.633a1.053 1.053 0 0 1 1.053-1.053H9.58Z" />
+          <path d="M9.053 10.633a1.053 1.053 0 0 1 1.053-1.053H9.053Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M9.58 10.633a1.053 1.053 0 0 1 1.053-1.053"
+            d="M9.053 10.633a1.053 1.053 0 0 1 1.053-1.053"
           />
           <path d="M10.633 9.58a1.053 1.053 0 0 1 1.053 1.053V9.58Z" />
           <path
@@ -169,17 +169,17 @@ export const StorefrontIcon = forwardRef<SVGSVGElement, StorefrontIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M14.95 13.792a1.16 1.16 0 0 1-1.158-1.158"
           />
-          <path d="M8.632 13.792a.95.95 0 0 0 .948-.948v.948Z" />
+          <path d="M8.105 13.792a.95.95 0 0 0 .948-.948v.948Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8.632 13.792a.95.95 0 0 0 .948-.948"
+            d="M8.105 13.792a.95.95 0 0 0 .948-.948"
           />
-          <path d="M10.528 13.792a.95.95 0 0 1-.948-.948v.948Z" />
+          <path d="M10.001 13.792a.95.95 0 0 1-.948-.948v.948Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M10.528 13.792a.95.95 0 0 1-.948-.948"
+            d="M10.001 13.792a.95.95 0 0 1-.948-.948"
           />
           <path d="M10.738 13.792a.95.95 0 0 0 .948-.948v.948Z" />
           <path

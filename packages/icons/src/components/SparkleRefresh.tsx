@@ -22,7 +22,19 @@ export const SparkleRefreshIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M13.686 3.917A7 7 0 1 0 15 8m-4.231-4.083h2.917V1"
+          d="M13.686 3.917C12.769 3 11.83 1.999 10.629 1.512A7 7 0 1 0 15 8m-1.314-7v2.917h-2.917"
+        />
+        <path d="M13.686 1.828a.894.894 0 0 1-1.47.684c.517.436.996.931 1.47 1.405z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M13.686 1.828a.894.894 0 0 1-1.47.684"
+        />
+        <path d="M11.425 3.917a.894.894 0 0 0 .552-1.599c.61.479 1.164 1.054 1.709 1.599z" />
+        <path
+          fill="none"
+          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          d="M11.425 3.917a.894.894 0 0 0 .552-1.599"
         />
         <path
           fill="none"
@@ -62,18 +74,6 @@ export const SparkleRefreshIcon = forwardRef<
           strokeMiterlimit="5"
           strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.62)"
           d="M7.468 5.921a.577.577 0 0 1 1.064 0"
-        />
-        <path d="M11.535 3.917a.894.894 0 0 0 .518-1.624 7 7 0 0 1 1.633 1.624Z" />
-        <path
-          fill="none"
-          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M11.535 3.917a.894.894 0 0 0 .518-1.624"
-        />
-        <path d="M13.686 1.726a.894.894 0 0 1-1.438.71 7 7 0 0 1 1.438 1.48Z" />
-        <path
-          fill="none"
-          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M13.686 1.726a.894.894 0 0 1-1.438.71"
         />
       </g>
     </Icon>

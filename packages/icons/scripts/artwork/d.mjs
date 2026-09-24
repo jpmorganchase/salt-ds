@@ -1,8 +1,9 @@
+import { circularArrow } from "./circular-arrow.mjs";
 import { retainedSurface } from "./retained-surface.mjs";
 import { softenedStroke as S, softenedFill as F } from "./contour-profiles.mjs";
 import { softenedRect as R, softenedFrame as SF } from "./contour-profiles.mjs";
 import { arrowRoot } from "./internal-arrow-junctions.mjs";
-import { concavePolygon, circularHeadJoins, cubicHeadJoins, tangentCircularHeadJoins } from "./cd-junctions.mjs";
+import { concavePolygon } from "./cd-junctions.mjs";
 import { stackoverflow, symphony } from "./brands.mjs";
 import { weldedCross } from "./cross-marks.mjs";
 import {
@@ -14,7 +15,7 @@ import { enclosedTick, enclosedWarning } from "./enclosed-marks.mjs";
 import { circularCrossJunction } from "./junctions.mjs";
 import { lockKeyhole } from "./lock-marks.mjs";
 import { withSharedMark } from "./mark-composition.mjs";
-import { box, C, circ, dot, group, italicLetter, L, slash, textLabel, S as stroke } from "./primitives.mjs";
+import { box, C, circ, dot, group, italicLetter, L, slash, textLabel } from "./primitives.mjs";
 
 const icons = {};
 const put = (n, o, s) => {
@@ -45,14 +46,7 @@ const littleStar =
 // bevels them into flat ends. Both treatments use the same complete rim.
 const [sparkleOutline, sparkleSolid] = retainedSurface(star, { miterLimit: 5 });
 put("sparkle", sparkleOutline + F(littleStar), sparkleSolid + F(littleStar));
-// Let the circle turn farther before the head so both short arms have room
-// for a visible, restrained weld at the heavier theme width.
-const refreshTipY = 6.75;
-const refreshTipX = 12 + Math.sqrt(9 ** 2 - (refreshTipY - 12) ** 2);
-const refreshHead = 3.75;
-const refresh = stroke(
-  `M${refreshTipX} ${refreshTipY}A9 9 0 1 0 21 12M${refreshTipX - refreshHead} ${refreshTipY}H${refreshTipX}V${refreshTipY - refreshHead}`,
-);
+const refresh = circularArrow();
 put(
   "sparkle-refresh",
   refresh + group(sparkleOutline, "translate(5.18 5.18) scale(.62)"),
@@ -147,8 +141,8 @@ const canopyLowerOffset = (x) =>
     }),
   );
 const storefrontWallCap = canopyLowerOffset(3.75 + storefrontHalfRim);
-const storefrontWallLeft = 3.75 - storefrontHalfRim;
-const storefrontWallRight = 20.25 + storefrontHalfRim;
+const storefrontWallLeft = 3.75;
+const storefrontWallRight = 20.25;
 // Adaptive linear segments approximate the normal offset to .002 source
 // units (under .0015 final units). Split at half-unit intervals so a scallop
 // valley cannot hide between the midpoint and endpoints of a wide segment.
@@ -172,37 +166,34 @@ for (let x = storefrontWallLeft; x < storefrontWallRight; x += 0.5) {
     [next, canopyLowerOffset(next)],
   );
 }
+// One set of window, door and wall landmarks for both variants. Painting the
+// same rims over the solid cutouts keeps their openings identical at every
+// supported stroke width; filling the wall never resizes its features.
+const storefrontWindow = box(6.75, 14.25, 4.5, 3.75);
+const storefrontDoorBounds = { left: 13.5, right: 17.25, top: 14.25, bottom: 20.25 };
+const { left: doorLeft, right: doorRight, top: doorTop, bottom: doorBottom } = storefrontDoorBounds;
+const storefrontDoor = box(doorLeft, doorTop, doorRight-doorLeft, doorBottom-doorTop);
 const storefrontWall =
-  canopyOffsetPoints
-    .map(
-      ([x, y], index) =>
-        `${index ? "L" : "M"}${Number(x.toFixed(6))} ${Number(y.toFixed(6))}`,
-    )
-    .join("") +
-  `V20.25H17.625V14.25H13.875V20.25H${storefrontWallLeft}Z` +
-  "M6.375 14.25V17.25H11.625V14.25Z";
+  canopyOffsetPoints.map(([x, y], index) =>
+    `${index ? "L" : "M"}${Number(x.toFixed(6))} ${Number(y.toFixed(6))}`,
+  ).join("") + `V20.25H${storefrontWallLeft}Z`;
 const storefrontGroundJoins = [3.75, 20.25]
-  .map((x) =>
-    circularCrossJunction(x, 20.25, 1.65, undefined, [
-      [-1, -1],
-      [1, -1],
-    ]),
-  )
-  .join("");
-put(
-  "storefront",
+  .map((x) => circularCrossJunction(x, 20.25, 1.65, undefined,
+    [[-1, -1], [1, -1]],
+  )).join("");
+const storefrontDoorJoins = [doorLeft, doorRight]
+  .map((x) => circularCrossJunction(x, 20.25, 1.35, undefined,
+    [[-1, -1], [1, -1]],
+  )).join("");
+const storefrontStructure =
   S(awning) +
-    S(
-      `M3.75 ${storefrontWallCap}V20.25H20.25V${storefrontWallCap}M1.5 20.25h21`,
-    ) +
-    S(box(6.75, 14.25, 4.5, 3), 0.9) +
-    S("M14.25 20.25v-6h3v6") +
-    storefrontGroundJoins,
-  F(awning) +
-    S(awning) +
-    F(storefrontWall) +
-    L(1.5, 20.25, 22.5, 20.25) +
-    storefrontGroundJoins,
+  S(`M3.75 ${storefrontWallCap}V20.25H20.25V${storefrontWallCap}M1.5 20.25h21`) +
+  S(storefrontWindow, 0.9) +
+  S(`M${doorLeft} ${doorBottom}V${doorTop}H${doorRight}V${doorBottom}`) +
+  storefrontGroundJoins + storefrontDoorJoins;
+put("storefront", storefrontStructure,
+  F(awning) + F(storefrontWall + storefrontWindow + storefrontDoor) +
+  storefrontStructure,
 );
 
 put(
@@ -233,12 +224,8 @@ put(
   ),
 );
 put("symphony", symphony);
-put(
-  "sync",
-  stroke(
-    `M3 12A9 9 0 0 1 ${refreshTipX} ${refreshTipY}M${refreshTipX - refreshHead} ${refreshTipY}H${refreshTipX}V${refreshTipY - refreshHead}M21 12A9 9 0 0 1 ${24 - refreshTipX} ${24 - refreshTipY}M${24 - refreshTipX + refreshHead} ${24 - refreshTipY}H${24 - refreshTipX}V${24 - refreshTipY + refreshHead}`,
-  ),
-);
+const syncHalf = circularArrow("clockwise", "half");
+put("sync", syncHalf + group(syncHalf, "rotate(180 12 12)"));
 const tag = "M2.25 13.5L13.5 2.25h8.25v8.25L10.5 21.75Z";
 put(
   "tag",
@@ -534,7 +521,7 @@ put(
   typeLines + handles.map((p) => S(p)).join(""),
   typeLines + handles.map((p) => S(p)).join("") + F(handles.join("")),
 );
-put("undo", S("M3.75 3.75v6h6M3.75 9.75a8.25 8.25 0 1 1 7.5 11.25"));
+put("undo", circularArrow("counterclockwise", "return"));
 const ungroupLines = SF("M15 3.75h5.25V9M3.75 15v5.25H9");
 put(
   "ungroup",
@@ -873,21 +860,6 @@ put(
     C(4.5, 4.5, 3) +
     C(12, 13.5, 3),
 );
-// Retain the actual circular trajectory beneath each head fillet.
-const refreshHeadJoins = tangentCircularHeadJoins(12, 12, 9,
-  [refreshTipX, refreshTipY], -1,
-  [[-refreshHead, 0], [0, -refreshHead]], 1.15);
-icons["sparkle-refresh"] = icons["sparkle-refresh"].map((drawing) => drawing + refreshHeadJoins);
-icons.sync[0] += refreshHeadJoins + group(refreshHeadJoins, "rotate(180 12 12)");
-const undoCenter = (() => {
-  const dx = -3.75, dy = -5.625;
-  const factor = Math.sqrt((8.25 ** 2 - dx ** 2 - dy ** 2) / (dx ** 2 + dy ** 2));
-  return [7.5 - factor * dy, 15.375 + factor * dx];
-})();
-icons.undo[0] += circularHeadJoins(...undoCenter, 8.25,
-  Math.atan2(9.75 - undoCenter[1], 3.75 - undoCenter[0]), 1,
-  [[0, -3.6], [3.6, 0]], .36);
-
 const straightHeadJoins = {
   "summarize": arrowRoot(21, 18.75, [-1, 0], 1.5),
   "swap": arrowRoot(20.25, 6.75, [-1, 0], 1.6) + arrowRoot(3.75, 17.25, [1, 0], 1.6),
@@ -896,9 +868,6 @@ const straightHeadJoins = {
   "workflow": arrowRoot(21, 20, [-1, 0], 1.25),
   "split-view": circularCrossJunction(12, 3.75, 1.8, undefined, [[-1, 1]]) +
     circularCrossJunction(12, 20.25, 1.8, undefined, [[-1, -1]]),
-  "storefront": [14.25, 17.25].map((x) =>
-    circularCrossJunction(x, 20.25, 1.35, undefined, [[-1, -1], [1, -1]]),
-  ).join(""),
 };
 for (const [name, joins] of Object.entries(straightHeadJoins))
   icons[name] = icons[name].map((drawing) => drawing ? drawing + joins : drawing);

@@ -17,7 +17,7 @@ Keep the features that distinguish the subject. A laptop with a plain screen has
 
 <IconDesignExamples example="family" />
 
-Related icons share visible landmarks: a cloud's lobes, a page's fold, a bookmark's notch or a person's head and shoulders. Preserve the base object's proportions, apparent size and position when adding a state or action. Compare the final drawings together; fitting them separately can make an unchanged object appear to move.
+Related icons share visible landmarks: a cloud's lobes, a page's fold, a bookmark's notch or a person's head and shoulders. Preserve the base object's proportions, apparent size and position when adding a state or action. Compare the final drawings together; fitting them separately can make an unchanged object appear to move. For openings such as Storefront's window and door, compare the full clear shape and surrounding rim at each supported weight. Matching their centers alone is insufficient: filling a wall should not change the size or proportion of its openings.
 
 Review meaning with the name hidden first, then in its intended interface. If the silhouette suggests the wrong object, correct it before refining details. When replacing established artwork, compare against the previous icon at 12px, especially for status. Keep states distinguishable without relying on color. An expert visual review is useful, but does not replace recognition feedback from users.
 
@@ -84,6 +84,14 @@ When replacing an established icon, compare its painted width, height, proportio
 
 Judge a mark within its container separately. A mathematically centered tick can look low because of its lower elbow. Balance the surrounding space and compare the positive and inverse forms. A primary status tick and a small tick qualifying another object can share a gesture without sharing one absolute size.
 
+### Circular action families
+
+Compare the whole arrow: circle diameter and centre, head size and placement, opening, weld strength and internal content. Matching only the outer bounds or the shaft-to-head angle does not establish a consistent family.
+
+Refresh, Replay, Forward, History, Sync and Sparkle refresh share one circle and head construction. Preserve those proportions when adding content. History uses the Replay loop with shorter clock hands centred inside it; leave clear space around the hands before changing their weight. Undo and Redo use the same circle and mirrored heads, with their open return arcs ending at the bottom. Sync uses two opposing heads and shorter arcs. These openings distinguish actions without changing the head size.
+
+Keep the circle centre fixed when shortening an arc. Recentering the remaining painted shape can move an otherwise unchanged head. Review internal numerals, hands and sparkles separately, then compare the complete family at 12px and 16px. New members inherit the nearest shared construction; any different framing or head proportion needs a specific visual reason.
+
 ## Stroke weight
 
 Use the primary line weight for the silhouette and the marks that carry the icon's meaning. A lighter secondary line is appropriate only when it creates a useful hierarchy and remains clear at 12px. Keep comparable features equally weighted across the family and across outline/solid pairs.
@@ -135,7 +143,9 @@ A successful transition is visible at the supported weights, leaves useful strai
 
 For compact arrows, check both arms and the point at 12px. Reduce the local radius or simplify surrounding detail before weakening the arrow. A secondary arrow can use a lighter family treatment when its role supports it; small size alone is not a reason to thin it.
 
-On a curved arrow, the bend of the shaft can consume space on one side of the head. If a smaller weld still crowds the arms, adjust the head's position along the curve or its proportions while preserving a clear direction. Compare both directions and repeated heads together.
+On a curved arrow, make the shaft's final approach flow into the middle of the head, between its two arms. Meeting at the same endpoint is not enough: a shaft arriving at a different angle can make the head look lopsided, even when both joins are smooth. Align that approach before calibrating the weld, then compare mirrored and repeated heads together. Preserve the distant curve and neighboring marks when making a local correction.
+
+The bend of the shaft can consume space on one side of the head. If a smaller weld still crowds the arms, adjust the head's position along the curve or its proportions while preserving a clear direction. Compare both directions and repeated heads together.
 
 Use the same treatment for equivalent repeated geometry. First reduce local softening or remove nonessential detail if space is tight. Retain a sharp interior corner only when comparison shows that softening obscures a distinguishing feature or closes a required opening. Record the exact feature and reason with the artwork. A status role, a shape name or an old reference alone is not an exemption.
 
@@ -173,9 +183,13 @@ Keep retained contours continuous. An opening reaching the outside, such as Home
 
 ## Lettering and numerals
 
-Use the family's Open Sans vector letter shapes. Preserve natural proportions, spacing and readable counters. Center the visible shapes rather than the character count, and retain optical adjustments for rounded digits.
+Use Roboto vector letter shapes to match the accompanying interface typography. Preserve natural proportions and readable counters. Use proportional lining numerals for short labels such as 10, 15 and 123; tabular spacing reserves unnecessary room around a narrow 1. Center the complete visible label, including rounded-digit overshoot, instead of centering by character count.
+
+Start with the typeface's natural advances and the family's shared tracking. Judge the visible rhythm of the whole label; equal bounding-box gaps are not a typography rule. Keep the same numeral scale across a timer family rather than shrinking only double-digit labels. Check both inter-character spacing and clearance to the surrounding arrow at native size.
 
 <IconDesignExamples example="lettering" />
+
+Use the same spacing method for caption lettering: CC is one centered label, not two letters positioned independently in halves of the frame. Preserve the lettering and its spacing when switching between painted and inverse forms; a disabled slash may interrupt letters but must not move them.
 
 Keep file labels, timer numerals and text controls consistent within their families. Bold and italic controls retain their recognizable differences. Check letters and short number sequences at 12px and 16px; do not compress them until they lose their identifying features.
 

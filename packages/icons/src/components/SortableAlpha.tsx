@@ -21,23 +21,23 @@ export const SortableAlphaIcon = forwardRef<
       <g strokeWidth="var(--icon-strokeWidth, 1)">
         <path
           fillRule="evenodd"
-          d="m4.283 6.054-.62-1.597H1.646L1.03 6.054H.438L2.408 1h.526l1.955 5.053Zm-.795-2.117L2.899 2.35l-.067-.203-.095-.293-.079-.244q-.034.14-.074.28t-.077.258q-.038.12-.066.202l-.598 1.587Z"
+          d="m4.193 6.054-.48-1.317H1.607L1.13 6.054H.45L2.368 1.02h.584l1.925 5.033ZM3.515 4.19l-.853-2.347-.854 2.347Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.1857)"
-          d="m4.283 6.054-.62-1.597H1.646L1.03 6.054H.438L2.408 1h.526l1.955 5.053Zm-.795-2.117L2.899 2.35l-.067-.203-.095-.293-.079-.244q-.034.14-.074.28t-.077.258q-.038.12-.066.202l-.598 1.587Z"
+          d="m4.193 6.054-.48-1.317H1.607L1.13 6.054H.45L2.368 1.02h.584l1.925 5.033ZM3.515 4.19l-.853-2.347-.854 2.347Z"
         />
         <path
           fillRule="evenodd"
-          d="M4.41 14.958H.917v-.441l2.709-4.069H1.009v-.523h3.33v.44l-2.713 4.07H4.41Z"
+          d="M4.494 14.415v.543H.834v-.498l2.758-3.989H.878v-.546h3.505v.484l-2.765 4.006Z"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.1857)"
-          d="M4.41 14.958H.917v-.441l2.709-4.069H1.009v-.523h3.33v.44l-2.713 4.07H4.41Z"
+          d="M4.494 14.415v.543H.834v-.498l2.758-3.989H.878v-.546h3.505v.484l-2.765 4.006Z"
         />
         <path
           fill="none"

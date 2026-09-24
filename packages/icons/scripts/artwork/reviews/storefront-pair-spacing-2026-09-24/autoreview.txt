@@ -1,0 +1,3 @@
+autoreview clean: no accepted/actionable findings reported
+overall: patch is correct (0.91)
+The change consistently shares Storefront geometry between outline and solid variants, preserves the solid cutouts behind the shared rims, updates the relevant validation coverage, and derives caption spacing from the same exported tracking value used by the label helper. No actionable defect is evident in the provided bundle.

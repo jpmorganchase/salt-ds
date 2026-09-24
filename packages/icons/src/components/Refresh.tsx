@@ -20,25 +20,19 @@ export const RefreshIcon = forwardRef<SVGSVGElement, RefreshIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M14.408 5.057c-1.103-2.5-3.31-4.045-6.253-4.045a6.988 6.988 0 1 0 6.731 8.827M9.994 5.057h4.414V1.012"
+            d="M13.686 3.917C12.769 3 11.83 1.999 10.629 1.512A7 7 0 1 0 15 8m-1.314-7v2.917h-2.917"
           />
-          <path d="M13.305 5.057a1.103 1.103 0 0 0 1.103-1.103v1.103Z" />
+          <path d="M13.686 1.828a.894.894 0 0 1-1.47.684c.517.436.996.931 1.47 1.405z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M13.305 5.057a1.103 1.103 0 0 0 1.103-1.103"
+            d="M13.686 1.828a.894.894 0 0 1-1.47.684"
           />
-          <path d="M11.76 5.057q3.909 0 .701-2.601c.825.67 1.484 1.551 1.947 2.601Z" />
+          <path d="M11.425 3.917a.894.894 0 0 0 .552-1.599c.61.479 1.164 1.054 1.709 1.599z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M11.76 5.057q3.909 0 .701-2.601"
-          />
-          <path d="M14.408 2.41q0 1.625-1.947.046c.825.67 1.484 1.551 1.947 2.601Z" />
-          <path
-            fill="none"
-            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M14.408 2.41q0 1.625-1.947.046"
+            d="M11.425 3.917a.894.894 0 0 0 .552-1.599"
           />
         </g>
       </Icon>

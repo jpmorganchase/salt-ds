@@ -1,0 +1,61 @@
+{
+  "names": [
+    "storefront.svg",
+    "closedcaption-disabled.svg",
+    "closedcaption-disabled_solid.svg",
+    "closedcaption.svg",
+    "closedcaption_solid.svg",
+    "csv.svg",
+    "csv_solid.svg",
+    "forward-10.svg",
+    "forward-15.svg",
+    "forward-30.svg",
+    "forward-5.svg",
+    "pdf.svg",
+    "pdf_solid.svg",
+    "replay-10.svg",
+    "replay-15.svg",
+    "replay-30.svg",
+    "replay-5.svg",
+    "sort-alpha-ascend.svg",
+    "sort-alpha-descend.svg",
+    "sort-num-ascend.svg",
+    "sort-num-descend.svg",
+    "sortable-alpha.svg",
+    "sortable-num.svg",
+    "storefront_solid.svg",
+    "string-number.svg",
+    "string-text.svg",
+    "text-bold.svg",
+    "text-color.svg",
+    "text-ordered-list.svg",
+    "text-strikethrough.svg",
+    "text-underline.svg",
+    "type.svg",
+    "type_solid.svg",
+    "xls.svg",
+    "xls_solid.svg",
+    "zip.svg",
+    "zip_solid.svg"
+  ],
+  "dpr": [
+    1,
+    2
+  ],
+  "weights": [
+    0.67,
+    1,
+    1.3333333333333333,
+    1.5
+  ],
+  "sizes": [
+    12,
+    16
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "samples": 1480,
+  "failures": []
+}

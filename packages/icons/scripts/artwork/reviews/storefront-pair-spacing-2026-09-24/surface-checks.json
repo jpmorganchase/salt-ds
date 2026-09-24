@@ -1,0 +1,30 @@
+{
+  "samples": 240,
+  "failures": [],
+  "names": [
+    "storefront",
+    "storefront_solid",
+    "closedcaption",
+    "closedcaption_solid",
+    "closedcaption-disabled",
+    "closedcaption-disabled_solid"
+  ],
+  "dpr": [
+    1,
+    2
+  ],
+  "sizes": [
+    12,
+    16
+  ],
+  "weights": [
+    0.67,
+    1,
+    1.3333333333333333,
+    1.5
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ]
+}

@@ -1902,7 +1902,7 @@
     "fitted": true,
     "targetSpan": 15.5,
     "scale": 1.166667,
-    "translateX": -1.588542,
+    "translateX": -1.333333,
     "translateY": -1.333333
   },
   "holiday.svg": {
@@ -3267,17 +3267,23 @@
     "groupKey": "redo.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.272727,
-    "translateX": -2.420455,
-    "translateY": -2.818182
+    "opticalCenter": [
+      7.342816,
+      8
+    ],
+    "opticalReason": "Mirror Undo on the shared circular-action frame, preserving its circle centre and head size.",
+    "frameSource": "refresh.svg",
+    "scale": 1.166667,
+    "translateX": -1.333333,
+    "translateY": -1.333333
   },
   "refresh.svg": {
     "groupKey": "refresh.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.103448,
-    "translateX": -0.672414,
-    "translateY": -0.827586
+    "scale": 1.166667,
+    "translateX": -1.333333,
+    "translateY": -1.333333
   },
   "remove-bookmark.svg": {
     "groupKey": "remove-bookmark.svg",
@@ -3680,7 +3686,7 @@
     "targetSpan": 15.5,
     "scale": 1.161369,
     "translateX": -1.594896,
-    "translateY": -1.443651
+    "translateY": -1.451215
   },
   "sort-alpha-descend.svg": {
     "groupKey": "sort-alpha-descend.svg",
@@ -3710,17 +3716,17 @@
     "groupKey": "sort-num-ascend.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.211735,
-    "translateX": -2.32677,
-    "translateY": -1.840761
+    "scale": 1.217949,
+    "translateX": -2.417067,
+    "translateY": -1.878606
   },
   "sort-num-descend.svg": {
     "groupKey": "sort-num-descend.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.211735,
-    "translateX": -2.32677,
-    "translateY": -1.811902
+    "scale": 1.217949,
+    "translateX": -2.417067,
+    "translateY": -1.859575
   },
   "sort.svg": {
     "groupKey": "sort.svg",
@@ -3742,9 +3748,9 @@
     "groupKey": "sortable-num.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.211735,
-    "translateX": -2.32677,
-    "translateY": -1.702886
+    "scale": 1.217949,
+    "translateX": -2.417067,
+    "translateY": -1.752404
   },
   "sparkle-refresh.svg": {
     "groupKey": "sparkle-refresh.svg",
@@ -4159,9 +4165,9 @@
     "groupKey": "text-color.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.211443,
-    "translateX": -1.691542,
-    "translateY": -1.81592
+    "scale": 1.214464,
+    "translateX": -1.715711,
+    "translateY": -1.859726
   },
   "text-highlight.svg": {
     "groupKey": "text-highlight.svg",
@@ -4183,9 +4189,9 @@
     "groupKey": "text-ordered-list.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.177885,
-    "translateX": -1.329327,
-    "translateY": -1.441481
+    "scale": 1.17506,
+    "translateX": -1.288369,
+    "translateY": -1.41884
   },
   "text-strikethrough.svg": {
     "groupKey": "text-strikethrough.svg",
@@ -4376,9 +4382,15 @@
     "groupKey": "undo.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.272727,
-    "translateX": -1.943182,
-    "translateY": -2.818182
+    "opticalCenter": [
+      8.657184,
+      8
+    ],
+    "opticalReason": "Retain the circular-action centre and head size when the return arc ends at the bottom; do not recenter its asymmetric painted bounds.",
+    "frameSource": "refresh.svg",
+    "scale": 1.166667,
+    "translateX": -1.333333,
+    "translateY": -1.333333
   },
   "ungroup.svg": {
     "groupKey": "ungroup.svg",
@@ -4777,7 +4789,7 @@
     "fitted": true,
     "targetSpan": 15.5,
     "scale": 1.109524,
-    "translateX": -0.87619,
+    "translateX": -0.811979,
     "translateY": -0.664286
   },
   "xls_solid.svg": {
@@ -4785,7 +4797,7 @@
     "fitted": true,
     "targetSpan": 15.5,
     "scale": 1.109524,
-    "translateX": -0.87619,
+    "translateX": -0.811979,
     "translateY": -0.664286
   },
   "zip.svg": {

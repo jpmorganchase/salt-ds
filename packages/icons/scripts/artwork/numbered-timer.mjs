@@ -1,27 +1,14 @@
-import { tangentCircularHeadJoins } from "./cd-junctions.mjs";
-import { S, textLabel } from "./primitives.mjs";
+import { circularArrow } from "./circular-arrow.mjs";
+import { group, textLabel } from "./primitives.mjs";
 
-// Both directions share the circle and number anchor. The arrowhead sits
-// above the number's cap line, preserving clearance at the authored width.
-export const numberedTimer = (seconds, direction) => {
-  const centerX = 12;
-  const centerY = 12.75;
-  const radius = 9;
-  const tipY = 7.5;
-  const arm = 3.75;
-  const sign = direction === "forward" ? 1 : -1;
-  const tipX = centerX + sign * Math.sqrt(radius ** 2 - (tipY - centerY) ** 2);
-  const endX = centerX + sign * radius;
-  const sweep = direction === "forward" ? 0 : 1;
-  return (
-    S(
-      `M${tipX} ${tipY}A${radius} ${radius} 0 1 ${sweep} ${endX} ${centerY}M${tipX} ${tipY - arm}V${tipY}H${tipX - sign * arm}`,
-    ) +
-    tangentCircularHeadJoins(centerX, centerY, radius, [tipX, tipY], -sign,
-      [[0, -arm], [-sign * arm, 0]], 1.15) +
-    textLabel(seconds, centerX, centerY, 6.3, {
-      align: "center",
-      verticalAlign: "center",
-    })
-  );
-};
+// Retain the timer's established construction-space label anchor. The shared
+// arrow moves with it, so export fitting keeps the final circle at [8, 8].
+export const numberedTimer = (seconds, direction) =>
+  group(
+    circularArrow(direction === "forward" ? "clockwise" : "counterclockwise"),
+    "translate(0 .75)",
+  ) +
+  textLabel(seconds, 12, 12.75, 6.3, {
+    align: "center",
+    verticalAlign: "center",
+  });

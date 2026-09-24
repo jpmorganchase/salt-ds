@@ -1,4 +1,4 @@
-import { boldLetterforms, regularLetterforms } from "./letterforms.mjs";
+import { boldLetterforms, regularLetterforms, letterTracking } from "./letterforms.mjs";
 
 // Construction coordinates use 24 units; output is normalized to a 16px master.
 // A 1.5-unit construction stroke exports at a fixed .67px on the 16px master.
@@ -44,7 +44,7 @@ export const textLabel = (text, x, y, capHeight = 7, options = {}) => {
     align = "left",
     verticalAlign = "top",
     bold = false,
-    tracking = 1,
+    tracking = letterTracking,
   } = options;
   const glyphs = bold ? boldLetterforms : regularLetterforms;
   let advance = 0;

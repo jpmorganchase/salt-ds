@@ -1,0 +1,43 @@
+Checked storefront: 2 registered variant(s).
+Checked closedcaption: 2 registered variant(s).
+Checked closedcaption-disabled: 2 registered variant(s).
+Checked forward-5: 1 registered variant(s).
+Checked forward-10: 1 registered variant(s).
+Checked forward-15: 1 registered variant(s).
+Checked forward-30: 1 registered variant(s).
+Checked replay-5: 1 registered variant(s).
+Checked replay-10: 1 registered variant(s).
+Checked replay-15: 1 registered variant(s).
+Checked replay-30: 1 registered variant(s).
+Checked csv: 2 registered variant(s).
+Checked pdf: 2 registered variant(s).
+Checked xls: 2 registered variant(s).
+Checked zip: 2 registered variant(s).
+Checked string-number: 1 registered variant(s).
+Checked string-text: 1 registered variant(s).
+Checked sort-alpha-ascend: 1 registered variant(s).
+Checked sort-alpha-descend: 1 registered variant(s).
+Checked sort-num-ascend: 1 registered variant(s).
+Checked sort-num-descend: 1 registered variant(s).
+Checked sortable-alpha: 1 registered variant(s).
+Checked sortable-num: 1 registered variant(s).
+Checked text-bold: 1 registered variant(s).
+Checked text-color: 1 registered variant(s).
+Checked text-ordered-list: 1 registered variant(s).
+Checked text-strikethrough: 1 registered variant(s).
+Checked text-underline: 1 registered variant(s).
+Checked type: 2 registered variant(s).
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 37 (closedcaption): synonym term 4 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 37 (closedcaption): synonym term 6 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 37 (closedcaption): synonym term 7 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 38 (closedcaption-disabled): synonym term 4 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 85 (forward-10): synonym term 5 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 85 (forward-10): synonym term 6 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 86 (forward-15): synonym term 5 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 177 (replay-10): synonym term 5 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 177 (replay-10): synonym term 6 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+WARN site/src/components/icon-preview/salt-icon-synonym.json row 178 (replay-15): synonym term 5 contains whitespace. Search normalization removes whitespace from the query, not stored terms; a full spaced phrase may not match this term.
+
+PASS: 29 requested meaning(s), 37 registered variant(s), 0 error(s), 10 warning(s).
+Limits: registration checks only; no visual/semantic relevance, generated-geometry equivalence, or recipe execution checks. generate:icons and validate:icons own effective recipe and geometry validation.
+Search normalization: the query is lowercased and whitespace is removed; stored synonym terms are not normalized. Hyphens are removed only when matching metadata iconName to component names; optional Solid and case-insensitive matching follow IconPreview.tsx.

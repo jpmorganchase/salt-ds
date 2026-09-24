@@ -258,8 +258,10 @@ export async function checkCutoutComposites(page, records) {
                 );
                 const normal = unit([tangent[1], -tangent[0]]);
                 const targetX = (p[0] * 2) / 3 + normalBuffer * normal[0];
-                // Exclude only rays that leave the actual side-wall extent.
-                if (targetX < 1.96 || targetX > 14.04) continue;
+                // The filled wall ends at the shared side-wall centerlines.
+                // Rays beyond that surface meet a vertical cap instead of
+                // the offset curve; end-cap probes below cover those shoulders.
+                if (targetX < 2.5 || targetX > 13.5) continue;
                 normalProbes.push({
                   feature: `awning scallop ${segment + 1}`,
                   t,

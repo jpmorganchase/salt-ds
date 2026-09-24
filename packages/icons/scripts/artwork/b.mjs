@@ -1,3 +1,4 @@
+import { circularArrow } from "./circular-arrow.mjs";
 import { retainedSurface } from "./retained-surface.mjs";
 import { softenedStroke as S, softenedFill as F } from "./contour-profiles.mjs";
 import { softenedRect as R, softenedFrame as SF } from "./contour-profiles.mjs";
@@ -6,7 +7,6 @@ import {
   compactSunRays,
   concaveMark,
   insideBoxCorners,
-  historyArrowRoots,
 } from "./b-junctions.mjs";
 import { arrowRoot } from "./internal-arrow-junctions.mjs";
 import { figma, github, linkedin, linkedinSolid } from "./brands.mjs";
@@ -411,9 +411,8 @@ add(
 );
 add(
   "history",
-  stroke("M3.75 8.25A9 9 0 1 1 12 21M3.75 2.75V8.25H9.25") +
-    S("M12 6V12L16 14.66667") +
-    historyArrowRoots(),
+  circularArrow("counterclockwise") +
+    SF("M12 7.5V12L15 14", { radius: 1.15 }),
 );
 const umbrella = "M10 11.25Q13.5 5.75 18 8.75Q21.75 11 21 14.25Z";
 // Light's tangent roots adapted to the short rays of this compact sun.
