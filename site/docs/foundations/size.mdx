@@ -91,17 +91,17 @@ You can find out more in the [iconography foundation](./assets).
 
 ### Stroke width
 
-`--salt-size-icon-strokeWidth` controls the primary stroke width of generated inline icon components. In high and medium densities, the theme targets a 1 CSS-pixel primary stroke at the default 12px icon size, balancing line visibility with open space for detail.
+`--salt-size-icon-strokeWidth` controls the primary stroke width of generated inline icon components. At size multiplier 1, each density targets an approximately 1 CSS-pixel primary stroke, balancing line visibility with open space for detail.
 
 | Density | Themed primary width `W`     | Default icon size `P` | Rendered primary stroke |
 | ------- | ---------------------------- | --------------------- | ----------------------- |
 | High    | 1.333333 (approximately 4/3) | 12px                  | Approximately 1px       |
 | Medium  | 1.333333 (approximately 4/3) | 12px                  | Approximately 1px       |
-| Low     | 1                            | 14px                  | 0.875px                 |
+| Low     | 1.142857 (approximately 8/7) | 14px                  | Approximately 1px       |
 | Touch   | 1                            | 16px                  | 1px                     |
 | Mobile  | 1                            | 16px                  | 1px                     |
 
-Use a unitless value in the icon's 16-unit coordinate space. At a rendered size of `P` pixels, the primary stroke is `W × P / 16` pixels wide. For example, selecting `W = 1` for a 12px icon produces a 0.75px stroke. Secondary strokes retain their proportional weight. The component falls back to `1` when neither the foundation token nor the per-icon override is defined; that fallback is separate from the theme's density defaults.
+Use a unitless value in the icon's 16-unit coordinate space. At a rendered size of `P` pixels, the primary stroke is `W × P / 16` pixels wide. For example, selecting `W = 1` for a 12px icon produces a 0.75px stroke. Larger size multipliers scale the stroke with the icon; the width is not fixed at 1 CSS pixel for enlarged icons. Secondary strokes retain their proportional weight. The component falls back to `1` when neither the foundation token nor the per-icon override is defined; that fallback is separate from the theme's density defaults.
 
 These are CSS-pixel measurements. Screen pixel density, display scaling and browser zoom affect rasterization, but the theme uses the same density defaults across displays.
 

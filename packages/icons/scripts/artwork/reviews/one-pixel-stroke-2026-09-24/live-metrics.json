@@ -1,0 +1,3302 @@
+[
+  {
+    "name": "AccessibleIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "AccessibleSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "AddDocumentIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "AddDocumentSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "AddIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "AddToGridIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "AddToGridSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "AddUserIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "AnnouncementIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ApiIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "AppSwitcherIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ArrowDownIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ArrowLeftIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ArrowRightIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ArrowUpIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "AttachIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BankCheckIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BankCheckSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BankIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BankSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BarChartIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BatteryIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BatterySolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BookmarkIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BookmarkSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BooleanIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BooleanSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BrowserIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BrowserSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BuildReportIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BuildReportSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BuildingIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BuildingSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BuildingsIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "BuildingsSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CalculatorIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CalculatorSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CalendarIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CalendarSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CallIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CallSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CartIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CartSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChartAreaIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChartBarIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChartBoxPlotIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChartBubbleIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChartBubbleSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChartBulletIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChartCandlestickIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChartCandlestickSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChartColumnIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChartDonutIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChartLineIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChartLineSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChartPieIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChartPieSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChartScatterIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChartScatterSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChartStackedBarIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChartWaterfallIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChatGroupIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChatGroupSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChatIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChatSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChattingIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChattingSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CheckmarkIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CheckmarkSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChevronDownIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChevronLeftIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChevronRightIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ChevronUpIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ClockIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ClockSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CloneIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CloseIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CloseSmallIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ClosedcaptionDisabledIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ClosedcaptionDisabledSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ClosedcaptionIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ClosedcaptionSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CloudDisabledIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CloudDisabledSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CloudDownloadIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CloudDownloadSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CloudIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CloudSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CloudSuccessIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CloudSuccessSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CloudSyncIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CloudSyncSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CloudUploadIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CloudUploadSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CoffeeIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CoffeeSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CollapseAllHorizontalIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CollapseAllIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CollapseIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ColumnChooserIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ColumnChooserSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CommentaryIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CommentarySolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CompareIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CompareSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CompassIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CompassSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CookieIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CookieSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CopyIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CopySolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CreditCardIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CreditCardSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CropsIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CropsSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CsvIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CsvSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CurrencyExchangeIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CurrencyIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CurrencySolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "CutIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DarkIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DarkSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DashboardIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DashboardSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DatabaseIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DatabaseSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DatasetIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DatasetManagerIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DatasetManagerSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DeleteIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DeleteSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DevicesIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DevicesSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DiamondIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DisplayIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DisplaySolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DivideIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DocumentDraftIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DocumentEditIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DocumentIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DocumentSearchIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DocumentSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DoesNotEqualIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DoubleChevronDownIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DoubleChevronLeftIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DoubleChevronRightIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DoubleChevronUpIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DownloadIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "DragRowIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "EditIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "EditSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "EqualIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ErrorExecuteIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ErrorIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ErrorSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ExpandAllHorizontalIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ExpandAllIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ExpandIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ExponentiationIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ExportIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ExportSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "FavoriteHalfIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "FavoriteIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "FavoriteSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "FavoriteStrongIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "FeedbackIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "FeedbackSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "FigmaIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "FilterClearIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "FilterClearSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "FilterIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "FilterSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "FirstIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "FlagIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "FlagSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "FolderClosedIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "FolderClosedSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "FolderOpenIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "FolderOpenSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "Forward5Icon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "Forward10Icon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "Forward15Icon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "Forward30Icon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "GithubIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "GlobeIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "GlobeSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "GreaterThanEqualToIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "GreaterThanIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "GridIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "GridSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "GroupIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "GroupSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "GrowthIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "GuideClosedIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "GuideClosedSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "GuideOpenIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "GuideOpenSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HandshakeIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HandshakeSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HeadphonesDisabledIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HeadphonesDisabledSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HeadphonesIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HeadphonesSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HelpCircleIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HelpCircleSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HelpIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HelpSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HiddenIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HiddenSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HierarchyIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HierarchySolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HistoryIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HolidayIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HolidaySolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HomeIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HomeSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HospitalIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "HospitalSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "IconFigmaIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ImageIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ImageSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ImportIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ImportSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "InboxIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "InboxSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "IndentIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "InfiniteIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "InfoIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "InfoSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "JigsawIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "JigsawSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "KeyBackspaceIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "KeyCapslockIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "KeyCommandIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "KeyControlIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "KeyEnterIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "KeyIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "KeyOptionIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "KeyShiftIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "KeySolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "KeyTabIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LaptopIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LaptopSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LastIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LayersIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LayersSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LessThanEqualToIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LessThanIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LightIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LightSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LightbulbIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LightbulbSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LikeIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LikeSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LineChartIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LineChartSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LinkedIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LinkedinIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LinkedinSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ListIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LoaderIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LocationIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LocationSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LockedIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "LockedSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MagicWandIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MaintenanceIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MaintenanceSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ManIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ManSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ManWomanIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ManWomanSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MapIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MapSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MarkerIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MarkerSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MaximizeIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MaximizeSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MedicalKitIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MedicalKitSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MenuIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MessageForwardIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MessageIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MessageReplyAllIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MessageReplyIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MessageSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MicroMenuIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MicrophoneDisabledIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MicrophoneDisabledSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MicrophoneIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MicrophoneSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MinimizeIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MobileIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MobileSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MouseIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MouseSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MoveAllIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MoveHorizontalIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MoveVerticalIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MultiplyIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MusicDisabledIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MusicDisabledSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MusicIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "MusicSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "NotAllowedIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "NoteIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "NoteSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "NotificationIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "NotificationReadIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "NotificationReadSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "NotificationSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "OutdentIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "OverflowMenuIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PanelCloseBottomIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PanelCloseBottomSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PanelCloseLeftIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PanelCloseLeftSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PanelCloseRightIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PanelCloseRightSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PanelCloseTopIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PanelCloseTopSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PanelOpenBottomIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PanelOpenBottomSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PanelOpenLeftIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PanelOpenLeftSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PanelOpenRightIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PanelOpenRightSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PanelOpenTopIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PanelOpenTopSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PasteIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PasteSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PauseIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PauseSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PdfIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PdfSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PercentageIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PiIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PicnicIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PicnicSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PieChartIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PinIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PinSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PivotIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PivotSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PlaceInIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PlayIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PlaySolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PolicyIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PotFoodIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PotFoodSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PresentationIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PresentationSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PriceLadderIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PrintIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "PrintSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ProgressCancelledIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ProgressClosedIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ProgressCompleteIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ProgressDraftIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ProgressInprogressIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ProgressOnholdIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ProgressPendingIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ProgressRejectedIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ProgressTodoIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ProtectionIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ProtectionSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ReceiptIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ReceiptSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "RedoIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "RefreshIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "RemoveBookmarkIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "RemoveBookmarkSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "RemoveDocumentIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "RemoveDocumentSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "RemoveIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "RemoveUserIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "Replay5Icon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "Replay10Icon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "Replay15Icon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "Replay30Icon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "RestoreIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "RunReportIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "RunReportSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SaltShakerIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SaltShakerSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SaveIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SaveSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ScalesIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ScalesSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ScheduleIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ScheduleTimeIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ScheduleTimeSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SchoolIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SchoolSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SearchIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SearchSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SemanticDissatisfiedIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SemanticDissatisfiedSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SemanticNeutralIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SemanticNeutralSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SemanticSatisfiedIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SemanticSatisfiedSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SemanticVeryDissatisfiedIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SemanticVeryDissatisfiedSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SemanticVerySatisfiedIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SemanticVerySatisfiedSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SendIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SendSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SettingsIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SettingsSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ShareIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ShareSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SignalIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SignatureIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SignpostIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SignpostSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SlideIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SlideSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SortAlphaAscendIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SortAlphaDescendIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SortAscendIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SortDescendIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SortIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SortNumAscendIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SortNumDescendIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SortableAlphaIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SortableNumIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SparkleIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SparkleRefreshIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SparkleRefreshSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SparkleSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SplitViewIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SquareRootIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "StackoverflowIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "StepActiveIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "StepDefaultIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "StepSuccessIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "StethoscopeIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "StethoscopeSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "StopIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "StopSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "StorageIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "StorageSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "StorefrontIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "StorefrontSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "StringNumberIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "StringTextIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SuccessCircleIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SuccessCircleSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SuccessIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SuccessSmallIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SuccessSmallSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SuccessSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SuccessTickIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SumIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SumSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SummarizeIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SwapIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SymphonyIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "SyncIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TagClearIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TagClearSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TagIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TagSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TailsIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TailsSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TargetIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TearOutIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TextAlignCenterIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TextAlignJustifyIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TextAlignLeftIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TextAlignRightIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TextBoldIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TextColorIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TextHighlightIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TextItalicsIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TextOrderedListIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TextStrikethroughIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TextUnderlineIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TextUnorderedListIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ThumbsDownIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ThumbsDownSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ThumbsUpIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ThumbsUpSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ToteIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ToteSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TravelIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TravelSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TreeIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TreeSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TriangleDownIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TriangleLeftIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TriangleRightDownIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TriangleRightIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TriangleUpIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TypeIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "TypeSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UndoIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UngroupIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UngroupSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UniversalAccessIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UniversalAccessSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UnlinkedIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UnlockedIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UnlockedSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UploadIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UrgencyCriticalIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UrgencyHighIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UrgencyLowIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UrgencyMediumIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UrgencyNoneIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UrgencyOntimeIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UserAdminIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UserAdminSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UserBadgeIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UserGroupIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UserGroupSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UserIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UserSearchIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UserSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UtensilsIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "UtensilsSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "VideoDisabledIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "VideoIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "VideoSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "VisibleIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "VisibleSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "VolumeDownIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "VolumeOffIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "VolumeUpIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "WarningIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "WarningSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "WatchIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "WatchSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "WaveformIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "WeightIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "WeightSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "WifiDisabledIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "WifiIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "WomanIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "WomanSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "WoodlandIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "WoodlandSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "WorkflowIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "WorkflowSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "XlsIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "XlsSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ZipIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  },
+  {
+    "name": "ZipSolidIcon",
+    "width": 14,
+    "height": 14,
+    "stroke": "1.142857"
+  }
+]

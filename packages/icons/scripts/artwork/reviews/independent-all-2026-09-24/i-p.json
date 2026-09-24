@@ -1,0 +1,966 @@
+{
+  "bucket": "i-p",
+  "date": "2026-09-24",
+  "coverage": {
+    "assigned": 148,
+    "reviewed": 148,
+    "sizes": [
+      12,
+      14,
+      16
+    ],
+    "pixelRatio": 1,
+    "backgrounds": [
+      "light",
+      "dark"
+    ],
+    "counts": {
+      "pass": 122,
+      "issue": 3,
+      "uncertain": 23
+    }
+  },
+  "method": "Independent visual inspection of current generated SVGs in four native-size sheets, followed by enlarged inspection of 34 potentially problematic exports. Verdicts are expert visual judgments, not user recognition testing.",
+  "entries": [
+    {
+      "file": "icon-figma.svg",
+      "name": "icon-figma",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, recognisable stacked Figma mark with clear internal gaps; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "image.svg",
+      "name": "image",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, page fold and picture motif remain distinct; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "image_solid.svg",
+      "name": "image_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, page fold and picture motif remain distinct; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "import.svg",
+      "name": "import",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, inward arrow remains separate from the receiving edge; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "import_solid.svg",
+      "name": "import_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, inward arrow remains separate from the receiving edge; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "inbox.svg",
+      "name": "inbox",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, downward arrow and tray opening remain distinct; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "inbox_solid.svg",
+      "name": "inbox_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, downward arrow and tray opening remain distinct; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "indent.svg",
+      "name": "indent",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, arrow and three text rows have separate edges; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "infinite.svg",
+      "name": "infinite",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, two loops remain open and balanced; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "info.svg",
+      "name": "info",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, letter i remains legible inside the square; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "info_solid.svg",
+      "name": "info_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, letter i remains legible inside the square; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "jigsaw.svg",
+      "name": "jigsaw",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, four puzzle features remain recognisable, including the concave sockets; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "jigsaw_solid.svg",
+      "name": "jigsaw_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, four puzzle features remain recognisable, including the concave sockets; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "key-backspace.svg",
+      "name": "key-backspace",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, left-pointed delete key and X remain separate; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "key-capslock.svg",
+      "name": "key-capslock",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, upward key symbol and its baseline stay distinct; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "key-command.svg",
+      "name": "key-command",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, four-loop keyboard mark remains open; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "key-control.svg",
+      "name": "key-control",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, simple chevron stays even and centered; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "key-enter.svg",
+      "name": "key-enter",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, return shaft and head stay continuous; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "key-option.svg",
+      "name": "key-option",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, stepped keyboard mark keeps a clear diagonal; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "key-shift.svg",
+      "name": "key-shift",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, upward arrow outline keeps its flat base; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "key-tab.svg",
+      "name": "key-tab",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, rightward arrow and destination bar stay separate; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "key.svg",
+      "name": "key",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, bow hole and key teeth remain discernible; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "key_solid.svg",
+      "name": "key_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, bow hole and key teeth remain discernible; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "laptop.svg",
+      "name": "laptop",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, screen and base remain separated at all three sizes; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "laptop_solid.svg",
+      "name": "laptop_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, screen and base remain separated at all three sizes; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "last.svg",
+      "name": "last",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, chevron and terminal bar retain a readable gap; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "layers.svg",
+      "name": "layers",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, three stacked planes have consistent spacing; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "layers_solid.svg",
+      "name": "layers_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, three stacked planes have consistent spacing; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "less-than-equal-to.svg",
+      "name": "less-than-equal-to",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, inequality stroke and underline remain distinct; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "less-than.svg",
+      "name": "less-than",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, two slanted arms meet cleanly; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "light.svg",
+      "name": "light",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, sun center and rays keep their spacing; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "light_solid.svg",
+      "name": "light_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, sun center and rays keep their spacing; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "lightbulb.svg",
+      "name": "lightbulb",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, bulb contour, filament and base remain identifiable; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "lightbulb_solid.svg",
+      "name": "lightbulb_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, bulb contour, filament and base remain identifiable; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "like.svg",
+      "name": "like",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, heart lobes and lower point meet cleanly; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "like_solid.svg",
+      "name": "like_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, heart lobes and lower point meet cleanly; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "line-chart.svg",
+      "name": "line-chart",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, chart axes and rising line remain distinguishable; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "line-chart_solid.svg",
+      "name": "line-chart_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, chart axes and rising line remain distinguishable; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "linked.svg",
+      "name": "linked",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, two chain links retain the central opening; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "linkedin.svg",
+      "name": "linkedin",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, letterforms remain recognizable at native size; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "linkedin_solid.svg",
+      "name": "linkedin_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, letterforms remain recognizable at native size; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "list.svg",
+      "name": "list",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, dots and three text lines align without merging; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "loader.svg",
+      "name": "loader",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, open arc remains smooth and intentional; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "location.svg",
+      "name": "location",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, pin opening stays visible; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "location_solid.svg",
+      "name": "location_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, pin opening stays visible; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "locked.svg",
+      "name": "locked",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, shackle, lock body and keyhole stay distinct; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "locked_solid.svg",
+      "name": "locked_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, shackle, lock body and keyhole stay distinct; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "magic-wand.svg",
+      "name": "magic-wand",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, diagonal wand and small sparkles remain separated; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "maintenance.svg",
+      "name": "maintenance",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, wrench head opening remains legible; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "maintenance_solid.svg",
+      "name": "maintenance_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, wrench head opening remains legible; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "man-woman.svg",
+      "name": "man-woman",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, two standing figures keep separate heads, torsos and legs; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "man-woman_solid.svg",
+      "name": "man-woman_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, two standing figures keep separate heads, torsos and legs; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "man.svg",
+      "name": "man",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, head, torso and separated legs remain aligned; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "man_solid.svg",
+      "name": "man_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, head, torso and separated legs remain aligned; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "map.svg",
+      "name": "map",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, folded panels remain distinguishable; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "map_solid.svg",
+      "name": "map_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, folded panels remain distinguishable; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "marker.svg",
+      "name": "marker",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, flag face remains separate from the pole; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "marker_solid.svg",
+      "name": "marker_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, flag face remains separate from the pole; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "maximize.svg",
+      "name": "maximize",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, outer window and directional control stay coherent; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "maximize_solid.svg",
+      "name": "maximize_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, outer window and directional control stay coherent; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "medical-kit.svg",
+      "name": "medical-kit",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, case handle and cross stay clear; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "medical-kit_solid.svg",
+      "name": "medical-kit_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, case handle and cross stay clear; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "menu.svg",
+      "name": "menu",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, three lines retain even weight and gaps; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "message-forward.svg",
+      "name": "message-forward",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, curved arrow keeps a clear pointed head and continuous bend; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "message-reply-all.svg",
+      "name": "message-reply-all",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, double arrowheads remain distinguishable; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "message-reply.svg",
+      "name": "message-reply",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, single curved arrow remains distinct; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "message.svg",
+      "name": "message",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, envelope border and crossing flap stay continuous; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "message_solid.svg",
+      "name": "message_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, envelope border and crossing flap stay continuous; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "micro-menu.svg",
+      "name": "micro-menu",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, three vertical dots remain visibly separated; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "microphone-disabled.svg",
+      "name": "microphone-disabled",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, diagonal slash does not erase the microphone head; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "microphone-disabled_solid.svg",
+      "name": "microphone-disabled_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, diagonal slash does not erase the microphone head; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "microphone.svg",
+      "name": "microphone",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, capsule, stem and foot remain identifiable; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "microphone_solid.svg",
+      "name": "microphone_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, capsule, stem and foot remain identifiable; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "minimize.svg",
+      "name": "minimize",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, single horizontal bar stays even and centered; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "mobile.svg",
+      "name": "mobile",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, phone frame and screen opening remain intact; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "mobile_solid.svg",
+      "name": "mobile_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, phone frame and screen opening remain intact; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "mouse.svg",
+      "name": "mouse",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, mouse button separator stays visible; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "mouse_solid.svg",
+      "name": "mouse_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, mouse button separator stays visible; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "move-all.svg",
+      "name": "move-all",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, four arrows stay symmetric around the center; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "move-horizontal.svg",
+      "name": "move-horizontal",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, opposed arrowheads remain distinguishable; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "move-vertical.svg",
+      "name": "move-vertical",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, opposed arrowheads remain distinguishable; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "multiply.svg",
+      "name": "multiply",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, crossing diagonals have even apparent weight and clean ends; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "music-disabled.svg",
+      "name": "music-disabled",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, diagonal slash overlaps a very small note at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "modifier clearance",
+      "size": "12px"
+    },
+    {
+      "file": "music-disabled_solid.svg",
+      "name": "music-disabled_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, diagonal slash overlaps a very small note at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "modifier clearance",
+      "size": "12px"
+    },
+    {
+      "file": "music.svg",
+      "name": "music",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, beamed notes retain distinct heads and stems; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "music_solid.svg",
+      "name": "music_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, beamed notes retain distinct heads and stems; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "not-allowed.svg",
+      "name": "not-allowed",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, circle and slash remain cleanly separated; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "note.svg",
+      "name": "note",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, page corner and text lines remain coherent; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "note_solid.svg",
+      "name": "note_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, page corner and text lines remain coherent; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "notification-read.svg",
+      "name": "notification-read",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, check stroke crowds the bell shoulder at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "modifier clearance",
+      "size": "12px"
+    },
+    {
+      "file": "notification-read_solid.svg",
+      "name": "notification-read_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, check stroke crowds the bell shoulder at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "modifier clearance",
+      "size": "12px"
+    },
+    {
+      "file": "notification.svg",
+      "name": "notification",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, bell dome and clapper remain identifiable; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "notification_solid.svg",
+      "name": "notification_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, bell dome and clapper remain identifiable; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "outdent.svg",
+      "name": "outdent",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, leftward arrow and three text rows remain distinct; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "overflow-menu.svg",
+      "name": "overflow-menu",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, three horizontal dots stay separate and centered; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "panel-close-bottom.svg",
+      "name": "panel-close-bottom",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel close bottom panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "directional distinction",
+      "size": "12px"
+    },
+    {
+      "file": "panel-close-bottom_solid.svg",
+      "name": "panel-close-bottom_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel close bottom panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "directional distinction",
+      "size": "12px"
+    },
+    {
+      "file": "panel-close-left.svg",
+      "name": "panel-close-left",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel close left panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "directional distinction",
+      "size": "12px"
+    },
+    {
+      "file": "panel-close-left_solid.svg",
+      "name": "panel-close-left_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel close left panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "directional distinction",
+      "size": "12px"
+    },
+    {
+      "file": "panel-close-right.svg",
+      "name": "panel-close-right",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel close right panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "directional distinction",
+      "size": "12px"
+    },
+    {
+      "file": "panel-close-right_solid.svg",
+      "name": "panel-close-right_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel close right panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "directional distinction",
+      "size": "12px"
+    },
+    {
+      "file": "panel-close-top.svg",
+      "name": "panel-close-top",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel close top panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "directional distinction",
+      "size": "12px"
+    },
+    {
+      "file": "panel-close-top_solid.svg",
+      "name": "panel-close-top_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel close top panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "directional distinction",
+      "size": "12px"
+    },
+    {
+      "file": "panel-open-bottom.svg",
+      "name": "panel-open-bottom",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel open bottom panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "directional distinction",
+      "size": "12px"
+    },
+    {
+      "file": "panel-open-bottom_solid.svg",
+      "name": "panel-open-bottom_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel open bottom panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "directional distinction",
+      "size": "12px"
+    },
+    {
+      "file": "panel-open-left.svg",
+      "name": "panel-open-left",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel open left panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "directional distinction",
+      "size": "12px"
+    },
+    {
+      "file": "panel-open-left_solid.svg",
+      "name": "panel-open-left_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel open left panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "directional distinction",
+      "size": "12px"
+    },
+    {
+      "file": "panel-open-right.svg",
+      "name": "panel-open-right",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel open right panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "directional distinction",
+      "size": "12px"
+    },
+    {
+      "file": "panel-open-right_solid.svg",
+      "name": "panel-open-right_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel open right panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "directional distinction",
+      "size": "12px"
+    },
+    {
+      "file": "panel-open-top.svg",
+      "name": "panel-open-top",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel open top panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "directional distinction",
+      "size": "12px"
+    },
+    {
+      "file": "panel-open-top_solid.svg",
+      "name": "panel-open-top_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel open top panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "directional distinction",
+      "size": "12px"
+    },
+    {
+      "file": "paste.svg",
+      "name": "paste",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, clipboard clip and line content remain distinguishable; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "paste_solid.svg",
+      "name": "paste_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, clipboard clip and line content remain distinguishable; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "pause.svg",
+      "name": "pause",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, two vertical bars retain even width and gap; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "pause_solid.svg",
+      "name": "pause_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, two vertical bars retain even width and gap; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "pdf.svg",
+      "name": "pdf",
+      "status": "issue",
+      "reason": "At 12/14/16px in light and dark, three-letter PDF label collapses into a tiny dark band at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "native-size lettering",
+      "size": "12px"
+    },
+    {
+      "file": "pdf_solid.svg",
+      "name": "pdf_solid",
+      "status": "issue",
+      "reason": "At 12/14/16px in light and dark, three-letter PDF label collapses into a tiny dark band at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "native-size lettering",
+      "size": "12px"
+    },
+    {
+      "file": "percentage.svg",
+      "name": "percentage",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, two circles and diagonal separator remain distinct; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "pi.svg",
+      "name": "pi",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, symbol legs and top bar retain the expected shape; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "picnic.svg",
+      "name": "picnic",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, tree and table are identifiable enlarged, but the table compresses into a short dark strip at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "native-size recognition",
+      "size": "12px"
+    },
+    {
+      "file": "picnic_solid.svg",
+      "name": "picnic_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, tree and table are identifiable enlarged, but the table compresses into a short dark strip at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "native-size recognition",
+      "size": "12px"
+    },
+    {
+      "file": "pie-chart.svg",
+      "name": "pie-chart",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, missing slice remains visible and pie outline continuous; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "pin.svg",
+      "name": "pin",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, pin head and angled needle retain their silhouette; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "pin_solid.svg",
+      "name": "pin_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, pin head and angled needle retain their silhouette; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "pivot.svg",
+      "name": "pivot",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, turning arrow stays inside the frame without touching it; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "pivot_solid.svg",
+      "name": "pivot_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, turning arrow stays inside the frame without touching it; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "place-in.svg",
+      "name": "place-in",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, arrow and receiving corner stay distinct; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "play.svg",
+      "name": "play",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, triangle keeps a sharp forward point and balanced area; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "play_solid.svg",
+      "name": "play_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, triangle keeps a sharp forward point and balanced area; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "policy.svg",
+      "name": "policy",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, page and badge compress at 12px, making the badge hard to distinguish from a circular seal. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "native-size recognition",
+      "size": "12px"
+    },
+    {
+      "file": "pot-food.svg",
+      "name": "pot-food",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, steam marks and bowl remain separate; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "pot-food_solid.svg",
+      "name": "pot-food_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, steam marks and bowl remain separate; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "presentation.svg",
+      "name": "presentation",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, screen, content and stand remain identifiable; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "presentation_solid.svg",
+      "name": "presentation_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, screen, content and stand remain identifiable; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "price-ladder.svg",
+      "name": "price-ladder",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, rungs and rails remain visibly separate; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "print.svg",
+      "name": "print",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, paper openings and outer printer edge remain continuous; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "print_solid.svg",
+      "name": "print_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, paper openings and outer printer edge remain continuous; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    },
+    {
+      "file": "progress-cancelled.svg",
+      "name": "progress-cancelled",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, X stays legible in the filled status disc; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "progress-closed.svg",
+      "name": "progress-closed",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, square center stays legible in the filled status disc; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "progress-complete.svg",
+      "name": "progress-complete",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, check stays legible in the filled status disc; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "progress-draft.svg",
+      "name": "progress-draft",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, empty ring stays even; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "progress-inprogress.svg",
+      "name": "progress-inprogress",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, half-filled disc remains balanced; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "progress-onhold.svg",
+      "name": "progress-onhold",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, pause bars remain distinct inside the disc; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "progress-pending.svg",
+      "name": "progress-pending",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, clock hand remains discernible inside the disc; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "progress-rejected.svg",
+      "name": "progress-rejected",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, minus remains centered inside the disc; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "progress-todo.svg",
+      "name": "progress-todo",
+      "status": "issue",
+      "reason": "At 12/14/16px in light and dark, thin dotted ring has much less presence than adjacent progress states at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "status weight",
+      "size": "12px"
+    },
+    {
+      "file": "protection.svg",
+      "name": "protection",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, central divide and shield perimeter remain separate; no visible break or clipped contour. Outline gesture remains consistent with its solid partner where present."
+    },
+    {
+      "file": "protection_solid.svg",
+      "name": "protection_solid",
+      "status": "pass",
+      "reason": "At 12/14/16px in light and dark, central divide and shield perimeter remain separate; no visible break or clipped contour. Solid treatment retains the same defining gesture as its outline partner."
+    }
+  ]
+}

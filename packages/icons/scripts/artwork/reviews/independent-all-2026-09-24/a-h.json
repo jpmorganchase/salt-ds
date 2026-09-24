@@ -1,0 +1,1187 @@
+{
+  "bucket": "a-h",
+  "reviewedAt": "2026-09-24",
+  "basis": "Frozen manifest plus current generated SVGs",
+  "reviewMethod": "Current SVGs rendered at DPR1 at 12/14/16px on light and dark; 64px enlarged diagnostic column. Each export individually inspected.",
+  "coverage": {
+    "assigned": 219,
+    "reviewed": 219,
+    "pass": 181,
+    "issue": 12,
+    "uncertain": 26
+  },
+  "evidence": "sheets/a-h/sheet-01.png through sheet-15.png",
+  "entries": [
+    {
+      "file": "accessible_solid.svg",
+      "status": "pass",
+      "reason": "The accessible silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "accessible.svg",
+      "status": "pass",
+      "reason": "The accessible silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "add-document_solid.svg",
+      "status": "uncertain",
+      "reason": "The inverse plus nearly closes at 12px, making this resemble a plain document.",
+      "issueType": "modifier legibility",
+      "size": 12
+    },
+    {
+      "file": "add-document.svg",
+      "status": "uncertain",
+      "reason": "The page reads, but the tiny interior plus is close to a dot at 12px.",
+      "issueType": "modifier legibility",
+      "size": 12
+    },
+    {
+      "file": "add-to-grid_solid.svg",
+      "status": "pass",
+      "reason": "The add to grid silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "add-to-grid.svg",
+      "status": "pass",
+      "reason": "The add to grid silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "add-user.svg",
+      "status": "pass",
+      "reason": "The add user silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "add.svg",
+      "status": "pass",
+      "reason": "Simple mark remains distinct and balanced at native sizes, with usable straight arms and clear terminals."
+    },
+    {
+      "file": "announcement.svg",
+      "status": "pass",
+      "reason": "The announcement silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "api.svg",
+      "status": "pass",
+      "reason": "The api silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "app-switcher.svg",
+      "status": "pass",
+      "reason": "Repeated structure remains separate at native sizes; defining frame and openings stay visible."
+    },
+    {
+      "file": "arrow-down.svg",
+      "status": "pass",
+      "reason": "Direction and arrowhead remain clear at 12, 14 and 16px; junctions do not swallow the point."
+    },
+    {
+      "file": "arrow-left.svg",
+      "status": "pass",
+      "reason": "Direction and arrowhead remain clear at 12, 14 and 16px; junctions do not swallow the point."
+    },
+    {
+      "file": "arrow-right.svg",
+      "status": "pass",
+      "reason": "Direction and arrowhead remain clear at 12, 14 and 16px; junctions do not swallow the point."
+    },
+    {
+      "file": "arrow-up.svg",
+      "status": "pass",
+      "reason": "Direction and arrowhead remain clear at 12, 14 and 16px; junctions do not swallow the point."
+    },
+    {
+      "file": "attach.svg",
+      "status": "pass",
+      "reason": "The attach silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "bank_solid.svg",
+      "status": "pass",
+      "reason": "Architectural outline and openings remain legible at native sizes with the filled body."
+    },
+    {
+      "file": "bank-check_solid.svg",
+      "status": "uncertain",
+      "reason": "The filled cheque is clear as a rectangle, but its small internal marks do not establish cheque meaning alone at 12px.",
+      "issueType": "recognition",
+      "size": 12
+    },
+    {
+      "file": "bank-check.svg",
+      "status": "uncertain",
+      "reason": "The cheque is a short striped rectangle at 12px; its cheque cues need surrounding context.",
+      "issueType": "recognition",
+      "size": 12
+    },
+    {
+      "file": "bank.svg",
+      "status": "pass",
+      "reason": "Architectural outline and openings remain legible at native sizes."
+    },
+    {
+      "file": "bar-chart.svg",
+      "status": "pass",
+      "reason": "The bar chart silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "battery_solid.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes with coherent filled weight."
+    },
+    {
+      "file": "battery.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes."
+    },
+    {
+      "file": "bookmark_solid.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "bookmark.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "boolean_solid.svg",
+      "status": "pass",
+      "reason": "The boolean silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "boolean.svg",
+      "status": "pass",
+      "reason": "The boolean silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "browser_solid.svg",
+      "status": "pass",
+      "reason": "Architectural outline and openings remain legible at native sizes with the filled body."
+    },
+    {
+      "file": "browser.svg",
+      "status": "pass",
+      "reason": "Architectural outline and openings remain legible at native sizes."
+    },
+    {
+      "file": "build-report_solid.svg",
+      "status": "uncertain",
+      "reason": "The filled shape still reads as a briefcase or toolbox, with little visible report cue at 12px.",
+      "issueType": "recognition",
+      "size": 12
+    },
+    {
+      "file": "build-report.svg",
+      "status": "uncertain",
+      "reason": "The shape reads as a briefcase or toolbox at 12px; the report meaning depends on its label.",
+      "issueType": "recognition",
+      "size": 12
+    },
+    {
+      "file": "building_solid.svg",
+      "status": "pass",
+      "reason": "Architectural outline and openings remain legible at native sizes with the filled body."
+    },
+    {
+      "file": "building.svg",
+      "status": "pass",
+      "reason": "Architectural outline and openings remain legible at native sizes."
+    },
+    {
+      "file": "buildings_solid.svg",
+      "status": "pass",
+      "reason": "Architectural outline and openings remain legible at native sizes with the filled body."
+    },
+    {
+      "file": "buildings.svg",
+      "status": "pass",
+      "reason": "Architectural outline and openings remain legible at native sizes."
+    },
+    {
+      "file": "calculator_solid.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes with coherent filled weight."
+    },
+    {
+      "file": "calculator.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes."
+    },
+    {
+      "file": "calendar_solid.svg",
+      "status": "pass",
+      "reason": "Time/control silhouette and identifying marks remain visible at native sizes in the filled variant."
+    },
+    {
+      "file": "calendar.svg",
+      "status": "pass",
+      "reason": "Time/control silhouette and identifying marks remain visible at native sizes."
+    },
+    {
+      "file": "call_solid.svg",
+      "status": "pass",
+      "reason": "The call silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "call.svg",
+      "status": "pass",
+      "reason": "The call silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "cart_solid.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes with coherent filled weight."
+    },
+    {
+      "file": "cart.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes."
+    },
+    {
+      "file": "chart-area.svg",
+      "status": "pass",
+      "reason": "The area chart keeps its characteristic data marks separate from its axes at native sizes."
+    },
+    {
+      "file": "chart-bar.svg",
+      "status": "pass",
+      "reason": "The bar chart keeps its characteristic data marks separate from its axes at native sizes."
+    },
+    {
+      "file": "chart-box-plot.svg",
+      "status": "issue",
+      "reason": "The two box plots compress to narrow pixel stacks; boxes and whiskers are hard to distinguish at 12px.",
+      "issueType": "detail collapse",
+      "size": 12
+    },
+    {
+      "file": "chart-bubble_solid.svg",
+      "status": "pass",
+      "reason": "The bubble chart keeps its characteristic data marks separate from its axes at native sizes."
+    },
+    {
+      "file": "chart-bubble.svg",
+      "status": "pass",
+      "reason": "The bubble chart keeps its characteristic data marks separate from its axes at native sizes."
+    },
+    {
+      "file": "chart-bullet.svg",
+      "status": "pass",
+      "reason": "The bullet chart keeps its characteristic data marks separate from its axes at native sizes."
+    },
+    {
+      "file": "chart-candlestick_solid.svg",
+      "status": "issue",
+      "reason": "Both candle bodies fill, losing the hollow-versus-filled distinction present in the outline variant.",
+      "issueType": "pair semantics",
+      "size": 12
+    },
+    {
+      "file": "chart-candlestick.svg",
+      "status": "pass",
+      "reason": "The candlestick chart keeps its characteristic data marks separate from its axes at native sizes."
+    },
+    {
+      "file": "chart-column.svg",
+      "status": "pass",
+      "reason": "The column chart keeps its characteristic data marks separate from its axes at native sizes."
+    },
+    {
+      "file": "chart-donut.svg",
+      "status": "pass",
+      "reason": "The donut chart keeps its characteristic data marks separate from its axes at native sizes."
+    },
+    {
+      "file": "chart-line_solid.svg",
+      "status": "pass",
+      "reason": "The line chart keeps its characteristic data marks separate from its axes at native sizes."
+    },
+    {
+      "file": "chart-line.svg",
+      "status": "pass",
+      "reason": "The line chart keeps its characteristic data marks separate from its axes at native sizes."
+    },
+    {
+      "file": "chart-pie_solid.svg",
+      "status": "pass",
+      "reason": "The pie chart keeps its characteristic data marks separate from its axes at native sizes."
+    },
+    {
+      "file": "chart-pie.svg",
+      "status": "pass",
+      "reason": "The pie chart keeps its characteristic data marks separate from its axes at native sizes."
+    },
+    {
+      "file": "chart-scatter_solid.svg",
+      "status": "pass",
+      "reason": "The scatter chart keeps its characteristic data marks separate from its axes at native sizes."
+    },
+    {
+      "file": "chart-scatter.svg",
+      "status": "pass",
+      "reason": "The scatter chart keeps its characteristic data marks separate from its axes at native sizes."
+    },
+    {
+      "file": "chart-stacked-bar.svg",
+      "status": "pass",
+      "reason": "The stacked bar chart keeps its characteristic data marks separate from its axes at native sizes."
+    },
+    {
+      "file": "chart-waterfall.svg",
+      "status": "pass",
+      "reason": "The waterfall chart keeps its characteristic data marks separate from its axes at native sizes."
+    },
+    {
+      "file": "chat_solid.svg",
+      "status": "pass",
+      "reason": "Speech outline and distinguishing marks remain visible at native sizes in the filled variant."
+    },
+    {
+      "file": "chat-group_solid.svg",
+      "status": "pass",
+      "reason": "Speech outline and distinguishing marks remain visible at native sizes in the filled variant."
+    },
+    {
+      "file": "chat-group.svg",
+      "status": "pass",
+      "reason": "Speech outline and distinguishing marks remain visible at native sizes."
+    },
+    {
+      "file": "chat.svg",
+      "status": "pass",
+      "reason": "Speech outline and distinguishing marks remain visible at native sizes."
+    },
+    {
+      "file": "chatting_solid.svg",
+      "status": "pass",
+      "reason": "Speech outline and distinguishing marks remain visible at native sizes in the filled variant."
+    },
+    {
+      "file": "chatting.svg",
+      "status": "pass",
+      "reason": "Speech outline and distinguishing marks remain visible at native sizes."
+    },
+    {
+      "file": "checkmark_solid.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "checkmark.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "chevron-down.svg",
+      "status": "pass",
+      "reason": "Direction and arrowhead remain clear at 12, 14 and 16px; junctions do not swallow the point."
+    },
+    {
+      "file": "chevron-left.svg",
+      "status": "pass",
+      "reason": "Direction and arrowhead remain clear at 12, 14 and 16px; junctions do not swallow the point."
+    },
+    {
+      "file": "chevron-right.svg",
+      "status": "pass",
+      "reason": "Direction and arrowhead remain clear at 12, 14 and 16px; junctions do not swallow the point."
+    },
+    {
+      "file": "chevron-up.svg",
+      "status": "pass",
+      "reason": "Direction and arrowhead remain clear at 12, 14 and 16px; junctions do not swallow the point."
+    },
+    {
+      "file": "clock_solid.svg",
+      "status": "pass",
+      "reason": "Time/control silhouette and identifying marks remain visible at native sizes in the filled variant."
+    },
+    {
+      "file": "clock.svg",
+      "status": "pass",
+      "reason": "Time/control silhouette and identifying marks remain visible at native sizes."
+    },
+    {
+      "file": "clone.svg",
+      "status": "pass",
+      "reason": "The clone silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "close_small.svg",
+      "status": "pass",
+      "reason": "Simple mark remains distinct and balanced at native sizes, with usable straight arms and clear terminals."
+    },
+    {
+      "file": "close.svg",
+      "status": "pass",
+      "reason": "Simple mark remains distinct and balanced at native sizes, with usable straight arms and clear terminals."
+    },
+    {
+      "file": "closedcaption_solid.svg",
+      "status": "pass",
+      "reason": "Simple mark remains distinct and balanced at native sizes, with usable straight arms and clear terminals."
+    },
+    {
+      "file": "closedcaption-disabled_solid.svg",
+      "status": "pass",
+      "reason": "Simple mark remains distinct and balanced at native sizes, with usable straight arms and clear terminals."
+    },
+    {
+      "file": "closedcaption-disabled.svg",
+      "status": "pass",
+      "reason": "Simple mark remains distinct and balanced at native sizes, with usable straight arms and clear terminals."
+    },
+    {
+      "file": "closedcaption.svg",
+      "status": "pass",
+      "reason": "Simple mark remains distinct and balanced at native sizes, with usable straight arms and clear terminals."
+    },
+    {
+      "file": "cloud_solid.svg",
+      "status": "pass",
+      "reason": "Cloud lobes remain clear; inverse marks retain usable separation at native sizes."
+    },
+    {
+      "file": "cloud-disabled_solid.svg",
+      "status": "pass",
+      "reason": "Cloud lobes remain clear; inverse marks retain usable separation at native sizes."
+    },
+    {
+      "file": "cloud-disabled.svg",
+      "status": "pass",
+      "reason": "Cloud lobes remain clear; interior marks retain usable separation at native sizes."
+    },
+    {
+      "file": "cloud-download_solid.svg",
+      "status": "pass",
+      "reason": "Cloud lobes remain clear; inverse marks retain usable separation at native sizes."
+    },
+    {
+      "file": "cloud-download.svg",
+      "status": "pass",
+      "reason": "Cloud lobes remain clear; interior marks retain usable separation at native sizes."
+    },
+    {
+      "file": "cloud-success_solid.svg",
+      "status": "uncertain",
+      "reason": "The inverse check competes with the cloud rim at 12px and reads weakly.",
+      "issueType": "modifier legibility",
+      "size": 12
+    },
+    {
+      "file": "cloud-success.svg",
+      "status": "uncertain",
+      "reason": "The check within the cloud is close to a short diagonal at 12px; success meaning weakens.",
+      "issueType": "modifier legibility",
+      "size": 12
+    },
+    {
+      "file": "cloud-sync_solid.svg",
+      "status": "issue",
+      "reason": "The arrow cutouts are cramped and indistinct at 12px, leaving a generic solid cloud.",
+      "issueType": "modifier legibility",
+      "size": 12
+    },
+    {
+      "file": "cloud-sync.svg",
+      "status": "issue",
+      "reason": "The opposed arrows merge into a small dark cluster at 12px; the cloud reads but sync does not.",
+      "issueType": "modifier legibility",
+      "size": 12
+    },
+    {
+      "file": "cloud-upload_solid.svg",
+      "status": "pass",
+      "reason": "Cloud lobes remain clear; inverse marks retain usable separation at native sizes."
+    },
+    {
+      "file": "cloud-upload.svg",
+      "status": "pass",
+      "reason": "Cloud lobes remain clear; interior marks retain usable separation at native sizes."
+    },
+    {
+      "file": "cloud.svg",
+      "status": "pass",
+      "reason": "Cloud lobes remain clear; interior marks retain usable separation at native sizes."
+    },
+    {
+      "file": "coffee_solid.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes with coherent filled weight."
+    },
+    {
+      "file": "coffee.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes."
+    },
+    {
+      "file": "collapse-all-horizontal.svg",
+      "status": "issue",
+      "reason": "The two inward chevrons read almost exactly as Close at 12px.",
+      "issueType": "recognition",
+      "size": 12
+    },
+    {
+      "file": "collapse-all.svg",
+      "status": "pass",
+      "reason": "Simple mark remains distinct and balanced at native sizes, with usable straight arms and clear terminals."
+    },
+    {
+      "file": "collapse.svg",
+      "status": "pass",
+      "reason": "Simple mark remains distinct and balanced at native sizes, with usable straight arms and clear terminals."
+    },
+    {
+      "file": "column-chooser_solid.svg",
+      "status": "pass",
+      "reason": "Repeated structure remains separate at native sizes; defining frame and openings stay visible."
+    },
+    {
+      "file": "column-chooser.svg",
+      "status": "pass",
+      "reason": "Repeated structure remains separate at native sizes; defining frame and openings stay visible."
+    },
+    {
+      "file": "commentary_solid.svg",
+      "status": "pass",
+      "reason": "Speech outline and distinguishing marks remain visible at native sizes in the filled variant."
+    },
+    {
+      "file": "commentary.svg",
+      "status": "pass",
+      "reason": "Speech outline and distinguishing marks remain visible at native sizes."
+    },
+    {
+      "file": "compare_solid.svg",
+      "status": "uncertain",
+      "reason": "The filled endpoint nodes make the compact arrow pair dense at 12px.",
+      "issueType": "detail density",
+      "size": 12
+    },
+    {
+      "file": "compare.svg",
+      "status": "uncertain",
+      "reason": "Arrows and endpoint nodes are distinct when enlarged but form a very small vertical cluster at 12px.",
+      "issueType": "detail density",
+      "size": 12
+    },
+    {
+      "file": "compass_solid.svg",
+      "status": "pass",
+      "reason": "The compass silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "compass.svg",
+      "status": "pass",
+      "reason": "The compass silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "cookie_solid.svg",
+      "status": "pass",
+      "reason": "The cookie silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "cookie.svg",
+      "status": "pass",
+      "reason": "The cookie silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "copy_solid.svg",
+      "status": "pass",
+      "reason": "The copy silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "copy.svg",
+      "status": "pass",
+      "reason": "The copy silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "credit-card_solid.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes with coherent filled weight."
+    },
+    {
+      "file": "credit-card.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes."
+    },
+    {
+      "file": "crops_solid.svg",
+      "status": "issue",
+      "reason": "The filled crop becomes a narrow dark sprig at 12px and loses its plant silhouette.",
+      "issueType": "optical size",
+      "size": 12
+    },
+    {
+      "file": "crops.svg",
+      "status": "issue",
+      "reason": "The slender crop is too small and fine to identify as a plant at 12px.",
+      "issueType": "optical size",
+      "size": 12
+    },
+    {
+      "file": "csv_solid.svg",
+      "status": "pass",
+      "reason": "Page fold and retained content remain distinct at native sizes in the filled surface."
+    },
+    {
+      "file": "csv.svg",
+      "status": "pass",
+      "reason": "Page fold and retained content remain distinct at native sizes."
+    },
+    {
+      "file": "currency_solid.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes with coherent filled weight."
+    },
+    {
+      "file": "currency-exchange.svg",
+      "status": "issue",
+      "reason": "Three tiny currency counters crowd together; the exchange concept is not recognisable at 12px.",
+      "issueType": "detail collapse",
+      "size": 12
+    },
+    {
+      "file": "currency.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes."
+    },
+    {
+      "file": "cut.svg",
+      "status": "pass",
+      "reason": "The cut silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "dark_solid.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "dark.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "dashboard_solid.svg",
+      "status": "pass",
+      "reason": "Time/control silhouette and identifying marks remain visible at native sizes in the filled variant."
+    },
+    {
+      "file": "dashboard.svg",
+      "status": "pass",
+      "reason": "Time/control silhouette and identifying marks remain visible at native sizes."
+    },
+    {
+      "file": "database_solid.svg",
+      "status": "pass",
+      "reason": "Repeated structure remains separate at native sizes; defining frame and openings stay visible."
+    },
+    {
+      "file": "database.svg",
+      "status": "pass",
+      "reason": "Repeated structure remains separate at native sizes; defining frame and openings stay visible."
+    },
+    {
+      "file": "dataset-manager_solid.svg",
+      "status": "uncertain",
+      "reason": "The person overlay is hard to distinguish from the filled database at 12px.",
+      "issueType": "detail density",
+      "size": 12
+    },
+    {
+      "file": "dataset-manager.svg",
+      "status": "uncertain",
+      "reason": "The database and person glyph remain separate enlarged but merge into a compact cluster at 12px.",
+      "issueType": "detail density",
+      "size": 12
+    },
+    {
+      "file": "dataset.svg",
+      "status": "pass",
+      "reason": "Repeated structure remains separate at native sizes; defining frame and openings stay visible."
+    },
+    {
+      "file": "delete_solid.svg",
+      "status": "pass",
+      "reason": "The delete silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "delete.svg",
+      "status": "pass",
+      "reason": "The delete silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "devices_solid.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes with coherent filled weight."
+    },
+    {
+      "file": "devices.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes."
+    },
+    {
+      "file": "diamond.svg",
+      "status": "pass",
+      "reason": "The diamond silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "display_solid.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes with coherent filled weight."
+    },
+    {
+      "file": "display.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes."
+    },
+    {
+      "file": "divide.svg",
+      "status": "pass",
+      "reason": "Simple mark remains distinct and balanced at native sizes, with usable straight arms and clear terminals."
+    },
+    {
+      "file": "document_solid.svg",
+      "status": "pass",
+      "reason": "Page fold and retained content remain distinct at native sizes in the filled surface."
+    },
+    {
+      "file": "document-draft.svg",
+      "status": "issue",
+      "reason": "At 12px this is almost indistinguishable from Document edit; the extra draft detail is too small.",
+      "issueType": "state distinction",
+      "size": 12
+    },
+    {
+      "file": "document-edit.svg",
+      "status": "issue",
+      "reason": "At 12px this is almost indistinguishable from Document draft; both show the same page and pencil.",
+      "issueType": "state distinction",
+      "size": 12
+    },
+    {
+      "file": "document-search.svg",
+      "status": "pass",
+      "reason": "Page fold and retained content remain distinct at native sizes."
+    },
+    {
+      "file": "document.svg",
+      "status": "pass",
+      "reason": "Page fold and retained content remain distinct at native sizes."
+    },
+    {
+      "file": "does-not-equal.svg",
+      "status": "pass",
+      "reason": "Simple mark remains distinct and balanced at native sizes, with usable straight arms and clear terminals."
+    },
+    {
+      "file": "double-chevron-down.svg",
+      "status": "pass",
+      "reason": "Direction and arrowhead remain clear at 12, 14 and 16px; junctions do not swallow the point."
+    },
+    {
+      "file": "double-chevron-left.svg",
+      "status": "pass",
+      "reason": "Direction and arrowhead remain clear at 12, 14 and 16px; junctions do not swallow the point."
+    },
+    {
+      "file": "double-chevron-right.svg",
+      "status": "pass",
+      "reason": "Direction and arrowhead remain clear at 12, 14 and 16px; junctions do not swallow the point."
+    },
+    {
+      "file": "double-chevron-up.svg",
+      "status": "pass",
+      "reason": "Direction and arrowhead remain clear at 12, 14 and 16px; junctions do not swallow the point."
+    },
+    {
+      "file": "download.svg",
+      "status": "pass",
+      "reason": "Direction and arrowhead remain clear at 12, 14 and 16px; junctions do not swallow the point."
+    },
+    {
+      "file": "drag-row.svg",
+      "status": "pass",
+      "reason": "The drag row silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "edit_solid.svg",
+      "status": "pass",
+      "reason": "The edit silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "edit.svg",
+      "status": "pass",
+      "reason": "The edit silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "equal.svg",
+      "status": "pass",
+      "reason": "Simple mark remains distinct and balanced at native sizes, with usable straight arms and clear terminals."
+    },
+    {
+      "file": "error_solid.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "error-execute.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "error.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "expand-all-horizontal.svg",
+      "status": "pass",
+      "reason": "Simple mark remains distinct and balanced at native sizes, with usable straight arms and clear terminals."
+    },
+    {
+      "file": "expand-all.svg",
+      "status": "pass",
+      "reason": "Simple mark remains distinct and balanced at native sizes, with usable straight arms and clear terminals."
+    },
+    {
+      "file": "expand.svg",
+      "status": "pass",
+      "reason": "Simple mark remains distinct and balanced at native sizes, with usable straight arms and clear terminals."
+    },
+    {
+      "file": "exponentiation.svg",
+      "status": "pass",
+      "reason": "Simple mark remains distinct and balanced at native sizes, with usable straight arms and clear terminals."
+    },
+    {
+      "file": "export_solid.svg",
+      "status": "pass",
+      "reason": "Direction and arrowhead remain clear at 12, 14 and 16px; junctions do not swallow the point."
+    },
+    {
+      "file": "export.svg",
+      "status": "pass",
+      "reason": "Direction and arrowhead remain clear at 12, 14 and 16px; junctions do not swallow the point."
+    },
+    {
+      "file": "favorite_solid.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "favorite_strong.svg",
+      "status": "uncertain",
+      "reason": "The stronger outlined star is only subtly heavier than Favorite at 12px.",
+      "issueType": "state distinction",
+      "size": 12
+    },
+    {
+      "file": "favorite-half.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "favorite.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "feedback_solid.svg",
+      "status": "uncertain",
+      "reason": "The inverse person inside the filled page is tight at 12px and may read as a generic document.",
+      "issueType": "detail density",
+      "size": 12
+    },
+    {
+      "file": "feedback.svg",
+      "status": "uncertain",
+      "reason": "The person inside the document is barely distinguishable; this can read as a generic page.",
+      "issueType": "detail density",
+      "size": 12
+    },
+    {
+      "file": "figma.svg",
+      "status": "pass",
+      "reason": "The figma silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "filter_solid.svg",
+      "status": "pass",
+      "reason": "The filter silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "filter-clear_solid.svg",
+      "status": "uncertain",
+      "reason": "The X remains separate at 16px but is very small beside the filled funnel at 12px.",
+      "issueType": "modifier legibility",
+      "size": 12
+    },
+    {
+      "file": "filter-clear.svg",
+      "status": "uncertain",
+      "reason": "The X sits close to the funnel and becomes a tiny cluster at 12px.",
+      "issueType": "modifier legibility",
+      "size": 12
+    },
+    {
+      "file": "filter.svg",
+      "status": "pass",
+      "reason": "The filter silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "first.svg",
+      "status": "pass",
+      "reason": "Direction and arrowhead remain clear at 12, 14 and 16px; junctions do not swallow the point."
+    },
+    {
+      "file": "flag_solid.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "flag.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "folder-closed_solid.svg",
+      "status": "pass",
+      "reason": "Repeated structure remains separate at native sizes; defining frame and openings stay visible."
+    },
+    {
+      "file": "folder-closed.svg",
+      "status": "pass",
+      "reason": "Repeated structure remains separate at native sizes; defining frame and openings stay visible."
+    },
+    {
+      "file": "folder-open_solid.svg",
+      "status": "pass",
+      "reason": "Repeated structure remains separate at native sizes; defining frame and openings stay visible."
+    },
+    {
+      "file": "folder-open.svg",
+      "status": "pass",
+      "reason": "Repeated structure remains separate at native sizes; defining frame and openings stay visible."
+    },
+    {
+      "file": "forward-10.svg",
+      "status": "uncertain",
+      "reason": "The 10 fits within the arc, but the narrow 1 is hard to read at 12px.",
+      "issueType": "numeral legibility",
+      "size": 12
+    },
+    {
+      "file": "forward-15.svg",
+      "status": "uncertain",
+      "reason": "The 15 sits tightly inside the arc and is difficult to distinguish from 10 at 12px.",
+      "issueType": "numeral legibility",
+      "size": 12
+    },
+    {
+      "file": "forward-30.svg",
+      "status": "uncertain",
+      "reason": "The 30 is legible enlarged but closely packed inside the arc at 12px.",
+      "issueType": "numeral legibility",
+      "size": 12
+    },
+    {
+      "file": "forward-5.svg",
+      "status": "pass",
+      "reason": "Time/control silhouette and identifying marks remain visible at native sizes."
+    },
+    {
+      "file": "github.svg",
+      "status": "pass",
+      "reason": "The github silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "globe_solid.svg",
+      "status": "pass",
+      "reason": "The globe silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "globe.svg",
+      "status": "pass",
+      "reason": "The globe silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "greater-than-equal-to.svg",
+      "status": "pass",
+      "reason": "Simple mark remains distinct and balanced at native sizes, with usable straight arms and clear terminals."
+    },
+    {
+      "file": "greater-than.svg",
+      "status": "pass",
+      "reason": "Simple mark remains distinct and balanced at native sizes, with usable straight arms and clear terminals."
+    },
+    {
+      "file": "grid_solid.svg",
+      "status": "pass",
+      "reason": "Repeated structure remains separate at native sizes; defining frame and openings stay visible."
+    },
+    {
+      "file": "grid.svg",
+      "status": "pass",
+      "reason": "Repeated structure remains separate at native sizes; defining frame and openings stay visible."
+    },
+    {
+      "file": "group_solid.svg",
+      "status": "uncertain",
+      "reason": "The filled nested squares become a small black cluster inside a frame at 12px.",
+      "issueType": "recognition",
+      "size": 12
+    },
+    {
+      "file": "group.svg",
+      "status": "uncertain",
+      "reason": "The small nested squares inside a larger frame read as a generic panel at 12px.",
+      "issueType": "recognition",
+      "size": 12
+    },
+    {
+      "file": "growth.svg",
+      "status": "pass",
+      "reason": "Direction and arrowhead remain clear at 12, 14 and 16px; junctions do not swallow the point."
+    },
+    {
+      "file": "guide-closed_solid.svg",
+      "status": "pass",
+      "reason": "Repeated structure remains separate at native sizes; defining frame and openings stay visible."
+    },
+    {
+      "file": "guide-closed.svg",
+      "status": "pass",
+      "reason": "Repeated structure remains separate at native sizes; defining frame and openings stay visible."
+    },
+    {
+      "file": "guide-open_solid.svg",
+      "status": "pass",
+      "reason": "Repeated structure remains separate at native sizes; defining frame and openings stay visible."
+    },
+    {
+      "file": "guide-open.svg",
+      "status": "pass",
+      "reason": "Repeated structure remains separate at native sizes; defining frame and openings stay visible."
+    },
+    {
+      "file": "handshake_solid.svg",
+      "status": "issue",
+      "reason": "The filled hands collapse to a small dark blob at 12px.",
+      "issueType": "optical size",
+      "size": 12
+    },
+    {
+      "file": "handshake.svg",
+      "status": "issue",
+      "reason": "The hands occupy too little of the 16-unit canvas and become an unrecognisable squiggle at 12px.",
+      "issueType": "optical size",
+      "size": 12
+    },
+    {
+      "file": "headphones_solid.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes with coherent filled weight."
+    },
+    {
+      "file": "headphones-disabled_solid.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes with coherent filled weight."
+    },
+    {
+      "file": "headphones-disabled.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes."
+    },
+    {
+      "file": "headphones.svg",
+      "status": "pass",
+      "reason": "Object silhouette and key interior feature stay legible at native sizes."
+    },
+    {
+      "file": "help_solid.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "help-circle_solid.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "help-circle.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "help.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "hidden_solid.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "hidden.svg",
+      "status": "pass",
+      "reason": "The state silhouette remains clear at 12px, with its main opening or mark visible in both themes."
+    },
+    {
+      "file": "hierarchy_solid.svg",
+      "status": "pass",
+      "reason": "The hierarchy silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "hierarchy.svg",
+      "status": "pass",
+      "reason": "The hierarchy silhouette remains recognisable at native sizes, with no visible broken edge or closed opening."
+    },
+    {
+      "file": "history.svg",
+      "status": "pass",
+      "reason": "Time/control silhouette and identifying marks remain visible at native sizes."
+    },
+    {
+      "file": "holiday_solid.svg",
+      "status": "uncertain",
+      "reason": "The small filled umbrella reads as a dark stroke cluster at 12px.",
+      "issueType": "recognition",
+      "size": 12
+    },
+    {
+      "file": "holiday.svg",
+      "status": "uncertain",
+      "reason": "The beach umbrella and sun are tiny at 12px; the umbrella is clearer at 16px.",
+      "issueType": "recognition",
+      "size": 12
+    },
+    {
+      "file": "home_solid.svg",
+      "status": "pass",
+      "reason": "Architectural outline and openings remain legible at native sizes with the filled body."
+    },
+    {
+      "file": "home.svg",
+      "status": "pass",
+      "reason": "Architectural outline and openings remain legible at native sizes."
+    },
+    {
+      "file": "hospital_solid.svg",
+      "status": "uncertain",
+      "reason": "The inverse medical cross weakens at 12px within the narrow building.",
+      "issueType": "modifier legibility",
+      "size": 12
+    },
+    {
+      "file": "hospital.svg",
+      "status": "uncertain",
+      "reason": "The medical cross is tiny at 12px, so the symbol reads mostly as a generic building.",
+      "issueType": "modifier legibility",
+      "size": 12
+    }
+  ]
+}

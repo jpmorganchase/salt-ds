@@ -58,7 +58,7 @@ The [export-fitting instructions](https://github.com/jpmorganchase/salt-ds/blob/
 
 Follow the [cutout guidance](/salt/foundations/assets/icon-design#transparency-and-cutouts). Derive clearance from the actual foreground paint, including its cap corners, tips and curved joins. Recheck it whenever that foreground changes.
 
-Compare gaps at the two themed weights and at native size. An opening that reaches the outer edge must remain fully open, without a border crossing its mouth. Check light and dark backgrounds; painted background-colored patches are not transparent cutouts.
+Compare gaps at all three themed weights and at native size. An opening that reaches the outer edge must remain fully open, without a border crossing its mouth. Check light and dark backgrounds; painted background-colored patches are not transparent cutouts.
 
 For implementation, use the maintenance guide's [painted-gap calculations and contour construction](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/MAINTAINING.md#construct-transparent-cutouts).
 
@@ -72,7 +72,7 @@ Start from the owner's official vector source and usage guidance. Preserve its c
 
 Compare the complete affected family in the site's [Icons catalogue](/salt/foundations/assets/index#all-icons), the existing Storybook **Icons/Icon** stories and the relevant component examples. **Icon QA** provides size and CSS-mask examples. Follow the [repository setup and review instructions](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/MAINTAINING.md#use-the-existing-review-surfaces) to run them.
 
-Review both variants at actual **12px and 16px**, on **light and dark backgrounds**, plus an enlarged view. Use 12px at **device pixel ratio 1 and 100% browser zoom** as the primary clarity check, then confirm higher-density screens. Display pixel density is separate from the Salt density setting. Start with the themed widths: **4/3 for high/medium density** and **1 for low/touch/mobile**. Also inspect the **0.67** SVG reference and the **1.5** fitting width. Confirm actual rendered dimensions: the component's `size` prop is a density-based multiplier, not a pixel value.
+Review both variants at actual **12px, 14px and 16px**, on **light and dark backgrounds**, plus an enlarged view. Include 14px because it is the default icon size in low density. Use 12px at **device pixel ratio 1 and 100% browser zoom** as the primary clarity check, then confirm higher-density screens. Display pixel density is separate from the Salt density setting. Start with the themed widths: **4/3 for high/medium density**, **8/7 for low density**, and **1 for touch/mobile**. These target an approximately 1 CSS-pixel primary stroke at size multiplier 1; larger multipliers scale the stroke with the icon. Also inspect the **0.67** SVG reference and the **1.5** fitting width. Confirm actual rendered dimensions: the component's `size` prop is a density-based multiplier, not a pixel value.
 
 For a whole-scale review, cover multipliers 1–4 at every density using the [published size table](/salt/foundations/assets/index#scaling-icons). Review generated components and CSS masks separately, since masks keep baked stroke widths.
 
