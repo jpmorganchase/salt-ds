@@ -120,6 +120,7 @@ code.saltText,
   font-weight: var(--salt-text-display-fontWeight);
   letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
   line-height: var(--salt-text-display1-lineHeight);
+  text-transform: var(--salt-text-display-textTransform, none);
 }
 
 /* Display 1 emphasis strong */
@@ -141,6 +142,7 @@ code.saltText,
   font-weight: var(--salt-text-display-fontWeight);
   letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
   line-height: var(--salt-text-display2-lineHeight);
+  text-transform: var(--salt-text-display-textTransform, none);
 }
 
 /* Display 2 emphasis strong */
@@ -162,6 +164,7 @@ code.saltText,
   font-weight: var(--salt-text-display-fontWeight);
   letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
   line-height: var(--salt-text-display3-lineHeight);
+  text-transform: var(--salt-text-display-textTransform, none);
 }
 
 /* Display 3 emphasis strong */
@@ -183,6 +186,7 @@ code.saltText,
   font-weight: var(--salt-text-display-fontWeight);
   letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
   line-height: var(--salt-text-display4-lineHeight);
+  text-transform: var(--salt-text-display-textTransform, none);
 }
 
 /* Display 4 emphasis strong */
