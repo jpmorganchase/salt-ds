@@ -51,3 +51,85 @@ describe("GIVEN a RadioButton component", () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 });
+
+function appearanceOf(name: string) {
+  const icon = page
+    .getByRole("radio", { name })
+    .element()
+    .closest("label")
+    ?.querySelector(".saltRadioButtonIcon");
+  if (!(icon instanceof HTMLElement)) {
+    throw new Error(`Expected the "${name}" radio button to render an icon`);
+  }
+  const { borderTopColor, color } = getComputedStyle(icon);
+  return { borderTopColor, color };
+}
+
+describe("GIVEN a RadioButton the user cannot change", () => {
+  it("looks interactive on hover when it is enabled", async () => {
+    await renderWithSalt(<RadioButton label="Enabled" />);
+    const resting = appearanceOf("Enabled");
+
+    await userEvent.hover(page.getByText("Enabled"));
+
+    expect(appearanceOf("Enabled")).not.toEqual(resting);
+  });
+
+  it.each([
+    ["unselected", {}],
+    ["selected", { checked: true }],
+  ] as const)(
+    "keeps its resting appearance on hover when disabled and %s",
+    async (_, props) => {
+      await renderWithSalt(
+        <RadioButton label="Disabled" disabled {...props} />,
+      );
+      const resting = appearanceOf("Disabled");
+
+      await userEvent.hover(page.getByText("Disabled"));
+
+      expect(appearanceOf("Disabled")).toEqual(resting);
+    },
+  );
+
+  it("still shows which of the disabled options is selected", async () => {
+    await renderWithSalt(
+      <>
+        <RadioButton label="Selected" checked disabled />
+        <RadioButton label="Unselected" disabled />
+      </>,
+    );
+    expect(appearanceOf("Selected")).not.toEqual(appearanceOf("Unselected"));
+
+    await userEvent.hover(page.getByText("Selected"));
+
+    expect(appearanceOf("Selected")).not.toEqual(appearanceOf("Unselected"));
+  });
+
+  it.each(["error", "warning"] as const)(
+    "keeps its %s appearance on hover",
+    async (validationStatus) => {
+      await renderWithSalt(
+        <RadioButton
+          label="Validated"
+          checked
+          validationStatus={validationStatus}
+        />,
+      );
+      const resting = appearanceOf("Validated");
+
+      await userEvent.hover(page.getByText("Validated"));
+
+      expect(appearanceOf("Validated")).toEqual(resting);
+    },
+  );
+
+  it("keeps its read-only appearance on hover", async () => {
+    await renderWithSalt(<RadioButton label="Read only" checked readOnly />);
+    const resting = appearanceOf("Read only");
+
+    await userEvent.hover(page.getByText("Read only"));
+
+    expect(appearanceOf("Read only")).toEqual(resting);
+  });
+});
