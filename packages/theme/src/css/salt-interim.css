@@ -3,6 +3,7 @@
 
 @import url(salt-interim/foundations/alpha.css);
 @import url(salt-interim/foundations/color.css);
+@import url(salt-interim/foundations/typography.css);
 
 /* Intermediate palette (refined colors) */
 @import url(salt-interim/palette/accent.css);
