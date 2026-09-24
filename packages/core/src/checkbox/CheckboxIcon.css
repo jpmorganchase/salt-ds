@@ -33,8 +33,6 @@
   color: var(--salt-selectable-foreground);
 }
 
-/* A disabled checkbox must not respond to hover. These restore the
-   resting appearance, which the hover rules above would otherwise win over. */
 .saltCheckbox-disabled:hover .saltCheckboxIcon,
 .saltCheckbox-disabled:hover .saltCheckboxIcon-indeterminate {
   border-color: var(--salt-selectable-borderColor);
