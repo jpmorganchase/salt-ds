@@ -52,10 +52,14 @@ describe("GIVEN a RadioButton component", () => {
   });
 });
 
-// The icon carries the control's visual state. It renders immediately after
-// the input, so it can be reached without depending on internal class names.
+// The icon carries the control's visual state and has no accessible role of
+// its own, so it is located by class within the labelled control.
 function iconFor(name: string) {
-  const icon = page.getByRole("radio", { name }).element().nextElementSibling;
+  const icon = page
+    .getByRole("radio", { name })
+    .element()
+    .closest("label")
+    ?.querySelector(".saltRadioButtonIcon");
   if (!(icon instanceof HTMLElement)) {
     throw new Error(`Expected the "${name}" radio button to render an icon`);
   }

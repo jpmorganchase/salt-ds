@@ -101,12 +101,14 @@ describe("GIVEN a Checkbox", () => {
   });
 });
 
-// The icon carries the control's visual state. It renders immediately after
-// the input, so it can be reached without depending on internal class names.
+// The icon carries the control's visual state and has no accessible role of
+// its own, so it is located by class within the labelled control.
 function iconFor(name: string) {
   const icon = page
     .getByRole("checkbox", { name })
-    .element().nextElementSibling;
+    .element()
+    .closest("label")
+    ?.querySelector(".saltCheckboxIcon");
   if (!(icon instanceof HTMLElement)) {
     throw new Error(`Expected the "${name}" checkbox to render an icon`);
   }
