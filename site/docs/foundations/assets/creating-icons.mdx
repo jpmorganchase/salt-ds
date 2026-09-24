@@ -46,7 +46,7 @@ Contributors should use the repository's shared mark composition so fitting a co
 
 ## Fit every export to the viewBox
 
-Check the complete painted shape, not just the path centerlines. Preserve aspect ratio, keep paint inside the 16-unit frame and compare apparent size against neighboring icons. The ordinary fit targets a **15.5-unit longest painted dimension at width 1.5**; optical exceptions and shared family frames preserve balance and common landmarks.
+Check the complete painted shape, not just the path centerlines. Preserve aspect ratio, keep paint inside the 16-unit frame and compare apparent size against neighboring icons. Choose a reviewed family frame before accepting the export. The default fit targets a **15.5-unit longest painted dimension at width 1.5**; this is a starting point for fuller artwork, not a size that compact controls must reach. Use documented family targets and shared frames to preserve apparent size, proportions, placement and common landmarks. A new direction or variant inherits its closest family rather than automatically filling the canvas.
 
 Check important straight edges on the final 12px pixel grid, then compare 16px and actual component placement. Retain an optical frame that preserves useful alignment instead of enlarging every drawing to the maximum span. See [pixel alignment](/salt/foundations/assets/icon-design#align-important-edges-to-the-pixel-grid).
 
@@ -77,6 +77,14 @@ Review both variants at actual **12px and 16px**, on **light and dark background
 For a whole-scale review, cover multipliers 1–4 at every density using the [published size table](/salt/foundations/assets/index#scaling-icons). Review generated components and CSS masks separately, since masks keep baked stroke widths.
 
 Hide names for the first recognition pass, then inspect the intended interface context. Compare before and after for the whole affected family. Retain a change only when it improves the identified problem without weakening recognition, weight or common landmarks. Distinguish an expert visual judgment from feedback gathered from users.
+
+Record visible band thickness, weld strength and native-size pixel clarity as separate review decisions. Include filled rims and inverse openings in the thickness check; a stroke-width value does not describe their narrowest visible band. A large contact sheet helps spot family differences, but flagged or changed icons also need a focused native-size comparison.
+
+### Compare outline and solid shapes
+
+Overlay or alternate the final pair in one fixed icon box. Compare the complete painted contour, including every point and recessed shoulder, and each retained symbol inside a frame. Equal width and height, shared path coordinates or an unchanged outer container do not establish a matching shape. Filling a surface should preserve its defining boundary; the outline stroke already contributes to that boundary.
+
+Declare what stays the same and what intentionally fills. The [pair contour audit](https://github.com/jpmorganchase/salt-ds/blob/main/packages/icons/MAINTAINING.md#compare-painted-pair-contours) tests these relationships at the supported weights. Unclassified pairs remain **needs review**. A contour pass covers that relationship only; continue reviewing internal openings, positive/inverse marks, apparent weight and recognition at 12px and 16px.
 
 ### Check corners and exceptions
 

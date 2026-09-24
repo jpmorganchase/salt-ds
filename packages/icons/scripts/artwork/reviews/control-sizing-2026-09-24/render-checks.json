@@ -1,0 +1,2608 @@
+{
+  "screenshots": [
+    "changed-light-dpr1-1.png",
+    "changed-light-dpr1-2.png",
+    "keyboard-light-dpr1-1.png",
+    "keyboard-light-dpr1-2.png",
+    "triangles-light-dpr1-1.png",
+    "triangles-light-dpr1-2.png",
+    "triangles-light-dpr1-3.png",
+    "changed-dark-dpr1-1.png",
+    "changed-dark-dpr1-2.png",
+    "keyboard-dark-dpr1-1.png",
+    "keyboard-dark-dpr1-2.png",
+    "triangles-dark-dpr1-1.png",
+    "triangles-dark-dpr1-2.png",
+    "triangles-dark-dpr1-3.png",
+    "changed-light-dpr2-1.png",
+    "changed-light-dpr2-2.png",
+    "keyboard-light-dpr2-1.png",
+    "keyboard-light-dpr2-2.png",
+    "triangles-light-dpr2-1.png",
+    "triangles-light-dpr2-2.png",
+    "triangles-light-dpr2-3.png",
+    "changed-dark-dpr2-1.png",
+    "changed-dark-dpr2-2.png",
+    "keyboard-dark-dpr2-1.png",
+    "keyboard-dark-dpr2-2.png",
+    "triangles-dark-dpr2-1.png",
+    "triangles-dark-dpr2-2.png",
+    "triangles-dark-dpr2-3.png",
+    "components-light-12-0.67.png",
+    "components-light-12-1.33.png",
+    "components-light-12-1.50.png",
+    "components-light-16-0.67.png",
+    "components-light-16-1.00.png",
+    "components-light-16-1.50.png",
+    "components-dark-12-0.67.png",
+    "components-dark-12-1.33.png",
+    "components-dark-12-1.50.png",
+    "components-dark-16-0.67.png",
+    "components-dark-16-1.00.png",
+    "components-dark-16-1.50.png"
+  ],
+  "components": [
+    {
+      "name": "close.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close_small.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "first.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "key-control.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "last.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-down.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-left.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-up.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close_small.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "first.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "key-control.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "last.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-down.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-left.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-up.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close_small.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "first.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "key-control.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "last.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-down.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-left.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-up.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close_small.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "first.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "key-control.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "last.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-down.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-left.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-up.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close_small.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "first.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "key-control.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "last.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-down.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-left.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-up.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close_small.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "first.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "key-control.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "last.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-down.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-left.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-up.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close_small.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "first.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "key-control.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "last.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-down.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-left.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-up.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close_small.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "first.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "key-control.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "last.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-down.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-left.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-up.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "light",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close_small.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "first.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "key-control.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "last.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-down.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-left.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-up.svg",
+      "size": 12,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close_small.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "first.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "key-control.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "last.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-down.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-left.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-up.svg",
+      "size": 12,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close_small.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "first.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "key-control.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "last.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-down.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-left.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-up.svg",
+      "size": 12,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close_small.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "first.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "key-control.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "last.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-down.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-left.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-up.svg",
+      "size": 12,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        12,
+        12
+      ],
+      "mask": [
+        12,
+        12
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close_small.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "first.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "key-control.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "last.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-down.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-left.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-up.svg",
+      "size": 16,
+      "weight": 0.67,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "0.67px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close_small.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "first.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "key-control.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "last.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-down.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-left.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-up.svg",
+      "size": 16,
+      "weight": 1,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close_small.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "first.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "key-control.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "last.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-down.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-left.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-up.svg",
+      "size": 16,
+      "weight": 1.3333333333333333,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.33333px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "close_small.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "first.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "key-control.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "last.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-down.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-left.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-right.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    },
+    {
+      "name": "triangle-up.svg",
+      "size": 16,
+      "weight": 1.5,
+      "theme": "dark",
+      "component": [
+        16,
+        16
+      ],
+      "mask": [
+        16,
+        16
+      ],
+      "resolvedStroke": "1.5px",
+      "maskLoaded": true
+    }
+  ],
+  "pageErrors": [],
+  "mobileNoOverflow": true
+}

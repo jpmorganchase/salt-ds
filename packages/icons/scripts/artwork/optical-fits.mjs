@@ -2,6 +2,43 @@
 // final 16-unit viewBox at primary stroke 1.5, not to recipe padding.
 // Record the optical reason; do not infer a target from bounding-box shape alone.
 export const opticalFits = {
+  "key-control.svg": {
+    targetSpan: 9.125, center: [8, 4.1],
+    reason: "Restore the compact raised Control-key caret beside the other keyboard symbols; it must not fill the navigation-chevron frame.",
+  },
+  "close.svg": {
+    targetSpan: 12.5, center: [8, 8],
+    reason: "Restore the original dismissal scale while keeping primary line weight and subtle inner joins.",
+  },
+  "first.svg": {
+    targetSpan: 10.8125, center: [8, 8],
+    reason: "Restore the compact pagination footprint and keep the boundary bar close to the 12px pixel grid.",
+  },
+  "last.svg": {
+    targetSpan: 10.8125, center: [8, 8],
+    reason: "Mirror First at the same compact pagination scale and preserve its bar-to-chevron spacing.",
+  },
+  ...Object.fromEntries(["up", "down", "left", "right"].map((direction) => [
+    "triangle-" + direction + ".svg",
+    { targetSpan: 40 / 3, center: [8, 8],
+      reason: "Keep directional triangles at their original compact 2:1 proportions and shared scale, independently of status and playback triangles." },
+  ])),
+  "triangle-right-down.svg": {
+    targetSpan: 28 / 3, center: [8, 8],
+    reason: "Restore the compact diagonal corner indicator instead of enlarging it to the status-icon frame.",
+  },
+  "sparkle_solid.svg": {
+    targetSpan: 15.5, center: [8, 8], frameSource: "sparkle.svg",
+    reason: "Fill the shared surface without moving its painted silhouette or retained marks.",
+  },
+  "sparkle-refresh_solid.svg": {
+    targetSpan: 15.5, center: [8, 8], frameSource: "sparkle-refresh.svg",
+    reason: "Fill the shared surface without moving its painted silhouette or retained marks.",
+  },
+  "favorite_solid.svg": {
+    targetSpan: 15.5, center: [8, 8], frameSource: "favorite.svg",
+    reason: "Fill the shared surface without moving its painted silhouette or retained marks.",
+  },
   "like_solid.svg": {
     targetSpan: 15.5, center: [8, 8], frameSource: "like.svg",
     reason: "Keep the heart lobes, cleft and pointed tip on the outline frame when filling its surface.",
@@ -268,7 +305,7 @@ export const opticalFits = {
       "Mirror GreaterThanEqualTo, preserving its comparison gesture and bar spacing.",
   },
   "close_small.svg": {
-    targetSpan: 12.5,
+    targetSpan: 10.5,
     center: [8, 8],
     reason:
       "Preserve the compact dismissal size beside Close without reducing its primary stroke.",
@@ -305,11 +342,6 @@ export const opticalFits = {
     center: [8, 4.25],
     reason:
       "Keep the power operator compact and raised in the upper half, distinct from a centered navigation chevron.",
-  },
-  "favorite_solid.svg": {
-    targetSpan: 15,
-    center: [8, 8],
-    reason: "Reduce the filled star's apparent size beside its outline.",
   },
   "play.svg": {
     targetSpan: 15.5,

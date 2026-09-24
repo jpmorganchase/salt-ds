@@ -22,59 +22,58 @@ export const SparkleRefreshIcon = forwardRef<
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M12.908 3.15a6.941 6.941 0 1 0 2.033 4.909M10.016 3.15h2.892V.259"
-        />
-        <path d="M11.751 3.15a1.157 1.157 0 0 0 1.157-1.156V3.15Z" />
-        <path
-          fill="none"
-          stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M11.751 3.15a1.157 1.157 0 0 0 1.157-1.156"
+          d="M13.686 3.917A7 7 0 1 0 15 8m-4.231-4.083h2.917V1"
         />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeMiterlimit="5"
           strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.62)"
-          d="M8 4.233c.67 2.774 1.052 3.156 3.825 3.826C9.052 8.729 8.67 9.11 8 11.884 7.33 9.111 6.948 8.728 4.175 8.06 6.948 7.389 7.33 7.007 8 4.233Z"
+          d="M8 4.142C8.675 6.94 9.06 7.325 11.858 8 9.06 8.675 8.675 9.06 8 11.858 7.325 9.06 6.94 8.675 4.142 8 6.94 7.325 7.325 6.94 8 4.142Z"
         />
-        <path d="M10.061 7.532a.572.572 0 0 1 0 1.054c.451-.19 1.022-.348 1.764-.527-.742-.18-1.313-.338-1.764-.527" />
+        <path d="M10.079 7.468a.577.577 0 0 1 0 1.064c.454-.191 1.03-.351 1.779-.532-.749-.18-1.325-.34-1.78-.532" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeMiterlimit="5"
           strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.62)"
-          d="M10.061 7.532a.572.572 0 0 1 0 1.054"
+          d="M10.079 7.468a.577.577 0 0 1 0 1.064"
         />
-        <path d="M8.527 10.12a.572.572 0 0 1-1.054 0c.19.451.348 1.022.527 1.764.18-.742.338-1.313.527-1.764" />
+        <path d="M8.532 10.079a.577.577 0 0 1-1.064 0c.191.454.351 1.03.532 1.779.18-.749.34-1.325.532-1.78" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeMiterlimit="5"
           strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.62)"
-          d="M8.527 10.12a.572.572 0 0 1-1.054 0"
+          d="M8.532 10.079a.577.577 0 0 1-1.064 0"
         />
-        <path d="M5.939 8.586a.572.572 0 0 1 0-1.054c-.451.189-1.022.348-1.764.527.742.179 1.313.338 1.764.527" />
+        <path d="M5.921 8.532a.577.577 0 0 1 0-1.064c-.454.191-1.03.351-1.779.532.749.18 1.325.34 1.78.532" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeMiterlimit="5"
           strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.62)"
-          d="M5.939 8.586a.572.572 0 0 1 0-1.054"
+          d="M5.921 8.532a.577.577 0 0 1 0-1.064"
         />
-        <path d="M7.473 5.998a.572.572 0 0 1 1.054 0C8.337 5.547 8.18 4.976 8 4.234c-.18.742-.338 1.313-.527 1.764" />
+        <path d="M7.468 5.921a.577.577 0 0 1 1.064 0C8.34 5.467 8.18 4.891 8 4.142c-.18.749-.34 1.325-.532 1.78" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
+          strokeMiterlimit="5"
           strokeWidth="calc(var(--icon-strokeWidth, 1) * 0.62)"
-          d="M7.473 5.998a.572.572 0 0 1 1.054 0"
+          d="M7.468 5.921a.577.577 0 0 1 1.064 0"
         />
-        <path d="M10.672 3.15q2.9 0 .566-1.23a7 7 0 0 1 1.67 1.23Z" />
+        <path d="M11.535 3.917a.894.894 0 0 0 .518-1.624 7 7 0 0 1 1.633 1.624Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M10.672 3.15q2.9 0 .566-1.23"
+          d="M11.535 3.917a.894.894 0 0 0 .518-1.624"
         />
-        <path d="M12.908.914q0 1.886-1.67 1.005a7 7 0 0 1 1.67 1.232Z" />
+        <path d="M13.686 1.726a.894.894 0 0 1-1.438.71 7 7 0 0 1 1.438 1.48Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M12.908.914q0 1.886-1.67 1.005"
+          d="M13.686 1.726a.894.894 0 0 1-1.438.71"
         />
       </g>
     </Icon>

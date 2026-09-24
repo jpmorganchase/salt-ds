@@ -56,7 +56,9 @@ A modifier can be separate from its base and still contain joined parts. A plus 
 
 Draw on a **16 × 16 canvas** and preserve natural proportions. The complete painted shape, including line endings and pointed joins, must fit inside it. Narrow icons retain space along their shorter axis; do not stretch them to fill a square.
 
-Ordinary exports target a longest painted span of **15.5 units at stroke width 1.5**. Optical adjustments can use a smaller span or an offset center. Related states and outline/solid pairs may need a shared frame to keep unchanged features aligned. See [export fitting](/salt/foundations/assets/creating-icons#fit-every-export-to-the-viewbox) for the contribution workflow.
+The canvas defines the maximum available space. Choose the intended visual size from the nearest family, then judge it beside related controls and text at 12px. Fuller objects and status containers can approach the edges; compact controls retain more surrounding space. There is no mandatory inset for the whole set.
+
+The exporter uses a **15.5-unit longest painted span at stroke width 1.5** as its default starting frame. This is not a requirement to enlarge every drawing. Record a smaller family span or an optical offset when needed. Related states and outline/solid pairs may need a shared frame to keep unchanged features aligned. See [export fitting](/salt/foundations/assets/creating-icons#fit-every-export-to-the-viewbox) for the contribution workflow.
 
 <IconDesignExamples example="scale" />
 
@@ -75,6 +77,10 @@ Make **12px on a standard-density screen (device pixel ratio 1) at 100% browser 
 ### Judge apparent size and balance
 
 Equal bounds do not guarantee equal apparent size. Compare circles, diagonals and filled shapes beside related icons and text. A broad solid shape may need a smaller span; an asymmetric shape may need an optical offset. Preserve common landmarks when making these adjustments.
+
+Close and its compact companion keep their dismissal scale; First and Last share a compact pagination frame. Directional triangles retain shallow proportions, while Key control remains a small raised keyboard glyph. A Warning container and a Play symbol are reviewed in their own families, even though both are triangular. Shape alone does not determine size.
+
+When replacing an established icon, compare its painted width, height, proportions and placement with the previous artwork in the same display box. Use that as a recognition baseline rather than copying every old coordinate. Correct proportions in the drawing before choosing its final scale. Preserve stroke weight when changing framing, then recheck inner joins, gaps and pixel alignment. New family members should inherit these reviewed relationships.
 
 Judge a mark within its container separately. A mathematically centered tick can look low because of its lower elbow. Balance the surrounding space and compare the positive and inverse forms. A primary status tick and a small tick qualifying another object can share a gesture without sharing one absolute size.
 
@@ -128,6 +134,8 @@ Simple marks with short arms, such as a close cross or compact arrow, often need
 A successful transition is visible at the supported weights, leaves useful straight lengths and keeps neighboring openings clear. A curve hidden beneath a wider stroke does not produce a visible weld. Excessive softening can close a counter, turn a plus into a sparkle or consume an arrow's arms.
 
 For compact arrows, check both arms and the point at 12px. Reduce the local radius or simplify surrounding detail before weakening the arrow. A secondary arrow can use a lighter family treatment when its role supports it; small size alone is not a reason to thin it.
+
+On a curved arrow, the bend of the shaft can consume space on one side of the head. If a smaller weld still crowds the arms, adjust the head's position along the curve or its proportions while preserving a clear direction. Compare both directions and repeated heads together.
 
 Use the same treatment for equivalent repeated geometry. First reduce local softening or remove nonessential detail if space is tight. Retain a sharp interior corner only when comparison shows that softening obscures a distinguishing feature or closes a required opening. Record the exact feature and reason with the artwork. A status role, a shape name or an old reference alone is not an exemption.
 
@@ -185,6 +193,8 @@ Before accepting a design, check:
 
 - **Meaning:** the object, action, direction and state remain recognizable, including without color.
 - **Family:** apparent size, weight, landmarks and modifier placement agree with related icons.
+- **Visible weight:** inspect the narrowest painted bands and inverse openings, including rims made from filled shapes. Equal stroke settings do not guarantee equal visible thickness.
+- **Weld strength:** joins remain softened without swallowing straight arms or closing counters. Judge this separately from line weight and pixel clarity.
 - **Boundaries:** every exposed inner join and opening follows the corner rule; outer points and flat ends stay clear.
 - **Pairs:** filling preserves the subject, common features and positive/inverse marks.
 - **Space:** cutouts follow the foreground; counters stay open; no seams, fragments or clipped tips appear.

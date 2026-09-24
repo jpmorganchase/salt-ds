@@ -553,8 +553,10 @@ put(
 );
 // Keep the compact dismissal smaller without losing its native-size presence.
 // Keep the four roots visible without swelling the center of a simple X.
-put("close", weldedCross(12, 12, 8.625, 8.625, 1.15));
-put("close_small", weldedCross(12, 12, 6.9375, 6.9375, 1.15));
+// Compensate the reduced optical frames so subtle inner curves remain exposed
+// at the heavy width instead of disappearing beneath the primary stroke.
+put("close", weldedCross(12, 12, 8.625, 8.625, 1.45));
+put("close_small", weldedCross(12, 12, 6.9375, 6.9375, 1.4));
 // Both surfaces retain the same frame and letter anchors after fitting.
 const captionEdge = (0.75 * 19.5) / 14;
 put(

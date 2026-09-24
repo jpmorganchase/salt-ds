@@ -1,0 +1,322 @@
+[
+  {
+    "file": "context-light-12.png",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "mode": "light",
+    "dimensions": [
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      }
+    ]
+  },
+  {
+    "file": "context-light-16.png",
+    "size": 16,
+    "weight": 1,
+    "mode": "light",
+    "dimensions": [
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      }
+    ]
+  },
+  {
+    "file": "context-dark-12.png",
+    "size": 12,
+    "weight": 1.3333333333333333,
+    "mode": "dark",
+    "dimensions": [
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      },
+      {
+        "width": 12,
+        "height": 12
+      }
+    ]
+  },
+  {
+    "file": "context-dark-16.png",
+    "size": 16,
+    "weight": 1,
+    "mode": "dark",
+    "dimensions": [
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      },
+      {
+        "width": 16,
+        "height": 16
+      }
+    ]
+  }
+]

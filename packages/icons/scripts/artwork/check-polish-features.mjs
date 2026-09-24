@@ -146,8 +146,9 @@ export async function checkPolishFeatures(page, records) {
           center,
           bounds: compactBounds,
         },
-        ratio >= 0.77 &&
-          ratio <= 0.82 &&
+        // Keep the compact mark near the original 85% dismissal scale.
+        ratio >= 0.82 &&
+          ratio <= 0.86 &&
           center.every((value) => Math.abs(value - 8) < 0.02),
       );
       const widths = [normalPaint, compactPaint].map((alpha) => {

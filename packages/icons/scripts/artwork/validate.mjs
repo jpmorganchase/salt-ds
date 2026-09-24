@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import { checkPairContours } from "./check-pair-contours.mjs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
@@ -250,6 +251,13 @@ try {
     result.stabilizationFailures.push(...checked.failures);
   }
   result.stabilizationSamples = stabilizationMeasurements.length;
+  const pairContours = await checkPairContours(page, records);
+  result.pairContourFailures = pairContours.failures;
+  result.pairContourCoverage = {
+    total: pairContours.results.length,
+    passed: pairContours.results.filter((r) => r.status === "pass").length,
+    needsReview: pairContours.needsReview.length,
+  };
   const details = await checkDetailRecognition(page, records, transforms);
   result.detailRecognitionFailures = details.failures;
   result.detailRecognitionSamples = details.results.length;
@@ -284,6 +292,10 @@ try {
   result.paintedBoundsSamples = painted.samples;
   const out = path.join(root, "dist/icon-validation");
   await fs.mkdir(out, { recursive: true });
+  await fs.writeFile(
+    path.join(out, "pair-contours.json"),
+    JSON.stringify(pairContours, null, 2) + "\n",
+  );
   await fs.writeFile(
     path.join(out, "scaling.json"),
     `${JSON.stringify(scalingMeasurements, null, 2)}\n`,
@@ -335,6 +347,7 @@ try {
     result.detailRecognitionFailures.length ||
     result.internalJunctionFailures.length ||
     result.pairStrokeFailures.length ||
+    result.pairContourFailures.length ||
     result.featureAlignmentFailures.length ||
     result.clearanceFailures.length ||
     result.cutoutClearanceFailures.length ||

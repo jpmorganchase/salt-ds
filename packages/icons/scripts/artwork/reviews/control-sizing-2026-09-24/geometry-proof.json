@@ -1,0 +1,138 @@
+{
+  "changed": [
+    "close.svg",
+    "close_small.svg",
+    "first.svg",
+    "key-control.svg",
+    "last.svg",
+    "triangle-down.svg",
+    "triangle-left.svg",
+    "triangle-right-down.svg",
+    "triangle-right.svg",
+    "triangle-up.svg"
+  ],
+  "unchanged": 540,
+  "sourceHashesMatch": true,
+  "closeInnerRadiiAtWidth15": {
+    "close.svg": 0.21142000000000005,
+    "close_small.svg": 0.20234700000000005
+  },
+  "triangleRatios": {
+    "triangle-up.svg": 2,
+    "triangle-down.svg": 2,
+    "triangle-left.svg": 2,
+    "triangle-right.svg": 2
+  },
+  "measurements12": [
+    {
+      "name": "close.svg",
+      "original": [
+        9.1875,
+        9.1875
+      ],
+      "corrected": [
+        9.28125,
+        9.28125
+      ]
+    },
+    {
+      "name": "close_small.svg",
+      "original": [
+        7.78125,
+        7.78125
+      ],
+      "corrected": [
+        7.78125,
+        7.78125
+      ]
+    },
+    {
+      "name": "first.svg",
+      "original": [
+        7.9921875,
+        7.9921875
+      ],
+      "corrected": [
+        7.9921875,
+        7.9921875
+      ]
+    },
+    {
+      "name": "key-control.svg",
+      "original": [
+        6.703125,
+        4.04296875
+      ],
+      "corrected": [
+        6.7734375,
+        4.08984375
+      ]
+    },
+    {
+      "name": "last.svg",
+      "original": [
+        7.9921875,
+        7.9921875
+      ],
+      "corrected": [
+        7.9921875,
+        7.9921875
+      ]
+    },
+    {
+      "name": "triangle-down.svg",
+      "original": [
+        9.984375,
+        4.9921875
+      ],
+      "corrected": [
+        9.984375,
+        4.9921875
+      ]
+    },
+    {
+      "name": "triangle-left.svg",
+      "original": [
+        4.9921875,
+        9.984375
+      ],
+      "corrected": [
+        4.9921875,
+        9.984375
+      ]
+    },
+    {
+      "name": "triangle-right-down.svg",
+      "original": [
+        6.99609375,
+        6.99609375
+      ],
+      "corrected": [
+        6.99609375,
+        6.99609375
+      ]
+    },
+    {
+      "name": "triangle-right.svg",
+      "original": [
+        4.9921875,
+        9.984375
+      ],
+      "corrected": [
+        4.9921875,
+        9.984375
+      ]
+    },
+    {
+      "name": "triangle-up.svg",
+      "original": [
+        9.984375,
+        4.9921875
+      ],
+      "corrected": [
+        9.984375,
+        4.9921875
+      ]
+    }
+  ]
+}

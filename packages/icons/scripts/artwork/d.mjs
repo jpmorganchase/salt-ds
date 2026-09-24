@@ -1,7 +1,8 @@
+import { retainedSurface } from "./retained-surface.mjs";
 import { softenedStroke as S, softenedFill as F } from "./contour-profiles.mjs";
 import { softenedRect as R, softenedFrame as SF } from "./contour-profiles.mjs";
 import { arrowRoot } from "./internal-arrow-junctions.mjs";
-import { concavePolygon, circularHeadJoins, cubicHeadJoins } from "./cd-junctions.mjs";
+import { concavePolygon, circularHeadJoins, cubicHeadJoins, tangentCircularHeadJoins } from "./cd-junctions.mjs";
 import { stackoverflow, symphony } from "./brands.mjs";
 import { weldedCross } from "./cross-marks.mjs";
 import {
@@ -13,7 +14,7 @@ import { enclosedTick, enclosedWarning } from "./enclosed-marks.mjs";
 import { circularCrossJunction } from "./junctions.mjs";
 import { lockKeyhole } from "./lock-marks.mjs";
 import { withSharedMark } from "./mark-composition.mjs";
-import { box, C, circ, dot, group, italicLetter, L, slash, textLabel } from "./primitives.mjs";
+import { box, C, circ, dot, group, italicLetter, L, slash, textLabel, S as stroke } from "./primitives.mjs";
 
 const icons = {};
 const put = (n, o, s) => {
@@ -40,18 +41,22 @@ const star =
   "M11 3C12.4 8.8 13.2 9.6 19 11C13.2 12.4 12.4 13.2 11 19C9.6 13.2 8.8 12.4 3 11C8.8 9.6 9.6 8.8 11 3Z";
 const littleStar =
   "M20 1.5L20.8 3.7 23 4.5 20.8 5.3 20 7.5 19.2 5.3 17 4.5 19.2 3.7Z";
-put("sparkle", S(star) + F(littleStar), F(star) + F(littleStar));
-// At 45 degrees, the corner bisector and circle tangent share a direction.
-const refreshTipX = 12 + 9 / Math.SQRT2;
-const refreshTipY = 12 - 9 / Math.SQRT2;
+// Preserve the four acute outward points; the default SVG miter limit
+// bevels them into flat ends. Both treatments use the same complete rim.
+const [sparkleOutline, sparkleSolid] = retainedSurface(star, { miterLimit: 5 });
+put("sparkle", sparkleOutline + F(littleStar), sparkleSolid + F(littleStar));
+// Let the circle turn farther before the head so both short arms have room
+// for a visible, restrained weld at the heavier theme width.
+const refreshTipY = 6.75;
+const refreshTipX = 12 + Math.sqrt(9 ** 2 - (refreshTipY - 12) ** 2);
 const refreshHead = 3.75;
-const refresh = S(
+const refresh = stroke(
   `M${refreshTipX} ${refreshTipY}A9 9 0 1 0 21 12M${refreshTipX - refreshHead} ${refreshTipY}H${refreshTipX}V${refreshTipY - refreshHead}`,
 );
 put(
   "sparkle-refresh",
-  refresh + group(S(star), "translate(5.18 5.18) scale(.62)"),
-  refresh + group(F(star), "translate(5.18 5.18) scale(.62)"),
+  refresh + group(sparkleOutline, "translate(5.18 5.18) scale(.62)"),
+  refresh + group(sparkleSolid, "translate(5.18 5.18) scale(.62)"),
 );
 put(
   "split-view",
@@ -230,7 +235,7 @@ put(
 put("symphony", symphony);
 put(
   "sync",
-  S(
+  stroke(
     `M3 12A9 9 0 0 1 ${refreshTipX} ${refreshTipY}M${refreshTipX - refreshHead} ${refreshTipY}H${refreshTipX}V${refreshTipY - refreshHead}M21 12A9 9 0 0 1 ${24 - refreshTipX} ${24 - refreshTipY}M${24 - refreshTipX + refreshHead} ${24 - refreshTipY}H${24 - refreshTipX}V${24 - refreshTipY + refreshHead}`,
   ),
 );
@@ -506,7 +511,7 @@ for (const [n, rot] of [
   ["triangle-up", 180],
   ["triangle-right", 270],
 ])
-  put(n, group(F("M4.5 7.5h15L12 16.5Z"), `rotate(${rot} 12 12)`));
+  put(n, group(F("M4.5 8.25h15L12 15.75Z"), `rotate(${rot} 12 12)`));
 put("triangle-right-down", F("M6 18h12V6Z"));
 const handles = [
   box(2.25, 2.25, 3, 3),
@@ -869,8 +874,9 @@ put(
     C(12, 13.5, 3),
 );
 // Retain the actual circular trajectory beneath each head fillet.
-const refreshHeadJoins = circularHeadJoins(12, 12, 9, -Math.PI / 4, -1,
-  [[-2.9, 0], [0, -2.9]], .3);
+const refreshHeadJoins = tangentCircularHeadJoins(12, 12, 9,
+  [refreshTipX, refreshTipY], -1,
+  [[-refreshHead, 0], [0, -refreshHead]], 1.15);
 icons["sparkle-refresh"] = icons["sparkle-refresh"].map((drawing) => drawing + refreshHeadJoins);
 icons.sync[0] += refreshHeadJoins + group(refreshHeadJoins, "rotate(180 12 12)");
 const undoCenter = (() => {

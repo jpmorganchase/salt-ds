@@ -20,31 +20,31 @@ export const CloseIcon = forwardRef<SVGSVGElement, CloseIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="m.773.773 14.454 14.454m0-14.454L.773 15.227"
+            d="M2.281 2.281 13.72 13.72m0-11.438L2.28 13.72"
           />
-          <path d="M8.681 8.681a.964.964 0 0 0-1.362 0L8 8Z" />
+          <path d="M8.68 8.68a.96.96 0 0 0-1.36 0L8 8Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8.681 8.681a.964.964 0 0 0-1.362 0"
+            d="M8.68 8.68a.96.96 0 0 0-1.36 0"
           />
-          <path d="M7.319 8.681a.964.964 0 0 0 0-1.362L8 8Z" />
+          <path d="M7.32 8.68a.96.96 0 0 0 0-1.36L8 8Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M7.319 8.681a.964.964 0 0 0 0-1.362"
+            d="M7.32 8.68a.96.96 0 0 0 0-1.36"
           />
-          <path d="M7.319 7.319a.964.964 0 0 0 1.362 0L8 8Z" />
+          <path d="M7.32 7.32a.96.96 0 0 0 1.36 0L8 8Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M7.319 7.319a.964.964 0 0 0 1.362 0"
+            d="M7.32 7.32a.96.96 0 0 0 1.36 0"
           />
-          <path d="M8.681 7.319a.964.964 0 0 0 0 1.362L8 8Z" />
+          <path d="M8.68 7.32a.96.96 0 0 0 0 1.36L8 8Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M8.681 7.319a.964.964 0 0 0 0 1.362"
+            d="M8.68 7.32a.96.96 0 0 0 0 1.36"
           />
         </g>
       </Icon>
