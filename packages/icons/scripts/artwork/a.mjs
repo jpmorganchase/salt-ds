@@ -774,10 +774,11 @@ put(
       `M${6 + scissorContact} ${6 + scissorContact}L12 12M${6 + scissorContact} ${18 - scissorContact}L20.25 3.75M14.25 14.25L20.25 20.25`,
     ),
 );
-// Equal-direction circular tips avoid the flattened-looking upper horn.
-// Both variants retain the same contour, natural arcs and primary rim.
-const moon = "M8.188569327215841,3.846902660549177A9 9 0 1 0 20.153097339450824,15.811430672784159A8.75 8.75 0 0 1 8.188569327215841,3.846902660549177Z";
-const moonRim = SF(moon, { radius: 1.15 });
+// An upright crescent with a fuller lower bowl and an upper-right opening.
+// Two circular arcs share sharp outer tips and modest inner rim fillets.
+const moon =
+  "M10.30693 2.398124A9.75 9.75 0 1 0 19.986732 17.59237A10.75 10.75 0 0 1 10.30693 2.398124Z";
+const moonRim = SF(moon, { radius: 1.05 });
 put("dark", moonRim, F(moon) + moonRim);
 const gaugeAngle = Math.atan2(-6, 5.25);
 const gaugeLength = Math.hypot(5.25, 6);

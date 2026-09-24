@@ -66,7 +66,7 @@ export async function checkFamilyFeatures(page, records) {
     };
     const at = (alpha, x, y) =>
       alpha[Math.floor(y * scale) * size + Math.floor(x * scale)];
-    // Schedule replaces Calendar's date field with an addition mark. Compare
+    // Schedule adds a mark within Calendar's empty date field. Compare
     // final paint outside that field so an independent fit cannot move or
     // resize the retained shell, header or bindings unnoticed.
     for (const weight of [0.67, 1, 1.333333, 1.5]) {

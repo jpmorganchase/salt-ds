@@ -3,6 +3,16 @@
 import { lineOnlySolidVariants } from "./line-only-variants.mjs";
 
 export const pairContracts = {
+  calendar: {
+    mode: "component-exteriors",
+    reason:
+      "Fill only the empty date field, retaining the shared frame, header and bindings.",
+  },
+  dark: {
+    mode: "component-exteriors",
+    reason:
+      "Fill the crescent while retaining its complete outer and inner silhouette, including both tips.",
+  },
   favorite: {
     mode: "component-exteriors",
     reason:

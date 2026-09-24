@@ -47,7 +47,17 @@ const littleStar =
 // Preserve the four acute outward points; the default SVG miter limit
 // bevels them into flat ends. Both treatments use the same complete rim.
 const [sparkleOutline, sparkleSolid] = retainedSurface(star, { miterLimit: 5 });
-put("sparkle", sparkleOutline + F(littleStar), sparkleSolid + F(littleStar));
+// Give the secondary sparkle enough native-size mass to remain a star at 12px.
+// Shift it slightly inward after scaling so the two gestures stay separate.
+const secondarySparkle = group(
+  F(littleStar),
+  "translate(-0.55 0) translate(20 4.5) scale(1.5) translate(-20 -4.5)",
+);
+put(
+  "sparkle",
+  sparkleOutline + secondarySparkle,
+  sparkleSolid + secondarySparkle,
+);
 const refresh = circularArrow();
 put(
   "sparkle-refresh",

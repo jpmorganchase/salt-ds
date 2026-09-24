@@ -1,3 +1,4 @@
+import { SaltProvider } from "@salt-ds/core";
 import {
   CalendarIcon,
   CalendarSolidIcon,
@@ -53,6 +54,31 @@ describe("Given an icon", () => {
       .element(page.getByTestId("SaltIcon"))
       .not.toHaveAttribute("aria-label");
   });
+
+  it.each([
+    ["high", 12],
+    ["medium", 12],
+    ["low", 14],
+    ["touch", 16],
+  ] as const)(
+    "renders a 1px primary stroke at the default %s density size",
+    async (density, pixels) => {
+      await renderWithSalt(
+        <SaltProvider density={density}>
+          <CalendarIcon data-testid="density-icon" />
+          <ScheduleTimeIcon data-testid="schedule" />
+        </SaltProvider>,
+      );
+
+      const icon = page.getByTestId("density-icon").element() as SVGSVGElement;
+      const width = Number.parseFloat(
+        getComputedStyle(getIconPath("density-icon")).strokeWidth,
+      );
+      expect(icon.getBoundingClientRect().width).toBe(pixels);
+      expect((width * pixels) / icon.viewBox.baseVal.width).toBeCloseTo(1, 5);
+      expectScheduleHandWidth(width * 0.72);
+    },
+  );
 
   it("passes native stroke width through to custom icon paths", async () => {
     await renderWithSalt(

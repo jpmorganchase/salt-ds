@@ -1079,9 +1079,9 @@
     "groupKey": "dark.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 1.142077,
-    "translateX": -1.284153,
-    "translateY": -0.989071
+    "scale": 1.067633,
+    "translateX": -0.248792,
+    "translateY": -0.480676
   },
   "dark_solid.svg": {
     "groupKey": "dark_solid.svg",
@@ -1093,9 +1093,9 @@
     ],
     "opticalReason": "Fill the shared crescent without enlarging its rim or moving the tips.",
     "frameSource": "dark.svg",
-    "scale": 1.142077,
-    "translateX": -1.284153,
-    "translateY": -0.989071
+    "scale": 1.067633,
+    "translateX": -0.248792,
+    "translateY": -0.480676
   },
   "dashboard.svg": {
     "groupKey": "dashboard.svg",
@@ -3801,9 +3801,9 @@
     "groupKey": "sparkle.svg",
     "fitted": true,
     "targetSpan": 15.5,
-    "scale": 0.860097,
-    "translateX": 1.679217,
-    "translateY": 1.692732
+    "scale": 0.864135,
+    "translateX": 1.658165,
+    "translateY": 1.663267
   },
   "sparkle_solid.svg": {
     "groupKey": "sparkle_solid.svg",
@@ -3815,9 +3815,9 @@
     ],
     "opticalReason": "Fill the shared surface without moving its painted silhouette or retained marks.",
     "frameSource": "sparkle.svg",
-    "scale": 0.860097,
-    "translateX": 1.679217,
-    "translateY": 1.692732
+    "scale": 0.864135,
+    "translateX": 1.658165,
+    "translateY": 1.663267
   },
   "split-view.svg": {
     "groupKey": "split-view.svg",

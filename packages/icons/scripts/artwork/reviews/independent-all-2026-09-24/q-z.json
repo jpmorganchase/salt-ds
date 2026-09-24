@@ -1,0 +1,1371 @@
+{
+  "reviewer": "Independent Q–Z visual review agent",
+  "date": "2026-09-24",
+  "basis": "Frozen manifest hashes; generated SVG export with React-equivalent theme stroke ratios",
+  "scope": "Every Q–Z generated SVG export, both variants where present",
+  "matrix": {
+    "sizesPx": [
+      12,
+      14,
+      16
+    ],
+    "dpr": 1,
+    "backgrounds": [
+      "light",
+      "dark"
+    ],
+    "enlargedPx": 64
+  },
+  "evidence": {
+    "focusedSheet": "q-z-focus.png",
+    "fullSheets": "sheets/q-z/part-1.png through part-8.png"
+  },
+  "total": 183,
+  "counts": {
+    "pass": 154,
+    "issue": 6,
+    "uncertain": 23
+  },
+  "summary": "All 183 assigned exports were inspected individually. No hash drift. Concrete concerns: solid Save loses floppy recognition at 12–14px; Signature detail compresses at 12px; XLS/ZIP labels cannot reliably distinguish file types at 12px. Several small numerals, modifiers and dense compound icons remain uncertain and should be checked in actual interface context before approval.",
+  "entries": [
+    {
+      "file": "receipt.svg",
+      "name": "receipt",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Torn receipt silhouette and horizontal content remain distinguishable; the bars are small at 12px."
+    },
+    {
+      "file": "receipt_solid.svg",
+      "name": "receipt",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Torn receipt silhouette and horizontal content remain distinguishable; the bars are small at 12px."
+    },
+    {
+      "file": "redo.svg",
+      "name": "redo",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Curved arrow and head remain open and directional at native sizes."
+    },
+    {
+      "file": "refresh.svg",
+      "name": "refresh",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Nearly complete circular arrow stays balanced, with a clear arrowhead and opening."
+    },
+    {
+      "file": "remove-bookmark.svg",
+      "name": "remove-bookmark",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Ribbon notch and internal minus remain separated; the minus keeps its meaning in positive and inverse form."
+    },
+    {
+      "file": "remove-bookmark_solid.svg",
+      "name": "remove-bookmark",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Ribbon notch and internal minus remain separated; the minus keeps its meaning in positive and inverse form."
+    },
+    {
+      "file": "remove-document.svg",
+      "name": "remove-document",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Page fold remains visible and the internal minus stays centred without crowding the rim."
+    },
+    {
+      "file": "remove-document_solid.svg",
+      "name": "remove-document",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Page fold remains visible and the internal minus stays centred without crowding the rim."
+    },
+    {
+      "file": "remove-user.svg",
+      "name": "remove-user",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Complete head-and-shoulders figure and adjacent minus remain distinct at native sizes."
+    },
+    {
+      "file": "remove.svg",
+      "name": "remove",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Standalone minus has clear flat ends and even apparent weight."
+    },
+    {
+      "file": "replay-10.svg",
+      "name": "replay-10",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Circular replay arrow reads, but the 10 numeral becomes difficult to identify at 12px.",
+      "issueType": "lettering",
+      "size": "12px"
+    },
+    {
+      "file": "replay-15.svg",
+      "name": "replay-15",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Circular replay arrow reads, but the 15 numeral becomes difficult to identify at 12px.",
+      "issueType": "lettering",
+      "size": "12px"
+    },
+    {
+      "file": "replay-30.svg",
+      "name": "replay-30",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Circular replay arrow reads, but the 30 numeral becomes difficult to identify at 12px.",
+      "issueType": "lettering",
+      "size": "12px"
+    },
+    {
+      "file": "replay-5.svg",
+      "name": "replay-5",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Circular replay arrow reads, while the small 5 needs a context check at 12px.",
+      "issueType": "lettering",
+      "size": "12px"
+    },
+    {
+      "file": "restore.svg",
+      "name": "restore",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Return arrow and its square destination remain separated at 12/14/16px."
+    },
+    {
+      "file": "run-report.svg",
+      "name": "run-report",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Page fold and triangular run mark remain legible, with coherent outline and inverse variants."
+    },
+    {
+      "file": "run-report_solid.svg",
+      "name": "run-report",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Page fold and triangular run mark remain legible, with coherent outline and inverse variants."
+    },
+    {
+      "file": "salt-shaker.svg",
+      "name": "salt-shaker",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Tilted shaker, holes and falling grains stay distinct; small grains remain visible at 12px."
+    },
+    {
+      "file": "salt-shaker_solid.svg",
+      "name": "salt-shaker",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Tilted shaker, holes and falling grains stay distinct; small grains remain visible at 12px."
+    },
+    {
+      "file": "save.svg",
+      "name": "save",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Floppy-disk outline is recognizable, but the solid treatment collapses toward an H at native size."
+    },
+    {
+      "file": "save_solid.svg",
+      "name": "save",
+      "variant": "solid",
+      "status": "issue",
+      "reason": "Solid floppy resembles a bold H at 12–14px because the body, top opening and bottom label collapse into two uprights and one bridge.",
+      "issueType": "recognition",
+      "size": "12–14px"
+    },
+    {
+      "file": "scales.svg",
+      "name": "scales",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Raised scale platform and central readout remain visible; detailed outline is small at 12px."
+    },
+    {
+      "file": "scales_solid.svg",
+      "name": "scales",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Raised scale platform and central readout remain visible; detailed outline is small at 12px."
+    },
+    {
+      "file": "schedule-time.svg",
+      "name": "schedule-time",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Page fold and internal clock remain distinct; clock hand and circular rim retain space."
+    },
+    {
+      "file": "schedule-time_solid.svg",
+      "name": "schedule-time",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Page fold and internal clock remain distinct; clock hand and circular rim retain space."
+    },
+    {
+      "file": "schedule.svg",
+      "name": "schedule",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Calendar bindings/header and plus remain clear after the Calendar date-field simplification."
+    },
+    {
+      "file": "school.svg",
+      "name": "school",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Graduation cap and tassel preserve the cap silhouette at all three native sizes."
+    },
+    {
+      "file": "school_solid.svg",
+      "name": "school",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Graduation cap and tassel preserve the cap silhouette at all three native sizes."
+    },
+    {
+      "file": "search.svg",
+      "name": "search",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Magnifier ring and handle remain continuous and clearly directional."
+    },
+    {
+      "file": "search_solid.svg",
+      "name": "search",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Magnifier ring and handle remain continuous and clearly directional."
+    },
+    {
+      "file": "semantic-dissatisfied.svg",
+      "name": "semantic-dissatisfied",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Face rim, eyes and downturned mouth remain distinguishable in both variants."
+    },
+    {
+      "file": "semantic-dissatisfied_solid.svg",
+      "name": "semantic-dissatisfied",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Face rim, eyes and downturned mouth remain distinguishable in both variants."
+    },
+    {
+      "file": "semantic-neutral.svg",
+      "name": "semantic-neutral",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Face rim, eyes and level mouth stay clear; expression differs from neighbouring states."
+    },
+    {
+      "file": "semantic-neutral_solid.svg",
+      "name": "semantic-neutral",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Face rim, eyes and level mouth stay clear; expression differs from neighbouring states."
+    },
+    {
+      "file": "semantic-satisfied.svg",
+      "name": "semantic-satisfied",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Upturned mouth remains distinguishable from neutral and very satisfied states."
+    },
+    {
+      "file": "semantic-satisfied_solid.svg",
+      "name": "semantic-satisfied",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Upturned mouth remains distinguishable from neutral and very satisfied states."
+    },
+    {
+      "file": "semantic-very-dissatisfied.svg",
+      "name": "semantic-very-dissatisfied",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Angled brows and deeper frown preserve the stronger expression at native size."
+    },
+    {
+      "file": "semantic-very-dissatisfied_solid.svg",
+      "name": "semantic-very-dissatisfied",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Angled brows and deeper frown preserve the stronger expression at native size."
+    },
+    {
+      "file": "semantic-very-satisfied.svg",
+      "name": "semantic-very-satisfied",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Closed eyes and broad smile preserve the stronger expression at native size."
+    },
+    {
+      "file": "semantic-very-satisfied_solid.svg",
+      "name": "semantic-very-satisfied",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Closed eyes and broad smile preserve the stronger expression at native size."
+    },
+    {
+      "file": "send.svg",
+      "name": "send",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Paper-plane outline and filled silhouette retain the same tip and flight direction."
+    },
+    {
+      "file": "send_solid.svg",
+      "name": "send",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Paper-plane outline and filled silhouette retain the same tip and flight direction."
+    },
+    {
+      "file": "settings.svg",
+      "name": "settings",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Gear teeth and central opening remain regular and open across both variants."
+    },
+    {
+      "file": "settings_solid.svg",
+      "name": "settings",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Gear teeth and central opening remain regular and open across both variants."
+    },
+    {
+      "file": "share.svg",
+      "name": "share",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Three nodes and two connecting branches remain clear, with consistent filled and open circles."
+    },
+    {
+      "file": "share_solid.svg",
+      "name": "share",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Three nodes and two connecting branches remain clear, with consistent filled and open circles."
+    },
+    {
+      "file": "signal.svg",
+      "name": "signal",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Broadcast arcs remain separate and centred around the source at native size."
+    },
+    {
+      "file": "signature.svg",
+      "name": "signature",
+      "variant": "outline",
+      "status": "issue",
+      "reason": "Signature stroke and dotted baseline form a tiny dark cluster at 12px; the intended signature gesture is not reliably identifiable.",
+      "issueType": "recognition/detail",
+      "size": "12px"
+    },
+    {
+      "file": "signpost.svg",
+      "name": "signpost",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Two opposing directional boards remain distinct from their shared stem."
+    },
+    {
+      "file": "signpost_solid.svg",
+      "name": "signpost",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Two opposing directional boards remain distinct from their shared stem."
+    },
+    {
+      "file": "slide.svg",
+      "name": "slide",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Two control rails and knobs remain identifiable; knob/rim weight is consistent."
+    },
+    {
+      "file": "slide_solid.svg",
+      "name": "slide",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Two control rails and knobs remain identifiable; knob/rim weight is consistent."
+    },
+    {
+      "file": "sort-alpha-ascend.svg",
+      "name": "sort-alpha-ascend",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "A/Z labels and descending arrow compose correctly, but letters are tiny at 12px.",
+      "issueType": "lettering",
+      "size": "12px"
+    },
+    {
+      "file": "sort-alpha-descend.svg",
+      "name": "sort-alpha-descend",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Z/A labels and descending arrow compose correctly, but letters are tiny at 12px.",
+      "issueType": "lettering",
+      "size": "12px"
+    },
+    {
+      "file": "sort-ascend.svg",
+      "name": "sort-ascend",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Rising arrow and short descending bars remain distinct without merging."
+    },
+    {
+      "file": "sort-descend.svg",
+      "name": "sort-descend",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Falling arrow and short descending bars remain distinct without merging."
+    },
+    {
+      "file": "sort-num-ascend.svg",
+      "name": "sort-num-ascend",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "1/9 labels and arrow compose correctly, but the digits are tiny at 12px.",
+      "issueType": "lettering",
+      "size": "12px"
+    },
+    {
+      "file": "sort-num-descend.svg",
+      "name": "sort-num-descend",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "9/1 labels and arrow compose correctly, but the digits are tiny at 12px.",
+      "issueType": "lettering",
+      "size": "12px"
+    },
+    {
+      "file": "sort.svg",
+      "name": "sort",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Opposing up/down arrows remain distinct and balanced at native size."
+    },
+    {
+      "file": "sortable-alpha.svg",
+      "name": "sortable-alpha",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "A/Z label and opposing small arrows read as a sorting control, though very compact at 12px.",
+      "issueType": "lettering",
+      "size": "12px"
+    },
+    {
+      "file": "sortable-num.svg",
+      "name": "sortable-num",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "1/9 label and opposing small arrows read as a sorting control, though very compact at 12px.",
+      "issueType": "lettering",
+      "size": "12px"
+    },
+    {
+      "file": "sparkle-refresh.svg",
+      "name": "sparkle-refresh",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Circular refresh arrow remains open and sparkle retains its star gesture in both variants."
+    },
+    {
+      "file": "sparkle-refresh_solid.svg",
+      "name": "sparkle-refresh",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Circular refresh arrow remains open and sparkle retains its star gesture in both variants."
+    },
+    {
+      "file": "sparkle.svg",
+      "name": "sparkle",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Primary and secondary sparkle retain corresponding shapes in outline and solid."
+    },
+    {
+      "file": "sparkle_solid.svg",
+      "name": "sparkle",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Primary and secondary sparkle retain corresponding shapes in outline and solid."
+    },
+    {
+      "file": "split-view.svg",
+      "name": "split-view",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Document/control strip and adjacent filled pane stay distinct at native sizes."
+    },
+    {
+      "file": "square-root.svg",
+      "name": "square-root",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Root hook, rising diagonal and overbar remain continuous and recognizable."
+    },
+    {
+      "file": "stackoverflow.svg",
+      "name": "stackoverflow",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Stacked sheets and ascending offsets remain separated at native size."
+    },
+    {
+      "file": "step-active.svg",
+      "name": "step-active",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Filled circular step remains clean and visually aligned with default/success states."
+    },
+    {
+      "file": "step-default.svg",
+      "name": "step-default",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Open circular step remains clean and aligned with active/success states."
+    },
+    {
+      "file": "step-success.svg",
+      "name": "step-success",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Check inside circular step remains open and aligned with default/active states."
+    },
+    {
+      "file": "stethoscope.svg",
+      "name": "stethoscope",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Ear tips, U-tube and diaphragm remain connected and legible in both variants."
+    },
+    {
+      "file": "stethoscope_solid.svg",
+      "name": "stethoscope",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Ear tips, U-tube and diaphragm remain connected and legible in both variants."
+    },
+    {
+      "file": "stop.svg",
+      "name": "stop",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Square control has even sides, clear corners and comparable optical scale to its solid form."
+    },
+    {
+      "file": "stop_solid.svg",
+      "name": "stop",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Square control has even sides, clear corners and comparable optical scale to its solid form."
+    },
+    {
+      "file": "storage.svg",
+      "name": "storage",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Archive lid, body and front slot remain readable; opening stays continuous."
+    },
+    {
+      "file": "storage_solid.svg",
+      "name": "storage",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Archive lid, body and front slot remain readable; opening stays continuous."
+    },
+    {
+      "file": "storefront.svg",
+      "name": "storefront",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Awning, window and open doorway are present and separated; dense details deserve a 12px context check.",
+      "issueType": "recognition",
+      "size": "12px"
+    },
+    {
+      "file": "storefront_solid.svg",
+      "name": "storefront",
+      "variant": "solid",
+      "status": "uncertain",
+      "reason": "Awning, window and open doorway are present and separated; dense details deserve a 12px context check.",
+      "issueType": "recognition",
+      "size": "12px"
+    },
+    {
+      "file": "string-number.svg",
+      "name": "string-number",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "123 remains grouped between two rules, but the small numerals are near the limit at 12px.",
+      "issueType": "lettering",
+      "size": "12px"
+    },
+    {
+      "file": "string-text.svg",
+      "name": "string-text",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "abc remains grouped between two rules, but the small letters are near the limit at 12px.",
+      "issueType": "lettering",
+      "size": "12px"
+    },
+    {
+      "file": "success-circle.svg",
+      "name": "success-circle",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Check stays clear inside the circle; positive/inverse pairs retain placement and direction."
+    },
+    {
+      "file": "success-circle_solid.svg",
+      "name": "success-circle",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Check stays clear inside the circle; positive/inverse pairs retain placement and direction."
+    },
+    {
+      "file": "success-tick.svg",
+      "name": "success-tick",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Standalone check has an open elbow, clear terminal ends and balanced arms."
+    },
+    {
+      "file": "success.svg",
+      "name": "success",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Success check or square maintains a clear positive/inverse mark at native sizes."
+    },
+    {
+      "file": "success_small.svg",
+      "name": "success_small",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Small check gesture and filled square treatment retain a legible success state."
+    },
+    {
+      "file": "success_small_solid.svg",
+      "name": "success_small",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Small check gesture and filled square treatment retain a legible success state."
+    },
+    {
+      "file": "success_solid.svg",
+      "name": "success",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Success check or square maintains a clear positive/inverse mark at native sizes."
+    },
+    {
+      "file": "sum.svg",
+      "name": "sum",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Sigma gesture remains recognizable; outline/solid weight changes without altering its shape."
+    },
+    {
+      "file": "sum_solid.svg",
+      "name": "sum",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Sigma gesture remains recognizable; outline/solid weight changes without altering its shape."
+    },
+    {
+      "file": "summarize.svg",
+      "name": "summarize",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Three text lines and turning arrow remain separate; the arrow exit is open."
+    },
+    {
+      "file": "swap.svg",
+      "name": "swap",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Opposing arrows retain clear directions and do not touch at their heads."
+    },
+    {
+      "file": "symphony.svg",
+      "name": "symphony",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Brand-style S remains distinct and proportionate at native size."
+    },
+    {
+      "file": "sync.svg",
+      "name": "sync",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Two chasing arrowheads retain circular motion and open breaks."
+    },
+    {
+      "file": "tag-clear.svg",
+      "name": "tag-clear",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Tag hole and adjacent clear X remain present, though the X is very small at 12px.",
+      "issueType": "modifier clarity",
+      "size": "12px"
+    },
+    {
+      "file": "tag-clear_solid.svg",
+      "name": "tag-clear",
+      "variant": "solid",
+      "status": "uncertain",
+      "reason": "Tag hole and adjacent clear X remain present, though the X is very small at 12px.",
+      "issueType": "modifier clarity",
+      "size": "12px"
+    },
+    {
+      "file": "tag.svg",
+      "name": "tag",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Price-tag silhouette, pointed end and eyelet remain clear in both variants."
+    },
+    {
+      "file": "tag_solid.svg",
+      "name": "tag",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Price-tag silhouette, pointed end and eyelet remain clear in both variants."
+    },
+    {
+      "file": "tails.svg",
+      "name": "tails",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Fox face, ears and facial openings remain legible in both variants."
+    },
+    {
+      "file": "tails_solid.svg",
+      "name": "tails",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Fox face, ears and facial openings remain legible in both variants."
+    },
+    {
+      "file": "target.svg",
+      "name": "target",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Concentric target and four outward ticks stay centred and distinct."
+    },
+    {
+      "file": "tear-out.svg",
+      "name": "tear-out",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Diagonal exit arrow leaves the square cleanly, with no closing seam."
+    },
+    {
+      "file": "text-align-center.svg",
+      "name": "text-align-center",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Unequal line lengths share a visual centre and remain separated."
+    },
+    {
+      "file": "text-align-justify.svg",
+      "name": "text-align-justify",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Four equal lines maintain even rhythm without merging."
+    },
+    {
+      "file": "text-align-left.svg",
+      "name": "text-align-left",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Short and long lines share a left edge and remain separated."
+    },
+    {
+      "file": "text-align-right.svg",
+      "name": "text-align-right",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Short and long lines share a right edge and remain separated."
+    },
+    {
+      "file": "text-bold.svg",
+      "name": "text-bold",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Roboto bold B remains distinct and proportionate at native size."
+    },
+    {
+      "file": "text-color.svg",
+      "name": "text-color",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "A and underline remain separately legible at native size."
+    },
+    {
+      "file": "text-highlight.svg",
+      "name": "text-highlight",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Marker nib and underline remain separate; the gesture reads as highlighting."
+    },
+    {
+      "file": "text-italics.svg",
+      "name": "text-italics",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Italic I retains its slant and top/bottom terminals."
+    },
+    {
+      "file": "text-ordered-list.svg",
+      "name": "text-ordered-list",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Numerals and three aligned rules remain separated; numerals are compact at 12px."
+    },
+    {
+      "file": "text-strikethrough.svg",
+      "name": "text-strikethrough",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Central bar crosses the S cleanly without closing its counter."
+    },
+    {
+      "file": "text-underline.svg",
+      "name": "text-underline",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "U and underline remain distinct at native size."
+    },
+    {
+      "file": "text-unordered-list.svg",
+      "name": "text-unordered-list",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Three bullets and three rules stay aligned and separated."
+    },
+    {
+      "file": "thumbs-down.svg",
+      "name": "thumbs-down",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Thumb direction and cuff remain recognizable in outline and solid."
+    },
+    {
+      "file": "thumbs-down_solid.svg",
+      "name": "thumbs-down",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Thumb direction and cuff remain recognizable in outline and solid."
+    },
+    {
+      "file": "thumbs-up.svg",
+      "name": "thumbs-up",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Thumb direction and cuff remain recognizable in outline and solid."
+    },
+    {
+      "file": "thumbs-up_solid.svg",
+      "name": "thumbs-up",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Thumb direction and cuff remain recognizable in outline and solid."
+    },
+    {
+      "file": "tote.svg",
+      "name": "tote",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Bag handle and top/body edge remain separate; matching solid retains the opening."
+    },
+    {
+      "file": "tote_solid.svg",
+      "name": "tote",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Bag handle and top/body edge remain separate; matching solid retains the opening."
+    },
+    {
+      "file": "travel.svg",
+      "name": "travel",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Two rolling luggage cases remain distinct and keep consistent height relation."
+    },
+    {
+      "file": "travel_solid.svg",
+      "name": "travel",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Two rolling luggage cases remain distinct and keep consistent height relation."
+    },
+    {
+      "file": "tree.svg",
+      "name": "tree",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Parent node and two children preserve hierarchy and separate connectors."
+    },
+    {
+      "file": "tree_solid.svg",
+      "name": "tree",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Parent node and two children preserve hierarchy and separate connectors."
+    },
+    {
+      "file": "triangle-down.svg",
+      "name": "triangle-down",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Downward triangle is compact but preserves sharp tip and direction."
+    },
+    {
+      "file": "triangle-left.svg",
+      "name": "triangle-left",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Leftward triangle is compact but preserves sharp tip and direction."
+    },
+    {
+      "file": "triangle-right-down.svg",
+      "name": "triangle-right-down",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Diagonal corner triangle is visibly smaller than cardinal triangles, likely intentional but needs family check."
+    },
+    {
+      "file": "triangle-right.svg",
+      "name": "triangle-right",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Rightward triangle is compact but preserves sharp tip and direction."
+    },
+    {
+      "file": "triangle-up.svg",
+      "name": "triangle-up",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Upward triangle is compact but preserves sharp tip and direction."
+    },
+    {
+      "file": "type.svg",
+      "name": "type",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Text frame corners and central T retain aligned handles in both variants."
+    },
+    {
+      "file": "type_solid.svg",
+      "name": "type",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Text frame corners and central T retain aligned handles in both variants."
+    },
+    {
+      "file": "undo.svg",
+      "name": "undo",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Curved left-return arrow has a clear head and open arc."
+    },
+    {
+      "file": "ungroup.svg",
+      "name": "ungroup",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Separated corner brackets and two objects read consistently in outline and solid."
+    },
+    {
+      "file": "ungroup_solid.svg",
+      "name": "ungroup",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Separated corner brackets and two objects read consistently in outline and solid."
+    },
+    {
+      "file": "universal-access.svg",
+      "name": "universal-access",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Person remains centered inside the circle with separated arms and legs."
+    },
+    {
+      "file": "universal-access_solid.svg",
+      "name": "universal-access",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Person remains centered inside the circle with separated arms and legs."
+    },
+    {
+      "file": "unlinked.svg",
+      "name": "unlinked",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Broken chain ends remain separated, but the diagonal fragments look busy at 12px.",
+      "issueType": "recognition",
+      "size": "12px"
+    },
+    {
+      "file": "unlocked.svg",
+      "name": "unlocked",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Raised open shackle and keyhole remain distinct in both variants."
+    },
+    {
+      "file": "unlocked_solid.svg",
+      "name": "unlocked",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Raised open shackle and keyhole remain distinct in both variants."
+    },
+    {
+      "file": "upload.svg",
+      "name": "upload",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Arrow exits above a separate open tray; arrowhead stays clear."
+    },
+    {
+      "file": "urgency-critical.svg",
+      "name": "urgency-critical",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Heavy top chevron plus lighter lower mark preserve highest urgency distinction."
+    },
+    {
+      "file": "urgency-high.svg",
+      "name": "urgency-high",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Three chevrons remain evenly separated and visibly stronger than medium."
+    },
+    {
+      "file": "urgency-low.svg",
+      "name": "urgency-low",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Single chevron is clear and lighter than medium."
+    },
+    {
+      "file": "urgency-medium.svg",
+      "name": "urgency-medium",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Two chevrons remain evenly separated and clear."
+    },
+    {
+      "file": "urgency-none.svg",
+      "name": "urgency-none",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Two flat bars remain parallel and separated."
+    },
+    {
+      "file": "urgency-ontime.svg",
+      "name": "urgency-ontime",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Open diamond stays centered with uninterrupted edges."
+    },
+    {
+      "file": "user-admin.svg",
+      "name": "user-admin",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Shield and inner person remain present, but the person is very small at 12px.",
+      "issueType": "detail",
+      "size": "12px"
+    },
+    {
+      "file": "user-admin_solid.svg",
+      "name": "user-admin",
+      "variant": "solid",
+      "status": "uncertain",
+      "reason": "Shield and inner person remain present, but the person is very small at 12px.",
+      "issueType": "detail",
+      "size": "12px"
+    },
+    {
+      "file": "user-badge.svg",
+      "name": "user-badge",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Person stays visible inside circular badge; lower rim remains substantial."
+    },
+    {
+      "file": "user-group.svg",
+      "name": "user-group",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Two heads and separate bodies remain legible in both variants."
+    },
+    {
+      "file": "user-group_solid.svg",
+      "name": "user-group",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Two heads and separate bodies remain legible in both variants."
+    },
+    {
+      "file": "user-search.svg",
+      "name": "user-search",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Person and adjacent magnifier remain distinct, though compact at 12px.",
+      "issueType": "recognition",
+      "size": "12px"
+    },
+    {
+      "file": "user.svg",
+      "name": "user",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Head and shoulders have an open gap and matching silhouette in both variants."
+    },
+    {
+      "file": "user_solid.svg",
+      "name": "user",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Head and shoulders have an open gap and matching silhouette in both variants."
+    },
+    {
+      "file": "utensils.svg",
+      "name": "utensils",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Fork and knife are separate, proportionate and recognizable in both variants."
+    },
+    {
+      "file": "utensils_solid.svg",
+      "name": "utensils",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Fork and knife are separate, proportionate and recognizable in both variants."
+    },
+    {
+      "file": "video-disabled.svg",
+      "name": "video-disabled",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Diagonal negation mark crosses the camera without merging with its lens edge."
+    },
+    {
+      "file": "video.svg",
+      "name": "video",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Camera body and projecting lens remain identifiable in both variants."
+    },
+    {
+      "file": "video_solid.svg",
+      "name": "video",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Camera body and projecting lens remain identifiable in both variants."
+    },
+    {
+      "file": "visible.svg",
+      "name": "visible",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Eye contour and central pupil remain recognizable and concentric."
+    },
+    {
+      "file": "visible_solid.svg",
+      "name": "visible",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Eye contour and central pupil remain recognizable and concentric."
+    },
+    {
+      "file": "volume-down.svg",
+      "name": "volume-down",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Speaker and one wave remain separate; reads lower than volume-up."
+    },
+    {
+      "file": "volume-off.svg",
+      "name": "volume-off",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Speaker and X stay separate, preserving the established off gesture."
+    },
+    {
+      "file": "volume-up.svg",
+      "name": "volume-up",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Speaker and two waves remain separated at native size."
+    },
+    {
+      "file": "warning.svg",
+      "name": "warning",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Exclamation and triangular container stay clear in positive/inverse variants."
+    },
+    {
+      "file": "warning_solid.svg",
+      "name": "warning",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Exclamation and triangular container stay clear in positive/inverse variants."
+    },
+    {
+      "file": "watch.svg",
+      "name": "watch",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Watch straps and dial are present, but the solid dial hand becomes tiny at 12px."
+    },
+    {
+      "file": "watch_solid.svg",
+      "name": "watch",
+      "variant": "solid",
+      "status": "uncertain",
+      "reason": "Watch straps and dial are present, but the solid dial hand becomes tiny at 12px.",
+      "issueType": "detail",
+      "size": "12px"
+    },
+    {
+      "file": "waveform.svg",
+      "name": "waveform",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Five unequal bars remain separated and centred."
+    },
+    {
+      "file": "weight.svg",
+      "name": "weight",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Scale-weight handle and sloped body remain distinguishable in both variants."
+    },
+    {
+      "file": "weight_solid.svg",
+      "name": "weight",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Scale-weight handle and sloped body remain distinguishable in both variants."
+    },
+    {
+      "file": "wifi-disabled.svg",
+      "name": "wifi-disabled",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Slash stays separate from the signal arcs and central dot."
+    },
+    {
+      "file": "wifi.svg",
+      "name": "wifi",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Three signal arcs and central dot remain open and aligned."
+    },
+    {
+      "file": "woman.svg",
+      "name": "woman",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Head, torso and skirt remain distinguishable; full figure matches the solid variant."
+    },
+    {
+      "file": "woman_solid.svg",
+      "name": "woman",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Head, torso and skirt remain distinguishable; full figure matches the solid variant."
+    },
+    {
+      "file": "woodland.svg",
+      "name": "woodland",
+      "variant": "outline",
+      "status": "pass",
+      "reason": "Tree crown, branch and trunk retain a clear recognisable silhouette in both variants."
+    },
+    {
+      "file": "woodland_solid.svg",
+      "name": "woodland",
+      "variant": "solid",
+      "status": "pass",
+      "reason": "Tree crown, branch and trunk retain a clear recognisable silhouette in both variants."
+    },
+    {
+      "file": "workflow.svg",
+      "name": "workflow",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Three nodes and rightward arrow remain present, but the miniature loops are crowded at 12px.",
+      "issueType": "recognition",
+      "size": "12px"
+    },
+    {
+      "file": "workflow_solid.svg",
+      "name": "workflow",
+      "variant": "solid",
+      "status": "uncertain",
+      "reason": "Three nodes and rightward arrow remain present, but the miniature loops are crowded at 12px.",
+      "issueType": "recognition",
+      "size": "12px"
+    },
+    {
+      "file": "xls.svg",
+      "name": "xls",
+      "variant": "outline",
+      "status": "issue",
+      "reason": "The file silhouette reads, but XLS lettering is not reliably readable at 12px.",
+      "issueType": "lettering",
+      "size": "12px"
+    },
+    {
+      "file": "xls_solid.svg",
+      "name": "xls",
+      "variant": "solid",
+      "status": "issue",
+      "reason": "The file silhouette reads, but XLS lettering is not reliably readable at 12px.",
+      "issueType": "lettering",
+      "size": "12px"
+    },
+    {
+      "file": "zip.svg",
+      "name": "zip",
+      "variant": "outline",
+      "status": "issue",
+      "reason": "The file silhouette reads, but ZIP lettering is not reliably readable at 12px.",
+      "issueType": "lettering",
+      "size": "12px"
+    },
+    {
+      "file": "zip_solid.svg",
+      "name": "zip",
+      "variant": "solid",
+      "status": "issue",
+      "reason": "The file silhouette reads, but ZIP lettering is not reliably readable at 12px.",
+      "issueType": "lettering",
+      "size": "12px"
+    }
+  ]
+}

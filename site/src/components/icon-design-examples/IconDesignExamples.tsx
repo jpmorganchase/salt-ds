@@ -102,7 +102,7 @@ const figures: Record<IconDesignExample, Figure> = {
         label: "Primary strokes",
         samples: [{ Icon: BankIcon, label: "Bank" }],
         description:
-          "The main outline uses 1.333333 units (approximately 4/3) in high/medium density and 1 unit in low/touch/mobile density.",
+          "Primary strokes use approximately 4/3 units in high/medium density, 8/7 in low, and 1 in touch/mobile. Each gives approximately 1px at the default icon size.",
       },
       {
         label: "Secondary details",
@@ -118,7 +118,7 @@ const figures: Record<IconDesignExample, Figure> = {
       },
     ],
     caption:
-      "These React icons inherit the density's primary stroke: 1.333333 units (approximately 4/3) in high/medium, and 1 unit in low/touch/mobile. Secondary details keep their proportions. The 64px views use the configured weight; filled contours retain their geometry.",
+      "These React icons inherit the density's primary stroke: approximately 4/3 units in high/medium, 8/7 in low, and 1 in touch/mobile. Secondary details keep their proportions. The 64px views scale the configured weight; filled contours retain their geometry.",
   },
   gauge: {
     groups: [12, 16, 64].map((pixels) => ({

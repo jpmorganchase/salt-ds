@@ -1,0 +1,849 @@
+{
+  "date": "2026-09-24",
+  "coverage": {
+    "total": 550,
+    "reviewed": 550,
+    "buckets": [
+      "a-h",
+      "i-p",
+      "q-z"
+    ]
+  },
+  "counts": {
+    "pass": 457,
+    "issue": 21,
+    "uncertain": 72
+  },
+  "issues": [
+    {
+      "file": "chart-box-plot.svg",
+      "status": "issue",
+      "reason": "The two box plots compress to narrow pixel stacks; boxes and whiskers are hard to distinguish at 12px.",
+      "issueType": "detail collapse",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "chart-candlestick_solid.svg",
+      "status": "issue",
+      "reason": "Both candle bodies fill, losing the hollow-versus-filled distinction present in the outline variant.",
+      "issueType": "pair semantics",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "cloud-sync.svg",
+      "status": "issue",
+      "reason": "The opposed arrows merge into a small dark cluster at 12px; the cloud reads but sync does not.",
+      "issueType": "modifier legibility",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "cloud-sync_solid.svg",
+      "status": "issue",
+      "reason": "The arrow cutouts are cramped and indistinct at 12px, leaving a generic solid cloud.",
+      "issueType": "modifier legibility",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "collapse-all-horizontal.svg",
+      "status": "issue",
+      "reason": "The two inward chevrons read almost exactly as Close at 12px.",
+      "issueType": "recognition",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "crops.svg",
+      "status": "issue",
+      "reason": "The slender crop is too small and fine to identify as a plant at 12px.",
+      "issueType": "optical size",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "crops_solid.svg",
+      "status": "issue",
+      "reason": "The filled crop becomes a narrow dark sprig at 12px and loses its plant silhouette.",
+      "issueType": "optical size",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "currency-exchange.svg",
+      "status": "issue",
+      "reason": "Three tiny currency counters crowd together; the exchange concept is not recognisable at 12px.",
+      "issueType": "detail collapse",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "document-draft.svg",
+      "status": "issue",
+      "reason": "At 12px this is almost indistinguishable from Document edit; the extra draft detail is too small.",
+      "issueType": "state distinction",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "document-edit.svg",
+      "status": "issue",
+      "reason": "At 12px this is almost indistinguishable from Document draft; both show the same page and pencil.",
+      "issueType": "state distinction",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "handshake.svg",
+      "status": "issue",
+      "reason": "The hands occupy too little of the 16-unit canvas and become an unrecognisable squiggle at 12px.",
+      "issueType": "optical size",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "handshake_solid.svg",
+      "status": "issue",
+      "reason": "The filled hands collapse to a small dark blob at 12px.",
+      "issueType": "optical size",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "pdf.svg",
+      "name": "pdf",
+      "status": "issue",
+      "reason": "At 12/14/16px in light and dark, three-letter PDF label collapses into a tiny dark band at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "native-size lettering",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "pdf_solid.svg",
+      "name": "pdf_solid",
+      "status": "issue",
+      "reason": "At 12/14/16px in light and dark, three-letter PDF label collapses into a tiny dark band at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "native-size lettering",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "progress-todo.svg",
+      "name": "progress-todo",
+      "status": "issue",
+      "reason": "At 12/14/16px in light and dark, thin dotted ring has much less presence than adjacent progress states at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "status weight",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "save_solid.svg",
+      "name": "save",
+      "variant": "solid",
+      "status": "issue",
+      "reason": "Solid floppy resembles a bold H at 12–14px because the body, top opening and bottom label collapse into two uprights and one bridge.",
+      "issueType": "recognition",
+      "size": "12–14px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "signature.svg",
+      "name": "signature",
+      "variant": "outline",
+      "status": "issue",
+      "reason": "Signature stroke and dotted baseline form a tiny dark cluster at 12px; the intended signature gesture is not reliably identifiable.",
+      "issueType": "recognition/detail",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "xls.svg",
+      "name": "xls",
+      "variant": "outline",
+      "status": "issue",
+      "reason": "The file silhouette reads, but XLS lettering is not reliably readable at 12px.",
+      "issueType": "lettering",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "xls_solid.svg",
+      "name": "xls",
+      "variant": "solid",
+      "status": "issue",
+      "reason": "The file silhouette reads, but XLS lettering is not reliably readable at 12px.",
+      "issueType": "lettering",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "zip.svg",
+      "name": "zip",
+      "variant": "outline",
+      "status": "issue",
+      "reason": "The file silhouette reads, but ZIP lettering is not reliably readable at 12px.",
+      "issueType": "lettering",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "zip_solid.svg",
+      "name": "zip",
+      "variant": "solid",
+      "status": "issue",
+      "reason": "The file silhouette reads, but ZIP lettering is not reliably readable at 12px.",
+      "issueType": "lettering",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    }
+  ],
+  "uncertain": [
+    {
+      "file": "add-document.svg",
+      "status": "uncertain",
+      "reason": "The page reads, but the tiny interior plus is close to a dot at 12px.",
+      "issueType": "modifier legibility",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "add-document_solid.svg",
+      "status": "uncertain",
+      "reason": "The inverse plus nearly closes at 12px, making this resemble a plain document.",
+      "issueType": "modifier legibility",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "bank-check.svg",
+      "status": "uncertain",
+      "reason": "The cheque is a short striped rectangle at 12px; its cheque cues need surrounding context.",
+      "issueType": "recognition",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "bank-check_solid.svg",
+      "status": "uncertain",
+      "reason": "The filled cheque is clear as a rectangle, but its small internal marks do not establish cheque meaning alone at 12px.",
+      "issueType": "recognition",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "build-report.svg",
+      "status": "uncertain",
+      "reason": "The shape reads as a briefcase or toolbox at 12px; the report meaning depends on its label.",
+      "issueType": "recognition",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "build-report_solid.svg",
+      "status": "uncertain",
+      "reason": "The filled shape still reads as a briefcase or toolbox, with little visible report cue at 12px.",
+      "issueType": "recognition",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "cloud-success.svg",
+      "status": "uncertain",
+      "reason": "The check within the cloud is close to a short diagonal at 12px; success meaning weakens.",
+      "issueType": "modifier legibility",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "cloud-success_solid.svg",
+      "status": "uncertain",
+      "reason": "The inverse check competes with the cloud rim at 12px and reads weakly.",
+      "issueType": "modifier legibility",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "compare.svg",
+      "status": "uncertain",
+      "reason": "Arrows and endpoint nodes are distinct when enlarged but form a very small vertical cluster at 12px.",
+      "issueType": "detail density",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "compare_solid.svg",
+      "status": "uncertain",
+      "reason": "The filled endpoint nodes make the compact arrow pair dense at 12px.",
+      "issueType": "detail density",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "dataset-manager.svg",
+      "status": "uncertain",
+      "reason": "The database and person glyph remain separate enlarged but merge into a compact cluster at 12px.",
+      "issueType": "detail density",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "dataset-manager_solid.svg",
+      "status": "uncertain",
+      "reason": "The person overlay is hard to distinguish from the filled database at 12px.",
+      "issueType": "detail density",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "favorite_strong.svg",
+      "status": "uncertain",
+      "reason": "The stronger outlined star is only subtly heavier than Favorite at 12px.",
+      "issueType": "state distinction",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "feedback.svg",
+      "status": "uncertain",
+      "reason": "The person inside the document is barely distinguishable; this can read as a generic page.",
+      "issueType": "detail density",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "feedback_solid.svg",
+      "status": "uncertain",
+      "reason": "The inverse person inside the filled page is tight at 12px and may read as a generic document.",
+      "issueType": "detail density",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "filter-clear.svg",
+      "status": "uncertain",
+      "reason": "The X sits close to the funnel and becomes a tiny cluster at 12px.",
+      "issueType": "modifier legibility",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "filter-clear_solid.svg",
+      "status": "uncertain",
+      "reason": "The X remains separate at 16px but is very small beside the filled funnel at 12px.",
+      "issueType": "modifier legibility",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "forward-10.svg",
+      "status": "uncertain",
+      "reason": "The 10 fits within the arc, but the narrow 1 is hard to read at 12px.",
+      "issueType": "numeral legibility",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "forward-15.svg",
+      "status": "uncertain",
+      "reason": "The 15 sits tightly inside the arc and is difficult to distinguish from 10 at 12px.",
+      "issueType": "numeral legibility",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "forward-30.svg",
+      "status": "uncertain",
+      "reason": "The 30 is legible enlarged but closely packed inside the arc at 12px.",
+      "issueType": "numeral legibility",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "group.svg",
+      "status": "uncertain",
+      "reason": "The small nested squares inside a larger frame read as a generic panel at 12px.",
+      "issueType": "recognition",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "group_solid.svg",
+      "status": "uncertain",
+      "reason": "The filled nested squares become a small black cluster inside a frame at 12px.",
+      "issueType": "recognition",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "holiday.svg",
+      "status": "uncertain",
+      "reason": "The beach umbrella and sun are tiny at 12px; the umbrella is clearer at 16px.",
+      "issueType": "recognition",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "holiday_solid.svg",
+      "status": "uncertain",
+      "reason": "The small filled umbrella reads as a dark stroke cluster at 12px.",
+      "issueType": "recognition",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "hospital.svg",
+      "status": "uncertain",
+      "reason": "The medical cross is tiny at 12px, so the symbol reads mostly as a generic building.",
+      "issueType": "modifier legibility",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "hospital_solid.svg",
+      "status": "uncertain",
+      "reason": "The inverse medical cross weakens at 12px within the narrow building.",
+      "issueType": "modifier legibility",
+      "size": 12,
+      "reviewerBucket": "a-h"
+    },
+    {
+      "file": "music-disabled.svg",
+      "name": "music-disabled",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, diagonal slash overlaps a very small note at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "modifier clearance",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "music-disabled_solid.svg",
+      "name": "music-disabled_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, diagonal slash overlaps a very small note at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "modifier clearance",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "notification-read.svg",
+      "name": "notification-read",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, check stroke crowds the bell shoulder at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "modifier clearance",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "notification-read_solid.svg",
+      "name": "notification-read_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, check stroke crowds the bell shoulder at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "modifier clearance",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "panel-close-bottom.svg",
+      "name": "panel-close-bottom",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel close bottom panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "directional distinction",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "panel-close-bottom_solid.svg",
+      "name": "panel-close-bottom_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel close bottom panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "directional distinction",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "panel-close-left.svg",
+      "name": "panel-close-left",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel close left panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "directional distinction",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "panel-close-left_solid.svg",
+      "name": "panel-close-left_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel close left panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "directional distinction",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "panel-close-right.svg",
+      "name": "panel-close-right",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel close right panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "directional distinction",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "panel-close-right_solid.svg",
+      "name": "panel-close-right_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel close right panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "directional distinction",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "panel-close-top.svg",
+      "name": "panel-close-top",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel close top panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "directional distinction",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "panel-close-top_solid.svg",
+      "name": "panel-close-top_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel close top panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "directional distinction",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "panel-open-bottom.svg",
+      "name": "panel-open-bottom",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel open bottom panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "directional distinction",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "panel-open-bottom_solid.svg",
+      "name": "panel-open-bottom_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel open bottom panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "directional distinction",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "panel-open-left.svg",
+      "name": "panel-open-left",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel open left panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "directional distinction",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "panel-open-left_solid.svg",
+      "name": "panel-open-left_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel open left panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "directional distinction",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "panel-open-right.svg",
+      "name": "panel-open-right",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel open right panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "directional distinction",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "panel-open-right_solid.svg",
+      "name": "panel-open-right_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel open right panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "directional distinction",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "panel-open-top.svg",
+      "name": "panel-open-top",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel open top panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "directional distinction",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "panel-open-top_solid.svg",
+      "name": "panel-open-top_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, panel open top panel frame stays distinct, but its small direction arrow needs context to distinguish open from close at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "directional distinction",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "picnic.svg",
+      "name": "picnic",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, tree and table are identifiable enlarged, but the table compresses into a short dark strip at 12px. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "native-size recognition",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "picnic_solid.svg",
+      "name": "picnic_solid",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, tree and table are identifiable enlarged, but the table compresses into a short dark strip at 12px. Solid treatment retains the same defining gesture as its outline partner.",
+      "issueType": "native-size recognition",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "policy.svg",
+      "name": "policy",
+      "status": "uncertain",
+      "reason": "At 12/14/16px in light and dark, page and badge compress at 12px, making the badge hard to distinguish from a circular seal. Outline gesture remains consistent with its solid partner where present.",
+      "issueType": "native-size recognition",
+      "size": "12px",
+      "reviewerBucket": "i-p"
+    },
+    {
+      "file": "replay-10.svg",
+      "name": "replay-10",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Circular replay arrow reads, but the 10 numeral becomes difficult to identify at 12px.",
+      "issueType": "lettering",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "replay-15.svg",
+      "name": "replay-15",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Circular replay arrow reads, but the 15 numeral becomes difficult to identify at 12px.",
+      "issueType": "lettering",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "replay-30.svg",
+      "name": "replay-30",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Circular replay arrow reads, but the 30 numeral becomes difficult to identify at 12px.",
+      "issueType": "lettering",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "replay-5.svg",
+      "name": "replay-5",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Circular replay arrow reads, while the small 5 needs a context check at 12px.",
+      "issueType": "lettering",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "sort-alpha-ascend.svg",
+      "name": "sort-alpha-ascend",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "A/Z labels and descending arrow compose correctly, but letters are tiny at 12px.",
+      "issueType": "lettering",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "sort-alpha-descend.svg",
+      "name": "sort-alpha-descend",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Z/A labels and descending arrow compose correctly, but letters are tiny at 12px.",
+      "issueType": "lettering",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "sort-num-ascend.svg",
+      "name": "sort-num-ascend",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "1/9 labels and arrow compose correctly, but the digits are tiny at 12px.",
+      "issueType": "lettering",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "sort-num-descend.svg",
+      "name": "sort-num-descend",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "9/1 labels and arrow compose correctly, but the digits are tiny at 12px.",
+      "issueType": "lettering",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "sortable-alpha.svg",
+      "name": "sortable-alpha",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "A/Z label and opposing small arrows read as a sorting control, though very compact at 12px.",
+      "issueType": "lettering",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "sortable-num.svg",
+      "name": "sortable-num",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "1/9 label and opposing small arrows read as a sorting control, though very compact at 12px.",
+      "issueType": "lettering",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "storefront.svg",
+      "name": "storefront",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Awning, window and open doorway are present and separated; dense details deserve a 12px context check.",
+      "issueType": "recognition",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "storefront_solid.svg",
+      "name": "storefront",
+      "variant": "solid",
+      "status": "uncertain",
+      "reason": "Awning, window and open doorway are present and separated; dense details deserve a 12px context check.",
+      "issueType": "recognition",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "string-number.svg",
+      "name": "string-number",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "123 remains grouped between two rules, but the small numerals are near the limit at 12px.",
+      "issueType": "lettering",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "string-text.svg",
+      "name": "string-text",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "abc remains grouped between two rules, but the small letters are near the limit at 12px.",
+      "issueType": "lettering",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "tag-clear.svg",
+      "name": "tag-clear",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Tag hole and adjacent clear X remain present, though the X is very small at 12px.",
+      "issueType": "modifier clarity",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "tag-clear_solid.svg",
+      "name": "tag-clear",
+      "variant": "solid",
+      "status": "uncertain",
+      "reason": "Tag hole and adjacent clear X remain present, though the X is very small at 12px.",
+      "issueType": "modifier clarity",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "unlinked.svg",
+      "name": "unlinked",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Broken chain ends remain separated, but the diagonal fragments look busy at 12px.",
+      "issueType": "recognition",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "user-admin.svg",
+      "name": "user-admin",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Shield and inner person remain present, but the person is very small at 12px.",
+      "issueType": "detail",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "user-admin_solid.svg",
+      "name": "user-admin",
+      "variant": "solid",
+      "status": "uncertain",
+      "reason": "Shield and inner person remain present, but the person is very small at 12px.",
+      "issueType": "detail",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "user-search.svg",
+      "name": "user-search",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Person and adjacent magnifier remain distinct, though compact at 12px.",
+      "issueType": "recognition",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "watch_solid.svg",
+      "name": "watch",
+      "variant": "solid",
+      "status": "uncertain",
+      "reason": "Watch straps and dial are present, but the solid dial hand becomes tiny at 12px.",
+      "issueType": "detail",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "workflow.svg",
+      "name": "workflow",
+      "variant": "outline",
+      "status": "uncertain",
+      "reason": "Three nodes and rightward arrow remain present, but the miniature loops are crowded at 12px.",
+      "issueType": "recognition",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    },
+    {
+      "file": "workflow_solid.svg",
+      "name": "workflow",
+      "variant": "solid",
+      "status": "uncertain",
+      "reason": "Three nodes and rightward arrow remain present, but the miniature loops are crowded at 12px.",
+      "issueType": "recognition",
+      "size": "12px",
+      "reviewerBucket": "q-z"
+    }
+  ]
+}

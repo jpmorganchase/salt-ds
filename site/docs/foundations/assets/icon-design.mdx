@@ -46,7 +46,7 @@ Preserve established meanings when extending a family. Schedule is the calendar-
 4. Add transparent clearance where shapes overlap or would visually merge. Preserve enough of the base silhouette to identify it at 12px.
 5. If the result is crowded, simplify contents or change placement before reducing the mark's size or weight.
 
-Schedule keeps Calendar's frame, header and bindings, and places the plus in the date field. Cloud upload's arrow crosses the cloud's lower edge, so it needs clearance around the arrow. Add user and Remove user keep the complete person beside a separate mark; a nearby modifier alone is no reason to cut the person.
+Calendar uses an empty date field: its header and bindings carry the meaning without a dense grid of small dates. Schedule keeps Calendar's frame, header and bindings, and places the plus in that space. Cloud upload's arrow crosses the cloud's lower edge, so it needs clearance around the arrow. Add user and Remove user keep the complete person beside a separate mark; a nearby modifier alone is no reason to cut the person.
 
 Remove bookmark places a minus within the ribbon. The outline paints the minus; the solid reveals it as a transparent opening. This preserves the same action and placement without requiring an overlapping badge.
 
@@ -74,7 +74,11 @@ Keep repeated lines evenly spaced, preserve shared landmarks between variants, a
 
 Check the result at 16px too. A single drawing cannot put every edge exactly on the pixel grid at both sizes, stroke settings and display scales. Prefer recognition and consistent apparent weight over mechanically snapping every point. Preserve diagonal angles, natural curves and welded transitions; the chevrons are judged by their proportions and visible weight, not by a horizontal/vertical grid score.
 
-Make **12px on a standard-density screen (device pixel ratio 1) at 100% browser zoom** the primary clarity check. Review in an actual component as well as in an icon sheet, then confirm 16px and higher-density screens. Fractional layout positions, browser zoom and display pixel density can change the raster result. Keep normal antialiasing (`shape-rendering: auto`); forcing `crispEdges` across the set can roughen diagonals and curved welds. These checks improve the artwork's starting alignment, but do not guarantee identical pixels in every context.
+Make **12px on a standard-density screen (device pixel ratio 1) at 100% browser zoom** the primary clarity check. Review in an actual component as well as in an icon sheet, then confirm 14px, 16px and higher-density screens. Check the 14px low-density size separately: even with an approximately 1 CSS-pixel primary stroke, its curves and details fall on different pixels from the 12px and 16px versions. Fractional layout positions, browser zoom and display pixel density can change the raster result. Keep normal antialiasing (`shape-rendering: auto`); forcing `crispEdges` across the set can roughen diagonals and curved welds. These checks improve the artwork's starting alignment, but do not guarantee identical pixels in every context.
+
+Assess default-size clarity with the icon size multiplier set to **1**: high and medium density render at 12px, low at 14px, and touch/mobile at 16px. Enlarged icons help inspect construction but do not establish clarity at these sizes. Judge the unscaled icon first; magnify the same captured pixels only to diagnose a problem.
+
+When comparing other icon libraries, use the same displayed dimensions, foreground, background, browser and screen pixel density. Compare each library at its normal weight, then match the visible stroke width where the artwork supports it. Record differences in detail and occupied area: a heavier stroke or a simpler symbol can look clearer without having a smoother curve.
 
 ### Judge apparent size and balance
 
@@ -106,7 +110,7 @@ Dashboard's four scale ticks are separate from the rim, but remain at the same p
 
 <IconDesignExamples example="gauge" />
 
-React icons use a primary width of **4/3 units in high and medium density** and **1 unit in low, touch and mobile density**. At 12px, a 4/3-unit stroke renders at approximately 1 CSS pixel. Secondary strokes retain their proportions. Standalone SVGs and CSS masks retain the artwork's **0.67-unit reference width**; they do not inherit React stroke settings. Filled marks retain their contours when surrounding strokes change. See [stroke settings](/salt/foundations/assets/index#stroke-weight).
+React icons use a primary width of **4/3 units in high and medium density**, **8/7 units in low density**, and **1 unit in touch and mobile density**. Each targets an approximately 1 CSS-pixel primary stroke at the density's default size: 12px, 14px and 16px respectively. Larger size multipliers scale the stroke with the icon. Secondary strokes retain their proportions. Standalone SVGs and CSS masks retain the artwork's **0.67-unit reference width**; they do not inherit React stroke settings. Filled marks retain their contours when surrounding strokes change. See [stroke settings](/salt/foundations/assets/index#stroke-weight).
 
 ## Geometry
 
@@ -179,7 +183,7 @@ Use true transparency so openings reveal any background. Distinguish an **invers
 
 Clearance follows the foreground's actual painted outline, including curves, sharp tips and flat cap corners. Measure space between visible edges, not between centerlines or bounding boxes. Curved relief around a sharp foreground corner can maintain even separation while the foreground stays crisp.
 
-Check the complete opening at both themed stroke widths. Wider strokes consume more room while fixed cutouts stay unchanged. Rebuild clearance when the foreground contour changes; a cutout made for an unwelded arrow may no longer fit its softened roots. Preserve the mark and adjust the surrounding opening before reducing its weight.
+Check the complete opening at all three themed stroke widths. Wider strokes consume more room while fixed cutouts stay unchanged. Rebuild clearance when the foreground contour changes; a cutout made for an unwelded arrow may no longer fit its softened roots. Preserve the mark and adjust the surrounding opening before reducing its weight.
 
 Keep retained contours continuous. An opening reaching the outside, such as Home's doorway or Printer's paper exit, must leave no line across its mouth. Inspect where borders end beside a cutout for stray steps, slivers and seams. Preserve intentional attachments and intrinsic openings, such as handles and eyelets.
 
@@ -213,7 +217,7 @@ The existing LinkedIn outline is a specific Salt presentation of the original le
 
 ## Design review
 
-Review the complete affected family at native **12px and 16px**, on **light and dark backgrounds**, at the supported stroke weights. Use an enlarged view to diagnose geometry, then return to native size. Include the intended component context and compare both React icons and baked SVG or CSS-mask artwork when contributing changes.
+Review the complete affected family at native **12px, 14px and 16px**, on **light and dark backgrounds**, at the supported stroke weights. Use an enlarged view to diagnose geometry, then return to native size. Include the intended component context and compare both React icons and baked SVG or CSS-mask artwork when contributing changes.
 
 Before accepting a design, check:
 

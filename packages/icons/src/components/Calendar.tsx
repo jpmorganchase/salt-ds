@@ -94,10 +94,6 @@ export const CalendarIcon = forwardRef<SVGSVGElement, CalendarIconProps>(
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
             d="M12.28 3.214a1.333 1.333 0 0 0-1.334 1.333"
           />
-          <path
-            fillRule="evenodd"
-            d="M2.291 7.818h1.473V9.29H2.291Zm3.315 0h1.473V9.29H5.606Zm3.315 0h1.473V9.29H8.921Zm3.315 0h1.473V9.29h-1.473ZM2.29 10.764h1.473v1.473H2.291Zm3.315 0h1.473v1.473H5.606Zm3.315 0h1.473v1.473H8.921Zm3.315 0h1.473v1.473h-1.473Z"
-          />
         </g>
       </Icon>
     );

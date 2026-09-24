@@ -11,7 +11,8 @@ import { box, circ, group, opticalScale } from "./primitives.mjs";
 // Explicit branches soften concave junctions without rounding the exterior.
 const squareStroke = SF;
 
-// Calendar: broad body, open header, two bindings and eight legible dates.
+// Calendar: broad body, open header and two bindings. The empty date field
+// keeps the calendar clear at native interface sizes and available for modifiers.
 const calendarFrame = squareStroke(box(2.5, 5.5, 19, 14));
 const calendarDivider = S(
   "M2.5 7.5q0 2 2 2h15q2 0 2-2" + "M2.5 11.5q0-2 2-2h15q2 0 2 2",
@@ -20,15 +21,9 @@ const calendarPins = S("M8 3.5v4M16 3.5v4");
 const calendarPinJoins = [8, 16]
   .map((x) => circularCrossJunction(x, 5.5, 1.81))
   .join("");
-const dateCentersX = [5.25, 9.75, 14.25, 18.75];
-const dateCentersY = [12.75, 16.75];
-const dateCounters = dateCentersY
-  .flatMap((y) => dateCentersX.map((x) => box(x - 1, y - 1, 2, 2)))
-  .join("");
-const calendarDates = F(dateCounters);
 // Fill only the date field. The open header and perimeter use the same
 // stroked contours in both variants, preserving matching painted edges.
-const calendarSolidBody = F(box(2.5, 9.5, 19, 10) + dateCounters);
+const calendarSolidBody = F(box(2.5, 9.5, 19, 10));
 
 // Mobile housing: 13:20 body, shallow top compartment, curved
 // separator junctions and a home point inside the main cavity.
@@ -49,11 +44,7 @@ const mobileSolid =
 
 const proposals = {
   calendar: [
-    calendarFrame +
-      calendarDivider +
-      calendarPins +
-      calendarPinJoins +
-      calendarDates,
+    calendarFrame + calendarDivider + calendarPins + calendarPinJoins,
     calendarSolidBody +
       calendarFrame +
       calendarDivider +
@@ -64,7 +55,7 @@ const proposals = {
 };
 
 // Scheduling an appointment keeps Calendar's complete shell and bindings.
-// Replace the dates with one centered addition mark, reserving clear space
+// Use the empty date field for one centered addition mark, reserving clear space
 // above and below it instead of crowding an interrupted outside corner.
 proposals.schedule = [
   withSharedMark(
