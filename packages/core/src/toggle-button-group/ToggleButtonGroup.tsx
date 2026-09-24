@@ -7,7 +7,6 @@ import {
   type KeyboardEvent,
   type SyntheticEvent,
   useCallback,
-  useEffect,
   useMemo,
   useRef,
   useState,
@@ -112,39 +111,6 @@ export const ToggleButtonGroup = forwardRef<
   });
   const [focused, setFocused] = useState<Value>(value);
 
-  const [enabledButtons, setEnabledButtons] = useState<HTMLButtonElement[]>([]);
-
-  useEffect(() => {
-    const group = groupRef.current;
-    if (!group) {
-      return;
-    }
-
-    const updateEnabledButtons = () => {
-      const buttons = Array.from(
-        group.querySelectorAll<HTMLButtonElement>("button:not([disabled])"),
-      );
-      setEnabledButtons((previous) =>
-        previous.length === buttons.length &&
-        previous.every((button, index) => button === buttons[index])
-          ? previous
-          : buttons,
-      );
-    };
-
-    // Descendants can change independently of this group's props.
-    const observer = new MutationObserver(updateEnabledButtons);
-    observer.observe(group, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-      attributeFilter: ["disabled"],
-    });
-    updateEnabledButtons();
-
-    return () => observer.disconnect();
-  }, []);
-
   const select = useCallback(
     (event: SyntheticEvent<HTMLButtonElement>) => {
       const newValue = event.currentTarget.value;
@@ -167,24 +133,11 @@ export const ToggleButtonGroup = forwardRef<
     setFocused(id);
   }, []);
 
-  // Following the ARIA radio group pattern, the group exposes exactly one tab
-  // stop: the selected button when it is enabled, otherwise the first enabled
-  // button. Disabled buttons are never the tab stop, as they cannot be focused.
   const isFocused = useCallback(
     (id: Value) => {
-      const hasEnabledSelection = enabledButtons.some((button) =>
-        isSameValue(button.value, focused),
-      );
-
-      if (hasEnabledSelection) {
-        return isSameValue(focused, id);
-      }
-
-      return (
-        enabledButtons.length > 0 && isSameValue(enabledButtons[0].value, id)
-      );
+      return focused === id || !focused;
     },
-    [focused, enabledButtons],
+    [focused],
   );
 
   const contextValue = useMemo(
