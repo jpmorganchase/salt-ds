@@ -150,6 +150,13 @@
   opacity: 0.4;
 }
 
+/* Preserve selection while suppressing disabled hover and pressed styles. */
+.saltInteractableCard-disabled.saltInteractableCard-selected,
+.saltInteractableCard-disabled.saltInteractableCard-selected:hover,
+.saltInteractableCard-disabled.saltInteractableCard-selected:active {
+  border-color: var(--salt-actionable-accented-borderColor-active);
+}
+
 /* Styles applied to nested divs in InteractableCard if `disabled={true}` */
 .saltInteractableCard-disabled div {
   pointer-events: none;
