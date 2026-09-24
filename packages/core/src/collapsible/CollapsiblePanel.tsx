@@ -1,23 +1,23 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ComponentPropsWithoutRef, forwardRef, useEffect } from "react";
-import type { DataAttributes } from "../types";
 import {
-  makePrefixer,
-  type RenderPropsType,
-  renderProps,
-  useId,
-} from "../utils";
+  type ComponentPropsWithoutRef,
+  forwardRef,
+  type ReactElement,
+  useEffect,
+} from "react";
+import type { DataAttributes } from "../types";
+import { makePrefixer, renderProps, useId } from "../utils";
 
 import { useCollapsibleContext } from "./CollapsibleContext";
 import collapsiblePanelCss from "./CollapsiblePanel.css";
 
 export interface CollapsiblePanelProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Render prop to enable customization of the panel's root element.
+   * Element used to customize the panel's root.
    */
-  render?: RenderPropsType["render"];
+  render?: ReactElement;
 }
 
 const withBaseName = makePrefixer("saltCollapsiblePanel");
