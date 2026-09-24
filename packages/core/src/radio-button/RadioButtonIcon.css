@@ -22,18 +22,18 @@
   color: var(--salt-selectable-foreground-hover);
 }
 
-.saltRadioButtonIcon-checked,
-.saltRadioButton:hover .saltRadioButtonIcon-checked {
-  border-color: var(--salt-selectable-borderColor-selected);
-  color: var(--salt-selectable-foreground-selected);
-}
-
 /* A disabled radio button must not respond to hover. This restores the
    resting appearance, which the hover rule above would otherwise win over.
    The checked state already resolves to its resting tokens on hover. */
 .saltRadioButton-disabled:hover .saltRadioButtonIcon {
   border-color: var(--salt-selectable-borderColor);
   color: var(--salt-selectable-foreground);
+}
+
+.saltRadioButtonIcon-checked,
+.saltRadioButton:hover .saltRadioButtonIcon-checked {
+  border-color: var(--salt-selectable-borderColor-selected);
+  color: var(--salt-selectable-foreground-selected);
 }
 
 .saltRadioButtonIcon-disabled,
