@@ -65,13 +65,13 @@ export interface ToggleButtonGroupProps
 
 const withBaseName = makePrefixer("saltToggleButtonGroup");
 
-// `value` on a DOM button is always a string, so selecting a button whose
-// `value` prop is a number stores a string on the group. Comparing both sides
-// as strings keeps such a button selected, and keeps it as the tab stop.
 function isSameValue(a: Value, b: Value) {
-  if (a === b) return true;
-  if (a == null || b == null) return false;
-  return String(a) === String(b);
+  if (Array.isArray(a) && Array.isArray(b)) {
+    return (
+      a.length === b.length && a.every((value, index) => value === b[index])
+    );
+  }
+  return a === b;
 }
 
 export const ToggleButtonGroup = forwardRef<
@@ -112,8 +112,7 @@ export const ToggleButtonGroup = forwardRef<
   const [focused, setFocused] = useState<Value>(value);
 
   const select = useCallback(
-    (event: SyntheticEvent<HTMLButtonElement>) => {
-      const newValue = event.currentTarget.value;
+    (event: SyntheticEvent<HTMLButtonElement>, newValue: Value) => {
       setValue(newValue);
       if (!isSameValue(value, newValue)) {
         onChange?.(event);

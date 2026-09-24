@@ -111,7 +111,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       if (disabled || readOnly) {
         return;
       }
-      toggleButtonGroup?.select(event);
+      toggleButtonGroup?.select(event, value);
       setSelected(!selected);
       onChange?.(event);
       onClick?.(event);

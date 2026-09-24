@@ -165,6 +165,32 @@ describe("GIVEN a ToggleButtonGroup and keyboard navigation", () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 
+  it("distinguishes numeric and string values with the same text", async () => {
+    const onChange = vi.fn();
+    await renderWithSalt(
+      <ToggleButtonGroup
+        defaultValue={1}
+        onChange={onChange}
+        aria-label="Mixed options"
+      >
+        <ToggleButton value={1}>Numeric one</ToggleButton>
+        <ToggleButton value="1">String one</ToggleButton>
+      </ToggleButtonGroup>,
+    );
+
+    const numericOne = page.getByRole("radio", { name: "Numeric one" });
+    const stringOne = page.getByRole("radio", { name: "String one" });
+
+    await expect.element(numericOne).toHaveAttribute("aria-checked", "true");
+    await expect.element(stringOne).toHaveAttribute("aria-checked", "false");
+
+    await stringOne.click();
+
+    expect(onChange).toHaveBeenCalledOnce();
+    await expect.element(numericOne).toHaveAttribute("aria-checked", "false");
+    await expect.element(stringOne).toHaveAttribute("aria-checked", "true");
+  });
+
   it("skips a disabled button when navigating with the arrow keys", async () => {
     await renderWithSalt(<Group defaultValue="alert" />);
 
