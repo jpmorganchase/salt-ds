@@ -12,31 +12,31 @@
 }
 
 .salt-theme .sbdocs h1 {
-  font-family: var(--salt-text-h1-fontFamily);
+  font-family: var(--salt-text-heading-fontFamily);
   font-size: var(--salt-text-h1-fontSize);
-  font-weight: var(--salt-text-h1-fontWeight);
+  font-weight: var(--salt-text-heading-fontWeight);
   line-height: var(--salt-text-h1-lineHeight);
 }
 
 .salt-theme .sbdocs h2 {
   border-bottom: none;
-  font-family: var(--salt-text-h2-fontFamily);
+  font-family: var(--salt-text-heading-fontFamily);
   font-size: var(--salt-text-h2-fontSize);
-  font-weight: var(--salt-text-h2-fontWeight);
+  font-weight: var(--salt-text-heading-fontWeight);
   line-height: var(--salt-text-h2-lineHeight);
 }
 
 .salt-theme .sbdocs h3 {
-  font-family: var(--salt-text-h3-fontFamily);
+  font-family: var(--salt-text-heading-fontFamily);
   font-size: var(--salt-text-h3-fontSize);
-  font-weight: var(--salt-text-h3-fontWeight);
+  font-weight: var(--salt-text-heading-fontWeight);
   line-height: var(--salt-text-h3-lineHeight);
 }
 
 .salt-theme .sbdocs h4 {
-  font-family: var(--salt-text-h4-fontFamily);
+  font-family: var(--salt-text-heading-fontFamily);
   font-size: var(--salt-text-h4-fontSize);
-  font-weight: var(--salt-text-h4-fontWeight);
+  font-weight: var(--salt-text-heading-fontWeight);
   line-height: var(--salt-text-h4-lineHeight);
 }
 

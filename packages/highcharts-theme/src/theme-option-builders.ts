@@ -153,9 +153,9 @@ export const buildTextOptions = (
     margin: tokens["--salt-spacing-200"],
     style: {
       color: tokens["--salt-content-primary-foreground"],
-      fontFamily: tokens["--salt-text-h4-fontFamily"],
+      fontFamily: tokens["--salt-text-heading-fontFamily"],
       fontSize: tokens["--salt-text-h4-fontSize"],
-      fontWeight: tokens["--salt-text-h4-fontWeight"],
+      fontWeight: tokens["--salt-text-heading-fontWeight"],
       lineHeight: tokens["--salt-text-h4-lineHeight"],
     },
   },

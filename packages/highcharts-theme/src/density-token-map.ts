@@ -66,9 +66,9 @@ export type SaltChartTokenMap = {
   "--salt-text-action-letterSpacing": string;
   "--salt-text-action-textTransform": string;
   "--salt-text-h4-fontSize": string;
-  "--salt-text-h4-fontWeight": string;
+  "--salt-text-heading-fontWeight": string;
   "--salt-text-h4-lineHeight": string;
-  "--salt-text-h4-fontFamily": string;
+  "--salt-text-heading-fontFamily": string;
   "--salt-text-label-fontSize": string;
   "--salt-text-label-fontWeight": string;
   "--salt-text-label-fontWeight-strong": string;
@@ -141,9 +141,9 @@ const TYPOGRAPHY_TOKENS = {
   actionLetterSpacing: "--salt-text-action-letterSpacing",
   actionTextTransform: "--salt-text-action-textTransform",
   titleFontSize: "--salt-text-h4-fontSize",
-  titleFontWeight: "--salt-text-h4-fontWeight",
+  titleFontWeight: "--salt-text-heading-fontWeight",
   titleLineHeight: "--salt-text-h4-lineHeight",
-  titleFontFamily: "--salt-text-h4-fontFamily",
+  titleFontFamily: "--salt-text-heading-fontFamily",
   labelFontSize: "--salt-text-label-fontSize",
   labelFontWeight: "--salt-text-label-fontWeight",
   labelStrongFontWeight: "--salt-text-label-fontWeight-strong",
@@ -428,9 +428,9 @@ export const getDensityTokenMap = (
     "--salt-text-action-letterSpacing": actionLetterSpacing,
     "--salt-text-action-textTransform": actionTextTransform,
     "--salt-text-h4-fontSize": titleFontSize,
-    "--salt-text-h4-fontWeight": titleFontWeight,
+    "--salt-text-heading-fontWeight": titleFontWeight,
     "--salt-text-h4-lineHeight": titleLineHeight,
-    "--salt-text-h4-fontFamily": titleFontFamily,
+    "--salt-text-heading-fontFamily": titleFontFamily,
     "--salt-text-label-fontSize": labelFontSize,
     "--salt-text-label-fontWeight": labelFontWeight,
     "--salt-text-label-fontWeight-strong": labelStrongFontWeight,

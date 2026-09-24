@@ -30,8 +30,8 @@
 
   cursor: var(--salt-cursor-hover);
   color: var(--salt-content-primary-foreground);
-  font-weight: var(--salt-text-h4-fontWeight);
-  font-family: var(--salt-text-h4-fontFamily);
+  font-weight: var(--salt-text-heading-fontWeight);
+  font-family: var(--salt-text-heading-fontFamily);
   text-align: var(--salt-text-textAlign);
   letter-spacing: var(--salt-text-letterSpacing);
   line-height: var(--salt-text-h4-lineHeight);
@@ -84,7 +84,7 @@
 
 .saltVerticalNavigation .saltVerticalNavigationItemContent-active,
 .saltVerticalNavigation .saltVerticalNavigationSubMenu .saltVerticalNavigationItemContent-active {
-  font-weight: var(--salt-text-h4-fontWeight);
+  font-weight: var(--salt-text-heading-fontWeight);
 }
 
 @supports selector(:has(*)) {
