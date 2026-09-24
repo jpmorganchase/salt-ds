@@ -1,3 +1,12 @@
+import {
+  Button,
+  Overlay,
+  OverlayHeader,
+  OverlayPanel,
+  OverlayPanelContent,
+  OverlayTrigger,
+  Text,
+} from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
@@ -82,6 +91,85 @@ describe("GIVEN an Overlay", () => {
       expect(
         (await trigger().element()).closest("[inert]"),
       ).not.toBeInTheDocument();
+    });
+  });
+
+  describe("WHEN an OverlayHeader is used", () => {
+    it("THEN it should name the overlay from the header", async () => {
+      await renderWithSalt(<CloseButton />);
+      await trigger().click();
+
+      const dialog = page.getByRole("dialog");
+      await expect.element(dialog).toHaveAccessibleName("Title");
+      await expect
+        .element(page.getByRole("heading", { level: 2 }))
+        .toBeVisible();
+    });
+
+    it("THEN it should describe the overlay from the description", async () => {
+      await renderWithSalt(<WithSections />);
+      await trigger().click();
+
+      const dialog = page.getByRole("dialog");
+      await expect.element(dialog).toHaveAccessibleName("Review changes");
+      await expect
+        .element(dialog)
+        .toHaveAccessibleDescription("Account updates are pending");
+    });
+
+    it("THEN it should merge a provided aria-labelledby with the header", async () => {
+      await renderWithSalt(
+        <Overlay open>
+          <OverlayTrigger>
+            <Button>Show Overlay</Button>
+          </OverlayTrigger>
+          <OverlayPanel aria-labelledby="overlay-context">
+            <OverlayHeader header="Title" />
+            <OverlayPanelContent>
+              <Text id="overlay-context">Billing</Text>
+            </OverlayPanelContent>
+          </OverlayPanel>
+        </Overlay>,
+      );
+
+      await expect
+        .element(page.getByRole("dialog"))
+        .toHaveAccessibleName("Billing Title");
+    });
+
+    it("THEN it should not label the overlay when the header only has actions", async () => {
+      await renderWithSalt(
+        <Overlay open>
+          <OverlayTrigger>
+            <Button>Show Overlay</Button>
+          </OverlayTrigger>
+          <OverlayPanel aria-label="Notifications">
+            <OverlayHeader actions={<Button>Close</Button>} />
+            <OverlayPanelContent>
+              <Text>Content of Overlay</Text>
+            </OverlayPanelContent>
+          </OverlayPanel>
+        </Overlay>,
+      );
+
+      const dialog = page.getByRole("dialog");
+      await expect.element(dialog).toHaveAccessibleName("Notifications");
+      await expect.element(dialog).not.toHaveAccessibleDescription();
+      await expect.element(page.getByRole("heading")).not.toBeInTheDocument();
+    });
+
+    it("THEN it should keep its name after closing and reopening", async () => {
+      await renderWithSalt(<CloseButton />);
+      await trigger().click();
+      await expect
+        .element(page.getByRole("dialog"))
+        .toHaveAccessibleName("Title");
+      await userEvent.keyboard("{Escape}");
+      await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+      await trigger().click();
+      await expect
+        .element(page.getByRole("dialog"))
+        .toHaveAccessibleName("Title");
     });
   });
 

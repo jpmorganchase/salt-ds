@@ -8,6 +8,12 @@ data:
   $ref: ./#/data
 ---
 
+## Best practices
+
+### Accessible name
+
+If `OverlayPanel` doesn't contain an `OverlayHeader` with a `header` or `preheader`, give it an accessible name. Use `aria-labelledby` when visible text already names the overlay, or `aria-label` when there's no visible text to reference.
+
 ## Interactions
 
 - Users expose an overlay using a focusable UI element, such as a button. On button activation by either the <kbd>Enter</kbd> or <kbd>Space</kbd> keys, focus enters the overlay.
