@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:salt-eval:common",
+  "title": "Shared definitions for salt-eval documents",
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "description": "Lowercase kebab-case identifier."
+    },
+    "verdict": {
+      "enum": ["correct", "missing", "wrong", "review"],
+      "description": "Per-criterion verdict. `review` means unresolved; it blocks any uplift claim until a human resolves it."
+    },
+    "graderVerdict": {
+      "enum": ["correct", "wrong", "error"],
+      "description": "Verdict from a deterministic grader. `error` is a harness fault and is reported as `review`, never as an agent failure."
+    },
+    "severity": {
+      "enum": ["mandatory", "advisory"],
+      "description": "Advisory criteria are logged but never counted towards pass or fail."
+    },
+    "track": {
+      "enum": ["instruct", "code"],
+      "description": "`instruct` grades implementation instructions with an LLM judge. `code` grades a generated TSX artifact with deterministic graders and optional judge criteria."
+    },
+    "checkKind": {
+      "enum": [
+        "ts:typecheck",
+        "lint:biome",
+        "salt:imports-resolve",
+        "salt:no-deprecated",
+        "jsx:required-element",
+        "jsx:required-ancestor",
+        "jsx:forbidden-element",
+        "jsx:prop-value",
+        "jsx:prop-absent",
+        "text:forbidden-pattern",
+        "render:smoke"
+      ],
+      "description": "Deterministic check kinds implemented by tooling/eval-graders. `render:smoke` is reserved and not implemented in v1."
+    },
+    "jsxElementParams": {
+      "type": "object",
+      "properties": {
+        "element": {
+          "type": "string",
+          "minLength": 1,
+          "description": "JSX tag name as written, e.g. `FormField`."
+        },
+        "from": {
+          "type": "string",
+          "description": "Optional package the element must be imported from, e.g. `@salt-ds/core`."
+        }
+      },
+      "required": ["element"]
+    },
+    "check": {
+      "type": "object",
+      "description": "One deterministic check: the same object shape is a case criterion (plus severity) and a grader request item.",
+      "required": ["id", "grader"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "grader": { "$ref": "#/$defs/checkKind" },
+        "params": { "type": "object" }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "grader": {
+              "enum": [
+                "ts:typecheck",
+                "salt:imports-resolve",
+                "salt:no-deprecated",
+                "render:smoke"
+              ]
+            },
+            "params": { "type": "object", "additionalProperties": false }
+          }
+        },
+        {
+          "properties": {
+            "grader": { "const": "lint:biome" },
+            "params": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "level": {
+                  "enum": ["error", "warning"],
+                  "description": "Lowest diagnostic severity that fails the check. Defaults to `error`."
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "grader": { "const": "jsx:required-element" },
+            "params": {
+              "$ref": "#/$defs/jsxElementParams",
+              "additionalProperties": false,
+              "properties": {
+                "element": true,
+                "from": true,
+                "min": { "type": "integer", "minimum": 1 }
+              }
+            }
+          },
+          "required": ["params"]
+        },
+        {
+          "properties": {
+            "grader": { "const": "jsx:required-ancestor" },
+            "params": {
+              "$ref": "#/$defs/jsxElementParams",
+              "additionalProperties": false,
+              "properties": {
+                "element": true,
+                "from": true,
+                "ancestor": { "type": "string", "minLength": 1 }
+              },
+              "required": ["ancestor"]
+            }
+          },
+          "required": ["params"]
+        },
+        {
+          "properties": {
+            "grader": { "const": "jsx:forbidden-element" },
+            "params": {
+              "$ref": "#/$defs/jsxElementParams",
+              "additionalProperties": false,
+              "properties": { "element": true, "from": true }
+            }
+          },
+          "required": ["params"]
+        },
+        {
+          "properties": {
+            "grader": { "const": "jsx:prop-value" },
+            "params": {
+              "$ref": "#/$defs/jsxElementParams",
+              "additionalProperties": false,
+              "properties": {
+                "element": true,
+                "from": true,
+                "prop": { "type": "string", "minLength": 1 },
+                "equals": { "type": ["boolean", "string", "number", "null"] }
+              },
+              "required": ["prop", "equals"]
+            }
+          },
+          "required": ["params"]
+        },
+        {
+          "properties": {
+            "grader": { "const": "jsx:prop-absent" },
+            "params": {
+              "$ref": "#/$defs/jsxElementParams",
+              "additionalProperties": false,
+              "properties": {
+                "element": true,
+                "from": true,
+                "prop": { "type": "string", "minLength": 1 }
+              },
+              "required": ["prop"]
+            }
+          },
+          "required": ["params"]
+        },
+        {
+          "properties": {
+            "grader": { "const": "text:forbidden-pattern" },
+            "params": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "pattern": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "JavaScript regular expression source, tested against every artifact file."
+                },
+                "flags": { "type": "string", "pattern": "^[gimsuy]*$" }
+              },
+              "required": ["pattern"]
+            }
+          },
+          "required": ["params"]
+        }
+      ]
+    },
+    "evidenceLocation": {
+      "type": "object",
+      "required": ["file"],
+      "additionalProperties": false,
+      "properties": {
+        "file": { "type": "string" },
+        "line": { "type": "integer", "minimum": 1 },
+        "column": { "type": "integer", "minimum": 1 },
+        "text": { "type": "string" }
+      }
+    },
+    "files": {
+      "type": "object",
+      "description": "Artifact files keyed by relative path.",
+      "propertyNames": { "pattern": "^(?!/)(?!.*\\.\\.)[^\\u0000]+$" },
+      "additionalProperties": { "type": "string" }
+    }
+  }
+}

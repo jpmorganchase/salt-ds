@@ -1,0 +1,9 @@
+import { Dropdown, Option } from "@salt-ds/core";
+
+export function Picker() {
+  return (
+    <Dropdown>
+      <Option value="a">A</Option>
+    </Dropdown>
+  );
+}

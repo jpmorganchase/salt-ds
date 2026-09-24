@@ -1,0 +1,14 @@
+import { FormField, Input } from "@salt-ds/core";
+
+export function Fields() {
+  return (
+    <>
+      <FormField readOnly>
+        <Input />
+      </FormField>
+      <FormField readOnly={true}>
+        <Input />
+      </FormField>
+    </>
+  );
+}

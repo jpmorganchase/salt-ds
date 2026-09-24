@@ -1,0 +1,4 @@
+{
+  "params": { "pattern": "```(tsx|jsx)" },
+  "expect": "forbidden pattern ```(tsx|jsx) matched at response.md:3"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "mcp-http-example",
+  "revision": "replace-with-your-mcp-commit-or-release",
+  "knowledge_revision": "replace-with-the-frozen-docs-or-annotations-revision-the-server-serves",
+  "description": "Template for a remote MCP server over HTTP. Set SALT_MCP_URL (and SALT_MCP_TOKEN for bearer auth) in your shell; the harness reads them by name at run time and refuses to start if they are missing.",
+  "mcp_servers": [
+    {
+      "name": "salt",
+      "transport": "http",
+      "url_env": "SALT_MCP_URL",
+      "token_env": "SALT_MCP_TOKEN",
+      "tools": "all"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "params": { "element": "Dropdown", "from": "@salt-ds/core" },
+  "expect": "<Dropdown> from @salt-ds/core rendered at"
+}

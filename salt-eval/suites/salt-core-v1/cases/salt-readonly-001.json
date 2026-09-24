@@ -1,0 +1,68 @@
+{
+  "id": "salt-readonly-001",
+  "track": "instruct",
+  "family": "form-field-state",
+  "cluster_id": "readonly-client-reference",
+  "status": "draft",
+  "provenance": {
+    "kind": "authored",
+    "source": "Migrated from the salt-eval starter (suite.json draft-1). Example fixture for the instruct track; not a field-collected support request."
+  },
+  "contamination": "public-stable",
+  "salt": {
+    "packages": {
+      "@salt-ds/core": "1.71.x"
+    },
+    "docs_revision": "public saltdesignsystem.com pages reviewed 2026-09-23"
+  },
+  "request": "Our application already uses Salt and has its provider configured. A client-reference field already consists of FormField, FormFieldLabel and Input. Its value is fixed by the system. Users must be able to select and copy the reference but must not edit it. Give the Salt-specific implementation instructions for changing this existing field, including which component should receive any state prop. Do not generate application code.",
+  "references": [
+    {
+      "id": "input-state",
+      "url": "https://www.saltdesignsystem.com/salt/components/input/examples",
+      "reviewed_date": "2026-09-23",
+      "kind": "Paraphrased public documentation; not a release-pinned source snapshot",
+      "fact": "Input's read-only state prevents editing while preserving selection and copying. Disabled Input is noninteractive."
+    },
+    {
+      "id": "formfield-state",
+      "url": "https://www.saltdesignsystem.com/salt/components/form-field/examples",
+      "reviewed_date": "2026-09-23",
+      "kind": "Paraphrased public documentation, confirmed against packages/core/src/form-field/FormField.tsx and input/Input.tsx (FormField provides readOnly through FormFieldContext; Input reads it)",
+      "fact": "When a control is contained in FormField, the documented readOnly state belongs on FormField rather than only on the contained control."
+    }
+  ],
+  "criteria": [
+    {
+      "id": "state-choice",
+      "grader": "judge",
+      "severity": "mandatory",
+      "requirement": "Recommend the read-only state for this field. Do not recommend disabling it or blocking selection/copying.",
+      "accept": "readOnly or an unambiguous read-only instruction passes. The plan need not restate automatic selection/copying behavior. Explicitly rejecting disabled is optional.",
+      "wrong": "Recommends disabled or prevents selection/copying, including when a correct instruction elsewhere contradicts that recommendation.",
+      "missing": "Only says non-editable, accessible or suitable, without resolving the read-only state.",
+      "source_ids": ["input-state"]
+    },
+    {
+      "id": "state-owner",
+      "grader": "judge",
+      "severity": "mandatory",
+      "requirement": "Explicitly place readOnly on the containing FormField in the existing composition.",
+      "accept": "Any wording that identifies the wrapper FormField as the owner of readOnly. No JSX or exact sentence is required.",
+      "wrong": "Places readOnly only on Input, or explicitly leaves the containing FormField's state unchanged.",
+      "missing": "Mentions readOnly without saying where to apply it, or merely lists the three existing components.",
+      "source_ids": ["formfield-state"]
+    },
+    {
+      "id": "no-application-code",
+      "grader": "text:forbidden-pattern",
+      "severity": "advisory",
+      "requirement": "The request asked for instructions, not application code. Logged only; a fenced code block is not a failure.",
+      "params": {
+        "pattern": "```(tsx|jsx|typescript|javascript)"
+      }
+    }
+  ],
+  "calibration": "calibration/salt-readonly-001.json",
+  "canary": "SALT-EVAL-CANARY-5e6ad241-eb42-4dcf-a9e0-636a11e71ecd"
+}

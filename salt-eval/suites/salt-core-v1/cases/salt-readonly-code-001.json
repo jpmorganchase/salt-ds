@@ -1,0 +1,110 @@
+{
+  "id": "salt-readonly-code-001",
+  "track": "code",
+  "family": "form-field-state",
+  "cluster_id": "readonly-client-reference",
+  "status": "draft",
+  "provenance": {
+    "kind": "authored",
+    "source": "Code-track twin of salt-readonly-001. Example fixture that proves the deterministic graders end to end; not a field-collected request."
+  },
+  "contamination": "public-stable",
+  "salt": {
+    "packages": {
+      "@salt-ds/core": "1.71.x"
+    },
+    "docs_revision": "public saltdesignsystem.com pages reviewed 2026-09-23; props confirmed against packages/core/src"
+  },
+  "request": "Create a ClientReferenceField component for our existing Salt application. It renders the labelled client-reference field we already use: a FormField with a FormFieldLabel reading \"Client reference\" and an Input showing the string passed in through a `value` prop. The value is fixed by the system: users must be able to select and copy it but must not edit it. Export the component from the module.",
+  "context": {
+    "repo_state": "React 18 with TypeScript. @salt-ds/core is installed and SaltProvider is already configured at the application root, so the module only needs to export the component.",
+    "fixture": "workspace-vite-react"
+  },
+  "references": [
+    {
+      "id": "input-state",
+      "url": "https://www.saltdesignsystem.com/salt/components/input/examples",
+      "reviewed_date": "2026-09-23",
+      "kind": "Paraphrased public documentation, confirmed against packages/core/src/input/Input.tsx (readOnly prop; disabled makes the control noninteractive)",
+      "fact": "Input's read-only state prevents editing while preserving selection and copying. Disabled Input is noninteractive."
+    },
+    {
+      "id": "formfield-state",
+      "url": "https://www.saltdesignsystem.com/salt/components/form-field/examples",
+      "reviewed_date": "2026-09-23",
+      "kind": "Confirmed against packages/core/src/form-field/FormField.tsx: FormField has a readOnly prop and provides it through FormFieldContext; Input reads it via useFormFieldProps",
+      "fact": "When a control is contained in FormField, readOnly belongs on FormField; the contained Input inherits it."
+    }
+  ],
+  "criteria": [
+    { "id": "compiles", "grader": "ts:typecheck", "severity": "mandatory" },
+    { "id": "lints", "grader": "lint:biome", "severity": "mandatory" },
+    {
+      "id": "imports-exist",
+      "grader": "salt:imports-resolve",
+      "severity": "mandatory"
+    },
+    {
+      "id": "uses-formfield",
+      "grader": "jsx:required-element",
+      "severity": "mandatory",
+      "requirement": "The field is composed with Salt's FormField.",
+      "params": { "element": "FormField", "from": "@salt-ds/core" },
+      "source_ids": ["formfield-state"]
+    },
+    {
+      "id": "has-label",
+      "grader": "jsx:required-element",
+      "severity": "mandatory",
+      "requirement": "The label is a FormFieldLabel.",
+      "params": { "element": "FormFieldLabel", "from": "@salt-ds/core" }
+    },
+    {
+      "id": "input-inside-formfield",
+      "grader": "jsx:required-ancestor",
+      "severity": "mandatory",
+      "requirement": "Every Input is rendered inside the FormField so it inherits the field state.",
+      "params": {
+        "element": "Input",
+        "ancestor": "FormField",
+        "from": "@salt-ds/core"
+      },
+      "source_ids": ["formfield-state"]
+    },
+    {
+      "id": "readonly-on-formfield",
+      "grader": "jsx:prop-value",
+      "severity": "mandatory",
+      "requirement": "readOnly is set on the FormField, not only on the Input.",
+      "params": { "element": "FormField", "prop": "readOnly", "equals": true },
+      "source_ids": ["formfield-state"]
+    },
+    {
+      "id": "no-disabled-formfield",
+      "grader": "jsx:prop-absent",
+      "severity": "mandatory",
+      "requirement": "The field is not disabled; disabled would block selection and copying.",
+      "params": { "element": "FormField", "prop": "disabled" },
+      "source_ids": ["input-state"]
+    },
+    {
+      "id": "no-disabled-input",
+      "grader": "jsx:prop-absent",
+      "severity": "mandatory",
+      "params": { "element": "Input", "prop": "disabled" },
+      "source_ids": ["input-state"]
+    },
+    {
+      "id": "explains-copyable",
+      "grader": "judge",
+      "severity": "advisory",
+      "requirement": "The prose explains why read-only rather than disabled: the value stays selectable and copyable.",
+      "accept": "Any statement that read-only keeps the value selectable or copyable, or that disabled would prevent selection or copying.",
+      "wrong": "Claims a disabled field stays copyable, or recommends disabled for this requirement.",
+      "missing": "No explanation of the read-only versus disabled choice; code alone does not satisfy this criterion.",
+      "source_ids": ["input-state"]
+    }
+  ],
+  "calibration": "calibration/salt-readonly-code-001.json",
+  "canary": "SALT-EVAL-CANARY-5e6ad241-eb42-4dcf-a9e0-636a11e71ecd"
+}

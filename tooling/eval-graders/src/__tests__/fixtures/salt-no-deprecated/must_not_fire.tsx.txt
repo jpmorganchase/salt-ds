@@ -1,0 +1,5 @@
+import { SaltProviderNext } from "@salt-ds/core";
+
+export function App() {
+  return <SaltProviderNext>content</SaltProviderNext>;
+}

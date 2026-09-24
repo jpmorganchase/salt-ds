@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:salt-eval:case",
+  "title": "Salt eval case (suites/<suite>/cases/<case-id>.json)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "track",
+    "family",
+    "cluster_id",
+    "status",
+    "provenance",
+    "contamination",
+    "salt",
+    "request",
+    "references",
+    "criteria",
+    "canary"
+  ],
+  "properties": {
+    "id": { "$ref": "urn:salt-eval:common#/$defs/identifier" },
+    "track": { "$ref": "urn:salt-eval:common#/$defs/track" },
+    "family": {
+      "$ref": "urn:salt-eval:common#/$defs/identifier",
+      "description": "Broad topic used for reporting, e.g. `form-field-state`. Not a statistical unit."
+    },
+    "cluster_id": {
+      "$ref": "urn:salt-eval:common#/$defs/identifier",
+      "description": "Groups paraphrases of one underlying request. Statistics treat a cluster as one independent unit."
+    },
+    "status": {
+      "enum": ["draft", "approved", "held_out", "retired"],
+      "description": "`draft` cases run but are labelled as unapproved. `approved` needs a maintainer in provenance.approved_by. `held_out` cases are excluded unless --include-held-out. `retired` cases never run."
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "source"],
+      "properties": {
+        "kind": { "enum": ["field", "authored", "adversarial"] },
+        "source": { "type": "string", "minLength": 1 },
+        "approved_by": { "type": "string" },
+        "approved_date": { "type": "string", "format": "date" }
+      }
+    },
+    "contamination": {
+      "enum": ["public-stable", "post-cutoff", "counterfactual"],
+      "description": "How likely the answer is in model training data. `post-cutoff` and `counterfactual` cases discriminate tooling from memorisation."
+    },
+    "salt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packages"],
+      "properties": {
+        "packages": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": { "type": "string" }
+        },
+        "docs_revision": { "type": "string" }
+      }
+    },
+    "request": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The only text the planner sees, besides the profile's tools and prompts."
+    },
+    "paraphrases": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Alternative phrasings. Each becomes its own sample under the same cluster_id."
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "repo_state": {
+          "type": "string",
+          "description": "Prose the planner gets about the consuming application."
+        },
+        "fixture": {
+          "type": "string",
+          "description": "Name of a folder under fixtures/ that holds the tsconfig used to typecheck generated code."
+        }
+      }
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "fact"],
+        "properties": {
+          "id": { "$ref": "urn:salt-eval:common#/$defs/identifier" },
+          "url": { "type": "string" },
+          "reviewed_date": { "type": "string", "format": "date" },
+          "kind": { "type": "string", "minLength": 1 },
+          "fact": { "type": "string", "minLength": 1 }
+        }
+      },
+      "description": "Trusted facts the judge grades against. The judge never consults the tooling under test."
+    },
+    "criteria": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          { "$ref": "#/$defs/judgeCriterion" },
+          { "$ref": "#/$defs/deterministicCriterion" }
+        ]
+      }
+    },
+    "calibration": {
+      "type": "string",
+      "description": "Path, relative to the suite root, of the judge calibration examples for this case."
+    },
+    "canary": { "type": "string", "pattern": "^SALT-EVAL-CANARY-" }
+  },
+  "$defs": {
+    "judgeCriterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "grader",
+        "severity",
+        "requirement",
+        "accept",
+        "wrong",
+        "missing",
+        "source_ids"
+      ],
+      "properties": {
+        "id": { "$ref": "urn:salt-eval:common#/$defs/identifier" },
+        "grader": { "const": "judge" },
+        "severity": { "$ref": "urn:salt-eval:common#/$defs/severity" },
+        "requirement": { "type": "string", "minLength": 1 },
+        "accept": { "type": "string", "minLength": 1 },
+        "wrong": { "type": "string", "minLength": 1 },
+        "missing": { "type": "string", "minLength": 1 },
+        "source_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "urn:salt-eval:common#/$defs/identifier" }
+        }
+      }
+    },
+    "deterministicCriterion": {
+      "$comment": "A check (id, grader, params) plus grading metadata. The parameter rules live once, in common#/$defs/check.",
+      "type": "object",
+      "allOf": [{ "$ref": "urn:salt-eval:common#/$defs/check" }],
+      "required": ["severity"],
+      "properties": {
+        "id": true,
+        "grader": true,
+        "params": true,
+        "severity": { "$ref": "urn:salt-eval:common#/$defs/severity" },
+        "requirement": { "type": "string" },
+        "source_ids": {
+          "type": "array",
+          "items": { "$ref": "urn:salt-eval:common#/$defs/identifier" }
+        }
+      },
+      "unevaluatedProperties": false
+    }
+  }
+}

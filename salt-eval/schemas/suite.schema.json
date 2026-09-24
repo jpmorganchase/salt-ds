@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:salt-eval:suite",
+  "title": "Salt eval suite manifest (suites/<suite>/suite.json)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "revision",
+    "status",
+    "salt",
+    "canary",
+    "judge_thresholds"
+  ],
+  "properties": {
+    "id": { "$ref": "urn:salt-eval:common#/$defs/identifier" },
+    "revision": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Free-form suite revision. Bump it whenever a case or calibration file changes; old logs record the revision they were scored against."
+    },
+    "status": {
+      "enum": ["draft", "approved"],
+      "description": "A suite is `approved` only when a Salt maintainer has approved every non-draft case in it."
+    },
+    "description": { "type": "string" },
+    "salt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packages"],
+      "properties": {
+        "packages": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": { "type": "string" },
+          "description": "Salt package version ranges the cases were written against, e.g. {\"@salt-ds/core\": \"1.x\"}."
+        },
+        "docs_revision": {
+          "type": "string",
+          "description": "Commit or release of the Salt documentation the references were reviewed against."
+        }
+      }
+    },
+    "canary": {
+      "type": "string",
+      "pattern": "^SALT-EVAL-CANARY-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "description": "Unique string embedded in every case. If a model reproduces it unprompted, the suite has leaked into training data."
+    },
+    "judge_thresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_false_accept_rate",
+        "max_false_reject_rate",
+        "max_review_rate"
+      ],
+      "properties": {
+        "max_false_accept_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "max_false_reject_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "max_review_rate": { "type": "number", "minimum": 0, "maximum": 1 }
+      },
+      "description": "Limits `salt-eval calibrate` enforces against maintainer-labelled calibration examples."
+    }
+  }
+}

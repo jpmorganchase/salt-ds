@@ -1,0 +1,74 @@
+name: "Salt eval harness"
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "salt-eval/**"
+      - "tooling/eval-graders/**"
+      - ".github/workflows/salt-eval.yml"
+  pull_request:
+    paths:
+      - "salt-eval/**"
+      - "tooling/eval-graders/**"
+      - ".github/workflows/salt-eval.yml"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+# Everything here runs offline with Inspect's mockllm models. No model provider is
+# called and no credentials exist in CI; live runs are manual (see salt-eval/docs/runbook.md).
+jobs:
+  graders:
+    name: Deterministic graders
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Use Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: "24"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: Lint graders
+        run: yarn biome ci tooling/eval-graders
+      - name: Grader specs (must_fire / must_not_fire per check kind)
+        run: yarn workspace @salt-ds/eval-graders test
+
+  harness:
+    name: Harness (offline, mock models)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Use Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: "24"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: Install uv
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: "salt-eval/uv.lock"
+      - name: Install harness
+        working-directory: salt-eval
+        run: uv sync --frozen
+      - name: Validate suites and reference solutions
+        working-directory: salt-eval
+        run: uv run salt-eval validate --solve
+      - name: Harness tests (both tracks end to end with mock models)
+        working-directory: salt-eval
+        run: uv run pytest -q

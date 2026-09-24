@@ -1,0 +1,21 @@
+{
+  "case_id": "salt-readonly-code-001",
+  "status": "DRAFT expected labels for the advisory judge criterion. A Salt maintainer must approve them.",
+  "examples": [
+    {
+      "id": "explains",
+      "response": "readOnly goes on FormField so the Input inherits it; unlike disabled, a read-only field stays selectable and copyable.\n\n```tsx\nimport { FormField, FormFieldLabel, Input } from \"@salt-ds/core\";\nexport function ClientReferenceField({ value }: { value: string }) {\n  return (\n    <FormField readOnly>\n      <FormFieldLabel>Client reference</FormFieldLabel>\n      <Input value={value} />\n    </FormField>\n  );\n}\n```",
+      "expected": { "explains-copyable": "correct" }
+    },
+    {
+      "id": "code-only",
+      "response": "```tsx\nimport { FormField, FormFieldLabel, Input } from \"@salt-ds/core\";\nexport function ClientReferenceField({ value }: { value: string }) {\n  return (\n    <FormField readOnly>\n      <FormFieldLabel>Client reference</FormFieldLabel>\n      <Input value={value} />\n    </FormField>\n  );\n}\n```",
+      "expected": { "explains-copyable": "missing" }
+    },
+    {
+      "id": "recommends-disabled",
+      "response": "Disable the FormField; a disabled field still lets users copy the value.\n\n```tsx\nimport { FormField, FormFieldLabel, Input } from \"@salt-ds/core\";\nexport function ClientReferenceField({ value }: { value: string }) {\n  return (\n    <FormField disabled>\n      <FormFieldLabel>Client reference</FormFieldLabel>\n      <Input value={value} />\n    </FormField>\n  );\n}\n```",
+      "expected": { "explains-copyable": "wrong" }
+    }
+  ]
+}

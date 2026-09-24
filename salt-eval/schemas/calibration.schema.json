@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:salt-eval:calibration",
+  "title": "Judge calibration examples for one case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["case_id", "status", "examples"],
+  "properties": {
+    "case_id": { "$ref": "urn:salt-eval:common#/$defs/identifier" },
+    "status": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Who labelled these and whether a maintainer approved the labels."
+    },
+    "examples": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "response", "expected"],
+        "properties": {
+          "id": { "$ref": "urn:salt-eval:common#/$defs/identifier" },
+          "response": { "type": "string", "minLength": 1 },
+          "expected": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+              "$ref": "urn:salt-eval:common#/$defs/verdict"
+            },
+            "description": "Maintainer verdict per judge criterion id."
+          }
+        }
+      }
+    }
+  }
+}

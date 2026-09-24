@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:salt-eval:grader-request",
+  "title": "One JSONL request line sent to `salt-eval-grade --serve`",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "files", "checks"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "files": { "$ref": "urn:salt-eval:common#/$defs/files" },
+    "checks": {
+      "type": "array",
+      "items": { "$ref": "urn:salt-eval:common#/$defs/check" }
+    },
+    "fixture": {
+      "type": "string",
+      "description": "Folder under salt-eval/fixtures/ whose tsconfig.json governs `ts:typecheck`. Defaults to workspace-vite-react."
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$comment": "Consumer-like project used to typecheck generated modules against the Salt sources in this repository. `salt-eval run --salt-types dist` uses tsconfig.dist.json instead.",
+  "compilerOptions": {
+    "target": "es2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": ["react", "react-dom"],
+    "paths": {
+      "@salt-ds/core": ["../../../packages/core/src/index.ts"],
+      "@salt-ds/countries": ["../../../packages/countries/src/index.ts"],
+      "@salt-ds/date-adapters": [
+        "../../../packages/date-adapters/src/index.ts"
+      ],
+      "@salt-ds/date-adapters/*": [
+        "../../../packages/date-adapters/src/*-adapter/index.ts"
+      ],
+      "@salt-ds/date-components": [
+        "../../../packages/date-components/src/index.ts"
+      ],
+      "@salt-ds/embla-carousel": [
+        "../../../packages/embla-carousel/src/index.ts"
+      ],
+      "@salt-ds/icons": ["../../../packages/icons/src/index.ts"],
+      "@salt-ds/lab": ["../../../packages/lab/src/index.ts"],
+      "@salt-ds/styles": ["../../../packages/styles/src/index.ts"],
+      "@salt-ds/window": ["../../../packages/window/src/index.ts"]
+    }
+  },
+  "include": ["src"]
+}

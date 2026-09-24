@@ -44,7 +44,9 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "yarn build:ag-grid-theme && yarn bundle:css && storybook build --stats-json",
     "typecheck": "tsgo --noEmit",
-    "chromatic": "chromatic"
+    "chromatic": "chromatic",
+    "eval:test": "yarn workspace @salt-ds/eval-graders test && cd salt-eval && uv run pytest -q",
+    "eval:validate": "cd salt-eval && uv run salt-eval validate --solve"
   },
   "dependencies": {
     "@biomejs/biome": "^2.5.10",

@@ -1,0 +1,7 @@
+{
+  "id": "closed-book",
+  "revision": "none",
+  "knowledge_revision": "model-training-data",
+  "description": "Baseline arm: no tools, no extra prompt. Measures what the planner already knows about Salt. Any arm that does not beat this on a suite is not adding knowledge.",
+  "mcp_servers": []
+}

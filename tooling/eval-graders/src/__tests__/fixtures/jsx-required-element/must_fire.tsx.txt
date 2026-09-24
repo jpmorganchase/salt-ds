@@ -1,0 +1,13 @@
+import { Input } from "@salt-ds/core";
+
+function FormField({ children }: { children: React.ReactNode }) {
+  return <div className="field">{children}</div>;
+}
+
+export function Field() {
+  return (
+    <FormField>
+      <Input />
+    </FormField>
+  );
+}

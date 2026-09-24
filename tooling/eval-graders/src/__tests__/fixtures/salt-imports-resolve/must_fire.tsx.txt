@@ -1,0 +1,9 @@
+import { FormField, FormFieldInput } from "@salt-ds/core";
+
+export function Field() {
+  return (
+    <FormField>
+      <FormFieldInput />
+    </FormField>
+  );
+}

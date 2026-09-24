@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:salt-eval:profile",
+  "title": "Toolchain profile: the thing under test in one arm",
+  "description": "A profile describes what the planner gets: MCP servers, extra system prompt files and a static context bundle. Generation settings live in the run, so arms cannot differ in model configuration. Files store environment variable names, never secrets.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "revision", "knowledge_revision"],
+  "properties": {
+    "id": { "$ref": "urn:salt-eval:common#/$defs/identifier" },
+    "revision": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Release, commit or build of the tooling under test. The harness records it; it cannot verify a remote deployment."
+    },
+    "knowledge_revision": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Frozen revision of the documentation or annotations the tooling serves. Arms must match unless --allow-knowledge-change."
+    },
+    "description": { "type": "string" },
+    "mcp_servers": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "transport", "url_env"],
+            "properties": {
+              "name": { "$ref": "urn:salt-eval:common#/$defs/identifier" },
+              "transport": { "const": "http" },
+              "url_env": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Environment variable holding the MCP endpoint URL."
+              },
+              "token_env": {
+                "type": "string",
+                "description": "Environment variable holding a bearer token. Optional."
+              },
+              "tools": { "$ref": "#/$defs/toolAllowList" }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "transport", "command"],
+            "properties": {
+              "name": { "$ref": "urn:salt-eval:common#/$defs/identifier" },
+              "transport": { "const": "stdio" },
+              "command": { "type": "string", "minLength": 1 },
+              "args": { "type": "array", "items": { "type": "string" } },
+              "cwd": {
+                "type": "string",
+                "description": "Working directory, relative to the profile file unless absolute."
+              },
+              "env_names": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Environment variables forwarded to the server process by name."
+              },
+              "tools": { "$ref": "#/$defs/toolAllowList" }
+            }
+          }
+        ]
+      }
+    },
+    "system_prompt_files": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Text or Markdown files appended to the planner's system prompt, relative to the profile file. Use for rules files or skills."
+    },
+    "context_bundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["include", "max_chars"],
+      "properties": {
+        "root": {
+          "type": "string",
+          "description": "Directory the globs are resolved against, relative to the profile file. Defaults to the profile's directory."
+        },
+        "include": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Glob patterns of files pasted verbatim into the system prompt (the docs-dump baseline)."
+        },
+        "max_chars": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Hard cap on bundled characters. Files are added in sorted order until the cap is reached; the cut point is recorded in the manifest."
+        }
+      }
+    }
+  },
+  "$defs": {
+    "toolAllowList": {
+      "oneOf": [
+        { "const": "all" },
+        { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      ],
+      "description": "Tools exposed to the planner. Only connect what the experiment is about."
+    }
+  }
+}

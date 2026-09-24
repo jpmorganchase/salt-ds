@@ -1,0 +1,5 @@
+import { Button } from "@salt-ds/core";
+
+export function Save() {
+  return <Button>Save</Button>;
+}

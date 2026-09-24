@@ -1,0 +1,9 @@
+import { FormField as Field, Input } from "@salt-ds/core";
+
+export function ClientReference() {
+  return (
+    <Field>
+      <Input />
+    </Field>
+  );
+}

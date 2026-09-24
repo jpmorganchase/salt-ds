@@ -4386,6 +4386,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@salt-ds/eval-graders@workspace:tooling/eval-graders":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/eval-graders@workspace:tooling/eval-graders"
+  dependencies:
+    "@biomejs/js-api": "npm:^6.0.0"
+    "@biomejs/wasm-nodejs": "npm:^2.5.7"
+    typescript: "npm:^6.0.0"
+  bin:
+    salt-eval-grade: ./bin/salt-eval-grade.mjs
+  languageName: unknown
+  linkType: soft
+
 "@salt-ds/highcharts-theme@workspace:packages/highcharts-theme":
   version: 0.0.0-use.local
   resolution: "@salt-ds/highcharts-theme@workspace:packages/highcharts-theme"

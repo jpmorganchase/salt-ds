@@ -1,0 +1,17 @@
+{
+  "id": "mcp-stdio-example",
+  "revision": "replace-with-your-mcp-commit-or-release",
+  "knowledge_revision": "replace-with-the-frozen-docs-or-annotations-revision-the-server-serves",
+  "description": "Template for a locally launched MCP server. Copy this file, point `command`/`args` at your server, and list only the tools the experiment is about. `env_names` are forwarded from your shell by name; the file never holds secrets.",
+  "mcp_servers": [
+    {
+      "name": "salt",
+      "transport": "stdio",
+      "command": "node",
+      "args": ["/absolute/path/to/your/salt-mcp/dist/server.js"],
+      "env_names": [],
+      "tools": "all"
+    }
+  ],
+  "system_prompt_files": []
+}
