@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:salt-eval:review",
+  "title": "Blinded human review file (runs/<run>/review-queue.json after labelling)",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["response_id", "reviewer", "labels"],
+    "properties": {
+      "response_id": { "type": "string", "minLength": 1 },
+      "reviewer": {
+        "type": "string",
+        "description": "Empty until a human fills it in. Required for any label other than `unreviewed`."
+      },
+      "request": { "type": "string" },
+      "response": { "type": "string" },
+      "artifact": { "$ref": "urn:salt-eval:common#/$defs/files" },
+      "criteria": { "type": "array" },
+      "references": { "type": "array" },
+      "labels": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "verdict", "reason"],
+          "properties": {
+            "id": { "$ref": "urn:salt-eval:common#/$defs/identifier" },
+            "verdict": {
+              "enum": ["unreviewed", "correct", "missing", "wrong", "review"]
+            },
+            "reason": { "type": "string" },
+            "attribution": {
+              "enum": [
+                "knowledge-missing",
+                "tool-not-discovered",
+                "tool-response-incomplete",
+                "agent-ignored-evidence",
+                "rubric-error"
+              ],
+              "description": "Why a failed criterion failed. Each label maps to one kind of next change: knowledge, tool descriptions, retrieval, planner instructions, or the rubric itself."
+            }
+          }
+        }
+      }
+    }
+  }
+}

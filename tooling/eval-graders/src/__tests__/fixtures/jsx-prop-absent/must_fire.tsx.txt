@@ -1,0 +1,9 @@
+import { FormField, Input } from "@salt-ds/core";
+
+export function Field() {
+  return (
+    <FormField disabled>
+      <Input />
+    </FormField>
+  );
+}

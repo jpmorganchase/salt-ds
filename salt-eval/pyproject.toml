@@ -1,0 +1,28 @@
+[project]
+name = "salt-eval"
+version = "0.1.0"
+description = "Paired evaluation harness for Salt AI tooling: MCP servers, rules and docs bundles measured with the same agent, tasks and graders."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "inspect-ai==0.3.268",
+  "mcp==1.30.0",
+  "jsonschema>=4.23,<5",
+]
+
+[project.scripts]
+salt-eval = "salt_eval.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8.3,<9"]
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["salt_eval"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::ResourceWarning"]

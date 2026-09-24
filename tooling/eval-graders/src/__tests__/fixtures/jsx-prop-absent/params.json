@@ -1,0 +1,4 @@
+{
+  "params": { "element": "FormField", "prop": "disabled" },
+  "expect": "<FormField> at src/Fixture.tsx:5 sets disabled"
+}

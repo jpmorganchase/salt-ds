@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:salt-eval:grader-result",
+  "title": "One JSONL result line from `salt-eval-grade`",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id"],
+  "properties": {
+    "id": { "type": "string" },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "verdict", "diagnostics", "evidence"],
+        "properties": {
+          "id": { "$ref": "urn:salt-eval:common#/$defs/identifier" },
+          "verdict": { "$ref": "urn:salt-eval:common#/$defs/graderVerdict" },
+          "diagnostics": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Human-readable reasons. Empty for `correct`."
+          },
+          "evidence": {
+            "type": "array",
+            "items": { "$ref": "urn:salt-eval:common#/$defs/evidenceLocation" }
+          }
+        }
+      }
+    },
+    "error": {
+      "type": "string",
+      "description": "Set instead of `results` when the whole request could not be processed."
+    }
+  },
+  "oneOf": [{ "required": ["results"] }, { "required": ["error"] }]
+}

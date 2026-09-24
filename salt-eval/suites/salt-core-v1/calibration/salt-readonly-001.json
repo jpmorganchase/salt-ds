@@ -1,0 +1,31 @@
+{
+  "case_id": "salt-readonly-001",
+  "status": "DRAFT expected labels. Have a Salt maintainer approve these; they do not prove judge validity.",
+  "examples": [
+    {
+      "id": "supported",
+      "response": "Keep FormField, its label and Input. Set readOnly on FormField to true; the existing control remains selectable and copyable.",
+      "expected": { "state-choice": "correct", "state-owner": "correct" }
+    },
+    {
+      "id": "different-valid-wording",
+      "response": "Use a read-only field. The containing FormField owns the readOnly setting. Preserve the existing labelled Input composition.",
+      "expected": { "state-choice": "correct", "state-owner": "correct" }
+    },
+    {
+      "id": "wrong-owner",
+      "response": "Make the Input read-only with readOnly=true on Input only. Leave the FormField state unchanged.",
+      "expected": { "state-choice": "correct", "state-owner": "wrong" }
+    },
+    {
+      "id": "vague",
+      "response": "Keep the existing Salt field. Make it non-editable and accessible.",
+      "expected": { "state-choice": "missing", "state-owner": "missing" }
+    },
+    {
+      "id": "contradictory",
+      "response": "Set readOnly on FormField. Also set disabled on FormField so the reference cannot be selected or copied.",
+      "expected": { "state-choice": "wrong", "state-owner": "correct" }
+    }
+  ]
+}

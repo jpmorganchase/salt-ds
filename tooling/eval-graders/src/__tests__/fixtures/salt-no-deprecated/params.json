@@ -1,0 +1,4 @@
+{
+  "params": {},
+  "expect": "UNSTABLE_SaltProviderNext from @salt-ds/core is deprecated"
+}

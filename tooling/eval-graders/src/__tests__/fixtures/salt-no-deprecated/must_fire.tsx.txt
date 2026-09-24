@@ -1,0 +1,5 @@
+import { UNSTABLE_SaltProviderNext } from "@salt-ds/core";
+
+export function App() {
+  return <UNSTABLE_SaltProviderNext>content</UNSTABLE_SaltProviderNext>;
+}

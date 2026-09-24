@@ -1,0 +1,8 @@
+{
+  "params": {
+    "element": "Input",
+    "ancestor": "FormField",
+    "from": "@salt-ds/core"
+  },
+  "expect": "is not inside <FormField> from @salt-ds/core"
+}

@@ -1,0 +1,10 @@
+import { FormField, FormFieldLabel, Input } from "@salt-ds/core";
+
+export function Field({ value }: { value: string }) {
+  return (
+    <FormField readOnly="yes">
+      <FormFieldLabel>Client reference</FormFieldLabel>
+      <Input value={value} />
+    </FormField>
+  );
+}

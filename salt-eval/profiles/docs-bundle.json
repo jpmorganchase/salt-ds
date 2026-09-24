@@ -1,0 +1,12 @@
+{
+  "id": "docs-bundle",
+  "revision": "site-docs-working-tree",
+  "knowledge_revision": "site-docs-working-tree",
+  "description": "Docs-dump baseline: the public component docs pasted verbatim into the system prompt, no retrieval. Scope `include` to the components your suite covers (the whole site/docs/components tree is about 600k characters). The manifest records which files fit under max_chars.",
+  "mcp_servers": [],
+  "context_bundle": {
+    "root": "../../site/docs/components",
+    "include": ["form-field/*.mdx", "input/*.mdx"],
+    "max_chars": 60000
+  }
+}

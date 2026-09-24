@@ -1,0 +1,28 @@
+{
+  "$comment": "Same consumer project, resolved against built type declarations. Run `yarn build` at the repository root first.",
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@salt-ds/core": ["../../../packages/core/dist-types/index.d.ts"],
+      "@salt-ds/countries": [
+        "../../../packages/countries/dist-types/index.d.ts"
+      ],
+      "@salt-ds/date-adapters": [
+        "../../../packages/date-adapters/dist-types/index.d.ts"
+      ],
+      "@salt-ds/date-adapters/*": [
+        "../../../packages/date-adapters/dist-types/*-adapter/index.d.ts"
+      ],
+      "@salt-ds/date-components": [
+        "../../../packages/date-components/dist-types/index.d.ts"
+      ],
+      "@salt-ds/embla-carousel": [
+        "../../../packages/embla-carousel/dist-types/index.d.ts"
+      ],
+      "@salt-ds/icons": ["../../../packages/icons/dist-types/index.d.ts"],
+      "@salt-ds/lab": ["../../../packages/lab/dist-types/index.d.ts"],
+      "@salt-ds/styles": ["../../../packages/styles/dist-types/index.d.ts"],
+      "@salt-ds/window": ["../../../packages/window/dist-types/index.d.ts"]
+    }
+  }
+}

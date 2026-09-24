@@ -1,0 +1,20 @@
+{
+  "name": "@salt-ds/eval-graders",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Deterministic graders for salt-eval: typecheck, lint, export census and JSX composition rules over generated Salt code.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "bin": {
+    "salt-eval-grade": "./bin/salt-eval-grade.mjs"
+  },
+  "scripts": {
+    "test": "yarn run -T vitest run --root ../.. tooling/eval-graders",
+    "registry": "node --disable-warning=ExperimentalWarning ./bin/salt-eval-grade.mjs --build-registry"
+  },
+  "dependencies": {
+    "@biomejs/js-api": "^6.0.0",
+    "@biomejs/wasm-nodejs": "^2.5.7",
+    "typescript": "^6.0.0"
+  }
+}

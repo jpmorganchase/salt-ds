@@ -1,0 +1,12 @@
+import { FormField, FormFieldLabel, Input } from "@salt-ds/core";
+import { SearchIcon } from "@salt-ds/icons";
+import "@salt-ds/theme/index.css";
+
+export function Field() {
+  return (
+    <FormField>
+      <FormFieldLabel>Search</FormFieldLabel>
+      <Input endAdornment={<SearchIcon />} />
+    </FormField>
+  );
+}
