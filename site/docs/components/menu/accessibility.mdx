@@ -8,6 +8,10 @@ data:
   $ref: ./#/data
 ---
 
+## Best practices
+
+- When a selectable `MenuGroup` has no `label`, pass an `aria-label` that describes the set of options, so screen reader users know what they're choosing between.
+
 ## Keyboard interactions
 
 <KeyboardControls>
@@ -25,6 +29,7 @@ If focus is on a menu item, this action closes the menu and moves focus to the p
 
 - If focus is on the menu trigger, this action opens the menu and places focus on the first menu item.
 - When focus is on a menu item that has a submenu, this action opens the submenu and places focus on its first item.
+- When focus is on a menu item in a selectable `MenuGroup`, this action selects the item, or toggles it when the group allows multiple selection. Space keeps the menu open and Enter closes it, unless the group sets `closeOnSelect`.
 - Otherwise, this action activates the item, and closes the menu.
 
 </KeyboardControl>

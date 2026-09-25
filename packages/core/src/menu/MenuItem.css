@@ -59,6 +59,10 @@
   min-height: var(--salt-text-lineHeight);
 }
 
+.saltMenuItem-selectionIcon {
+  margin: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2) 0;
+}
+
 .saltMenuItem-expandIcon.saltIcon {
   margin-left: auto;
 }

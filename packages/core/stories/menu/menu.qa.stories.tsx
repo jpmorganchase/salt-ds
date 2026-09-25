@@ -178,3 +178,56 @@ WithIconExamples.parameters = {
     disableSnapshot: false,
   },
 };
+
+export const SelectionExamples: StoryFn<QAContainerProps> = (props) => {
+  return (
+    <QAContainer
+      itemWidthAuto
+      height={1200}
+      width={800}
+      transposeDensity
+      vertical
+      {...props}
+    >
+      <div style={{ width: 190, height: 540 }}>
+        <Menu open>
+          <MenuTrigger>
+            <Button appearance="transparent" aria-label="Open Menu">
+              <MicroMenuIcon aria-hidden />
+            </Button>
+          </MenuTrigger>
+          <MenuPanel>
+            <MenuGroup
+              label="Sort by"
+              selectionVariant="single"
+              selected={["name"]}
+            >
+              <MenuItem value="name">Name</MenuItem>
+              <MenuItem value="size">Size</MenuItem>
+            </MenuGroup>
+            <MenuGroup
+              label="Columns"
+              selectionVariant="multiple"
+              selected={["owner", "type"]}
+            >
+              <MenuItem value="owner">Owner</MenuItem>
+              <MenuItem value="modified">Date modified</MenuItem>
+              <MenuItem disabled value="type">
+                Type
+              </MenuItem>
+            </MenuGroup>
+            <MenuGroup>
+              <MenuItem>Export</MenuItem>
+            </MenuGroup>
+          </MenuPanel>
+        </Menu>
+      </div>
+    </QAContainer>
+  );
+};
+
+SelectionExamples.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+  },
+};

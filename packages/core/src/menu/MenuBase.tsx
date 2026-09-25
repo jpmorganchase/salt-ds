@@ -31,6 +31,10 @@ import {
   useIsomorphicLayoutEffect,
 } from "../utils";
 import { MenuContext } from "./MenuContext";
+import {
+  defaultMenuGroupContextValue,
+  MenuGroupContext,
+} from "./MenuGroupContext";
 
 export interface MenuBaseProps {
   children?: ReactNode;
@@ -186,7 +190,9 @@ export function MenuBase(props: MenuBaseProps) {
           setTriggerDisabled,
         }}
       >
-        {children}
+        <MenuGroupContext.Provider value={defaultMenuGroupContextValue}>
+          {children}
+        </MenuGroupContext.Provider>
       </MenuContext.Provider>
     </FloatingNode>
   );
