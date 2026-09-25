@@ -710,3 +710,51 @@ describe("GIVEN a closed Dropdown", () => {
     },
   );
 });
+
+describe("GIVEN an open Dropdown with focus on the first option", () => {
+  function States({ selected }: { selected?: string[] }) {
+    return (
+      <Dropdown defaultSelected={selected}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+        <Option value="Arizona" />
+      </Dropdown>
+    );
+  }
+
+  it("keeps focus on the first option when re-rendered with a selection", async () => {
+    const { rerender } = await renderWithSalt(<States selected={["Alaska"]} />);
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowDown}");
+    await expectActive("Alaska");
+    await userEvent.keyboard("{Home}");
+    await expectActive("Alabama");
+
+    await rerender(<States selected={["Alaska"]} />);
+
+    await expectActive("Alabama");
+  });
+
+  it("keeps focus on the first option when re-rendered after opening with End", async () => {
+    const { rerender } = await renderWithSalt(<States />);
+    await userEvent.tab();
+    await userEvent.keyboard("{End}");
+    await expectActive("Arizona");
+    await userEvent.keyboard("{Home}");
+    await expectActive("Alabama");
+
+    await rerender(<States />);
+
+    await expectActive("Alabama");
+  });
+
+  it("keeps a typeahead match on the first option when opening", async () => {
+    await renderWithSalt(<States selected={["Arizona"]} />);
+    await userEvent.tab();
+
+    await userEvent.keyboard("a");
+
+    await expect.element(listbox()).toBeInTheDocument();
+    await expectActive("Alabama");
+  });
+});

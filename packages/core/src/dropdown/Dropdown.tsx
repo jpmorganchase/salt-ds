@@ -415,7 +415,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     let newActive: ReturnType<typeof getFirstOption>;
 
     // If the active item is still in the list, we don't need to do anything
-    if (activeIndex > 0) {
+    if (activeIndex >= 0) {
       return;
     }
 
