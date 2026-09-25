@@ -1,5 +1,18 @@
 # @salt-ds/ag-grid-theme
 
+## 2.10.1
+
+### Patch Changes
+
+- d578674: Applied typography letter spacing tokens consistently to text-owning components and inherited typography roots, and applied the display text transform token to display text.
+- Updated dependencies [d578674]
+- Updated dependencies [e990c46]
+- Updated dependencies [e990c46]
+- Updated dependencies [d578674]
+- Updated dependencies [d578674]
+- Updated dependencies [550c4c1]
+  - @salt-ds/theme@1.47.0
+
 ## 2.10.0
 
 ### Minor Changes

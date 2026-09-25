@@ -1,5 +1,11 @@
 # @salt-ds/window
 
+## 0.1.2
+
+### Patch Changes
+
+- 2a5cb0d: Refined the context typing so the default window value is correctly represented as `Window | null`.
+
 ## 0.1.1
 
 ### Patch Changes
