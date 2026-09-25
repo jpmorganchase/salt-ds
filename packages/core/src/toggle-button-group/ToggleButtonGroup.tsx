@@ -112,7 +112,12 @@ export const ToggleButtonGroup = forwardRef<
   const [focused, setFocused] = useState<Value>(value);
 
   const select = useCallback(
-    (event: SyntheticEvent<HTMLButtonElement>, newValue: Value) => {
+    (
+      event: SyntheticEvent<HTMLButtonElement>,
+      ...values: [newValue?: Value]
+    ) => {
+      const newValue =
+        values.length === 0 ? event.currentTarget.value : values[0];
       setValue(newValue);
       if (!isSameValue(value, newValue)) {
         onChange?.(event);

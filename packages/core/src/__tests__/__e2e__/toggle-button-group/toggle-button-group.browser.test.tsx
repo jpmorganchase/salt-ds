@@ -1,4 +1,8 @@
-import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
+import {
+  ToggleButton,
+  ToggleButtonGroup,
+  useToggleButtonGroup,
+} from "@salt-ds/core";
 import {
   HomeIcon,
   NotificationIcon,
@@ -43,6 +47,38 @@ function Group({ disableHome, ...props }: GroupProps) {
     <ToggleButtonGroup aria-label="Toggle options" {...props}>
       <Options disableHome={disableHome} />
     </ToggleButtonGroup>
+  );
+}
+
+function LegacyToggleButton() {
+  const toggleButtonGroup = useToggleButtonGroup();
+
+  return (
+    <button
+      aria-checked={toggleButtonGroup?.isSelected("legacy")}
+      onClick={(event) => toggleButtonGroup?.select(event)}
+      role="radio"
+      type="button"
+      value="legacy"
+    >
+      Legacy
+    </button>
+  );
+}
+
+function ExplicitUndefinedToggleButton() {
+  const toggleButtonGroup = useToggleButtonGroup();
+
+  return (
+    <button
+      aria-checked={toggleButtonGroup?.isSelected(undefined)}
+      onClick={(event) => toggleButtonGroup?.select(event, undefined)}
+      role="radio"
+      type="button"
+      value="dom-value"
+    >
+      Clear
+    </button>
   );
 }
 
@@ -122,6 +158,32 @@ describe("GIVEN an uncontrolled ToggleButtonGroup", () => {
     await selected.click();
     expect(onChange).not.toHaveBeenCalled();
     await expect.element(selected).toHaveAttribute("aria-checked", "true");
+  });
+
+  it("falls back to the DOM value when select omits its value", async () => {
+    await renderWithSalt(
+      <ToggleButtonGroup aria-label="Legacy options">
+        <LegacyToggleButton />
+      </ToggleButtonGroup>,
+    );
+
+    const legacy = page.getByRole("radio", { name: "Legacy" });
+    await legacy.click();
+
+    await expect.element(legacy).toHaveAttribute("aria-checked", "true");
+  });
+
+  it("preserves an explicitly undefined value", async () => {
+    await renderWithSalt(
+      <ToggleButtonGroup defaultValue="selected" aria-label="Clear selection">
+        <ExplicitUndefinedToggleButton />
+      </ToggleButtonGroup>,
+    );
+
+    const clear = page.getByRole("radio", { name: "Clear" });
+    await clear.click();
+
+    await expect.element(clear).toHaveAttribute("aria-checked", "true");
   });
 });
 
