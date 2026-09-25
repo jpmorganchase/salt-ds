@@ -32,7 +32,6 @@
   --salt-text-heading-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 
   /* Label */
-  --salt-text-label-fontFamily: var(--salt-typography-fontFamily-openSans);
   --salt-text-label-fontWeight: var(--salt-typography-fontWeight-regular);
   --salt-text-label-fontWeight-small: var(--salt-typography-fontWeight-light);
   --salt-text-label-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);

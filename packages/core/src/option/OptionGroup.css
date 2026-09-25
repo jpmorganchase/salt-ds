@@ -3,7 +3,7 @@
   color: var(--salt-content-secondary-foreground);
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-label-fontWeight-strong);
-  font-family: var(--salt-text-label-fontFamily);
+  font-family: var(--salt-text-fontFamily);
   line-height: var(--salt-text-label-lineHeight);
   letter-spacing: var(--salt-text-letterSpacing);
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));

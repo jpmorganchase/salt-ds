@@ -18,7 +18,7 @@
   align-items: center;
   color: var(--salt-content-primary-foreground);
   display: inline-flex;
-  font-family: var(--salt-text-label-fontFamily);
+  font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-fontWeight);
   gap: var(--salt-spacing-50);

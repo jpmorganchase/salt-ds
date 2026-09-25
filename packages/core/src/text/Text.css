@@ -292,7 +292,7 @@ h4.saltText small,
 /* Label */
 label.saltText,
 .saltText-label.saltText {
-  font-family: var(--salt-text-label-fontFamily);
+  font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
   font-weight: var(--salt-text-fontWeight);
