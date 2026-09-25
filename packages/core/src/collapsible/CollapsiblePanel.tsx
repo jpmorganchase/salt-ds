@@ -4,10 +4,10 @@ import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   forwardRef,
+  isValidElement,
   type ReactElement,
   useEffect,
 } from "react";
-import type { DataAttributes } from "../types";
 import { makePrefixer, renderProps, useId } from "../utils";
 
 import { useCollapsibleContext } from "./CollapsibleContext";
@@ -35,7 +35,10 @@ export const CollapsiblePanel = forwardRef<
     window: targetWindow,
   });
 
-  const id = useId(idProp);
+  const renderId = isValidElement<{ id?: string }>(render)
+    ? render.props.id
+    : undefined;
+  const id = useId(idProp ?? renderId);
   const { open, setPanelId } = useCollapsibleContext();
 
   useEffect(() => {
@@ -44,11 +47,6 @@ export const CollapsiblePanel = forwardRef<
     }
   }, [id, setPanelId]);
 
-  const stateAttributes: Partial<DataAttributes> = {
-    "data-open": open ? "" : undefined,
-    "data-closed": !open ? "" : undefined,
-  };
-
   return renderProps("div", {
     className: clsx(withBaseName(), className),
     id,
@@ -56,7 +54,6 @@ export const CollapsiblePanel = forwardRef<
     hidden: !open,
     ref,
     ...rest,
-    ...stateAttributes,
     render,
     children: <div className={withBaseName("inner")}>{children}</div>,
   });
