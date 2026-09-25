@@ -20,15 +20,15 @@ data:
 
 <KeyboardControl keyOrCombos="Tab">
 
-- Tab moves focus forward to the next `LinkCard`, standalone `InteractableCard`, or enabled card in a multi-select group.
-- A single-select group has one tab stop: the selected card, or the first enabled card when no card is selected.
+- Tab moves focus forward to the next `LinkCard`, enabled standalone `InteractableCard`, or enabled card in a multi-select group. Disabled cards can't receive focus.
+- A single-select group has one tab stop: the selected card, or the first enabled card when no enabled card is selected. Tab skips a disabled group.
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-- Shift + Tab moves focus backward to the previous `LinkCard`, standalone `InteractableCard`, or enabled card in a multi-select group.
-- A single-select group has one tab stop: the selected card, or the first enabled card when no card is selected.
+- Shift + Tab moves focus backward to the previous `LinkCard`, enabled standalone `InteractableCard`, or enabled card in a multi-select group. Disabled cards can't receive focus.
+- A single-select group has one tab stop: the selected card, or the first enabled card when no enabled card is selected. Shift + Tab skips a disabled group.
 
 </KeyboardControl>
 
