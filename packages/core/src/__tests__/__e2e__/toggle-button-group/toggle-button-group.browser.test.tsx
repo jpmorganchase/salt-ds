@@ -9,7 +9,13 @@ import {
   PrintIcon,
   SearchIcon,
 } from "@salt-ds/icons";
-import { type ComponentProps, type SyntheticEvent, useState } from "react";
+import {
+  type ComponentProps,
+  createContext,
+  type SyntheticEvent,
+  useContext,
+  useState,
+} from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { trackNativeEvents } from "~browser-test-utils/interactions";
@@ -116,6 +122,60 @@ function RemovableGroup() {
         {showSearch && <ToggleButton value="search">Search</ToggleButton>}
       </ToggleButtonGroup>
     </>
+  );
+}
+
+function ReversibleGroup() {
+  const [reversed, setReversed] = useState(false);
+  const buttons = [
+    <ToggleButton key="alert" value="alert">
+      Alert
+    </ToggleButton>,
+    <ToggleButton key="search" value="search">
+      Search
+    </ToggleButton>,
+  ];
+
+  return (
+    <>
+      <button type="button" onClick={() => setReversed(true)}>
+        Reverse
+      </button>
+      <ToggleButtonGroup aria-label="Reversible options">
+        {reversed ? buttons.reverse() : buttons}
+      </ToggleButtonGroup>
+    </>
+  );
+}
+
+const ShowInsertedContext = createContext(false);
+
+function InsertableOptions() {
+  const showInserted = useContext(ShowInsertedContext);
+
+  return (
+    <>
+      {showInserted && <ToggleButton value="inserted">Inserted</ToggleButton>}
+      <ToggleButton value="alert">Alert</ToggleButton>
+    </>
+  );
+}
+
+// Created once, so the group's children don't change when a button is inserted.
+const insertableOptions = <InsertableOptions />;
+
+function InsertableGroup() {
+  const [showInserted, setShowInserted] = useState(false);
+
+  return (
+    <ShowInsertedContext.Provider value={showInserted}>
+      <button type="button" onClick={() => setShowInserted(true)}>
+        Insert
+      </button>
+      <ToggleButtonGroup aria-label="Insertable options">
+        {insertableOptions}
+      </ToggleButtonGroup>
+    </ShowInsertedContext.Provider>
   );
 }
 
@@ -243,11 +303,24 @@ describe("GIVEN an uncontrolled ToggleButtonGroup", () => {
       .toHaveAttribute("tabindex", "0");
   });
 
+  it("keeps custom buttons that do not register reachable when nothing is selected", async () => {
+    await renderWithSalt(
+      <ToggleButtonGroup aria-label="Legacy options">
+        <LegacyToggleButton value="First" />
+        <LegacyToggleButton value="Second" />
+      </ToggleButtonGroup>,
+    );
+
+    await expect
+      .element(page.getByRole("radio", { name: "First" }))
+      .toHaveAttribute("tabindex", "0");
+  });
+
   it("matches array values by their contents", async () => {
     const onChange = vi.fn();
     await renderWithSalt(
       <ToggleButtonGroup
-        defaultValue={["bold"]}
+        defaultValue={["italic"]}
         onChange={onChange}
         aria-label="Array options"
       >
@@ -259,16 +332,18 @@ describe("GIVEN an uncontrolled ToggleButtonGroup", () => {
     const bold = page.getByRole("radio", { name: "Bold" });
     const italic = page.getByRole("radio", { name: "Italic" });
 
-    await expect.element(bold).toHaveAttribute("aria-checked", "true");
-    await expect.element(italic).toHaveAttribute("aria-checked", "false");
-
-    await bold.click();
-    expect(onChange).not.toHaveBeenCalled();
-
-    await italic.click();
-    expect(onChange).toHaveBeenCalledOnce();
     await expect.element(italic).toHaveAttribute("aria-checked", "true");
     await expect.element(bold).toHaveAttribute("aria-checked", "false");
+    await expect.element(italic).toHaveAttribute("tabindex", "0");
+    await expect.element(bold).toHaveAttribute("tabindex", "-1");
+
+    await italic.click();
+    expect(onChange).not.toHaveBeenCalled();
+
+    await bold.click();
+    expect(onChange).toHaveBeenCalledOnce();
+    await expect.element(bold).toHaveAttribute("aria-checked", "true");
+    await expect.element(italic).toHaveAttribute("aria-checked", "false");
   });
 });
 
@@ -403,17 +478,16 @@ describe("GIVEN a ToggleButtonGroup and keyboard navigation", () => {
       .toHaveAttribute("tabindex", "-1");
   });
 
-  it("can be reached with Tab when the selected button is disabled", async () => {
+  it("uses the first enabled button as the tab stop when the selected button is disabled", async () => {
     await renderWithSalt(
       <>
-        <button type="button">Before</button>
         <Group defaultValue="home" />
         <button type="button">After</button>
       </>,
     );
 
-    await page.getByRole("button", { name: "Before" }).click();
-    await userEvent.tab();
+    await page.getByRole("button", { name: "After" }).click();
+    await userEvent.tab({ shift: true });
 
     await expect
       .element(page.getByRole("radio", { name: "Alert" }))
@@ -463,20 +537,63 @@ describe("GIVEN a ToggleButtonGroup and keyboard navigation", () => {
     await expect.element(search).toHaveFocus();
   });
 
-  it("can be reached with Tab when the value matches no button", async () => {
-    await renderWithSalt(
-      <>
-        <button type="button">Before</button>
-        <Group defaultValue="missing" />
-      </>,
-    );
-
-    await page.getByRole("button", { name: "Before" }).click();
-    await userEvent.tab();
+  it("uses the first enabled button as the tab stop when the value matches no button", async () => {
+    await renderWithSalt(<Group defaultValue="missing" />);
 
     await expect
       .element(page.getByRole("radio", { name: "Alert" }))
-      .toHaveFocus();
+      .toHaveAttribute("tabindex", "0");
+    await expect
+      .element(page.getByRole("radio", { name: "Search" }))
+      .toHaveAttribute("tabindex", "-1");
+    await expect
+      .element(page.getByRole("radio", { name: "Print" }))
+      .toHaveAttribute("tabindex", "-1");
+  });
+
+  it("uses a selected button with an empty-string value as the tab stop", async () => {
+    await renderWithSalt(
+      <ToggleButtonGroup defaultValue="" aria-label="Options">
+        <ToggleButton value="one">One</ToggleButton>
+        <ToggleButton value="">Empty value</ToggleButton>
+      </ToggleButtonGroup>,
+    );
+
+    await expect
+      .element(page.getByRole("radio", { name: "Empty value" }))
+      .toHaveAttribute("tabindex", "0");
+    await expect
+      .element(page.getByRole("radio", { name: "One" }))
+      .toHaveAttribute("tabindex", "-1");
+  });
+
+  it("moves the tab stop to the new first button when the buttons are reordered", async () => {
+    await renderWithSalt(<ReversibleGroup />);
+
+    const alert = page.getByRole("radio", { name: "Alert" });
+    const search = page.getByRole("radio", { name: "Search" });
+
+    await expect.element(alert).toHaveAttribute("tabindex", "0");
+    await expect.element(search).toHaveAttribute("tabindex", "-1");
+
+    await page.getByRole("button", { name: "Reverse" }).click();
+
+    await expect.element(search).toHaveAttribute("tabindex", "0");
+    await expect.element(alert).toHaveAttribute("tabindex", "-1");
+  });
+
+  it("moves the tab stop to a button inserted before the first button", async () => {
+    await renderWithSalt(<InsertableGroup />);
+
+    const alert = page.getByRole("radio", { name: "Alert" });
+    await expect.element(alert).toHaveAttribute("tabindex", "0");
+
+    await page.getByRole("button", { name: "Insert" }).click();
+
+    await expect
+      .element(page.getByRole("radio", { name: "Inserted" }))
+      .toHaveAttribute("tabindex", "0");
+    await expect.element(alert).toHaveAttribute("tabindex", "-1");
   });
 
   it("stays reachable with Tab when the focused button is removed", async () => {

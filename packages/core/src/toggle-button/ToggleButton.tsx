@@ -105,13 +105,12 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
     const disabled = toggleButtonGroup?.disabled || disabledProp;
     const readOnly = toggleButtonGroup?.readOnly || readOnlyProp;
 
-    const registerEnabled = toggleButtonGroup?.registerEnabled;
+    const registerButton = toggleButtonGroup?.registerButton;
     useIsomorphicLayoutEffect(() => {
-      if (disabled || !registerEnabled) {
-        return;
+      if (!disabled && buttonRef.current && registerButton) {
+        return registerButton(value, buttonRef.current);
       }
-      return registerEnabled(value);
-    }, [disabled, registerEnabled, value]);
+    }, [disabled, registerButton, value]);
 
     const [selected, setSelected] = useControlled({
       controlled: toggleButtonGroupSelected,

@@ -12,7 +12,7 @@ export interface ToggleButtonGroupContextValue {
   isSelected: (id: Value) => boolean;
   orientation: "horizontal" | "vertical";
   readOnly?: boolean;
-  registerEnabled: (id: Value) => () => void;
+  registerButton: (value: Value, element: HTMLElement) => () => void;
   select: (event: SyntheticEvent<HTMLButtonElement>, value?: Value) => void;
   sentiment?: ButtonSentiment;
 }

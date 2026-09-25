@@ -18,6 +18,7 @@ import {
   ownerDocument,
   useControlled,
   useForkRef,
+  useIsomorphicLayoutEffect,
 } from "../utils";
 import toggleButtonGroupCss from "./ToggleButtonGroup.css";
 import {
@@ -74,6 +75,26 @@ function isSameValue(a: Value, b: Value) {
   return a === b;
 }
 
+interface RegisteredButton {
+  element: HTMLElement;
+  value: Value;
+}
+
+const sortButtons = (buttons: RegisteredButton[]) =>
+  [...buttons].sort((buttonA, buttonB) => {
+    const position = buttonA.element.compareDocumentPosition(buttonB.element);
+    if (position & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
+    if (position & Node.DOCUMENT_POSITION_PRECEDING) return 1;
+    return 0;
+  });
+
+const buttonsAreEqual = (
+  buttonsA: RegisteredButton[],
+  buttonsB: RegisteredButton[],
+) =>
+  buttonsA.length === buttonsB.length &&
+  buttonsA.every((button, index) => button === buttonsB[index]);
+
 export const ToggleButtonGroup = forwardRef<
   HTMLDivElement,
   ToggleButtonGroupProps
@@ -110,19 +131,42 @@ export const ToggleButtonGroup = forwardRef<
     state: "value",
   });
   const [focused, setFocused] = useState<Value>(value);
-  const [enabledValues, setEnabledValues] = useState<Value[]>([]);
+  const [enabledButtons, setEnabledButtons] = useState<RegisteredButton[]>([]);
 
-  const registerEnabled = useCallback((id: Value) => {
-    setEnabledValues((previous) => [...previous, id]);
-    return () => {
-      setEnabledValues((previous) => {
-        const index = previous.indexOf(id);
-        return index === -1
-          ? previous
-          : previous.filter((_, itemIndex) => itemIndex !== index);
-      });
-    };
-  }, []);
+  const registerButton = useCallback(
+    (buttonValue: Value, element: HTMLElement) => {
+      const button = { element, value: buttonValue };
+      setEnabledButtons((currentButtons) =>
+        sortButtons([
+          ...currentButtons.filter(
+            (currentButton) => currentButton.element !== element,
+          ),
+          button,
+        ]),
+      );
+
+      return () => {
+        setEnabledButtons((currentButtons) =>
+          currentButtons.includes(button)
+            ? currentButtons.filter(
+                (registeredButton) => registeredButton !== button,
+              )
+            : currentButtons,
+        );
+      };
+    },
+    [],
+  );
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: re-sorts registered buttons after children move.
+  useIsomorphicLayoutEffect(() => {
+    setEnabledButtons((currentButtons) => {
+      const sortedButtons = sortButtons(currentButtons);
+      return buttonsAreEqual(currentButtons, sortedButtons)
+        ? currentButtons
+        : sortedButtons;
+    });
+  }, [children]);
 
   const select = useCallback(
     (
@@ -153,17 +197,20 @@ export const ToggleButtonGroup = forwardRef<
   const isFocused = useCallback(
     (id: Value) => {
       // Trust the focused value until buttons register (e.g. server rendering).
-      const hasFocusTarget =
-        focused !== undefined &&
-        focused !== "" &&
-        (enabledValues.length === 0 ||
-          enabledValues.some((enabledValue) =>
-            isSameValue(enabledValue, focused),
-          ));
+      if (enabledButtons.length === 0) {
+        return focused === id || focused === undefined || focused === "";
+      }
 
-      return hasFocusTarget ? focused === id : true;
+      const hasFocusTarget = enabledButtons.some((button) =>
+        isSameValue(button.value, focused),
+      );
+
+      return isSameValue(
+        hasFocusTarget ? focused : enabledButtons[0].value,
+        id,
+      );
     },
-    [focused, enabledValues],
+    [focused, enabledButtons],
   );
 
   const contextValue = useMemo(
@@ -175,7 +222,7 @@ export const ToggleButtonGroup = forwardRef<
       isSelected,
       orientation,
       readOnly,
-      registerEnabled,
+      registerButton,
       select,
       sentiment,
     }),
@@ -187,7 +234,7 @@ export const ToggleButtonGroup = forwardRef<
       isSelected,
       orientation,
       readOnly,
-      registerEnabled,
+      registerButton,
       select,
       sentiment,
     ],
