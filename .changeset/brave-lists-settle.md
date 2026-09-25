@@ -6,6 +6,8 @@ Fixed `ListBox` and `Dropdown` unexpectedly scrolling the page during keyboard n
 
 `ComboBox` now prevents PageUp and PageDown from scrolling the page when navigation cannot move beyond the first or last option.
 
+`ListBox`, `Dropdown`, and `ComboBox` now leave navigation keys pressed with Ctrl or Meta, and Home, End, PageUp, and PageDown pressed with Alt, to the browser, so shortcuts such as Ctrl+End, Cmd+ArrowDown, and Ctrl+PageDown keep working. Alt+ArrowDown still opens the list.
+
 `Dropdown` now opens the list when Home or End is pressed while it is closed, and moves focus to the first or last option.
 
 Fixed `Dropdown` moving focus away from the first option when it re-rendered while the list was open, or when a typed character matched the first option while opening the list.

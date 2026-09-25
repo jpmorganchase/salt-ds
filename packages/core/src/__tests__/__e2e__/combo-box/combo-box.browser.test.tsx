@@ -956,3 +956,27 @@ describe("given a multiselect ComboBox with pills", () => {
       .toHaveFocus();
   });
 });
+
+describe("GIVEN an open Combo box and a navigation key pressed with a modifier", () => {
+  it.each([
+    "{Control>}{PageDown}{/Control}",
+    "{Control>}{End}{/Control}",
+    "{Meta>}{ArrowDown}{/Meta}",
+  ])("leaves %s to the browser", async (keys) => {
+    const keyDown = trackDefaultPrevented();
+    await renderWithSalt(
+      <ComboBox onKeyDown={keyDown.handler}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </ComboBox>,
+    );
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowDown}");
+    await expectActive("Alabama");
+
+    await userEvent.keyboard(keys);
+
+    expect(keyDown.lastDefaultPrevented()).toBe(false);
+    await expectActive("Alabama");
+  });
+});

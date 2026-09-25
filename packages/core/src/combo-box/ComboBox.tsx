@@ -29,6 +29,7 @@ import { useFormFieldProps } from "../form-field-context";
 import {
   getComboBoxNavigationTarget,
   isListControlNavigationKey,
+  isModifiedListControlNavigationKey,
   type OptionAndElement,
 } from "../list-control/ListControlNavigationKeys";
 import { ListControlProvider } from "../list-control/ListControlProvider";
@@ -235,7 +236,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       shouldAutoSelectRef.current = false;
     }
 
-    if (readOnly) {
+    if (readOnly || isModifiedListControlNavigationKey(event)) {
       return;
     }
 

@@ -14,6 +14,7 @@ import {
 import {
   getListControlNavigationTarget,
   isListControlNavigationKey,
+  isModifiedListControlNavigationKey,
   type OptionAndElement,
 } from "../list-control/ListControlNavigationKeys";
 import { ListControlProvider } from "../list-control/ListControlProvider";
@@ -125,6 +126,10 @@ export const ListBox = forwardRef(function ListBox<Item>(
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     onKeyDown?.(event);
+
+    if (isModifiedListControlNavigationKey(event)) {
+      return;
+    }
 
     if (
       event.key.length === 1 &&

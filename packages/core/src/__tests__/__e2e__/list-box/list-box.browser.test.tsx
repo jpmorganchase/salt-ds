@@ -303,3 +303,27 @@ describe("GIVEN a List box at the edge of its options", () => {
     expect(keyDown.lastDefaultPrevented()).toBe(true);
   });
 });
+
+describe("GIVEN a List box and a navigation key pressed with a modifier", () => {
+  it.each([
+    "{Control>}{End}{/Control}",
+    "{Meta>}{ArrowDown}{/Meta}",
+    "{Control>}{PageDown}{/Control}",
+    "{Alt>}{End}{/Alt}",
+  ])("leaves %s to the browser", async (keys) => {
+    const keyDown = trackDefaultPrevented();
+    await renderWithSalt(
+      <ListBox onKeyDown={keyDown.handler}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </ListBox>,
+    );
+    await userEvent.tab();
+    await expectActiveOption("Alabama");
+
+    await userEvent.keyboard(keys);
+
+    expect(keyDown.lastDefaultPrevented()).toBe(false);
+    await expectActiveOption("Alabama");
+  });
+});

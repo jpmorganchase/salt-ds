@@ -18,6 +18,27 @@ export function isListControlNavigationKey(key: string): boolean {
   return LIST_CONTROL_NAVIGATION_KEYS.has(key);
 }
 
+/**
+ * Navigation keys pressed with Ctrl or Meta (e.g. Ctrl+End, Cmd+ArrowDown,
+ * Ctrl+PageDown) are browser or OS shortcuts, so list controls leave them to
+ * the browser. Alt is only used with ArrowUp and ArrowDown, as in the ARIA
+ * combobox pattern.
+ */
+export function isModifiedListControlNavigationKey(event: {
+  key: string;
+  altKey: boolean;
+  ctrlKey: boolean;
+  metaKey: boolean;
+}): boolean {
+  if (!isListControlNavigationKey(event.key)) {
+    return false;
+  }
+  if (event.ctrlKey || event.metaKey) {
+    return true;
+  }
+  return event.altKey && event.key !== "ArrowUp" && event.key !== "ArrowDown";
+}
+
 export interface OptionAndElement<Item> {
   data: OptionValue<Item>;
   element: HTMLElement;

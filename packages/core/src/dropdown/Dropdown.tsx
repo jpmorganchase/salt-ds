@@ -32,6 +32,7 @@ import {
 import {
   getListControlNavigationTarget,
   isListControlNavigationKey,
+  isModifiedListControlNavigationKey,
   type OptionAndElement,
 } from "../list-control/ListControlNavigationKeys";
 import { ListControlProvider } from "../list-control/ListControlProvider";
@@ -295,7 +296,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     onKeyDown?.(event);
 
-    if (readOnly) {
+    if (readOnly || isModifiedListControlNavigationKey(event)) {
       return;
     }
 
