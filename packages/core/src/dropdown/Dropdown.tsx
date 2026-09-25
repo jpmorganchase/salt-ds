@@ -29,7 +29,12 @@ import {
   type FormFieldValidationStatus,
   useFormFieldProps,
 } from "../form-field-context";
-import type { OptionValue } from "../list-control/ListControlContext";
+import {
+  getListControlNavigationTarget,
+  isListControlNavigationKey,
+  isModifiedListControlNavigationKey,
+  type OptionAndElement,
+} from "../list-control/ListControlNavigationKeys";
 import { ListControlProvider } from "../list-control/ListControlProvider";
 import {
   defaultValueToString,
@@ -291,13 +296,24 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     onKeyDown?.(event);
 
-    if (readOnly) {
+    if (readOnly || isModifiedListControlNavigationKey(event)) {
       return;
     }
 
     if (!openState) {
-      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      if (
+        event.key === "ArrowDown" ||
+        event.key === "ArrowUp" ||
+        event.key === "Home" ||
+        event.key === "End"
+      ) {
+        event.preventDefault();
         setOpen(true, undefined, event.key);
+        return;
+      }
+
+      // The list is hidden, so leave PageUp/PageDown to scroll the page.
+      if (isListControlNavigationKey(event.key)) {
         return;
       }
     }
@@ -319,28 +335,23 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
       return;
     }
 
-    let newActive:
-      | { data: OptionValue<Item>; element: HTMLElement }
-      | undefined;
+    const isNavigationKey = isListControlNavigationKey(event.key);
+    if (isNavigationKey) {
+      event.preventDefault();
+    }
+
+    const newActive: OptionAndElement<Item> | undefined = isNavigationKey
+      ? getListControlNavigationTarget(event.key, activeOption, {
+          getFirstOption,
+          getLastOption,
+          getOptionAfter,
+          getOptionBefore,
+          getOptionPageAbove,
+          getOptionPageBelow,
+        })
+      : undefined;
+
     switch (event.key) {
-      case "ArrowDown":
-        newActive = getOptionAfter(activeOption) ?? getLastOption();
-        break;
-      case "ArrowUp":
-        newActive = getOptionBefore(activeOption) ?? getFirstOption();
-        break;
-      case "Home":
-        newActive = getFirstOption();
-        break;
-      case "End":
-        newActive = getLastOption();
-        break;
-      case "PageUp":
-        newActive = getOptionPageAbove(activeOption);
-        break;
-      case "PageDown":
-        newActive = getOptionPageBelow(activeOption);
-        break;
       case "Enter":
       case " ":
         if (
@@ -367,7 +378,6 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     }
 
     if (newActive && newActive.data.id !== activeState?.id) {
-      event.preventDefault();
       setActive(newActive.data);
       setFocusVisibleState(true);
     }
@@ -406,12 +416,19 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     let newActive: ReturnType<typeof getFirstOption>;
 
     // If the active item is still in the list, we don't need to do anything
-    if (activeIndex > 0) {
+    if (activeIndex >= 0) {
       return;
     }
 
+    // Home and End always open on the first or last option, even with a selection.
+    if (openKey.current === "Home") {
+      newActive = getFirstOption();
+    } else if (openKey.current === "End") {
+      newActive = getLastOption();
+    }
+
     // If we have selected an item, we should make that the active item
-    if (selectedState.length > 0) {
+    if (!newActive && selectedState.length > 0) {
       newActive = getOptionsMatching(
         (option) => option.value === selectedState[0],
       ).pop();

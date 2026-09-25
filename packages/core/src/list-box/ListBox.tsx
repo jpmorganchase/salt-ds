@@ -11,7 +11,12 @@ import {
   type Ref,
   useRef,
 } from "react";
-import type { OptionValue } from "../list-control/ListControlContext";
+import {
+  getListControlNavigationTarget,
+  isListControlNavigationKey,
+  isModifiedListControlNavigationKey,
+  type OptionAndElement,
+} from "../list-control/ListControlNavigationKeys";
 import { ListControlProvider } from "../list-control/ListControlProvider";
 import {
   defaultValueToString,
@@ -122,6 +127,10 @@ export const ListBox = forwardRef(function ListBox<Item>(
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     onKeyDown?.(event);
 
+    if (isModifiedListControlNavigationKey(event)) {
+      return;
+    }
+
     if (
       event.key.length === 1 &&
       !event.ctrlKey &&
@@ -139,28 +148,23 @@ export const ListBox = forwardRef(function ListBox<Item>(
       return;
     }
 
-    let newActive:
-      | { data: OptionValue<Item>; element: HTMLElement }
-      | undefined;
+    const isNavigationKey = isListControlNavigationKey(event.key);
+    if (isNavigationKey) {
+      event.preventDefault();
+    }
+
+    const newActive: OptionAndElement<Item> | undefined = isNavigationKey
+      ? getListControlNavigationTarget(event.key, activeOption, {
+          getFirstOption,
+          getLastOption,
+          getOptionAfter,
+          getOptionBefore,
+          getOptionPageAbove,
+          getOptionPageBelow,
+        })
+      : undefined;
+
     switch (event.key) {
-      case "ArrowDown":
-        newActive = getOptionAfter(activeOption) ?? getLastOption();
-        break;
-      case "ArrowUp":
-        newActive = getOptionBefore(activeOption) ?? getFirstOption();
-        break;
-      case "Home":
-        newActive = getFirstOption();
-        break;
-      case "End":
-        newActive = getLastOption();
-        break;
-      case "PageUp":
-        newActive = getOptionPageAbove(activeOption);
-        break;
-      case "PageDown":
-        newActive = getOptionPageBelow(activeOption);
-        break;
       case "Enter":
       case " ":
         if (
@@ -182,7 +186,6 @@ export const ListBox = forwardRef(function ListBox<Item>(
     }
 
     if (newActive && newActive.data.id !== activeState?.id) {
-      event.preventDefault();
       setActive(newActive.data);
       setFocusVisibleState(true);
     }

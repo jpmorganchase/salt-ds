@@ -3,6 +3,7 @@ import { composeStories } from "@storybook/react-vite";
 import { type KeyboardEventHandler, useRef, useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
+import { trackNativeEvents } from "~browser-test-utils/interactions";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as comboBoxStories from "~stories/combo-box/combo-box.stories";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
@@ -739,6 +740,143 @@ describe("Given a ComboBox", () => {
   });
 });
 
+describe("GIVEN a Combo box in a scroll container", () => {
+  function ScrollFixture() {
+    return (
+      <div
+        data-testid="scroll-container"
+        style={{ height: 100, overflow: "auto" }}
+      >
+        <div style={{ height: 300 }} />
+        <ComboBox>
+          <Option value="Alabama" />
+          <Option value="Alaska" />
+        </ComboBox>
+        <div style={{ height: 300 }} />
+      </div>
+    );
+  }
+
+  it.each([
+    ["{PageUp}", "Alabama"],
+    ["{PageDown}", "Alaska"],
+  ] as const)(
+    "does not scroll its container when %s cannot move past the options",
+    async (key, activeOption) => {
+      await renderWithSalt(<ScrollFixture />);
+      input().element().focus();
+      await userEvent.keyboard("{ArrowDown}");
+      if (activeOption === "Alaska") {
+        await userEvent.keyboard("{End}");
+      }
+      await expectActive(activeOption);
+
+      const scrollContainer = page
+        .getByTestId("scroll-container")
+        .element() as HTMLElement;
+      scrollContainer.scrollTop = 280;
+      await new Promise<void>((resolve) =>
+        requestAnimationFrame(() => resolve()),
+      );
+      const initialScrollTop = scrollContainer.scrollTop;
+
+      await userEvent.keyboard(key);
+      await new Promise<void>((resolve) =>
+        requestAnimationFrame(() => resolve()),
+      );
+
+      expect(scrollContainer.scrollTop).toBe(initialScrollTop);
+    },
+  );
+});
+
+describe("GIVEN a closed Combo box", () => {
+  it.each(["{PageUp}", "{PageDown}", "{Home}", "{End}"])(
+    "leaves %s to the browser",
+    async (key) => {
+      const keyDown = trackNativeEvents();
+      await renderWithSalt(
+        <ComboBox onKeyDown={keyDown.handler}>
+          <Option value="Alabama" />
+          <Option value="Alaska" />
+        </ComboBox>,
+      );
+      await userEvent.tab();
+      await expect.element(input()).toHaveAttribute("aria-expanded", "false");
+
+      await userEvent.keyboard(key);
+
+      expect(keyDown.last()?.defaultPrevented).toBe(false);
+      await expect.element(input()).toHaveAttribute("aria-expanded", "false");
+      await expect
+        .element(input())
+        .not.toHaveAttribute("aria-activedescendant");
+    },
+  );
+
+  it.each([
+    ["{Home}", 0],
+    ["{End}", "Alabama".length],
+  ] as const)("moves the caret with %s", async (key, caret) => {
+    await renderWithSalt(
+      <ComboBox defaultValue="Alabama">
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </ComboBox>,
+    );
+    await userEvent.tab();
+    const inputElement = input().element() as HTMLInputElement;
+    inputElement.setSelectionRange(3, 3);
+
+    await userEvent.keyboard(key);
+
+    expect(inputElement.selectionStart).toBe(caret);
+    expect(inputElement.selectionEnd).toBe(caret);
+    await expect.element(input()).toHaveAttribute("aria-expanded", "false");
+  });
+});
+
+describe("GIVEN a Combo box with no options to show", () => {
+  function FilteredComboBox({
+    onKeyDown,
+  }: {
+    onKeyDown: KeyboardEventHandler<HTMLInputElement>;
+  }) {
+    const [value, setValue] = useState("");
+    const options = ["Alabama", "Alaska"].filter((option) =>
+      option.toLowerCase().startsWith(value.toLowerCase()),
+    );
+    return (
+      <ComboBox
+        value={value}
+        inputProps={{
+          onChange: (event) => setValue(event.target.value),
+        }}
+        onKeyDown={onKeyDown}
+      >
+        {options.map((option) => (
+          <Option key={option} value={option} />
+        ))}
+      </ComboBox>
+    );
+  }
+
+  it.each(["{PageUp}", "{PageDown}"])(
+    "lets %s scroll the page",
+    async (key) => {
+      const keyDown = trackNativeEvents();
+      await renderWithSalt(<FilteredComboBox onKeyDown={keyDown.handler} />);
+      await typeFilter("z");
+      await expect.element(input()).toHaveAttribute("aria-expanded", "true");
+      await expect.element(listbox()).not.toBeInTheDocument();
+
+      await userEvent.keyboard(key);
+
+      expect(keyDown.last()?.defaultPrevented).toBe(false);
+    },
+  );
+});
+
 describe("given a multiselect ComboBox with pills", () => {
   it("lets keyboard users reach and remove every pill through one tab stop", async () => {
     await renderWithSalt(
@@ -816,5 +954,29 @@ describe("given a multiselect ComboBox with pills", () => {
     await expect
       .element(page.getByRole("button", { name: "Remove Alabama" }))
       .toHaveFocus();
+  });
+});
+
+describe("GIVEN an open Combo box and a navigation key pressed with a modifier", () => {
+  it.each([
+    "{Control>}{PageDown}{/Control}",
+    "{Control>}{End}{/Control}",
+    "{Meta>}{ArrowDown}{/Meta}",
+  ])("leaves %s to the browser", async (keys) => {
+    const keyDown = trackNativeEvents();
+    await renderWithSalt(
+      <ComboBox onKeyDown={keyDown.handler}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </ComboBox>,
+    );
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowDown}");
+    await expectActive("Alabama");
+
+    await userEvent.keyboard(keys);
+
+    expect(keyDown.last()?.defaultPrevented).toBe(false);
+    await expectActive("Alabama");
   });
 });

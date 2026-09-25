@@ -26,7 +26,12 @@ import {
 } from "react";
 import { Button } from "../button";
 import { useFormFieldProps } from "../form-field-context";
-import type { OptionValue } from "../list-control/ListControlContext";
+import {
+  getComboBoxNavigationTarget,
+  isListControlNavigationKey,
+  isModifiedListControlNavigationKey,
+  type OptionAndElement,
+} from "../list-control/ListControlNavigationKeys";
 import { ListControlProvider } from "../list-control/ListControlProvider";
 import { defaultValueToString } from "../list-control/ListControlState";
 import { OptionList } from "../option/OptionList";
@@ -231,7 +236,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       shouldAutoSelectRef.current = false;
     }
 
-    if (readOnly) {
+    if (readOnly || isModifiedListControlNavigationKey(event)) {
       return;
     }
 
@@ -242,48 +247,32 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       }
     }
 
+    // With no list shown, leave these keys to move the caret or scroll the page.
+    if (
+      (!openState || !hasValidChildren) &&
+      isListControlNavigationKey(event.key)
+    ) {
+      return;
+    }
+
     const activeOption = activeState;
 
-    let newActive:
-      | { data: OptionValue<Item>; element: HTMLElement }
-      | undefined;
+    // Unlike arrow keys, PageUp/PageDown scroll the nearest scroll container.
+    if (event.key === "PageUp" || event.key === "PageDown") {
+      event.preventDefault();
+    }
+
+    const newActive: OptionAndElement<Item> | undefined =
+      getComboBoxNavigationTarget(event.key, activeOption, {
+        getFirstOption,
+        getLastOption,
+        getOptionAfter,
+        getOptionBefore,
+        getOptionPageAbove,
+        getOptionPageBelow,
+      });
+
     switch (event.key) {
-      case "ArrowDown":
-        newActive = activeOption
-          ? getOptionAfter(activeOption)
-          : getFirstOption();
-        break;
-      case "ArrowUp":
-        newActive = activeOption
-          ? getOptionBefore(activeOption)
-          : getLastOption();
-        break;
-      case "Home":
-        newActive = getFirstOption();
-        break;
-      case "End":
-        newActive = getLastOption();
-        break;
-      case "PageUp":
-        if (activeOption) {
-          newActive = getOptionPageAbove(activeOption);
-        } else {
-          const lastOption = getLastOption();
-          if (lastOption) {
-            newActive = getOptionPageAbove(lastOption?.data);
-          }
-        }
-        break;
-      case "PageDown":
-        if (activeOption) {
-          newActive = getOptionPageBelow(activeOption);
-        } else {
-          const firstOption = getFirstOption();
-          if (firstOption) {
-            newActive = getOptionPageBelow(firstOption.data);
-          }
-        }
-        break;
       case "Enter":
         if (openState && activeState?.disabled) {
           event.preventDefault();

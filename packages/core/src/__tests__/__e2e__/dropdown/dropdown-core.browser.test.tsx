@@ -3,6 +3,7 @@ import { composeStories } from "@storybook/react-vite";
 import { type KeyboardEventHandler, useRef, useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
+import { trackNativeEvents } from "~browser-test-utils/interactions";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as dropdownStories from "~stories/dropdown/dropdown.stories";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
@@ -576,5 +577,236 @@ describe("Given a core Dropdown", () => {
       .click({ position: { x: 0, y: 0 } });
     await expect.element(combobox()).toHaveAttribute("aria-expanded", "false");
     await expect.element(listbox()).not.toBeInTheDocument();
+  });
+});
+
+describe("GIVEN a Dropdown at the edge of its options", () => {
+  it("stops the page scrolling when opening the list with an arrow key", async () => {
+    const keyDown = trackNativeEvents();
+    await renderWithSalt(
+      <Dropdown onKeyDown={keyDown.handler}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </Dropdown>,
+    );
+
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowDown}");
+
+    await expect.element(listbox()).toBeInTheDocument();
+    expect(keyDown.last()?.defaultPrevented).toBe(true);
+  });
+
+  it("stops the page scrolling when arrowing past the first option", async () => {
+    const keyDown = trackNativeEvents();
+    await renderWithSalt(
+      <Dropdown onKeyDown={keyDown.handler}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </Dropdown>,
+    );
+
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowDown}");
+    await userEvent.keyboard("{Home}");
+
+    // The active option cannot move, but the dropdown still owns the key.
+    await userEvent.keyboard("{ArrowUp}");
+
+    expect(keyDown.last()?.defaultPrevented).toBe(true);
+  });
+});
+
+describe("GIVEN a closed Dropdown", () => {
+  it.each([
+    ["{Home}", "Alabama"],
+    ["{End}", "Arizona"],
+  ] as const)(
+    "opens the list with %s and moves focus to %s",
+    async (key, activeOption) => {
+      const keyDown = trackNativeEvents();
+      await renderWithSalt(
+        <Dropdown onKeyDown={keyDown.handler}>
+          <Option value="Alabama" />
+          <Option value="Alaska" />
+          <Option value="Arizona" />
+        </Dropdown>,
+      );
+      await userEvent.tab();
+      await expect
+        .element(combobox())
+        .toHaveAttribute("aria-expanded", "false");
+
+      await userEvent.keyboard(key);
+
+      expect(keyDown.last()?.defaultPrevented).toBe(true);
+      await expect.element(listbox()).toBeInTheDocument();
+      await expectActive(activeOption);
+    },
+  );
+
+  it.each([
+    ["{Home}", "Alabama"],
+    ["{End}", "Arizona"],
+  ] as const)(
+    "uses %s to move focus to %s even when another option is selected",
+    async (key, activeOption) => {
+      await renderWithSalt(
+        <Dropdown defaultSelected={["Alaska"]}>
+          <Option value="Alabama" />
+          <Option value="Alaska" />
+          <Option value="Arizona" />
+        </Dropdown>,
+      );
+      await userEvent.tab();
+
+      await userEvent.keyboard(key);
+
+      await expect.element(listbox()).toBeInTheDocument();
+      await expectActive(activeOption);
+    },
+  );
+
+  it("still opens on the selected option with an arrow key", async () => {
+    await renderWithSalt(
+      <Dropdown defaultSelected={["Alaska"]}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+        <Option value="Arizona" />
+      </Dropdown>,
+    );
+    await userEvent.tab();
+
+    await userEvent.keyboard("{ArrowDown}");
+
+    await expect.element(listbox()).toBeInTheDocument();
+    await expectActive("Alaska");
+  });
+
+  it.each(["{PageUp}", "{PageDown}"])(
+    "lets %s scroll the page",
+    async (key) => {
+      const keyDown = trackNativeEvents();
+      await renderWithSalt(
+        <Dropdown onKeyDown={keyDown.handler}>
+          <Option value="Alabama" />
+          <Option value="Alaska" />
+        </Dropdown>,
+      );
+      await userEvent.tab();
+      await expect
+        .element(combobox())
+        .toHaveAttribute("aria-expanded", "false");
+
+      await userEvent.keyboard(key);
+
+      expect(keyDown.last()?.defaultPrevented).toBe(false);
+      await expect
+        .element(combobox())
+        .toHaveAttribute("aria-expanded", "false");
+      await expect
+        .element(combobox())
+        .not.toHaveAttribute("aria-activedescendant");
+    },
+  );
+});
+
+describe("GIVEN an open Dropdown with focus on the first option", () => {
+  function States({ selected }: { selected?: string[] }) {
+    return (
+      <Dropdown defaultSelected={selected}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+        <Option value="Arizona" />
+      </Dropdown>
+    );
+  }
+
+  it("keeps focus on the first option when re-rendered with a selection", async () => {
+    const { rerender } = await renderWithSalt(<States selected={["Alaska"]} />);
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowDown}");
+    await expectActive("Alaska");
+    await userEvent.keyboard("{Home}");
+    await expectActive("Alabama");
+
+    await rerender(<States selected={["Alaska"]} />);
+
+    await expectActive("Alabama");
+  });
+
+  it("keeps focus on the first option when re-rendered after opening with End", async () => {
+    const { rerender } = await renderWithSalt(<States />);
+    await userEvent.tab();
+    await userEvent.keyboard("{End}");
+    await expectActive("Arizona");
+    await userEvent.keyboard("{Home}");
+    await expectActive("Alabama");
+
+    await rerender(<States />);
+
+    await expectActive("Alabama");
+  });
+
+  it("keeps a typeahead match on the first option when opening", async () => {
+    await renderWithSalt(<States selected={["Arizona"]} />);
+    await userEvent.tab();
+
+    await userEvent.keyboard("a");
+
+    await expect.element(listbox()).toBeInTheDocument();
+    await expectActive("Alabama");
+  });
+});
+
+describe("GIVEN a Dropdown and a navigation key pressed with a modifier", () => {
+  function States({ onKeyDown }: { onKeyDown: KeyboardEventHandler }) {
+    return (
+      <Dropdown onKeyDown={onKeyDown}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </Dropdown>
+    );
+  }
+
+  it.each([
+    "{Control>}{Home}{/Control}",
+    "{Control>}{End}{/Control}",
+    "{Meta>}{ArrowDown}{/Meta}",
+    "{Alt>}{End}{/Alt}",
+  ])("does not open the list with %s", async (keys) => {
+    const keyDown = trackNativeEvents();
+    await renderWithSalt(<States onKeyDown={keyDown.handler} />);
+    await userEvent.tab();
+
+    await userEvent.keyboard(keys);
+
+    expect(keyDown.last()?.defaultPrevented).toBe(false);
+    await expect.element(combobox()).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("still opens the list with Alt+ArrowDown", async () => {
+    const keyDown = trackNativeEvents();
+    await renderWithSalt(<States onKeyDown={keyDown.handler} />);
+    await userEvent.tab();
+
+    await userEvent.keyboard("{Alt>}{ArrowDown}{/Alt}");
+
+    expect(keyDown.last()?.defaultPrevented).toBe(true);
+    await expect.element(listbox()).toBeInTheDocument();
+    await expectActive("Alabama");
+  });
+
+  it("leaves Ctrl+PageDown to the browser while the list is open", async () => {
+    const keyDown = trackNativeEvents();
+    await renderWithSalt(<States onKeyDown={keyDown.handler} />);
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowDown}");
+    await expectActive("Alabama");
+
+    await userEvent.keyboard("{Control>}{PageDown}{/Control}");
+
+    expect(keyDown.last()?.defaultPrevented).toBe(false);
+    await expectActive("Alabama");
   });
 });
