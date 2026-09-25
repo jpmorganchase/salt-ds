@@ -82,9 +82,6 @@ describe("GIVEN a ToggleButton", () => {
     const button = page.getByRole("button");
 
     await expect.element(button).toHaveAttribute("aria-readonly");
-    // `readonly` is not a valid attribute on a button. Read-only state is
-    // conveyed by aria-readonly alone, so the invalid attribute must not be
-    // rendered.
     await expect.element(button).not.toHaveAttribute("readonly");
     await button.click({ force: true });
     expect(onChange).not.toHaveBeenCalled();
