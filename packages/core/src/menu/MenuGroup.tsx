@@ -5,26 +5,70 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type ReactNode,
+  type SyntheticEvent,
+  useMemo,
 } from "react";
 import { makePrefixer, useId } from "../utils";
 import menuGroupCss from "./MenuGroup.css";
+import { MenuGroupContext, useMenuGroupSelection } from "./MenuGroupContext";
 
 export interface MenuGroupProps extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * Menus to be rendered inside the menu group.
+   */
+  children?: ReactNode;
+  /**
+   * If `true`, selecting a menu item closes the menu. If `false`, the menu stays open.
+   * When not set, clicking closes the menu for "single" selection but not for "multiple" selection, Enter always closes the menu and Space never does.
+   * Only applies when `selectionVariant` is "single" or "multiple".
+   */
+  closeOnSelect?: boolean;
+  /**
+   * The values of the menu items selected by default. Use with `name` to keep the selection while the menu is closed.
+   * This will be disregarded if `selected` is set.
+   */
+  defaultSelected?: string[];
   /**
    * The label of the menu group.
    */
   label?: string;
   /**
-   * Menus to be rendered inside the menu group.
+   * Identifies the group's selection within the menu, so an uncontrolled selection is kept while the menu is closed.
+   * Must be unique within the menu.
    */
-  children?: ReactNode;
+  name?: string;
+  /**
+   * Callback fired when the selection changes.
+   * @param event
+   * @param newSelected The new selected values.
+   */
+  onSelectionChange?: (event: SyntheticEvent, newSelected: string[]) => void;
+  /**
+   * The values of the selected menu items. Use with `onSelectionChange` to control the selection.
+   */
+  selected?: string[];
+  /**
+   * Selection variant of the menu group. If "single", the menu items inside behave like radio buttons. If "multiple", they behave like checkboxes. Each selectable menu item needs a `value`. Defaults to "none".
+   */
+  selectionVariant?: "none" | "single" | "multiple";
 }
 
 const withBaseName = makePrefixer("saltMenuGroup");
 
 export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
   function MenuGroup(props, ref) {
-    const { className, children, label, ...rest } = props;
+    const {
+      className,
+      children,
+      closeOnSelect,
+      defaultSelected,
+      label,
+      name,
+      onSelectionChange,
+      selected,
+      selectionVariant = "none",
+      ...rest
+    } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -35,21 +79,36 @@ export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
 
     const labelId = useId();
 
+    const { isSelected, select } = useMenuGroupSelection({
+      defaultSelected,
+      name,
+      onSelectionChange,
+      selected,
+      selectionVariant,
+    });
+
+    const contextValue = useMemo(
+      () => ({ closeOnSelect, isSelected, select, selectionVariant }),
+      [closeOnSelect, isSelected, select, selectionVariant],
+    );
+
     return (
-      <div
-        aria-labelledby={label ? labelId : undefined}
-        className={clsx(withBaseName(), className)}
-        role="group"
-        ref={ref}
-        {...rest}
-      >
-        {label && (
-          <div aria-hidden className={withBaseName("label")} id={labelId}>
-            {label}
-          </div>
-        )}
-        {children}
-      </div>
+      <MenuGroupContext.Provider value={contextValue}>
+        <div
+          aria-labelledby={label ? labelId : undefined}
+          className={clsx(withBaseName(), className)}
+          role="group"
+          ref={ref}
+          {...rest}
+        >
+          {label && (
+            <div aria-hidden className={withBaseName("label")} id={labelId}>
+              {label}
+            </div>
+          )}
+          {children}
+        </div>
+      </MenuGroupContext.Provider>
     );
   },
 );

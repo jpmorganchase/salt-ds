@@ -1,4 +1,14 @@
+import {
+  Button,
+  Menu,
+  MenuGroup,
+  type MenuGroupProps,
+  MenuItem,
+  MenuPanel,
+  MenuTrigger,
+} from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
+import { useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
@@ -13,6 +23,11 @@ const {
   IconWithGroups,
   WithTooltip,
   WithDisabledItems,
+  SingleSelection,
+  MultipleSelection,
+  MixedSelection,
+  SelectionInSubmenu,
+  UncontrolledSelection,
 } = composeStories(menuStories);
 
 afterEach(() => vi.restoreAllMocks());
@@ -83,6 +98,25 @@ describe("Given a Menu", () => {
       expect(onOpenChange).toHaveBeenLastCalledWith(false);
     },
   );
+
+  it("does not activate the first item when Enter is held on the trigger", async () => {
+    const alertSpy = vi.spyOn(window, "alert").mockImplementation(() => {});
+    await renderWithSalt(<SingleLevel />);
+    trigger().element().focus();
+    await userEvent.keyboard("{Enter}");
+    const copy = page.getByRole("menuitem", { name: "Copy" });
+    await expect.element(copy).toHaveFocus();
+    copy.element().dispatchEvent(
+      new KeyboardEvent("keydown", {
+        key: "Enter",
+        bubbles: true,
+        cancelable: true,
+        repeat: true,
+      }),
+    );
+    await expect.element(page.getByRole("menu")).toBeInTheDocument();
+    expect(alertSpy).not.toHaveBeenCalled();
+  });
 
   it("closes on Escape", async () => {
     const onOpenChange = vi.fn();
@@ -288,5 +322,557 @@ describe("Given a Menu", () => {
     await expect.element(page.getByRole("tooltip")).toBeVisible();
     await menuTrigger.click();
     await expect.element(page.getByRole("menu")).toBeInTheDocument();
+  });
+});
+
+function SelectableMenu({
+  children,
+  initialSelected = [],
+  onSelectionChange,
+  ...rest
+}: MenuGroupProps & { initialSelected?: string[] }) {
+  const [selected, setSelected] = useState(initialSelected);
+
+  return (
+    <Menu>
+      <MenuTrigger>
+        <Button aria-label="Open Menu">Open Menu</Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup
+          label="Options"
+          selected={selected}
+          onSelectionChange={(event, newSelected) => {
+            setSelected(newSelected);
+            onSelectionChange?.(event, newSelected);
+          }}
+          {...rest}
+        >
+          {children ?? (
+            <>
+              <MenuItem value="one">One</MenuItem>
+              <MenuItem value="two">Two</MenuItem>
+              <MenuItem disabled value="three">
+                Three
+              </MenuItem>
+            </>
+          )}
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+}
+
+const itemRole = {
+  single: "menuitemradio",
+  multiple: "menuitemcheckbox",
+} as const;
+
+describe("Given a Menu with selectable groups", () => {
+  it("renders radio and checkbox menu items", async () => {
+    await renderWithSalt(<MixedSelection open />);
+    await expect
+      .element(page.getByRole("group", { name: "Sort by" }))
+      .toBeInTheDocument();
+    const name = page.getByRole("menuitemradio", { name: "Name" });
+    await expect.element(name).toHaveAttribute("aria-checked", "true");
+    expect(
+      name.element().querySelector(".saltRadioButtonIcon-checked"),
+    ).not.toBeNull();
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Date modified" }))
+      .toHaveAttribute("aria-checked", "false");
+    const owner = page.getByRole("menuitemcheckbox", { name: "Owner" });
+    await expect.element(owner).toHaveAttribute("aria-checked", "true");
+    expect(
+      owner.element().querySelector(".saltCheckboxIcon-checked"),
+    ).not.toBeNull();
+    const exportItem = page.getByRole("menuitem", { name: "Export" });
+    await expect.element(exportItem).not.toHaveAttribute("aria-checked");
+    expect(exportItem.element().querySelector(".saltCheckboxIcon")).toBeNull();
+  });
+
+  it("selects one item and closes the menu on click in single selection", async () => {
+    const onOpenChange = vi.fn();
+    await renderWithSalt(<SingleSelection onOpenChange={onOpenChange} />);
+    await trigger().click();
+    await page.getByRole("menuitemradio", { name: "Size" }).click();
+    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+    expect(onOpenChange).toHaveBeenLastCalledWith(false);
+    await trigger().click();
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Size" }))
+      .toHaveAttribute("aria-checked", "true");
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Name" }))
+      .toHaveAttribute("aria-checked", "false");
+  });
+
+  it("toggles items and keeps the menu open on click in multiple selection", async () => {
+    await renderWithSalt(<MultipleSelection />);
+    await trigger().click();
+    const owner = page.getByRole("menuitemcheckbox", { name: "Owner" });
+    const modified = page.getByRole("menuitemcheckbox", {
+      name: "Date modified",
+    });
+    await owner.click();
+    await modified.click();
+    await expect.element(page.getByRole("menu")).toBeInTheDocument();
+    await expect.element(owner).toHaveAttribute("aria-checked", "false");
+    await expect.element(modified).toHaveAttribute("aria-checked", "true");
+  });
+
+  it("calls onSelectionChange with the new selection", async () => {
+    const onSelectionChange = vi.fn();
+    await renderWithSalt(
+      <SelectableMenu
+        selectionVariant="multiple"
+        onSelectionChange={onSelectionChange}
+      />,
+    );
+    await trigger().click();
+    const one = page.getByRole("menuitemcheckbox", { name: "One" });
+    const two = page.getByRole("menuitemcheckbox", { name: "Two" });
+    await one.click();
+    expect(onSelectionChange).toHaveBeenLastCalledWith(expect.anything(), [
+      "one",
+    ]);
+    await two.click();
+    expect(onSelectionChange).toHaveBeenLastCalledWith(expect.anything(), [
+      "one",
+      "two",
+    ]);
+    await one.click();
+    expect(onSelectionChange).toHaveBeenLastCalledWith(expect.anything(), [
+      "two",
+    ]);
+  });
+
+  it("does not call onSelectionChange when the checked radio item is selected again", async () => {
+    const onSelectionChange = vi.fn();
+    await renderWithSalt(
+      <SelectableMenu
+        selectionVariant="single"
+        initialSelected={["one"]}
+        onSelectionChange={onSelectionChange}
+      />,
+    );
+    await trigger().click();
+    await page.getByRole("menuitemradio", { name: "One" }).click();
+    expect(onSelectionChange).not.toHaveBeenCalled();
+    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+  });
+
+  it.each(["single", "multiple"] as const)(
+    "selects and closes the menu with Enter in %s selection",
+    async (selectionVariant) => {
+      const onSelectionChange = vi.fn();
+      await renderWithSalt(
+        <SelectableMenu
+          selectionVariant={selectionVariant}
+          onSelectionChange={onSelectionChange}
+        />,
+      );
+      trigger().element().focus();
+      await userEvent.keyboard("{Enter}");
+      await expect
+        .element(page.getByRole(itemRole[selectionVariant], { name: "One" }))
+        .toHaveFocus();
+      await userEvent.keyboard("{Enter}");
+      await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+      expect(onSelectionChange).toHaveBeenLastCalledWith(expect.anything(), [
+        "one",
+      ]);
+    },
+  );
+
+  it.each(["single", "multiple"] as const)(
+    "selects and keeps the menu open with Space in %s selection",
+    async (selectionVariant) => {
+      await renderWithSalt(
+        <SelectableMenu selectionVariant={selectionVariant} />,
+      );
+      trigger().element().focus();
+      await userEvent.keyboard("{Enter}");
+      const one = page.getByRole(itemRole[selectionVariant], { name: "One" });
+      await expect.element(one).toHaveFocus();
+      await userEvent.keyboard(" ");
+      await expect.element(one).toHaveAttribute("aria-checked", "true");
+      await expect.element(page.getByRole("menu")).toBeInTheDocument();
+      await expect.element(one).toHaveFocus();
+    },
+  );
+
+  it("toggles once when Space is held", async () => {
+    const onSelectionChange = vi.fn();
+    await renderWithSalt(
+      <SelectableMenu
+        selectionVariant="multiple"
+        onSelectionChange={onSelectionChange}
+      />,
+    );
+    trigger().element().focus();
+    await userEvent.keyboard("{Enter}");
+    const one = page.getByRole("menuitemcheckbox", { name: "One" });
+    await expect.element(one).toHaveFocus();
+    for (const repeat of [false, true, true]) {
+      one.element().dispatchEvent(
+        new KeyboardEvent("keydown", {
+          key: " ",
+          bubbles: true,
+          cancelable: true,
+          repeat,
+        }),
+      );
+    }
+    await expect.element(one).toHaveAttribute("aria-checked", "true");
+    expect(onSelectionChange).toHaveBeenCalledTimes(1);
+  });
+
+  it("keeps the menu open on click and Enter when closeOnSelect is false", async () => {
+    await renderWithSalt(
+      <SelectableMenu selectionVariant="single" closeOnSelect={false} />,
+    );
+    await trigger().click();
+    const one = page.getByRole("menuitemradio", { name: "One" });
+    await one.click();
+    await expect.element(one).toHaveAttribute("aria-checked", "true");
+    await expect.element(page.getByRole("menu")).toBeInTheDocument();
+    const two = page.getByRole("menuitemradio", { name: "Two" });
+    two.element().focus();
+    await userEvent.keyboard("{Enter}");
+    await expect.element(two).toHaveAttribute("aria-checked", "true");
+    await expect.element(page.getByRole("menu")).toBeInTheDocument();
+  });
+
+  it("closes the menu on click and Space when closeOnSelect is true", async () => {
+    await renderWithSalt(
+      <SelectableMenu selectionVariant="multiple" closeOnSelect />,
+    );
+    await trigger().click();
+    await page.getByRole("menuitemcheckbox", { name: "One" }).click();
+    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+    trigger().element().focus();
+    await userEvent.keyboard("{Enter}");
+    const one = page.getByRole("menuitemcheckbox", { name: "One" });
+    await expect.element(one).toHaveAttribute("aria-checked", "true");
+    await expect.element(one).toHaveFocus();
+    await userEvent.keyboard(" ");
+    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+  });
+
+  it("does not select disabled items", async () => {
+    const onSelectionChange = vi.fn();
+    await renderWithSalt(
+      <SelectableMenu
+        selectionVariant="multiple"
+        onSelectionChange={onSelectionChange}
+      />,
+    );
+    await trigger().click();
+    const three = page.getByRole("menuitemcheckbox", { name: "Three" });
+    await expect.element(three).toHaveAttribute("aria-disabled", "true");
+    await three.click({ force: true });
+    await expect.element(three).toHaveAttribute("aria-checked", "false");
+    await expect.element(page.getByRole("menu")).toBeInTheDocument();
+    expect(onSelectionChange).not.toHaveBeenCalled();
+  });
+
+  it("keeps submenu triggers and nested items as regular menu items", async () => {
+    await renderWithSalt(
+      <SelectableMenu selectionVariant="multiple">
+        <MenuItem value="one">One</MenuItem>
+        <Menu>
+          <MenuTrigger>
+            <MenuItem>More options</MenuItem>
+          </MenuTrigger>
+          <MenuPanel>
+            <MenuItem>Nested</MenuItem>
+          </MenuPanel>
+        </Menu>
+      </SelectableMenu>,
+    );
+    await trigger().click();
+    const moreOptions = page.getByRole("menuitem", { name: "More options" });
+    await expect.element(moreOptions).not.toHaveAttribute("aria-checked");
+    await moreOptions.hover();
+    await expect
+      .element(page.getByRole("menuitem", { name: "Nested" }))
+      .not.toHaveAttribute("aria-checked");
+  });
+
+  it("supports selection in a submenu", async () => {
+    await renderWithSalt(<SelectionInSubmenu />);
+    await trigger().click();
+    await page.getByRole("menuitem", { name: "Sort by" }).hover();
+    await page.getByRole("menuitemradio", { name: "Size" }).click();
+    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+    await trigger().click();
+    await page.getByRole("menuitem", { name: "Sort by" }).hover();
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Size" }))
+      .toHaveAttribute("aria-checked", "true");
+  });
+
+  it("warns once when a menu item in a selectable group has no value", async () => {
+    const warning = vi.spyOn(console, "warn").mockImplementation(() => {});
+    await renderWithSalt(
+      <SelectableMenu selectionVariant="single">
+        <MenuItem value="one">One</MenuItem>
+        <MenuItem>Reset</MenuItem>
+      </SelectableMenu>,
+    );
+    await trigger().click();
+    const reset = page.getByRole("menuitem", { name: "Reset" });
+    await expect.element(reset).not.toHaveAttribute("aria-checked");
+    await userEvent.keyboard("{Escape}");
+    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+    await trigger().click();
+    await expect.element(reset).toBeInTheDocument();
+    expect(
+      warning.mock.calls.filter(([message]) =>
+        String(message).includes("MenuItem requires a `value`"),
+      ),
+    ).toHaveLength(1);
+  });
+});
+
+function UncontrolledMenu({ children, ...rest }: MenuGroupProps) {
+  return (
+    <Menu>
+      <MenuTrigger>
+        <Button aria-label="Open Menu">Open Menu</Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup aria-label="Options" name="options" {...rest}>
+          {children ?? (
+            <>
+              <MenuItem value="one">One</MenuItem>
+              <MenuItem value="two">Two</MenuItem>
+            </>
+          )}
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+}
+
+function SwitchingControlMenu() {
+  const [controlled, setControlled] = useState(true);
+
+  return (
+    <>
+      <button type="button" onClick={() => setControlled(false)}>
+        Stop controlling
+      </button>
+      <Menu open>
+        <MenuTrigger>
+          <Button aria-label="Open Menu">Open Menu</Button>
+        </MenuTrigger>
+        <MenuPanel>
+          <MenuGroup
+            aria-label="Options"
+            name="options"
+            selectionVariant="single"
+            selected={controlled ? ["one"] : undefined}
+          >
+            <MenuItem value="one">One</MenuItem>
+          </MenuGroup>
+        </MenuPanel>
+      </Menu>
+    </>
+  );
+}
+
+function ChangingDefaultMenu() {
+  const [defaultSelected, setDefaultSelected] = useState(["one"]);
+
+  return (
+    <>
+      <button type="button" onClick={() => setDefaultSelected(["two"])}>
+        Change default
+      </button>
+      <Menu open>
+        <MenuTrigger>
+          <Button aria-label="Open Menu">Open Menu</Button>
+        </MenuTrigger>
+        <MenuPanel>
+          <MenuGroup
+            aria-label="Options"
+            name="options"
+            selectionVariant="single"
+            defaultSelected={defaultSelected}
+          >
+            <MenuItem value="one">One</MenuItem>
+            <MenuItem value="two">Two</MenuItem>
+          </MenuGroup>
+        </MenuPanel>
+      </Menu>
+    </>
+  );
+}
+
+describe("Given a Menu with uncontrolled selectable groups", () => {
+  it("keeps a single selection after the menu closes", async () => {
+    await renderWithSalt(<UncontrolledSelection />);
+    await trigger().click();
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Name" }))
+      .toHaveAttribute("aria-checked", "true");
+    await page.getByRole("menuitemradio", { name: "Date modified" }).click();
+    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+    await trigger().click();
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Date modified" }))
+      .toHaveAttribute("aria-checked", "true");
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Name" }))
+      .toHaveAttribute("aria-checked", "false");
+  });
+
+  it("keeps a multiple selection after the menu closes", async () => {
+    await renderWithSalt(<UncontrolledSelection />);
+    await trigger().click();
+    await page.getByRole("menuitemcheckbox", { name: "Owner" }).click();
+    await page.getByRole("menuitemcheckbox", { name: "Type" }).click();
+    await userEvent.keyboard("{Escape}");
+    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+    await trigger().click();
+    await expect
+      .element(page.getByRole("menuitemcheckbox", { name: "Owner" }))
+      .toHaveAttribute("aria-checked", "false");
+    await expect
+      .element(page.getByRole("menuitemcheckbox", { name: "Size" }))
+      .toHaveAttribute("aria-checked", "true");
+    await expect
+      .element(page.getByRole("menuitemcheckbox", { name: "Type" }))
+      .toHaveAttribute("aria-checked", "true");
+  });
+
+  it("keeps a selection in a submenu after the root menu closes", async () => {
+    await renderWithSalt(<UncontrolledSelection />);
+    await trigger().click();
+    await page.getByRole("menuitem", { name: "Density" }).hover();
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Medium" }))
+      .toHaveAttribute("aria-checked", "true");
+    await page.getByRole("menuitemradio", { name: "Low" }).click();
+    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+    await trigger().click();
+    await page.getByRole("menuitem", { name: "Density" }).hover();
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Low" }))
+      .toHaveAttribute("aria-checked", "true");
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Medium" }))
+      .toHaveAttribute("aria-checked", "false");
+  });
+
+  it("calls onSelectionChange with the new selection", async () => {
+    const onSelectionChange = vi.fn();
+    await renderWithSalt(
+      <UncontrolledMenu
+        selectionVariant="multiple"
+        defaultSelected={["one"]}
+        onSelectionChange={onSelectionChange}
+      />,
+    );
+    await trigger().click();
+    const two = page.getByRole("menuitemcheckbox", { name: "Two" });
+    await two.click();
+    await expect.element(two).toHaveAttribute("aria-checked", "true");
+    expect(onSelectionChange).toHaveBeenLastCalledWith(expect.anything(), [
+      "one",
+      "two",
+    ]);
+  });
+
+  it("keeps a selection without a name until the menu closes, and warns once", async () => {
+    const warning = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const onSelectionChange = vi.fn();
+    await renderWithSalt(
+      <UncontrolledMenu
+        name={undefined}
+        selectionVariant="multiple"
+        onSelectionChange={onSelectionChange}
+      />,
+    );
+    await trigger().click();
+    const one = page.getByRole("menuitemcheckbox", { name: "One" });
+    const two = page.getByRole("menuitemcheckbox", { name: "Two" });
+    await one.click();
+    await two.click();
+    await expect.element(one).toHaveAttribute("aria-checked", "true");
+    await expect.element(two).toHaveAttribute("aria-checked", "true");
+    expect(onSelectionChange).toHaveBeenLastCalledWith(expect.anything(), [
+      "one",
+      "two",
+    ]);
+    await userEvent.keyboard("{Escape}");
+    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+    await trigger().click();
+    await expect.element(one).toHaveAttribute("aria-checked", "false");
+    await expect.element(two).toHaveAttribute("aria-checked", "false");
+    expect(
+      warning.mock.calls.filter(([message]) =>
+        String(message).includes("MenuGroup requires a `name`"),
+      ),
+    ).toHaveLength(1);
+  });
+
+  it("ignores defaultSelected changes after mount", async () => {
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    await renderWithSalt(<ChangingDefaultMenu />);
+    const one = page.getByRole("menuitemradio", { name: "One" });
+    await expect.element(one).toHaveAttribute("aria-checked", "true");
+    await page.getByRole("button", { name: "Change default" }).click();
+    await expect
+      .poll(() =>
+        error.mock.calls.some(([message]) =>
+          String(message).includes(
+            "changing the default selected state of an uncontrolled MenuGroup",
+          ),
+        ),
+      )
+      .toBe(true);
+    await expect.element(one).toHaveAttribute("aria-checked", "true");
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Two" }))
+      .toHaveAttribute("aria-checked", "false");
+  });
+
+  it("prefers selected over defaultSelected", async () => {
+    await renderWithSalt(
+      <UncontrolledMenu
+        selectionVariant="single"
+        selected={["one"]}
+        defaultSelected={["two"]}
+      />,
+    );
+    await trigger().click();
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "One" }))
+      .toHaveAttribute("aria-checked", "true");
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Two" }))
+      .toHaveAttribute("aria-checked", "false");
+  });
+
+  it("warns when a group switches from controlled to uncontrolled", async () => {
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    await renderWithSalt(<SwitchingControlMenu />);
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "One" }))
+      .toHaveAttribute("aria-checked", "true");
+    await page.getByRole("button", { name: "Stop controlling" }).click();
+    await expect
+      .poll(() =>
+        error.mock.calls.some(([message]) =>
+          String(message).includes(
+            "changing the controlled selected state of MenuGroup to be uncontrolled",
+          ),
+        ),
+      )
+      .toBe(true);
   });
 });
