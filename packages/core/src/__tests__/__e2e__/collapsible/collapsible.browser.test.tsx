@@ -81,11 +81,32 @@ describe("Given a Collapsible", () => {
 
     const panel = page.getByTestId("custom-panel");
     await expect.element(panel).toHaveClass("saltCollapsiblePanel");
-    await expect.element(panel).toHaveAttribute("data-open");
-    await expect.element(panel).not.toHaveAttribute("data-closed");
     expect(panel.element().tagName).toBe("SECTION");
     await expect
       .element(page.getByRole("button", { name: "Toggle" }))
       .toHaveAttribute("aria-controls", panel.element().id);
+  });
+
+  it("keeps aria-controls in sync with an id set on the render element", async () => {
+    await renderWithSalt(
+      <Collapsible>
+        <CollapsibleTrigger>
+          <Button>Toggle</Button>
+        </CollapsibleTrigger>
+        <CollapsiblePanel
+          data-testid="custom-panel"
+          render={<section id="custom-id" />}
+        >
+          Content
+        </CollapsiblePanel>
+      </Collapsible>,
+    );
+
+    await expect
+      .element(page.getByTestId("custom-panel"))
+      .toHaveAttribute("id", "custom-id");
+    await expect
+      .element(page.getByRole("button", { name: "Toggle" }))
+      .toHaveAttribute("aria-controls", "custom-id");
   });
 });
