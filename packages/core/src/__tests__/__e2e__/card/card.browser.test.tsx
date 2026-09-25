@@ -281,16 +281,12 @@ describe("Given a Card", () => {
 
     await expect.element(content).not.toBeVisible();
     await expect.element(content).toHaveAttribute("aria-hidden", "true");
-    await expect.element(content).toHaveAttribute("data-closed");
-    await expect.element(content).not.toHaveAttribute("data-open");
     await expect
       .element(button)
       .toHaveAttribute("aria-controls", content.element().id);
 
     await button.click();
     await expect.element(content).toBeVisible();
-    await expect.element(content).toHaveAttribute("data-open");
-    await expect.element(content).not.toHaveAttribute("data-closed");
   });
 
   it("keeps a footer pinned when rendered CardContent is collapsed", async () => {

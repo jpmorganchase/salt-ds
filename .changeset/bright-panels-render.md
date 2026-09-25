@@ -2,6 +2,6 @@
 "@salt-ds/core": minor
 ---
 
-Add a `render` element prop to `CollapsiblePanel` for customizing its root element, with `data-open` and `data-closed` attributes for styling its state.
+Add a `render` element prop to `CollapsiblePanel` for customizing its root element.
 
 `CollapsiblePanel` animations now respect reduced motion preferences.
