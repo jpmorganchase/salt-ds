@@ -849,7 +849,9 @@ describe("GIVEN a Combo box with no options to show", () => {
     return (
       <ComboBox
         value={value}
-        onChange={(event) => setValue(event.target.value)}
+        inputProps={{
+          onChange: (event) => setValue(event.target.value),
+        }}
         onKeyDown={onKeyDown}
       >
         {options.map((option) => (
