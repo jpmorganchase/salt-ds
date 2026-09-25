@@ -585,29 +585,6 @@ describe("Given a Menu with selectable groups", () => {
       expect.stringContaining("MenuItem requires a `value`"),
     );
   });
-
-  it("warns when an uncontrolled selectable group has no name", async () => {
-    const warning = vi.spyOn(console, "warn").mockImplementation(() => {});
-    await renderWithSalt(
-      <Menu open>
-        <MenuTrigger>
-          <Button aria-label="Open Menu">Open Menu</Button>
-        </MenuTrigger>
-        <MenuPanel>
-          <MenuGroup selectionVariant="multiple" aria-label="Options">
-            <MenuItem value="one">One</MenuItem>
-          </MenuGroup>
-        </MenuPanel>
-      </Menu>,
-    );
-    const one = page.getByRole("menuitemcheckbox", { name: "One" });
-    await expect.element(one).toHaveAttribute("aria-checked", "false");
-    expect(warning).toHaveBeenCalledWith(
-      expect.stringContaining("MenuGroup requires a `name`"),
-    );
-    await one.click();
-    await expect.element(one).toHaveAttribute("aria-checked", "false");
-  });
 });
 
 function UncontrolledMenu({ children, ...rest }: MenuGroupProps) {
@@ -650,6 +627,34 @@ function SwitchingControlMenu() {
             selected={controlled ? ["one"] : undefined}
           >
             <MenuItem value="one">One</MenuItem>
+          </MenuGroup>
+        </MenuPanel>
+      </Menu>
+    </>
+  );
+}
+
+function ChangingDefaultMenu() {
+  const [defaultSelected, setDefaultSelected] = useState(["one"]);
+
+  return (
+    <>
+      <button type="button" onClick={() => setDefaultSelected(["two"])}>
+        Change default
+      </button>
+      <Menu open>
+        <MenuTrigger>
+          <Button aria-label="Open Menu">Open Menu</Button>
+        </MenuTrigger>
+        <MenuPanel>
+          <MenuGroup
+            aria-label="Options"
+            name="options"
+            selectionVariant="single"
+            defaultSelected={defaultSelected}
+          >
+            <MenuItem value="one">One</MenuItem>
+            <MenuItem value="two">Two</MenuItem>
           </MenuGroup>
         </MenuPanel>
       </Menu>
@@ -730,6 +735,60 @@ describe("Given a Menu with uncontrolled selectable groups", () => {
       "one",
       "two",
     ]);
+  });
+
+  it("keeps a selection without a name until the menu closes, and warns once", async () => {
+    const warning = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const onSelectionChange = vi.fn();
+    await renderWithSalt(
+      <UncontrolledMenu
+        name={undefined}
+        selectionVariant="multiple"
+        onSelectionChange={onSelectionChange}
+      />,
+    );
+    await trigger().click();
+    const one = page.getByRole("menuitemcheckbox", { name: "One" });
+    const two = page.getByRole("menuitemcheckbox", { name: "Two" });
+    await one.click();
+    await two.click();
+    await expect.element(one).toHaveAttribute("aria-checked", "true");
+    await expect.element(two).toHaveAttribute("aria-checked", "true");
+    expect(onSelectionChange).toHaveBeenLastCalledWith(expect.anything(), [
+      "one",
+      "two",
+    ]);
+    await userEvent.keyboard("{Escape}");
+    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+    await trigger().click();
+    await expect.element(one).toHaveAttribute("aria-checked", "false");
+    await expect.element(two).toHaveAttribute("aria-checked", "false");
+    expect(
+      warning.mock.calls.filter(([message]) =>
+        String(message).includes("MenuGroup requires a `name`"),
+      ),
+    ).toHaveLength(1);
+  });
+
+  it("ignores defaultSelected changes after mount", async () => {
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    await renderWithSalt(<ChangingDefaultMenu />);
+    const one = page.getByRole("menuitemradio", { name: "One" });
+    await expect.element(one).toHaveAttribute("aria-checked", "true");
+    await page.getByRole("button", { name: "Change default" }).click();
+    await expect
+      .poll(() =>
+        error.mock.calls.some(([message]) =>
+          String(message).includes(
+            "changing the default selected state of an uncontrolled MenuGroup",
+          ),
+        ),
+      )
+      .toBe(true);
+    await expect.element(one).toHaveAttribute("aria-checked", "true");
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Two" }))
+      .toHaveAttribute("aria-checked", "false");
   });
 
   it("prefers selected over defaultSelected", async () => {
