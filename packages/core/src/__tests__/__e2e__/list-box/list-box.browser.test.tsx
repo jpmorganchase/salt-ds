@@ -291,10 +291,15 @@ describe("GIVEN a List box at the edge of its options", () => {
     );
 
     await userEvent.tab();
+    await expectActiveOption("Alabama");
     await userEvent.keyboard("{PageUp}");
+    await expectActiveOption("Alabama");
     expect(keyDown.lastDefaultPrevented()).toBe(true);
 
+    await userEvent.keyboard("{End}");
+    await expectActiveOption("Alaska");
     await userEvent.keyboard("{PageDown}");
+    await expectActiveOption("Alaska");
     expect(keyDown.lastDefaultPrevented()).toBe(true);
   });
 });

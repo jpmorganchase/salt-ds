@@ -791,8 +791,8 @@ describe("GIVEN a Combo box in a scroll container", () => {
 });
 
 describe("GIVEN a closed Combo box", () => {
-  it.each(["{PageUp}", "{PageDown}"])(
-    "lets %s scroll the page",
+  it.each(["{PageUp}", "{PageDown}", "{Home}", "{End}"])(
+    "leaves %s to the browser",
     async (key) => {
       const keyDown = trackDefaultPrevented();
       await renderWithSalt(
@@ -811,6 +811,66 @@ describe("GIVEN a closed Combo box", () => {
       await expect
         .element(input())
         .not.toHaveAttribute("aria-activedescendant");
+    },
+  );
+
+  it.each([
+    ["{Home}", 0],
+    ["{End}", "Alabama".length],
+  ] as const)("moves the caret with %s", async (key, caret) => {
+    await renderWithSalt(
+      <ComboBox defaultValue="Alabama">
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </ComboBox>,
+    );
+    await userEvent.tab();
+    const inputElement = input().element() as HTMLInputElement;
+    inputElement.setSelectionRange(3, 3);
+
+    await userEvent.keyboard(key);
+
+    expect(inputElement.selectionStart).toBe(caret);
+    expect(inputElement.selectionEnd).toBe(caret);
+    await expect.element(input()).toHaveAttribute("aria-expanded", "false");
+  });
+});
+
+describe("GIVEN a Combo box with no options to show", () => {
+  function FilteredComboBox({
+    onKeyDown,
+  }: {
+    onKeyDown: KeyboardEventHandler<HTMLInputElement>;
+  }) {
+    const [value, setValue] = useState("");
+    const options = ["Alabama", "Alaska"].filter((option) =>
+      option.toLowerCase().startsWith(value.toLowerCase()),
+    );
+    return (
+      <ComboBox
+        value={value}
+        onChange={(event) => setValue(event.target.value)}
+        onKeyDown={onKeyDown}
+      >
+        {options.map((option) => (
+          <Option key={option} value={option} />
+        ))}
+      </ComboBox>
+    );
+  }
+
+  it.each(["{PageUp}", "{PageDown}"])(
+    "lets %s scroll the page",
+    async (key) => {
+      const keyDown = trackDefaultPrevented();
+      await renderWithSalt(<FilteredComboBox onKeyDown={keyDown.handler} />);
+      await typeFilter("z");
+      await expect.element(input()).toHaveAttribute("aria-expanded", "true");
+      await expect.element(listbox()).not.toBeInTheDocument();
+
+      await userEvent.keyboard(key);
+
+      expect(keyDown.lastDefaultPrevented()).toBe(false);
     },
   );
 });

@@ -616,3 +616,32 @@ describe("GIVEN a Dropdown at the edge of its options", () => {
     expect(keyDown.lastDefaultPrevented()).toBe(true);
   });
 });
+
+describe("GIVEN a closed Dropdown", () => {
+  it.each(["{PageUp}", "{PageDown}", "{Home}", "{End}"])(
+    "lets %s scroll the page",
+    async (key) => {
+      const keyDown = trackDefaultPrevented();
+      await renderWithSalt(
+        <Dropdown onKeyDown={keyDown.handler}>
+          <Option value="Alabama" />
+          <Option value="Alaska" />
+        </Dropdown>,
+      );
+      await userEvent.tab();
+      await expect
+        .element(combobox())
+        .toHaveAttribute("aria-expanded", "false");
+
+      await userEvent.keyboard(key);
+
+      expect(keyDown.lastDefaultPrevented()).toBe(false);
+      await expect
+        .element(combobox())
+        .toHaveAttribute("aria-expanded", "false");
+      await expect
+        .element(combobox())
+        .not.toHaveAttribute("aria-activedescendant");
+    },
+  );
+});

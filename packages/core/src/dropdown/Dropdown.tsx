@@ -305,6 +305,11 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         setOpen(true, undefined, event.key);
         return;
       }
+
+      // The list is hidden, so leave the other navigation keys to scroll the page.
+      if (isListControlNavigationKey(event.key)) {
+        return;
+      }
     }
 
     if (

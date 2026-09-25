@@ -28,6 +28,7 @@ import { Button } from "../button";
 import { useFormFieldProps } from "../form-field-context";
 import {
   getComboBoxNavigationTarget,
+  isListControlNavigationKey,
   type OptionAndElement,
 } from "../list-control/ListControlNavigationKeys";
 import { ListControlProvider } from "../list-control/ListControlProvider";
@@ -243,11 +244,14 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         setOpen(true, undefined, event.key);
         return;
       }
+    }
 
-      // The list is hidden, so leave PageUp/PageDown to scroll the page.
-      if (event.key === "PageUp" || event.key === "PageDown") {
-        return;
-      }
+    // With no list shown, leave these keys to move the caret or scroll the page.
+    if (
+      (!openState || !hasValidChildren) &&
+      isListControlNavigationKey(event.key)
+    ) {
+      return;
     }
 
     const activeOption = activeState;

@@ -1,6 +1,9 @@
 import type { OptionValue } from "./ListControlContext";
 
-/** Keys that always navigate between options and should prevent default. */
+/**
+ * Keys that move between options while the list is shown. When no list is
+ * shown, Dropdown and ComboBox leave these keys to the browser.
+ */
 export const LIST_CONTROL_NAVIGATION_KEYS: ReadonlySet<string> = new Set([
   "ArrowDown",
   "ArrowUp",
