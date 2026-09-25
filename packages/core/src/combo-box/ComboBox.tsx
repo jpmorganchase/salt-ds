@@ -243,6 +243,11 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         setOpen(true, undefined, event.key);
         return;
       }
+
+      // The list is hidden, so leave PageUp/PageDown to scroll the page.
+      if (event.key === "PageUp" || event.key === "PageDown") {
+        return;
+      }
     }
 
     const activeOption = activeState;
