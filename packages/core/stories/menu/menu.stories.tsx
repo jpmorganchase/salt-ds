@@ -4,6 +4,7 @@ import {
   Card,
   Menu,
   MenuGroup,
+  type MenuGroupProps,
   MenuItem,
   MenuPanel,
   MenuTrigger,
@@ -474,6 +475,152 @@ export const WithDisabledItems: StoryFn<typeof Menu> = (args) => {
         >
           Export
         </MenuItem>
+      </MenuPanel>
+    </Menu>
+  );
+};
+
+export const SingleSelection: StoryFn<typeof Menu> = (args) => {
+  const [sort, setSort] = useState<string[]>(["name"]);
+
+  return (
+    <Menu {...args}>
+      <MenuTrigger>
+        <Button appearance="transparent" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup
+          label="Sort by"
+          selectionVariant="single"
+          selected={sort}
+          onSelectionChange={(_event, newSelected) => setSort(newSelected)}
+        >
+          <MenuItem value="name">Name</MenuItem>
+          <MenuItem value="modified">Date modified</MenuItem>
+          <MenuItem value="size">Size</MenuItem>
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+};
+
+export const MultipleSelection: StoryFn<typeof Menu> = (args) => {
+  const [columns, setColumns] = useState<string[]>(["owner", "size"]);
+
+  return (
+    <Menu {...args}>
+      <MenuTrigger>
+        <Button appearance="transparent" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup
+          label="Columns"
+          selectionVariant="multiple"
+          selected={columns}
+          onSelectionChange={(_event, newSelected) => setColumns(newSelected)}
+        >
+          <MenuItem value="owner">Owner</MenuItem>
+          <MenuItem value="modified">Date modified</MenuItem>
+          <MenuItem value="size">Size</MenuItem>
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+};
+
+export const MixedSelection: StoryFn<typeof Menu> = (args) => {
+  const [sort, setSort] = useState<string[]>(["name"]);
+  const [columns, setColumns] = useState<string[]>(["owner", "size"]);
+
+  return (
+    <Menu {...args}>
+      <MenuTrigger>
+        <Button appearance="transparent" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup
+          label="Sort by"
+          selectionVariant="single"
+          selected={sort}
+          onSelectionChange={(_event, newSelected) => setSort(newSelected)}
+        >
+          <MenuItem value="name">Name</MenuItem>
+          <MenuItem value="modified">Date modified</MenuItem>
+        </MenuGroup>
+        <MenuGroup
+          label="Columns"
+          selectionVariant="multiple"
+          selected={columns}
+          onSelectionChange={(_event, newSelected) => setColumns(newSelected)}
+        >
+          <MenuItem value="owner">Owner</MenuItem>
+          <MenuItem value="size">Size</MenuItem>
+          <MenuItem disabled value="type">
+            Type
+          </MenuItem>
+        </MenuGroup>
+        <MenuGroup>
+          <EditStylingMenu />
+          <MenuItem
+            onClick={() => {
+              alert("Export");
+            }}
+          >
+            Export
+          </MenuItem>
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+};
+
+function SortByMenu(
+  props: Pick<MenuGroupProps, "onSelectionChange" | "selected">,
+) {
+  return (
+    <Menu>
+      <MenuTrigger>
+        <MenuItem>Sort by</MenuItem>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup aria-label="Sort by" selectionVariant="single" {...props}>
+          <MenuItem value="name">Name</MenuItem>
+          <MenuItem value="modified">Date modified</MenuItem>
+          <MenuItem value="size">Size</MenuItem>
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+}
+
+export const SelectionInSubmenu: StoryFn<typeof Menu> = (args) => {
+  const [sort, setSort] = useState<string[]>(["name"]);
+
+  return (
+    <Menu {...args}>
+      <MenuTrigger>
+        <Button appearance="transparent" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuItem
+          onClick={() => {
+            alert("Copy");
+          }}
+        >
+          Copy
+        </MenuItem>
+        <SortByMenu
+          selected={sort}
+          onSelectionChange={(_event, newSelected) => setSort(newSelected)}
+        />
       </MenuPanel>
     </Menu>
   );
