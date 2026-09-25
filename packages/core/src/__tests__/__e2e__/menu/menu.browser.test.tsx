@@ -99,6 +99,25 @@ describe("Given a Menu", () => {
     },
   );
 
+  it("does not activate the first item when Enter is held on the trigger", async () => {
+    const alertSpy = vi.spyOn(window, "alert").mockImplementation(() => {});
+    await renderWithSalt(<SingleLevel />);
+    trigger().element().focus();
+    await userEvent.keyboard("{Enter}");
+    const copy = page.getByRole("menuitem", { name: "Copy" });
+    await expect.element(copy).toHaveFocus();
+    copy.element().dispatchEvent(
+      new KeyboardEvent("keydown", {
+        key: "Enter",
+        bubbles: true,
+        cancelable: true,
+        repeat: true,
+      }),
+    );
+    await expect.element(page.getByRole("menu")).toBeInTheDocument();
+    expect(alertSpy).not.toHaveBeenCalled();
+  });
+
   it("closes on Escape", async () => {
     const onOpenChange = vi.fn();
     await renderWithSalt(<SingleLevel onOpenChange={onOpenChange} />);
@@ -484,6 +503,32 @@ describe("Given a Menu with selectable groups", () => {
     },
   );
 
+  it("toggles once when Space is held", async () => {
+    const onSelectionChange = vi.fn();
+    await renderWithSalt(
+      <SelectableMenu
+        selectionVariant="multiple"
+        onSelectionChange={onSelectionChange}
+      />,
+    );
+    trigger().element().focus();
+    await userEvent.keyboard("{Enter}");
+    const one = page.getByRole("menuitemcheckbox", { name: "One" });
+    await expect.element(one).toHaveFocus();
+    for (const repeat of [false, true, true]) {
+      one.element().dispatchEvent(
+        new KeyboardEvent("keydown", {
+          key: " ",
+          bubbles: true,
+          cancelable: true,
+          repeat,
+        }),
+      );
+    }
+    await expect.element(one).toHaveAttribute("aria-checked", "true");
+    expect(onSelectionChange).toHaveBeenCalledTimes(1);
+  });
+
   it("keeps the menu open on click and Enter when closeOnSelect is false", async () => {
     await renderWithSalt(
       <SelectableMenu selectionVariant="single" closeOnSelect={false} />,
@@ -569,7 +614,7 @@ describe("Given a Menu with selectable groups", () => {
       .toHaveAttribute("aria-checked", "true");
   });
 
-  it("warns when a menu item in a selectable group has no value", async () => {
+  it("warns once when a menu item in a selectable group has no value", async () => {
     const warning = vi.spyOn(console, "warn").mockImplementation(() => {});
     await renderWithSalt(
       <SelectableMenu selectionVariant="single">
@@ -578,12 +623,17 @@ describe("Given a Menu with selectable groups", () => {
       </SelectableMenu>,
     );
     await trigger().click();
-    await expect
-      .element(page.getByRole("menuitem", { name: "Reset" }))
-      .not.toHaveAttribute("aria-checked");
-    expect(warning).toHaveBeenCalledWith(
-      expect.stringContaining("MenuItem requires a `value`"),
-    );
+    const reset = page.getByRole("menuitem", { name: "Reset" });
+    await expect.element(reset).not.toHaveAttribute("aria-checked");
+    await userEvent.keyboard("{Escape}");
+    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+    await trigger().click();
+    await expect.element(reset).toBeInTheDocument();
+    expect(
+      warning.mock.calls.filter(([message]) =>
+        String(message).includes("MenuItem requires a `value`"),
+      ),
+    ).toHaveLength(1);
   });
 });
 
