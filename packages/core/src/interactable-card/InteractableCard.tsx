@@ -141,7 +141,7 @@ export const InteractableCard = forwardRef<
     if (isMultiselect) {
       tabIndex = 0; // All items focusable in multi-select
     } else {
-      // Single select: Only selected or first item (if none are selected) is focusable
+      // Single select: only the selected card, or the first enabled card when no enabled card is selected, is focusable
       tabIndex = selected ? 0 : -1;
       // Fall back to the value for custom providers without hasEnabledSelection.
       const hasEnabledSelection =
