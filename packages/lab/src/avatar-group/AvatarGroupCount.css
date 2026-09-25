@@ -2,10 +2,11 @@
   --avatarGroupCount-size: var(--avatarGroup-item-size, var(--salt-size-base));
   color: var(--salt-content-bold-foreground);
   background: var(--salt-sentiment-neutral-background);
-  font-family: var(--salt-text-notation-fontFamily);
+  font-family: var(--salt-text-fontFamily);
   font-size: calc(var(--salt-text-notation-fontSize) * var(--avatarGroup-size-multiplier, 1));
   font-weight: var(--salt-text-notation-fontWeight);
   line-height: var(--salt-text-notation-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
   width: var(--avatarGroupCount-size);
   min-width: var(--avatarGroupCount-size);
   height: var(--avatarGroupCount-size);

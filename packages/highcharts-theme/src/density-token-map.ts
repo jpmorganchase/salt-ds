@@ -73,7 +73,6 @@ export type SaltChartTokenMap = {
   "--salt-text-label-fontWeight": string;
   "--salt-text-label-fontWeight-strong": string;
   "--salt-text-label-lineHeight": string;
-  "--salt-text-label-fontFamily": string;
   "--salt-content-primary-foreground": string;
   "--salt-content-secondary-foreground": string;
   "--salt-content-secondary-foreground-disabled": string;
@@ -148,7 +147,6 @@ const TYPOGRAPHY_TOKENS = {
   labelFontWeight: "--salt-text-label-fontWeight",
   labelStrongFontWeight: "--salt-text-label-fontWeight-strong",
   labelLineHeight: "--salt-text-label-lineHeight",
-  labelFontFamily: "--salt-text-label-fontFamily",
   primaryForeground: "--salt-content-primary-foreground",
   secondaryForeground: "--salt-content-secondary-foreground",
   secondaryForegroundDisabled: "--salt-content-secondary-foreground-disabled",
@@ -212,7 +210,6 @@ export const getDensityTokenMap = (
     TYPOGRAPHY_TOKENS.labelStrongFontWeight,
   );
   let labelLineHeight = getTokenFallback(TYPOGRAPHY_TOKENS.labelLineHeight);
-  let labelFontFamily = getTokenFallback(TYPOGRAPHY_TOKENS.labelFontFamily);
   let primaryForeground = getTokenFallback(TYPOGRAPHY_TOKENS.primaryForeground);
   let secondaryForeground = getTokenFallback(
     TYPOGRAPHY_TOKENS.secondaryForeground,
@@ -350,10 +347,6 @@ export const getDensityTokenMap = (
       tokenValues,
       TYPOGRAPHY_TOKENS.labelLineHeight,
     );
-    labelFontFamily = getResolvedStringToken(
-      tokenValues,
-      TYPOGRAPHY_TOKENS.labelFontFamily,
-    );
     primaryForeground = getResolvedStringToken(
       tokenValues,
       TYPOGRAPHY_TOKENS.primaryForeground,
@@ -435,7 +428,6 @@ export const getDensityTokenMap = (
     "--salt-text-label-fontWeight": labelFontWeight,
     "--salt-text-label-fontWeight-strong": labelStrongFontWeight,
     "--salt-text-label-lineHeight": labelLineHeight,
-    "--salt-text-label-fontFamily": labelFontFamily,
     "--salt-content-primary-foreground": primaryForeground,
     "--salt-content-secondary-foreground": secondaryForeground,
     "--salt-content-secondary-foreground-disabled": secondaryForegroundDisabled,

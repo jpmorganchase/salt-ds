@@ -107,6 +107,8 @@
   --salt-text-display4-fontWeight: var(--salt-text-display-fontWeight);
   --salt-text-display4-fontWeight-small: var(--salt-text-display-fontWeight-small);
   --salt-text-display4-fontWeight-strong: var(--salt-text-display-fontWeight-strong);
+  --salt-text-label-fontFamily: var(--salt-text-fontFamily);
+  --salt-text-notation-fontFamily: var(--salt-text-fontFamily);
 
   /* Navigable */
   --salt-navigable-cursor-active: pointer;

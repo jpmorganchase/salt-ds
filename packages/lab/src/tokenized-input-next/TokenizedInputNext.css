@@ -19,6 +19,7 @@
   font-size: var(--salt-text-fontSize);
   height: 100%;
   line-height: var(--salt-text-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
   min-height: var(--salt-size-base);
   padding: 0 var(--salt-spacing-100);
   position: relative;
@@ -105,7 +106,7 @@
   flex-basis: 0;
   height: var(--salt-text-lineHeight);
   font: inherit;
-  letter-spacing: 0;
+  letter-spacing: var(--salt-text-letterSpacing);
   overflow: hidden;
   resize: none;
   padding: 0;

@@ -11,13 +11,11 @@
   --salt-text-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
 
   /* Notation */
-  --salt-text-notation-fontFamily: var(--salt-typography-fontFamily-openSans);
   --salt-text-notation-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-text-notation-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 
   /* Label */
-  --salt-text-label-fontFamily: var(--salt-typography-fontFamily-openSans);
   --salt-text-label-fontWeight: var(--salt-typography-fontWeight-regular);
   --salt-text-label-fontWeight-small: var(--salt-typography-fontWeight-light);
   --salt-text-label-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
@@ -54,6 +52,8 @@
 
   /* Display */
   --salt-text-display-fontFamily: var(--salt-typography-fontFamily-openSans);
+  --salt-text-display-letterSpacing: 0;
+  --salt-text-display-textTransform: none;
   --salt-text-display-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-text-display-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-display-fontWeight-strong: var(--salt-typography-fontWeight-bold);
@@ -68,6 +68,8 @@
 
   /* Display */
   --salt-text-display-fontFamily: var(--salt-typography-fontFamily-amplitude);
+  --salt-text-display-letterSpacing: 0;
+  --salt-text-display-textTransform: none;
   --salt-text-display-fontWeight: var(--salt-typography-fontWeight-medium);
   --salt-text-display-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-display-fontWeight-strong: var(--salt-typography-fontWeight-bold);

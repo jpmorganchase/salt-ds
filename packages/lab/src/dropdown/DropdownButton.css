@@ -26,7 +26,7 @@
 
 .saltDropdownButton-buttonLabel {
   display: inline-block;
-  letter-spacing: 0;
+  letter-spacing: var(--salt-text-letterSpacing);
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;

@@ -74,7 +74,7 @@
 
 /* Notation */
 .saltText-notation.saltText {
-  font-family: var(--salt-text-notation-fontFamily);
+  font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-notation-fontSize);
   line-height: var(--salt-text-notation-lineHeight);
   font-weight: var(--salt-text-fontWeight);
@@ -118,7 +118,9 @@ code.saltText,
   font-family: var(--salt-text-display-fontFamily);
   font-size: var(--salt-text-display1-fontSize);
   font-weight: var(--salt-text-display-fontWeight);
+  letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
   line-height: var(--salt-text-display1-lineHeight);
+  text-transform: var(--salt-text-display-textTransform, none);
 }
 
 /* Display 1 emphasis strong */
@@ -138,7 +140,9 @@ code.saltText,
   font-family: var(--salt-text-display-fontFamily);
   font-size: var(--salt-text-display2-fontSize);
   font-weight: var(--salt-text-display-fontWeight);
+  letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
   line-height: var(--salt-text-display2-lineHeight);
+  text-transform: var(--salt-text-display-textTransform, none);
 }
 
 /* Display 2 emphasis strong */
@@ -158,7 +162,9 @@ code.saltText,
   font-family: var(--salt-text-display-fontFamily);
   font-size: var(--salt-text-display3-fontSize);
   font-weight: var(--salt-text-display-fontWeight);
+  letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
   line-height: var(--salt-text-display3-lineHeight);
+  text-transform: var(--salt-text-display-textTransform, none);
 }
 
 /* Display 3 emphasis strong */
@@ -178,7 +184,9 @@ code.saltText,
   font-family: var(--salt-text-display-fontFamily);
   font-size: var(--salt-text-display4-fontSize);
   font-weight: var(--salt-text-display-fontWeight);
+  letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
   line-height: var(--salt-text-display4-lineHeight);
+  text-transform: var(--salt-text-display-textTransform, none);
 }
 
 /* Display 4 emphasis strong */
@@ -284,7 +292,7 @@ h4.saltText small,
 /* Label */
 label.saltText,
 .saltText-label.saltText {
-  font-family: var(--salt-text-label-fontFamily);
+  font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
   font-weight: var(--salt-text-fontWeight);

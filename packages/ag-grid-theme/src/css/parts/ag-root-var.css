@@ -66,6 +66,7 @@ div[class*="ag-theme-salt"] {
   --ag-value-change-delta-down-color: var(--salt-sentiment-negative-foreground-decorative);
   --ag-value-change-delta-up-color: var(--salt-sentiment-positive-foreground-decorative);
   --ag-widget-container-horizontal-padding: var(--salt-spacing-100);
+  letter-spacing: var(--salt-text-letterSpacing);
   /*
       Use categorical color for below tokens when available
       --ag-advanced-filter-join-pill-color,--ag-advanced-filter-column-pill-color,--ag-advanced-filter-option-pill-color,--ag-advanced-filter-value-pill-color

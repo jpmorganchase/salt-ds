@@ -39,7 +39,7 @@
   color: var(--saltFormFieldLegacy-helperText-color, var(--salt-content-secondary-foreground));
   font-size: var(--formFieldLegacy-helperText-fontSize);
   font-style: var(--saltFormFieldLegacy-helperText-fontStyle, var(--salt-typography-textDecoration-italic));
-  letter-spacing: var(--saltFormFieldLegacy-helperText-letterSpacing, 0);
+  letter-spacing: var(--saltFormFieldLegacy-helperText-letterSpacing, var(--salt-text-letterSpacing));
   line-height: var(--saltFormFieldLegacy-helperText-lineHeight, var(--salt-text-lineHeight));
   min-height: var(--saltFormFieldLegacy-helperText-minHeight, var(--salt-text-label-minHeight));
   margin-bottom: var(--saltFormFieldLegacy-helperText-marginBottom, 0);
