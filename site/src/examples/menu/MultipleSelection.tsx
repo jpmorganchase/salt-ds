@@ -7,11 +7,9 @@ import {
   MenuTrigger,
 } from "@salt-ds/core";
 import { MicroMenuIcon } from "@salt-ds/icons";
-import { type ReactElement, useState } from "react";
+import type { ReactElement } from "react";
 
 export const MultipleSelection = (): ReactElement => {
-  const [columns, setColumns] = useState<string[]>(["owner", "size"]);
-
   return (
     <Menu>
       <MenuTrigger>
@@ -22,9 +20,9 @@ export const MultipleSelection = (): ReactElement => {
       <MenuPanel>
         <MenuGroup
           label="Columns"
+          name="columns"
           selectionVariant="multiple"
-          selected={columns}
-          onSelectionChange={(_event, newSelected) => setColumns(newSelected)}
+          defaultSelected={["owner", "size"]}
         >
           <MenuItem value="owner">Owner</MenuItem>
           <MenuItem value="modified">Date modified</MenuItem>
