@@ -17,9 +17,6 @@ const ORIENTATION = {
   bottom: "horizontal",
 } as const;
 
-const isHorizontal = (position: Position) =>
-  position === "left" || position === "right";
-
 const separator = () => page.getByRole("separator", { name: "Resize drawer" });
 
 function drawer() {
@@ -74,10 +71,11 @@ async function dispatchPointer(
   });
 }
 
-const sizeStyle = (position: Position) =>
-  isHorizontal(position)
-    ? { width: 300, minWidth: 100, maxWidth: 600 }
-    : { height: 300, minHeight: 100, maxHeight: 600 };
+const sizeProps = {
+  defaultSize: 300,
+  minSize: 100,
+  maxSize: 600,
+};
 
 /**
  * Includes a focusable control, so the separator does not receive the initial
@@ -88,13 +86,7 @@ function ResizableFixture({
   ...rest
 }: Partial<DrawerProps>) {
   return (
-    <Drawer
-      open
-      resizable
-      position={position}
-      style={sizeStyle(position)}
-      {...rest}
-    >
+    <Drawer open resizable position={position} {...sizeProps} {...rest}>
       <DrawerHeader
         header="Resizable drawer"
         actions={<Button aria-label="Close drawer">Close</Button>}
@@ -114,7 +106,7 @@ function TriggeredDrawer() {
         onOpenChange={setOpen}
         resizable
         position="left"
-        style={{ width: 300, minWidth: 100, maxWidth: 600 }}
+        {...sizeProps}
       >
         <DrawerHeader
           header="Resizable drawer"

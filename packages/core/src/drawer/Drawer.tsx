@@ -31,13 +31,22 @@ import type { DrawerResizeHandleBorder } from "./internal/DrawerResizeHandle";
 
 interface ConditionalScrimWrapperProps extends PropsWithChildren {
   condition: boolean;
+  className?: string;
 }
 
 const ConditionalScrimWrapper = ({
   condition,
+  className,
   children,
 }: ConditionalScrimWrapperProps) => {
-  return condition ? <Scrim fixed> {children} </Scrim> : <>{children} </>;
+  return condition ? (
+    <Scrim fixed className={className}>
+      {" "}
+      {children}{" "}
+    </Scrim>
+  ) : (
+    <>{children} </>
+  );
 };
 
 export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
@@ -69,16 +78,39 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    * Allow the user to resize the drawer by dragging its inner edge.
    * The handle occupies space inside the drawer's declared size rather than overlaying its
    * content, and does not consume the drawer's padding.
-   * Limits come from the drawer's own CSS: `min-width`/`max-width` for `left` and `right`,
-   * `min-height`/`max-height` for `top` and `bottom`.
+   * Compose the drawer from `DrawerHeader`, `DrawerContent` and `DrawerFooter` when resizable,
+   * so content scrolls inside `DrawerContent` rather than scrolling the drawer itself.
    * */
   resizable?: boolean;
+  /**
+   * Smallest size in px the drawer can be resized to. Applies to the width for a `left` or
+   * `right` drawer, and to the height for a `top` or `bottom` drawer.
+   * */
+  minSize?: number;
+  /**
+   * Largest size in px the drawer can be resized to. Defaults to the size of the viewport
+   * along the resize axis.
+   * */
+  maxSize?: number;
+  /**
+   * Size in px the drawer starts at. When omitted, the drawer keeps the size set by CSS until
+   * it is resized.
+   * */
+  defaultSize?: number;
+  /**
+   * Called with the new size in px each time the drawer is resized.
+   * */
+  onResize?: (size: number) => void;
   /**
    * Sides of the resize handle to render a border on. No borders are rendered by default.
    * `left` and `right` apply to a `left` or `right` drawer, `top` and `bottom` to a `top`
    * or `bottom` drawer; a side that does not run along the handle is ignored.
    * */
   resizeHandleBorders?: DrawerResizeHandleBorder[];
+  /**
+   * Accessible name for the resize handle. Defaults to "Resize drawer".
+   * */
+  resizeHandleLabel?: string;
   /**
    * Which element to initially focus. Can be either a number (tabbable index as specified by the order) or a ref.
    * Default value is 0 (first tabbable element).
@@ -103,6 +135,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       disableScrim,
       resizable = false,
       resizeHandleBorders,
+      resizeHandleLabel = "Resize drawer",
+      minSize,
+      maxSize,
+      defaultSize,
+      onResize,
       initialFocus,
       id,
       style,
@@ -121,6 +158,16 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const drawerId = useId(id);
 
     const sectioned = hasDrawerSection(children);
+
+    useEffect(() => {
+      if (process.env.NODE_ENV !== "production") {
+        if (resizable && !sectioned) {
+          console.warn(
+            "A resizable Drawer should be composed from DrawerHeader, DrawerContent and DrawerFooter. A resizable Drawer does not scroll itself, so content outside DrawerContent may be clipped.",
+          );
+        }
+      }
+    }, [resizable, sectioned]);
 
     const [showComponent, setShowComponent] = useState(false);
     const [headerId, setHeaderId] = useState<string | undefined>(undefined);
@@ -145,9 +192,37 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       enabled: resizable,
       position,
       element: elements.floating,
+      minSize,
+      maxSize,
+      defaultSize,
+      onResize,
     });
     const sizeProperty =
       position === "left" || position === "right" ? "width" : "height";
+
+    const borderSidesAlongHandle = useMemo<DrawerResizeHandleBorder[]>(
+      () => (sizeProperty === "width" ? ["left", "right"] : ["top", "bottom"]),
+      [sizeProperty],
+    );
+    const resizeHandleBordersKey = resizeHandleBorders?.join(",");
+
+    useEffect(() => {
+      if (process.env.NODE_ENV !== "production") {
+        const ignored = resizeHandleBordersKey
+          ?.split(",")
+          .filter(
+            (side) =>
+              !borderSidesAlongHandle.includes(
+                side as DrawerResizeHandleBorder,
+              ),
+          );
+        if (ignored?.length) {
+          console.warn(
+            `Drawer ignored resizeHandleBorders "${ignored.join('", "')}". A ${position} drawer's resize handle only supports the "${borderSidesAlongHandle.join('" and "')}" sides.`,
+          );
+        }
+      }
+    }, [resizeHandleBordersKey, borderSidesAlongHandle, position]);
 
     useEffect(() => {
       if (open && !showComponent) {
@@ -175,7 +250,15 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     return (
       <DrawerContext.Provider value={contextValue}>
-        <ConditionalScrimWrapper condition={showComponent && !disableScrim}>
+        <ConditionalScrimWrapper
+          condition={showComponent && !disableScrim}
+          className={clsx({
+            [withBaseName("resizingHorizontal")]:
+              isResizing && sizeProperty === "width",
+            [withBaseName("resizingVertical")]:
+              isResizing && sizeProperty === "height",
+          })}
+        >
           <FloatingComponent
             id={drawerId}
             open={showComponent}
@@ -217,11 +300,9 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 position={position}
                 resizing={isResizing}
                 borders={resizeHandleBorders?.filter((side) =>
-                  sizeProperty === "width"
-                    ? side === "left" || side === "right"
-                    : side === "top" || side === "bottom",
+                  borderSidesAlongHandle.includes(side),
                 )}
-                aria-label="Resize drawer"
+                aria-label={resizeHandleLabel}
                 aria-controls={drawerId}
                 {...separatorProps}
               />

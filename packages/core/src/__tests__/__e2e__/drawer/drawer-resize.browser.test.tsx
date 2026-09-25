@@ -116,23 +116,18 @@ async function pressOnHandle(key: string) {
   await userEvent.keyboard(key);
 }
 
-const sizeStyle = (position: Position) =>
-  isHorizontal(position)
-    ? { width: 300, minWidth: 100, maxWidth: 600 }
-    : { height: 300, minHeight: 100, maxHeight: 600 };
+const sizeProps = {
+  defaultSize: 300,
+  minSize: 100,
+  maxSize: 600,
+};
 
 function ResizableFixture({
   position = "left",
   ...rest
 }: Partial<DrawerProps>) {
   return (
-    <Drawer
-      open
-      resizable
-      position={position}
-      style={sizeStyle(position)}
-      {...rest}
-    >
+    <Drawer open resizable position={position} {...sizeProps} {...rest}>
       <DrawerHeader header="Resizable drawer" />
       <DrawerContent>Content</DrawerContent>
     </Drawer>
@@ -147,7 +142,7 @@ function DismissibleFixture({ position = "left" }: { position?: Position }) {
       onOpenChange={setOpen}
       resizable
       position={position}
-      style={sizeStyle(position)}
+      {...sizeProps}
     >
       <DrawerHeader header="Resizable drawer" />
       <DrawerContent>Content</DrawerContent>
@@ -163,14 +158,12 @@ describe("GIVEN a resizable Drawer", () => {
         await waitForOpen();
 
         const rect = drawer().getBoundingClientRect();
-        const expected = sizeStyle(position);
 
         expect(isHorizontal(position) ? rect.width : rect.height).toBeCloseTo(
           300,
           1,
         );
         expect(rect.width).toBeGreaterThan(0);
-        expect(expected).toBeTruthy();
 
         // The reserve is on the handle's side only. A sectioned Drawer has no
         // padding of its own, so it is exactly the handle size.
@@ -227,6 +220,50 @@ describe("GIVEN a resizable Drawer", () => {
       // The handle's size is added to the Drawer's own padding, not taken from it.
       expect(paddingOf("right")).toBeCloseTo(basePadding + HANDLE_SIZE, 1);
       expect(drawer().getBoundingClientRect().width).toBeCloseTo(300, 1);
+    });
+
+    it("does not scroll its own handle out of view", async () => {
+      await renderWithSalt(
+        <Drawer open resizable position="left" defaultSize={300}>
+          <DrawerHeader header="Resizable drawer" />
+          <DrawerContent>Content</DrawerContent>
+        </Drawer>,
+      );
+      await waitForOpen();
+
+      // A resizable Drawer never scrolls itself, so the handle cannot be
+      // carried out of view by overflowing content.
+      expect(getComputedStyle(drawer()).overflow).toBe("clip");
+    });
+
+    it("returns to its CSS size when resizing is turned off", async () => {
+      function ToggleFixture({ resizable }: { resizable: boolean }) {
+        return (
+          <Drawer
+            open
+            resizable={resizable}
+            position="left"
+            defaultSize={300}
+            style={{ width: 420 }}
+          >
+            <DrawerHeader header="Resizable drawer" />
+            <DrawerContent>Content</DrawerContent>
+          </Drawer>
+        );
+      }
+
+      const { rerender } = await renderWithSalt(
+        <ToggleFixture resizable={true} />,
+      );
+      await waitForOpen();
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(300, 0);
+
+      await act(async () => {
+        rerender(<ToggleFixture resizable={false} />);
+      });
+
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(420, 0);
+      expect(document.querySelector(".saltDrawerResizeHandle")).toBeNull();
     });
   });
 
@@ -287,27 +324,7 @@ describe("GIVEN a resizable Drawer", () => {
         .toBeGreaterThan(rect.width + 40);
     });
 
-    it("resizes from just outside the edge without dismissing the Drawer", async () => {
-      await renderWithSalt(<DismissibleFixture position="left" />);
-      await waitForOpen();
-
-      const rect = drawer().getBoundingClientRect();
-      const y = rect.top + 120;
-      const startX = rect.right + 3;
-      const target = document.elementFromPoint(startX, y);
-      expect(target).not.toBeNull();
-
-      await dispatchPointer(target as Element, "pointerdown", startX, y);
-      await dispatchPointer(handle(), "pointermove", startX + 80, y);
-      await dispatchPointer(handle(), "pointerup", startX + 80, y);
-
-      await expect
-        .poll(() => drawerSize("left"))
-        .toBeGreaterThan(rect.width + 60);
-      await expect.element(page.getByRole("dialog")).toBeVisible();
-    });
-
-    it("still dismisses on a press well outside the edge", async () => {
+    it("dismisses on a press outside the Drawer", async () => {
       await renderWithSalt(<DismissibleFixture position="left" />);
       await waitForOpen();
 
@@ -321,7 +338,7 @@ describe("GIVEN a resizable Drawer", () => {
       await expect.poll(() => document.querySelector(".saltDrawer")).toBeNull();
     });
 
-    it("clamps to the CSS maximum", async () => {
+    it("clamps to maxSize", async () => {
       await renderWithSalt(<ResizableFixture position="left" />);
       await waitForOpen();
 
@@ -330,13 +347,28 @@ describe("GIVEN a resizable Drawer", () => {
       await expect.poll(() => drawerSize("left")).toBeCloseTo(600, 0);
     });
 
-    it("clamps to the CSS minimum", async () => {
+    it("clamps to minSize", async () => {
       await renderWithSalt(<ResizableFixture position="left" />);
       await waitForOpen();
 
       await dragHandleBy("left", -900);
 
       await expect.poll(() => drawerSize("left")).toBeCloseTo(100, 0);
+    });
+
+    it("never shrinks below the handle's hit area without a minSize", async () => {
+      await renderWithSalt(
+        <Drawer open resizable position="left" defaultSize={300}>
+          <DrawerHeader header="Resizable drawer" />
+          <DrawerContent>Content</DrawerContent>
+        </Drawer>,
+      );
+      await waitForOpen();
+
+      await dragHandleBy("left", -900);
+
+      // The handle stays grabbable, so the drawer can always be restored.
+      await expect.poll(() => drawerSize("left")).toBeGreaterThanOrEqual(16);
     });
   });
 
@@ -406,22 +438,114 @@ describe("GIVEN a resizable Drawer", () => {
       await expect.poll(() => drawerSize("left")).toBeCloseTo(600, 0);
     });
 
-    it("collapses and restores with Enter", async () => {
-      await renderWithSalt(<ResizableFixture position="left" />);
-      await waitForOpen();
-
-      await pressOnHandle("{Enter}");
-      await expect.poll(() => drawerSize("left")).toBeCloseTo(100, 0);
-
-      await pressOnHandle("{Enter}");
-      await expect.poll(() => drawerSize("left")).toBeCloseTo(300, 0);
-    });
-
     it("ignores keys that do not resize", async () => {
       await renderWithSalt(<ResizableFixture position="left" />);
       await waitForOpen();
 
       await pressOnHandle("{ArrowUp}");
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(300, 0);
+
+      // Enter no longer collapses: collapsing is not offered without an
+      // explicit opt-in, so a stray Enter cannot shrink the drawer.
+      await pressOnHandle("{Enter}");
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(300, 0);
+    });
+  });
+
+  describe("changing position", () => {
+    it("drops a size captured on the other axis", async () => {
+      function AxisFixture({ position }: { position: Position }) {
+        return (
+          <Drawer
+            open
+            resizable
+            position={position}
+            minSize={100}
+            maxSize={600}
+          >
+            <DrawerHeader header="Resizable drawer" />
+            <DrawerContent>Content</DrawerContent>
+          </Drawer>
+        );
+      }
+
+      const { rerender } = await renderWithSalt(
+        <AxisFixture position="left" />,
+      );
+      await waitForOpen();
+
+      await dragHandleBy("left", 120);
+      const resizedWidth = drawerSize("left");
+      expect(resizedWidth).toBeGreaterThan(120);
+
+      await act(async () => {
+        rerender(<AxisFixture position="top" />);
+      });
+
+      // The width must not be reapplied as a height.
+      await expect
+        .poll(() => drawer().style.height)
+        .not.toBe(`${resizedWidth}px`);
+
+      // The separator must describe the drawer it is now attached to, not the
+      // size it had on the previous axis.
+      await expect
+        .poll(() => {
+          const value = handle().getAttribute("aria-valuenow");
+          return value === null ? null : Number(value);
+        })
+        .toBeCloseTo(drawerSize("top"), 0);
+    });
+  });
+
+  describe("size constraints", () => {
+    it("brings a defaultSize beyond maxSize back within range", async () => {
+      await renderWithSalt(
+        <Drawer
+          open
+          resizable
+          position="left"
+          defaultSize={900}
+          minSize={100}
+          maxSize={600}
+        >
+          <DrawerHeader header="Resizable drawer" />
+          <DrawerContent>Content</DrawerContent>
+        </Drawer>,
+      );
+      await waitForOpen();
+
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(600, 0);
+      await expect
+        .poll(() => handle().getAttribute("aria-valuenow"))
+        .toBe("600");
+    });
+
+    it("brings the size back within range when maxSize tightens", async () => {
+      function LimitFixture({ maxSize }: { maxSize: number }) {
+        return (
+          <Drawer
+            open
+            resizable
+            position="left"
+            defaultSize={500}
+            minSize={100}
+            maxSize={maxSize}
+          >
+            <DrawerHeader header="Resizable drawer" />
+            <DrawerContent>Content</DrawerContent>
+          </Drawer>
+        );
+      }
+
+      const { rerender } = await renderWithSalt(<LimitFixture maxSize={600} />);
+      await waitForOpen();
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(500, 0);
+
+      await act(async () => {
+        rerender(<LimitFixture maxSize={300} />);
+      });
+
       await expect.poll(() => drawerSize("left")).toBeCloseTo(300, 0);
     });
   });

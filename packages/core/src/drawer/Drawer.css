@@ -53,20 +53,31 @@
   padding-top: calc(var(--drawer-padding) + var(--drawer-resizeHandleSize));
 }
 
-/* A focused resize handle draws its ring just outside the strip, which sits
-   flush with the Drawer's edge, so `overflow: auto` would clip it. A sectioned
-   Drawer scrolls inside DrawerContent rather than scrolling itself, so it can
-   clip with a margin instead, which lets the ring paint. */
-.saltDrawer-resizable.saltDrawer-sectioned {
+/* A resizable Drawer never scrolls itself: its handle is positioned against the
+   Drawer's padding box, so a scrolling Drawer would carry the handle out of
+   view, and `overflow: auto` would clip the focus ring the handle draws just
+   outside the strip. Clipping with a margin instead lets the ring paint.
+   Content scrolls inside DrawerContent, which is why a resizable Drawer warns
+   in development when it is not composed from the Drawer sections. */
+.saltDrawer-resizable {
   overflow: clip;
   overflow-clip-margin: var(--salt-focused-outlineWidth);
 }
 
-@supports selector(:has(*)) {
-  .saltDrawer-resizable:has(> .saltDrawerHeader, > .saltDrawerContent, > .saltDrawerFooter) {
-    overflow: clip;
-    overflow-clip-margin: var(--salt-focused-outlineWidth);
-  }
+/* While a resize drag is in progress the pointer is captured by the handle, but
+   it may travel anywhere over the modal surface. The Drawer and the Scrim
+   behind it carry the resize cursor for the duration of the drag so it does not
+   revert to the default. Class names are applied by Drawer.tsx. */
+.saltDrawer-resizing.saltDrawer-left,
+.saltDrawer-resizing.saltDrawer-right,
+.saltScrim.saltDrawer-resizingHorizontal {
+  cursor: ew-resize;
+}
+
+.saltDrawer-resizing.saltDrawer-top,
+.saltDrawer-resizing.saltDrawer-bottom,
+.saltScrim.saltDrawer-resizingVertical {
+  cursor: ns-resize;
 }
 
 /* Styles applied when variant = "primary" */

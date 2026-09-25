@@ -9,9 +9,11 @@ import {
   Text,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
+import "@salt-ds/react-resizable-panels-theme/index.css";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import { type ReactNode, useLayoutEffect, useRef } from "react";
+import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 
 export default {
   title: "Core/Drawer/Drawer QA",
@@ -187,5 +189,97 @@ export const DrawerOverflow: StoryFn<QAContainerProps> = (props) => {
   );
 };
 DrawerOverflow.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+/* Pins the Drawer's resize handle against the Splitter handle it mirrors.
+   The two stylesheets are deliberate duplicates — core and
+   @salt-ds/react-resizable-panels-theme build independently — so these
+   snapshots are what catches drift between them. Compares the strip width, the
+   dot thumb and the border treatment on both axes. Hover and drag states are
+   not snapshotted: both stylesheets take them from the same
+   --salt-separable-* tokens. */
+function SplitterReference({
+  direction,
+}: {
+  direction: "horizontal" | "vertical";
+}) {
+  const borders =
+    direction === "horizontal"
+      ? "resize-handle-salt-border-left resize-handle-salt-border-right"
+      : "resize-handle-salt-border-top resize-handle-salt-border-bottom";
+
+  return (
+    <div
+      className="react-resizable-panels-theme-salt"
+      style={{
+        width: 260,
+        height: 200,
+        boxSizing: "border-box",
+        border:
+          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
+      }}
+    >
+      <PanelGroup direction={direction}>
+        <Panel className="resizable-panel-salt-variant-primary" />
+        <PanelResizeHandle className={borders} />
+        <Panel className="resizable-panel-salt-variant-primary" />
+      </PanelGroup>
+    </div>
+  );
+}
+
+const COMPARISON_DRAWER_SIZE = 220;
+
+export const ResizeHandleVsSplitterHorizontal: StoryFn = () => (
+  <div style={{ height: 320 }}>
+    <StackLayout
+      gap={1}
+      style={{ marginLeft: COMPARISON_DRAWER_SIZE + 40, paddingTop: 20 }}
+    >
+      <Text>Splitter reference</Text>
+      <SplitterReference direction="horizontal" />
+    </StackLayout>
+    <Drawer
+      open
+      resizable
+      disableScrim
+      position="left"
+      defaultSize={COMPARISON_DRAWER_SIZE}
+      resizeHandleBorders={["left", "right"]}
+    >
+      <DrawerHeader header="Drawer handle" actions={<CloseButton />} />
+      <DrawerContent>
+        <Text>Handle sits on the inner edge.</Text>
+      </DrawerContent>
+    </Drawer>
+  </div>
+);
+ResizeHandleVsSplitterHorizontal.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const ResizeHandleVsSplitterVertical: StoryFn = () => (
+  <div style={{ height: 460 }}>
+    <StackLayout gap={1} style={{ paddingTop: 200 }}>
+      <Text>Splitter reference</Text>
+      <SplitterReference direction="vertical" />
+    </StackLayout>
+    <Drawer
+      open
+      resizable
+      disableScrim
+      position="top"
+      defaultSize={180}
+      resizeHandleBorders={["top", "bottom"]}
+    >
+      <DrawerHeader header="Drawer handle" actions={<CloseButton />} />
+      <DrawerContent>
+        <Text>Handle sits on the inner edge.</Text>
+      </DrawerContent>
+    </Drawer>
+  </div>
+);
+ResizeHandleVsSplitterVertical.parameters = {
   chromatic: { disableSnapshot: false },
 };

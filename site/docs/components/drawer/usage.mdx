@@ -20,6 +20,14 @@ Left and right drawers cover the entire height of the viewport, and top and bott
 
 Always set a logical width suitable for the content inside the drawer. Refer to Salt's [Forms](/salt/patterns/forms) pattern for information on logical forms width, and the [typography foundation](/salt/foundations/typography) for guidance on paragraph text width.
 
+### Resizing
+
+Use the `resizable` prop when the right size depends on the user's content or screen, such as a drawer containing a table or a chart. Bound the resize with `minSize` and `maxSize` so the drawer stays usable, and use `onResize` if you need to persist the size the user chose.
+
+A resizable drawer does not scroll itself, so compose it from `DrawerHeader`, `DrawerContent` and `DrawerFooter` and let `DrawerContent` scroll.
+
+The resize handle matches the handle used by [`Splitter`](/salt/components/splitter). A drawer is modal and temporary, so it is resized on its own against the edge of the screen; to split a persistent layout between regions that stay visible, use `Splitter`, and for a persistent resizable region alongside the main task use [`SidePanel`](/salt/components/side-panel).
+
 ### When to use
 
 - To complete quick, self-contained actions with minimal disruption, such as quick selections, lightweight submissions, or confirmations, then return to the prior context.

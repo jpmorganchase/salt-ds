@@ -7,5 +7,6 @@ export * from "./Footer";
 export * from "./Header";
 export * from "./MandatoryAction";
 export * from "./Preheader";
+export * from "./Resizable";
 export * from "./RightDrawer";
 export * from "./TopDrawer";

@@ -565,6 +565,8 @@ export const Resizable: StoryFn<DrawerProps> = ({
   const [open, setOpen] = useState(false);
 
   const isHorizontal = position === "left" || position === "right";
+  const minSize = isHorizontal ? 200 : 160;
+  const maxSize = isHorizontal ? 640 : 520;
 
   return (
     <>
@@ -575,11 +577,9 @@ export const Resizable: StoryFn<DrawerProps> = ({
         position={position}
         open={open}
         onOpenChange={setOpen}
-        style={
-          isHorizontal
-            ? { width: 320, minWidth: 200, maxWidth: 640 }
-            : { height: 280, minHeight: 160, maxHeight: 520 }
-        }
+        defaultSize={isHorizontal ? 320 : 280}
+        minSize={minSize}
+        maxSize={maxSize}
       >
         <DrawerHeader
           header={`Resizable ${position} drawer`}
@@ -588,12 +588,7 @@ export const Resizable: StoryFn<DrawerProps> = ({
         />
         <DrawerContent>
           <StackLayout>
-            <Text>
-              Limits come from the drawer's own CSS:{" "}
-              {isHorizontal
-                ? "min-width 200px, max-width 640px."
-                : "min-height 160px, max-height 520px."}
-            </Text>
+            <Text>{`Resizes between ${minSize}px and ${maxSize}px.`}</Text>
             <Text>{loremText.repeat(4)}</Text>
           </StackLayout>
         </DrawerContent>

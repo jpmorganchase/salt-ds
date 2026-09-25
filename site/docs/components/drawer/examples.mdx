@@ -77,3 +77,13 @@ Use the `disableScrim` prop to prevent the scrim from rendering.
 **Note:** `DrawerCloseButton` is deprecated. Use the prop `actions` within `DrawerHeader` instead.
 
 <LivePreview componentName="drawer" exampleName="DeprecatedCloseButton" />
+
+## Resizable
+
+Use the `resizable` prop to let users adjust the drawer's width or height by dragging the handle on its inner edge, or by focusing the handle and using the keyboard.
+
+Set `minSize` and `maxSize` to bound the resize, and `defaultSize` to choose the size the drawer opens at. All three are in pixels, and apply to the width for a `left` or `right` drawer and to the height for a `top` or `bottom` drawer. `maxSize` defaults to the size of the viewport.
+
+Compose a resizable drawer from `DrawerHeader`, `DrawerContent` and `DrawerFooter`, so content scrolls inside `DrawerContent` rather than scrolling the drawer itself.
+
+<LivePreview componentName="drawer" exampleName="Resizable" />

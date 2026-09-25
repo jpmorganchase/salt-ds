@@ -1,17 +1,27 @@
 /* Styles applied to the Drawer's resize handle.
-   Mirrors the Splitter handle (@salt-ds/react-resizable-panels-theme): a
-   transparent strip carrying the same dot thumb and the same hover, drag and
-   focus treatments, so a resizable Drawer matches the documented Splitter.
+   Mirrors the Splitter handle in
+   packages/react-resizable-panels-theme/src/index.css: a transparent strip
+   carrying the same dot thumb and the same hover, drag and focus treatments,
+   so a resizable Drawer matches the documented Splitter. The two stylesheets
+   are deliberate duplicates — core and the theme package build independently,
+   and the theme targets react-resizable-panels v3 DOM. Drift between them is
+   caught by the ResizeHandleVsSplitter stories in drawer.qa.stories.tsx.
 
    The element itself is the pointer target. The Splitter inflates its 6px
    handle by 5px on each side for a 16px target; a Drawer's outer side is inert
    while the Drawer is modal, so it cannot receive pointer events and the same
    total is taken inwards instead. The element is out of flow, so this costs no
    layout: the Drawer still reserves only --drawerResizeHandle-size, which is
-   the width of the visible strip drawn by ::before. */
+   the width of the visible strip drawn by ::before.
+
+   The Drawer deliberately has no background variants. The Splitter offers them
+   because its handle sits between panels over the group background; this handle
+   sits inside the Drawer, so staying transparent already shows the Drawer's own
+   variant background. */
 .saltDrawerResizeHandle {
   --drawerResizeHandle-size: var(--drawer-resizeHandleSize, var(--salt-size-fixed-600));
-  --drawerResizeHandle-hitSize: 16px;
+  /* Keep in sync with MIN_RESIZE_SIZE in useDrawerResize.ts. */
+  --drawerResizeHandle-hitSize: calc(var(--drawerResizeHandle-size) + 2 * var(--salt-spacing-fixed-500));
   --drawerResizeHandle-thumbSize: max(var(--salt-size-icon, 12px), 12px);
   /* Offset that centres the thumb on the visible strip. */
   --drawerResizeHandle-thumbInset: calc((var(--drawerResizeHandle-size) - var(--drawerResizeHandle-thumbSize)) / 2);

@@ -34,3 +34,35 @@ data:
 
 </KeyboardControl>
 </KeyboardControls>
+
+## Resize handle
+
+When the `resizable` prop is set, the drawer renders a resize handle on its inner edge. The handle has a role of `separator`, joins the tab order after the drawer's content, and reports the drawer's current size and limits through `aria-valuenow`, `aria-valuemin` and `aria-valuemax`.
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Left / Right">
+
+- When focus is on the resize handle of a left or right drawer, this action resizes the drawer by a small step.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Up / Down">
+
+- When focus is on the resize handle of a top or bottom drawer, this action resizes the drawer by a small step.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Arrow">
+
+- This action resizes the drawer by a larger step.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Home">
+
+- This action resizes the drawer to its minimum size.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="End">
+
+- This action resizes the drawer to its maximum size.
+
+</KeyboardControl>
+</KeyboardControls>
