@@ -132,12 +132,13 @@ export const InteractableCard = forwardRef<
     onClick?.(event);
   };
 
-  let tabIndex: number;
+  // Disabled cards omit tabIndex so they can't receive focus, matching native disabled controls.
+  let tabIndex: number | undefined;
 
-  if (interactableCardGroup) {
-    if (disabled) {
-      tabIndex = -1;
-    } else if (isMultiselect) {
+  if (disabled) {
+    tabIndex = undefined;
+  } else if (interactableCardGroup) {
+    if (isMultiselect) {
       tabIndex = 0; // All items focusable in multi-select
     } else {
       // Single select: Only selected or first item (if none are selected) is focusable
@@ -151,7 +152,7 @@ export const InteractableCard = forwardRef<
       }
     }
   } else {
-    tabIndex = disabled ? -1 : 0;
+    tabIndex = 0;
   }
 
   const cardRef = useRef<HTMLDivElement>(null);

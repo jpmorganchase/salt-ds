@@ -80,6 +80,33 @@ describe("Given an Interactable Card", () => {
       .element(page.getByText(/commitment to provide a wide range/))
       .toBeVisible();
   });
+
+  it("does not focus or activate a disabled card", async () => {
+    const onChange = vi.fn();
+    const onClick = vi.fn();
+    await renderWithSalt(
+      <>
+        <button type="button">Before</button>
+        <InteractableCard disabled onChange={onChange} onClick={onClick}>
+          Disabled
+        </InteractableCard>
+        <button type="button">After</button>
+      </>,
+    );
+
+    const disabledCard = page.getByRole("button", { name: "Disabled" });
+    await expect.element(disabledCard).not.toHaveAttribute("tabindex");
+    await userEvent.tab();
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "After" }))
+      .toHaveFocus();
+
+    await disabledCard.click({ force: true });
+    await expect.element(disabledCard).not.toHaveFocus();
+    expect(onClick).not.toHaveBeenCalled();
+    expect(onChange).not.toHaveBeenCalled();
+  });
 });
 
 describe("GIVEN a multiselect InteractableCardGroup", () => {
@@ -507,22 +534,18 @@ describe("GIVEN a single-select InteractableCardGroup", () => {
   });
 
   it.each(["group", "card"] as const)(
-    "calls onKeyDown without selecting when the %s is disabled",
+    "does not focus or select a card when the %s is disabled",
     async (disabledTarget) => {
       const onChange = vi.fn();
       const onClick = vi.fn();
-      const onCardKeyDown = vi.fn();
-      const onGroupKeyDown = vi.fn();
       await renderWithSalt(
         <InteractableCardGroup
           disabled={disabledTarget === "group"}
           onChange={onChange}
-          onKeyDown={onGroupKeyDown}
         >
           <InteractableCard
             disabled={disabledTarget === "card"}
             onClick={onClick}
-            onKeyDown={onCardKeyDown}
             value="one"
           >
             One
@@ -531,19 +554,16 @@ describe("GIVEN a single-select InteractableCardGroup", () => {
         </InteractableCardGroup>,
       );
 
-      // Disabled cards are not tabbable but can still receive focus.
-      card("One", false).element().focus();
-      await userEvent.keyboard(" ");
-      await userEvent.keyboard("{Enter}");
-      await userEvent.keyboard("{ArrowDown}");
+      const disabledCard = card("One", false);
+      await expect.element(disabledCard).not.toHaveAttribute("tabindex");
+      await disabledCard.click({ force: true });
+      await expect.element(disabledCard).not.toHaveFocus();
+      disabledCard.element().focus();
+      await expect.element(disabledCard).not.toHaveFocus();
 
-      expect(onCardKeyDown).toHaveBeenCalledTimes(3);
-      expect(onGroupKeyDown).toHaveBeenCalledTimes(3);
       expect(onClick).not.toHaveBeenCalled();
       expect(onChange).not.toHaveBeenCalled();
-      await expect.element(card("One", false)).toHaveFocus();
       await expectChecked("One", false, false);
-      await expectChecked("Two", false, false);
     },
   );
 });
@@ -612,7 +632,7 @@ describe("GIVEN an InteractableCardGroup whose disabled state changes", () => {
     await act(() => setSelectedCardDisabled(true));
 
     await expect.element(card("One", false)).toHaveAttribute("tabindex", "0");
-    await expect.element(card("Two", false)).toHaveAttribute("tabindex", "-1");
+    await expect.element(card("Two", false)).not.toHaveAttribute("tabindex");
 
     await act(() => setSelectedCardDisabled(false));
 
