@@ -1,7 +1,8 @@
 import { FloatingTree, useFloatingParentNodeId } from "@floating-ui/react";
-import { type ReactNode, useCallback, useMemo, useState } from "react";
+import { type ReactNode, useState } from "react";
 import { MenuBase, type MenuBaseProps } from "./MenuBase";
 import {
+  type MenuSelectionStore,
   MenuSelectionStoreContext,
   useMenuSelectionStore,
 } from "./MenuSelectionStoreContext";
@@ -9,23 +10,15 @@ import {
 export interface MenuProps extends MenuBaseProps {}
 
 function MenuSelectionStoreProvider({ children }: { children: ReactNode }) {
-  const [storedSelection, setStoredSelection] = useState<
-    Record<string, string[]>
-  >({});
-
-  const getSelected = useCallback(
-    (name: string) => storedSelection[name],
-    [storedSelection],
-  );
-
-  const setSelected = useCallback((name: string, selected: string[]) => {
-    setStoredSelection((previous) => ({ ...previous, [name]: selected }));
-  }, []);
-
-  const store = useMemo(
-    () => ({ getSelected, setSelected }),
-    [getSelected, setSelected],
-  );
+  const [store] = useState<MenuSelectionStore>(() => {
+    const selections = new Map<string, string[]>();
+    return {
+      getSelected: (name) => selections.get(name),
+      setSelected: (name, selected) => {
+        selections.set(name, selected);
+      },
+    };
+  });
 
   return (
     <MenuSelectionStoreContext.Provider value={store}>

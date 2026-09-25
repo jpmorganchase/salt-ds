@@ -4,9 +4,9 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useRef,
+  useState,
 } from "react";
-import { createContext } from "../utils";
+import { createContext, useControlled } from "../utils";
 import type { MenuGroupProps } from "./MenuGroup";
 import { useMenuSelectionStore } from "./MenuSelectionStoreContext";
 
@@ -46,6 +46,8 @@ export interface UseMenuGroupSelectionProps
 
 const noSelection: string[] = [];
 
+let missingNameWarningShown = false;
+
 export function useMenuGroupSelection({
   defaultSelected,
   name,
@@ -54,52 +56,34 @@ export function useMenuGroupSelection({
   selectionVariant,
 }: UseMenuGroupSelectionProps) {
   const store = useMenuSelectionStore();
-  const controlled = selectedProp !== undefined;
-  const { current: initiallyControlled } = useRef(controlled);
+  const [storedSelected] = useState(() =>
+    name === undefined ? undefined : store?.getSelected(name),
+  );
+  const [selectedState, setSelectedState, isControlled] = useControlled({
+    controlled: selectedProp,
+    default: storedSelected ?? defaultSelected ?? noSelection,
+    name: "MenuGroup",
+    state: "selected",
+  });
   const missingName =
-    selectionVariant !== "none" && !controlled && name === undefined;
+    selectionVariant !== "none" && !isControlled && name === undefined;
 
   useEffect(() => {
     if (process.env.NODE_ENV !== "production") {
-      if (missingName) {
+      if (missingName && !missingNameWarningShown) {
+        missingNameWarningShown = true;
         console.warn(
-          "Salt: MenuGroup requires a `name` to keep an uncontrolled selection while the menu is closed. Pass `name` with `defaultSelected`, or control the selection with `selected` and `onSelectionChange`.",
+          "Salt: MenuGroup requires a `name` to keep an uncontrolled selection while the menu is closed. Without one, the selection resets each time the menu closes. Pass `name`, or control the selection with `selected` and `onSelectionChange`.",
         );
       }
     }
   }, [missingName]);
 
-  useEffect(() => {
-    if (process.env.NODE_ENV !== "production") {
-      if (initiallyControlled !== controlled) {
-        console.error(
-          [
-            `Salt: A component is changing the ${
-              initiallyControlled ? "" : "un"
-            }controlled selected state of MenuGroup to be ${
-              initiallyControlled ? "un" : ""
-            }controlled.`,
-            "Elements should not switch from uncontrolled to controlled (or vice versa).",
-            "Decide between using a controlled or uncontrolled MenuGroup element for the lifetime of the component.",
-            "The nature of the state is determined during the first render, it's considered controlled if `selected` is not `undefined`.",
-          ].join("\n"),
-        );
-      }
-    }
-  }, [initiallyControlled, controlled]);
-
-  const storedSelected =
-    name === undefined ? undefined : store?.getSelected(name);
-  const currentSelected = selectedProp ?? storedSelected ?? defaultSelected;
-
-  const selected = useMemo(() => {
-    if (currentSelected === undefined) {
-      return noSelection;
-    }
-    return selectionVariant === "single"
-      ? currentSelected.slice(0, 1)
-      : currentSelected;
-  }, [currentSelected, selectionVariant]);
+  const selected = useMemo(
+    () =>
+      selectionVariant === "single" ? selectedState.slice(0, 1) : selectedState,
+    [selectedState, selectionVariant],
+  );
 
   const isSelected = useCallback(
     (value: string) => selected.includes(value),
@@ -122,12 +106,13 @@ export function useMenuGroupSelection({
         return;
       }
 
-      if (!controlled && name !== undefined) {
+      setSelectedState(newSelected);
+      if (!isControlled && name !== undefined) {
         store?.setSelected(name, newSelected);
       }
       onSelectionChange?.(event, newSelected);
     },
-    [controlled, name, onSelectionChange, selected, selectionVariant, store],
+    [isControlled, name, onSelectionChange, selected, selectionVariant, store],
   );
 
   return { isSelected, select };
