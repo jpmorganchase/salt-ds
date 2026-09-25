@@ -1,15 +1,17 @@
 import {
   InteractableCard,
   InteractableCardGroup,
+  InteractableCardGroupContext,
+  type InteractableCardGroupContextValue,
   type InteractableCardGroupProps,
   type InteractableCardValue,
 } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
-import { type SyntheticEvent, useState } from "react";
+import { StrictMode, type SyntheticEvent, useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { checkAccessibility } from "~browser-test-utils/accessibility";
-import { renderWithSalt } from "~browser-test-utils/render";
+import { act, renderWithSalt } from "~browser-test-utils/render";
 import * as cardStories from "~stories/interactable-card/interactable-card.stories";
 
 const composedStories = composeStories(cardStories);
@@ -77,6 +79,33 @@ describe("Given an Interactable Card", () => {
     await expect
       .element(page.getByText(/commitment to provide a wide range/))
       .toBeVisible();
+  });
+
+  it("does not focus or activate a disabled card", async () => {
+    const onChange = vi.fn();
+    const onClick = vi.fn();
+    await renderWithSalt(
+      <>
+        <button type="button">Before</button>
+        <InteractableCard disabled onChange={onChange} onClick={onClick}>
+          Disabled
+        </InteractableCard>
+        <button type="button">After</button>
+      </>,
+    );
+
+    const disabledCard = page.getByRole("button", { name: "Disabled" });
+    await expect.element(disabledCard).not.toHaveAttribute("tabindex");
+    await userEvent.tab();
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "After" }))
+      .toHaveFocus();
+
+    await disabledCard.click({ force: true });
+    await expect.element(disabledCard).not.toHaveFocus();
+    expect(onClick).not.toHaveBeenCalled();
+    expect(onChange).not.toHaveBeenCalled();
   });
 });
 
@@ -253,6 +282,24 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 
+  it("skips a disabled card and toggles the next card with the keyboard", async () => {
+    const onChange = vi.fn();
+    await renderWithSalt(
+      <InteractableCardGroup multiSelect onChange={onChange}>
+        <InteractableCard disabled value="one">
+          One
+        </InteractableCard>
+        <InteractableCard value="two">Two</InteractableCard>
+      </InteractableCardGroup>,
+    );
+    await userEvent.tab();
+    await expect.element(card("Two", true)).toHaveFocus();
+    await userEvent.keyboard(" ");
+    await expectChecked("One", true, false);
+    await expectChecked("Two", true, true);
+    expect(onChange).toHaveBeenCalledOnce();
+  });
+
   it("does not toggle with Enter", async () => {
     const onChange = vi.fn();
     await renderWithSalt(<Cards multiSelect onChange={onChange} />);
@@ -301,6 +348,48 @@ describe("GIVEN a single-select InteractableCardGroup", () => {
     await expect.element(card("Two", false)).toHaveFocus();
   });
 
+  it("uses the first enabled card as the tab stop when the selected card is disabled", async () => {
+    await renderWithSalt(
+      <>
+        <button type="button">Before</button>
+        <InteractableCardGroup defaultValue="one">
+          <InteractableCard disabled value="one">
+            One
+          </InteractableCard>
+          <InteractableCard value="two">Two</InteractableCard>
+        </InteractableCardGroup>
+        <button type="button">After</button>
+      </>,
+    );
+
+    await userEvent.tab();
+    await userEvent.tab();
+    await expect.element(card("Two", false)).toHaveFocus();
+    page.getByRole("button", { name: "After" }).element().focus();
+    await userEvent.tab({ shift: true });
+    await expect.element(card("Two", false)).toHaveFocus();
+  });
+
+  it("enters the group on the selected empty-string value", async () => {
+    await renderWithSalt(
+      <>
+        <button type="button">Before</button>
+        <InteractableCardGroup defaultValue="">
+          <InteractableCard value="one">One</InteractableCard>
+          <InteractableCard value="">Empty value</InteractableCard>
+        </InteractableCardGroup>
+        <button type="button">After</button>
+      </>,
+    );
+
+    await userEvent.tab();
+    await userEvent.tab();
+    await expect.element(card("Empty value", false)).toHaveFocus();
+    page.getByRole("button", { name: "After" }).element().focus();
+    await userEvent.tab({ shift: true });
+    await expect.element(card("Empty value", false)).toHaveFocus();
+  });
+
   it("selects and focuses with arrow keys", async () => {
     const onChange = vi.fn();
     await renderWithSalt(<Cards onChange={onChange} />);
@@ -319,6 +408,68 @@ describe("GIVEN a single-select InteractableCardGroup", () => {
     await expectChecked("One", false, true);
     expect(onChange).toHaveBeenCalledTimes(4);
   });
+
+  it("skips a disabled middle card and wraps at both boundaries", async () => {
+    const onChange = vi.fn();
+    await renderWithSalt(
+      <InteractableCardGroup defaultValue="one" onChange={onChange}>
+        <InteractableCard value="one">One</InteractableCard>
+        <InteractableCard disabled value="two">
+          Two
+        </InteractableCard>
+        <InteractableCard value="three">Three</InteractableCard>
+      </InteractableCardGroup>,
+    );
+
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowRight}");
+    await expect.element(card("Three", false)).toHaveFocus();
+    await userEvent.keyboard("{ArrowRight}");
+    await expect.element(card("One", false)).toHaveFocus();
+    await userEvent.keyboard("{ArrowLeft}");
+    await expect.element(card("Three", false)).toHaveFocus();
+    await userEvent.keyboard("{ArrowLeft}");
+    await expect.element(card("One", false)).toHaveFocus();
+
+    await expectChecked("Two", false, false);
+    expect(onChange).toHaveBeenCalledTimes(4);
+  });
+
+  it("prevents default browser behavior when navigating with arrow keys", async () => {
+    let defaultPrevented = false;
+    const onKeyDown = vi.fn((event) => {
+      defaultPrevented = event.defaultPrevented;
+    });
+    await renderWithSalt(<Cards onKeyDown={onKeyDown} />);
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowDown}");
+
+    expect(onKeyDown).toHaveBeenCalledOnce();
+    expect(defaultPrevented).toBe(true);
+  });
+
+  it.each(["Alt", "Control", "Meta"])(
+    "leaves arrow keys pressed with %s to the browser",
+    async (modifier) => {
+      const onChange = vi.fn();
+      let defaultPrevented: boolean | undefined;
+      const onKeyDown = vi.fn((event) => {
+        if (event.key === "ArrowRight") {
+          defaultPrevented = event.defaultPrevented;
+        }
+      });
+      await renderWithSalt(
+        <Cards defaultValue="one" onChange={onChange} onKeyDown={onKeyDown} />,
+      );
+      await userEvent.tab();
+      await userEvent.keyboard(`{${modifier}>}{ArrowRight}{/${modifier}}`);
+
+      expect(defaultPrevented).toBe(false);
+      expect(onChange).not.toHaveBeenCalled();
+      await expect.element(card("One", false)).toHaveFocus();
+      await expectChecked("One", false, true);
+    },
+  );
 
   it("selects with Space when initially empty", async () => {
     await renderWithSalt(<Cards />);
@@ -376,5 +527,132 @@ describe("GIVEN a single-select InteractableCardGroup", () => {
     await disabledCard.click({ force: true });
     await expectChecked("One", false, false);
     expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it.each(["group", "card"] as const)(
+    "does not focus or select a card when the %s is disabled",
+    async (disabledTarget) => {
+      const onChange = vi.fn();
+      const onClick = vi.fn();
+      await renderWithSalt(
+        <InteractableCardGroup
+          disabled={disabledTarget === "group"}
+          onChange={onChange}
+        >
+          <InteractableCard
+            disabled={disabledTarget === "card"}
+            onClick={onClick}
+            value="one"
+          >
+            One
+          </InteractableCard>
+          <InteractableCard value="two">Two</InteractableCard>
+        </InteractableCardGroup>,
+      );
+
+      const disabledCard = card("One", false);
+      await expect.element(disabledCard).not.toHaveAttribute("tabindex");
+      await disabledCard.click({ force: true });
+      await expect.element(disabledCard).not.toHaveFocus();
+      disabledCard.element().focus();
+      await expect.element(disabledCard).not.toHaveFocus();
+
+      expect(onClick).not.toHaveBeenCalled();
+      expect(onChange).not.toHaveBeenCalled();
+      await expectChecked("One", false, false);
+    },
+  );
+});
+
+describe("GIVEN an InteractableCardGroup whose disabled state changes", () => {
+  // The children are created once, so the group only re-renders because its
+  // own `disabled` prop changed. This is what a consumer gets when the cards
+  // are hoisted or memoized.
+  const stableChildren = (
+    <>
+      <InteractableCard value="one">One</InteractableCard>
+      <InteractableCard value="two">Two</InteractableCard>
+    </>
+  );
+
+  function Example() {
+    const [disabled, setDisabled] = useState(true);
+    return (
+      <>
+        <button type="button" onClick={() => setDisabled(false)}>
+          Enable
+        </button>
+        <InteractableCardGroup disabled={disabled}>
+          {stableChildren}
+        </InteractableCardGroup>
+      </>
+    );
+  }
+
+  it("can be reached with Tab once it is enabled", async () => {
+    await renderWithSalt(<Example />);
+
+    await userEvent.click(page.getByRole("button", { name: "Enable" }));
+    await userEvent.tab();
+
+    await expect
+      .element(page.getByRole("radio", { name: "One" }))
+      .toHaveFocus();
+  });
+
+  it("keeps one tab stop when the selected card is re-enabled", async () => {
+    let setSelectedCardDisabled = (_disabled: boolean) => {};
+
+    function SelectedCard() {
+      const [disabled, setDisabled] = useState(false);
+      setSelectedCardDisabled = setDisabled;
+      return (
+        <InteractableCard disabled={disabled} value="two">
+          Two
+        </InteractableCard>
+      );
+    }
+
+    await renderWithSalt(
+      <StrictMode>
+        <InteractableCardGroup defaultValue="two">
+          <InteractableCard value="one">One</InteractableCard>
+          <SelectedCard />
+        </InteractableCardGroup>
+      </StrictMode>,
+    );
+
+    await expect.element(card("One", false)).toHaveAttribute("tabindex", "-1");
+    await expect.element(card("Two", false)).toHaveAttribute("tabindex", "0");
+
+    await act(() => setSelectedCardDisabled(true));
+
+    await expect.element(card("One", false)).toHaveAttribute("tabindex", "0");
+    await expect.element(card("Two", false)).not.toHaveAttribute("tabindex");
+
+    await act(() => setSelectedCardDisabled(false));
+
+    await expect.element(card("One", false)).toHaveAttribute("tabindex", "-1");
+    await expect.element(card("Two", false)).toHaveAttribute("tabindex", "0");
+  });
+});
+
+describe("GIVEN a custom InteractableCardGroupContext provider", () => {
+  it("uses the first card as the tab stop without registration fields", async () => {
+    const contextValue: InteractableCardGroupContextValue = {
+      select: () => {},
+      isSelected: () => false,
+      isFirstChild: (value) => value === "one",
+      value: undefined,
+    };
+    await renderWithSalt(
+      <InteractableCardGroupContext.Provider value={contextValue}>
+        <InteractableCard value="one">One</InteractableCard>
+        <InteractableCard value="two">Two</InteractableCard>
+      </InteractableCardGroupContext.Provider>,
+    );
+
+    await expect.element(card("One", false)).toHaveAttribute("tabindex", "0");
+    await expect.element(card("Two", false)).toHaveAttribute("tabindex", "-1");
   });
 });

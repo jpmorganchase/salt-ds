@@ -9,7 +9,13 @@ import {
   useRef,
 } from "react";
 import { hasCardSection } from "../card/hasCardSection";
-import { capitalize, makePrefixer, useControlled, useForkRef } from "../utils";
+import {
+  capitalize,
+  makePrefixer,
+  useControlled,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "../utils";
 import interactableCardCss from "./InteractableCard.css";
 import {
   type InteractableCardValue,
@@ -114,7 +120,11 @@ export const InteractableCard = forwardRef<
   const accentValue = accent || accentPlacement;
 
   const handleClick = (event: MouseEvent<HTMLDivElement>) => {
-    if (interactableCardGroup && !disabled) {
+    if (disabled) {
+      return;
+    }
+
+    if (interactableCardGroup) {
       interactableCardGroup.select(event, value);
       setSelected(!selected);
     }
@@ -122,26 +132,38 @@ export const InteractableCard = forwardRef<
     onClick?.(event);
   };
 
-  let tabIndex: number;
+  // Disabled cards omit tabIndex so they can't receive focus, matching native disabled controls.
+  let tabIndex: number | undefined;
 
-  if (interactableCardGroup) {
-    if (disabled) {
-      tabIndex = -1;
-    } else if (isMultiselect) {
+  if (disabled) {
+    tabIndex = undefined;
+  } else if (interactableCardGroup) {
+    if (isMultiselect) {
       tabIndex = 0; // All items focusable in multi-select
     } else {
-      // Single select: Only selected or first item (if none are selected) is focusable
+      // Single select: only the selected card, or the first enabled card when no enabled card is selected, is focusable
       tabIndex = selected ? 0 : -1;
-      if (!interactableCardGroup.value && isFirstChild) {
+      // Fall back to the value for custom providers without hasEnabledSelection.
+      const hasEnabledSelection =
+        interactableCardGroup.hasEnabledSelection ??
+        Boolean(interactableCardGroup.value);
+      if (!hasEnabledSelection && isFirstChild) {
         tabIndex = 0;
       }
     }
   } else {
-    tabIndex = disabled ? -1 : 0;
+    tabIndex = 0;
   }
 
   const cardRef = useRef<HTMLDivElement>(null);
   const handleRef = useForkRef(ref, cardRef);
+  const registerCard = interactableCardGroup?.registerCard;
+
+  useIsomorphicLayoutEffect(() => {
+    if (!disabled && cardRef.current && registerCard) {
+      return registerCard(value, cardRef.current);
+    }
+  }, [disabled, registerCard, value]);
 
   const { active, cardProps } = useInteractableCard({
     disabled,
