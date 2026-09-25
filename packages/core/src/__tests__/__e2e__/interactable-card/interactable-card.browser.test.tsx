@@ -5,11 +5,11 @@ import {
   type InteractableCardValue,
 } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
-import { type SyntheticEvent, useState } from "react";
+import { StrictMode, type SyntheticEvent, useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { checkAccessibility } from "~browser-test-utils/accessibility";
-import { renderWithSalt } from "~browser-test-utils/render";
+import { act, renderWithSalt } from "~browser-test-utils/render";
 import * as cardStories from "~stories/interactable-card/interactable-card.stories";
 
 const composedStories = composeStories(cardStories);
@@ -380,6 +380,32 @@ describe("GIVEN a single-select InteractableCardGroup", () => {
     expect(onChange).toHaveBeenCalledTimes(4);
   });
 
+  it("skips a disabled middle card and wraps at both boundaries", async () => {
+    const onChange = vi.fn();
+    await renderWithSalt(
+      <InteractableCardGroup defaultValue="one" onChange={onChange}>
+        <InteractableCard value="one">One</InteractableCard>
+        <InteractableCard disabled value="two">
+          Two
+        </InteractableCard>
+        <InteractableCard value="three">Three</InteractableCard>
+      </InteractableCardGroup>,
+    );
+
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowRight}");
+    await expect.element(card("Three", false)).toHaveFocus();
+    await userEvent.keyboard("{ArrowRight}");
+    await expect.element(card("One", false)).toHaveFocus();
+    await userEvent.keyboard("{ArrowLeft}");
+    await expect.element(card("Three", false)).toHaveFocus();
+    await userEvent.keyboard("{ArrowLeft}");
+    await expect.element(card("One", false)).toHaveFocus();
+
+    await expectChecked("Two", false, false);
+    expect(onChange).toHaveBeenCalledTimes(4);
+  });
+
   it("prevents default browser behavior when navigating with arrow keys", async () => {
     let defaultPrevented = false;
     const onKeyDown = vi.fn((event) => {
@@ -513,5 +539,41 @@ describe("GIVEN an InteractableCardGroup whose disabled state changes", () => {
     await expect
       .element(page.getByRole("radio", { name: "One" }))
       .toHaveFocus();
+  });
+
+  it("keeps one tab stop when the selected card is re-enabled", async () => {
+    let setSelectedCardDisabled = (_disabled: boolean) => {};
+
+    function SelectedCard() {
+      const [disabled, setDisabled] = useState(false);
+      setSelectedCardDisabled = setDisabled;
+      return (
+        <InteractableCard disabled={disabled} value="two">
+          Two
+        </InteractableCard>
+      );
+    }
+
+    await renderWithSalt(
+      <StrictMode>
+        <InteractableCardGroup defaultValue="two">
+          <InteractableCard value="one">One</InteractableCard>
+          <SelectedCard />
+        </InteractableCardGroup>
+      </StrictMode>,
+    );
+
+    await expect.element(card("One", false)).toHaveAttribute("tabindex", "-1");
+    await expect.element(card("Two", false)).toHaveAttribute("tabindex", "0");
+
+    await act(() => setSelectedCardDisabled(true));
+
+    await expect.element(card("One", false)).toHaveAttribute("tabindex", "0");
+    await expect.element(card("Two", false)).toHaveAttribute("tabindex", "-1");
+
+    await act(() => setSelectedCardDisabled(false));
+
+    await expect.element(card("One", false)).toHaveAttribute("tabindex", "-1");
+    await expect.element(card("Two", false)).toHaveAttribute("tabindex", "0");
   });
 });

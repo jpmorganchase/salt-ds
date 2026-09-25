@@ -9,7 +9,13 @@ import {
   useRef,
 } from "react";
 import { hasCardSection } from "../card/hasCardSection";
-import { capitalize, makePrefixer, useControlled, useForkRef } from "../utils";
+import {
+  capitalize,
+  makePrefixer,
+  useControlled,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "../utils";
 import interactableCardCss from "./InteractableCard.css";
 import {
   type InteractableCardValue,
@@ -146,6 +152,13 @@ export const InteractableCard = forwardRef<
 
   const cardRef = useRef<HTMLDivElement>(null);
   const handleRef = useForkRef(ref, cardRef);
+  const registerCard = interactableCardGroup?.registerCard;
+
+  useIsomorphicLayoutEffect(() => {
+    if (!disabled && cardRef.current && registerCard) {
+      return registerCard(value, cardRef.current);
+    }
+  }, [disabled, registerCard, value]);
 
   const { active, cardProps } = useInteractableCard({
     disabled,

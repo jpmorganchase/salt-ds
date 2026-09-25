@@ -7,7 +7,6 @@ import {
   type KeyboardEvent,
   type SyntheticEvent,
   useCallback,
-  useEffect,
   useMemo,
   useRef,
   useState,
@@ -18,6 +17,7 @@ import {
   ownerDocument,
   useControlled,
   useForkRef,
+  useIsomorphicLayoutEffect,
 } from "../utils";
 import interactableCardGroupCss from "./InteractableCardGroup.css";
 import {
@@ -56,6 +56,27 @@ export interface InteractableCardGroupProps
 
 const withBaseName = makePrefixer("saltInteractableCardGroup");
 
+interface RegisteredCard {
+  element: HTMLElement;
+  value: InteractableCardValue;
+}
+
+const sortCards = (cards: RegisteredCard[]) =>
+  [...cards].sort((cardA, cardB) => {
+    const position = cardA.element.compareDocumentPosition(cardB.element);
+    if (position & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
+    if (position & Node.DOCUMENT_POSITION_PRECEDING) return 1;
+    return 0;
+  });
+
+const cardsAreEqual = (cardsA: RegisteredCard[], cardsB: RegisteredCard[]) =>
+  cardsA.length === cardsB.length &&
+  cardsA.every(
+    (card, index) =>
+      card.element === cardsB[index].element &&
+      card.value === cardsB[index].value,
+  );
+
 export const InteractableCardGroup = forwardRef<
   HTMLDivElement,
   InteractableCardGroupProps
@@ -89,17 +110,43 @@ export const InteractableCardGroup = forwardRef<
     state: "value",
   });
 
-  const [elements, setElements] = useState<HTMLElement[]>([]);
+  const [enabledCards, setEnabledCards] = useState<RegisteredCard[]>([]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: queries the dom when children or disabled changes.
-  useEffect(() => {
-    const childElements: HTMLElement[] = Array.from(
-      groupRef.current?.querySelectorAll(".saltInteractableCard") ?? [],
-    ).filter(
-      (element) => !element.classList.contains("saltInteractableCard-disabled"),
-    ) as HTMLElement[];
-    setElements(childElements);
-  }, [children, disabled]);
+  const registerCard = useCallback(
+    (cardValue: InteractableCardValue, element: HTMLElement) => {
+      const card = { element, value: cardValue };
+      setEnabledCards((currentCards) =>
+        sortCards([
+          ...currentCards.filter(
+            (currentCard) => currentCard.element !== element,
+          ),
+          card,
+        ]),
+      );
+
+      return () => {
+        setEnabledCards((currentCards) => {
+          const currentCard = currentCards.find(
+            (registeredCard) => registeredCard.element === element,
+          );
+          return currentCard === card
+            ? currentCards.filter((registeredCard) => registeredCard !== card)
+            : currentCards;
+        });
+      };
+    },
+    [],
+  );
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: re-sorts registered cards after children move.
+  useIsomorphicLayoutEffect(() => {
+    setEnabledCards((currentCards) => {
+      const sortedCards = sortCards(currentCards);
+      return cardsAreEqual(currentCards, sortedCards)
+        ? currentCards
+        : sortedCards;
+    });
+  }, [children]);
 
   const select = useCallback(
     (
@@ -135,24 +182,19 @@ export const InteractableCardGroup = forwardRef<
 
   const isFirstChild = useCallback(
     (cardValue: InteractableCardValue) => {
-      return (
-        elements.findIndex(
-          (element) => element.getAttribute("data-value") === cardValue,
-        ) === 0
-      );
+      return enabledCards.findIndex((card) => card.value === cardValue) === 0;
     },
-    [elements],
+    [enabledCards],
   );
-
-  const hasEnabledSelection =
-    !multiSelect &&
-    typeof value === "string" &&
-    elements.some((element) => element.getAttribute("data-value") === value);
 
   const contextValue = useMemo(
     () => ({
       select,
-      hasEnabledSelection,
+      registerCard,
+      hasEnabledSelection:
+        !multiSelect &&
+        typeof value === "string" &&
+        enabledCards.some((card) => card.value === value),
       isSelected,
       isFirstChild,
       disabled,
@@ -161,7 +203,8 @@ export const InteractableCardGroup = forwardRef<
     }),
     [
       select,
-      hasEnabledSelection,
+      registerCard,
+      enabledCards,
       isSelected,
       disabled,
       multiSelect,
@@ -184,7 +227,7 @@ export const InteractableCardGroup = forwardRef<
       ".saltInteractableCard",
     );
     const currentIndex = currentCard
-      ? elements.indexOf(currentCard as HTMLElement)
+      ? enabledCards.findIndex((card) => card.element === currentCard)
       : -1;
 
     if (currentIndex === -1) {
@@ -192,17 +235,13 @@ export const InteractableCardGroup = forwardRef<
       return;
     }
 
-    const nextIndex = (currentIndex + 1) % elements.length;
-    const prevIndex = (currentIndex - 1 + elements.length) % elements.length;
+    const nextIndex = (currentIndex + 1) % enabledCards.length;
+    const prevIndex =
+      (currentIndex - 1 + enabledCards.length) % enabledCards.length;
 
     if (event.key === " ") {
       event.preventDefault();
-      select(
-        event,
-        elements[currentIndex].getAttribute(
-          "data-value",
-        ) as InteractableCardValue,
-      );
+      select(event, enabledCards[currentIndex].value);
     }
 
     if (!multiSelect) {
@@ -210,24 +249,14 @@ export const InteractableCardGroup = forwardRef<
         case "ArrowDown":
         case "ArrowRight":
           event.preventDefault();
-          select(
-            event,
-            elements[nextIndex].getAttribute(
-              "data-value",
-            ) as InteractableCardValue,
-          );
-          elements[nextIndex]?.focus();
+          select(event, enabledCards[nextIndex].value);
+          enabledCards[nextIndex]?.element.focus();
           break;
         case "ArrowUp":
         case "ArrowLeft":
           event.preventDefault();
-          select(
-            event,
-            elements[prevIndex].getAttribute(
-              "data-value",
-            ) as InteractableCardValue,
-          );
-          elements[prevIndex]?.focus();
+          select(event, enabledCards[prevIndex].value);
+          enabledCards[prevIndex]?.element.focus();
           break;
       }
     }
