@@ -74,7 +74,7 @@
 
 /* Notation */
 .saltText-notation.saltText {
-  font-family: var(--salt-text-notation-fontFamily);
+  font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-notation-fontSize);
   line-height: var(--salt-text-notation-lineHeight);
   font-weight: var(--salt-text-fontWeight);
