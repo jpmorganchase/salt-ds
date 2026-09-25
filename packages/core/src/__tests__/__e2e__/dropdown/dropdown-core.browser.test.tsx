@@ -3,7 +3,7 @@ import { composeStories } from "@storybook/react-vite";
 import { type KeyboardEventHandler, useRef, useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { trackDefaultPrevented } from "~browser-test-utils/interactions";
+import { trackNativeEvents } from "~browser-test-utils/interactions";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as dropdownStories from "~stories/dropdown/dropdown.stories";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
@@ -582,7 +582,7 @@ describe("Given a core Dropdown", () => {
 
 describe("GIVEN a Dropdown at the edge of its options", () => {
   it("stops the page scrolling when opening the list with an arrow key", async () => {
-    const keyDown = trackDefaultPrevented();
+    const keyDown = trackNativeEvents();
     await renderWithSalt(
       <Dropdown onKeyDown={keyDown.handler}>
         <Option value="Alabama" />
@@ -594,11 +594,11 @@ describe("GIVEN a Dropdown at the edge of its options", () => {
     await userEvent.keyboard("{ArrowDown}");
 
     await expect.element(listbox()).toBeInTheDocument();
-    expect(keyDown.lastDefaultPrevented()).toBe(true);
+    expect(keyDown.last()?.defaultPrevented).toBe(true);
   });
 
   it("stops the page scrolling when arrowing past the first option", async () => {
-    const keyDown = trackDefaultPrevented();
+    const keyDown = trackNativeEvents();
     await renderWithSalt(
       <Dropdown onKeyDown={keyDown.handler}>
         <Option value="Alabama" />
@@ -613,7 +613,7 @@ describe("GIVEN a Dropdown at the edge of its options", () => {
     // The active option cannot move, but the dropdown still owns the key.
     await userEvent.keyboard("{ArrowUp}");
 
-    expect(keyDown.lastDefaultPrevented()).toBe(true);
+    expect(keyDown.last()?.defaultPrevented).toBe(true);
   });
 });
 
@@ -624,7 +624,7 @@ describe("GIVEN a closed Dropdown", () => {
   ] as const)(
     "opens the list with %s and moves focus to %s",
     async (key, activeOption) => {
-      const keyDown = trackDefaultPrevented();
+      const keyDown = trackNativeEvents();
       await renderWithSalt(
         <Dropdown onKeyDown={keyDown.handler}>
           <Option value="Alabama" />
@@ -639,7 +639,7 @@ describe("GIVEN a closed Dropdown", () => {
 
       await userEvent.keyboard(key);
 
-      expect(keyDown.lastDefaultPrevented()).toBe(true);
+      expect(keyDown.last()?.defaultPrevented).toBe(true);
       await expect.element(listbox()).toBeInTheDocument();
       await expectActive(activeOption);
     },
@@ -686,7 +686,7 @@ describe("GIVEN a closed Dropdown", () => {
   it.each(["{PageUp}", "{PageDown}"])(
     "lets %s scroll the page",
     async (key) => {
-      const keyDown = trackDefaultPrevented();
+      const keyDown = trackNativeEvents();
       await renderWithSalt(
         <Dropdown onKeyDown={keyDown.handler}>
           <Option value="Alabama" />
@@ -700,7 +700,7 @@ describe("GIVEN a closed Dropdown", () => {
 
       await userEvent.keyboard(key);
 
-      expect(keyDown.lastDefaultPrevented()).toBe(false);
+      expect(keyDown.last()?.defaultPrevented).toBe(false);
       await expect
         .element(combobox())
         .toHaveAttribute("aria-expanded", "false");
@@ -775,30 +775,30 @@ describe("GIVEN a Dropdown and a navigation key pressed with a modifier", () => 
     "{Meta>}{ArrowDown}{/Meta}",
     "{Alt>}{End}{/Alt}",
   ])("does not open the list with %s", async (keys) => {
-    const keyDown = trackDefaultPrevented();
+    const keyDown = trackNativeEvents();
     await renderWithSalt(<States onKeyDown={keyDown.handler} />);
     await userEvent.tab();
 
     await userEvent.keyboard(keys);
 
-    expect(keyDown.lastDefaultPrevented()).toBe(false);
+    expect(keyDown.last()?.defaultPrevented).toBe(false);
     await expect.element(combobox()).toHaveAttribute("aria-expanded", "false");
   });
 
   it("still opens the list with Alt+ArrowDown", async () => {
-    const keyDown = trackDefaultPrevented();
+    const keyDown = trackNativeEvents();
     await renderWithSalt(<States onKeyDown={keyDown.handler} />);
     await userEvent.tab();
 
     await userEvent.keyboard("{Alt>}{ArrowDown}{/Alt}");
 
-    expect(keyDown.lastDefaultPrevented()).toBe(true);
+    expect(keyDown.last()?.defaultPrevented).toBe(true);
     await expect.element(listbox()).toBeInTheDocument();
     await expectActive("Alabama");
   });
 
   it("leaves Ctrl+PageDown to the browser while the list is open", async () => {
-    const keyDown = trackDefaultPrevented();
+    const keyDown = trackNativeEvents();
     await renderWithSalt(<States onKeyDown={keyDown.handler} />);
     await userEvent.tab();
     await userEvent.keyboard("{ArrowDown}");
@@ -806,7 +806,7 @@ describe("GIVEN a Dropdown and a navigation key pressed with a modifier", () => 
 
     await userEvent.keyboard("{Control>}{PageDown}{/Control}");
 
-    expect(keyDown.lastDefaultPrevented()).toBe(false);
+    expect(keyDown.last()?.defaultPrevented).toBe(false);
     await expectActive("Alabama");
   });
 });

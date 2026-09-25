@@ -3,7 +3,7 @@ import { composeStories } from "@storybook/react-vite";
 import { type KeyboardEventHandler, useRef, useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { trackDefaultPrevented } from "~browser-test-utils/interactions";
+import { trackNativeEvents } from "~browser-test-utils/interactions";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as comboBoxStories from "~stories/combo-box/combo-box.stories";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
@@ -794,7 +794,7 @@ describe("GIVEN a closed Combo box", () => {
   it.each(["{PageUp}", "{PageDown}", "{Home}", "{End}"])(
     "leaves %s to the browser",
     async (key) => {
-      const keyDown = trackDefaultPrevented();
+      const keyDown = trackNativeEvents();
       await renderWithSalt(
         <ComboBox onKeyDown={keyDown.handler}>
           <Option value="Alabama" />
@@ -806,7 +806,7 @@ describe("GIVEN a closed Combo box", () => {
 
       await userEvent.keyboard(key);
 
-      expect(keyDown.lastDefaultPrevented()).toBe(false);
+      expect(keyDown.last()?.defaultPrevented).toBe(false);
       await expect.element(input()).toHaveAttribute("aria-expanded", "false");
       await expect
         .element(input())
@@ -864,7 +864,7 @@ describe("GIVEN a Combo box with no options to show", () => {
   it.each(["{PageUp}", "{PageDown}"])(
     "lets %s scroll the page",
     async (key) => {
-      const keyDown = trackDefaultPrevented();
+      const keyDown = trackNativeEvents();
       await renderWithSalt(<FilteredComboBox onKeyDown={keyDown.handler} />);
       await typeFilter("z");
       await expect.element(input()).toHaveAttribute("aria-expanded", "true");
@@ -872,7 +872,7 @@ describe("GIVEN a Combo box with no options to show", () => {
 
       await userEvent.keyboard(key);
 
-      expect(keyDown.lastDefaultPrevented()).toBe(false);
+      expect(keyDown.last()?.defaultPrevented).toBe(false);
     },
   );
 });
@@ -963,7 +963,7 @@ describe("GIVEN an open Combo box and a navigation key pressed with a modifier",
     "{Control>}{End}{/Control}",
     "{Meta>}{ArrowDown}{/Meta}",
   ])("leaves %s to the browser", async (keys) => {
-    const keyDown = trackDefaultPrevented();
+    const keyDown = trackNativeEvents();
     await renderWithSalt(
       <ComboBox onKeyDown={keyDown.handler}>
         <Option value="Alabama" />
@@ -976,7 +976,7 @@ describe("GIVEN an open Combo box and a navigation key pressed with a modifier",
 
     await userEvent.keyboard(keys);
 
-    expect(keyDown.lastDefaultPrevented()).toBe(false);
+    expect(keyDown.last()?.defaultPrevented).toBe(false);
     await expectActive("Alabama");
   });
 });

@@ -2,7 +2,7 @@ import { ListBox, Option } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { trackDefaultPrevented } from "~browser-test-utils/interactions";
+import { trackNativeEvents } from "~browser-test-utils/interactions";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as listBoxStories from "~stories/list-box/list-box.stories";
 
@@ -226,7 +226,7 @@ describe("GIVEN a List box", () => {
 
 describe("GIVEN a List box at the edge of its options", () => {
   it("stops the page scrolling when arrowing past the first option", async () => {
-    const keyDown = trackDefaultPrevented();
+    const keyDown = trackNativeEvents();
     await renderWithSalt(
       <ListBox onKeyDown={keyDown.handler}>
         <Option value="Alabama" />
@@ -242,11 +242,11 @@ describe("GIVEN a List box at the edge of its options", () => {
     await userEvent.keyboard("{ArrowUp}");
 
     await expectActiveOption("Alabama");
-    expect(keyDown.lastDefaultPrevented()).toBe(true);
+    expect(keyDown.last()?.defaultPrevented).toBe(true);
   });
 
   it("stops the page scrolling when pressing Home on the first option", async () => {
-    const keyDown = trackDefaultPrevented();
+    const keyDown = trackNativeEvents();
     await renderWithSalt(
       <ListBox onKeyDown={keyDown.handler}>
         <Option value="Alabama" />
@@ -259,11 +259,11 @@ describe("GIVEN a List box at the edge of its options", () => {
 
     await userEvent.keyboard("{Home}");
 
-    expect(keyDown.lastDefaultPrevented()).toBe(true);
+    expect(keyDown.last()?.defaultPrevented).toBe(true);
   });
 
   it("stops the page scrolling when arrowing past the last option", async () => {
-    const keyDown = trackDefaultPrevented();
+    const keyDown = trackNativeEvents();
     await renderWithSalt(
       <ListBox onKeyDown={keyDown.handler}>
         <Option value="Alabama" />
@@ -278,11 +278,11 @@ describe("GIVEN a List box at the edge of its options", () => {
     await userEvent.keyboard("{ArrowDown}");
 
     await expectActiveOption("Alaska");
-    expect(keyDown.lastDefaultPrevented()).toBe(true);
+    expect(keyDown.last()?.defaultPrevented).toBe(true);
   });
 
   it("stops the page scrolling when paging past the edges", async () => {
-    const keyDown = trackDefaultPrevented();
+    const keyDown = trackNativeEvents();
     await renderWithSalt(
       <ListBox onKeyDown={keyDown.handler}>
         <Option value="Alabama" />
@@ -294,13 +294,13 @@ describe("GIVEN a List box at the edge of its options", () => {
     await expectActiveOption("Alabama");
     await userEvent.keyboard("{PageUp}");
     await expectActiveOption("Alabama");
-    expect(keyDown.lastDefaultPrevented()).toBe(true);
+    expect(keyDown.last()?.defaultPrevented).toBe(true);
 
     await userEvent.keyboard("{End}");
     await expectActiveOption("Alaska");
     await userEvent.keyboard("{PageDown}");
     await expectActiveOption("Alaska");
-    expect(keyDown.lastDefaultPrevented()).toBe(true);
+    expect(keyDown.last()?.defaultPrevented).toBe(true);
   });
 });
 
@@ -311,7 +311,7 @@ describe("GIVEN a List box and a navigation key pressed with a modifier", () => 
     "{Control>}{PageDown}{/Control}",
     "{Alt>}{End}{/Alt}",
   ])("leaves %s to the browser", async (keys) => {
-    const keyDown = trackDefaultPrevented();
+    const keyDown = trackNativeEvents();
     await renderWithSalt(
       <ListBox onKeyDown={keyDown.handler}>
         <Option value="Alabama" />
@@ -323,7 +323,7 @@ describe("GIVEN a List box and a navigation key pressed with a modifier", () => 
 
     await userEvent.keyboard(keys);
 
-    expect(keyDown.lastDefaultPrevented()).toBe(false);
+    expect(keyDown.last()?.defaultPrevented).toBe(false);
     await expectActiveOption("Alabama");
   });
 });
