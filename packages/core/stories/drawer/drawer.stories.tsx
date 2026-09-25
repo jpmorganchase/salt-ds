@@ -598,7 +598,16 @@ export const Resizable: StoryFn<DrawerProps> = ({
           </StackLayout>
         </DrawerContent>
         <DrawerFooter>
-          <Button onClick={() => setOpen(false)}>Close</Button>
+          <Button
+            sentiment="accented"
+            appearance="bordered"
+            onClick={() => setOpen(false)}
+          >
+            Cancel
+          </Button>
+          <Button sentiment="accented" onClick={() => setOpen(false)}>
+            Save
+          </Button>
         </DrawerFooter>
       </Drawer>
     </>
