@@ -139,14 +139,11 @@
 
 /* Styles applied to InteractableCard if `disabled={true}` */
 .saltInteractableCard-disabled,
-.saltInteractableCard-disabled:focus,
-.saltInteractableCard-disabled:focus-visible,
 .saltInteractableCard-disabled:hover,
 .saltInteractableCard-disabled:active {
   border-color: var(--saltInteractableCard-borderColor, var(--interactableCard-borderColor));
   box-shadow: none;
   cursor: var(--salt-cursor-disabled);
-  outline: none;
   opacity: 0.4;
 }
 

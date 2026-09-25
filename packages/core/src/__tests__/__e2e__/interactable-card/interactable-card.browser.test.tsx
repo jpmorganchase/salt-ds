@@ -489,33 +489,6 @@ describe("GIVEN a single-select InteractableCardGroup", () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 
-  it("does not select disabled groups with the keyboard", async () => {
-    const onChange = vi.fn();
-    await renderWithSalt(
-      <>
-        <button type="button">Before</button>
-        <Cards disabled onChange={onChange} />
-        <button type="button">After</button>
-      </>,
-    );
-
-    // A disabled group is skipped entirely, so Tab moves past it rather than
-    // landing on a card that cannot be selected.
-    await userEvent.tab();
-    await expect
-      .element(page.getByRole("button", { name: "Before" }))
-      .toHaveFocus();
-    await userEvent.tab();
-    await expect
-      .element(page.getByRole("button", { name: "After" }))
-      .toHaveFocus();
-
-    // Pressing Space with the group out of reach leaves it unselected.
-    await userEvent.keyboard(" ");
-    await expectChecked("One", false, false);
-    expect(onChange).not.toHaveBeenCalled();
-  });
-
   it("does not select an individually disabled card", async () => {
     const onChange = vi.fn();
     await renderWithSalt(

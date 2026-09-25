@@ -219,7 +219,7 @@ export const InteractableCardGroup = forwardRef<
     const currentCard = (doc.activeElement as HTMLElement | null)?.closest(
       ".saltInteractableCard",
     );
-    // Disabled cards aren't registered, so their key events fall through to onKeyDown.
+    // Only enabled cards are registered; other key events just call onKeyDown.
     const currentIndex = currentCard
       ? enabledCards.findIndex((card) => card.element === currentCard)
       : -1;
