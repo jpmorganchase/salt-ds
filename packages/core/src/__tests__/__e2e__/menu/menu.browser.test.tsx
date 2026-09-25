@@ -8,7 +8,7 @@ import {
   MenuTrigger,
 } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
-import { type ReactNode, useState } from "react";
+import { useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
@@ -27,6 +27,7 @@ const {
   MultipleSelection,
   MixedSelection,
   SelectionInSubmenu,
+  UncontrolledSelection,
 } = composeStories(menuStories);
 
 afterEach(() => vi.restoreAllMocks());
@@ -307,11 +308,11 @@ describe("Given a Menu", () => {
 
 function SelectableMenu({
   children,
-  defaultSelected = [],
+  initialSelected = [],
   onSelectionChange,
   ...rest
-}: MenuGroupProps & { children?: ReactNode; defaultSelected?: string[] }) {
-  const [selected, setSelected] = useState(defaultSelected);
+}: MenuGroupProps & { initialSelected?: string[] }) {
+  const [selected, setSelected] = useState(initialSelected);
 
   return (
     <Menu>
@@ -433,7 +434,7 @@ describe("Given a Menu with selectable groups", () => {
     await renderWithSalt(
       <SelectableMenu
         selectionVariant="single"
-        defaultSelected={["one"]}
+        initialSelected={["one"]}
         onSelectionChange={onSelectionChange}
       />,
     );
@@ -571,7 +572,7 @@ describe("Given a Menu with selectable groups", () => {
   it("warns when a menu item in a selectable group has no value", async () => {
     const warning = vi.spyOn(console, "warn").mockImplementation(() => {});
     await renderWithSalt(
-      <SelectableMenu selectionVariant="single" defaultSelected={[]}>
+      <SelectableMenu selectionVariant="single">
         <MenuItem value="one">One</MenuItem>
         <MenuItem>Reset</MenuItem>
       </SelectableMenu>,
@@ -585,7 +586,7 @@ describe("Given a Menu with selectable groups", () => {
     );
   });
 
-  it("warns when a selectable group has no selected prop", async () => {
+  it("warns when an uncontrolled selectable group has no name", async () => {
     const warning = vi.spyOn(console, "warn").mockImplementation(() => {});
     await renderWithSalt(
       <Menu open>
@@ -599,11 +600,170 @@ describe("Given a Menu with selectable groups", () => {
         </MenuPanel>
       </Menu>,
     );
-    await expect
-      .element(page.getByRole("menuitemcheckbox", { name: "One" }))
-      .toHaveAttribute("aria-checked", "false");
+    const one = page.getByRole("menuitemcheckbox", { name: "One" });
+    await expect.element(one).toHaveAttribute("aria-checked", "false");
     expect(warning).toHaveBeenCalledWith(
-      expect.stringContaining("MenuGroup requires `selected`"),
+      expect.stringContaining("MenuGroup requires a `name`"),
     );
+    await one.click();
+    await expect.element(one).toHaveAttribute("aria-checked", "false");
+  });
+});
+
+function UncontrolledMenu({ children, ...rest }: MenuGroupProps) {
+  return (
+    <Menu>
+      <MenuTrigger>
+        <Button aria-label="Open Menu">Open Menu</Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup aria-label="Options" name="options" {...rest}>
+          {children ?? (
+            <>
+              <MenuItem value="one">One</MenuItem>
+              <MenuItem value="two">Two</MenuItem>
+            </>
+          )}
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+}
+
+function SwitchingControlMenu() {
+  const [controlled, setControlled] = useState(true);
+
+  return (
+    <>
+      <button type="button" onClick={() => setControlled(false)}>
+        Stop controlling
+      </button>
+      <Menu open>
+        <MenuTrigger>
+          <Button aria-label="Open Menu">Open Menu</Button>
+        </MenuTrigger>
+        <MenuPanel>
+          <MenuGroup
+            aria-label="Options"
+            name="options"
+            selectionVariant="single"
+            selected={controlled ? ["one"] : undefined}
+          >
+            <MenuItem value="one">One</MenuItem>
+          </MenuGroup>
+        </MenuPanel>
+      </Menu>
+    </>
+  );
+}
+
+describe("Given a Menu with uncontrolled selectable groups", () => {
+  it("keeps a single selection after the menu closes", async () => {
+    await renderWithSalt(<UncontrolledSelection />);
+    await trigger().click();
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Name" }))
+      .toHaveAttribute("aria-checked", "true");
+    await page.getByRole("menuitemradio", { name: "Date modified" }).click();
+    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+    await trigger().click();
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Date modified" }))
+      .toHaveAttribute("aria-checked", "true");
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Name" }))
+      .toHaveAttribute("aria-checked", "false");
+  });
+
+  it("keeps a multiple selection after the menu closes", async () => {
+    await renderWithSalt(<UncontrolledSelection />);
+    await trigger().click();
+    await page.getByRole("menuitemcheckbox", { name: "Owner" }).click();
+    await page.getByRole("menuitemcheckbox", { name: "Type" }).click();
+    await userEvent.keyboard("{Escape}");
+    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+    await trigger().click();
+    await expect
+      .element(page.getByRole("menuitemcheckbox", { name: "Owner" }))
+      .toHaveAttribute("aria-checked", "false");
+    await expect
+      .element(page.getByRole("menuitemcheckbox", { name: "Size" }))
+      .toHaveAttribute("aria-checked", "true");
+    await expect
+      .element(page.getByRole("menuitemcheckbox", { name: "Type" }))
+      .toHaveAttribute("aria-checked", "true");
+  });
+
+  it("keeps a selection in a submenu after the root menu closes", async () => {
+    await renderWithSalt(<UncontrolledSelection />);
+    await trigger().click();
+    await page.getByRole("menuitem", { name: "Density" }).hover();
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Medium" }))
+      .toHaveAttribute("aria-checked", "true");
+    await page.getByRole("menuitemradio", { name: "Low" }).click();
+    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+    await trigger().click();
+    await page.getByRole("menuitem", { name: "Density" }).hover();
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Low" }))
+      .toHaveAttribute("aria-checked", "true");
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Medium" }))
+      .toHaveAttribute("aria-checked", "false");
+  });
+
+  it("calls onSelectionChange with the new selection", async () => {
+    const onSelectionChange = vi.fn();
+    await renderWithSalt(
+      <UncontrolledMenu
+        selectionVariant="multiple"
+        defaultSelected={["one"]}
+        onSelectionChange={onSelectionChange}
+      />,
+    );
+    await trigger().click();
+    const two = page.getByRole("menuitemcheckbox", { name: "Two" });
+    await two.click();
+    await expect.element(two).toHaveAttribute("aria-checked", "true");
+    expect(onSelectionChange).toHaveBeenLastCalledWith(expect.anything(), [
+      "one",
+      "two",
+    ]);
+  });
+
+  it("prefers selected over defaultSelected", async () => {
+    await renderWithSalt(
+      <UncontrolledMenu
+        selectionVariant="single"
+        selected={["one"]}
+        defaultSelected={["two"]}
+      />,
+    );
+    await trigger().click();
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "One" }))
+      .toHaveAttribute("aria-checked", "true");
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Two" }))
+      .toHaveAttribute("aria-checked", "false");
+  });
+
+  it("warns when a group switches from controlled to uncontrolled", async () => {
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    await renderWithSalt(<SwitchingControlMenu />);
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "One" }))
+      .toHaveAttribute("aria-checked", "true");
+    await page.getByRole("button", { name: "Stop controlling" }).click();
+    await expect
+      .poll(() =>
+        error.mock.calls.some(([message]) =>
+          String(message).includes(
+            "changing the controlled selected state of MenuGroup to be uncontrolled",
+          ),
+        ),
+      )
+      .toBe(true);
   });
 });
