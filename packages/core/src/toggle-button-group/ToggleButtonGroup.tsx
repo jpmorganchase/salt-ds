@@ -139,7 +139,8 @@ export const ToggleButtonGroup = forwardRef<
 
   const isFocused = useCallback(
     (id: Value) => {
-      return focused === id || !focused;
+      // `0` is a valid value, so only an empty value means nothing is focused.
+      return focused === id || focused === undefined || focused === "";
     },
     [focused],
   );
@@ -170,6 +171,12 @@ export const ToggleButtonGroup = forwardRef<
   );
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    // Leave modified arrow keys (e.g. browser history shortcuts) to the browser.
+    if (event.altKey || event.ctrlKey || event.metaKey) {
+      onKeyDown?.(event);
+      return;
+    }
+
     const elements: HTMLElement[] = Array.from(
       groupRef.current?.querySelectorAll("button:not([disabled])") ?? [],
     );

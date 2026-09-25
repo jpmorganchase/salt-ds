@@ -118,7 +118,7 @@ describe("GIVEN an uncontrolled ToggleButtonGroup", () => {
   });
 
   it("respects defaultValue", async () => {
-    await renderWithSalt(<Group defaultValue="home" disableHome={false} />);
+    await renderWithSalt(<Group defaultValue="home" />);
     for (const [name, selected, tabIndex] of [
       ["Alert", "false", "-1"],
       ["Home", "true", "0"],
@@ -277,6 +277,43 @@ describe("GIVEN a ToggleButtonGroup and keyboard navigation", () => {
     await userEvent.keyboard("{ArrowRight}");
 
     expect(keyDown.lastDefaultPrevented()).toBe(true);
+  });
+
+  it("leaves modified arrow keys to the browser", async () => {
+    const keyDown = trackDefaultPrevented();
+    await renderWithSalt(
+      <Group defaultValue="alert" onKeyDown={keyDown.handler} />,
+    );
+
+    await userEvent.tab();
+    const alert = page.getByRole("radio", { name: "Alert" });
+    await expect.element(alert).toHaveFocus();
+
+    for (const [modifier, key] of [
+      ["Alt", "ArrowRight"],
+      ["Control", "ArrowLeft"],
+      ["Meta", "ArrowDown"],
+    ] as const) {
+      await userEvent.keyboard(`{${modifier}>}{${key}}{/${modifier}}`);
+      expect(keyDown.lastDefaultPrevented()).toBe(false);
+      await expect.element(alert).toHaveFocus();
+    }
+  });
+
+  it("keeps a single tab stop when a numeric value is 0", async () => {
+    await renderWithSalt(
+      <ToggleButtonGroup defaultValue={0} aria-label="Numeric options">
+        <ToggleButton value={0}>Zero</ToggleButton>
+        <ToggleButton value={1}>One</ToggleButton>
+      </ToggleButtonGroup>,
+    );
+
+    await expect
+      .element(page.getByRole("radio", { name: "Zero" }))
+      .toHaveAttribute("tabindex", "0");
+    await expect
+      .element(page.getByRole("radio", { name: "One" }))
+      .toHaveAttribute("tabindex", "-1");
   });
 });
 
