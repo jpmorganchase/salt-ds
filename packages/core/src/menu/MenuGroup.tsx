@@ -24,9 +24,19 @@ export interface MenuGroupProps extends ComponentPropsWithoutRef<"div"> {
    */
   closeOnSelect?: boolean;
   /**
+   * The values of the menu items selected by default. Use with `name` for an uncontrolled selection.
+   * This will be disregarded if `selected` is set.
+   */
+  defaultSelected?: string[];
+  /**
    * The label of the menu group.
    */
   label?: string;
+  /**
+   * Identifies the group's selection within the menu, so an uncontrolled selection is kept while the menu is closed.
+   * Must be unique within the menu.
+   */
+  name?: string;
   /**
    * Callback fired when the selection changes.
    * @param event
@@ -34,7 +44,7 @@ export interface MenuGroupProps extends ComponentPropsWithoutRef<"div"> {
    */
   onSelectionChange?: (event: SyntheticEvent, newSelected: string[]) => void;
   /**
-   * The values of the selected menu items. Required when `selectionVariant` is "single" or "multiple".
+   * The values of the selected menu items. Use with `onSelectionChange` to control the selection.
    */
   selected?: string[];
   /**
@@ -51,7 +61,9 @@ export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
       className,
       children,
       closeOnSelect,
+      defaultSelected,
       label,
+      name,
       onSelectionChange,
       selected,
       selectionVariant = "none",
@@ -68,6 +80,8 @@ export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
     const labelId = useId();
 
     const { isSelected, select } = useMenuGroupSelection({
+      defaultSelected,
+      name,
       onSelectionChange,
       selected,
       selectionVariant,
