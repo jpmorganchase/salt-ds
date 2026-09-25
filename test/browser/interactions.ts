@@ -1,4 +1,5 @@
 import type { Locator } from "@vitest/browser/context";
+import type { SyntheticEvent } from "react";
 
 export function pasteValue(locator: Locator, value: string) {
   const input = locator.element() as HTMLInputElement;
@@ -35,4 +36,16 @@ export function dropFiles(locator: Locator, files: File[]) {
       dataTransfer,
     }),
   );
+}
+
+// React 16 pools synthetic events, so keep the native events instead.
+export function trackNativeEvents<T extends Event = Event>() {
+  const nativeEvents: T[] = [];
+
+  return {
+    handler: (event: SyntheticEvent<Element, T>) => {
+      nativeEvents.push(event.nativeEvent);
+    },
+    last: () => nativeEvents.at(-1),
+  };
 }
