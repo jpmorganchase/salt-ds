@@ -33,6 +33,8 @@ export interface MenuItemProps extends ComponentPropsWithoutRef<"div"> {
 
 const withBaseName = makePrefixer("saltMenuItem");
 
+let missingValueWarningShown = false;
+
 export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
   function MenuItem(props, ref) {
     const {
@@ -75,7 +77,12 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
 
     useEffect(() => {
       if (process.env.NODE_ENV !== "production") {
-        if (insideSelectableGroup && value === undefined) {
+        if (
+          insideSelectableGroup &&
+          value === undefined &&
+          !missingValueWarningShown
+        ) {
+          missingValueWarningShown = true;
           console.warn(
             "Salt: MenuItem requires a `value` to be selectable inside a MenuGroup with `selectionVariant` set. It will behave as a regular menu item.",
           );
@@ -130,6 +137,9 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
               !disabled
             ) {
               event.preventDefault();
+              if (event.repeat) {
+                return;
+              }
               const { view, ...eventInit } = event;
               queueMicrotask(() => {
                 activationKeyRef.current = key;
