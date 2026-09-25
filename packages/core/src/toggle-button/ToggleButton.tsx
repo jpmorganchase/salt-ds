@@ -13,7 +13,12 @@ import {
 } from "react";
 import type { ButtonAppearance, ButtonSentiment } from "../button";
 import { useToggleButtonGroup } from "../toggle-button-group";
-import { makePrefixer, useControlled, useForkRef } from "../utils";
+import {
+  makePrefixer,
+  useControlled,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "../utils";
 
 import toggleButtonCss from "./ToggleButton.css";
 
@@ -99,6 +104,14 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       appearanceProp || toggleButtonGroup?.appearance || "solid";
     const disabled = toggleButtonGroup?.disabled || disabledProp;
     const readOnly = toggleButtonGroup?.readOnly || readOnlyProp;
+
+    const registerEnabled = toggleButtonGroup?.registerEnabled;
+    useIsomorphicLayoutEffect(() => {
+      if (disabled || !registerEnabled) {
+        return;
+      }
+      return registerEnabled(value);
+    }, [disabled, registerEnabled, value]);
 
     const [selected, setSelected] = useControlled({
       controlled: toggleButtonGroupSelected,

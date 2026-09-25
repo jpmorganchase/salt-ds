@@ -19,6 +19,7 @@ data:
 <KeyboardControl keyOrCombos="Tab">
 
 - Tab moves focus into the toggle button group. Focus is set to the active button.
+- If the active button is disabled, or no button is active, focus is set to the first enabled button.
 - If focus is inside the toggle button group, Tab moves focus out of the toggle button group. Focus is set to the next component in the tab order.
 
 </KeyboardControl>
@@ -32,17 +33,18 @@ data:
 
 - If focus is inside the toggle button group, this action moves focus out of the component. Focus is set to the previous component in the tab order.
 - If focus is below the toggle button group, this action move focus into the toggle button group. Focus is set to the active button.
+- If the active button is disabled, or no button is active, focus is set to the last enabled button.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Right arrow / Down arrow">
 
-- This action moves focus to the next toggle button in the toggle button group.
+- This action moves focus to the next enabled toggle button in the toggle button group.
 - If focus is on the last toggle button, this action wraps focus to the first toggle button.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Left arrow / Up arrow">
 
-- This action moves focus to the previous toggle button in the toggle button group.
+- This action moves focus to the previous enabled toggle button in the toggle button group.
 - If focus is on the first toggle button, this action wraps focus to the last toggle button.
 
 </KeyboardControl>

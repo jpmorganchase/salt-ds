@@ -110,6 +110,19 @@ export const ToggleButtonGroup = forwardRef<
     state: "value",
   });
   const [focused, setFocused] = useState<Value>(value);
+  const [enabledValues, setEnabledValues] = useState<Value[]>([]);
+
+  const registerEnabled = useCallback((id: Value) => {
+    setEnabledValues((previous) => [...previous, id]);
+    return () => {
+      setEnabledValues((previous) => {
+        const index = previous.indexOf(id);
+        return index === -1
+          ? previous
+          : previous.filter((_, itemIndex) => itemIndex !== index);
+      });
+    };
+  }, []);
 
   const select = useCallback(
     (
@@ -139,10 +152,18 @@ export const ToggleButtonGroup = forwardRef<
 
   const isFocused = useCallback(
     (id: Value) => {
-      // `0` is a valid value, so only an empty value means nothing is focused.
-      return focused === id || focused === undefined || focused === "";
+      // Trust the focused value until buttons register (e.g. server rendering).
+      const hasFocusTarget =
+        focused !== undefined &&
+        focused !== "" &&
+        (enabledValues.length === 0 ||
+          enabledValues.some((enabledValue) =>
+            isSameValue(enabledValue, focused),
+          ));
+
+      return hasFocusTarget ? focused === id : true;
     },
-    [focused],
+    [focused, enabledValues],
   );
 
   const contextValue = useMemo(
@@ -154,6 +175,7 @@ export const ToggleButtonGroup = forwardRef<
       isSelected,
       orientation,
       readOnly,
+      registerEnabled,
       select,
       sentiment,
     }),
@@ -165,6 +187,7 @@ export const ToggleButtonGroup = forwardRef<
       isSelected,
       orientation,
       readOnly,
+      registerEnabled,
       select,
       sentiment,
     ],
@@ -188,7 +211,6 @@ export const ToggleButtonGroup = forwardRef<
       case "ArrowDown":
       case "ArrowRight":
         if (elements.length > 0) {
-          // The group owns the arrow keys, so stop the page scrolling.
           event.preventDefault();
           elements[(currentIndex + 1) % elements.length]?.focus();
         }

@@ -12,7 +12,7 @@ import {
 import { type ComponentProps, type SyntheticEvent, useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
-import { trackDefaultPrevented } from "~browser-test-utils/interactions";
+import { trackNativeEvents } from "~browser-test-utils/interactions";
 import { renderWithSalt } from "~browser-test-utils/render";
 
 type GroupProps = ComponentProps<typeof ToggleButtonGroup> & {
@@ -50,18 +50,21 @@ function Group({ disableHome, ...props }: GroupProps) {
   );
 }
 
-function LegacyToggleButton() {
+// A custom button written before `select` took a value and buttons registered.
+function LegacyToggleButton({ value }: { value: string }) {
   const toggleButtonGroup = useToggleButtonGroup();
 
   return (
     <button
-      aria-checked={toggleButtonGroup?.isSelected("legacy")}
+      aria-checked={toggleButtonGroup?.isSelected(value)}
       onClick={(event) => toggleButtonGroup?.select(event)}
+      onFocus={() => toggleButtonGroup?.focus(value)}
       role="radio"
+      tabIndex={toggleButtonGroup?.isFocused(value) ? 0 : -1}
       type="button"
-      value="legacy"
+      value={value}
     >
-      Legacy
+      {value}
     </button>
   );
 }
@@ -79,6 +82,40 @@ function ExplicitUndefinedToggleButton() {
     >
       Clear
     </button>
+  );
+}
+
+function ToggleSearchGroup() {
+  const [disableSearch, setDisableSearch] = useState(false);
+
+  return (
+    <>
+      <button type="button" onClick={() => setDisableSearch((prev) => !prev)}>
+        Toggle Search
+      </button>
+      <ToggleButtonGroup defaultValue="search" aria-label="Dynamic options">
+        <ToggleButton value="alert">Alert</ToggleButton>
+        <ToggleButton value="search" disabled={disableSearch}>
+          Search
+        </ToggleButton>
+      </ToggleButtonGroup>
+    </>
+  );
+}
+
+function RemovableGroup() {
+  const [showSearch, setShowSearch] = useState(true);
+
+  return (
+    <>
+      <button type="button" onClick={() => setShowSearch(false)}>
+        Remove Search
+      </button>
+      <ToggleButtonGroup aria-label="Dynamic options">
+        <ToggleButton value="alert">Alert</ToggleButton>
+        {showSearch && <ToggleButton value="search">Search</ToggleButton>}
+      </ToggleButtonGroup>
+    </>
   );
 }
 
@@ -118,7 +155,7 @@ describe("GIVEN an uncontrolled ToggleButtonGroup", () => {
   });
 
   it("respects defaultValue", async () => {
-    await renderWithSalt(<Group defaultValue="home" />);
+    await renderWithSalt(<Group defaultValue="home" disableHome={false} />);
     for (const [name, selected, tabIndex] of [
       ["Alert", "false", "-1"],
       ["Home", "true", "0"],
@@ -163,11 +200,13 @@ describe("GIVEN an uncontrolled ToggleButtonGroup", () => {
   it("falls back to the DOM value when select omits its value", async () => {
     await renderWithSalt(
       <ToggleButtonGroup aria-label="Legacy options">
-        <LegacyToggleButton />
+        <LegacyToggleButton value="Legacy" />
       </ToggleButtonGroup>,
     );
 
     const legacy = page.getByRole("radio", { name: "Legacy" });
+    await expect.element(legacy).toHaveAttribute("aria-checked", "false");
+
     await legacy.click();
 
     await expect.element(legacy).toHaveAttribute("aria-checked", "true");
@@ -181,9 +220,55 @@ describe("GIVEN an uncontrolled ToggleButtonGroup", () => {
     );
 
     const clear = page.getByRole("radio", { name: "Clear" });
+    await expect.element(clear).toHaveAttribute("aria-checked", "false");
+
     await clear.click();
 
     await expect.element(clear).toHaveAttribute("aria-checked", "true");
+  });
+
+  it("keeps a single tab stop for custom buttons that do not register", async () => {
+    await renderWithSalt(
+      <ToggleButtonGroup defaultValue="Second" aria-label="Legacy options">
+        <LegacyToggleButton value="First" />
+        <LegacyToggleButton value="Second" />
+      </ToggleButtonGroup>,
+    );
+
+    await expect
+      .element(page.getByRole("radio", { name: "First" }))
+      .toHaveAttribute("tabindex", "-1");
+    await expect
+      .element(page.getByRole("radio", { name: "Second" }))
+      .toHaveAttribute("tabindex", "0");
+  });
+
+  it("matches array values by their contents", async () => {
+    const onChange = vi.fn();
+    await renderWithSalt(
+      <ToggleButtonGroup
+        defaultValue={["bold"]}
+        onChange={onChange}
+        aria-label="Array options"
+      >
+        <ToggleButton value={["bold"]}>Bold</ToggleButton>
+        <ToggleButton value={["italic"]}>Italic</ToggleButton>
+      </ToggleButtonGroup>,
+    );
+
+    const bold = page.getByRole("radio", { name: "Bold" });
+    const italic = page.getByRole("radio", { name: "Italic" });
+
+    await expect.element(bold).toHaveAttribute("aria-checked", "true");
+    await expect.element(italic).toHaveAttribute("aria-checked", "false");
+
+    await bold.click();
+    expect(onChange).not.toHaveBeenCalled();
+
+    await italic.click();
+    expect(onChange).toHaveBeenCalledOnce();
+    await expect.element(italic).toHaveAttribute("aria-checked", "true");
+    await expect.element(bold).toHaveAttribute("aria-checked", "false");
   });
 });
 
@@ -201,8 +286,6 @@ describe("GIVEN a ToggleButtonGroup and keyboard navigation", () => {
 
     await one.click();
 
-    // A screen reader must announce the chosen button as checked, and the tab
-    // stop must follow it. Otherwise the group reports nothing as selected.
     await expect.element(one).toHaveAttribute("aria-checked", "true");
     await expect.element(two).toHaveAttribute("aria-checked", "false");
     await expect.element(one).toHaveAttribute("tabindex", "0");
@@ -223,8 +306,10 @@ describe("GIVEN a ToggleButtonGroup and keyboard navigation", () => {
     );
 
     await page.getByRole("radio", { name: "Two" }).click();
-
     expect(onChange).not.toHaveBeenCalled();
+
+    await page.getByRole("radio", { name: "One" }).click();
+    expect(onChange).toHaveBeenCalledOnce();
   });
 
   it("distinguishes numeric and string values with the same text", async () => {
@@ -268,7 +353,7 @@ describe("GIVEN a ToggleButtonGroup and keyboard navigation", () => {
   });
 
   it("stops the page scrolling when navigating with the arrow keys", async () => {
-    const keyDown = trackDefaultPrevented();
+    const keyDown = trackNativeEvents<KeyboardEvent>();
     await renderWithSalt(
       <Group defaultValue="alert" onKeyDown={keyDown.handler} />,
     );
@@ -276,11 +361,12 @@ describe("GIVEN a ToggleButtonGroup and keyboard navigation", () => {
     await userEvent.tab();
     await userEvent.keyboard("{ArrowRight}");
 
-    expect(keyDown.lastDefaultPrevented()).toBe(true);
+    expect(keyDown.last()?.key).toBe("ArrowRight");
+    expect(keyDown.last()?.defaultPrevented).toBe(true);
   });
 
   it("leaves modified arrow keys to the browser", async () => {
-    const keyDown = trackDefaultPrevented();
+    const keyDown = trackNativeEvents<KeyboardEvent>();
     await renderWithSalt(
       <Group defaultValue="alert" onKeyDown={keyDown.handler} />,
     );
@@ -295,7 +381,8 @@ describe("GIVEN a ToggleButtonGroup and keyboard navigation", () => {
       ["Meta", "ArrowDown"],
     ] as const) {
       await userEvent.keyboard(`{${modifier}>}{${key}}{/${modifier}}`);
-      expect(keyDown.lastDefaultPrevented()).toBe(false);
+      expect(keyDown.last()?.key).toBe(key);
+      expect(keyDown.last()?.defaultPrevented).toBe(false);
       await expect.element(alert).toHaveFocus();
     }
   });
@@ -314,6 +401,97 @@ describe("GIVEN a ToggleButtonGroup and keyboard navigation", () => {
     await expect
       .element(page.getByRole("radio", { name: "One" }))
       .toHaveAttribute("tabindex", "-1");
+  });
+
+  it("can be reached with Tab when the selected button is disabled", async () => {
+    await renderWithSalt(
+      <>
+        <button type="button">Before</button>
+        <Group defaultValue="home" />
+        <button type="button">After</button>
+      </>,
+    );
+
+    await page.getByRole("button", { name: "Before" }).click();
+    await userEvent.tab();
+
+    await expect
+      .element(page.getByRole("radio", { name: "Alert" }))
+      .toHaveFocus();
+    await expect
+      .element(page.getByRole("radio", { name: "Home" }))
+      .toHaveAttribute("aria-checked", "true");
+
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "After" }))
+      .toHaveFocus();
+  });
+
+  it("stays reachable with Tab when the selected button becomes disabled", async () => {
+    await renderWithSalt(<ToggleSearchGroup />);
+
+    const toggle = page.getByRole("button", { name: "Toggle Search" });
+    const alert = page.getByRole("radio", { name: "Alert" });
+    const search = page.getByRole("radio", { name: "Search" });
+
+    await expect.element(search).toHaveAttribute("tabindex", "0");
+    await expect.element(alert).toHaveAttribute("tabindex", "-1");
+
+    await toggle.click();
+    await expect.element(search).toBeDisabled();
+    await userEvent.tab();
+
+    await expect.element(alert).toHaveFocus();
+  });
+
+  it("returns the tab stop to the selected button when it is enabled again", async () => {
+    await renderWithSalt(<ToggleSearchGroup />);
+
+    const toggle = page.getByRole("button", { name: "Toggle Search" });
+    const alert = page.getByRole("radio", { name: "Alert" });
+    const search = page.getByRole("radio", { name: "Search" });
+
+    await toggle.click();
+    await expect.element(alert).toHaveAttribute("tabindex", "0");
+
+    await toggle.click();
+    await expect.element(search).toHaveAttribute("tabindex", "0");
+    await expect.element(alert).toHaveAttribute("tabindex", "-1");
+
+    await userEvent.tab();
+    await expect.element(search).toHaveFocus();
+  });
+
+  it("can be reached with Tab when the value matches no button", async () => {
+    await renderWithSalt(
+      <>
+        <button type="button">Before</button>
+        <Group defaultValue="missing" />
+      </>,
+    );
+
+    await page.getByRole("button", { name: "Before" }).click();
+    await userEvent.tab();
+
+    await expect
+      .element(page.getByRole("radio", { name: "Alert" }))
+      .toHaveFocus();
+  });
+
+  it("stays reachable with Tab when the focused button is removed", async () => {
+    await renderWithSalt(<RemovableGroup />);
+
+    await page.getByRole("radio", { name: "Search" }).click();
+    await page.getByRole("button", { name: "Remove Search" }).click();
+    await expect
+      .element(page.getByRole("radio", { name: "Search" }))
+      .not.toBeInTheDocument();
+
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("radio", { name: "Alert" }))
+      .toHaveFocus();
   });
 });
 
