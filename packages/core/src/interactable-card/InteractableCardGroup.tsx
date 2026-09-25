@@ -238,7 +238,8 @@ export const InteractableCardGroup = forwardRef<
       select(event, enabledCards[currentIndex].value);
     }
 
-    if (!multiSelect) {
+    // Leave modified arrow keys, e.g. Alt + Arrow for browser history, to the browser.
+    if (!multiSelect && !event.altKey && !event.ctrlKey && !event.metaKey) {
       switch (event.key) {
         case "ArrowDown":
         case "ArrowRight":

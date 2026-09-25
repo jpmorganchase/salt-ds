@@ -448,6 +448,29 @@ describe("GIVEN a single-select InteractableCardGroup", () => {
     expect(defaultPrevented).toBe(true);
   });
 
+  it.each(["Alt", "Control", "Meta"])(
+    "leaves arrow keys pressed with %s to the browser",
+    async (modifier) => {
+      const onChange = vi.fn();
+      let defaultPrevented: boolean | undefined;
+      const onKeyDown = vi.fn((event) => {
+        if (event.key === "ArrowRight") {
+          defaultPrevented = event.defaultPrevented;
+        }
+      });
+      await renderWithSalt(
+        <Cards defaultValue="one" onChange={onChange} onKeyDown={onKeyDown} />,
+      );
+      await userEvent.tab();
+      await userEvent.keyboard(`{${modifier}>}{ArrowRight}{/${modifier}}`);
+
+      expect(defaultPrevented).toBe(false);
+      expect(onChange).not.toHaveBeenCalled();
+      await expect.element(card("One", false)).toHaveFocus();
+      await expectChecked("One", false, true);
+    },
+  );
+
   it("selects with Space when initially empty", async () => {
     await renderWithSalt(<Cards />);
     await userEvent.tab();
