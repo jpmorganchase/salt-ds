@@ -1,6 +1,8 @@
 import {
   InteractableCard,
   InteractableCardGroup,
+  InteractableCardGroupContext,
+  type InteractableCardGroupContextValue,
   type InteractableCardGroupProps,
   type InteractableCardValue,
 } from "@salt-ds/core";
@@ -503,6 +505,47 @@ describe("GIVEN a single-select InteractableCardGroup", () => {
     await expectChecked("One", false, false);
     expect(onChange).not.toHaveBeenCalled();
   });
+
+  it.each(["group", "card"] as const)(
+    "calls onKeyDown without selecting when the %s is disabled",
+    async (disabledTarget) => {
+      const onChange = vi.fn();
+      const onClick = vi.fn();
+      const onCardKeyDown = vi.fn();
+      const onGroupKeyDown = vi.fn();
+      await renderWithSalt(
+        <InteractableCardGroup
+          disabled={disabledTarget === "group"}
+          onChange={onChange}
+          onKeyDown={onGroupKeyDown}
+        >
+          <InteractableCard
+            disabled={disabledTarget === "card"}
+            onClick={onClick}
+            onKeyDown={onCardKeyDown}
+            value="one"
+          >
+            One
+          </InteractableCard>
+          <InteractableCard value="two">Two</InteractableCard>
+        </InteractableCardGroup>,
+      );
+
+      // Disabled cards are not tabbable but can still receive focus.
+      card("One", false).element().focus();
+      await userEvent.keyboard(" ");
+      await userEvent.keyboard("{Enter}");
+      await userEvent.keyboard("{ArrowDown}");
+
+      expect(onCardKeyDown).toHaveBeenCalledTimes(3);
+      expect(onGroupKeyDown).toHaveBeenCalledTimes(3);
+      expect(onClick).not.toHaveBeenCalled();
+      expect(onChange).not.toHaveBeenCalled();
+      await expect.element(card("One", false)).toHaveFocus();
+      await expectChecked("One", false, false);
+      await expectChecked("Two", false, false);
+    },
+  );
 });
 
 describe("GIVEN an InteractableCardGroup whose disabled state changes", () => {
@@ -575,5 +618,25 @@ describe("GIVEN an InteractableCardGroup whose disabled state changes", () => {
 
     await expect.element(card("One", false)).toHaveAttribute("tabindex", "-1");
     await expect.element(card("Two", false)).toHaveAttribute("tabindex", "0");
+  });
+});
+
+describe("GIVEN a custom InteractableCardGroupContext provider", () => {
+  it("uses the first card as the tab stop without registration fields", async () => {
+    const contextValue: InteractableCardGroupContextValue = {
+      select: () => {},
+      isSelected: () => false,
+      isFirstChild: (value) => value === "one",
+      value: undefined,
+    };
+    await renderWithSalt(
+      <InteractableCardGroupContext.Provider value={contextValue}>
+        <InteractableCard value="one">One</InteractableCard>
+        <InteractableCard value="two">Two</InteractableCard>
+      </InteractableCardGroupContext.Provider>,
+    );
+
+    await expect.element(card("One", false)).toHaveAttribute("tabindex", "0");
+    await expect.element(card("Two", false)).toHaveAttribute("tabindex", "-1");
   });
 });

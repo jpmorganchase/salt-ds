@@ -142,7 +142,11 @@ export const InteractableCard = forwardRef<
     } else {
       // Single select: Only selected or first item (if none are selected) is focusable
       tabIndex = selected ? 0 : -1;
-      if (!interactableCardGroup.hasEnabledSelection && isFirstChild) {
+      // Fall back to the value for custom providers without hasEnabledSelection.
+      const hasEnabledSelection =
+        interactableCardGroup.hasEnabledSelection ??
+        Boolean(interactableCardGroup.value);
+      if (!hasEnabledSelection && isFirstChild) {
         tabIndex = 0;
       }
     }

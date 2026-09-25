@@ -9,3 +9,5 @@ Improved `InteractableCardGroup` keyboard navigation. Arrow keys no longer scrol
 Fixed an `InteractableCardGroup` becoming unreachable with Tab after it is re-enabled.
 
 Disabled cards now retain their selected border without displaying hover or pressed effects.
+
+Disabled `InteractableCard` components no longer render the `disabled` attribute, which is not valid on a `div`. Use `aria-disabled="true"` or the `saltInteractableCard-disabled` class to target disabled cards in styles or tests.

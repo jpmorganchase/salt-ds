@@ -70,11 +70,7 @@ export const useInteractableCard = <T extends Element>({
   };
 
   const handleKeyDown = (event: KeyboardEvent<T>) => {
-    if (disabled) {
-      return;
-    }
-
-    if (event.key === enter || event.key === space) {
+    if (!disabled && (event.key === enter || event.key === space)) {
       setkeyIsDown(event.key);
       event.preventDefault();
       setActive(true);

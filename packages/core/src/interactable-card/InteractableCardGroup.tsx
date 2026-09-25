@@ -214,18 +214,12 @@ export const InteractableCardGroup = forwardRef<
   );
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (
-      disabled ||
-      (event.target as HTMLElement).closest(".saltInteractableCard-disabled")
-    ) {
-      return;
-    }
-
     const doc = ownerDocument(groupRef.current);
 
     const currentCard = (doc.activeElement as HTMLElement | null)?.closest(
       ".saltInteractableCard",
     );
+    // Disabled cards aren't registered, so their key events fall through to onKeyDown.
     const currentIndex = currentCard
       ? enabledCards.findIndex((card) => card.element === currentCard)
       : -1;

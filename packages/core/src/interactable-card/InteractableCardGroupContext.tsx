@@ -13,7 +13,7 @@ export interface InteractableCardGroupContextValue {
     value: InteractableCardValue,
     element: HTMLElement,
   ) => () => void;
-  hasEnabledSelection: boolean;
+  hasEnabledSelection?: boolean;
   isSelected: (id: InteractableCardValue) => boolean;
   isFirstChild: (value: InteractableCardValue) => boolean;
   multiSelect?: boolean;
