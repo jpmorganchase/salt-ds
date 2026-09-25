@@ -300,13 +300,18 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     }
 
     if (!openState) {
-      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      if (
+        event.key === "ArrowDown" ||
+        event.key === "ArrowUp" ||
+        event.key === "Home" ||
+        event.key === "End"
+      ) {
         event.preventDefault();
         setOpen(true, undefined, event.key);
         return;
       }
 
-      // The list is hidden, so leave the other navigation keys to scroll the page.
+      // The list is hidden, so leave PageUp/PageDown to scroll the page.
       if (isListControlNavigationKey(event.key)) {
         return;
       }
@@ -414,8 +419,15 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
       return;
     }
 
+    // Home and End always open on the first or last option, even with a selection.
+    if (openKey.current === "Home") {
+      newActive = getFirstOption();
+    } else if (openKey.current === "End") {
+      newActive = getLastOption();
+    }
+
     // If we have selected an item, we should make that the active item
-    if (selectedState.length > 0) {
+    if (!newActive && selectedState.length > 0) {
       newActive = getOptionsMatching(
         (option) => option.value === selectedState[0],
       ).pop();

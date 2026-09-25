@@ -618,7 +618,72 @@ describe("GIVEN a Dropdown at the edge of its options", () => {
 });
 
 describe("GIVEN a closed Dropdown", () => {
-  it.each(["{PageUp}", "{PageDown}", "{Home}", "{End}"])(
+  it.each([
+    ["{Home}", "Alabama"],
+    ["{End}", "Arizona"],
+  ] as const)(
+    "opens the list with %s and moves focus to %s",
+    async (key, activeOption) => {
+      const keyDown = trackDefaultPrevented();
+      await renderWithSalt(
+        <Dropdown onKeyDown={keyDown.handler}>
+          <Option value="Alabama" />
+          <Option value="Alaska" />
+          <Option value="Arizona" />
+        </Dropdown>,
+      );
+      await userEvent.tab();
+      await expect
+        .element(combobox())
+        .toHaveAttribute("aria-expanded", "false");
+
+      await userEvent.keyboard(key);
+
+      expect(keyDown.lastDefaultPrevented()).toBe(true);
+      await expect.element(listbox()).toBeInTheDocument();
+      await expectActive(activeOption);
+    },
+  );
+
+  it.each([
+    ["{Home}", "Alabama"],
+    ["{End}", "Arizona"],
+  ] as const)(
+    "uses %s to move focus to %s even when another option is selected",
+    async (key, activeOption) => {
+      await renderWithSalt(
+        <Dropdown defaultSelected={["Alaska"]}>
+          <Option value="Alabama" />
+          <Option value="Alaska" />
+          <Option value="Arizona" />
+        </Dropdown>,
+      );
+      await userEvent.tab();
+
+      await userEvent.keyboard(key);
+
+      await expect.element(listbox()).toBeInTheDocument();
+      await expectActive(activeOption);
+    },
+  );
+
+  it("still opens on the selected option with an arrow key", async () => {
+    await renderWithSalt(
+      <Dropdown defaultSelected={["Alaska"]}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+        <Option value="Arizona" />
+      </Dropdown>,
+    );
+    await userEvent.tab();
+
+    await userEvent.keyboard("{ArrowDown}");
+
+    await expect.element(listbox()).toBeInTheDocument();
+    await expectActive("Alaska");
+  });
+
+  it.each(["{PageUp}", "{PageDown}"])(
     "lets %s scroll the page",
     async (key) => {
       const keyDown = trackDefaultPrevented();

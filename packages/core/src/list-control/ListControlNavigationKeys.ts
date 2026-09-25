@@ -2,7 +2,8 @@ import type { OptionValue } from "./ListControlContext";
 
 /**
  * Keys that move between options while the list is shown. When no list is
- * shown, Dropdown and ComboBox leave these keys to the browser.
+ * shown, Dropdown and ComboBox pass the keys they don't use to open the list
+ * to the browser.
  */
 const LIST_CONTROL_NAVIGATION_KEYS: ReadonlySet<string> = new Set([
   "ArrowDown",

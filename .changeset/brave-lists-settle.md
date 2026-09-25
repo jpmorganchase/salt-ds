@@ -6,4 +6,6 @@ Fixed `ListBox` and `Dropdown` unexpectedly scrolling the page during keyboard n
 
 `ComboBox` now prevents PageUp and PageDown from scrolling the page when navigation cannot move beyond the first or last option.
 
-`Dropdown` and `ComboBox` no longer handle Home, End, PageUp, and PageDown while no list is shown, so these keys scroll the page or move the text cursor as normal instead of highlighting a hidden option.
+`Dropdown` now opens the list when Home or End is pressed while it is closed, and moves focus to the first or last option.
+
+While no list is shown, `Dropdown` and `ComboBox` leave PageUp and PageDown to the browser, and `ComboBox` also leaves Home and End, so these keys scroll the page or move the text cursor as normal instead of highlighting a hidden option.
