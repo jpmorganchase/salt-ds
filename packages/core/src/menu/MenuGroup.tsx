@@ -24,7 +24,7 @@ export interface MenuGroupProps extends ComponentPropsWithoutRef<"div"> {
    */
   closeOnSelect?: boolean;
   /**
-   * The values of the menu items selected by default. Use with `name` for an uncontrolled selection.
+   * The values of the menu items selected by default. Use with `name` to keep the selection while the menu is closed.
    * This will be disregarded if `selected` is set.
    */
   defaultSelected?: string[];
