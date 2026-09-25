@@ -1,5 +1,60 @@
 # @salt-ds/theme
 
+## 1.47.0
+
+### Minor Changes
+
+- d578674: Deprecated `--salt-text-label-fontFamily`. Use `--salt-text-fontFamily` instead. The deprecated token remains available as an alias of `--salt-text-fontFamily` for compatibility but may be removed in a future major version.
+- e990c46: Deprecated unused tokens in the legacy theme. These tokens are no longer used by any Salt component. They will continue to work for now, but should not be used and may be removed in a future major version.
+
+  Deprecated characteristic tokens:
+
+  - `--salt-content-bold-foreground-disabled`
+  - `--salt-selectable-background-disabled`
+  - `--salt-selectable-background-selectedDisabled`
+  - `--salt-selectable-borderColor-selectedDisabled`
+  - `--salt-selectable-foreground-selectedDisabled`
+  - `--salt-sentiment-accent-background-disabled`
+
+  Deprecated palette tokens:
+
+  - `--salt-palette-accent-disabled`
+  - `--salt-palette-interact-background-activeDisabled`
+  - `--salt-palette-interact-border-activeDisabled`
+  - `--salt-palette-interact-foreground-activeDisabled`
+  - `--salt-palette-interact-cta-foreground-disabled`
+  - `--salt-palette-interact-primary-foreground-disabled`
+  - `--salt-palette-interact-primary-foreground-hover`
+  - `--salt-palette-interact-secondary-background-active`
+  - `--salt-palette-interact-secondary-background-hover`
+  - `--salt-palette-interact-secondary-foreground`
+  - `--salt-palette-interact-secondary-foreground-active`
+  - `--salt-palette-interact-secondary-foreground-disabled`
+  - `--salt-palette-interact-secondary-foreground-hover`
+
+- e990c46: Deprecated unused tokens in the next theme. These tokens are no longer used by any Salt component. They will continue to work for now, but should not be used and may be removed in a future major version.
+
+  Deprecated characteristic tokens:
+
+  - `--salt-content-bold-foreground-disabled`
+  - `--salt-selectable-background-disabled`
+  - `--salt-selectable-background-selectedDisabled`
+  - `--salt-selectable-borderColor-selectedDisabled`
+  - `--salt-selectable-foreground-selectedDisabled`
+  - `--salt-sentiment-accent-background-disabled`
+
+  Deprecated palette tokens:
+
+  - `--salt-palette-accent-disabled`
+  - `--salt-palette-accent-weaker-disabled`
+  - `--salt-palette-foreground-primary-alt-disabled`
+
+- d578674: Deprecated `--salt-text-notation-fontFamily`. Use `--salt-text-fontFamily` instead. The deprecated token remains available as an alias of `--salt-text-fontFamily` for compatibility but may be removed in a future major version.
+- d578674: Added display typography letter spacing and text transform tokens.
+- 550c4c1: Simplified typography tokens so all heading levels share `--salt-text-heading-fontFamily` and `--salt-text-heading-fontWeight` tokens, while all display levels share `--salt-text-display-fontFamily` and `--salt-text-display-fontWeight` tokens. The `small` and `strong` variants follow the same shared naming.
+
+  The level-specific font family and weight tokens are deprecated. They remain available as aliases for compatibility but may be removed in a future major version.
+
 ## 1.46.0
 
 ### Minor Changes

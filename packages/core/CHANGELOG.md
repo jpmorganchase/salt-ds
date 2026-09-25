@@ -1,5 +1,66 @@
 # @salt-ds/core
 
+## 1.72.0
+
+### Minor Changes
+
+- 24b5b04: Expand `Overlay` placement options to include all FloatingUI placement type options (-start and -end on top, bottom, left and right).
+- 83d7f9c: Add `OverlayFooter`, a composable layout section for an overlay panel. Use it as a direct child of `OverlayPanel` with `OverlayHeader` and `OverlayPanelContent` to create structured layouts.
+
+  `OverlayHeader` and `OverlayFooter` own their padding on all sides. `OverlayPanelContent` drops its top padding after an `OverlayHeader` and its bottom padding before an `OverlayFooter`, so adjacent sections share a single gap.
+
+  Add the `--saltOverlay-header-padding` and `--saltOverlay-footer-padding` CSS variables to `OverlayHeader` and `OverlayFooter`.
+
+### Patch Changes
+
+- ff312fb: Fixed `ListBox` and `Dropdown` unexpectedly scrolling the page during keyboard navigation, including when navigation reaches the first or last option.
+
+  `ComboBox` now prevents PageUp and PageDown from scrolling the page when navigation cannot move beyond the first or last option.
+
+  `ListBox`, `Dropdown`, and `ComboBox` now leave navigation keys pressed with Ctrl or Meta, and Home, End, PageUp, and PageDown pressed with Alt, to the browser, so shortcuts such as Ctrl+End, Cmd+ArrowDown, and Ctrl+PageDown keep working. Alt+ArrowDown still opens the list.
+
+  `Dropdown` now opens the list when Home or End is pressed while it is closed, and moves focus to the first or last option.
+
+  Fixed `Dropdown` moving focus away from the first option when it re-rendered while the list was open, or when a typed character matched the first option while opening the list.
+
+  While no list is shown, `Dropdown` and `ComboBox` leave PageUp and PageDown to the browser, and `ComboBox` also leaves Home and End, so these keys scroll the page or move the text cursor as normal instead of highlighting a hidden option.
+
+- d578674: Applied typography letter spacing tokens consistently to text-owning components and inherited typography roots, and applied the display text transform token to display text.
+- d578674: Deprecated `--salt-text-label-fontFamily`. Use `--salt-text-fontFamily` instead. The deprecated token remains available as an alias of `--salt-text-fontFamily` for compatibility but may be removed in a future major version.
+- d578674: Deprecated `--salt-text-notation-fontFamily`. Use `--salt-text-fontFamily` instead. The deprecated token remains available as an alias of `--salt-text-fontFamily` for compatibility but may be removed in a future major version.
+- cf3afb3: Fixed disabled `InteractableCard` components responding to pointer or keyboard interactions and displaying hover or pressed styles. Disabled cards retain their selected border.
+
+  Disabled `InteractableCard` components can no longer receive focus and no longer render the `disabled` attribute, which is not valid on a `div`. Use `aria-disabled="true"` or the `saltInteractableCard-disabled` class to target disabled cards in styles or tests.
+
+  Improved single-select `InteractableCardGroup` keyboard navigation. Arrow keys skip disabled cards and no longer scroll the page, arrow keys pressed with Alt, Ctrl, or Meta are left to the browser, and Tab moves focus to the first enabled card when no enabled card is selected.
+
+  Fixed an `InteractableCardGroup` becoming unreachable with Tab after it is re-enabled.
+
+- 0b65f84: Improved Dropdown, ComboBox, and ListBox performance for large, non-virtualized option lists. Fixed active/highlighted styling to track the active Option by id instead of value, so Options that share the same value no longer all appear active together; selection is unaffected and remains value-based.
+- b434b9e: Fixed `ToggleButtonGroup` keyboard navigation so arrow keys no longer scroll the page. Arrow keys pressed with Alt, Ctrl or Meta are left to the browser, so shortcuts such as history navigation still work.
+
+  Fixed selection in uncontrolled `ToggleButtonGroup` components whose `ToggleButton` components use numeric or array `value` props. The selected button is now correctly conveyed to assistive technologies, and selecting it again no longer triggers `onChange`.
+
+  Fixed a `ToggleButtonGroup` having no tab stop when its selected or focused button is disabled or removed, or when its value matches no button. When no enabled button is selected, the group now has a single tab stop on the first enabled button. A value of `0` no longer makes every button in the group a tab stop.
+
+  `ToggleButton` no longer adds an unsupported `readOnly` attribute to its underlying button.
+
+- e75a32d: Fixed `NumberInput` increment and decrement buttons remaining enabled inside a disabled `FormField`. The buttons now inherit the disabled state from the field.
+
+  Fixed keyboard navigation in a multiselect `ComboBox` so its selected pills form a single tab stop. Use the arrow keys to move between pills and Tab to leave the pill list.
+
+- 59a14d2: Fixed disabled `Checkbox` and `RadioButton` controls changing appearance when hovered, which could make them seem interactive. Disabled controls now retain their correct colors, including checked radio buttons.
+- e990c46: Simplified the disabled appearance of `Accordion`, `Breadcrumbs`, and `MenuItem` for a more consistent look across Salt components.
+- 550c4c1: Simplified typography tokens so all heading levels share `--salt-text-heading-fontFamily` and `--salt-text-heading-fontWeight` tokens, while all display levels share `--salt-text-display-fontFamily` and `--salt-text-display-fontWeight` tokens. The `small` and `strong` variants follow the same shared naming.
+
+  The level-specific font family and weight tokens are deprecated. They remain available as aliases for compatibility but may be removed in a future major version.
+
+- Updated dependencies [fbe1e48]
+- Updated dependencies [2a5cb0d]
+  - @salt-ds/styles@0.4.1
+  - @salt-ds/window@0.1.2
+  - @salt-ds/icons@1.18.3
+
 ## 1.71.0
 
 ### Minor Changes

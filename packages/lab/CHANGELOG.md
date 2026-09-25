@@ -1,5 +1,36 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.105
+
+### Patch Changes
+
+- d578674: Applied typography letter spacing tokens consistently to text-owning components and inherited typography roots, and applied the display text transform token to display text.
+- d578674: Deprecated `--salt-text-notation-fontFamily`. Use `--salt-text-fontFamily` instead. The deprecated token remains available as an alias of `--salt-text-fontFamily` for compatibility but may be removed in a future major version.
+- e990c46: Simplified the disabled appearance of `List` and `ListNext` items for a more consistent look across Salt components.
+- 550c4c1: Simplified typography tokens so all heading levels share `--salt-text-heading-fontFamily` and `--salt-text-heading-fontWeight` tokens, while all display levels share `--salt-text-display-fontFamily` and `--salt-text-display-fontWeight` tokens. The `small` and `strong` variants follow the same shared naming.
+
+  The level-specific font family and weight tokens are deprecated. They remain available as aliases for compatibility but may be removed in a future major version.
+
+- Updated dependencies [ff312fb]
+- Updated dependencies [d578674]
+- Updated dependencies [24b5b04]
+- Updated dependencies [83d7f9c]
+- Updated dependencies [fbe1e48]
+- Updated dependencies [d578674]
+- Updated dependencies [d578674]
+- Updated dependencies [cf3afb3]
+- Updated dependencies [0b65f84]
+- Updated dependencies [b434b9e]
+- Updated dependencies [e75a32d]
+- Updated dependencies [59a14d2]
+- Updated dependencies [e990c46]
+- Updated dependencies [550c4c1]
+- Updated dependencies [2a5cb0d]
+  - @salt-ds/core@1.72.0
+  - @salt-ds/styles@0.4.1
+  - @salt-ds/window@0.1.2
+  - @salt-ds/icons@1.18.3
+
 ## 1.0.0-alpha.104
 
 ### Minor Changes
