@@ -6,14 +6,12 @@ import {
   OverlayPanelContent,
   OverlayTrigger,
   Text,
-  useId,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
 
 export const CloseButton = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const id = useId();
 
   const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
 
@@ -34,8 +32,8 @@ export const CloseButton = (): ReactElement => {
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
-      <OverlayPanel aria-labelledby={id}>
-        <OverlayHeader header="Title" actions={closeButton} id={id} />
+      <OverlayPanel>
+        <OverlayHeader header="Title" actions={closeButton} />
         <OverlayPanelContent>
           <Text as="p">Content of Overlay</Text>
         </OverlayPanelContent>

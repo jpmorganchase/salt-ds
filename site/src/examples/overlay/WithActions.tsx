@@ -10,7 +10,6 @@ import {
   OverlayPanelContent,
   OverlayTrigger,
   StackLayout,
-  useId,
 } from "@salt-ds/core";
 import { type ChangeEvent, type ReactElement, useState } from "react";
 
@@ -27,7 +26,6 @@ const checkboxesData = [
 
 export const WithActions = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const id = useId();
 
   const [controlledValues, setControlledValues] = useState([
     checkboxesData[0].value,
@@ -81,9 +79,8 @@ export const WithActions = (): ReactElement => {
         style={{
           width: 246,
         }}
-        aria-labelledby={id}
       >
-        <OverlayHeader header="Export" id={id} />
+        <OverlayHeader header="Export" />
         <OverlayPanelContent>
           <StackLayout gap={1}>
             <Checkbox
@@ -105,7 +102,11 @@ export const WithActions = (): ReactElement => {
           </StackLayout>
         </OverlayPanelContent>
         <OverlayFooter>
-          <Button onClick={handleExport} style={{ width: "100%" }}>
+          <Button
+            sentiment="accented"
+            onClick={handleExport}
+            style={{ width: "100%" }}
+          >
             Export
           </Button>
         </OverlayFooter>

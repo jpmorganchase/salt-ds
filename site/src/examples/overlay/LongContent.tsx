@@ -7,14 +7,12 @@ import {
   OverlayTrigger,
   StackLayout,
   Text,
-  useId,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
 
 export const LongContent = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const id = useId();
 
   const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
 
@@ -40,9 +38,8 @@ export const LongContent = (): ReactElement => {
           width: 300,
           maxHeight: 180,
         }}
-        aria-labelledby={id}
       >
-        <OverlayHeader header="Long content" actions={closeButton} id={id} />
+        <OverlayHeader header="Long content" actions={closeButton} />
         <OverlayPanelContent>
           <StackLayout>
             <Text as="p">

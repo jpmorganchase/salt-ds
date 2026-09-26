@@ -30,6 +30,10 @@ export interface OverlayContextValue {
   getReferenceProps: (
     userProps?: HTMLProps<Element> | undefined,
   ) => Record<string, unknown>;
+  headerId?: string;
+  setHeaderId?: (id: string | undefined) => void;
+  descriptionId?: string;
+  setDescriptionId?: (id: string | undefined) => void;
 }
 
 export const OverlayContext = createContext<OverlayContextValue>(
@@ -52,6 +56,10 @@ export const OverlayContext = createContext<OverlayContextValue>(
     getReferenceProps() {
       return {} as Record<string, unknown>;
     },
+    headerId: undefined,
+    setHeaderId: () => {},
+    descriptionId: undefined,
+    setDescriptionId: () => {},
   },
 );
 

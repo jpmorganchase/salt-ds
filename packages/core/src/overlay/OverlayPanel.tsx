@@ -24,7 +24,9 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
   function OverlayPanel(props, ref) {
     const {
       className,
+      "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledby,
+      "aria-describedby": ariaDescribedby,
       children,
       ...rest
     } = props;
@@ -46,6 +48,8 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
       floating,
       arrowProps,
       hideArrow,
+      headerId,
+      descriptionId,
     } = useOverlayContext();
 
     const handleRef = useForkRef<HTMLDivElement>(floating, ref);
@@ -70,7 +74,9 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
           context: context,
           outsideElementsInert: true,
         }}
-        aria-labelledby={ariaLabelledby}
+        aria-label={ariaLabel}
+        aria-labelledby={clsx(ariaLabelledby, headerId) || undefined}
+        aria-describedby={clsx(ariaDescribedby, descriptionId) || undefined}
       >
         <div
           className={clsx(withBaseName("content"), {
