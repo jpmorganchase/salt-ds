@@ -1,0 +1,12 @@
+.salt-theme.salt-interim {
+  --salt-content-primary-foreground: var(--salt-palette-monochrome-contrast);
+  --salt-content-primary-foreground-disabled: var(--salt-palette-monochrome-contrast-disabled);
+  --salt-content-secondary-foreground: var(--salt-palette-neutral-high);
+  --salt-content-secondary-foreground-disabled: var(--salt-palette-neutral-high-disabled);
+  --salt-content-accent-foreground: var(--salt-palette-accent-mediumHigh);
+  --salt-content-attention-foreground: var(--salt-palette-negative-mediumHigh);
+
+  --salt-content-bold-foreground: var(--salt-palette-monochrome-light);
+
+  --salt-content-foreground-visited: unset;
+}

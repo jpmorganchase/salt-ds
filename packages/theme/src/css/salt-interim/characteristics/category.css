@@ -1,0 +1,161 @@
+.salt-theme.salt-interim {
+  --salt-category-1-foreground: var(--salt-palette-categorical-1-mediumHigh);
+  --salt-category-1-background: var(--salt-palette-categorical-1-lowest);
+  --salt-category-1-borderColor: var(--salt-palette-categorical-1-medium);
+
+  --salt-category-1-bold-background: var(--salt-palette-categorical-1-medium);
+
+  --salt-category-1-dataviz: var(--salt-palette-categorical-1-dataviz);
+
+  --salt-category-2-foreground: var(--salt-palette-categorical-2-mediumHigh);
+  --salt-category-2-background: var(--salt-palette-categorical-2-lowest);
+  --salt-category-2-borderColor: var(--salt-palette-categorical-2-medium);
+
+  --salt-category-2-bold-background: var(--salt-palette-categorical-2-medium);
+
+  --salt-category-2-dataviz: var(--salt-palette-categorical-2-medium);
+
+  --salt-category-3-foreground: var(--salt-palette-categorical-3-mediumHigh);
+  --salt-category-3-background: var(--salt-palette-categorical-3-lowest);
+  --salt-category-3-borderColor: var(--salt-palette-categorical-3-medium);
+
+  --salt-category-3-bold-background: var(--salt-palette-categorical-3-medium);
+
+  --salt-category-3-dataviz: var(--salt-palette-categorical-3-medium);
+
+  --salt-category-4-foreground: var(--salt-palette-categorical-4-mediumHigh);
+  --salt-category-4-background: var(--salt-palette-categorical-4-lowest);
+  --salt-category-4-borderColor: var(--salt-palette-categorical-4-medium);
+
+  --salt-category-4-bold-background: var(--salt-palette-categorical-4-medium);
+
+  --salt-category-4-dataviz: var(--salt-palette-categorical-4-medium);
+
+  --salt-category-5-foreground: var(--salt-palette-categorical-5-mediumHigh);
+  --salt-category-5-background: var(--salt-palette-categorical-5-lowest);
+  --salt-category-5-borderColor: var(--salt-palette-categorical-5-medium);
+
+  --salt-category-5-bold-background: var(--salt-palette-categorical-5-medium);
+
+  --salt-category-5-dataviz: var(--salt-palette-categorical-5-medium);
+
+  --salt-category-6-foreground: var(--salt-palette-categorical-6-mediumHigh);
+  --salt-category-6-background: var(--salt-palette-categorical-6-lowest);
+  --salt-category-6-borderColor: var(--salt-palette-categorical-6-medium);
+
+  --salt-category-6-bold-background: var(--salt-palette-categorical-6-medium);
+
+  --salt-category-6-dataviz: var(--salt-palette-categorical-6-medium);
+
+  --salt-category-7-foreground: var(--salt-palette-categorical-7-mediumHigh);
+  --salt-category-7-background: var(--salt-palette-categorical-7-lowest);
+  --salt-category-7-borderColor: var(--salt-palette-categorical-7-medium);
+
+  --salt-category-7-bold-background: var(--salt-palette-categorical-7-medium);
+
+  --salt-category-7-dataviz: var(--salt-palette-categorical-7-medium);
+
+  --salt-category-8-foreground: var(--salt-palette-categorical-8-mediumHigh);
+  --salt-category-8-background: var(--salt-palette-categorical-8-lowest);
+  --salt-category-8-borderColor: var(--salt-palette-categorical-8-medium);
+
+  --salt-category-8-bold-background: var(--salt-palette-categorical-8-medium);
+
+  --salt-category-8-dataviz: var(--salt-palette-categorical-8-medium);
+
+  --salt-category-9-foreground: var(--salt-palette-categorical-9-mediumHigh);
+  --salt-category-9-background: var(--salt-palette-categorical-9-lowest);
+  --salt-category-9-borderColor: var(--salt-palette-categorical-9-medium);
+
+  --salt-category-9-bold-background: var(--salt-palette-categorical-9-medium);
+
+  --salt-category-9-dataviz: var(--salt-palette-categorical-9-medium);
+
+  --salt-category-10-foreground: var(--salt-palette-categorical-1-medium0-mediumHigh);
+  --salt-category-10-background: var(--salt-palette-categorical-1-medium0-lowest);
+  --salt-category-10-borderColor: var(--salt-palette-categorical-1-medium0-medium);
+
+  --salt-category-10-bold-background: var(--salt-palette-categorical-1-medium0-medium);
+
+  --salt-category-10-dataviz: var(--salt-palette-categorical-1-medium0-medium);
+
+  --salt-category-11-foreground: var(--salt-palette-categorical-1-medium1-mediumHigh);
+  --salt-category-11-background: var(--salt-palette-categorical-1-medium1-lowest);
+  --salt-category-11-borderColor: var(--salt-palette-categorical-1-medium1-medium);
+
+  --salt-category-11-bold-background: var(--salt-palette-categorical-1-medium1-medium);
+
+  --salt-category-11-dataviz: var(--salt-palette-categorical-1-medium1-medium);
+
+  --salt-category-12-foreground: var(--salt-palette-categorical-1-medium2-mediumHigh);
+  --salt-category-12-background: var(--salt-palette-categorical-1-medium2-lowest);
+  --salt-category-12-borderColor: var(--salt-palette-categorical-1-medium2-medium);
+
+  --salt-category-12-bold-background: var(--salt-palette-categorical-1-medium2-medium);
+
+  --salt-category-12-dataviz: var(--salt-palette-categorical-1-medium2-medium);
+
+  --salt-category-13-foreground: var(--salt-palette-categorical-1-medium3-mediumHigh);
+  --salt-category-13-background: var(--salt-palette-categorical-1-medium3-lowest);
+  --salt-category-13-borderColor: var(--salt-palette-categorical-1-medium3-medium);
+
+  --salt-category-13-bold-background: var(--salt-palette-categorical-1-medium3-medium);
+
+  --salt-category-13-dataviz: var(--salt-palette-categorical-1-medium3-medium);
+
+  --salt-category-14-foreground: var(--salt-palette-categorical-1-medium4-mediumHigh);
+  --salt-category-14-background: var(--salt-palette-categorical-1-medium4-lowest);
+  --salt-category-14-borderColor: var(--salt-palette-categorical-1-medium4-medium);
+
+  --salt-category-14-bold-background: var(--salt-palette-categorical-1-medium4-medium);
+
+  --salt-category-14-dataviz: var(--salt-palette-categorical-1-medium4-medium);
+
+  --salt-category-15-foreground: var(--salt-palette-categorical-1-medium5-mediumHigh);
+  --salt-category-15-background: var(--salt-palette-categorical-1-medium5-lowest);
+  --salt-category-15-borderColor: var(--salt-palette-categorical-1-medium5-medium);
+
+  --salt-category-15-bold-background: var(--salt-palette-categorical-1-medium5-medium);
+
+  --salt-category-15-dataviz: var(--salt-palette-categorical-1-medium5-medium);
+
+  --salt-category-16-foreground: var(--salt-palette-categorical-1-medium6-mediumHigh);
+  --salt-category-16-background: var(--salt-palette-categorical-1-medium6-lowest);
+  --salt-category-16-borderColor: var(--salt-palette-categorical-1-medium6-medium);
+
+  --salt-category-16-bold-background: var(--salt-palette-categorical-1-medium6-medium);
+
+  --salt-category-16-dataviz: var(--salt-palette-categorical-1-medium6-medium);
+
+  --salt-category-17-foreground: var(--salt-palette-categorical-1-medium7-mediumHigh);
+  --salt-category-17-background: var(--salt-palette-categorical-1-medium7-lowest);
+  --salt-category-17-borderColor: var(--salt-palette-categorical-1-medium7-medium);
+
+  --salt-category-17-bold-background: var(--salt-palette-categorical-1-medium7-medium);
+
+  --salt-category-17-dataviz: var(--salt-palette-categorical-1-medium7-medium);
+
+  --salt-category-18-foreground: var(--salt-palette-categorical-1-medium8-mediumHigh);
+  --salt-category-18-background: var(--salt-palette-categorical-1-medium8-lowest);
+  --salt-category-18-borderColor: var(--salt-palette-categorical-1-medium8-medium);
+
+  --salt-category-18-bold-background: var(--salt-palette-categorical-1-medium8-medium);
+
+  --salt-category-18-dataviz: var(--salt-palette-categorical-1-medium8-medium);
+
+  --salt-category-19-foreground: var(--salt-palette-categorical-1-medium9-mediumHigh);
+  --salt-category-19-background: var(--salt-palette-categorical-1-medium9-lowest);
+  --salt-category-19-borderColor: var(--salt-palette-categorical-1-medium9-medium);
+
+  --salt-category-19-bold-background: var(--salt-palette-categorical-1-medium9-medium);
+
+  --salt-category-19-dataviz: var(--salt-palette-categorical-1-medium9-medium);
+
+  --salt-category-20-foreground: var(--salt-palette-categorical-2-medium0-mediumHigh);
+  --salt-category-20-background: var(--salt-palette-categorical-2-medium0-lowest);
+  --salt-category-20-borderColor: var(--salt-palette-categorical-2-medium0-medium);
+
+  --salt-category-20-bold-background: var(--salt-palette-categorical-2-medium0-medium);
+
+  --salt-category-20-dataviz: var(--salt-palette-categorical-2-medium0-medium);
+}

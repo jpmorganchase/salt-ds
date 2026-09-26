@@ -1,0 +1,196 @@
+.salt-theme.salt-interim {
+  /* accented solid- previous CTA */
+  --salt-actionable-accented-bold-background-active: var(--salt-palette-accent-lower);
+  --salt-actionable-accented-bold-background-hover: linear-gradient(var(--salt-palette-alpha-dark-low), var(--salt-palette-alpha-dark-low)) var(--salt-palette-accent-medium);
+  --salt-actionable-accented-bold-background: var(--salt-palette-accent-medium);
+  --salt-actionable-accented-bold-borderColor-active: var(--salt-palette-accent-medium);
+  --salt-actionable-accented-bold-borderColor-hover: var(--salt-palette-alpha-contrast-medium);
+  --salt-actionable-accented-bold-borderColor: var(--salt-palette-accent-medium);
+  --salt-actionable-accented-bold-foreground-active: var(--salt-palette-monochrome-contrast);
+  --salt-actionable-accented-bold-foreground-hover: var(--salt-palette-monochrome-light);
+  --salt-actionable-accented-bold-foreground: var(--salt-palette-monochrome-light);
+
+  /* accented bordered */
+  --salt-actionable-accented-background-active: var(--salt-palette-accent-lower);
+  --salt-actionable-accented-background-hover: var(--salt-palette-accent-lowest);
+  --salt-actionable-accented-background: var(--salt-color-transparent);
+  --salt-actionable-accented-borderColor-active: var(--salt-palette-accent-medium);
+  --salt-actionable-accented-borderColor-hover: var(--salt-palette-accent-medium);
+  --salt-actionable-accented-borderColor: var(--salt-palette-accent-medium);
+  --salt-actionable-accented-foreground-active: var(--salt-palette-monochrome-contrast);
+  --salt-actionable-accented-foreground-hover: var(--salt-palette-accent-high);
+  --salt-actionable-accented-foreground: var(--salt-palette-accent-mediumHigh);
+
+  --salt-actionable-accented-background-selected: var(--salt-palette-accent-medium);
+  --salt-actionable-accented-borderColor-selected: var(--salt-palette-accent-medium);
+  --salt-actionable-accented-foreground-selected: var(--salt-palette-monochrome-light);
+
+  /* accented transparent  */
+  --salt-actionable-accented-subtle-background-active: var(--salt-palette-alpha-contrast-low);
+  --salt-actionable-accented-subtle-background-hover: var(--salt-palette-alpha-contrast-lower);
+  --salt-actionable-accented-subtle-background: var(--salt-color-transparent);
+  --salt-actionable-accented-subtle-borderColor-active: var(--salt-color-transparent);
+  --salt-actionable-accented-subtle-borderColor-hover: var(--salt-color-transparent);
+  --salt-actionable-accented-subtle-borderColor: var(--salt-color-transparent);
+  --salt-actionable-accented-subtle-foreground-active: var(--salt-palette-monochrome-contrast);
+  --salt-actionable-accented-subtle-foreground-hover: var(--salt-palette-accent-high);
+  --salt-actionable-accented-subtle-foreground: var(--salt-palette-accent-mediumHigh);
+
+  /* neutral solid previous Primary */
+  --salt-actionable-bold-background-active: var(--salt-palette-neutral-lower);
+  --salt-actionable-bold-background-hover: linear-gradient(var(--salt-palette-alpha-dark-low), var(--salt-palette-alpha-dark-low)) var(--salt-palette-neutral-medium);
+  --salt-actionable-bold-background: var(--salt-palette-neutral-medium);
+  --salt-actionable-bold-borderColor-active: var(--salt-palette-neutral-medium);
+  --salt-actionable-bold-borderColor-hover: var(--salt-palette-alpha-contrast-medium);
+  --salt-actionable-bold-borderColor: var(--salt-palette-neutral-medium);
+  --salt-actionable-bold-foreground-active: var(--salt-palette-monochrome-contrast);
+  --salt-actionable-bold-foreground-hover: var(--salt-palette-monochrome-light);
+  --salt-actionable-bold-foreground: var(--salt-palette-monochrome-light);
+
+  /* neutral bordered */
+  --salt-actionable-background-active: var(--salt-palette-neutral-lower);
+  --salt-actionable-background-hover: var(--salt-palette-neutral-lowest);
+  --salt-actionable-background: var(--salt-color-transparent);
+  --salt-actionable-borderColor-active: var(--salt-palette-neutral-medium);
+  --salt-actionable-borderColor-hover: var(--salt-palette-neutral-medium);
+  --salt-actionable-borderColor: var(--salt-palette-neutral-medium);
+  --salt-actionable-foreground-active: var(--salt-palette-monochrome-contrast);
+  --salt-actionable-foreground-hover: var(--salt-palette-monochrome-contrast);
+  --salt-actionable-foreground: var(--salt-palette-monochrome-contrast);
+
+  --salt-actionable-background-selected: var(--salt-palette-neutral-medium);
+  --salt-actionable-borderColor-selected: var(--salt-palette-neutral-medium);
+  --salt-actionable-foreground-selected: var(--salt-palette-monochrome-light);
+
+  /* neutral transparent - previous Secondary */
+  --salt-actionable-subtle-background-active: var(--salt-palette-alpha-contrast-low);
+  --salt-actionable-subtle-background-hover: var(--salt-palette-alpha-contrast-lower);
+  --salt-actionable-subtle-background: var(--salt-color-transparent);
+  --salt-actionable-subtle-borderColor-active: var(--salt-color-transparent);
+  --salt-actionable-subtle-borderColor-hover: var(--salt-color-transparent);
+  --salt-actionable-subtle-borderColor: var(--salt-color-transparent);
+  --salt-actionable-subtle-foreground-active: var(--salt-palette-monochrome-contrast);
+  --salt-actionable-subtle-foreground-hover: var(--salt-palette-monochrome-contrast);
+  --salt-actionable-subtle-foreground: var(--salt-palette-monochrome-contrast);
+
+  /* negative solid */
+  --salt-actionable-negative-bold-background-active: var(--salt-palette-negative-lower);
+  --salt-actionable-negative-bold-background-hover: linear-gradient(var(--salt-palette-alpha-dark-low), var(--salt-palette-alpha-dark-low)) var(--salt-palette-negative-medium);
+  --salt-actionable-negative-bold-background: var(--salt-palette-negative-medium);
+  --salt-actionable-negative-bold-borderColor-active: var(--salt-palette-negative-medium);
+  --salt-actionable-negative-bold-borderColor-hover: var(--salt-palette-alpha-contrast-medium);
+  --salt-actionable-negative-bold-borderColor: var(--salt-palette-negative-medium);
+  --salt-actionable-negative-bold-foreground-active: var(--salt-palette-monochrome-contrast);
+  --salt-actionable-negative-bold-foreground-hover: var(--salt-palette-monochrome-light);
+  --salt-actionable-negative-bold-foreground: var(--salt-palette-monochrome-light);
+
+  /* negative bordered */
+  --salt-actionable-negative-background-active: var(--salt-palette-negative-lower);
+  --salt-actionable-negative-background-hover: var(--salt-palette-negative-lowest);
+  --salt-actionable-negative-background: var(--salt-color-transparent);
+  --salt-actionable-negative-borderColor-active: var(--salt-palette-negative-medium);
+  --salt-actionable-negative-borderColor-hover: var(--salt-palette-negative-medium);
+  --salt-actionable-negative-borderColor: var(--salt-palette-negative-medium);
+  --salt-actionable-negative-foreground-active: var(--salt-palette-monochrome-contrast);
+  --salt-actionable-negative-foreground-hover: var(--salt-palette-negative-high);
+  --salt-actionable-negative-foreground: var(--salt-palette-negative-mediumHigh);
+
+  --salt-actionable-negative-background-selected: var(--salt-palette-negative-medium);
+  --salt-actionable-negative-borderColor-selected: var(--salt-palette-negative-medium);
+  --salt-actionable-negative-foreground-selected: var(--salt-palette-monochrome-light);
+
+  /* negative transparent */
+  --salt-actionable-negative-subtle-background-active: var(--salt-palette-alpha-contrast-low);
+  --salt-actionable-negative-subtle-background-hover: var(--salt-palette-alpha-contrast-lower);
+  --salt-actionable-negative-subtle-background: var(--salt-color-transparent);
+  --salt-actionable-negative-subtle-borderColor-active: var(--salt-color-transparent);
+  --salt-actionable-negative-subtle-borderColor-hover: var(--salt-color-transparent);
+  --salt-actionable-negative-subtle-borderColor: var(--salt-color-transparent);
+  --salt-actionable-negative-subtle-foreground-active: var(--salt-palette-monochrome-contrast);
+  --salt-actionable-negative-subtle-foreground-hover: var(--salt-palette-negative-high);
+  --salt-actionable-negative-subtle-foreground: var(--salt-palette-negative-mediumHigh);
+
+  /* positive solid */
+  --salt-actionable-positive-bold-background-active: var(--salt-palette-positive-lower);
+  --salt-actionable-positive-bold-background-hover: linear-gradient(var(--salt-palette-alpha-dark-low), var(--salt-palette-alpha-dark-low)) var(--salt-palette-positive-medium);
+  --salt-actionable-positive-bold-background: var(--salt-palette-positive-medium);
+  --salt-actionable-positive-bold-borderColor-active: var(--salt-palette-positive-medium);
+  --salt-actionable-positive-bold-borderColor-hover: var(--salt-palette-alpha-contrast-medium);
+  --salt-actionable-positive-bold-borderColor: var(--salt-palette-positive-medium);
+  --salt-actionable-positive-bold-foreground-active: var(--salt-palette-monochrome-contrast);
+  --salt-actionable-positive-bold-foreground-hover: var(--salt-palette-monochrome-light);
+  --salt-actionable-positive-bold-foreground: var(--salt-palette-monochrome-light);
+
+  /* positive bordered */
+  --salt-actionable-positive-background-active: var(--salt-palette-positive-lower);
+  --salt-actionable-positive-background-hover: var(--salt-palette-positive-lowest);
+  --salt-actionable-positive-background: var(--salt-color-transparent);
+  --salt-actionable-positive-borderColor-active: var(--salt-palette-positive-medium);
+  --salt-actionable-positive-borderColor-hover: var(--salt-palette-positive-medium);
+  --salt-actionable-positive-borderColor: var(--salt-palette-positive-medium);
+  --salt-actionable-positive-foreground-active: var(--salt-palette-monochrome-contrast);
+  --salt-actionable-positive-foreground-hover: var(--salt-palette-positive-high);
+  --salt-actionable-positive-foreground: var(--salt-palette-positive-mediumHigh);
+
+  --salt-actionable-positive-background-selected: var(--salt-palette-positive-medium);
+  --salt-actionable-positive-borderColor-selected: var(--salt-palette-positive-medium);
+  --salt-actionable-positive-foreground-selected: var(--salt-palette-monochrome-light);
+
+  /* positive transparent */
+  --salt-actionable-positive-subtle-background-active: var(--salt-palette-alpha-contrast-low);
+  --salt-actionable-positive-subtle-background-hover: var(--salt-palette-alpha-contrast-lower);
+  --salt-actionable-positive-subtle-background: var(--salt-color-transparent);
+  --salt-actionable-positive-subtle-borderColor-active: var(--salt-color-transparent);
+  --salt-actionable-positive-subtle-borderColor-hover: var(--salt-color-transparent);
+  --salt-actionable-positive-subtle-borderColor: var(--salt-color-transparent);
+  --salt-actionable-positive-subtle-foreground-active: var(--salt-palette-monochrome-contrast);
+  --salt-actionable-positive-subtle-foreground-hover: var(--salt-palette-positive-high);
+  --salt-actionable-positive-subtle-foreground: var(--salt-palette-positive-mediumHigh);
+
+  /* caution solid */
+  --salt-actionable-caution-bold-background-active: var(--salt-palette-warning-lower);
+  --salt-actionable-caution-bold-background-hover: linear-gradient(var(--salt-palette-alpha-dark-low), var(--salt-palette-alpha-dark-low)) var(--salt-palette-warning-medium);
+  --salt-actionable-caution-bold-background: var(--salt-palette-warning-medium);
+  --salt-actionable-caution-bold-borderColor-active: var(--salt-palette-warning-medium);
+  --salt-actionable-caution-bold-borderColor-hover: var(--salt-palette-alpha-contrast-medium);
+  --salt-actionable-caution-bold-borderColor: var(--salt-palette-warning-medium);
+  --salt-actionable-caution-bold-foreground-active: var(--salt-palette-monochrome-contrast);
+  --salt-actionable-caution-bold-foreground-hover: var(--salt-palette-monochrome-light);
+  --salt-actionable-caution-bold-foreground: var(--salt-palette-monochrome-light);
+
+  /* caution bordered */
+  --salt-actionable-caution-background-active: var(--salt-palette-warning-lower);
+  --salt-actionable-caution-background-hover: var(--salt-palette-warning-lowest);
+  --salt-actionable-caution-background: var(--salt-color-transparent);
+  --salt-actionable-caution-borderColor-active: var(--salt-palette-warning-medium);
+  --salt-actionable-caution-borderColor-hover: var(--salt-palette-warning-medium);
+  --salt-actionable-caution-borderColor: var(--salt-palette-warning-medium);
+  --salt-actionable-caution-foreground-active: var(--salt-palette-monochrome-contrast);
+  --salt-actionable-caution-foreground-hover: var(--salt-palette-warning-high);
+  --salt-actionable-caution-foreground: var(--salt-palette-warning-mediumHigh);
+
+  --salt-actionable-caution-background-selected: var(--salt-palette-warning-medium);
+  --salt-actionable-caution-borderColor-selected: var(--salt-palette-warning-medium);
+  --salt-actionable-caution-foreground-selected: var(--salt-palette-monochrome-light);
+
+  /* caution transparent */
+  --salt-actionable-caution-subtle-background-active: var(--salt-palette-alpha-contrast-low);
+  --salt-actionable-caution-subtle-background-hover: var(--salt-palette-alpha-contrast-lower);
+  --salt-actionable-caution-subtle-background: var(--salt-color-transparent);
+  --salt-actionable-caution-subtle-borderColor-active: var(--salt-color-transparent);
+  --salt-actionable-caution-subtle-borderColor-hover: var(--salt-color-transparent);
+  --salt-actionable-caution-subtle-borderColor: var(--salt-color-transparent);
+  --salt-actionable-caution-subtle-foreground-active: var(--salt-palette-monochrome-contrast);
+  --salt-actionable-caution-subtle-foreground-hover: var(--salt-palette-warning-high);
+  --salt-actionable-caution-subtle-foreground: var(--salt-palette-warning-mediumHigh);
+
+  --salt-actionable-onSolid-subtle-background: var(--salt-color-transparent);
+  --salt-actionable-onSolid-subtle-background-active: var(--salt-palette-alpha-dark-low);
+  --salt-actionable-onSolid-subtle-background-hover: var(--salt-palette-alpha-dark-lower);
+  --salt-actionable-onSolid-subtle-borderColor: var(--salt-color-transparent);
+  --salt-actionable-onSolid-subtle-borderColor-active: var(--salt-color-transparent);
+  --salt-actionable-onSolid-subtle-borderColor-hover: var(--salt-color-transparent);
+  --salt-actionable-onSolid-subtle-foreground: var(--salt-palette-monochrome-light);
+  --salt-actionable-onSolid-subtle-foreground-active: var(--salt-palette-monochrome-light);
+  --salt-actionable-onSolid-subtle-foreground-hover: var(--salt-palette-monochrome-light);
+}

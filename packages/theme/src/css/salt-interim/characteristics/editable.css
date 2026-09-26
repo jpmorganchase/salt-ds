@@ -1,0 +1,18 @@
+.salt-theme.salt-interim {
+  --salt-editable-borderColor: var(--salt-palette-neutral-medium);
+  --salt-editable-borderColor-active: var(--salt-palette-accent-high);
+  --salt-editable-borderColor-disabled: var(--salt-palette-neutral-medium-disabled);
+  --salt-editable-borderColor-hover: var(--salt-palette-accent-medium);
+  --salt-editable-borderColor-readonly: var(--salt-palette-neutral-medium-readonly);
+
+  --salt-editable-background-readonly: var(--salt-color-transparent);
+
+  --salt-editable-primary-background: var(--salt-palette-background-primary);
+  --salt-editable-primary-background-disabled: var(--salt-palette-background-primary-disabled);
+
+  --salt-editable-secondary-background: var(--salt-palette-background-secondary);
+  --salt-editable-secondary-background-disabled: var(--salt-palette-background-secondary-disabled);
+
+  --salt-editable-tertiary-background: var(--salt-palette-background-tertiary);
+  --salt-editable-tertiary-background-disabled: var(--salt-palette-background-tertiary-disabled);
+}

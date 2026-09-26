@@ -1,0 +1,165 @@
+.salt-theme.salt-interim[data-mode="light"] {
+  --salt-palette-categorical-1-lowest: var(--salt-color-topaz-100);
+  --salt-palette-categorical-1-medium: var(--salt-color-topaz-500);
+  --salt-palette-categorical-1-mediumHigh: var(--salt-color-topaz-600);
+  --salt-palette-categorical-1-dataviz: var(--salt-color-topaz-600);
+
+  --salt-palette-categorical-2-lowest: var(--salt-color-clementine-100);
+  --salt-palette-categorical-2-medium: var(--salt-color-clementine-500);
+  --salt-palette-categorical-2-mediumHigh: var(--salt-color-clementine-600);
+
+  --salt-palette-categorical-3-lowest: var(--salt-color-quartz-100);
+  --salt-palette-categorical-3-medium: var(--salt-color-quartz-500);
+  --salt-palette-categorical-3-mediumHigh: var(--salt-color-quartz-600);
+
+  --salt-palette-categorical-4-lowest: var(--salt-color-ruby-100);
+  --salt-palette-categorical-4-medium: var(--salt-color-ruby-500);
+  --salt-palette-categorical-4-mediumHigh: var(--salt-color-ruby-600);
+
+  --salt-palette-categorical-5-lowest: var(--salt-color-emerald-100);
+  --salt-palette-categorical-5-medium: var(--salt-color-emerald-500);
+  --salt-palette-categorical-5-mediumHigh: var(--salt-color-emerald-600);
+
+  --salt-palette-categorical-6-lowest: var(--salt-color-smoke-100);
+  --salt-palette-categorical-6-medium: var(--salt-color-smoke-500);
+  --salt-palette-categorical-6-mediumHigh: var(--salt-color-smoke-600);
+
+  --salt-palette-categorical-7-lowest: var(--salt-color-cobalt-100);
+  --salt-palette-categorical-7-medium: var(--salt-color-cobalt-500);
+  --salt-palette-categorical-7-mediumHigh: var(--salt-color-cobalt-600);
+
+  --salt-palette-categorical-8-lowest: var(--salt-color-clay-100);
+  --salt-palette-categorical-8-medium: var(--salt-color-clay-500);
+  --salt-palette-categorical-8-mediumHigh: var(--salt-color-clay-600);
+
+  --salt-palette-categorical-9-lowest: var(--salt-color-slate-100);
+  --salt-palette-categorical-9-medium: var(--salt-color-slate-500);
+  --salt-palette-categorical-9-mediumHigh: var(--salt-color-slate-600);
+
+  --salt-palette-categorical-1-medium0-medium: var(--salt-color-brown-500);
+  --salt-palette-categorical-1-medium0-mediumHigh: var(--salt-color-brown-600);
+  --salt-palette-categorical-1-medium0-lowest: var(--salt-color-brown-100);
+
+  --salt-palette-categorical-1-medium1-medium: var(--salt-color-olive-500);
+  --salt-palette-categorical-1-medium1-mediumHigh: var(--salt-color-olive-600);
+  --salt-palette-categorical-1-medium1-lowest: var(--salt-color-olive-100);
+
+  --salt-palette-categorical-1-medium2-medium: var(--salt-color-lavender-500);
+  --salt-palette-categorical-1-medium2-mediumHigh: var(--salt-color-lavender-600);
+  --salt-palette-categorical-1-medium2-lowest: var(--salt-color-lavender-100);
+
+  --salt-palette-categorical-1-medium3-medium: var(--salt-color-violet-500);
+  --salt-palette-categorical-1-medium3-mediumHigh: var(--salt-color-violet-600);
+  --salt-palette-categorical-1-medium3-lowest: var(--salt-color-violet-100);
+
+  --salt-palette-categorical-1-medium4-medium: var(--salt-color-citrine-500);
+  --salt-palette-categorical-1-medium4-mediumHigh: var(--salt-color-citrine-600);
+  --salt-palette-categorical-1-medium4-lowest: var(--salt-color-citrine-100);
+
+  --salt-palette-categorical-1-medium5-medium: var(--salt-color-fuchsia-500);
+  --salt-palette-categorical-1-medium5-mediumHigh: var(--salt-color-fuchsia-600);
+  --salt-palette-categorical-1-medium5-lowest: var(--salt-color-fuchsia-100);
+
+  --salt-palette-categorical-1-medium6-medium: var(--salt-color-sapphire-500);
+  --salt-palette-categorical-1-medium6-mediumHigh: var(--salt-color-sapphire-600);
+  --salt-palette-categorical-1-medium6-lowest: var(--salt-color-sapphire-100);
+
+  --salt-palette-categorical-1-medium7-medium: var(--salt-color-rose-500);
+  --salt-palette-categorical-1-medium7-mediumHigh: var(--salt-color-rose-600);
+  --salt-palette-categorical-1-medium7-lowest: var(--salt-color-rose-100);
+
+  --salt-palette-categorical-1-medium8-medium: var(--salt-color-indigo-500);
+  --salt-palette-categorical-1-medium8-mediumHigh: var(--salt-color-indigo-600);
+  --salt-palette-categorical-1-medium8-lowest: var(--salt-color-indigo-100);
+
+  --salt-palette-categorical-1-medium9-medium: var(--salt-color-lime-500);
+  --salt-palette-categorical-1-medium9-mediumHigh: var(--salt-color-lime-600);
+  --salt-palette-categorical-1-medium9-lowest: var(--salt-color-lime-100);
+
+  --salt-palette-categorical-2-medium0-medium: var(--salt-color-salmon-500);
+  --salt-palette-categorical-2-medium0-mediumHigh: var(--salt-color-salmon-600);
+  --salt-palette-categorical-2-medium0-lowest: var(--salt-color-salmon-100);
+}
+
+.salt-theme.salt-interim[data-mode="dark"] {
+  --salt-palette-categorical-1-lowest: var(--salt-color-topaz-900);
+  --salt-palette-categorical-1-medium: var(--salt-color-topaz-500);
+  --salt-palette-categorical-1-mediumHigh: var(--salt-color-topaz-400);
+  --salt-palette-categorical-1-dataviz: var(--salt-color-topaz-500);
+
+  --salt-palette-categorical-2-lowest: var(--salt-color-clementine-900);
+  --salt-palette-categorical-2-medium: var(--salt-color-clementine-500);
+  --salt-palette-categorical-2-mediumHigh: var(--salt-color-clementine-400);
+
+  --salt-palette-categorical-3-lowest: var(--salt-color-quartz-900);
+  --salt-palette-categorical-3-medium: var(--salt-color-quartz-500);
+  --salt-palette-categorical-3-mediumHigh: var(--salt-color-quartz-500);
+
+  --salt-palette-categorical-4-lowest: var(--salt-color-ruby-900);
+  --salt-palette-categorical-4-medium: var(--salt-color-ruby-500);
+  --salt-palette-categorical-4-mediumHigh: var(--salt-color-ruby-400);
+
+  --salt-palette-categorical-5-lowest: var(--salt-color-emerald-900);
+  --salt-palette-categorical-5-medium: var(--salt-color-emerald-500);
+  --salt-palette-categorical-5-mediumHigh: var(--salt-color-emerald-400);
+
+  --salt-palette-categorical-6-lowest: var(--salt-color-smoke-900);
+  --salt-palette-categorical-6-medium: var(--salt-color-smoke-500);
+  --salt-palette-categorical-6-mediumHigh: var(--salt-color-smoke-400);
+
+  --salt-palette-categorical-7-lowest: var(--salt-color-cobalt-900);
+  --salt-palette-categorical-7-medium: var(--salt-color-cobalt-500);
+  --salt-palette-categorical-7-mediumHigh: var(--salt-color-cobalt-400);
+
+  --salt-palette-categorical-8-lowest: var(--salt-color-clay-900);
+  --salt-palette-categorical-8-medium: var(--salt-color-clay-500);
+  --salt-palette-categorical-8-mediumHigh: var(--salt-color-clay-400);
+
+  --salt-palette-categorical-9-lowest: var(--salt-color-slate-900);
+  --salt-palette-categorical-9-medium: var(--salt-color-slate-500);
+  --salt-palette-categorical-9-mediumHigh: var(--salt-color-slate-400);
+
+  --salt-palette-categorical-1-medium0-medium: var(--salt-color-brown-500);
+  --salt-palette-categorical-1-medium0-mediumHigh: var(--salt-color-brown-400);
+  --salt-palette-categorical-1-medium0-lowest: var(--salt-color-brown-900);
+
+  --salt-palette-categorical-1-medium1-medium: var(--salt-color-olive-500);
+  --salt-palette-categorical-1-medium1-mediumHigh: var(--salt-color-olive-400);
+  --salt-palette-categorical-1-medium1-lowest: var(--salt-color-olive-900);
+
+  --salt-palette-categorical-1-medium2-medium: var(--salt-color-lavender-500);
+  --salt-palette-categorical-1-medium2-mediumHigh: var(--salt-color-lavender-400);
+  --salt-palette-categorical-1-medium2-lowest: var(--salt-color-lavender-900);
+
+  --salt-palette-categorical-1-medium3-medium: var(--salt-color-violet-500);
+  --salt-palette-categorical-1-medium3-mediumHigh: var(--salt-color-violet-400);
+  --salt-palette-categorical-1-medium3-lowest: var(--salt-color-violet-900);
+
+  --salt-palette-categorical-1-medium4-medium: var(--salt-color-citrine-500);
+  --salt-palette-categorical-1-medium4-mediumHigh: var(--salt-color-citrine-400);
+  --salt-palette-categorical-1-medium4-lowest: var(--salt-color-citrine-900);
+
+  --salt-palette-categorical-1-medium5-medium: var(--salt-color-fuchsia-500);
+  --salt-palette-categorical-1-medium5-mediumHigh: var(--salt-color-fuchsia-400);
+  --salt-palette-categorical-1-medium5-lowest: var(--salt-color-fuchsia-900);
+
+  --salt-palette-categorical-1-medium6-medium: var(--salt-color-sapphire-500);
+  --salt-palette-categorical-1-medium6-mediumHigh: var(--salt-color-sapphire-400);
+  --salt-palette-categorical-1-medium6-lowest: var(--salt-color-sapphire-900);
+
+  --salt-palette-categorical-1-medium7-medium: var(--salt-color-rose-500);
+  --salt-palette-categorical-1-medium7-mediumHigh: var(--salt-color-rose-400);
+  --salt-palette-categorical-1-medium7-lowest: var(--salt-color-rose-900);
+
+  --salt-palette-categorical-1-medium8-medium: var(--salt-color-indigo-500);
+  --salt-palette-categorical-1-medium8-mediumHigh: var(--salt-color-indigo-400);
+  --salt-palette-categorical-1-medium8-lowest: var(--salt-color-indigo-900);
+
+  --salt-palette-categorical-1-medium9-medium: var(--salt-color-lime-500);
+  --salt-palette-categorical-1-medium9-mediumHigh: var(--salt-color-lime-400);
+  --salt-palette-categorical-1-medium9-lowest: var(--salt-color-lime-900);
+
+  --salt-palette-categorical-2-medium0-medium: var(--salt-color-salmon-500);
+  --salt-palette-categorical-2-medium0-mediumHigh: var(--salt-color-salmon-400);
+  --salt-palette-categorical-2-medium0-lowest: var(--salt-color-salmon-900);
+}

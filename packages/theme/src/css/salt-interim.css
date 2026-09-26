@@ -1,0 +1,37 @@
+/* Foundations (base values) */
+@import url(foundations/index.css);
+
+@import url(salt-interim/foundations/alpha.css);
+@import url(salt-interim/foundations/color.css);
+@import url(salt-interim/foundations/typography.css);
+
+/* Intermediate palette (refined colors) */
+@import url(salt-interim/palette/accent.css);
+@import url(salt-interim/palette/alpha.css);
+@import url(salt-interim/palette/background.css);
+@import url(salt-interim/palette/categorical.css);
+@import url(salt-interim/palette/corner.css);
+@import url(salt-interim/palette/info.css);
+@import url(salt-interim/palette/monochrome.css);
+@import url(salt-interim/palette/negative.css);
+@import url(salt-interim/palette/neutral.css);
+@import url(salt-interim/palette/positive.css);
+@import url(salt-interim/palette/shadow.css);
+@import url(salt-interim/palette/warning.css);
+
+/* Characteristics (semantic values referencing the palette above) */
+@import url(salt-interim/characteristics/actionable.css);
+@import url(salt-interim/characteristics/category.css);
+@import url(salt-interim/characteristics/container.css);
+@import url(salt-interim/characteristics/content.css);
+@import url(salt-interim/characteristics/editable.css);
+@import url(salt-interim/characteristics/focused.css);
+@import url(salt-interim/characteristics/layout.css);
+@import url(salt-interim/characteristics/navigable.css);
+@import url(salt-interim/characteristics/overlayable.css);
+@import url(salt-interim/characteristics/selectable.css);
+@import url(salt-interim/characteristics/sentiment.css);
+@import url(salt-interim/characteristics/separable.css);
+@import url(salt-interim/characteristics/status.css);
+@import url(salt-interim/characteristics/target.css);
+@import url(salt-interim/characteristics/text.css);

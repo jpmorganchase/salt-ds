@@ -1,0 +1,11 @@
+.salt-theme.salt-interim[data-mode="light"] {
+  --salt-palette-monochrome-contrast: var(--salt-color-black);
+  --salt-palette-monochrome-contrast-disabled: var(--salt-color-black-40a);
+  --salt-palette-monochrome-light: var(--salt-color-white);
+}
+
+.salt-theme.salt-interim[data-mode="dark"] {
+  --salt-palette-monochrome-contrast: var(--salt-color-white);
+  --salt-palette-monochrome-contrast-disabled: var(--salt-color-white-40a);
+  --salt-palette-monochrome-light: var(--salt-color-white);
+}
