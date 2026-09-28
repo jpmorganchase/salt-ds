@@ -1,18 +1,9 @@
-/* Styles applied to the Drawer's resize handle.
-   Mirrors the Splitter handle (@salt-ds/react-resizable-panels-theme): a
-   transparent strip carrying the same dot thumb and the same hover, drag and
-   focus treatments, so a resizable Drawer matches the documented Splitter.
-
-   The element itself is the pointer target. It is wider than the visible strip
-   drawn by ::before, extending inwards by --salt-spacing-100, which stays within
-   the padding of the Drawer's sections. The element is out of flow, so the
-   Drawer reserves only --drawerResizeHandle-size. */
+/* Styles applied to root element. The element is the pointer target, wider than the visible strip drawn by ::before. */
 .saltDrawerResizeHandle {
-  /* Set on the resizable Drawer, which reserves the same space for the handle. */
   --drawerResizeHandle-size: var(--drawer-resizeHandleSize);
   --drawerResizeHandle-hitSize: calc(var(--drawerResizeHandle-size) + var(--salt-spacing-100));
   --drawerResizeHandle-thumbSize: max(var(--salt-size-icon, 12px), 12px);
-  /* Offset that centres the thumb on the visible strip. */
+  /* Offset that centers the thumb on the visible strip */
   --drawerResizeHandle-thumbInset: calc((var(--drawerResizeHandle-size) - var(--drawerResizeHandle-thumbSize)) / 2);
   --drawerResizeHandle-background: transparent;
   --drawerResizeHandle-background-hover: var(--salt-separable-background-hover);
@@ -26,11 +17,11 @@
   box-sizing: border-box;
   background: transparent;
   touch-action: none;
-  /* Set from the Drawer's scroll position, so the handle stays on the edge of a scrolling Drawer. */
+  /* Set from the drawer's scroll position, so the handle stays on the edge of a scrolling drawer */
   transform: translate(var(--drawerResizeHandle-scrollLeft, 0px), var(--drawerResizeHandle-scrollTop, 0px));
 }
 
-/* The visible strip, narrower than the handle, which is the pointer target. */
+/* Styles applied to the visible strip */
 .saltDrawerResizeHandle::before {
   content: "";
   position: absolute;
@@ -38,7 +29,7 @@
   background: var(--drawerResizeHandle-background);
 }
 
-/* Resize handle thumb */
+/* Styles applied to the thumb */
 .saltDrawerResizeHandle::after {
   content: "";
   position: absolute;
@@ -140,19 +131,19 @@
   transform: translateX(-50%) rotate(90deg);
 }
 
-/* Hover and drag states, matching the Splitter's treatment */
+/* Styles applied on hover */
 .saltDrawerResizeHandle:hover {
   --drawerResizeHandle-background: var(--drawerResizeHandle-background-hover);
   --drawerResizeHandle-dot-background: var(--drawerResizeHandle-dot-background-hover);
 }
 
-/* Styles applied while dragging */
+/* Styles applied while resizing */
 .saltDrawerResizeHandle-resizing {
   --drawerResizeHandle-background: var(--drawerResizeHandle-background-active);
   --drawerResizeHandle-dot-background: var(--drawerResizeHandle-dot-background-active);
 }
 
-/* The ring is drawn inside the visible strip, so it is never clipped by the Drawer's edge. */
+/* Styles applied on focus. The ring is drawn inside the strip, so the drawer's edge never clips it. */
 .saltDrawerResizeHandle:focus-visible {
   outline: none;
 }

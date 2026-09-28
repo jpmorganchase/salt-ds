@@ -562,8 +562,8 @@ describe("GIVEN a resizable Drawer", () => {
           style={
             {
               height: 300,
-              "--saltDrawer-minSize": "10vh",
-              "--saltDrawer-maxSize": "50vh",
+              "--saltDrawer-minHeight": "10vh",
+              "--saltDrawer-maxHeight": "50vh",
             } as CSSProperties
           }
         >
@@ -594,7 +594,7 @@ describe("GIVEN a resizable Drawer", () => {
             {
               width: 300,
               padding: 0,
-              "--saltDrawer-minSize": "0px",
+              "--saltDrawer-minWidth": "0px",
             } as CSSProperties
           }
         >

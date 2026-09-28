@@ -75,7 +75,7 @@ const measure = (element: HTMLElement, horizontal: boolean) => {
 
 /**
  * Resolves the drawer's own CSS size constraints by momentarily forcing it to
- * the extremes and measuring the result. This honours any CSS constraint
+ * the extremes and measuring the result. This honors any CSS constraint
  * (`px`, `%`, `vw`, `clamp()`, tokens, media queries) without re-implementing
  * CSS value resolution, and never paints because it happens synchronously.
  */

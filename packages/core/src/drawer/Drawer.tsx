@@ -65,18 +65,14 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    * */
   disableScrim?: boolean;
   /**
-   * Allow the user to resize the drawer by dragging its inner edge.
-   * The handle occupies space inside the drawer's declared size rather than overlaying its
-   * content, and does not consume the drawer's padding.
-   * Limits come from the drawer's own CSS: `min-width`/`max-width` for `left` and `right`,
-   * `min-height`/`max-height` for `top` and `bottom`. The drawer never shrinks below
-   * `--salt-size-base`, so the handle always stays on screen.
+   * Allow the user to resize the drawer from its inner edge. Size limits are set in CSS,
+   * not props: `min-width`/`max-width` (or `min-height`/`max-height` for `top` and `bottom`
+   * drawers), or the `--saltDrawer-minWidth`/`maxWidth`/`minHeight`/`maxHeight` variables.
    * */
   resizable?: boolean;
   /**
-   * Callback fired when the user stops resizing the drawer, with its new width (`left`
-   * and `right`) or height (`top` and `bottom`) in px. The drawer's `width` or `height` style
-   * is its initial size, so a saved size can be restored by passing it back there.
+   * Callback called when the drawer is stopped from being resized, by dragging or from
+   * the keyboard. It provides a generic event and the new size of the drawer in px.
    * */
   onResizeStop?: (event: Event, size: number) => void;
   /**

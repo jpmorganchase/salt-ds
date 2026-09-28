@@ -21,6 +21,7 @@
   --drawer-padding: 0px;
 }
 
+/* Styles applied while the user is resizing the drawer */
 .saltDrawer-resizing {
   user-select: none;
 }
@@ -31,11 +32,7 @@
   }
 }
 
-/* The resize handle occupies space inside the Drawer's declared size rather
-   than overlaying content: the Drawer is border-box, so reserving padding on
-   the handle's side shrinks the content box while the Drawer's width or height
-   stays exactly as the consumer set it. The Drawer's own padding is preserved,
-   as the handle's size is added to it. */
+/* Styles applied when resizable = true. Padding reserves space for the resize handle, so it doesn't cover content. */
 .saltDrawer-resizable {
   --drawer-resizeHandleSize: var(--salt-size-fixed-600);
 }
@@ -56,19 +53,18 @@
   padding-top: calc(var(--drawer-padding) + var(--drawer-resizeHandleSize));
 }
 
-/* Resize limits: override with `--saltDrawer-minSize` / `--saltDrawer-maxSize`, or with
-   min/max width or height styles. The minimum never drops below --salt-size-base, so the
-   handle always stays on screen. */
+/* Styles applied when resizable = true and position = "left" or "right". The minimum never drops below --salt-size-base, so the handle stays on screen. */
 .saltDrawer-resizable.saltDrawer-left,
 .saltDrawer-resizable.saltDrawer-right {
-  min-width: max(var(--saltDrawer-minSize, 0px), var(--salt-size-base));
-  max-width: var(--saltDrawer-maxSize, 100%);
+  min-width: max(var(--saltDrawer-minWidth, 0px), var(--salt-size-base));
+  max-width: var(--saltDrawer-maxWidth, 100%);
 }
 
+/* Styles applied when resizable = true and position = "top" or "bottom". The minimum never drops below --salt-size-base, so the handle stays on screen. */
 .saltDrawer-resizable.saltDrawer-top,
 .saltDrawer-resizable.saltDrawer-bottom {
-  min-height: max(var(--saltDrawer-minSize, 0px), var(--salt-size-base));
-  max-height: var(--saltDrawer-maxSize, 100%);
+  min-height: max(var(--saltDrawer-minHeight, 0px), var(--salt-size-base));
+  max-height: var(--saltDrawer-maxHeight, 100%);
 }
 
 /* Styles applied when variant = "primary" */
