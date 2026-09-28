@@ -39,6 +39,7 @@
     "typecheck": "yarn node ./scripts/typecheck.mjs",
     "typecheck:consumer": "yarn node ./scripts/checkConsumerTypes.mjs",
     "typecheck:react19": "yarn node ./scripts/typecheckReactTypes.mjs 19",
+    "typecheck:site": "yarn workspace @salt-ds/site gen:css && yarn node ./scripts/typecheck.mjs --incremental false -p site/tsconfig.json",
     "chromatic": "chromatic"
   },
   "dependencies": {
