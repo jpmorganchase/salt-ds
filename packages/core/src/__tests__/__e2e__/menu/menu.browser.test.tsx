@@ -63,6 +63,28 @@ function MultiLevelWithBackgroundTarget() {
   );
 }
 
+function SubmenuWithDisabledLastItem() {
+  return (
+    <Menu>
+      <MenuTrigger>
+        <Button aria-label="Open Menu">Open Menu</Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuItem>Copy</MenuItem>
+        <Menu>
+          <MenuTrigger>
+            <MenuItem>Edit styling</MenuItem>
+          </MenuTrigger>
+          <MenuPanel>
+            <MenuItem>Column</MenuItem>
+            <MenuItem disabled>Cell</MenuItem>
+          </MenuPanel>
+        </Menu>
+      </MenuPanel>
+    </Menu>
+  );
+}
+
 describe("Given a Menu", () => {
   it("opens, performs an action, and closes with a mouse", async () => {
     const onOpenChange = vi.fn();
@@ -181,6 +203,15 @@ describe("Given a Menu", () => {
     await expect.poll(menuCount).toBe(1);
   });
 
+  it("closes a nested menu whose last item is disabled when hovering another parent item", async () => {
+    await renderWithSalt(<SubmenuWithDisabledLastItem />);
+    await trigger().click();
+    await page.getByRole("menuitem", { name: "Edit styling" }).hover();
+    await expect.poll(menuCount).toBe(2);
+    await page.getByRole("menuitem", { name: "Copy" }).hover({ force: true });
+    await expect.poll(menuCount).toBe(1);
+  });
+
   it("closes a nested menu when the pointer moves to page background", async () => {
     await renderWithSalt(<MultiLevelWithBackgroundTarget />);
     await trigger().click();
@@ -232,15 +263,32 @@ describe("Given a Menu", () => {
         .toBeInTheDocument();
   });
 
-  it("ignores disabled items", async () => {
+  it("does not activate disabled items", async () => {
     const alertSpy = vi.spyOn(window, "alert").mockImplementation(() => {});
     await renderWithSalt(<IconWithGroups />);
     await trigger().click();
     const paste = page.getByRole("menuitem", { name: "Paste" });
-    await expect.element(paste).toHaveAttribute("aria-disabled");
+    await expect.element(paste).toHaveAttribute("aria-disabled", "true");
     await paste.click({ force: true });
+    await expect.element(paste).toHaveFocus();
     await expect.element(page.getByRole("menu")).toBeInTheDocument();
-    await expect.element(paste).not.toHaveFocus();
+    expect(alertSpy).not.toHaveBeenCalled();
+  });
+
+  it("moves focus to disabled items with the arrow keys", async () => {
+    const alertSpy = vi.spyOn(window, "alert").mockImplementation(() => {});
+    await renderWithSalt(<IconWithGroups />);
+    trigger().element().focus();
+    await userEvent.keyboard("{Enter}");
+    await expect
+      .element(page.getByRole("menuitem", { name: "Copy" }))
+      .toHaveFocus();
+    await userEvent.keyboard("{ArrowDown}");
+    const paste = page.getByRole("menuitem", { name: "Paste" });
+    await expect.element(paste).toHaveFocus();
+    await userEvent.keyboard("{Enter} ");
+    await expect.element(paste).toHaveFocus();
+    await expect.element(page.getByRole("menu")).toBeInTheDocument();
     expect(alertSpy).not.toHaveBeenCalled();
   });
 
@@ -255,6 +303,29 @@ describe("Given a Menu", () => {
     await expect
       .element(page.getByRole("menuitem", { name: "Column" }))
       .not.toBeInTheDocument();
+  });
+
+  it("does not open disabled nested items from the keyboard", async () => {
+    await renderWithSalt(<WithDisabledItems />);
+    trigger().element().focus();
+    await userEvent.keyboard("{Enter}");
+    await expect
+      .element(page.getByRole("menuitem", { name: "Copy" }))
+      .toHaveFocus();
+    await userEvent.keyboard("{ArrowDown}");
+    const editStyling = page.getByRole("menuitem", { name: "Edit styling" });
+    await expect.element(editStyling).toHaveFocus();
+    for (const key of ["{ArrowRight}", "{Enter}", " "]) {
+      await userEvent.keyboard(key);
+      await expect.element(editStyling).toHaveFocus();
+      await expect
+        .element(page.getByRole("menuitem", { name: "Column" }))
+        .not.toBeInTheDocument();
+    }
+    await userEvent.keyboard("{Escape}");
+    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+    await trigger().click();
+    await expect.element(page.getByRole("menu")).toBeInTheDocument();
   });
 
   it("focuses items on hover", async () => {
@@ -574,6 +645,30 @@ describe("Given a Menu with selectable groups", () => {
     await expect.element(three).toHaveAttribute("aria-disabled", "true");
     await three.click({ force: true });
     await expect.element(three).toHaveAttribute("aria-checked", "false");
+    await expect.element(page.getByRole("menu")).toBeInTheDocument();
+    expect(onSelectionChange).not.toHaveBeenCalled();
+  });
+
+  it("moves focus to checked disabled items without toggling them", async () => {
+    const onSelectionChange = vi.fn();
+    await renderWithSalt(
+      <SelectableMenu
+        selectionVariant="multiple"
+        initialSelected={["three"]}
+        onSelectionChange={onSelectionChange}
+      />,
+    );
+    trigger().element().focus();
+    await userEvent.keyboard("{Enter}");
+    await expect
+      .element(page.getByRole("menuitemcheckbox", { name: "One" }))
+      .toHaveFocus();
+    await userEvent.keyboard("{ArrowDown}{ArrowDown}");
+    const three = page.getByRole("menuitemcheckbox", { name: "Three" });
+    await expect.element(three).toHaveFocus();
+    await expect.element(three).toHaveAttribute("aria-checked", "true");
+    await userEvent.keyboard(" {Enter}");
+    await expect.element(three).toHaveAttribute("aria-checked", "true");
     await expect.element(page.getByRole("menu")).toBeInTheDocument();
     expect(onSelectionChange).not.toHaveBeenCalled();
   });
