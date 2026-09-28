@@ -53,6 +53,21 @@
   padding-top: calc(var(--drawer-padding) + var(--drawer-resizeHandleSize));
 }
 
+/* Resize limits: override with `--saltDrawer-minSize` / `--saltDrawer-maxSize`, or with
+   min/max width or height styles. The minimum never drops below --salt-size-base, so the
+   handle always stays on screen. */
+.saltDrawer-resizable.saltDrawer-left,
+.saltDrawer-resizable.saltDrawer-right {
+  min-width: max(var(--saltDrawer-minSize, calc(var(--salt-size-base) * 8)), var(--salt-size-base));
+  max-width: var(--saltDrawer-maxSize, 100%);
+}
+
+.saltDrawer-resizable.saltDrawer-top,
+.saltDrawer-resizable.saltDrawer-bottom {
+  min-height: max(var(--saltDrawer-minSize, calc(var(--salt-size-base) * 4)), var(--salt-size-base));
+  max-height: var(--saltDrawer-maxSize, 100%);
+}
+
 /* A focused resize handle draws its ring just outside the strip, which sits
    flush with the Drawer's edge, so `overflow: auto` would clip it. A sectioned
    Drawer scrolls inside DrawerContent rather than scrolling itself, so it can

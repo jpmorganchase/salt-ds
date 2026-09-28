@@ -70,7 +70,8 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    * The handle occupies space inside the drawer's declared size rather than overlaying its
    * content, and does not consume the drawer's padding.
    * Limits come from the drawer's own CSS: `min-width`/`max-width` for `left` and `right`,
-   * `min-height`/`max-height` for `top` and `bottom`.
+   * `min-height`/`max-height` for `top` and `bottom`. Without them, a density-aware minimum
+   * applies, so the drawer can never be collapsed out of sight.
    * */
   resizable?: boolean;
   /**

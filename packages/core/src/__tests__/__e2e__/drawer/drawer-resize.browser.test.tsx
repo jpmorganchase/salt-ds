@@ -1,6 +1,12 @@
 import type { DrawerProps } from "@salt-ds/core";
-import { Button, Drawer, DrawerContent, DrawerHeader } from "@salt-ds/core";
-import { useState } from "react";
+import {
+  Button,
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  SaltProvider,
+} from "@salt-ds/core";
+import { type CSSProperties, useState } from "react";
 import { describe, expect, it } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { act, renderWithSalt } from "~browser-test-utils/render";
@@ -417,6 +423,20 @@ describe("GIVEN a resizable Drawer", () => {
       await expect.poll(() => drawerSize("left")).toBeCloseTo(300, 0);
     });
 
+    it("restores the size before Home with Enter", async () => {
+      await renderWithSalt(<ResizableFixture position="left" />);
+      await waitForOpen();
+
+      await pressOnHandle("{ArrowRight}");
+      await pressOnHandle("{Home}");
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(100, 0);
+
+      await pressOnHandle("{Enter}");
+      await expect
+        .poll(() => drawerSize("left"))
+        .toBeCloseTo(300 + KEYBOARD_STEP, 0);
+    });
+
     it("ignores keys that do not resize", async () => {
       await renderWithSalt(<ResizableFixture position="left" />);
       await waitForOpen();
@@ -499,6 +519,121 @@ describe("GIVEN a resizable Drawer", () => {
 
       await page.getByRole("button", { name: "Action" }).click();
       expect(clicked).toBe(true);
+    });
+  });
+
+  describe("size limits", () => {
+    // Default minimum: 8 × --salt-size-base for width, 4 × for height.
+    const DEFAULT_MIN = { horizontal: 8, vertical: 4 };
+    const sizeBase = () =>
+      Number.parseFloat(
+        getComputedStyle(drawer()).getPropertyValue("--salt-size-base"),
+      );
+    const defaultMin = (position: Position) =>
+      sizeBase() *
+      (isHorizontal(position) ? DEFAULT_MIN.horizontal : DEFAULT_MIN.vertical);
+
+    for (const position of POSITIONS) {
+      it(`keeps a default minimum when no limits are set, position=${position}`, async () => {
+        await renderWithSalt(
+          <Drawer
+            open
+            resizable
+            position={position}
+            style={isHorizontal(position) ? { width: 320 } : { height: 280 }}
+          >
+            <DrawerHeader header="Resizable drawer" />
+            <DrawerContent>Content</DrawerContent>
+          </Drawer>,
+        );
+        await waitForOpen();
+
+        await dragHandleBy(
+          position,
+          position === "left" || position === "top" ? -2000 : 2000,
+        );
+
+        await expect
+          .poll(() => drawerSize(position))
+          .toBeCloseTo(defaultMin(position), 0);
+      });
+    }
+
+    it("scales the default minimum with density", async () => {
+      await renderWithSalt(
+        <SaltProvider density="high">
+          <Drawer open resizable position="left" style={{ width: 320 }}>
+            <DrawerHeader header="Resizable drawer" />
+            <DrawerContent>Content</DrawerContent>
+          </Drawer>
+        </SaltProvider>,
+      );
+      await waitForOpen();
+
+      await dragHandleBy("left", -2000);
+
+      expect(sizeBase()).toBe(20);
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(160, 0);
+    });
+
+    it("accepts the limits as CSS variables", async () => {
+      await renderWithSalt(
+        <Drawer
+          open
+          resizable
+          position="top"
+          style={
+            {
+              height: 300,
+              "--saltDrawer-minSize": "10vh",
+              "--saltDrawer-maxSize": "50vh",
+            } as CSSProperties
+          }
+        >
+          <DrawerHeader header="Resizable drawer" />
+          <DrawerContent>Content</DrawerContent>
+        </Drawer>,
+      );
+      await waitForOpen();
+
+      await dragHandleBy("top", -2000);
+      await expect
+        .poll(() => drawerSize("top"))
+        .toBeCloseTo(window.innerHeight * 0.1, 0);
+
+      await dragHandleBy("top", 2000);
+      await expect
+        .poll(() => drawerSize("top"))
+        .toBeCloseTo(window.innerHeight * 0.5, 0);
+    });
+
+    it("never collapses to zero, even with a zero minimum and no padding", async () => {
+      await renderWithSalt(
+        <Drawer
+          open
+          resizable
+          position="left"
+          style={
+            {
+              width: 300,
+              padding: 0,
+              "--saltDrawer-minSize": "0px",
+            } as CSSProperties
+          }
+        >
+          <DrawerHeader header="Resizable drawer" />
+          <DrawerContent>Content</DrawerContent>
+        </Drawer>,
+      );
+      await waitForOpen();
+
+      await dragHandleBy("left", -2000);
+
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(sizeBase(), 0);
+      const rect = handle().getBoundingClientRect();
+      expect(
+        document.elementFromPoint(rect.right - 2, rect.top + rect.height / 2),
+      ).toBe(handle());
     });
   });
 });

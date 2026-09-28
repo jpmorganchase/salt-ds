@@ -127,6 +127,8 @@ export function useDrawerResize({
   const handleRef = useRef<HTMLElement | null>(null);
   // Size to return to when a collapsed drawer is restored with Enter.
   const restoreSizeRef = useRef<number | null>(null);
+  // Size the drawer opened at, used when there is no size to restore.
+  const initialSizeRef = useRef<number | null>(null);
 
   const readMetrics = useEventCallback(() => {
     if (!element) return null;
@@ -232,6 +234,9 @@ export function useDrawerResize({
       event.preventDefault();
 
       if (key === "Home") {
+        if (current.current > current.min + 1) {
+          restoreSizeRef.current = current.current;
+        }
         applySize(current.min, current);
         return;
       }
@@ -244,7 +249,10 @@ export function useDrawerResize({
       if (key === "Enter") {
         const collapsed = current.current <= current.min + 1;
         if (collapsed) {
-          applySize(restoreSizeRef.current ?? current.max, current);
+          applySize(
+            restoreSizeRef.current ?? initialSizeRef.current ?? current.max,
+            current,
+          );
         } else {
           restoreSizeRef.current = current.current;
           applySize(current.min, current);
@@ -275,6 +283,8 @@ export function useDrawerResize({
     if (!enabled) {
       setSize(undefined);
       setMetrics(null);
+      restoreSizeRef.current = null;
+      initialSizeRef.current = null;
     }
   }, [enabled]);
 
@@ -282,7 +292,10 @@ export function useDrawerResize({
   // exposes `aria-valuenow` to assistive technology.
   useIsomorphicLayoutEffect(() => {
     if (enabled && element) {
-      readMetrics();
+      const next = readMetrics();
+      if (next && initialSizeRef.current === null) {
+        initialSizeRef.current = next.current;
+      }
     }
   }, [enabled, element, readMetrics]);
 

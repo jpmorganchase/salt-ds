@@ -2,7 +2,7 @@
 "@salt-ds/core": minor
 ---
 
-Added a `resizable` prop to `Drawer`. When enabled, a resize handle is rendered on the drawer's inner edge for all four `position` values, allowing users to resize the drawer by dragging or with the keyboard. The handle occupies space inside the drawer's declared size rather than overlaying its content, so a drawer keeps the width or height you set while the space available to content is reduced by the handle's size. The drawer's own padding is preserved. Resize limits come from the drawer's own CSS: `min-width`/`max-width` for `left` and `right`, `min-height`/`max-height` for `top` and `bottom`.
+Added a `resizable` prop to `Drawer`. When enabled, a resize handle is rendered on the drawer's inner edge for all four `position` values, allowing users to resize the drawer by dragging or with the keyboard. The handle occupies space inside the drawer's declared size rather than overlaying its content, so a drawer keeps the width or height you set while the space available to content is reduced by the handle's size. The drawer's own padding is preserved. Resize limits come from the drawer's own CSS: `min-width`/`max-width` for `left` and `right`, `min-height`/`max-height` for `top` and `bottom`. They can also be set with the `--saltDrawer-minSize` and `--saltDrawer-maxSize` CSS variables. Without them, a density-aware minimum applies, so the drawer can never be collapsed out of sight, and the maximum is `100%`.
 
 ```tsx
 <Drawer
