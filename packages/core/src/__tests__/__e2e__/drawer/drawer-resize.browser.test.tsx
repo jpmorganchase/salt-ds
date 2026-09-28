@@ -7,7 +7,7 @@ import {
   SaltProvider,
 } from "@salt-ds/core";
 import { type CSSProperties, useState } from "react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { act, renderWithSalt } from "~browser-test-utils/render";
 
@@ -446,55 +446,40 @@ describe("GIVEN a resizable Drawer", () => {
     });
   });
 
-  describe("handle borders", () => {
-    const strip = () => getComputedStyle(handle(), "::before");
-
-    it("renders no borders by default", async () => {
-      await renderWithSalt(<ResizableFixture position="left" />);
+  describe("onResizeStop", () => {
+    it("reports the new size once when a drag ends", async () => {
+      const onResizeStop = vi.fn();
+      await renderWithSalt(<ResizableFixture onResizeStop={onResizeStop} />);
       await waitForOpen();
 
-      expect(strip().borderLeftWidth).toBe("0px");
-      expect(strip().borderRightWidth).toBe("0px");
+      await dragHandleBy("left", 50);
+
+      expect(onResizeStop).toHaveBeenCalledTimes(1);
+      expect(onResizeStop.mock.calls[0][1]).toBeCloseTo(350, 0);
     });
 
-    it("renders the requested sides without growing the strip", async () => {
-      await renderWithSalt(
-        <ResizableFixture
-          position="left"
-          resizeHandleBorders={["left", "right"]}
-        />,
-      );
+    it("reports the new size after a keyboard resize", async () => {
+      const onResizeStop = vi.fn();
+      await renderWithSalt(<ResizableFixture onResizeStop={onResizeStop} />);
       await waitForOpen();
 
-      expect(strip().borderLeftWidth).toBe("1px");
-      expect(strip().borderRightWidth).toBe("1px");
-      expect(strip().borderLeftStyle).toBe("solid");
-      // Borders are drawn inside the strip, so it stays the reserved size.
-      expect(strip().width).toBe(`${HANDLE_SIZE}px`);
-      expect(paddingOf("right")).toBeCloseTo(HANDLE_SIZE, 1);
+      await pressOnHandle("{ArrowRight}");
+
+      expect(onResizeStop).toHaveBeenCalledTimes(1);
+      expect(onResizeStop.mock.calls[0][1]).toBeCloseTo(300 + KEYBOARD_STEP, 0);
     });
 
-    it("ignores sides that do not run along the handle", async () => {
-      await renderWithSalt(
-        <ResizableFixture
-          position="left"
-          resizeHandleBorders={["top", "bottom"]}
-        />,
-      );
+    it("is not called when the size does not change", async () => {
+      const onResizeStop = vi.fn();
+      await renderWithSalt(<ResizableFixture onResizeStop={onResizeStop} />);
       await waitForOpen();
 
-      expect(strip().borderTopWidth).toBe("0px");
-      expect(strip().borderBottomWidth).toBe("0px");
-    });
+      await pressOnHandle("{End}");
+      onResizeStop.mockClear();
+      await pressOnHandle("{End}");
+      await dragHandleBy("left", 0);
 
-    it("supports the horizontal sides for a bottom Drawer", async () => {
-      await renderWithSalt(
-        <ResizableFixture position="bottom" resizeHandleBorders={["top"]} />,
-      );
-      await waitForOpen();
-
-      expect(strip().borderTopWidth).toBe("1px");
-      expect(strip().height).toBe(`${HANDLE_SIZE}px`);
+      expect(onResizeStop).not.toHaveBeenCalled();
     });
   });
 

@@ -22,11 +22,7 @@ interface DragState extends Bounds {
 export interface SeparatorProps
   extends Pick<
     AriaAttributes,
-    | "aria-orientation"
-    | "aria-valuenow"
-    | "aria-valuemin"
-    | "aria-valuemax"
-    | "aria-valuetext"
+    "aria-orientation" | "aria-valuenow" | "aria-valuemin" | "aria-valuemax"
   > {
   role: "separator";
   tabIndex: number;
@@ -47,6 +43,8 @@ export interface UseDrawerResizeProps {
   position: DrawerResizePosition;
   /** The drawer element being resized. */
   element: HTMLElement | null | undefined;
+  /** Called with the new size in px when a drag ends or a key resizes the drawer. */
+  onResizeStop?: (event: Event, size: number) => void;
 }
 
 export interface UseDrawerResizeResult {
@@ -113,6 +111,7 @@ export function useDrawerResize({
   enabled,
   position,
   element,
+  onResizeStop,
 }: UseDrawerResizeProps): UseDrawerResizeResult {
   const horizontal = isHorizontal(position);
 
@@ -139,10 +138,15 @@ export function useDrawerResize({
     return next;
   });
 
+  // Latest applied size, so a drag's end can be reported without waiting for a render.
+  const sizeRef = useRef<number | null>(null);
+
   const applySize = useEventCallback((next: number, bounds: Bounds) => {
     const clamped = clamp(next, bounds);
+    sizeRef.current = clamped;
     setSize(clamped);
     setMetrics({ ...bounds, current: clamped });
+    return clamped;
   });
 
   const lockCursor = useEventCallback(() => {
@@ -156,7 +160,7 @@ export function useDrawerResize({
     };
   });
 
-  const endDrag = useEventCallback(() => {
+  const endDrag = useEventCallback((event: ReactPointerEvent<HTMLElement>) => {
     const drag = dragRef.current;
     if (!drag) return;
     const handle = handleRef.current;
@@ -166,6 +170,10 @@ export function useDrawerResize({
     dragRef.current = null;
     restoreCursorRef.current?.();
     setIsResizing(false);
+    const finalSize = sizeRef.current;
+    if (finalSize !== null && finalSize !== drag.originSize) {
+      onResizeStop?.(event.nativeEvent, finalSize);
+    }
   });
 
   /** Starts a drag from a pointer anywhere within the handle's hit area. */
@@ -233,39 +241,38 @@ export function useDrawerResize({
 
       event.preventDefault();
 
+      const collapsed = current.current <= current.min + 1;
+      let next: number;
       if (key === "Home") {
-        if (current.current > current.min + 1) {
+        if (!collapsed) {
           restoreSizeRef.current = current.current;
         }
-        applySize(current.min, current);
-        return;
-      }
-      if (key === "End") {
-        applySize(current.max, current);
-        return;
-      }
-      // Collapses to the smallest allowed size, or restores the size the drawer
-      // had before it was collapsed, as the Splitter does.
-      if (key === "Enter") {
-        const collapsed = current.current <= current.min + 1;
+        next = current.min;
+      } else if (key === "End") {
+        next = current.max;
+      } else if (key === "Enter") {
+        // Collapses to the smallest allowed size, or restores the size the drawer
+        // had before it was collapsed, as the Splitter does.
         if (collapsed) {
-          applySize(
-            restoreSizeRef.current ?? initialSizeRef.current ?? current.max,
-            current,
-          );
+          next =
+            restoreSizeRef.current ?? initialSizeRef.current ?? current.max;
         } else {
           restoreSizeRef.current = current.current;
-          applySize(current.min, current);
+          next = current.min;
         }
-        return;
+      } else {
+        const towardsHigherCoordinate =
+          key === "ArrowRight" || key === "ArrowDown";
+        const direction =
+          towardsHigherCoordinate === growsWithCoordinate(position) ? 1 : -1;
+        const step = shiftKey ? KEYBOARD_LARGE_STEP : KEYBOARD_STEP;
+        next = current.current + step * direction;
       }
 
-      const towardsHigherCoordinate =
-        key === "ArrowRight" || key === "ArrowDown";
-      const direction =
-        towardsHigherCoordinate === growsWithCoordinate(position) ? 1 : -1;
-      const step = shiftKey ? KEYBOARD_LARGE_STEP : KEYBOARD_STEP;
-      applySize(current.current + step * direction, current);
+      const applied = applySize(next, current);
+      if (applied !== current.current) {
+        onResizeStop?.(event.nativeEvent, applied);
+      }
     },
   );
 
@@ -382,9 +389,6 @@ export function useDrawerResize({
       "aria-valuenow": metrics ? Math.round(metrics.current) : undefined,
       "aria-valuemin": metrics ? Math.round(metrics.min) : undefined,
       "aria-valuemax": metrics ? Math.round(metrics.max) : undefined,
-      "aria-valuetext": metrics
-        ? `${Math.round(metrics.current)} pixels`
-        : undefined,
       onPointerDown,
       onPointerMove,
       onPointerUp: endDrag,

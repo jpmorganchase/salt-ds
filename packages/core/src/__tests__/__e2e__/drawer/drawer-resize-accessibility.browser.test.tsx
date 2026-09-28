@@ -152,9 +152,6 @@ describe("GIVEN a resizable Drawer", () => {
       await expect.element(separator()).toHaveAttribute("aria-valuenow", "300");
       await expect.element(separator()).toHaveAttribute("aria-valuemin", "100");
       await expect.element(separator()).toHaveAttribute("aria-valuemax", "600");
-      await expect
-        .element(separator())
-        .toHaveAttribute("aria-valuetext", "300 pixels");
     });
 
     it("reports the resolved limits for a vertical Drawer", async () => {
@@ -174,9 +171,6 @@ describe("GIVEN a resizable Drawer", () => {
       await userEvent.keyboard("{ArrowRight}");
 
       await expect.element(separator()).toHaveAttribute("aria-valuenow", "308");
-      await expect
-        .element(separator())
-        .toHaveAttribute("aria-valuetext", "308 pixels");
     });
 
     it("updates its value after a pointer resize", async () => {

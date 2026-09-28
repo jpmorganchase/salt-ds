@@ -189,3 +189,28 @@ export const DrawerOverflow: StoryFn<QAContainerProps> = (props) => {
 DrawerOverflow.parameters = {
   chromatic: { disableSnapshot: false },
 };
+
+export const ResizableDrawer: StoryFn = () => {
+  return (
+    <Drawer open resizable style={{ width: 350 }}>
+      <DrawerHeader
+        header="Resizable drawer"
+        description="Pending transaction review"
+        actions={<CloseButton />}
+      />
+      <DrawerContent>
+        <Text>{loremText}</Text>
+        <Text>{loremText}</Text>
+      </DrawerContent>
+      <DrawerFooter>
+        <Button sentiment="accented" appearance="bordered">
+          Cancel
+        </Button>
+        <Button sentiment="accented">Save</Button>
+      </DrawerFooter>
+    </Drawer>
+  );
+};
+ResizableDrawer.parameters = {
+  chromatic: { disableSnapshot: false },
+};
