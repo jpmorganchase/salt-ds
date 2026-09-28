@@ -161,4 +161,4 @@ Agents don't see images, so:
 
 - Name the components and tokens that the anatomy, layout and color images show in the text as well, for example "Use `--salt-spacing-300` between sections."
 - Write alt text for informative images, and use captions for extra explanation. Both are included in the Markdown.
-- Keep the pattern's Storybook stories in `packages/core/stories/patterns/<pattern-name>`, and link them in the page's resources. Their source is included as the pattern's examples.
+- Keep the pattern's Storybook stories in `packages/core/stories/patterns/<pattern-name>`, and link them in the page's resources. Their source is included as the pattern's examples. Guidance-only patterns don't need stories.
