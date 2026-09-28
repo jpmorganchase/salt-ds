@@ -79,6 +79,19 @@ function packagePath(directory, target) {
   return path.join(directory, target.replace(/^\.?\//, ""));
 }
 
+function listsAgentDocs(manifest) {
+  return (manifest.files ?? []).some((entry) =>
+    /^(?:\.?\/)?docs\/?$/.test(entry),
+  );
+}
+
+async function checkAgentDocs(manifest, directory) {
+  if (!listsAgentDocs(manifest)) return [];
+  return (await pathExists(path.join(directory, "docs", "index.md")))
+    ? []
+    : ["is missing docs/index.md; run yarn build to generate agent docs"];
+}
+
 async function checkCssPackage(pkg) {
   const { directory, manifest } = pkg;
   const targets = new Set([manifest.style, ...(manifest.files ?? [])]);
@@ -93,6 +106,7 @@ async function checkCssPackage(pkg) {
     }
   }
 
+  errors.push(...(await checkAgentDocs(manifest, directory)));
   return errors;
 }
 
@@ -168,6 +182,7 @@ async function checkJavaScriptPackage(pkg, temporaryDirectory) {
     }
   }
 
+  errors.push(...(await checkAgentDocs(packedManifest, packageDirectory)));
   return errors;
 }
 

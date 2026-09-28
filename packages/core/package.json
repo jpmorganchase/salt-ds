@@ -55,6 +55,7 @@
     "css",
     "dist-cjs",
     "dist-es",
-    "dist-types"
+    "dist-types",
+    "docs"
   ]
 }

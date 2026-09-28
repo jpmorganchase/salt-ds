@@ -26,6 +26,7 @@ node_modules
 /packages/*/dist-cjs/
 /packages/*/dist-es/
 /packages/*/dist-types/
+/packages/*/docs/
 /packages/ag-grid-theme/fonts/
 /packages/ag-grid-theme/salt-ag-theme.css
 /packages/core/css/

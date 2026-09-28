@@ -23,6 +23,10 @@ The repo contains below packages under `/packages`
 
 ## How to's
 
+### Docs for coding agents
+
+`yarn build` also generates Markdown documentation for coding agents from `site/docs` into each package's `docs` folder, which is published with the package. If a docs change fails with an unsupported MDX component or unresolved example, see [tooling/agent-docs](./tooling/agent-docs/README.md). Run `yarn build:agent-docs --check` to validate docs changes without a full build.
+
 ### How to add a new icon
 
 1. Add the icon to the `packages/icons/src/SVG` folder. The icon should be named using kebab casing e.g. `icon-name.svg`.

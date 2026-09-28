@@ -14712,6 +14712,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"salt-agent-docs@workspace:tooling/agent-docs":
+  version: 0.0.0-use.local
+  resolution: "salt-agent-docs@workspace:tooling/agent-docs"
+  dependencies:
+    gray-matter: "npm:^4.0.3"
+    mdast-util-to-string: "npm:^4.0.0"
+    postcss: "npm:^8.5.24"
+    react-docgen-typescript: "npm:2.4.0"
+    remark-gfm: "npm:^4.0.0"
+    remark-mdx: "npm:^3.0.0"
+    remark-parse: "npm:^11.0.0"
+    remark-stringify: "npm:^11.0.0"
+    typescript: "npm:^6.0.0"
+    unified: "npm:^11.0.0"
+  languageName: unknown
+  linkType: soft
+
 "sax@npm:1.6.1, sax@npm:^1.5.0":
   version: 1.6.1
   resolution: "sax@npm:1.6.1"
