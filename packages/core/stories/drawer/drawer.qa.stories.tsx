@@ -11,7 +11,14 @@ import {
 import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
-import { type ReactNode, useLayoutEffect, useRef } from "react";
+import {
+  type CSSProperties,
+  type ReactNode,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 
 export default {
   title: "Core/Drawer/Drawer QA",
@@ -190,9 +197,18 @@ DrawerOverflow.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const ResizableDrawer: StoryFn = () => {
+const ResizableDrawerTemplate = ({
+  position,
+  resizable = true,
+}: Pick<DrawerProps, "position" | "resizable">) => {
+  const horizontal = position === "left" || position === "right";
   return (
-    <Drawer open resizable style={{ width: 350 }}>
+    <Drawer
+      open
+      resizable={resizable}
+      position={position}
+      style={horizontal ? { width: 350 } : { height: 280 }}
+    >
       <DrawerHeader
         header="Resizable drawer"
         description="Pending transaction review"
@@ -211,6 +227,87 @@ export const ResizableDrawer: StoryFn = () => {
     </Drawer>
   );
 };
-ResizableDrawer.parameters = {
+
+export const NotResizable: StoryFn = () => (
+  <ResizableDrawerTemplate position="left" resizable={false} />
+);
+NotResizable.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const ResizableLeft: StoryFn = () => (
+  <ResizableDrawerTemplate position="left" />
+);
+ResizableLeft.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const ResizableRight: StoryFn = () => (
+  <ResizableDrawerTemplate position="right" />
+);
+ResizableRight.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const ResizableTop: StoryFn = () => (
+  <ResizableDrawerTemplate position="top" />
+);
+ResizableTop.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const ResizableBottom: StoryFn = () => (
+  <ResizableDrawerTemplate position="bottom" />
+);
+ResizableBottom.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const ResizableScrolledUnsectioned: StoryFn = () => {
+  const [drawer, setDrawer] = useState<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!drawer) return;
+    const frame = requestAnimationFrame(() => {
+      drawer.scrollTop = 400;
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [drawer]);
+
+  return (
+    <Drawer
+      open
+      resizable
+      initialFocus={-1}
+      style={{ width: 350 }}
+      ref={setDrawer}
+    >
+      <Text>{loremText.repeat(20)}</Text>
+    </Drawer>
+  );
+};
+ResizableScrolledUnsectioned.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const ResizableAtMinimumSize: StoryFn = () => (
+  <Drawer
+    open
+    resizable
+    style={
+      {
+        width: 0,
+        padding: 0,
+        "--saltDrawer-minWidth": "0px",
+      } as CSSProperties
+    }
+  >
+    <DrawerHeader header="Resizable drawer" />
+    <DrawerContent>
+      <Text>{loremText}</Text>
+    </DrawerContent>
+  </Drawer>
+);
+ResizableAtMinimumSize.parameters = {
   chromatic: { disableSnapshot: false },
 };

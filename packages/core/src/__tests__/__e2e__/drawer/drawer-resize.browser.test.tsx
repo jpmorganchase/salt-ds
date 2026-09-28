@@ -155,29 +155,6 @@ function DismissibleFixture() {
 
 describe("GIVEN a resizable Drawer", () => {
   describe("size", () => {
-    for (const position of POSITIONS) {
-      it(`keeps its declared size when position=${position}`, async () => {
-        await renderWithSalt(<ResizableFixture position={position} />);
-        await waitForOpen();
-
-        expect(drawerSize(position)).toBeCloseTo(300, 0);
-      });
-    }
-
-    it("renders no resize handle when not resizable", async () => {
-      await renderWithSalt(
-        <Drawer open style={{ width: 300 }}>
-          <DrawerHeader header="Plain drawer" />
-          <DrawerContent>Content</DrawerContent>
-        </Drawer>,
-      );
-      await waitForOpen();
-
-      await expect
-        .element(page.getByRole("separator", { name: "Resize drawer" }))
-        .not.toBeInTheDocument();
-    });
-
     it("returns to its declared size when resizing is turned off", async () => {
       function ToggleFixture() {
         const [resizable, setResizable] = useState(true);
@@ -491,32 +468,6 @@ describe("GIVEN a resizable Drawer", () => {
         .poll(() => drawerSize("top"))
         .toBeCloseTo(window.innerHeight * 0.5, 0);
     });
-
-    it("keeps its handle reachable with a zero minimum and no padding", async () => {
-      await renderWithSalt(
-        <Drawer
-          open
-          resizable
-          style={
-            {
-              width: 300,
-              padding: 0,
-              "--saltDrawer-minWidth": "0px",
-            } as CSSProperties
-          }
-        >
-          <DrawerHeader header="Resizable drawer" />
-          <DrawerContent>Content</DrawerContent>
-        </Drawer>,
-      );
-      await waitForOpen();
-
-      await dragHandleBy("left", -2000);
-
-      await expect.poll(() => drawerSize("left")).toBeCloseTo(sizeBase(), 0);
-      const { x, y } = handleCenter();
-      expect(document.elementFromPoint(x, y)).toBe(handle());
-    });
   });
 
   describe("onResizeStop", () => {
@@ -584,25 +535,6 @@ describe("GIVEN a resizable Drawer", () => {
       await page.getByRole("button", { name: "Move to top" }).click();
 
       await expect.poll(() => drawerSize("top")).toBeCloseTo(200, 0);
-    });
-
-    it("keeps its handle on the edge of a scrolled unsectioned drawer", async () => {
-      await renderWithSalt(
-        <Drawer open resizable style={{ width: 300 }}>
-          <p>{"Unsectioned content. ".repeat(600)}</p>
-        </Drawer>,
-      );
-      await waitForOpen();
-
-      const before = handle().getBoundingClientRect();
-      await act(async () => {
-        drawer().scrollTop = 500;
-        drawer().dispatchEvent(new Event("scroll"));
-      });
-
-      await expect
-        .poll(() => handle().getBoundingClientRect().top)
-        .toBeCloseTo(before.top, 0);
     });
   });
 });
