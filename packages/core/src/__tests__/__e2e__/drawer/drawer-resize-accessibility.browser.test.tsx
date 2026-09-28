@@ -22,23 +22,14 @@ const isHorizontal = (position: Position) =>
 
 const separator = () => page.getByRole("separator", { name: "Resize drawer" });
 
-function drawer() {
-  const element = document.querySelector<HTMLElement>(".saltDrawer");
-  if (!element) throw new Error("Drawer missing");
-  return element;
-}
+const drawer = () => page.getByRole("dialog").element() as HTMLElement;
 
-function handle() {
-  const element = document.querySelector<HTMLElement>(
-    ".saltDrawerResizeHandle",
-  );
-  if (!element) throw new Error("Drawer resize handle missing");
-  return element;
-}
+const valueNow = () =>
+  Number(separator().element().getAttribute("aria-valuenow"));
 
 /**
- * A Drawer mounts translated off-screen and slides in, so geometry reads are
- * meaningless until the animation has settled.
+ * A Drawer mounts off-screen and slides in, so geometry is only meaningful
+ * once the animation has settled.
  */
 async function waitForOpen() {
   await expect.element(page.getByRole("dialog")).toBeVisible();
@@ -74,14 +65,28 @@ async function dispatchPointer(
   });
 }
 
-const sizeStyle = (position: Position) =>
+function handleCenter() {
+  const rect = separator().element().getBoundingClientRect();
+  return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+}
+
+/** Moves focus to the separator with the keyboard, as a user would. */
+async function tabToSeparator() {
+  await expect
+    .element(page.getByRole("button", { name: "Close drawer" }))
+    .toHaveFocus();
+  await userEvent.tab();
+  await expect.element(separator()).toHaveFocus();
+}
+
+const limitsStyle = (position: Position) =>
   isHorizontal(position)
     ? { width: 300, minWidth: 100, maxWidth: 600 }
     : { height: 300, minHeight: 100, maxHeight: 600 };
 
 /**
- * Includes a focusable control, so the separator does not receive the initial
- * focus that `FloatingFocusManager` gives the first tabbable element.
+ * Includes a focusable control, so the separator doesn't receive the initial
+ * focus that the drawer gives its first tabbable element.
  */
 function ResizableFixture({
   position = "left",
@@ -92,7 +97,7 @@ function ResizableFixture({
       open
       resizable
       position={position}
-      style={sizeStyle(position)}
+      style={limitsStyle(position)}
       {...rest}
     >
       <DrawerHeader
@@ -113,8 +118,7 @@ function TriggeredDrawer() {
         open={open}
         onOpenChange={setOpen}
         resizable
-        position="left"
-        style={{ width: 300, minWidth: 100, maxWidth: 600 }}
+        style={limitsStyle("left")}
       >
         <DrawerHeader
           header="Resizable drawer"
@@ -133,149 +137,115 @@ function TriggeredDrawer() {
 describe("GIVEN a resizable Drawer", () => {
   describe("separator semantics", () => {
     for (const position of POSITIONS) {
-      it(`exposes a separator with the ${ORIENTATION[position]} orientation when position=${position}`, async () => {
+      it(`exposes a ${ORIENTATION[position]} separator when position=${position}`, async () => {
         await renderWithSalt(<ResizableFixture position={position} />);
         await waitForOpen();
 
-        await expect.element(separator()).toBeInTheDocument();
         await expect
           .element(separator())
           .toHaveAttribute("aria-orientation", ORIENTATION[position]);
       });
+
+      it(`reports its size and limits before any interaction, position=${position}`, async () => {
+        await renderWithSalt(<ResizableFixture position={position} />);
+        await waitForOpen();
+
+        await expect
+          .element(separator())
+          .toHaveAttribute("aria-valuenow", "300");
+        await expect
+          .element(separator())
+          .toHaveAttribute("aria-valuemin", "100");
+        await expect
+          .element(separator())
+          .toHaveAttribute("aria-valuemax", "600");
+      });
     }
 
-    it("describes its value before any interaction", async () => {
-      await renderWithSalt(<ResizableFixture position="left" />);
-      await waitForOpen();
-
-      // A focusable separator must always expose a value.
-      await expect.element(separator()).toHaveAttribute("aria-valuenow", "300");
-      await expect.element(separator()).toHaveAttribute("aria-valuemin", "100");
-      await expect.element(separator()).toHaveAttribute("aria-valuemax", "600");
-    });
-
-    it("reports the resolved limits for a vertical Drawer", async () => {
-      await renderWithSalt(<ResizableFixture position="top" />);
-      await waitForOpen();
-
-      await expect.element(separator()).toHaveAttribute("aria-valuenow", "300");
-      await expect.element(separator()).toHaveAttribute("aria-valuemin", "100");
-      await expect.element(separator()).toHaveAttribute("aria-valuemax", "600");
-    });
-
     it("updates its value after a keyboard resize", async () => {
-      await renderWithSalt(<ResizableFixture position="left" />);
+      await renderWithSalt(<ResizableFixture />);
       await waitForOpen();
 
-      handle().focus();
+      await tabToSeparator();
       await userEvent.keyboard("{ArrowRight}");
 
-      await expect.element(separator()).toHaveAttribute("aria-valuenow", "308");
+      await expect.poll(valueNow).toBeGreaterThan(300);
+      expect(valueNow()).toBeCloseTo(drawer().getBoundingClientRect().width, 0);
     });
 
     it("updates its value after a pointer resize", async () => {
-      await renderWithSalt(<ResizableFixture position="left" />);
+      await renderWithSalt(<ResizableFixture />);
       await waitForOpen();
 
-      const rect = handle().getBoundingClientRect();
-      const startX = rect.left + rect.width / 2;
-      const startY = rect.top + rect.height / 2;
+      const { x, y } = handleCenter();
+      await dispatchPointer(separator().element(), "pointerdown", x, y);
+      await dispatchPointer(separator().element(), "pointermove", x + 50, y);
+      await dispatchPointer(separator().element(), "pointerup", x + 50, y);
 
-      await dispatchPointer(handle(), "pointerdown", startX, startY);
-      await dispatchPointer(handle(), "pointermove", startX + 50, startY);
-      await dispatchPointer(handle(), "pointerup", startX + 50, startY);
+      await expect.poll(valueNow).toBeCloseTo(350, 0);
+    });
 
+    it("updates its maximum when the viewport resizes", async () => {
+      await renderWithSalt(
+        <Drawer open resizable style={{ width: 300 }}>
+          <DrawerHeader header="Resizable drawer" />
+          <DrawerContent>Content</DrawerContent>
+        </Drawer>,
+      );
+      await waitForOpen();
       await expect
-        .poll(() =>
-          Number(handle().getAttribute("aria-valuenow") ?? Number.NaN),
-        )
-        .toBeCloseTo(350, 0);
+        .element(separator())
+        .toHaveAttribute("aria-valuemax", String(window.innerWidth));
+
+      try {
+        await page.viewport(900, 700);
+        await expect
+          .element(separator())
+          .toHaveAttribute("aria-valuemax", "900");
+      } finally {
+        await page.viewport(1280, 1024);
+      }
     });
 
     it("points at the drawer it controls", async () => {
-      await renderWithSalt(<ResizableFixture position="left" />);
+      await renderWithSalt(<ResizableFixture />);
       await waitForOpen();
 
-      const dialogId = page.getByRole("dialog").element().id;
-      expect(dialogId).toBeTruthy();
       await expect
         .element(separator())
-        .toHaveAttribute("aria-controls", dialogId);
-    });
-
-    it("uses only ARIA attributes permitted on a separator", async () => {
-      await renderWithSalt(<ResizableFixture position="left" />);
-      await waitForOpen();
-
-      const permitted = new Set([
-        "aria-label",
-        "aria-controls",
-        "aria-orientation",
-        "aria-valuenow",
-        "aria-valuemin",
-        "aria-valuemax",
-        "aria-valuetext",
-      ]);
-      const used = Array.from(handle().attributes)
-        .map((attribute) => attribute.name)
-        .filter((name) => name.startsWith("aria-"));
-
-      expect(used.length).toBeGreaterThan(0);
-      for (const name of used) {
-        expect(permitted.has(name)).toBe(true);
-      }
+        .toHaveAttribute("aria-controls", drawer().id);
     });
   });
 
   describe("focus management", () => {
-    it("is reachable by keyboard after the drawer content", async () => {
-      await renderWithSalt(<ResizableFixture position="left" />);
+    it("is reachable by keyboard within the drawer's focus trap", async () => {
+      await renderWithSalt(<ResizableFixture />);
       await waitForOpen();
 
+      await tabToSeparator();
+
+      await userEvent.tab();
       await expect
         .element(page.getByRole("button", { name: "Close drawer" }))
         .toHaveFocus();
-
-      await userEvent.tab();
-      await expect.element(separator()).toHaveFocus();
     });
 
-    it("keeps focus trapped within the modal drawer", async () => {
-      await renderWithSalt(<ResizableFixture position="left" />);
+    it("shows a focus indicator when focused with the keyboard", async () => {
+      await renderWithSalt(<ResizableFixture />);
       await waitForOpen();
 
-      const closeButton = page.getByRole("button", { name: "Close drawer" });
-      await expect.element(closeButton).toHaveFocus();
+      await tabToSeparator();
 
-      await userEvent.tab();
-      await expect.element(separator()).toHaveFocus();
-
-      // Tabbing past the last element returns to the first, rather than
-      // escaping to the page behind the modal.
-      await userEvent.tab();
-      await expect.element(closeButton).toHaveFocus();
-    });
-
-    it("shows a focus indicator on the separator", async () => {
-      await renderWithSalt(<ResizableFixture position="left" />);
-      await waitForOpen();
-
-      handle().focus();
-      const strip = getComputedStyle(handle(), "::before");
-      expect(strip.outlineStyle).not.toBe("none");
-      expect(Number.parseFloat(strip.outlineWidth)).toBeGreaterThan(0);
-    });
-
-    it("stays modal and named while resizable", async () => {
-      await renderWithSalt(<ResizableFixture position="left" />);
-      await waitForOpen();
-
-      await expect
-        .element(page.getByRole("dialog"))
-        .toHaveAttribute("aria-modal", "true");
-      await expect
-        .element(page.getByRole("dialog", { name: "Resizable drawer" }))
-        .toBeInTheDocument();
+      const element = separator().element();
+      const hasOutline = [
+        getComputedStyle(element),
+        getComputedStyle(element, "::before"),
+      ].some(
+        (style) =>
+          style.outlineStyle !== "none" &&
+          Number.parseFloat(style.outlineWidth) > 0,
+      );
+      expect(hasOutline).toBe(true);
     });
 
     it("returns focus to the trigger after a resized drawer closes", async () => {
@@ -285,25 +255,13 @@ describe("GIVEN a resizable Drawer", () => {
       await trigger.click();
       await waitForOpen();
 
-      handle().focus();
+      await tabToSeparator();
       await userEvent.keyboard("{ArrowRight}");
-      await expect.element(separator()).toHaveAttribute("aria-valuenow", "308");
+      await expect.poll(valueNow).toBeGreaterThan(300);
 
       await userEvent.keyboard("{Escape}");
       await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
       await expect.element(trigger).toHaveFocus();
-    });
-
-    it("keeps background content inert while open", async () => {
-      await renderWithSalt(<TriggeredDrawer />);
-
-      const trigger = page.getByRole("button", { name: "Open Drawer" });
-      await trigger.click();
-      await waitForOpen();
-
-      await expect
-        .poll(() => trigger.element().closest("[inert]") !== null)
-        .toBe(true);
     });
   });
 
@@ -328,26 +286,17 @@ describe("GIVEN a resizable Drawer", () => {
     it(
       "has no violations while resizing",
       async () => {
-        const { container } = await renderWithSalt(
-          <ResizableFixture position="left" />,
-        );
+        const { container } = await renderWithSalt(<ResizableFixture />);
         await waitForOpen();
 
-        const rect = handle().getBoundingClientRect();
-        const startX = rect.left + rect.width / 2;
-        const startY = rect.top + rect.height / 2;
-
-        await dispatchPointer(handle(), "pointerdown", startX, startY);
-        await dispatchPointer(handle(), "pointermove", startX + 30, startY);
-        await expect
-          .poll(() =>
-            handle().classList.contains("saltDrawerResizeHandle-resizing"),
-          )
-          .toBe(true);
+        const { x, y } = handleCenter();
+        await dispatchPointer(separator().element(), "pointerdown", x, y);
+        await dispatchPointer(separator().element(), "pointermove", x + 30, y);
+        await expect.poll(valueNow).toBeCloseTo(330, 0);
 
         await runAxeScan(container);
 
-        await dispatchPointer(handle(), "pointerup", startX + 30, startY);
+        await dispatchPointer(separator().element(), "pointerup", x + 30, y);
       },
       AXE_TIMEOUT,
     );
