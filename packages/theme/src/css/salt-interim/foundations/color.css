@@ -90,7 +90,7 @@
   --salt-color-jet-91-rgb: 38, 45, 52;
   --salt-color-jet-95-rgb: 28, 36, 43;
 
-  --salt-color-jpm-brown-rgb: 75, 44, 29;
+  --salt-color-jpmBrown-rgb: 75, 44, 29;
 
   --salt-color-black-rgb: 0, 0, 0;
 
@@ -497,7 +497,7 @@
   --salt-color-jet-91: rgb(var(--salt-color-jet-91-rgb));
   --salt-color-jet-95: rgb(var(--salt-color-jet-95-rgb));
 
-  --salt-color-jpm-brown: rgb(var(--salt-color-jpm-brown-rgb));
+  --salt-color-jpmBrown: rgb(var(--salt-color-jpmBrown-rgb));
 
   --salt-color-black: rgb(var(--salt-color-black-rgb));
 
