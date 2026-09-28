@@ -65,7 +65,7 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    * */
   disableScrim?: boolean;
   /**
-   * Allow the user to resize the drawer from its inner edge. Size limits are set in CSS,
+   * Allow the user to resize the drawer by dragging its edge. Size limits are set in CSS,
    * not props: `min-width`/`max-width` (or `min-height`/`max-height` for `top` and `bottom`
    * drawers), or the `--saltDrawer-minWidth`/`maxWidth`/`minHeight`/`maxHeight` variables.
    * */

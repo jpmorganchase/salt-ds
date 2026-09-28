@@ -2,13 +2,13 @@
 "@salt-ds/core": minor
 ---
 
-Added `resizable` and `onResizeFinish` props to `Drawer`. A resizable drawer can be resized from its inner edge by dragging or with the keyboard, within its `min-width`/`max-width` (or `min-height`/`max-height`), which can also be set with `--saltDrawer-minWidth`, `--saltDrawer-maxWidth`, `--saltDrawer-minHeight` and `--saltDrawer-maxHeight`.
+Added `resizable` and `onResizeFinish` props to `Drawer`. A resizable drawer has a handle that users can drag with mouse cursor or move with the arrow keys. Set its size limits with CSS (`min-width`/`max-width`, or `min-height`/`max-height` for `top` and `bottom` drawers).
 
 ```tsx
 <Drawer
   resizable
-  style={{ width: 320, minWidth: 200, maxWidth: 640 }}
-  onResizeFinish={(event, size) => saveWidth(size)}
+  style={{ width, minWidth: 200, maxWidth: 640 }}
+  onResizeFinish={(_event, size) => setWidth(size)}
 >
   <DrawerHeader header="Resizable drawer" />
   <DrawerContent>Content</DrawerContent>
