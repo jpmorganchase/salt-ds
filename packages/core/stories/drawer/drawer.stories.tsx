@@ -613,3 +613,49 @@ export const Resizable: StoryFn<DrawerProps> = ({
     </>
   );
 };
+
+const DEFAULT_RESIZABLE_WIDTH = 320;
+
+export const ResizableControlled: StoryFn<DrawerProps> = (args) => {
+  const [open, setOpen] = useState(false);
+  const [width, setWidth] = useState(DEFAULT_RESIZABLE_WIDTH);
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open Drawer</Button>
+      <Drawer
+        {...args}
+        resizable
+        open={open}
+        onOpenChange={setOpen}
+        size={width}
+        onResize={(_event, size) => setWidth(size)}
+        style={{ minWidth: 200, maxWidth: 640 }}
+      >
+        <DrawerHeader
+          header="Controlled resizable drawer"
+          description="The width is held in state, so it can be reset at any time."
+          actions={<CloseButton onClick={() => setOpen(false)} />}
+        />
+        <DrawerContent>
+          <StackLayout>
+            <Text>Width: {Math.round(width)}px</Text>
+            <Text>{loremText.repeat(2)}</Text>
+          </StackLayout>
+        </DrawerContent>
+        <DrawerFooter>
+          <Button
+            sentiment="accented"
+            appearance="bordered"
+            onClick={() => setWidth(DEFAULT_RESIZABLE_WIDTH)}
+          >
+            Reset width
+          </Button>
+          <Button sentiment="accented" onClick={() => setOpen(false)}>
+            Done
+          </Button>
+        </DrawerFooter>
+      </Drawer>
+    </>
+  );
+};

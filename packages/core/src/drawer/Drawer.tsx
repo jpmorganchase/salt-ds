@@ -65,16 +65,26 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    * */
   disableScrim?: boolean;
   /**
-   * Allow the user to resize the drawer by dragging its edge. Size limits are set in CSS,
-   * not props: `min-width`/`max-width` (or `min-height`/`max-height` for `top` and `bottom`
-   * drawers), or the `--saltDrawer-minWidth`/`maxWidth`/`minHeight`/`maxHeight` variables.
+   * Allow the user to resize the drawer. Set size limits with CSS `min-width`/`max-width`
+   * (`min-height`/`max-height` for `top` and `bottom`) or the `--saltDrawer-min*`/`--saltDrawer-max*` variables.
    * */
   resizable?: boolean;
   /**
-   * Callback called when the user finishes resizing the drawer: on releasing the handle after
-   * a drag, or after each key press. It provides a generic event and the new size in px.
+   * Size of the drawer in px, to be used when in a controlled state.
+   * Width for `left` and `right` drawers, height for `top` and `bottom` drawers.
+   * When not set, the drawer starts at its CSS size.
    * */
-  onResizeFinish?: (event: Event, size: number) => void;
+  size?: number;
+  /**
+   * Callback called when the drawer is resized.
+   * It provides a generic event and the new size in px.
+   * */
+  onResize?: (event: Event, size: number) => void;
+  /**
+   * Callback called when the handle stops being dragged or is moved from the keyboard.
+   * It provides a generic event and the new size in px.
+   * */
+  onResizeEnd?: (event: Event, size: number) => void;
   /**
    * Which element to initially focus. Can be either a number (tabbable index as specified by the order) or a ref.
    * Default value is 0 (first tabbable element).
@@ -98,7 +108,9 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       disableDismiss,
       disableScrim,
       resizable = false,
-      onResizeFinish,
+      size,
+      onResize,
+      onResizeEnd,
       initialFocus,
       id,
       style,
@@ -141,7 +153,9 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       enabled: resizable,
       position,
       element: elements.floating,
-      onResizeFinish,
+      size,
+      onResize,
+      onResizeEnd,
     });
 
     useEffect(() => {

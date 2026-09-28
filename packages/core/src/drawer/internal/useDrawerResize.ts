@@ -6,7 +6,11 @@ import type {
   PointerEvent as ReactPointerEvent,
 } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useEventCallback, useIsomorphicLayoutEffect } from "../../utils";
+import {
+  useControlled,
+  useEventCallback,
+  useIsomorphicLayoutEffect,
+} from "../../utils";
 import type { DrawerProps } from "../Drawer";
 
 type DrawerPosition = NonNullable<DrawerProps["position"]>;
@@ -39,7 +43,9 @@ export interface UseDrawerResizeProps {
   enabled: boolean;
   position: DrawerPosition;
   element: HTMLElement | null | undefined;
-  onResizeFinish?: (event: Event, size: number) => void;
+  size?: number;
+  onResize?: (event: Event, size: number) => void;
+  onResizeEnd?: (event: Event, size: number) => void;
 }
 
 export interface UseDrawerResizeResult {
@@ -90,12 +96,27 @@ export function useDrawerResize({
   enabled,
   position,
   element,
-  onResizeFinish,
+  size: sizeProp,
+  onResize,
+  onResizeEnd,
 }: UseDrawerResizeProps): UseDrawerResizeResult {
   const horizontal = isHorizontal(position);
   const targetWindow = useWindow();
 
-  const [size, setSize] = useState<{ value: number; horizontal: boolean }>();
+  // Uncontrolled, the size stays unset until the user resizes, so the drawer keeps its CSS size.
+  const [sizeState, setSizeState, isControlled] = useControlled<
+    number | undefined
+  >({
+    controlled: sizeProp,
+    default: undefined,
+    name: "Drawer",
+    state: "size",
+  });
+  // Drop the uncontrolled size when `position` switches axis.
+  const [sizeAxisHorizontal, setSizeAxisHorizontal] = useState(horizontal);
+  const size =
+    isControlled || sizeAxisHorizontal === horizontal ? sizeState : undefined;
+
   const [isResizing, setIsResizing] = useState(false);
   const [metrics, setMetrics] = useState<(Bounds & { current: number }) | null>(
     null,
@@ -124,13 +145,16 @@ export function useDrawerResize({
 
   const sizeRef = useRef<number | null>(null);
 
-  const applySize = useEventCallback((next: number, bounds: Bounds) => {
-    const clamped = clamp(next, bounds);
-    sizeRef.current = clamped;
-    setSize({ value: clamped, horizontal });
-    setMetrics({ ...bounds, current: clamped });
-    return clamped;
-  });
+  const applySize = useEventCallback(
+    (event: Event, next: number, bounds: Bounds) => {
+      const clamped = clamp(next, bounds);
+      sizeRef.current = clamped;
+      setSizeState(clamped);
+      setSizeAxisHorizontal(horizontal);
+      onResize?.(event, clamped);
+      return clamped;
+    },
+  );
 
   const onPointerDown = useEventCallback(
     (event: ReactPointerEvent<HTMLElement>) => {
@@ -163,7 +187,7 @@ export function useDrawerResize({
       drag,
     );
     if (next !== sizeRef.current) {
-      applySize(next, drag);
+      applySize(event, next, drag);
     }
   });
 
@@ -174,7 +198,7 @@ export function useDrawerResize({
     setIsResizing(false);
     const finalSize = sizeRef.current;
     if (finalSize !== null && finalSize !== drag.originSize) {
-      onResizeFinish?.(event, finalSize);
+      onResizeEnd?.(event, finalSize);
     }
   });
 
@@ -260,10 +284,9 @@ export function useDrawerResize({
         next = current.current + step * direction;
       }
 
-      const applied = applySize(next, current);
-      if (applied !== current.current) {
-        onResizeFinish?.(event.nativeEvent, applied);
-      }
+      if (clamp(next, current) === current.current) return;
+      const applied = applySize(event.nativeEvent, next, current);
+      onResizeEnd?.(event.nativeEvent, applied);
     },
   );
 
@@ -277,7 +300,7 @@ export function useDrawerResize({
 
   useEffect(() => {
     if (!enabled) {
-      setSize(undefined);
+      setSizeState(undefined);
       setMetrics(null);
       restoreSizeRef.current = null;
       initialSizeRef.current = null;
@@ -296,6 +319,12 @@ export function useDrawerResize({
       initialSizeRef.current = next.current;
     }
   }, [enabled, element, horizontal, readMetrics]);
+
+  // Sync the separator's aria values with the rendered size.
+  useIsomorphicLayoutEffect(() => {
+    if (!enabled || !element || size === undefined) return;
+    readMetrics(true);
+  }, [enabled, element, size, readMetrics]);
 
   useEffect(() => {
     if (!enabled || !element || !targetWindow) return;
@@ -326,8 +355,8 @@ export function useDrawerResize({
 
   return {
     sizeStyle:
-      enabled && size?.horizontal === horizontal
-        ? { [horizontal ? "width" : "height"]: size.value }
+      size !== undefined
+        ? { [horizontal ? "width" : "height"]: size }
         : undefined,
     isResizing,
     separatorProps: {
