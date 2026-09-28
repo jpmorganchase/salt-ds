@@ -117,6 +117,7 @@ code.saltText,
 .saltText-display1.saltText {
   font-family: var(--salt-text-display-fontFamily);
   font-size: var(--salt-text-display1-fontSize);
+  font-style: var(--salt-text-display-fontStyle, normal);
   font-weight: var(--salt-text-display-fontWeight);
   letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
   line-height: var(--salt-text-display1-lineHeight);
@@ -139,6 +140,7 @@ code.saltText,
 .saltText-display2.saltText {
   font-family: var(--salt-text-display-fontFamily);
   font-size: var(--salt-text-display2-fontSize);
+  font-style: var(--salt-text-display-fontStyle, normal);
   font-weight: var(--salt-text-display-fontWeight);
   letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
   line-height: var(--salt-text-display2-lineHeight);
@@ -161,6 +163,7 @@ code.saltText,
 .saltText-display3.saltText {
   font-family: var(--salt-text-display-fontFamily);
   font-size: var(--salt-text-display3-fontSize);
+  font-style: var(--salt-text-display-fontStyle, normal);
   font-weight: var(--salt-text-display-fontWeight);
   letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
   line-height: var(--salt-text-display3-lineHeight);
@@ -183,6 +186,7 @@ code.saltText,
 .saltText-display4.saltText {
   font-family: var(--salt-text-display-fontFamily);
   font-size: var(--salt-text-display4-fontSize);
+  font-style: var(--salt-text-display-fontStyle, normal);
   font-weight: var(--salt-text-display-fontWeight);
   letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
   line-height: var(--salt-text-display4-lineHeight);

@@ -42,6 +42,7 @@
   --salt-text-display-fontFamily: var(--salt-typography-fontFamily-roboto);
   --salt-text-display-letterSpacing: -2%;
   --salt-text-display-textTransform: uppercase;
+  --salt-text-display-fontStyle: var(--salt-typography-fontStyle-italic);
   --salt-text-display-fontWeight: var(--salt-typography-fontWeight-light);
   --salt-text-display-fontWeight-small: var(--salt-typography-fontWeight-light);
   --salt-text-display-fontWeight-strong: var(--salt-typography-fontWeight-light);

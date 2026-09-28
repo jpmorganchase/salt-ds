@@ -3,5 +3,5 @@
 }
 
 .status-indicator-with-text-label {
-  font-style: var(--salt-typography-textDecoration-italic);
+  font-style: var(--salt-typography-fontStyle-italic);
 }
