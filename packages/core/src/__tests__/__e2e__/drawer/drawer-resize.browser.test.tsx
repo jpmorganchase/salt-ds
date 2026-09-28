@@ -466,9 +466,7 @@ describe("GIVEN a resizable Drawer", () => {
   describe("onResizeEnd", () => {
     it("reports the new size once when a drag ends", async () => {
       const onResizeEnd = vi.fn();
-      await renderWithSalt(
-        <ResizableFixture onResizeEnd={onResizeEnd} />,
-      );
+      await renderWithSalt(<ResizableFixture onResizeEnd={onResizeEnd} />);
       await waitForOpen();
 
       await dragHandleBy("left", 50);
@@ -479,26 +477,19 @@ describe("GIVEN a resizable Drawer", () => {
 
     it("reports the new size after a keyboard resize", async () => {
       const onResizeEnd = vi.fn();
-      await renderWithSalt(
-        <ResizableFixture onResizeEnd={onResizeEnd} />,
-      );
+      await renderWithSalt(<ResizableFixture onResizeEnd={onResizeEnd} />);
       await waitForOpen();
 
       await pressOnHandle("{ArrowRight}");
       await expect.poll(() => drawerSize("left")).toBeGreaterThan(300);
 
       expect(onResizeEnd).toHaveBeenCalledTimes(1);
-      expect(onResizeEnd.mock.calls[0][1]).toBeCloseTo(
-        drawerSize("left"),
-        0,
-      );
+      expect(onResizeEnd.mock.calls[0][1]).toBeCloseTo(drawerSize("left"), 0);
     });
 
     it("is not called when the size does not change", async () => {
       const onResizeEnd = vi.fn();
-      await renderWithSalt(
-        <ResizableFixture onResizeEnd={onResizeEnd} />,
-      );
+      await renderWithSalt(<ResizableFixture onResizeEnd={onResizeEnd} />);
       await waitForOpen();
 
       await pressOnHandle("{End}");
