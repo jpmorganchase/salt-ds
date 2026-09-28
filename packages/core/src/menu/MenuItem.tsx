@@ -72,8 +72,10 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
     const selected = selectable && isSelected(value);
 
     useEffect(() => {
-      setTriggerDisabled(!!disabled);
-    }, [disabled, setTriggerDisabled]);
+      if (triggersSubmenu) {
+        setTriggerDisabled(!!disabled);
+      }
+    }, [disabled, setTriggerDisabled, triggersSubmenu]);
 
     useEffect(() => {
       if (process.env.NODE_ENV !== "production") {
@@ -126,18 +128,14 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
         aria-checked={selectable ? selected : undefined}
         aria-disabled={disabled || undefined}
         {...getItemProps({
-          tabIndex: disabled ? undefined : active ? 0 : -1,
+          tabIndex: active ? 0 : -1,
           onKeyDown(event: KeyboardEvent<HTMLDivElement>) {
             const element = event.currentTarget;
             const { key } = event;
             onKeyDown?.(event);
-            if (
-              (key === " " || key === "Enter") &&
-              !triggersSubmenu &&
-              !disabled
-            ) {
+            if ((key === " " || key === "Enter") && !triggersSubmenu) {
               event.preventDefault();
-              if (event.repeat) {
+              if (disabled || event.repeat) {
                 return;
               }
               const { view, ...eventInit } = event;

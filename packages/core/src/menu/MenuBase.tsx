@@ -95,10 +95,15 @@ export function MenuBase(props: MenuBaseProps) {
 
   const isNested = parentId != null;
 
+  const handleOpenChange = (newOpen: boolean) => {
+    if (newOpen && triggerDisabled) return;
+    setOpen(newOpen);
+  };
+
   const { x, y, strategy, elements, refs, context } = useFloatingUI({
     nodeId,
     open: openState,
-    onOpenChange: setOpen,
+    onOpenChange: handleOpenChange,
     strategy: !getVirtualElement ? "absolute" : "fixed",
     placement:
       placement ??
@@ -144,6 +149,7 @@ export function MenuBase(props: MenuBaseProps) {
         activeIndex,
         nested: isNested,
         onNavigate: setActiveIndex,
+        disabledIndices: (index) => elementsRef.current[index] == null,
       }),
     ],
   );
