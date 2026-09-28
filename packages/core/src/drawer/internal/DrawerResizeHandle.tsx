@@ -32,8 +32,12 @@ export const DrawerResizeHandle = forwardRef<
   return (
     <div
       ref={ref}
-      className={clsx(withBaseName(), withBaseName(position), className)}
-      data-resizing={resizing || undefined}
+      className={clsx(
+        withBaseName(),
+        withBaseName(position),
+        { [withBaseName("resizing")]: resizing },
+        className,
+      )}
       {...rest}
     />
   );

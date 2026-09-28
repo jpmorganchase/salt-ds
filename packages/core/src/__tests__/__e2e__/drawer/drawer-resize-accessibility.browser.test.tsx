@@ -340,7 +340,9 @@ describe("GIVEN a resizable Drawer", () => {
         await dispatchPointer(handle(), "pointerdown", startX, startY);
         await dispatchPointer(handle(), "pointermove", startX + 30, startY);
         await expect
-          .poll(() => handle().hasAttribute("data-resizing"))
+          .poll(() =>
+            handle().classList.contains("saltDrawerResizeHandle-resizing"),
+          )
           .toBe(true);
 
         await runAxeScan(container);

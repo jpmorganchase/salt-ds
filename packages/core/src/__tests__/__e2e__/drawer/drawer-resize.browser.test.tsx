@@ -629,7 +629,7 @@ describe("GIVEN a resizable Drawer", () => {
       await userEvent.keyboard("{Escape}");
       await expect.poll(() => document.querySelector(".saltDrawer")).toBeNull();
 
-      expect(document.body.style.cursor).toBe("");
+      await expect.poll(() => document.body.style.cursor).toBe("");
     });
 
     it("does not carry a width over as a height when the position changes", async () => {
@@ -722,35 +722,16 @@ describe("GIVEN a resizable Drawer", () => {
         );
       });
 
-      expect(handle()).not.toHaveAttribute("data-resizing");
+      expect(handle()).not.toHaveClass("saltDrawerResizeHandle-resizing");
       expect(document.body.style.cursor).toBe("");
-    });
-
-    it("uses density-aware keyboard steps", async () => {
-      await renderWithSalt(
-        <SaltProvider density="high">
-          <ResizableFixture position="left" />
-        </SaltProvider>,
-      );
-      await waitForOpen();
-      const step = Number.parseFloat(
-        getComputedStyle(drawer()).getPropertyValue("--salt-spacing-100"),
-      );
-      expect(step).toBe(4);
-
-      await pressOnHandle("{ArrowRight}");
-      await expect.poll(() => drawerSize("left")).toBeCloseTo(300 + step, 0);
-
-      await pressOnHandle("{Shift>}{ArrowRight}{/Shift}");
-      await expect
-        .poll(() => drawerSize("left"))
-        .toBeCloseTo(300 + step + step * 5, 0);
     });
 
     it("draws the focus ring inside the strip", async () => {
       await renderWithSalt(<ResizableFixture position="left" />);
       await waitForOpen();
 
+      // :focus-visible needs keyboard modality.
+      await userEvent.keyboard("{Shift}");
       handle().focus();
       await expect.poll(() => document.activeElement).toBe(handle());
       const strip = getComputedStyle(handle(), "::before");

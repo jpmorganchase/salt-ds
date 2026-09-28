@@ -1,3 +1,4 @@
+import { useWindow } from "@salt-ds/window";
 import type {
   AriaAttributes,
   KeyboardEvent as ReactKeyboardEvent,
@@ -28,10 +29,6 @@ export interface SeparatorProps
   tabIndex: number;
   ref: (element: HTMLElement | null) => void;
   onPointerDown: (event: ReactPointerEvent<HTMLElement>) => void;
-  onPointerMove: (event: ReactPointerEvent<HTMLElement>) => void;
-  onPointerUp: (event: ReactPointerEvent<HTMLElement>) => void;
-  onPointerCancel: (event: ReactPointerEvent<HTMLElement>) => void;
-  onLostPointerCapture: (event: ReactPointerEvent<HTMLElement>) => void;
   onKeyDown: (event: ReactKeyboardEvent<HTMLElement>) => void;
   onFocus: () => void;
 }
@@ -56,10 +53,9 @@ export interface UseDrawerResizeResult {
   separatorProps: SeparatorProps;
 }
 
-/** Keyboard steps are multiples of `--salt-spacing-100`, so they follow density. */
-const KEYBOARD_LARGE_STEP_MULTIPLIER = 5;
-/** Used if `--salt-spacing-100` can't be read. */
-const FALLBACK_KEYBOARD_STEP = 8;
+const KEYBOARD_STEP = 8;
+/** Applied to the step while Shift is held. */
+const KEYBOARD_STEP_MULTIPLIER = 5;
 /** Large enough to hit any CSS max constraint. */
 const PROBE_SIZE = 1e6;
 
@@ -100,13 +96,6 @@ const probeBounds = (element: HTMLElement, horizontal: boolean): Bounds => {
   return { min, max: Math.max(min, max) };
 };
 
-const readKeyboardStep = (element: HTMLElement) => {
-  const step = Number.parseFloat(
-    getComputedStyle(element).getPropertyValue("--salt-spacing-100"),
-  );
-  return step > 0 ? step : FALLBACK_KEYBOARD_STEP;
-};
-
 const clamp = (value: number, { min, max }: Bounds) =>
   Math.min(Math.max(value, min), max);
 
@@ -117,6 +106,7 @@ export function useDrawerResize({
   onResizeStop,
 }: UseDrawerResizeProps): UseDrawerResizeResult {
   const horizontal = isHorizontal(position);
+  const targetWindow = useWindow();
 
   // Keyed by axis, so a width is never applied as a height after `position` changes.
   const [size, setSize] = useState<{ value: number; horizontal: boolean }>();
@@ -126,7 +116,6 @@ export function useDrawerResize({
     null,
   );
   const dragRef = useRef<DragState | null>(null);
-  const restoreCursorRef = useRef<(() => void) | null>(null);
   const handleRef = useRef<HTMLElement | null>(null);
   // Size to return to when a collapsed drawer is restored with Enter.
   const restoreSizeRef = useRef<number | null>(null);
@@ -153,9 +142,6 @@ export function useDrawerResize({
 
   // Latest applied size, so a drag's end can be reported without waiting for a render.
   const sizeRef = useRef<number | null>(null);
-  // Pointer moves are applied at most once per frame.
-  const frameRef = useRef<number | null>(null);
-  const pendingCoordinateRef = useRef<number | null>(null);
 
   const applySize = useEventCallback((next: number, bounds: Bounds) => {
     const clamped = clamp(next, bounds);
@@ -165,113 +151,87 @@ export function useDrawerResize({
     return clamped;
   });
 
-  const lockCursor = useEventCallback(() => {
-    const body = element?.ownerDocument?.body;
-    if (!body) return;
-    const previous = body.style.cursor;
-    body.style.cursor = horizontal ? "ew-resize" : "ns-resize";
-    restoreCursorRef.current = () => {
-      body.style.cursor = previous;
-      restoreCursorRef.current = null;
-    };
-  });
-
-  const applyDragCoordinate = useEventCallback(
-    (drag: DragState, coordinate: number) => {
-      const delta = coordinate - drag.origin;
-      const direction = growsWithCoordinate(position) ? 1 : -1;
-      applySize(drag.originSize + delta * direction, drag);
-    },
-  );
-
-  const cancelFrame = useEventCallback(() => {
-    if (frameRef.current !== null) {
-      element?.ownerDocument.defaultView?.cancelAnimationFrame(
-        frameRef.current,
-      );
-      frameRef.current = null;
-    }
-  });
-
-  const flushPendingMove = useEventCallback((drag: DragState) => {
-    cancelFrame();
-    const coordinate = pendingCoordinateRef.current;
-    pendingCoordinateRef.current = null;
-    if (coordinate !== null) {
-      applyDragCoordinate(drag, coordinate);
-    }
-  });
-
-  const endDrag = useEventCallback((event: ReactPointerEvent<HTMLElement>) => {
-    const drag = dragRef.current;
-    if (!drag) return;
-    flushPendingMove(drag);
-    const handle = handleRef.current;
-    if (handle?.hasPointerCapture(drag.pointerId)) {
-      handle.releasePointerCapture(drag.pointerId);
-    }
-    dragRef.current = null;
-    restoreCursorRef.current?.();
-    setIsResizing(false);
-    const finalSize = sizeRef.current;
-    if (finalSize !== null && finalSize !== drag.originSize) {
-      onResizeStop?.(event.nativeEvent, finalSize);
-    }
-  });
-
-  /** Starts a drag from a pointer anywhere within the handle's hit area. */
-  const beginDrag = useEventCallback(
-    (pointerId: number, coordinate: number) => {
-      const handle = handleRef.current;
-      if (!element || !handle) return false;
-
+  const onPointerDown = useEventCallback(
+    (event: ReactPointerEvent<HTMLElement>) => {
+      if (event.button !== 0 || !event.isPrimary) return;
       const current = readMetrics();
-      if (!current) return false;
+      if (!current) return;
 
-      handle.setPointerCapture(pointerId);
+      event.preventDefault();
       dragRef.current = {
-        pointerId,
-        origin: coordinate,
+        pointerId: event.pointerId,
+        origin: horizontal ? event.clientX : event.clientY,
         originSize: current.current,
         min: current.min,
         max: current.max,
       };
-      lockCursor();
+      sizeRef.current = current.current;
+      handleRef.current?.focus();
       setIsResizing(true);
-      return true;
     },
   );
 
-  const onPointerDown = useEventCallback(
-    (event: ReactPointerEvent<HTMLElement>) => {
-      if (event.button !== 0 || !event.isPrimary) return;
-      const coordinate = horizontal ? event.clientX : event.clientY;
-      if (beginDrag(event.pointerId, coordinate)) {
-        event.preventDefault();
-      }
-    },
-  );
+  const handleDragMove = useEventCallback((event: PointerEvent) => {
+    const drag = dragRef.current;
+    if (!drag || event.pointerId !== drag.pointerId) return;
 
-  const onPointerMove = useEventCallback(
-    (event: ReactPointerEvent<HTMLElement>) => {
-      const drag = dragRef.current;
-      if (!drag || drag.pointerId !== event.pointerId) return;
+    const coordinate = horizontal ? event.clientX : event.clientY;
+    const direction = growsWithCoordinate(position) ? 1 : -1;
+    const next = clamp(
+      drag.originSize + (coordinate - drag.origin) * direction,
+      drag,
+    );
+    if (next !== sizeRef.current) {
+      applySize(next, drag);
+    }
+  });
 
-      pendingCoordinateRef.current = horizontal ? event.clientX : event.clientY;
-      const targetWindow = element?.ownerDocument.defaultView;
-      if (!targetWindow) {
-        flushPendingMove(drag);
-        return;
-      }
-      if (frameRef.current === null) {
-        frameRef.current = targetWindow.requestAnimationFrame(() => {
-          frameRef.current = null;
-          const current = dragRef.current;
-          if (current) flushPendingMove(current);
-        });
-      }
-    },
-  );
+  const handleDragEnd = useEventCallback((event: Event) => {
+    const drag = dragRef.current;
+    if (!drag) return;
+    dragRef.current = null;
+    setIsResizing(false);
+    const finalSize = sizeRef.current;
+    if (finalSize !== null && finalSize !== drag.originSize) {
+      onResizeStop?.(event, finalSize);
+    }
+  });
+
+  // While dragging, follow the pointer on the window, as Slider does.
+  useEffect(() => {
+    if (!isResizing || !targetWindow) return;
+    // The Drawer has closed mid-drag, so there is nothing left to resize.
+    if (!element) {
+      dragRef.current = null;
+      setIsResizing(false);
+      return;
+    }
+
+    const body = targetWindow.document.body;
+    const previousCursor = body.style.cursor;
+    body.style.cursor = horizontal ? "ew-resize" : "ns-resize";
+
+    targetWindow.addEventListener("pointermove", handleDragMove);
+    targetWindow.addEventListener("pointerup", handleDragEnd);
+    targetWindow.addEventListener("pointercancel", handleDragEnd);
+    targetWindow.addEventListener("blur", handleDragEnd);
+    targetWindow.addEventListener("contextmenu", handleDragEnd);
+    return () => {
+      body.style.cursor = previousCursor;
+      targetWindow.removeEventListener("pointermove", handleDragMove);
+      targetWindow.removeEventListener("pointerup", handleDragEnd);
+      targetWindow.removeEventListener("pointercancel", handleDragEnd);
+      targetWindow.removeEventListener("blur", handleDragEnd);
+      targetWindow.removeEventListener("contextmenu", handleDragEnd);
+    };
+  }, [
+    isResizing,
+    targetWindow,
+    element,
+    horizontal,
+    handleDragMove,
+    handleDragEnd,
+  ]);
 
   const onKeyDown = useEventCallback(
     (event: ReactKeyboardEvent<HTMLElement>) => {
@@ -317,12 +277,9 @@ export function useDrawerResize({
           key === "ArrowRight" || key === "ArrowDown";
         const direction =
           towardsHigherCoordinate === growsWithCoordinate(position) ? 1 : -1;
-        const baseStep = element
-          ? readKeyboardStep(element)
-          : FALLBACK_KEYBOARD_STEP;
         const step = shiftKey
-          ? baseStep * KEYBOARD_LARGE_STEP_MULTIPLIER
-          : baseStep;
+          ? KEYBOARD_STEP * KEYBOARD_STEP_MULTIPLIER
+          : KEYBOARD_STEP;
         next = current.current + step * direction;
       }
 
@@ -334,7 +291,7 @@ export function useDrawerResize({
   );
 
   const onFocus = useCallback(() => {
-    readMetrics();
+    if (!dragRef.current) readMetrics();
   }, [readMetrics]);
 
   const setHandle = useCallback((node: HTMLElement | null) => {
@@ -369,12 +326,11 @@ export function useDrawerResize({
 
   // Keep `aria-valuemin` / `aria-valuemax` in step with limits that depend on the viewport.
   useEffect(() => {
-    const targetWindow = element?.ownerDocument.defaultView;
     if (!enabled || !element || !targetWindow) return;
     const onResize = () => readMetrics();
     targetWindow.addEventListener("resize", onResize);
     return () => targetWindow.removeEventListener("resize", onResize);
-  }, [enabled, element, readMetrics]);
+  }, [enabled, element, targetWindow, readMetrics]);
 
   // An unsectioned Drawer scrolls itself, which would carry the handle out of view with the
   // content, so the handle is offset by the scroll position to stay pinned to the edge.
@@ -397,26 +353,6 @@ export function useDrawerResize({
     return () => element.removeEventListener("scroll", onScroll);
   }, [enabled, element]);
 
-  // A drag can outlive the handle, e.g. when the Drawer closes mid-drag and unmounts before
-  // `pointerup`, so end it here too rather than leaving the cursor and resizing state behind.
-  useEffect(() => {
-    if (!enabled || !element) return;
-    const targetWindow = element.ownerDocument.defaultView;
-    return () => {
-      if (frameRef.current !== null) {
-        targetWindow?.cancelAnimationFrame(frameRef.current);
-        frameRef.current = null;
-      }
-      pendingCoordinateRef.current = null;
-      if (!dragRef.current) return;
-      dragRef.current = null;
-      restoreCursorRef.current?.();
-      setIsResizing(false);
-    };
-  }, [enabled, element]);
-
-  useEffect(() => () => restoreCursorRef.current?.(), []);
-
   return {
     size: enabled && size?.horizontal === horizontal ? size.value : undefined,
     isResizing,
@@ -429,10 +365,6 @@ export function useDrawerResize({
       "aria-valuemin": metrics ? Math.round(metrics.min) : undefined,
       "aria-valuemax": metrics ? Math.round(metrics.max) : undefined,
       onPointerDown,
-      onPointerMove,
-      onPointerUp: endDrag,
-      onPointerCancel: endDrag,
-      onLostPointerCapture: endDrag,
       onKeyDown,
       onFocus,
     },

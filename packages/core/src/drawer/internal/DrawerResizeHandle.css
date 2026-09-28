@@ -146,7 +146,7 @@
 }
 
 /* Styles applied while dragging */
-.saltDrawerResizeHandle[data-resizing] {
+.saltDrawerResizeHandle-resizing {
   --drawerResizeHandle-background: var(--drawerResizeHandle-background-active);
   --drawerResizeHandle-dot-background: var(--drawerResizeHandle-dot-background-active);
 }
