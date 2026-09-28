@@ -3,7 +3,7 @@
   --drawerResizeHandle-size: var(--drawer-resizeHandleSize);
   --drawerResizeHandle-hitSize: calc(var(--drawerResizeHandle-size) + var(--salt-spacing-100));
   --drawerResizeHandle-thumbSize: max(var(--salt-size-icon, 12px), 12px);
-  --drawerResizeHandle-thumbInset: calc((var(--drawerResizeHandle-size) - var(--drawerResizeHandle-thumbSize)) / 2);
+  --drawerResizeHandle-thumbImage: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%3E%3Cpath%20d%3D%22M5%2011V9H7V11H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%207L5%205H7L7%207H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%201V3H7V1L5%201Z%22%20%2F%3E%3C%2Fsvg%3E");
   --drawerResizeHandle-background: transparent;
   --drawerResizeHandle-background-hover: var(--salt-separable-background-hover);
   --drawerResizeHandle-background-active: var(--salt-separable-background-active);
@@ -27,18 +27,19 @@
   background: var(--drawerResizeHandle-background);
 }
 
-/* Styles applied to the thumb */
+/* Styles applied to the thumb, which shares the strip's box and centers its dots within it */
 .saltDrawerResizeHandle::after {
   content: "";
   position: absolute;
-  height: var(--drawerResizeHandle-thumbSize);
-  width: var(--drawerResizeHandle-thumbSize);
   background: var(--drawerResizeHandle-dot-background);
-  fill: var(--drawerResizeHandle-dot-background);
-  mask-image: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%3E%3Cpath%20d%3D%22M5%2011V9H7V11H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%207L5%205H7L7%207H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%201V3H7V1L5%201Z%22%20%2F%3E%3C%2Fsvg%3E");
-  mask-size: cover;
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%3E%3Cpath%20d%3D%22M5%2011V9H7V11H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%207L5%205H7L7%207H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%201V3H7V1L5%201Z%22%20%2F%3E%3C%2Fsvg%3E");
-  -webkit-mask-size: cover;
+  mask-image: var(--drawerResizeHandle-thumbImage);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: var(--drawerResizeHandle-thumbSize);
+  -webkit-mask-image: var(--drawerResizeHandle-thumbImage);
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: var(--drawerResizeHandle-thumbSize);
 }
 
 /* Styles applied when the Drawer's position = "left" */
@@ -50,17 +51,12 @@
   cursor: ew-resize;
 }
 
-.saltDrawerResizeHandle-left::before {
+.saltDrawerResizeHandle-left::before,
+.saltDrawerResizeHandle-left::after {
   top: 0;
   bottom: 0;
   right: 0;
   width: var(--drawerResizeHandle-size);
-}
-
-.saltDrawerResizeHandle-left::after {
-  top: 50%;
-  right: var(--drawerResizeHandle-thumbInset);
-  transform: translateY(-50%);
 }
 
 /* Styles applied when the Drawer's position = "right" */
@@ -72,21 +68,17 @@
   cursor: ew-resize;
 }
 
-.saltDrawerResizeHandle-right::before {
+.saltDrawerResizeHandle-right::before,
+.saltDrawerResizeHandle-right::after {
   top: 0;
   bottom: 0;
   left: 0;
   width: var(--drawerResizeHandle-size);
 }
 
-.saltDrawerResizeHandle-right::after {
-  top: 50%;
-  left: var(--drawerResizeHandle-thumbInset);
-  transform: translateY(-50%);
-}
-
 /* Styles applied when the Drawer's position = "top" */
 .saltDrawerResizeHandle-top {
+  --drawerResizeHandle-thumbImage: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%3E%3Cpath%20d%3D%22M1%205H3V7H1Z%22%20%2F%3E%3Cpath%20d%3D%22M5%205H7V7H5Z%22%20%2F%3E%3Cpath%20d%3D%22M9%205H11V7H9Z%22%20%2F%3E%3C%2Fsvg%3E");
   left: 0;
   right: 0;
   bottom: 0;
@@ -94,21 +86,17 @@
   cursor: ns-resize;
 }
 
-.saltDrawerResizeHandle-top::before {
+.saltDrawerResizeHandle-top::before,
+.saltDrawerResizeHandle-top::after {
   left: 0;
   right: 0;
   bottom: 0;
   height: var(--drawerResizeHandle-size);
-}
-
-.saltDrawerResizeHandle-top::after {
-  left: 50%;
-  bottom: var(--drawerResizeHandle-thumbInset);
-  transform: translateX(-50%) rotate(90deg);
 }
 
 /* Styles applied when the Drawer's position = "bottom" */
 .saltDrawerResizeHandle-bottom {
+  --drawerResizeHandle-thumbImage: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%3E%3Cpath%20d%3D%22M1%205H3V7H1Z%22%20%2F%3E%3Cpath%20d%3D%22M5%205H7V7H5Z%22%20%2F%3E%3Cpath%20d%3D%22M9%205H11V7H9Z%22%20%2F%3E%3C%2Fsvg%3E");
   left: 0;
   right: 0;
   top: 0;
@@ -116,17 +104,12 @@
   cursor: ns-resize;
 }
 
-.saltDrawerResizeHandle-bottom::before {
+.saltDrawerResizeHandle-bottom::before,
+.saltDrawerResizeHandle-bottom::after {
   left: 0;
   right: 0;
   top: 0;
   height: var(--drawerResizeHandle-size);
-}
-
-.saltDrawerResizeHandle-bottom::after {
-  left: 50%;
-  top: var(--drawerResizeHandle-thumbInset);
-  transform: translateX(-50%) rotate(90deg);
 }
 
 /* Styles applied on hover */
