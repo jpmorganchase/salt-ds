@@ -75,6 +75,8 @@ jobs:
         run: yarn
       - name: Run typecheck
         run: yarn run typecheck
+      - name: Typecheck site and examples
+        run: yarn run typecheck:site
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
