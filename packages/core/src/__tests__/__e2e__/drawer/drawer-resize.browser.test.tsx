@@ -504,18 +504,14 @@ describe("GIVEN a resizable Drawer", () => {
   });
 
   describe("size limits", () => {
-    // Default minimum: 8 × --salt-size-base for width, 4 × for height.
-    const DEFAULT_MIN = { horizontal: 8, vertical: 4 };
+    // Without consumer limits, the drawer can only shrink to --salt-size-base.
     const sizeBase = () =>
       Number.parseFloat(
         getComputedStyle(drawer()).getPropertyValue("--salt-size-base"),
       );
-    const defaultMin = (position: Position) =>
-      sizeBase() *
-      (isHorizontal(position) ? DEFAULT_MIN.horizontal : DEFAULT_MIN.vertical);
 
     for (const position of POSITIONS) {
-      it(`keeps a default minimum when no limits are set, position=${position}`, async () => {
+      it(`never shrinks below --salt-size-base when no limits are set, position=${position}`, async () => {
         await renderWithSalt(
           <Drawer
             open
@@ -536,11 +532,11 @@ describe("GIVEN a resizable Drawer", () => {
 
         await expect
           .poll(() => drawerSize(position))
-          .toBeCloseTo(defaultMin(position), 0);
+          .toBeCloseTo(sizeBase(), 0);
       });
     }
 
-    it("scales the default minimum with density", async () => {
+    it("scales the minimum with density", async () => {
       await renderWithSalt(
         <SaltProvider density="high">
           <Drawer open resizable position="left" style={{ width: 320 }}>
@@ -554,7 +550,7 @@ describe("GIVEN a resizable Drawer", () => {
       await dragHandleBy("left", -2000);
 
       expect(sizeBase()).toBe(20);
-      await expect.poll(() => drawerSize("left")).toBeCloseTo(160, 0);
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(20, 0);
     });
 
     it("accepts the limits as CSS variables", async () => {
