@@ -122,3 +122,15 @@ Place modifier keys, such as Shift, before other keys in a combination.
 Use + to separate keys within a combination. Add a space to either side of +.
 
 Use / to separate alternative keys or key combinations. Add a space to either side of /.
+
+## 6. Docs for coding agents
+
+Each component page is also published as Markdown in its package's `docs` folder, for example `@salt-ds/core/docs/components/button.md`, so coding agents read documentation that matches the installed version. `yarn build` generates it; run `yarn build:agent-docs --check` to validate your page. See [tooling/agent-docs](../../tooling/agent-docs/README.md).
+
+Agents get the text, example source, props tables and keyboard interactions, but not images or live previews. So:
+
+- Give every image that carries information alt text, and state the key point in the text too. Leave alt text empty only for decorative images.
+- Keep examples self-contained. Import from Salt packages and files in the example's folder, not site-only helpers.
+- Use `PropsTable` for components only. It shows nothing for hooks and other functions, so describe their arguments and return values in text instead.
+- Fill in `alsoKnownAs` with the names developers search for. They appear in the package's docs index, which agents use to find the right component.
+- Use existing MDX components. Generation fails on an unknown one, so a new component also needs a handler in `tooling/agent-docs`.
