@@ -10,7 +10,7 @@ import {
   useLocalization,
 } from "@salt-ds/date-components";
 // CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
-// refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/lab/src/date-picker/useDatePicker.ts to create your own
+// refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/date-components/src/date-picker/useDatePicker.ts to create your own
 import { CustomDatePickerPanel } from "@salt-ds/date-components/stories/date-picker/CustomDatePickerPanel";
 import {
   type ReactElement,
