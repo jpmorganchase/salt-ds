@@ -1,13 +1,8 @@
 import { useStore } from "@jpmorganchase/mosaic-store";
 import {
-  Button,
   FlexLayout,
   H1,
   Link,
-  Overlay,
-  OverlayPanel,
-  OverlayPanelContent,
-  OverlayTrigger,
   SplitLayout,
   type StackLayoutProps,
   Table,
@@ -16,16 +11,10 @@ import {
   TD,
   Text,
   TH,
-  Tooltip,
   TR,
   useResponsiveProp,
 } from "@salt-ds/core";
-import {
-  ChevronDownIcon,
-  FigmaIcon,
-  GithubIcon,
-  SettingsIcon,
-} from "@salt-ds/icons";
+import { FigmaIcon, GithubIcon } from "@salt-ds/icons";
 import dynamic from "next/dynamic";
 import type { ElementType } from "react";
 import { ThemeControls } from "../../components/components/ThemeControls";
@@ -34,7 +23,6 @@ import { LinkBase } from "../../components/link/Link";
 import type { PageHeadingProps } from "../Base/PageHeading";
 import headingStyles from "./ComponentPageHeading.module.css";
 import type { CustomSiteState } from "./DetailComponent";
-import styles from "./DetailComponent.module.css";
 
 const Markdown = dynamic(() => import("../../components/markdown/Markdown"));
 
@@ -223,27 +211,7 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
               )}
             </FlexLayout>
           }
-          endItem={
-            <Overlay>
-              <Tooltip aria-hidden="true" content="Theme controls">
-                <OverlayTrigger>
-                  <Button
-                    aria-label="Theme controls"
-                    sentiment="neutral"
-                    appearance="bordered"
-                  >
-                    <SettingsIcon aria-hidden />
-                    <ChevronDownIcon aria-hidden />
-                  </Button>
-                </OverlayTrigger>
-              </Tooltip>
-              <OverlayPanel className={styles.overlay}>
-                <OverlayPanelContent className={styles.overlayContent}>
-                  <ThemeControls />
-                </OverlayPanelContent>
-              </OverlayPanel>
-            </Overlay>
-          }
+          endItem={<ThemeControls scope="component" />}
         />
       </div>
     </div>

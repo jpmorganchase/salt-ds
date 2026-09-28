@@ -19,6 +19,7 @@ There are two main options for static foregrounds: primary or secondary. Since b
 />
 
 <TokenTableWithControls
+  contextLabel="Static foregrounds"
   tokens={[
     "--salt-content-primary-foreground",
     "--salt-content-secondary-foreground",
@@ -48,6 +49,7 @@ Accented foreground tokens can be used to indicate interactive content, such as 
 />
 
 <TokenTableWithControls
+  contextLabel="Interactive content"
   tokens={[
     "--salt-content-accent-foreground",
     "--salt-content-foreground-visited",
@@ -65,7 +67,10 @@ If you need to make static content more prominent, use bold foreground tokens—
   background="secondary"
 />
 
-<TokenTableWithControls tokens={["--salt-content-bold-foreground"]} />
+<TokenTableWithControls
+  contextLabel="Adding emphasis"
+  tokens={["--salt-content-bold-foreground"]}
+/>
 
 ## Calling attention
 
@@ -78,10 +83,16 @@ The attention foreground token can be used to highlight specific labels, such as
   background="secondary"
 />
 
-<TokenTableWithControls tokens={["--salt-content-attention-foreground"]} />
+<TokenTableWithControls
+  contextLabel="Calling attention"
+  tokens={["--salt-content-attention-foreground"]}
+/>
 
 ## Brand expression
 
 The brand foreground token applies the brand color to static content, such as brand names or icons. Use it sparingly to reinforce brand identity. It isn't intended to indicate interactivity, status or sentiment.
 
-<TokenTableWithControls tokens={["--salt-content-brand-foreground"]} />
+<TokenTableWithControls
+  contextLabel="Brand expression"
+  tokens={["--salt-content-brand-foreground"]}
+/>

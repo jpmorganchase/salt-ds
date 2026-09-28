@@ -1,6 +1,5 @@
 import {
   Button,
-  capitalize,
   Dropdown,
   type DropdownProps,
   FormField,
@@ -14,6 +13,7 @@ import {
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
 import { useEffect, useState } from "react";
 import { Callout } from "../callout";
+import { getDensityDisplayName } from "../components/ThemeSettingsOverlay";
 import styles from "./AllTokens.module.css";
 import {
   type Density,
@@ -65,6 +65,10 @@ export function AllTokens() {
         legacyFoundationDensity,
         nextCharacteristicDensity,
         legacyCharacteristicDensity,
+        interimFoundations,
+        interimCharacteristics,
+        interimFoundationDensity,
+        interimCharacteristicDensity,
       ] = await Promise.all([
         import("./cssFoundations-next.json"),
         import("./cssFoundations-legacy.json"),
@@ -74,6 +78,10 @@ export function AllTokens() {
         import("./cssFoundationsDensity-legacy.json"),
         import("./cssCharacteristicsDensity-next.json"),
         import("./cssCharacteristicsDensity-legacy.json"),
+        import("./cssFoundations-salt-interim.json"),
+        import("./cssCharacteristics-salt-interim.json"),
+        import("./cssFoundationsDensity-salt-interim.json"),
+        import("./cssCharacteristicsDensity-salt-interim.json"),
       ]);
 
       if (!active) {
@@ -105,6 +113,20 @@ export function AllTokens() {
             legacyCharacteristicDensity.default as DensityOverrides,
           foundationDensity:
             legacyFoundationDensity.default as DensityOverrides,
+        },
+        "salt-interim": {
+          characteristics: groupTokens(
+            interimCharacteristics.default as CssVariableData,
+          ),
+          foundations: groupTokens(
+            filterFoundationTokens(
+              interimFoundations.default as CssVariableData,
+            ),
+          ),
+          characteristicDensity:
+            interimCharacteristicDensity.default as DensityOverrides,
+          foundationDensity:
+            interimFoundationDensity.default as DensityOverrides,
         },
       });
     };
@@ -181,7 +203,7 @@ export function AllTokens() {
             className={styles.controlDropdown}
             selected={[density]}
             onSelectionChange={handleDensitySelectionChange}
-            valueToString={(value) => capitalize(value)}
+            valueToString={getDensityDisplayName}
           >
             {densities.map((value) => (
               <Option key={value} value={value} />
