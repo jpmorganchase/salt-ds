@@ -470,41 +470,50 @@ describe("GIVEN a resizable Drawer", () => {
     });
   });
 
-  describe("onResizeStop", () => {
+  describe("onResizeFinish", () => {
     it("reports the new size once when a drag ends", async () => {
-      const onResizeStop = vi.fn();
-      await renderWithSalt(<ResizableFixture onResizeStop={onResizeStop} />);
+      const onResizeFinish = vi.fn();
+      await renderWithSalt(
+        <ResizableFixture onResizeFinish={onResizeFinish} />,
+      );
       await waitForOpen();
 
       await dragHandleBy("left", 50);
 
-      expect(onResizeStop).toHaveBeenCalledTimes(1);
-      expect(onResizeStop.mock.calls[0][1]).toBeCloseTo(350, 0);
+      expect(onResizeFinish).toHaveBeenCalledTimes(1);
+      expect(onResizeFinish.mock.calls[0][1]).toBeCloseTo(350, 0);
     });
 
     it("reports the new size after a keyboard resize", async () => {
-      const onResizeStop = vi.fn();
-      await renderWithSalt(<ResizableFixture onResizeStop={onResizeStop} />);
+      const onResizeFinish = vi.fn();
+      await renderWithSalt(
+        <ResizableFixture onResizeFinish={onResizeFinish} />,
+      );
       await waitForOpen();
 
       await pressOnHandle("{ArrowRight}");
       await expect.poll(() => drawerSize("left")).toBeGreaterThan(300);
 
-      expect(onResizeStop).toHaveBeenCalledTimes(1);
-      expect(onResizeStop.mock.calls[0][1]).toBeCloseTo(drawerSize("left"), 0);
+      expect(onResizeFinish).toHaveBeenCalledTimes(1);
+      expect(onResizeFinish.mock.calls[0][1]).toBeCloseTo(
+        drawerSize("left"),
+        0,
+      );
     });
 
     it("is not called when the size does not change", async () => {
-      const onResizeStop = vi.fn();
-      await renderWithSalt(<ResizableFixture onResizeStop={onResizeStop} />);
+      const onResizeFinish = vi.fn();
+      await renderWithSalt(
+        <ResizableFixture onResizeFinish={onResizeFinish} />,
+      );
       await waitForOpen();
 
       await pressOnHandle("{End}");
-      onResizeStop.mockClear();
+      onResizeFinish.mockClear();
       await pressOnHandle("{End}");
       await dragHandleBy("left", 0);
 
-      expect(onResizeStop).not.toHaveBeenCalled();
+      expect(onResizeFinish).not.toHaveBeenCalled();
     });
   });
 

@@ -43,7 +43,7 @@ export interface UseDrawerResizeProps {
   /** The drawer element being resized. */
   element: HTMLElement | null | undefined;
   /** Called with the new size in px when a drag ends or a key resizes the drawer. */
-  onResizeStop?: (event: Event, size: number) => void;
+  onResizeFinish?: (event: Event, size: number) => void;
 }
 
 export interface UseDrawerResizeResult {
@@ -105,7 +105,7 @@ export function useDrawerResize({
   enabled,
   position,
   element,
-  onResizeStop,
+  onResizeFinish,
 }: UseDrawerResizeProps): UseDrawerResizeResult {
   const horizontal = isHorizontal(position);
   const targetWindow = useWindow();
@@ -195,7 +195,7 @@ export function useDrawerResize({
     setIsResizing(false);
     const finalSize = sizeRef.current;
     if (finalSize !== null && finalSize !== drag.originSize) {
-      onResizeStop?.(event, finalSize);
+      onResizeFinish?.(event, finalSize);
     }
   });
 
@@ -287,7 +287,7 @@ export function useDrawerResize({
 
       const applied = applySize(next, current);
       if (applied !== current.current) {
-        onResizeStop?.(event.nativeEvent, applied);
+        onResizeFinish?.(event.nativeEvent, applied);
       }
     },
   );

@@ -71,10 +71,10 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    * */
   resizable?: boolean;
   /**
-   * Callback called when the drawer is stopped from being resized, by dragging or from
-   * the keyboard. It provides a generic event and the new size of the drawer in px.
+   * Callback called when the user finishes resizing the drawer: on releasing the handle after
+   * a drag, or after each key press. It provides a generic event and the new size in px.
    * */
-  onResizeStop?: (event: Event, size: number) => void;
+  onResizeFinish?: (event: Event, size: number) => void;
   /**
    * Which element to initially focus. Can be either a number (tabbable index as specified by the order) or a ref.
    * Default value is 0 (first tabbable element).
@@ -98,7 +98,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       disableDismiss,
       disableScrim,
       resizable = false,
-      onResizeStop,
+      onResizeFinish,
       initialFocus,
       id,
       style,
@@ -141,7 +141,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       enabled: resizable,
       position,
       element: elements.floating,
-      onResizeStop,
+      onResizeFinish,
     });
 
     useEffect(() => {
