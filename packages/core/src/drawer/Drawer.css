@@ -5,8 +5,10 @@
   background: var(--drawer-background);
   display: flex;
   flex-direction: column;
-  max-height: 100%;
-  max-width: 100%;
+  min-height: max(var(--saltDrawer-minHeight, 0px), var(--drawer-minHeight, 0px));
+  max-height: var(--saltDrawer-maxHeight, 100%);
+  min-width: max(var(--saltDrawer-minWidth, 0px), var(--drawer-minWidth, 0px));
+  max-width: var(--saltDrawer-maxWidth, 100%);
   overflow: auto;
   /* Legacy padding for unsectioned drawers only. */
   padding: var(--drawer-padding);
@@ -53,14 +55,12 @@
 
 .saltDrawer-resizable.saltDrawer-left,
 .saltDrawer-resizable.saltDrawer-right {
-  min-width: max(var(--saltDrawer-minWidth, 0px), var(--salt-size-base));
-  max-width: var(--saltDrawer-maxWidth, 100%);
+  --drawer-minWidth: var(--salt-size-base);
 }
 
 .saltDrawer-resizable.saltDrawer-top,
 .saltDrawer-resizable.saltDrawer-bottom {
-  min-height: max(var(--saltDrawer-minHeight, 0px), var(--salt-size-base));
-  max-height: var(--saltDrawer-maxHeight, 100%);
+  --drawer-minHeight: var(--salt-size-base);
 }
 
 /* Styles applied when variant = "primary" */
