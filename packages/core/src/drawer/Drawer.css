@@ -1,7 +1,6 @@
 /* Styles applied to Drawer component */
 .saltDrawer {
   --drawer-padding: var(--salt-spacing-300);
-  --drawer-resizeHandleSize: var(--salt-size-fixed-600);
 
   background: var(--drawer-background);
   display: flex;
@@ -37,6 +36,10 @@
    the handle's side shrinks the content box while the Drawer's width or height
    stays exactly as the consumer set it. The Drawer's own padding is preserved,
    as the handle's size is added to it. */
+.saltDrawer-resizable {
+  --drawer-resizeHandleSize: var(--salt-size-fixed-600);
+}
+
 .saltDrawer-resizable.saltDrawer-left {
   padding-right: calc(var(--drawer-padding) + var(--drawer-resizeHandleSize));
 }

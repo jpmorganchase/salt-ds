@@ -1,13 +1,15 @@
 import { useWindow } from "@salt-ds/window";
 import type {
   AriaAttributes,
+  CSSProperties,
   KeyboardEvent as ReactKeyboardEvent,
   PointerEvent as ReactPointerEvent,
 } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useEventCallback, useIsomorphicLayoutEffect } from "../../utils";
+import type { DrawerProps } from "../Drawer";
 
-export type DrawerResizePosition = "left" | "right" | "top" | "bottom";
+type DrawerPosition = NonNullable<DrawerProps["position"]>;
 
 interface Bounds {
   min: number;
@@ -37,7 +39,7 @@ export interface UseDrawerResizeProps {
   /** Resizing is only wired up when enabled. */
   enabled: boolean;
   /** Edge the drawer is anchored to. */
-  position: DrawerResizePosition;
+  position: DrawerPosition;
   /** The drawer element being resized. */
   element: HTMLElement | null | undefined;
   /** Called with the new size in px when a drag ends or a key resizes the drawer. */
@@ -45,8 +47,8 @@ export interface UseDrawerResizeProps {
 }
 
 export interface UseDrawerResizeResult {
-  /** The user defined size in px, or `undefined` while the drawer keeps its CSS defined size. */
-  size: number | undefined;
+  /** The user defined `width` or `height`, or `undefined` while the drawer keeps its CSS defined size. */
+  sizeStyle: CSSProperties | undefined;
   /** Whether a pointer drag is in progress. */
   isResizing: boolean;
   /** Props for the resize handle. */
@@ -59,11 +61,11 @@ const KEYBOARD_STEP_MULTIPLIER = 5;
 /** Large enough to hit any CSS max constraint. */
 const PROBE_SIZE = 1e6;
 
-const isHorizontal = (position: DrawerResizePosition) =>
+const isHorizontal = (position: DrawerPosition) =>
   position === "left" || position === "right";
 
 /** Whether dragging towards higher coordinates makes the drawer bigger. */
-const growsWithCoordinate = (position: DrawerResizePosition) =>
+const growsWithCoordinate = (position: DrawerPosition) =>
   position === "left" || position === "top";
 
 const measure = (element: HTMLElement, horizontal: boolean) => {
@@ -354,7 +356,10 @@ export function useDrawerResize({
   }, [enabled, element]);
 
   return {
-    size: enabled && size?.horizontal === horizontal ? size.value : undefined,
+    sizeStyle:
+      enabled && size?.horizontal === horizontal
+        ? { [horizontal ? "width" : "height"]: size.value }
+        : undefined,
     isResizing,
     separatorProps: {
       role: "separator",

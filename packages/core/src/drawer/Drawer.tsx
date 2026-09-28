@@ -141,14 +141,12 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     const handleRef = useForkRef<HTMLDivElement>(floating, ref);
 
-    const { size, isResizing, separatorProps } = useDrawerResize({
+    const { sizeStyle, isResizing, separatorProps } = useDrawerResize({
       enabled: resizable,
       position,
       element: elements.floating,
       onResizeStop,
     });
-    const sizeProperty =
-      position === "left" || position === "right" ? "width" : "height";
 
     useEffect(() => {
       if (open && !showComponent) {
@@ -209,7 +207,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             {...rest}
             style={{
               ...style,
-              ...(size !== undefined && { [sizeProperty]: size }),
+              ...sizeStyle,
             }}
           >
             {children}

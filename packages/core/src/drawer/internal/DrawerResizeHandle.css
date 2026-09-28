@@ -8,7 +8,8 @@
    the padding of the Drawer's sections. The element is out of flow, so the
    Drawer reserves only --drawerResizeHandle-size. */
 .saltDrawerResizeHandle {
-  --drawerResizeHandle-size: var(--drawer-resizeHandleSize, var(--salt-size-fixed-600));
+  /* Set on the resizable Drawer, which reserves the same space for the handle. */
+  --drawerResizeHandle-size: var(--drawer-resizeHandleSize);
   --drawerResizeHandle-hitSize: calc(var(--drawerResizeHandle-size) + var(--salt-spacing-100));
   --drawerResizeHandle-thumbSize: max(var(--salt-size-icon, 12px), 12px);
   /* Offset that centres the thumb on the visible strip. */
