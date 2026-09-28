@@ -60,12 +60,6 @@ const KEYBOARD_STEP = 8;
 const KEYBOARD_LARGE_STEP = 40;
 /** Large enough to hit any CSS max constraint. */
 const PROBE_SIZE = 1e6;
-/**
- * How far beyond the Drawer's edge a press still grabs the handle, matching
- * the `hitAreaMargins` defaults the documented Splitter relies on. Inside the
- * Drawer the handle element covers this itself.
- */
-const OUTSIDE_HIT_MARGIN = { fine: 5, coarse: 15 };
 
 const isHorizontal = (position: DrawerResizePosition) =>
   position === "left" || position === "right";
@@ -115,7 +109,8 @@ export function useDrawerResize({
 }: UseDrawerResizeProps): UseDrawerResizeResult {
   const horizontal = isHorizontal(position);
 
-  const [size, setSize] = useState<number | undefined>(undefined);
+  // Keyed by axis, so a width is never applied as a height after `position` changes.
+  const [size, setSize] = useState<{ value: number; horizontal: boolean }>();
   const [isResizing, setIsResizing] = useState(false);
   // Mirrors the drawer's current and available size for `aria-value*`.
   const [metrics, setMetrics] = useState<(Bounds & { current: number }) | null>(
@@ -128,6 +123,7 @@ export function useDrawerResize({
   const restoreSizeRef = useRef<number | null>(null);
   // Size the drawer opened at, used when there is no size to restore.
   const initialSizeRef = useRef<number | null>(null);
+  const axisRef = useRef(horizontal);
 
   const readMetrics = useEventCallback(() => {
     if (!element) return null;
@@ -144,7 +140,7 @@ export function useDrawerResize({
   const applySize = useEventCallback((next: number, bounds: Bounds) => {
     const clamped = clamp(next, bounds);
     sizeRef.current = clamped;
-    setSize(clamped);
+    setSize({ value: clamped, horizontal });
     setMetrics({ ...bounds, current: clamped });
     return clamped;
   });
@@ -298,88 +294,64 @@ export function useDrawerResize({
   // Describe the separator before first paint, so a focusable separator always
   // exposes `aria-valuenow` to assistive technology.
   useIsomorphicLayoutEffect(() => {
-    if (enabled && element) {
-      const next = readMetrics();
-      if (next && initialSizeRef.current === null) {
-        initialSizeRef.current = next.current;
-      }
+    if (!enabled || !element) return;
+    if (axisRef.current !== horizontal) {
+      axisRef.current = horizontal;
+      restoreSizeRef.current = null;
+      initialSizeRef.current = null;
     }
+    const next = readMetrics();
+    if (next && initialSizeRef.current === null) {
+      initialSizeRef.current = next.current;
+    }
+  }, [enabled, element, horizontal, readMetrics]);
+
+  // Keep `aria-valuemin` / `aria-valuemax` in step with limits that depend on the viewport.
+  useEffect(() => {
+    const targetWindow = element?.ownerDocument.defaultView;
+    if (!enabled || !element || !targetWindow) return;
+    const onResize = () => readMetrics();
+    targetWindow.addEventListener("resize", onResize);
+    return () => targetWindow.removeEventListener("resize", onResize);
   }, [enabled, element, readMetrics]);
 
-  // The handle element covers its hit area inside the Drawer, but the band
-  // just beyond the Drawer's edge belongs to the page. Content out there is
-  // inert while the Drawer is modal, so presses land on the document instead;
-  // claiming them in the capture phase also stops `useDismiss`, which listens
-  // in the bubble phase, from closing the Drawer.
+  // An unsectioned Drawer scrolls itself, which would carry the handle out of view with the
+  // content, so the handle is offset by the scroll position to stay pinned to the edge.
   useEffect(() => {
     if (!enabled || !element) return;
-    const doc = element.ownerDocument;
-    const targetWindow = doc.defaultView;
-    if (!targetWindow) return;
-    // The root rather than the body, so the cursor applies wherever the
-    // pointer lands, including areas the body does not cover.
-    const root = doc.documentElement;
-    const coarsePointer = targetWindow.matchMedia("(pointer: coarse)");
-
-    const isWithinHitArea = (event: PointerEvent) => {
+    const onScroll = () => {
       const handle = handleRef.current;
-      if (!handle) return false;
-
-      const margin = coarsePointer.matches
-        ? OUTSIDE_HIT_MARGIN.coarse
-        : OUTSIDE_HIT_MARGIN.fine;
-      const { top, right, bottom, left } = handle.getBoundingClientRect();
-      return (
-        event.clientX >= left - margin &&
-        event.clientX <= right + margin &&
-        event.clientY >= top - margin &&
-        event.clientY <= bottom + margin
+      if (!handle) return;
+      handle.style.setProperty(
+        "--drawerResizeHandle-scrollLeft",
+        `${element.scrollLeft}px`,
+      );
+      handle.style.setProperty(
+        "--drawerResizeHandle-scrollTop",
+        `${element.scrollTop}px`,
       );
     };
+    onScroll();
+    element.addEventListener("scroll", onScroll, { passive: true });
+    return () => element.removeEventListener("scroll", onScroll);
+  }, [enabled, element]);
 
-    const onPointerDown = (event: PointerEvent) => {
-      if (event.button !== 0 || event.defaultPrevented) return;
-      // Presses within the Drawer are the handle element's own business.
-      if (element.contains(event.target as Node)) return;
-      if (!isWithinHitArea(event)) return;
-
-      const coordinate = horizontal ? event.clientX : event.clientY;
-      if (beginDrag(event.pointerId, coordinate)) {
-        event.preventDefault();
-        event.stopPropagation();
-        handleRef.current?.focus();
-      }
-    };
-
-    // The cursor is applied across the whole hit area, including the part the
-    // handle's own CSS already covers. Keeping it set while the pointer is on
-    // the handle means crossing the Drawer's edge changes nothing, so the
-    // cursor does not flicker back to its default for a frame.
-    const onPointerMove = (event: PointerEvent) => {
-      if (dragRef.current) return;
-      if (isWithinHitArea(event)) {
-        root.style.setProperty(
-          "cursor",
-          horizontal ? "ew-resize" : "ns-resize",
-        );
-      } else {
-        root.style.removeProperty("cursor");
-      }
-    };
-
-    doc.addEventListener("pointerdown", onPointerDown, true);
-    doc.addEventListener("pointermove", onPointerMove, true);
+  // A drag can outlive the handle, e.g. when the Drawer closes mid-drag and unmounts before
+  // `pointerup`, so end it here too rather than leaving the cursor and resizing state behind.
+  useEffect(() => {
+    if (!enabled || !element) return;
     return () => {
-      doc.removeEventListener("pointerdown", onPointerDown, true);
-      doc.removeEventListener("pointermove", onPointerMove, true);
-      root.style.removeProperty("cursor");
+      if (!dragRef.current) return;
+      dragRef.current = null;
+      restoreCursorRef.current?.();
+      setIsResizing(false);
     };
-  }, [enabled, element, horizontal, beginDrag]);
+  }, [enabled, element]);
 
   useEffect(() => () => restoreCursorRef.current?.(), []);
 
   return {
-    size: enabled ? size : undefined,
+    size: enabled && size?.horizontal === horizontal ? size.value : undefined,
     isResizing,
     separatorProps: {
       role: "separator",

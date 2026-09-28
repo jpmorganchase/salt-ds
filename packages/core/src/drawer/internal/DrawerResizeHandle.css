@@ -27,6 +27,8 @@
   box-sizing: border-box;
   background: transparent;
   touch-action: none;
+  /* Set from the Drawer's scroll position, so the handle stays on the edge of a scrolling Drawer. */
+  transform: translate(var(--drawerResizeHandle-scrollLeft, 0px), var(--drawerResizeHandle-scrollTop, 0px));
 }
 
 /* The visible strip, narrower than the handle, which is the pointer target. */

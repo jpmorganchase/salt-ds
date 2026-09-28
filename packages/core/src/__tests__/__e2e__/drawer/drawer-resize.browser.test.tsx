@@ -293,7 +293,7 @@ describe("GIVEN a resizable Drawer", () => {
         .toBeGreaterThan(rect.width + 40);
     });
 
-    it("resizes from just outside the edge without dismissing the Drawer", async () => {
+    it("does not resize from a press just outside the edge", async () => {
       await renderWithSalt(<DismissibleFixture position="left" />);
       await waitForOpen();
 
@@ -301,16 +301,12 @@ describe("GIVEN a resizable Drawer", () => {
       const y = rect.top + 120;
       const startX = rect.right + 3;
       const target = document.elementFromPoint(startX, y);
-      expect(target).not.toBeNull();
+      expect(target).not.toBe(handle());
 
       await dispatchPointer(target as Element, "pointerdown", startX, y);
-      await dispatchPointer(handle(), "pointermove", startX + 80, y);
-      await dispatchPointer(handle(), "pointerup", startX + 80, y);
 
-      await expect
-        .poll(() => drawerSize("left"))
-        .toBeGreaterThan(rect.width + 60);
-      await expect.element(page.getByRole("dialog")).toBeVisible();
+      expect(document.documentElement.style.cursor).toBe("");
+      await expect.poll(() => document.querySelector(".saltDrawer")).toBeNull();
     });
 
     it("still dismisses on a press well outside the edge", async () => {
@@ -619,6 +615,93 @@ describe("GIVEN a resizable Drawer", () => {
       expect(
         document.elementFromPoint(rect.right - 2, rect.top + rect.height / 2),
       ).toBe(handle());
+    });
+  });
+
+  describe("lifecycle", () => {
+    it("cleans up when the Drawer closes mid-drag", async () => {
+      await renderWithSalt(<DismissibleFixture position="left" />);
+      await waitForOpen();
+
+      const rect = handle().getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      await dispatchPointer(handle(), "pointerdown", x, y);
+      await dispatchPointer(handle(), "pointermove", x + 40, y);
+      expect(document.body.style.cursor).toBe("ew-resize");
+
+      await userEvent.keyboard("{Escape}");
+      await expect.poll(() => document.querySelector(".saltDrawer")).toBeNull();
+
+      expect(document.body.style.cursor).toBe("");
+    });
+
+    it("does not carry a width over as a height when the position changes", async () => {
+      function PositionFixture() {
+        const [position, setPosition] = useState<Position>("left");
+        return (
+          <Drawer
+            open
+            resizable
+            position={position}
+            style={{ width: 300, height: 200 }}
+          >
+            <DrawerHeader header="Resizable drawer" />
+            <DrawerContent>
+              <Button onClick={() => setPosition("top")}>Move to top</Button>
+            </DrawerContent>
+          </Drawer>
+        );
+      }
+      await renderWithSalt(<PositionFixture />);
+      await waitForOpen();
+
+      await dragHandleBy("left", 100);
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(400, 0);
+
+      await page.getByRole("button", { name: "Move to top" }).click();
+
+      await expect.poll(() => drawerSize("top")).toBeCloseTo(200, 0);
+      await expect.element(handle()).toHaveAttribute("aria-valuenow", "200");
+    });
+
+    it("updates its limits when the viewport resizes", async () => {
+      await renderWithSalt(
+        <Drawer open resizable position="left" style={{ width: 300 }}>
+          <DrawerHeader header="Resizable drawer" />
+          <DrawerContent>Content</DrawerContent>
+        </Drawer>,
+      );
+      await waitForOpen();
+      await expect
+        .element(handle())
+        .toHaveAttribute("aria-valuemax", String(window.innerWidth));
+
+      try {
+        await page.viewport(900, 700);
+        await expect.element(handle()).toHaveAttribute("aria-valuemax", "900");
+      } finally {
+        await page.viewport(1280, 1024);
+      }
+    });
+
+    it("keeps the handle on the edge of a scrolled unsectioned Drawer", async () => {
+      await renderWithSalt(
+        <Drawer open resizable position="left" style={{ width: 300 }}>
+          <p>{"Unsectioned content. ".repeat(600)}</p>
+        </Drawer>,
+      );
+      await waitForOpen();
+
+      const before = handle().getBoundingClientRect();
+      await act(async () => {
+        drawer().scrollTop = 500;
+        drawer().dispatchEvent(new Event("scroll"));
+      });
+
+      await expect
+        .poll(() => handle().getBoundingClientRect().top)
+        .toBeCloseTo(before.top, 0);
     });
   });
 });
