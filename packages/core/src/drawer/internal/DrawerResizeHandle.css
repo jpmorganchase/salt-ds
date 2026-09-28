@@ -1,9 +1,8 @@
-/* Styles applied to root element. The element is the pointer target, wider than the visible strip drawn by ::before. */
+/* Styles applied to root element */
 .saltDrawerResizeHandle {
   --drawerResizeHandle-size: var(--drawer-resizeHandleSize);
   --drawerResizeHandle-hitSize: calc(var(--drawerResizeHandle-size) + var(--salt-spacing-100));
   --drawerResizeHandle-thumbSize: max(var(--salt-size-icon, 12px), 12px);
-  /* Offset that centers the thumb on the visible strip */
   --drawerResizeHandle-thumbInset: calc((var(--drawerResizeHandle-size) - var(--drawerResizeHandle-thumbSize)) / 2);
   --drawerResizeHandle-background: transparent;
   --drawerResizeHandle-background-hover: var(--salt-separable-background-hover);
@@ -17,7 +16,6 @@
   box-sizing: border-box;
   background: transparent;
   touch-action: none;
-  /* Set from the drawer's scroll position, so the handle stays on the edge of a scrolling drawer */
   transform: translate(var(--drawerResizeHandle-scrollLeft, 0px), var(--drawerResizeHandle-scrollTop, 0px));
 }
 
@@ -143,7 +141,7 @@
   --drawerResizeHandle-dot-background: var(--drawerResizeHandle-dot-background-active);
 }
 
-/* Styles applied on focus. The ring is drawn inside the strip, so the drawer's edge never clips it. */
+/* Styles applied on focus */
 .saltDrawerResizeHandle:focus-visible {
   outline: none;
 }

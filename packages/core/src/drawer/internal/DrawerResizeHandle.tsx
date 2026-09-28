@@ -10,9 +10,7 @@ const withBaseName = makePrefixer("saltDrawerResizeHandle");
 
 export interface DrawerResizeHandleProps
   extends ComponentPropsWithoutRef<"div"> {
-  /** Edge the drawer is anchored to. The handle sits on the opposite edge. */
   position: NonNullable<DrawerProps["position"]>;
-  /** Whether a drag is in progress. */
   resizing?: boolean;
 }
 

@@ -9,7 +9,6 @@ type Position = NonNullable<DrawerProps["position"]>;
 
 const POSITIONS: Position[] = ["left", "right", "top", "bottom"];
 
-/** The arrow key that makes a drawer bigger at each position. */
 const GROW_KEY = {
   left: "ArrowRight",
   right: "ArrowLeft",
@@ -27,7 +26,6 @@ const SHRINK_KEY = {
 const isHorizontal = (position: Position) =>
   position === "left" || position === "right";
 
-/** Dragging towards higher coordinates grows a left or top drawer. */
 const growDelta = (position: Position, distance: number) =>
   position === "left" || position === "top" ? distance : -distance;
 
@@ -48,10 +46,6 @@ const sizeBase = () =>
     getComputedStyle(drawer()).getPropertyValue("--salt-size-base"),
   );
 
-/**
- * A Drawer mounts off-screen and slides in, so geometry is only meaningful
- * once the animation has settled.
- */
 async function waitForOpen() {
   await expect.element(page.getByRole("dialog")).toBeVisible();
   await expect
@@ -99,7 +93,6 @@ const moveAlong = (
   delta: number,
 ) => (isHorizontal(position) ? { x: x + delta, y } : { x, y: y + delta });
 
-/** Drags the handle by `delta` along the drawer's resize axis. */
 async function dragHandleBy(position: Position, delta: number) {
   const start = handleCenter();
   const end = moveAlong(position, start, delta);

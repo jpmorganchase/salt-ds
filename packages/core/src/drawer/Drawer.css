@@ -21,7 +21,6 @@
   --drawer-padding: 0px;
 }
 
-/* Styles applied while the user is resizing the drawer */
 .saltDrawer-resizing {
   user-select: none;
 }
@@ -32,7 +31,6 @@
   }
 }
 
-/* Styles applied when resizable = true. Padding reserves space for the resize handle, so it doesn't cover content. */
 .saltDrawer-resizable {
   --drawer-resizeHandleSize: var(--salt-size-fixed-600);
 }
@@ -53,14 +51,12 @@
   padding-top: calc(var(--drawer-padding) + var(--drawer-resizeHandleSize));
 }
 
-/* Styles applied when resizable = true and position = "left" or "right". The minimum never drops below --salt-size-base, so the handle stays on screen. */
 .saltDrawer-resizable.saltDrawer-left,
 .saltDrawer-resizable.saltDrawer-right {
   min-width: max(var(--saltDrawer-minWidth, 0px), var(--salt-size-base));
   max-width: var(--saltDrawer-maxWidth, 100%);
 }
 
-/* Styles applied when resizable = true and position = "top" or "bottom". The minimum never drops below --salt-size-base, so the handle stays on screen. */
 .saltDrawer-resizable.saltDrawer-top,
 .saltDrawer-resizable.saltDrawer-bottom {
   min-height: max(var(--saltDrawer-minHeight, 0px), var(--salt-size-base));

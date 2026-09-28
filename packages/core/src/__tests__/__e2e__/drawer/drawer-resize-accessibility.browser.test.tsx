@@ -27,10 +27,6 @@ const drawer = () => page.getByRole("dialog").element() as HTMLElement;
 const valueNow = () =>
   Number(separator().element().getAttribute("aria-valuenow"));
 
-/**
- * A Drawer mounts off-screen and slides in, so geometry is only meaningful
- * once the animation has settled.
- */
 async function waitForOpen() {
   await expect.element(page.getByRole("dialog")).toBeVisible();
   await expect
@@ -70,7 +66,6 @@ function handleCenter() {
   return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
 }
 
-/** Moves focus to the separator with the keyboard, as a user would. */
 async function tabToSeparator() {
   await expect
     .element(page.getByRole("button", { name: "Close drawer" }))
@@ -84,10 +79,7 @@ const limitsStyle = (position: Position) =>
     ? { width: 300, minWidth: 100, maxWidth: 600 }
     : { height: 300, minHeight: 100, maxHeight: 600 };
 
-/**
- * Includes a focusable control, so the separator doesn't receive the initial
- * focus that the drawer gives its first tabbable element.
- */
+// The close button takes initial focus, so the separator isn't focused on open.
 function ResizableFixture({
   position = "left",
   ...rest
