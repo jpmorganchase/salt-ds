@@ -18,12 +18,6 @@ export interface MenuGroupProps extends ComponentPropsWithoutRef<"div"> {
    */
   children?: ReactNode;
   /**
-   * If `true`, selecting a menu item closes the menu. If `false`, the menu stays open.
-   * When not set, clicking closes the menu for "single" selection but not for "multiple" selection, Enter always closes the menu and Space never does.
-   * Only applies when `selectionVariant` is "single" or "multiple".
-   */
-  closeOnSelect?: boolean;
-  /**
    * The values of the menu items selected by default. Use with `name` to keep the selection while the menu is closed.
    * This will be disregarded if `selected` is set.
    */
@@ -60,7 +54,6 @@ export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
     const {
       className,
       children,
-      closeOnSelect,
       defaultSelected,
       label,
       name,
@@ -88,8 +81,8 @@ export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
     });
 
     const contextValue = useMemo(
-      () => ({ closeOnSelect, isSelected, select, selectionVariant }),
-      [closeOnSelect, isSelected, select, selectionVariant],
+      () => ({ isSelected, select, selectionVariant }),
+      [isSelected, select, selectionVariant],
     );
 
     return (

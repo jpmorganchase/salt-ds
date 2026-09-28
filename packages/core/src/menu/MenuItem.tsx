@@ -52,8 +52,7 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
     const { setTriggerDisabled } = useMenuContext();
     const { ExpandGroupIcon } = useIcon();
     const { activeIndex, getItemProps, setFocusInside } = useMenuPanelContext();
-    const { closeOnSelect, isSelected, select, selectionVariant } =
-      useMenuGroup();
+    const { isSelected, select, selectionVariant } = useMenuGroup();
     const item = useListItem();
     const tree = useFloatingTree();
     const active = item.index === activeIndex;
@@ -95,9 +94,6 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
     const shouldCloseMenu = () => {
       if (!selectable) {
         return true;
-      }
-      if (closeOnSelect !== undefined) {
-        return closeOnSelect;
       }
       if (activationKeyRef.current === "Enter") {
         return true;

@@ -600,38 +600,6 @@ describe("Given a Menu with selectable groups", () => {
     expect(onSelectionChange).toHaveBeenCalledTimes(1);
   });
 
-  it("keeps the menu open on click and Enter when closeOnSelect is false", async () => {
-    await renderWithSalt(
-      <SelectableMenu selectionVariant="single" closeOnSelect={false} />,
-    );
-    await trigger().click();
-    const one = page.getByRole("menuitemradio", { name: "One" });
-    await one.click();
-    await expect.element(one).toHaveAttribute("aria-checked", "true");
-    await expect.element(page.getByRole("menu")).toBeInTheDocument();
-    const two = page.getByRole("menuitemradio", { name: "Two" });
-    two.element().focus();
-    await userEvent.keyboard("{Enter}");
-    await expect.element(two).toHaveAttribute("aria-checked", "true");
-    await expect.element(page.getByRole("menu")).toBeInTheDocument();
-  });
-
-  it("closes the menu on click and Space when closeOnSelect is true", async () => {
-    await renderWithSalt(
-      <SelectableMenu selectionVariant="multiple" closeOnSelect />,
-    );
-    await trigger().click();
-    await page.getByRole("menuitemcheckbox", { name: "One" }).click();
-    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
-    trigger().element().focus();
-    await userEvent.keyboard("{Enter}");
-    const one = page.getByRole("menuitemcheckbox", { name: "One" });
-    await expect.element(one).toHaveAttribute("aria-checked", "true");
-    await expect.element(one).toHaveFocus();
-    await userEvent.keyboard(" ");
-    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
-  });
-
   it("does not select disabled items", async () => {
     const onSelectionChange = vi.fn();
     await renderWithSalt(
