@@ -14,8 +14,7 @@ type MenuGroupSelectionVariant = NonNullable<
   MenuGroupProps["selectionVariant"]
 >;
 
-export interface MenuGroupContextValue
-  extends Pick<MenuGroupProps, "closeOnSelect"> {
+export interface MenuGroupContextValue {
   isSelected: (value: string) => boolean;
   select: (event: SyntheticEvent, value: string) => void;
   selectionVariant: MenuGroupSelectionVariant;
