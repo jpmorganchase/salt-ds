@@ -8,13 +8,11 @@ import {
   OverlayTrigger,
   StackLayout,
   Text,
-  useId,
 } from "@salt-ds/core";
 import { type ReactElement, useState } from "react";
 
 export const WithSections = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const id = useId();
 
   const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
 
@@ -25,8 +23,8 @@ export const WithSections = (): ReactElement => {
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
-      <OverlayPanel style={{ width: 320, maxHeight: 200 }} aria-labelledby={id}>
-        <OverlayHeader header="Review changes" id={id} />
+      <OverlayPanel style={{ width: 320, maxHeight: 200 }}>
+        <OverlayHeader header="Review changes" />
         <OverlayPanelContent>
           <StackLayout>
             <Text as="p">
@@ -44,10 +42,16 @@ export const WithSections = (): ReactElement => {
           </StackLayout>
         </OverlayPanelContent>
         <OverlayFooter>
-          <Button appearance="bordered" onClick={handleClose}>
+          <Button
+            sentiment="accented"
+            appearance="bordered"
+            onClick={handleClose}
+          >
             Cancel
           </Button>
-          <Button onClick={handleClose}>Save changes</Button>
+          <Button sentiment="accented" onClick={handleClose}>
+            Save changes
+          </Button>
         </OverlayFooter>
       </OverlayPanel>
     </Overlay>

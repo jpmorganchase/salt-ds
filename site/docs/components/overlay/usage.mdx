@@ -12,6 +12,8 @@ data:
 
 Interaction with the content in an overlay is typically constrained, as richer interactions/workflows should occur within a separate UI mechanism (such as a new page, [`Dialog`](/salt/components/dialog) or [`Drawer`](/salt/components/drawer)).
 
+`OverlayHeader` names `OverlayPanel` using its `header` and `preheader`, and describes it using its `description`, so you don't need to set `aria-labelledby` or `aria-describedby` manually.
+
 ### When to use
 
 - To expose interactive and essential elements within a tooltip to carry out in-context tasks.
@@ -25,8 +27,7 @@ Interaction with the content in an overlay is typically constrained, as richer i
 
 ### Best practices
 
-1. Give `OverlayPanel` an accessible name by assigning an `id` to `OverlayHeader` and passing the same value to `OverlayPanel` through `aria-labelledby`.
-2. Keep `OverlayHeader`, `OverlayPanelContent` and `OverlayFooter` as direct children of `OverlayPanel` so their spacing and scrolling behavior apply correctly.
+1. Keep `OverlayHeader`, `OverlayPanelContent` and `OverlayFooter` as direct children of `OverlayPanel` so their spacing and scrolling behavior apply correctly.
 
 ## Import
 
