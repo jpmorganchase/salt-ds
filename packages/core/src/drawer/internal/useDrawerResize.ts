@@ -56,8 +56,10 @@ export interface UseDrawerResizeResult {
   separatorProps: SeparatorProps;
 }
 
-const KEYBOARD_STEP = 8;
-const KEYBOARD_LARGE_STEP = 40;
+/** Keyboard steps are multiples of `--salt-spacing-100`, so they follow density. */
+const KEYBOARD_LARGE_STEP_MULTIPLIER = 5;
+/** Used if `--salt-spacing-100` can't be read. */
+const FALLBACK_KEYBOARD_STEP = 8;
 /** Large enough to hit any CSS max constraint. */
 const PROBE_SIZE = 1e6;
 
@@ -98,6 +100,13 @@ const probeBounds = (element: HTMLElement, horizontal: boolean): Bounds => {
   return { min, max: Math.max(min, max) };
 };
 
+const readKeyboardStep = (element: HTMLElement) => {
+  const step = Number.parseFloat(
+    getComputedStyle(element).getPropertyValue("--salt-spacing-100"),
+  );
+  return step > 0 ? step : FALLBACK_KEYBOARD_STEP;
+};
+
 const clamp = (value: number, { min, max }: Bounds) =>
   Math.min(Math.max(value, min), max);
 
@@ -125,9 +134,17 @@ export function useDrawerResize({
   const initialSizeRef = useRef<number | null>(null);
   const axisRef = useRef(horizontal);
 
-  const readMetrics = useEventCallback(() => {
+  // Probing forces layout, so bounds are resolved once per interaction (focus, pointer
+  // press, viewport resize) and reused for each key press.
+  const boundsRef = useRef<Bounds | null>(null);
+
+  const readMetrics = useEventCallback((reuseBounds = false) => {
     if (!element) return null;
-    const bounds = probeBounds(element, horizontal);
+    const bounds =
+      reuseBounds && boundsRef.current
+        ? boundsRef.current
+        : probeBounds(element, horizontal);
+    boundsRef.current = bounds;
     const current = clamp(measure(element, horizontal), bounds);
     const next = { ...bounds, current };
     setMetrics(next);
@@ -136,6 +153,9 @@ export function useDrawerResize({
 
   // Latest applied size, so a drag's end can be reported without waiting for a render.
   const sizeRef = useRef<number | null>(null);
+  // Pointer moves are applied at most once per frame.
+  const frameRef = useRef<number | null>(null);
+  const pendingCoordinateRef = useRef<number | null>(null);
 
   const applySize = useEventCallback((next: number, bounds: Bounds) => {
     const clamped = clamp(next, bounds);
@@ -156,9 +176,36 @@ export function useDrawerResize({
     };
   });
 
+  const applyDragCoordinate = useEventCallback(
+    (drag: DragState, coordinate: number) => {
+      const delta = coordinate - drag.origin;
+      const direction = growsWithCoordinate(position) ? 1 : -1;
+      applySize(drag.originSize + delta * direction, drag);
+    },
+  );
+
+  const cancelFrame = useEventCallback(() => {
+    if (frameRef.current !== null) {
+      element?.ownerDocument.defaultView?.cancelAnimationFrame(
+        frameRef.current,
+      );
+      frameRef.current = null;
+    }
+  });
+
+  const flushPendingMove = useEventCallback((drag: DragState) => {
+    cancelFrame();
+    const coordinate = pendingCoordinateRef.current;
+    pendingCoordinateRef.current = null;
+    if (coordinate !== null) {
+      applyDragCoordinate(drag, coordinate);
+    }
+  });
+
   const endDrag = useEventCallback((event: ReactPointerEvent<HTMLElement>) => {
     const drag = dragRef.current;
     if (!drag) return;
+    flushPendingMove(drag);
     const handle = handleRef.current;
     if (handle?.hasPointerCapture(drag.pointerId)) {
       handle.releasePointerCapture(drag.pointerId);
@@ -197,7 +244,7 @@ export function useDrawerResize({
 
   const onPointerDown = useEventCallback(
     (event: ReactPointerEvent<HTMLElement>) => {
-      if (event.button !== 0) return;
+      if (event.button !== 0 || !event.isPrimary) return;
       const coordinate = horizontal ? event.clientX : event.clientY;
       if (beginDrag(event.pointerId, coordinate)) {
         event.preventDefault();
@@ -210,10 +257,19 @@ export function useDrawerResize({
       const drag = dragRef.current;
       if (!drag || drag.pointerId !== event.pointerId) return;
 
-      const coordinate = horizontal ? event.clientX : event.clientY;
-      const delta = coordinate - drag.origin;
-      const direction = growsWithCoordinate(position) ? 1 : -1;
-      applySize(drag.originSize + delta * direction, drag);
+      pendingCoordinateRef.current = horizontal ? event.clientX : event.clientY;
+      const targetWindow = element?.ownerDocument.defaultView;
+      if (!targetWindow) {
+        flushPendingMove(drag);
+        return;
+      }
+      if (frameRef.current === null) {
+        frameRef.current = targetWindow.requestAnimationFrame(() => {
+          frameRef.current = null;
+          const current = dragRef.current;
+          if (current) flushPendingMove(current);
+        });
+      }
     },
   );
 
@@ -232,7 +288,7 @@ export function useDrawerResize({
         return;
       }
 
-      const current = readMetrics();
+      const current = readMetrics(true);
       if (!current) return;
 
       event.preventDefault();
@@ -261,7 +317,12 @@ export function useDrawerResize({
           key === "ArrowRight" || key === "ArrowDown";
         const direction =
           towardsHigherCoordinate === growsWithCoordinate(position) ? 1 : -1;
-        const step = shiftKey ? KEYBOARD_LARGE_STEP : KEYBOARD_STEP;
+        const baseStep = element
+          ? readKeyboardStep(element)
+          : FALLBACK_KEYBOARD_STEP;
+        const step = shiftKey
+          ? baseStep * KEYBOARD_LARGE_STEP_MULTIPLIER
+          : baseStep;
         next = current.current + step * direction;
       }
 
@@ -340,7 +401,13 @@ export function useDrawerResize({
   // `pointerup`, so end it here too rather than leaving the cursor and resizing state behind.
   useEffect(() => {
     if (!enabled || !element) return;
+    const targetWindow = element.ownerDocument.defaultView;
     return () => {
+      if (frameRef.current !== null) {
+        targetWindow?.cancelAnimationFrame(frameRef.current);
+        frameRef.current = null;
+      }
+      pendingCoordinateRef.current = null;
       if (!dragRef.current) return;
       dragRef.current = null;
       restoreCursorRef.current?.();

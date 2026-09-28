@@ -272,7 +272,7 @@ describe("GIVEN a resizable Drawer", () => {
       const rect = drawer().getBoundingClientRect();
       const y = rect.top + 120;
 
-      // Past the 6px visible strip, but inside the 16px pointer target.
+      // Past the 6px visible strip, but inside the pointer target (6px + --salt-spacing-100).
       expect(document.elementFromPoint(rect.right - 12, y)).toBe(handle());
     });
 
@@ -702,6 +702,67 @@ describe("GIVEN a resizable Drawer", () => {
       await expect
         .poll(() => handle().getBoundingClientRect().top)
         .toBeCloseTo(before.top, 0);
+    });
+  });
+
+  describe("input handling", () => {
+    it("ignores a non-primary pointer", async () => {
+      await renderWithSalt(<ResizableFixture position="left" />);
+      await waitForOpen();
+
+      const rect = handle().getBoundingClientRect();
+      await act(async () => {
+        handle().dispatchEvent(
+          new PointerEvent("pointerdown", {
+            bubbles: true,
+            cancelable: true,
+            button: 0,
+            clientX: rect.left + 3,
+            clientY: rect.top + 50,
+            isPrimary: false,
+            pointerId: 2,
+            pointerType: "touch",
+          }),
+        );
+      });
+
+      expect(handle()).not.toHaveAttribute("data-resizing");
+      expect(document.body.style.cursor).toBe("");
+    });
+
+    it("uses density-aware keyboard steps", async () => {
+      await renderWithSalt(
+        <SaltProvider density="high">
+          <ResizableFixture position="left" />
+        </SaltProvider>,
+      );
+      await waitForOpen();
+      const step = Number.parseFloat(
+        getComputedStyle(drawer()).getPropertyValue("--salt-spacing-100"),
+      );
+      expect(step).toBe(4);
+
+      await pressOnHandle("{ArrowRight}");
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(300 + step, 0);
+
+      await pressOnHandle("{Shift>}{ArrowRight}{/Shift}");
+      await expect
+        .poll(() => drawerSize("left"))
+        .toBeCloseTo(300 + step + step * 5, 0);
+    });
+
+    it("draws the focus ring inside the strip", async () => {
+      await renderWithSalt(<ResizableFixture position="left" />);
+      await waitForOpen();
+
+      handle().focus();
+      await expect.poll(() => document.activeElement).toBe(handle());
+      const strip = getComputedStyle(handle(), "::before");
+      expect(Number.parseFloat(strip.outlineOffset)).toBeCloseTo(
+        -Number.parseFloat(strip.outlineWidth),
+        1,
+      );
+      expect(getComputedStyle(drawer()).overflow).toBe("auto");
     });
   });
 });
