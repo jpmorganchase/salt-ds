@@ -79,8 +79,6 @@
   --salt-color-background-snow-rgb: 255, 255, 255;
   --salt-color-background-titanium-rgb: 226, 228, 229;
 
-  --salt-color-logo-brown-rgb: 58, 34, 6;
-
   --salt-color-snow-rgb: 255, 255, 255;
 
   --salt-color-wheat-15-rgb: 250, 248, 246;
@@ -484,8 +482,6 @@
   --salt-color-background-marble: rgb(var(--salt-color-background-marble-rgb));
   --salt-color-background-snow: rgb(var(--salt-color-background-snow-rgb));
   --salt-color-background-titanium: rgb(var(--salt-color-background-titanium-rgb));
-
-  --salt-color-logo-brown: rgb(var(--salt-color-logo-brown-rgb));
 
   /* Base colors */
   --salt-color-snow: rgb(var(--salt-color-snow-rgb));

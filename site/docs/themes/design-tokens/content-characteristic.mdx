@@ -5,7 +5,7 @@ sidebar:
   priority: 15
 ---
 
-Content tokens define the standard foreground colors for all text and icons within Salt, ensuring clarity and consistency across your interface. Available in variants such as primary, secondary, accent, and attention, these tokens should be applied to all foreground elements unless another characteristic—like actionable—takes precedence for interactive states. Using content tokens appropriately helps maintain visual harmony and supports accessibility throughout your application.
+Content tokens define the standard foreground colors for all text and icons within Salt, ensuring clarity and consistency across your interface. Available in variants such as primary, secondary, accent, attention, and brand, these tokens should be applied to all foreground elements unless another characteristic—like actionable—takes precedence for interactive states. Using content tokens appropriately helps maintain visual harmony and supports accessibility throughout your application.
 
 ## Static foregrounds
 
@@ -79,3 +79,9 @@ The attention foreground token can be used to highlight specific labels, such as
 />
 
 <TokenTableWithControls tokens={["--salt-content-attention-foreground"]} />
+
+## Brand expression
+
+The brand foreground token applies the brand color to static content, such as brand names or icons. Use it sparingly to reinforce brand identity. It isn't intended to indicate interactivity, status or sentiment.
+
+<TokenTableWithControls tokens={["--salt-content-brand-foreground"]} />

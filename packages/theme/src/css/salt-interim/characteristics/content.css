@@ -5,6 +5,7 @@
   --salt-content-secondary-foreground-disabled: var(--salt-palette-neutral-high-disabled);
   --salt-content-accent-foreground: var(--salt-palette-accent-mediumHigh);
   --salt-content-attention-foreground: var(--salt-palette-negative-mediumHigh);
+  --salt-content-brand-foreground: var(--salt-palette-brand-mediumHigh);
 
   --salt-content-bold-foreground: var(--salt-palette-monochrome-light);
 
