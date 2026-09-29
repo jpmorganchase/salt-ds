@@ -16,15 +16,15 @@
   --salt-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
 
   /* Label */
-  --salt-text-label-fontWeight: var(--salt-typography-fontWeight-regular);
-  --salt-text-label-fontWeight-small: var(--salt-typography-fontWeight-semiBold);
+  --salt-text-label-fontWeight: var(--salt-typography-fontWeight-semiBold);
+  --salt-text-label-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-label-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
 
   /* Code */
   --salt-text-code-fontFamily: var(--salt-typography-fontFamily-ptMono);
 
   /* Action */
-  --salt-text-action-letterSpacing: 4%;
+  --salt-text-action-letterSpacing: 0.04em;
   --salt-text-action-textTransform: none;
   --salt-text-action-textAlign: center;
   --salt-text-action-fontFamily: var(--salt-typography-fontFamily-roboto);
@@ -40,7 +40,7 @@
 
   /* Display */
   --salt-text-display-fontFamily: var(--salt-typography-fontFamily-roboto);
-  --salt-text-display-letterSpacing: -2%;
+  --salt-text-display-letterSpacing: -0.02em;
   --salt-text-display-textTransform: uppercase;
   --salt-text-display-fontStyle: var(--salt-typography-fontStyle-italic);
   --salt-text-display-fontWeight: var(--salt-typography-fontWeight-light);
@@ -193,7 +193,7 @@
   --salt-text-notation-lineHeight: 10px;
 }
 
-.salt-density-mobile {
+.salt-interim.salt-density-mobile {
   --salt-text-h1-fontSize: 24px;
   --salt-text-h1-lineHeight: 31px;
 

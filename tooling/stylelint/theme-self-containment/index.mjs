@@ -10,6 +10,7 @@ const {
 } = stylelint;
 
 const themeEntries = {
+  "salt-interim.css": new Set(["foundations", "salt-interim"]),
   "theme-next.css": new Set(["deprecated", "foundations", "next"]),
   "theme.css": new Set(["deprecated", "foundations", "legacy"]),
 };

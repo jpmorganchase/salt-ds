@@ -67,6 +67,9 @@ describe("salt/theme-self-containment", () => {
   it.each([
     ["theme-next.css", "legacy"],
     ["theme.css", "next"],
+    ["salt-interim.css", "next"],
+    ["salt-interim.css", "legacy"],
+    ["salt-interim.css", "deprecated"],
   ])("rejects %s imports from %s", async (entry, disallowedDirectory) => {
     const dependency = `${disallowedDirectory}/tokens.css`;
     const directory = createTheme({

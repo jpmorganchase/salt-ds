@@ -17,6 +17,7 @@ export const openSans = Open_Sans({
 
 export const roboto = Roboto({
   subsets: ["latin"],
+  style: ["normal", "italic"],
   display: "swap",
   variable: "--site-font-family-roboto",
 });

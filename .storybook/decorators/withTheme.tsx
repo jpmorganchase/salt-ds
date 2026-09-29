@@ -10,6 +10,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
   const { density, mode, styleInjection, theme } = context.globals;
 
   const Provider = theme === "brand" ? SaltProviderNext : SaltProvider;
+  const themeName = theme === "salt-interim" ? "salt-interim" : "";
 
   if (mode === "side-by-side" || mode === "stacked") {
     const isStacked = mode === "stacked";
@@ -39,7 +40,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
             corner="rounded"
             headingFont="Amplitude"
             actionFont="Amplitude"
-            theme={theme}
+            theme={themeName}
           >
             <Panel>
               <StoryFn />
@@ -60,7 +61,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
       corner="rounded"
       headingFont="Amplitude"
       actionFont="Amplitude"
-      theme={theme}
+      theme={themeName}
     >
       <StoryFn />
     </Provider>
