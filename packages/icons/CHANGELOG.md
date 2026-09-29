@@ -1,5 +1,14 @@
 # @salt-ds/icons
 
+## 1.18.3
+
+### Patch Changes
+
+- Updated dependencies [fbe1e48]
+- Updated dependencies [2a5cb0d]
+  - @salt-ds/styles@0.4.1
+  - @salt-ds/window@0.1.2
+
 ## 1.18.2
 
 ### Patch Changes
