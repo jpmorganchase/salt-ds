@@ -123,7 +123,7 @@
 }
 
 /* Styles applied while resizing */
-.saltDrawerResizeHandle-resizing {
+.saltDrawerResizeHandle.saltDrawerResizeHandle-resizing {
   --drawerResizeHandle-background: var(--drawerResizeHandle-background-active);
   --drawerResizeHandle-dot-background: var(--drawerResizeHandle-dot-background-active);
 }
