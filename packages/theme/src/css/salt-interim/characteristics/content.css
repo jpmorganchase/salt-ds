@@ -9,5 +9,6 @@
 
   --salt-content-bold-foreground: var(--salt-palette-monochrome-light);
 
-  --salt-content-foreground-visited: unset;
+  /* `initial` stops an outer theme's value being inherited and makes `var()` use its fallback, so visited links keep their unvisited color */
+  --salt-content-foreground-visited: initial;
 }

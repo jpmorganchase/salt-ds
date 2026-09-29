@@ -10,7 +10,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
   const { density, mode, styleInjection, theme } = context.globals;
 
   const Provider = theme === "brand" ? SaltProviderNext : SaltProvider;
-  const themeName = theme === "salt-interim" ? "salt-interim" : "";
+  const themeName = theme === "salt-interim" ? "salt-interim" : undefined;
 
   if (mode === "side-by-side" || mode === "stacked") {
     const isStacked = mode === "stacked";
