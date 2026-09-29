@@ -165,8 +165,6 @@ export const useDragDropNaturalMovement: DragDropHook = ({
           const [lastItem] = dropTargets.slice(-1);
           const lastChildEnd = lastItem.end;
 
-          console.log({ lastItem });
-
           dragLimits.current.start = containerRect[START];
           dragLimits.current.end = lastItem.isOverflowIndicator
             ? Math.max(lastItem.start, containerRect.right - draggedItem.size)

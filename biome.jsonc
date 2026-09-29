@@ -35,6 +35,15 @@
         "!**/packages/*/src/__tests__/**",
         "!**/packages/highcharts-theme/src/examples/**"
       ]
+    },
+    {
+      "path": "./tooling/biome/dev-only-console.grit",
+      "includes": [
+        "**/packages/*/src/**",
+        "!**/packages/*/src/__tests__/**",
+        "!**/packages/*/src/examples/**",
+        "!**/packages/*/src/dependencies/**"
+      ]
     }
   ],
   "assist": { "actions": { "source": { "organizeImports": "on" } } },

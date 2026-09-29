@@ -1,0 +1,14 @@
+language js
+
+// Console output is for developers, so it has to be inside a
+// `process.env.NODE_ENV` check to be removed from production builds. Early
+// returns can't be followed, so the check must enclose the call.
+JsCallExpression(callee=$callee) as $call where {
+  $callee <: `console.$method`,
+  $call <: not within or {
+    JsIfStatement(test=contains `process.env.NODE_ENV`),
+    JsLogicalExpression(left=contains `process.env.NODE_ENV`),
+    JsConditionalExpression(test=contains `process.env.NODE_ENV`)
+  } ,
+  register_diagnostic(span=$call, message="Wrap console calls in a process.env.NODE_ENV check so they are removed from production builds.")
+}
