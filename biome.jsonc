@@ -35,6 +35,14 @@
         "!**/packages/*/src/__tests__/**",
         "!**/packages/highcharts-theme/src/examples/**"
       ]
+    },
+    {
+      "path": "./tooling/biome/named-component-functions.grit",
+      "includes": [
+        "**/packages/*/src/**/*.ts",
+        "**/packages/*/src/**/*.tsx",
+        "!**/packages/*/src/__tests__/**"
+      ]
     }
   ],
   "assist": { "actions": { "source": { "organizeImports": "on" } } },

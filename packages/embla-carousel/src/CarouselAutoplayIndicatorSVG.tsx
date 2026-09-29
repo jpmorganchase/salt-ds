@@ -31,34 +31,26 @@ export interface CarouselAutoplayIndicatorSVGProps
 export const CarouselAutoplayIndicatorSVG = forwardRef<
   SVGSVGElement,
   CarouselAutoplayIndicatorSVGProps
->(
-  (
-    {
-      barRef,
-      className,
-      radius,
-      size,
-      strokeWidth,
-    }: CarouselAutoplayIndicatorSVGProps,
-    ref,
-  ) => {
-    return (
-      <svg
-        className={clsx(withBaseName(), className)}
-        width={size}
-        height={size}
-        aria-hidden
-        ref={ref}
-      >
-        <circle
-          ref={barRef}
-          className={withBaseName("bar")}
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          strokeWidth={strokeWidth}
-        />
-      </svg>
-    );
-  },
-);
+>(function CarouselAutoplayIndicatorSVG(
+  { barRef, className, radius, size, strokeWidth },
+  ref,
+) {
+  return (
+    <svg
+      className={clsx(withBaseName(), className)}
+      width={size}
+      height={size}
+      aria-hidden
+      ref={ref}
+    >
+      <circle
+        ref={barRef}
+        className={withBaseName("bar")}
+        cx={size / 2}
+        cy={size / 2}
+        r={radius}
+        strokeWidth={strokeWidth}
+      />
+    </svg>
+  );
+});
