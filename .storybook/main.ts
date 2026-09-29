@@ -53,9 +53,9 @@ const config: StorybookConfig = {
             getAbsolutePath("@salt-ds/theme"),
             "src/css/baseline.css",
           ),
-          "@salt-ds/theme/css/salt-interim.css": join(
+          "@salt-ds/theme/css/experimental/salt-interim.css": join(
             getAbsolutePath("@salt-ds/theme"),
-            "src/css/salt-interim.css",
+            "src/css/experimental/salt-interim.css",
           ),
           "@salt-ds/theme/css/theme-next.css": join(
             getAbsolutePath("@salt-ds/theme"),

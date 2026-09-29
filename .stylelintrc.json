@@ -53,7 +53,7 @@
     },
     {
       "files": [
-        "**/theme/src/css/salt-interim.css",
+        "**/theme/src/css/experimental/salt-interim.css",
         "**/theme/src/css/theme.css",
         "**/theme/src/css/theme-next.css"
       ],

@@ -12,7 +12,7 @@ import type { MyAppProps } from "../types/mosaic";
 
 import "@salt-ds/theme/css/baseline.css";
 import "@salt-ds/theme/css/theme-next.css";
-import "@salt-ds/theme/css/salt-interim.css";
+import "@salt-ds/theme/css/experimental/salt-interim.css";
 import "@salt-ds/theme/index.css";
 
 import "../css/index.css";
