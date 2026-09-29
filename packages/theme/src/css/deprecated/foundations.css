@@ -40,6 +40,7 @@
   /* Typography */
   --salt-typography-fontFamily: var(--salt-typography-fontFamily-openSans);
   --salt-typography-fontFamily-code: var(--salt-typography-fontFamily-ptMono);
+  --salt-typography-textDecoration-italic: var(--salt-typography-fontStyle-italic);
 
   /* Alpha */
   --salt-color-black-15a: rgba(var(--salt-color-black-rgb), 0.15);

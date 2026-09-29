@@ -32,7 +32,7 @@
 }
 
 .textContainer p {
-  font-style: var(--salt-typography-textDecoration-italic);
+  font-style: var(--salt-typography-fontStyle-italic);
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
 }

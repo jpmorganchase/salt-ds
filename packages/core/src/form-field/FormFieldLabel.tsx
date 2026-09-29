@@ -61,7 +61,7 @@ export const FormFieldLabel = ({
       className={clsx(withBaseName(), withBaseName(intent), className)}
       id={id}
       disabled={disabled}
-      variant="secondary"
+      color={intent === "sentence" ? "primary" : "secondary"}
       onClick={handleClick}
       {...restProps}
     >

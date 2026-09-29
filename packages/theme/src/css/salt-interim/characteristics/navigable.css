@@ -1,0 +1,7 @@
+.salt-theme.salt-interim {
+  --salt-navigable-indicator-hover: var(--salt-palette-neutral-medium);
+  --salt-navigable-accent-indicator-active: var(--salt-palette-accent-medium);
+
+  --salt-navigable-accent-background-active: var(--salt-palette-accent-lowest);
+  --salt-navigable-accent-borderColor-active: var(--salt-palette-accent-medium);
+}

@@ -4,3 +4,9 @@
   --salt-typography-fontFamily-openSans: var(--site-font-family-openSans);
   --salt-typography-fontFamily-amplitude: var(--site-font-family-amplitude);
 }
+
+/* Must out-specify the Salt (Interim) theme's own Roboto definition, regardless of stylesheet order */
+.salt-theme.salt-interim[data-mode="light"],
+.salt-theme.salt-interim[data-mode="dark"] {
+  --salt-typography-fontFamily-roboto: var(--site-font-family-roboto);
+}

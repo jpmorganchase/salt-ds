@@ -72,10 +72,10 @@ export const LivePreview: FC<LivePreviewProps> = ({
               applyClassesTo="scope"
             >
               <div className={styles.example}>
-                {/* Blank theme is needed here to prevent the site theme being inherited */}
+                {/* An explicit theme is needed here to prevent the site theme being inherited */}
                 <ChosenSaltProvider
                   applyClassesTo="scope"
-                  theme=""
+                  theme={theme === "salt-interim" ? "salt-interim" : ""}
                   density={density}
                   mode={mode}
                 >

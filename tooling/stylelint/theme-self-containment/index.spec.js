@@ -64,14 +64,37 @@ describe("salt/theme-self-containment", () => {
     await expect(lintTheme(directory, "theme-next.css")).resolves.toEqual([]);
   });
 
+  it("resolves nested entries against the theme CSS root", async () => {
+    const directory = createTheme({
+      "experimental/salt-interim.css": [
+        "@import url(../foundations/index.css);",
+        "@import url(../salt-interim/tokens.css);",
+      ].join("\n"),
+      "foundations/index.css": ".salt-theme { --salt-foundation: #000000; }",
+      "salt-interim/tokens.css":
+        ".salt-interim { --salt-interim-token: var(--salt-foundation); }",
+    });
+
+    await expect(
+      lintTheme(directory, "experimental/salt-interim.css"),
+    ).resolves.toEqual([]);
+  });
+
   it.each([
     ["theme-next.css", "legacy"],
     ["theme.css", "next"],
+    ["experimental/salt-interim.css", "next"],
+    ["experimental/salt-interim.css", "legacy"],
+    ["experimental/salt-interim.css", "deprecated"],
   ])("rejects %s imports from %s", async (entry, disallowedDirectory) => {
     const dependency = `${disallowedDirectory}/tokens.css`;
+    const importPath = path.posix.relative(
+      path.posix.dirname(entry),
+      dependency,
+    );
     const directory = createTheme({
       [dependency]: ".salt-theme { --salt-token: #000000; }",
-      [entry]: `@import url(${dependency});`,
+      [entry]: `@import url(${importPath});`,
     });
     const warnings = await lintTheme(directory, entry);
 

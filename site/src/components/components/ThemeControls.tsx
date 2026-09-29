@@ -1,65 +1,39 @@
 import {
-  StackLayout,
-  Text,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@salt-ds/core";
-import { useLivePreviewControls } from "./LivePreviewProvider";
-import styles from "./ThemeControls.module.css";
+  type LivePreviewContextType,
+  useLivePreviewControls,
+} from "./LivePreviewProvider";
+import { type ThemeOption, ThemeSettingsOverlay } from "./ThemeSettingsOverlay";
 
-export function ThemeControls() {
-  const { density, mode, theme, setDensity, setMode, setTheme } =
-    useLivePreviewControls();
+type Theme = NonNullable<LivePreviewContextType["theme"]>;
+
+const themeOptions: ThemeOption<Theme>[] = [
+  { value: "legacy", label: "Legacy" },
+  { value: "brand", label: "J.P. Morgan" },
+  { value: "salt-interim", label: "Salt (Interim)" },
+];
+
+export function ThemeControls({ scope }: { scope: "component" | "pattern" }) {
+  const {
+    density,
+    mode,
+    theme,
+    setDensity,
+    setMode,
+    setTheme,
+    resetToDefaults,
+  } = useLivePreviewControls();
 
   return (
-    <StackLayout gap={1} padding={{ md: 1 }}>
-      <StackLayout gap={0.75} align="baseline" padding={0}>
-        <Text styleAs="label" color="secondary">
-          <strong>Density</strong>
-        </Text>
-        <ToggleButtonGroup
-          className={styles.toggleGroup}
-          aria-label="Select density"
-          value={density}
-          onChange={(event) => setDensity(event.currentTarget.value as any)}
-        >
-          <ToggleButton value="high">High</ToggleButton>
-          <ToggleButton value="medium">Medium</ToggleButton>
-          <ToggleButton value="low">Low</ToggleButton>
-          <ToggleButton value="touch">Touch</ToggleButton>
-          <ToggleButton value="mobile">Mobile</ToggleButton>
-        </ToggleButtonGroup>
-      </StackLayout>
-      <StackLayout gap={0.75} align="baseline" padding={0}>
-        <Text styleAs="label" color="secondary">
-          <strong>Mode</strong>
-        </Text>
-        <ToggleButtonGroup
-          className={styles.toggleGroup}
-          aria-label="Select mode"
-          onChange={(event) => setMode(event.currentTarget.value as any)}
-          value={mode}
-        >
-          <ToggleButton value="system">System</ToggleButton>
-          <ToggleButton value="light">Light</ToggleButton>
-          <ToggleButton value="dark">Dark</ToggleButton>
-        </ToggleButtonGroup>
-      </StackLayout>
-      <StackLayout gap={0.75} align="baseline" padding={0}>
-        <Text styleAs="label" color="secondary">
-          <strong>Themes</strong>
-        </Text>
-
-        <ToggleButtonGroup
-          className={styles.toggleGroup}
-          aria-label="Select themes"
-          onChange={(event) => setTheme(event.currentTarget.value as any)}
-          value={theme}
-        >
-          <ToggleButton value="legacy">Legacy</ToggleButton>
-          <ToggleButton value="brand">J.P. Morgan</ToggleButton>
-        </ToggleButtonGroup>
-      </StackLayout>
-    </StackLayout>
+    <ThemeSettingsOverlay<Theme>
+      scope={scope}
+      density={density}
+      onDensityChange={setDensity}
+      mode={mode}
+      onModeChange={setMode}
+      theme={theme}
+      themeOptions={themeOptions}
+      onThemeChange={setTheme}
+      onReset={resetToDefaults}
+    />
   );
 }
