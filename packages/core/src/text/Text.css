@@ -299,7 +299,7 @@ label.saltText,
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
-  font-weight: var(--salt-text-fontWeight);
+  font-weight: var(--salt-text-label-fontWeight);
 }
 
 /* Label emphasis strong */
@@ -312,5 +312,5 @@ label.saltText strong,
 label.saltText small,
 .saltText-label.saltText small {
   font-size: inherit;
-  font-weight: var(--salt-text-fontWeight-small);
+  font-weight: var(--salt-text-label-fontWeight-small);
 }

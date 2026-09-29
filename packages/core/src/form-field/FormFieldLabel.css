@@ -1,5 +1,7 @@
 .saltFormFieldLabel.saltText {
-  font-weight: var(--saltFormField-label-fontWeight, var(--salt-text-fontWeight-strong));
+  font-size: var(--formFieldLabel-fontSize);
+  line-height: var(--formFieldLabel-lineHeight);
+  font-weight: var(--saltFormField-label-fontWeight, var(--formFieldLabel-fontWeight));
   width: 100%;
 }
 
@@ -12,12 +14,21 @@
   width: fit-content;
 }
 
-.saltFormFieldLabel-necessityLabel {
-  font-weight: var(--salt-text-fontWeight);
-  font-style: var(--salt-typography-fontStyle-italic);
+.saltFormFieldLabel-label {
+  --formFieldLabel-fontSize: var(--salt-text-label-fontSize);
+  --formFieldLabel-lineHeight: var(--salt-text-label-lineHeight);
+  --formFieldLabel-fontWeight: var(--salt-text-label-fontWeight-strong);
+  --formFieldLabel-necessity-fontWeight: var(--salt-text-label-fontWeight);
 }
 
-.saltFormFieldLabel-sentence.saltText {
-  color: var(--salt-content-primary-foreground);
-  font-size: var(--salt-text-fontSize);
+.saltFormFieldLabel-sentence {
+  --formFieldLabel-fontSize: var(--salt-text-fontSize);
+  --formFieldLabel-lineHeight: var(--salt-text-lineHeight);
+  --formFieldLabel-fontWeight: var(--salt-text-fontWeight-strong);
+  --formFieldLabel-necessity-fontWeight: var(--salt-text-fontWeight);
+}
+
+.saltFormFieldLabel-necessityLabel {
+  font-style: var(--salt-typography-fontStyle-italic);
+  font-weight: var(--formFieldLabel-necessity-fontWeight);
 }
