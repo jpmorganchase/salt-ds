@@ -12,8 +12,8 @@
 
   --salt-container-bold-borderColor: var(--salt-palette-alpha-contrast-medium);
   --salt-container-bold-borderColor-disabled: var(--salt-palette-alpha-contrast-lower);
-  --salt-container-borderColor: var(--salt-palette-alpha-contrast-medium);
-  --salt-container-subtle-borderColor: var(--salt-palette-alpha-contrast-medium);
+  --salt-container-borderColor: var(--salt-palette-alpha-contrast-mediumLow);
+  --salt-container-subtle-borderColor: var(--salt-palette-alpha-contrast-lower);
 
   --salt-container-ghost-bold-borderColor: var(--salt-palette-alpha-contrast-medium);
   --salt-container-ghost-borderColor: var(--salt-palette-alpha-contrast-mediumLow);

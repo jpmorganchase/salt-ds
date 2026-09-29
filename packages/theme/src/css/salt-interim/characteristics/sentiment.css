@@ -1,4 +1,4 @@
-.salt-interim.salt-theme {
+.salt-theme.salt-interim {
   --salt-sentiment-negative-foreground-informative: var(--salt-palette-negative-mediumHigh);
   --salt-sentiment-positive-foreground-informative: var(--salt-palette-positive-mediumHigh);
 
