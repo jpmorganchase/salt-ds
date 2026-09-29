@@ -59,12 +59,15 @@ export type DateInputRangeDetails = {
 };
 
 /**
- * Enum to identify the field being parsed
+ * Identifies the field being parsed
  */
-export enum DateParserField {
-  START = "start",
-  END = "end",
-}
+export const DateParserField = {
+  START: "start",
+  END: "end",
+} as const;
+
+export type DateParserField =
+  (typeof DateParserField)[keyof typeof DateParserField];
 
 /**
  * Props for the DateInputRange component.
