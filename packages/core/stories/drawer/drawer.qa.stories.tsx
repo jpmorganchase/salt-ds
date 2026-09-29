@@ -116,6 +116,12 @@ const DrawerTemplate: StoryFn<typeof Drawer> = () => {
             <Button sentiment="accented">Save and continue</Button>
           </DrawerFooter>
         </FakeDrawer>
+        <FakeDrawer>
+          <DrawerHeader header="Title without actions" />
+          <DrawerContent>
+            <Text>{loremText}</Text>
+          </DrawerContent>
+        </FakeDrawer>
       </StackLayout>
       <StackLayout direction="row" gap={3}>
         <FakeDrawer>
