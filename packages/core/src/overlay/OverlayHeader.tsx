@@ -50,6 +50,7 @@ export const OverlayHeader = forwardRef<HTMLDivElement, OverlayHeaderProps>(
     const descriptionId = useId();
     const hasHeading = Boolean(header || preheader);
     const hasDescription = Boolean(description);
+    const hasActions = Boolean(actions);
 
     useIsomorphicLayoutEffect(() => {
       setHeaderId?.(hasHeading ? headingId : undefined);
@@ -68,7 +69,15 @@ export const OverlayHeader = forwardRef<HTMLDivElement, OverlayHeaderProps>(
     }, [hasDescription, descriptionId, setDescriptionId]);
 
     return (
-      <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
+      <div
+        className={clsx(
+          withBaseName(),
+          { [withBaseName("withActions")]: hasActions },
+          className,
+        )}
+        {...rest}
+        ref={ref}
+      >
         <div className={withBaseName("container")}>
           {hasHeading && (
             <H2 id={headingId} styleAs="h4" className={withBaseName("header")}>
@@ -86,7 +95,7 @@ export const OverlayHeader = forwardRef<HTMLDivElement, OverlayHeaderProps>(
             </Text>
           )}
         </div>
-        {actions && (
+        {hasActions && (
           <div className={withBaseName("actionsContainer")}>{actions}</div>
         )}
       </div>
