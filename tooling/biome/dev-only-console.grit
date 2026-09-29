@@ -1,14 +1,43 @@
 language js
 
-// Console output is for developers, so it has to be inside a
-// `process.env.NODE_ENV` check to be removed from production builds. Early
-// returns can't be followed, so the check must enclose the call.
+// Console output is for developers, so it has to be inside a development-only
+// branch to be removed from production builds: the consequent of an `if` or
+// ternary, or the right side of `&&`, whose condition checks
+// `process.env.NODE_ENV !== "production"` (or `=== "development"`), alone or
+// as part of an `&&` chain. Early returns and `else` branches of production
+// checks can't be followed, so the check must enclose the call.
+pattern dev_check() {
+  or {
+    `process.env.NODE_ENV !== "production"`,
+    `process.env.NODE_ENV != "production"`,
+    `"production" !== process.env.NODE_ENV`,
+    `"production" != process.env.NODE_ENV`,
+    `process.env.NODE_ENV === "development"`,
+    `process.env.NODE_ENV == "development"`,
+    `"development" === process.env.NODE_ENV`,
+    `"development" == process.env.NODE_ENV`
+  }
+}
+
+pattern dev_condition() {
+  or {
+    dev_check(),
+    JsParenthesizedExpression(expression=dev_condition()),
+    `$left && $right` where {
+      or { $left <: dev_condition(), $right <: dev_condition() }
+    }
+  }
+}
+
 JsCallExpression(callee=$callee) as $call where {
   $callee <: `console.$method`,
   $call <: not within or {
-    JsIfStatement(test=contains `process.env.NODE_ENV`),
-    JsLogicalExpression(left=contains `process.env.NODE_ENV`),
-    JsConditionalExpression(test=contains `process.env.NODE_ENV`)
+    JsIfStatement(test=dev_condition(), consequent=contains $call),
+    JsConditionalExpression(test=dev_condition(), consequent=contains $call),
+    `$guard && $guarded` where {
+      $guard <: dev_condition(),
+      $guarded <: contains $call
+    }
   } ,
-  register_diagnostic(span=$call, message="Wrap console calls in a process.env.NODE_ENV check so they are removed from production builds.")
+  register_diagnostic(span=$call, message="Put console calls in a process.env.NODE_ENV !== \"production\" branch so they are removed from production builds.")
 }
