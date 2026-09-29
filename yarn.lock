@@ -6730,7 +6730,7 @@ __metadata:
     "@typescript/typescript-win32-x64":
       optional: true
   bin:
-    tsc: ./bin/tsc
+    tsc: bin/tsc
   checksum: 10/b0179005349b43dc1febb35c4e79162cdf89b84eae60f6deac142429109041e07582e69a6aacf5a897e085869686d4512ea444a10acf5b5aa2b60910f82a19ca
   languageName: node
   linkType: hard
