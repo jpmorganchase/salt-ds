@@ -3,7 +3,6 @@ import type {
   AriaAttributes,
   CSSProperties,
   KeyboardEvent as ReactKeyboardEvent,
-  PointerEvent as ReactPointerEvent,
 } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -24,7 +23,12 @@ interface DragState extends Bounds {
   pointerId: number;
   origin: number;
   originSize: number;
+  captured: boolean;
 }
+
+type Interaction = "inactive" | "hover" | "active";
+
+type HitEvent = Pick<MouseEvent, "clientX" | "clientY" | "target">;
 
 export interface SeparatorProps
   extends Pick<
@@ -34,7 +38,6 @@ export interface SeparatorProps
   role: "separator";
   tabIndex: number;
   ref: (element: HTMLElement | null) => void;
-  onPointerDown: (event: ReactPointerEvent<HTMLElement>) => void;
   onKeyDown: (event: ReactKeyboardEvent<HTMLElement>) => void;
   onFocus: () => void;
 }
@@ -51,12 +54,36 @@ export interface UseDrawerResizeProps {
 export interface UseDrawerResizeResult {
   sizeStyle: CSSProperties | undefined;
   isResizing: boolean;
+  isHovered: boolean;
+  isInHitArea: (event: HitEvent) => boolean;
   separatorProps: SeparatorProps;
 }
 
 const KEYBOARD_STEP = 8;
 const KEYBOARD_STEP_MULTIPLIER = 5;
 const PROBE_SIZE = 1e6;
+// WCAG 2.5.8 (AA) minimum target size.
+const MIN_TARGET_SIZE = 24;
+
+const isElement = (target: EventTarget | null): target is Element =>
+  target !== null && (target as Node).nodeType === 1;
+
+/** Shows the cursor everywhere in the document, over any element's own cursor. */
+const setDocumentCursor = (ownerDocument: Document, cursor: string) => {
+  const view = ownerDocument.defaultView as (Window & typeof globalThis) | null;
+  if (!view || !ownerDocument.adoptedStyleSheets) return undefined;
+  const sheet = new view.CSSStyleSheet();
+  sheet.replaceSync(`*, *:hover { cursor: ${cursor} !important; }`);
+  ownerDocument.adoptedStyleSheets = [
+    ...ownerDocument.adoptedStyleSheets,
+    sheet,
+  ];
+  return () => {
+    ownerDocument.adoptedStyleSheets = ownerDocument.adoptedStyleSheets.filter(
+      (adopted) => adopted !== sheet,
+    );
+  };
+};
 
 const isHorizontal = (position: DrawerPosition) =>
   position === "left" || position === "right";
@@ -117,7 +144,7 @@ export function useDrawerResize({
   const size =
     isControlled || sizeAxisHorizontal === horizontal ? sizeState : undefined;
 
-  const [isResizing, setIsResizing] = useState(false);
+  const [interaction, setInteraction] = useState<Interaction>("inactive");
   const [metrics, setMetrics] = useState<(Bounds & { current: number }) | null>(
     null,
   );
@@ -156,29 +183,80 @@ export function useDrawerResize({
     },
   );
 
-  const onPointerDown = useEventCallback(
-    (event: ReactPointerEvent<HTMLElement>) => {
-      if (event.button !== 0 || !event.isPrimary) return;
-      const current = readMetrics();
-      if (!current) return;
+  // The handle's box extended outward, away from the content, to the minimum target size.
+  const getHitRect = () => {
+    const handle = handleRef.current;
+    if (!handle) return null;
+    const { left, top, right, bottom, width, height } =
+      handle.getBoundingClientRect();
+    const outside = Math.max(
+      0,
+      MIN_TARGET_SIZE - (horizontal ? width : height),
+    );
+    return {
+      left: position === "right" ? left - outside : left,
+      right: position === "left" ? right + outside : right,
+      top: position === "bottom" ? top - outside : top,
+      bottom: position === "top" ? bottom + outside : bottom,
+    };
+  };
 
-      event.preventDefault();
-      dragRef.current = {
-        pointerId: event.pointerId,
-        origin: horizontal ? event.clientX : event.clientY,
-        originSize: current.current,
-        min: current.min,
-        max: current.max,
-      };
-      sizeRef.current = current.current;
-      handleRef.current?.focus();
-      setIsResizing(true);
-    },
-  );
+  // Everything outside the modal drawer is inert, so any other element under the pointer is a layer above it.
+  const isViableTarget = (target: EventTarget | null) => {
+    if (!element) return false;
+    if (!isElement(target)) return true;
+    return (
+      element.contains(target) ||
+      target.contains(element) ||
+      target.closest("[inert]") !== null
+    );
+  };
 
-  const handleDragMove = useEventCallback((event: PointerEvent) => {
-    const drag = dragRef.current;
-    if (!drag || event.pointerId !== drag.pointerId) return;
+  const isInHitArea = useEventCallback((event: HitEvent) => {
+    if (!enabled) return false;
+    const rect = getHitRect();
+    if (!rect) return false;
+    const { clientX: x, clientY: y } = event;
+    return (
+      x >= rect.left &&
+      x <= rect.right &&
+      y >= rect.top &&
+      y <= rect.bottom &&
+      isViableTarget(event.target)
+    );
+  });
+
+  const startDrag = useEventCallback((event: PointerEvent) => {
+    const current = readMetrics();
+    if (!current) return;
+
+    event.preventDefault();
+    dragRef.current = {
+      pointerId: event.pointerId,
+      origin: horizontal ? event.clientX : event.clientY,
+      originSize: current.current,
+      min: current.min,
+      max: current.max,
+      captured: false,
+    };
+    sizeRef.current = current.current;
+    handleRef.current?.focus({
+      preventScroll: true,
+      focusVisible: false,
+    } as FocusOptions);
+    setInteraction("active");
+  });
+
+  const moveDrag = useEventCallback((event: PointerEvent, drag: DragState) => {
+    // Captured on the first move rather than on press, so a press without a drag still clicks.
+    if (!drag.captured) {
+      drag.captured = true;
+      try {
+        handleRef.current?.setPointerCapture(event.pointerId);
+      } catch {
+        // The pointer is no longer active.
+      }
+    }
 
     const coordinate = horizontal ? event.clientX : event.clientY;
     const direction = growsWithCoordinate(position) ? 1 : -1;
@@ -191,11 +269,15 @@ export function useDrawerResize({
     }
   });
 
-  const handleDragEnd = useEventCallback((event: Event) => {
+  const endDrag = useEventCallback((event: Event) => {
     const drag = dragRef.current;
     if (!drag) return;
     dragRef.current = null;
-    setIsResizing(false);
+    const stillHovered =
+      "pointerType" in event &&
+      (event as PointerEvent).pointerType !== "touch" &&
+      isInHitArea(event as PointerEvent);
+    setInteraction(stillHovered ? "hover" : "inactive");
     const finalSize = sizeRef.current;
     if (finalSize !== null && finalSize !== drag.originSize) {
       onResizeEnd?.(event, finalSize);
@@ -203,38 +285,98 @@ export function useDrawerResize({
   });
 
   useEffect(() => {
-    if (!isResizing || !targetWindow) return;
-    if (!element) {
-      dragRef.current = null;
-      setIsResizing(false);
-      return;
-    }
+    if (!enabled || !element || !targetWindow) return;
+    const ownerDocument = targetWindow.document;
 
-    const body = targetWindow.document.body;
-    const previousCursor = body.style.cursor;
-    body.style.cursor = horizontal ? "ew-resize" : "ns-resize";
+    const onPointerDown = (event: PointerEvent) => {
+      if (event.defaultPrevented || !event.isPrimary) return;
+      if (event.pointerType === "mouse" && event.button > 0) return;
+      if (dragRef.current || !isInHitArea(event)) return;
+      startDrag(event);
+    };
 
-    targetWindow.addEventListener("pointermove", handleDragMove);
-    targetWindow.addEventListener("pointerup", handleDragEnd);
-    targetWindow.addEventListener("pointercancel", handleDragEnd);
-    targetWindow.addEventListener("blur", handleDragEnd);
-    targetWindow.addEventListener("contextmenu", handleDragEnd);
+    const onPointerMove = (event: PointerEvent) => {
+      if (event.defaultPrevented) return;
+      const drag = dragRef.current;
+      if (!drag) {
+        // Touch has no hover, so it would leave the hover state behind.
+        if (event.pointerType !== "touch") {
+          setInteraction(isInHitArea(event) ? "hover" : "inactive");
+        }
+        return;
+      }
+      if (event.pointerId !== drag.pointerId) return;
+      // No buttons pressed means the release was missed, e.g. over an iframe.
+      if (event.buttons === 0) {
+        endDrag(event);
+        return;
+      }
+      moveDrag(event, drag);
+    };
+
+    const onPointerUp = (event: PointerEvent) => {
+      if (event.defaultPrevented) return;
+      if (event.pointerType === "mouse" && event.button > 0) return;
+      if (dragRef.current?.pointerId !== event.pointerId) return;
+      event.preventDefault();
+      endDrag(event);
+    };
+
+    const onPointerCancel = (event: PointerEvent) => {
+      if (dragRef.current?.pointerId === event.pointerId) endDrag(event);
+    };
+
+    const onContextMenu = (event: MouseEvent) => {
+      if (!event.defaultPrevented) endDrag(event);
+    };
+
+    // "pointerout" doesn't fire when the pointer moves into an iframe, so hover would stick.
+    const onPointerOut = (event: PointerEvent) => {
+      if (
+        !dragRef.current &&
+        isElement(event.relatedTarget) &&
+        event.relatedTarget.tagName === "IFRAME"
+      ) {
+        setInteraction("inactive");
+      }
+    };
+
+    ownerDocument.addEventListener("pointerdown", onPointerDown, true);
+    ownerDocument.addEventListener("pointermove", onPointerMove);
+    ownerDocument.addEventListener("pointerup", onPointerUp, true);
+    ownerDocument.addEventListener("pointercancel", onPointerCancel);
+    ownerDocument.addEventListener("contextmenu", onContextMenu, true);
+    ownerDocument.addEventListener("pointerout", onPointerOut);
+    targetWindow.addEventListener("blur", endDrag);
     return () => {
-      body.style.cursor = previousCursor;
-      targetWindow.removeEventListener("pointermove", handleDragMove);
-      targetWindow.removeEventListener("pointerup", handleDragEnd);
-      targetWindow.removeEventListener("pointercancel", handleDragEnd);
-      targetWindow.removeEventListener("blur", handleDragEnd);
-      targetWindow.removeEventListener("contextmenu", handleDragEnd);
+      ownerDocument.removeEventListener("pointerdown", onPointerDown, true);
+      ownerDocument.removeEventListener("pointermove", onPointerMove);
+      ownerDocument.removeEventListener("pointerup", onPointerUp, true);
+      ownerDocument.removeEventListener("pointercancel", onPointerCancel);
+      ownerDocument.removeEventListener("contextmenu", onContextMenu, true);
+      ownerDocument.removeEventListener("pointerout", onPointerOut);
+      targetWindow.removeEventListener("blur", endDrag);
+      dragRef.current = null;
+      setInteraction("inactive");
     };
   }, [
-    isResizing,
-    targetWindow,
+    enabled,
     element,
-    horizontal,
-    handleDragMove,
-    handleDragEnd,
+    targetWindow,
+    isInHitArea,
+    startDrag,
+    moveDrag,
+    endDrag,
   ]);
+
+  const showResizeCursor = interaction !== "inactive";
+  useEffect(() => {
+    if (!showResizeCursor || !targetWindow) return;
+    return setDocumentCursor(
+      targetWindow.document,
+      horizontal ? "ew-resize" : "ns-resize",
+    );
+  }, [showResizeCursor, targetWindow, horizontal]);
 
   const onKeyDown = useEventCallback(
     (event: ReactKeyboardEvent<HTMLElement>) => {
@@ -358,7 +500,9 @@ export function useDrawerResize({
       size !== undefined
         ? { [horizontal ? "width" : "height"]: size }
         : undefined,
-    isResizing,
+    isResizing: interaction === "active",
+    isHovered: interaction === "hover",
+    isInHitArea,
     separatorProps: {
       role: "separator",
       tabIndex: 0,
@@ -367,7 +511,6 @@ export function useDrawerResize({
       "aria-valuenow": metrics ? Math.round(metrics.current) : undefined,
       "aria-valuemin": metrics ? Math.round(metrics.min) : undefined,
       "aria-valuemax": metrics ? Math.round(metrics.max) : undefined,
-      onPointerDown,
       onKeyDown,
       onFocus,
     },

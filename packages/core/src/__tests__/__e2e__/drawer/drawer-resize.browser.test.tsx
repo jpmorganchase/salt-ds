@@ -233,7 +233,7 @@ describe("GIVEN a resizable Drawer", () => {
       await dispatchPointer(handle(), "pointerdown", start.x, start.y);
       await dispatchPointer(handle(), "pointermove", start.x + 50, start.y);
       await dispatchPointer(handle(), "pointercancel", start.x + 50, start.y);
-      await dispatchPointer(window, "pointermove", start.x + 150, start.y);
+      await dispatchPointer(document, "pointermove", start.x + 150, start.y);
 
       await expect.poll(() => drawerSize("left")).toBeCloseTo(350, 0);
     });
@@ -273,12 +273,32 @@ describe("GIVEN a resizable Drawer", () => {
       expect(drawerSize("left")).toBeCloseTo(300, 0);
     });
 
-    it("dismisses rather than resizes on a press just outside the drawer", async () => {
+    it("resizes when dragged from just outside its edge", async () => {
       await renderWithSalt(<DismissibleFixture />);
       await waitForOpen();
 
       const rect = drawer().getBoundingClientRect();
-      const x = rect.right + 3;
+      const x = rect.right + 5;
+      const y = rect.top + 120;
+      await dispatchPointer(
+        document.elementFromPoint(x, y) as Element,
+        "pointerdown",
+        x,
+        y,
+      );
+      await dispatchPointer(document, "pointermove", x + 50, y);
+      await dispatchPointer(document, "pointerup", x + 50, y);
+
+      await expect.element(page.getByRole("dialog")).toBeInTheDocument();
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(350, 0);
+    });
+
+    it("dismisses rather than resizes on a press further outside the drawer", async () => {
+      await renderWithSalt(<DismissibleFixture />);
+      await waitForOpen();
+
+      const rect = drawer().getBoundingClientRect();
+      const x = rect.right + 40;
       const y = rect.top + 120;
       await dispatchPointer(
         document.elementFromPoint(x, y) as Element,

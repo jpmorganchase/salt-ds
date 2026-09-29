@@ -48,7 +48,6 @@
   bottom: 0;
   right: 0;
   width: var(--drawerResizeHandle-hitSize);
-  cursor: ew-resize;
 }
 
 .saltDrawerResizeHandle-left::before,
@@ -65,7 +64,6 @@
   bottom: 0;
   left: 0;
   width: var(--drawerResizeHandle-hitSize);
-  cursor: ew-resize;
 }
 
 .saltDrawerResizeHandle-right::before,
@@ -88,7 +86,6 @@
   right: 0;
   bottom: 0;
   height: var(--drawerResizeHandle-hitSize);
-  cursor: ns-resize;
 }
 
 .saltDrawerResizeHandle-top::before,
@@ -105,7 +102,6 @@
   right: 0;
   top: 0;
   height: var(--drawerResizeHandle-hitSize);
-  cursor: ns-resize;
 }
 
 .saltDrawerResizeHandle-bottom::before,
@@ -117,7 +113,7 @@
 }
 
 /* Styles applied on hover */
-.saltDrawerResizeHandle:hover {
+.saltDrawerResizeHandle-hovered {
   --drawerResizeHandle-background: var(--drawerResizeHandle-background-hover);
   --drawerResizeHandle-dot-background: var(--drawerResizeHandle-dot-background-hover);
 }

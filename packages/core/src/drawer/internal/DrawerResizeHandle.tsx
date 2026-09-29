@@ -12,13 +12,14 @@ export interface DrawerResizeHandleProps
   extends ComponentPropsWithoutRef<"div"> {
   position: NonNullable<DrawerProps["position"]>;
   resizing?: boolean;
+  hovered?: boolean;
 }
 
 export const DrawerResizeHandle = forwardRef<
   HTMLDivElement,
   DrawerResizeHandleProps
 >(function DrawerResizeHandle(props, ref) {
-  const { position, resizing, className, ...rest } = props;
+  const { position, resizing, hovered, className, ...rest } = props;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -33,7 +34,10 @@ export const DrawerResizeHandle = forwardRef<
       className={clsx(
         withBaseName(),
         withBaseName(position),
-        { [withBaseName("resizing")]: resizing },
+        {
+          [withBaseName("resizing")]: resizing,
+          [withBaseName("hovered")]: hovered,
+        },
         className,
       )}
       {...rest}

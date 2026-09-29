@@ -143,21 +143,24 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       onOpenChange,
     });
 
+    const { sizeStyle, isResizing, isHovered, isInHitArea, separatorProps } =
+      useDrawerResize({
+        enabled: resizable,
+        position,
+        element: elements.floating,
+        size,
+        onResize,
+        onResizeEnd,
+      });
+
     const { getFloatingProps } = useInteractions([
       useClick(context),
-      useDismiss(context, { outsidePress: !disableDismiss }),
+      useDismiss(context, {
+        outsidePress: disableDismiss ? false : (event) => !isInHitArea(event),
+      }),
     ]);
 
     const handleRef = useForkRef<HTMLDivElement>(floating, ref);
-
-    const { sizeStyle, isResizing, separatorProps } = useDrawerResize({
-      enabled: resizable,
-      position,
-      element: elements.floating,
-      size,
-      onResize,
-      onResizeEnd,
-    });
 
     useEffect(() => {
       if (open && !showComponent) {
@@ -226,6 +229,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
               <DrawerResizeHandle
                 position={position}
                 resizing={isResizing}
+                hovered={isHovered}
                 aria-label="Resize drawer"
                 aria-controls={drawerId}
                 {...separatorProps}
