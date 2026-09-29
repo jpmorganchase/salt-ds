@@ -35,6 +35,27 @@
         "!**/packages/*/src/__tests__/**",
         "!**/packages/highcharts-theme/src/examples/**"
       ]
+    },
+    {
+      "path": "./tooling/biome/make-prefixer-names.grit",
+      "includes": ["**/packages/*/src/**", "!**/packages/*/src/__tests__/**"]
+    },
+    {
+      "path": "./tooling/biome/css-injection-test-id.grit",
+      "includes": ["**/packages/*/src/**", "!**/packages/*/src/__tests__/**"]
+    },
+    {
+      // Matches the scope of the react noRestrictedImports override below.
+      "path": "./tooling/biome/no-react-namespace-restricted-hooks.grit",
+      "includes": [
+        "**/packages/*/src/**",
+        "!**/packages/*/src/__tests__/**",
+        "!**/packages/highcharts-theme/src/examples/**"
+      ]
+    },
+    {
+      "path": "./tooling/biome/stories-package-imports.grit",
+      "includes": ["**/packages/*/stories/**"]
     }
   ],
   "assist": { "actions": { "source": { "organizeImports": "on" } } },
@@ -238,6 +259,26 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    {
+      // Package source uses named exports so they re-export cleanly from each package index.
+      "includes": [
+        "**/packages/*/src/**",
+        "!**/packages/*/src/__tests__/**",
+        // Module declarations for CSS imports need default exports.
+        "!**/packages/*/src/**/*.d.ts",
+        "!**/packages/*/src/examples/**",
+        "!**/packages/ag-grid-theme/src/dependencies/**",
+        // Generated flag components.
+        "!**/packages/countries/src/components/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "error"
           }
         }
       }

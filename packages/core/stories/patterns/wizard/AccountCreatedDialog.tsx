@@ -4,7 +4,7 @@ import {
   DialogActions,
   DialogContent,
   DialogHeader,
-} from "../../../src";
+} from "@salt-ds/core";
 
 export interface ConfirmationDialogProps {
   open: boolean;
