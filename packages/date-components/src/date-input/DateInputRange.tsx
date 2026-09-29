@@ -69,6 +69,12 @@ export const DateParserField = {
 export type DateParserField =
   (typeof DateParserField)[keyof typeof DateParserField];
 
+// Keeps `DateParserField.START` and `DateParserField.END` usable as types, as they were with the enum.
+export declare namespace DateParserField {
+  type START = typeof DateParserField.START;
+  type END = typeof DateParserField.END;
+}
+
 /**
  * Props for the DateInputRange component.
  */
