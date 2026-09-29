@@ -35,7 +35,7 @@
     "lint:style": "stylelint -f verbose \"packages/*/src/**/*.css\"",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "yarn build:ag-grid-theme && yarn bundle:css && storybook build --stats-json",
-    "typecheck": "tsgo --noEmit",
+    "typecheck": "yarn node ./scripts/typecheck.mjs",
     "chromatic": "chromatic"
   },
   "dependencies": {
@@ -58,7 +58,7 @@
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.3.7",
     "@types/tinycolor2": "^1.4.3",
-    "@typescript/native-preview": "7.0.0-dev.20260601.1",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "@vitejs/plugin-react": "^6.0.4",
     "ag-grid-community": "^36.0.0",
     "ag-grid-enterprise": "^36.0.0",

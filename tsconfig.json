@@ -40,7 +40,6 @@
   },
   "include": [
     "packages",
-    "integration/toolkit",
     ".storybook/decorators",
     "docs",
     "tooling",
