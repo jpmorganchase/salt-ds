@@ -38,7 +38,7 @@ export const themes: Array<{ displayName: string; value: ThemeType }> = [
     value: "legacy",
   },
   {
-    displayName: "Salt (Interim)",
+    displayName: "J.P. Morgan (Interim)",
     value: "salt-interim",
   },
 ];

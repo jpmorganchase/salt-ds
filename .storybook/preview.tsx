@@ -52,7 +52,7 @@ const preview: Preview = {
         items: [
           { value: "brand", title: "Brand" },
           { value: "legacy", title: "Legacy" },
-          { value: "salt-interim", title: "Salt (Interim)" },
+          { value: "salt-interim", title: "J.P. Morgan (Interim)" },
         ],
         title: "Theme",
       },
