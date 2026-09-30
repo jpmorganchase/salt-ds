@@ -5,11 +5,14 @@ A benchmark for AI coding agents that build React interfaces with the Salt Desig
 1. **Does Salt context help agents produce better UI?** We run the same tasks under arms that differ only in the Salt context the agent gets (none, docs, an MCP server, a skill or a combination) and compare pass rates task by task.
 2. **When it doesn't, what should we improve?** Every failed check is traced to a cause: a guidance gap, unclear guidance, a retrieval miss, tool misuse, misinterpretation, a prior override, an implementation error or an eval defect. Each cause points to a different fix.
 
+
+
 ## Status
 
-Design phase. These documents are the brief for the code; there is no harness yet. Next steps are in [roadmap.md](./roadmap.md), starting with Phase 0.
+Design phase. Next steps are in [roadmap.md](./roadmap.md), starting with Phase 0.
 
 ## Scope
+
 
 | salt-eval is                                               | salt-eval isn't                                                                 |
 | ---------------------------------------------------------- | ------------------------------------------------------------------------------- |
@@ -17,6 +20,9 @@ Design phase. These documents are the brief for the code; there is no harness ye
 | Product-agnostic: any context product can be an arm        | A model leaderboard                                                             |
 | Real coding agents working in real starting points         | A single "Salt compliance" score                                                |
 | Automated checks, validated judgment and transcript review | A merge gate for Salt pull requests, until its numbers earn that                |
+
+
+
 
 ## Principles
 
@@ -28,6 +34,8 @@ Design phase. These documents are the brief for the code; there is no harness ye
 6. **Read transcripts before trusting numbers.** A score tells you which transcripts to read, not what happened.
 7. **Change one thing at a time,** and report every difference with its noise floor.
 
+
+
 ## Reading order
 
 1. [CONTEXT.md](./CONTEXT.md): the vocabulary. Use these terms in tasks, code and conversation.
@@ -37,10 +45,10 @@ Design phase. These documents are the brief for the code; there is no harness ye
 5. [docs/architecture.md](./docs/architecture.md): the harness that runs and records a trial.
 6. [roadmap.md](./roadmap.md): what to build next and how we'll know it worked.
 
-Background: [docs/prior-art.md](./docs/prior-art.md) covers what we took from Atlassian, Anthropic and our own earlier attempts. [docs/adr/](./docs/adr/) records decisions, starting with [why salt-eval lives here](./docs/adr/0001-salt-eval-lives-at-repo-root.md). Agents working in this folder follow [AGENTS.md](./AGENTS.md).
+Background: [docs/prior-art.md](./docs/prior-art.md) covers what we took from Atlassian, Anthropic and our own earlier attempts. `docs/adr/` records decisions, starting with [why salt-eval lives here](./docs/adr/0001-salt-eval-lives-at-repo-root.md). Agents working in this folder follow [AGENTS.md](./AGENTS.md).
 
 ## Layout
 
 This folder holds documentation only. Folders for tasks, starting points, arms and the harness are created by roadmap tasks once they have content.
 
-Held-out tasks, confidential tasks and all run outputs live in a private store outside git. See [what lives where](./docs/architecture.md#what-lives-where).
+Held-out tasks, confidential tasks and all run outputs live in a private store outside git. See "What lives where" in [docs/architecture.md](./docs/architecture.md).

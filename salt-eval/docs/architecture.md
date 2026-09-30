@@ -76,7 +76,7 @@ Roadmap Phase 2 builds only this: one agent program, one starting point, one tas
 
 ## Open decisions
 
-These are tracked in the [roadmap](../roadmap.md#open-decisions):
+These are tracked under "Open decisions" in the [roadmap](../roadmap.md):
 
 - **Harness language.** Default: TypeScript on Node, reusing the repository's Playwright, axe-core, Vitest and Biome.
 - **The first agent program.** It must run headlessly and expose full tool results.

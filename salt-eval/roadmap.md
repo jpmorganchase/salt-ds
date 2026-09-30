@@ -28,19 +28,19 @@ Decide these in Phase 0 and record each answer here with its date.
 
 The critical path. One to two weeks, depending on maintainer time. No harness yet.
 
-- [ ] Collect about 20 candidate requests from `findings.md`, Salt support questions and recurring review comments. Give each one a "why it's hard" line.
-- [ ] Choose five to eight that cover all four work types and both fidelities. Start from the [worked examples](./docs/tasks.md#worked-examples).
+- [ ] Collect about 20 candidate requests from `findings.md` (on the `mcp-eval` branch), Salt support questions and recurring review comments. Give each one a "why it's hard" line.
+- [ ] Choose five to eight that cover all four work types and both fidelities. Start from the worked examples in [docs/tasks.md](./docs/tasks.md).
 - [ ] For each task, write the guidance anchors, checks, rubric items and "Not checked". Add every "none" anchor and every unclear passage to the guidance issues list.
 - [ ] Build two or three shared starting points: an empty Salt app, an existing Salt app with a router, header and profile page, and a non-Salt app.
 - [ ] Hand-write each task's reference solution and at least one known-bad output against the pinned Salt version.
 - [ ] Have two reviewers judge each reference solution and known-bad output independently, and fix every disagreement.
-- [ ] Choose the task file format. It must satisfy the [anatomy table](./docs/tasks.md#anatomy-of-a-task) and stay readable without tools.
+- [ ] Choose the task file format. It must satisfy the anatomy table in [docs/tasks.md](./docs/tasks.md) and stay readable without tools.
 
 **Exit:** the seed tasks, starting points and fixtures are in `salt-eval/`, and the guidance issues list has gone to the Salt docs owners. That list is the first result, before any agent runs. The worked examples already contribute two entries: nothing in prose says `VerticalNavigationItemContent` is required, and the vertical navigation pattern and component pages point to different components.
 
 ## Phase 2: one task, end to end
 
-One to two weeks. Build the [first slice](./docs/architecture.md#first-slice).
+One to two weeks. Build the first slice described in [docs/architecture.md](./docs/architecture.md).
 
 - [ ] Workspace preparer: a copy outside the repository, the pinned Salt install, a single-commit history and a clean agent configuration.
 - [ ] Adapter for the chosen agent program: headless run, time limit, raw transcript.
@@ -63,7 +63,7 @@ About a week, including run time.
 - [ ] Exposure detector: did each anchored passage appear in the trace?
 - [ ] Run every seed task ten times on the baseline and oracle arms.
 - [ ] Measure per-task variance, set trial counts and compute noise floors for bank-wide and targeted comparisons.
-- [ ] Run the [benchmark checks](./docs/experiments.md#checking-the-benchmark-itself). Fix every eval defect and version the tasks it affected.
+- [ ] Run the checks under "Checking the benchmark itself" in [docs/experiments.md](./docs/experiments.md). Fix every eval defect and version the tasks it affected.
 
 **Exit:** a short report with per-task pass rates for both arms, the noise floor and the eval defects fixed. It answers "could Salt context help on these tasks at all?" If the oracle arm barely beats the baseline, rethink the tasks before comparing products.
 
@@ -75,7 +75,7 @@ Answers the first question for the context products that exist today.
 - [ ] Bank-wide comparisons against the baseline.
 - [ ] The anchor scorecard.
 - [ ] Blind human review of a sample that includes passes, with attributions confirmed from trace evidence.
-- [ ] A comparison report as described in [experiments.md](./docs/experiments.md#reporting-a-comparison).
+- [ ] A comparison report as described under "Reporting a comparison" in [docs/experiments.md](./docs/experiments.md).
 
 **Exit:** the report is shared with the Salt team and names the top three fixes the scorecard points to.
 

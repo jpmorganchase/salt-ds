@@ -1,6 +1,6 @@
 # Prior art
 
-What salt-eval takes from published work and from our own earlier attempts, and what it deliberately doesn't. Sources were read on 30 September 2026.
+What salt-eval takes from published work and from our own earlier attempts, and what it deliberately doesn't.
 
 ## Atlassian
 

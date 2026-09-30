@@ -60,7 +60,7 @@ For each failed required check or rubric item, walk these steps in order. The fi
    - **Yes**, otherwise: **misinterpretation**.
 5. **Split misinterpretation with the oracle arm.** If the oracle arm, which has the passage in its request, fails the same check at a similar rate, the passage itself doesn't communicate: **unclear guidance**. If the oracle arm passes, the passage works when it's prominent, and the product's presentation is the suspect: the passage is buried in a long page or trimmed out of an oversized example.
 
-Exposure detection runs automatically as a first pass by matching the passage's text against the trace, and reviewers confirm it on a sample. It only works if traces keep tool results in full; see [architecture](./architecture.md#traces).
+Exposure detection runs automatically as a first pass by matching the passage's text against the trace, and reviewers confirm it on a sample. It only works if traces keep tool results in full; see "Traces" in [architecture.md](./architecture.md).
 
 ## From attributions to decisions
 

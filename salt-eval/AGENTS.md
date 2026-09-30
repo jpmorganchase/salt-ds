@@ -21,7 +21,7 @@ Never break these. If a task seems to require it, stop and ask.
 
 ## Working on tasks
 
-- Follow the [acceptance checklist](./docs/tasks.md#acceptance-checklist).
+- Follow the acceptance checklist in [docs/tasks.md](./docs/tasks.md).
 - Write the "why it's hard" line first. If you can't, the task isn't ready.
 - Don't name Salt components in a request unless the task's specificity is API-level.
 
@@ -33,5 +33,9 @@ Never break these. If a task seems to require it, stop and ask.
 
 ## Recording decisions
 
-- A decision that is hard to reverse, surprising without context and the result of a real trade-off gets an ADR in [docs/adr/](./docs/adr/).
+- A decision that is hard to reverse, surprising without context and the result of a real trade-off gets an ADR in `docs/adr/`.
 - When you finish a roadmap task, tick it and add one line of evidence: a link to a report, a trial page or a pull request.
+
+## Writing docs
+
+- Link to files, never to `#section` anchors or folders, and name the section in the text instead: see "Isolation" in `docs/architecture.md`. Section and folder links don't open reliably in the editor.

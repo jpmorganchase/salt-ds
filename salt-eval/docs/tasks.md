@@ -1,19 +1,20 @@
 # Tasks
 
-The task bank decides what salt-eval can tell us. No harness can rescue a task that measures the wrong thing, so the bank comes first.
+The task bank decides what salt-eval can tell us. No harness can rescue a task that measures the wrong thing, so the bank comes first (see what I did there).
 
 ## What makes a good Salt task
 
-1. **It mirrors real Salt work.** It reads like something a product team would ask a coding agent to do, and it comes from a real source whenever possible (see [Sources](#sources)).
+1. **It mirrors real Salt work.** It reads like something a product team would ask a coding agent to do, and it comes from a real source whenever possible (see Sources below).
 2. **It turns on Salt decisions.** Its difficulty comes from two to five Salt decisions: which component or pattern, how to compose it and what the guidance says about states, layout, content or accessibility. It doesn't come from generic React, data plumbing or CSS puzzles. The task names these decisions in one line, **why it's hard**.
 3. **Two Salt experts would agree on every verdict.** Everything graded is stated in the request or anchored to Salt guidance.
 4. **It accepts every valid solution.** Checks test properties of the rendered result, not one way of writing the code.
 5. **It respects its fidelity.** A prototype task never fails an output for placeholder links, mock data or missing error handling the request didn't ask for.
 6. **It runs offline and repeatably.** No backend, no live data and nothing in the starting point that gives the answer away.
 
-One more test comes from [Anthropic's eval guidance](./prior-art.md#anthropic): when the oracle arm fails a task in every trial, suspect the task before the agent.
+One more test comes from Anthropic's eval guidance, summarized in [prior-art.md](./prior-art.md): when the oracle arm fails a task in every trial, suspect the task before the agent.
 
 ## Anatomy of a task
+
 
 | Field                            | Holds                                                                      |
 | -------------------------------- | -------------------------------------------------------------------------- |
@@ -30,6 +31,7 @@ One more test comes from [Anthropic's eval guidance](./prior-art.md#anthropic): 
 | Provenance                       | Where the task came from and how it was sanitized                          |
 | Split and variants               | Dev or held-out, and the rewordings that share its checks                  |
 
+
 Choosing a file format is a roadmap task. This table is the contract any format must meet.
 
 "Not checked" is a field on purpose. Writing down what a task doesn't grade stops checks from creeping into territory the request never asked about.
@@ -40,6 +42,7 @@ Every starting point's README states one standing expectation: where Salt provid
 
 Aim for enough spread that a result isn't an artifact of one kind of work, not for every combination.
 
+
 | Dimension      | Values                                                                       | Guidance                                                                                                             |
 | -------------- | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | Work type      | Create, extend, migrate, fix                                                 | Weight toward extend: most production work adds to an existing Salt app                                              |
@@ -48,11 +51,12 @@ Aim for enough spread that a result isn't an artifact of one kind of work, not f
 | Specificity    | Outcome, pattern, API                                                        | Mostly outcome, because that's how people ask. API-level variants separate choosing a component from using it        |
 | Starting point | Empty Salt app, existing Salt app, non-Salt app                              | Existing apps should have their own conventions and wrapper components, like real ones                               |
 
+
 A useful pairing: give an outcome-level task an API-level variant. If agents fail the outcome version but pass the API version, the problem is choosing the component, not using it.
 
 ## Sources
 
-In priority order, adapted from [Anthropic's guidance](./prior-art.md#anthropic):
+In priority order, adapted from Anthropic's guidance in [prior-art.md](./prior-art.md):
 
 1. **Real agent sessions that built Salt UI**, sanitized. The session analyzed in `findings.md` on the `mcp-eval` branch already yields at least three tasks.
 2. **Salt support questions and recurring review comments.** What the Salt team corrects again and again is what agents get wrong.
@@ -65,7 +69,10 @@ Two cautions from the same source:
 - **Don't pick tasks because today's model fails them.** That samples one model's blind spots rather than what matters for Salt. Say why a task is hard before you run it.
 - **Don't rely only on real traffic.** People ask for what they expect to work, which skews easy.
 
+
+
 ## Traps
+
 
 | Trap                                                                                    | Why it hurts                                         | Instead                                                        |
 | --------------------------------------------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------------------- |
@@ -76,6 +83,9 @@ Two cautions from the same source:
 | "Build a whole app"                                                                     | Too many decisions per verdict to attribute failures | Two to five Salt decisions per task                            |
 | Taste without an anchor ("looks professional")                                          | Experts disagree and judges drift                    | Anchor it, or get the guidance written first                   |
 | The answer left in the starting point (the fix in git history, a TODO describing it)    | Measures search, not Salt knowledge                  | Single-commit starting points, reviewed for leaks              |
+
+
+
 
 ## Worked examples
 
@@ -116,12 +126,16 @@ Writing this task found a guidance issue before any agent ran: published guidanc
 
 **What failures tell us.**
 
+
 | Trace shows                                                    | Attribution                                                             | Change to test next                                                                              |
 | -------------------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | Nothing about Salt navigation reached the agent                | Retrieval miss                                                          | Product: does a query for "left navigation" or "sidebar" return either route?                    |
 | A lookup returned not found and the agent carried on           | Tool misuse, plus a retrieval miss in the product if the name was valid | Product: resolve aliases. Skill: treat not found as a stop                                       |
 | The Basic example reached the agent and the wrapper is missing | Misinterpretation                                                       | Compare with the oracle arm before changing anything                                             |
 | The oracle arm drops the wrapper too                           | Unclear guidance: the requirement is only implied by an example         | Docs: state it in prose. Component: consider a development warning when a trigger has no wrapper |
+
+
+
 
 ### 2. Account overview page
 
@@ -155,11 +169,15 @@ Create · prototype · outcome-level
 
 **What failures tell us.**
 
+
 | Trace shows                                             | Attribution                                                                                | Change to test next                                                                |
 | ------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------- |
 | Cards nested; Card's usage page never reached the agent | Retrieval miss                                                                             | Product: does "group of cards" or "card container" reach Card's "When not to use"? |
 | Cards nested; the passage reached the agent             | Misinterpretation                                                                          | Compare with the oracle arm                                                        |
 | The oracle arm nests cards too                          | Unclear guidance: "a background containing other cards" doesn't read as "don't nest cards" | Docs: say it plainly, with a `Panel` example                                       |
+
+
+
 
 ### 3. Edit contact details form
 
@@ -191,11 +209,15 @@ Extend · production · outcome-level
 
 **What failures tell us.**
 
+
 | Trace shows                                                                                  | Attribution                                                              | Change to test next                                                       |
 | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
 | Error rendered as plain text under the input; the validation example never reached the agent | Retrieval miss                                                           | Product: does "form validation" reach the `FormField` validation example? |
 | The same, but the example reached the agent                                                  | Misinterpretation                                                        | Compare with the oracle arm                                               |
 | Save and Cancel right-aligned although the button bar passage reached the agent              | Misinterpretation (the dialog order applied to a page) or prior override | Docs: show page-form order and dialog order side by side                  |
+
+
+
 
 ### 4. Fix seeded defects
 
@@ -205,12 +227,14 @@ Fix · production · outcome-level
 
 **Starting point.** A Salt settings page with a test file for its behavior and four seeded defects:
 
+
 | Seeded defect                                                           | Guidance anchor                                                                   |
 | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
 | `Text` with the `variant` prop                                          | The pinned types mark `variant` `@deprecated` since 1.27.1: "Use `color` instead" |
 | A `Card` used as a background around three other `Card`s                | Card usage, "When not to use"                                                     |
 | `VerticalNavigationItemTrigger` without `VerticalNavigationItemContent` | The vertical navigation Basic example                                             |
 | A form that mixes top and left label placement                          | Forms pattern: "Don't mix label placements across the same form"                  |
+
 
 **Checks.** One required check per defect, plus two that catch collateral damage: the page's behavior tests still pass, and no file outside the page changed.
 
@@ -230,7 +254,10 @@ A task enters the bank when:
 - [ ] Once the harness exists: the oracle arm passes the task in at least some trials.
 - [ ] It has a split, and its variants are listed.
 
+
+
 ## Growing the bank
+
 
 | Stage      | Size                                                           | Purpose                                                  | Move on when                                                   |
 | ---------- | -------------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------------- |
@@ -238,11 +265,14 @@ A task enters the bank when:
 | First bank | About 30 tasks, a third held out                               | First comparisons of context products, for large effects | Every work type has at least four tasks                        |
 | Ongoing    | New tasks from real sessions; saturated and dead tasks retired | Keep headroom and follow how Salt is actually used       | —                                                              |
 
+
 Rules as the bank grows:
 
 - **Tasks are versioned.** Changing a request, starting point or check makes a new version, and pass rates don't compare across versions.
 - **Held-out tasks burn.** Once anyone uses a held-out task's trace to change a context product, the task moves to dev and gets replaced.
 - **Saturated tasks retire to a canary set.** They stay runnable to catch regressions but don't count in comparisons.
+
+
 
 ## Not tested yet
 
@@ -252,3 +282,4 @@ These are deliberately out of scope. Revisit them when evidence says they matter
 - **Matching a visual design** from Figma or a screenshot.
 - **Performance and bundle size.**
 - **Custom theming** beyond the Salt themes configured in the starting point.
+
