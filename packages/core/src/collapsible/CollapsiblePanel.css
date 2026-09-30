@@ -21,3 +21,9 @@
 .saltCollapsiblePanel-inner {
   overflow: hidden;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .saltCollapsiblePanel {
+    transition: none;
+  }
+}

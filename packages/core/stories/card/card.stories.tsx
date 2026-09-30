@@ -5,6 +5,9 @@ import {
   CardFooter,
   CardHeader,
   type CardProps,
+  Collapsible,
+  CollapsiblePanel,
+  CollapsibleTrigger,
   FlexLayout,
   H3,
   Label,
@@ -14,7 +17,7 @@ import {
   StackLayout,
   Text,
 } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
+import { ChevronDownIcon, ChevronUpIcon, CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 import exampleImage from "./../assets/exampleImage1x.png";
@@ -293,4 +296,66 @@ export const BorderColor: StoryFn<typeof Card> = (args) => {
       ))}
     </StackLayout>
   );
+};
+
+export const CollapsibleCard: StoryFn<typeof Card> = (args) => {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <Collapsible
+      onOpenChange={(_, isOpen) => setExpanded(isOpen)}
+      open={expanded}
+    >
+      <Card {...args} style={{ maxWidth: "360px" }}>
+        <CardHeader>
+          <FlexLayout align="start" gap={1} justify="space-between">
+            <StackLayout gap={0.5}>
+              <H3>Quarterly investment report</H3>
+              <Text color="secondary">Q2 2026 - Updated 16 July</Text>
+            </StackLayout>
+            <CollapsibleTrigger>
+              <Button
+                appearance="transparent"
+                aria-label="Q2 2026 report highlights"
+                sentiment="neutral"
+              >
+                {expanded ? (
+                  <ChevronUpIcon aria-hidden />
+                ) : (
+                  <ChevronDownIcon aria-hidden />
+                )}
+              </Button>
+            </CollapsibleTrigger>
+          </FlexLayout>
+        </CardHeader>
+        <CollapsiblePanel render={<CardContent />}>
+          <StackLayout gap={1}>
+            <FlexLayout justify="space-between">
+              <Text color="secondary">Portfolio return</Text>
+              <Text>+4.8%</Text>
+            </FlexLayout>
+            <FlexLayout justify="space-between">
+              <Text color="secondary">Benchmark return</Text>
+              <Text>+3.9%</Text>
+            </FlexLayout>
+            <FlexLayout justify="space-between">
+              <Text color="secondary">Income generated</Text>
+              <Text>$12,450</Text>
+            </FlexLayout>
+            <Text color="secondary">
+              Performance is shown after fees for the period ending 30 June
+              2026.
+            </Text>
+          </StackLayout>
+        </CollapsiblePanel>
+        <CardFooter>
+          <Button>Open full report</Button>
+        </CardFooter>
+      </Card>
+    </Collapsible>
+  );
+};
+
+CollapsibleCard.parameters = {
+  layout: "padded",
 };
