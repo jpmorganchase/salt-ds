@@ -1,7 +1,7 @@
 /**
  * Prototypes of single-pointer, non-drag alternatives for resizing a Drawer (WCAG 2.2 SC 2.5.7 Dragging
- * Movements). They are built on the Drawer's public API only (`size`, `onResize`, the separator's aria values),
- * so they can be demoed without changing the component.
+ * Movements): click-to-place (option #1) and stepper buttons (option #2). They are built on the Drawer's public
+ * API only (`size`, `onResize`, the separator's aria values), so they can be demoed without changing the component.
  */
 import {
   Button,
@@ -13,7 +13,7 @@ import {
   StackLayout,
   Text,
 } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
+import { AddIcon, CloseIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
 import type { ArgTypes, Meta, StoryFn } from "@storybook/react-vite";
 import {
   type MouseEventHandler,
@@ -369,14 +369,14 @@ const CloseButton = ({
   </Button>
 );
 
-interface ClickToPlaceArgs {
+interface PositionArgs {
   position: Position;
 }
 
 const ClickToPlaceTemplate = ({
   position,
   preview,
-}: ClickToPlaceArgs & { preview: Preview }) => {
+}: PositionArgs & { preview: Preview }) => {
   const horizontal = isHorizontal(position);
   const defaultSize = horizontal ? 320 : 280;
   const [open, setOpen] = useState(false);
@@ -482,7 +482,7 @@ const ClickToPlaceTemplate = ({
   );
 };
 
-const positionArgTypes: ArgTypes<ClickToPlaceArgs> = {
+const positionArgTypes: ArgTypes<PositionArgs> = {
   position: {
     control: "radio",
     options: ["left", "right", "top", "bottom"],
@@ -493,7 +493,7 @@ const positionArgTypes: ArgTypes<ClickToPlaceArgs> = {
  * Option #1: click the handle, then click where the edge should go. The drawer follows the pointer in
  * between (mouse and pen only). On touch, tap the handle, then tap the destination.
  */
-export const ClickToPlace: StoryFn<ClickToPlaceArgs> = ({ position }) => (
+export const ClickToPlace: StoryFn<PositionArgs> = ({ position }) => (
   <ClickToPlaceTemplate key={position} position={position} preview="live" />
 );
 ClickToPlace.args = { position: "left" };
@@ -503,10 +503,212 @@ ClickToPlace.argTypes = positionArgTypes;
  * Same as ClickToPlace, but only a guide line follows the pointer, so the layout doesn't shift until the
  * placing click.
  */
-export const ClickToPlaceGuideLine: StoryFn<ClickToPlaceArgs> = ({
-  position,
-}) => (
+export const ClickToPlaceGuideLine: StoryFn<PositionArgs> = ({ position }) => (
   <ClickToPlaceTemplate key={position} position={position} preview="guide" />
 );
 ClickToPlaceGuideLine.args = { position: "left" };
 ClickToPlaceGuideLine.argTypes = positionArgTypes;
+
+// Same as the Drawer's Shift + Arrow key step.
+const STEPPER_STEP = 40;
+
+interface SeparatorValues {
+  min: number;
+  max: number;
+  now: number | null;
+}
+
+/** Tracks the resize handle's aria values, which reflect the drawer's CSS min/max and rendered size. */
+function useSeparatorValues(drawer: HTMLElement | null) {
+  const [values, setValues] = useState<SeparatorValues | null>(null);
+
+  useEffect(() => {
+    const handle = drawer ? getHandle(drawer) : null;
+    if (!handle) {
+      setValues(null);
+      return;
+    }
+    const read = () => {
+      const now = Number.parseFloat(handle.getAttribute("aria-valuenow") ?? "");
+      setValues({
+        ...readBounds(handle),
+        now: Number.isFinite(now) ? now : null,
+      });
+    };
+    read();
+    const observer = new MutationObserver(read);
+    observer.observe(handle, {
+      attributes: true,
+      attributeFilter: ["aria-valuemin", "aria-valuemax", "aria-valuenow"],
+    });
+    return () => observer.disconnect();
+  }, [drawer]);
+
+  return values;
+}
+
+type StepperPlacement = "header" | "bar";
+
+const StepperButtonsTemplate = ({
+  position,
+  placement,
+}: PositionArgs & { placement: StepperPlacement }) => {
+  const horizontal = isHorizontal(position);
+  const defaultSize = horizontal ? 320 : 280;
+  const [open, setOpen] = useState(false);
+  const [drawer, setDrawer] = useState<HTMLDivElement | null>(null);
+  const [size, setSize] = useState(defaultSize);
+  const values = useSeparatorValues(drawer);
+
+  // The rendered size can differ from state when CSS clamps it, e.g. on a small viewport.
+  const current = values?.now ?? size;
+  const min = values?.min ?? 0;
+  const max = values?.max ?? Number.POSITIVE_INFINITY;
+  const atMin = Math.round(current) <= Math.round(min);
+  const atMax = Math.round(current) >= Math.round(max);
+  const limitText = atMin ? " (minimum)" : atMax ? " (maximum)" : "";
+
+  const step = (direction: 1 | -1) => {
+    setSize(Math.min(Math.max(current + STEPPER_STEP * direction, min), max));
+  };
+
+  const shrinkLabel = horizontal
+    ? "Make drawer narrower"
+    : "Make drawer shorter";
+  const growLabel = horizontal ? "Make drawer wider" : "Make drawer taller";
+
+  const renderStepper = (direction: 1 | -1) => {
+    const Icon = direction === 1 ? AddIcon : RemoveIcon;
+    return (
+      <Button
+        aria-label={direction === 1 ? growLabel : shrinkLabel}
+        appearance="transparent"
+        sentiment="neutral"
+        disabled={direction === 1 ? atMax : atMin}
+        // Keeps focus on the button when it reaches a limit and becomes disabled.
+        focusableWhenDisabled
+        onClick={() => step(direction)}
+      >
+        <Icon aria-hidden />
+      </Button>
+    );
+  };
+
+  const sizeBar = (
+    <div
+      role="group"
+      aria-label="Drawer size"
+      className={`demoStepper-sizeBar demoStepper-sizeBar-${position}`}
+    >
+      {renderStepper(-1)}
+      <Text className="demoStepper-sizeValue" aria-live="polite">
+        {Math.round(current)}px
+        <span className="demoStepper-srOnly">{limitText}</span>
+      </Text>
+      {renderStepper(1)}
+      <Button
+        aria-label="Reset drawer size"
+        appearance="transparent"
+        sentiment="neutral"
+        onClick={() => setSize(defaultSize)}
+      >
+        <RefreshIcon aria-hidden />
+      </Button>
+    </div>
+  );
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open Drawer</Button>
+      <Drawer
+        ref={setDrawer}
+        resizable
+        position={position}
+        open={open}
+        onOpenChange={setOpen}
+        size={size}
+        onResize={(_event, next) => setSize(next)}
+        style={
+          horizontal
+            ? { minWidth: 200, maxWidth: 640 }
+            : { minHeight: 160, maxHeight: 520 }
+        }
+      >
+        {placement === "bar" && position === "top" && sizeBar}
+        <DrawerHeader
+          header={
+            placement === "header"
+              ? "Stepper buttons (header)"
+              : "Stepper buttons (size bar)"
+          }
+          description={
+            placement === "header"
+              ? `Use the − and + buttons in the header to resize in ${STEPPER_STEP}px steps. Dragging and the arrow keys still work.`
+              : `Use the − and + buttons in the size bar to resize in ${STEPPER_STEP}px steps. The bar sits on the drawer's fixed side, so the buttons stay under the pointer while resizing. Dragging and the arrow keys still work.`
+          }
+          actions={
+            <>
+              {placement === "header" && (
+                <>
+                  {renderStepper(-1)}
+                  {renderStepper(1)}
+                </>
+              )}
+              <CloseButton onClick={() => setOpen(false)} />
+            </>
+          }
+        />
+        <DrawerContent>
+          <StackLayout>
+            {placement === "header" && (
+              <Text aria-live="polite">
+                Size: {Math.round(current)}px{limitText}
+              </Text>
+            )}
+            <Text>{loremText.repeat(4)}</Text>
+          </StackLayout>
+        </DrawerContent>
+        <DrawerFooter>
+          {placement === "header" && (
+            <Button
+              sentiment="accented"
+              appearance="bordered"
+              onClick={() => setSize(defaultSize)}
+            >
+              Reset size
+            </Button>
+          )}
+          <Button sentiment="accented" onClick={() => setOpen(false)}>
+            Done
+          </Button>
+        </DrawerFooter>
+        {placement === "bar" && position !== "top" && sizeBar}
+      </Drawer>
+    </>
+  );
+};
+
+/**
+ * Option #2: −/+ buttons in the header resize the drawer in fixed steps. The buttons are disabled, but stay
+ * focusable, at the size limits.
+ */
+export const StepperButtons: StoryFn<PositionArgs> = ({ position }) => (
+  <StepperButtonsTemplate
+    key={position}
+    position={position}
+    placement="header"
+  />
+);
+StepperButtons.args = { position: "left" };
+StepperButtons.argTypes = positionArgTypes;
+
+/**
+ * Option #2, as a size bar `[−] 320px [+] [reset]` on the drawer's fixed side: below the footer, in the corner
+ * that doesn't move (above the header for top drawers). The buttons stay put while the drawer resizes, so they
+ * can be clicked repeatedly.
+ */
+export const StepperButtonsSizeBar: StoryFn<PositionArgs> = ({ position }) => (
+  <StepperButtonsTemplate key={position} position={position} placement="bar" />
+);
+StepperButtonsSizeBar.args = { position: "left" };
+StepperButtonsSizeBar.argTypes = positionArgTypes;
