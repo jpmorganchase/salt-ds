@@ -50,9 +50,9 @@ const preview: Preview = {
       toolbar: {
         dynamicTitle: true,
         items: [
-          { value: "brand", title: "Brand" },
-          { value: "legacy", title: "Legacy" },
-          { value: "salt-interim", title: "Salt (Interim)" },
+          { value: "brand", title: "J.P. Morgan" },
+          { value: "legacy", title: "Legacy (UITK)" },
+          { value: "salt-interim", title: "J.P. Morgan (Interim)" },
         ],
         title: "Theme",
       },

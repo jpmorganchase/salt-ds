@@ -9,7 +9,7 @@ type Theme = NonNullable<LivePreviewContextType["theme"]>;
 const themeOptions: ThemeOption<Theme>[] = [
   { value: "legacy", label: "Legacy" },
   { value: "brand", label: "J.P. Morgan" },
-  { value: "salt-interim", label: "Salt (Interim)" },
+  { value: "salt-interim", label: "J.P. Morgan (Interim)" },
 ];
 
 export function ThemeControls({ scope }: { scope: "component" | "pattern" }) {
