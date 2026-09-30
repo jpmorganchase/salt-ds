@@ -6,6 +6,7 @@ Follow below instructions to contribute to Salt.
 2. Run `yarn build` to build all packages across the repo. This is required to run Storybook or the site.
 3. Run `yarn storybook` to run a local instance of [storybook](https://storybook.js.org/docs/get-started/install#start-storybook) for development
 4. Run `cd site && yarn serve` to run a local instance of the [documentation](https://www.saltdesignsystem.com/) site.
+5. Optionally, run `git config blame.ignoreRevsFile .git-blame-ignore-revs` so that `git blame` skips the bulk formatting commits listed in `.git-blame-ignore-revs`. GitHub's blame view already skips them.
 
 ## Packages
 
