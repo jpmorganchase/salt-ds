@@ -1,5 +1,108 @@
 # @salt-ds/theme
 
+## 1.47.0
+
+### Minor Changes
+
+- d578674: Deprecated `--salt-text-label-fontFamily`. Use `--salt-text-fontFamily` instead. The deprecated token remains available as an alias of `--salt-text-fontFamily` for compatibility but may be removed in a future major version.
+- e990c46: Deprecated unused tokens in the legacy theme. These tokens are no longer used by any Salt component. They will continue to work for now, but should not be used and may be removed in a future major version.
+
+  Deprecated characteristic tokens:
+
+  - `--salt-content-bold-foreground-disabled`
+  - `--salt-selectable-background-disabled`
+  - `--salt-selectable-background-selectedDisabled`
+  - `--salt-selectable-borderColor-selectedDisabled`
+  - `--salt-selectable-foreground-selectedDisabled`
+  - `--salt-sentiment-accent-background-disabled`
+
+  Deprecated palette tokens:
+
+  - `--salt-palette-accent-disabled`
+  - `--salt-palette-interact-background-activeDisabled`
+  - `--salt-palette-interact-border-activeDisabled`
+  - `--salt-palette-interact-foreground-activeDisabled`
+  - `--salt-palette-interact-cta-foreground-disabled`
+  - `--salt-palette-interact-primary-foreground-disabled`
+  - `--salt-palette-interact-primary-foreground-hover`
+  - `--salt-palette-interact-secondary-background-active`
+  - `--salt-palette-interact-secondary-background-hover`
+  - `--salt-palette-interact-secondary-foreground`
+  - `--salt-palette-interact-secondary-foreground-active`
+  - `--salt-palette-interact-secondary-foreground-disabled`
+  - `--salt-palette-interact-secondary-foreground-hover`
+
+- 8e59c5d: Added brand tokens.
+
+  Added characteristic tokens (next and legacy themes):
+
+  - `--salt-content-brand-foreground`
+
+  Added palette tokens (next theme):
+
+  - `--salt-palette-brand-strong`
+
+  Added foundation tokens (next theme):
+
+  - `--salt-color-jpmBrown`
+  - `--salt-color-jpmBrown-rgb`
+
+  Deprecated `--salt-color-logo-brown` and `--salt-color-logo-brown-rgb` in the next theme. Use `--salt-color-jpmBrown` and `--salt-color-jpmBrown-rgb` instead, which have the same value. The deprecated tokens remain available as aliases for compatibility but may be removed in a future major version.
+
+- e990c46: Deprecated unused tokens in the next theme. These tokens are no longer used by any Salt component. They will continue to work for now, but should not be used and may be removed in a future major version.
+
+  Deprecated characteristic tokens:
+
+  - `--salt-content-bold-foreground-disabled`
+  - `--salt-selectable-background-disabled`
+  - `--salt-selectable-background-selectedDisabled`
+  - `--salt-selectable-borderColor-selectedDisabled`
+  - `--salt-selectable-foreground-selectedDisabled`
+  - `--salt-sentiment-accent-background-disabled`
+
+  Deprecated palette tokens:
+
+  - `--salt-palette-accent-disabled`
+  - `--salt-palette-accent-weaker-disabled`
+  - `--salt-palette-foreground-primary-alt-disabled`
+
+- d578674: Deprecated `--salt-text-notation-fontFamily`. Use `--salt-text-fontFamily` instead. The deprecated token remains available as an alias of `--salt-text-fontFamily` for compatibility but may be removed in a future major version.
+- 8e59c5d: Added `--salt-typography-fontStyle-normal` and `--salt-typography-fontStyle-italic` foundation tokens.
+
+  Deprecated `--salt-typography-textDecoration-italic`. Use `--salt-typography-fontStyle-italic` instead, since italic is a `font-style` value rather than a `text-decoration` value. The deprecated token remains available as an alias of `--salt-typography-fontStyle-italic` for compatibility but may be removed in a future major version.
+
+- 8e59c5d: Added an experimental Salt (Interim) theme, available at `@salt-ds/theme/css/experimental/salt-interim.css`.
+
+  To try it, import the stylesheets, load the fonts, and pass `theme="salt-interim"` to `SaltProvider`. The theme uses Roboto in weights 300, 400 and 600, each in normal and italic styles, and PT Mono for code.
+
+  ```tsx
+  import "@fontsource/roboto/300.css";
+  import "@fontsource/roboto/300-italic.css";
+  import "@fontsource/roboto/400.css";
+  import "@fontsource/roboto/400-italic.css";
+  import "@fontsource/roboto/600.css";
+  import "@fontsource/roboto/600-italic.css";
+  import "@fontsource/pt-mono";
+  import "@salt-ds/theme/css/global.css";
+  import "@salt-ds/theme/css/experimental/salt-interim.css";
+
+  <SaltProvider theme="salt-interim">
+    <App />
+  </SaltProvider>;
+  ```
+
+  This theme is experimental. Its tokens and values may change, or it may be removed, in any release without a major version bump. Its stylesheet will move out of the `experimental/` folder when it becomes stable. It isn't recommended for production use.
+
+- d578674: Added display typography letter spacing and text transform tokens.
+- 8e59c5d: Added `--salt-text-display-fontStyle` token to control the font style of display text.
+- 550c4c1: Simplified typography tokens so all heading levels share `--salt-text-heading-fontFamily` and `--salt-text-heading-fontWeight` tokens, while all display levels share `--salt-text-display-fontFamily` and `--salt-text-display-fontWeight` tokens. The `small` and `strong` variants follow the same shared naming.
+
+  The level-specific font family and weight tokens are deprecated. They remain available as aliases for compatibility but may be removed in a future major version.
+
+### Patch Changes
+
+- 8e59c5d: Changed `--salt-focused-outlineInset` and `--salt-focused-outlineOffset` from `0` to `0px` so they can be used in `calc()` expressions with other lengths.
+
 ## 1.46.0
 
 ### Minor Changes

@@ -14,7 +14,7 @@ export const WithText = (): ReactElement => (
     <Text
       color="error"
       styleAs="label"
-      style={{ fontStyle: "var(--salt-typography-textDecoration-italic)" }}
+      style={{ fontStyle: "var(--salt-typography-fontStyle-italic)" }}
     >
       Request could not be submitted. Please try again later.
     </Text>

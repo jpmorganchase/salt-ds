@@ -1,5 +1,37 @@
 # @salt-ds/date-components
 
+## 1.1.1
+
+### Patch Changes
+
+- d578674: Applied typography letter spacing tokens consistently to text-owning components and inherited typography roots, and applied the display text transform token to display text.
+- e990c46: Simplified the disabled appearance of `Calendar` days for a more consistent look across Salt components.
+- Updated dependencies [ff312fb]
+- Updated dependencies [d578674]
+- Updated dependencies [24b5b04]
+- Updated dependencies [83d7f9c]
+- Updated dependencies [f9f5198]
+- Updated dependencies [fbe1e48]
+- Updated dependencies [394af0d]
+- Updated dependencies [d578674]
+- Updated dependencies [d578674]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [cf3afb3]
+- Updated dependencies [0b65f84]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [b434b9e]
+- Updated dependencies [e75a32d]
+- Updated dependencies [59a14d2]
+- Updated dependencies [e990c46]
+- Updated dependencies [550c4c1]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [2a5cb0d]
+  - @salt-ds/core@1.72.0
+  - @salt-ds/styles@0.4.1
+  - @salt-ds/window@0.1.2
+  - @salt-ds/icons@1.18.3
+
 ## 1.1.0
 
 ### Minor Changes

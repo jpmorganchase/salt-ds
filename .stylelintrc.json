@@ -38,6 +38,12 @@
       }
     },
     {
+      "files": ["**/react-resizable-panels-theme/**/*.css"],
+      "rules": {
+        "salt/custom-property-starts-with-component-name": null
+      }
+    },
+    {
       "files": ["**/theme/src/css/**/*.css"],
       "rules": {
         "salt/correct-theme-token-usage": null,
@@ -53,6 +59,7 @@
     },
     {
       "files": [
+        "**/theme/src/css/experimental/salt-interim.css",
         "**/theme/src/css/theme.css",
         "**/theme/src/css/theme-next.css"
       ],

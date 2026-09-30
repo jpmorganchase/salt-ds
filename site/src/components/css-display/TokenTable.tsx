@@ -1,13 +1,8 @@
 import { useColorMode } from "@jpmorganchase/mosaic-store";
 import {
-  Button,
   capitalize,
   H2,
   H3,
-  Overlay,
-  OverlayPanel,
-  OverlayPanelContent,
-  OverlayTrigger,
   Spinner,
   StackLayout,
   Table,
@@ -16,12 +11,9 @@ import {
   Text,
   TH,
   THead,
-  ToggleButton,
-  ToggleButtonGroup,
-  Tooltip,
   TR,
 } from "@salt-ds/core";
-import { ChevronDownIcon, SettingsIcon } from "@salt-ds/icons";
+import { ThemeSettingsOverlay } from "../components/ThemeSettingsOverlay";
 import { CopyToClipboard } from "../copy-to-clipboard";
 import styles from "./AllTokens.module.css";
 import { getTokenGroupDescription } from "./descriptions";
@@ -33,7 +25,7 @@ export type DensityOverrides = Partial<
   Record<string, Partial<Record<Density, string>>>
 >;
 export type Mode = "light" | "dark" | "system";
-export type ThemeType = "next" | "legacy";
+export type ThemeType = "next" | "legacy" | "salt-interim";
 export type TokenTier = "characteristic" | "foundation";
 
 export const themes: Array<{ displayName: string; value: ThemeType }> = [
@@ -45,6 +37,10 @@ export const themes: Array<{ displayName: string; value: ThemeType }> = [
     displayName: "Legacy",
     value: "legacy",
   },
+  {
+    displayName: "J.P. Morgan (Interim)",
+    value: "salt-interim",
+  },
 ];
 
 export const densities: Density[] = [
@@ -55,14 +51,25 @@ export const densities: Density[] = [
   "mobile",
 ];
 
+const themeOptions = themes.map(({ displayName, value }) => ({
+  value,
+  label: displayName,
+}));
+
 export function getThemeDisplayName(value: ThemeType) {
   return themes.find((theme) => theme.value === value)?.displayName ?? value;
 }
 
 type TokenTableControls = {
+  /**
+   * Names the section the table belongs to, to distinguish its settings
+   * trigger from others on the page.
+   */
+  contextLabel?: string;
   onDensityChange?: (density: Density) => void;
   onModeChange: (mode: Mode) => void;
   onThemeChange: (theme: ThemeType) => void;
+  onReset: () => void;
 };
 
 type TokenTableProps = {
@@ -202,82 +209,18 @@ function TokenTableSettings({
   theme: ThemeType;
 }) {
   return (
-    <Overlay>
-      <Tooltip aria-hidden="true" content="Token table controls">
-        <OverlayTrigger>
-          <Button
-            aria-label="Token table controls"
-            appearance="bordered"
-            sentiment="neutral"
-          >
-            <SettingsIcon aria-hidden />
-            <ChevronDownIcon aria-hidden />
-          </Button>
-        </OverlayTrigger>
-      </Tooltip>
-      <OverlayPanel className={styles.compactControlsOverlay}>
-        <OverlayPanelContent className={styles.compactControlsOverlayContent}>
-          <StackLayout gap={1} padding={{ md: 1 }}>
-            {controls.onDensityChange ? (
-              <StackLayout gap={0.75} align="baseline" padding={0}>
-                <Text styleAs="label" color="secondary">
-                  <strong>Density</strong>
-                </Text>
-                <ToggleButtonGroup
-                  className={styles.compactToggleGroup}
-                  aria-label="Select density"
-                  value={density}
-                  onChange={(event) =>
-                    controls.onDensityChange?.(
-                      event.currentTarget.value as Density,
-                    )
-                  }
-                >
-                  {densities.map((value) => (
-                    <ToggleButton key={value} value={value}>
-                      {capitalize(value)}
-                    </ToggleButton>
-                  ))}
-                </ToggleButtonGroup>
-              </StackLayout>
-            ) : null}
-            <StackLayout gap={0.75} align="baseline" padding={0}>
-              <Text styleAs="label" color="secondary">
-                <strong>Mode</strong>
-              </Text>
-              <ToggleButtonGroup
-                className={styles.compactToggleGroup}
-                aria-label="Select mode"
-                value={mode}
-                onChange={(event) =>
-                  controls.onModeChange(event.currentTarget.value as Mode)
-                }
-              >
-                <ToggleButton value="system">System</ToggleButton>
-                <ToggleButton value="light">Light</ToggleButton>
-                <ToggleButton value="dark">Dark</ToggleButton>
-              </ToggleButtonGroup>
-            </StackLayout>
-            <StackLayout gap={0.75} align="baseline" padding={0}>
-              <Text styleAs="label" color="secondary">
-                <strong>Themes</strong>
-              </Text>
-              <ToggleButtonGroup
-                className={styles.compactToggleGroup}
-                aria-label="Select theme"
-                value={theme}
-                onChange={(event) =>
-                  controls.onThemeChange(event.currentTarget.value as ThemeType)
-                }
-              >
-                <ToggleButton value="legacy">Legacy</ToggleButton>
-                <ToggleButton value="next">J.P. Morgan</ToggleButton>
-              </ToggleButtonGroup>
-            </StackLayout>
-          </StackLayout>
-        </OverlayPanelContent>
-      </OverlayPanel>
-    </Overlay>
+    <ThemeSettingsOverlay<ThemeType>
+      scope="tokens"
+      contextLabel={controls.contextLabel}
+      density={density}
+      onDensityChange={controls.onDensityChange}
+      mode={mode}
+      onModeChange={controls.onModeChange}
+      theme={theme}
+      themeOptions={themeOptions}
+      onThemeChange={controls.onThemeChange}
+      onReset={controls.onReset}
+    />
   );
 }
 

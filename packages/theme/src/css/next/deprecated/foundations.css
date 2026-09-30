@@ -3,4 +3,7 @@
   --salt-color-background-gradientlight: var(--salt-color-background-titanium);
 
   --salt-color-gray-400-40a: rgba(var(--salt-color-gray-400-rgb), 0.4);
+
+  --salt-color-logo-brown-rgb: var(--salt-color-jpmBrown-rgb);
+  --salt-color-logo-brown: var(--salt-color-jpmBrown);
 }

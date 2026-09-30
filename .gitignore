@@ -43,7 +43,6 @@ storybook-static
 
 # misc
 .DS_Store
-.eslintcache
 
 npm-debug.log*
 yarn-debug.log*

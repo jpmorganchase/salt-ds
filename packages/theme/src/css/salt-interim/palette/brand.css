@@ -1,0 +1,7 @@
+.salt-theme.salt-interim[data-mode="light"] {
+  --salt-palette-brand-mediumHigh: var(--salt-color-jpmBrown);
+}
+
+.salt-theme.salt-interim[data-mode="dark"] {
+  --salt-palette-brand-mediumHigh: var(--salt-color-brown-400);
+}

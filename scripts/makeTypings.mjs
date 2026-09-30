@@ -78,13 +78,11 @@ export async function makeTypings(outDir, srcDir = path.join(cwd, "src")) {
 
   const emitResult = program.emit();
 
-  // Skip diagnostic reporting in CI
-  if (isCI) {
-    return;
-  }
-  const diagnostics = ts
-    .getPreEmitDiagnostics(program)
-    .concat(emitResult.diagnostics);
+  // CI type-checks separately with `yarn typecheck` (TypeScript 7), which
+  // doesn't report declaration emit errors, so only those are reported here.
+  const diagnostics = isCI
+    ? emitResult.diagnostics
+    : ts.getPreEmitDiagnostics(program).concat(emitResult.diagnostics);
   if (diagnostics.length > 0) {
     reportTSDiagnostics(diagnostics);
     throw new Error("Could not generate .d.ts files");
