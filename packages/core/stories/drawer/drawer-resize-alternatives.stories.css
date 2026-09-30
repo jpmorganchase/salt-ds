@@ -1,0 +1,41 @@
+/* Prototype-only styles for the WCAG 2.5.7 resize alternative stories. */
+
+/* Show the handle's active state while waiting for the placing click. */
+.demoClickToPlace-armed > .saltDrawerResizeHandle {
+  --drawerResizeHandle-background: var(--drawerResizeHandle-background-active);
+  --drawerResizeHandle-dot-background: var(--drawerResizeHandle-dot-background-active);
+}
+
+/* Content is inert to the pointer while armed, so it gets no hover/active states. The scroll container keeps
+   pointer events so the wheel still scrolls the content. */
+.demoClickToPlace-armed * {
+  pointer-events: none;
+}
+
+.demoClickToPlace-armed > .saltDrawerResizeHandle,
+.demoClickToPlace-armed .saltDrawerContent-inner {
+  pointer-events: auto;
+}
+
+.demoClickToPlace-guide {
+  position: fixed;
+  z-index: 2147483647;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.demoClickToPlace-guide-vertical {
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-left: var(--salt-size-fixed-200, 2px) dashed var(--salt-focused-outlineColor);
+  transform: translateX(-50%);
+}
+
+.demoClickToPlace-guide-horizontal {
+  left: 0;
+  right: 0;
+  height: 0;
+  border-top: var(--salt-size-fixed-200, 2px) dashed var(--salt-focused-outlineColor);
+  transform: translateY(-50%);
+}
