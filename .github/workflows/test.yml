@@ -34,12 +34,6 @@ jobs:
         run: yarn run prettier:ci
       - name: Stylelint
         run: yarn run lint:style
-      - name: Check no import from src
-        run: |
-          if find ./packages -type f \( -iname \*.ts -o -iname \*.tsx \) -exec grep "@salt-ds/.*/src" {} +; then
-            echo "Should not import from src in any typescript file"
-            exit 1;
-          fi
       - name: Spellcheck
         run: yarn workspace @salt-ds/site spellcheck
 

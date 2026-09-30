@@ -48,10 +48,10 @@ Optionally, a `testId` can be passed to the hook, the injected style tag will co
 
 ### Linting for CSS injection
 
-We have created a local eslint rule (must-inject-css) that checks if any component CSS being imported is assigned to a variable.
+A Biome lint plugin (`tooling/biome/must-inject-css.grit`) checks that component CSS is imported into a variable rather than as a side effect.
 This will help to make sure developers import CSS in such a way that can be injected by using the hook.
 
-This linting rule will only be run for component tsx files, all other CSS file imports will be ignored by this rule.
+This linting rule only runs on TypeScript files in each package's `src` folder, all other CSS file imports will be ignored by this rule.
 
 ### Storybook plugin
 
