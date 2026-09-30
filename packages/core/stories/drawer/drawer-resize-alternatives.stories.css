@@ -39,3 +39,43 @@
   border-top: var(--salt-size-fixed-200, 2px) dashed var(--salt-focused-outlineColor);
   transform: translateY(-50%);
 }
+
+/* Size bar on the drawer's fixed side, so its buttons don't move while the drawer resizes. */
+.demoStepper-sizeBar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--salt-spacing-50);
+  padding: var(--salt-spacing-100) var(--salt-spacing-300);
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
+  box-sizing: border-box;
+}
+
+/* The moving edge of a right drawer is on the left, so the controls sit on the right. */
+.demoStepper-sizeBar-right {
+  justify-content: flex-end;
+}
+
+/* The moving edge of a top drawer is at the bottom, so the bar sits at the top. */
+.demoStepper-sizeBar-top {
+  border-top: none;
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
+}
+
+.demoStepper-sizeValue {
+  min-width: 6ch;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.demoStepper-srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
