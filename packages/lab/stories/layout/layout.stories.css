@@ -13,12 +13,6 @@
   padding: 2rem 1rem;
 }
 
-.copy-right {
-  color: var(--salt-content-secondary-foreground);
-  border-top: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
-  text-align: center;
-}
-
 .border-item {
   padding: 1rem;
   display: flex;
