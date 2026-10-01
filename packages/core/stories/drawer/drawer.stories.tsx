@@ -24,6 +24,7 @@ import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   type ChangeEvent,
+  type CSSProperties,
   type MouseEventHandler,
   type SyntheticEvent,
   useEffect,
@@ -577,8 +578,16 @@ export const Resizable: StoryFn<DrawerProps> = ({
         onOpenChange={setOpen}
         style={
           isHorizontal
-            ? { width: 320, minWidth: 200, maxWidth: 640 }
-            : { height: 280, minHeight: 160, maxHeight: 520 }
+            ? ({
+                width: 320,
+                "--saltDrawer-minWidth": "200px",
+                "--saltDrawer-maxWidth": "640px",
+              } as CSSProperties)
+            : ({
+                height: 280,
+                "--saltDrawer-minHeight": "160px",
+                "--saltDrawer-maxHeight": "520px",
+              } as CSSProperties)
         }
       >
         <DrawerHeader
@@ -589,10 +598,11 @@ export const Resizable: StoryFn<DrawerProps> = ({
         <DrawerContent>
           <StackLayout>
             <Text>
-              Limits come from the drawer's own CSS:{" "}
+              Limits come from the drawer's CSS variables:{" "}
               {isHorizontal
-                ? "min-width 200px, max-width 640px."
-                : "min-height 160px, max-height 520px."}
+                ? "minimum width 200px, maximum width 640px."
+                : "minimum height 160px, maximum height 520px."}{" "}
+              The drawer never exceeds the viewport.
             </Text>
             <Text>{loremText.repeat(4)}</Text>
           </StackLayout>
@@ -630,7 +640,12 @@ export const ResizableControlled: StoryFn<DrawerProps> = (args) => {
         onOpenChange={setOpen}
         size={width}
         onResize={(_event, size) => setWidth(size)}
-        style={{ minWidth: 200, maxWidth: 640 }}
+        style={
+          {
+            "--saltDrawer-minWidth": "200px",
+            "--saltDrawer-maxWidth": "640px",
+          } as CSSProperties
+        }
       >
         <DrawerHeader
           header="Controlled resizable drawer"
