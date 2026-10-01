@@ -150,10 +150,12 @@ jobs:
               core.setFailed(`Unexpected Changesets mode: ${mode || '<empty>'}`);
             }
 
+  # Production Storybook only updates when packages are published. These jobs
+  # need `publish` directly: depending on `release` would skip them, because
+  # the skipped `version` job propagates through its `always()` condition.
   build-release-storybook:
     name: Build Release Storybook
-    if: github.event_name == 'push' && github.repository == 'jpmorganchase/salt-ds'
-    needs: release
+    needs: publish
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -174,6 +176,34 @@ jobs:
         run: yarn build-storybook
         env:
           NODE_OPTIONS: "--max_old_space_size=6144"
+      - name: Upload Storybook Static
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: storybook-build
+          path: ./storybook-static
+          retention-days: 1
+
+  publish-storybook:
+    name: Publish Storybook
+    needs: build-release-storybook
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Downloading an artifact from the same run needs no token permissions.
+    permissions: {}
+    steps:
+      - name: Download Storybook build
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: storybook-build
+          path: ./storybook-static
+      - name: Remove non-static files
+        run: rm -rf ./storybook-static/preview-stats.json ./storybook-static/_worker.js ./storybook-static/_routes.json ./storybook-static/functions
+      - name: Publish Storybook
+        uses: cloudflare/wrangler-action@25853364521e0d392ece9b0c1e97a4b37b638087 # v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_SALT_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_SALT_ACCOUNT_ID }}
+          command: pages deploy ./storybook-static --project-name=saltdesignsystem-storybook --branch=main
 
   prepare-version-publish:
     name: Prepare Version Publish
