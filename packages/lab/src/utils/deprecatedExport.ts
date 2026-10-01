@@ -19,7 +19,7 @@ export function deprecatedComponent<P extends object>(
   deprecationKey: string,
   message: string,
 ) {
-  const Wrapped = forwardRef<unknown, P>((props, ref) => {
+  const Wrapped = forwardRef<unknown, P>(function Wrapped(props, ref) {
     warnOnce(deprecationKey, message);
     return createElement(Component, { ...props, ref } as P);
   });

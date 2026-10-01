@@ -15,6 +15,8 @@ concurrency:
 
 jobs:
   deploy:
+    # Production (main) is deployed by release.yml once packages are published,
+    # so it only changes when there's a release.
     if: ${{ github.event.workflow_run.conclusion == 'success' && !(github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main') }}
     runs-on: ubuntu-latest
 

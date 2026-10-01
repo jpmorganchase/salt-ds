@@ -149,7 +149,7 @@ export interface DateInputSingleProps
 }
 
 export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
-  (props: DateInputSingleProps, ref: React.Ref<HTMLDivElement>) => {
+  function DateInputSingle(props, ref) {
     const { dateAdapter } = useLocalization();
     const {
       bordered = false,

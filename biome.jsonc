@@ -37,6 +37,14 @@
       ]
     },
     {
+      "path": "./tooling/biome/named-component-functions.grit",
+      "includes": [
+        "**/packages/*/src/**/*.ts",
+        "**/packages/*/src/**/*.tsx",
+        "!**/packages/*/src/__tests__/**"
+      ]
+    },
+    {
       "path": "./tooling/biome/dev-only-console.grit",
       "includes": [
         "**/packages/*/src/**",

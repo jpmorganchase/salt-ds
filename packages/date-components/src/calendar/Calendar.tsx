@@ -177,7 +177,7 @@ function getStartOrEndDate(
 let warnedOnce = false;
 
 export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
-  (props: CalendarProps, ref: React.Ref<HTMLDivElement>) => {
+  function Calendar(props, ref) {
     const targetWindow = useWindow();
     const { dateAdapter } = useLocalization();
     useComponentCssInjection({

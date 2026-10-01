@@ -15,7 +15,7 @@ const withBaseName = makePrefixer("saltCollapsiblePanel");
 export const CollapsiblePanel = forwardRef<
   HTMLDivElement,
   CollapsiblePanelProps
->((props, ref) => {
+>(function CollapsiblePanel(props, ref) {
   const { children, className, id: idProp, ...rest } = props;
 
   const targetWindow = useWindow();

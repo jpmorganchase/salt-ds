@@ -47,7 +47,7 @@ export interface CalendarGridProps extends ComponentPropsWithoutRef<"div"> {
 }
 
 export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(
-  (props: CalendarGridProps, ref: React.Ref<HTMLDivElement>) => {
+  function CalendarGrid(props, ref) {
     const {
       CalendarDayProps,
       CalendarWeekHeaderProps,
