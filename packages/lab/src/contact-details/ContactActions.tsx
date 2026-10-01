@@ -7,7 +7,7 @@ const withBaseName = makePrefixer("saltContactActions");
 export interface ContactActionsProps extends HTMLAttributes<HTMLDivElement> {}
 
 export const ContactActions = forwardRef<HTMLDivElement, ContactActionsProps>(
-  (props, ref) => {
+  function ContactActions(props, ref) {
     const { children, ...restProps } = props;
     const { variant } = useContactDetailsContext();
     if (variant === "mini") {

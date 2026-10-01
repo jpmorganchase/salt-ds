@@ -8,7 +8,7 @@ const withBaseName = makePrefixer("saltContactAvatar");
 export type ContactAvatarProps = AvatarProps;
 
 export const ContactAvatar = forwardRef<HTMLDivElement, ContactAvatarProps>(
-  (props, ref) => {
+  function ContactAvatar(props, ref) {
     const { className, ...restProps } = props;
     const context = useContactDetailsContext();
     const { variant, primary, isStacked, setHasAvatar } = context;
