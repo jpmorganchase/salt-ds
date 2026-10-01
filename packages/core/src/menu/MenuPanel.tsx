@@ -4,6 +4,8 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type ReactNode,
+  useCallback,
+  useState,
 } from "react";
 import { makePrefixer, useFloatingComponent, useForkRef } from "../utils";
 import { useMenuContext } from "./MenuContext";
@@ -18,6 +20,15 @@ export interface MenuPanelProps extends ComponentPropsWithoutRef<"div"> {
 }
 
 const withBaseName = makePrefixer("saltMenuPanel");
+
+function useSlotRegistry() {
+  const [count, setCount] = useState(0);
+  const register = useCallback(() => {
+    setCount((current) => current + 1);
+    return () => setCount((current) => current - 1);
+  }, []);
+  return [count > 0, register] as const;
+}
 
 export const MenuPanel = forwardRef<HTMLDivElement, MenuPanelProps>(
   function MenuPanel(props, ref) {
@@ -39,9 +50,21 @@ export const MenuPanel = forwardRef<HTMLDivElement, MenuPanelProps>(
 
     const handleRef = useForkRef<HTMLDivElement>(ref, refs?.setFloating);
 
+    const [reserveIconSpace, registerIcon] = useSlotRegistry();
+    const [reserveSelectionIconSpace, registerSelectionIcon] =
+      useSlotRegistry();
+
     return (
       <MenuPanelContext.Provider
-        value={{ activeIndex, getItemProps, setFocusInside }}
+        value={{
+          activeIndex,
+          getItemProps,
+          setFocusInside,
+          reserveIconSpace,
+          reserveSelectionIconSpace,
+          registerIcon,
+          registerSelectionIcon,
+        }}
       >
         <FloatingList elementsRef={elementsRef}>
           <FloatingComponent

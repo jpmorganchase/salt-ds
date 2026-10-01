@@ -12,11 +12,19 @@ import {
   Tooltip,
 } from "@salt-ds/core";
 import {
+  CalendarIcon,
+  ColumnChooserIcon,
   CopyIcon,
+  DragRowIcon,
+  EditIcon,
   ExportIcon,
+  GridIcon,
   MicroMenuIcon,
   PasteIcon,
   SettingsIcon,
+  SortAlphaAscendIcon,
+  StringNumberIcon,
+  UserIcon,
 } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type SyntheticEvent, useState } from "react";
@@ -233,7 +241,7 @@ export const Icons: StoryFn<typeof Menu> = (args) => {
       </MenuTrigger>
       <MenuPanel>
         <MenuItem>
-          <CopyIcon aria-hidden />
+          {/* <CopyIcon aria-hidden /> */}
           Copy
         </MenuItem>
         <MenuItem>
@@ -621,6 +629,101 @@ export const SelectionInSubmenu: StoryFn<typeof Menu> = (args) => {
           selected={sort}
           onSelectionChange={(_event, newSelected) => setSort(newSelected)}
         />
+      </MenuPanel>
+    </Menu>
+  );
+};
+
+export const SelectionWithIcons: StoryFn<typeof Menu> = (args) => {
+  const [sort, setSort] = useState<string[]>(["name"]);
+  const [columns, setColumns] = useState<string[]>(["owner", "size"]);
+
+  return (
+    <Menu {...args}>
+      <MenuTrigger>
+        <Button appearance="transparent" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup
+          label="Sort by"
+          selectionVariant="single"
+          selected={sort}
+          onSelectionChange={(_event, newSelected) => setSort(newSelected)}
+        >
+          <MenuItem value="name">
+            <SortAlphaAscendIcon aria-hidden />
+            Name
+          </MenuItem>
+          <MenuItem value="modified">
+            <CalendarIcon aria-hidden />
+            Date modified
+          </MenuItem>
+        </MenuGroup>
+        <MenuGroup
+          label="Columns"
+          selectionVariant="multiple"
+          selected={columns}
+          onSelectionChange={(_event, newSelected) => setColumns(newSelected)}
+        >
+          <MenuItem value="owner">
+            <UserIcon aria-hidden />
+            Owner
+          </MenuItem>
+          <MenuItem value="modified">
+            <CalendarIcon aria-hidden />
+            Date modified
+          </MenuItem>
+          <MenuItem value="size">
+            <StringNumberIcon aria-hidden />
+            Size
+          </MenuItem>
+        </MenuGroup>
+        <MenuGroup>
+          <MenuItem>
+            <CopyIcon aria-hidden />
+            Copy
+          </MenuItem>
+          <MenuItem>
+            <ExportIcon aria-hidden />
+            Export
+          </MenuItem>
+          <Menu>
+            <MenuTrigger>
+              <MenuItem>
+                <EditIcon aria-hidden />
+                Edit styling
+              </MenuItem>
+            </MenuTrigger>
+            <MenuPanel>
+              <MenuItem
+                onClick={() => {
+                  alert("Column");
+                }}
+              >
+                <ColumnChooserIcon aria-hidden />
+                Column
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  alert("Cell");
+                }}
+              >
+                <GridIcon aria-hidden />
+                Cell
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  alert("Row");
+                }}
+              >
+                <DragRowIcon aria-hidden />
+                Row
+              </MenuItem>
+            </MenuPanel>
+          </Menu>
+        </MenuGroup>
       </MenuPanel>
     </Menu>
   );

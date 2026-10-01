@@ -10,11 +10,12 @@ import {
   type MouseEvent,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import { CheckboxIcon } from "../checkbox";
 import { RadioButtonIcon } from "../radio-button";
 import { useIcon } from "../semantic-icon-provider";
-import { makePrefixer, useForkRef } from "../utils";
+import { makePrefixer, useForkRef, useIsomorphicLayoutEffect } from "../utils";
 import { useMenuContext } from "./MenuContext";
 import { useMenuGroup } from "./MenuGroupContext";
 import menuItemCss from "./MenuItem.css";
@@ -32,6 +33,32 @@ export interface MenuItemProps extends ComponentPropsWithoutRef<"div"> {
 }
 
 const withBaseName = makePrefixer("saltMenuItem");
+
+const leadingSlotClassNames = [
+  withBaseName("selectionIcon"),
+  withBaseName("selectionIconPlaceholder"),
+  withBaseName("iconPlaceholder"),
+];
+
+function hasLeadingIcon(item: HTMLElement | null) {
+  for (const node of Array.from(item?.childNodes ?? [])) {
+    if (node.nodeType === node.TEXT_NODE) {
+      if (node.textContent?.trim()) {
+        return false;
+      }
+    } else if (node.nodeType === node.ELEMENT_NODE) {
+      const { classList } = node as Element;
+      if (
+        !leadingSlotClassNames.some((className) =>
+          classList.contains(className),
+        )
+      ) {
+        return classList.contains("saltIcon");
+      }
+    }
+  }
+  return false;
+}
 
 let missingValueWarningShown = false;
 
@@ -51,7 +78,15 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
     const { triggersSubmenu, blurActive } = useIsMenuTrigger();
     const { setTriggerDisabled } = useMenuContext();
     const { ExpandGroupIcon } = useIcon();
-    const { activeIndex, getItemProps, setFocusInside } = useMenuPanelContext();
+    const {
+      activeIndex,
+      getItemProps,
+      setFocusInside,
+      reserveIconSpace,
+      reserveSelectionIconSpace,
+      registerIcon,
+      registerSelectionIcon,
+    } = useMenuPanelContext();
     const { isSelected, select, selectionVariant } = useMenuGroup();
     const item = useListItem();
     const tree = useFloatingTree();
@@ -62,13 +97,30 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
       css: menuItemCss,
       window: targetWindow,
     });
-    const handleRef = useForkRef<HTMLDivElement>(ref, item.ref);
+    const itemRef = useRef<HTMLDivElement>(null);
+    const listItemRef = useForkRef<HTMLDivElement>(item.ref, itemRef);
+    const handleRef = useForkRef<HTMLDivElement>(ref, listItemRef);
     const activationKeyRef = useRef<string | null>(null);
+    const [hasIcon, setHasIcon] = useState(false);
 
     const insideSelectableGroup =
       selectionVariant !== "none" && !triggersSubmenu;
     const selectable = insideSelectableGroup && value !== undefined;
     const selected = selectable && isSelected(value);
+
+    useIsomorphicLayoutEffect(() => {
+      setHasIcon(hasLeadingIcon(itemRef.current));
+    });
+
+    useIsomorphicLayoutEffect(
+      () => (hasIcon ? registerIcon() : undefined),
+      [hasIcon, registerIcon],
+    );
+
+    useIsomorphicLayoutEffect(
+      () => (selectable ? registerSelectionIcon() : undefined),
+      [selectable, registerSelectionIcon],
+    );
 
     useEffect(() => {
       if (triggersSubmenu) {
@@ -174,6 +226,15 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
             checked={selected}
             className={withBaseName("selectionIcon")}
           />
+        )}
+        {reserveSelectionIconSpace && !selectable && (
+          <span
+            aria-hidden
+            className={withBaseName("selectionIconPlaceholder")}
+          />
+        )}
+        {reserveIconSpace && !hasIcon && (
+          <span aria-hidden className={withBaseName("iconPlaceholder")} />
         )}
         {children}
         {triggersSubmenu && (
