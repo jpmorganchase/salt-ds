@@ -1,0 +1,35 @@
+.description {
+  padding: var(--salt-spacing-25) 0;
+}
+.button {
+  width: fit-content;
+}
+.actionsTitle {
+  font-weight: var(--salt-text-heading-fontWeight);
+}
+table:global(.saltTable) td.tableCell {
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
+}
+.dialog :global(.saltTable) {
+  --table-row-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+}
+.shortcuts {
+  padding: var(--salt-spacing-75) 0;
+}
+.keyboardKey {
+  padding-top: var(--salt-spacing-50);
+  padding-bottom: var(--salt-spacing-50);
+}
+.dialog :global(.saltDialogContent-inner) {
+  overflow-y: hidden;
+}
+.dialog .tableScroll {
+  overflow-y: auto;
+  max-height: 40vh;
+  position: relative;
+}
+
+.connector {
+  display: inline-block;
+  vertical-align: middle;
+}
