@@ -1,18 +1,25 @@
 ---
 title: Content status
-description: "A content status provides information about content in a container component of an application. It remains onscreen until a situation resolves or the user takes action, making it a great tool for communication and guidance."
+description: "A content status communicates loading, empty, warning, error, and success states inside a container component or bounded content region. Use it to keep state messaging attached to the content the user is already working with."
 layout: DetailPattern
 tags:
   - pattern
 aliases:
   - /salt/patterns/content-status
 data:
-  resources:
+  resources: []
+  components:
     [
-      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-content-status--info", label: "Examples" }
+      "Button",
+      "Progress",
+      "Spinner",
+      "Stack layout",
+      "Status indicator",
+      "Text",
     ]
-  components: ["Button", "Progress", "Spinner", "Stack layout", "Status indicator", "Text"]
 ---
+
+<LivePreview componentName="patterns/content-status" exampleName="Info" />
 
 <Diagram
   src="/img/patterns/content-status/content-status.png"
@@ -22,13 +29,56 @@ data:
 
 ## When to use
 
-Use this pattern in a container component:
-- When content is loading.
-- To share information with users.
-- To let users know there’s an error.
-- When the user has successfully submitted content.
+Use this pattern in a container component when the state belongs to the content area itself:
+
+- When a bounded region or local content area needs a loading, empty, warning, error, or success state.
+- When content is loading and no useful previous content is available.
+- When a container has no data to show and you need an empty-state message.
+- To share information, warnings, or errors with users that relate to the current content area.
+- When the user has successfully submitted content or completed an action.
+
+## When not to use
+
+- For essential platform-wide maintenance or outage notices, use [SystemStatus](/salt/components/system-status/usage).
+- For an individual service's current condition, show [StatusIndicator with descriptive text](/salt/components/status-indicator/usage) alongside that service. A service being degraded is different from the interface failing to load or refresh its data.
+- When a refresh fails and previously loaded content remains visible, use [Banner](/salt/components/banner/usage) in the related container. Use a page-level Banner when the issue affects the whole page.
+- For a non-blocking notification that does not need to remain in the content area, consider [Toast](/salt/components/toast/usage). Essential error details and recovery actions must remain available in the owning view.
+- For field validation or a failed save, follow the [Forms feedback guidance](/salt/patterns/forms#choosing-feedback). Use [Dialog](/salt/components/dialog/usage) only when the user must make a decision that requires interrupting the workflow.
+- When the state is not tied to a container, use inline text or another component instead.
 
 ## How to build
+
+### Choosing how to communicate loading and recovery
+
+Choose feedback according to whether useful content is already available and
+which part of the task is affected:
+
+- **No content yet:** use Content status within the affected region for initial loading, an initial-load failure with Retry, or an empty result after a successful request. A failed request is not an empty result.
+- **Refreshing existing content:** retain the content and show a local loading indication, such as a [loading Refresh button](/salt/components/button/examples#loading).
+- **Refresh failed, previous content remains:** show a [Banner](/salt/components/banner/usage) in the related container, explain that the data was not updated, and offer Retry. For example: “Couldn't refresh. Showing previously loaded data.”
+- **The whole page is affected, with useful content still available:** use a page-level Banner.
+- **An essential platform-wide condition:** use [SystemStatus](/salt/components/system-status/usage) for a maintenance notice or outage affecting the application. A failed request in one region does not by itself establish a platform-wide outage.
+
+Choose severity according to whether users can safely continue or their task is
+blocked, rather than treating every failed request as the same severity.
+
+Preserve filters, selection, scroll position, and keyboard focus during a refresh
+where they remain valid. Updating the displayed records must not overwrite an
+unsaved editing draft. If a new search, filter, or account changes the scope, make
+clear that any retained rows are previous results; do not present them as matching
+the new request.
+
+When freshness matters, show when the data was last updated. Retaining content
+does not make stale data safe: disable or revalidate actions that require current
+data until its freshness is established.
+
+### Empty and no matching results
+
+Choose the message according to why no records are displayed:
+
+- **No records in the current scope:** after a successful request, explain that no records are available in this scope. Offer an onward action only when it applies to the task.
+- **No matching results:** explain that no items match the current search or filters. Keep these criteria visible so users can adjust or clear them; do not clear them automatically. A filtered result with no rows does not establish that the whole dataset is empty. Follow the [List filtering guidance](/salt/patterns/list-filtering#no-matches).
+- **Request failed:** describe the failure and offer Retry using the [loading and recovery guidance](#choosing-how-to-communicate-loading-and-recovery). Successful no-match results are not errors and do not need Retry.
 
 ### Anatomy
 
@@ -47,9 +97,9 @@ The content status consists of three functional areas:
 
 ### Layout
 
-- Use [`StackLayout`](/salt/components/layouts/stack-layout) to display the two lists and move buttons that make up list builder in a row formation.
-- Use [`Text`](/salt/components/text), [`Button`](/salt/components/button) and [`Input`](/salt/components/input) to assemble the header area.
-- Use [`StackLayout`](/salt/components/layouts/stack-layout) to orient the move buttons between the two lists in a column formation.
+- Use [`StackLayout`](/salt/components/layouts/stack-layout) to arrange the visual indicator, title, supporting message, and optional action vertically.
+- Use [`Text`](/salt/components/text) for the title and supporting message.
+- Add a [`Button`](/salt/components/button) only when the status offers an action, such as reloading content.
 
 <Diagram
   src="/img/patterns/content-status/content-status-layout.png"
@@ -59,8 +109,10 @@ The content status consists of three functional areas:
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
+
 - Text line length shouldn't exceed 80 characters. See the [typography foundation](/salt/foundations/typography) for more information.
 - You should horizontally and vertically center the pattern in the container.
+
 </GuidanceCallout>
 
 ### Supporting messages
@@ -91,7 +143,7 @@ We've used a [spinner](/salt/components/spinner) component to reassure users in 
 
 ## Info message
 
-Use this variant to communicate useful information. For example, if there’s no data available, this variation can communicate that message to let users know why they can't see any content.
+Use this variant to communicate useful information. For example, if there’s no data available, this variation can communicate an empty-state message and let users know why they can't see any content.
 
 <Diagram
   src="/img/patterns/content-status/content-status-info.png"
@@ -102,7 +154,7 @@ Use this variant to communicate useful information. For example, if there’s no
 
 ## Warning message
 
-Use the warning status to inform users of an issue or potential issue related to their current task. Use this for issues that don't prevent the user from continuing or completing their task. This could include a system status that may cause issues at a later point.
+Use the warning status to inform users of an issue or potential issue related to their current task. Use this for issues that don't prevent the user from continuing or completing their task. For example, warn about a limitation affecting the content in this region. For essential platform-wide notices, use [SystemStatus](/salt/components/system-status/usage).
 
 <Diagram
   src="/img/patterns/content-status/content-status-warning.png"
@@ -123,12 +175,14 @@ Use the error status to communicate a critical issue that prevents the user from
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
- Error and warning messages should: 
- 1. Notify users when there’s an issue. 
- 2. Identify and explain the issue. 
- 3. Provide a resolution.
-</GuidanceCallout>
 
+Error and warning messages should:
+
+1. Notify users when there’s an issue.
+2. Identify and explain the issue.
+3. Provide a resolution.
+
+</GuidanceCallout>
 
 ## Success message
 

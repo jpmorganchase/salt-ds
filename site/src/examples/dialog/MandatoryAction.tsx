@@ -10,10 +10,11 @@ import {
   useId,
   useResponsiveProp,
 } from "@salt-ds/core";
-import { type ElementType, type ReactElement, useState } from "react";
+import { type ElementType, type ReactElement, useRef, useState } from "react";
 
 export const MandatoryAction = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const cancelRef = useRef<HTMLButtonElement>(null);
   const id = useId();
 
   const handleRequestOpen = () => {
@@ -38,7 +39,12 @@ export const MandatoryAction = (): ReactElement => {
     );
 
   const cancel = (
-    <Button appearance="bordered" sentiment="accented" onClick={handleClose}>
+    <Button
+      ref={cancelRef}
+      appearance="bordered"
+      sentiment="accented"
+      onClick={handleClose}
+    >
       Cancel
     </Button>
   );
@@ -55,6 +61,7 @@ export const MandatoryAction = (): ReactElement => {
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
+        initialFocus={cancelRef}
         disableDismiss
         size="small"
         status="error"

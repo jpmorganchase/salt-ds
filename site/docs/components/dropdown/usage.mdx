@@ -12,22 +12,29 @@ data:
 
 ### When to use
 
-- When a user needs the ability to choose one value from a set of five to 10 options.
-- When only the selected value from a set of options needs to be visible once the selection is made.
+- When users need to select one or more values and the list of options does not need to stay visible.
+- When available space favors a popup and users can find the options without typing a filter. Use `multiselect` when multiple values are allowed.
 
 ### When not to use
 
-- When you have more than 10 options and users would benefit from filtering to narrow down the available options. Instead, use [`ComboBox`](../combo-box).
-- When you have fewer than five options and need to one option to be selected. Instead, use [`RadioButtonGroup`](../button).
-- When you have fewer than five options and multiple selections are required, or possible. Instead, use [`CheckboxGroup`](../checkbox).
-- If you have a Boolean selection, for instance “on” or “off”. Instead, use [`Switch`](../switch).
-- When you have large number (>100) of list items, to prevent performance issues without virtualization, we strongly recommend adding a filter e.g. use a [`ComboBox`](../combo-box) instead.
+- When typing would help users find an option. Instead, use [`ComboBox`](../combo-box) and supply the filtering logic.
+- When users should compare a small set of mutually exclusive choices without opening a popup. Instead, use [`RadioButtonGroup`](../radio-button).
+- When multiple independent choices should remain visible together. Instead, use [`CheckboxGroup`](../checkbox).
+- When a selectable list should remain visible. Instead, use [`ListBox`](../list-box).
+- For a popup list of actions such as Edit or Delete. Instead, use [`Menu`](../menu).
+- For an on/off setting that takes effect immediately. Instead, use [`Switch`](../switch).
+
+See [Choosing a selection control](../list-box/usage#choosing-a-selection-control)
+for the decision and the distinction between filtering and large-list performance.
 
 ### Controlled/Uncontrolled
 
-Just like native input elements in React, dropdowns can be controlled or uncontrolled. By default a dropdown is uncontrolled. Use the `defaultSelected` prop to control the default value of the dropdown.
+By default, a dropdown manages its own selection. Use `defaultSelected` to set the
+initial selection, or `selected` with `onSelectionChange` to control it.
 
-If you want to control the value of the dropdown, use the `value` and `selected` props. The `onSelectionChange` prop is required when using the controlled approach.
+The `value` prop overrides the text displayed in the button, for example to show a
+summary of multiple selected options. It does not replace `selected` as the
+selection state.
 
 ## Import
 
