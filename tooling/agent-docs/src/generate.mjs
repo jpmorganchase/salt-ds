@@ -31,6 +31,13 @@ export const REPOSITORY_ROOT = path.resolve(
   "../../..",
 );
 
+// Consumers run this script from the installed package to set up AGENTS.md.
+const AGENTS_MD_PACKAGE = "@salt-ds/core";
+const AGENTS_MD_SCRIPT = "agents-md.mjs";
+const AGENTS_MD_SOURCE = fileURLToPath(
+  new URL("./agents-md.mjs", import.meta.url),
+);
+
 export class AgentDocsError extends Error {
   constructor(errors) {
     super(
@@ -217,6 +224,7 @@ export function findBrokenLinks(outputs) {
   const broken = [];
   for (const [packageName, { files }] of outputs) {
     for (const [docPath, content] of files) {
+      if (!docPath.endsWith(".md")) continue;
       const prose = content.replace(FENCE_PATTERN, "");
       for (const [, target] of prose.matchAll(LINK_PATTERN)) {
         const url = target.replace(/^<|>$/g, "").split("#")[0];
@@ -321,6 +329,11 @@ export async function generateAgentDocs({
     });
   }
   await addReferences({ packages, packagesDir, routeIndex, outputs });
+  if (packages.has(AGENTS_MD_PACKAGE)) {
+    outputs
+      .get(AGENTS_MD_PACKAGE)
+      .files.set(AGENTS_MD_SCRIPT, await readFile(AGENTS_MD_SOURCE, "utf8"));
+  }
 
   const packageNames = [...outputs.outputs.keys()].sort();
   for (const packageName of packageNames) {
