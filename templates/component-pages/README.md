@@ -131,6 +131,7 @@ Agents get the text, example source, props tables and keyboard interactions, but
 
 - Give every image that carries information alt text, and state the key point in the text too. Leave alt text empty only for decorative images.
 - Keep examples self-contained. Import from Salt packages and files in the example's folder, not site-only helpers.
+- Keep examples focused. When a page grows past about 20 KB of Markdown, its largest examples move to separate files linked from the page, so an agent reads the guidance first and opens only the examples it needs.
 - Use `PropsTable` for components only. It shows nothing for hooks and other functions, so describe their arguments and return values in text instead.
 - Fill in `alsoKnownAs` with the names developers search for. They appear in the package's docs index, which agents use to find the right component.
 - Use existing MDX components. Generation fails on an unknown one, so a new component also needs a handler in `tooling/agent-docs`.
