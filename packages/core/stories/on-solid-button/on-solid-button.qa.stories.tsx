@@ -1,11 +1,11 @@
+import { OnSolidButton } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
-import { OnSolidButton } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import { type ReactNode, useEffect, useRef } from "react";
 
 export default {
-  title: "Lab/On Solid Button/On Solid Button QA",
+  title: "Core/On Solid Button/On Solid Button QA",
   component: OnSolidButton,
   globals: {
     a11y: {

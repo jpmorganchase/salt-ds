@@ -1,9 +1,9 @@
+import { OnSolidButton } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
-import { OnSolidButton } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
-  title: "Lab/On Solid Button",
+  title: "Core/On Solid Button",
   component: OnSolidButton,
 } as Meta<typeof OnSolidButton>;
 
