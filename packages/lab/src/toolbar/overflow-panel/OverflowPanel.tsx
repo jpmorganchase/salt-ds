@@ -41,7 +41,7 @@ export interface DropdownPanelProps extends DropdownBaseProps {
   triggerButtonLabel?: string;
 }
 
-export const OverflowPanel = forwardRef(function DropdownPanel(
+export const OverflowPanel = forwardRef(function OverflowPanel(
   {
     children,
     className,
