@@ -1,7 +1,8 @@
 /**
  * Prototypes of single-pointer, non-drag alternatives for resizing a Drawer (WCAG 2.2 SC 2.5.7 Dragging
- * Movements): click-to-place (option #1) and stepper buttons (option #2). They are built on the Drawer's public
- * API only (`size`, `onResize`, the separator's aria values), so they can be demoed without changing the component.
+ * Movements): click-to-place (option #1), stepper buttons (option #2) and preset cycling (option #6). They are
+ * built on the Drawer's public API only (`size`, `onResize`, the separator's aria values), so they can be demoed
+ * without changing the component.
  */
 import {
   Button,
@@ -598,12 +599,12 @@ const StepperButtonsTemplate = ({
     <div
       role="group"
       aria-label="Drawer size"
-      className={`demoStepper-sizeBar demoStepper-sizeBar-${position}`}
+      className={`demoSizeBar demoSizeBar-${position}`}
     >
       {renderStepper(-1)}
-      <Text className="demoStepper-sizeValue" aria-live="polite">
+      <Text className="demoSizeBar-value" aria-live="polite">
         {Math.round(current)}px
-        <span className="demoStepper-srOnly">{limitText}</span>
+        <span className="demoSrOnly">{limitText}</span>
       </Text>
       {renderStepper(1)}
       <Button
@@ -712,3 +713,136 @@ export const StepperButtonsSizeBar: StoryFn<PositionArgs> = ({ position }) => (
 );
 StepperButtonsSizeBar.args = { position: "left" };
 StepperButtonsSizeBar.argTypes = positionArgTypes;
+
+interface Preset {
+  name: string;
+  size: number;
+}
+
+/** Presets clamped to the drawer's limits. Presets that end up the same size are merged. */
+const getPresets = (
+  horizontal: boolean,
+  defaultSize: number,
+  min: number,
+  max: number,
+): Preset[] => {
+  const presets = [
+    { name: "Compact", size: min },
+    { name: "Default", size: defaultSize },
+    { name: "Wide", size: horizontal ? 480 : 400 },
+    { name: "Full", size: max },
+  ]
+    .filter(({ size }) => Number.isFinite(size))
+    .map(({ name, size }) => ({
+      name,
+      size: Math.round(Math.min(Math.max(size, min), max)),
+    }));
+  return presets.filter(
+    (preset, index) =>
+      presets.findIndex(({ size }) => size === preset.size) === index,
+  );
+};
+
+const PresetCyclingTemplate = ({ position }: PositionArgs) => {
+  const horizontal = isHorizontal(position);
+  const defaultSize = horizontal ? 320 : 280;
+  const [open, setOpen] = useState(false);
+  const [drawer, setDrawer] = useState<HTMLDivElement | null>(null);
+  const [size, setSize] = useState(defaultSize);
+  const values = useSeparatorValues(drawer);
+
+  const current = Math.round(values?.now ?? size);
+  const presets = values
+    ? getPresets(horizontal, defaultSize, values.min, values.max)
+    : [];
+  // Within 1px, to allow for rounding in the rendered size.
+  const currentPreset = presets.find(
+    (preset) => Math.abs(preset.size - current) <= 1,
+  );
+  // The next larger preset, wrapping back to the smallest. A dragged size moves on to the next larger preset.
+  const nextPreset =
+    presets.find((preset) => preset.size > current + 1) ?? presets[0];
+  const currentName = currentPreset?.name ?? "Custom";
+
+  const sizeBar = (
+    <div
+      role="group"
+      aria-label="Drawer size"
+      className={`demoSizeBar demoSizeBar-${position}`}
+    >
+      <Button
+        appearance="bordered"
+        sentiment="neutral"
+        disabled={!nextPreset}
+        onClick={() => nextPreset && setSize(nextPreset.size)}
+      >
+        Size: {currentName}
+      </Button>
+      <Text className="demoSizeBar-value">{current}px</Text>
+      {nextPreset && (
+        <Text color="secondary" styleAs="label">
+          Next: {nextPreset.name}
+        </Text>
+      )}
+      <span className="demoSrOnly" aria-live="polite">
+        Drawer size: {currentName}, {current}px
+      </span>
+    </div>
+  );
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open Drawer</Button>
+      <Drawer
+        ref={setDrawer}
+        resizable
+        position={position}
+        open={open}
+        onOpenChange={setOpen}
+        size={size}
+        onResize={(_event, next) => setSize(next)}
+        style={
+          horizontal
+            ? { minWidth: 200, maxWidth: 640 }
+            : { minHeight: 160, maxHeight: 520 }
+        }
+      >
+        {position === "top" && sizeBar}
+        <DrawerHeader
+          header="Preset size cycling"
+          description={`Click the size button to cycle through ${presets
+            .map(({ name }) => name)
+            .join(
+              ", ",
+            )}. Dragging and the arrow keys still work, and a dragged size moves on to the next larger preset.`}
+          actions={<CloseButton onClick={() => setOpen(false)} />}
+        />
+        <DrawerContent>
+          <StackLayout>
+            <Text>
+              Presets:{" "}
+              {presets.map(({ name, size }) => `${name} ${size}px`).join(", ")}.
+            </Text>
+            <Text>{loremText.repeat(4)}</Text>
+          </StackLayout>
+        </DrawerContent>
+        <DrawerFooter>
+          <Button sentiment="accented" onClick={() => setOpen(false)}>
+            Done
+          </Button>
+        </DrawerFooter>
+        {position !== "top" && sizeBar}
+      </Drawer>
+    </>
+  );
+};
+
+/**
+ * Option #6: one button cycles the drawer through preset sizes (Compact, Default, Wide, Full). It sits in the
+ * size bar on the drawer's fixed side, so it stays under the pointer while cycling.
+ */
+export const PresetCycling: StoryFn<PositionArgs> = ({ position }) => (
+  <PresetCyclingTemplate key={position} position={position} />
+);
+PresetCycling.args = { position: "left" };
+PresetCycling.argTypes = positionArgTypes;
