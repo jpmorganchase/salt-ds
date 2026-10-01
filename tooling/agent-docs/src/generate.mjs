@@ -1,7 +1,12 @@
 import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { DOCS_DIRECTORY, GENERATED_MARKER, SITE_ORIGIN } from "./config.mjs";
+import {
+  DOCS_DIRECTORY,
+  GENERATED_MARKER,
+  MAX_PAGE_BYTES,
+  SITE_ORIGIN,
+} from "./config.mjs";
 import { createExampleResolver } from "./examples.mjs";
 import { pathExists } from "./files.mjs";
 import { createLinkResolver, docLink } from "./links.mjs";
@@ -277,7 +282,6 @@ export async function generateAgentDocs({
       examplesDir: path.join(repoRoot, "site", "src", "examples"),
     }),
     props: propsProvider ?? createPropsProvider({ packagesDir }),
-    patternStoriesDir: path.join(packagesDir, "core", "stories", "patterns"),
     componentsByTitle: new Map(
       knownDocuments
         .filter((doc) => doc.kind === "component")
@@ -300,10 +304,15 @@ export async function generateAgentDocs({
         ? await renderComponentDocument(doc, shared)
         : await renderPageDocument(doc, shared);
     const target = outputs.get(doc.packageName);
-    if (target.files.has(doc.docPath)) {
-      errors.push(`${doc.route}: more than one page writes ${doc.docPath}.`);
+    for (const file of [
+      { docPath: doc.docPath, markdown: rendered.markdown },
+      ...rendered.files,
+    ]) {
+      if (target.files.has(file.docPath)) {
+        errors.push(`${doc.route}: more than one page writes ${file.docPath}.`);
+      }
+      target.files.set(file.docPath, file.markdown);
     }
-    target.files.set(doc.docPath, rendered.markdown);
     target.entries.push({
       title: doc.title,
       docPath: doc.docPath,
@@ -317,15 +326,18 @@ export async function generateAgentDocs({
   for (const packageName of packageNames) {
     const info = packages.get(packageName);
     const target = outputs.outputs.get(packageName);
-    target.files.set(
-      "index.md",
-      renderIndex({
-        packageName,
-        version: info.version,
-        entries: target.entries,
-        otherPackages: packageNames.filter((name) => name !== packageName),
-      }),
-    );
+    const index = renderIndex({
+      packageName,
+      version: info.version,
+      entries: target.entries,
+      otherPackages: packageNames.filter((name) => name !== packageName),
+    });
+    target.files.set("index.md", index);
+    if (Buffer.byteLength(index) > MAX_PAGE_BYTES) {
+      warnings.push(
+        `${packageName}/docs/index.md is ${Math.round(Buffer.byteLength(index) / 1024)} KB. Agents read it first, so keep it under ${MAX_PAGE_BYTES / 1024} KB.`,
+      );
+    }
     if (!info.files.some((entry) => /^(?:\.?\/)?docs\/?$/.test(entry))) {
       errors.push(
         `${packageName}: add "${DOCS_DIRECTORY}" to "files" in packages/${info.directory}/package.json so its generated docs are published.`,

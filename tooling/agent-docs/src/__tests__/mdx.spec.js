@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { convertMdx, stringifyMarkdown, stripFragments } from "../mdx.mjs";
+import {
+  convertMdx,
+  EXAMPLE_NODE,
+  stringifyMarkdown,
+  stripFragments,
+} from "../mdx.mjs";
 
 function createContext(overrides = {}) {
   const errors = [];
@@ -12,7 +17,6 @@ function createContext(overrides = {}) {
     links: { resolve: (url) => url },
     examples: { resolve: async () => ({ error: "No examples." }) },
     props: { get: () => undefined },
-    shownSupport: new Set(),
     referenceLink: (packageName, docPath) => `${packageName}/docs/${docPath}`,
     error: (_node, message) => errors.push(message),
     warn: (_node, message) => warnings.push(message),
@@ -39,40 +43,19 @@ describe("convertMdx", () => {
     expect(markdown).toBe("## Title\n\nSome **text**.\n");
   });
 
-  it("inlines LivePreview examples and their supporting files once", async () => {
+  it("turns LivePreview into an example node for placement", async () => {
+    const entry = { language: "tsx", code: "export const Accented = 1;\n" };
+    const support = [{ kind: "asset", displayPath: "../assets/logo.svg" }];
     const ctx = createContext({
-      examples: {
-        resolve: async (componentName, exampleName) => ({
-          entry: {
-            language: "tsx",
-            code: `export const ${exampleName} = 1;\n`,
-          },
-          support: [
-            {
-              kind: "file",
-              displayPath: "./index.module.css",
-              absolutePath: `/examples/${componentName}/index.module.css`,
-              language: "css",
-              code: ".root {}\n",
-            },
-            { kind: "asset", displayPath: "../assets/logo.svg" },
-          ],
-        }),
-      },
+      examples: { resolve: async () => ({ entry, support }) },
     });
-    const markdown = await toMarkdown(
-      '<LivePreview componentName="button" exampleName="Accented" />\n\n<LivePreview componentName="button" exampleName="Neutral" />',
+    const nodes = await convertMdx(
+      '<LivePreview componentName="button" exampleName="Accented" />',
       ctx,
     );
-    expect(markdown).toContain("_Example:_ `Accented`");
-    expect(markdown).toContain("```tsx\nexport const Accented = 1;\n```");
-    expect(markdown).toContain(
-      "Supporting file `./index.module.css`:\n\n```css\n.root {}\n```",
-    );
-    expect(markdown).toContain(
-      "Supporting file `./index.module.css` is shown above.",
-    );
-    expect(markdown).toContain("Asset `../assets/logo.svg` (not included).");
+    expect(nodes).toEqual([
+      { type: EXAMPLE_NODE, name: "Accented", entry, support },
+    ]);
     expect(ctx.errors).toEqual([]);
   });
 

@@ -1,18 +1,14 @@
-import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { toString as nodeText } from "mdast-util-to-string";
 import {
   DROPPED_FRAGMENTS,
   GENERATED_MARKER,
   INDEX_SECTIONS,
-  MAX_INLINE_STORY_FILE_BYTES,
   PACKAGE_DESCRIPTIONS,
-  PATTERN_STORY_LINK,
   RELATIONSHIP_LABELS,
   SITE_ORIGIN,
   SUMMARY_MAX_LENGTH,
 } from "./config.mjs";
-import { listFiles, pathExists } from "./files.mjs";
 import { docLink } from "./links.mjs";
 import {
   convertMdx,
@@ -22,6 +18,7 @@ import {
   stripFragments,
   u,
 } from "./mdx.mjs";
+import { placeExamples } from "./placement.mjs";
 
 export function summarize(text, maxLength = SUMMARY_MAX_LENGTH) {
   const clean = text.replace(/\s+/g, " ").trim();
@@ -44,7 +41,7 @@ function location(page, node) {
     : `site/docs/${page.relativePath}`;
 }
 
-async function convertPage(page, doc, shared, shownSupport) {
+async function convertPage(page, doc, shared) {
   const ctx = {
     sitePath: page.sitePath,
     packageName: doc.packageName,
@@ -52,7 +49,6 @@ async function convertPage(page, doc, shared, shownSupport) {
     links: shared.links,
     examples: shared.examples,
     props: shared.props,
-    shownSupport,
     referenceLink: (packageName, docPath) =>
       docLink({
         fromPackage: doc.packageName,
@@ -174,8 +170,20 @@ function firstParagraphText(nodes) {
   return paragraph ? nodeText(paragraph) : "";
 }
 
+/** Renders a page's Markdown and any example files moved off it. */
+function finishDocument(doc, children, summary) {
+  const placed = placeExamples(children, {
+    title: doc.title,
+    docPath: doc.docPath,
+  });
+  return {
+    markdown: stringifyMarkdown({ type: "root", children: placed.children }),
+    summary,
+    files: placed.files,
+  };
+}
+
 export async function renderComponentDocument(doc, shared) {
-  const shownSupport = new Set();
   const facts = commonFacts(doc, shared);
   if (doc.aliases.length > 0) {
     facts.push(fact("Also known as", [u.text(doc.aliases.join(", "))]));
@@ -207,101 +215,38 @@ export async function renderComponentDocument(doc, shared) {
     u.heading(1, [u.text(doc.title)]),
     ...summaryNodes(doc, doc.index, shared),
     u.list(facts),
-    ...(await convertPage(doc.index, doc, shared, shownSupport)),
+    ...(await convertPage(doc.index, doc, shared)),
   ];
   for (const tab of doc.tabs) {
-    const content = await convertPage(tab.page, doc, shared, shownSupport);
+    const content = await convertPage(tab.page, doc, shared);
     if (content.length === 0) continue;
     children.push(
       u.heading(2, [u.text(tab.heading)]),
       ...demoteHeadings(content, 1),
     );
   }
-  return {
-    markdown: stringifyMarkdown({ type: "root", children }),
-    summary: typeof doc.summary === "string" ? plainText(doc.summary) : "",
-  };
-}
-
-const STORY_LANGUAGES = { ".tsx": "tsx", ".ts": "ts", ".css": "css" };
-
-/**
- * Pattern examples live in Storybook rather than on the site. The pattern's
- * Storybook link identifies its folder under packages/core/stories/patterns.
- */
-async function patternStoryNodes(doc, shared) {
-  if (!doc.route.startsWith("/salt/patterns/")) return [];
-  const resources = doc.page.frontmatter.data?.resources;
-  const linkedSlug = (Array.isArray(resources) ? resources : [])
-    .map((resource) => PATTERN_STORY_LINK.exec(resource?.href ?? "")?.[1])
-    .find(Boolean);
-  // Without a Storybook link, a stories folder named like the page still counts.
-  const slug = linkedSlug ?? path.posix.basename(doc.route);
-  const directory = path.join(shared.patternStoriesDir, slug);
-  if (!(await pathExists(directory))) {
-    if (linkedSlug) {
-      shared.warnings.push(
-        `site/docs/${doc.page.relativePath}: no Storybook stories found in packages/core/stories/patterns/${slug}.`,
-      );
-    }
-    return [];
-  }
-  const files = (
-    await listFiles(directory, (file) => path.extname(file) in STORY_LANGUAGES)
-  ).sort(
-    (left, right) =>
-      Number(right.endsWith(".stories.tsx")) -
-        Number(left.endsWith(".stories.tsx")) || left.localeCompare(right),
+  return finishDocument(
+    doc,
+    children,
+    typeof doc.summary === "string" ? plainText(doc.summary) : "",
   );
-  const nodes = [
-    u.heading(2, [u.text("Examples")]),
-    u.paragraph([
-      u.text(
-        "Source of this pattern's Storybook examples. Each named export in a ",
-      ),
-      u.inlineCode(".stories.tsx"),
-      u.text(
-        " file is one example; the default export and Storybook types only configure Storybook.",
-      ),
-    ]),
-  ];
-  for (const file of files) {
-    const content = await readFile(path.join(directory, file), "utf8");
-    const bytes = Buffer.byteLength(content);
-    const label = [u.text("File "), u.inlineCode(file)];
-    if (bytes > MAX_INLINE_STORY_FILE_BYTES) {
-      nodes.push(
-        u.paragraph([
-          ...label,
-          u.text(` (${Math.round(bytes / 1024)} KB, not included).`),
-        ]),
-      );
-    } else {
-      nodes.push(
-        u.paragraph([...label, u.text(":")]),
-        u.code(STORY_LANGUAGES[path.extname(file)], content.trimEnd()),
-      );
-    }
-  }
-  return nodes;
 }
 
 export async function renderPageDocument(doc, shared) {
-  const content = await convertPage(doc.page, doc, shared, new Set());
+  const content = await convertPage(doc.page, doc, shared);
   const children = [
     u.heading(1, [u.text(doc.title)]),
     ...summaryNodes(doc, doc.page, shared),
     u.list([...commonFacts(doc, shared), websiteFact(doc)]),
     ...content,
-    ...(await patternStoryNodes(doc, shared)),
   ];
-  return {
-    markdown: stringifyMarkdown({ type: "root", children }),
-    summary:
-      typeof doc.summary === "string"
-        ? plainText(doc.summary)
-        : firstParagraphText(content),
-  };
+  return finishDocument(
+    doc,
+    children,
+    typeof doc.summary === "string"
+      ? plainText(doc.summary)
+      : firstParagraphText(content),
+  );
 }
 
 function sectionFor(entry) {
