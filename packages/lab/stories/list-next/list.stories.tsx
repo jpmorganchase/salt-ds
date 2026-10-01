@@ -6,6 +6,7 @@ import {
   ToggleButtonGroup,
 } from "@salt-ds/core";
 import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
+import { ListItemNext, ListNext, type ListNextProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   type ChangeEvent,
@@ -13,7 +14,6 @@ import {
   type SyntheticEvent,
   useState,
 } from "react";
-import { ListItemNext, ListNext, type ListNextProps } from "../../src";
 import { usStateExampleData } from "../assets/exampleData";
 
 export default {

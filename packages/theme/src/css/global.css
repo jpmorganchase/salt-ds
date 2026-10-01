@@ -35,6 +35,7 @@
   border-width: 0;
 }
 
+/* stylelint-disable selector-class-pattern -- .focused is a public utility class */
 .saltFocusVisible:after,
 .focused:focus:after,
 .focused:focus-visible:after {
@@ -46,3 +47,4 @@
   outline-width: var(--salt-focused-outlineWidth);
   position: absolute;
 }
+/* stylelint-enable selector-class-pattern */

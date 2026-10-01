@@ -5,7 +5,7 @@ import { useInsertionPoint } from "./InsertionPointProvider";
 
 /* Workaround for https://github.com/webpack/webpack/issues/14814#issuecomment-1536757985 */
 const maybeUseInsertionEffect: typeof React.useLayoutEffect =
-  // biome-ignore lint/suspicious/noExplicitAny: see comment above
+  // biome-ignore lint/suspicious/noExplicitAny lint/plugin/no-react-namespace-restricted-hooks: see comment above; styles can't depend on core's useIsomorphicLayoutEffect
   (React as any)["useInsertionEffect".toString()] ?? React.useLayoutEffect;
 
 export interface UseComponentCssInjection {

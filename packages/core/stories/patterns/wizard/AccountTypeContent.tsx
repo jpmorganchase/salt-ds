@@ -6,7 +6,7 @@ import {
   RadioButtonGroup,
   StackLayout,
   Text,
-} from "../../../src";
+} from "@salt-ds/core";
 import type { FormContentProps } from "./wizard.stories";
 
 export const accountTypeOptions = [
