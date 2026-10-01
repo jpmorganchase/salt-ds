@@ -152,7 +152,9 @@ export const useOverflowCollectionItems: OverflowCollectionHook = ({
     }
 
     measure().catch((err) => {
-      console.warn("error occurred measuring Overflow Items", err);
+      if (process.env.NODE_ENV !== "production") {
+        console.warn("error occurred measuring Overflow Items", err);
+      }
     });
   }, [measureManagedItems]);
 

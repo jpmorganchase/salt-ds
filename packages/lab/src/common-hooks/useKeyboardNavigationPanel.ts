@@ -111,7 +111,6 @@ export const useKeyboardNavigationPanel = ({
     (e: KeyboardEvent<HTMLElement>) => {
       const direction: NavigationDirection = e.shiftKey ? "BWD" : "FWD";
       const nextIdx = nextFocusableItemIdx(direction, highlightedIdx);
-      console.log(`nextFocusableItem from ${highlightedIdx} is ${nextIdx}`);
       if (nextIdx !== highlightedIdx) {
         setHighlightedIndex(nextIdx);
         // What exactly is the point of this ?

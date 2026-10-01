@@ -45,6 +45,15 @@
       ]
     },
     {
+      "path": "./tooling/biome/dev-only-console.grit",
+      "includes": [
+        "**/packages/*/src/**",
+        "!**/packages/*/src/__tests__/**",
+        "!**/packages/*/src/examples/**",
+        "!**/packages/*/src/dependencies/**"
+      ]
+    },
+    {
       "path": "./tooling/biome/make-prefixer-names.grit",
       "includes": ["**/packages/*/src/**", "!**/packages/*/src/__tests__/**"]
     },
