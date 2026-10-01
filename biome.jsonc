@@ -43,6 +43,15 @@
         "**/packages/*/src/**/*.tsx",
         "!**/packages/*/src/__tests__/**"
       ]
+    },
+    {
+      "path": "./tooling/biome/dev-only-console.grit",
+      "includes": [
+        "**/packages/*/src/**",
+        "!**/packages/*/src/__tests__/**",
+        "!**/packages/*/src/examples/**",
+        "!**/packages/*/src/dependencies/**"
+      ]
     }
   ],
   "assist": { "actions": { "source": { "organizeImports": "on" } } },

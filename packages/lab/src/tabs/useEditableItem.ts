@@ -53,7 +53,6 @@ export const useEditableItem = ({
     tabIndex: number,
   ) => {
     setEditing(false);
-    console.log("exit edit mode");
     onExitEditModeProp?.(
       originalValue,
       editedValue,
@@ -64,9 +63,6 @@ export const useEditableItem = ({
 
   const onKeyDown = useCallback(
     (evt: KeyboardEvent) => {
-      console.log(`useEditableItem onKeyDown ${highlightedIdx}`, {
-        editable: indexPositions[highlightedIdx]?.editable,
-      });
       if (isEditKey(evt.key) && indexPositions[highlightedIdx]?.editable) {
         onEnterEditMode();
       }
