@@ -1,0 +1,9 @@
+language js
+
+// Stories show how consumers use a package, so they import it by name rather
+// than through a relative path to the package's src entry point. Deep imports
+// of internals and examples, which have no public entry point, are allowed.
+JsModuleSource() as $source where {
+  $source <: r"^[\"'](?:\.\./)+src(?:/index)?[\"']$",
+  register_diagnostic(span=$source, message="Import from the package name, e.g. @salt-ds/core, instead of its src folder.")
+}

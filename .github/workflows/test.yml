@@ -52,6 +52,8 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn
+      - name: Check lab prerelease versioning
+        run: node ./scripts/checkLabPrerelease.mjs
       - name: Build
         run: yarn build
       - name: Check packages

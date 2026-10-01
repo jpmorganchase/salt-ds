@@ -28,7 +28,7 @@ export type MaybeChildProps = {
 const withBaseName = makePrefixer("saltDropdownBase");
 
 export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
-  function Dropdown(
+  function DropdownBase(
     {
       "aria-labelledby": ariaLabelledByProp,
       children,

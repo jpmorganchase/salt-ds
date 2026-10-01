@@ -16,7 +16,7 @@ export interface DatePickerTriggerProps {
 export const DatePickerTrigger = forwardRef<
   HTMLDivElement,
   DatePickerTriggerProps
->((props: DatePickerTriggerProps, ref: React.Ref<HTMLDivElement>) => {
+>(function DatePickerTrigger(props, ref) {
   const { children, className, ...rest } = props;
 
   const {

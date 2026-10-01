@@ -21,7 +21,13 @@
       "logLevel": "default"
     },
     "salt/characteristic-token-in-all-themes": null,
-    "salt/theme-self-containment": null
+    "salt/theme-self-containment": null,
+    "selector-class-pattern": [
+      "^salt",
+      {
+        "message": "Expected class selector \"%s\" to start with \"salt\""
+      }
+    ]
   },
   "overrides": [
     {
@@ -82,6 +88,20 @@
             "severity": "warning"
           }
         ]
+      }
+    },
+    {
+      "files": [
+        "**/ag-grid-theme/**/*.css",
+        "**/highcharts-theme/**/*.css",
+        "**/react-resizable-panels-theme/**/*.css",
+        "**/lab/src/app-header/AppHeader.css",
+        "**/lab/src/color-chooser/ColorPicker.css",
+        "**/lab/src/toolbar/Toolbar.css",
+        "**/lab/src/toolbar/Tooltray.css"
+      ],
+      "rules": {
+        "selector-class-pattern": null
       }
     }
   ]

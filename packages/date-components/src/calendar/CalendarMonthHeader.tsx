@@ -27,7 +27,7 @@ const withBaseName = makePrefixer("saltCalendarMonthHeader");
 export const CalendarMonthHeader = forwardRef<
   HTMLDivElement,
   CalendarMonthHeaderProps
->((props: CalendarMonthHeaderProps, ref: React.Ref<HTMLDivElement>) => {
+>(function CalendarMonthHeader(props, ref) {
   const { className, format: formatMonthProp = "MMMM", month, ...rest } = props;
   const { dateAdapter } = useLocalization();
 

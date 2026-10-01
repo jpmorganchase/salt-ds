@@ -195,7 +195,7 @@ export interface DateInputRangeProps
 }
 
 export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
-  (props: DateInputRangeProps, ref: React.Ref<HTMLDivElement>) => {
+  function DateInputRange(props, ref) {
     const { dateAdapter } = useLocalization();
     const {
       "aria-label": ariaLabel,

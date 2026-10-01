@@ -45,6 +45,7 @@ export interface OptionProps extends ComponentPropsWithoutRef<"div"> {
 
 const withBaseName = makePrefixer("saltOption");
 
+// biome-ignore lint/plugin/named-component-functions: exported as memo(OptionComponent) under the name Option.
 const OptionComponent = forwardRef<HTMLDivElement, OptionProps>(
   function Option(props, ref) {
     const {

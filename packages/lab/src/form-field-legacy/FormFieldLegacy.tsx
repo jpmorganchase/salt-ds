@@ -190,143 +190,140 @@ export const useFormFieldLegacy = ({
 
 const withBaseName = makePrefixer(classBase);
 
-export const FormFieldLegacy = forwardRef(
-  (
-    {
-      ActivationIndicatorComponent = FormActivationIndicator,
-      children,
-      className,
-      disabled,
-      disableFocusRing = false,
-      fullWidth = true,
-      hasStatusIndicator,
-      HelperTextComponent = FormHelperText,
-      HelperTextProps,
-      helperText,
-      helperTextPlacement = "bottom",
-      label,
-      LabelComponent = FormLabel,
-      labelPlacement = "top",
-      LabelProps = { displayedNecessity: "required" },
-      onBlur,
-      onFocus,
-      readOnly,
-      required,
-      StatusIndicatorProps,
-      validationStatus,
-      variant = "primary",
-      ...restProps
-    }: FormFieldLegacyProps,
-    ref: ForwardedRef<HTMLDivElement>,
-  ) => {
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-form-field-legacy",
-      css: formFieldLegacyCss,
-      window: targetWindow,
-    });
+export const FormFieldLegacy = forwardRef(function FormFieldLegacy(
+  {
+    ActivationIndicatorComponent = FormActivationIndicator,
+    children,
+    className,
+    disabled,
+    disableFocusRing = false,
+    fullWidth = true,
+    hasStatusIndicator,
+    HelperTextComponent = FormHelperText,
+    HelperTextProps,
+    helperText,
+    helperTextPlacement = "bottom",
+    label,
+    LabelComponent = FormLabel,
+    labelPlacement = "top",
+    LabelProps = { displayedNecessity: "required" },
+    onBlur,
+    onFocus,
+    readOnly,
+    required,
+    StatusIndicatorProps,
+    validationStatus,
+    variant = "primary",
+    ...restProps
+  }: FormFieldLegacyProps,
+  ref: ForwardedRef<HTMLDivElement>,
+) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-form-field-legacy",
+    css: formFieldLegacyCss,
+    window: targetWindow,
+  });
 
-    const labelId = useId(LabelProps?.id);
-    const helperTextId = useId(HelperTextProps?.id);
-    const rootRef = useRef<HTMLDivElement>(null);
+  const labelId = useId(LabelProps?.id);
+  const helperTextId = useId(HelperTextProps?.id);
+  const rootRef = useRef<HTMLDivElement>(null);
 
-    const renderHelperText = !!helperText;
+  const renderHelperText = !!helperText;
 
-    const a11yValue = useA11yValue({
-      required,
-      disabled,
-      readOnly,
-      labelId,
-      helperTextId,
-      renderHelperText,
-    });
+  const a11yValue = useA11yValue({
+    required,
+    disabled,
+    readOnly,
+    labelId,
+    helperTextId,
+    renderHelperText,
+  });
 
-    const [states, dispatchers, eventHandlers] = useFormFieldLegacy({
-      onBlur,
-      onFocus,
-    });
+  const [states, dispatchers, eventHandlers] = useFormFieldLegacy({
+    onBlur,
+    onFocus,
+  });
 
-    const hasLabel = label !== undefined;
-    const labelTop = hasLabel && labelPlacement === "top";
-    const labelLeft = hasLabel && labelPlacement === "left";
-    const isWarning = validationStatus === "warning";
-    const isError = validationStatus === "error";
-    const focusClass = disableFocusRing
-      ? "lowFocused"
-      : "focused"; /* NOTE: need to look at */
-    const inlineHelperText =
-      renderHelperText && helperTextPlacement === "bottom";
-    const tooltipHelperText =
-      renderHelperText &&
-      helperTextPlacement === "tooltip" &&
-      !hasStatusIndicator;
+  const hasLabel = label !== undefined;
+  const labelTop = hasLabel && labelPlacement === "top";
+  const labelLeft = hasLabel && labelPlacement === "left";
+  const isWarning = validationStatus === "warning";
+  const isError = validationStatus === "error";
+  const focusClass = disableFocusRing
+    ? "lowFocused"
+    : "focused"; /* NOTE: need to look at */
+  const inlineHelperText = renderHelperText && helperTextPlacement === "bottom";
+  const tooltipHelperText =
+    renderHelperText &&
+    helperTextPlacement === "tooltip" &&
+    !hasStatusIndicator;
 
-    const handleTriggerRef = useForkRef(rootRef, ref);
+  const handleTriggerRef = useForkRef(rootRef, ref);
 
-    return (
-      <Tooltip disabled={!tooltipHelperText} content={helperText}>
-        <div
-          ref={handleTriggerRef}
-          className={clsx(
-            withBaseName(),
-            {
-              [withBaseName("disabled")]: disabled,
-              [withBaseName("readOnly")]: readOnly,
-              [withBaseName("warning")]: isWarning,
-              [withBaseName("error")]: isError,
-              [withBaseName("fullWidth")]: fullWidth,
-              [withBaseName(focusClass)]: states.focused,
-              [withBaseName("labelTop")]: labelTop,
-              [withBaseName("labelLeft")]: labelLeft,
-              [withBaseName("withHelperText")]: inlineHelperText,
-              [withBaseName(variant)]: variant,
-            },
-            className,
-          )}
-          {...eventHandlers}
-          {...restProps}
+  return (
+    <Tooltip disabled={!tooltipHelperText} content={helperText}>
+      <div
+        ref={handleTriggerRef}
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("disabled")]: disabled,
+            [withBaseName("readOnly")]: readOnly,
+            [withBaseName("warning")]: isWarning,
+            [withBaseName("error")]: isError,
+            [withBaseName("fullWidth")]: fullWidth,
+            [withBaseName(focusClass)]: states.focused,
+            [withBaseName("labelTop")]: labelTop,
+            [withBaseName("labelLeft")]: labelLeft,
+            [withBaseName("withHelperText")]: inlineHelperText,
+            [withBaseName(variant)]: variant,
+          },
+          className,
+        )}
+        {...eventHandlers}
+        {...restProps}
+      >
+        <FormFieldLegacyContext.Provider
+          value={{
+            ...states,
+            ...dispatchers,
+            ...eventHandlers,
+            a11yProps: a11yValue,
+            inFormField: true,
+            ref: rootRef,
+          }}
         >
-          <FormFieldLegacyContext.Provider
-            value={{
-              ...states,
-              ...dispatchers,
-              ...eventHandlers,
-              a11yProps: a11yValue,
-              inFormField: true,
-              ref: rootRef,
-            }}
-          >
-            {hasLabel && (
-              <LabelComponent
-                {...LabelProps}
-                validationStatus={validationStatus}
-                hasStatusIndicator={hasStatusIndicator}
-                StatusIndicatorProps={StatusIndicatorProps}
-                className={LabelProps.className}
-                label={label}
-                disabled={disabled}
-                readOnly={readOnly}
-                required={required}
-                tooltipText={helperText}
-                id={labelId}
-              />
-            )}
-            {children}
-            <ActivationIndicatorComponent
-              hasIcon={!hasStatusIndicator}
+          {hasLabel && (
+            <LabelComponent
+              {...LabelProps}
               validationStatus={validationStatus}
+              hasStatusIndicator={hasStatusIndicator}
+              StatusIndicatorProps={StatusIndicatorProps}
+              className={LabelProps.className}
+              label={label}
+              disabled={disabled}
+              readOnly={readOnly}
+              required={required}
+              tooltipText={helperText}
+              id={labelId}
             />
-            {renderHelperText && (
-              <HelperTextComponent
-                helperText={helperText}
-                helperTextPlacement={helperTextPlacement}
-                {...HelperTextProps}
-                id={helperTextId}
-              />
-            )}
-          </FormFieldLegacyContext.Provider>
-        </div>
-      </Tooltip>
-    );
-  },
-);
+          )}
+          {children}
+          <ActivationIndicatorComponent
+            hasIcon={!hasStatusIndicator}
+            validationStatus={validationStatus}
+          />
+          {renderHelperText && (
+            <HelperTextComponent
+              helperText={helperText}
+              helperTextPlacement={helperTextPlacement}
+              {...HelperTextProps}
+              id={helperTextId}
+            />
+          )}
+        </FormFieldLegacyContext.Provider>
+      </div>
+    </Tooltip>
+  );
+});

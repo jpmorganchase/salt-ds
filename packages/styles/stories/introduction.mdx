@@ -45,6 +45,7 @@ In the above example, `useComponentCssInjection` is called with CSS string itsel
 Internally, the hook uses a Map of Map objects to store if a CSS string has been injected into a given window before.
 
 Optionally, a `testId` can be passed to the hook, the injected style tag will contain a data attribute with the given id.
+Salt components use `salt-` followed by the kebab-case component name, for example `salt-stepper`.
 
 ### Linting for CSS injection
 
@@ -52,6 +53,8 @@ A Biome lint plugin (`tooling/biome/must-inject-css.grit`) checks that component
 This will help to make sure developers import CSS in such a way that can be injected by using the hook.
 
 This linting rule only runs on TypeScript files in each package's `src` folder, all other CSS file imports will be ignored by this rule.
+
+A second plugin (`tooling/biome/css-injection-test-id.grit`) checks that string `testId` values in each package's `src` folder follow the `salt-` kebab-case format.
 
 ### Storybook plugin
 

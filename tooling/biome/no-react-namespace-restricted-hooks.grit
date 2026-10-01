@@ -1,0 +1,15 @@
+language js
+
+// noRestrictedImports only checks imports, so calling these hooks through the
+// React namespace would get around it. Type queries such as
+// `typeof React.useLayoutEffect` don't call the hook and are allowed.
+or {
+  `React.useLayoutEffect` as $member where {
+    $member <: not within TsTypeofType() ,
+    register_diagnostic(span=$member, message="Use useIsomorphicLayoutEffect instead of React.useLayoutEffect.")
+  },
+  `React.useId` as $member where {
+    $member <: not within TsTypeofType() ,
+    register_diagnostic(span=$member, message="Import useId from @salt-ds/core instead of using React.useId.")
+  }
+}
