@@ -27,6 +27,13 @@ data:
 
 Use it when your user needs to enter an address for a specific country. This could be for shipping, contact, legal or compliance purposes, such as client onboarding flow or client detail collection processes.
 
+## When not to use
+
+- When the address is always for one known country and the fields do not change by location, use a standard form instead.
+- When users only need to select a country or region without entering address details, use a country selector such as Dropdown instead.
+- When the workflow depends on location detection, address lookup, autocomplete, or address verification, treat those capabilities as product or technical integrations outside the scope of this pattern.
+- When users are entering non-address contact information, such as phone number, email address, banking details, or time zone, use the relevant form field or pattern alongside the address form instead.
+
 ## How to build
 
 ### Anatomy

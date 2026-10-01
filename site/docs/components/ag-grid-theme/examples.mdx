@@ -10,6 +10,8 @@ data:
 
 <AGThemeProvider>
 
+These examples combine AG Grid behavior with Salt styling. Follow the [package setup guidance](./usage#using-the-package) for your supported AG Grid version. Available features and configuration depend on the AG Grid version, row model, and license; the Salt theme does not supply data loading or application logic.
+
 ## Default
 
 Applies the default look when applying the Salt theme.
@@ -59,7 +61,7 @@ Header background variants:
 
 ## Checkbox selection
 
-Users will be able to select rows via checkboxes.
+Users can select rows via checkboxes. Make the scope of a bulk selection explicit: loaded rows, the current page, filtered results, or all records, as supported by the grid configuration and data source. Do not imply that unloaded records are selected unless the application supports that operation. Follow [List filtering guidance](/salt/patterns/list-filtering#clearing-and-selection) when filters hide selected records or affect unsaved edits.
 
 <LivePreview componentName="ag-grid-theme" exampleName="CheckboxSelection" />
 
@@ -123,7 +125,7 @@ The HD Compact theme for AG Grid can be applied by using the `ag-theme-salt-comp
 
 ## Infinite scroll
 
-The page continues to load as the user scrolls down the table.
+The grid requests additional row blocks as the user scrolls. This example simulates a loading delay by slicing generated local data into blocks. It does not implement remote fetching, filtering, sorting, or failure recovery. Apply [Content status guidance](/salt/patterns/content-status#choosing-how-to-communicate-loading-and-recovery) when building those application behaviors.
 
 <LivePreview componentName="ag-grid-theme" exampleName="InfiniteScroll" />
 
@@ -150,7 +152,7 @@ This overlay tells the user that there is no information to display.
 
 Users can move between pages using the controls in the lower right.
 
-The example below suppresses AG Grid's built-in pagination panel and composes Salt components to handle pagination instead.
+The example below suppresses AG Grid's built-in pagination panel and composes Salt controls around AG Grid's pagination state. AG Grid owns the pages of generated local rows; the example synchronizes the active page, page count, page size, and displayed range with the grid. It does not implement remote data loading. Follow [Pagination data and page ownership](../pagination/usage#data-and-page-ownership) when adapting it.
 
 <LivePreview componentName="ag-grid-theme" exampleName="Pagination" />
 

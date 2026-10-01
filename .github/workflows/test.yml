@@ -77,6 +77,8 @@ jobs:
         run: yarn run typecheck
       - name: Typecheck site and examples
         run: yarn run typecheck:site
+      - name: Check generated pattern example loaders
+        run: yarn run gen:pattern-examples --check
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest

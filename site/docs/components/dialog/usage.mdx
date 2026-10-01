@@ -19,12 +19,36 @@ Dialogs are interruptive by nature and should be used sparingly. Use dialogs to 
 
 ### When not to use
 
-- When you don't need to interrupt the user's flow. If the information is part of an event that’s occurred in a peripheral application or workflow, use [`Toast`](../toast) instead. If the information is related to the current workflow, use [`Banner`](../banner) instead.
+- When you don't need to interrupt the user's flow. If feedback needs to remain visible in the current workflow, use [`Banner`](../banner) in the affected content area. For a non-blocking confirmation or update, including an event in a peripheral application or workflow, consider [`Toast`](../toast/usage). Keep essential error details and recovery actions available in the owning view.
 - To launch a dialog from another dialog. Users may struggle to dismiss the two dialogs and may not understand which dialog is higher priority. Consider an alternative solution, such as progressively disclosing information in the first dialog.
 
 ### Status
 
 For status dialogs you can set the `status` prop to `error`, `warning`, `success`, or `info` to render a status icon in the title and change the border color of the dialog. For accessibility reasons, pass `role="alertdialog"` to the dialog component when rendering an alert dialog. You should rely on users' acknowledgment of the message by clicking the action button.
+
+### Forms in dialogs
+
+When a dialog contains a form, follow the Forms pattern's
+[submission and recovery guidance](/salt/patterns/forms#submission-and-recovery)
+for draft ownership, validation, pending submission, failure, and retry. Follow
+its [cancellation and draft guidance](/salt/patterns/forms#cancellation-and-drafts)
+to distinguish abandoning edits from pausing work. The [default example](/salt/components/dialog/examples#default)
+shows the header, content, and action composition.
+
+### Destructive actions
+
+When deletion needs confirmation, identify the record and explain the consequence before the user confirms. Opening the confirmation dialog must not execute Delete. Give Cancel initial focus and follow the [Button bar pattern](/salt/patterns/button-bar#dialog) for action order and responsive layout.
+
+The application owns the deletion request and its outcome. While it is pending, show progress and prevent duplicate requests. Keep Escape available: closing the dialog does not cancel a request or prove that deletion succeeded. Keep progress and any later failure or recovery available in the owning view if the dialog closes.
+
+On a confirmed failure, retain the record and show persistent feedback in the affected dialog or view, with Retry when repeating the request is safe. If the outcome is unknown, reconcile the record's state before offering another deletion attempt. A Toast must not be the only place to find essential error details or recovery actions. Follow [Banner accessibility guidance](../banner/accessibility) to announce feedback; visual status alone does not announce it.
+
+On success, update the collection, announce the result, and follow [Returning focus after an action](./accessibility#returning-focus-after-an-action). Choosing the surviving record, focus target, and safe retry behavior belongs to the application; Dialog does not supply a deletion workflow.
+
+### Action composition
+
+`DialogActions` always follows the [Button bar pattern](/salt/patterns/button-bar#dialog)
+for hierarchy, grouping, order, layout, and responsive behavior.
 
 ## Import
 

@@ -1,0 +1,209 @@
+{
+  "examples": [
+    {
+      "id": "announcement-dialog",
+      "entry": "patterns/announcement-dialog/index.tsx",
+      "files": [
+        "patterns/announcement-dialog/example.module.css",
+        "patterns/announcement-dialog/index.tsx"
+      ],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "app-header",
+      "entry": "patterns/app-header/index.tsx",
+      "files": ["patterns/app-header/index.tsx"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "breadcrumbs",
+      "entry": "patterns/breadcrumbs/index.tsx",
+      "files": ["patterns/breadcrumbs/index.tsx"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "button-bar",
+      "entry": "patterns/button-bar/index.tsx",
+      "files": ["patterns/button-bar/index.tsx"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "comments",
+      "entry": "patterns/comments/index.tsx",
+      "files": ["patterns/comments/index.tsx"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "contact-details",
+      "entry": "patterns/contact-details/index.tsx",
+      "files": ["patterns/contact-details/index.tsx"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "content-status",
+      "entry": "patterns/content-status/index.tsx",
+      "files": ["patterns/content-status/index.tsx"],
+      "saltPackages": ["@salt-ds/core"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "experience-customization",
+      "entry": "patterns/experience-customization/index.tsx",
+      "files": [
+        "patterns/experience-customization/DataFormatContent.tsx",
+        "patterns/experience-customization/FoundationContent.tsx",
+        "patterns/experience-customization/MandatoryConfigurationsContent.tsx",
+        "patterns/experience-customization/NotificationsContent.tsx",
+        "patterns/experience-customization/RegionalSettingsContent.tsx",
+        "patterns/experience-customization/StockCard.tsx",
+        "patterns/experience-customization/index.tsx",
+        "patterns/wizard/ContentOverflow.module.css",
+        "patterns/wizard/ContentOverflow.tsx",
+        "patterns/wizard/useWizardForm.ts",
+        "patterns/wizard/utils/index.ts"
+      ],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/countries", "@salt-ds/icons"],
+      "externalDependencies": ["clsx", "react", "yup"]
+    },
+    {
+      "id": "file-upload",
+      "entry": "patterns/file-upload/index.tsx",
+      "files": ["patterns/file-upload/index.tsx"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons", "@salt-ds/lab"],
+      "externalDependencies": ["@faker-js/faker", "clsx", "react"]
+    },
+    {
+      "id": "formatted-input",
+      "entry": "patterns/formatted-input/index.tsx",
+      "files": [
+        "patterns/formatted-input/index.tsx",
+        "patterns/formatted-input/useFormattedInput.ts"
+      ],
+      "saltPackages": ["@salt-ds/core"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "forms",
+      "entry": "patterns/forms/index.tsx",
+      "files": ["patterns/forms/index.tsx"],
+      "saltPackages": ["@salt-ds/core"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "indication",
+      "entry": "patterns/indication/index.tsx",
+      "files": ["patterns/indication/index.tsx"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "international-phone-number-input",
+      "entry": "patterns/international-phone-number-input/index.tsx",
+      "files": ["patterns/international-phone-number-input/index.tsx"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/countries"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "keyboard-shortcuts",
+      "entry": "patterns/keyboard-shortcuts/index.tsx",
+      "files": [
+        "patterns/keyboard-shortcuts/example.module.css",
+        "patterns/keyboard-shortcuts/index.tsx"
+      ],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"],
+      "externalDependencies": ["react", "react-hotkeys-hook"]
+    },
+    {
+      "id": "list-builder",
+      "entry": "patterns/list-builder/index.tsx",
+      "files": [
+        "patterns/assets/exampleData.ts",
+        "patterns/list-builder/example.module.css",
+        "patterns/list-builder/index.tsx"
+      ],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "menu-button",
+      "entry": "patterns/menu-button/index.tsx",
+      "files": ["patterns/menu-button/index.tsx"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "metric",
+      "entry": "patterns/metric/index.tsx",
+      "files": ["patterns/metric/index.tsx"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "navigation",
+      "entry": "patterns/navigation/index.tsx",
+      "files": ["patterns/navigation/index.tsx"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "preferences-dialog",
+      "entry": "patterns/preferences-dialog/index.tsx",
+      "files": ["patterns/preferences-dialog/index.tsx"],
+      "saltPackages": ["@salt-ds/core"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "search",
+      "entry": "patterns/search/index.tsx",
+      "files": ["patterns/search/index.tsx"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "selectable-card",
+      "entry": "patterns/selectable-card/index.tsx",
+      "files": ["patterns/selectable-card/index.tsx"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "split-button",
+      "entry": "patterns/split-button/index.tsx",
+      "files": ["patterns/split-button/index.tsx"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "vertical-navigation",
+      "entry": "patterns/vertical-navigation/index.tsx",
+      "files": ["patterns/vertical-navigation/index.tsx"],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"],
+      "externalDependencies": ["react"]
+    },
+    {
+      "id": "wizard",
+      "entry": "patterns/wizard/index.tsx",
+      "files": [
+        "patterns/wizard/AccountCancelDialog.tsx",
+        "patterns/wizard/AccountCreatedDialog.tsx",
+        "patterns/wizard/AccountDetailsContent.tsx",
+        "patterns/wizard/AccountTypeContent.tsx",
+        "patterns/wizard/AdditionalInfoContent.tsx",
+        "patterns/wizard/ContentOverflow.module.css",
+        "patterns/wizard/ContentOverflow.tsx",
+        "patterns/wizard/ReviewAccountContent.tsx",
+        "patterns/wizard/index.tsx",
+        "patterns/wizard/useWizardForm.ts",
+        "patterns/wizard/utils/index.ts"
+      ],
+      "saltPackages": ["@salt-ds/core", "@salt-ds/icons"],
+      "externalDependencies": ["clsx", "react", "yup"]
+    }
+  ]
+}

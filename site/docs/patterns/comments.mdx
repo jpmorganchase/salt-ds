@@ -9,10 +9,11 @@ aliases:
 data:
   resources:
     [
-      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-comments", label: "Comments examples" },
     ]
   components: ["Avatar", "Form field", "Input", "Multiline input"]
 ---
+
+<LivePreview componentName="patterns/comments" exampleName="Default" />
 
 <Diagram
   src="/img/patterns/comments/comments-hero-shot.png"
@@ -27,6 +28,13 @@ data:
 - Capture collaborative notes and reminders in shared contexts.
 - Maintain an auditable discussion log.
 - Suitable for forums, activity feeds, support threads, and collaborative workspaces.
+
+## When not to use
+
+- When users only need to read system-generated events or history, use an activity log, timeline, or audit trail instead.
+- When feedback should be private or submitted once, use a form, survey, or support intake flow instead.
+- When the content is long-form documentation, decisions, or instructions, use a document, page, or knowledge base pattern instead.
+- When real-time conversation is the primary task, use a messaging or chat experience instead.
 
 ## How to build
 
