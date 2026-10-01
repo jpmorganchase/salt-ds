@@ -87,9 +87,20 @@ function listsAgentDocs(manifest) {
 
 async function checkAgentDocs(manifest, directory) {
   if (!listsAgentDocs(manifest)) return [];
-  return (await pathExists(path.join(directory, "docs", "index.md")))
-    ? []
-    : ["is missing docs/index.md; run yarn build to generate agent docs"];
+  // The core README tells consumers to run docs/agents-md.mjs.
+  const required =
+    manifest.name === "@salt-ds/core"
+      ? ["index.md", "agents-md.mjs"]
+      : ["index.md"];
+  const errors = [];
+  for (const file of required) {
+    if (!(await pathExists(path.join(directory, "docs", file)))) {
+      errors.push(
+        `is missing docs/${file}; run yarn build to generate agent docs`,
+      );
+    }
+  }
+  return errors;
 }
 
 async function checkCssPackage(pkg) {

@@ -11,4 +11,4 @@
 "@salt-ds/theme": patch
 ---
 
-Added documentation for coding agents in each package's `docs` folder. It is generated from the Salt website for the published version, and covers component usage, props, examples and accessibility, plus patterns, design tokens, icons and country symbols. Start at `@salt-ds/core/docs/index.md`.
+Added documentation for coding agents in each package's `docs` folder. It is generated from the Salt website for the published version, and covers component usage, props, examples and accessibility, plus patterns, design tokens, icons and country symbols. Start at `@salt-ds/core/docs/index.md`, and run `node node_modules/@salt-ds/core/docs/agents-md.mjs` to point your project's `AGENTS.md` and `CLAUDE.md` at it.
