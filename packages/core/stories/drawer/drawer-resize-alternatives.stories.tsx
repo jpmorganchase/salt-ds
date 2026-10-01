@@ -776,9 +776,11 @@ const PresetCyclingTemplate = ({ position }: PositionArgs) => {
         disabled={!nextPreset}
         onClick={() => nextPreset && setSize(nextPreset.size)}
       >
-        Size: {currentName}
+        Change size
       </Button>
-      <Text className="demoSizeBar-value">{current}px</Text>
+      <Text className="demoSizeBar-value">
+        {currentName} · {current}px
+      </Text>
       {nextPreset && (
         <Text color="secondary" styleAs="label">
           Next: {nextPreset.name}
@@ -810,7 +812,7 @@ const PresetCyclingTemplate = ({ position }: PositionArgs) => {
         {position === "top" && sizeBar}
         <DrawerHeader
           header="Preset size cycling"
-          description={`Click the size button to cycle through ${presets
+          description={`Click "Change size" to cycle through ${presets
             .map(({ name }) => name)
             .join(
               ", ",
