@@ -49,17 +49,20 @@ export const INDEX_SECTIONS = [
   { key: "about", title: "About" },
 ];
 
-/** Support files larger than this are listed instead of inlined. */
+/**
+ * Supporting files larger than this, usually example data, are linked as
+ * separate files rather than shown inline.
+ */
 export const MAX_INLINE_SUPPORT_FILE_BYTES = 8 * 1024;
 
-/** Pattern story files larger than this are listed instead of inlined. */
-export const MAX_INLINE_STORY_FILE_BYTES = 32 * 1024;
+/**
+ * Pages larger than this move example source, largest first, into separate
+ * files. Many coding agents read a file in one call of limited size.
+ */
+export const MAX_PAGE_BYTES = 20 * 1024;
 
-/** Pattern pages link to their Storybook stories; the story id names the folder. */
-export const PATTERN_STORY_LINK =
-  /storybook\.saltdesignsystem\.com\/\?path=\/(?:story|docs)\/patterns-([a-z0-9-]+?)(?:--[a-z0-9-]+)?$/;
-
-export const SUMMARY_MAX_LENGTH = 180;
+/** Index summaries are cut to this length so each index fits in one read. */
+export const SUMMARY_MAX_LENGTH = 100;
 
 /** `:fragment{src}` includes (Mosaic) that carry no guidance and are dropped. */
 export const DROPPED_FRAGMENTS = new Set(["feedback.mdx"]);

@@ -29,8 +29,8 @@ const fixtureFiles = {
     ".salt-theme { --salt-actionable-bold-background: var(--salt-palette-accent); }",
   "packages/theme/src/css/deprecated/characteristics.css":
     ".salt-theme { --salt-old-background: var(--salt-actionable-bold-background); --salt-old-accent: var(--salt-palette-accent); }",
-  "packages/core/stories/patterns/forms/forms.stories.tsx":
-    "export const Standard = () => null;\n",
+  "site/src/examples/patterns/forms/index.tsx":
+    "export const Standard = () => null;\nexport const Compact = () => null;\n",
   "site/src/examples/button/Primary.tsx":
     'import "./styles.css";\n\nexport const Primary = () => null;\n',
   "site/src/examples/button/styles.css": ".primary {}\n",
@@ -103,6 +103,10 @@ layout: DetailPattern
 ## Layout
 
 Stack fields vertically.
+
+<LivePreview componentName="patterns/forms" exampleName="Standard" />
+
+<LivePreview componentName="patterns/forms" exampleName="Compact" />
 `,
   "site/docs/foundations/spacing.mdx": `---
 title: Spacing
@@ -242,8 +246,12 @@ describe("generateAgentDocs", () => {
     const forms = result.outputs
       .get("@salt-ds/core")
       .files.get("patterns/forms.md");
-    expect(forms).toContain("## Examples");
-    expect(forms).toContain("File `forms.stories.tsx`:");
+    expect(forms).toContain(
+      "_Example:_ `Standard`, exported by `patterns/forms/index.tsx`:",
+    );
+    expect(forms).toContain(
+      "_Example:_ `Compact`, exported by `patterns/forms/index.tsx` (shown above).",
+    );
 
     const index = await readFile(
       path.join(repoRoot, "packages/core/docs/index.md"),

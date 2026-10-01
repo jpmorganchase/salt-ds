@@ -47,6 +47,9 @@ export function stringifyMarkdown(root) {
   return serializer.stringify(root);
 }
 
+/** Placeholder node for a LivePreview example, rendered by `placeExamples`. */
+export const EXAMPLE_NODE = "agentDocsExample";
+
 export const u = {
   text: (value) => ({ type: "text", value }),
   paragraph: (children) => ({ type: "paragraph", children }),
@@ -269,60 +272,24 @@ async function livePreview(node, ctx) {
     ctx.error(node, "LivePreview requires componentName and exampleName.");
     return [];
   }
+  if (node.type === "mdxJsxTextElement") {
+    ctx.error(node, "LivePreview must be on its own line.");
+    return [];
+  }
   const example = await ctx.examples.resolve(componentName, exampleName);
   if (example.error) {
     ctx.error(node, example.error);
     return [];
   }
-  const nodes = [
-    u.paragraph([
-      u.emphasis([u.text("Example:")]),
-      u.text(" "),
-      u.inlineCode(exampleName),
-    ]),
-    u.code(example.entry.language, example.entry.code.trimEnd()),
+  // Rendered once the whole page is known; see `placeExamples`.
+  return [
+    {
+      type: EXAMPLE_NODE,
+      name: exampleName,
+      entry: example.entry,
+      support: example.support,
+    },
   ];
-  for (const file of example.support) {
-    const label = [u.text("Supporting file "), u.inlineCode(file.displayPath)];
-    if (file.kind === "file") {
-      if (ctx.shownSupport.has(file.absolutePath)) {
-        nodes.push(u.paragraph([...label, u.text(" is shown above.")]));
-      } else {
-        ctx.shownSupport.add(file.absolutePath);
-        nodes.push(u.paragraph([...label, u.text(":")]));
-        nodes.push(u.code(file.language, file.code.trimEnd()));
-      }
-    } else if (file.kind === "omitted") {
-      const size = Math.round(file.bytes / 1024);
-      nodes.push(
-        u.paragraph([
-          ...label,
-          u.text(` (${size} KB of example data, not included).`),
-        ]),
-      );
-    } else if (file.kind === "asset") {
-      nodes.push(
-        u.paragraph([
-          u.text("Asset "),
-          u.inlineCode(file.displayPath),
-          u.text(" (not included)."),
-        ]),
-      );
-    } else {
-      nodes.push(
-        u.paragraph([
-          u.text("Site helper "),
-          u.inlineCode(file.displayPath),
-          u.text(" (not included)."),
-        ]),
-      );
-    }
-  }
-  if (node.type === "mdxJsxTextElement") {
-    ctx.error(node, "LivePreview must be on its own line.");
-    return [];
-  }
-  return nodes;
 }
 
 function splitJsDocTags(description) {
