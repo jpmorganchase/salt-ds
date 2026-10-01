@@ -6,16 +6,24 @@ Salt's stable React components. See the [Salt documentation site](https://www.sa
 
 Salt packages include Markdown documentation for coding agents in their `docs` folder. It is generated from the Salt website for the exact version you install, so it matches your code: components with usage guidance, props, examples and accessibility, plus patterns, themes and design tokens.
 
-Point your agent at it by adding this block to your project's `AGENTS.md` (or your agent's equivalent instructions file):
+Point your agent at it by running this in the folder that holds your `AGENTS.md`, usually the repository root:
+
+```sh
+node node_modules/@salt-ds/core/docs/agents-md.mjs
+```
+
+This adds the block below to `AGENTS.md`, which GitHub Copilot, Codex, Cursor and most other coding agents read, and makes `CLAUDE.md` import `AGENTS.md` for Claude Code. It keeps your other instructions, and running it again updates the block. Add `--check` to fail in CI when either file needs updating, or `--no-claude` to leave `CLAUDE.md` alone.
+
+You can also add the block to `AGENTS.md` (or your agent's equivalent instructions file) yourself:
 
 ```md
 <!-- BEGIN:salt-ds-agent-docs -->
 
 ## Salt Design System
 
-This project uses the Salt Design System (`@salt-ds/*` packages). Salt's APIs may differ from your training data. Before writing or changing UI that uses Salt, read `node_modules/@salt-ds/core/docs/index.md` and the pages it links to; they match the installed package versions.
+This project uses the Salt Design System (`@salt-ds/*` packages). Salt's APIs may differ from your training data. Before writing or changing UI that uses Salt, read `node_modules/@salt-ds/core/docs/index.md` (relative to this file) and the pages it links to; they match the installed package versions.
 
 <!-- END:salt-ds-agent-docs -->
 ```
 
-In a monorepo, `node_modules/@salt-ds/core` may be under the application's directory rather than the repository root.
+In a monorepo, `node_modules/@salt-ds/core` may be under the application's directory rather than the repository root. Run the script by that path, for example `node apps/web/node_modules/@salt-ds/core/docs/agents-md.mjs`, and the block points to those docs.
