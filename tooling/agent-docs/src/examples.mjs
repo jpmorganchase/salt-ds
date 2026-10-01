@@ -50,22 +50,34 @@ function displayPath(entryFile, file) {
 
 /**
  * Resolves `<LivePreview componentName exampleName />` to the example source
- * and the local files it imports, as the site does when showing code.
+ * and the local files it imports, as the site does when showing code. An
+ * example is `<componentName>/<exampleName>.tsx`, or a named export of
+ * `<componentName>/index.tsx` (as pattern examples are).
  */
 export function createExampleResolver({ examplesDir }) {
   const root = path.resolve(examplesDir);
+  const inRoot = (file) => file.startsWith(`${root}${path.sep}`);
 
   async function resolve(componentName, exampleName) {
-    const entryFile = path.join(root, componentName, `${exampleName}.tsx`);
-    if (
-      !entryFile.startsWith(`${root}${path.sep}`) ||
-      !(await isFile(entryFile))
-    ) {
+    const exampleFile = path.join(root, componentName, `${exampleName}.tsx`);
+    const moduleFile = path.join(root, componentName, "index.tsx");
+    let entryFile;
+    if (inRoot(exampleFile) && (await isFile(exampleFile))) {
+      entryFile = exampleFile;
+    } else if (inRoot(moduleFile) && (await isFile(moduleFile))) {
+      entryFile = moduleFile;
+    } else {
       return {
         error: `Example ${componentName}/${exampleName}.tsx does not exist in site/src/examples.`,
       };
     }
     const entryCode = await readFile(entryFile, "utf8");
+    const isModule = entryFile === moduleFile;
+    if (isModule && !exportsName(entryCode, exampleName)) {
+      return {
+        error: `Example ${componentName}/index.tsx has no ${exampleName} export.`,
+      };
+    }
     const support = [];
     const seen = new Set([entryFile]);
     const queue = [{ file: entryFile, code: entryCode, depth: 0 }];
@@ -91,30 +103,51 @@ export function createExampleResolver({ examplesDir }) {
           support.push({ displayPath: shownPath, kind: "asset" });
         } else {
           const content = await readFile(resolved, "utf8");
-          const bytes = Buffer.byteLength(content);
-          if (bytes > MAX_INLINE_SUPPORT_FILE_BYTES) {
-            support.push({ displayPath: shownPath, kind: "omitted", bytes });
-          } else {
-            support.push({
-              displayPath: shownPath,
-              absolutePath: resolved,
-              kind: "file",
-              language,
-              code: content,
-            });
-            if (SCRIPT_EXTENSIONS.has(extension)) {
-              queue.push({ file: resolved, code: content, depth: depth + 1 });
-            }
+          support.push({
+            displayPath: shownPath,
+            absolutePath: resolved,
+            examplePath: toPosix(path.relative(root, resolved)),
+            kind: "file",
+            language,
+            code: content,
+            large: Buffer.byteLength(content) > MAX_INLINE_SUPPORT_FILE_BYTES,
+          });
+          if (SCRIPT_EXTENSIONS.has(extension)) {
+            queue.push({ file: resolved, code: content, depth: depth + 1 });
           }
         }
       }
     }
 
     return {
-      entry: { language: "tsx", code: entryCode },
+      entry: {
+        language: "tsx",
+        code: entryCode,
+        absolutePath: entryFile,
+        displayPath: toPosix(path.relative(root, entryFile)),
+        isModule,
+      },
       support,
     };
   }
 
   return { resolve };
+}
+
+/** Whether `code` declares or lists a named export called `name`. */
+export function exportsName(code, name) {
+  const declaration = new RegExp(
+    `export\\s+(?:async\\s+)?(?:const|let|var|function\\*?|class)\\s+${name}\\b`,
+  );
+  if (declaration.test(code)) return true;
+  return [...code.matchAll(/export\s+(?:type\s+)?\{([^}]*)\}/g)].some(
+    ([, list]) =>
+      list.split(",").some(
+        (item) =>
+          item
+            .trim()
+            .split(/\s+as\s+/)
+            .pop() === name,
+      ),
+  );
 }

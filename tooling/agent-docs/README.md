@@ -13,11 +13,15 @@ The generated folders are ignored by Git. `scripts/checkPackages.mjs` checks tha
 ## What it generates
 
 - One page per component: the overview frontmatter and the usage, examples and accessibility tabs merged into one file. `PropsTable` becomes a props table (from `react-docgen-typescript`, as on the site), and each `LivePreview` becomes the example's source plus the local files it imports.
-- One page per pattern, getting-started, foundations, themes and about page. Pattern pages include the source of their Storybook stories from `packages/core/stories/patterns/<pattern>`.
+- One page per pattern, getting-started, foundations, themes and about page. A pattern's `LivePreview` names an export of `site/src/examples/patterns/<pattern>/index.tsx`; the page shows that module's source once for all of its examples.
 - Reference lists: every design token (`@salt-ds/theme/docs/tokens.md`), icon (`@salt-ds/icons/docs/icons.md`) and country symbol (`@salt-ds/countries/docs/country-symbols.md`).
-- An `index.md` per package listing every page with its summary and `alsoKnownAs` names, which agents use to find the right page.
+- An `index.md` per package listing every page with its summary and `alsoKnownAs` names, which agents use to find the right page. Summaries are shortened so the index fits in one read, and generation warns when an index grows past 20 KB.
 
 Links between pages in one package are relative. Links to another package use `@salt-ds/<package>/docs/...`, and links to pages that aren't shipped point to the website.
+
+## Long pages
+
+Many coding agents read a file in one call of limited size, so a page over 20 KB (`MAX_PAGE_BYTES` in [`src/config.mjs`](./src/config.mjs)) moves its largest examples to `<page>/examples/<example>.md` until it fits, keeping the first example on the page when it can. The page links to each moved example, and each moved example links back. Examples of one pattern module move together. Supporting files over 8 KB, usually example data, are always written once to `<page>/examples/files/` and linked, as are files that more than one moved example uses and the largest files of an example that is still too long.
 
 ## Where pages go
 
