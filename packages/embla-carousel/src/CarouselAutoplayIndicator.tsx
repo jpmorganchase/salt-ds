@@ -101,7 +101,7 @@ export const CarouselAutoplayIndicator = forwardRef<
           animationFrameId.current = null;
         }
       };
-    }, [circumference, duration, slideIndex, isPlaying, isPaused]);
+    }, [circumference, duration, isPlaying, isPaused]);
 
     return (
       <div
