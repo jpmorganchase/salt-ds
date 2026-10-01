@@ -1,4 +1,5 @@
-import { type MutableRefObject, type Ref, useMemo, useRef } from "react";
+import { type Ref, useMemo, useRef } from "react";
+import { setRef } from "./setRef";
 
 type RefCleanup = () => void;
 
@@ -9,17 +10,13 @@ function attachRef<Instance>(
   if (typeof ref === "function") {
     // From React 19, a callback ref can return a cleanup function, which React
     // calls instead of calling the ref with `null`.
-    const cleanup: unknown = ref(instance);
-    return typeof cleanup === "function"
-      ? (cleanup as RefCleanup)
-      : () => ref(null);
+    const cleanup = ref(instance);
+    return typeof cleanup === "function" ? cleanup : () => ref(null);
   }
 
   if (ref) {
-    (ref as MutableRefObject<Instance | null>).current = instance;
-    return () => {
-      (ref as MutableRefObject<Instance | null>).current = null;
-    };
+    setRef(ref, instance);
+    return () => setRef(ref, null);
   }
 
   return undefined;
