@@ -16,6 +16,7 @@ The generated folders are ignored by Git. `scripts/checkPackages.mjs` checks tha
 - One page per pattern, getting-started, foundations, themes and about page. A pattern's `LivePreview` names an export of `site/src/examples/patterns/<pattern>/index.tsx`; the page shows that module's source once for all of its examples.
 - Reference lists: every design token (`@salt-ds/theme/docs/tokens.md`), icon (`@salt-ds/icons/docs/icons.md`) and country symbol (`@salt-ds/countries/docs/country-symbols.md`).
 - An `index.md` per package listing every page with its summary and `alsoKnownAs` names, which agents use to find the right page. Summaries are shortened so the index fits in one read, and generation warns when an index grows past 20 KB.
+- `@salt-ds/core/docs/agents-md.mjs`, copied from [`src/agents-md.mjs`](./src/agents-md.mjs). Consumers run it to add the Salt block to their `AGENTS.md` and import that from `CLAUDE.md`. Its block must match the one in the core README, which a test checks.
 
 Links between pages in one package are relative. Links to another package use `@salt-ds/<package>/docs/...`, and links to pages that aren't shipped point to the website.
 

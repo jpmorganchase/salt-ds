@@ -208,6 +208,7 @@ describe("generateAgentDocs", () => {
     expect(
       [...result.outputs.get("@salt-ds/core").files.keys()].sort(),
     ).toEqual([
+      "agents-md.mjs",
       "components/button.md",
       "components/dialog.md",
       "components/dialog/alert-dialog.md",
@@ -329,7 +330,7 @@ describe("generateAgentDocs", () => {
       propsProvider,
       write: false,
     });
-    expect(result.packages.get("@salt-ds/core").files).toBe(5);
+    expect(result.packages.get("@salt-ds/core").files).toBe(6);
     expect(await pathExists(path.join(repoRoot, "packages/core/docs"))).toBe(
       false,
     );
