@@ -41,7 +41,7 @@
 }
 
 /* Size bar on the drawer's fixed side, so its buttons don't move while the drawer resizes. */
-.demoStepper-sizeBar {
+.demoSizeBar {
   display: flex;
   flex-shrink: 0;
   align-items: center;
@@ -52,23 +52,23 @@
 }
 
 /* The moving edge of a right drawer is on the left, so the controls sit on the right. */
-.demoStepper-sizeBar-right {
+.demoSizeBar-right {
   justify-content: flex-end;
 }
 
 /* The moving edge of a top drawer is at the bottom, so the bar sits at the top. */
-.demoStepper-sizeBar-top {
+.demoSizeBar-top {
   border-top: none;
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
 }
 
-.demoStepper-sizeValue {
+.demoSizeBar-value {
   min-width: 6ch;
   text-align: center;
   font-variant-numeric: tabular-nums;
 }
 
-.demoStepper-srOnly {
+.demoSrOnly {
   position: absolute;
   width: 1px;
   height: 1px;
