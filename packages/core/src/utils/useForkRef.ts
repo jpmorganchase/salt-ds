@@ -1,5 +1,4 @@
 import { type Ref, useMemo, useRef } from "react";
-import { setRef } from "./setRef";
 
 type RefCleanup = () => void;
 
@@ -15,8 +14,12 @@ function attachRef<Instance>(
   }
 
   if (ref) {
-    setRef(ref, instance);
-    return () => setRef(ref, null);
+    // `current` is read-only in the React 18 types.
+    const objectRef: { current: Instance | null } = ref;
+    objectRef.current = instance;
+    return () => {
+      objectRef.current = null;
+    };
   }
 
   return undefined;
