@@ -13,7 +13,11 @@ export default {
   },
 } as Meta<typeof GridItem>;
 
-const renderGridContent = <Text>Item</Text>;
+const renderGridContent = (
+  <div>
+    <Text as="p">Item</Text>
+  </div>
+);
 const GridItemStory: StoryFn<typeof GridItem> = (args) => {
   return (
     <GridLayout
@@ -22,14 +26,14 @@ const GridItemStory: StoryFn<typeof GridItem> = (args) => {
       className="layout-container"
     >
       <GridItem className="layout-active-content" {...args}>
-        <Text>Item</Text>
+        <Text as="p">Item</Text>
       </GridItem>
       {renderGridContent}
       {renderGridContent}
       {renderGridContent}
       {renderGridContent}
       <GridItem colSpan={{ xs: 2, md: 4 }}>
-        <Text>Item spanning 4 columns</Text>
+        <Text as="p">Item spanning 4 columns</Text>
       </GridItem>
     </GridLayout>
   );

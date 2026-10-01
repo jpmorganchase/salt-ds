@@ -91,7 +91,9 @@ export const MandatoryConfigurationsContent = () => {
       <StackLayout padding={3}>
         <StackLayout gap="var(--salt-spacing-50)">
           <Text as="h1" styleAs="h2" id={headingId}>
-            <Text color="primary">Customize your experience</Text>
+            <Text as="span" color="primary" style={{ display: "block" }}>
+              Customize your experience
+            </Text>
             Choose data access level
           </Text>
           <Text color="secondary">A selection is required to proceed</Text>

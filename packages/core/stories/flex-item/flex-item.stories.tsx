@@ -20,18 +20,18 @@ const FlexItemStory: StoryFn<typeof FlexItem> = (args) => {
   return (
     <FlexLayout className="layout-container">
       <FlexItem className="layout-active-content" {...args}>
-        <Text>Item</Text>
+        <Text as="p">Item</Text>
       </FlexItem>
       <FlexItem>
         <StackLayout gap={1}>
-          <Text>Larger Item</Text>
-          <Text>Containing 2 lines</Text>
+          <Text as="p">Larger Item</Text>
+          <Text as="p">Containing 2 paragraphs</Text>
         </StackLayout>
       </FlexItem>
       <FlexItem>
         <StackLayout gap={1}>
-          <Text>Larger Item</Text>
-          <Text>Containing 2 lines</Text>
+          <Text as="p">Larger Item</Text>
+          <Text as="p">Containing 2 paragraphs</Text>
         </StackLayout>
       </FlexItem>
     </FlexLayout>

@@ -35,7 +35,7 @@ const DefaultStackLayoutStory: StoryFn<typeof StackLayout> = (args) => {
     <StackLayout {...args} className="layout-container">
       {Array.from({ length: 5 }, (_, index) => (
         <div key={index}>
-          <Text>Item {index + 1}</Text>
+          <Text as="p">Item {index + 1}</Text>
         </div>
       ))}
     </StackLayout>
@@ -49,7 +49,7 @@ const SeparatorsStory: StoryFn<typeof FlexLayout> = (args) => {
     <StackLayout {...args} className="layout-container">
       {Array.from({ length: 3 }, (_, index) => (
         <div key={index}>
-          <Text>Item {index + 1}</Text>
+          <Text as="p">Item {index + 1}</Text>
         </div>
       ))}
     </StackLayout>

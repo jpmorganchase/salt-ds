@@ -23,7 +23,7 @@ const DefaultStory: StoryFn<typeof FlowLayout> = (args) => {
     <FlowLayout className="layout-container" {...args}>
       {Array.from({ length: 12 }, (_, index) => (
         <div key={index} style={{ minWidth: 80 }}>
-          <Text>Item {index + 1}</Text>
+          <Text as="p">Item {index + 1}</Text>
         </div>
       ))}
     </FlowLayout>

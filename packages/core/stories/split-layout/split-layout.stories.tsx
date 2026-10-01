@@ -48,7 +48,7 @@ const startItem = (
   <FlowLayout className="layout-container" align="baseline">
     {Array.from({ length: 3 }, (_, index) => (
       <div key={index}>
-        <Text>Item {index + 1}</Text>
+        <Text as="p">Item {index + 1}</Text>
       </div>
     ))}
   </FlowLayout>
@@ -56,10 +56,10 @@ const startItem = (
 const endItem = (
   <FlowLayout align="baseline">
     <div className="layout-content-right">
-      <Text>Item 4</Text>
+      <Text as="p">Item 4</Text>
     </div>
     <div className="layout-content-right">
-      <Text>Item 5</Text>
+      <Text as="p">Item 5</Text>
     </div>
   </FlowLayout>
 );

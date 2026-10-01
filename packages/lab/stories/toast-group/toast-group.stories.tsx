@@ -29,7 +29,7 @@ const InfoToast = () => {
         <Text>
           <strong>File update</strong>
         </Text>
-        <div>A new version of this file is available with 37 updates. </div>
+        <Text>A new version of this file is available with 37 updates. </Text>
       </ToastContent>
       <Button variant="secondary" onClick={closeToast}>
         <CloseIcon />
@@ -47,12 +47,12 @@ const ErrorToast = () => {
     <Toast status="error">
       <ToastContent>
         <StackLayout gap={1}>
-          <div>
+          <StackLayout gap={0}>
             <Text>
               <strong>System error</strong>
             </Text>
-            <div>Connection timed out. Failed to retrieve data. </div>
-          </div>
+            <Text>Connection timed out. Failed to retrieve data. </Text>
+          </StackLayout>
           <FlowLayout gap={1} justify="end">
             <Button onClick={closeToast}>Dismiss</Button>
             <Button variant="cta">Try again</Button>
@@ -72,12 +72,12 @@ const WarningToast = () => {
     <Toast status="warning">
       <ToastContent>
         <StackLayout gap={1}>
-          <div>
+          <StackLayout gap={0}>
             <Text>
               <strong>File access</strong>
             </Text>
-            <div>Viewers of this file can see comments and suggestions. </div>
-          </div>
+            <Text>Viewers of this file can see comments and suggestions. </Text>
+          </StackLayout>
           <FlowLayout gap={1}>
             <Button variant="cta" style={{ width: "100%" }}>
               Edit permissions
@@ -103,7 +103,9 @@ const SuccessToast = () => {
         <Text>
           <strong>Project file upload</strong>
         </Text>
-        <div>Project file has successfully uploaded to the shared drive. </div>
+        <Text>
+          Project file has successfully uploaded to the shared drive.{" "}
+        </Text>
       </ToastContent>
       <Button variant="secondary" onClick={closeToast}>
         <CloseIcon />

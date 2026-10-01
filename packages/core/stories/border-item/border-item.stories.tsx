@@ -16,23 +16,23 @@ const Template: StoryFn<typeof BorderItem> = (args) => {
   return (
     <BorderLayout columnGap={1} rowGap={1} className="layout-container">
       <BorderItem position="north" className="border-item">
-        <Text>North</Text>
+        <Text as="p">North</Text>
       </BorderItem>
       <BorderItem {...args} className="border-item layout-active-content">
-        <Text>{args.position}</Text>
+        <Text as="p">{args.position}</Text>
       </BorderItem>
       <BorderItem
         position="center"
         className="border-item layout-content"
         style={{ minWidth: 100 }}
       >
-        <Text>Center</Text>
+        <Text as="p">Center</Text>
       </BorderItem>
       <BorderItem position="east" className="border-item">
-        <Text>East</Text>
+        <Text as="p">East</Text>
       </BorderItem>
       <BorderItem position="south" className="border-item">
-        <Text>South</Text>
+        <Text as="p">South</Text>
       </BorderItem>
     </BorderLayout>
   );

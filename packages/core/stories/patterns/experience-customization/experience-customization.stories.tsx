@@ -392,7 +392,9 @@ export const EndToEnd = () => {
       <FlexItem style={{ flex: 1 }}>
         <StackLayout gap="var(--salt-spacing-50)">
           <Text as="h1" styleAs="h2">
-            <Text color="primary">Customize your experience</Text>
+            <Text as="span" color="primary" style={{ display: "block" }}>
+              Customize your experience
+            </Text>
             {wizardSteps[activeStepIndex].label}
           </Text>
           {wizardSteps[activeStepIndex].id === "foundation" && (

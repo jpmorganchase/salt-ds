@@ -37,7 +37,7 @@ const Template: StoryFn<typeof GridLayout> = (args) => {
     <GridLayout {...args} className="layout-container">
       {Array.from({ length: 12 }, (_, index) => (
         <div key={index}>
-          <Text>{`Item ${index + 1}`}</Text>
+          <Text as="p">{`Item ${index + 1}`}</Text>
         </div>
       ))}
     </GridLayout>
@@ -57,7 +57,7 @@ const PaddingAndMargins: StoryFn<typeof GridLayout> = (args) => {
             key={`item-${index + 1}`}
             padding={1}
           >
-            <Text>Item {index + 1}</Text>
+            <Text as="p">Item {index + 1}</Text>
           </GridItem>
         ))}
       </GridLayout>
@@ -76,7 +76,7 @@ const ResponsiveView: StoryFn<typeof GridLayout> = (args) => {
     <SaltProvider breakpoints={customBreakpoints}>
       <GridLayout {...args} className="layout-container custom-breaks">
         <GridItem colSpan={{ xs: 1, md: 6, lg: 9 }}>
-          <Text>GridItem 1</Text>
+          <Text as="p">GridItem 1</Text>
         </GridItem>
 
         {Array.from({ length: 6 }, (_, index) => (
@@ -85,11 +85,11 @@ const ResponsiveView: StoryFn<typeof GridLayout> = (args) => {
             colSpan={{ xs: 1, md: 3 }}
             rowSpan={{ md: 2, lg: 1 }}
           >
-            <Text>{`Item ${index + 2}`}</Text>
+            <Text as="p">{`Item ${index + 2}`}</Text>
           </GridItem>
         ))}
         <GridItem colSpan={{ xs: 1, md: 6, lg: 9 }}>
-          <Text>GridItem 8</Text>
+          <Text as="p">GridItem 8</Text>
         </GridItem>
       </GridLayout>
     </SaltProvider>
@@ -111,11 +111,11 @@ const footerLinks: Record<string, string[]> = {
 
 const footerColumns = Object.keys(footerLinks).map((header) => (
   <StackLayout key={header} gap={1}>
-    <H3 color="secondary">
+    <Text as="p" styleAs="h3" color="secondary">
       <strong>{header}</strong>
-    </H3>
+    </Text>
     {footerLinks[header].map((link: string) => (
-      <Text color="secondary" key={link}>
+      <Text as="p" color="secondary" key={link}>
         {link}
       </Text>
     ))}
@@ -131,16 +131,16 @@ const FooterTemplate: StoryFn<typeof GridLayout> = (args) => {
         verticalAlignment="center"
       >
         <StackLayout gap={1}>
-          <H3 color="secondary">
+          <Text as="p" styleAs="h3" color="secondary">
             <strong>Logo | Salt</strong>
-          </H3>
+          </Text>
           <Text as="p" color="secondary">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           </Text>
         </StackLayout>
       </GridItem>
       {footerColumns}
-      <GridItem colSpan={{ xs: 2, md: 6 }} className="copy-right">
+      <GridItem colSpan={{ xs: 2, md: 6 }} className="copy-right" padding={2}>
         <Text as="p" color="secondary">
           © 2022 BrandName All rights reserved.
         </Text>

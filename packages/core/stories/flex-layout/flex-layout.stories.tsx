@@ -47,7 +47,7 @@ const DefaultStory: StoryFn<typeof FlexLayout> = (args) => {
     <FlexLayout {...args}>
       {Array.from({ length: 5 }, (_, index) => (
         <div key={`item-${index + 1}`} className="layout-content">
-          <Text>Item {index + 1}</Text>
+          <Text as="p">Item {index + 1}</Text>
         </div>
       ))}
     </FlexLayout>
@@ -68,7 +68,7 @@ const PaddingAndMargins: StoryFn<typeof FlexLayout> = (args) => {
             key={`item-${index + 1}`}
             padding={1}
           >
-            <Text>Item {index + 1}</Text>
+            <Text as="p">Item {index + 1}</Text>
           </FlexItem>
         ))}
       </FlexLayout>
@@ -87,7 +87,7 @@ const SeparatedItemsStory: StoryFn<typeof FlexLayout> = (args) => {
     <FlexLayout {...args}>
       {Array.from({ length: 3 }, (_, index) => (
         <div key={`item-${index + 1}`} className="layout-content">
-          <Text>Item {index + 1}</Text>
+          <Text as="p">Item {index + 1}</Text>
         </div>
       ))}
     </FlexLayout>
@@ -111,7 +111,7 @@ const Responsive: StoryFn<typeof FlexLayout> = (args) => {
             key={`item-${index + 1}`}
             style={{ width: "200px" }}
           >
-            <Text>Item {index + 1}</Text>
+            <Text as="p">Item {index + 1}</Text>
           </div>
         ))}
       </FlexLayout>
