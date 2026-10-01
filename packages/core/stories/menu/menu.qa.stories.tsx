@@ -11,6 +11,7 @@ import {
   ExportIcon,
   MicroMenuIcon,
   SettingsIcon,
+  UserIcon,
 } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
@@ -210,14 +211,20 @@ export const SelectionExamples: StoryFn<QAContainerProps> = (props) => {
               selectionVariant="multiple"
               selected={["owner", "type"]}
             >
-              <MenuItem value="owner">Owner</MenuItem>
+              <MenuItem value="owner">
+                <UserIcon aria-hidden />
+                Owner
+              </MenuItem>
               <MenuItem value="modified">Date modified</MenuItem>
               <MenuItem disabled value="type">
                 Type
               </MenuItem>
             </MenuGroup>
             <MenuGroup>
-              <MenuItem>Export</MenuItem>
+              <MenuItem>
+                <ExportIcon aria-hidden />
+                Export
+              </MenuItem>
             </MenuGroup>
           </MenuPanel>
         </Menu>
