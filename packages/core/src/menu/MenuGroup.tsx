@@ -6,31 +6,29 @@ import {
   forwardRef,
   type ReactNode,
   type SyntheticEvent,
+  useCallback,
   useMemo,
 } from "react";
 import { makePrefixer, useId } from "../utils";
 import menuGroupCss from "./MenuGroup.css";
-import { MenuGroupContext, useMenuGroupSelection } from "./MenuGroupContext";
+import { MenuGroupContext } from "./MenuGroupContext";
 
-export interface MenuGroupProps extends ComponentPropsWithoutRef<"div"> {
+interface BaseMenuGroupProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Menus to be rendered inside the menu group.
    */
   children?: ReactNode;
   /**
-   * The values of the menu items selected by default. Use with `name` to keep the selection while the menu is closed.
-   * This will be disregarded if `selected` is set.
-   */
-  defaultSelected?: string[];
-  /**
    * The label of the menu group.
    */
   label?: string;
   /**
-   * Identifies the group's selection within the menu, so an uncontrolled selection is kept while the menu is closed.
-   * Must be unique within the menu.
+   * Selection variant of the menu group. If "single", the menu items inside behave like radio buttons. If "multiple", they behave like checkboxes. Each selectable menu item needs a `value`. Defaults to "none".
    */
-  name?: string;
+  selectionVariant?: "none" | "single" | "multiple";
+}
+
+interface SelectableMenuGroupProps extends BaseMenuGroupProps {
   /**
    * Callback fired when the selection changes.
    * @param event
@@ -38,30 +36,36 @@ export interface MenuGroupProps extends ComponentPropsWithoutRef<"div"> {
    */
   onSelectionChange?: (event: SyntheticEvent, newSelected: string[]) => void;
   /**
-   * The values of the selected menu items. Use with `onSelectionChange` to control the selection.
+   * The values of the selected menu items. Required when `selectionVariant` is "single" or "multiple". The menu's content unmounts when it closes, so keep the selection in state and update it in `onSelectionChange`.
    */
-  selected?: string[];
-  /**
-   * Selection variant of the menu group. If "single", the menu items inside behave like radio buttons. If "multiple", they behave like checkboxes. Each selectable menu item needs a `value`. Defaults to "none".
-   */
-  selectionVariant?: "none" | "single" | "multiple";
+  selected: string[];
+  selectionVariant: "single" | "multiple";
 }
 
+interface NonSelectableMenuGroupProps extends BaseMenuGroupProps {
+  selectionVariant?: "none";
+}
+
+export type MenuGroupProps =
+  | SelectableMenuGroupProps
+  | NonSelectableMenuGroupProps;
+
 const withBaseName = makePrefixer("saltMenuGroup");
+
+const noSelection: string[] = [];
 
 export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
   function MenuGroup(props, ref) {
     const {
       className,
       children,
-      defaultSelected,
       label,
-      name,
       onSelectionChange,
-      selected,
+      selected: selectedProp = noSelection,
       selectionVariant = "none",
       ...rest
-    } = props;
+    } = props as BaseMenuGroupProps &
+      Partial<Pick<SelectableMenuGroupProps, "onSelectionChange" | "selected">>;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -72,13 +76,34 @@ export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
 
     const labelId = useId();
 
-    const { isSelected, select } = useMenuGroupSelection({
-      defaultSelected,
-      name,
-      onSelectionChange,
-      selected,
-      selectionVariant,
-    });
+    const selected = useMemo(
+      () =>
+        selectionVariant === "single" ? selectedProp.slice(0, 1) : selectedProp,
+      [selectedProp, selectionVariant],
+    );
+
+    const isSelected = useCallback(
+      (value: string) => selected.includes(value),
+      [selected],
+    );
+
+    const select = useCallback(
+      (event: SyntheticEvent, value: string) => {
+        if (selectionVariant === "single") {
+          if (!selected.includes(value)) {
+            onSelectionChange?.(event, [value]);
+          }
+        } else if (selectionVariant === "multiple") {
+          onSelectionChange?.(
+            event,
+            selected.includes(value)
+              ? selected.filter((item) => item !== value)
+              : selected.concat(value),
+          );
+        }
+      },
+      [onSelectionChange, selected, selectionVariant],
+    );
 
     const contextValue = useMemo(
       () => ({ isSelected, select, selectionVariant }),

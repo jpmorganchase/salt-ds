@@ -7,9 +7,11 @@ import {
   MenuTrigger,
 } from "@salt-ds/core";
 import { MicroMenuIcon } from "@salt-ds/icons";
-import type { ReactElement } from "react";
+import { type ReactElement, useState } from "react";
 
 export const SingleSelection = (): ReactElement => {
+  const [sortBy, setSortBy] = useState<string[]>(["name"]);
+
   return (
     <Menu>
       <MenuTrigger>
@@ -20,9 +22,9 @@ export const SingleSelection = (): ReactElement => {
       <MenuPanel>
         <MenuGroup
           label="Sort by"
-          name="sortBy"
           selectionVariant="single"
-          defaultSelected={["name"]}
+          selected={sortBy}
+          onSelectionChange={(_event, newSelected) => setSortBy(newSelected)}
         >
           <MenuItem value="name">Name</MenuItem>
           <MenuItem value="modified">Date modified</MenuItem>

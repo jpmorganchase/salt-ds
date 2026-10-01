@@ -4,7 +4,6 @@ import {
   Card,
   Menu,
   MenuGroup,
-  type MenuGroupProps,
   MenuItem,
   MenuPanel,
   MenuTrigger,
@@ -20,7 +19,7 @@ import {
   SettingsIcon,
 } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { useState } from "react";
+import { type SyntheticEvent, useState } from "react";
 
 export default {
   title: "Core/Menu",
@@ -580,9 +579,10 @@ export const MixedSelection: StoryFn<typeof Menu> = (args) => {
   );
 };
 
-function SortByMenu(
-  props: Pick<MenuGroupProps, "onSelectionChange" | "selected">,
-) {
+function SortByMenu(props: {
+  selected: string[];
+  onSelectionChange: (event: SyntheticEvent, newSelected: string[]) => void;
+}) {
   return (
     <Menu>
       <MenuTrigger>
@@ -621,64 +621,6 @@ export const SelectionInSubmenu: StoryFn<typeof Menu> = (args) => {
           selected={sort}
           onSelectionChange={(_event, newSelected) => setSort(newSelected)}
         />
-      </MenuPanel>
-    </Menu>
-  );
-};
-
-function DensityMenu() {
-  return (
-    <Menu>
-      <MenuTrigger>
-        <MenuItem>Density</MenuItem>
-      </MenuTrigger>
-      <MenuPanel>
-        <MenuGroup
-          aria-label="Density"
-          name="density"
-          selectionVariant="single"
-          defaultSelected={["medium"]}
-        >
-          <MenuItem value="high">High</MenuItem>
-          <MenuItem value="medium">Medium</MenuItem>
-          <MenuItem value="low">Low</MenuItem>
-        </MenuGroup>
-      </MenuPanel>
-    </Menu>
-  );
-}
-
-export const UncontrolledSelection: StoryFn<typeof Menu> = (args) => {
-  return (
-    <Menu {...args}>
-      <MenuTrigger>
-        <Button appearance="transparent" aria-label="Open Menu">
-          <MicroMenuIcon aria-hidden />
-        </Button>
-      </MenuTrigger>
-      <MenuPanel>
-        <MenuGroup
-          label="Sort by"
-          name="sortBy"
-          selectionVariant="single"
-          defaultSelected={["name"]}
-        >
-          <MenuItem value="name">Name</MenuItem>
-          <MenuItem value="modified">Date modified</MenuItem>
-        </MenuGroup>
-        <MenuGroup
-          label="Columns"
-          name="columns"
-          selectionVariant="multiple"
-          defaultSelected={["owner", "size"]}
-        >
-          <MenuItem value="owner">Owner</MenuItem>
-          <MenuItem value="size">Size</MenuItem>
-          <MenuItem value="type">Type</MenuItem>
-        </MenuGroup>
-        <MenuGroup>
-          <DensityMenu />
-        </MenuGroup>
       </MenuPanel>
     </Menu>
   );

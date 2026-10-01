@@ -2,20 +2,22 @@
 "@salt-ds/core": minor
 ---
 
-Added selection to `Menu`. Set `selectionVariant` on `MenuGroup` to "single" or "multiple" to render its items as radio or checkbox menu items, and give each `MenuItem` a `value`. Control the selection with `selected` and `onSelectionChange`, or use `defaultSelected` with a `name` to keep an uncontrolled selection while the menu is closed.
+Added selection to `Menu`. Set `selectionVariant` on `MenuGroup` to "single" or "multiple" to render its items as radio or checkbox menu items, give each `MenuItem` a `value`, and control the selection with `selected` and `onSelectionChange`. The menu's content unmounts when it closes, so keep the selection in state.
 
 Clicking an item closes the menu for single selection and keeps it open for multiple selection. Enter always closes the menu and Space keeps it open.
 
 ```tsx
+const [sortBy, setSortBy] = useState(["name"]);
+
 <MenuGroup
   label="Sort by"
-  name="sortBy"
   selectionVariant="single"
-  defaultSelected={["name"]}
+  selected={sortBy}
+  onSelectionChange={(_event, newSelected) => setSortBy(newSelected)}
 >
   <MenuItem value="name">Name</MenuItem>
   <MenuItem value="size">Size</MenuItem>
-</MenuGroup>
+</MenuGroup>;
 ```
 
 Disabled `MenuItem` components can now be focused with the arrow keys so they can be discovered, but they still can't be activated.
