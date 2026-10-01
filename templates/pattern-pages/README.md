@@ -161,4 +161,4 @@ Agents don't see images, so:
 
 - Name the components and tokens that the anatomy, layout and color images show in the text as well, for example "Use `--salt-spacing-300` between sections."
 - Write alt text for informative images, and use captions for extra explanation. Both are included in the Markdown.
-- Keep the pattern's Storybook stories in `packages/core/stories/patterns/<pattern-name>`, and link them in the page's resources. Their source is included as the pattern's examples. Guidance-only patterns don't need stories.
+- Write the pattern's examples as named exports of `site/src/examples/patterns/<pattern-name>/index.tsx`, and show them with `<LivePreview componentName="patterns/<pattern-name>" exampleName="<ExportName>" />`. The website and the Markdown both include the module's source, and the pattern's Storybook stories re-export the same examples. Reference images from `site/public`, for example `/img/examples/avatar.png`, rather than importing them. After adding or removing files, run `yarn gen:pattern-examples` to update the site's source loaders. Guidance-only patterns don't need examples.
