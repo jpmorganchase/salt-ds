@@ -95,7 +95,9 @@
         "noUnusedTemplateLiteral": "error",
         "useNumberNamespace": "error",
         "noInferrableTypes": "error",
-        "noUselessElse": "error"
+        "noUselessElse": "error",
+        // Enums generate runtime code and aren't erasable; use `as const` objects instead.
+        "noEnum": "error"
       },
       "complexity": {
         // Changed to warn because it is useful to keep this in mind, but it doesn't need to be a strict requirement.
