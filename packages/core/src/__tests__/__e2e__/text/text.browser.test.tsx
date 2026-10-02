@@ -353,13 +353,54 @@ describe("GIVEN styleAs=bodyLarge or styleAs=labelLarge", () => {
   });
 });
 
-const editorialTokens = [
-  "--salt-text-editorial-fontFamily",
-  "--salt-text-editorial-textTransform",
-  "--salt-text-editorial-fontStyle",
-  "--salt-text-editorial-fontWeight",
-  "--salt-text-editorial-fontWeight-small",
-  "--salt-text-editorial-fontWeight-strong",
+const fontTokenSuffixes = [
+  "fontFamily",
+  "textTransform",
+  "fontStyle",
+  "fontWeight",
+  "fontWeight-small",
+  "fontWeight-strong",
+] as const;
+
+const emphasisContent = (label: string) => (
+  <>
+    {label} <strong>strong</strong> <small>small</small>
+  </>
+);
+
+const fontTokenCases = [
+  {
+    name: "editorial",
+    baselineName: "display",
+    subject: (
+      <Editorial1 data-testid="subject">
+        {emphasisContent("Editorial")}
+      </Editorial1>
+    ),
+    baseline: (
+      <Display1 data-testid="baseline">{emphasisContent("Display")}</Display1>
+    ),
+    baselineTokens: {
+      "--salt-text-display-fontFamily": "Courier",
+      "--salt-text-display-fontWeight": "100",
+      "--salt-text-display-fontWeight-strong": "100",
+      "--salt-text-display-fontStyle": "normal",
+      "--salt-text-display-textTransform": "lowercase",
+    },
+  },
+  {
+    name: "eyebrow",
+    baselineName: "body",
+    subject: (
+      <Eyebrow data-testid="subject">{emphasisContent("Eyebrow")}</Eyebrow>
+    ),
+    baseline: <Text data-testid="baseline">{emphasisContent("Body")}</Text>,
+    baselineTokens: {
+      "--salt-text-fontFamily": "Courier",
+      "--salt-text-fontWeight": "100",
+      "--salt-text-fontWeight-strong": "100",
+    },
+  },
 ] as const;
 
 const themeWrappers = [
@@ -388,87 +429,87 @@ const themeWrappers = [
 ] as const;
 
 describe.each(themeWrappers)("GIVEN the $name theme", ({ wrap }) => {
-  it("defines the editorial tokens and matches the display styles", async () => {
-    const { container } = await render(
-      wrap(
-        <>
-          <Display1 data-testid="display">
-            Display <strong>strong</strong> <small>small</small>
-          </Display1>
-          <Editorial1 data-testid="editorial">
-            Editorial <strong>strong</strong> <small>small</small>
-          </Editorial1>
-        </>,
-      ),
-    );
-    const display = container.querySelector<HTMLElement>(
-      '[data-testid="display"]',
-    ) as HTMLElement;
-    const editorial = container.querySelector<HTMLElement>(
-      '[data-testid="editorial"]',
-    ) as HTMLElement;
-    const displayStyle = getComputedStyle(display);
-    const editorialStyle = getComputedStyle(editorial);
-
-    for (const token of editorialTokens) {
-      expect(editorialStyle.getPropertyValue(token).trim()).not.toBe("");
-    }
-    for (const property of [
-      "fontFamily",
-      "fontWeight",
-      "fontStyle",
-      "textTransform",
-    ] as const) {
-      expect(editorialStyle[property]).toBe(displayStyle[property]);
-    }
-    for (const selector of ["strong", "small"]) {
-      expect(
-        getComputedStyle(editorial.querySelector(selector) as HTMLElement)
-          .fontWeight,
-      ).toBe(
-        getComputedStyle(display.querySelector(selector) as HTMLElement)
-          .fontWeight,
+  it.each(fontTokenCases)(
+    "defines the $name tokens and matches the $baselineName styles",
+    async ({ name, subject, baseline }) => {
+      const { container } = await render(
+        wrap(
+          <>
+            {baseline}
+            {subject}
+          </>,
+        ),
       );
-    }
-  });
+      const baselineElement = container.querySelector<HTMLElement>(
+        '[data-testid="baseline"]',
+      ) as HTMLElement;
+      const subjectElement = container.querySelector<HTMLElement>(
+        '[data-testid="subject"]',
+      ) as HTMLElement;
+      const baselineStyle = getComputedStyle(baselineElement);
+      const subjectStyle = getComputedStyle(subjectElement);
+
+      for (const suffix of fontTokenSuffixes) {
+        expect(
+          subjectStyle.getPropertyValue(`--salt-text-${name}-${suffix}`).trim(),
+        ).not.toBe("");
+      }
+      for (const property of [
+        "fontFamily",
+        "fontWeight",
+        "fontStyle",
+        "textTransform",
+      ] as const) {
+        expect(subjectStyle[property]).toBe(baselineStyle[property]);
+      }
+      for (const selector of ["strong", "small"]) {
+        expect(
+          getComputedStyle(
+            subjectElement.querySelector(selector) as HTMLElement,
+          ).fontWeight,
+        ).toBe(
+          getComputedStyle(
+            baselineElement.querySelector(selector) as HTMLElement,
+          ).fontWeight,
+        );
+      }
+    },
+  );
 });
 
-it("uses the editorial tokens instead of the display tokens", async () => {
-  const { container } = await renderWithSalt(
-    <div
-      style={
-        {
-          "--salt-text-display-fontFamily": "Courier",
-          "--salt-text-display-fontWeight": "100",
-          "--salt-text-display-fontWeight-strong": "100",
-          "--salt-text-display-fontStyle": "normal",
-          "--salt-text-display-textTransform": "lowercase",
-          "--salt-text-editorial-fontFamily": "Lato",
-          "--salt-text-editorial-fontWeight": "900",
-          "--salt-text-editorial-fontWeight-strong": "800",
-          "--salt-text-editorial-fontStyle": "italic",
-          "--salt-text-editorial-textTransform": "uppercase",
-        } as CSSProperties
-      }
-    >
-      <Editorial1>
-        Editorial <strong>strong</strong>
-      </Editorial1>
-    </div>,
-  );
-  const editorial = container.querySelector<HTMLElement>(
-    ".saltText",
-  ) as HTMLElement;
-  const style = getComputedStyle(editorial);
-  expect(style.fontFamily).toBe("Lato");
-  expect(style.fontWeight).toBe("900");
-  expect(style.fontStyle).toBe("italic");
-  expect(style.textTransform).toBe("uppercase");
-  expect(
-    getComputedStyle(editorial.querySelector("strong") as HTMLElement)
-      .fontWeight,
-  ).toBe("800");
-});
+it.each(fontTokenCases)(
+  "uses the $name tokens instead of the $baselineName tokens",
+  async ({ name, subject, baselineTokens }) => {
+    const { container } = await renderWithSalt(
+      <div
+        style={
+          {
+            ...baselineTokens,
+            [`--salt-text-${name}-fontFamily`]: "Lato",
+            [`--salt-text-${name}-fontWeight`]: "900",
+            [`--salt-text-${name}-fontWeight-strong`]: "800",
+            [`--salt-text-${name}-fontStyle`]: "italic",
+            [`--salt-text-${name}-textTransform`]: "uppercase",
+          } as CSSProperties
+        }
+      >
+        {subject}
+      </div>,
+    );
+    const subjectElement = container.querySelector<HTMLElement>(
+      '[data-testid="subject"]',
+    ) as HTMLElement;
+    const style = getComputedStyle(subjectElement);
+    expect(style.fontFamily).toBe("Lato");
+    expect(style.fontWeight).toBe("900");
+    expect(style.fontStyle).toBe("italic");
+    expect(style.textTransform).toBe("uppercase");
+    expect(
+      getComputedStyle(subjectElement.querySelector("strong") as HTMLElement)
+        .fontWeight,
+    ).toBe("800");
+  },
+);
 
 it("inherits a custom font family CSS variable", async () => {
   const { container } = await renderWithSalt(

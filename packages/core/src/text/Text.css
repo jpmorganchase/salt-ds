@@ -447,20 +447,22 @@ label.saltText small,
 
 /* Eyebrow */
 .saltText-eyebrow.saltText {
-  font-family: var(--salt-text-fontFamily);
+  font-family: var(--salt-text-eyebrow-fontFamily);
   font-size: var(--salt-text-eyebrow-fontSize);
-  line-height: var(--salt-text-eyebrow-lineHeight);
-  font-weight: var(--salt-text-fontWeight);
+  font-style: var(--salt-text-eyebrow-fontStyle, normal);
+  font-weight: var(--salt-text-eyebrow-fontWeight);
   letter-spacing: var(--salt-text-eyebrow-letterSpacing);
+  line-height: var(--salt-text-eyebrow-lineHeight);
+  text-transform: var(--salt-text-eyebrow-textTransform, none);
 }
 
 /* Eyebrow emphasis strong */
 .saltText-eyebrow.saltText strong {
-  font-weight: var(--salt-text-fontWeight-strong);
+  font-weight: var(--salt-text-eyebrow-fontWeight-strong);
 }
 
 /* Eyebrow emphasis small */
 .saltText-eyebrow.saltText small {
   font-size: inherit;
-  font-weight: var(--salt-text-fontWeight-small);
+  font-weight: var(--salt-text-eyebrow-fontWeight-small);
 }
