@@ -12,7 +12,7 @@ import { OverflowPanel } from "./overflow-panel/OverflowPanel";
 import tooltrayCss from "./Tooltray.css";
 import type { TooltrayProps } from "./TooltrayProps";
 
-export const Tooltray = (props: TooltrayProps): ReactElement => {
+export const Tooltray = (props: TooltrayProps) => {
   const {
     "aria-label": ariaLabel,
     // Tooltray itself doesn't use these alignment props directly,

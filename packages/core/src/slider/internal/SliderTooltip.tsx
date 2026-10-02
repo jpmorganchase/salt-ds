@@ -1,7 +1,6 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import type { ReactElement } from "react";
 import { Text } from "../../text";
 import { makePrefixer } from "../../utils";
 import sliderTooltipCss from "./SliderTooltip.css";
@@ -13,10 +12,7 @@ interface SliderTooltipProps {
   open?: boolean;
 }
 
-export const SliderTooltip = ({
-  value,
-  open,
-}: SliderTooltipProps): ReactElement => {
+export const SliderTooltip = ({ value, open }: SliderTooltipProps) => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-slider-tooltip",

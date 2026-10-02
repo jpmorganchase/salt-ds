@@ -1,5 +1,4 @@
 import {
-  type ReactElement,
   type ReactNode,
   type RefObject,
   type SyntheticEvent,
@@ -48,7 +47,7 @@ export function ListControlOptionContextProvider<Item>({
 }: {
   children: ReactNode;
   value: ListControlOptionContextValue<Item>;
-}): ReactElement {
+}) {
   return (
     <ListControlOptionContext.Provider
       value={value as unknown as ListControlOptionContextValue<unknown>}

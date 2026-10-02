@@ -25,6 +25,9 @@ interface NonNullableRefObject<T> {
 
 export type FilterPredicate = (item: OverflowItem) => boolean;
 
+// Read and passed to a `ref` prop. Before version 19 of the React types,
+// `RefObject<T | null>` can't be passed to a `ref` prop, so this uses
+// `MutableRefObject`, which every supported version has.
 export type ElementRef = MutableRefObject<HTMLDivElement | null>;
 
 export interface OverflowSource {

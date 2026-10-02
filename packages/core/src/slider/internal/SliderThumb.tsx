@@ -4,7 +4,6 @@ import { clsx } from "clsx";
 import {
   type ChangeEvent,
   type ComponentPropsWithoutRef,
-  type ReactElement,
   type Ref,
   useCallback,
   useEffect,
@@ -70,7 +69,7 @@ export const SliderThumb = ({
   stepMultiplier,
   trackDragging,
   ...rest
-}: SliderThumbProps): ReactElement => {
+}: SliderThumbProps) => {
   {
     const targetWindow = useWindow();
     useComponentCssInjection({

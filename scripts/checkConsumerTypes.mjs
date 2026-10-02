@@ -46,6 +46,18 @@ if (unbuilt.length > 0) {
   process.exit(1);
 }
 
+// TypeScript falls back to `@types/react` if a version isn't installed, which
+// would silently check the wrong version.
+const missingTypes = Object.values(reactTypes)
+  .flat()
+  .filter((name) => !existsSync(path.join(nodeModules, name, "index.d.ts")));
+if (missingTypes.length > 0) {
+  console.error(
+    `Missing ${missingTypes.join(", ")}. Run \`yarn\` to install them.`,
+  );
+  process.exit(1);
+}
+
 const builtDeclarations = /^packages[\\/][^\\/]+[\\/]dist-types[\\/]/;
 
 // Errors in third-party declarations are reported separately, as they can't be

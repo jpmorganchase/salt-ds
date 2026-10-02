@@ -1,14 +1,9 @@
 ---
 "@salt-ds/core": patch
-"@salt-ds/date-components": patch
-"@salt-ds/embla-carousel": patch
 "@salt-ds/lab": patch
-"@salt-ds/styles": patch
-"@salt-ds/window": patch
 ---
 
-Fixed type errors when using Salt with version 19 of `@types/react`:
+Fixed types when using Salt with version 19 of `@types/react`:
 
-- Types no longer use the global `JSX` namespace, which was removed in version 19.
-- `ToggleButtonProps` no longer conflicts with the native `onChange` prop.
-- APIs that take a ref object, such as `useResizeObserver`, accept refs created with `useRef(null)`.
+- APIs that take a ref object, such as `useResizeObserver`, accept refs created with `useRef(null)`. Version 19 types these as `RefObject<T | null>`, which caused a type error.
+- Types no longer use the global `JSX` namespace, which version 19 removed. Types that used it, such as the return types of `ComboBox`, `Dropdown` and `ListBox`, resolved to `any`, or caused errors in Salt's declaration files when `skipLibCheck` is disabled. `ToggleButtonProps` also caused an error when `skipLibCheck` is disabled.

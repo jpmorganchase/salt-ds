@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -37,6 +38,17 @@ const paths = Object.fromEntries(
 );
 const reactTypes = path.join(nodeModules, `types-react-${version}`);
 const reactDomTypes = path.join(nodeModules, `types-react-dom-${version}`);
+// TypeScript falls back to `@types/react` if a version isn't installed, which
+// would silently check the wrong version.
+const missingTypes = [reactTypes, reactDomTypes].filter(
+  (directory) => !existsSync(path.join(directory, "index.d.ts")),
+);
+if (missingTypes.length > 0) {
+  console.error(
+    `Missing ${missingTypes.map((directory) => path.basename(directory)).join(", ")}. Run \`yarn\` to install them.`,
+  );
+  process.exit(1);
+}
 Object.assign(paths, {
   react: [path.join(reactTypes, "index.d.ts")],
   "react/*": [path.join(reactTypes, "*")],

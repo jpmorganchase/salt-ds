@@ -5,7 +5,6 @@ import highlighterCss from "./Highlighter.css";
 
 const baseName = "saltHighlighter";
 
-/** @returns {import("react").ReactElement} */
 export const Highlighter = (props) => {
   const { matchPattern, text = "" } = props;
   const targetWindow = useWindow();

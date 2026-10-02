@@ -1,10 +1,4 @@
-import {
-  type ReactElement,
-  type ReactNode,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
+import { type ReactNode, useContext, useMemo, useState } from "react";
 import { createContext } from "../utils/createContext";
 import { useIsomorphicLayoutEffect } from "../utils/useIsomorphicLayoutEffect";
 import type { Breakpoints } from "./Breakpoints";
@@ -24,9 +18,7 @@ interface BreakpointProviderProps {
   matchedBreakpoints: Breakpoint[];
 }
 
-export function BreakpointProvider(
-  props: BreakpointProviderProps,
-): ReactElement {
+export function BreakpointProvider(props: BreakpointProviderProps) {
   const { children, matchedBreakpoints } = props;
 
   return (
