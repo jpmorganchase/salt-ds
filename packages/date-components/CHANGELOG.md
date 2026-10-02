@@ -1,5 +1,21 @@
 # @salt-ds/date-components
 
+## 1.1.2
+
+### Patch Changes
+
+- e466542: `DateParserField` is now a const object with a matching union type instead of an enum. `DateParserField.START` and `DateParserField.END` work as before, as values and as types, and `"start"` or `"end"` can now be used wherever a `DateParserField` is expected.
+- 55f27de: The calendar, date input and date picker components now show their names in React DevTools instead of being anonymous.
+- Updated dependencies [75f2d7d]
+- Updated dependencies [61228a7]
+- Updated dependencies [f8925a2]
+- Updated dependencies [55f27de]
+- Updated dependencies [602ddb5]
+- Updated dependencies [fd1bf44]
+- Updated dependencies [75f2d7d]
+- Updated dependencies [cb2e335]
+  - @salt-ds/core@1.73.0
+
 ## 1.1.1
 
 ### Patch Changes

@@ -1,5 +1,27 @@
 # @salt-ds/core
 
+## 1.73.0
+
+### Minor Changes
+
+- 75f2d7d: Deprecated `setRef`. Use `useForkRef` to merge refs instead, which also runs the cleanup functions that callback refs can return from React 19.
+- 602ddb5: Added `OnSolidButton`, a button for low-emphasis actions on solid backgrounds.
+
+  ```tsx
+  import { OnSolidButton } from "@salt-ds/core";
+
+  <OnSolidButton>Dismiss</OnSolidButton>;
+  ```
+
+### Patch Changes
+
+- 61228a7: `SaltProvider` warnings about multiple root providers and `applyClassesToChild` are now only logged in development.
+- f8925a2: Fixed `Stepper`'s injected style id to use lowercase `salt-stepper`, matching the other components.
+- 55f27de: `Code` and `OverlayPanelCloseButton` now show their own names in React DevTools instead of `TextAction` and `OverlayPanelButton`, and `CollapsiblePanel` and `FormField` are no longer anonymous.
+- fd1bf44: Fixed the checkbox in multiselect `Option` being misaligned with the option's text, impacting `ComboBox`, `Dropdown` and `ListBox`.
+- 75f2d7d: Fixed cleanup functions returned from callback refs, which are supported from React 19, not being called when the ref is passed to a Salt component. The cleanup function now runs when the element is removed, instead of the ref being called with `null`. `useForkRef` supports these cleanup functions in the same way.
+- cb2e335: Fixed `Toolbar` moving items that fit into its overflow menu, and not restoring focus to the previously focused control, when rendered in React Strict Mode.
+
 ## 1.72.0
 
 ### Minor Changes

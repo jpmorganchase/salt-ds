@@ -1,5 +1,20 @@
 # @salt-ds/countries
 
+## 1.5.4
+
+### Patch Changes
+
+- ed2072d: Renamed `CountrySymbol`'s private CSS variables from `--country-symbol-*` to `--countrySymbol-*`, to match Salt's naming for component CSS variables. Overrides of these private variables need to be updated; `--saltCountrySymbol-size-multiplier` is unchanged.
+- Updated dependencies [75f2d7d]
+- Updated dependencies [61228a7]
+- Updated dependencies [f8925a2]
+- Updated dependencies [55f27de]
+- Updated dependencies [602ddb5]
+- Updated dependencies [fd1bf44]
+- Updated dependencies [75f2d7d]
+- Updated dependencies [cb2e335]
+  - @salt-ds/core@1.73.0
+
 ## 1.5.3
 
 ### Patch Changes
