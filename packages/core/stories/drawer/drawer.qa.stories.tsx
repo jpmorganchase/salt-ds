@@ -11,7 +11,7 @@ import {
 import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
-import { type FC, type ReactNode, useLayoutEffect, useRef } from "react";
+import { type ReactNode, useLayoutEffect, useRef } from "react";
 
 export default {
   title: "Core/Drawer/Drawer QA",
@@ -46,7 +46,7 @@ function FakeDrawer({ children, ...rest }: DrawerProps) {
 const loremText =
   "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
 
-const DrawerTemplate: StoryFn<typeof Drawer> & FC = () => {
+const DrawerTemplate = () => {
   return (
     <StackLayout gap={3}>
       <StackLayout direction="row" gap={3}>
@@ -156,7 +156,7 @@ function ScrolledDrawerContent({
   return <DrawerContent ref={ref}>{children}</DrawerContent>;
 }
 
-const DrawerOverflowTemplate: StoryFn<typeof Drawer> & FC = () => {
+const DrawerOverflowTemplate = () => {
   return (
     <StackLayout direction="row" gap={3}>
       <FakeDrawer>

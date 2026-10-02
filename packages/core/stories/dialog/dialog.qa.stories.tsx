@@ -19,7 +19,7 @@ import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import "./dialog.stories.css";
 import { CloseIcon } from "@salt-ds/icons";
-import { type FC, Fragment } from "react";
+import { Fragment } from "react";
 
 export default {
   title: "Core/Dialog/Dialog QA",
@@ -47,7 +47,7 @@ type TemplateProps = Omit<DialogProps, "content"> & {
   maxHeight?: number;
 };
 
-const DialogTemplate: StoryFn<TemplateProps> & FC<TemplateProps> = ({
+const DialogTemplate = ({
   status,
   header,
   content,
