@@ -1,4 +1,4 @@
-import { OnSolidButton } from "@salt-ds/lab";
+import { OnSolidButton } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
