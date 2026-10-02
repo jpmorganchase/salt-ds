@@ -1,11 +1,11 @@
+import { OnSolidButton } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
-import { OnSolidButton } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import { type ReactNode, useEffect, useRef } from "react";
 
 export default {
-  title: "Lab/On Solid Button/On Solid Button QA",
+  title: "Core/On Solid Button/On Solid Button QA",
   component: OnSolidButton,
   globals: {
     a11y: {
@@ -43,7 +43,7 @@ const Surface = ({
 );
 
 export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => (
-  <QAContainer cols={1} itemPadding={12} itemWidthAuto {...props}>
+  <QAContainer cols={1} itemPadding={12} itemWidthAuto width={2000} {...props}>
     {surfaces.map(({ name, background }) => (
       <Surface key={name} background={background}>
         <OnSolidButton>OnSolidButton</OnSolidButton>

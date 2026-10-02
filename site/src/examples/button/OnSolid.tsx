@@ -1,5 +1,4 @@
-import { StackLayout } from "@salt-ds/core";
-import { OnSolidButton } from "@salt-ds/lab";
+import { OnSolidButton, StackLayout } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 const surfaces = [

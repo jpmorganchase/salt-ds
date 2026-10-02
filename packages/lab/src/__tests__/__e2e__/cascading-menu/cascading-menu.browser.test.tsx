@@ -1,5 +1,7 @@
+import { Button } from "@salt-ds/core";
+import { CascadingMenu } from "@salt-ds/lab";
 import { composeStories } from "@storybook/react-vite";
-import { version } from "react";
+import { createRef, version } from "react";
 import { describe, expect, it } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
@@ -28,6 +30,28 @@ describe("GIVEN a CascadingMenu component", () => {
     await renderWithSalt(<Default />);
     await trigger().click();
     await expect.poll(menuCount).toBe(1);
+  });
+
+  it("THEN the menu is anchored to a trigger that has its own ref", async () => {
+    const triggerRef = createRef<HTMLButtonElement>();
+    await renderWithSalt(
+      <CascadingMenu
+        initialSource={{ menuItems: [{ title: "Menu item" }] }}
+        itemToString={(item) => item?.title ?? ""}
+      >
+        <Button data-testid="cascading-menu-trigger" ref={triggerRef}>
+          Open menu
+        </Button>
+      </CascadingMenu>,
+    );
+    await trigger().click();
+    await expect.poll(menuCount).toBe(1);
+
+    expect(triggerRef.current).toBe(trigger().element());
+    const triggerRect = trigger().element().getBoundingClientRect();
+    const menuRect = page.getByRole("menu").element().getBoundingClientRect();
+    expect(Math.abs(menuRect.left - triggerRect.left)).toBeLessThan(2);
+    expect(menuRect.top).toBeGreaterThanOrEqual(triggerRect.bottom - 2);
   });
 
   it("THEN the menu will not be displayed when only focused", async () => {
