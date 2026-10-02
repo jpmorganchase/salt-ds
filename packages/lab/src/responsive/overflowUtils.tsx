@@ -1,4 +1,3 @@
-import type { ReactElement } from "react";
 import type {
   ElementRef,
   OverflowItem,
@@ -6,9 +5,7 @@ import type {
 } from "./overflowTypes";
 
 export const DropdownPlaceholder = () => null;
-export const getDropdownPlaceholder = (): ReactElement => (
-  <DropdownPlaceholder />
-);
+export const getDropdownPlaceholder = () => <DropdownPlaceholder />;
 
 export type heightOrWidth = "width" | "height";
 export const NO_DATA = {};

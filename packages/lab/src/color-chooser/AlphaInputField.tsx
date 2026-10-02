@@ -6,9 +6,9 @@ import {
   type ChangeEvent,
   type FocusEvent,
   type KeyboardEvent,
+  type ReactElement,
   useEffect,
   useState,
-  type ReactElement,
 } from "react";
 import { InputLegacy as Input } from "../input-legacy";
 

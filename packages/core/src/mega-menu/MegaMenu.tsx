@@ -4,14 +4,7 @@ import {
   useFloatingRootContext,
   useInteractions,
 } from "@floating-ui/react";
-import {
-  type ReactElement,
-  type ReactNode,
-  useCallback,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { type ReactNode, useCallback, useMemo, useRef, useState } from "react";
 import { useControlled } from "../utils";
 import { MegaMenuContext } from "./MegaMenuContext";
 import { useMegaMenuNavigation } from "./useMegaMenuNavigation";
@@ -58,7 +51,7 @@ export function MegaMenu({
   defaultOpen = false,
   onOpenChange,
   placement = "bottom",
-}: MegaMenuProps): ReactElement {
+}: MegaMenuProps) {
   const [openState, setOpenState] = useControlled({
     controlled: open,
     default: defaultOpen,

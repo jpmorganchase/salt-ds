@@ -1,9 +1,9 @@
 import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
+import type { ReactElement } from "react";
 import { Tab, Tabstrip, type TabstripProps } from "../tabs";
 import type { ColorPicker, ColorPickerProps } from "./ColorPicker";
 import type { Swatches, SwatchesTabProps } from "./Swatches";
-import type { ReactElement } from "react";
 
 const withBaseName = makePrefixer("saltColorChooserDictTabs");
 

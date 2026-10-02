@@ -1,9 +1,4 @@
-import {
-  createContext,
-  type ReactElement,
-  type ReactNode,
-  useContext,
-} from "react";
+import { createContext, type ReactNode, useContext } from "react";
 
 export interface CSPContextType {
   nonce?: string;
@@ -24,7 +19,7 @@ export interface CSPProviderProps extends CSPContextType {
   children: ReactNode;
 }
 
-export function CSPProvider(props: CSPProviderProps): ReactElement {
+export function CSPProvider(props: CSPProviderProps) {
   const { children, nonce: nonceProp } = props;
   const nonce = useCSPNonce(nonceProp);
 

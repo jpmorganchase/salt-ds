@@ -1,9 +1,4 @@
-import {
-  createContext,
-  type ReactElement,
-  type ReactNode,
-  useContext,
-} from "react";
+import { createContext, type ReactNode, useContext } from "react";
 
 import type { StepDepth } from "../Step";
 import type { StepperOrientation } from "../Stepper";
@@ -20,7 +15,7 @@ export interface StepperProviderProps {
 export function StepperProvider({
   orientation: orientationProp,
   children,
-}: StepperProviderProps): ReactElement {
+}: StepperProviderProps) {
   const depth = useContext(StepDepthContext);
 
   return (

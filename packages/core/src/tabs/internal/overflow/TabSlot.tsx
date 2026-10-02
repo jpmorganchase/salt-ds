@@ -1,8 +1,4 @@
-import {
-  type ComponentPropsWithoutRef,
-  type ReactElement,
-  useCallback,
-} from "react";
+import { type ComponentPropsWithoutRef, useCallback } from "react";
 import { useTabSlotRegistry } from "../contexts/TabSlotRegistryContext";
 
 export interface TabSlotProps extends ComponentPropsWithoutRef<"div"> {
@@ -10,11 +6,7 @@ export interface TabSlotProps extends ComponentPropsWithoutRef<"div"> {
   value: string;
 }
 
-export function TabSlot({
-  slotId,
-  value,
-  ...rest
-}: TabSlotProps): ReactElement {
+export function TabSlot({ slotId, value, ...rest }: TabSlotProps) {
   const slotRegistry = useTabSlotRegistry();
   const handleRef = useCallback(
     (element: HTMLDivElement | null) => {
