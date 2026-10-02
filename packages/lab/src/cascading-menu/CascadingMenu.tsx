@@ -223,8 +223,8 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
         }
 
         return cloneElement(cloneChildren, {
-          ref: handleRef,
           ...childrenProps,
+          ref: handleRef,
         });
       }
       return null;

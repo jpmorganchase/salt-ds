@@ -208,7 +208,6 @@ export const List = forwardRef(function List<
     const { disabled, value, id: itemId, label } = item;
     const isChildItem = isValidElement(value);
     const listItemProps: ListItemProps<Item> & {
-      key: string;
       "data-idx": number;
     } = {
       className: clsx({
@@ -220,7 +219,6 @@ export const List = forwardRef(function List<
       item: isChildItem ? undefined : (item?.value ?? undefined),
       itemHeight: getItemHeight(idx.value),
       itemTextHighlightPattern,
-      key: itemId,
       "data-idx": idx.value,
       label,
       role: "option",
@@ -229,9 +227,9 @@ export const List = forwardRef(function List<
     };
     list.push(
       isChildItem ? (
-        cloneElement(value, listItemProps)
+        cloneElement(value, { ...listItemProps, key: itemId })
       ) : (
-        <ListItem {...listItemProps} />
+        <ListItem key={itemId} {...listItemProps} />
       ),
     );
 
