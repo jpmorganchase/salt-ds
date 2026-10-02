@@ -3,6 +3,11 @@ import {
   Display2,
   Display3,
   Display4,
+  Editorial1,
+  Editorial2,
+  Editorial3,
+  Editorial4,
+  Eyebrow,
   H1,
   H2,
   H3,
@@ -24,6 +29,11 @@ const components = [
   { component: Display2, name: "Display2", tag: "span" },
   { component: Display3, name: "Display3", tag: "span" },
   { component: Display4, name: "Display4", tag: "span" },
+  { component: Editorial1, name: "Editorial1", tag: "span" },
+  { component: Editorial2, name: "Editorial2", tag: "span" },
+  { component: Editorial3, name: "Editorial3", tag: "span" },
+  { component: Editorial4, name: "Editorial4", tag: "span" },
+  { component: Eyebrow, name: "Eyebrow", tag: "span" },
   { component: H1, name: "H1", tag: "h1" },
   { component: H2, name: "H2", tag: "h2" },
   { component: H3, name: "H3", tag: "h3" },
@@ -172,6 +182,41 @@ const styleGroups = [
     components: [Text, H1, H2, H3, H4, Label, TextNotation],
     fontSize: "24px",
   },
+  {
+    styleAs: "editorial1",
+    components: [Text, H1, H2, H3, H4, Label, TextNotation],
+    fontSize: "144px",
+  },
+  {
+    styleAs: "editorial2",
+    components: [Text, H1, H2, H3, H4, Label, TextNotation],
+    fontSize: "122px",
+  },
+  {
+    styleAs: "editorial3",
+    components: [Text, H1, H2, H3, H4, Label, TextNotation],
+    fontSize: "102px",
+  },
+  {
+    styleAs: "editorial4",
+    components: [Text, H1, H2, H3, H4, Label, TextNotation],
+    fontSize: "84px",
+  },
+  {
+    styleAs: "eyebrow",
+    components: [Text, H1, H2, H3, H4, Label, TextNotation],
+    fontSize: "14px",
+  },
+  {
+    styleAs: "bodyLarge",
+    components: [Text, H1, H2, H3, H4, Label, TextNotation],
+    fontSize: "14px",
+  },
+  {
+    styleAs: "labelLarge",
+    components: [Text, H1, H2, H3, H4, Label, TextNotation],
+    fontSize: "12px",
+  },
 ] as const;
 
 for (const { styleAs, components: styledComponents, fontSize } of styleGroups) {
@@ -216,6 +261,93 @@ describe("GIVEN styleAs=action", () => {
       expect(style.fontWeight).toBe("600");
     });
   }
+});
+
+const editorialAndEyebrowStyles = [
+  {
+    component: Editorial1,
+    name: "Editorial1",
+    lineHeight: "144px",
+    letterSpacing: -2.88,
+  },
+  {
+    component: Editorial2,
+    name: "Editorial2",
+    lineHeight: "122px",
+    letterSpacing: -2.44,
+  },
+  {
+    component: Editorial3,
+    name: "Editorial3",
+    lineHeight: "102px",
+    letterSpacing: -2.04,
+  },
+  {
+    component: Editorial4,
+    name: "Editorial4",
+    lineHeight: "84px",
+    letterSpacing: -1.68,
+  },
+  {
+    component: Eyebrow,
+    name: "Eyebrow",
+    lineHeight: "18px",
+    letterSpacing: 1.12,
+  },
+] as const;
+
+describe("GIVEN an editorial or eyebrow component", () => {
+  it.each(editorialAndEyebrowStyles)(
+    "$name applies its line height and letter spacing",
+    async ({ component: Component, lineHeight, letterSpacing }) => {
+      const { container } = await renderWithSalt(
+        <Component>{textExample}</Component>,
+      );
+      const style = getComputedStyle(
+        container.querySelector<HTMLElement>(".saltText") as HTMLElement,
+      );
+      expect(style.lineHeight).toBe(lineHeight);
+      expect(Number.parseFloat(style.letterSpacing)).toBeCloseTo(letterSpacing);
+    },
+  );
+});
+
+describe("GIVEN styleAs=bodyLarge or styleAs=labelLarge", () => {
+  it("applies the body large line height", async () => {
+    const { container } = await renderWithSalt(
+      <Text styleAs="bodyLarge">{textExample}</Text>,
+    );
+    const style = getComputedStyle(
+      container.querySelector<HTMLElement>(".saltText") as HTMLElement,
+    );
+    expect(style.lineHeight).toBe("22px");
+    expect(style.letterSpacing).toBe("normal");
+  });
+
+  it("applies the label large line height", async () => {
+    const { container } = await renderWithSalt(
+      <Label styleAs="labelLarge">{textExample}</Label>,
+    );
+    const style = getComputedStyle(
+      container.querySelector<HTMLElement>(".saltText") as HTMLElement,
+    );
+    expect(style.lineHeight).toBe("16px");
+    expect(style.letterSpacing).toBe("normal");
+  });
+
+  it("uses body emphasis weights when a heading is styled as body large", async () => {
+    const { container } = await renderWithSalt(
+      <H1 styleAs="bodyLarge">
+        Body large <strong>strong</strong>
+      </H1>,
+    );
+    const heading = container.querySelector<HTMLElement>(
+      ".saltText",
+    ) as HTMLElement;
+    const strong = container.querySelector("strong") as HTMLElement;
+    expect(getComputedStyle(heading).fontWeight).toBe("400");
+    expect(getComputedStyle(strong).fontWeight).toBe("600");
+  });
 });
 
 it("inherits a custom font family CSS variable", async () => {

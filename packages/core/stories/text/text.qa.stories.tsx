@@ -4,6 +4,11 @@ import {
   Display2,
   Display3,
   Display4,
+  Editorial1,
+  Editorial2,
+  Editorial3,
+  Editorial4,
+  Eyebrow,
   H1,
   H2,
   H3,
@@ -74,8 +79,17 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <H4>
       H4 <strong>strong</strong> and <small>small</small> text
     </H4>
+    <Eyebrow>
+      Eyebrow <strong>strong</strong> and <small>small</small> text
+    </Eyebrow>
+    <Text styleAs="bodyLarge">
+      Body large <strong>strong</strong> and <small>small</small> text
+    </Text>
     <Label>
       Label <strong>strong</strong> and <small>small</small> text
+    </Label>
+    <Label styleAs="labelLarge">
+      Label large <strong>strong</strong> and <small>small</small> text
     </Label>
     <TextNotation>
       Notation <strong>strong</strong> and <small>small</small> text
@@ -90,6 +104,29 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
 );
 
 AllVariantsGrid.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+  },
+};
+
+export const EditorialVariantsGrid: StoryFn<QAContainerProps> = (props) => (
+  <QAContainer height={3200} width={2000} cols={1} vertical {...props}>
+    <Editorial1>
+      Editorial 1 <strong>strong</strong> <small>small</small>
+    </Editorial1>
+    <Editorial2>
+      Editorial 2 <strong>strong</strong> <small>small</small>
+    </Editorial2>
+    <Editorial3>
+      Editorial 3 <strong>strong</strong> <small>small</small>
+    </Editorial3>
+    <Editorial4>
+      Editorial 4 <strong>strong</strong> <small>small</small>
+    </Editorial4>
+  </QAContainer>
+);
+
+EditorialVariantsGrid.parameters = {
   chromatic: {
     disableSnapshot: false,
   },

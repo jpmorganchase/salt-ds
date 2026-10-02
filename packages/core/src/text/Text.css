@@ -205,6 +205,98 @@ code.saltText,
   font-weight: var(--salt-text-display-fontWeight-small);
 }
 
+/* Editorial 1 */
+.saltText-editorial1.saltText {
+  font-family: var(--salt-text-display-fontFamily);
+  font-size: var(--salt-text-editorial1-fontSize);
+  font-style: var(--salt-text-display-fontStyle, normal);
+  font-weight: var(--salt-text-display-fontWeight);
+  letter-spacing: var(--salt-text-editorial-letterSpacing);
+  line-height: var(--salt-text-editorial1-lineHeight);
+  text-transform: var(--salt-text-display-textTransform, none);
+}
+
+/* Editorial 1 emphasis strong */
+.saltText-editorial1.saltText strong {
+  font-size: inherit;
+  font-weight: var(--salt-text-display-fontWeight-strong);
+}
+
+/* Editorial 1 emphasis small */
+.saltText-editorial1.saltText small {
+  font-size: inherit;
+  font-weight: var(--salt-text-display-fontWeight-small);
+}
+
+/* Editorial 2 */
+.saltText-editorial2.saltText {
+  font-family: var(--salt-text-display-fontFamily);
+  font-size: var(--salt-text-editorial2-fontSize);
+  font-style: var(--salt-text-display-fontStyle, normal);
+  font-weight: var(--salt-text-display-fontWeight);
+  letter-spacing: var(--salt-text-editorial-letterSpacing);
+  line-height: var(--salt-text-editorial2-lineHeight);
+  text-transform: var(--salt-text-display-textTransform, none);
+}
+
+/* Editorial 2 emphasis strong */
+.saltText-editorial2.saltText strong {
+  font-size: inherit;
+  font-weight: var(--salt-text-display-fontWeight-strong);
+}
+
+/* Editorial 2 emphasis small */
+.saltText-editorial2.saltText small {
+  font-size: inherit;
+  font-weight: var(--salt-text-display-fontWeight-small);
+}
+
+/* Editorial 3 */
+.saltText-editorial3.saltText {
+  font-family: var(--salt-text-display-fontFamily);
+  font-size: var(--salt-text-editorial3-fontSize);
+  font-style: var(--salt-text-display-fontStyle, normal);
+  font-weight: var(--salt-text-display-fontWeight);
+  letter-spacing: var(--salt-text-editorial-letterSpacing);
+  line-height: var(--salt-text-editorial3-lineHeight);
+  text-transform: var(--salt-text-display-textTransform, none);
+}
+
+/* Editorial 3 emphasis strong */
+.saltText-editorial3.saltText strong {
+  font-size: inherit;
+  font-weight: var(--salt-text-display-fontWeight-strong);
+}
+
+/* Editorial 3 emphasis small */
+.saltText-editorial3.saltText small {
+  font-size: inherit;
+  font-weight: var(--salt-text-display-fontWeight-small);
+}
+
+/* Editorial 4 */
+.saltText-editorial4.saltText {
+  font-family: var(--salt-text-display-fontFamily);
+  font-size: var(--salt-text-editorial4-fontSize);
+  font-style: var(--salt-text-display-fontStyle, normal);
+  font-weight: var(--salt-text-display-fontWeight);
+  letter-spacing: var(--salt-text-editorial-letterSpacing);
+  line-height: var(--salt-text-editorial4-lineHeight);
+  text-transform: var(--salt-text-display-textTransform, none);
+}
+
+/* Editorial 4 emphasis strong */
+.saltText-editorial4.saltText strong {
+  font-size: inherit;
+  font-weight: var(--salt-text-display-fontWeight-strong);
+}
+
+/* Editorial 4 emphasis small */
+.saltText-editorial4.saltText small {
+  font-size: inherit;
+  font-weight: var(--salt-text-display-fontWeight-small);
+}
+
 /* Heading 1 */
 h1.saltText,
 .saltText-h1.saltText {
@@ -313,4 +405,62 @@ label.saltText small,
 .saltText-label.saltText small {
   font-size: inherit;
   font-weight: var(--salt-text-label-fontWeight-small);
+}
+
+/* Label large */
+.saltText-labelLarge.saltText {
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-label-fontSize-large);
+  line-height: var(--salt-text-label-lineHeight-large);
+  font-weight: var(--salt-text-label-fontWeight);
+}
+
+/* Label large emphasis strong */
+.saltText-labelLarge.saltText strong {
+  font-weight: var(--salt-text-label-fontWeight-strong);
+}
+
+/* Label large emphasis small */
+.saltText-labelLarge.saltText small {
+  font-size: inherit;
+  font-weight: var(--salt-text-label-fontWeight-small);
+}
+
+/* Body large */
+.saltText-bodyLarge.saltText {
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize-large);
+  line-height: var(--salt-text-lineHeight-large);
+  font-weight: var(--salt-text-fontWeight);
+}
+
+/* Body large emphasis strong */
+.saltText-bodyLarge.saltText strong {
+  font-weight: var(--salt-text-fontWeight-strong);
+}
+
+/* Body large emphasis small */
+.saltText-bodyLarge.saltText small {
+  font-size: inherit;
+  font-weight: var(--salt-text-fontWeight-small);
+}
+
+/* Eyebrow */
+.saltText-eyebrow.saltText {
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-eyebrow-fontSize);
+  line-height: var(--salt-text-eyebrow-lineHeight);
+  font-weight: var(--salt-text-fontWeight);
+  letter-spacing: var(--salt-text-eyebrow-letterSpacing);
+}
+
+/* Eyebrow emphasis strong */
+.saltText-eyebrow.saltText strong {
+  font-weight: var(--salt-text-fontWeight-strong);
+}
+
+/* Eyebrow emphasis small */
+.saltText-eyebrow.saltText small {
+  font-size: inherit;
+  font-weight: var(--salt-text-fontWeight-small);
 }
