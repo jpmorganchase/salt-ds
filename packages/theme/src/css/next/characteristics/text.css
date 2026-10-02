@@ -22,6 +22,18 @@
 
   /* Code */
   --salt-text-code-fontFamily: var(--salt-typography-fontFamily-ptMono);
+
+  /* Editorial */
+  --salt-text-editorial-letterSpacing: -0.02em;
+
+  /* Eyebrow */
+  --salt-text-eyebrow-fontFamily: var(--salt-typography-fontFamily-openSans);
+  --salt-text-eyebrow-letterSpacing: 0.08em;
+  --salt-text-eyebrow-textTransform: uppercase;
+  --salt-text-eyebrow-fontStyle: var(--salt-typography-fontStyle-normal);
+  --salt-text-eyebrow-fontWeight: var(--salt-typography-fontWeight-semiBold);
+  --salt-text-eyebrow-fontWeight-small: var(--salt-typography-fontWeight-semiBold);
+  --salt-text-eyebrow-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
 }
 
 .salt-theme-next.salt-theme[data-action-font="Open Sans"] {
@@ -58,6 +70,14 @@
   --salt-text-display-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-text-display-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-display-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+
+  /* Editorial */
+  --salt-text-editorial-fontFamily: var(--salt-typography-fontFamily-openSans);
+  --salt-text-editorial-textTransform: none;
+  --salt-text-editorial-fontStyle: var(--salt-typography-fontStyle-normal);
+  --salt-text-editorial-fontWeight: var(--salt-typography-fontWeight-semiBold);
+  --salt-text-editorial-fontWeight-small: var(--salt-typography-fontWeight-regular);
+  --salt-text-editorial-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 }
 
 .salt-theme-next.salt-theme[data-heading-font="Amplitude"] {
@@ -75,6 +95,14 @@
   --salt-text-display-fontWeight: var(--salt-typography-fontWeight-medium);
   --salt-text-display-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-display-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+
+  /* Editorial */
+  --salt-text-editorial-fontFamily: var(--salt-typography-fontFamily-amplitude);
+  --salt-text-editorial-textTransform: none;
+  --salt-text-editorial-fontStyle: var(--salt-typography-fontStyle-normal);
+  --salt-text-editorial-fontWeight: var(--salt-typography-fontWeight-medium);
+  --salt-text-editorial-fontWeight-small: var(--salt-typography-fontWeight-regular);
+  --salt-text-editorial-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 }
 
 /* Sizes by density */
@@ -94,9 +122,15 @@
   --salt-text-label-fontSize: 14px;
   --salt-text-label-lineHeight: 18px;
 
+  --salt-text-label-fontSize-large: 14px;
+  --salt-text-label-lineHeight-large: 18px;
+
   --salt-text-fontSize: 16px;
   --salt-text-lineHeight: 20px;
   --salt-text-minHeight: 20px;
+
+  --salt-text-fontSize-large: 16px;
+  --salt-text-lineHeight-large: 26px;
 
   --salt-text-display1-fontSize: 102px;
   --salt-text-display1-lineHeight: 133px;
@@ -109,6 +143,21 @@
 
   --salt-text-display4-fontSize: 54px;
   --salt-text-display4-lineHeight: 70px;
+
+  --salt-text-editorial1-fontSize: 194px;
+  --salt-text-editorial1-lineHeight: 194px;
+
+  --salt-text-editorial2-fontSize: 168px;
+  --salt-text-editorial2-lineHeight: 168px;
+
+  --salt-text-editorial3-fontSize: 144px;
+  --salt-text-editorial3-lineHeight: 144px;
+
+  --salt-text-editorial4-fontSize: 122px;
+  --salt-text-editorial4-lineHeight: 122px;
+
+  --salt-text-eyebrow-fontSize: 16px;
+  --salt-text-eyebrow-lineHeight: 21px;
 
   --salt-text-notation-fontSize: 14px;
   --salt-text-notation-lineHeight: 18px;
@@ -130,9 +179,15 @@
   --salt-text-label-fontSize: 12px;
   --salt-text-label-lineHeight: 16px;
 
+  --salt-text-label-fontSize-large: 14px;
+  --salt-text-label-lineHeight-large: 18px;
+
   --salt-text-fontSize: 14px;
   --salt-text-lineHeight: 18px;
   --salt-text-minHeight: 18px;
+
+  --salt-text-fontSize-large: 16px;
+  --salt-text-lineHeight-large: 26px;
 
   --salt-text-display1-fontSize: 84px;
   --salt-text-display1-lineHeight: 109px;
@@ -145,6 +200,21 @@
 
   --salt-text-display4-fontSize: 42px;
   --salt-text-display4-lineHeight: 55px;
+
+  --salt-text-editorial1-fontSize: 168px;
+  --salt-text-editorial1-lineHeight: 168px;
+
+  --salt-text-editorial2-fontSize: 144px;
+  --salt-text-editorial2-lineHeight: 144px;
+
+  --salt-text-editorial3-fontSize: 122px;
+  --salt-text-editorial3-lineHeight: 122px;
+
+  --salt-text-editorial4-fontSize: 102px;
+  --salt-text-editorial4-lineHeight: 102px;
+
+  --salt-text-eyebrow-fontSize: 16px;
+  --salt-text-eyebrow-lineHeight: 21px;
 
   --salt-text-notation-fontSize: 12px;
   --salt-text-notation-lineHeight: 16px;
@@ -166,9 +236,15 @@
   --salt-text-label-fontSize: 11px;
   --salt-text-label-lineHeight: 14px;
 
+  --salt-text-label-fontSize-large: 12px;
+  --salt-text-label-lineHeight-large: 16px;
+
   --salt-text-fontSize: 12px;
   --salt-text-lineHeight: 16px;
   --salt-text-minHeight: 16px;
+
+  --salt-text-fontSize-large: 14px;
+  --salt-text-lineHeight-large: 22px;
 
   --salt-text-display1-fontSize: 68px;
   --salt-text-display1-lineHeight: 88px;
@@ -181,6 +257,21 @@
 
   --salt-text-display4-fontSize: 32px;
   --salt-text-display4-lineHeight: 42px;
+
+  --salt-text-editorial1-fontSize: 144px;
+  --salt-text-editorial1-lineHeight: 144px;
+
+  --salt-text-editorial2-fontSize: 122px;
+  --salt-text-editorial2-lineHeight: 122px;
+
+  --salt-text-editorial3-fontSize: 102px;
+  --salt-text-editorial3-lineHeight: 102px;
+
+  --salt-text-editorial4-fontSize: 84px;
+  --salt-text-editorial4-lineHeight: 84px;
+
+  --salt-text-eyebrow-fontSize: 14px;
+  --salt-text-eyebrow-lineHeight: 18px;
 
   --salt-text-notation-fontSize: 10px;
   --salt-text-notation-lineHeight: 13px;
@@ -202,9 +293,15 @@
   --salt-text-label-fontSize: 10px;
   --salt-text-label-lineHeight: 13px;
 
+  --salt-text-label-fontSize-large: 11px;
+  --salt-text-label-lineHeight-large: 14px;
+
   --salt-text-fontSize: 11px;
   --salt-text-lineHeight: 14px;
   --salt-text-minHeight: 14px;
+
+  --salt-text-fontSize-large: 12px;
+  --salt-text-lineHeight-large: 19px;
 
   --salt-text-display1-fontSize: 54px;
   --salt-text-display1-lineHeight: 70px;
@@ -217,6 +314,21 @@
 
   --salt-text-display4-fontSize: 24px;
   --salt-text-display4-lineHeight: 32px;
+
+  --salt-text-editorial1-fontSize: 122px;
+  --salt-text-editorial1-lineHeight: 122px;
+
+  --salt-text-editorial2-fontSize: 102px;
+  --salt-text-editorial2-lineHeight: 102px;
+
+  --salt-text-editorial3-fontSize: 84px;
+  --salt-text-editorial3-lineHeight: 84px;
+
+  --salt-text-editorial4-fontSize: 68px;
+  --salt-text-editorial4-lineHeight: 68px;
+
+  --salt-text-eyebrow-fontSize: 12px;
+  --salt-text-eyebrow-lineHeight: 16px;
 
   --salt-text-notation-fontSize: 8px;
   --salt-text-notation-lineHeight: 10px;
@@ -238,9 +350,15 @@
   --salt-text-label-fontSize: 14px;
   --salt-text-label-lineHeight: 18px;
 
+  --salt-text-label-fontSize-large: 14px;
+  --salt-text-label-lineHeight-large: 18px;
+
   --salt-text-fontSize: 16px;
   --salt-text-lineHeight: 21px;
   --salt-text-minHeight: 21px;
+
+  --salt-text-fontSize-large: 16px;
+  --salt-text-lineHeight-large: 26px;
 
   --salt-text-display1-fontSize: 40px;
   --salt-text-display1-lineHeight: 52px;
@@ -253,6 +371,21 @@
 
   --salt-text-display4-fontSize: 28px;
   --salt-text-display4-lineHeight: 36px;
+
+  --salt-text-editorial1-fontSize: 56px;
+  --salt-text-editorial1-lineHeight: 56px;
+
+  --salt-text-editorial2-fontSize: 52px;
+  --salt-text-editorial2-lineHeight: 52px;
+
+  --salt-text-editorial3-fontSize: 48px;
+  --salt-text-editorial3-lineHeight: 48px;
+
+  --salt-text-editorial4-fontSize: 44px;
+  --salt-text-editorial4-lineHeight: 44px;
+
+  --salt-text-eyebrow-fontSize: 16px;
+  --salt-text-eyebrow-lineHeight: 21px;
 
   --salt-text-notation-fontSize: 12px;
   --salt-text-notation-lineHeight: 16px;

@@ -3,6 +3,11 @@ import {
   Display1,
   Display2,
   Display3,
+  Editorial1,
+  Editorial2,
+  Editorial3,
+  Editorial4,
+  Eyebrow as EyebrowText,
   H1,
   H2,
   H3,
@@ -111,6 +116,30 @@ const FigureTextComponent: StoryFn<typeof Text> = () => {
 
 export const Display = FigureTextComponent.bind({});
 
+//********** Editorial 1, 2, 3 and 4 ***********/
+
+export const Editorial: StoryFn<typeof Text> = () => {
+  return (
+    <StackLayout>
+      <Editorial1>Editorial 1</Editorial1>
+      <Editorial2>Editorial 2</Editorial2>
+      <Editorial3>Editorial 3</Editorial3>
+      <Editorial4>Editorial 4</Editorial4>
+    </StackLayout>
+  );
+};
+
+//********** Eyebrow ***********/
+
+export const Eyebrow: StoryFn<typeof Text> = () => {
+  return (
+    <StackLayout gap={1}>
+      <EyebrowText>Eyebrow text</EyebrowText>
+      <H1>Heading with an eyebrow</H1>
+    </StackLayout>
+  );
+};
+
 //********** Headings H1, H2, H3 and H4 ***********/
 
 const HeadingsComponent: StoryFn<typeof Text> = () => (
@@ -172,6 +201,48 @@ const LabelCaptionTextComponent: StoryFn<typeof Text> = () => {
 };
 
 export const Label = LabelCaptionTextComponent.bind({});
+
+//********** Label large ***********/
+
+export const LabelLarge: StoryFn<typeof Text> = () => {
+  return (
+    <StackLayout>
+      <LabelText styleAs="labelLarge">
+        Label large text - labelLarge - His seasons Shall without form fourth
+        seed so.
+      </LabelText>
+      <LabelText styleAs="labelLarge">
+        Label large text
+        <strong> emphasis high</strong>
+      </LabelText>
+      <LabelText styleAs="labelLarge">
+        Label large text
+        <small> emphasis low</small>
+      </LabelText>
+    </StackLayout>
+  );
+};
+
+//********** Body large ***********/
+
+export const BodyLarge: StoryFn<typeof Text> = () => {
+  return (
+    <StackLayout>
+      <Text styleAs="bodyLarge">
+        Body large text - bodyLarge - His seasons Shall without form fourth seed
+        so.
+      </Text>
+      <Text styleAs="bodyLarge">
+        Body large text
+        <strong> emphasis high</strong>
+      </Text>
+      <Text styleAs="bodyLarge">
+        Body large text
+        <small> emphasis low</small>
+      </Text>
+    </StackLayout>
+  );
+};
 
 //********** Notation ***********/
 

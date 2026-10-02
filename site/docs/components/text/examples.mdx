@@ -12,14 +12,20 @@ data:
 
 `Text` supports these sets of styles:
 
+- Editorial
 - Display
 - Headings
-- Body
-- Label
+- Eyebrow
+- Body, including body large
+- Label, including label large
 - Code
 
 These alternative components display text in commonly used styles. Where relevant, use them instead of `Text` to simplify syntax:
 
+- `Editorial1`
+- `Editorial2`
+- `Editorial3`
+- `Editorial4`
 - `Display1`
 - `Display2`
 - `Display3`
@@ -28,12 +34,23 @@ These alternative components display text in commonly used styles. Where relevan
 - `H2`
 - `H3`
 - `H4`
+- `Eyebrow`
 - `Label`
 - `Code`
 - `TextNotation`
 - `TextAction`
 
+To use the body large and label large styles, set `styleAs="bodyLarge"` on `Text` or `styleAs="labelLarge"` on `Label`.
+
 <LivePreview componentName="text" exampleName="Styles" />
+
+## Editorial content
+
+Use the editorial styles for large, expressive headlines, such as in a masthead or hero banner. Pair them with `Eyebrow` to introduce a topic above the heading, and the body large style for introductory paragraphs.
+
+Editorial components render a `<span>`. To keep the correct HTML hierarchy, use the `styleAs` prop to apply an editorial style to a heading element.
+
+<LivePreview componentName="text" exampleName="EditorialContent" />
 
 ## Truncation
 
