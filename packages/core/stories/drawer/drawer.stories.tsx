@@ -24,6 +24,7 @@ import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   type ChangeEvent,
+  type CSSProperties,
   type MouseEventHandler,
   type SyntheticEvent,
   useEffect,
@@ -551,6 +552,122 @@ export const HeaderAndFooter: StoryFn<DrawerProps> = (args) => {
           </Button>
           <Button sentiment="accented" onClick={handleClose}>
             Save
+          </Button>
+        </DrawerFooter>
+      </Drawer>
+    </>
+  );
+};
+
+export const Resizable: StoryFn<DrawerProps> = ({
+  position = "left",
+  ...args
+}) => {
+  const [open, setOpen] = useState(false);
+
+  const isHorizontal = position === "left" || position === "right";
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open Drawer</Button>
+      <Drawer
+        {...args}
+        resizable
+        position={position}
+        open={open}
+        onOpenChange={setOpen}
+        style={
+          isHorizontal
+            ? ({
+                width: 320,
+                "--saltDrawer-minWidth": "200px",
+                "--saltDrawer-maxWidth": "640px",
+              } as CSSProperties)
+            : ({
+                height: 280,
+                "--saltDrawer-minHeight": "160px",
+                "--saltDrawer-maxHeight": "520px",
+              } as CSSProperties)
+        }
+      >
+        <DrawerHeader
+          header={`Resizable ${position} drawer`}
+          description="Drag the handle on the edge, or focus it and use the arrow keys."
+          actions={<CloseButton onClick={() => setOpen(false)} />}
+        />
+        <DrawerContent>
+          <StackLayout>
+            <Text>
+              Limits come from the drawer's CSS variables:{" "}
+              {isHorizontal
+                ? "minimum width 200px, maximum width 640px."
+                : "minimum height 160px, maximum height 520px."}{" "}
+              The drawer never exceeds the viewport.
+            </Text>
+            <Text>{loremText.repeat(4)}</Text>
+          </StackLayout>
+        </DrawerContent>
+        <DrawerFooter>
+          <Button
+            sentiment="accented"
+            appearance="bordered"
+            onClick={() => setOpen(false)}
+          >
+            Cancel
+          </Button>
+          <Button sentiment="accented" onClick={() => setOpen(false)}>
+            Save
+          </Button>
+        </DrawerFooter>
+      </Drawer>
+    </>
+  );
+};
+
+const DEFAULT_RESIZABLE_WIDTH = 320;
+
+export const ResizableControlled: StoryFn<DrawerProps> = (args) => {
+  const [open, setOpen] = useState(false);
+  const [width, setWidth] = useState(DEFAULT_RESIZABLE_WIDTH);
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open Drawer</Button>
+      <Drawer
+        {...args}
+        resizable
+        open={open}
+        onOpenChange={setOpen}
+        size={width}
+        onResize={(_event, size) => setWidth(size)}
+        style={
+          {
+            "--saltDrawer-minWidth": "200px",
+            "--saltDrawer-maxWidth": "640px",
+          } as CSSProperties
+        }
+      >
+        <DrawerHeader
+          header="Controlled resizable drawer"
+          description="The width is held in state, so it can be reset at any time."
+          actions={<CloseButton onClick={() => setOpen(false)} />}
+        />
+        <DrawerContent>
+          <StackLayout>
+            <Text>Width: {Math.round(width)}px</Text>
+            <Text>{loremText.repeat(2)}</Text>
+          </StackLayout>
+        </DrawerContent>
+        <DrawerFooter>
+          <Button
+            sentiment="accented"
+            appearance="bordered"
+            onClick={() => setWidth(DEFAULT_RESIZABLE_WIDTH)}
+          >
+            Reset width
+          </Button>
+          <Button sentiment="accented" onClick={() => setOpen(false)}>
+            Done
           </Button>
         </DrawerFooter>
       </Drawer>
