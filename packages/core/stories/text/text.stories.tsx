@@ -56,12 +56,12 @@ export const InheritColor: StoryFn<typeof Text> = () => {
 
 export const Disabled: StoryFn<typeof Text> = () => {
   return (
-    <div>
+    <StackLayout gap={0.5}>
       <Text disabled>This is a disabled primary text example</Text>
       <Text color="secondary" disabled>
         This is a disabled secondary text example
       </Text>
-    </div>
+    </StackLayout>
   );
 };
 

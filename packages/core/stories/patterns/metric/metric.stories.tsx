@@ -26,8 +26,8 @@ export const Metric = () => {
 
 export const HorizontalMetric = () => {
   return (
-    <StackLayout direction="row" gap={1}>
-      <Text style={{ marginTop: "var(--salt-spacing-150)" }}>
+    <StackLayout direction="row" gap={1} align="baseline">
+      <Text>
         <strong>Performance</strong>
       </Text>
       <Display1>801</Display1>
@@ -212,20 +212,20 @@ export const HierarchicalVertical = () => {
 export const HierarchicalHorizontal = () => {
   return (
     <StackLayout gap={8} align="end">
-      <StackLayout direction="row" gap={1}>
-        <Text style={{ marginTop: "var(--salt-spacing-50)" }}>
+      <StackLayout direction="row" gap={1} align="baseline">
+        <Text>
           <strong>Performance</strong>
         </Text>
         <Display3>801</Display3>
       </StackLayout>
-      <StackLayout direction="row" gap={1}>
-        <Text style={{ marginTop: "var(--salt-spacing-100)" }}>
+      <StackLayout direction="row" gap={1} align="baseline">
+        <Text>
           <strong>Performance</strong>
         </Text>
         <Display2>801</Display2>
       </StackLayout>
-      <StackLayout direction="row" gap={1}>
-        <Text style={{ marginTop: "var(--salt-spacing-150)" }}>
+      <StackLayout direction="row" gap={1} align="baseline">
+        <Text>
           <strong>Performance</strong>
         </Text>
         <Display1>801</Display1>

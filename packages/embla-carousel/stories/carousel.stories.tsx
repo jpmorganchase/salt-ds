@@ -43,9 +43,7 @@ const CarouselCardExample: StoryFn<CarouselProps & { ariaVariant: string }> = ({
       emblaPlugins={[ClassNames({ snapped: "carouselSlideIsSnapped" })]}
       {...args}
     >
-      <H2 id={`${carouselId}-title`} className="carouselHeading">
-        Carousel card example
-      </H2>
+      <H2 id={`${carouselId}-title`}>Carousel card example</H2>
       <StackLayout gap={1} direction="column-reverse">
         <FlexLayout gap={1} wrap={true} align={"center"}>
           <CarouselPreviousButton tabIndex={-1} />
@@ -86,11 +84,7 @@ const CarouselNumberExample: StoryFn<CarouselProps> = (args) => {
               key={tabId}
             >
               <div className="carouselNumber">
-                <Display1
-                  id={`${tabId}-title`}
-                  className="carouselHeading"
-                  aria-label={"Placeholder tab"}
-                >
+                <Display1 id={`${tabId}-title`} aria-label={"Placeholder tab"}>
                   {index + 1}
                 </Display1>
               </div>
@@ -126,9 +120,7 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
       emblaOptions={{ align: "center", slidesToScroll: 2 }}
       {...args}
     >
-      <H2 id={`${carouselId}-title`} className="carouselHeading">
-        Multiple slides carousel example
-      </H2>
+      <H2 id={`${carouselId}-title`}>Multiple slides carousel example</H2>
       <StackLayout gap={1} direction="column-reverse">
         <FlexLayout gap={1} wrap={true} align={"center"}>
           <CarouselPreviousButton aria-label="Previous slide group" />
@@ -182,7 +174,7 @@ export const CustomSlide: StoryFn<typeof Carousel> = (args) => {
       emblaPlugins={[ClassNames({ snapped: "carouselSlideIsSnapped" })]}
       {...args}
     >
-      <H2 id={`${carouselId}-title`} className="carouselHeading">
+      <H2 id={`${carouselId}-title`}>
         Carousel example with custom content slides
       </H2>
       <StackLayout gap={1} direction="column-reverse">

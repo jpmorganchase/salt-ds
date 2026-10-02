@@ -29,7 +29,7 @@ const InfoToast = () => {
         <Text>
           <strong>File update</strong>
         </Text>
-        <div>A new version of this file is available with 37 updates. </div>
+        <Text>A new version of this file is available with 37 updates. </Text>
       </ToastContent>
       <Button variant="secondary" onClick={closeToast}>
         <CloseIcon />
@@ -46,20 +46,18 @@ const ErrorToast = () => {
   return open ? (
     <Toast status="error">
       <ToastContent>
-        <div>
-          <Text>
-            <strong>System error</strong>
-          </Text>
-          <div>Connection timed out. Failed to retrieve data. </div>
-        </div>
-        <FlowLayout
-          gap={1}
-          justify="end"
-          style={{ marginTop: "var(--salt-spacing-100)" }}
-        >
-          <Button onClick={closeToast}>Dismiss</Button>
-          <Button variant="cta">Try again</Button>
-        </FlowLayout>
+        <StackLayout gap={1}>
+          <StackLayout gap={0}>
+            <Text>
+              <strong>System error</strong>
+            </Text>
+            <Text>Connection timed out. Failed to retrieve data. </Text>
+          </StackLayout>
+          <FlowLayout gap={1} justify="end">
+            <Button onClick={closeToast}>Dismiss</Button>
+            <Button variant="cta">Try again</Button>
+          </FlowLayout>
+        </StackLayout>
       </ToastContent>
     </Toast>
   ) : null;
@@ -73,20 +71,22 @@ const WarningToast = () => {
   return open ? (
     <Toast status="warning">
       <ToastContent>
-        <div>
-          <Text>
-            <strong>File access</strong>
-          </Text>
-          <div>Viewers of this file can see comments and suggestions. </div>
-        </div>
-        <FlowLayout gap={1} style={{ marginTop: "var(--salt-spacing-100)" }}>
-          <Button variant="cta" style={{ width: "100%" }}>
-            Edit permissions
-          </Button>
-          <Button onClick={closeToast} style={{ width: "100%" }}>
-            Dismiss
-          </Button>
-        </FlowLayout>
+        <StackLayout gap={1}>
+          <StackLayout gap={0}>
+            <Text>
+              <strong>File access</strong>
+            </Text>
+            <Text>Viewers of this file can see comments and suggestions. </Text>
+          </StackLayout>
+          <FlowLayout gap={1}>
+            <Button variant="cta" style={{ width: "100%" }}>
+              Edit permissions
+            </Button>
+            <Button onClick={closeToast} style={{ width: "100%" }}>
+              Dismiss
+            </Button>
+          </FlowLayout>
+        </StackLayout>
       </ToastContent>
     </Toast>
   ) : null;
@@ -103,7 +103,9 @@ const SuccessToast = () => {
         <Text>
           <strong>Project file upload</strong>
         </Text>
-        <div>Project file has successfully uploaded to the shared drive. </div>
+        <Text>
+          Project file has successfully uploaded to the shared drive.{" "}
+        </Text>
       </ToastContent>
       <Button variant="secondary" onClick={closeToast}>
         <CloseIcon />

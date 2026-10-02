@@ -43,10 +43,6 @@
   user-select: none;
 }
 
-.carouselHeading {
-  margin: 0;
-}
-
 .carouselMultipleSlide {
   width: 600px;
   --carousel-slide-size: 48%;

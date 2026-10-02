@@ -227,12 +227,15 @@ export const ControlledSingleSelect: StoryFn<typeof Tree> = (args) => {
   const [selected, setSelected] = useState<string[]>(["annual-report"]);
 
   return (
-    <div>
-      <div style={{ marginBottom: 16 }}>
-        <strong>Expanded:</strong> {expanded.join(", ") || "none"}
-        <br />
-        <strong>Selected:</strong> {selected.join(", ") || "none"}
-      </div>
+    <StackLayout gap={2}>
+      <StackLayout gap={0.5}>
+        <Text>
+          <strong>Expanded:</strong> {expanded.join(", ") || "none"}
+        </Text>
+        <Text>
+          <strong>Selected:</strong> {selected.join(", ") || "none"}
+        </Text>
+      </StackLayout>
       <Tree
         {...args}
         aria-label="File browser"
@@ -259,7 +262,7 @@ export const ControlledSingleSelect: StoryFn<typeof Tree> = (args) => {
         </TreeNode>
         <TreeNode value="downloads" label="Downloads" />
       </Tree>
-    </div>
+    </StackLayout>
   );
 };
 
@@ -268,12 +271,15 @@ export const ControlledMultiselect: StoryFn<typeof Tree> = (args) => {
   const [selected, setSelected] = useState<string[]>([]);
 
   return (
-    <div>
-      <div style={{ marginBottom: 16 }}>
-        <strong>Expanded:</strong> {expanded.join(", ") || "none"}
-        <br />
-        <strong>Selected:</strong> {selected.join(", ") || "none"}
-      </div>
+    <StackLayout gap={2}>
+      <StackLayout gap={0.5}>
+        <Text>
+          <strong>Expanded:</strong> {expanded.join(", ") || "none"}
+        </Text>
+        <Text>
+          <strong>Selected:</strong> {selected.join(", ") || "none"}
+        </Text>
+      </StackLayout>
       <Tree
         {...args}
         aria-label="File browser"
@@ -300,7 +306,7 @@ export const ControlledMultiselect: StoryFn<typeof Tree> = (args) => {
         </TreeNode>
         <TreeNode value="downloads" label="Downloads" />
       </Tree>
-    </div>
+    </StackLayout>
   );
 };
 ControlledMultiselect.args = {

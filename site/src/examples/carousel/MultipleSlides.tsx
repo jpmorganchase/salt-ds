@@ -32,9 +32,7 @@ export const MultipleSlides = (): ReactElement => {
       })}
       emblaOptions={{ align: "center", slidesToScroll: "auto" }}
     >
-      <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
-        Multiple slides carousel example
-      </H2>
+      <H2 id={`${carouselId}-title`}>Multiple slides carousel example</H2>
       <StackLayout gap={1} direction="column-reverse">
         <FlexLayout gap={1} wrap={true} align={"center"}>
           <CarouselPreviousButton aria-label="Previous slide group" />

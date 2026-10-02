@@ -19,8 +19,6 @@ import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 import exampleImage from "./../assets/exampleImage1x.png";
 
-import "./card.stories.css";
-
 export default {
   title: "Core/Card/Card",
   component: Card,

@@ -37,7 +37,10 @@ export const Closable: StoryFn<typeof Pill> = () => {
     <FlowLayout gap={0.5} style={{ maxWidth: "400px" }}>
       <FlowLayout
         gap={1}
-        style={{ flexBasis: "100%", marginBottom: "1.5rem" }}
+        style={{
+          flexBasis: "100%",
+          marginBottom: "var(--salt-spacing-300)",
+        }}
         align={"center"}
         justify={"space-between"}
       >
