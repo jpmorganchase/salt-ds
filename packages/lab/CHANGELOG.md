@@ -1,5 +1,31 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.106
+
+### Minor Changes
+
+- 602ddb5: Promoted `OnSolidButton` from lab to core. Import it from `@salt-ds/core` instead.
+
+### Patch Changes
+
+- 79abeeb: Fixed `CascadingMenu` not opening with React 19 when its trigger element has its own ref.
+
+  Fixed React warnings about a `key` prop being spread into JSX in `List`, `Tabs` and `Toolbar`, and removed `defaultProps` from `OverflowSeparator`, which React 19 doesn't support on function components.
+
+  Updated `react-window` to `^1.8.11`, which supports React 18 and 19.
+
+- 55f27de: `ComboBoxDeprecated`, `DropdownBase`, `InputLegacy` and `OverflowPanel` now show their own names in React DevTools instead of `ComboBox`, `Dropdown`, `Input` and `DropdownPanel`, and `AppHeader`, `ContactActions`, `ContactAvatar` and `FormFieldLegacy` are no longer anonymous.
+- 61228a7: Removed leftover debug logging from `ComboBox`, `ComboBoxDeprecated`, `ListDeprecated`, `ContactDetails`, `Tabstrip` and the responsive and collapsible-group hooks, and made lab's remaining console warnings and errors development-only.
+- Updated dependencies [75f2d7d]
+- Updated dependencies [61228a7]
+- Updated dependencies [f8925a2]
+- Updated dependencies [55f27de]
+- Updated dependencies [602ddb5]
+- Updated dependencies [fd1bf44]
+- Updated dependencies [75f2d7d]
+- Updated dependencies [cb2e335]
+  - @salt-ds/core@1.73.0
+
 ## 1.0.0-alpha.105
 
 ### Patch Changes
