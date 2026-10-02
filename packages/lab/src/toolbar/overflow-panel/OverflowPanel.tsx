@@ -133,12 +133,14 @@ export const OverflowPanel = forwardRef(function OverflowPanel(
           const formFieldProps = {
             id: item.id,
             inOverflowPanel: true,
-            key: item.id,
             onClick: handleItemClick,
           } as ToolbarFieldProps;
 
           if (type === ToolbarField) {
-            return cloneElement(item.value as ReactElement, formFieldProps);
+            return cloneElement(item.value as ReactElement, {
+              ...formFieldProps,
+              key: item.id,
+            });
           }
           return (
             <ToolbarField {...formFieldProps} key={item.id}>

@@ -156,7 +156,12 @@ const OptionComponent = forwardRef<HTMLDivElement, OptionProps>(
         tabIndex={-1}
         {...rest}
       >
-        {multiselect && <CheckboxIcon checked={selected} />}
+        {multiselect && (
+          <CheckboxIcon
+            checked={selected}
+            className={withBaseName("checkbox")}
+          />
+        )}
         {children ?? valueToString(value)}
       </div>
     );

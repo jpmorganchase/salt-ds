@@ -34,7 +34,7 @@
     "compute-scroll-into-view": "^3.0.0",
     "deepmerge": "^4.2.2",
     "react-color": "^2.19.3",
-    "react-window": "^1.8.6",
+    "react-window": "^1.8.11",
     "rifm": "^0.12.0",
     "tinycolor2": "^1.4.2"
   },
