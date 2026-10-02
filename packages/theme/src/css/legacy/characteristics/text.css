@@ -48,7 +48,13 @@
   --salt-text-code-fontFamily: var(--salt-typography-fontFamily-ptMono);
 
   /* Editorial */
+  --salt-text-editorial-fontFamily: var(--salt-typography-fontFamily-openSans);
   --salt-text-editorial-letterSpacing: -0.02em;
+  --salt-text-editorial-textTransform: none;
+  --salt-text-editorial-fontStyle: var(--salt-typography-fontStyle-normal);
+  --salt-text-editorial-fontWeight: var(--salt-typography-fontWeight-semiBold);
+  --salt-text-editorial-fontWeight-small: var(--salt-typography-fontWeight-regular);
+  --salt-text-editorial-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 
   /* Eyebrow */
   --salt-text-eyebrow-letterSpacing: 0.08em;
