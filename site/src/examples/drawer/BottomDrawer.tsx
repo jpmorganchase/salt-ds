@@ -161,7 +161,7 @@ export const BottomDrawer = (): ReactElement => {
               />
             </div>
             <FlowLayout gap={1}>
-              <H3 style={{ margin: 0 }}>Threshold Summary</H3>
+              <H3>Threshold Summary</H3>
               <Text>(Projected Revenue)</Text>
             </FlowLayout>
             <FlowLayout justify="space-between">
