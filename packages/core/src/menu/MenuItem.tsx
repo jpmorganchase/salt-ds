@@ -143,18 +143,8 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
       }
     }, [insideSelectableGroup, value]);
 
-    const shouldCloseMenu = () => {
-      if (!selectable) {
-        return true;
-      }
-      if (activationKeyRef.current === "Enter") {
-        return true;
-      }
-      if (activationKeyRef.current === " ") {
-        return false;
-      }
-      return selectionVariant === "single";
-    };
+    const shouldCloseMenu = () =>
+      !selectable || activationKeyRef.current === "Enter";
 
     let role = "menuitem";
     if (selectable) {

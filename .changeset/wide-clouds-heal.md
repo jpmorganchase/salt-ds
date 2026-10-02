@@ -4,7 +4,7 @@
 
 Added selection to `Menu`. Set `selectionVariant` on `MenuGroup` to "single" or "multiple" to render its items as radio or checkbox menu items, give each `MenuItem` a `value`, and control the selection with `selected` and `onSelectionChange`. The menu's content unmounts when it closes, so keep the selection in state.
 
-Clicking an item closes the menu for single selection and keeps it open for multiple selection. Enter always closes the menu and Space keeps it open.
+Clicking a selectable item keeps the menu open. Enter selects the item and closes the menu, and Space selects it and keeps the menu open.
 
 ```tsx
 const [sortBy, setSortBy] = useState(["name"]);
