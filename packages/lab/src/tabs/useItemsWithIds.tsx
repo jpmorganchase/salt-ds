@@ -32,11 +32,10 @@ export const useItemsWithIds = (
           const props = {
             "aria-labelledby": tabId,
             id: tabPanelId,
-            key: tabId,
           };
           const element: JSX.Element | undefined =
             child.type === TabPanel ? (
-              cloneElement(child, props)
+              cloneElement(child, { ...props, key: tabId })
             ) : (
               <TabPanel {...props} label={label} key={tabId}>
                 {child}
