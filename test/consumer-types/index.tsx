@@ -17,6 +17,7 @@ import {
   useResizeObserver,
 } from "@salt-ds/core";
 import * as countries from "@salt-ds/countries";
+import * as dateAdapters from "@salt-ds/date-adapters";
 import * as dateComponents from "@salt-ds/date-components";
 import * as emblaCarousel from "@salt-ds/embla-carousel";
 import * as highchartsTheme from "@salt-ds/highcharts-theme";
@@ -30,6 +31,7 @@ import { type ReactElement, useRef } from "react";
 export const packages = [
   core,
   countries,
+  dateAdapters,
   dateComponents,
   emblaCarousel,
   highchartsTheme,

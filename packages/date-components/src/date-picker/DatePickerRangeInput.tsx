@@ -192,7 +192,7 @@ export const DatePickerRangeInput = forwardRef<
     helpers: { setOpen },
   } = useDatePickerOverlay();
 
-  const previousValue = useRef<typeof valueProp | undefined>(undefined);
+  const previousValue = useRef<typeof valueProp>(undefined);
 
   const [value, setValue] = useControlled({
     controlled: valueProp,

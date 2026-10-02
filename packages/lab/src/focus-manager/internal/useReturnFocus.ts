@@ -28,9 +28,7 @@ export function useReturnFocus({
   active,
   document,
 }: UseReturnFocusProps): void {
-  const previousFocusedElement = useRef<HTMLElement | null | undefined>(
-    undefined,
-  );
+  const previousFocusedElement = useRef<HTMLElement | null>(null);
 
   useIsomorphicLayoutEffect(() => {
     if (active) {
