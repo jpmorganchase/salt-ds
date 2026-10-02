@@ -43,7 +43,7 @@ import {
   SaltShakerIcon,
   SaltShakerSolidIcon,
 } from "@salt-ds/icons";
-import { type ComponentType, useState } from "react";
+import { type FunctionComponent, useState } from "react";
 import AgGridThemeDefault from "../../../ag-grid-theme/src/examples/Default";
 import AgGridThemeHDCompact from "../../../ag-grid-theme/src/examples/HDCompact";
 import AgGridThemeZebra from "../../../ag-grid-theme/src/examples/VariantZebra";
@@ -101,8 +101,8 @@ export default {
 // accept it as a JSX component. These stories are only rendered with props.
 function asComponent<TArgs>(
   story: (args: TArgs, context: never) => unknown,
-): ComponentType<Partial<TArgs>> {
-  return story as unknown as ComponentType<Partial<TArgs>>;
+): FunctionComponent<Partial<TArgs>> {
+  return story as FunctionComponent<Partial<TArgs>>;
 }
 
 const AccordionDefault = asComponent(AccordionDefaultStory);

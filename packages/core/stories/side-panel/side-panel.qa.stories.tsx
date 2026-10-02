@@ -11,7 +11,7 @@ import {
 
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
-import type { FC, ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export default {
   title: "Core/Side Panel/Side Panel QA",
@@ -39,7 +39,7 @@ function FakeSidePanel({
 const loremText =
   "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.";
 
-const SidePanelTemplate: StoryFn<SidePanelProps> & FC<SidePanelProps> = ({
+const SidePanelTemplate = ({
   variant = "primary",
   position = "right",
 }: SidePanelProps) => {
