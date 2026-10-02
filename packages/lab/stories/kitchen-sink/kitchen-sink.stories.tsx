@@ -162,68 +162,92 @@ export const Components = () => {
     <StackLayout>
       <StackLayout direction="row">
         <Card variant="primary">
-          <Display1>Masthead</Display1>
-          <H1>H1 Header</H1>
-          <H2>H2 Subheader</H2>
-          <Text color="primary">Primary body copy</Text>
-          <Text color="secondary">Secondary body copy</Text>
-          <Text color="error">Error body copy</Text>
-          <Text color="warning">Warning body copy</Text>
-          <Text color="success">Success body copy</Text>
-          <Text color="info">Info body copy</Text>
-          <Link href="#">Default link text</Link>
-          <Text>
-            <code>Code example 123</code>
-          </Text>
+          <StackLayout gap={1}>
+            <Display1>Masthead</Display1>
+            <H1>H1 Header</H1>
+            <H2>H2 Subheader</H2>
+            <StackLayout gap={0}>
+              <Text color="primary">Primary body copy</Text>
+              <Text color="secondary">Secondary body copy</Text>
+              <Text color="error">Error body copy</Text>
+              <Text color="warning">Warning body copy</Text>
+              <Text color="success">Success body copy</Text>
+              <Text color="info">Info body copy</Text>
+              <Link href="#">Default link text</Link>
+              <Text>
+                <code>Code example 123</code>
+              </Text>
+            </StackLayout>
+          </StackLayout>
         </Card>
         <Card variant="secondary">
-          <Display1>Masthead</Display1>
-          <H1>H1 Header</H1>
-          <H2>H2 Subheader</H2>
-          <Text color="primary">Primary body copy</Text>
-          <Text color="secondary">Secondary body copy</Text>
-          <Text color="error">Error body copy</Text>
-          <Text color="warning">Warning body copy</Text>
-          <Text color="success">Success body copy</Text>
-          <Text color="info">Info body copy</Text>
-          <Link href="#">Default link text</Link>
-          <Text>
-            <code>Code example 123</code>
-          </Text>
+          <StackLayout gap={1}>
+            <Display1>Masthead</Display1>
+            <H1>H1 Header</H1>
+            <H2>H2 Subheader</H2>
+            <StackLayout gap={0}>
+              <Text color="primary">Primary body copy</Text>
+              <Text color="secondary">Secondary body copy</Text>
+              <Text color="error">Error body copy</Text>
+              <Text color="warning">Warning body copy</Text>
+              <Text color="success">Success body copy</Text>
+              <Text color="info">Info body copy</Text>
+              <Link href="#">Default link text</Link>
+              <Text>
+                <code>Code example 123</code>
+              </Text>
+            </StackLayout>
+          </StackLayout>
         </Card>
         <Card variant="primary">
-          <Display1>Masthead</Display1>
-          <H1>H1 Header</H1>
-          <Card variant="secondary">
-            <H2>H2 Subheader</H2>
-            <Text color="primary">Primary body copy</Text>
-            <Text color="secondary">Secondary body copy</Text>
-            <Text color="error">Error body copy</Text>
-            <Text color="warning">Warning body copy</Text>
-            <Text color="success">Success body copy</Text>
-            <Text color="info">Info body copy</Text>
-          </Card>
-          <Link href="#">Default link text</Link>
-          <Text>
-            <code>Code example 123</code>
-          </Text>
+          <StackLayout gap={1}>
+            <Display1>Masthead</Display1>
+            <H1>H1 Header</H1>
+            <StackLayout gap={0}>
+              <Card variant="secondary">
+                <StackLayout gap={1}>
+                  <H2>H2 Subheader</H2>
+                  <StackLayout gap={0}>
+                    <Text color="primary">Primary body copy</Text>
+                    <Text color="secondary">Secondary body copy</Text>
+                    <Text color="error">Error body copy</Text>
+                    <Text color="warning">Warning body copy</Text>
+                    <Text color="success">Success body copy</Text>
+                    <Text color="info">Info body copy</Text>
+                  </StackLayout>
+                </StackLayout>
+              </Card>
+              <Link href="#">Default link text</Link>
+              <Text>
+                <code>Code example 123</code>
+              </Text>
+            </StackLayout>
+          </StackLayout>
         </Card>
         <Card variant="secondary">
-          <Display1>Masthead</Display1>
-          <H1>H1 Header</H1>
-          <Card variant="primary">
-            <H2>H2 Subheader</H2>
-            <Text color="primary">Primary body copy</Text>
-            <Text color="secondary">Secondary body copy</Text>
-            <Text color="error">Error body copy</Text>
-            <Text color="warning">Warning body copy</Text>
-            <Text color="success">Success body copy</Text>
-            <Text color="info">Info body copy</Text>
-          </Card>
-          <Link href="#">Default link text</Link>
-          <Text>
-            <code>Code example 123</code>
-          </Text>
+          <StackLayout gap={1}>
+            <Display1>Masthead</Display1>
+            <H1>H1 Header</H1>
+            <StackLayout gap={0}>
+              <Card variant="primary">
+                <StackLayout gap={1}>
+                  <H2>H2 Subheader</H2>
+                  <StackLayout gap={0}>
+                    <Text color="primary">Primary body copy</Text>
+                    <Text color="secondary">Secondary body copy</Text>
+                    <Text color="error">Error body copy</Text>
+                    <Text color="warning">Warning body copy</Text>
+                    <Text color="success">Success body copy</Text>
+                    <Text color="info">Info body copy</Text>
+                  </StackLayout>
+                </StackLayout>
+              </Card>
+              <Link href="#">Default link text</Link>
+              <Text>
+                <code>Code example 123</code>
+              </Text>
+            </StackLayout>
+          </StackLayout>
         </Card>
       </StackLayout>
       <StackLayout direction="row">

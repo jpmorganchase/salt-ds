@@ -37,7 +37,7 @@ export const Secondary: StoryFn<typeof FormField> = () => (
       padding: "20px 20px",
     }}
   >
-    <div style={{ width: "200px" }}>
+    <StackLayout gap={1} style={{ width: "200px" }}>
       <H3>Secondary</H3>
       <FormField
         label="Secondary form field"
@@ -46,8 +46,8 @@ export const Secondary: StoryFn<typeof FormField> = () => (
       >
         <Input defaultValue="Value" />
       </FormField>
-    </div>
-    <div style={{ width: "200px" }}>
+    </StackLayout>
+    <StackLayout gap={1} style={{ width: "200px" }}>
       <H3>Secondary with disabled outer ring</H3>
       <FormField
         label="Secondary form field"
@@ -57,12 +57,12 @@ export const Secondary: StoryFn<typeof FormField> = () => (
       >
         <Input defaultValue="Value" />
       </FormField>
-    </div>
+    </StackLayout>
   </div>
 );
 
 export const Tertiary: StoryFn<typeof FormField> = () => (
-  <div style={{ width: "200px" }}>
+  <StackLayout gap={1} style={{ width: "200px" }}>
     <H3>Tertiary</H3>
     <FormField
       label="Tertiary form field"
@@ -71,7 +71,7 @@ export const Tertiary: StoryFn<typeof FormField> = () => (
     >
       <Input defaultValue="Value" />
     </FormField>
-  </div>
+  </StackLayout>
 );
 
 export const Disabled: StoryFn<typeof FormField> = () => (

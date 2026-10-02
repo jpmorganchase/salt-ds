@@ -514,10 +514,8 @@ export const ScrollableAriaLabelledByOverride: StoryFn<
   const containerId = "user-provided-aria-labelledby";
   return (
     <>
-      <StackLayout gap={0.5}>
-        <Text id={containerId}>External Table Container Name</Text>
-        <Text id={tableId}>External Table Name</Text>
-      </StackLayout>
+      <Text id={containerId}>External Table Container Name</Text>
+      <Text id={tableId}>External Table Name</Text>
       <TableContainer aria-labelledby={containerId} style={{ height: 120 }}>
         <Table aria-labelledby={tableId} {...args}>
           <THead {...THeadProps}>
