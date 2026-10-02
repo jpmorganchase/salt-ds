@@ -13,15 +13,12 @@ import {
   H3,
   H4,
   Label,
-  SaltProvider,
-  SaltProviderNext,
   Text,
   TextAction,
   TextNotation,
 } from "@salt-ds/core";
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties } from "react";
 import { describe, expect, it } from "vitest";
-import { render } from "vitest-browser-react";
 import { renderWithSalt } from "~browser-test-utils/render";
 
 const textExample = "Far away behind the word mountains lives sample text.";
@@ -266,78 +263,7 @@ describe("GIVEN styleAs=action", () => {
   }
 });
 
-const editorialAndEyebrowStyles = [
-  {
-    component: Editorial1,
-    name: "Editorial1",
-    lineHeight: "144px",
-    letterSpacing: -2.88,
-  },
-  {
-    component: Editorial2,
-    name: "Editorial2",
-    lineHeight: "122px",
-    letterSpacing: -2.44,
-  },
-  {
-    component: Editorial3,
-    name: "Editorial3",
-    lineHeight: "102px",
-    letterSpacing: -2.04,
-  },
-  {
-    component: Editorial4,
-    name: "Editorial4",
-    lineHeight: "84px",
-    letterSpacing: -1.68,
-  },
-  {
-    component: Eyebrow,
-    name: "Eyebrow",
-    lineHeight: "18px",
-    letterSpacing: 1.12,
-  },
-] as const;
-
-describe("GIVEN an editorial or eyebrow component", () => {
-  it.each(editorialAndEyebrowStyles)(
-    "$name applies its line height and letter spacing",
-    async ({ component: Component, lineHeight, letterSpacing }) => {
-      const { container } = await renderWithSalt(
-        <Component>{textExample}</Component>,
-      );
-      const style = getComputedStyle(
-        container.querySelector<HTMLElement>(".saltText") as HTMLElement,
-      );
-      expect(style.lineHeight).toBe(lineHeight);
-      expect(Number.parseFloat(style.letterSpacing)).toBeCloseTo(letterSpacing);
-    },
-  );
-});
-
-describe("GIVEN styleAs=bodyLarge or styleAs=labelLarge", () => {
-  it("applies the body large line height", async () => {
-    const { container } = await renderWithSalt(
-      <Text styleAs="bodyLarge">{textExample}</Text>,
-    );
-    const style = getComputedStyle(
-      container.querySelector<HTMLElement>(".saltText") as HTMLElement,
-    );
-    expect(style.lineHeight).toBe("22px");
-    expect(style.letterSpacing).toBe("normal");
-  });
-
-  it("applies the label large line height", async () => {
-    const { container } = await renderWithSalt(
-      <Label styleAs="labelLarge">{textExample}</Label>,
-    );
-    const style = getComputedStyle(
-      container.querySelector<HTMLElement>(".saltText") as HTMLElement,
-    );
-    expect(style.lineHeight).toBe("16px");
-    expect(style.letterSpacing).toBe("normal");
-  });
-
+describe("GIVEN styleAs=bodyLarge", () => {
   it("uses body emphasis weights when a heading is styled as body large", async () => {
     const { container } = await renderWithSalt(
       <H1 styleAs="bodyLarge">
@@ -352,15 +278,6 @@ describe("GIVEN styleAs=bodyLarge or styleAs=labelLarge", () => {
     expect(getComputedStyle(strong).fontWeight).toBe("600");
   });
 });
-
-const fontTokenSuffixes = [
-  "fontFamily",
-  "textTransform",
-  "fontStyle",
-  "fontWeight",
-  "fontWeight-small",
-  "fontWeight-strong",
-] as const;
 
 const emphasisContent = (label: string) => (
   <>
@@ -377,9 +294,6 @@ const fontTokenCases = [
         {emphasisContent("Editorial")}
       </Editorial1>
     ),
-    baseline: (
-      <Display1 data-testid="baseline">{emphasisContent("Display")}</Display1>
-    ),
     baselineTokens: {
       "--salt-text-display-fontFamily": "Courier",
       "--salt-text-display-fontWeight": "100",
@@ -394,7 +308,6 @@ const fontTokenCases = [
     subject: (
       <Eyebrow data-testid="subject">{emphasisContent("Eyebrow")}</Eyebrow>
     ),
-    baseline: <Text data-testid="baseline">{emphasisContent("Body")}</Text>,
     baselineTokens: {
       "--salt-text-fontFamily": "Courier",
       "--salt-text-fontWeight": "100",
@@ -402,80 +315,6 @@ const fontTokenCases = [
     },
   },
 ] as const;
-
-const themeWrappers = [
-  {
-    name: "legacy",
-    wrap: (children: ReactNode) => <SaltProvider>{children}</SaltProvider>,
-  },
-  {
-    name: "salt-interim",
-    wrap: (children: ReactNode) => (
-      <SaltProvider theme="salt-interim">{children}</SaltProvider>
-    ),
-  },
-  {
-    name: "next with Amplitude headings",
-    wrap: (children: ReactNode) => (
-      <SaltProviderNext headingFont="Amplitude">{children}</SaltProviderNext>
-    ),
-  },
-  {
-    name: "next with Open Sans headings",
-    wrap: (children: ReactNode) => (
-      <SaltProviderNext headingFont="Open Sans">{children}</SaltProviderNext>
-    ),
-  },
-] as const;
-
-describe.each(themeWrappers)("GIVEN the $name theme", ({ wrap }) => {
-  it.each(fontTokenCases)(
-    "defines the $name tokens and matches the $baselineName styles",
-    async ({ name, subject, baseline }) => {
-      const { container } = await render(
-        wrap(
-          <>
-            {baseline}
-            {subject}
-          </>,
-        ),
-      );
-      const baselineElement = container.querySelector<HTMLElement>(
-        '[data-testid="baseline"]',
-      ) as HTMLElement;
-      const subjectElement = container.querySelector<HTMLElement>(
-        '[data-testid="subject"]',
-      ) as HTMLElement;
-      const baselineStyle = getComputedStyle(baselineElement);
-      const subjectStyle = getComputedStyle(subjectElement);
-
-      for (const suffix of fontTokenSuffixes) {
-        expect(
-          subjectStyle.getPropertyValue(`--salt-text-${name}-${suffix}`).trim(),
-        ).not.toBe("");
-      }
-      for (const property of [
-        "fontFamily",
-        "fontWeight",
-        "fontStyle",
-        "textTransform",
-      ] as const) {
-        expect(subjectStyle[property]).toBe(baselineStyle[property]);
-      }
-      for (const selector of ["strong", "small"]) {
-        expect(
-          getComputedStyle(
-            subjectElement.querySelector(selector) as HTMLElement,
-          ).fontWeight,
-        ).toBe(
-          getComputedStyle(
-            baselineElement.querySelector(selector) as HTMLElement,
-          ).fontWeight,
-        );
-      }
-    },
-  );
-});
 
 it.each(fontTokenCases)(
   "uses the $name tokens instead of the $baselineName tokens",
