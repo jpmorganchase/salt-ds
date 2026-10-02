@@ -93,7 +93,7 @@ describe("GIVEN an Accordion", () => {
     const onMount = vi.fn();
     await renderWithSalt(<AccordionExample onMount={onMount} />);
     await page.getByRole("button").click();
-    expect(onMount).toHaveBeenCalledOnce();
+    expect(onMount).toHaveBeenCalled();
   });
 
   it("expands and calls onToggle", async () => {
@@ -112,9 +112,13 @@ describe("GIVEN an Accordion", () => {
     await renderWithSalt(
       <AccordionExample onMount={onMount} onUnmount={onUnmount} />,
     );
+    // Strict Mode mounts components an extra time in development, so compare
+    // against the calls made by the initial render.
+    const mounts = onMount.mock.calls.length;
+    const unmounts = onUnmount.mock.calls.length;
     await page.getByRole("button").click();
-    expect(onMount).toHaveBeenCalledOnce();
-    expect(onUnmount).not.toHaveBeenCalled();
+    expect(onMount).toHaveBeenCalledTimes(mounts);
+    expect(onUnmount).toHaveBeenCalledTimes(unmounts);
   });
 
   it("collapses when clicked again", async () => {
@@ -131,10 +135,11 @@ describe("GIVEN an Accordion", () => {
   it("keeps details mounted after collapse", async () => {
     const onUnmount = vi.fn();
     await renderWithSalt(<AccordionExample onUnmount={onUnmount} />);
+    const unmounts = onUnmount.mock.calls.length;
     const button = page.getByRole("button");
     await button.click();
     await button.click();
-    expect(onUnmount).not.toHaveBeenCalled();
+    expect(onUnmount).toHaveBeenCalledTimes(unmounts);
   });
 
   it("supports custom header and panel ids", async () => {
