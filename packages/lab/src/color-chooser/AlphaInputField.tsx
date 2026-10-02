@@ -8,6 +8,7 @@ import {
   type KeyboardEvent,
   useEffect,
   useState,
+  type ReactElement,
 } from "react";
 import { InputLegacy as Input } from "../input-legacy";
 
@@ -25,7 +26,7 @@ export const AlphaInput = ({
   alphaValue,
   onSubmit,
   showAsOpacity = false,
-}: AlphaInputProps): JSX.Element => {
+}: AlphaInputProps): ReactElement => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-rgba-input",

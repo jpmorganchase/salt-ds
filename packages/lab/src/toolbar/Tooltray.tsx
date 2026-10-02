@@ -2,7 +2,7 @@ import { useIdMemo } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { cloneElement } from "react";
+import { cloneElement, type ReactElement } from "react";
 
 import { useOverflowCollectionItems } from "../responsive/useOverflowCollectionItems";
 import { useOverflowLayout } from "../responsive/useOverflowLayout";
@@ -12,7 +12,7 @@ import { OverflowPanel } from "./overflow-panel/OverflowPanel";
 import tooltrayCss from "./Tooltray.css";
 import type { TooltrayProps } from "./TooltrayProps";
 
-export const Tooltray = (props: TooltrayProps) => {
+export const Tooltray = (props: TooltrayProps): ReactElement => {
   const {
     "aria-label": ariaLabel,
     // Tooltray itself doesn't use these alignment props directly,
@@ -67,10 +67,15 @@ export const Tooltray = (props: TooltrayProps) => {
 
   const overflowMenuItems = overflowedItems
     .map((i) =>
-      cloneElement(collectionHook.data[i.index].element, {
-        "data-is-inside-panel": true,
-        key: i.index,
-      }),
+      cloneElement(
+        collectionHook.data[i.index].element as ReactElement<
+          Record<string, unknown>
+        >,
+        {
+          "data-is-inside-panel": true,
+          key: i.index,
+        },
+      ),
     )
     .reverse();
 

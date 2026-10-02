@@ -8,6 +8,7 @@ import {
   CarouselTabList,
 } from "@salt-ds/embla-carousel";
 import type { Meta, StoryFn } from "@storybook/react-vite";
+import type { FC } from "react";
 import "./carousel.stories.css";
 import {
   Display1,
@@ -63,7 +64,9 @@ const CarouselCardExample: StoryFn<CarouselProps & { ariaVariant: string }> = ({
   );
 };
 
-const CarouselNumberExample: StoryFn<CarouselProps> = (args) => {
+const CarouselNumberExample: StoryFn<CarouselProps> & FC<CarouselProps> = (
+  args: CarouselProps,
+) => {
   const cards = Array.from(Array(4).keys());
   const carouselId = useId();
   return (

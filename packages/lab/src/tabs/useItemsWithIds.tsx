@@ -26,14 +26,18 @@ export const useItemsWithIds = (
             "data-label": dataLabel = `Tab ${index + 1}`,
             enableClose: closeable,
             label = dataLabel,
-          } = child.props;
+          } = child.props as {
+            "data-label"?: string;
+            enableClose?: boolean;
+            label?: string;
+          };
           const tabId = `${id}-${index}`;
           const tabPanelId = `${tabId}-panel`;
           const props = {
             "aria-labelledby": tabId,
             id: tabPanelId,
           };
-          const element: JSX.Element | undefined =
+          const element: ReactElement | undefined =
             child.type === TabPanel ? (
               cloneElement(child, { ...props, key: tabId })
             ) : (

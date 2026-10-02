@@ -1,7 +1,12 @@
 import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { type Dispatch, type SetStateAction, useCallback } from "react";
+import {
+  type Dispatch,
+  type ReactElement,
+  type SetStateAction,
+  useCallback,
+} from "react";
 import type { SelectionChangeHandler } from "../../common-hooks";
 import { List, ListItem, ListItemGroup } from "../../list";
 import queryInputCss from "../QueryInput.css";
@@ -23,7 +28,7 @@ function itemToString(item: QueryInputItem) {
   return [item.category, item.value].join(": ");
 }
 
-export function SearchList(props: SearchListProps) {
+export function SearchList(props: SearchListProps): ReactElement {
   const {
     inputValue,
     selectedItems,

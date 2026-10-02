@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from "react";
+import type { HTMLAttributes, ReactElement, ReactNode } from "react";
 
 export type FormLabelNecessity = "optional" | "required";
 // export type FormLabelNecessityStyle = 'full' | 'abbreviated';
@@ -29,7 +29,8 @@ export const NecessityIndicator = ({
   displayedNecessity,
   className,
   ...restProps
-}: NecessityIndicatorOptions & HTMLAttributes<HTMLSpanElement>) => {
+}: NecessityIndicatorOptions &
+  HTMLAttributes<HTMLSpanElement>): ReactElement | null => {
   let necessityText: ReactNode = "";
 
   if (necessityTextProp) {

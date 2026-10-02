@@ -15,7 +15,7 @@ export interface FocusAPI {
 }
 
 export interface TabDescriptor extends OverflowSource {
-  element?: JSX.Element;
+  element?: ReactElement;
 }
 export type TabsSource = string[] | TabDescriptor[];
 

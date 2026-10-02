@@ -5,6 +5,7 @@ import {
   OverlayHeader,
   OverlayPanel,
   OverlayPanelContent,
+  type OverlayProps,
   OverlayTrigger,
   StackLayout,
   Text,
@@ -12,7 +13,7 @@ import {
 import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
-import type { CSSProperties } from "react";
+import type { CSSProperties, FC } from "react";
 
 export default {
   title: "Core/Overlay/Overlay QA",
@@ -156,7 +157,9 @@ WithSections.parameters = {
   },
 };
 
-const HideArrowTemplate: StoryFn<typeof Overlay> = (args) => (
+const HideArrowTemplate: StoryFn<typeof Overlay> & FC<OverlayProps> = (
+  args: OverlayProps,
+) => (
   <Overlay hideArrow open {...args}>
     <OverlayTrigger>
       <Button>Show Overlay</Button>

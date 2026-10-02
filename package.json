@@ -36,6 +36,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "yarn build:ag-grid-theme && yarn bundle:css && storybook build --stats-json",
     "typecheck": "yarn node ./scripts/typecheck.mjs",
+    "typecheck:consumer": "yarn node ./scripts/checkConsumerTypes.mjs",
+    "typecheck:react19": "yarn node ./scripts/typecheckReactTypes.mjs 19",
     "chromatic": "chromatic"
   },
   "dependencies": {
@@ -126,6 +128,12 @@
     "rollup": "^4.24.2",
     "rollup-plugin-esbuild": "^6.1.1",
     "rollup-plugin-postcss": "^4.0.2",
+    "types-react-16": "npm:@types/react@^16.14.0",
+    "types-react-17": "npm:@types/react@^17.0.0",
+    "types-react-19": "npm:@types/react@^19.0.0",
+    "types-react-dom-16": "npm:@types/react-dom@^16.9.0",
+    "types-react-dom-17": "npm:@types/react-dom@^17.0.0",
+    "types-react-dom-19": "npm:@types/react-dom@^19.0.0",
     "vitest-browser-react": "2.3.0"
   },
   "dependenciesMeta": {

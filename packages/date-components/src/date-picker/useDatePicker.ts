@@ -186,7 +186,9 @@ export function useDatePicker(
     timezone,
   } = props;
 
-  const previousSelectedDate = useRef<typeof selectedDateProp>();
+  const previousSelectedDate = useRef<typeof selectedDateProp | undefined>(
+    undefined,
+  );
   const incompleteRangeAnnouncementKeyRef = useRef<string | null>(null);
   const datePickerRef = useRef<HTMLDivElement>(null);
   const containerRef = useForkRef(ref, datePickerRef);

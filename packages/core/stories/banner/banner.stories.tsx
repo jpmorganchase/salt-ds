@@ -2,6 +2,7 @@ import {
   Banner,
   BannerActions,
   BannerContent,
+  type BannerProps,
   Button,
   FlowLayout,
   Link,
@@ -11,7 +12,7 @@ import {
 } from "@salt-ds/core";
 import { CloseIcon, RefreshIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { useState } from "react";
+import { type FC, useState } from "react";
 
 export default {
   title: "Core/Banner",
@@ -168,7 +169,9 @@ const statuses: { status: ValidationStatus; content: string }[] = [
   },
 ];
 
-export const StatusesPrimary: StoryFn<typeof Banner> = (props) => {
+export const StatusesPrimary: StoryFn<typeof Banner> & FC<BannerProps> = (
+  props: BannerProps,
+) => {
   return (
     <StackLayout style={{ width: 500 }}>
       {statuses.map((example) => (

@@ -1,5 +1,5 @@
 // TODO rename ?
-import type { ReactElement, ReactNode, RefObject } from "react";
+import type { MutableRefObject, ReactElement, ReactNode } from "react";
 import type { OverflowAction as overflowAction2 } from "./OverflowReducer";
 
 type dimension = "width" | "height" | "scrollWidth" | "scrollHeight";
@@ -25,7 +25,7 @@ interface NonNullableRefObject<T> {
 
 export type FilterPredicate = (item: OverflowItem) => boolean;
 
-export type ElementRef = RefObject<HTMLDivElement>;
+export type ElementRef = MutableRefObject<HTMLDivElement | null>;
 
 export interface OverflowSource {
   id?: string;
@@ -41,7 +41,7 @@ export type InjectedSourceItem = {
 };
 
 export type InjectedChildItem = {
-  element: JSX.Element;
+  element: ReactElement;
 };
 
 export type InjectedItem = InjectedChildItem | InjectedSourceItem;

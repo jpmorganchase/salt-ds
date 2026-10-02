@@ -7,6 +7,7 @@ import {
   type KeyboardEvent,
   useEffect,
   useState,
+  type ReactElement,
 } from "react";
 import { InputLegacy as Input } from "../input-legacy";
 import type { RGBAValue } from "./Color";
@@ -23,7 +24,7 @@ export const RGBInput = ({
   rgbaValue,
   value,
   onSubmit,
-}: RGBInputProps): JSX.Element => {
+}: RGBInputProps): ReactElement => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-rgba-input",

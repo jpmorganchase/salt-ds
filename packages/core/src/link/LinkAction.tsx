@@ -18,7 +18,9 @@ export const LinkAction = forwardRef<HTMLAnchorElement, LinkActionProps>(
     // rendered link.
     const link = renderProps("a", { ...props, ref });
 
-    if (link.props.target !== "_blank" || !externalLinkContent) {
+    const linkProps = link.props as ComponentPropsWithoutRef<"a">;
+
+    if (linkProps.target !== "_blank" || !externalLinkContent) {
       return link;
     }
 
@@ -26,7 +28,7 @@ export const LinkAction = forwardRef<HTMLAnchorElement, LinkActionProps>(
       link,
       undefined,
       <>
-        {link.props.children}
+        {linkProps.children}
         {externalLinkContent}
       </>,
     );

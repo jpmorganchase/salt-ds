@@ -12,6 +12,7 @@ import { clsx } from "clsx";
 import {
   type MutableRefObject,
   memo,
+  type ReactElement,
   type SyntheticEvent,
   useRef,
   useState,
@@ -49,7 +50,9 @@ export type InputPillProps = PillProps & {
   onClose?: (event: SyntheticEvent, index: number) => void;
 };
 
-export const InputPill = memo(function InputPill(props: InputPillProps) {
+export const InputPill = memo(function InputPill(
+  props: InputPillProps,
+): ReactElement {
   const {
     className,
     hidden,

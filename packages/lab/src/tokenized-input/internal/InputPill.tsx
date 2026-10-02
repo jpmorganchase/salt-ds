@@ -6,7 +6,7 @@ import {
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { type MutableRefObject, memo, useRef } from "react";
+import { type MutableRefObject, memo, type ReactElement, useRef } from "react";
 import { getWidth } from "./useWidth";
 
 const withBaseName = makePrefixer("saltInputPill");
@@ -42,7 +42,9 @@ export type InputPillProps = PillProps & {
   onDelete?: (index: number) => void;
 };
 
-export const InputPill = memo(function InputPill(props: InputPillProps) {
+export const InputPill = memo(function InputPill(
+  props: InputPillProps,
+): ReactElement {
   const {
     active,
     className,

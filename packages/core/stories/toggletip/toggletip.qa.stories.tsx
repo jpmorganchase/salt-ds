@@ -2,18 +2,22 @@ import {
   Avatar,
   Toggletip,
   ToggletipPanel,
+  type ToggletipProps,
   ToggletipTrigger,
 } from "@salt-ds/core";
 import { HelpCircleIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components/index";
+import type { FC } from "react";
 
 export default {
   title: "Core/Toggletip/Toggletip QA",
   component: Avatar,
 } as Meta<typeof Avatar>;
 
-const Template: StoryFn<typeof Toggletip> = (args) => (
+const Template: StoryFn<typeof Toggletip> & FC<ToggletipProps> = (
+  args: ToggletipProps,
+) => (
   <Toggletip {...args}>
     <ToggletipTrigger aria-label="Help info">
       <HelpCircleIcon aria-hidden />

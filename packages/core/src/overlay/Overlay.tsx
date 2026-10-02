@@ -9,7 +9,13 @@ import {
   useInteractions,
   useRole,
 } from "@floating-ui/react";
-import { type ReactNode, useMemo, useRef, useState } from "react";
+import {
+  type ReactElement,
+  type ReactNode,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   type UseFloatingUIProps,
   useControlled,
@@ -46,7 +52,7 @@ export const Overlay = ({
   onOpenChange,
   placement: placementProp = "top",
   hideArrow = false,
-}: OverlayProps) => {
+}: OverlayProps): ReactElement => {
   const arrowRef = useRef<SVGSVGElement | null>(null);
   const [headerId, setHeaderId] = useState<string | undefined>(undefined);
   const [descriptionId, setDescriptionId] = useState<string | undefined>(

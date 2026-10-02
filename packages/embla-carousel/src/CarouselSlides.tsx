@@ -12,6 +12,7 @@ import {
   type KeyboardEvent,
   type MouseEventHandler,
   type ReactElement,
+  type Ref,
   useEffect,
   useRef,
   useState,
@@ -293,12 +294,17 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
           id={id ?? `${carouselId}-slides`}
         >
           {Children.map(children, (child, index) => {
-            const childElement = child as ReactElement;
-            const existingId = childElement.props.id;
+            const element = child as ReactElement<{
+              "aria-hidden"?: boolean;
+              id?: string;
+              onFocus?: (event: FocusEvent) => void;
+              ref?: Ref<HTMLDivElement>;
+              tabIndex?: number;
+            }>;
+            const existingId = element.props.id;
             const isFocused = focusedSlideIndex === index;
             const isVisible = visibleSlideIndexes.includes(index + 1);
             const isHidden = !isVisible && !isFocused;
-            const element = child as ReactElement;
             return cloneElement(element, {
               "aria-hidden": isHidden,
               id: existingId ?? `${carouselId}-slide${index + 1}`,

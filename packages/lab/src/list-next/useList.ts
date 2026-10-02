@@ -28,7 +28,7 @@ export interface UseListProps {
   /* List id. */
   id?: string;
   /* List ref. */
-  ref: RefObject<HTMLUListElement>;
+  ref: RefObject<HTMLUListElement | null>;
 }
 
 export const useList = ({
