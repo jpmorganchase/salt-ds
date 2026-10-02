@@ -469,14 +469,13 @@ describe("Given a Menu with selectable groups", () => {
     expect(exportItem.element().querySelector(".saltCheckboxIcon")).toBeNull();
   });
 
-  it("selects one item and closes the menu on click in single selection", async () => {
+  it("selects one item and keeps the menu open on click in single selection", async () => {
     const onOpenChange = vi.fn();
     await renderWithSalt(<SingleSelection onOpenChange={onOpenChange} />);
     await trigger().click();
     await page.getByRole("menuitemradio", { name: "Size" }).click();
-    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
-    expect(onOpenChange).toHaveBeenLastCalledWith(false);
-    await trigger().click();
+    await expect.element(page.getByRole("menu")).toBeInTheDocument();
+    expect(onOpenChange).not.toHaveBeenCalledWith(false);
     await expect
       .element(page.getByRole("menuitemradio", { name: "Size" }))
       .toHaveAttribute("aria-checked", "true");
@@ -556,7 +555,7 @@ describe("Given a Menu with selectable groups", () => {
     await trigger().click();
     await page.getByRole("menuitemradio", { name: "One" }).click();
     expect(onSelectionChange).not.toHaveBeenCalled();
-    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+    await expect.element(page.getByRole("menu")).toBeInTheDocument();
   });
 
   it.each(["single", "multiple"] as const)(
@@ -693,13 +692,12 @@ describe("Given a Menu with selectable groups", () => {
     await renderWithSalt(<SelectionInSubmenu />);
     await trigger().click();
     await page.getByRole("menuitem", { name: "Sort by" }).hover();
-    await page.getByRole("menuitemradio", { name: "Size" }).click();
-    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
-    await trigger().click();
-    await page.getByRole("menuitem", { name: "Sort by" }).hover();
+    const size = page.getByRole("menuitemradio", { name: "Size" });
+    await size.click();
+    await expect.element(size).toHaveAttribute("aria-checked", "true");
     await expect
-      .element(page.getByRole("menuitemradio", { name: "Size" }))
-      .toHaveAttribute("aria-checked", "true");
+      .element(page.getByRole("menu", { name: "Sort by" }))
+      .toBeInTheDocument();
   });
 
   it("warns once when a menu item in a selectable group has no value", async () => {
