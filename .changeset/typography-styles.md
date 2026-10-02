@@ -7,6 +7,7 @@ Added editorial, eyebrow, body large and label large typography tokens to all th
 - Editorial 1–4: `--salt-text-editorial1-fontSize` to `--salt-text-editorial4-fontSize`, `--salt-text-editorial1-lineHeight` to `--salt-text-editorial4-lineHeight` and `--salt-text-editorial-letterSpacing`.
 - Editorial font: `--salt-text-editorial-fontFamily`, `--salt-text-editorial-fontWeight`, `--salt-text-editorial-fontWeight-small`, `--salt-text-editorial-fontWeight-strong`, `--salt-text-editorial-fontStyle` and `--salt-text-editorial-textTransform`. These match the display values in each theme.
 - Eyebrow: `--salt-text-eyebrow-fontSize`, `--salt-text-eyebrow-lineHeight` and `--salt-text-eyebrow-letterSpacing`.
+- Eyebrow font: `--salt-text-eyebrow-fontFamily`, `--salt-text-eyebrow-fontWeight`, `--salt-text-eyebrow-fontWeight-small`, `--salt-text-eyebrow-fontWeight-strong`, `--salt-text-eyebrow-fontStyle` and `--salt-text-eyebrow-textTransform`. These match the body text values in each theme.
 - Body large: `--salt-text-fontSize-large` and `--salt-text-lineHeight-large`.
 - Label large: `--salt-text-label-fontSize-large` and `--salt-text-label-lineHeight-large`.
 
