@@ -1,5 +1,6 @@
 import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
+import type { ReactElement } from "react";
 import { Tab, Tabstrip, type TabstripProps } from "../tabs";
 import type { ColorPicker, ColorPickerProps } from "./ColorPicker";
 import type { Swatches, SwatchesTabProps } from "./Swatches";
@@ -31,7 +32,7 @@ export const DictTabs = ({
   onTabClick,
   activeTab,
   ...props
-}: DictTabsProps): JSX.Element => {
+}: DictTabsProps): ReactElement => {
   return (
     <div>
       <Tabstrip

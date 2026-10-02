@@ -212,7 +212,7 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
     });
 
     const cloneMenuChildren = (cloneChildren: ReactNode) => {
-      if (isValidElement(cloneChildren)) {
+      if (isValidElement<Record<string, unknown>>(cloneChildren)) {
         const childrenProps = {
           ...cloneChildren.props,
         };

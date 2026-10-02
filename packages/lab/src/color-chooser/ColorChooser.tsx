@@ -12,7 +12,7 @@ import { RefreshIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ChangeEvent, useState } from "react";
+import { type ChangeEvent, type ReactElement, useState } from "react";
 import type { Color } from "./Color";
 import colorChooserCss from "./ColorChooser.css";
 import {
@@ -86,7 +86,7 @@ export const ColorChooser = ({
   saltColorOverrides,
   readOnly = false,
   displayHexOnly = false,
-}: ColorChooserProps): JSX.Element => {
+}: ColorChooserProps): ReactElement => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-color-chooser",

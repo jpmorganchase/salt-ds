@@ -5,7 +5,7 @@ export function useWidth<Element extends HTMLElement>(
   responsive: boolean,
 ): [RefObject<Element>, number] {
   const [width, setWidth] = useState<number>();
-  const ref = useRef<Element>();
+  const ref = useRef<Element>(null);
 
   const handleResize = useCallback(function handleResize(contentRect: DOMRect) {
     setWidth(contentRect.width);

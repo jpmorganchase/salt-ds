@@ -1,7 +1,7 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef, type HTMLAttributes, type RefObject } from "react";
+import { forwardRef, type HTMLAttributes, type Ref } from "react";
 import { Text } from "../../text";
 import { makePrefixer } from "../../utils";
 import sliderTrackCss from "./SliderTrack.css";
@@ -26,7 +26,7 @@ interface SliderTrackProps
   minLabel?: number | string;
   progressPercentage?: number;
   progressPercentageRange?: [number, number];
-  sliderRef: RefObject<HTMLDivElement>;
+  sliderRef: Ref<HTMLDivElement>;
 }
 
 export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(

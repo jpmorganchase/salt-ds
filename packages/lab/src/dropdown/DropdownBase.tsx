@@ -8,7 +8,14 @@ import {
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { Children, cloneElement, forwardRef, useRef, useState } from "react";
+import {
+  Children,
+  cloneElement,
+  forwardRef,
+  type ReactElement,
+  useRef,
+  useState,
+} from "react";
 import { Portal } from "../portal";
 import { forwardCallbackProps } from "../utils";
 import { isDesktop, useWindow as usePortalWindow } from "../window";
@@ -64,7 +71,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
     });
     const [trigger, popupComponent] = Children.toArray(
       children,
-    ) as JSX.Element[];
+    ) as ReactElement<MaybeChildProps>[];
     const id = useId(idProp);
     const Window = usePortalWindow();
 

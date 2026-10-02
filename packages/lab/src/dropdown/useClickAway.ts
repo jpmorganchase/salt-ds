@@ -1,8 +1,8 @@
 import { type RefObject, useEffect } from "react";
 
 export type ClickawayHook = (props: {
-  popperRef: RefObject<HTMLElement>;
-  rootRef: RefObject<HTMLElement>;
+  popperRef: RefObject<HTMLElement | null>;
+  rootRef: RefObject<HTMLElement | null>;
   isOpen: boolean;
   onClose: () => void;
 }) => void;

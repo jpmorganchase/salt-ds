@@ -57,7 +57,7 @@ export type BaseComboBoxProps<
     listWidth?: number | string;
 
     rootWidth?: string | number;
-    rootRef: RefObject<HTMLElement>;
+    rootRef: RefObject<HTMLElement | null>;
     disabledPortal?: boolean;
     source: ReadonlyArray<Item>;
   };
