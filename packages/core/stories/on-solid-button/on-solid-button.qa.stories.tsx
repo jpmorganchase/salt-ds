@@ -43,7 +43,13 @@ const Surface = ({
 );
 
 export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => (
-  <QAContainer cols={1} itemPadding={12} itemWidthAuto {...props}>
+  <QAContainer
+    cols={1}
+    itemPadding={12}
+    itemWidthAuto
+    width={2000}
+    {...props}
+  >
     {surfaces.map(({ name, background }) => (
       <Surface key={name} background={background}>
         <OnSolidButton>OnSolidButton</OnSolidButton>
