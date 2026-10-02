@@ -25,7 +25,7 @@ export interface DropdownBaseProps
   openOnFocus?: boolean;
   placement?: DropdownPlacement;
   popupWidth?: number;
-  triggerComponent?: JSX.Element;
+  triggerComponent?: ReactElement;
   width?: number | string;
 }
 
@@ -45,7 +45,7 @@ export interface DropdownHookProps
   ariaLabelledBy?: string;
   id: string;
   popupComponent: ReactElement;
-  rootRef: RefObject<HTMLDivElement>;
+  rootRef: RefObject<HTMLDivElement | null>;
 }
 
 export interface DropdownHookTriggerProps {

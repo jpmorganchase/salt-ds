@@ -1613,7 +1613,9 @@ export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = ({
   const [validationStatus, setValidationStatus] = useState<
     "error" | undefined
   >();
-  const savedValidationState = useRef<typeof validationStatus>();
+  const savedValidationState = useRef<typeof validationStatus | undefined>(
+    undefined,
+  );
   const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
     defaultSelectedDate ?? null,
   );

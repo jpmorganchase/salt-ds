@@ -19,7 +19,7 @@ import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import "./dialog.stories.css";
 import { CloseIcon } from "@salt-ds/icons";
-import { Fragment } from "react";
+import { type FC, Fragment } from "react";
 
 export default {
   title: "Core/Dialog/Dialog QA",
@@ -39,15 +39,21 @@ function FakeDialog({ children, status, id }: DialogProps) {
   );
 }
 
-const DialogTemplate: StoryFn<
-  Omit<DialogProps, "content"> & {
-    header?: string;
-    preheader?: string;
-    content?: DialogContentProps["children"];
-    longDialog?: boolean;
-    maxHeight?: number;
-  }
-> = ({ status, header, content, longDialog, maxHeight = 420 }) => {
+type TemplateProps = Omit<DialogProps, "content"> & {
+  header?: string;
+  preheader?: string;
+  content?: DialogContentProps["children"];
+  longDialog?: boolean;
+  maxHeight?: number;
+};
+
+const DialogTemplate: StoryFn<TemplateProps> & FC<TemplateProps> = ({
+  status,
+  header,
+  content,
+  longDialog,
+  maxHeight = 420,
+}: TemplateProps) => {
   const defaultHeader = "Congratulations! You have created a Dialog.";
   const defaultContent =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";

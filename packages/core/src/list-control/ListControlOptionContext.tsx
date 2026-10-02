@@ -1,4 +1,5 @@
 import {
+  type ReactElement,
   type ReactNode,
   type RefObject,
   type SyntheticEvent,
@@ -10,7 +11,7 @@ import { ListControlOptionStore } from "./ListControlOptionStore";
 
 export interface ListControlOptionContextValue<Item> {
   disabled?: boolean;
-  listRef?: RefObject<HTMLDivElement>;
+  listRef?: RefObject<HTMLDivElement | null>;
   multiselect: boolean;
   optionStateStore: ListControlOptionStore<Item>;
   register: (
@@ -47,7 +48,7 @@ export function ListControlOptionContextProvider<Item>({
 }: {
   children: ReactNode;
   value: ListControlOptionContextValue<Item>;
-}) {
+}): ReactElement {
   return (
     <ListControlOptionContext.Provider
       value={value as unknown as ListControlOptionContextValue<unknown>}

@@ -17,6 +17,7 @@ import {
   type ComponentPropsWithoutRef,
   createContext,
   forwardRef,
+  type ReactElement,
   type ReactNode,
   useContext,
   useMemo,
@@ -120,7 +121,7 @@ export interface FloatingComponentProviderProps
 
 export function FloatingComponentProvider(
   props: FloatingComponentProviderProps,
-) {
+): ReactElement {
   const { Component, children } = props;
   const value = useMemo(() => ({ Component }), [Component]);
 
@@ -179,7 +180,9 @@ export interface FloatingPlatformProviderProps {
   animationFrame?: boolean;
 }
 
-export function FloatingPlatformProvider(props: FloatingPlatformProviderProps) {
+export function FloatingPlatformProvider(
+  props: FloatingPlatformProviderProps,
+): ReactElement {
   const {
     platform: platformProp,
     middleware,

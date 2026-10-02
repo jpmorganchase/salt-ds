@@ -1,4 +1,10 @@
-import { createContext, type ReactNode, useContext, useMemo } from "react";
+import {
+  createContext,
+  type ReactElement,
+  type ReactNode,
+  useContext,
+  useMemo,
+} from "react";
 
 export interface InsertionPointContextType {
   insertionPoint: ChildNode | null;
@@ -14,7 +20,9 @@ export interface InsertionPointProviderProps extends InsertionPointContextType {
   children: ReactNode;
 }
 
-export function InsertionPointProvider(props: InsertionPointProviderProps) {
+export function InsertionPointProvider(
+  props: InsertionPointProviderProps,
+): ReactElement {
   const { insertionPoint: insertionPointProp, children } = props;
   const value = useMemo(() => insertionPointProp, [insertionPointProp]);
 

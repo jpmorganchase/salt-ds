@@ -31,6 +31,12 @@
     {
       "groupName": "Biome",
       "matchPackageNames": ["@biomejs/**"]
+    },
+    {
+      "description": "The React types aliases are each pinned to a major for the multi-version type checks",
+      "matchDepNames": ["/^types-react-(dom-)?\\d+$/"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
     }
   ]
 }

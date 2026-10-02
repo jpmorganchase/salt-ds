@@ -1,4 +1,10 @@
-import { createContext, type ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  type ReactElement,
+  type ReactNode,
+  useContext,
+  useState,
+} from "react";
 import { useIsomorphicLayoutEffect } from "../utils/useIsomorphicLayoutEffect";
 
 const ViewportContext = createContext<number | null>(null);
@@ -7,7 +13,9 @@ type ViewportProviderProps = {
   children?: ReactNode;
 };
 
-const ViewportProvider = ({ children }: ViewportProviderProps) => {
+const ViewportProvider = ({
+  children,
+}: ViewportProviderProps): ReactElement => {
   // Get value directly from the ViewportContext so we can detect if the value is null (no inherited ViewportProvider)
   const existingViewport = useContext(ViewportContext);
   const [viewport, setViewport] = useState(existingViewport);

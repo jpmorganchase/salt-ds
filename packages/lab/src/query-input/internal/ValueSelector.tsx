@@ -4,7 +4,13 @@ import {
   useForkRef,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
-import { type Dispatch, type Ref, type SetStateAction, useMemo } from "react";
+import {
+  type Dispatch,
+  type ReactElement,
+  type Ref,
+  type SetStateAction,
+  useMemo,
+} from "react";
 import { Portal } from "../../portal";
 import { useWindow } from "../../window";
 import type { QueryInputCategory, QueryInputItem } from "../queryInputTypes";
@@ -39,7 +45,7 @@ export interface ValueSelectorProps {
   setHighlightedValueIndex: Dispatch<SetStateAction<number>>;
 }
 
-export function ValueSelector(props: ValueSelectorProps) {
+export function ValueSelector(props: ValueSelectorProps): ReactElement | null {
   const {
     isOpen,
     inputValue,

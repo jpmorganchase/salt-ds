@@ -15,6 +15,13 @@ interface LegacyRoot {
   unmount: () => void;
 }
 
+// The legacy root API was removed in React 19, so it isn't in every version of
+// the React DOM types. This renderer is only used for React 16 and 17.
+const legacyReactDOM = ReactDOM as unknown as {
+  render: (element: ReactElement, container: HTMLElement) => void;
+  unmountComponentAtNode: (container: HTMLElement) => boolean;
+};
+
 const mountedRoots = new Map<HTMLElement, LegacyRoot>();
 
 function wrapUi(
@@ -27,10 +34,10 @@ function wrapUi(
 function createLegacyRoot(container: HTMLElement): LegacyRoot {
   return {
     render(ui) {
-      ReactDOM.render(ui as ReactElement, container);
+      legacyReactDOM.render(ui as ReactElement, container);
     },
     unmount() {
-      ReactDOM.unmountComponentAtNode(container);
+      legacyReactDOM.unmountComponentAtNode(container);
     },
   };
 }

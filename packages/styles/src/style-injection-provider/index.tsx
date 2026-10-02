@@ -1,4 +1,9 @@
-import { createContext, type ReactNode, useContext } from "react";
+import {
+  createContext,
+  type ReactElement,
+  type ReactNode,
+  useContext,
+} from "react";
 export interface StyleInjectionContextType {
   value?: boolean;
 }
@@ -14,7 +19,9 @@ export interface StyleInjectionProviderProps extends StyleInjectionContextType {
   children: ReactNode;
 }
 
-export function StyleInjectionProvider(props: StyleInjectionProviderProps) {
+export function StyleInjectionProvider(
+  props: StyleInjectionProviderProps,
+): ReactElement {
   const { value: enableStyleInjectionProp, children } = props;
   const value = useStyleInjection(enableStyleInjectionProp);
 

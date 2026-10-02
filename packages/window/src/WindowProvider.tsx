@@ -1,4 +1,9 @@
-import { createContext, type ReactNode, useContext } from "react";
+import {
+  createContext,
+  type ReactElement,
+  type ReactNode,
+  useContext,
+} from "react";
 
 export type WindowContextType = Window | null;
 
@@ -15,7 +20,7 @@ export interface WindowProviderProps {
   window: WindowContextType;
 }
 
-export function WindowProvider(props: WindowProviderProps) {
+export function WindowProvider(props: WindowProviderProps): ReactElement {
   const { window: targetWindow, children } = props;
 
   return (

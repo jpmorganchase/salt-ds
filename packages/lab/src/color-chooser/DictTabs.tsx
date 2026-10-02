@@ -3,6 +3,7 @@ import { clsx } from "clsx";
 import { Tab, Tabstrip, type TabstripProps } from "../tabs";
 import type { ColorPicker, ColorPickerProps } from "./ColorPicker";
 import type { Swatches, SwatchesTabProps } from "./Swatches";
+import type { ReactElement } from "react";
 
 const withBaseName = makePrefixer("saltColorChooserDictTabs");
 
@@ -31,7 +32,7 @@ export const DictTabs = ({
   onTabClick,
   activeTab,
   ...props
-}: DictTabsProps): JSX.Element => {
+}: DictTabsProps): ReactElement => {
   return (
     <div>
       <Tabstrip

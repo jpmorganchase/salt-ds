@@ -6,6 +6,7 @@ import {
   type KeyboardEvent,
   useEffect,
   useState,
+  type ReactElement,
 } from "react";
 import { InputLegacy as Input } from "../input-legacy";
 import { isValidHex } from "./ColorHelpers";
@@ -22,7 +23,7 @@ export const HexInput = ({
   hexValue,
   disableAlphaChooser,
   onSubmit,
-}: HexInputProps): JSX.Element => {
+}: HexInputProps): ReactElement => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-color-picker",
