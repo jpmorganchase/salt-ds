@@ -64,6 +64,14 @@
   --salt-text-display-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-text-display-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-display-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+
+  /* Editorial */
+  --salt-text-editorial-fontFamily: var(--salt-typography-fontFamily-openSans);
+  --salt-text-editorial-textTransform: none;
+  --salt-text-editorial-fontStyle: var(--salt-typography-fontStyle-normal);
+  --salt-text-editorial-fontWeight: var(--salt-typography-fontWeight-semiBold);
+  --salt-text-editorial-fontWeight-small: var(--salt-typography-fontWeight-regular);
+  --salt-text-editorial-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 }
 
 .salt-theme-next.salt-theme[data-heading-font="Amplitude"] {
@@ -81,6 +89,14 @@
   --salt-text-display-fontWeight: var(--salt-typography-fontWeight-medium);
   --salt-text-display-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-display-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+
+  /* Editorial */
+  --salt-text-editorial-fontFamily: var(--salt-typography-fontFamily-amplitude);
+  --salt-text-editorial-textTransform: none;
+  --salt-text-editorial-fontStyle: var(--salt-typography-fontStyle-normal);
+  --salt-text-editorial-fontWeight: var(--salt-typography-fontWeight-medium);
+  --salt-text-editorial-fontWeight-small: var(--salt-typography-fontWeight-regular);
+  --salt-text-editorial-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 }
 
 /* Sizes by density */

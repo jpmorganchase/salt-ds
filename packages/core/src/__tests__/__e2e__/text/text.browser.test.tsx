@@ -13,12 +13,15 @@ import {
   H3,
   H4,
   Label,
+  SaltProvider,
+  SaltProviderNext,
   Text,
   TextAction,
   TextNotation,
 } from "@salt-ds/core";
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { describe, expect, it } from "vitest";
+import { render } from "vitest-browser-react";
 import { renderWithSalt } from "~browser-test-utils/render";
 
 const textExample = "Far away behind the word mountains lives sample text.";
@@ -348,6 +351,123 @@ describe("GIVEN styleAs=bodyLarge or styleAs=labelLarge", () => {
     expect(getComputedStyle(heading).fontWeight).toBe("400");
     expect(getComputedStyle(strong).fontWeight).toBe("600");
   });
+});
+
+const editorialTokens = [
+  "--salt-text-editorial-fontFamily",
+  "--salt-text-editorial-textTransform",
+  "--salt-text-editorial-fontStyle",
+  "--salt-text-editorial-fontWeight",
+  "--salt-text-editorial-fontWeight-small",
+  "--salt-text-editorial-fontWeight-strong",
+] as const;
+
+const themeWrappers = [
+  {
+    name: "legacy",
+    wrap: (children: ReactNode) => <SaltProvider>{children}</SaltProvider>,
+  },
+  {
+    name: "salt-interim",
+    wrap: (children: ReactNode) => (
+      <SaltProvider theme="salt-interim">{children}</SaltProvider>
+    ),
+  },
+  {
+    name: "next with Amplitude headings",
+    wrap: (children: ReactNode) => (
+      <SaltProviderNext headingFont="Amplitude">{children}</SaltProviderNext>
+    ),
+  },
+  {
+    name: "next with Open Sans headings",
+    wrap: (children: ReactNode) => (
+      <SaltProviderNext headingFont="Open Sans">{children}</SaltProviderNext>
+    ),
+  },
+] as const;
+
+describe.each(themeWrappers)("GIVEN the $name theme", ({ wrap }) => {
+  it("defines the editorial tokens and matches the display styles", async () => {
+    const { container } = await render(
+      wrap(
+        <>
+          <Display1 data-testid="display">
+            Display <strong>strong</strong> <small>small</small>
+          </Display1>
+          <Editorial1 data-testid="editorial">
+            Editorial <strong>strong</strong> <small>small</small>
+          </Editorial1>
+        </>,
+      ),
+    );
+    const display = container.querySelector<HTMLElement>(
+      '[data-testid="display"]',
+    ) as HTMLElement;
+    const editorial = container.querySelector<HTMLElement>(
+      '[data-testid="editorial"]',
+    ) as HTMLElement;
+    const displayStyle = getComputedStyle(display);
+    const editorialStyle = getComputedStyle(editorial);
+
+    for (const token of editorialTokens) {
+      expect(editorialStyle.getPropertyValue(token).trim()).not.toBe("");
+    }
+    for (const property of [
+      "fontFamily",
+      "fontWeight",
+      "fontStyle",
+      "textTransform",
+    ] as const) {
+      expect(editorialStyle[property]).toBe(displayStyle[property]);
+    }
+    for (const selector of ["strong", "small"]) {
+      expect(
+        getComputedStyle(editorial.querySelector(selector) as HTMLElement)
+          .fontWeight,
+      ).toBe(
+        getComputedStyle(display.querySelector(selector) as HTMLElement)
+          .fontWeight,
+      );
+    }
+  });
+});
+
+it("uses the editorial tokens instead of the display tokens", async () => {
+  const { container } = await renderWithSalt(
+    <div
+      style={
+        {
+          "--salt-text-display-fontFamily": "Courier",
+          "--salt-text-display-fontWeight": "100",
+          "--salt-text-display-fontWeight-strong": "100",
+          "--salt-text-display-fontStyle": "normal",
+          "--salt-text-display-textTransform": "lowercase",
+          "--salt-text-editorial-fontFamily": "Lato",
+          "--salt-text-editorial-fontWeight": "900",
+          "--salt-text-editorial-fontWeight-strong": "800",
+          "--salt-text-editorial-fontStyle": "italic",
+          "--salt-text-editorial-textTransform": "uppercase",
+        } as CSSProperties
+      }
+    >
+      <Editorial1>
+        Editorial <strong>strong</strong>
+      </Editorial1>
+    </div>,
+  );
+  const editorial = container.querySelector<HTMLElement>(
+    ".saltText",
+  ) as HTMLElement;
+  const style = getComputedStyle(editorial);
+  expect(style.fontFamily).toBe("Lato");
+  expect(style.fontWeight).toBe("900");
+  expect(style.fontStyle).toBe("italic");
+  expect(style.textTransform).toBe("uppercase");
+  expect(
+    getComputedStyle(editorial.querySelector("strong") as HTMLElement)
+      .fontWeight,
+  ).toBe("800");
 });
 
 it("inherits a custom font family CSS variable", async () => {
