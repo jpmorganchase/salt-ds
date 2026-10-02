@@ -18,7 +18,7 @@ import {
   DatePickerTrigger,
 } from "@salt-ds/date-components";
 import { composeStories } from "@storybook/react-vite";
-import { type FocusEventHandler, useState } from "react";
+import { type FocusEventHandler, StrictMode, useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { type Locator, page, userEvent } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
@@ -1053,6 +1053,29 @@ async function openOverflowWithKeyboard(name: string | RegExp) {
 }
 
 describe("Toolbar variants and layout", () => {
+  it("doesn't overflow items that fit in Strict Mode", async () => {
+    await renderWithSalt(
+      <StrictMode>
+        <MixedControlsWidthChangeTestCase />
+      </StrictMode>,
+    );
+    await expectButton("Run", true);
+    // Let the toolbar measure its items, which happens in animation frames.
+    for (let frame = 0; frame < 5; frame += 1) {
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+    }
+
+    for (const host of document.querySelectorAll(
+      ".saltToolbarOverflow-itemHost",
+    )) {
+      expect(
+        host.querySelectorAll(":scope > .saltToolbarOverflow-contentHost"),
+      ).toHaveLength(1);
+    }
+    await expectButton("Run", true);
+    await expectButton(/Overflow\./i, false);
+  });
+
   it.each([
     [
       "default",
