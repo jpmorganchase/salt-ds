@@ -37,6 +37,26 @@ A `MenuGroup` can be used without a `label` prop to visually separate groups of 
 
 <LivePreview componentName="menu" exampleName="SeparatorOnly" />
 
+## Single selection
+
+Set `selectionVariant` to "single" on a `MenuGroup` to let users choose one option from a set, such as a sort order. Give each `MenuItem` a `value`, and control the selection with `selected` and `onSelectionChange`. The menu's content unmounts when it closes, so keep the selection in your state.
+
+<LivePreview componentName="menu" exampleName="SingleSelection" />
+
+## Multiple selection
+
+Set `selectionVariant` to "multiple" to let users toggle several options on or off, such as the visible columns of a table.
+
+<LivePreview componentName="menu" exampleName="MultipleSelection" />
+
+## Selection with actions
+
+Place each set of options in its own `MenuGroup`, and put actions in a separate `MenuGroup`.
+
+Because the selection lives in your state, the "Reset view" action can restore it.
+
+<LivePreview componentName="menu" exampleName="SelectionWithActions" />
+
 ## With icon
 
 Icons can be used to help users quickly identify the type of action they can take.
