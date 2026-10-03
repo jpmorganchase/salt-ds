@@ -27,6 +27,7 @@
     "test": "vitest",
     "test:components": "vitest run --config vitest.browser.config.mts --browser.headless",
     "test:components:local": "vitest --config vitest.browser.config.mts",
+    "test:server-components": "yarn node ./scripts/checkServerComponents.mjs",
     "prettier": "prettier --write .",
     "prettier:ci": "prettier --check .",
     "lint": "biome check",

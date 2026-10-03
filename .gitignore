@@ -18,6 +18,7 @@ node_modules
 # testing
 /.vitest
 /test/browser/screenshots
+/test/server-components/.next
 /coverage
 .nyc_output
 

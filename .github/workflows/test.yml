@@ -58,6 +58,8 @@ jobs:
         run: yarn build
       - name: Check packages
         run: node ./scripts/checkPackages.mjs
+      - name: Check React Server Components
+        run: yarn run test:server-components
   type-checks:
     name: Type Checks
     runs-on: ubuntu-latest

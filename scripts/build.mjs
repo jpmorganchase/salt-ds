@@ -8,6 +8,7 @@ import { rollup } from "rollup";
 import esbuild from "rollup-plugin-esbuild";
 import postcss from "rollup-plugin-postcss";
 import { makeTypings } from "./makeTypings.mjs";
+import { markClientModules } from "./markClientModules.mjs";
 import { emptyDir } from "./utils.mjs";
 
 const cwd = process.cwd();
@@ -58,6 +59,7 @@ const bundle = await rollup({
     }),
     postcss({ extract: false, inject: false }),
     json(),
+    markClientModules(),
   ],
 });
 
