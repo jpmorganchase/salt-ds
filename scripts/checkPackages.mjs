@@ -87,11 +87,12 @@ function listsAgentDocs(manifest) {
 
 async function checkAgentDocs(manifest, directory) {
   if (!listsAgentDocs(manifest)) return [];
-  // The core README tells consumers to run docs/agents-md.mjs.
+  // agents-md.mjs indexes manifest.json, and the core README tells consumers
+  // to run docs/agents-md.mjs.
   const required =
     manifest.name === "@salt-ds/core"
-      ? ["index.md", "agents-md.mjs"]
-      : ["index.md"];
+      ? ["index.md", "manifest.json", "agents-md.mjs"]
+      : ["index.md", "manifest.json"];
   const errors = [];
   for (const file of required) {
     if (!(await pathExists(path.join(directory, "docs", file)))) {

@@ -77,11 +77,15 @@ export async function discoverDocuments({ siteDocsDir }) {
   const grouped = new Set();
   const componentPackageByDirectory = new Map();
 
+  // Component pages are a component's index page, which normally uses the
+  // DetailComponent layout. Pages with another layout that declare a package,
+  // such as technical pages for lab layouts, belong to that package too.
   const componentIndexes = [...pages.values()].filter(
     (page) =>
       page.relativePath.startsWith("components/") &&
       page.relativePath.endsWith("/index.mdx") &&
-      page.frontmatter.layout === "DetailComponent",
+      (page.frontmatter.layout === "DetailComponent" ||
+        typeof page.frontmatter.data?.package?.name === "string"),
   );
   // Parents first, so nested components can inherit their parent's package.
   componentIndexes.sort(

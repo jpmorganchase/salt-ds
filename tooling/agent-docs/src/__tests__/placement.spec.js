@@ -163,6 +163,22 @@ describe("placeExamples with large files and repeated examples", () => {
     ).toContain("```tsx\nexport const rows = [];\n```");
   });
 
+  it("writes an example shown twice on a page once", () => {
+    const { markdown, files } = place(
+      [example("Accented"), example("Solid"), example("Accented")],
+      10,
+    );
+    expect([...files.keys()]).toContain(
+      "components/button/examples/accented.md",
+    );
+    expect([...files.keys()]).not.toContain(
+      "components/button/examples/accented-2.md",
+    );
+    expect(
+      markdown.match(/\[source\]\(\.\/button\/examples\/accented\.md\)/g),
+    ).toHaveLength(2);
+  });
+
   it("names each example once in a moved module's file", () => {
     const { files } = place(
       [

@@ -21,26 +21,35 @@ repository root:
 node node_modules/@salt-ds/core/docs/agents-md.mjs
 ```
 
-The script adds a short Salt section to `AGENTS.md` that tells agents to read the
-installed documentation before they write Salt UI. GitHub Copilot, Codex, Cursor
-and most other coding agents read `AGENTS.md`, and the script makes `CLAUDE.md`
-import it for Claude Code. It keeps your other instructions, and running it again
-after you upgrade Salt updates the section.
+The script adds a Salt section to `AGENTS.md` that tells agents to read the
+installed documentation before they write Salt UI, with a compressed index of
+every documentation page in the Salt packages you have installed. GitHub
+Copilot, Codex, Cursor and most other coding agents read `AGENTS.md` with every
+request, so they know which pages exist without having to decide to look them
+up. The script makes `CLAUDE.md` import `AGENTS.md` for Claude Code, and keeps
+your other instructions.
 
-- Add `--check` to fail a CI job when the section is missing or out of date.
+Run the script again after you add or upgrade Salt packages, because the index
+lists the pages of the installed versions.
+
+- Add `--check` to fail a CI job when `AGENTS.md` or `CLAUDE.md` needs updating,
+  for example after an upgrade. It checks `CLAUDE.md` too unless you also add
+  `--no-claude`.
 - Add `--no-claude` to leave `CLAUDE.md` alone.
 - In a monorepo where `@salt-ds/core` is installed under an application, run the
   script by that path, such as
   `node apps/web/node_modules/@salt-ds/core/docs/agents-md.mjs`.
 
-To add the section yourself, copy it from the
-[`@salt-ds/core` README](https://www.npmjs.com/package/@salt-ds/core).
+The [`@salt-ds/core` README](https://www.npmjs.com/package/@salt-ds/core) shows
+what the section looks like. Generate it with the script rather than by hand, so
+the index matches your installed versions.
 
 ## What agents can read
 
-Agents start at `node_modules/@salt-ds/core/docs/index.md`. It lists every page
-with a short summary and the other names people use for each component, such as
-"Modal" for Dialog, so agents can find the right page.
+The index in `AGENTS.md` lists each package's pages by folder, with the other
+names people use for a component, such as "Modal" for Dialog, so agents can find
+the right page. Each package's `docs/index.md`, starting with
+`node_modules/@salt-ds/core/docs/index.md`, adds a short summary of every page.
 
 - Component pages combine the usage, examples and accessibility tabs from this
   site with props tables and keyboard interactions.

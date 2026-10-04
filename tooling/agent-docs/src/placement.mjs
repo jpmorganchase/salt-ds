@@ -68,7 +68,7 @@ function supportNodes(file, shown, linkShared) {
 function exampleNodes(example, shown, linkShared, { label = true } = {}) {
   const { entry, support } = example;
   const exampleText = exampleLabel(example);
-  if (entry.isModule && shown.has(entry.absolutePath)) {
+  if (shown.has(entry.absolutePath)) {
     return [u.paragraph([...exampleText, u.text(" (shown above).")])];
   }
   shown.add(entry.absolutePath);
@@ -109,14 +109,15 @@ function uniquePath(paths, candidate) {
 }
 
 /**
- * Groups examples that move together: each example, or every example
- * exported by the same module, since they share its source.
+ * Groups examples that move together: the examples a page shows from one
+ * file, which is each repeat of one example or every example exported by the
+ * same module, since they share its source.
  */
 function groupExamples(examples, base) {
   const groups = new Map();
   const paths = new Set();
   for (const example of examples) {
-    const key = example.entry.isModule ? example.entry.absolutePath : example;
+    const key = example.entry.absolutePath;
     if (!groups.has(key)) {
       const name = example.entry.isModule
         ? path.posix.basename(path.posix.dirname(example.entry.displayPath))

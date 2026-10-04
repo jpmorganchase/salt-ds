@@ -12,16 +12,23 @@ Point your agent at it by running this in the folder that holds your `AGENTS.md`
 node node_modules/@salt-ds/core/docs/agents-md.mjs
 ```
 
-This adds the block below to `AGENTS.md`, which GitHub Copilot, Codex, Cursor and most other coding agents read, and makes `CLAUDE.md` import `AGENTS.md` for Claude Code. It keeps your other instructions, and running it again updates the block. Add `--check` to fail in CI when either file needs updating, or `--no-claude` to leave `CLAUDE.md` alone.
+This adds a Salt block to `AGENTS.md`, which GitHub Copilot, Codex, Cursor and most other coding agents read, and makes `CLAUDE.md` import `AGENTS.md` for Claude Code. The block holds a compressed index of the docs in every installed `@salt-ds` package, so agents see which pages exist with every request instead of having to decide to look them up. The script keeps your other instructions.
 
-You can also add the block to `AGENTS.md` (or your agent's equivalent instructions file) yourself:
+Run it again after you add or upgrade Salt packages, because the index lists the pages of the installed versions. Add `--check` to fail in CI when either file needs updating, and `--no-claude` to leave `CLAUDE.md` alone; if you set up with `--no-claude`, check with it too.
+
+The block looks like this, with one line per docs folder:
 
 ```md
 <!-- BEGIN:salt-ds-agent-docs -->
 
 ## Salt Design System
 
-This project uses the Salt Design System (`@salt-ds/*` packages). Salt's APIs may differ from your training data. Before writing or changing UI that uses Salt, read `node_modules/@salt-ds/core/docs/index.md` (relative to this file) and the pages it links to; they match the installed package versions.
+This project uses the Salt Design System (`@salt-ds/*` packages), whose APIs may differ from your training data. For any Salt task, prefer retrieval-led reasoning over pre-training-led reasoning: before writing or changing UI that uses Salt, read the relevant pages from the index below. They are generated for the installed package versions. Index paths are relative to `root`, which is relative to this file. Names in brackets are other names for the same component, and each package's `docs/index.md` summarizes its pages.
+
+[Salt docs index]|root: node_modules/@salt-ds
+|core/docs/components:{accordion.md[Collapsible panel;Concertina;Expansion panel],avatar.md[Faces;Profile Picture;User Photo],...}
+|core/docs/patterns:{analytical-dashboard.md,announcement-dialog.md,...}
+|theme/docs:{foundations.md,themes.md,tokens.md}
 
 <!-- END:salt-ds-agent-docs -->
 ```

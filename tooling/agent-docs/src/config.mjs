@@ -61,6 +61,12 @@ export const MAX_INLINE_SUPPORT_FILE_BYTES = 8 * 1024;
  */
 export const MAX_PAGE_BYTES = 20 * 1024;
 
+/**
+ * The Salt block that agents-md.mjs writes to AGENTS.md is sent with every
+ * agent request, so generation warns when its docs index grows past this.
+ */
+export const MAX_AGENTS_BLOCK_BYTES = 8 * 1024;
+
 /** Index summaries are cut to this length so each index fits in one read. */
 export const SUMMARY_MAX_LENGTH = 100;
 
